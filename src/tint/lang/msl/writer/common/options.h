@@ -184,6 +184,10 @@ struct Options {
     /// Set to `true` to scalarize max min and clamp builtins.
     bool scalarize_max_min_clamp = false;
 
+    /// Set to `true` to polyfill clamping of 'id' parameter to webgpu max allowable subgroup size
+    /// (128)
+    bool polyfill_subgroup_shuffle_clamped = false;
+
     /// Set to `true` to disable the module constant transform for f16
     bool disable_module_constant_f16 = false;
 
