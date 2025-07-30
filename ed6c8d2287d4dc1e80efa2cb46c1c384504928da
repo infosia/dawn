@@ -69,6 +69,24 @@
       "parentUuid": "f950c41a_15968292",
       "revId": "ed6c8d2287d4dc1e80efa2cb46c1c384504928da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d84fd89e_f7b5fcb3",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-30T15:04:32Z",
+      "side": 1,
+      "message": "The swizzle is set on the texture in GL, not on the target. The target name is used because GL uses bind-to-edit for [obscure reasons](https://kangz.net/posts/2016/07/11/lets-do-opengl-archeology/).\n\nSo either we store the state in the texture and compare, or we set unconditionally if the feature is enabled on the device.",
+      "parentUuid": "413028ac_c6079159",
+      "revId": "ed6c8d2287d4dc1e80efa2cb46c1c384504928da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
