@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a139069b_e0c0a949",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-30T16:48:22Z",
+      "side": 1,
+      "message": "PTAL and LMK if this is a reasonable direction for getting ICE errors out to Dawn.\n\nWe may well want to add the callback earlier as well, e.g. during WGSL parsing, to get ICEs from there too. This is just a first step to prove this path out and get the error message for the one specific crash we know of in the wild.\n\nI expect to also want to add another argument to the callback that contains the offending shader (either WGSL or IR disassembly, depending on where the ICE originated), so that we can actually reproduce errors from the wild locally.",
+      "revId": "a882cba2fb49f9e987821a7582aa27f2287e8376",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
