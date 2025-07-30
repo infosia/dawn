@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7fe3965_193cb7a5",
+        "filename": "infra/config/global/generated/cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-07-30T22:29:26Z",
+      "side": 0,
+      "message": "Do you know why adding the PACKAGE.star caused these changes? Regenerating on ToT doesn\u0027t produce these changes, so it\u0027s somehow tied to the addition of that file.",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 3
+      },
+      "revId": "80bfc9639f60665c9b8a264dbde34826cda5c6c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
