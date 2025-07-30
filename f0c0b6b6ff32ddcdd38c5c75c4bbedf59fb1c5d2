@@ -16,6 +16,24 @@
       "message": "```suggestion\n// runCorpusGeneratorIr converts a set of input test files into an IR fuzzer corpus\n```",
       "revId": "f0c0b6b6ff32ddcdd38c5c75c4bbedf59fb1c5d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31170558_732d4ca7",
+        "filename": "tools/src/cmd/fuzz/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-30T16:01:53Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "f694f56c_ae16fdfe",
+      "revId": "f0c0b6b6ff32ddcdd38c5c75c4bbedf59fb1c5d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
