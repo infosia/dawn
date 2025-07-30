@@ -16,6 +16,24 @@
       "message": "Where did the `.*` come from after 42? .... Oh, is this a regex?",
       "revId": "75e07182f3d316bb96577670f7c779d334f8d611",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d860c71e_c43a3658",
+        "filename": "src/tint/utils/ice/ice_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-30T17:52:21Z",
+      "side": 1,
+      "message": "Yes, it\u0027s a regex, otherwise it\u0027ll need the full path.",
+      "parentUuid": "2668d15e_28db819f",
+      "revId": "75e07182f3d316bb96577670f7c779d334f8d611",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
