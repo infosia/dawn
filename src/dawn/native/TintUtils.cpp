@@ -185,4 +185,9 @@ std::unordered_map<tint::OverrideId, double> BuildSubstituteOverridesTransformCo
     return map;
 }
 
+void TintInternalCompilerErrorCallback(std::string err, void* userdata) {
+    DeviceBase* device = static_cast<DeviceBase*>(userdata);
+    device->HandleError(DAWN_INTERNAL_ERROR(err));
+}
+
 }  // namespace dawn::native
