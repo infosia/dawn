@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f694f56c_ae16fdfe",
+        "filename": "tools/src/cmd/fuzz/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-30T15:02:50Z",
+      "side": 1,
+      "message": "```suggestion\n// runCorpusGeneratorIr converts a set of input test files into an IR fuzzer corpus\n```",
+      "revId": "f0c0b6b6ff32ddcdd38c5c75c4bbedf59fb1c5d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
