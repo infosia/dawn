@@ -51,6 +51,24 @@
       "parentUuid": "d55dffae_3cc2fe5d",
       "revId": "ed6c8d2287d4dc1e80efa2cb46c1c384504928da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "413028ac_c6079159",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-30T14:52:42Z",
+      "side": 1,
+      "message": "Oops the terrible GL state machine...\n\nIf I get it right, the ultimate logic might be:\n* if the current required swizzle of this texture is not the same as the already set swizzle (which might be stored in a global map of GLTarget -\u003e swizzle state, each item initialized as default swizzle), then set the swizzle state of the texture`\n\nBut that might be too complex?\n\nRemoving the `if` condition and always set the swizzle could ensure the correctness, though.",
+      "parentUuid": "f950c41a_15968292",
+      "revId": "ed6c8d2287d4dc1e80efa2cb46c1c384504928da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
