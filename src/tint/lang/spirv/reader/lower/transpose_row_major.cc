@@ -40,6 +40,8 @@ namespace {
 
 using namespace tint::core::fluent_types;  // NOLINT
 
+constexpr std::string_view kTintLoadRowMajor = "tint_load_row_major";
+
 /// PIMPL state for the transform.
 struct State {
     /// The IR module.
@@ -54,6 +56,32 @@ struct State {
     /// The symbol manager.
     SymbolTable& sym{ir.symbols};
 
+    // A map from a (type, is_row_major) pair to it's replacement (which maybe the same as the
+    // original).
+    struct TypeAndRowMajor {
+        const core::type::Type* type;
+        bool row_major;
+
+        bool operator==(const TypeAndRowMajor& other) const {
+            return type == other.type && row_major == other.row_major;
+        }
+
+        tint::HashCode HashCode() const { return Hash(type, row_major); }
+    };
+    Hashmap<TypeAndRowMajor, const core::type::Type*, 32> original_to_transposed{};
+
+    /// A map from rewritten structs to original structs.
+    Hashmap<const core::type::Struct*, const core::type::Struct*, 4> struct_to_original{};
+
+    /// List of instruction results where the usages need to be updated
+    Vector<core::ir::InstructionResult*, 32> results_to_update;
+
+    /// A hash of access instructions to the vector index they were accessing
+    Hashmap<core::ir::Access*, core::ir::Value*, 8> access_to_vector_index;
+
+    /// A list of instructions to remove
+    Vector<core::ir::Instruction*, 8> instructions_to_remove_if_unused;
+
     /// Process the module.
     void Process() {
         for (auto* type : ty) {
@@ -62,23 +90,304 @@ struct State {
                 continue;
             }
 
-            auto* replacement = RewriteStruct(strct);
+            auto* replacement = RewriteType(strct, false);
             if (replacement == strct) {
                 continue;
             }
         }
+
+        for (auto* inst : ir.Instructions()) {
+            for (auto* res : inst->Results()) {
+                auto* new_ty = RewriteType(res->Type(), false);
+                if (new_ty != res->Type()) {
+                    res->SetType(new_ty);
+                    results_to_update.Push(res);
+                }
+            }
+        }
+
+        while (!results_to_update.IsEmpty()) {
+            auto* result = results_to_update.Pop();
+
+            // Use sorted usages to force a copy, the replacements may create new usages of this
+            // result.
+            for (auto& usage : result->UsagesSorted()) {
+                tint::Switch(
+                    usage.instruction,  //
+                    [&](core::ir::Load* ld) { ReplaceLoad(ld); },
+                    [&](core::ir::Store* store) {
+                        // TODO(dsinclair): Remove
+                        TINT_UNREACHABLE() << " store";
+                    },
+                    [&](core::ir::Let* let) {
+                        // TODO(dsinclair): Remove
+                        TINT_UNREACHABLE() << " let";
+                    },
+                    [&](core::ir::Access* access) { ReplaceAccess(access); },
+                    [&](core::ir::Call* call) {
+                        // TODO(dsinclair): Remove
+                        TINT_UNREACHABLE() << " call";
+                    },
+                    [&](core::ir::Construct* construct) {
+                        // TODO(dsinclair): Remove
+                        TINT_UNREACHABLE() << " construct";
+                    },
+                    [&](core::ir::LoadVectorElement* lve) { ReplaceLoadVectorElement(lve); },
+                    [&](core::ir::StoreVectorElement* sve) {
+                        // TODO(dsinclair): remove
+                        TINT_UNREACHABLE() << " store vector element";
+                    },
+                    TINT_ICE_ON_NO_MATCH);
+            }
+        }
+
+        for (auto* inst : instructions_to_remove_if_unused) {
+            // If we've detached, just remove the instruction
+            if (inst->Results().IsEmpty()) {
+                inst->Destroy();
+                continue;
+            }
+
+            TINT_ASSERT(inst->Results().Length() == 1);
+            if (!inst->Result()->IsUsed()) {
+                inst->Destroy();
+            }
+        }
     }
 
-    const core::type::Struct* RewriteStruct(const core::type::Struct* src) {
+    // This is a load vector element that is coming from a matrix which we've transposed the size
+    // of. So, we need to swap the index on this load with the last index of the source access.
+    void ReplaceLoadVectorElement(core::ir::LoadVectorElement* lve) {
+        auto* src_result = lve->From()->As<core::ir::InstructionResult>();
+        TINT_ASSERT(src_result);
+
+        auto* src_access = src_result->Instruction()->As<core::ir::Access>();
+        TINT_ASSERT(src_access);
+
+        core::ir::Access* new_access = nullptr;
+        b.InsertAfter(src_access, [&] {
+            Vector<core::ir::Value*, 4> indices;
+            auto old_indices = src_access->Indices();
+
+            // We push all old indices here because we've already removed the vector index,
+            for (size_t i = 0; i < old_indices.Length(); ++i) {
+                indices.Push(old_indices[i]);
+            }
+            indices.Push(lve->Index());
+
+            auto access_idx = access_to_vector_index.Get(src_access);
+            TINT_ASSERT(access_idx);
+
+            auto* src_ty = src_access->Result()->Type()->As<core::type::Pointer>();
+            TINT_ASSERT(src_ty);
+
+            auto* src_mat = src_ty->StoreType()->As<core::type::Matrix>();
+            TINT_ASSERT(src_mat);
+
+            auto* new_ptr =
+                ty.ptr(src_ty->AddressSpace(), ty.vec(src_mat->Type(), src_mat->Rows()));
+            new_access = b.Access(new_ptr, src_access->Object(), indices);
+
+            b.InsertAfter(lve, [&] {
+                b.LoadVectorElementWithResult(lve->DetachResult(), new_access, *access_idx);
+            });
+            lve->Destroy();
+        });
+
+        instructions_to_remove_if_unused.Push(src_access);
+    }
+
+    void ReplaceAccess(core::ir::Access* access) {
+        bool indexed_through_row_major = false;
+
+        auto* cur_ty = access->Object()->Type()->UnwrapPtr();
+        const core::type::Type* parent_ty = nullptr;
+        for (auto* idx : access->Indices()) {
+            if (auto* struct_ty = cur_ty->As<core::type::Struct>()) {
+                auto const_idx = idx->As<core::ir::Constant>()->Value()->ValueAs<uint32_t>();
+                parent_ty = cur_ty;
+                cur_ty = cur_ty->Element(const_idx);
+
+                auto* orig_struct = struct_to_original.GetOr(struct_ty, nullptr);
+                if (!orig_struct) {
+                    // Structure didn't change, so doesn't contain a row-major member
+                    continue;
+                }
+
+                auto* mem = orig_struct->Members()[const_idx];
+                if (mem->RowMajor() && cur_ty->Is<core::type::Matrix>()) {
+                    indexed_through_row_major = true;
+                }
+
+            } else {
+                parent_ty = cur_ty;
+                cur_ty = cur_ty->Elements().type;
+            }
+        }
+
+        // Not accessing through a matrix, nothing to do.
+        if (!indexed_through_row_major) {
+            return;
+        }
+
+        // We've accessed the matrix itself, we need to update the access result type, and if
+        // changed, update the uses of this access
+        if (cur_ty->Is<core::type::Matrix>()) {
+            auto* new_access_ty = RewriteType(access->Result()->Type(), true);
+            TINT_ASSERT(new_access_ty != access->Result()->Type());
+
+            access->Result()->SetType(new_access_ty);
+            results_to_update.Push(access->Result());
+            return;
+        }
+
+        // We're accessing a row of the vector. We need to replace this access with an access of the
+        // parent matrix and then store away which row we're accessing so we can rebuild any needed
+        // accesses later.
+        if (cur_ty->Is<core::type::Vector>()) {
+            TINT_ASSERT(parent_ty != nullptr);
+            auto* idx = access->PopLastIndex();
+
+            auto* access_ptr = access->Result()->Type()->As<core::type::Pointer>();
+            TINT_ASSERT(access_ptr);
+
+            /// The access now returns the transposed matrix
+            auto* new_access_ty =
+                ty.ptr(access_ptr->AddressSpace(), parent_ty, access_ptr->Access());
+            access->Result()->SetType(new_access_ty);
+
+            access_to_vector_index.Add(access, idx);
+            results_to_update.Push(access->Result());
+            return;
+        }
+
+        // TODO(dsinclair): Remove
+        TINT_UNREACHABLE() << " access";
+    }
+
+    void ReplaceLoad(core::ir::Load* ld) {
+        if (ld->Result()->Type()->Is<core::type::Matrix>()) {
+            b.InsertAfter(ld, [&] {
+                // We're replacing the load, which means the source must have been a transposed
+                // matrix, so we need to get the load result as if it was row-major decorated.
+                auto* new_res = b.InstructionResult(RewriteType(ld->Result()->Type(), true));
+                b.CallWithResult(ld->DetachResult(), core::BuiltinFn::kTranspose, new_res);
+                ld->SetResult(new_res);
+            });
+        } else if (ld->Result()->Type()->Is<core::type::Vector>()) {
+            auto* src = ld->From()->As<core::ir::InstructionResult>();
+            TINT_ASSERT(src);
+
+            if (auto* access = src->Instruction()->As<core::ir::Access>()) {
+                // We're loading a vector from an access chain, we need to determine if this vector
+                // came from a row-major matrix
+
+                auto idx = access_to_vector_index.Get(access);
+                TINT_ASSERT(idx);
+
+                printf("%s\n", access->Result()->Type()->TypeInfo().name);
+                auto* loader =
+                    LoadColumnHelper(access->Result()->Type()->As<core::type::Pointer>());
+                b.InsertAfter(ld, [&] {
+                    auto* v = *idx;
+                    if (v->Type()->Is<core::type::I32>()) {
+                        v = b.Convert(ty.u32(), v)->Result();
+                    }
+                    b.CallWithResult(ld->DetachResult(), loader, access, v);
+                });
+
+                // Do this after we're done so we don't end up modifying the usage list of the
+                // result we're iterating over.
+                instructions_to_remove_if_unused.Push(ld);
+
+            } else {
+                // TODO(dsinclair): Remove
+                TINT_UNREACHABLE() << " load vec not access";
+            }
+        } else {
+            // TODO(dsinclair): Remove
+            TINT_UNREACHABLE() << " load";
+        }
+    }
+
+    // Note, the type provided in the pointer has _already_ been transposed.
+    core::ir::Function* LoadColumnHelper(const core::type::Pointer* ptr) {
+        TINT_ASSERT(ptr);
+
+        auto* row_major_ty = ptr->UnwrapPtr()->As<core::type::Matrix>();
+        TINT_ASSERT(row_major_ty);
+
+        auto* vec_ty = ty.vec(row_major_ty->Type(), row_major_ty->Columns());
+        auto* col_ptr_ty = ty.ptr(
+            ptr->AddressSpace(), ty.vec(row_major_ty->Type(), row_major_ty->Rows()), ptr->Access());
+
+        auto* fn = b.Function(kTintLoadRowMajor, vec_ty);
+        auto* mat = b.FunctionParam(ptr);
+        auto* row = b.FunctionParam(ty.u32());
+        fn->SetParams({mat, row});
+
+        b.Append(fn->Block(), [&] {
+            Vector<core::ir::Value*, 4> values;
+            for (uint32_t i = 0; i < row_major_ty->Columns(); ++i) {
+                values.Push(b.LoadVectorElement(b.Access(col_ptr_ty, mat, u32(i)), row)->Result());
+            }
+            b.Return(fn, b.Construct(vec_ty, values));
+        });
+        return fn;
+    }
+
+    const core::type::Type* RewriteType(const core::type::Type* type, bool decorated_row_major) {
+        return original_to_transposed.GetOrAdd(TypeAndRowMajor{type, decorated_row_major}, [&] {
+            return tint::Switch(
+                type,
+                [&](const core::type::Array* arr) {
+                    return RewriteArray(arr, decorated_row_major);
+                },
+                [&](const core::type::Struct* str) { return RewriteStruct(str); },
+                [&](const core::type::Matrix* mat) {
+                    if (!decorated_row_major) {
+                        return mat;
+                    }
+                    return ty.mat(mat->Type(), mat->Rows(), mat->Columns());
+                },
+                [&](const core::type::Pointer* ptr) {
+                    return ty.ptr(ptr->AddressSpace(),
+                                  RewriteType(ptr->StoreType(), decorated_row_major),
+                                  ptr->Access());
+                },
+                [&](Default) { return type; });
+        });
+    }
+
+    const core::type::Type* RewriteArray(const core::type::Array* arr, bool decorated_row_major) {
+        auto* elem_ty = RewriteType(arr->ElemType(), decorated_row_major);
+        if (elem_ty == arr->ElemType()) {
+            return arr;
+        }
+
+        // The element type is the only thing that will change. That does not affect the stride of
+        // the array itself, which may either be the natural stride or an larger stride in the case
+        // of an explicitly laid out array.
+        if (arr->Is<spirv::type::ExplicitLayoutArray>()) {
+            return ty.Get<spirv::type::ExplicitLayoutArray>(elem_ty, arr->Count(), arr->Align(),
+                                                            arr->Size(), arr->Stride());
+        }
+        return ty.Get<core::type::Array>(elem_ty, arr->Count(), arr->Align(), arr->Size(),
+                                         arr->Stride(), arr->Stride());
+    }
+
+    const core::type::Type* RewriteStruct(const core::type::Struct* old_struct) {
         bool made_changes = false;
 
+        printf("REWRITE %p\n", old_struct);
+
         Vector<const core::type::StructMember*, 8> new_members;
-        new_members.Reserve(src->Members().Length());
-        for (auto* member : src->Members()) {
-            auto* new_member_type = RewriteType(member->Type());
+        new_members.Reserve(old_struct->Members().Length());
+        for (auto* member : old_struct->Members()) {
+            auto* new_member_type = RewriteType(member->Type(), member->RowMajor());
+            printf("RM %d\n", member->RowMajor());
             if (member->RowMajor() || new_member_type != member->Type()) {
-                // Recreate the struct member without the row-major attribute, and using the new
-                // type.
+                // Recreate the struct member without the row major attribute, using the new type.
                 new_members.Push(ty.Get<core::type::StructMember>(
                     member->Name(), new_member_type, member->Index(), member->Offset(),
                     member->Align(), member->Size(), member->Attributes()));
@@ -88,19 +397,15 @@ struct State {
             }
         }
         if (!made_changes) {
-            return src;
+            return old_struct;
         }
 
-        // TODO(dsinclair): record which members were re-written
-
         // Create the new struct and record the mapping to the old struct.
-        auto* new_struct = ty.Struct(sym.New(src->Name().Name()), std::move(new_members));
-        // struct_to_original.Add(new_struct, src);
-        return new_struct;
-    }
+        auto* new_struct = ty.Struct(sym.New(old_struct->Name().Name()), std::move(new_members));
+        struct_to_original.Add(new_struct, old_struct);
 
-    const core::type::Type* RewriteType([[maybe_unused]] const core::type::Type* type) {
-        return nullptr;
+        printf("NEW %p\n", new_struct);
+        return new_struct;
     }
 };
 
