@@ -142,6 +142,24 @@
       "parentUuid": "c573e78f_69d69e50",
       "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33ab8e91_d6e0be2a",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-31T20:32:58Z",
+      "side": 1,
+      "message": "I think other similar cases in the C API produce validation errors when passing an extension struct even if it has the default values. I think that is fine to do here, it just means that Blink will have to avoid passing the extension when the feature is not enabled.\n\nIn general I\u0027m undecided which option is better for C. It\u0027s already true that applications should be tested to make sure it works correctly on all of its target implementations (especially if they use extensions) so it probably wouldn\u0027t be that bad if Dawn accepts the extension struct even if the feature is disabled. A third option if we wanted to make the C API more like the JS API, we could have implementations ignore chained structs with unknown sTypes instead of erroring.",
+      "parentUuid": "08b91d38_e70ba83b",
+      "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
