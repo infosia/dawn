@@ -51,6 +51,24 @@
       "parentUuid": "32bfdab9_33b9d52e",
       "revId": "ed558dcdb0fe859d51470b85e8bb93d71c19e54d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2370cbf_b827d778",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-31T09:11:01Z",
+      "side": 1,
+      "message": "Yes the current SPV reader is already considered deprecated and we\u0027ll delete it when we have confidence that the IR reader is good enough.",
+      "parentUuid": "c26b1951_a51b01b7",
+      "revId": "ed558dcdb0fe859d51470b85e8bb93d71c19e54d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
