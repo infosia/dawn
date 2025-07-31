@@ -146,6 +146,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1b14f349_e4297b53",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-31T14:28:10Z",
+      "side": 1,
+      "message": "In discussion with Dan we should just remove the toggle itself so it cannot be triggered from outside at all.",
+      "parentUuid": "7cb8d82d_bfa7ec8e",
+      "revId": "1ff7a6df615f01a9089f561c180652fda74bbc6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "85b13b6f_923892d8",
         "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
         "patchSetId": 7
