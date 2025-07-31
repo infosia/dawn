@@ -16,6 +16,24 @@
       "message": "Question on the GN build config:\n\n1. After moving things dawn::native::devtool to dawn::devtool,\nalthough specifying `dawn_component(\"devtool_playback\")`, seems I\u0027m losing the build target `libdevtool_playback.so`, unless I add it as a dep to `dawn/native/BUILD.gn`.\n\nDo you know what I\u0027m missing to config `dawn/devtool:devtool_playback` like a seperate build target as say `dawn/native:native`?\n\n2. To make dawn::native uses `devtool_record` and `devtool_playback`, do I need to put devtool headers into `include/dawn/devtool/`, and config them like `include/dawn/native/DawnNative.h` as public headers?",
       "revId": "e987a12ddfce10f113c03bd3736c60c0eda54dff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e6c21d1_61a25beb",
+        "filename": "src/dawn/devtool/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-31T07:57:19Z",
+      "side": 1,
+      "message": "1) GN starts from the root GN files and discover files as targets are specified. You can add devtools to a new group there that\u0027s referenced by `all`.\n\n2) Splitting headers to `include/dawn/devtools` is not necessary for \"internal libraries\". For example `dawn/common` or `dawn/utils` don\u0027t do that.",
+      "parentUuid": "c2e3e4e6_00980fa1",
+      "revId": "e987a12ddfce10f113c03bd3736c60c0eda54dff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
