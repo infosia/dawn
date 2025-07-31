@@ -16,6 +16,46 @@
       "message": "See https://pprof.corp.google.com/?id\u003d094fd7917c7a0686c109e8d2b6647c4f\u0026path\u003d1acexpm14qkju809hmmtg09hmmtg1fo4h2w08vnttk1qnwh0808vnttk1wz9tns13q2veo0pezaxk1fc0g1w1v8izlc1v8izlc08fw0hs094751c1p5frns10bvs5k0alswxs0yq9pog0k7k6mo1ual3bs for an example profile demonstrating the problem this CL is trying to avoid.",
       "revId": "df86506d8f911761fefe1f4c476065b77159a992",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "517c5c68_dd39b046",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-31T20:50:40Z",
+      "side": 1,
+      "message": "Would it be worth it to add some test to verify that we are hitting the cache? (or do we already have some since we already had this behavior and they are already passing?)",
+      "revId": "df86506d8f911761fefe1f4c476065b77159a992",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1d477b1_a4ecb852",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-31T20:50:40Z",
+      "side": 1,
+      "message": "Should we call `Device::CreateTextureView` here instead of the actual backend `Impl` version so that we can (1) hit the cache if relevant, and (2) not need to expose `CreateTextureViewImpl` as public?",
+      "range": {
+        "startLine": 1132,
+        "startChar": 16,
+        "endLine": 1133,
+        "endChar": 88
+      },
+      "revId": "df86506d8f911761fefe1f4c476065b77159a992",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
