@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6494ed2_19c170d9",
+        "filename": "tools/src/cmd/fuzz/main.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-31T00:23:28Z",
+      "side": 1,
+      "message": "I should refactor this file to have the oswrapper in the taskConfig struct, so it doesn\u0027t need to be passed around as a param, but I will do that cleanup in a follow on CL",
+      "revId": "9866904a776c4345085a32170d0bac5531ed0c6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
