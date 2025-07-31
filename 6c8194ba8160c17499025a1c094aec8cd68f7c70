@@ -276,6 +276,30 @@
       },
       "revId": "6c8194ba8160c17499025a1c094aec8cd68f7c70",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eeaefc62_be2ca63a",
+        "filename": "src/dawn/tests/unittests/native/CacheRequestTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-31T18:28:31Z",
+      "side": 1,
+      "message": "Ack that works. Can you add some comments to record why we had to do this?",
+      "parentUuid": "b8fb2f6b_bdd119e9",
+      "range": {
+        "startLine": 380,
+        "startChar": 4,
+        "endLine": 382,
+        "endChar": 0
+      },
+      "revId": "6c8194ba8160c17499025a1c094aec8cd68f7c70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
