@@ -50,7 +50,7 @@ class TextureView;
 struct FramebufferCacheTextureView {
     // Uses a weak ref in the cache key as we need to make sure the pointer values are not reused
     // if the texture view is no longer used and new views created.
-    WeakRef<TextureView> weakRef;
+    uint64_t textureViewId;
     uint32_t depthSlice;
 };
 
