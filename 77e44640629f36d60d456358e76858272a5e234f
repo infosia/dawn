@@ -446,6 +446,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8973b44e_3978f751",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-31T22:02:01Z",
+      "side": 1,
+      "message": "I have changed it to a map of barrier types with sync ids",
+      "parentUuid": "bf2ae238_eca16256",
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "505d3752_bc31b92c",
