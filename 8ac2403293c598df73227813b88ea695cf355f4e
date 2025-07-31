@@ -22,6 +22,30 @@
       },
       "revId": "8ac2403293c598df73227813b88ea695cf355f4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "146b0717_cecbf182",
+        "filename": "src/emdawnwebgpu/tests/SpotTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-31T22:53:54Z",
+      "side": 1,
+      "message": "It didn\u0027t. I guess we are not enabling warnings on these test files. It\u0027s fine though.",
+      "parentUuid": "753da63f_898a04e3",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 34
+      },
+      "revId": "8ac2403293c598df73227813b88ea695cf355f4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
