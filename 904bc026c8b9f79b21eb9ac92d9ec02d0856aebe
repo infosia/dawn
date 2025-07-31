@@ -135,6 +135,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0eb95d5_dae2c13d",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-31T04:47:21Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c59e2032_bf9ed726",
+      "revId": "904bc026c8b9f79b21eb9ac92d9ec02d0856aebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "602e7ec7_987ac5ab",
