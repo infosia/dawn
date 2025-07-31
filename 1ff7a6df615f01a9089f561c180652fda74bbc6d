@@ -110,6 +110,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7ace7773_0a7703d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-31T13:32:02Z",
+      "side": 1,
+      "message": "Right, so I thought the plan was to err on the side of caution and assume they\u0027re all bad and polyfill them all?",
+      "parentUuid": "98ff5e11_5da09b0d",
+      "revId": "1ff7a6df615f01a9089f561c180652fda74bbc6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "85b13b6f_923892d8",
         "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
         "patchSetId": 7
