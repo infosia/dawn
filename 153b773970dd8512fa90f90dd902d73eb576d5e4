@@ -3,6 +3,46 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "fece456f_c97515ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-07-31T20:35:48Z",
+      "side": 1,
+      "message": "LGTM % nit\n\nI\u0027m getting the feeling that afero isn\u0027t quite as fully baked as I was hoping. I also found some minor functional differences between the real and memory mapped filesystems when [I initially set this up](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/tools/src/oswrapper/memmaposwrapper.go;l\u003d166?q\u003d-file:%5Eout%20-file:%5Egen%20memmaposwrapper).\n\nI had no particular reason for choosing it other than that it seemed to be the go-to recommendation for an in-memory filesystem in Go. If you stumble across an alternative that looks more promising, I\u0027d be open to switching to it.",
+      "revId": "153b773970dd8512fa90f90dd902d73eb576d5e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b00c4f3_f3edc12b",
+        "filename": "tools/src/cmd/fuzz/main_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-07-31T20:35:48Z",
+      "side": 1,
+      "message": "Nit: Should be at the bottom of the list.",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 31,
+        "endChar": 38
+      },
+      "revId": "153b773970dd8512fa90f90dd902d73eb576d5e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "770c15b4_17afa691",
         "filename": "tools/src/oswrapper/oswrapper.go",
         "patchSetId": 1
