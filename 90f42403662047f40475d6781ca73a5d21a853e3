@@ -124,6 +124,24 @@
       "parentUuid": "edc07d7b_e6122df1",
       "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08b91d38_e70ba83b",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-31T13:32:44Z",
+      "side": 1,
+      "message": "Adding Kai: I now understand the semantic in the JS API but it\u0027s weird to me that we allow passing in the chained descriptor in C even when the extension is not enabled. In JS, WebIDL ignores unknown dictionary members, but in C we produce a validation error on unknown chains.\n\nThis means that there is a difference when passing a default swizzle between a webgpu.h implementation that doesn\u0027t know the extension (validation error) and on that knows the implementation, even if the feature isn\u0027t enabled (no validation error).",
+      "parentUuid": "c573e78f_69d69e50",
+      "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
