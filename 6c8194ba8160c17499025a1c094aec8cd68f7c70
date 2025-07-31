@@ -252,6 +252,30 @@
       },
       "revId": "6c8194ba8160c17499025a1c094aec8cd68f7c70",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8fb2f6b_bdd119e9",
+        "filename": "src/dawn/tests/unittests/native/CacheRequestTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-31T06:22:44Z",
+      "side": 1,
+      "message": "Since the cache miss handler lambda need to call mock function `cacheMissFn` while can not capture it, I thought it have to be static.\n\nTo solve the issue, I made `cacheHitFn` and `cacheMissFn` both become `unique_ptr`, and construct/destruct them for every round of test, in this way we can ensure the expected behaviors happen in the right place.",
+      "parentUuid": "0bedfdc0_74502fad",
+      "range": {
+        "startLine": 380,
+        "startChar": 4,
+        "endLine": 382,
+        "endChar": 0
+      },
+      "revId": "6c8194ba8160c17499025a1c094aec8cd68f7c70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
