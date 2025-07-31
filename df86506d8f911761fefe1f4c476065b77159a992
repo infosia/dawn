@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7491f6e3_7ef1d11b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-31T20:33:44Z",
+      "side": 1,
+      "message": "See https://pprof.corp.google.com/?id\u003d094fd7917c7a0686c109e8d2b6647c4f\u0026path\u003d1acexpm14qkju809hmmtg09hmmtg1fo4h2w08vnttk1qnwh0808vnttk1wz9tns13q2veo0pezaxk1fc0g1w1v8izlc1v8izlc08fw0hs094751c1p5frns10bvs5k0alswxs0yq9pog0k7k6mo1ual3bs for an example profile demonstrating the problem this CL is trying to avoid.",
+      "revId": "df86506d8f911761fefe1f4c476065b77159a992",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
