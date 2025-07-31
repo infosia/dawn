@@ -110,6 +110,30 @@
       },
       "revId": "e134acc230817487a807521a4c29351661db3ab6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d45ff1cc_0f976395",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 2386,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-31T20:25:44Z",
+      "side": 1,
+      "message": "I\u0027ve written down notes in a TODO so I\u0027ll try to look into this at some point with code size tests in hand.",
+      "parentUuid": "99345084_3e17b083",
+      "range": {
+        "startLine": 2385,
+        "startChar": 6,
+        "endLine": 2386,
+        "endChar": 25
+      },
+      "revId": "e134acc230817487a807521a4c29351661db3ab6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
