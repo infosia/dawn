@@ -33,6 +33,24 @@
       "message": "This is set by PopulateBindingRelatedOptions, but AFAICT we wouldn\u0027t expect the user of `msl::writer::Generate()` to ever set this? If that\u0027s right then we probably shouldn\u0027t put this in the Options struct, and instead just calculate it in the transform where you need it (or raise).",
       "revId": "5a4667ca21f5a0cc49334abd17deb7780c8e31b4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e72e1e7d_e3ad76b8",
+        "filename": "src/tint/lang/msl/writer/common/options.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-31T05:13:20Z",
+      "side": 1,
+      "message": "You\u0027re right. Move this from option to raise.",
+      "parentUuid": "a457f789_8935378b",
+      "revId": "5a4667ca21f5a0cc49334abd17deb7780c8e31b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
