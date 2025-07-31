@@ -22,6 +22,30 @@
       },
       "revId": "d05e8e8d418c5e6100989d24c34413c5b4931a10",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1899dec9_254b2be5",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-31T18:50:31Z",
+      "side": 1,
+      "message": "Moved to Device. PTAL.",
+      "parentUuid": "39cbfd5d_e5440cd4",
+      "range": {
+        "startLine": 342,
+        "startChar": 39,
+        "endLine": 345,
+        "endChar": 40
+      },
+      "revId": "d05e8e8d418c5e6100989d24c34413c5b4931a10",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
