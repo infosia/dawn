@@ -27,6 +27,7 @@
 
 #include "src/dawn/native/vulkan/CommandRecordingContextVk.h"
 
+#include "dawn/native/vulkan/BufferVk.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "vulkan/vulkan_core.h"
 
@@ -60,6 +61,43 @@ void CommandRecordingContext::AddBufferBarrier(VkAccessFlags srcAccessMask,
     barrier->bufferDstStages |= dstStages;
 }
 
+void CommandRecordingContext::UpdateBarrierSyncId(Buffer* buffer) {
+    if (mEnableSkipRedundantBarriers) {
+        buffer->UpdateImplicitBarrierSyncId(mImplicitBarrierSyncId);
+    }
+}
+
+bool CommandRecordingContext::IsRedundantBarrier(VkAccessFlags srcAccessMask,
+                                                 VkAccessFlags dstAccessMask,
+                                                 VkPipelineStageFlags srcStages,
+                                                 VkPipelineStageFlags dstStages,
+                                                 size_t implicit_barrier_fence_id) {
+    if (!mEnableSkipRedundantBarriers) {
+        return false;
+    }
+    // We do not bother to avoid redundant barriers for vertex. We could in the future.
+    if (dstStages & vertexStages) {
+        return false;
+    }
+
+    for (auto& each_pair : mNonVertexBarrierMapSync) {
+        auto& curr_barrier = each_pair.first;
+        if ((curr_barrier.bufferSrcStages & srcStages) == srcStages &&
+            (curr_barrier.bufferDstStages & dstStages) == dstStages) {
+            if ((curr_barrier.bufferDstAccessMask & dstAccessMask) == dstAccessMask &&
+                (curr_barrier.bufferSrcAccessMask & srcAccessMask) == srcAccessMask) {
+                // Any barrier that came after the the last update to this buffer will have a larger
+                // sync id.
+                if (implicit_barrier_fence_id < each_pair.second) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
 void CommandRecordingContext::EmitBufferBarriers(Device* device) {
     std::array<VkMemoryBarrier, 2> barriers;
     size_t idx = 0;
@@ -84,6 +122,11 @@ void CommandRecordingContext::EmitBufferBarriers(Device* device) {
     };
     CreateBarrierIfNeeded(mVertexBufferBarrier);
     CreateBarrierIfNeeded(mNonVertexBufferBarrier);
+
+    if (mEnableSkipRedundantBarriers) {
+        mImplicitBarrierSyncId++;
+        mNonVertexBarrierMapSync[mNonVertexBufferBarrier] = mImplicitBarrierSyncId;
+    }
 
     if (idx > 0) {
         device->fn.CmdPipelineBarrier(commandBuffer, srcStages, dstStages, 0, idx, barriers.data(),

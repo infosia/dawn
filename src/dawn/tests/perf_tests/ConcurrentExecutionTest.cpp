@@ -160,12 +160,16 @@ void ConcurrentExecutionTest::Step() {
         }
         wgpu::ComputePassEncoder pass = encoder.BeginComputePass(&computePassDesc);
         pass.SetPipeline(mPipeline);
-        pass.SetBindGroup(0, mBindGroupA);
-        pass.DispatchWorkgroups(1);
-
-        if (GetParam().mConcurrentExecutionType == ConcurrentExecutionType::RunTwoConcurrent) {
-            pass.SetBindGroup(0, mBindGroupB);
+        // Do a few iterations to have different barriers get activated. (transfer stage vs compute
+        // stage)
+        for (int i = 0; i < 3; i++) {
+            pass.SetBindGroup(0, mBindGroupA);
             pass.DispatchWorkgroups(1);
+
+            if (GetParam().mConcurrentExecutionType == ConcurrentExecutionType::RunTwoConcurrent) {
+                pass.SetBindGroup(0, mBindGroupB);
+                pass.DispatchWorkgroups(1);
+            }
         }
 
         pass.End();
