@@ -108,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3e24cf29_a6eb54e8",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-07-31T21:07:23Z",
+      "side": 1,
+      "message": "Working further on the refactor:\n\nDeps of `playback` seems clear: `include/dawn/devtool` -\u003e `devtool_playback` -\u003e `webgpu.h`\n\nFor `record` though:\n`devtool_record` -\u003e `dawn:native`: needs dawn::native::webgpu objects to access ids/internal states.\n`dawn:native` -\u003e `devtool_record`: dawn::native::webgpu:: objects needs to call `Encode*` functions of `devtool_record`\n\nThat\u0027s a circular dependency so seems they shouldn\u0027t be two seperate components?\n\nI tried thinking about having a `source_set` of public parts of `devtool_record` and `dawn:native`. that\u0027s `source_set(dawn:native:webgpu)`? but dawn:native:webgpu is intertwined inside `dawn:native` other than a separate component.\n\nTo have a singular dependency: `devtool_record` -\u003e `webgpu.h` -\u003e `dawn::native` -\u003e `dawn::native::webgpu`, then `devtool_record` is just another `dawn::native::webgpu`\n\nCan `devtool_record` live outside `dawn:native`?",
+      "parentUuid": "be7dbee9_70ee4108",
+      "revId": "14a4acbf4ab004e6f7af613e08e2774b7ccf5f2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "15aec64b_b37aefab",
         "filename": "src/dawn/native/devtool/protos/cmd.proto",
         "patchSetId": 2

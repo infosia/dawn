@@ -34,6 +34,24 @@
       "parentUuid": "c2e3e4e6_00980fa1",
       "revId": "e987a12ddfce10f113c03bd3736c60c0eda54dff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1569d51_e27a0de4",
+        "filename": "src/dawn/devtool/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-07-31T21:07:23Z",
+      "side": 1,
+      "message": "Thanks for the answer. Resolved for discovering targets",
+      "parentUuid": "6e6c21d1_61a25beb",
+      "revId": "e987a12ddfce10f113c03bd3736c60c0eda54dff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
