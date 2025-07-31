@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "74c5eb97_11d01200",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-31T21:43:12Z",
+      "side": 1,
+      "message": "We don\u0027t have any explicit tests for the cache, no. I\u0027ve verified that the cache is indeed caching with logging, but it would be good to get some tests in place. This is kind of a hard one to test explicitly, though, since it\u0027s very much treated as an implementation detail of the CommandBufferVK. (Similarly, the command buffer also uses a RenderPassCache that is lacking tests.)\n\nThat said, I think we also need some tests for the LRUCache and the TextureView cache, so there\u0027s a lot we could improve on. Those would be appropriate for a separate CL.",
+      "parentUuid": "517c5c68_dd39b046",
+      "revId": "df86506d8f911761fefe1f4c476065b77159a992",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b1d477b1_a4ecb852",
         "filename": "src/dawn/native/vulkan/TextureVk.cpp",
         "patchSetId": 1
@@ -48,6 +66,30 @@
       "writtenOn": "2025-07-31T20:50:40Z",
       "side": 1,
       "message": "Should we call `Device::CreateTextureView` here instead of the actual backend `Impl` version so that we can (1) hit the cache if relevant, and (2) not need to expose `CreateTextureViewImpl` as public?",
+      "range": {
+        "startLine": 1132,
+        "startChar": 16,
+        "endLine": 1133,
+        "endChar": 88
+      },
+      "revId": "df86506d8f911761fefe1f4c476065b77159a992",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "688ffba7_352904e8",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-31T21:43:12Z",
+      "side": 1,
+      "message": "Yeah, I can do that. I didn\u0027t initially because it means we\u0027ll start running validation for each view creation, but the caching behavior would be nice.",
+      "parentUuid": "b1d477b1_a4ecb852",
       "range": {
         "startLine": 1132,
         "startChar": 16,
