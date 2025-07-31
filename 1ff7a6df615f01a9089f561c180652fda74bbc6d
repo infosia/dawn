@@ -128,6 +128,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7cb8d82d_bfa7ec8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-31T14:21:10Z",
+      "side": 1,
+      "message": "I agree but as written this is a self contained piece of code which we can later build on.",
+      "parentUuid": "7ace7773_0a7703d4",
+      "revId": "1ff7a6df615f01a9089f561c180652fda74bbc6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "85b13b6f_923892d8",
         "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
         "patchSetId": 7
