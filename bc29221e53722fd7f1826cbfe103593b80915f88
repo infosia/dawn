@@ -265,6 +265,24 @@
       "parentUuid": "e77b51ac_b16c3802",
       "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3dcf606d_fb57f7f2",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-07-31T14:25:34Z",
+      "side": 1,
+      "message": "That looks good, but is there a test that exercises multiple views with different swizzles on the same texture? There is only a single set of TexParameter parameters for a texture, so this would be prohibited in GLES (similar to the restriction on depth/stencil aspect and mip level subsets). This doesn\u0027t seem to be precluded by the proposal, but I could have missed something.",
+      "parentUuid": "970c44f8_2263c8d3",
+      "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
