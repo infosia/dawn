@@ -110,6 +110,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c84eb8d0_8d5fdfdd",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-31T22:01:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f59ac5c5_304d6a60",
+      "range": {
+        "startLine": 77,
+        "startChar": 9,
+        "endLine": 77,
+        "endChar": 34
+      },
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19d941a5_12613cf5",
@@ -298,6 +322,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "760bcd8d_bccb7084",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-31T22:01:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "883ca33e_458d4156",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 36
+      },
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da1216f1_465f38ef",
@@ -311,6 +359,30 @@
       "writtenOn": "2025-07-28T14:02:08Z",
       "side": 1,
       "message": "The history here could be quite long. So we can simply bail after checking N entries (10) as this is an optimization.",
+      "range": {
+        "startLine": 83,
+        "startChar": 50,
+        "endLine": 83,
+        "endChar": 74
+      },
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f546789c_18e0daa4",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-31T22:01:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "da1216f1_465f38ef",
       "range": {
         "startLine": 83,
         "startChar": 50,
@@ -440,6 +512,30 @@
       "writtenOn": "2025-07-28T13:51:32Z",
       "side": 1,
       "message": "Proves that this entire change passes CTS.",
+      "range": {
+        "startLine": 893,
+        "startChar": 3,
+        "endLine": 894,
+        "endChar": 77
+      },
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2677678_77ad00e8",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-31T22:01:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "4c20b379_5f4868fc",
       "range": {
         "startLine": 893,
         "startChar": 3,
