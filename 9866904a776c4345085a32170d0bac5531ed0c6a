@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "6f85ecac_84e5ca9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-07-31T00:45:36Z",
+      "side": 1,
+      "message": "Thanks for handling this. Getting proper test coverage for all of Dawn\u0027s Go code has been a long-term goal for me for a while, but other things have taken priority for months.\n\nI suppose gemini-cli should make this much easier to complete now.",
+      "revId": "9866904a776c4345085a32170d0bac5531ed0c6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "a6494ed2_19c170d9",
         "filename": "tools/src/cmd/fuzz/main.go",
         "patchSetId": 2
