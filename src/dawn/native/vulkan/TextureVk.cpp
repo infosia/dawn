@@ -1130,7 +1130,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* recordingContext,
 
                 ColorAttachmentIndex ca0(uint8_t(0));
                 DAWN_TRY_ASSIGN(beginCmd.colorAttachments[ca0].view,
-                                TextureView::Create(this, Unpack(&viewDesc)));
+                                device->CreateTextureView(this, &viewDesc));
 
                 RenderPassColorAttachment colorAttachment{};
                 colorAttachment.view = beginCmd.colorAttachments[ca0].view.Get();
@@ -1947,8 +1947,9 @@ MaybeError SharedTexture::OnBeforeSubmit(CommandRecordingContext* context) {
 // static
 ResultOrError<Ref<TextureView>> TextureView::Create(
     TextureBase* texture,
+    uint64_t textureViewId,
     const UnpackedPtr<TextureViewDescriptor>& descriptor) {
-    Ref<TextureView> view = AcquireRef(new TextureView(texture, descriptor));
+    Ref<TextureView> view = AcquireRef(new TextureView(texture, textureViewId, descriptor));
     DAWN_TRY(view->Initialize(descriptor));
     return view;
 }
@@ -2009,8 +2010,10 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
     return {};
 }
 
-TextureView::TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDescriptor>& descriptor)
-    : TextureViewBase(texture, descriptor) {}
+TextureView::TextureView(TextureBase* texture,
+                         uint64_t textureViewId,
+                         const UnpackedPtr<TextureViewDescriptor>& descriptor)
+    : TextureViewBase(texture, descriptor), mTextureViewId(textureViewId) {}
 TextureView::~TextureView() {}
 
 void TextureView::DestroyImpl() {
