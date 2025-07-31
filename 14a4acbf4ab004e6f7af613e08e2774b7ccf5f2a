@@ -126,6 +126,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bcdc7aa5_bcd72d13",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-07-31T22:57:04Z",
+      "side": 1,
+      "message": "Proposing\n`source_set(\"devtool_record\") { ... }`\n\nand in `dawn/native/BUILD.gn`:\n```\nsource_set(\"sources\"){\n  if (dawn_enable_devtool_record) {\n    deps +\u003d [ \"${dawn_root}/src/dawn/devtool:devtool_record\" ]\n  }\n}\n```",
+      "parentUuid": "3e24cf29_a6eb54e8",
+      "revId": "14a4acbf4ab004e6f7af613e08e2774b7ccf5f2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "15aec64b_b37aefab",
         "filename": "src/dawn/native/devtool/protos/cmd.proto",
         "patchSetId": 2
