@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "770c15b4_17afa691",
+        "filename": "tools/src/oswrapper/oswrapper.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-31T20:18:01Z",
+      "side": 1,
+      "message": "Technically something like File.Readdirnames would be sufficient for my use case elsewhere, but I only realized that after I was significantly into this implementation and having a \u0027working\u0027 Readdir with notes I think is probably better overall for the codebase so someone else doesn\u0027t step on this rake.",
+      "revId": "153b773970dd8512fa90f90dd902d73eb576d5e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
