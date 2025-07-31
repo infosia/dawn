@@ -400,6 +400,11 @@ struct State {
                 [&](core::ir::UserCall* uc) { user_calls_to_convert_.Add(uc); },
                 [&](core::ir::CoreBuiltinCall* bc) {
                     // This was converted when we switched from a SPIR-V intrinsic to core
+                    // The only non-atomic builtin that can touch something that contains an atomic
+                    // is arrayLength.
+                    if (bc->Func() == core::BuiltinFn::kArrayLength) {
+                        return;
+                    }
                     TINT_ASSERT(core::IsAtomic(bc->Func()));
                     TINT_ASSERT(bc->Args()[0]->Type()->UnwrapPtr()->Is<core::type::Atomic>());
                 },
