@@ -137,6 +137,11 @@ class Device final : public DeviceBase {
 
     QuerySetBase* GetEmptyPassQuerySet();
 
+    // Called internally by Texture::ClearTexture
+    ResultOrError<Ref<TextureViewBase>> CreateTextureViewImpl(
+        TextureBase* texture,
+        const UnpackedPtr<TextureViewDescriptor>& descriptor) override;
+
   private:
     Device(AdapterBase* adapter,
            const UnpackedPtr<DeviceDescriptor>& descriptor,
@@ -164,9 +169,6 @@ class Device final : public DeviceBase {
         const SurfaceConfiguration* config) override;
     ResultOrError<Ref<TextureBase>> CreateTextureImpl(
         const UnpackedPtr<TextureDescriptor>& descriptor) override;
-    ResultOrError<Ref<TextureViewBase>> CreateTextureViewImpl(
-        TextureBase* texture,
-        const UnpackedPtr<TextureViewDescriptor>& descriptor) override;
     Ref<ComputePipelineBase> CreateUninitializedComputePipelineImpl(
         const UnpackedPtr<ComputePipelineDescriptor>& descriptor) override;
     Ref<RenderPipelineBase> CreateUninitializedRenderPipelineImpl(
@@ -217,6 +219,7 @@ class Device final : public DeviceBase {
     Ref<PipelineCache> mMonolithicPipelineCache;
 
     Ref<QuerySetBase> mEmptyPassQuerySet;
+    std::atomic<uint64_t> mNextTextureViewId = 1;
 
     MaybeError ImportExternalImage(const ExternalImageDescriptorVk* descriptor,
                                    ExternalMemoryHandle memoryHandle,
