@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "47de7fa3_8cf06779",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-31T13:14:14Z",
+      "side": 1,
+      "message": "Is the plan to only do subgroup broadcast? Currently the toggle and flag names are all subgroup_broadcast, but if we\u0027re going to do all subgroup operations we should rename the toggle and options entry to be more general.",
+      "parentUuid": "c2553a73_8802cb60",
+      "revId": "1ff7a6df615f01a9089f561c180652fda74bbc6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "85b13b6f_923892d8",
         "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
         "patchSetId": 7
