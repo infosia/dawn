@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "753da63f_898a04e3",
+        "filename": "src/emdawnwebgpu/tests/SpotTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-31T22:33:04Z",
+      "side": 1,
+      "message": "nit. I suspect that we might need like a [[maybe_unused]] or something here? Not sure if the compiler will complain about this.",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 34
+      },
+      "revId": "8ac2403293c598df73227813b88ea695cf355f4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
