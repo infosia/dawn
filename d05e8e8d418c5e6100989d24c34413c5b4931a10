@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39cbfd5d_e5440cd4",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-31T08:35:39Z",
+      "side": 1,
+      "message": "nit: Since we are going to do this in a bunch of places, we could have a helper to create the callback from a device directly.",
+      "range": {
+        "startLine": 342,
+        "startChar": 39,
+        "endLine": 345,
+        "endChar": 40
+      },
+      "revId": "d05e8e8d418c5e6100989d24c34413c5b4931a10",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
