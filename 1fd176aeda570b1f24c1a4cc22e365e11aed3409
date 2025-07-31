@@ -200,6 +200,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cdbc4a57_5bd27bbc",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-31T04:43:37Z",
+      "side": 1,
+      "message": "Both our Gerrit CMake bots and our GitHub CMake bots build with the same CMake files, so there\u0027s not really that much room for difference. The major differences are in CMake build settings (listed below), and in where the compilation toolchain comes from. The toolchain seems most likely to be the culprit here, as we had a number of issues with old MacOS toolchains recently - hence the addition of the \"HermeticXcode\" [here](https://dawn-review.googlesource.com/c/dawn/+/243695), which you can see below.\n\nThe Clang version numbers weakly support this - Clang 15 is newer than the version that was broken for us (13), but still quite old.\n- GitHub: `AppleClang 15.0.0.15000309`\n- Gerrit: `Clang 21.0.0`\n\nIt may be possible to make the GitHub builders use the hermetic Xcode but ideally we wouldn\u0027t make every external developer also use it.\n\n@wcandillon@gmail.com it sounds like you have this problem locally, if your Xcode is old, would you be able to try with a newer version and see if the problem is fixed?\n\n---\n\nFrom [a recent Gerrit run](https://logs.chromium.org/logs/dawn/buildbucket/cr-buildbucket/8707861674000835777/+/u/CMake_build_default_targets/CMake_generate_step_for_default_targets/l_execution_details):\n```\nExecuting command [\n  \u0027/Volumes/Work/s/w/ir/cache/uncached/dawn/tools/cmake/bin/cmake\u0027,\n  \u0027-S\u0027,\n  \u0027/Volumes/Work/s/w/ir/cache/uncached/dawn\u0027,\n  \u0027-B\u0027,\n  \u0027/Volumes/Work/s/w/ir/cache/uncached/dawn/cmake-build\u0027,\n  \u0027-GNinja\u0027,\n  \u0027-DCMAKE_BUILD_TYPE\u003dRELEASE\u0027,\n  \u0027-DTINT_BUILD_BENCHMARKS\u003d0\u0027,\n  \u0027-DTINT_RANDOMIZE_HASHES\u003d1\u0027,\n  \u0027-DDAWN_WERROR\u003d1\u0027,\n  \u0027-DDAWN_USE_BUILT_DXC\u003d0\u0027,\n  \u0027-DTINT_BUILD_SPV_READER\u003d1\u0027,\n  \u0027-DTINT_BUILD_WGSL_READER\u003d1\u0027,\n  \u0027-DTINT_BUILD_GLSL_WRITER\u003d1\u0027,\n  \u0027-DTINT_BUILD_HLSL_WRITER\u003d1\u0027,\n  \u0027-DTINT_BUILD_MSL_WRITER\u003d1\u0027,\n  \u0027-DTINT_BUILD_SPV_WRITER\u003d1\u0027,\n  \u0027-DTINT_BUILD_WGSL_WRITER\u003d1\u0027,\n  \u0027-DDAWN_ENABLE_ASAN\u003d0\u0027,\n  \u0027-DDAWN_ENABLE_UBSAN\u003d0\u0027,\n  \u0027-DDAWN_BUILD_NODE_BINDINGS\u003d0\u0027,\n  \u0027-DTINT_BUILD_AS_OTHER_OS\u003d0\u0027,\n  \u0027-DTINT_BUILD_FUZZERS\u003d0\u0027,\n  \u0027-DCMAKE_TOOLCHAIN_FILE\u003d../src/cmake/HermeticXcode/HermeticXcode.cmake\u0027,\n]\n```\n\nFrom the [GitHub run linked above](https://github.com/google/dawn/actions/runs/16529169039/job/46750011026):\n```\ncmake -S . -B out/Release\n-C .github/workflows/dawn-ci.cmake\n-DCMAKE_CXX_COMPILER\u003dclang++\n-DCMAKE_C_COMPILER\u003dclang\n-DCMAKE_BUILD_TYPE\u003dRelease\n```",
+      "parentUuid": "dfa70a5e_c8ea907f",
+      "revId": "1fd176aeda570b1f24c1a4cc22e365e11aed3409",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d83bb941_f36b7934",
         "filename": ".github/workflows/ci.yml",
         "patchSetId": 8
