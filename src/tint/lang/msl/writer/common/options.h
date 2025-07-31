@@ -184,6 +184,10 @@ struct Options {
     /// Set to `true` to scalarize max min and clamp builtins.
     bool scalarize_max_min_clamp = false;
 
+    /// Set to `true` to generate a polyfill clamp of `id` param of subgroupShuffle to within the
+    /// spec max subgroup size.
+    bool subgroup_shuffle_clamped = false;
+
     /// Set to `true` to disable the module constant transform for f16
     bool disable_module_constant_f16 = false;
 
@@ -228,6 +232,7 @@ struct Options {
                  emit_vertex_point_size,
                  disable_polyfill_integer_div_mod,
                  scalarize_max_min_clamp,
+                 subgroup_shuffle_clamped,
                  disable_module_constant_f16,
                  use_argument_buffers,
                  buffer_size_ubo_index,
