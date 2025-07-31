@@ -33,6 +33,24 @@
       "message": "Note that the AST SPIR-V reader will be replaced VERY soon with the SPIR-V IR reader, which should already be better at most things so you could try that and see if it works for you (and report what doesn\u0027t yet)",
       "revId": "ed558dcdb0fe859d51470b85e8bb93d71c19e54d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c26b1951_a51b01b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4243302
+      },
+      "writtenOn": "2025-07-31T08:43:41Z",
+      "side": 1,
+      "message": "Excellent, I\u0027ll check it out and will report any findings! (I see now there\u0027s a --use-ir-reader flag).\nI\u0027m assuming that the current spv reader code will then be deprecated/deleted? If that\u0027s the case I\u0027ll abandon this CL (no point bothering ppl; I can patch my build until then).\nThanks for the suggestion and the quick reply!",
+      "parentUuid": "32bfdab9_33b9d52e",
+      "revId": "ed558dcdb0fe859d51470b85e8bb93d71c19e54d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
