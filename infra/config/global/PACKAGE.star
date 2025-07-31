@@ -51,4 +51,5 @@ pkg.depend(
 
 pkg.resources([
     "milestones.json",
+    "settings.json",
 ])
