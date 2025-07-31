@@ -164,12 +164,12 @@ constexpr uint32_t kMaxVectorLen = 4;
 static constexpr std::array<const char*, 4> kComponentNames = {"x", "y", "z", "w"};
 
 /// @param inst a SPIR-V instruction
-/// @returns Returns the opcode for an instruciton
+/// @returns Returns the opcode for an instruction
 inline spv::Op opcode(const spvtools::opt::Instruction& inst) {
     return inst.opcode();
 }
 /// @param inst a SPIR-V instruction pointer
-/// @returns Returns the opcode for an instruciton
+/// @returns Returns the opcode for an instruction
 inline spv::Op opcode(const spvtools::opt::Instruction* inst) {
     return inst->opcode();
 }
@@ -5785,12 +5785,6 @@ bool FunctionEmitter::EmitImageAccess(const spvtools::opt::Instruction& inst) {
             // This occurs if one is signed integer and the other is unsigned integer,
             // or vice versa. Perform a bitcast.
             value = builder_.Bitcast(Source{}, result_type->Build(builder_), call_expr);
-        }
-        if (!expected_component_type->Is<F32>() && IsSampledImageAccess(op)) {
-            // WGSL permits sampled image access only on float textures.
-            // Reject this case in the SPIR-V reader, at least until SPIR-V validation
-            // catches up with this rule and can reject it earlier in the workflow.
-            return Fail() << "sampled image must have float component type";
         }
 
         EmitConstDefOrWriteToHoistedVar(inst, {result_type, value});
