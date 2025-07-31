@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebc469b8_a22525b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4243302
+      },
+      "writtenOn": "2025-07-31T08:29:21Z",
+      "side": 1,
+      "message": "This change is to enable _gather_ ops with u16 when converting hlsl -\u003e spv -\u003e wgsl.\n\nI removed the \"_OpSampledImage type must be a float_\" check to make it more permissive because an `OpImageGather` operation with a `OpSampledImage` with `uint` type is still valid:\n```spv\n%68 \u003d OpSampledImage %type_sampled_image %53 %54\n%69 \u003d OpImageGather %v4uint %68 %67 %int_0 None\n```\n\nI think it would be even better to let the check detect whether the `OpSampledImage` var is used by `OpImageGather` or `OpImageSample`, but I\u0027m not versed enough in the ast to determine if that\u0027s feasible.\n\nThanks for your review and any feedback 😊.",
+      "revId": "ed558dcdb0fe859d51470b85e8bb93d71c19e54d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
