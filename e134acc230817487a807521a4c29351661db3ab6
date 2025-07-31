@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3b2990e_0184485d",
+        "filename": "src/emdawnwebgpu/tests/SpotTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-31T20:21:46Z",
+      "side": 1,
+      "message": "Intentional but it\u0027s not needed.",
+      "parentUuid": "1a0e5ef8_2169db37",
+      "range": {
+        "startLine": 113,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 81
+      },
+      "revId": "e134acc230817487a807521a4c29351661db3ab6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c297cae8_49da0ca2",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-07-31T18:21:58Z",
       "side": 1,
       "message": "It might be easier to follow if we early out if we don\u0027t have messages instead? i.e.\n\n```\nif (messageCount \u003d\u003d 0) {\n    _emwgpuOnCompilationInfoCompleted(futureId, \n        {{{ gpu.CompilationInfoRequestStatus.Success }}},\n        {{{ gpu.passAsPointer(\u0027compilationInfoPtr\u0027) }}}\n    );\n    return;\n}\n```",
+      "range": {
+        "startLine": 2385,
+        "startChar": 6,
+        "endLine": 2386,
+        "endChar": 25
+      },
+      "revId": "e134acc230817487a807521a4c29351661db3ab6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99345084_3e17b083",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 2386,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-31T20:21:46Z",
+      "side": 1,
+      "message": "That `_emwgpuOnCompilationInfoCompleted` call is a bit complicated so I don\u0027t feel like it\u0027s really a net improvement to duplicate it? Plus it increases code size a tiny bit.\n\nI\u0027d rather factor it out into a separate function but we don\u0027t have a great way of doing that right now.",
+      "parentUuid": "c297cae8_49da0ca2",
       "range": {
         "startLine": 2385,
         "startChar": 6,
