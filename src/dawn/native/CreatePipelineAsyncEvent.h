@@ -35,10 +35,10 @@
 #include <type_traits>
 
 #include "dawn/common/Ref.h"
+#include "dawn/common/WeakRefSupport.h"
 #include "dawn/native/CallbackTaskManager.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/EventManager.h"
-#include "dawn/native/Pipeline.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native {
@@ -51,35 +51,38 @@ class ShaderModuleBase;
 
 // CreatePipelineAsyncEvent represents the async event managed by event manager,
 // and the async task run on a separate task to initialize the pipeline.
+class CreatePipelineAsyncEvent : public EventManager::TrackedEvent,
+                                 public WeakRefSupport<CreatePipelineAsyncEvent> {
+  public:
+    using TrackedEvent::TrackedEvent;
+
+    virtual void OnInitialize(MaybeError result) = 0;
+};
+
 template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
-class CreatePipelineAsyncEvent final : public EventManager::TrackedEvent {
+class CreatePipelineAsyncEventImpl final : public CreatePipelineAsyncEvent {
   public:
     using CallbackType = decltype(std::declval<CreatePipelineAsyncCallbackInfo>().callback);
 
     // Create an event backed by the given wait list event (for async pipeline creation goes through
     // the backend).
-    CreatePipelineAsyncEvent(DeviceBase* device,
-                             const CreatePipelineAsyncCallbackInfo& callbackInfo,
-                             Ref<PipelineType> pipeline,
-                             Ref<WaitListEvent> event);
+    CreatePipelineAsyncEventImpl(const CreatePipelineAsyncCallbackInfo& callbackInfo,
+                                 Ref<PipelineType> pipeline,
+                                 Ref<WaitListEvent> event);
     // Create an event that's ready at creation (for cached results)
-    CreatePipelineAsyncEvent(DeviceBase* device,
-                             const CreatePipelineAsyncCallbackInfo& callbackInfo,
-                             Ref<PipelineType> pipeline);
+    CreatePipelineAsyncEventImpl(const CreatePipelineAsyncCallbackInfo& callbackInfo,
+                                 Ref<PipelineType> pipeline);
     // Create an event that's ready at creation (for errors)
-    CreatePipelineAsyncEvent(DeviceBase* device,
-                             const CreatePipelineAsyncCallbackInfo& callbackInfo,
-                             std::unique_ptr<ErrorData> error,
-                             StringView label);
-
-    ~CreatePipelineAsyncEvent() override;
+    CreatePipelineAsyncEventImpl(DeviceBase* device,
+                                 const CreatePipelineAsyncCallbackInfo& callbackInfo,
+                                 std::unique_ptr<ErrorData> error,
+                                 StringView label);
+    ~CreatePipelineAsyncEventImpl() override;
 
     // Entrance call to synchronously initializing the pipeline.
     void InitializeSync();
     // Entrance call to start an AsyncTask initializing the pipeline.
     void InitializeAsync();
-
-    void Complete(EventCompletionType completionType) override;
 
   private:
     static const char* kDawnHistogramMetricsSuccess;
@@ -87,25 +90,26 @@ class CreatePipelineAsyncEvent final : public EventManager::TrackedEvent {
 
     void AddOrGetCachedPipeline();
 
-    // Body of pipeline initialization, called synchronously, or wrapped in an AsyncTask run by
-    // AsyncTaskManager.
-    void InitializeImpl(bool isAsync);
+    void OnInitialize(MaybeError result) override;
+
+    void Complete(EventCompletionType completionType) override;
 
     CallbackType mCallback;
     raw_ptr<void> mUserdata1;
     raw_ptr<void> mUserdata2;
+
     // For some errors (e.g. device lost) we still need to resolve and return a pipeline with
     // Pipeline::MakeError. So we need to hold the pipeline and the error separately.
     Ref<PipelineType> mPipeline;
     std::unique_ptr<ErrorData> mError;
-    // Used to keep ShaderModuleBase::mTintProgram alive until pipeline initialization is done.
-    PipelineBase::ScopedUseShaderPrograms mScopedUseShaderPrograms;
+
+    double mStartTime = 0;
 };
 
 using CreateComputePipelineAsyncEvent =
-    CreatePipelineAsyncEvent<ComputePipelineBase, WGPUCreateComputePipelineAsyncCallbackInfo>;
+    CreatePipelineAsyncEventImpl<ComputePipelineBase, WGPUCreateComputePipelineAsyncCallbackInfo>;
 using CreateRenderPipelineAsyncEvent =
-    CreatePipelineAsyncEvent<RenderPipelineBase, WGPUCreateRenderPipelineAsyncCallbackInfo>;
+    CreatePipelineAsyncEventImpl<RenderPipelineBase, WGPUCreateRenderPipelineAsyncCallbackInfo>;
 
 }  // namespace dawn::native
 

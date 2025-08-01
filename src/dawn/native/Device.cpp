@@ -1330,14 +1330,13 @@ Future DeviceBase::APICreateComputePipelineAsync(
         GetCachedComputePipeline(uninitializedComputePipeline.Get());
     if (cachedComputePipeline.Get() != nullptr) {
         // Cached pipeline: create an async event that completes when created.
-        return GetFuture(AcquireRef(new CreateComputePipelineAsyncEvent(
-            this, callbackInfo, std::move(cachedComputePipeline))));
+        return GetFuture(AcquireRef(
+            new CreateComputePipelineAsyncEvent(callbackInfo, std::move(cachedComputePipeline))));
     }
 
     // New pipeline: create an event backed by system event that is really async.
     Ref<CreateComputePipelineAsyncEvent> event = AcquireRef(new CreateComputePipelineAsyncEvent(
-        this, callbackInfo, std::move(uninitializedComputePipeline),
-        AcquireRef(new WaitListEvent())));
+        callbackInfo, std::move(uninitializedComputePipeline), AcquireRef(new WaitListEvent())));
     Future future = GetFuture(event);
     InitializeComputePipelineAsyncImpl(std::move(event));
     return future;
@@ -1399,14 +1398,13 @@ Future DeviceBase::APICreateRenderPipelineAsync(
         GetCachedRenderPipeline(uninitializedRenderPipeline.Get());
     if (cachedRenderPipeline.Get() != nullptr) {
         // Cached pipeline: create an async event that completes when created.
-        return GetFuture(AcquireRef(new CreateRenderPipelineAsyncEvent(
-            this, callbackInfo, std::move(cachedRenderPipeline))));
+        return GetFuture(AcquireRef(
+            new CreateRenderPipelineAsyncEvent(callbackInfo, std::move(cachedRenderPipeline))));
     }
 
     // New pipeline: create an event backed by system event that is really async.
     Ref<CreateRenderPipelineAsyncEvent> event = AcquireRef(new CreateRenderPipelineAsyncEvent(
-        this, callbackInfo, std::move(uninitializedRenderPipeline),
-        AcquireRef(new WaitListEvent())));
+        callbackInfo, std::move(uninitializedRenderPipeline), AcquireRef(new WaitListEvent())));
     Future future = GetFuture(event);
     InitializeRenderPipelineAsyncImpl(std::move(event));
     return future;
