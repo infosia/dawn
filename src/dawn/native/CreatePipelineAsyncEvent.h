@@ -58,20 +58,17 @@ class CreatePipelineAsyncEvent final : public EventManager::TrackedEvent {
 
     // Create an event backed by the given wait list event (for async pipeline creation goes through
     // the backend).
-    CreatePipelineAsyncEvent(DeviceBase* device,
-                             const CreatePipelineAsyncCallbackInfo& callbackInfo,
+    CreatePipelineAsyncEvent(const CreatePipelineAsyncCallbackInfo& callbackInfo,
                              Ref<PipelineType> pipeline,
                              Ref<WaitListEvent> event);
     // Create an event that's ready at creation (for cached results)
-    CreatePipelineAsyncEvent(DeviceBase* device,
-                             const CreatePipelineAsyncCallbackInfo& callbackInfo,
+    CreatePipelineAsyncEvent(const CreatePipelineAsyncCallbackInfo& callbackInfo,
                              Ref<PipelineType> pipeline);
     // Create an event that's ready at creation (for errors)
     CreatePipelineAsyncEvent(DeviceBase* device,
                              const CreatePipelineAsyncCallbackInfo& callbackInfo,
                              std::unique_ptr<ErrorData> error,
                              StringView label);
-
     ~CreatePipelineAsyncEvent() override;
 
     // Entrance call to synchronously initializing the pipeline.
@@ -79,17 +76,15 @@ class CreatePipelineAsyncEvent final : public EventManager::TrackedEvent {
     // Entrance call to start an AsyncTask initializing the pipeline.
     void InitializeAsync();
 
-    void Complete(EventCompletionType completionType) override;
-
   private:
     static const char* kDawnHistogramMetricsSuccess;
     static const char* kDawnHistogramMetricsUS;
 
     void AddOrGetCachedPipeline();
 
-    // Body of pipeline initialization, called synchronously, or wrapped in an AsyncTask run by
-    // AsyncTaskManager.
-    void InitializeImpl(bool isAsync);
+    void DidInitialize(double startTime, MaybeError result);
+
+    void Complete(EventCompletionType completionType) override;
 
     CallbackType mCallback;
     raw_ptr<void> mUserdata1;
@@ -98,8 +93,6 @@ class CreatePipelineAsyncEvent final : public EventManager::TrackedEvent {
     // Pipeline::MakeError. So we need to hold the pipeline and the error separately.
     Ref<PipelineType> mPipeline;
     std::unique_ptr<ErrorData> mError;
-    // Used to keep ShaderModuleBase::mTintProgram alive until pipeline initialization is done.
-    PipelineBase::ScopedUseShaderPrograms mScopedUseShaderPrograms;
 };
 
 using CreateComputePipelineAsyncEvent =

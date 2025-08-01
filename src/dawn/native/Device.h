@@ -541,8 +541,6 @@ class DeviceBase : public ErrorSink,
     Ref<RenderPipelineBase> GetCachedRenderPipeline(
         RenderPipelineBase* uninitializedRenderPipeline);
     virtual Ref<PipelineCacheBase> GetOrCreatePipelineCacheImpl(const CacheKey& key);
-    virtual void InitializeComputePipelineAsyncImpl(Ref<CreateComputePipelineAsyncEvent> event);
-    virtual void InitializeRenderPipelineAsyncImpl(Ref<CreateRenderPipelineAsyncEvent> event);
 
     void ApplyFeatures(const UnpackedPtr<DeviceDescriptor>& deviceDescriptor,
                        wgpu::FeatureLevel level);
