@@ -64,6 +64,7 @@ endfunction ()
 
 set(langs C CXX)
 
+# NOTE: This should be kept in sync with src/dawn/common/BUILD.gn.
 dawn_add_flag("-Wconditional-uninitialized" ${langs})
 dawn_add_flag("-Wcstring-format-directive" ${langs})
 dawn_add_flag("-Wctad-maybe-unsupported" ${langs})
@@ -77,6 +78,7 @@ dawn_add_flag("-Wimplicit-fallthrough" ${langs})
 dawn_add_flag("-Winconsistent-missing-destructor-override" ${langs})
 dawn_add_flag("-Winvalid-offsetof" ${langs})
 dawn_add_flag("-Wmissing-field-initializers" ${langs})
+dawn_add_flag("-Wmissing-include-dirs" ${langs})
 dawn_add_flag("-Wnon-c-typedef-for-linkage" ${langs})
 dawn_add_flag("-Wpessimizing-move" ${langs})
 dawn_add_flag("-Wrange-loop-analysis" ${langs})
