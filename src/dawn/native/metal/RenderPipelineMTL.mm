@@ -27,6 +27,8 @@
 
 #include "dawn/native/metal/RenderPipelineMTL.h"
 
+#include "absl/strings/escaping.h"
+#include "dawn/common/Log.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/AsyncTask.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
@@ -37,6 +39,7 @@
 #include "dawn/native/metal/ShaderModuleMTL.h"
 #include "dawn/native/metal/TextureMTL.h"
 #include "dawn/native/metal/UtilsMetal.h"
+#include "dawn/native/stream/Stream.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 #include "dawn/platform/metrics/HistogramMacros.h"
 #include "dawn/platform/tracing/TraceEvent.h"
@@ -265,8 +268,11 @@ MTLColorWriteMask MetalColorWriteMask(wgpu::ColorWriteMask writeMask,
 
 void ComputeBlendDesc(MTLRenderPipelineColorAttachmentDescriptor* attachment,
                       const ColorTargetState* state,
-                      bool isDeclaredInFragmentShader) {
+                      bool isDeclaredInFragmentShader,
+                      CacheKey* cacheKey) {
     attachment.blendingEnabled = state->blend != nullptr;
+    StreamIn(cacheKey, attachment.blendingEnabled);
+
     if (attachment.blendingEnabled) {
         attachment.sourceRGBBlendFactor = MetalBlendFactor(state->blend->color.srcFactor, false);
         attachment.destinationRGBBlendFactor =
@@ -276,8 +282,14 @@ void ComputeBlendDesc(MTLRenderPipelineColorAttachmentDescriptor* attachment,
         attachment.destinationAlphaBlendFactor =
             MetalBlendFactor(state->blend->alpha.dstFactor, true);
         attachment.alphaBlendOperation = MetalBlendOperation(state->blend->alpha.operation);
+
+        StreamIn(cacheKey, attachment.sourceRGBBlendFactor, attachment.destinationRGBBlendFactor,
+                 attachment.rgbBlendOperation, attachment.sourceAlphaBlendFactor,
+                 attachment.destinationAlphaBlendFactor, attachment.alphaBlendOperation);
     }
+
     attachment.writeMask = MetalColorWriteMask(state->writeMask, isDeclaredInFragmentShader);
+    StreamIn(cacheKey, attachment.writeMask);
 }
 
 MTLStencilOperation MetalStencilOperation(wgpu::StencilOperation stencilOperation) {
@@ -331,12 +343,12 @@ MTLCullMode ToMTLCullMode(wgpu::CullMode mode) {
 }
 
 // Build a mapping of vertex buffer slots to packed indices
-PerVertexBuffer<uint32_t> ComputeMetalVertexBufferIndices(PipelineLayoutBase* layout,
-                                                          VertexBufferMask vertexBuffersUsed) {
+PerVertexBuffer<NSUInteger> ComputeMetalVertexBufferIndices(PipelineLayoutBase* layout,
+                                                            VertexBufferMask vertexBuffersUsed) {
     // Vertex buffers are placed after all the buffers for the bind groups.
     uint32_t vertexBufferIndex =
         ToBackend(layout)->GetBufferBindingCount(SingleShaderStage::Vertex);
-    PerVertexBuffer<uint32_t> vertexBufferIndices;
+    PerVertexBuffer<NSUInteger> vertexBufferIndices;
     for (VertexBufferSlot slot : vertexBuffersUsed) {
         vertexBufferIndices[slot] = vertexBufferIndex;
         vertexBufferIndex++;
@@ -380,12 +392,15 @@ MaybeError RenderPipeline::FinishInitialize() {
     // Only put this flag on if the feature is enabled because it may have a performance cost.
     descriptorMTL.supportIndirectCommandBuffers =
         GetDevice()->HasFeature(Feature::MultiDrawIndirect);
+    StreamIn(&mCacheKey, descriptorMTL.supportIndirectCommandBuffers);
 
     NSRef<MTLVertexDescriptor> vertexDesc;
     if (GetDevice()->IsToggleEnabled(Toggle::MetalEnableVertexPulling)) {
+        StreamIn(&mCacheKey, false);
         vertexDesc = AcquireNSRef([MTLVertexDescriptor new]);
     } else {
-        vertexDesc = MakeVertexDesc();
+        StreamIn(&mCacheKey, true);
+        vertexDesc = MakeVertexDesc(&mCacheKey);
     }
     descriptorMTL.vertexDescriptor = vertexDesc.Get();
 
@@ -394,6 +409,8 @@ MaybeError RenderPipeline::FinishInitialize() {
     if (mVertexFunctionData->needsStorageBufferLength) {
         mStagesRequiringStorageBufferLength |= wgpu::ShaderStage::Vertex;
     }
+
+    StreamIn(&mCacheKey, GetStage(SingleShaderStage::Vertex).module->GetHash());
 
     if (HasStage(SingleShaderStage::Fragment)) {
         DAWN_ASSERT(mFragmentFunctionData);
@@ -404,36 +421,51 @@ MaybeError RenderPipeline::FinishInitialize() {
         }
 
         const ProgrammableStage& fragmentStage = GetStage(SingleShaderStage::Fragment);
+        StreamIn(&mCacheKey, fragmentStage.module->GetHash());
+
         const auto& fragmentOutputMask = fragmentStage.metadata->fragmentOutputMask;
-        for (auto i : GetColorAttachmentsMask()) {
-            descriptorMTL.colorAttachments[static_cast<uint8_t>(i)].pixelFormat =
+
+        for (ColorAttachmentIndex i : GetColorAttachmentsMask()) {
+            NSUInteger metalIndex = static_cast<NSUInteger>(i);
+
+            descriptorMTL.colorAttachments[metalIndex].pixelFormat =
                 MetalPixelFormat(GetDevice(), GetColorAttachmentFormat(i));
-            const ColorTargetState* descriptor = GetColorTargetState(i);
-            ComputeBlendDesc(descriptorMTL.colorAttachments[static_cast<uint8_t>(i)], descriptor,
-                             fragmentOutputMask[i]);
+
+            StreamIn(&mCacheKey, metalIndex,
+                     descriptorMTL.colorAttachments[metalIndex].pixelFormat);
+
+            ComputeBlendDesc(descriptorMTL.colorAttachments[metalIndex], GetColorTargetState(i),
+                             fragmentOutputMask[i], &mCacheKey);
         }
 
-        if (GetAttachmentState()->HasPixelLocalStorage()) {
+        const bool hasPixelLocalStorage = GetAttachmentState()->HasPixelLocalStorage();
+        StreamIn(&mCacheKey, hasPixelLocalStorage);
+
+        if (hasPixelLocalStorage) {
             const std::vector<wgpu::TextureFormat>& storageAttachmentSlots =
                 GetAttachmentState()->GetStorageAttachmentSlots();
             std::vector<ColorAttachmentIndex> storageAttachmentPacking =
                 GetAttachmentState()->ComputeStorageAttachmentPackingInColorAttachments();
 
             for (size_t i = 0; i < storageAttachmentSlots.size(); i++) {
-                uint8_t index = static_cast<uint8_t>(storageAttachmentPacking[i]);
-
+                const NSUInteger metalIndex = static_cast<NSUInteger>(storageAttachmentPacking[i]);
                 if (storageAttachmentSlots[i] == wgpu::TextureFormat::Undefined) {
-                    descriptorMTL.colorAttachments[index].pixelFormat =
+                    descriptorMTL.colorAttachments[metalIndex].pixelFormat =
                         MetalPixelFormat(GetDevice(), kImplicitPLSSlotFormat);
                 } else {
-                    descriptorMTL.colorAttachments[index].pixelFormat =
+                    descriptorMTL.colorAttachments[metalIndex].pixelFormat =
                         MetalPixelFormat(GetDevice(), storageAttachmentSlots[i]);
                 }
+                StreamIn(&mCacheKey, metalIndex,
+                         descriptorMTL.colorAttachments[metalIndex].pixelFormat);
             }
         }
     }
 
-    if (HasDepthStencilAttachment()) {
+    const bool hasDepthStencilAttachment = HasDepthStencilAttachment();
+    StreamIn(&mCacheKey, hasDepthStencilAttachment);
+
+    if (hasDepthStencilAttachment) {
         wgpu::TextureFormat depthStencilFormat = GetDepthStencilFormat();
         MTLPixelFormat metalFormat = MetalPixelFormat(GetDevice(), depthStencilFormat);
 
@@ -454,29 +486,169 @@ MaybeError RenderPipeline::FinishInitialize() {
                 descriptorMTL.stencilAttachmentPixelFormat = metalFormat;
             }
         }
+
+        StreamIn(&mCacheKey, descriptorMTL.depthAttachmentPixelFormat);
     }
 
     descriptorMTL.inputPrimitiveTopology = MTLInputPrimitiveTopology(GetPrimitiveTopology());
     descriptorMTL.rasterSampleCount = GetSampleCount();
     descriptorMTL.alphaToCoverageEnabled = IsAlphaToCoverageEnabled();
 
-    platform::metrics::DawnHistogramTimer timer(GetDevice()->GetPlatform());
-    NSError* error = nullptr;
-    mMtlRenderPipelineState =
-        AcquireNSPRef([mtlDevice newRenderPipelineStateWithDescriptor:descriptorMTL error:&error]);
-    if (error != nullptr) {
-        std::string errorMessage = absl::StrFormat(
-            "RenderPipelineMTL: error creating pipeline stoate: %s from vertex MSL:\n\n%s",
-            [error.localizedDescription UTF8String], [*mVertexFunctionData->msl UTF8String]);
-        if (GetStageMask() & wgpu::ShaderStage::Fragment) {
-            absl::StrAppendFormat(&errorMessage, "\n\nand fragment MSL:\n\n%s",
-                                  [*mFragmentFunctionData->msl UTF8String]);
-        }
-        return DAWN_INTERNAL_ERROR(errorMessage);
-    }
-    DAWN_ASSERT(mMtlRenderPipelineState != nil);
-    timer.RecordMicroseconds("Metal.newRenderPipelineStateWithDescriptor.CacheMiss");
+    StreamIn(&mCacheKey, descriptorMTL.inputPrimitiveTopology, descriptorMTL.rasterSampleCount,
+             descriptorMTL.alphaToCoverageEnabled);
 
+    platform::metrics::DawnHistogramTimer timer(GetDevice()->GetPlatform());
+
+    NSRef<NSString> homeDir = NSHomeDirectory();
+    NSRef<NSString> bundleId = [[NSBundle mainBundle] bundleIdentifier];
+
+    NSRef<NSString> shaderCachePath = [NSString
+        pathWithComponents:@[ *homeDir, @"/Library/Caches", *bundleId, @"/DawnMetalShaderCache" ]];
+
+    NSError* error = nullptr;
+
+    if (![[NSFileManager defaultManager] createDirectoryAtPath:*shaderCachePath
+                                   withIntermediateDirectories:YES
+                                                    attributes:nil
+                                                         error:&error]) {
+        ErrorLog() << "RenderPipelineMTL: failed to create shader cache directory at path "
+                   << [*shaderCachePath UTF8String]
+                   << " with error: " << [error.localizedDescription UTF8String];
+    }
+
+    Sha3_224::Output hash = Sha3_224::Hash(mCacheKey.data(), mCacheKey.size());
+    std::string_view hashBytesView(reinterpret_cast<const char*>(hash.data()), hash.size());
+
+    NSRef<NSString> shaderBinaryFilename =
+        [NSString stringWithUTF8String:absl::BytesToHexString(hashBytesView).c_str()];
+
+    NSRef<NSString> shaderBinaryPath =
+        [[NSString pathWithComponents:@[ *shaderCachePath, *shaderBinaryFilename ]]
+            stringByAppendingPathExtension:@"binary.metallib"];
+
+    NSRef<NSURL> shaderBinaryURL = [NSURL fileURLWithPath:*shaderBinaryPath];
+
+    auto loadFromBinaryArchive = [&] {
+        TRACE_EVENT0(GetDevice()->GetPlatform(), General, "loadFromBinaryArchive");
+        if ([[NSFileManager defaultManager] fileExistsAtPath:*shaderBinaryPath]) {
+            NSRef<MTLBinaryArchiveDescriptor> binaryArchiveDesc =
+                AcquireNSRef([[MTLBinaryArchiveDescriptor alloc] init]);
+            (*binaryArchiveDesc).url = *shaderBinaryURL;
+
+            NSPRef<id<MTLBinaryArchive>> binaryArchive;
+            {
+                TRACE_EVENT0(GetDevice()->GetPlatform(), General,
+                             "MTLDevice newBinaryArchiveWithDescriptor(URL)");
+                binaryArchive =
+                    AcquireNSPRef([mtlDevice newBinaryArchiveWithDescriptor:*binaryArchiveDesc
+                                                                      error:&error]);
+            }
+            if (!binaryArchive) {
+                ErrorLog() << "RenderPipelineMTL: failed to load binary archive at path "
+                           << [*shaderBinaryPath UTF8String]
+                           << " with error: " << [error.localizedDescription UTF8String];
+                return;
+            }
+
+            descriptorMTL.binaryArchives = @[ *binaryArchive ];
+
+            {
+                TRACE_EVENT0(GetDevice()->GetPlatform(), General,
+                             "MTLDevice newRenderPipelineStateWithDescriptor(binaryArchive)");
+                mMtlRenderPipelineState = AcquireNSPRef([mtlDevice
+                    newRenderPipelineStateWithDescriptor:descriptorMTL
+                                                 options:MTLPipelineOptionFailOnBinaryArchiveMiss
+                                              reflection:nullptr
+                                                   error:&error]);
+            }
+            if (!mMtlRenderPipelineState) {
+                ErrorLog() << "RenderPipelineMTL: failed to create render pipeline state from "
+                              "binary archive at path "
+                           << [*shaderBinaryPath UTF8String]
+                           << " with error: " << [error.localizedDescription UTF8String];
+                descriptorMTL.binaryArchives = @[];
+                return;
+            }
+
+            timer.RecordMicroseconds("Metal.newRenderPipelineStateWithDescriptor.CacheHit");
+        } else {
+            ErrorLog() << "RenderPipelineMTL: could not find cached binary archive at path "
+                       << [*shaderBinaryPath UTF8String];
+        }
+    };
+    loadFromBinaryArchive();
+
+    if (!mMtlRenderPipelineState) {
+        auto serializeToBinaryArchive = [&] {
+            TRACE_EVENT0(GetDevice()->GetPlatform(), General, "serializeToBinaryArchive");
+            if ([[NSFileManager defaultManager] fileExistsAtPath:*shaderBinaryPath] &&
+                ![[NSFileManager defaultManager] removeItemAtPath:*shaderBinaryPath error:&error]) {
+                ErrorLog() << "RenderPipelineMTL: failed to delete stale binary archive at path "
+                           << [*shaderBinaryPath UTF8String]
+                           << " with error: " << [error.localizedDescription UTF8String];
+                return;
+            }
+
+            NSRef<MTLBinaryArchiveDescriptor> binaryArchiveDesc =
+                AcquireNSRef([[MTLBinaryArchiveDescriptor alloc] init]);
+
+            NSPRef<id<MTLBinaryArchive>> binaryArchive =
+                AcquireNSPRef([mtlDevice newBinaryArchiveWithDescriptor:*binaryArchiveDesc
+                                                                  error:&error]);
+            if (!binaryArchive) {
+                ErrorLog() << "RenderPipelineMTL: failed to create new binary archive with error: "
+                           << [error.localizedDescription UTF8String];
+                return;
+            }
+
+            {
+                TRACE_EVENT0(GetDevice()->GetPlatform(), General,
+                             "MTLBinaryArchive addRenderPipelineFunctionsWithDescriptor");
+                if (![*binaryArchive addRenderPipelineFunctionsWithDescriptor:descriptorMTL
+                                                                        error:&error]) {
+                    ErrorLog() << "RenderPipelineMTL: failed to add render pipeline state to new "
+                                  "binary archive with error: "
+                               << [error.localizedDescription UTF8String];
+                    return;
+                }
+            }
+
+            auto serializeToURLTask = [device = GetDevice(), archive = std::move(binaryArchive),
+                                       binaryURL = shaderBinaryURL, label = GetLabel()]() mutable {
+                TRACE_EVENT1(device->GetPlatform(), General, "MTLBinaryArchive serializeToURL",
+                             "label", utils::GetLabelForTrace(label));
+                NSError* error = nullptr;
+                if (![*archive serializeToURL:*binaryURL error:&error]) {
+                    ErrorLog() << "RenderPipelineMTL: failed to save binary archive to path "
+                               << [(*binaryURL).path UTF8String]
+                               << " with error: " << [error.localizedDescription UTF8String];
+                }
+            };
+
+            GetDevice()->GetAsyncTaskManager()->PostBackgroundTask(std::move(serializeToURLTask));
+        };
+        serializeToBinaryArchive();
+
+        {
+            TRACE_EVENT0(GetDevice()->GetPlatform(), General,
+                         "MTLDevice newRenderPipelineStateWithDescriptor");
+            mMtlRenderPipelineState =
+                AcquireNSPRef([mtlDevice newRenderPipelineStateWithDescriptor:descriptorMTL
+                                                                        error:&error]);
+        }
+        if (!mMtlRenderPipelineState) {
+            std::string errorMessage = absl::StrFormat(
+                "RenderPipelineMTL: error creating pipeline state: %s from vertex MSL:\n\n%s",
+                [error.localizedDescription UTF8String], [*mVertexFunctionData->msl UTF8String]);
+            if (GetStageMask() & wgpu::ShaderStage::Fragment) {
+                absl::StrAppendFormat(&errorMessage, "\n\nand fragment MSL:\n\n%s",
+                                      [*mFragmentFunctionData->msl UTF8String]);
+            }
+            return DAWN_INTERNAL_ERROR(errorMessage);
+        }
+
+        timer.RecordMicroseconds("Metal.newRenderPipelineStateWithDescriptor.CacheMiss");
+    }
     // Create depth stencil state and cache it, fetch the cached depth stencil state when we
     // call setDepthStencilState() for a given render pipeline in CommandEncoder, in order
     // to improve performance.
@@ -602,7 +774,7 @@ id<MTLDepthStencilState> RenderPipeline::GetMTLDepthStencilState() {
     return mMtlDepthStencilState.Get();
 }
 
-uint32_t RenderPipeline::GetMtlVertexBufferIndex(VertexBufferSlot slot) const {
+NSUInteger RenderPipeline::GetMtlVertexBufferIndex(VertexBufferSlot slot) const {
     DAWN_ASSERT(slot < kMaxVertexBuffersTyped);
     return mMtlVertexBufferIndices[slot];
 }
@@ -611,13 +783,14 @@ wgpu::ShaderStage RenderPipeline::GetStagesRequiringStorageBufferLength() const 
     return mStagesRequiringStorageBufferLength;
 }
 
-NSRef<MTLVertexDescriptor> RenderPipeline::MakeVertexDesc() const {
+NSRef<MTLVertexDescriptor> RenderPipeline::MakeVertexDesc(CacheKey* cacheKey) const {
     MTLVertexDescriptor* mtlVertexDescriptor = [MTLVertexDescriptor new];
 
     for (VertexBufferSlot slot : GetVertexBuffersUsed()) {
         const VertexBufferInfo& info = GetVertexBuffer(slot);
 
-        MTLVertexBufferLayoutDescriptor* layoutDesc = [MTLVertexBufferLayoutDescriptor new];
+        NSRef<MTLVertexBufferLayoutDescriptor> layoutDesc =
+            AcquireNSRef([MTLVertexBufferLayoutDescriptor new]);
         if (info.arrayStride == 0) {
             // For MTLVertexStepFunctionConstant, the stepRate must be 0,
             // but the arrayStride must NOT be 0, so we made up it with
@@ -633,30 +806,41 @@ NSRef<MTLVertexDescriptor> RenderPipeline::MakeVertexDesc() const {
                     std::max(maxArrayStride,
                              GetVertexFormatInfo(attrib.format).byteSize + size_t(attrib.offset));
             }
-            layoutDesc.stepFunction = MTLVertexStepFunctionConstant;
-            layoutDesc.stepRate = 0;
+            (*layoutDesc).stepFunction = MTLVertexStepFunctionConstant;
+            (*layoutDesc).stepRate = 0;
             // Metal requires the stride must be a multiple of 4 bytes, align it with next
             // multiple of 4 if it's not.
-            layoutDesc.stride = Align(maxArrayStride, 4);
+            (*layoutDesc).stride = Align(maxArrayStride, 4);
         } else {
-            layoutDesc.stepFunction = VertexStepModeFunction(info.stepMode);
-            layoutDesc.stepRate = 1;
-            layoutDesc.stride = info.arrayStride;
+            (*layoutDesc).stepFunction = VertexStepModeFunction(info.stepMode);
+            (*layoutDesc).stepRate = 1;
+            (*layoutDesc).stride = info.arrayStride;
         }
 
-        mtlVertexDescriptor.layouts[GetMtlVertexBufferIndex(slot)] = layoutDesc;
-        [layoutDesc release];
+        const NSUInteger metalIndex = GetMtlVertexBufferIndex(slot);
+
+        StreamIn(cacheKey, metalIndex);
+        StreamIn(cacheKey, (*layoutDesc).stepFunction, (*layoutDesc).stepRate,
+                 (*layoutDesc).stride);
+
+        mtlVertexDescriptor.layouts[metalIndex] = *layoutDesc;
     }
 
     for (VertexAttributeLocation loc : GetAttributeLocationsUsed()) {
         const VertexAttributeInfo& info = GetAttribute(loc);
 
-        auto attribDesc = [MTLVertexAttributeDescriptor new];
-        attribDesc.format = VertexFormatType(info.format);
-        attribDesc.offset = info.offset;
-        attribDesc.bufferIndex = GetMtlVertexBufferIndex(info.vertexBufferSlot);
-        mtlVertexDescriptor.attributes[static_cast<uint8_t>(loc)] = attribDesc;
-        [attribDesc release];
+        NSRef<MTLVertexAttributeDescriptor> attribDesc =
+            AcquireNSRef([MTLVertexAttributeDescriptor new]);
+        (*attribDesc).format = VertexFormatType(info.format);
+        (*attribDesc).offset = info.offset;
+        (*attribDesc).bufferIndex = GetMtlVertexBufferIndex(info.vertexBufferSlot);
+
+        const NSUInteger metalIndex = static_cast<NSUInteger>(loc);
+
+        StreamIn(cacheKey, metalIndex);
+        StreamIn(cacheKey, (*attribDesc).format, (*attribDesc).offset, (*attribDesc).bufferIndex);
+
+        mtlVertexDescriptor.attributes[metalIndex] = *attribDesc;
     }
 
     return AcquireNSRef(mtlVertexDescriptor);
