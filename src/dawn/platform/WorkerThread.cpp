@@ -95,6 +95,7 @@ AsyncWorkerThreadPool::~AsyncWorkerThreadPool() {
 
 std::unique_ptr<dawn::platform::WaitableEvent> AsyncWorkerThreadPool::PostWorkerTask(
     dawn::platform::PostWorkerTaskCallback callback,
+    bool background,
     void* userdata) {
     std::unique_ptr<AsyncWaitableEvent> waitableEvent = std::make_unique<AsyncWaitableEvent>();
 
