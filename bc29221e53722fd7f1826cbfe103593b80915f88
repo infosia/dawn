@@ -283,6 +283,24 @@
       "parentUuid": "970c44f8_2263c8d3",
       "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5def362d_efc8353a",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-08-01T13:44:00Z",
+      "side": 1,
+      "message": "This CL includes tests in `src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp`. One of them tests that a custom swizzle correctly reorders texture components and that a subsequent use of the default swizzle correctly reverts to the standard component mapping for instance. It means two views with different swizzles.\n\nHow shall I update the [proposal](https://github.com/gpuweb/gpuweb/blob/main/proposals/texture-component-swizzle.md#open-questions) to incorporate your feedback? See my current PR (not merged yet): https://github.com/gpuweb/gpuweb/pull/5252/files",
+      "parentUuid": "3dcf606d_fb57f7f2",
+      "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
