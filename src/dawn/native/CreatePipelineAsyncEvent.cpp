@@ -93,7 +93,6 @@ void CreatePipelineAsyncEvent<RenderPipelineBase,
 
 template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
 CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::CreatePipelineAsyncEvent(
-    DeviceBase* device,
     const CreatePipelineAsyncCallbackInfo& callbackInfo,
     Ref<PipelineType> pipeline,
     Ref<WaitListEvent> event)
@@ -101,12 +100,10 @@ CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::CreateP
       mCallback(callbackInfo.callback),
       mUserdata1(callbackInfo.userdata1),
       mUserdata2(callbackInfo.userdata2),
-      mPipeline(std::move(pipeline)),
-      mScopedUseShaderPrograms(mPipeline->UseShaderPrograms()) {}
+      mPipeline(std::move(pipeline)) {}
 
 template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
 CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::CreatePipelineAsyncEvent(
-    DeviceBase* device,
     const CreatePipelineAsyncCallbackInfo& callbackInfo,
     Ref<PipelineType> pipeline)
     : TrackedEvent(static_cast<wgpu::CallbackMode>(callbackInfo.mode), TrackedEvent::Completed{}),
@@ -135,48 +132,55 @@ CreatePipelineAsyncEvent<PipelineType,
 }
 
 template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
-void CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::InitializeImpl(
-    bool isAsync) {
-    DeviceBase* device = mPipeline->GetDevice();
-    const char* eventLabel = utils::GetLabelForTrace(mPipeline->GetLabel());
-    if (isAsync) {
-        TRACE_EVENT_FLOW_END1(device->GetPlatform(), General,
-                              "CreatePipelineAsyncEvent::InitializeAsync", this, "label",
-                              eventLabel);
-    }
-    TRACE_EVENT1(device->GetPlatform(), General, "CreatePipelineAsyncEvent::InitializeImpl",
-                 "label", eventLabel);
-
-    MaybeError maybeError;
-    {
-        SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(device->GetPlatform(), kDawnHistogramMetricsUS);
-        maybeError = mPipeline->Initialize(std::move(mScopedUseShaderPrograms));
-    }
-    DAWN_HISTOGRAM_BOOLEAN(device->GetPlatform(), kDawnHistogramMetricsSuccess,
-                           maybeError.IsSuccess());
-    if (maybeError.IsError()) {
-        mError = maybeError.AcquireError();
-    }
-
-    // TODO(dawn:2451): API re-entrant callbacks in spontaneous mode that use the device could
-    // deadlock itself.
-    device->GetInstance()->GetEventManager()->SetFutureReady(this);
-}
-
-template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
 void CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::InitializeSync() {
-    InitializeImpl(false);
+    double startTime = mPipeline->GetDevice()->GetPlatform()->MonotonicallyIncreasingTime();
+    MaybeError result;
+    {
+        TRACE_EVENT1(mPipeline->GetDevice()->GetPlatform(), General,
+                     "CreatePipelineAsyncEvent::InitializeSync", "label",
+                     utils::GetLabelForTrace(mPipeline->GetLabel()));
+        result = mPipeline->Initialize();
+    }
+    DidInitialize(startTime, std::move(result));
 }
 
 template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
 void CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::InitializeAsync() {
     DeviceBase* device = mPipeline->GetDevice();
+    double startTime = device->GetPlatform()->MonotonicallyIncreasingTime();
+
     const char* eventLabel = utils::GetLabelForTrace(mPipeline->GetLabel());
     TRACE_EVENT_FLOW_BEGIN1(device->GetPlatform(), General,
                             "CreatePipelineAsyncEvent::InitializeAsync", this, "label", eventLabel);
 
-    auto asyncTask = [event = Ref<CreatePipelineAsyncEvent>(this)] { event->InitializeImpl(true); };
-    device->GetAsyncTaskManager()->PostTask(std::move(asyncTask));
+    auto completionCallback = [event = Ref<CreatePipelineAsyncEvent>(this),
+                               startTime](MaybeError result) {
+        TRACE_EVENT_FLOW_END0(event->mPipeline->GetDevice()->GetPlatform(), General,
+                              "CreatePipelineAsyncEvent::InitializeAsync", event.Get());
+        event->DidInitialize(startTime, std::move(result));
+    };
+
+    mPipeline->InitializeAsync(std::move(completionCallback));
+}
+
+template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
+void CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::DidInitialize(
+    double startTime,
+    MaybeError result) {
+    DeviceBase* device = mPipeline->GetDevice();
+    DAWN_HISTOGRAM_BOOLEAN(device->GetPlatform(), kDawnHistogramMetricsSuccess, result.IsSuccess());
+
+    auto elapsed = device->GetPlatform()->MonotonicallyIncreasingTime() - startTime;
+    int elapsedUS = static_cast<int>(elapsed * 1'000'000.0);
+    DAWN_HISTOGRAM_CUSTOM_MICROSECOND_TIMES(device->GetPlatform(), kDawnHistogramMetricsUS,
+                                            elapsedUS, 1, 1'000'000, 50);
+
+    if (result.IsError()) [[unlikely]] {
+        mError = result.AcquireError();
+    }
+    // TODO(dawn:2451): API re-entrant callbacks in spontaneous mode that use the device could
+    // deadlock itself.
+    device->GetInstance()->GetEventManager()->SetFutureReady(this);
 }
 
 template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>

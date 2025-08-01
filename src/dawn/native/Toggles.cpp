@@ -732,6 +732,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Don't validate the required VkImage size against the size of the AHardwareBuffer on import. "
       "Some drivers report the wrong size.",
       "https://crbug.com/333424893", ToggleStage::Device}},
+    {Toggle::ForceSynchronousPipelineCreation,
+     {"force_synchronous_pipeline_creation",
+      "Force Create(Render/Compute)PipelineAsync to use the synchronous pipeline creation path."
+      "To workaround crashes in AMD Metal shader compiler validation layer with ParitionAlloc and "
+      "for backends like GL which can't support asynchronous pipeline compilation.",
+      "https://crbug.com/41479494", ToggleStage::Device}},
     // Comment to separate the }} so it is clearer what to copy-paste to add a toggle.
 }};
 

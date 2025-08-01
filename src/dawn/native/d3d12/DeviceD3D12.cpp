@@ -429,12 +429,6 @@ ResultOrError<Ref<TextureViewBase>> Device::CreateTextureViewImpl(
     const UnpackedPtr<TextureViewDescriptor>& descriptor) {
     return TextureView::Create(texture, descriptor);
 }
-void Device::InitializeComputePipelineAsyncImpl(Ref<CreateComputePipelineAsyncEvent> event) {
-    event->InitializeAsync();
-}
-void Device::InitializeRenderPipelineAsyncImpl(Ref<CreateRenderPipelineAsyncEvent> event) {
-    event->InitializeAsync();
-}
 
 ResultOrError<Ref<SharedBufferMemoryBase>> Device::ImportSharedBufferMemoryImpl(
     const SharedBufferMemoryDescriptor* descriptor) {

@@ -506,6 +506,9 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     deviceToggles->Default(
         Toggle::EnableIntegerRangeAnalysisInRobustness,
         platform->IsFeatureEnabled(platform::Features::kWebGPUEnableRangeAnalysisForRobustness));
+
+    // GL backend can't support asynchronous pipeline compilation.
+    deviceToggles->Default(Toggle::ForceSynchronousPipelineCreation, true);
 }
 
 ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(

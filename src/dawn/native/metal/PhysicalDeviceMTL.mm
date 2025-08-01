@@ -423,6 +423,19 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // TODO(crbug.com/dawn/846): tighten this workaround when the driver bug is fixed.
     deviceToggles->Default(Toggle::AlwaysResolveIntoZeroLevelAndLayer, true);
 
+    // TODO(dawn:1473): Metal fails to store GPU counters to sampleBufferAttachments on empty
+    // encoders on macOS 11.0+, we need to add mock blit command to blit encoder when encoding
+    // writeTimestamp as workaround by enabling the toggle
+    // "metal_use_mock_blit_encoder_for_write_timestamp".
+    deviceToggles->Default(Toggle::MetalUseMockBlitEncoderForWriteTimestamp, true);
+
+    // Enable the integer range analysis for shader robustness by default if the corresponding
+    // platform feature is enabled.
+    deviceToggles->Default(
+        Toggle::EnableIntegerRangeAnalysisInRobustness,
+        platform->IsFeatureEnabled(platform::Features::kWebGPUEnableRangeAnalysisForRobustness));
+
+#if DAWN_PLATFORM_IS(MACOS)
     uint32_t deviceId = GetDeviceId();
     uint32_t vendorId = GetVendorId();
 
@@ -468,12 +481,6 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::ApplyClearBigIntegerColorValueWithDraw, true);
     }
 
-    // TODO(dawn:1473): Metal fails to store GPU counters to sampleBufferAttachments on empty
-    // encoders on macOS 11.0+, we need to add mock blit command to blit encoder when encoding
-    // writeTimestamp as workaround by enabling the toggle
-    // "metal_use_mock_blit_encoder_for_write_timestamp".
-    deviceToggles->Default(Toggle::MetalUseMockBlitEncoderForWriteTimestamp, true);
-
     // On macOS 15.0+, we can use sampleTimestamps:gpuTimestamp: from MTLDevice to capture CPU and
     // GPU timestamps to estimate GPU timestamp period at device creation, but this API call will
     // cause GPU overheating on Intel GPUs due to a driver bug keeping the GPU running at the
@@ -485,7 +492,6 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         }
     }
 
-#if DAWN_PLATFORM_IS(MACOS)
     if (gpu_info::IsIntel(vendorId)) {
         deviceToggles->Default(
             Toggle::MetalUseBothDepthAndStencilAttachmentsForCombinedDepthStencilFormats, true);
@@ -539,13 +545,11 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(
             Toggle::MetalUseBothDepthAndStencilAttachmentsForCombinedDepthStencilFormats, true);
     }
-#endif
 
-    // Enable the integer range analysis for shader robustness by default if the corresponding
-    // platform feature is enabled.
-    deviceToggles->Default(
-        Toggle::EnableIntegerRangeAnalysisInRobustness,
-        platform->IsFeatureEnabled(platform::Features::kWebGPUEnableRangeAnalysisForRobustness));
+    if (gpu_info::IsAMD(vendorId) && IsMetalValidationEnabled()) {
+        deviceToggles->Default(Toggle::ForceSynchronousPipelineCreation, true);
+    }
+#endif
 }
 
 MaybeError PhysicalDevice::InitializeImpl() {

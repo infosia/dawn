@@ -1330,16 +1330,19 @@ Future DeviceBase::APICreateComputePipelineAsync(
         GetCachedComputePipeline(uninitializedComputePipeline.Get());
     if (cachedComputePipeline.Get() != nullptr) {
         // Cached pipeline: create an async event that completes when created.
-        return GetFuture(AcquireRef(new CreateComputePipelineAsyncEvent(
-            this, callbackInfo, std::move(cachedComputePipeline))));
+        return GetFuture(AcquireRef(
+            new CreateComputePipelineAsyncEvent(callbackInfo, std::move(cachedComputePipeline))));
     }
 
     // New pipeline: create an event backed by system event that is really async.
     Ref<CreateComputePipelineAsyncEvent> event = AcquireRef(new CreateComputePipelineAsyncEvent(
-        this, callbackInfo, std::move(uninitializedComputePipeline),
-        AcquireRef(new WaitListEvent())));
+        callbackInfo, std::move(uninitializedComputePipeline), AcquireRef(new WaitListEvent())));
     Future future = GetFuture(event);
-    InitializeComputePipelineAsyncImpl(std::move(event));
+    if (IsToggleEnabled(Toggle::ForceSynchronousPipelineCreation)) {
+        event->InitializeSync();
+    } else {
+        event->InitializeAsync();
+    }
     return future;
 }
 PipelineLayoutBase* DeviceBase::APICreatePipelineLayout(
@@ -1399,16 +1402,19 @@ Future DeviceBase::APICreateRenderPipelineAsync(
         GetCachedRenderPipeline(uninitializedRenderPipeline.Get());
     if (cachedRenderPipeline.Get() != nullptr) {
         // Cached pipeline: create an async event that completes when created.
-        return GetFuture(AcquireRef(new CreateRenderPipelineAsyncEvent(
-            this, callbackInfo, std::move(cachedRenderPipeline))));
+        return GetFuture(AcquireRef(
+            new CreateRenderPipelineAsyncEvent(callbackInfo, std::move(cachedRenderPipeline))));
     }
 
     // New pipeline: create an event backed by system event that is really async.
     Ref<CreateRenderPipelineAsyncEvent> event = AcquireRef(new CreateRenderPipelineAsyncEvent(
-        this, callbackInfo, std::move(uninitializedRenderPipeline),
-        AcquireRef(new WaitListEvent())));
+        callbackInfo, std::move(uninitializedRenderPipeline), AcquireRef(new WaitListEvent())));
     Future future = GetFuture(event);
-    InitializeRenderPipelineAsyncImpl(std::move(event));
+    if (IsToggleEnabled(Toggle::ForceSynchronousPipelineCreation)) {
+        event->InitializeSync();
+    } else {
+        event->InitializeAsync();
+    }
     return future;
 }
 RenderBundleEncoder* DeviceBase::APICreateRenderBundleEncoder(
@@ -2031,18 +2037,6 @@ ResultOrError<Ref<ComputePipelineBase>> DeviceBase::CreateUninitializedComputePi
                                    this, *descriptor, &appliedDescriptor));
 
     return CreateUninitializedComputePipelineImpl(Unpack(&appliedDescriptor));
-}
-
-// This base version is creating the pipeline synchronously,
-// and is overwritten on the backends that actually support asynchronous pipeline creation.
-void DeviceBase::InitializeComputePipelineAsyncImpl(Ref<CreateComputePipelineAsyncEvent> event) {
-    event->InitializeSync();
-}
-
-// This base version is creating the pipeline synchronously,
-// and is overwritten on the backends that actually support asynchronous pipeline creation.
-void DeviceBase::InitializeRenderPipelineAsyncImpl(Ref<CreateRenderPipelineAsyncEvent> event) {
-    event->InitializeSync();
 }
 
 ResultOrError<Ref<PipelineLayoutBase>> DeviceBase::CreatePipelineLayout(

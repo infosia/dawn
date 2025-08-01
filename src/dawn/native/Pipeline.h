@@ -35,14 +35,15 @@
 #include <vector>
 
 #include "dawn/native/CachedObject.h"
+#include "dawn/native/CreatePipelineAsyncEvent.h"
 #include "dawn/native/Forward.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/PerStage.h"
 #include "dawn/native/PipelineLayout.h"
 #include "dawn/native/ShaderModule.h"
-#include "partition_alloc/pointers/raw_ptr.h"
-
 #include "dawn/native/dawn_platform.h"
+
+#include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native {
 
@@ -102,6 +103,8 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
 
     // Initialize() should only be called once by the frontend.
     MaybeError Initialize(std::optional<ScopedUseShaderPrograms> scopedUsePrograms = std::nullopt);
+
+    virtual void InitializeAsync(std::function<void(MaybeError)> completionCallback);
 
     uint32_t GetImmediateConstantSize() const;
 
