@@ -223,6 +223,10 @@ var LibraryWebGPU = {
       return UTF8ToString(ptr, length);
     },
 
+    makeU32: (value) => {
+      return value >>>= 0;
+    },
+
     makeColor: (ptr) => {
       return {
         "r": {{{ makeGetValue('ptr', 0, 'double') }}},
@@ -2135,12 +2139,12 @@ var LibraryWebGPU = {
 
   wgpuRenderBundleEncoderDraw: (passPtr, vertexCount, instanceCount, firstVertex, firstInstance) => {
     var pass = WebGPU.getJsObject(passPtr);
-    pass.draw(vertexCount, instanceCount, firstVertex, firstInstance);
+    pass.draw(WebGPU.makeU32(vertexCount), WebGPU.makeU32(instanceCount), WebGPU.makeU32(firstVertex), WebGPU.makeU32(firstInstance));
   },
 
   wgpuRenderBundleEncoderDrawIndexed: (passPtr, indexCount, instanceCount, firstIndex, baseVertex, firstInstance) => {
     var pass = WebGPU.getJsObject(passPtr);
-    pass.drawIndexed(indexCount, instanceCount, firstIndex, baseVertex, firstInstance);
+    pass.drawIndexed(WebGPU.makeU32(indexCount), WebGPU.makeU32(instanceCount), WebGPU.makeU32(firstIndex), baseVertex, WebGPU.makeU32(firstInstance));
   },
 
   wgpuRenderBundleEncoderDrawIndexedIndirect: (passPtr, indirectBufferPtr, indirectOffset) => {
@@ -2227,12 +2231,12 @@ var LibraryWebGPU = {
 
   wgpuRenderPassEncoderDraw: (passPtr, vertexCount, instanceCount, firstVertex, firstInstance) => {
     var pass = WebGPU.getJsObject(passPtr);
-    pass.draw(vertexCount, instanceCount, firstVertex, firstInstance);
+    pass.draw(WebGPU.makeU32(vertexCount), WebGPU.makeU32(instanceCount), WebGPU.makeU32(firstVertex), WebGPU.makeU32(firstInstance));
   },
 
   wgpuRenderPassEncoderDrawIndexed: (passPtr, indexCount, instanceCount, firstIndex, baseVertex, firstInstance) => {
     var pass = WebGPU.getJsObject(passPtr);
-    pass.drawIndexed(indexCount, instanceCount, firstIndex, baseVertex, firstInstance);
+    pass.drawIndexed(WebGPU.makeU32(indexCount), WebGPU.makeU32(instanceCount), WebGPU.makeU32(firstIndex), baseVertex, WebGPU.makeU32(firstInstance));
   },
 
   wgpuRenderPassEncoderDrawIndirect: (passPtr, indirectBufferPtr, indirectOffset) => {
