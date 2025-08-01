@@ -47,6 +47,11 @@ struct ExternalTexture {
     /// Plane1 binding data;
     BindingPoint plane1{};
 
+    bool operator==(const ExternalTexture&) const = default;
+
+    /// @returns the hash code of the ExternalTexture
+    tint::HashCode HashCode() const { return Hash(metadata, plane0, plane1); }
+
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(ExternalTexture, metadata, plane0, plane1);
 };
@@ -69,6 +74,13 @@ struct Bindings {
     /// External bindings
     ExternalTextureBindings external_texture{};
 
+    bool operator==(const Bindings&) const = default;
+
+    /// @returns the hash code of the Bindings
+    tint::HashCode HashCode() const {
+        return Hash(uniform, storage, texture, storage_texture, sampler, external_texture);
+    }
+
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(Bindings, uniform, storage, texture, storage_texture, sampler, external_texture);
 };
@@ -86,6 +98,11 @@ struct ArrayLengthOptions {
     /// The mapping from the storage buffer binding points in WGSL binding-point space to the index
     /// into the uniform buffer where the length of the buffer is stored.
     std::unordered_map<BindingPoint, uint32_t> bindpoint_to_size_index;
+
+    bool operator==(const ArrayLengthFromUniformOptions&) const = default;
+
+    /// @returns the hash code of the ArrayLengthFromUniformOptions
+    tint::HashCode HashCode() const { return Hash(ubo_binding, bindpoint_to_size_index); }
 
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(ArrayLengthOptions, ubo_binding, buffer_sizes_offset, bindpoint_to_size_index);
@@ -116,6 +133,20 @@ struct Options {
     /// Copy assignment
     /// @returns this Options
     Options& operator=(const Options&);
+    /// Equality operator
+    /// @returns true if equal
+    bool operator==(const Options&) const = default;
+
+    /// @returns the hash code of the Options
+    tint::HashCode HashCode() const {
+        return Hash(remapped_entry_point_name, strip_all_names, disable_robustness,
+                    enable_integer_range_analysis, disable_workgroup_init, disable_demote_to_helper,
+                    emit_vertex_point_size, disable_polyfill_integer_div_mod,
+                    scalarize_max_min_clamp, disable_module_constant_f16, use_argument_buffers,
+                    buffer_size_ubo_index, fixed_sample_mask, pixel_local_attachments,
+                    array_length_from_uniform, vertex_pulling_config, immediate_binding_point,
+                    bindings);
+    }
 
     /// An optional remapped name to use when emitting the entry point.
     std::string remapped_entry_point_name = {};
