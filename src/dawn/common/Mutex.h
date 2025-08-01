@@ -42,10 +42,10 @@
 namespace dawn {
 
 template <typename MutexT>
-class MutexBase : public RefCounted, NonCopyable {
+class __attribute__((capability("mutex"))) MutexBase : public RefCounted, NonCopyable {
   public:
     template <typename MutexRef>
-    struct AutoLockBase : NonMovable {
+    struct __attribute__((scoped_lockable)) AutoLockBase : NonMovable {
         AutoLockBase() : mMutex(nullptr) {}
         explicit AutoLockBase(MutexRef mutex) : mMutex(std::move(mutex)) {
             if (mMutex != nullptr) {
@@ -110,8 +110,8 @@ class MutexBase : public RefCounted, NonCopyable {
     }
 
   private:
-    void Lock() { mNativeMutex.lock(); }
-    void Unlock() { mNativeMutex.unlock(); }
+    void Lock() __attribute__((exclusive_lock_function())) { mNativeMutex.lock(); }
+    void Unlock() __attribute__((unlock_function())) { mNativeMutex.unlock(); }
 
   private:
 #if defined(DAWN_ENABLE_ASSERTS)
