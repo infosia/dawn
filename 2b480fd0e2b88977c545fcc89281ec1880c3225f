@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a2e7d12_0cee24e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-01T19:17:16Z",
+      "side": 1,
+      "message": "WDYT of adding this? I haven\u0027t really done any work to fix warnings except for one `-Wmissing-include-dirs` in Emdawnwebgpu but it makes it a bit easier to find warnings in the future.",
+      "revId": "2b480fd0e2b88977c545fcc89281ec1880c3225f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
