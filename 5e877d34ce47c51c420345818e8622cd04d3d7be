@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "441819bb_08459a86",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-01T00:43:30Z",
+      "side": 1,
+      "message": "This is a very rough poc I put together with Gemini. I will go through it in more detail when I am back next week, but it broadly looks promising to me.\n\nEven if we don\u0027t go this route, I think getting the afero types out of the oswrapper.go interfaces would be worth while, and using the \u0027proper\u0027 ReadDir interface.",
+      "revId": "5e877d34ce47c51c420345818e8622cd04d3d7be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
