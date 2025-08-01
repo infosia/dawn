@@ -1338,7 +1338,11 @@ Future DeviceBase::APICreateComputePipelineAsync(
     Ref<CreateComputePipelineAsyncEvent> event = AcquireRef(new CreateComputePipelineAsyncEvent(
         callbackInfo, std::move(uninitializedComputePipeline), AcquireRef(new WaitListEvent())));
     Future future = GetFuture(event);
-    InitializeComputePipelineAsyncImpl(std::move(event));
+    if (IsToggleEnabled(Toggle::ForceSynchronousPipelineCreation)) {
+        event->InitializeSync();
+    } else {
+        event->InitializeAsync();
+    }
     return future;
 }
 PipelineLayoutBase* DeviceBase::APICreatePipelineLayout(
@@ -1406,7 +1410,11 @@ Future DeviceBase::APICreateRenderPipelineAsync(
     Ref<CreateRenderPipelineAsyncEvent> event = AcquireRef(new CreateRenderPipelineAsyncEvent(
         callbackInfo, std::move(uninitializedRenderPipeline), AcquireRef(new WaitListEvent())));
     Future future = GetFuture(event);
-    InitializeRenderPipelineAsyncImpl(std::move(event));
+    if (IsToggleEnabled(Toggle::ForceSynchronousPipelineCreation)) {
+        event->InitializeSync();
+    } else {
+        event->InitializeAsync();
+    }
     return future;
 }
 RenderBundleEncoder* DeviceBase::APICreateRenderBundleEncoder(
@@ -2034,18 +2042,6 @@ ResultOrError<Ref<ComputePipelineBase>> DeviceBase::CreateUninitializedComputePi
                                    this, *descriptor, &appliedDescriptor));
 
     return CreateUninitializedComputePipelineImpl(Unpack(&appliedDescriptor));
-}
-
-// This base version is creating the pipeline synchronously,
-// and is overwritten on the backends that actually support asynchronous pipeline creation.
-void DeviceBase::InitializeComputePipelineAsyncImpl(Ref<CreateComputePipelineAsyncEvent> event) {
-    event->InitializeSync();
-}
-
-// This base version is creating the pipeline synchronously,
-// and is overwritten on the backends that actually support asynchronous pipeline creation.
-void DeviceBase::InitializeRenderPipelineAsyncImpl(Ref<CreateRenderPipelineAsyncEvent> event) {
-    event->InitializeSync();
 }
 
 ResultOrError<Ref<PipelineLayoutBase>> DeviceBase::CreatePipelineLayout(

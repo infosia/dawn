@@ -76,7 +76,10 @@ static constexpr std::string_view kVertexShader = R"(
         }
     )";
 
-class AllowedErrorTests : public DawnMockTest {};
+class AllowedErrorTests : public DawnMockTest {
+  public:
+    AllowedErrorTests() { mDeviceToggles.Default(Toggle::ForceSynchronousPipelineCreation, true); }
+};
 
 //
 // Exercise APIs where OOM errors cause a device lost.

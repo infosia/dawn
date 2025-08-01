@@ -133,8 +133,6 @@ class Device final : public d3d::Device {
         const UnpackedPtr<ComputePipelineDescriptor>& descriptor) override;
     Ref<RenderPipelineBase> CreateUninitializedRenderPipelineImpl(
         const UnpackedPtr<RenderPipelineDescriptor>& descriptor) override;
-    void InitializeComputePipelineAsyncImpl(Ref<CreateComputePipelineAsyncEvent> event) override;
-    void InitializeRenderPipelineAsyncImpl(Ref<CreateRenderPipelineAsyncEvent> event) override;
 
     ResultOrError<Ref<SharedTextureMemoryBase>> ImportSharedTextureMemoryImpl(
         const SharedTextureMemoryDescriptor* descriptor) override;

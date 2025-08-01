@@ -243,26 +243,6 @@ ResultOrError<Ref<TextureViewBase>> Device::CreateTextureViewImpl(
     const UnpackedPtr<TextureViewDescriptor>& descriptor) {
     return TextureView::Create(texture, descriptor);
 }
-void Device::InitializeComputePipelineAsyncImpl(Ref<CreateComputePipelineAsyncEvent> event) {
-    PhysicalDevice* physicalDevice = ToBackend(GetPhysicalDevice());
-    if (physicalDevice->IsMetalValidationEnabled() &&
-        gpu_info::IsAMD(physicalDevice->GetVendorId())) {
-        event->InitializeSync();
-        return;
-    }
-
-    event->InitializeAsync();
-}
-void Device::InitializeRenderPipelineAsyncImpl(Ref<CreateRenderPipelineAsyncEvent> event) {
-    PhysicalDevice* physicalDevice = ToBackend(GetPhysicalDevice());
-    if (physicalDevice->IsMetalValidationEnabled() &&
-        gpu_info::IsAMD(physicalDevice->GetVendorId())) {
-        event->InitializeSync();
-        return;
-    }
-
-    event->InitializeAsync();
-}
 
 ResultOrError<Ref<SharedTextureMemoryBase>> Device::ImportSharedTextureMemoryImpl(
     const SharedTextureMemoryDescriptor* baseDescriptor) {
