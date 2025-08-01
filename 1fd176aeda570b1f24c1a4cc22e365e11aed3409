@@ -218,6 +218,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "43c4994a_cbbb1072",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-01T10:05:06Z",
+      "side": 1,
+      "message": "This is great, thank you. Thank you for pointing me to HermeticXcode.cmake, which I had missed. I have fixed the Android build and am in the process of fixing the iOS build.\n\nI am however using https://github.com/leetal/ios-cmake for the Apple toolchain, and it looks like we need to consolidate to use the same Apple toolchain because on main, the GitHub action fails with a different error than the one I am fixing now.\n\nSo just to clarify, this is unrelated to this PR and is about getting main to be green: https://github.com/google/dawn/actions/runs/16664102015\nIf I struggle to make the CI go green with HermeticXcode.cmake, I will circle back for help here.",
+      "parentUuid": "cdbc4a57_5bd27bbc",
+      "revId": "1fd176aeda570b1f24c1a4cc22e365e11aed3409",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d83bb941_f36b7934",
         "filename": ".github/workflows/ci.yml",
         "patchSetId": 8
