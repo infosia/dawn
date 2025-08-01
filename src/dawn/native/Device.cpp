@@ -2298,7 +2298,7 @@ ResultOrError<Ref<TextureViewBase>> DeviceBase::CreateTextureView(
     }
 
     return texture->GetOrCreateViewFromCache(
-        descriptor, [&](TextureViewQuery&) -> ResultOrError<Ref<TextureViewBase>> {
+        descriptor, [&](const TextureViewQuery&) -> ResultOrError<Ref<TextureViewBase>> {
             return CreateTextureViewImpl(texture, descriptor);
         });
 }
