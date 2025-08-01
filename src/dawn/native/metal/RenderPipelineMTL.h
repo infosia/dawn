@@ -58,7 +58,7 @@ class RenderPipeline final : public RenderPipelineBase {
 
     // For each Dawn vertex buffer, give the index in which it will be positioned in the Metal
     // vertex buffer table.
-    uint32_t GetMtlVertexBufferIndex(VertexBufferSlot slot) const;
+    NSUInteger GetMtlVertexBufferIndex(VertexBufferSlot slot) const;
 
     wgpu::ShaderStage GetStagesRequiringStorageBufferLength() const;
 
@@ -75,13 +75,13 @@ class RenderPipeline final : public RenderPipelineBase {
 
     MaybeError FinishInitialize();
 
-    NSRef<MTLVertexDescriptor> MakeVertexDesc() const;
+    NSRef<MTLVertexDescriptor> MakeVertexDesc(CacheKey*) const;
     NSRef<MTLDepthStencilDescriptor> MakeDepthStencilDesc();
 
     const MTLPrimitiveType mMtlPrimitiveTopology;
     const MTLWinding mMtlFrontFace;
     const MTLCullMode mMtlCullMode;
-    const PerVertexBuffer<uint32_t> mMtlVertexBufferIndices;
+    const PerVertexBuffer<NSUInteger> mMtlVertexBufferIndices;
 
     NSPRef<id<MTLRenderPipelineState>> mMtlRenderPipelineState;
     NSPRef<id<MTLDepthStencilState>> mMtlDepthStencilState;
