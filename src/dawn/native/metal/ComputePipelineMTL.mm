@@ -55,14 +55,8 @@ ComputePipeline::~ComputePipeline() = default;
 MaybeError ComputePipeline::InitializeImpl() {
     auto mtlDevice = ToBackend(GetDevice())->GetMTLDevice();
 
-    const ProgrammableStage& computeStage = GetStage(SingleShaderStage::Compute);
-    ShaderModule::MetalFunctionData computeData;
-
-    DAWN_TRY(ToBackend(computeStage.module.Get())
-                 ->CreateFunction(SingleShaderStage::Compute, computeStage, ToBackend(GetLayout()),
-                                  &computeData,
-                                  /* sampleMask */ 0xFFFFFFFF,
-                                  /* renderPipeline */ nullptr));
+    MetalFunctionData computeData;
+    DAWN_TRY_ASSIGN(computeData, LoadShaderEntryPoint(this, SingleShaderStage::Compute));
 
     NSError* error = nullptr;
     NSRef<NSString> label = MakeDebugName(GetDevice(), "Dawn_ComputePipeline", GetLabel());
