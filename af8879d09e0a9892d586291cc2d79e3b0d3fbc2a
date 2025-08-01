@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ae19c9e_d9242692",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 24
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-01T20:25:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "564aa03d_5abc98e7",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 2
+      },
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa14e444_a4a3476d",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-08-01T18:55:45Z",
       "side": 1,
       "message": "This should pin a version instead of using master. That said, according to the README this is not needed because ninja is preinstalled? https://github.com/seanmiddleditch/gha-setup-ninja",
+      "range": {
+        "startLine": 224,
+        "startChar": 46,
+        "endLine": 224,
+        "endChar": 52
+      },
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b46ebd14_5be5f609",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 24
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-01T20:25:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa14e444_a4a3476d",
       "range": {
         "startLine": 224,
         "startChar": 46,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c70c32b_196fbf19",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 24
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-01T20:25:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5db358e_bb0e0c24",
+      "range": {
+        "startLine": 231,
+        "startChar": 69,
+        "endLine": 231,
+        "endChar": 75
+      },
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ec498ec_19e6ace5",
@@ -100,6 +172,30 @@
       "writtenOn": "2025-08-01T18:55:45Z",
       "side": 1,
       "message": "nit: Put most of this config in a file similar to `dawn-ci.cmake` (or maybe even better, it can be in the same file by making it conditional on the target platform)",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 40
+      },
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "677530c6_f9d60c81",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 24
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-01T20:25:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ec498ec_19e6ace5",
       "range": {
         "startLine": 239,
         "startChar": 0,
@@ -133,6 +229,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b22f563c_2f5d0fe1",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 24
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-01T20:25:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3161ed0e_c5fe754c",
+      "range": {
+        "startLine": 286,
+        "startChar": 46,
+        "endLine": 286,
+        "endChar": 52
+      },
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7fbef628_d8efee7a",
@@ -156,6 +276,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac3264f1_69e3cc8f",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 24
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-01T20:25:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fbef628_d8efee7a",
+      "range": {
+        "startLine": 295,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 40
+      },
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f1fd0f5f_1d3320f1",
@@ -169,6 +313,24 @@
       "writtenOn": "2025-08-01T18:55:45Z",
       "side": 1,
       "message": "This puts dawn.json in the include path, which it probably shouldn\u0027t be. I think there should be a directory called `include` inside the package which is the include dir.\n\naside: I don\u0027t want to give the impression that dawn.json is stable at all. This is probably not a concern though since webgpu_cpp.h and the Dawn extensions in dawn/webgpu.h are not stable either. I have filed https://crbug.com/435623330 about it.",
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70ddbfd3_937af6f7",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 24
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-01T20:25:22Z",
+      "side": 1,
+      "message": "Here we just want to have this file for good measure, what would you consider to be a good resolution of this bug?",
+      "parentUuid": "f1fd0f5f_1d3320f1",
       "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -221,6 +383,23 @@
       "side": 1,
       "message": "We definitely don\u0027t need to fix all of the CI at once, incremental progress is great!",
       "parentUuid": "7718c096_4eaedd49",
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3eea3310_dcac8c9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-01T20:25:22Z",
+      "side": 1,
+      "message": "Thanks a lot, review comments implemented.",
       "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
