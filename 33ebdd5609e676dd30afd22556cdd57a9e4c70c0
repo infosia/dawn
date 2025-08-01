@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7553c9a9_73bb2660",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-01T01:59:27Z",
+      "side": 1,
+      "message": "```suggestion\n                    // The only non-atomic builtin that can touch something that contains an atomic\n                    // is arrayLength.\n                    if (bc-\u003eFunc() \u003d\u003d core::BuiltinFn::kArrayLength) {\n                        return;\n                    }\n                    \n                    // This was converted when we switched from a SPIR-V intrinsic to core\n```",
+      "range": {
+        "startLine": 402,
+        "startChar": 0,
+        "endLine": 407,
+        "endChar": 21
+      },
+      "revId": "33ebdd5609e676dd30afd22556cdd57a9e4c70c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
