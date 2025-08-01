@@ -92,6 +92,11 @@ struct VertexAttributeDescriptor {
     /// The shader location used for the attribute.
     uint32_t shader_location;
 
+    bool operator==(const VertexAttributeDescriptor&) const = default;
+
+    /// @returns the hash code of the VertexAttributeDescriptor
+    tint::HashCode HashCode() const { return tint::Hash(format, offset, shader_location); }
+
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(VertexAttributeDescriptor, format, offset, shader_location);
 };
@@ -114,6 +119,11 @@ struct VertexBufferLayoutDescriptor {
     /// The vertex attributes.
     std::vector<VertexAttributeDescriptor> attributes;
 
+    bool operator==(const VertexBufferLayoutDescriptor&) const = default;
+
+    /// @returns the hash code of the VertexBufferLayoutDescriptor
+    tint::HashCode HashCode() const { return tint::Hash(array_stride, step_mode, attributes); }
+
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(VertexBufferLayoutDescriptor, array_stride, step_mode, attributes);
 };
@@ -126,6 +136,11 @@ struct VertexPullingConfig {
     /// The "group" we will put all our vertex buffers into (as storage buffers).
     /// Default to 4 as it is past the limits of user-accessible groups.
     uint32_t pulling_group = 4u;
+
+    bool operator==(const VertexPullingConfig&) const = default;
+
+    /// @returns the hash code of the VertexPullingConfig
+    tint::HashCode HashCode() const { return tint::Hash(vertex_state, pulling_group); }
 
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(VertexPullingConfig, vertex_state, pulling_group);

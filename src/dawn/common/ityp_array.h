@@ -90,6 +90,9 @@ class array : private ::std::array<Value, Size> {
 
     constexpr Index size() const { return Index(I(Size)); }
 
+    bool operator==(const array&) const = default;
+    auto operator<=>(const array&) const = default;
+
     using Base::back;
     using Base::data;
     using Base::empty;
