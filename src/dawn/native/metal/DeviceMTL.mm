@@ -28,6 +28,7 @@
 #include "dawn/native/metal/DeviceMTL.h"
 
 #include "dawn/common/GPUInfo.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/Platform.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/BackendConnection.h"
@@ -53,6 +54,7 @@
 #include "dawn/native/metal/SwapChainMTL.h"
 #include "dawn/native/metal/TextureMTL.h"
 #include "dawn/native/metal/UtilsMetal.h"
+#include "dawn/native/utils/WGPUHelpers.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
 
@@ -393,6 +395,30 @@ id<MTLBuffer> Device::GetMockBlitMtlBuffer() {
     }
 
     return mMockBlitMtlBuffer.Get();
+}
+
+ResultOrError<Ref<MetalShaderLibrary>> Device::GetOrCreateMetalShaderLibrary(
+    PipelineBase* pipeline,
+    SingleShaderStage stage) {
+    // First try to find a cache hit in the ContentLessObjectCache to find any entries which are
+    // still alive (possibly cached in a RenderPipeline) but not in the LRU cache.
+    const std::string& label = pipeline->GetStage(stage).module->GetLabel();
+    TRACE_EVENT1(GetPlatform(), General, "metal::Device::GetOrCreateMetalShaderLibrary", "label",
+                 utils::GetLabelForTrace(label));
+    MetalShaderParams params = ComputeShaderParams(pipeline, stage);
+    return mShaderLibrariesLRUCache.Use(
+        [&](auto lruCache) -> ResultOrError<Ref<MetalShaderLibrary>> {
+            return lruCache->GetOrCreate(
+                params,
+                [&](const MetalShaderParams& params) -> ResultOrError<Ref<MetalShaderLibrary>> {
+                    // Try to find an existing instance that's not in the LRU cache, but might be
+                    // held on by a strong Ref somewhere else.
+                    Ref<MetalShaderLibrary> blueprint =
+                        AcquireRef(new MetalShaderLibrary(this, params, label));
+                    auto [weakCachedLibrary, _] = mShaderLibrariesWeakCache.Insert(blueprint.Get());
+                    return weakCachedLibrary;
+                });
+        });
 }
 
 void Device::StartTrace() {
