@@ -42,10 +42,10 @@
 namespace dawn {
 
 template <typename MutexT>
-class MutexBase : public RefCounted, NonCopyable {
+class __attribute__((capability("mutex"))) MutexBase : public RefCounted, NonCopyable {
   public:
     template <typename MutexRef>
-    struct AutoLockBase : NonMovable {
+    struct __attribute__((scoped_lockable)) AutoLockBase : NonMovable {
         AutoLockBase() : mMutex(nullptr) {}
         explicit AutoLockBase(MutexRef mutex) : mMutex(std::move(mutex)) {
             if (mMutex != nullptr) {
@@ -83,7 +83,7 @@ class MutexBase : public RefCounted, NonCopyable {
     }
 
   protected:
-    void Lock() {
+    void Lock() __attribute__((exclusive_lock_function())) {
 #if defined(DAWN_ENABLE_ASSERTS)
         auto currentThread = std::this_thread::get_id();
         if constexpr (!std::is_same_v<MutexT, std::recursive_mutex>) {
@@ -99,7 +99,7 @@ class MutexBase : public RefCounted, NonCopyable {
 #endif  // DAWN_ENABLE_ASSERTS
     }
 
-    void Unlock() {
+    void Unlock() __attribute__((unlock_function())) {
 #if defined(DAWN_ENABLE_ASSERTS)
         DAWN_ASSERT(IsLockedByCurrentThread());
         if (--mRecursionStackDepth == 0) {
