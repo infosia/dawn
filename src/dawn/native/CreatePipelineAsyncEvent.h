@@ -71,7 +71,6 @@ class CreatePipelineAsyncEvent final : public EventManager::TrackedEvent {
                              const CreatePipelineAsyncCallbackInfo& callbackInfo,
                              std::unique_ptr<ErrorData> error,
                              StringView label);
-
     ~CreatePipelineAsyncEvent() override;
 
     // Entrance call to synchronously initializing the pipeline.
@@ -79,17 +78,15 @@ class CreatePipelineAsyncEvent final : public EventManager::TrackedEvent {
     // Entrance call to start an AsyncTask initializing the pipeline.
     void InitializeAsync();
 
-    void Complete(EventCompletionType completionType) override;
-
   private:
     static const char* kDawnHistogramMetricsSuccess;
     static const char* kDawnHistogramMetricsUS;
 
     void AddOrGetCachedPipeline();
 
-    // Body of pipeline initialization, called synchronously, or wrapped in an AsyncTask run by
-    // AsyncTaskManager.
-    void InitializeImpl(bool isAsync);
+    void DidInitialize(double startTime, MaybeError result);
+
+    void Complete(EventCompletionType completionType) override;
 
     CallbackType mCallback;
     raw_ptr<void> mUserdata1;
