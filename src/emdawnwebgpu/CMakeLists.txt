@@ -280,16 +280,6 @@ if (EMSCRIPTEN)
     )
 
     if (${DAWN_BUILD_TESTS})
-        set(emdawnwebgpu_test_sources
-            "tests/FuturesTests.cpp"
-            "tests/SpotTests.cpp"
-        )
-        set(emdawnwebgpu_test_deps
-            dawn::dawn_wgpu_utils
-            emdawnwebgpu_cpp
-            gmock_main_wasmsafe
-        )
-
         add_library(emdawnwebgpu_test_linkopts INTERFACE)
         target_link_options(emdawnwebgpu_test_linkopts
             INTERFACE
@@ -307,18 +297,25 @@ if (EMSCRIPTEN)
             )
         endif()
 
-        add_library(emdawnwebgpu_tests)
+        add_library(emdawnwebgpu_tests_main)
         target_link_libraries(
-            emdawnwebgpu_tests
+            emdawnwebgpu_tests_main
             PUBLIC
+                dawn_warnings_config
+                emdawnwebgpu_cpp
                 emdawnwebgpu_test_linkopts
-                ${emdawnwebgpu_test_deps}
+                gmock_main_wasmsafe
+        )
+
+        set(emdawnwebgpu_test_sources
+            "tests/FuturesTests.cpp"
+            "tests/SpotTests.cpp"
         )
 
         add_executable(emdawnwebgpu_tests_asyncify ${emdawnwebgpu_test_sources})
         set_target_properties(emdawnwebgpu_tests_asyncify PROPERTIES
             SUFFIX ".html")
-        target_link_libraries(emdawnwebgpu_tests_asyncify PUBLIC emdawnwebgpu_tests)
+        target_link_libraries(emdawnwebgpu_tests_asyncify PUBLIC emdawnwebgpu_tests_main)
         target_link_options(emdawnwebgpu_tests_asyncify
             PUBLIC
                 # We need Asyncify or JSPI for Future tests.
@@ -329,7 +326,7 @@ if (EMSCRIPTEN)
         add_executable(emdawnwebgpu_tests_jspi ${emdawnwebgpu_test_sources})
         set_target_properties(emdawnwebgpu_tests_jspi PROPERTIES
             SUFFIX ".html")
-        target_link_libraries(emdawnwebgpu_tests_jspi PUBLIC emdawnwebgpu_tests)
+        target_link_libraries(emdawnwebgpu_tests_jspi PUBLIC emdawnwebgpu_tests_main)
         target_link_options(emdawnwebgpu_tests_jspi
             PUBLIC
                 # We need Asyncify or JSPI for Future tests.

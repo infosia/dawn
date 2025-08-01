@@ -142,6 +142,7 @@ config("internal_config") {
   # Add them only when building in standalone because we control which clang
   # version we use. Otherwise we risk breaking projects depending on Dawn when
   # the use a different clang version.
+  # NOTE: This should be kept in sync with DawnCompilerWarningFlags.cmake.
   if (dawn_standalone && is_clang) {
     cflags += [
       "-Wconditional-uninitialized",
@@ -157,6 +158,7 @@ config("internal_config") {
       "-Winconsistent-missing-destructor-override",
       "-Winvalid-offsetof",
       "-Wmissing-field-initializers",
+      "-Wmissing-include-dirs",
       "-Wnon-c-typedef-for-linkage",
       "-Wpessimizing-move",
       "-Wrange-loop-analysis",
@@ -169,6 +171,7 @@ config("internal_config") {
       "-Wunreachable-code-aggressive",
       "-Wunused-but-set-variable",
       "-Wunused-macros",
+      "-Wzero-as-null-pointer-constant",
     ]
 
     if (is_win) {

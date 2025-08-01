@@ -37,8 +37,27 @@ if (DAWN_WERROR)
       INTERFACE
         "-Werror"
     )
-  endif ()
-endif ()
+  endif()
+endif()
+if (DAWN_WEVERYTHING)
+  # This is NOT a supported configuration, Dawn is not warning-clean in this configuration.
+  # However it's maintained "best-effort" as a way to manually discover new warnings we should fix.
+  if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    target_compile_options(dawn_warnings_config
+      INTERFACE
+        "-Weverything"
+        "-Wno-c++98-compat"
+        "-Wno-c++98-compat-pedantic"
+        "-Wno-covered-switch-default"
+        "-Wno-global-constructors"
+        "-Wno-padded"
+        "-Wno-poison-system-directories"
+        "-Wno-shadow"
+        "-Wno-shadow-field-in-constructor"
+        "-Wno-unsafe-buffer-usage"
+    )
+  endif()
+endif()
 
 # Flags that might not be supported in every version of a compiler.
 
@@ -64,6 +83,7 @@ endfunction ()
 
 set(langs C CXX)
 
+# NOTE: This should be kept in sync with src/dawn/common/BUILD.gn.
 dawn_add_flag("-Wconditional-uninitialized" ${langs})
 dawn_add_flag("-Wcstring-format-directive" ${langs})
 dawn_add_flag("-Wctad-maybe-unsupported" ${langs})
@@ -77,6 +97,7 @@ dawn_add_flag("-Wimplicit-fallthrough" ${langs})
 dawn_add_flag("-Winconsistent-missing-destructor-override" ${langs})
 dawn_add_flag("-Winvalid-offsetof" ${langs})
 dawn_add_flag("-Wmissing-field-initializers" ${langs})
+dawn_add_flag("-Wmissing-include-dirs" ${langs})
 dawn_add_flag("-Wnon-c-typedef-for-linkage" ${langs})
 dawn_add_flag("-Wpessimizing-move" ${langs})
 dawn_add_flag("-Wrange-loop-analysis" ${langs})
@@ -89,6 +110,7 @@ dawn_add_flag("-Wtautological-unsigned-zero-compare" ${langs})
 dawn_add_flag("-Wunreachable-code-aggressive" ${langs})
 dawn_add_flag("-Wunused-but-set-variable" ${langs})
 dawn_add_flag("-Wunused-macros" ${langs})
+dawn_add_flag("-Wzero-as-null-pointer-constant" ${langs})
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   if (CMAKE_CXX_COMPILER_VERSION_MAJOR VERSION_LESS_EQUAL 18)
