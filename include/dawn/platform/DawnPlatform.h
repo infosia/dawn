@@ -91,7 +91,14 @@ class DAWN_PLATFORM_EXPORT WorkerTaskPool {
     WorkerTaskPool(const WorkerTaskPool&) = delete;
     WorkerTaskPool& operator=(const WorkerTaskPool&) = delete;
 
-    virtual std::unique_ptr<WaitableEvent> PostWorkerTask(PostWorkerTaskCallback,
+    // Deprecated: assumes task is foreground.
+    virtual std::unique_ptr<WaitableEvent> PostWorkerTask(PostWorkerTaskCallback callback,
+                                                          void* userdata) {
+        return PostWorkerTask(std::move(callback), /*background=*/false, userdata);
+    }
+
+    virtual std::unique_ptr<WaitableEvent> PostWorkerTask(PostWorkerTaskCallback callback,
+                                                          bool background,
                                                           void* userdata) = 0;
 };
 

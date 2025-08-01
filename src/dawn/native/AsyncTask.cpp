@@ -37,6 +37,14 @@ AsyncTaskManager::AsyncTaskManager(dawn::platform::WorkerTaskPool* workerTaskPoo
     : mWorkerTaskPool(workerTaskPool) {}
 
 void AsyncTaskManager::PostTask(AsyncTask asyncTask) {
+    PostWorkerTask(std::move(asyncTask), /*background=*/false);
+}
+
+void AsyncTaskManager::PostBackgroundTask(AsyncTask asyncTask) {
+    PostWorkerTask(std::move(asyncTask), /*background=*/true);
+}
+
+void AsyncTaskManager::PostWorkerTask(AsyncTask asyncTask, bool background) {
     // If these allocations becomes expensive, we can slab-allocate tasks.
     Ref<WaitableTask> waitableTask = AcquireRef(new WaitableTask());
     waitableTask->taskManager = this;
@@ -55,7 +63,7 @@ void AsyncTaskManager::PostTask(AsyncTask asyncTask) {
     // The worker function will acquire and release the task upon completion.
     waitableTask->AddRef();
     waitableTask->waitableEvent =
-        mWorkerTaskPool->PostWorkerTask(DoWaitableTask, waitableTask.Get());
+        mWorkerTaskPool->PostWorkerTask(DoWaitableTask, background, waitableTask.Get());
 }
 
 void AsyncTaskManager::HandleTaskCompletion(WaitableTask* task) {
