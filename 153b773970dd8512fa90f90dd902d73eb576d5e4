@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a2cbfb8_9077bb83",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-01T00:40:51Z",
+      "side": 1,
+      "message": "I think afero as a library is focused more on being an abstraction over a variety of implementations of a filesystem more so then a drop in replacement for the standard lib for testing, so is willing to \u0027break\u0027 with the standard lib\u0027s API. In theory we could hard commit to using afero for all the FS stuff and live with its version of the API, but given the issues I have found and the somewhat limited testing I am seeing in their library I am not sure if we would want to do that.\n\nI took a look (with Gemini) at what an impleemntation of our oswrapper api would look like using testing/fstest, and it looks promising to me, https://dawn-review.googlesource.com/c/dawn/+/255654.\n\nI am gone until Tuesday, but will take another look at this when I get back",
+      "parentUuid": "fece456f_c97515ba",
+      "revId": "153b773970dd8512fa90f90dd902d73eb576d5e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8b00c4f3_f3edc12b",
