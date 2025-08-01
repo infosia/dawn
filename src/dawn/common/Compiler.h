@@ -141,4 +141,32 @@
 #define DAWN_DISABLE_STRUCT_PADDING_WARNINGS
 #endif
 
+// DAWN_MUTEX_CAPABILITY
+#if DAWN_HAS_ATTRIBUTE(capability)
+#define DAWN_MUTEX_CAPABILITY __attribute__((capability("mutex")))
+#else
+#define DAWN_MUTEX_CAPABILITY
+#endif
+
+// DAWN_SCOPED_LOCKABLE
+#if DAWN_HAS_ATTRIBUTE(scoped_lockable)
+#define DAWN_SCOPED_LOCKABLE __attribute__((scoped_lockable))
+#else
+#define DAWN_SCOPED_LOCKABLE
+#endif
+
+// DAWN_EXCLUSIVE_LOCK_FUNCTION
+#if DAWN_HAS_ATTRIBUTE(exclusive_lock_function)
+#define DAWN_EXCLUSIVE_LOCK_FUNCTION __attribute__((exclusive_lock_function()))
+#else
+#define DAWN_EXCLUSIVE_LOCK_FUNCTION
+#endif
+
+// DAWN_UNLOCK_FUNCTION
+#if DAWN_HAS_ATTRIBUTE(unlock_function)
+#define DAWN_UNLOCK_FUNCTION __attribute__((unlock_function()))
+#else
+#define DAWN_UNLOCK_FUNCTION
+#endif
+
 #endif  // SRC_DAWN_COMMON_COMPILER_H_
