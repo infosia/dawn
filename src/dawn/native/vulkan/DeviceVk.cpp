@@ -267,12 +267,6 @@ Ref<PipelineCacheBase> Device::GetOrCreatePipelineCacheImpl(const CacheKey& key)
 
     return PipelineCache::Create(this, key);
 }
-void Device::InitializeComputePipelineAsyncImpl(Ref<CreateComputePipelineAsyncEvent> event) {
-    event->InitializeAsync();
-}
-void Device::InitializeRenderPipelineAsyncImpl(Ref<CreateRenderPipelineAsyncEvent> event) {
-    event->InitializeAsync();
-}
 
 ResultOrError<Ref<SharedTextureMemoryBase>> Device::ImportSharedTextureMemoryImpl(
     const SharedTextureMemoryDescriptor* descriptor) {

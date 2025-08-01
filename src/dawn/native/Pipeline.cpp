@@ -33,6 +33,7 @@
 #include "absl/container/flat_hash_set.h"
 #include "absl/strings/string_view.h"
 #include "dawn/common/Enumerator.h"
+#include "dawn/native/AsyncTask.h"
 #include "dawn/native/BindGroupLayout.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/ImmediateConstantsLayout.h"
@@ -40,6 +41,8 @@
 #include "dawn/native/ObjectContentHasher.h"
 #include "dawn/native/PipelineLayout.h"
 #include "dawn/native/ShaderModule.h"
+#include "dawn/native/utils/WGPUHelpers.h"
+#include "dawn/platform/DawnPlatform.h"
 #include "src/utils/numeric.h"
 
 namespace dawn::native {
@@ -246,6 +249,12 @@ PipelineBase::PipelineBase(DeviceBase* device,
             }
         }
     }
+
+    // Set immediate constant status. userConstants is the first element in both
+    // RenderImmediateConstants and ComputeImmediateConstants.
+    ImmediateConstantMask userConstantsBits =
+        GetImmediateConstantBlockBits(0, layout->GetImmediateDataRangeByteSize());
+    mImmediateMask |= userConstantsBits;
 }
 
 PipelineBase::PipelineBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label)
@@ -373,15 +382,18 @@ MaybeError PipelineBase::Initialize(std::optional<ScopedUseShaderPrograms> scope
     if (!scopedUsePrograms) {
         scopedUsePrograms = UseShaderPrograms();
     }
-
-    // Set immediate constant status. userConstants is the first element in both
-    // RenderImmediateConstants and ComputeImmediateConstants.
-    ImmediateConstantMask userConstantsBits =
-        GetImmediateConstantBlockBits(0, GetLayout()->GetImmediateDataRangeByteSize());
-    mImmediateMask |= userConstantsBits;
-
     DAWN_TRY_CONTEXT(InitializeImpl(), "initializing %s", this);
     return {};
+}
+
+void PipelineBase::InitializeAsync(Ref<CreatePipelineAsyncEvent> event) {
+    // Used to keep ShaderModuleBase::mTintProgram alive until pipeline initialization is done.
+    auto useShaderPrograms = UseShaderPrograms();
+    auto asyncTask = [pipeline = Ref<PipelineBase>(this), event = std::move(event),
+                      useShaderPrograms = std::move(useShaderPrograms)] {
+        event->OnInitialize(pipeline->Initialize(std::move(useShaderPrograms)));
+    };
+    GetDevice()->GetAsyncTaskManager()->PostTask(std::move(asyncTask));
 }
 
 void PipelineBase::SetImmediateMaskForTesting(ImmediateConstantMask immediateConstantMask) {
