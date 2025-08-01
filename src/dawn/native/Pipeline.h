@@ -100,6 +100,9 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
     // Initialize() should only be called once by the frontend.
     MaybeError Initialize(std::optional<ScopedUseShaderPrograms> scopedUsePrograms = std::nullopt);
 
+    virtual void InitializeAsync(ScopedUseShaderPrograms scopedUseShaderPrograms,
+                                 std::function<void(MaybeError)> callback);
+
     uint32_t GetImmediateConstantSize() const;
 
     void SetImmediateMaskForTesting(ImmediateConstantMask immediateConstantMask);

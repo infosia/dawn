@@ -384,6 +384,11 @@ MaybeError PipelineBase::Initialize(std::optional<ScopedUseShaderPrograms> scope
     return {};
 }
 
+void PipelineBase::InitializeAsync(ScopedUseShaderPrograms scopedUseShaderPrograms,
+                                   std::function<void(MaybeError)> callback) {
+    callback(Initialize(std::move(scopedUseShaderPrograms)));
+}
+
 void PipelineBase::SetImmediateMaskForTesting(ImmediateConstantMask immediateConstantMask) {
     mImmediateMask = immediateConstantMask;
 }
