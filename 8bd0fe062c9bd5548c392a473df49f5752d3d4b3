@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a27ad8f_4a95a944",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-08-01T21:05:47Z",
+      "side": 1,
+      "message": "Some changes might be better included in the parent CL like discussed in https://dawn-review.googlesource.com/c/dawn/+/254218/comment/8bd1698b_2297d50e/",
+      "revId": "8bd0fe062c9bd5548c392a473df49f5752d3d4b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2642097a_20ab9bb7",
+        "filename": "src/dawn/devtool/PlaybackManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-08-01T21:05:47Z",
+      "side": 1,
+      "message": "Question:\nNow that Playback only depends on webgpu.h, it can do command playback using only WGPU* object.\nBut what about inspecting objects (e.g. GetBuffers and its state) Does it still need to depend on dawn::native?",
+      "revId": "8bd0fe062c9bd5548c392a473df49f5752d3d4b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
