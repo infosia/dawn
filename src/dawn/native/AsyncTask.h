@@ -56,6 +56,7 @@ class AsyncTaskManager {
     explicit AsyncTaskManager(dawn::platform::WorkerTaskPool* workerTaskPool);
 
     void PostTask(AsyncTask asyncTask);
+    void PostBackgroundTask(AsyncTask asyncTask);
     void WaitAllPendingTasks();
     bool HasPendingTasks();
 
@@ -69,6 +70,8 @@ class AsyncTaskManager {
         raw_ptr<AsyncTaskManager> taskManager;
         std::unique_ptr<dawn::platform::WaitableEvent> waitableEvent;
     };
+
+    void PostWorkerTask(AsyncTask asyncTask, bool background);
 
     static void DoWaitableTask(void* task);
     void HandleTaskCompletion(WaitableTask* task);
