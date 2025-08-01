@@ -91,8 +91,16 @@ class DAWN_PLATFORM_EXPORT WorkerTaskPool {
     WorkerTaskPool(const WorkerTaskPool&) = delete;
     WorkerTaskPool& operator=(const WorkerTaskPool&) = delete;
 
+    // Deprecated: assumes task is foreground.
     virtual std::unique_ptr<WaitableEvent> PostWorkerTask(PostWorkerTaskCallback,
                                                           void* userdata) = 0;
+
+    // TODO(sunnyps): Remove the default implementation once all clients migrate to the new API.
+    virtual std::unique_ptr<WaitableEvent> PostWorkerTask(PostWorkerTaskCallback callback,
+                                                          bool background,
+                                                          void* userdata) {
+        return PostWorkerTask(callback, userdata);
+    }
 };
 
 // These features map to similarly named ones in src/chromium/src/gpu/config/gpu_finch_features.h
