@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3b3f768_10a1d063",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-01T18:18:54Z",
+      "side": 1,
+      "message": "Overall LGTM, though I\u0027d love to have @cwallez give it a sanity check as well, given that I\u0027m still familiarizing myself with Dawn\u0027s barrier usage.",
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8f99c37_b9d5163e",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-01T18:18:54Z",
+      "side": 1,
+      "message": "Is the intent to strip this out prior to landing?",
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
