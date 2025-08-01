@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dafd7391_af77b52b",
+        "filename": "docs/tint/fuzzers.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-01T00:52:14Z",
+      "side": 1,
+      "message": "```suggestion\nfiles. A manually provided input of .tirb files can be provided. There\nis currently no facility to detect that an explicit input directory\ncontains .wgsl files that need converting to .tirb files.\n```",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 50
+      },
+      "revId": "2959bc45e85a1c82b5442db7a62955f78ee4223b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0fc8c48_f80dd0fd",
+        "filename": "docs/tint/fuzzers.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-01T00:52:14Z",
+      "side": 1,
+      "message": "```suggestion\nThe inputs are expected to be .wgsl files like the WGSL generation, but\nthe output will .tirb files. Similarly to the WGSL mode generation\ninputs with `.expected.` will be filtered out.\n```",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 46
+      },
+      "revId": "2959bc45e85a1c82b5442db7a62955f78ee4223b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2cf9348_37a03b36",
+        "filename": "docs/tint/fuzzers.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-01T00:52:14Z",
+      "side": 1,
+      "message": "```suggestion\nand added significant complexity to the tooling. If you need to\nminimize a corpus manually please consult the libFuzzer documentation\n```",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 69
+      },
+      "revId": "2959bc45e85a1c82b5442db7a62955f78ee4223b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
