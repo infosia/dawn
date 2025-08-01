@@ -39,6 +39,7 @@
 #include "dawn/native/Device.h"
 #include "dawn/native/metal/CommandRecordingContext.h"
 #include "dawn/native/metal/Forward.h"
+#include "dawn/native/metal/ShaderModuleMTL.h"
 
 #import <IOSurface/IOSurfaceRef.h>
 #import <Metal/Metal.h>
@@ -88,6 +89,9 @@ class Device final : public DeviceBase {
     // Get a MTLBuffer that can be used as a mock in a no-op blit encoder based on filling this
     // single-byte buffer
     id<MTLBuffer> GetMockBlitMtlBuffer();
+
+    ResultOrError<Ref<MetalShaderLibrary>> GetOrCreateMetalShaderLibrary(PipelineBase* pipeline,
+                                                                         SingleShaderStage stage);
 
   private:
     Device(AdapterBase* adapter,
@@ -157,6 +161,12 @@ class Device final : public DeviceBase {
     // vertex/fragement stage
     bool mCounterSamplingAtStageBoundary;
     NSPRef<id<MTLBuffer>> mMockBlitMtlBuffer;
+
+    static constexpr size_t kMaxCachedShaderLibraries = 32;
+    MutexProtected<LRUCache<MetalShaderParams, Ref<MetalShaderLibrary>>> mShaderLibrariesLRUCache{
+        kMaxCachedShaderLibraries};
+
+    ContentLessObjectCache<MetalShaderLibrary> mShaderLibrariesWeakCache;
 };
 
 }  // namespace dawn::native::metal
