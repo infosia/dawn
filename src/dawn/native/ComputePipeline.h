@@ -52,6 +52,10 @@ class ComputePipelineBase : public PipelineBase,
 
     ObjectType GetType() const override;
 
+    ComputePipelineBase* AsComputePipeline() const override {
+        return const_cast<ComputePipelineBase*>(this);
+    }
+
     // Functors necessary for the unordered_set<ComputePipelineBase*>-based cache.
     struct EqualityFunc {
         bool operator()(const ComputePipelineBase* a, const ComputePipelineBase* b) const;
