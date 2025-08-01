@@ -47,6 +47,11 @@ struct ExternalTexture {
     /// Plane1 binding data;
     BindingPoint plane1{};
 
+    bool operator==(const ExternalTexture&) const = default;
+
+    /// @returns the hash code of the ExternalTexture
+    tint::HashCode HashCode() const { return Hash(metadata, plane0, plane1); }
+
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(ExternalTexture, metadata, plane0, plane1);
 };
@@ -69,6 +74,13 @@ struct Bindings {
     /// External bindings
     ExternalTextureBindings external_texture{};
 
+    bool operator==(const Bindings&) const = default;
+
+    /// @returns the hash code of the Bindings
+    tint::HashCode HashCode() const {
+        return Hash(uniform, storage, texture, storage_texture, sampler, external_texture);
+    }
+
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(Bindings, uniform, storage, texture, storage_texture, sampler, external_texture);
 };
@@ -87,6 +99,11 @@ struct ArrayLengthOptions {
     /// into the uniform buffer where the length of the buffer is stored.
     std::unordered_map<BindingPoint, uint32_t> bindpoint_to_size_index;
 
+    bool operator==(const ArrayLengthOptions&) const = default;
+
+    /// @returns the hash code of the ArrayLengthOptions
+    tint::HashCode HashCode() const { return Hash(ubo_binding, bindpoint_to_size_index); }
+
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(ArrayLengthOptions, ubo_binding, buffer_sizes_offset, bindpoint_to_size_index);
 };
@@ -102,6 +119,13 @@ struct ArgumentBufferInfo {
     /// Dynamic offsets map. The map is binding number -> offset index
     std::unordered_map<uint32_t, uint32_t> binding_info_to_offset_index{};
 
+    bool operator==(const ArgumentBufferInfo&) const = default;
+
+    /// @returns the hash code of the ArgumentBufferInfo
+    tint::HashCode HashCode() const {
+        return Hash(id, dynamic_buffer_id, binding_info_to_offset_index);
+    }
+
     TINT_REFLECT(ArgumentBufferInfo, id, dynamic_buffer_id, binding_info_to_offset_index);
 };
 
@@ -116,6 +140,20 @@ struct Options {
     /// Copy assignment
     /// @returns this Options
     Options& operator=(const Options&);
+    /// Equality operator
+    /// @returns true if equal
+    bool operator==(const Options&) const = default;
+
+    /// @returns the hash code of the Options
+    tint::HashCode HashCode() const {
+        return Hash(remapped_entry_point_name, strip_all_names, disable_robustness,
+                    enable_integer_range_analysis, disable_workgroup_init, disable_demote_to_helper,
+                    emit_vertex_point_size, disable_polyfill_integer_div_mod,
+                    scalarize_max_min_clamp, disable_module_constant_f16, use_argument_buffers,
+                    buffer_size_ubo_index, fixed_sample_mask, pixel_local_attachments,
+                    array_length_from_constants, vertex_pulling_config, immediate_binding_point,
+                    group_to_argument_buffer_info, bindings);
+    }
 
     /// An optional remapped name to use when emitting the entry point.
     std::string remapped_entry_point_name = {};
