@@ -27,8 +27,11 @@
 
 #include "dawn/native/metal/ShaderModuleMTL.h"
 
+#include "absl/strings/escaping.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/Adapter.h"
+#include "dawn/native/AsyncTask.h"
 #include "dawn/native/BindGroupLayout.h"
 #include "dawn/native/CacheRequest.h"
 #include "dawn/native/Serializable.h"
@@ -52,7 +55,6 @@
 namespace dawn::native::metal {
 namespace {
 
-using OptionalVertexPullingTransformConfig = std::optional<tint::VertexPullingConfig>;
 using SubstituteOverrideConfig = std::unordered_map<tint::OverrideId, double>;
 
 #define MSL_COMPILATION_REQUEST_MEMBERS(X)                                           \
@@ -63,11 +65,10 @@ using SubstituteOverrideConfig = std::unordered_map<tint::OverrideId, double>;
     X(LimitsForCompilationRequest, limits)                                           \
     X(UnsafeUnserializedValue<LimitsForCompilationRequest>, adapterSupportedLimits)  \
     X(uint32_t, maxSubgroupSize)                                                     \
-    X(std::string, entryPointName)                                                   \
+    X(std::string_view, entryPointName)                                              \
     X(bool, usesSubgroupMatrix)                                                      \
     X(bool, useStrictMath)                                                           \
-    X(bool, disableSymbolRenaming)                                                   \
-    X(tint::msl::writer::Options, tintOptions)                                       \
+    X(const tint::msl::writer::Options*, tintOptions)                                \
     X(UnsafeUnserializedValue<dawn::platform::Platform*>, platform)
 
 DAWN_MAKE_CACHE_REQUEST(MslCompilationRequest, MSL_COMPILATION_REQUEST_MEMBERS);
@@ -95,35 +96,6 @@ DAWN_SERIALIZABLE(struct, MslCompilation, MSL_COMPILATION_MEMBERS) {
 };
 // clang-format on
 #undef MSL_COMPILATION_MEMBERS
-
-}  // namespace
-}  // namespace dawn::native::metal
-
-namespace dawn::native::metal {
-
-// static
-ResultOrError<Ref<ShaderModule>> ShaderModule::Create(
-    Device* device,
-    const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
-    const std::vector<tint::wgsl::Extension>& internalExtensions,
-    ShaderModuleParseResult* parseResult) {
-    Ref<ShaderModule> module = AcquireRef(new ShaderModule(device, descriptor, internalExtensions));
-    DAWN_TRY(module->Initialize(parseResult));
-    return module;
-}
-
-ShaderModule::ShaderModule(Device* device,
-                           const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
-                           std::vector<tint::wgsl::Extension> internalExtensions)
-    : ShaderModuleBase(device, descriptor, std::move(internalExtensions)) {}
-
-ShaderModule::~ShaderModule() = default;
-
-MaybeError ShaderModule::Initialize(ShaderModuleParseResult* parseResult) {
-    return InitializeBase(parseResult);
-}
-
-namespace {
 
 tint::msl::writer::Bindings generateBindingInfo(
     SingleShaderStage stage,
@@ -213,29 +185,29 @@ tint::msl::writer::Bindings generateBindingInfo(
     }
     return bindings;
 }
+}  // namespace
 
-ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
-    DeviceBase* device,
-    const ProgrammableStage& programmableStage,
-    SingleShaderStage stage,
-    const PipelineLayout* layout,
-    uint32_t sampleMask,
-    const RenderPipeline* renderPipeline,
-    const BindingInfoArray& moduleBindingInfo,
-    bool useStrictMath) {
-    std::ostringstream errorStream;
-    errorStream << "Tint MSL failure:\n";
+MetalShaderParams ComputeShaderParams(PipelineBase* pipeline, SingleShaderStage stage) {
+    DeviceBase* device = pipeline->GetDevice();
+    RenderPipeline* renderPipeline = ToBackend(pipeline->AsRenderPipeline());
+
+    // Vertex and fragment stages must specify a renderPipeline
+    DAWN_ASSERT((stage != SingleShaderStage::Vertex && stage != SingleShaderStage::Fragment) ||
+                renderPipeline != nullptr);
+
+    const ProgrammableStage& programmableStage = pipeline->GetStage(stage);
 
     tint::msl::writer::ArrayLengthFromUniformOptions arrayLengthFromUniform;
     arrayLengthFromUniform.ubo_binding = kBufferLengthBufferSlot;
 
     tint::msl::writer::Bindings bindings =
-        generateBindingInfo(stage, layout, moduleBindingInfo, arrayLengthFromUniform);
+        generateBindingInfo(stage, ToBackend(pipeline->GetLayout()),
+                            programmableStage.metadata->bindings, arrayLengthFromUniform);
 
-    OptionalVertexPullingTransformConfig vertexPullingTransformConfig;
+    std::optional<tint::VertexPullingConfig> vertexPullingConfig;
     if (stage == SingleShaderStage::Vertex &&
         device->IsToggleEnabled(Toggle::MetalEnableVertexPulling)) {
-        vertexPullingTransformConfig =
+        vertexPullingConfig =
             BuildVertexPullingTransformConfig(*renderPipeline, kPullingBufferBindingSet);
 
         for (VertexBufferSlot slot : renderPipeline->GetVertexBuffersUsed()) {
@@ -258,7 +230,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     }
 
     std::unordered_map<uint32_t, uint32_t> pixelLocalAttachments;
-    if (stage == SingleShaderStage::Fragment && layout->HasPixelLocalStorage()) {
+    if (stage == SingleShaderStage::Fragment && pipeline->GetLayout()->HasPixelLocalStorage()) {
         const AttachmentState* attachmentState = renderPipeline->GetAttachmentState();
         const std::vector<wgpu::TextureFormat>& storageAttachmentSlots =
             attachmentState->GetStorageAttachmentSlots();
@@ -270,40 +242,85 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
         }
     }
 
-    MslCompilationRequest req = {};
-    req.stage = stage;
-    req.shaderModuleHash = programmableStage.module->GetHash();
-    req.inputProgram = UnsafeUnserializedValue(programmableStage.module->UseTintProgram());
-    req.substituteOverrideConfig = BuildSubstituteOverridesTransformConfig(programmableStage);
-    req.entryPointName = programmableStage.entryPoint.c_str();
-    req.disableSymbolRenaming = device->IsToggleEnabled(Toggle::DisableSymbolRenaming);
-    req.usesSubgroupMatrix = programmableStage.metadata->usesSubgroupMatrix;
-    req.platform = UnsafeUnserializedValue(device->GetPlatform());
-    req.useStrictMath = useStrictMath;
+    uint32_t sampleMask =
+        stage == SingleShaderStage::Fragment ? renderPipeline->GetSampleMask() : 0xFFFFFFFF;
 
-    req.tintOptions.strip_all_names = !req.disableSymbolRenaming;
-    req.tintOptions.remapped_entry_point_name = device->GetIsolatedEntryPointName();
-    req.tintOptions.disable_robustness = !device->IsRobustnessEnabled();
-    req.tintOptions.buffer_size_ubo_index = kBufferLengthBufferSlot;
-    req.tintOptions.fixed_sample_mask = sampleMask;
-    req.tintOptions.disable_workgroup_init = false;
-    req.tintOptions.disable_demote_to_helper =
+    MetalShaderParams params;
+    params.stage = stage;
+    params.shaderModuleHash = programmableStage.module->GetHash();
+    params.entryPointName = programmableStage.entryPoint;
+    params.pipelineConstants = programmableStage.constants;
+
+    params.tintOptions.strip_all_names = !device->IsToggleEnabled(Toggle::DisableSymbolRenaming);
+    params.tintOptions.remapped_entry_point_name = device->GetIsolatedEntryPointName();
+    params.tintOptions.disable_robustness = !device->IsRobustnessEnabled();
+    params.tintOptions.buffer_size_ubo_index = kBufferLengthBufferSlot;
+    params.tintOptions.fixed_sample_mask = sampleMask;
+    params.tintOptions.disable_workgroup_init = false;
+    params.tintOptions.disable_demote_to_helper =
         device->IsToggleEnabled(Toggle::DisableDemoteToHelper);
-    req.tintOptions.emit_vertex_point_size =
-        stage == SingleShaderStage::Vertex &&
+    params.tintOptions.emit_vertex_point_size =
+        params.stage == SingleShaderStage::Vertex &&
         renderPipeline->GetPrimitiveTopology() == wgpu::PrimitiveTopology::PointList;
-    req.tintOptions.array_length_from_uniform = std::move(arrayLengthFromUniform);
-    req.tintOptions.pixel_local_attachments = std::move(pixelLocalAttachments);
-    req.tintOptions.bindings = std::move(bindings);
-    req.tintOptions.disable_polyfill_integer_div_mod =
+    params.tintOptions.array_length_from_uniform = std::move(arrayLengthFromUniform);
+    params.tintOptions.pixel_local_attachments = std::move(pixelLocalAttachments);
+    params.tintOptions.bindings = std::move(bindings);
+    params.tintOptions.disable_polyfill_integer_div_mod =
         device->IsToggleEnabled(Toggle::DisablePolyfillsOnIntegerDivisonAndModulo);
-    req.tintOptions.scalarize_max_min_clamp = device->IsToggleEnabled(Toggle::ScalarizeMaxMinClamp);
-    req.tintOptions.disable_module_constant_f16 =
+    params.tintOptions.scalarize_max_min_clamp =
+        device->IsToggleEnabled(Toggle::ScalarizeMaxMinClamp);
+    params.tintOptions.disable_module_constant_f16 =
         device->IsToggleEnabled(Toggle::MetalDisableModuleConstantF16);
-    req.tintOptions.vertex_pulling_config = std::move(vertexPullingTransformConfig);
-    req.tintOptions.enable_integer_range_analysis =
+    params.tintOptions.vertex_pulling_config = std::move(vertexPullingConfig);
+    params.tintOptions.enable_integer_range_analysis =
         device->IsToggleEnabled(Toggle::EnableIntegerRangeAnalysisInRobustness);
 
+    params.useStrictMath = programmableStage.module->GetStrictMath().value_or(false);
+
+    return params;
+}
+
+// static
+ResultOrError<Ref<ShaderModule>> ShaderModule::Create(
+    Device* device,
+    const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
+    const std::vector<tint::wgsl::Extension>& internalExtensions,
+    ShaderModuleParseResult* parseResult) {
+    Ref<ShaderModule> module = AcquireRef(new ShaderModule(device, descriptor, internalExtensions));
+    DAWN_TRY(module->Initialize(parseResult));
+    return module;
+}
+
+ShaderModule::ShaderModule(Device* device,
+                           const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
+                           std::vector<tint::wgsl::Extension> internalExtensions)
+    : ShaderModuleBase(device, descriptor, std::move(internalExtensions)) {}
+
+ShaderModule::~ShaderModule() = default;
+
+MaybeError ShaderModule::Initialize(ShaderModuleParseResult* parseResult) {
+    return InitializeBase(parseResult);
+}
+
+namespace {
+
+ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
+    DeviceBase* device,
+    ShaderModuleBase::ScopedUseTintProgram useTintProgram,
+    const MetalShaderParams& params) {
+    const EntryPointMetadata& entryPointMetadata =
+        useTintProgram->GetEntryPoint(params.entryPointName);
+    MslCompilationRequest req = {};
+    req.stage = params.stage;
+    req.shaderModuleHash = params.shaderModuleHash;
+    req.inputProgram = UnsafeUnserializedValue(std::move(useTintProgram));
+    req.substituteOverrideConfig =
+        BuildSubstituteOverridesTransformConfig(entryPointMetadata, params.pipelineConstants);
+    req.entryPointName = params.entryPointName;
+    req.usesSubgroupMatrix = entryPointMetadata.usesSubgroupMatrix;
+    req.platform = UnsafeUnserializedValue(device->GetPlatform());
+    req.useStrictMath = params.useStrictMath;
+    req.tintOptions = &params.tintOptions;
     req.limits = LimitsForCompilationRequest::Create(device->GetLimits().v1);
     req.adapterSupportedLimits = UnsafeUnserializedValue(
         LimitsForCompilationRequest::Create(device->GetAdapter()->GetLimits().v1));
@@ -315,7 +332,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
         [](MslCompilationRequest r) -> ResultOrError<MslCompilation> {
             TRACE_EVENT0(r.platform.UnsafeGetValue(), General, "tint::msl::writer::Generate");
             // Requires Tint Program here right before actual using.
-            auto inputProgram = r.inputProgram.UnsafeGetValue()->GetTintProgram();
+            Ref<TintProgram> inputProgram = r.inputProgram.UnsafeGetValue()->GetTintProgram();
             const tint::Program* tintInputProgram = &(inputProgram->program);
             // Convert the AST program to an IR module.
             tint::Result<tint::core::ir::Module> ir;
@@ -357,7 +374,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
             {
                 SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(r.platform.UnsafeGetValue(),
                                                    "ShaderModuleGenerateMSL");
-                result = tint::msl::writer::Generate(ir.Get(), r.tintOptions);
+                result = tint::msl::writer::Generate(ir.Get(), *r.tintOptions);
                 DAWN_INVALID_IF(result != tint::Success,
                                 "An error occurred while generating MSL:\n%s",
                                 result.Failure().reason);
@@ -401,7 +418,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
 
             return MslCompilation{{
                 std::move(msl),
-                r.tintOptions.remapped_entry_point_name,
+                r.tintOptions->remapped_entry_point_name,
                 result->needs_storage_buffer_sizes,
                 result->has_invariant_attribute,
                 std::move(result->workgroup_info.allocations),
@@ -414,43 +431,23 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
         std::ostringstream dumpedMsg;
         dumpedMsg << "/* Dumped generated MSL */\n" << mslCompilation->msl;
         device->EmitLog(wgpu::LoggingType::Info, dumpedMsg.str().c_str());
+        ErrorLog() << dumpedMsg.str();
     }
 
     return mslCompilation;
 }
 
-}  // namespace
-
-MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
-                                        const ProgrammableStage& programmableStage,
-                                        const PipelineLayout* layout,
-                                        ShaderModule::MetalFunctionData* out,
-                                        uint32_t sampleMask,
-                                        const RenderPipeline* renderPipeline) {
-    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "metal::ShaderModule::CreateFunction",
-                 "label", utils::GetLabelForTrace(GetLabel()));
-
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(out);
-
-    const char* entryPointName = programmableStage.entryPoint.c_str();
-
-    // Vertex stages must specify a renderPipeline
-    if (stage == SingleShaderStage::Vertex) {
-        DAWN_ASSERT(renderPipeline != nullptr);
-    }
-
+ResultOrError<MetalFunctionData> LoadEntryPointFunction(
+    DeviceBase* device,
+    ShaderModuleBase::ScopedUseTintProgram useTintProgram,
+    const MetalShaderParams& params,
+    const std::string& label) {
     CacheResult<MslCompilation> mslCompilation;
-    DAWN_TRY_ASSIGN(
-        mslCompilation,
-        TranslateToMSL(GetDevice(), programmableStage, stage, layout, sampleMask, renderPipeline,
-                       GetEntryPoint(entryPointName).bindings, GetStrictMath().value_or(false)));
-
-    out->needsStorageBufferLength = mslCompilation->needsStorageBufferLength;
-    out->workgroupAllocations = std::move(mslCompilation->workgroupAllocations);
-    out->localWorkgroupSize = MTLSizeMake(mslCompilation->localWorkgroupSize.width,
-                                          mslCompilation->localWorkgroupSize.height,
-                                          mslCompilation->localWorkgroupSize.depthOrArrayLayers);
+    {
+        TRACE_EVENT1(device->GetPlatform(), General, "metal::ShaderModule::TranslateToMSL", "label",
+                     utils::GetLabelForTrace(label));
+        DAWN_TRY_ASSIGN(mslCompilation, TranslateToMSL(device, useTintProgram, params));
+    }
 
     NSRef<NSString> mslSource =
         AcquireNSRef([[NSString alloc] initWithUTF8String:mslCompilation->msl.c_str()]);
@@ -471,43 +468,38 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
 // minimum support macOS version is macOS 15.0.
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        (*compileOptions).fastMathEnabled = !GetStrictMath().value_or(false);
+        (*compileOptions).fastMathEnabled = !params.useStrictMath;
 #pragma clang diagnostic pop
     }
 
-    auto mtlDevice = ToBackend(GetDevice())->GetMTLDevice();
+    auto mtlDevice = ToBackend(device)->GetMTLDevice();
+    platform::metrics::DawnHistogramTimer timer(device->GetPlatform());
+
     NSError* error = nullptr;
-
-    NSPRef<id<MTLLibrary>> library;
-    platform::metrics::DawnHistogramTimer timer(GetDevice()->GetPlatform());
-    {
-        TRACE_EVENT0(GetDevice()->GetPlatform(), General, "MTLDevice::newLibraryWithSource");
-        library = AcquireNSPRef([mtlDevice newLibraryWithSource:mslSource.Get()
-                                                        options:compileOptions.Get()
-                                                          error:&error]);
-    }
-
-    if (error != nullptr) {
-        // clang-format formats the `mslCompilation->msl` below oddly as `mslCompilation -> msl`.
+    NSPRef<id<MTLLibrary>> library =
+        AcquireNSPRef([mtlDevice newLibraryWithSource:mslSource.Get()
+                                              options:compileOptions.Get()
+                                                error:&error]);
+    if (!library) {
+        // clang-format formats `mslCompilation->msl` below oddly as `mslCompilation -> msl`.
         // clang-format off
-        DAWN_INVALID_IF(error.code != MTLLibraryErrorCompileWarning,
-                        "ShaderModuleMTL: Unable to create library object: %s from "
-                        "produced MSL shader below:\n\n%s",
-                        [error.localizedDescription UTF8String], mslCompilation->msl);
+        return DAWN_FORMAT_INTERNAL_ERROR("ShaderModuleMTL: Unable to create library object: %s "
+                                          "from produced MSL source below:\n\n%s",
+                                          [error.localizedDescription UTF8String],
+                                          mslCompilation->msl);
         // clang-format on
     }
-    DAWN_ASSERT(library != nil);
     timer.RecordMicroseconds("Metal.newLibraryWithSource.CacheMiss");
 
-    NSRef<NSString> name = AcquireNSRef(
-        [[NSString alloc] initWithUTF8String:mslCompilation->remappedEntryPointName.c_str()]);
-
+    NSRef<NSString> mslEntryPointName =
+        [NSString stringWithUTF8String:mslCompilation->remappedEntryPointName.c_str()];
+    NSPRef<id<MTLFunction>> entryPointFunction;
     {
-        TRACE_EVENT0(GetDevice()->GetPlatform(), General, "MTLLibrary::newFunctionWithName");
-        out->function = AcquireNSPRef([*library newFunctionWithName:name.Get()]);
+        TRACE_EVENT0(device->GetPlatform(), General, "MTLLibrary::newFunctionWithName");
+        entryPointFunction = AcquireNSPRef([*library newFunctionWithName:mslEntryPointName.Get()]);
         // TODO(372181030): Remove this unnecessary check when we understand why the MTLFunction
         // might be nil here.
-        if (out->function == nil) {
+        if (!entryPointFunction) {
             std::string availableFunctions;
             for (NSString* fn : [*library functionNames]) {
                 availableFunctions += "\n - \"";
@@ -520,19 +512,126 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
         }
     }
 
-    std::ostringstream labelStream;
-    labelStream << GetLabel() << "::" << entryPointName;
-    SetDebugName(GetDevice(), out->function.Get(), "Dawn_ShaderModule", labelStream.str());
-    GetDevice()->GetBlobCache()->EnsureStored(mslCompilation);
+    std::string functionLabel = absl::StrFormat("%s::%s", label, params.entryPointName);
+    SetDebugName(device, entryPointFunction.Get(), "Dawn_ShaderModule", functionLabel);
 
-    if (GetDevice()->IsToggleEnabled(Toggle::MetalEnableVertexPulling) &&
-        GetEntryPoint(entryPointName).usedVertexInputs.any()) {
-        out->needsStorageBufferLength = true;
+    device->GetBlobCache()->EnsureStored(mslCompilation);
+
+    MetalFunctionData result;
+    result.needsStorageBufferLength = mslCompilation->needsStorageBufferLength;
+    result.workgroupAllocations = std::move(mslCompilation->workgroupAllocations);
+    result.localWorkgroupSize = MTLSizeMake(mslCompilation->localWorkgroupSize.width,
+                                            mslCompilation->localWorkgroupSize.height,
+                                            mslCompilation->localWorkgroupSize.depthOrArrayLayers);
+    result.function = std::move(entryPointFunction);
+    if (device->IsToggleEnabled(Toggle::MetalEnableVertexPulling) &&
+        useTintProgram->GetEntryPoint(params.entryPointName).usedVertexInputs.any()) {
+        result.needsStorageBufferLength = true;
+    }
+    // For emitting MSL in error message if render pipeline creation fails.
+    result.msl = std::move(mslSource);
+
+    return result;
+}
+
+}  // namespace
+
+MetalShaderLibrary::MetalShaderLibrary(Device* device,
+                                       MetalShaderParams params,
+                                       std::string_view label)
+    : mDevice(device), mParams(params), mLabel(label) {
+    SetContentHash(ComputeContentHash());
+}
+
+MetalShaderLibrary::~MetalShaderLibrary() = default;
+
+void MetalShaderLibrary::DeleteThis() {
+    ContentLessObjectCacheable::Uncache();
+    RefCounted::DeleteThis();
+}
+
+void MetalShaderLibrary::LoadEntryPoint(ShaderModuleBase::ScopedUseTintProgram useTintProgram,
+                                        LoadEntryPointCallback callback) {
+    TRACE_EVENT1(mDevice->GetPlatform(), General, "MetalShaderLibrary::LoadEntryPoint", "label",
+                 utils::GetLabelForTrace(mLabel));
+    auto copyResult = [](std::optional<MetalFunctionData>& result,
+                         std::unique_ptr<ErrorData>& error) -> ResultOrError<MetalFunctionData> {
+        if (result.has_value()) [[likely]] {
+            return ResultOrError<MetalFunctionData>(result.value());
+        }
+        return ResultOrError<MetalFunctionData>(std::make_unique<ErrorData>(*error.get()));
+    };
+
+    std::optional<ResultOrError<MetalFunctionData>> readyResult;
+    {
+        Mutex::AutoLock lock(&mMutex);
+        if (mResultState == ResultState::kPending) {
+            ErrorLog() << "Pending library cache hit: " << mLabel;
+            mPendingCallbacks.push_back(std::move(callback));
+            return;
+        }
+        if (mResultState == ResultState::kNotStarted) {
+            ErrorLog() << "Not started library cache miss: " << mLabel;
+            mResultState = ResultState::kPending;
+        } else {
+            ErrorLog() << "Ready library cache hit: " << mLabel;
+            DAWN_ASSERT(mResultState == ResultState::kReady);
+            readyResult = copyResult(mResult, mError);
+        }
     }
 
-    // For emitting MSL in error message if render pipeline creation fails.
-    out->msl = std::move(mslCompilation->msl);
+    if (readyResult) {
+        callback(std::move(readyResult.value()));
+        return;
+    }
 
-    return {};
+    auto result = LoadEntryPointFunction(mDevice, std::move(useTintProgram), mParams, mLabel);
+
+    std::optional<MetalFunctionData> resultData;
+    std::unique_ptr<ErrorData> resultError;
+
+    if (result.IsSuccess()) [[likely]] {
+        resultData = result.AcquireSuccess();
+    } else {
+        resultError = result.AcquireError();
+    }
+
+    auto syncResult = copyResult(resultData, resultError);
+
+    {
+        Mutex::AutoLock lock(&mMutex);
+        mResultState = ResultState::kReady;
+        mResult = std::move(resultData);
+        mError = std::move(resultError);
+        for (auto& pendingCallback : mPendingCallbacks) {
+            auto asyncResult =
+                std::make_shared<ResultOrError<MetalFunctionData>>(copyResult(mResult, mError));
+            auto asyncTask = [asyncCallback = std::move(pendingCallback),
+                              asyncResult = std::move(asyncResult)]() {
+                asyncCallback(std::move(*asyncResult));
+            };
+            mDevice->GetAsyncTaskManager()->PostTask(std::move(asyncTask));
+        }
+        mPendingCallbacks.clear();
+    }
+
+    callback(std::move(syncResult));
 }
+
+ResultOrError<MetalFunctionData> LoadShaderEntryPoint(PipelineBase* pipeline,
+                                                      SingleShaderStage stage) {
+    DeviceBase* device = pipeline->GetDevice();
+    ShaderModuleBase* shaderModule = pipeline->GetStage(stage).module.Get();
+
+    DAWN_ASSERT(!shaderModule->IsError());
+
+    TRACE_EVENT1(device->GetPlatform(), General, "metal::ShaderModule::CreateFunction", "label",
+                 utils::GetLabelForTrace(shaderModule->GetLabel()));
+
+    MetalShaderParams params = ComputeShaderParams(pipeline, stage);
+
+    return LoadEntryPointFunction(device, shaderModule->UseTintProgram(), params,
+                                  shaderModule->GetLabel());
+}
+
 }  // namespace dawn::native::metal
