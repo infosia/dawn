@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7718c096_4eaedd49",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-01T11:01:06Z",
+      "side": 1,
+      "message": "In its current version, all prebuilt binaries for iOS/Android are successfully built. We would like to use this as the source of truth for React Native WebGPU. Thank you for your help and support on this, especially with the new DAWN_BUILD_MONOLITHIC_LIBRARY and BUILD_SHARED_LIBS\u003dOFF options. Would you like to merge this now, or should we first address the other build failures on main? (There\u0027s one macOS-related issue and some others I haven\u0027t looked at yet.)",
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
