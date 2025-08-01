@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bffaff3_09274ac2",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-01T22:34:30Z",
+      "side": 1,
+      "message": "Ya this was a stale commit when it was in core/ir (spec is i32/u32)",
+      "parentUuid": "7c8bc1f0_acc3c6fd",
+      "revId": "f77fb952e16a9170dbdf7b6f2f1f4d227ac5a26d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "82b8ca4b_4cf270e1",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-08-01T21:48:02Z",
       "side": 1,
       "message": "Nit: Could just set the arg in the lambda, also you know it must be u32.\n\n```suggestion\n            b.InsertBefore(builtin, [\u0026] {\n                auto* clamp_via_masking_and \u003d\n                    b.And\u003cu32\u003e(shuffle_id, mask_max_subgroup_size);\n                builtin-\u003eSetArg(1, clamp_via_masking_and-\u003eResult());\n            });\n```",
+      "range": {
+        "startLine": 1114,
+        "startChar": 0,
+        "endLine": 1119,
+        "endChar": 64
+      },
+      "revId": "f77fb952e16a9170dbdf7b6f2f1f4d227ac5a26d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0556278b_edfdd438",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-01T22:34:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82b8ca4b_4cf270e1",
       "range": {
         "startLine": 1114,
         "startChar": 0,
