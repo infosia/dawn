@@ -3,6 +3,178 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "0aa2c3be_8c499df7",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 24
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-01T18:55:45Z",
+      "side": 1,
+      "message": "This is fine for now, but it\u0027s surprising to build the Android builds on Mac. I\u0027m not sure if the Mac builders cost money or are slower due to limited capacity, but if so then it would be preferable to do these on Linux.",
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "564aa03d_5abc98e7",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 24
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-01T18:55:45Z",
+      "side": 1,
+      "message": "Please fix all of these trailing whitespace warnings",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 2
+      },
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa14e444_a4a3476d",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 24
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-01T18:55:45Z",
+      "side": 1,
+      "message": "This should pin a version instead of using master. That said, according to the README this is not needed because ninja is preinstalled? https://github.com/seanmiddleditch/gha-setup-ninja",
+      "range": {
+        "startLine": 224,
+        "startChar": 46,
+        "endLine": 224,
+        "endChar": 52
+      },
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5db358e_bb0e0c24",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 24
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-01T18:55:45Z",
+      "side": 1,
+      "message": "This should also pin a revision. (Use a Git hash rather than a tag since the hash is more permanent/verifiable.)",
+      "range": {
+        "startLine": 231,
+        "startChar": 69,
+        "endLine": 231,
+        "endChar": 75
+      },
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ec498ec_19e6ace5",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 24
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-01T18:55:45Z",
+      "side": 1,
+      "message": "nit: Put most of this config in a file similar to `dawn-ci.cmake` (or maybe even better, it can be in the same file by making it conditional on the target platform)",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 40
+      },
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3161ed0e_c5fe754c",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 24
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-01T18:55:45Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 286,
+        "startChar": 46,
+        "endLine": 286,
+        "endChar": 52
+      },
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fbef628_d8efee7a",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 24
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-01T18:55:45Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 295,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 40
+      },
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1fd0f5f_1d3320f1",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 24
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-01T18:55:45Z",
+      "side": 1,
+      "message": "This puts dawn.json in the include path, which it probably shouldn\u0027t be. I think there should be a directory called `include` inside the package which is the include dir.\n\naside: I don\u0027t want to give the impression that dawn.json is stable at all. This is probably not a concern though since webgpu_cpp.h and the Dawn extensions in dawn/webgpu.h are not stable either. I have filed https://crbug.com/435623330 about it.",
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "7718c096_4eaedd49",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 24
@@ -31,6 +203,24 @@
       "writtenOn": "2025-08-01T11:01:26Z",
       "side": 1,
       "message": "iOS/Android are green now 💚",
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5efbe4e9_81ddfbdb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-01T18:55:45Z",
+      "side": 1,
+      "message": "We definitely don\u0027t need to fix all of the CI at once, incremental progress is great!",
+      "parentUuid": "7718c096_4eaedd49",
       "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
