@@ -31,6 +31,7 @@
 #include "dawn/native/RenderPipeline.h"
 
 #include "dawn/common/NSRef.h"
+#include "dawn/native/metal/ShaderModuleMTL.h"
 
 #import <Metal/Metal.h>
 
@@ -63,20 +64,35 @@ class RenderPipeline final : public RenderPipelineBase {
 
     MaybeError InitializeImpl() override;
 
+    void InitializeAsync(std::function<void(MaybeError)> completionCallback) override;
+
   private:
     using RenderPipelineBase::RenderPipelineBase;
+
+    void OnVertexShaderFunctionLoaded(ResultOrError<MetalFunctionData>);
+    void OnFragmentShaderFunctionLoaded(ResultOrError<MetalFunctionData>);
+
+    MaybeError FinishInitialize();
 
     NSRef<MTLVertexDescriptor> MakeVertexDesc() const;
     NSRef<MTLDepthStencilDescriptor> MakeDepthStencilDesc();
 
-    MTLPrimitiveType mMtlPrimitiveTopology;
-    MTLWinding mMtlFrontFace;
-    MTLCullMode mMtlCullMode;
+    const MTLPrimitiveType mMtlPrimitiveTopology;
+    const MTLWinding mMtlFrontFace;
+    const MTLCullMode mMtlCullMode;
+    const PerVertexBuffer<uint32_t> mMtlVertexBufferIndices;
+
     NSPRef<id<MTLRenderPipelineState>> mMtlRenderPipelineState;
     NSPRef<id<MTLDepthStencilState>> mMtlDepthStencilState;
-    PerVertexBuffer<uint32_t> mMtlVertexBufferIndices;
 
     wgpu::ShaderStage mStagesRequiringStorageBufferLength = wgpu::ShaderStage::None;
+
+    std::optional<MetalFunctionData> mVertexFunctionData;
+    std::optional<MetalFunctionData> mFragmentFunctionData;
+
+    Ref<MetalShaderLibrary> mVertexShaderLibrary;
+    Ref<MetalShaderLibrary> mFragmentShaderLibrary;
+    std::function<void(MaybeError)> mPendingInitializeCallback;
 };
 
 }  // namespace dawn::native::metal

@@ -30,8 +30,10 @@
 
 #include <memory>
 #include <string>
+#include <tuple>
 #include <vector>
 
+#include "absl/strings/escaping.h"
 #include "dawn/native/ShaderModule.h"
 
 #include "dawn/common/NSRef.h"
@@ -49,6 +51,81 @@ class Device;
 class PipelineLayout;
 class RenderPipeline;
 
+struct MetalShaderParams {
+    SingleShaderStage stage;
+    ShaderModuleBase::ShaderModuleHash shaderModuleHash;
+    std::string entryPointName;
+    PipelineConstantEntries pipelineConstants;
+    tint::msl::writer::Options tintOptions;
+    bool useStrictMath;
+
+    bool operator==(const MetalShaderParams& other) const {
+        return std::tie(stage, shaderModuleHash, entryPointName, pipelineConstants, tintOptions,
+                        useStrictMath) == std::tie(other.stage, other.shaderModuleHash,
+                                                   other.entryPointName, other.pipelineConstants,
+                                                   other.tintOptions, other.useStrictMath);
+    }
+
+    template <typename H>
+    friend H AbslHashValue(H state, const MetalShaderParams& params) {
+        return H::combine(std::move(state), params.stage, params.shaderModuleHash,
+                          params.entryPointName, params.pipelineConstants,
+                          params.tintOptions.HashCode(), params.useStrictMath);
+    }
+};
+
+struct MetalFunctionData {
+    NSRef<NSString> msl;
+    NSPRef<id<MTLFunction>> function;
+    bool needsStorageBufferLength;
+    std::vector<uint32_t> workgroupAllocations;
+    MTLSize localWorkgroupSize;
+};
+
+MetalShaderParams ComputeShaderParams(PipelineBase* pipeline, SingleShaderStage stage);
+
+ResultOrError<MetalFunctionData> LoadShaderEntryPoint(PipelineBase* pipeline,
+                                                      SingleShaderStage stage);
+
+class MetalShaderLibrary : public RefCounted,
+                           public CachedObject,
+                           public ContentLessObjectCacheable<MetalShaderLibrary> {
+  public:
+    MetalShaderLibrary(Device* device, MetalShaderParams params, std::string_view label);
+
+    using LoadEntryPointCallback = std::function<void(ResultOrError<MetalFunctionData>)>;
+    void LoadEntryPoint(ShaderModuleBase::ScopedUseTintProgram useTintProgram,
+                        LoadEntryPointCallback callback);
+
+    // For ContentLessObjectCache:
+    size_t ComputeContentHash() override { return absl::HashOf(mParams); }
+
+    struct EqualityFunc {
+        bool operator()(const MetalShaderLibrary* lhs, const MetalShaderLibrary* rhs) const {
+            return lhs->mParams == rhs->mParams;
+        }
+    };
+
+  private:
+    ~MetalShaderLibrary() override;
+    void DeleteThis() override;
+
+    const raw_ptr<Device> mDevice;
+    const MetalShaderParams mParams;
+    const std::string mLabel;
+
+    Mutex mMutex;
+    enum class ResultState {
+        kNotStarted,
+        kPending,
+        kReady,
+    };
+    ResultState mResultState = ResultState::kNotStarted;
+    std::optional<MetalFunctionData> mResult;
+    std::unique_ptr<ErrorData> mError;
+    std::vector<LoadEntryPointCallback> mPendingCallbacks;
+};
+
 class ShaderModule final : public ShaderModuleBase {
   public:
     static ResultOrError<Ref<ShaderModule>> Create(
@@ -56,21 +133,6 @@ class ShaderModule final : public ShaderModuleBase {
         const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
         const std::vector<tint::wgsl::Extension>& internalExtensions,
         ShaderModuleParseResult* parseResult);
-
-    struct MetalFunctionData {
-        std::string msl;
-        NSPRef<id<MTLFunction>> function;
-        bool needsStorageBufferLength;
-        std::vector<uint32_t> workgroupAllocations;
-        MTLSize localWorkgroupSize;
-    };
-
-    MaybeError CreateFunction(SingleShaderStage stage,
-                              const ProgrammableStage& programmableStage,
-                              const PipelineLayout* layout,
-                              MetalFunctionData* out,
-                              uint32_t sampleMask = 0xFFFFFFFF,
-                              const RenderPipeline* renderPipeline = nullptr);
 
   private:
     ShaderModule(Device* device,
