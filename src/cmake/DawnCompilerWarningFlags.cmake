@@ -37,8 +37,23 @@ if (DAWN_WERROR)
       INTERFACE
         "-Werror"
     )
-  endif ()
-endif ()
+  endif()
+endif()
+if (DAWN_WEVERYTHING)
+  if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    target_compile_options(dawn_warnings_config
+      INTERFACE
+        "-Weverything"
+        "-Wno-c++98-compat"
+        "-Wno-c++98-compat-pedantic"
+        "-Wno-padded"
+        "-Wno-unsafe-buffer-usage"
+        "-Wno-covered-switch-default"
+        "-Wno-global-constructors"
+        "-Wno-poison-system-directories"
+    )
+  endif()
+endif()
 
 # Flags that might not be supported in every version of a compiler.
 
@@ -77,6 +92,7 @@ dawn_add_flag("-Wimplicit-fallthrough" ${langs})
 dawn_add_flag("-Winconsistent-missing-destructor-override" ${langs})
 dawn_add_flag("-Winvalid-offsetof" ${langs})
 dawn_add_flag("-Wmissing-field-initializers" ${langs})
+dawn_add_flag("-Wmissing-include-dirs" ${langs})
 dawn_add_flag("-Wnon-c-typedef-for-linkage" ${langs})
 dawn_add_flag("-Wpessimizing-move" ${langs})
 dawn_add_flag("-Wrange-loop-analysis" ${langs})

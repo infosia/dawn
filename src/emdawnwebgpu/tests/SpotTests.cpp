@@ -64,15 +64,15 @@ class SpotTests : public testing::Test {
         wgpu::DeviceDescriptor deviceDesc;
         deviceDesc.requiredFeatureCount = kFeatures.size();
         deviceDesc.requiredFeatures = kFeatures.data();
-        wgpu::Device device;
+        wgpu::Device _device;
         EXPECT_EQ(wgpu::WaitStatus::Success,
                   instance.WaitAny(
                       adapter.RequestDevice(&deviceDesc, wgpu::CallbackMode::WaitAnyOnly,
-                                            [&device](wgpu::RequestDeviceStatus, wgpu::Device d,
-                                                      wgpu::StringView) { device = std::move(d); }),
+                                            [&_device](wgpu::RequestDeviceStatus, wgpu::Device d,
+                                                      wgpu::StringView) { _device = std::move(d); }),
                       UINT64_MAX));
-        EXPECT_TRUE(device);
-        this->device = device;
+        EXPECT_TRUE(_device);
+        this->device = _device;
     }
 
   protected:

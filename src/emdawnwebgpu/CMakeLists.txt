@@ -280,16 +280,6 @@ if (EMSCRIPTEN)
     )
 
     if (${DAWN_BUILD_TESTS})
-        set(emdawnwebgpu_test_sources
-            "tests/FuturesTests.cpp"
-            "tests/SpotTests.cpp"
-        )
-        set(emdawnwebgpu_test_deps
-            dawn::dawn_wgpu_utils
-            emdawnwebgpu_cpp
-            gmock_main_wasmsafe
-        )
-
         add_library(emdawnwebgpu_test_linkopts INTERFACE)
         target_link_options(emdawnwebgpu_test_linkopts
             INTERFACE
@@ -311,8 +301,15 @@ if (EMSCRIPTEN)
         target_link_libraries(
             emdawnwebgpu_tests
             PUBLIC
+                dawn_warnings_config
                 emdawnwebgpu_test_linkopts
-                ${emdawnwebgpu_test_deps}
+                emdawnwebgpu_cpp
+                gmock_main_wasmsafe
+        )
+
+        set(emdawnwebgpu_test_sources
+            "tests/FuturesTests.cpp"
+            "tests/SpotTests.cpp"
         )
 
         add_executable(emdawnwebgpu_tests_asyncify ${emdawnwebgpu_test_sources})

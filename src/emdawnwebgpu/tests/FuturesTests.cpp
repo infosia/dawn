@@ -67,7 +67,7 @@ class InstanceLevelTests : public testing::Test {
                       instance.RequestAdapter(
                           adapterOptions, wgpu::CallbackMode::AllowSpontaneous,
                           [&status, &result](wgpu::RequestAdapterStatus s, wgpu::Adapter adapter,
-                                             wgpu::StringView message) {
+                                             wgpu::StringView) {
                               status = s;
                               result = std::move(adapter);
                           }),
@@ -99,7 +99,7 @@ class AdapterLevelTests : public InstanceLevelTests {
             instance.WaitAny(adapter.RequestDevice(
                                  descriptor, wgpu::CallbackMode::AllowSpontaneous,
                                  [&status, &result](wgpu::RequestDeviceStatus s,
-                                                    wgpu::Device device, wgpu::StringView message) {
+                                                    wgpu::Device device, wgpu::StringView) {
                                      status = s;
                                      result = std::move(device);
                                  }),

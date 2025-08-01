@@ -214,7 +214,7 @@ class {{OptionalBoolCppType}} {
 // TODO(crbug.com/42241199): Remove when all callers check the enum.
 struct ConvertibleStatus {
     // NOLINTNEXTLINE(runtime/explicit) allow implicit construction
-    constexpr ConvertibleStatus(Status status) : status(status) {}
+    constexpr ConvertibleStatus(Status _status) : status(_status) {}
     // NOLINTNEXTLINE(runtime/explicit) allow implicit conversion
     constexpr operator bool() const {
         return status == Status::Success;
@@ -252,13 +252,13 @@ class ObjectBase {
 
     ObjectBase(ObjectBase&& other) {
         mHandle = other.mHandle;
-        other.mHandle = 0;
+        other.mHandle = nullptr;
     }
     Derived& operator=(ObjectBase&& other) {
         if (&other != this) {
             if (mHandle) Derived::{{c_prefix}}Release(mHandle);
             mHandle = other.mHandle;
-            other.mHandle = 0;
+            other.mHandle = nullptr;
         }
 
         return static_cast<Derived&>(*this);
@@ -288,7 +288,7 @@ class ObjectBase {
     }
     CType MoveToCHandle() {
         CType result = mHandle;
-        mHandle = 0;
+        mHandle = nullptr;
         return result;
     }
     static Derived Acquire(CType handle) {
@@ -516,7 +516,7 @@ struct StringViewAdapter {
     WGPUStringView sv;
     char* nullTerminated = nullptr;
 
-    StringViewAdapter(WGPUStringView sv) : sv(sv) {}
+    StringViewAdapter(WGPUStringView _sv) : sv(_sv) {}
     ~StringViewAdapter() { delete[] nullTerminated; }
     operator ::WGPUStringView() { return sv; }
     operator StringView() { return {sv.data, sv.length}; }
