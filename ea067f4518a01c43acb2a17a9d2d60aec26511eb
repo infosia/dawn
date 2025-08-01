@@ -22,6 +22,30 @@
       },
       "revId": "ea067f4518a01c43acb2a17a9d2d60aec26511eb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba25d3ac_5e27a55e",
+        "filename": "src/tint/lang/wgsl/writer/ir_to_program/ir_to_program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-01T12:48:45Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "09ca4e40_570cc5b3",
+      "range": {
+        "startLine": 1095,
+        "startChar": 0,
+        "endLine": 1097,
+        "endChar": 13
+      },
+      "revId": "ea067f4518a01c43acb2a17a9d2d60aec26511eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
