@@ -63,15 +63,14 @@ class InstanceLevelTests : public testing::Test {
 
         wgpu::RequestAdapterStatus status;
         wgpu::Adapter result = nullptr;
-        EXPECT_EQ(instance.WaitAny(
-                      instance.RequestAdapter(
-                          adapterOptions, wgpu::CallbackMode::AllowSpontaneous,
-                          [&status, &result](wgpu::RequestAdapterStatus s, wgpu::Adapter adapter,
-                                             wgpu::StringView message) {
-                              status = s;
-                              result = std::move(adapter);
-                          }),
-                      UINT64_MAX),
+        EXPECT_EQ(instance.WaitAny(instance.RequestAdapter(
+                                       adapterOptions, wgpu::CallbackMode::AllowSpontaneous,
+                                       [&status, &result](wgpu::RequestAdapterStatus s,
+                                                          wgpu::Adapter adapter, wgpu::StringView) {
+                                           status = s;
+                                           result = std::move(adapter);
+                                       }),
+                                   UINT64_MAX),
                   wgpu::WaitStatus::Success);
         EXPECT_EQ(status, wgpu::RequestAdapterStatus::Success);
         return result;
@@ -95,16 +94,15 @@ class AdapterLevelTests : public InstanceLevelTests {
     wgpu::Device RequestDevice(const wgpu::DeviceDescriptor* descriptor = nullptr) {
         wgpu::RequestDeviceStatus status;
         wgpu::Device result = nullptr;
-        EXPECT_EQ(
-            instance.WaitAny(adapter.RequestDevice(
-                                 descriptor, wgpu::CallbackMode::AllowSpontaneous,
-                                 [&status, &result](wgpu::RequestDeviceStatus s,
-                                                    wgpu::Device device, wgpu::StringView message) {
-                                     status = s;
-                                     result = std::move(device);
-                                 }),
-                             UINT64_MAX),
-            wgpu::WaitStatus::Success);
+        EXPECT_EQ(instance.WaitAny(adapter.RequestDevice(
+                                       descriptor, wgpu::CallbackMode::AllowSpontaneous,
+                                       [&status, &result](wgpu::RequestDeviceStatus s,
+                                                          wgpu::Device device, wgpu::StringView) {
+                                           status = s;
+                                           result = std::move(device);
+                                       }),
+                                   UINT64_MAX),
+                  wgpu::WaitStatus::Success);
         EXPECT_EQ(status, wgpu::RequestDeviceStatus::Success);
         return result;
     }
