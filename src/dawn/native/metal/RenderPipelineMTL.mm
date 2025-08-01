@@ -28,6 +28,7 @@
 #include "dawn/native/metal/RenderPipelineMTL.h"
 
 #include "dawn/native/Adapter.h"
+#include "dawn/native/AsyncTask.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/metal/BackendMTL.h"
@@ -36,7 +37,9 @@
 #include "dawn/native/metal/ShaderModuleMTL.h"
 #include "dawn/native/metal/TextureMTL.h"
 #include "dawn/native/metal/UtilsMetal.h"
+#include "dawn/native/utils/WGPUHelpers.h"
 #include "dawn/platform/metrics/HistogramMacros.h"
+#include "dawn/platform/tracing/TraceEvent.h"
 
 namespace dawn::native::metal {
 
@@ -327,6 +330,20 @@ MTLCullMode ToMTLCullMode(wgpu::CullMode mode) {
     DAWN_UNREACHABLE();
 }
 
+// Build a mapping of vertex buffer slots to packed indices
+PerVertexBuffer<uint32_t> ComputeMetalVertexBufferIndices(PipelineLayoutBase* layout,
+                                                          VertexBufferMask vertexBuffersUsed) {
+    // Vertex buffers are placed after all the buffers for the bind groups.
+    uint32_t vertexBufferIndex =
+        ToBackend(layout)->GetBufferBindingCount(SingleShaderStage::Vertex);
+    PerVertexBuffer<uint32_t> vertexBufferIndices;
+    for (VertexBufferSlot slot : vertexBuffersUsed) {
+        vertexBufferIndices[slot] = vertexBufferIndex;
+        vertexBufferIndex++;
+    }
+    return vertexBufferIndices;
+}
+
 }  // anonymous namespace
 
 // static
@@ -336,26 +353,20 @@ Ref<RenderPipelineBase> RenderPipeline::CreateUninitialized(
     return AcquireRef(new RenderPipeline(device, descriptor));
 }
 
-RenderPipeline::RenderPipeline(DeviceBase* dev, const UnpackedPtr<RenderPipelineDescriptor>& desc)
-    : RenderPipelineBase(dev, desc) {}
+RenderPipeline::RenderPipeline(DeviceBase* device,
+                               const UnpackedPtr<RenderPipelineDescriptor>& desc)
+    : RenderPipelineBase(device, desc),
+      mMtlPrimitiveTopology(MTLPrimitiveTopology(GetPrimitiveTopology())),
+      mMtlFrontFace(MTLFrontFace(GetFrontFace())),
+      mMtlCullMode(ToMTLCullMode(GetCullMode())),
+      mMtlVertexBufferIndices(
+          ComputeMetalVertexBufferIndices(GetLayout(), GetVertexBuffersUsed())) {}
 
 RenderPipeline::~RenderPipeline() = default;
 
-MaybeError RenderPipeline::InitializeImpl() {
-    mMtlPrimitiveTopology = MTLPrimitiveTopology(GetPrimitiveTopology());
-    mMtlFrontFace = MTLFrontFace(GetFrontFace());
-    mMtlCullMode = ToMTLCullMode(GetCullMode());
-    // Build a mapping of vertex buffer slots to packed indices
-    {
-        // Vertex buffers are placed after all the buffers for the bind groups.
-        uint32_t mtlVertexBufferIndex =
-            ToBackend(GetLayout())->GetBufferBindingCount(SingleShaderStage::Vertex);
-
-        for (VertexBufferSlot slot : GetVertexBuffersUsed()) {
-            mMtlVertexBufferIndices[slot] = mtlVertexBufferIndex;
-            mtlVertexBufferIndex++;
-        }
-    }
+MaybeError RenderPipeline::FinishInitialize() {
+    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "metal::RenderPipeline::FinishInitialize",
+                 "label", utils::GetLabelForTrace(GetLabel()));
 
     auto mtlDevice = ToBackend(GetDevice())->GetMTLDevice();
 
@@ -378,33 +389,21 @@ MaybeError RenderPipeline::InitializeImpl() {
     }
     descriptorMTL.vertexDescriptor = vertexDesc.Get();
 
-    const PerStage<ProgrammableStage>& allStages = GetAllStages();
-    const ProgrammableStage& vertexStage = allStages[wgpu::ShaderStage::Vertex];
-    ShaderModule::MetalFunctionData vertexData;
-    DAWN_TRY_CONTEXT(ToBackend(vertexStage.module.Get())
-                         ->CreateFunction(SingleShaderStage::Vertex, vertexStage,
-                                          ToBackend(GetLayout()), &vertexData, 0xFFFFFFFF, this),
-                     " getting vertex MTLFunction for %s", this);
-
-    descriptorMTL.vertexFunction = vertexData.function.Get();
-    if (vertexData.needsStorageBufferLength) {
+    DAWN_ASSERT(mVertexFunctionData);
+    descriptorMTL.vertexFunction = mVertexFunctionData->function.Get();
+    if (mVertexFunctionData->needsStorageBufferLength) {
         mStagesRequiringStorageBufferLength |= wgpu::ShaderStage::Vertex;
     }
 
-    ShaderModule::MetalFunctionData fragmentData;
-    if (GetStageMask() & wgpu::ShaderStage::Fragment) {
-        const ProgrammableStage& fragmentStage = allStages[wgpu::ShaderStage::Fragment];
-        DAWN_TRY_CONTEXT(
-            ToBackend(fragmentStage.module.Get())
-                ->CreateFunction(SingleShaderStage::Fragment, fragmentStage, ToBackend(GetLayout()),
-                                 &fragmentData, GetSampleMask(), this),
-            " getting fragment MTLFunction for %s", this);
+    if (HasStage(SingleShaderStage::Fragment)) {
+        DAWN_ASSERT(mFragmentFunctionData);
 
-        descriptorMTL.fragmentFunction = fragmentData.function.Get();
-        if (fragmentData.needsStorageBufferLength) {
+        descriptorMTL.fragmentFunction = mFragmentFunctionData->function.Get();
+        if (mFragmentFunctionData->needsStorageBufferLength) {
             mStagesRequiringStorageBufferLength |= wgpu::ShaderStage::Fragment;
         }
 
+        const ProgrammableStage& fragmentStage = GetStage(SingleShaderStage::Fragment);
         const auto& fragmentOutputMask = fragmentStage.metadata->fragmentOutputMask;
         for (auto i : GetColorAttachmentsMask()) {
             descriptorMTL.colorAttachments[static_cast<uint8_t>(i)].pixelFormat =
@@ -467,10 +466,11 @@ MaybeError RenderPipeline::InitializeImpl() {
         AcquireNSPRef([mtlDevice newRenderPipelineStateWithDescriptor:descriptorMTL error:&error]);
     if (error != nullptr) {
         std::string errorMessage = absl::StrFormat(
-            "RenderPipelineMTL: error creating pipeline state: %s from vertex MSL:\n\n%s",
-            [error.localizedDescription UTF8String], vertexData.msl);
+            "RenderPipelineMTL: error creating pipeline stoate: %s from vertex MSL:\n\n%s",
+            [error.localizedDescription UTF8String], [*mVertexFunctionData->msl UTF8String]);
         if (GetStageMask() & wgpu::ShaderStage::Fragment) {
-            absl::StrAppendFormat(&errorMessage, "\n\nand fragment MSL:\n\n%s", fragmentData.msl);
+            absl::StrAppendFormat(&errorMessage, "\n\nand fragment MSL:\n\n%s",
+                                  [*mFragmentFunctionData->msl UTF8String]);
         }
         return DAWN_INTERNAL_ERROR(errorMessage);
     }
@@ -484,7 +484,90 @@ MaybeError RenderPipeline::InitializeImpl() {
     mMtlDepthStencilState =
         AcquireNSPRef([mtlDevice newDepthStencilStateWithDescriptor:depthStencilDesc.Get()]);
 
+    mVertexFunctionData.reset();
+    mFragmentFunctionData.reset();
+
     return {};
+}
+
+MaybeError RenderPipeline::InitializeImpl() {
+    DAWN_TRY_ASSIGN_CONTEXT(mVertexFunctionData,
+                            LoadShaderEntryPoint(this, SingleShaderStage::Vertex),
+                            " getting vertex MTLFunction for %s", this);
+
+    if (HasStage(SingleShaderStage::Fragment)) {
+        DAWN_TRY_ASSIGN_CONTEXT(mFragmentFunctionData,
+                                LoadShaderEntryPoint(this, SingleShaderStage::Fragment),
+                                " getting fragment MTLFunction for %s", this);
+    }
+
+    return FinishInitialize();
+}
+
+void RenderPipeline::OnVertexShaderFunctionLoaded(ResultOrError<MetalFunctionData> result) {
+    if (result.IsError() && mPendingInitializeCallback) {
+        mPendingInitializeCallback(result.AcquireError());
+        mPendingInitializeCallback = {};
+    }
+    mVertexFunctionData = result.AcquireSuccess();
+    if (!HasStage(SingleShaderStage::Fragment) || mFragmentFunctionData) {
+        mPendingInitializeCallback(FinishInitialize());
+        mPendingInitializeCallback = {};
+    }
+}
+
+void RenderPipeline::OnFragmentShaderFunctionLoaded(ResultOrError<MetalFunctionData> result) {
+    if (result.IsError() && mPendingInitializeCallback) {
+        mPendingInitializeCallback(result.AcquireError());
+        mPendingInitializeCallback = {};
+    }
+    mFragmentFunctionData = result.AcquireSuccess();
+    if (mVertexFunctionData) {
+        mPendingInitializeCallback(FinishInitialize());
+        mPendingInitializeCallback = {};
+    }
+}
+
+void RenderPipeline::InitializeAsync(ScopedUseShaderPrograms scopedUseShaderPrograms,
+                                     std::function<void(MaybeError)> callback) {
+    Device* device = ToBackend(GetDevice());
+
+    auto maybeError = [&]() -> MaybeError {
+        DAWN_TRY_ASSIGN(mVertexShaderLibrary,
+                        device->GetOrCreateMetalShaderLibrary(this, SingleShaderStage::Vertex));
+        if (GetStageMask() & wgpu::ShaderStage::Fragment) {
+            DAWN_TRY_ASSIGN(mFragmentShaderLibrary, device->GetOrCreateMetalShaderLibrary(
+                                                        this, SingleShaderStage::Fragment));
+        }
+        return {};
+    }();
+
+    if (maybeError.IsError()) {
+        callback(std::move(maybeError));
+        return;
+    }
+
+    mPendingInitializeCallback = std::move(callback);
+
+    auto vertexShaderCallback =
+        [pipeline = Ref<RenderPipeline>(this)](ResultOrError<MetalFunctionData> result) {
+            pipeline->OnVertexShaderFunctionLoaded(std::move(result));
+        };
+
+    auto fragmentShaderCallback =
+        [pipeline = Ref<RenderPipeline>(this)](ResultOrError<MetalFunctionData> result) {
+            pipeline->OnFragmentShaderFunctionLoaded(std::move(result));
+        };
+
+    mVertexShaderLibrary->LoadEntryPoint(
+        std::move(scopedUseShaderPrograms[SingleShaderStage::Vertex]),
+        std::move(vertexShaderCallback));
+
+    if (mFragmentShaderLibrary) {
+        mFragmentShaderLibrary->LoadEntryPoint(
+            std::move(scopedUseShaderPrograms[SingleShaderStage::Fragment]),
+            std::move(fragmentShaderCallback));
+    }
 }
 
 MTLPrimitiveType RenderPipeline::GetMTLPrimitiveTopology() const {
