@@ -69,6 +69,7 @@ class AsyncWorkerThreadPool : public dawn::platform::WorkerTaskPool, public NonC
 
     std::unique_ptr<dawn::platform::WaitableEvent> PostWorkerTask(
         dawn::platform::PostWorkerTaskCallback callback,
+        bool background,
         void* userdata) override;
 
   private:
