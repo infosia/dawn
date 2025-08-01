@@ -31,115 +31,129 @@ package oswrapper
 import (
 	"os"
 	"path/filepath"
-
-	"github.com/spf13/afero"
 )
 
+// RealOSWrapper provides a concrete implementation of OSWrapper that interacts
+// with the real operating system.
 type RealOSWrapper struct {
 	RealEnvironProvider
 	RealFilesystemReaderWriter
 }
 
+// RealEnvironProvider provides a concrete implementation of EnvironProvider.
 type RealEnvironProvider struct{}
 
+// RealFilesystemReaderWriter provides a concrete implementation of FilesystemReaderWriter.
 type RealFilesystemReaderWriter struct {
 	RealFilesystemReader
 	RealFilesystemWriter
 }
 
-// Since these take Fs interface references instead of concrete implementations,
-// we could theoretically share most of the implementation between this and
-// MemMapFilesystemReader/Writer, relying on the fact that the real one will
-// have an OsFs and the test one will with a MemMapFs. However, since afero.Fs
-// does not implement MkdirTemp or Symlink, we would need to have some
-// differences anyways. So, keep the implementations completely separate for
-// now.
-type RealFilesystemReader struct {
-	fs afero.Fs
-}
-type RealFilesystemWriter struct {
-	fs afero.Fs
-}
+// RealFilesystemReader provides a concrete implementation of FilesystemReader
+// that interacts with the real operating system.
+type RealFilesystemReader struct{}
 
+// RealFilesystemWriter provides a concrete implementation of FilesystemWriter
+// that interacts with the real operating system.
+type RealFilesystemWriter struct{}
+
+// GetRealOSWrapper creates a new RealOSWrapper that interacts with the real OS.
 func GetRealOSWrapper() RealOSWrapper {
-	filesystem := afero.NewOsFs()
 	return RealOSWrapper{
 		RealEnvironProvider{},
 		RealFilesystemReaderWriter{
-			RealFilesystemReader{
-				fs: filesystem,
-			},
-			RealFilesystemWriter{
-				fs: filesystem,
-			},
+			RealFilesystemReader{},
+			RealFilesystemWriter{},
 		},
 	}
 }
 
+// Environ returns a copy of strings representing the environment, in the form "key=value".
 func (RealEnvironProvider) Environ() []string {
 	return os.Environ()
 }
 
+// Getenv retrieves the value of the environment variable named by the key.
 func (RealEnvironProvider) Getenv(key string) string {
 	return os.Getenv(key)
 }
 
+// Getwd returns a rooted path name corresponding to the current directory.
 func (RealEnvironProvider) Getwd() (string, error) {
 	return os.Getwd()
 }
 
+// UserHomeDir returns the current user's home directory.
 func (RealEnvironProvider) UserHomeDir() (string, error) {
 	return os.UserHomeDir()
 }
 
-func (rfsr RealFilesystemReader) Open(name string) (afero.File, error) {
-	return rfsr.fs.Open(name)
+// Open opens the named file for reading.
+func (RealFilesystemReader) Open(name string) (File, error) {
+	return os.Open(name)
 }
 
-func (rfsr RealFilesystemReader) OpenFile(name string, flag int, perm os.FileMode) (afero.File, error) {
-	return rfsr.fs.OpenFile(name, flag, perm)
+// OpenFile is the generalized open call.
+func (RealFilesystemReader) OpenFile(name string, flag int, perm os.FileMode) (File, error) {
+	return os.OpenFile(name, flag, perm)
 }
 
+// ReadFile reads the file named by filename and returns the contents.
 func (RealFilesystemReader) ReadFile(name string) ([]byte, error) {
 	return os.ReadFile(name)
 }
 
+// ReadDir reads the named directory, returning all its directory entries.
+func (RealFilesystemReader) ReadDir(name string) ([]os.DirEntry, error) {
+	return os.ReadDir(name)
+}
+
+// Stat returns a FileInfo describing the named file.
 func (RealFilesystemReader) Stat(name string) (os.FileInfo, error) {
 	return os.Stat(name)
 }
 
+// Walk walks the file tree rooted at root, calling fn for each file or directory.
 func (RealFilesystemReader) Walk(root string, fn filepath.WalkFunc) error {
 	return filepath.Walk(root, fn)
 }
 
-func (rfsw RealFilesystemWriter) Create(name string) (afero.File, error) {
-	return rfsw.fs.Create(name)
+// Create creates the named file.
+func (RealFilesystemWriter) Create(name string) (File, error) {
+	return os.Create(name)
 }
 
+// Mkdir creates a new directory with the specified name and permission bits.
 func (RealFilesystemWriter) Mkdir(path string, perm os.FileMode) error {
 	return os.Mkdir(path, perm)
 }
 
+// MkdirAll creates a directory named path, along with any necessary parents.
 func (RealFilesystemWriter) MkdirAll(path string, perm os.FileMode) error {
 	return os.MkdirAll(path, perm)
 }
 
+// MkdirTemp creates a new temporary directory in the directory dir.
 func (RealFilesystemWriter) MkdirTemp(dir, pattern string) (string, error) {
 	return os.MkdirTemp(dir, pattern)
 }
 
+// Remove removes the named file or (empty) directory.
 func (RealFilesystemWriter) Remove(name string) error {
 	return os.Remove(name)
 }
 
+// RemoveAll removes path and any children it contains.
 func (RealFilesystemWriter) RemoveAll(path string) error {
 	return os.RemoveAll(path)
 }
 
+// Symlink creates newname as a symbolic link to oldname.
 func (RealFilesystemWriter) Symlink(oldname, newname string) error {
 	return os.Symlink(oldname, newname)
 }
 
+// WriteFile writes data to a file named by filename.
 func (RealFilesystemWriter) WriteFile(name string, data []byte, perm os.FileMode) error {
 	return os.WriteFile(name, data, perm)
 }

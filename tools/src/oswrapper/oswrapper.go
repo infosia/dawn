@@ -30,11 +30,20 @@
 package oswrapper
 
 import (
+	"io"
 	"os"
 	"path/filepath"
-
-	"github.com/spf13/afero"
 )
+
+// File is an interface that abstracts file operations, combining standard io interfaces.
+// This allows for mocking and using different file implementations (real vs. in-memory).
+type File interface {
+	io.Reader
+	io.Writer
+	io.Seeker
+	io.Closer
+	Stat() (os.FileInfo, error)
+}
 
 // OSWrapper is a wrapper around all filesystem and environment-related os functions.
 type OSWrapper interface {
@@ -58,16 +67,17 @@ type FilesystemReaderWriter interface {
 
 // FilesystemReader is a wrapper around the read-related filesystem os functions.
 type FilesystemReader interface {
-	Open(name string) (afero.File, error)
-	OpenFile(name string, flag int, perm os.FileMode) (afero.File, error)
+	Open(name string) (File, error)
+	OpenFile(name string, flag int, perm os.FileMode) (File, error)
 	ReadFile(name string) ([]byte, error)
+	ReadDir(name string) ([]os.DirEntry, error)
 	Stat(name string) (os.FileInfo, error)
 	Walk(root string, fn filepath.WalkFunc) error
 }
 
-// FilesystemWriter is a wrapper around the read-related filesystem os functions.
+// FilesystemWriter is a wrapper around the write-related filesystem os functions.
 type FilesystemWriter interface {
-	Create(name string) (afero.File, error)
+	Create(name string) (File, error)
 	Mkdir(path string, perm os.FileMode) error
 	MkdirAll(path string, perm os.FileMode) error
 	MkdirTemp(dir, pattern string) (string, error)
