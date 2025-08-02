@@ -22,6 +22,30 @@
       },
       "revId": "33ebdd5609e676dd30afd22556cdd57a9e4c70c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26bcf038_a6ef15c9",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-02T00:59:15Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "7553c9a9_73bb2660",
+      "range": {
+        "startLine": 402,
+        "startChar": 0,
+        "endLine": 407,
+        "endChar": 21
+      },
+      "revId": "33ebdd5609e676dd30afd22556cdd57a9e4c70c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
