@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c81f3c5e_dfe91baa",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-02T14:53:57Z",
+      "side": 0,
+      "message": "proven to resolve this failure (fully tested)",
+      "range": {
+        "startLine": 624,
+        "startChar": 0,
+        "endLine": 627,
+        "endChar": 67
+      },
+      "revId": "24eec2f88310a949c1de8e25f10ff410c38e537b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
