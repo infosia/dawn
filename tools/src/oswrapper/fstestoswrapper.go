@@ -1,0 +1,542 @@
+// Copyright 2025 The Dawn & Tint Authors
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+//
+// 1. Redistributions of source code must retain the above copyright notice, this
+//    list of conditions and the following disclaimer.
+//
+// 2. Redistributions in binary form must reproduce the above copyright notice,
+//    this list of conditions and the following disclaimer in the documentation
+//    and/or other materials provided with the distribution.
+//
+// 3. Neither the name of the copyright holder nor the names of its
+//    contributors may be used to endorse or promote products derived from
+//    this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+// DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+// FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+// Contains implementation of oswrapper interfaces using fstest.
+package oswrapper
+
+import (
+	"errors"
+	"fmt"
+	"io"
+	"io/fs"
+	"os"
+	"path/filepath"
+	"strings"
+	"sync/atomic"
+	"syscall"
+	"testing/fstest"
+	"time"
+)
+
+// FSTestOSWrapper is an in-memory implementation of OSWrapper for testing.
+// It uses a map to simulate a filesystem, which can be used to create
+// a read-only fstest.MapFS for read operations. Write operations
+// manipulate the map directly.
+type FSTestOSWrapper struct {
+	FSTestEnvironProvider
+	FSTestFilesystemReaderWriter
+}
+
+// CreateFSTestOSWrapper creates a new FSTestOSWrapper with an empty in-memory filesystem.
+func CreateFSTestOSWrapper() FSTestOSWrapper {
+	return FSTestOSWrapper{
+		FSTestEnvironProvider{},
+		FSTestFilesystemReaderWriter{
+			FS: make(map[string]*fstest.MapFile),
+		},
+	}
+}
+
+// FSTestEnvironProvider is a stub implementation of EnvironProvider that panics if called.
+type FSTestEnvironProvider struct{}
+
+// FSTestFilesystemReaderWriter provides an in-memory implementation of FilesystemReaderWriter.
+// It holds the map that represents the filesystem.
+type FSTestFilesystemReaderWriter struct {
+	FS map[string]*fstest.MapFile
+}
+
+// CleanPath prepares a path for use as a key in the fstest map.
+// It ensures forward slashes for the separator, and removes any leading slash.
+func (w FSTestFilesystemReaderWriter) CleanPath(path string) string {
+	p := filepath.ToSlash(filepath.Clean(path))
+	p = strings.TrimPrefix(p, "/")
+	if p == "" {
+		p = "." // The canonical representation of the root in a fs.FS.
+	}
+	return p
+}
+
+// fs returns a read-only fs.FS view of the underlying map.
+func (w FSTestFilesystemReaderWriter) fs() fs.FS {
+	return fstest.MapFS(w.FS)
+}
+
+// mapFileInfo wraps a fstest.MapFile to implement the os.FileInfo interface.
+// It holds a pointer to the MapFile and the file's full path to derive its base name.
+type mapFileInfo struct {
+	path string
+	file *fstest.MapFile
+}
+
+// Name returns the base name of the file.
+func (i *mapFileInfo) Name() string {
+	return filepath.Base(i.path)
+}
+
+// Size returns the length of the file's data in bytes.
+func (i *mapFileInfo) Size() int64 {
+	return int64(len(i.file.Data))
+}
+
+// Mode returns the file mode bits.
+func (i *mapFileInfo) Mode() fs.FileMode {
+	return i.file.Mode
+}
+
+// ModTime returns the modification time.
+func (i *mapFileInfo) ModTime() time.Time {
+	return i.file.ModTime
+}
+
+// IsDir returns true if the entry is a directory.
+func (i *mapFileInfo) IsDir() bool {
+	return i.file.Mode.IsDir()
+}
+
+// Sys returns the underlying data source (can be nil).
+func (i *mapFileInfo) Sys() any {
+	return i.file.Sys
+}
+
+// fstestFileHandle implements the oswrapper.File interface for the in-memory fstest map.
+type fstestFileHandle struct {
+	path    string
+	info    os.FileInfo
+	fsMap   *map[string]*fstest.MapFile
+	content []byte
+	offset  int64
+	flag    int
+}
+
+// --- EnvironProvider implementation ---
+
+func (p FSTestEnvironProvider) Environ() []string {
+	panic("Environ() is not currently implemented in fstest wrapper")
+}
+
+func (p FSTestEnvironProvider) Getenv(_ string) string {
+	panic("Getenv() is not currently implemented in fstest wrapper")
+}
+
+func (p FSTestEnvironProvider) Getwd() (string, error) {
+	panic("Getwd() is not currently implemented in fstest wrapper")
+}
+
+func (p FSTestEnvironProvider) UserHomeDir() (string, error) {
+	panic("UserHomeDir() is not currently implemented in fstest wrapper")
+}
+
+// --- FilesystemReader implementation ---
+
+func (w FSTestFilesystemReaderWriter) Open(name string) (File, error) {
+	return w.OpenFile(name, os.O_RDONLY, 0)
+}
+
+func (w FSTestFilesystemReaderWriter) OpenFile(name string, flag int, perm os.FileMode) (File, error) {
+	path := w.CleanPath(name)
+	mapFile, exists := w.FS[path]
+
+	// Check if a parent component of the path is a file.
+	dir := filepath.Dir(path)
+	if dir != "." && dir != "" {
+		parentInfo, parentExists := w.FS[dir]
+		if parentExists && !parentInfo.Mode.IsDir() {
+			return nil, &os.PathError{Op: "open", Path: name, Err: fmt.Errorf("not a directory")}
+		}
+	}
+
+	if flag&os.O_CREATE != 0 {
+		if exists {
+			if flag&os.O_EXCL != 0 {
+				return nil, &os.PathError{Op: "open", Path: name, Err: os.ErrExist}
+			}
+		} else {
+			parent := filepath.Dir(path)
+			if parent != "." && parent != "" {
+				parentInfo, parentExists := w.FS[parent]
+				if !parentExists {
+					return nil, &os.PathError{Op: "open", Path: name, Err: os.ErrNotExist}
+				}
+				if !parentInfo.Mode.IsDir() {
+					return nil, &os.PathError{Op: "open", Path: name, Err: fmt.Errorf("not a directory")}
+				}
+			}
+			newFile := &fstest.MapFile{Data: []byte{}, Mode: perm, ModTime: time.Now()}
+			w.FS[path] = newFile
+			mapFile = newFile
+			exists = true
+		}
+	}
+
+	if !exists {
+		return nil, &os.PathError{Op: "open", Path: name, Err: os.ErrNotExist}
+	}
+
+	if mapFile.Mode.IsDir() {
+		if flag&(os.O_WRONLY|os.O_RDWR) != 0 {
+			return nil, &os.PathError{Op: "open", Path: name, Err: fmt.Errorf("is a directory")}
+		}
+		if flag&os.O_TRUNC != 0 {
+			return nil, &os.PathError{Op: "open", Path: name, Err: fmt.Errorf("is a directory")}
+		}
+	}
+
+	// Create an os.FileInfo compatible wrapper for the fstest.MapFile.
+	info := &mapFileInfo{path: name, file: mapFile}
+	handle := &fstestFileHandle{
+		path:    path,
+		info:    info,
+		fsMap:   &w.FS,
+		flag:    flag,
+		content: nil, // Set below
+		offset:  0,   // Set below
+	}
+
+	initialData := mapFile.Data
+	if flag&os.O_TRUNC != 0 && !mapFile.Mode.IsDir() {
+		initialData = []byte{}
+	}
+
+	handle.content = make([]byte, len(initialData))
+	copy(handle.content, initialData)
+
+	if flag&os.O_APPEND != 0 {
+		handle.offset = int64(len(handle.content))
+	}
+
+	return handle, nil
+}
+
+func (w FSTestFilesystemReaderWriter) ReadFile(name string) ([]byte, error) {
+	p := w.CleanPath(name)
+
+	// If the path is the root, it's always a directory.
+	if p == "." {
+		return nil, &os.PathError{Op: "read", Path: name, Err: fmt.Errorf("is a directory")}
+	}
+
+	// Check for an explicit entry
+	if mapFile, exists := w.FS[p]; exists {
+		if mapFile.Mode.IsDir() {
+			return nil, &os.PathError{Op: "read", Path: name, Err: fmt.Errorf("is a directory")}
+		}
+		data := make([]byte, len(mapFile.Data))
+		copy(data, mapFile.Data)
+		return data, nil
+	}
+
+	// If no explicit entry, check if it's an implicit directory
+	for path := range w.FS {
+		if strings.HasPrefix(path, p+"/") {
+			return nil, &os.PathError{Op: "read", Path: name, Err: fmt.Errorf("is a directory")}
+		}
+	}
+
+	return nil, &os.PathError{Op: "open", Path: name, Err: os.ErrNotExist}
+}
+
+func (w FSTestFilesystemReaderWriter) ReadDir(name string) ([]os.DirEntry, error) {
+	p := w.CleanPath(name)
+
+	if mapFile, exists := w.FS[p]; exists && !mapFile.Mode.IsDir() {
+		return nil, &os.PathError{Op: "readdir", Path: name, Err: fmt.Errorf("not a directory")}
+	}
+	return fs.ReadDir(w.fs(), p)
+}
+
+func (w FSTestFilesystemReaderWriter) Stat(name string) (os.FileInfo, error) {
+	return fs.Stat(w.fs(), w.CleanPath(name))
+}
+
+func (w FSTestFilesystemReaderWriter) Walk(root string, fn filepath.WalkFunc) error {
+	fsRoot := w.CleanPath(root)
+
+	walkDirFn := func(path string, d fs.DirEntry, err error) error {
+		// The path from fs.WalkDir is relative to the FS root.
+		// We need to reconstruct the path that the user's filepath.WalkFunc expects.
+		// The contract for filepath.Walk is that the paths passed to the callback
+		// have the original `root` argument as a prefix.
+		var fullPath string
+		if path == fsRoot {
+			fullPath = root
+		} else {
+			// fs.WalkDir gives a path from the FS root. We need the part relative
+			// to the walk's root, and then join it with the original root string.
+			rel, errRel := filepath.Rel(fsRoot, path)
+			if errRel != nil {
+				return fn(path, nil, fmt.Errorf("internal error creating relative path: %w", errRel))
+			}
+			fullPath = filepath.Join(root, rel)
+		}
+
+		if err != nil {
+			return fn(fullPath, nil, err)
+		}
+		info, errInfo := d.Info()
+		if errInfo != nil {
+			return fn(fullPath, nil, errInfo)
+		}
+		return fn(fullPath, info, nil)
+	}
+	return fs.WalkDir(w.fs(), fsRoot, walkDirFn)
+}
+
+// --- FilesystemWriter implementation ---
+
+func (w FSTestFilesystemReaderWriter) Create(name string) (File, error) {
+	return w.OpenFile(name, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+}
+
+func (w FSTestFilesystemReaderWriter) Mkdir(path string, perm os.FileMode) error {
+	p := w.CleanPath(path)
+
+	if _, exists := w.FS[p]; exists {
+		return &os.PathError{Op: "mkdir", Path: path, Err: os.ErrExist}
+	}
+
+	parent := filepath.Dir(p)
+	if parent != "." {
+		parentInfo, parentExists := w.FS[parent]
+		if !parentExists {
+			return &os.PathError{Op: "mkdir", Path: path, Err: os.ErrNotExist}
+		}
+		if !parentInfo.Mode.IsDir() {
+			return &os.PathError{Op: "mkdir", Path: path, Err: fmt.Errorf("not a directory")}
+		}
+	}
+	w.FS[p] = &fstest.MapFile{Mode: os.ModeDir | perm, ModTime: time.Now()}
+	return nil
+}
+
+func (w FSTestFilesystemReaderWriter) MkdirAll(path string, perm os.FileMode) error {
+	p := w.CleanPath(path)
+
+	if p == "." {
+		return nil
+	}
+
+	parts := strings.Split(p, "/")
+	current := ""
+	for i, part := range parts {
+		if current == "" {
+			current = part
+		} else {
+			current = current + "/" + part // Internally FSTestOSWrapper uses '/' for separators
+		}
+		if file, exists := w.FS[current]; !exists {
+			w.FS[current] = &fstest.MapFile{Mode: os.ModeDir | perm, ModTime: time.Now()}
+		} else if !file.Mode.IsDir() {
+			// If this is the last part of the path, the error is that the file exists.
+			// Otherwise, an intermediate path component is not a directory.
+			if i < len(parts)-1 {
+				return &os.PathError{Op: "mkdir", Path: path, Err: fmt.Errorf("not a directory")}
+			}
+			return &os.PathError{Op: "mkdir", Path: path, Err: os.ErrExist}
+		}
+	}
+	return nil
+}
+
+// tempCounter is an incrementing value used for generating the 'random' part of  temporary file
+// names.
+var tempCounter uint32
+
+// ResetTempCounterForTesting resets the internal counter used by MkdirTemp.
+// This should only be used in test fixtures to ensure deterministic behavior.
+func ResetTempCounterForTesting() {
+	atomic.StoreUint32(&tempCounter, 0)
+}
+
+func (w FSTestFilesystemReaderWriter) MkdirTemp(dir, pattern string) (string, error) {
+	prefix, suffix := pattern, ""
+	if i := strings.LastIndex(pattern, "*"); i != -1 {
+		prefix, suffix = pattern[:i], pattern[i+1:]
+	}
+
+	// Note: This is using deterministic values for the 'random' part of the path names to make
+	// testing be deterministic. This code should only be used for testing purposes, since an
+	// attacker might be able to exploit this.
+	rndStr := fmt.Sprintf("%d", atomic.AddUint32(&tempCounter, 1))
+
+	name := prefix + rndStr + suffix
+	path := filepath.Join(dir, name)
+	err := w.Mkdir(path, 0700|os.ModeDir)
+	if err != nil {
+		return "", err
+	}
+	return path, nil
+}
+
+func (w FSTestFilesystemReaderWriter) Remove(name string) error {
+	p := w.CleanPath(name)
+
+	info, err := w.Stat(p)
+	if err != nil {
+		var pathErr *os.PathError
+		if errors.As(err, &pathErr) {
+			pathErr.Op = "remove"
+			pathErr.Path = name
+			return pathErr
+		}
+		return &os.PathError{Op: "remove", Path: name, Err: err}
+	}
+
+	if info.IsDir() {
+		entries, err := w.ReadDir(p)
+		if err != nil {
+			return &os.PathError{Op: "remove", Path: name, Err: err}
+		}
+		if len(entries) > 0 {
+			return &os.PathError{Op: "remove", Path: name, Err: syscall.ENOTEMPTY}
+		}
+	}
+	delete(w.FS, p)
+	return nil
+}
+
+func (w FSTestFilesystemReaderWriter) RemoveAll(path string) error {
+	p := w.CleanPath(path)
+
+	// Check if the path or any of its parents are invalid.
+	// os.RemoveAll returns nil if the path doesn't exist, but errors if a
+	// parent path component is a file.
+	dir := filepath.Dir(p)
+	for dir != "." && dir != "" {
+		info, exists := w.FS[dir]
+		if exists && !info.Mode.IsDir() {
+			return &os.PathError{Op: "removeall", Path: path, Err: fmt.Errorf("not a directory")}
+		}
+		dir = filepath.Dir(dir)
+	}
+
+	prefix := p + string(filepath.Separator)
+	for key := range w.FS {
+		if key == p || strings.HasPrefix(key, prefix) {
+			delete(w.FS, key)
+		}
+	}
+	return nil
+}
+
+func (w FSTestFilesystemReaderWriter) Symlink(_, _ string) error {
+	panic("Symlink() is not currently implemented in fstest wrapper")
+}
+
+func (w FSTestFilesystemReaderWriter) WriteFile(name string, data []byte, perm os.FileMode) error {
+	path := w.CleanPath(name)
+
+	if info, exists := w.FS[path]; exists && info.Mode.IsDir() {
+		return &os.PathError{Op: "open", Path: name, Err: fmt.Errorf("is a directory")}
+	}
+
+	dir := filepath.Dir(path)
+	if dir != "." && dir != "" {
+		parentInfo, parentExists := w.FS[dir]
+		if !parentExists {
+			return &os.PathError{Op: "open", Path: name, Err: os.ErrNotExist}
+		}
+		if !parentInfo.Mode.IsDir() {
+			return &os.PathError{Op: "open", Path: name, Err: fmt.Errorf("not a directory")}
+		}
+	}
+	w.FS[path] = &fstest.MapFile{Data: data, Mode: perm, ModTime: time.Now()}
+	return nil
+}
+
+// --- File implementation ---
+
+func (h *fstestFileHandle) Stat() (os.FileInfo, error) {
+	return h.info, nil
+}
+
+func (h *fstestFileHandle) Close() error {
+	mapFile, exists := (*h.fsMap)[h.path]
+	if !exists {
+		return &os.PathError{Op: "close", Path: h.info.Name(), Err: os.ErrNotExist}
+	}
+
+	mapFile.Data = h.content
+	mapFile.ModTime = time.Now()
+	return nil
+}
+
+func (h *fstestFileHandle) Read(p []byte) (int, error) {
+	if h.flag&os.O_WRONLY != 0 {
+		return 0, &os.PathError{Op: "read", Path: h.path, Err: os.ErrInvalid}
+	}
+
+	if h.offset >= int64(len(h.content)) {
+		return 0, io.EOF
+	}
+
+	n := copy(p, h.content[h.offset:])
+	h.offset += int64(n)
+	return n, nil
+}
+
+func (h *fstestFileHandle) Write(p []byte) (int, error) {
+	if h.flag&(os.O_WRONLY|os.O_RDWR) == 0 {
+		return 0, &os.PathError{Op: "write", Path: h.path, Err: os.ErrInvalid}
+	}
+
+	if h.flag&os.O_APPEND != 0 {
+		h.offset = int64(len(h.content))
+	}
+
+	n := len(p)
+	end := h.offset + int64(n)
+	if end > int64(len(h.content)) {
+		newContent := make([]byte, end)
+		copy(newContent, h.content)
+		h.content = newContent
+	}
+
+	copy(h.content[h.offset:end], p)
+	h.offset = end
+	return n, nil
+}
+
+func (h *fstestFileHandle) Seek(offset int64, whence int) (int64, error) {
+	var newOffset int64
+	switch whence {
+	case io.SeekStart:
+		newOffset = offset
+	case io.SeekCurrent:
+		newOffset = h.offset + offset
+	case io.SeekEnd:
+		newOffset = int64(len(h.content)) + offset
+	default:
+		return 0, &os.PathError{Op: "seek", Path: h.path, Err: os.ErrInvalid}
+	}
+
+	if newOffset < 0 {
+		return 0, &os.PathError{Op: "seek", Path: h.path, Err: os.ErrInvalid}
+	}
+	h.offset = newOffset
+	return h.offset, nil
+}
