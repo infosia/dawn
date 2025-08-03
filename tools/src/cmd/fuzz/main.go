@@ -35,12 +35,12 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
 	"sync/atomic"
 
+	"dawn.googlesource.com/dawn/tools/src/execwrapper"
 	"dawn.googlesource.com/dawn/tools/src/fileutils"
 	"dawn.googlesource.com/dawn/tools/src/glob"
 	"dawn.googlesource.com/dawn/tools/src/oswrapper"
@@ -50,8 +50,6 @@ import (
 	"dawn.googlesource.com/dawn/tools/src/utils"
 )
 
-// TODO(crbug.com/416755658): Add unittest coverage when exec calls are done
-// via dependency injection.
 // TODO(crbug.com/344014313): Add unittests once fileutils and term are updated
 // to support dependency injection.
 // TODO(crbug.com/344014313): Add unittests once term is converted to support
@@ -83,6 +81,7 @@ type cmdConfig struct {
 	out          string
 	numProcesses int
 	osWrapper    oswrapper.OSWrapper
+	executor     execwrapper.ExecWrapper
 }
 
 func showUsage() {
@@ -104,6 +103,7 @@ usage:
 func main() {
 	c := cmdConfig{}
 	c.osWrapper = oswrapper.GetRealOSWrapper()
+	c.executor = execwrapper.RealExecWrapper{}
 
 	flag.Usage = showUsage
 
@@ -325,7 +325,8 @@ func checkFuzzer(t *taskConfig) error {
 				})
 			}
 
-			if out, err := exec.Command(t.fuzzer, file).CombinedOutput(); err != nil {
+			cmd := t.executor.Command(t.fuzzer, file)
+			if out, err := cmd.CombinedOutput(); err != nil {
 				_, fuzzer := filepath.Split(t.fuzzer)
 				return fmt.Errorf("fuzzer '%s' failed to process file '%s' with error: %w\nOutput:\n%s", fuzzer, file, err, string(out))
 			}
@@ -360,7 +361,7 @@ func runFuzzer(t *taskConfig) error {
 	errs := make(chan error, t.numProcesses)
 	for i := 0; i < t.numProcesses; i++ {
 		go func() {
-			cmd := exec.CommandContext(ctx, t.fuzzer, args...)
+			cmd := t.executor.CommandContext(ctx, t.fuzzer, args...)
 			out := bytes.Buffer{}
 			cmd.Stdout = &out
 			cmd.Stderr = &out
@@ -452,7 +453,7 @@ func runCorpusGeneratorIr(t *taskConfig) error {
 	}
 	fmt.Println("running assembler")
 
-	cmd := exec.CommandContext(ctx, t.assembler, args...)
+	cmd := t.executor.CommandContext(ctx, t.assembler, args...)
 	out := &bytes.Buffer{}
 	cmd.Stdout = out
 	cmd.Stderr = out
