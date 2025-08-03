@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c15adbf9_524e5e23",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-03T14:59:57Z",
+      "side": 1,
+      "message": "I wrote a bug up with my thoughts about afero. I am going to continue to prototype a fstest based implementation.",
+      "parentUuid": "1a2cbfb8_9077bb83",
+      "revId": "153b773970dd8512fa90f90dd902d73eb576d5e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8b00c4f3_f3edc12b",
@@ -49,6 +67,30 @@
       "writtenOn": "2025-07-31T20:35:48Z",
       "side": 1,
       "message": "Nit: Should be at the bottom of the list.",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 31,
+        "endChar": 38
+      },
+      "revId": "153b773970dd8512fa90f90dd902d73eb576d5e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e53f5d59_7bd80479",
+        "filename": "tools/src/cmd/fuzz/main_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-03T14:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b00c4f3_f3edc12b",
       "range": {
         "startLine": 31,
         "startChar": 1,
