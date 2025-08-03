@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "33177583_d9395294",
+        "filename": "docs/tint/fuzzers.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-03T15:01:26Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "dafd7391_af77b52b",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 50
+      },
+      "revId": "2959bc45e85a1c82b5442db7a62955f78ee4223b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0fc8c48_f80dd0fd",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "56866c59_ae52d413",
+        "filename": "docs/tint/fuzzers.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-03T15:01:26Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "e0fc8c48_f80dd0fd",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 46
+      },
+      "revId": "2959bc45e85a1c82b5442db7a62955f78ee4223b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b2cf9348_37a03b36",
@@ -60,6 +108,54 @@
       "writtenOn": "2025-08-01T00:52:14Z",
       "side": 1,
       "message": "```suggestion\nand added significant complexity to the tooling. If you need to\nminimize a corpus manually please consult the libFuzzer documentation\n```",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 69
+      },
+      "revId": "2959bc45e85a1c82b5442db7a62955f78ee4223b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a822230_7780e3a5",
+        "filename": "docs/tint/fuzzers.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-03T15:01:26Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "b2cf9348_37a03b36",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 69
+      },
+      "revId": "2959bc45e85a1c82b5442db7a62955f78ee4223b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fae7753_e18b51c8",
+        "filename": "docs/tint/fuzzers.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-03T15:01:26Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "b2cf9348_37a03b36",
       "range": {
         "startLine": 194,
         "startChar": 0,
