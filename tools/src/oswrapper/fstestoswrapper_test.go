@@ -1686,6 +1686,77 @@ func TestFSTestOSWrapper_MkdirAll_MatchesReal(t *testing.T) {
 	}
 }
 
+func TestFSTestOSWrapper_MkdirTemp(t *testing.T) {
+	tests := []struct {
+		name         string
+		setup        unittestSetup
+		dir          string
+		pattern      string
+		expectedPath string // The expected path, given the deterministic counter
+		expectedError
+	}{
+		{
+			name:    "Simple pattern",
+			dir:     filepath.Join("/", "tmp"),
+			pattern: "test-",
+			setup: unittestSetup{
+				initialDirs: []string{"/tmp"},
+			},
+			expectedPath: filepath.Join("/", "tmp", "test-1"),
+		},
+		{
+			name:    "Pattern with star",
+			dir:     filepath.Join("/", "tmp"),
+			pattern: "test-*-suffix",
+			setup: unittestSetup{
+				initialDirs: []string{"/tmp"},
+			},
+			expectedPath: filepath.Join("/", "tmp", "test-1-suffix"),
+		},
+		{
+			name:    "Base dir does not exist",
+			dir:     filepath.Join("/", "nonexistent"),
+			pattern: "test-",
+			expectedError: expectedError{
+				wantErrIs: os.ErrNotExist,
+			},
+		},
+		{
+			name:    "Base dir is a file",
+			dir:     filepath.Join("/", "tmpfile"),
+			pattern: "test-",
+			setup: unittestSetup{
+				initialFiles: map[string]string{"/tmpfile": ""},
+			},
+			expectedError: expectedError{
+				wantErrMsg: "not a directory",
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			oswrapper.ResetTempCounterForTesting() // Reset for deterministic names
+			wrapper := tc.setup.setup(t)
+
+			gotPath, err := wrapper.MkdirTemp(tc.dir, tc.pattern)
+
+			if tc.expectedError.Check(t, err) {
+				return
+			}
+
+			require.Equal(t, tc.expectedPath, gotPath)
+
+			info, err := wrapper.Stat(gotPath)
+			require.NoError(t, err, "Stat on created temp dir failed")
+			require.True(t, info.IsDir(), "Created temp path is not a directory")
+		})
+	}
+}
+
+// Note: There is no TestFSTestOSWrapper_MkdirTemp_MatchesReal, because that would require the
+// wrapper to replicate the random part of the temporary names.
+
 func TestFSTestOSWrapper_Remove(t *testing.T) {
 	tests := []struct {
 		name          string
