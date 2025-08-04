@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ab3d52b_bb8451ff",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 56
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-04T09:03:07Z",
+      "side": 1,
+      "message": "Doesn\u0027t the CMake install step copy all the headers in the correct directory?",
+      "revId": "8cd02dafda4c91c78f91d93049423de4e0b67b99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8eaeaf63_2ff67d04",
+        "filename": ".github/workflows/dawn-ci.cmake",
+        "patchSetId": 56
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-04T09:03:07Z",
+      "side": 1,
+      "message": "Why do we disable OpenGL on mobile where this is where GLES is (on Android?)",
+      "revId": "8cd02dafda4c91c78f91d93049423de4e0b67b99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "ff9883f4_167b9b29",
