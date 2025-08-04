@@ -319,6 +319,24 @@
       "parentUuid": "5def362d_efc8353a",
       "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "201d5b29_19028248",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-08-04T08:40:17Z",
+      "side": 1,
+      "message": "Thanks Corentin. I\u0027ll merge this CL as is then as Gregg is working on these tests at https://github.com/gpuweb/cts/pull/4427/files",
+      "parentUuid": "b3cf6060_336de016",
+      "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
