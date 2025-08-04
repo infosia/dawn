@@ -16,6 +16,24 @@
       "message": "Do you have a measure of the overhead? It\u0027s slightly surprising that `Promote` would be so expensive so I\u0027m interested in knowing more. LGTM anyway!",
       "revId": "360ecbc0811bce5abd4256e7bf4f598dc85ec471",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dda004e8_b94d28bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-04T18:24:09Z",
+      "side": 1,
+      "message": "Yea unfortunately, `Promote` needs to acquire a lock atm. This is a result of `WeakRefs` implementation... When I was working on it with Austin, we had to make some compromises because it would be a much larger refactoring to make `WeakRefs` not need to use a lock. We didn\u0027t have as much immediate use for it aside from the frontend cache at the time so we didn\u0027t invest as much into making it as efficient, but it could definitely be worth looking into.",
+      "parentUuid": "710a4090_62497cc5",
+      "revId": "360ecbc0811bce5abd4256e7bf4f598dc85ec471",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
