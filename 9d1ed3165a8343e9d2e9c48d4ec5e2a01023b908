@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8166e970_01534918",
+        "filename": "src/dawn/tests/unittests/LRUCacheTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-04T18:32:41Z",
+      "side": 1,
+      "message": "Ah, yeah. I see what you mean. Thing is it\u0027s supposed to created a new value, not retrieve a cached one in this case. Reworded for clarity.",
+      "parentUuid": "80b26a1e_e96343cb",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 48
+      },
+      "revId": "9d1ed3165a8343e9d2e9c48d4ec5e2a01023b908",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "102ced2e_a0e64bb3",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-08-04T17:59:57Z",
       "side": 1,
       "message": "nit. This comment doesn\u0027t match the test.",
+      "range": {
+        "startLine": 179,
+        "startChar": 3,
+        "endLine": 179,
+        "endChar": 95
+      },
+      "revId": "9d1ed3165a8343e9d2e9c48d4ec5e2a01023b908",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "857fc997_daed52eb",
+        "filename": "src/dawn/tests/unittests/LRUCacheTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-04T18:32:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "102ced2e_a0e64bb3",
       "range": {
         "startLine": 179,
         "startChar": 3,
