@@ -34,6 +34,24 @@
       "parentUuid": "710a4090_62497cc5",
       "revId": "360ecbc0811bce5abd4256e7bf4f598dc85ec471",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d09220af_cd5c8c48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-04T18:27:01Z",
+      "side": 1,
+      "message": "Thank you for the explanation, that makes total sense! Can we add a TODO in this CL that explains this and references an issue to optimize `Promote`?",
+      "parentUuid": "dda004e8_b94d28bc",
+      "revId": "360ecbc0811bce5abd4256e7bf4f598dc85ec471",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
