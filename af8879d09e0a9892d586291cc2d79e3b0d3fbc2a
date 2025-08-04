@@ -353,6 +353,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfeb6c8a_6276aa53",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 24
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-04T16:53:33Z",
+      "side": 1,
+      "message": "I think it is fine to include it as long as it\u0027s not in the include path. (I know of at least one downstream project that is using dawn.json for generating language bindings even though it is unstable, so it\u0027s certainly useful to have.) We\u0027ll deal with documenting our stable interface later, in that bug I filed.",
+      "parentUuid": "8584ba90_a2870017",
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "7718c096_4eaedd49",

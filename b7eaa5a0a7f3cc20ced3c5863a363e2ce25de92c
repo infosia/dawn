@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d07fdfc4_81947bbf",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 58
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-04T16:53:33Z",
+      "side": 1,
+      "message": "Actually, on this note: in the commit message, could you please include a file listing from each artifact so that we know what it looks like? E.g. a listing from `tar -tf`\n\nI mainly want to make sure the include paths are separate from everything else. But also curious what the file organization is since it\u0027s hard to tell from reading the script.",
+      "parentUuid": "2adb40ac_d5577d34",
+      "revId": "b7eaa5a0a7f3cc20ced3c5863a363e2ce25de92c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4ba525fc_ca0cb988",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 58
