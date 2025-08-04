@@ -33,6 +33,23 @@
       "message": "LGTM",
       "revId": "2b480fd0e2b88977c545fcc89281ec1880c3225f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcafe10b_f40efcd0",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-04T15:23:49Z",
+      "side": 1,
+      "message": "On the Tint side we _always_ enable Weverything and then turned off everythinng that failed. We then fixed things as we could, or added them to the Wno list as needed.",
+      "revId": "2b480fd0e2b88977c545fcc89281ec1880c3225f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
