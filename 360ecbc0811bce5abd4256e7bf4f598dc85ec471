@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "710a4090_62497cc5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-04T09:25:33Z",
+      "side": 1,
+      "message": "Do you have a measure of the overhead? It\u0027s slightly surprising that `Promote` would be so expensive so I\u0027m interested in knowing more. LGTM anyway!",
+      "revId": "360ecbc0811bce5abd4256e7bf4f598dc85ec471",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
