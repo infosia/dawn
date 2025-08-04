@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2adb40ac_d5577d34",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 58
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-04T16:34:52Z",
+      "side": 1,
+      "message": "Won\u0027t this path also contain the libraries etc in addition to the headers? (not 100% sure)",
+      "revId": "b7eaa5a0a7f3cc20ced3c5863a363e2ce25de92c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ba525fc_ca0cb988",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 58
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-04T16:34:52Z",
+      "side": 1,
+      "message": "LGTM with trailing whitespace stripped as well :)",
+      "revId": "b7eaa5a0a7f3cc20ced3c5863a363e2ce25de92c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
