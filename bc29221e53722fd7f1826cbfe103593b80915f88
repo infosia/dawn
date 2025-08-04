@@ -337,6 +337,24 @@
       "parentUuid": "b3cf6060_336de016",
       "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "033cc2b3_d9f2e74b",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-08-04T08:46:43Z",
+      "side": 1,
+      "message": "cc @gman@chromium.org",
+      "parentUuid": "201d5b29_19028248",
+      "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
