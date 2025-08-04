@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66843e4c_e6b80831",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-04T22:30:59Z",
+      "side": 1,
+      "message": "Oops, I completely missed that this failed the first dry run, I thought it succeeded (probably was having trouble with gerrit not loading the results). Will have to investigate.",
+      "revId": "e3dc59a68090aa22d7af9c0812cdef2b71dd440e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
