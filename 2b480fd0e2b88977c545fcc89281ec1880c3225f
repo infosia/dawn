@@ -86,6 +86,24 @@
       "parentUuid": "1d58ed60_1bfe9eb2",
       "revId": "2b480fd0e2b88977c545fcc89281ec1880c3225f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf7f590a_88dd8600",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-04T23:05:27Z",
+      "side": 1,
+      "message": "It seems like Tint has `-Weverything` for CMake builds but not GN builds. This seems okay since `DAWN_WERROR` is disabled by default, but it also means CMake builds won\u0027t stay warning-clean.\n\nHonestly a lot more work is needed here, so I\u0027ve filed bug 436300898 with a bunch of my thoughts on this. Let\u0027s discuss more there, I want to collect up all the ideas.\n\nIn the meantime this is one step to making it easier to clean up warnings in Dawn so I\u0027ll land it. (I have no idea how many warnings there are, I didn\u0027t even try to check yet except for Emdawnwebgpu.",
+      "parentUuid": "f28172f9_1abb28fd",
+      "revId": "2b480fd0e2b88977c545fcc89281ec1880c3225f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
