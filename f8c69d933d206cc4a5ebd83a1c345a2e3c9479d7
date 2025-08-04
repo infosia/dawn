@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35edb073_4fcd3ddc",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 2161,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-04T23:29:11Z",
+      "side": 1,
+      "message": "Since draw calls are very hot I think we should err on the side of not having conversions in draw calls.\n\n- It\u0027s not realistic for now to draw more than 2^31 vertices or instances in a browser\n- I believe firstVertex and firstInstance apply offsets to the vertex buffers so these can only be huge if the vertex buffers are huge",
+      "revId": "f8c69d933d206cc4a5ebd83a1c345a2e3c9479d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
