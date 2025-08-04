@@ -206,6 +206,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0b6c0eca_49b24361",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-04T17:30:41Z",
+      "side": 1,
+      "message": "Any reason that this is not in `RecordComputePass` then instead of in the handling of `BeginComputePass`? (IMHO the code below that splits the recording context should also be moved in `BeginComputePass` at some point).",
+      "parentUuid": "2f36ed90_82d0840c",
+      "range": {
+        "startLine": 882,
+        "startChar": 34,
+        "endLine": 882,
+        "endChar": 50
+      },
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c440450b_43a1c6f3",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 9
