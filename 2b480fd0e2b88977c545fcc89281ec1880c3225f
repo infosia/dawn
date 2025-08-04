@@ -16,6 +16,23 @@
       "message": "WDYT of adding this? I haven\u0027t really done any work to fix warnings except for one `-Wmissing-include-dirs` in Emdawnwebgpu but it makes it a bit easier to find warnings in the future.",
       "revId": "2b480fd0e2b88977c545fcc89281ec1880c3225f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "674414d0_f2c587cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-04T08:28:00Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "2b480fd0e2b88977c545fcc89281ec1880c3225f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
