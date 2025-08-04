@@ -160,6 +160,24 @@
       "parentUuid": "08b91d38_e70ba83b",
       "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ca5d255_d213c002",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-08-04T08:45:14Z",
+      "side": 1,
+      "message": "Now that the [PR](https://github.com/gpuweb/gpuweb/pull/5252) has been merged, we agree that a validation error should happen if the swizzle is not the default and the `\"texture-component-swizzle\"` feature is enabled.\n\nHowever, implementing the suggestion \"Blink will have to avoid passing the extension when the feature is not enabled.\" by itself makes it there is no validation error happening for a non-identity swizzle when the feature is not enabled [in the CTS](https://github.com/gpuweb/cts/pull/4427/files#diff-a4511abbdc884d289f7c0936e7ce778cbdb2331a7324794c104ee1ffdfbcdd75R22).",
+      "parentUuid": "33ab8e91_d6e0be2a",
+      "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
