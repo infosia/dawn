@@ -162,6 +162,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7b35d520_b85b4642",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-08-04T20:53:14Z",
+      "side": 1,
+      "message": "If we have deps of `native::webgpu` -\u003e`devtool::record`, and then `devtool::record` -\u003e `protobuf`, it seems that we need another layer of plain-old-data structure. Is this what we want?\n\nE.g., the current `devtool::record` implementation of `QueueWriteBuffer` record (source_set and intertwined with `native::webgpu`)\n\n```\nvoid devtool::RecordManager::EncodeQueueWriteBuffer(Queue* queue,\n                                           Buffer* buffer,\n                                           uint64_t bufferOffset,\n                                           const void* data,\n                                           size_t size) {\n    cmd::pb::QueueWriteBufferCmd* cmd \u003d mBlock.add_cmds()-\u003emutable_queuewritebuffer();\n\n    cmd-\u003eset_queueid(queue-\u003eid);\n    cmd-\u003eset_bufferid(buffer-\u003eid);\n    cmd-\u003eset_bufferoffset(bufferOffset);\n    cmd-\u003eset_data(data, size);\n}\n```\n\n\nIf want to split out the protobuf part:\n```\n// plays the role like QueueWriteBufferTransfer in dawn::wire\nstruct QueueWriteBufferData {\n    uint64_t queueId;\n    uint64_t bufferId;\n    uint64_t bufferOffset;\n    std::vector\u003cuint8_t\u003e data;\n};\n\n// assigns values from dawn::native to QueueWriteBufferData\nvoid native::webgpu::SomeCommandSerializer::EncodeQueueWriteBuffer(Queue* queue,\n                                Buffer* buffer,\n                                uint64_t bufferOffset,\n                                const void* data,\n                                size_t size);\n\n// assigns values again from QueueWriteBufferData to protobuf\nvoid devtool::RecordManager::RecordQueueWriteBuffer(const QueueWriteBufferData\u0026 data);\n                        \n```",
+      "parentUuid": "11847d7c_2a89b4c3",
+      "revId": "14a4acbf4ab004e6f7af613e08e2774b7ccf5f2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "15aec64b_b37aefab",
         "filename": "src/dawn/native/devtool/protos/cmd.proto",
         "patchSetId": 2
