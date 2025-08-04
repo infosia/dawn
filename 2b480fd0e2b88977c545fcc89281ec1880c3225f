@@ -50,6 +50,24 @@
       "message": "On the Tint side we _always_ enable Weverything and then turned off everythinng that failed. We then fixed things as we could, or added them to the Wno list as needed.",
       "revId": "2b480fd0e2b88977c545fcc89281ec1880c3225f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d58ed60_1bfe9eb2",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-04T16:32:33Z",
+      "side": 1,
+      "message": "That\u0027s a bit brittle because compilers add new warnings all the time. IMHO it would be better to have -Weverything as opt-in for CMake builds that will use many different compilers / compiler versions.",
+      "parentUuid": "fcafe10b_f40efcd0",
+      "revId": "2b480fd0e2b88977c545fcc89281ec1880c3225f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
