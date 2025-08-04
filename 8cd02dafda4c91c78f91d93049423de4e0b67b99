@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "de4ec84b_c46dad91",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 56
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-04T13:29:17Z",
+      "side": 1,
+      "message": "that\u0027s a great catch. Also I realized that we had convoluted steps/duplication in the header processing/uploading. This is fixed now. This also addressed the comment from @kainino@chromium.org about the dawn.json. It is much cleaner now.",
+      "parentUuid": "9ab3d52b_bb8451ff",
+      "revId": "8cd02dafda4c91c78f91d93049423de4e0b67b99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8eaeaf63_2ff67d04",
@@ -37,6 +55,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "aea3aec6_d6303335",
+        "filename": ".github/workflows/dawn-ci.cmake",
+        "patchSetId": 56
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-04T13:29:17Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "8eaeaf63_2ff67d04",
+      "revId": "8cd02dafda4c91c78f91d93049423de4e0b67b99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "ff9883f4_167b9b29",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 56
@@ -48,6 +84,23 @@
       "writtenOn": "2025-08-02T17:16:33Z",
       "side": 1,
       "message": "All green, all review comments implemented (except where to put the dawn.json in the artifacts, open to suggestions there).",
+      "revId": "8cd02dafda4c91c78f91d93049423de4e0b67b99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bac11b01_5cb0ddb0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 56
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-04T13:29:17Z",
+      "side": 1,
+      "message": "all review comments implemented.",
       "revId": "8cd02dafda4c91c78f91d93049423de4e0b67b99",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
