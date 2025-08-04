@@ -68,6 +68,24 @@
       "parentUuid": "fcafe10b_f40efcd0",
       "revId": "2b480fd0e2b88977c545fcc89281ec1880c3225f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f28172f9_1abb28fd",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-04T20:29:47Z",
+      "side": 1,
+      "message": "We\u0027ve had `Weverything` enabled for Tint since the beginning. There have been a handful of times where folks mentioned warnings causing issues in all that time and we just fixed the warning (or suppressed). This was with a Werror that could not be disabled.\n\nDawn allows turning Werror off, so having Weverything on, at most, may generate a bit of terminal output, but hopefully folks would file issues and we can just fix them.\n\nWe at least always see the errors which is better then only seeing them if you remember to turn on Weverything. (I have this issue with Werror now where I forget to turn it on and it\u0027s very very frustrating.)",
+      "parentUuid": "1d58ed60_1bfe9eb2",
+      "revId": "2b480fd0e2b88977c545fcc89281ec1880c3225f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
