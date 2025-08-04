@@ -39,7 +39,7 @@ class SpirvReader_TransposeRowMajorTest : public core::ir::transform::TransformT
     void SetUp() override { capabilities.Add(core::ir::Capability::kAllowNonCoreTypes); }
 };
 
-TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_ReadUniformMatrix) {
+TEST_F(SpirvReader_TransposeRowMajorTest, ReadUniformMatrix) {
     // struct S {
     //   @offset(16) @row_major m : mat2x3<f32>,
     // };
@@ -89,18 +89,22 @@ $B1: {  # root
 
     auto* after = R"(
 S = struct @align(24) {
-  m:mat3x2<f32> @offset(16) @size(24), @row_major
+  m:mat2x3<f32> @offset(16) @size(24), @row_major
+}
+
+S_1 = struct @align(24) {
+  m:mat3x2<f32> @offset(16)
 }
 
 $B1: {  # root
-  %s:ptr<uniform, S, read> = var undef @binding_point(0, 0)
+  %s:ptr<uniform, S_1, read> = var undef @binding_point(0, 0)
 }
 
 %f = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:ptr<uniform, mat3x2<f32>, read> = access %s, 0u
     %4:mat3x2<f32> = load %3
-    %5:mat2x3<f23> = transpose %4
+    %5:mat2x3<f32> = transpose %4
     %x:mat2x3<f32> = let %5
     ret
   }
@@ -111,7 +115,7 @@ $B1: {  # root
     EXPECT_EQ(after, str());
 }
 
-TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_ReadUniformColumn) {
+TEST_F(SpirvReader_TransposeRowMajorTest, ReadUniformColumn) {
     // struct S {
     //   @offset(16)
     //   @row_major
@@ -161,22 +165,37 @@ $B1: {  # root
     ASSERT_EQ(before, str());
 
     auto* after = R"(
-fn tint_load_row_major_column(tint_from : ptr<uniform, mat3x2<f32>>, tint_idx : u32) -> vec3<f32> {
-  return vec3<f32>(tint_from[0][tint_idx], tint_from[1][tint_idx], tint_from[2][tint_idx]);
+S = struct @align(24) {
+  m:mat2x3<f32> @offset(16) @size(24), @row_major
 }
 
-struct S {
-  @size(16)
-  padding_0 : u32,
-  /* @offset(16u) */
-  m : mat3x2<f32>,
+S_1 = struct @align(24) {
+  m:mat3x2<f32> @offset(16)
 }
 
-@group(0) @binding(0) var<uniform> s : S;
+$B1: {  # root
+  %s:ptr<uniform, S_1, read> = var undef @binding_point(0, 0)
+}
 
-@compute @workgroup_size(1i)
-fn f() {
-  let x : vec3<f32> = tint_load_row_major_column(&(s.m), u32(1i));
+%f = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:ptr<uniform, mat3x2<f32>, read> = access %s, 0u
+    %4:vec3<f32> = call %tint_load_row_major_column, %3, 1u
+    %x:vec3<f32> = let %4
+    ret
+  }
+}
+%tint_load_row_major_column = func(%7:ptr<uniform, mat3x2<f32>, read>, %8:u32):vec3<f32> {
+  $B3: {
+    %9:ptr<uniform, vec2<f32>, read> = access %7, 0u
+    %10:f32 = load_vector_element %9, %8
+    %11:ptr<uniform, vec2<f32>, read> = access %7, 1u
+    %12:f32 = load_vector_element %11, %8
+    %13:ptr<uniform, vec2<f32>, read> = access %7, 2u
+    %14:f32 = load_vector_element %13, %8
+    %15:vec3<f32> = construct %10, %12, %14
+    ret %15
+  }
 }
 )";
 
@@ -184,7 +203,7 @@ fn f() {
     EXPECT_EQ(after, str());
 }
 
-TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_ReadUniformElement) {
+TEST_F(SpirvReader_TransposeRowMajorTest, ReadUniformElement) {
     // struct S {
     //   @offset(16)
     //   @row_major
@@ -210,7 +229,7 @@ TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_ReadUniformElement) {
     auto* f = b.ComputeFunction("f");
     b.Append(f->Block(), [&] {
         auto* col = b.Access<ptr<uniform, vec3<f32>>>(var, 0_u, 1_u);
-        b.Let("x", b.LoadVectorElement(col, 3_u));
+        b.Let("x", b.LoadVectorElement(col, 2_u));
         b.Return(f);
     });
 
@@ -226,7 +245,7 @@ $B1: {  # root
 %f = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:ptr<uniform, vec3<f32>, read> = access %s, 0u, 1u
-    %4:f32 = load_vector_element %3, 3u
+    %4:f32 = load_vector_element %3, 2u
     %x:f32 = let %4
     ret
   }
@@ -236,19 +255,25 @@ $B1: {  # root
     ASSERT_EQ(before, str());
 
     auto* after = R"(
-struct S {
-  @size(16)
-  padding_0 : u32,
-  /* @offset(16u) */
-  m : mat3x2<f32>,
+S = struct @align(24) {
+  m:mat2x3<f32> @offset(16) @size(24), @row_major
 }
 
-@group(0) @binding(0) var<uniform> s : S;
+S_1 = struct @align(24) {
+  m:mat3x2<f32> @offset(16)
+}
 
-@compute @workgroup_size(1i)
-fn f() {
-  let col_idx : i32 = 1i;
-  let x : f32 = s.m[2u][col_idx];
+$B1: {  # root
+  %s:ptr<uniform, S_1, read> = var undef @binding_point(0, 0)
+}
+
+%f = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:ptr<uniform, vec2<f32>, read> = access %s, 0u, 2u
+    %4:f32 = load_vector_element %3, 1u
+    %x:f32 = let %4
+    ret
+  }
 }
 )";
 
@@ -256,7 +281,7 @@ fn f() {
     EXPECT_EQ(after, str());
 }
 
-TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_ReadUniformSwizzle) {
+TEST_F(SpirvReader_TransposeRowMajorTest, ReadUniformSwizzle) {
     // struct S {
     //   @offset(16)
     //   @row_major
@@ -310,23 +335,38 @@ $B1: {  # root
     ASSERT_EQ(before, str());
 
     auto* after = R"(
-fn tint_load_row_major_column(tint_from : ptr<uniform, mat3x2<f32>>, tint_idx : u32) -> vec3<f32> {
-  return vec3<f32>(tint_from[0][tint_idx], tint_from[1][tint_idx], tint_from[2][tint_idx]);
+S = struct @align(24) {
+  m:mat2x3<f32> @offset(16) @size(24), @row_major
 }
 
-struct S {
-  @size(16)
-  padding_0 : u32,
-  /* @offset(16u) */
-  m : mat3x2<f32>,
+S_1 = struct @align(24) {
+  m:mat3x2<f32> @offset(16)
 }
 
-@group(0) @binding(0) var<uniform> s : S;
+$B1: {  # root
+  %s:ptr<uniform, S_1, read> = var undef @binding_point(0, 0)
+}
 
-@compute @workgroup_size(1i)
-fn f() {
-  let col_idx : i32 = 1i;
-  let x : vec2<f32> = tint_load_row_major_column(&(s.m), u32(col_idx)).zx;
+%f = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:ptr<uniform, mat3x2<f32>, read> = access %s, 0u
+    %4:vec3<f32> = call %tint_load_row_major_column, %3, 1u
+    %6:vec2<f32> = swizzle %4, zx
+    %x:vec2<f32> = let %6
+    ret
+  }
+}
+%tint_load_row_major_column = func(%8:ptr<uniform, mat3x2<f32>, read>, %9:u32):vec3<f32> {
+  $B3: {
+    %10:ptr<uniform, vec2<f32>, read> = access %8, 0u
+    %11:f32 = load_vector_element %10, %9
+    %12:ptr<uniform, vec2<f32>, read> = access %8, 1u
+    %13:f32 = load_vector_element %12, %9
+    %14:ptr<uniform, vec2<f32>, read> = access %8, 2u
+    %15:f32 = load_vector_element %14, %9
+    %16:vec3<f32> = construct %11, %13, %15
+    ret %16
+  }
 }
 )";
 
@@ -334,7 +374,7 @@ fn f() {
     EXPECT_EQ(after, str());
 }
 
-TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_WriteStorageMatrix) {
+TEST_F(SpirvReader_TransposeRowMajorTest, WriteStorageMatrix) {
     // struct S {
     //   @offset(8)
     //   @row_major
@@ -386,18 +426,26 @@ $B1: {  # root
     ASSERT_EQ(before, str());
 
     auto* after = R"(
-struct S {
-  @size(8)
-  padding_0 : u32,
-  /* @offset(8u) */
-  m : mat3x2<f32>,
+S = struct @align(24) {
+  m:mat2x3<f32> @offset(8) @size(24), @row_major
 }
 
-@group(0) @binding(0) var<storage, read_write> s : S;
+S_1 = struct @align(24) {
+  m:mat3x2<f32> @offset(8)
+}
 
-@compute @workgroup_size(1i)
-fn f() {
-  s.m = transpose(mat2x3<f32>(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f));
+$B1: {  # root
+  %s:ptr<storage, S_1, read_write> = var undef @binding_point(0, 0)
+}
+
+%f = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:mat2x3<f32> = construct 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f
+    %4:ptr<storage, mat3x2<f32>, read_write> = access %s, 0u
+    %5:mat3x2<f32> = transpose %3
+    store %4, %5
+    ret
+  }
 }
 )";
 
@@ -405,7 +453,7 @@ fn f() {
     EXPECT_EQ(after, str());
 }
 
-TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_WriteStorageColumn) {
+TEST_F(SpirvReader_TransposeRowMajorTest, WriteStorageColumn) {
     // struct S {
     //   @offset(8)
     //   @row_major
@@ -458,25 +506,39 @@ $B1: {  # root
     ASSERT_EQ(before, str());
 
     auto* after = R"(
-fn tint_store_row_major_column(tint_to : ptr<storage, mat3x2<f32>, read_write>, tint_idx : u32, tint_col : vec3<f32>) {
-  tint_to[0][tint_idx] = tint_col[0];
-  tint_to[1][tint_idx] = tint_col[1];
-  tint_to[2][tint_idx] = tint_col[2];
+S = struct @align(24) {
+  m:mat2x3<f32> @offset(8) @size(24), @row_major
 }
 
-struct S {
-  @size(8)
-  padding_0 : u32,
-  /* @offset(8u) */
-  m : mat3x2<f32>,
+S_1 = struct @align(24) {
+  m:mat3x2<f32> @offset(8)
 }
 
-@group(0) @binding(0) var<storage, read_write> s : S;
+$B1: {  # root
+  %s:ptr<storage, S_1, read_write> = var undef @binding_point(0, 0)
+}
 
-@compute @workgroup_size(1i)
-fn f() {
-  let col_idx : i32 = 1i;
-  tint_store_row_major_column(&(s.m), u32(col_idx), vec3<f32>(1.0f, 2.0f, 3.0f));
+%f = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:ptr<storage, mat3x2<f32>, read_write> = access %s, 0u
+    %4:vec3<f32> = construct 1.0f, 2.0f, 3.0f
+    %5:void = call %tint_store_row_major_column, %3, 1u, %4
+    ret
+  }
+}
+%tint_store_row_major_column = func(%7:ptr<storage, mat3x2<f32>, read_write>, %8:u32, %9:vec3<f32>):void {
+  $B3: {
+    %10:f32 = access %9, 0u
+    %11:ptr<storage, vec2<f32>, read_write> = access %7, 0u
+    store_vector_element %11, %8, %10
+    %12:f32 = access %9, 1u
+    %13:ptr<storage, vec2<f32>, read_write> = access %7, 1u
+    store_vector_element %13, %8, %12
+    %14:f32 = access %9, 2u
+    %15:ptr<storage, vec2<f32>, read_write> = access %7, 2u
+    store_vector_element %15, %8, %14
+    ret
+  }
 }
 )";
 
@@ -484,7 +546,7 @@ fn f() {
     EXPECT_EQ(after, str());
 }
 
-TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_WriteStorageElement_Accessor) {
+TEST_F(SpirvReader_TransposeRowMajorTest, WriteStorageElement_Accessor) {
     // struct S {
     //   @offset(8)
     //   @row_major
@@ -535,19 +597,24 @@ $B1: {  # root
     ASSERT_EQ(before, str());
 
     auto* after = R"(
-struct S {
-  @size(8)
-  padding_0 : u32,
-  /* @offset(8u) */
-  m : mat3x2<f32>,
+S = struct @align(24) {
+  m:mat2x3<f32> @offset(8) @size(24), @row_major
 }
 
-@group(0) @binding(0) var<storage, read_write> s : S;
+S_1 = struct @align(24) {
+  m:mat3x2<f32> @offset(8)
+}
 
-@compute @workgroup_size(1i)
-fn f() {
-  let col_idx : i32 = 1i;
-  s.m[2u][col_idx] = 1.0f;
+$B1: {  # root
+  %s:ptr<storage, S_1, read_write> = var undef @binding_point(0, 0)
+}
+
+%f = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:ptr<storage, vec2<f32>, read_write> = access %s, 0u, 2u
+    store_vector_element %3, 1u, 1.0f
+    ret
+  }
 }
 )";
 
@@ -555,7 +622,7 @@ fn f() {
     EXPECT_EQ(after, str());
 }
 
-TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_ExtractFromLoadedStruct) {
+TEST_F(SpirvReader_TransposeRowMajorTest, ExtractFromLoadedStruct) {
     // struct S {
     //   @offset(16)
     //   @row_major
@@ -619,23 +686,35 @@ $B1: {  # root
     ASSERT_EQ(before, str());
 
     auto* after = R"(
-struct S {
-  @size(16)
-  padding_0 : u32,
-  /* @offset(16u) */
-  m : mat3x2<f32>,
+S = struct @align(24) {
+  m:mat2x3<f32> @offset(16) @size(24), @row_major
 }
 
-@group(0) @binding(0) var<uniform> s : S;
+S_1 = struct @align(24) {
+  m:mat3x2<f32> @offset(16)
+}
 
-@compute @workgroup_size(1i)
-fn f() {
-  let col_idx : i32 = 1i;
-  let row_idx : i32 = 2i;
-  let load : S = s;
-  let m : mat2x3<f32> = transpose(load.m);
-  let c : vec3<f32> = transpose(load.m)[col_idx];
-  let e : f32 = transpose(load.m)[col_idx][row_idx];
+$B1: {  # root
+  %s:ptr<uniform, S_1, read> = var undef @binding_point(0, 0)
+}
+
+%f = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:S_1 = load %s
+    %load:S_1 = let %3
+    %5:mat3x2<f32> = access %load, 0u
+    %6:mat2x3<f32> = transpose %5
+    %m:mat2x3<f32> = let %6
+    %8:mat3x2<f32> = access %load, 0u
+    %9:mat2x3<f32> = transpose %8
+    %10:vec3<f32> = access %9, 1u
+    %c:vec3<f32> = let %10
+    %12:mat3x2<f32> = access %load, 0u
+    %13:mat2x3<f32> = transpose %12
+    %14:f32 = access %13, 1u, 2u
+    %e:f32 = let %14
+    ret
+  }
 }
 )";
 
@@ -643,7 +722,105 @@ fn f() {
     EXPECT_EQ(after, str());
 }
 
-TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_InsertInStructConstructor) {
+TEST_F(SpirvReader_TransposeRowMajorTest, ExtractFromLoadedVector) {
+    // struct S {
+    //   @offset(16)
+    //   @row_major
+    //   m : mat2x3<f32>,
+    // };
+    // @group(0) @binding(0) var<uniform> s : S;
+    //
+    // @compute @workgroup_size(1)
+    // fn f() {
+    //   let col_idx : i32 = 1i;
+    //   let row_idx : i32 = 2i;
+    //   let load = s;
+    //   let m : mat2x3<f32> = load.m;
+    //   let c : vec3<f32> = load.m[col_idx];
+    //   let e : vec3<f32> = c[row_idx];
+    // }
+    auto* matrix_member = ty.Get<core::type::StructMember>(mod.symbols.New("m"), ty.mat2x3<f32>(),
+                                                           0u, 16u, 24u, 24u, core::IOAttributes{});
+    matrix_member->SetRowMajor();
+
+    auto* strct = ty.Struct(mod.symbols.New("S"), Vector{matrix_member});
+
+    auto* var = b.Var("s", ty.ptr<uniform>(strct));
+    var->SetBindingPoint(0, 0);
+    mod.root_block->Append(var);
+
+    auto* f = b.ComputeFunction("f");
+    b.Append(f->Block(), [&] {
+        auto* ls = b.Load(var);
+        auto* load = b.Let("load", ls);
+        b.Let("m", b.Access(ty.mat2x3<f32>(), load, 0_u));
+        auto* c = b.Let("c", b.Access(ty.vec3<f32>(), load, 0_u, 1_u));
+        b.Let("e", b.Access(ty.f32(), c, 2_u));
+        b.Return(f);
+    });
+
+    auto* before = R"(
+S = struct @align(24) {
+  m:mat2x3<f32> @offset(16) @size(24), @row_major
+}
+
+$B1: {  # root
+  %s:ptr<uniform, S, read> = var undef @binding_point(0, 0)
+}
+
+%f = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:S = load %s
+    %load:S = let %3
+    %5:mat2x3<f32> = access %load, 0u
+    %m:mat2x3<f32> = let %5
+    %7:vec3<f32> = access %load, 0u, 1u
+    %c:vec3<f32> = let %7
+    %9:f32 = access %c, 2u
+    %e:f32 = let %9
+    ret
+  }
+}
+)";
+
+    ASSERT_EQ(before, str());
+
+    auto* after = R"(
+S = struct @align(24) {
+  m:mat2x3<f32> @offset(16) @size(24), @row_major
+}
+
+S_1 = struct @align(24) {
+  m:mat3x2<f32> @offset(16)
+}
+
+$B1: {  # root
+  %s:ptr<uniform, S_1, read> = var undef @binding_point(0, 0)
+}
+
+%f = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:S_1 = load %s
+    %load:S_1 = let %3
+    %5:mat3x2<f32> = access %load, 0u
+    %6:mat2x3<f32> = transpose %5
+    %m:mat2x3<f32> = let %6
+    %8:mat3x2<f32> = access %load, 0u
+    %9:mat2x3<f32> = transpose %8
+    %10:vec3<f32> = access %9, 1u
+    %c:vec3<f32> = let %10
+    %12:f32 = access %c, 2u
+    %e:f32 = let %12
+    ret
+  }
+}
+)";
+
+    Run(TransposeRowMajor);
+    EXPECT_EQ(after, str());
+}
+
+TEST_F(SpirvReader_TransposeRowMajorTest, InsertInStructConstructor) {
     // struct S {
     //   @offset(0) @row_major m1 : mat2x3<f32>,
     //   @offset(32) m2 : mat4x2<f32>,
@@ -709,24 +886,32 @@ $B1: {  # root
     ASSERT_EQ(before, str());
 
     auto* after = R"(
-struct S {
-  /* @offset(0u) */
-  m : mat3x2<f32>,
-  @size(8)
-  padding_0 : u32,
-  /* @offset(32u) */
-  m1 : mat4x2<f32>,
-  /* @offset(64u) */
-  m2 : mat2x4<f32>,
+S = struct @align(32) {
+  m:mat2x3<f32> @offset(0) @size(24), @row_major
+  m_1:mat4x2<f32> @offset(32)
+  m_2:mat4x2<f32> @offset(64), @row_major
 }
 
-@group(0) @binding(0) var<storage, read_write> s : S;
+S_1 = struct @align(32) {
+  m:mat3x2<f32> @offset(0)
+  m_1:mat4x2<f32> @offset(32)
+  m_2:mat2x4<f32> @offset(64)
+}
 
-@compute @workgroup_size(1i)
-fn f() {
-  let m1 = mat2x3f();
-  let m2 = mat4x2f();
-  s = S(transpose(m1), m2, transpose(m2));
+$B1: {  # root
+  %s:ptr<storage, S_1, read_write> = var undef @binding_point(0, 0)
+}
+
+%f = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:mat2x3<f32> = construct
+    %4:mat4x2<f32> = construct
+    %5:mat3x2<f32> = transpose %3
+    %6:mat2x4<f32> = transpose %4
+    %7:S_1 = construct %5, %4, %6
+    store %s, %7
+    ret
+  }
 }
 )";
 
@@ -734,7 +919,7 @@ fn f() {
     EXPECT_EQ(after, str());
 }
 
-TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_DeeplyNested) {
+TEST_F(SpirvReader_TransposeRowMajorTest, DeeplyNested) {
     // struct Inner {
     //   @offset(0)
     //   @row_major
@@ -752,7 +937,7 @@ TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_DeeplyNested) {
     //   buffer.arr[0].m[3] = m[2];
     // }
     auto* matrix_member = ty.Get<core::type::StructMember>(mod.symbols.New("m"), ty.mat4x3<f32>(),
-                                                           0u, 16u, 24u, 24u, core::IOAttributes{});
+                                                           0u, 16u, 24u, 48u, core::IOAttributes{});
     matrix_member->SetRowMajor();
 
     auto* inner_strct = ty.Struct(mod.symbols.New("Inner"), Vector{matrix_member});
@@ -774,7 +959,7 @@ TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_DeeplyNested) {
 
     auto* before = R"(
 Inner = struct @align(24) {
-  m:mat4x3<f32> @offset(16) @size(24), @row_major
+  m:mat4x3<f32> @offset(16) @size(48), @row_major
 }
 
 Outer = struct @align(24) {
@@ -801,28 +986,51 @@ $B1: {  # root
     ASSERT_EQ(before, str());
 
     auto* after = R"(
-fn tint_store_row_major_column(tint_to : ptr<storage, mat3x4<f32>, read_write>, tint_idx : u32, tint_col : vec3<f32>) {
-  tint_to[0][tint_idx] = tint_col[0];
-  tint_to[1][tint_idx] = tint_col[1];
-  tint_to[2][tint_idx] = tint_col[2];
+Inner = struct @align(24) {
+  m:mat4x3<f32> @offset(16) @size(48), @row_major
 }
 
-struct Inner {
-  /* @offset(0u) */
-  m : mat3x4<f32>,
+Outer = struct @align(24) {
+  arr:array<Inner, 4> @offset(0)
 }
 
-struct Outer {
-  /* @offset(0u) */
-  arr : array<Inner, 4>,
+Inner_1 = struct @align(24) {
+  m:mat3x4<f32> @offset(16)
 }
 
-@group(0) @binding(0) var<storage, read_write> buffer : Outer;
+Outer_1 = struct @align(24) {
+  arr:array<Inner_1, 4> @offset(0)
+}
 
-@compute @workgroup_size(1i)
-fn f() {
-  let m : mat4x3<f32> = transpose(buffer.arr[1].m);
-  tint_store_row_major_column(&(buffer.arr[0].m), u32(3), m[2]);
+$B1: {  # root
+  %s:ptr<storage, Outer_1, read_write> = var undef @binding_point(0, 0)
+}
+
+%f = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:ptr<storage, mat3x4<f32>, read_write> = access %s, 0u, 1u, 0u
+    %4:mat3x4<f32> = load %3
+    %5:mat4x3<f32> = transpose %4
+    %m:mat4x3<f32> = let %5
+    %7:ptr<storage, mat3x4<f32>, read_write> = access %s, 0u, 0u, 0u
+    %8:vec3<f32> = access %m, 2u
+    %9:void = call %tint_store_row_major_column, %7, 3u, %8
+    ret
+  }
+}
+%tint_store_row_major_column = func(%11:ptr<storage, mat3x4<f32>, read_write>, %12:u32, %13:vec3<f32>):void {
+  $B3: {
+    %14:f32 = access %13, 0u
+    %15:ptr<storage, vec4<f32>, read_write> = access %11, 0u
+    store_vector_element %15, %12, %14
+    %16:f32 = access %13, 1u
+    %17:ptr<storage, vec4<f32>, read_write> = access %11, 1u
+    store_vector_element %17, %12, %16
+    %18:f32 = access %13, 2u
+    %19:ptr<storage, vec4<f32>, read_write> = access %11, 2u
+    store_vector_element %19, %12, %18
+    ret
+  }
 }
 )";
 
@@ -830,7 +1038,7 @@ fn f() {
     EXPECT_EQ(after, str());
 }
 
-TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_MultipleColumnHelpers) {
+TEST_F(SpirvReader_TransposeRowMajorTest, MultipleColumnHelpers) {
     // struct S {
     //   @offset(0) @row_major m1 : mat2x3<f32>,
     //   @offset(32) @row_major m2 : mat4x2<f32>,
@@ -855,7 +1063,7 @@ TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_MultipleColumnHelpers) {
     matrix_member_0->SetRowMajor();
 
     auto* matrix_member_1 = ty.Get<core::type::StructMember>(
-        mod.symbols.New("m"), ty.mat4x2<f32>(), 1u, 32u, 24u, 24u, core::IOAttributes{});
+        mod.symbols.New("m"), ty.mat4x2<f32>(), 1u, 32u, 24u, 48u, core::IOAttributes{});
     matrix_member_1->SetRowMajor();
 
     auto* strct = ty.Struct(mod.symbols.New("S"), Vector{matrix_member_0, matrix_member_1});
@@ -895,7 +1103,7 @@ TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_MultipleColumnHelpers) {
     auto* before = R"(
 S = struct @align(24) {
   m:mat2x3<f32> @offset(0) @size(24), @row_major
-  m_1:mat4x2<f32> @offset(32) @size(24), @row_major
+  m_1:mat4x2<f32> @offset(32) @size(48), @row_major
 }
 
 $B1: {  # root
@@ -937,65 +1145,143 @@ $B1: {  # root
     ASSERT_EQ(before, str());
 
     auto* after = R"(
-fn tint_load_row_major_column(tint_from : ptr<storage, mat3x2<f32>, read_write>, tint_idx : u32) -> vec3<f32> {
-  return vec3<f32>(tint_from[0][tint_idx], tint_from[1][tint_idx], tint_from[2][tint_idx]);
+S = struct @align(24) {
+  m:mat2x3<f32> @offset(0) @size(24), @row_major
+  m_1:mat4x2<f32> @offset(32) @size(48), @row_major
 }
 
-fn tint_store_row_major_column(tint_to : ptr<private, mat3x2<f32>>, tint_idx : u32, tint_col : vec3<f32>) {
-  tint_to[0][tint_idx] = tint_col[0];
-  tint_to[1][tint_idx] = tint_col[1];
-  tint_to[2][tint_idx] = tint_col[2];
+S_1 = struct @align(24) {
+  m:mat3x2<f32> @offset(0)
+  m_1:mat2x4<f32> @offset(32) @size(48)
 }
 
-fn tint_load_row_major_column_1(tint_from : ptr<storage, mat2x4<f32>, read_write>, tint_idx : u32) -> vec2<f32> {
-  return vec2<f32>(tint_from[0][tint_idx], tint_from[1][tint_idx]);
+$B1: {  # root
+  %s:ptr<storage, S_1, read_write> = var undef @binding_point(0, 0)
+  %ps:ptr<private, S_1, read_write> = var undef
 }
 
-fn tint_store_row_major_column_1(tint_to : ptr<private, mat2x4<f32>>, tint_idx : u32, tint_col : vec2<f32>) {
-  tint_to[0][tint_idx] = tint_col[0];
-  tint_to[1][tint_idx] = tint_col[1];
+%f = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %4:ptr<storage, mat3x2<f32>, read_write> = access %s, 0u
+    %5:ptr<storage, mat3x2<f32>, read_write> = access %s, 0u
+    %6:ptr<storage, mat2x4<f32>, read_write> = access %s, 1u
+    %7:ptr<storage, mat2x4<f32>, read_write> = access %s, 1u
+    %8:ptr<private, mat3x2<f32>, read_write> = access %ps, 0u
+    %9:ptr<private, mat3x2<f32>, read_write> = access %ps, 0u
+    %10:ptr<private, mat2x4<f32>, read_write> = access %ps, 1u
+    %11:ptr<private, mat2x4<f32>, read_write> = access %ps, 1u
+    %12:vec3<f32> = call %tint_load_row_major_column, %5, 1u
+    %14:void = call %tint_store_row_major_column, %8, 0u, %12
+    %16:vec3<f32> = call %tint_load_row_major_column, %4, 0u
+    %17:void = call %tint_store_row_major_column, %9, 1u, %16
+    %18:vec2<f32> = call %tint_load_row_major_column_1, %7, 3u
+    %20:void = call %tint_store_row_major_column_1, %10, 2u, %18
+    %22:vec2<f32> = call %tint_load_row_major_column_1, %6, 2u
+    %23:void = call %tint_store_row_major_column_1, %11, 3u, %22
+    %24:vec3<f32> = call %tint_load_row_major_column_2, %8, 0u
+    %26:void = call %tint_store_row_major_column_2, %4, 0u, %24
+    %28:vec3<f32> = call %tint_load_row_major_column_2, %9, 1u
+    %29:void = call %tint_store_row_major_column_2, %5, 1u, %28
+    %30:vec2<f32> = call %tint_load_row_major_column_3, %10, 2u
+    %32:void = call %tint_store_row_major_column_3, %6, 2u, %30
+    %34:vec2<f32> = call %tint_load_row_major_column_3, %11, 3u
+    %35:void = call %tint_store_row_major_column_3, %7, 3u, %34
+    ret
+  }
 }
-
-fn tint_load_row_major_column_2(tint_from : ptr<private, mat3x2<f32>>, tint_idx : u32) -> vec3<f32> {
-  return vec3<f32>(tint_from[0][tint_idx], tint_from[1][tint_idx], tint_from[2][tint_idx]);
+%tint_store_row_major_column_1 = func(%36:ptr<private, mat2x4<f32>, read_write>, %37:u32, %38:vec2<f32>):void {  # %tint_store_row_major_column_1: 'tint_store_row_major_column'
+  $B3: {
+    %39:f32 = access %38, 0u
+    %40:ptr<private, vec4<f32>, read_write> = access %36, 0u
+    store_vector_element %40, %37, %39
+    %41:f32 = access %38, 1u
+    %42:ptr<private, vec4<f32>, read_write> = access %36, 1u
+    store_vector_element %42, %37, %41
+    ret
+  }
 }
-
-fn tint_store_row_major_column_2(tint_to : ptr<storage, mat3x2<f32>, read_write>, tint_idx : u32, tint_col : vec3<f32>) {
-  tint_to[0][tint_idx] = tint_col[0];
-  tint_to[1][tint_idx] = tint_col[1];
-  tint_to[2][tint_idx] = tint_col[2];
+%tint_load_row_major_column_3 = func(%43:ptr<private, mat2x4<f32>, read_write>, %44:u32):vec2<f32> {  # %tint_load_row_major_column_3: 'tint_load_row_major_column'
+  $B4: {
+    %45:ptr<private, vec4<f32>, read_write> = access %43, 0u
+    %46:f32 = load_vector_element %45, %44
+    %47:ptr<private, vec4<f32>, read_write> = access %43, 1u
+    %48:f32 = load_vector_element %47, %44
+    %49:vec2<f32> = construct %46, %48
+    ret %49
+  }
 }
-
-fn tint_load_row_major_column_3(tint_from : ptr<private, mat2x4<f32>>, tint_idx : u32) -> vec2<f32> {
-  return vec2<f32>(tint_from[0][tint_idx], tint_from[1][tint_idx]);
+%tint_store_row_major_column = func(%50:ptr<private, mat3x2<f32>, read_write>, %51:u32, %52:vec3<f32>):void {
+  $B5: {
+    %53:f32 = access %52, 0u
+    %54:ptr<private, vec2<f32>, read_write> = access %50, 0u
+    store_vector_element %54, %51, %53
+    %55:f32 = access %52, 1u
+    %56:ptr<private, vec2<f32>, read_write> = access %50, 1u
+    store_vector_element %56, %51, %55
+    %57:f32 = access %52, 2u
+    %58:ptr<private, vec2<f32>, read_write> = access %50, 2u
+    store_vector_element %58, %51, %57
+    ret
+  }
 }
-
-fn tint_store_row_major_column_3(tint_to : ptr<storage, mat2x4<f32>, read_write>, tint_idx : u32, tint_col : vec2<f32>) {
-  tint_to[0][tint_idx] = tint_col[0];
-  tint_to[1][tint_idx] = tint_col[1];
+%tint_load_row_major_column_2 = func(%59:ptr<private, mat3x2<f32>, read_write>, %60:u32):vec3<f32> {  # %tint_load_row_major_column_2: 'tint_load_row_major_column'
+  $B6: {
+    %61:ptr<private, vec2<f32>, read_write> = access %59, 0u
+    %62:f32 = load_vector_element %61, %60
+    %63:ptr<private, vec2<f32>, read_write> = access %59, 1u
+    %64:f32 = load_vector_element %63, %60
+    %65:ptr<private, vec2<f32>, read_write> = access %59, 2u
+    %66:f32 = load_vector_element %65, %60
+    %67:vec3<f32> = construct %62, %64, %66
+    ret %67
+  }
 }
-
-struct S {
-  /* @offset(0u) */
-  m1 : mat3x2<f32>,
-  /* @offset(32u) */
-  m2 : mat2x4<f32>,
+%tint_load_row_major_column_1 = func(%68:ptr<storage, mat2x4<f32>, read_write>, %69:u32):vec2<f32> {  # %tint_load_row_major_column_1: 'tint_load_row_major_column'
+  $B7: {
+    %70:ptr<storage, vec4<f32>, read_write> = access %68, 0u
+    %71:f32 = load_vector_element %70, %69
+    %72:ptr<storage, vec4<f32>, read_write> = access %68, 1u
+    %73:f32 = load_vector_element %72, %69
+    %74:vec2<f32> = construct %71, %73
+    ret %74
+  }
 }
-
-@group(0) @binding(0) var<storage, read_write> s : S;
-
-var<private> ps : S;
-
-@compute @workgroup_size(1i)
-fn f() {
-  tint_store_row_major_column(&(ps.m1), u32(0u), tint_load_row_major_column(&(s.m1), u32(1u)));
-  tint_store_row_major_column(&(ps.m1), u32(1u), tint_load_row_major_column(&(s.m1), u32(0u)));
-  tint_store_row_major_column_1(&(ps.m2), u32(2u), tint_load_row_major_column_1(&(s.m2), u32(3u)));
-  tint_store_row_major_column_1(&(ps.m2), u32(3u), tint_load_row_major_column_1(&(s.m2), u32(2u)));
-  tint_store_row_major_column_2(&(s.m1), u32(0u), tint_load_row_major_column_2(&(ps.m1), u32(0u)));
-  tint_store_row_major_column_2(&(s.m1), u32(1u), tint_load_row_major_column_2(&(ps.m1), u32(1u)));
-  tint_store_row_major_column_3(&(s.m2), u32(2u), tint_load_row_major_column_3(&(ps.m2), u32(2u)));
-  tint_store_row_major_column_3(&(s.m2), u32(3u), tint_load_row_major_column_3(&(ps.m2), u32(3u)));
+%tint_store_row_major_column_3 = func(%75:ptr<storage, mat2x4<f32>, read_write>, %76:u32, %77:vec2<f32>):void {  # %tint_store_row_major_column_3: 'tint_store_row_major_column'
+  $B8: {
+    %78:f32 = access %77, 0u
+    %79:ptr<storage, vec4<f32>, read_write> = access %75, 0u
+    store_vector_element %79, %76, %78
+    %80:f32 = access %77, 1u
+    %81:ptr<storage, vec4<f32>, read_write> = access %75, 1u
+    store_vector_element %81, %76, %80
+    ret
+  }
+}
+%tint_load_row_major_column = func(%82:ptr<storage, mat3x2<f32>, read_write>, %83:u32):vec3<f32> {
+  $B9: {
+    %84:ptr<storage, vec2<f32>, read_write> = access %82, 0u
+    %85:f32 = load_vector_element %84, %83
+    %86:ptr<storage, vec2<f32>, read_write> = access %82, 1u
+    %87:f32 = load_vector_element %86, %83
+    %88:ptr<storage, vec2<f32>, read_write> = access %82, 2u
+    %89:f32 = load_vector_element %88, %83
+    %90:vec3<f32> = construct %85, %87, %89
+    ret %90
+  }
+}
+%tint_store_row_major_column_2 = func(%91:ptr<storage, mat3x2<f32>, read_write>, %92:u32, %93:vec3<f32>):void {  # %tint_store_row_major_column_2: 'tint_store_row_major_column'
+  $B10: {
+    %94:f32 = access %93, 0u
+    %95:ptr<storage, vec2<f32>, read_write> = access %91, 0u
+    store_vector_element %95, %92, %94
+    %96:f32 = access %93, 1u
+    %97:ptr<storage, vec2<f32>, read_write> = access %91, 1u
+    store_vector_element %97, %92, %96
+    %98:f32 = access %93, 2u
+    %99:ptr<storage, vec2<f32>, read_write> = access %91, 2u
+    store_vector_element %99, %92, %98
+    ret
+  }
 }
 )";
 
@@ -1003,7 +1289,9 @@ fn f() {
     EXPECT_EQ(after, str());
 }
 
-TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_PreserveMatrixStride) {
+TEST_F(SpirvReader_TransposeRowMajorTest, PreserveMatrixStride) {
+    capabilities.Add(core::ir::Capability::kAllowStructMatrixDecorations);
+
     // struct S {
     //   @offset(0)
     //   @stride(32)
@@ -1055,17 +1343,26 @@ $B1: {  # root
     ASSERT_EQ(before, str());
 
     auto* after = R"(
-struct S {
-  /* @offset(0u) */
-  @stride(32) @internal(disable_validation__ignore_stride)
-  m : mat3x2<f32>,
+S = struct @align(24) {
+  m:mat2x3<f32> @offset(0) @size(24), @row_major, @matrix_stride(32)
 }
 
-@group(0) @binding(0) var<uniform> s : S;
+S_1 = struct @align(24) {
+  m:mat3x2<f32> @offset(0), @matrix_stride(32)
+}
 
-@compute @workgroup_size(1i)
-fn f() {
-  let x : mat2x3<f32> = transpose(s.m);
+$B1: {  # root
+  %s:ptr<uniform, S_1, read> = var undef @binding_point(0, 0)
+}
+
+%f = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:ptr<uniform, mat3x2<f32>, read> = access %s, 0u
+    %4:mat3x2<f32> = load %3
+    %5:mat2x3<f32> = transpose %4
+    %x:mat2x3<f32> = let %5
+    ret
+  }
 }
 )";
 
@@ -1073,7 +1370,7 @@ fn f() {
     EXPECT_EQ(after, str());
 }
 
-TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_ArrayOfMatrix_ReadWholeArray) {
+TEST_F(SpirvReader_TransposeRowMajorTest, ArrayOfMatrix_ReadWholeArray) {
     // struct S {
     //   @offset(0)
     //   @row_major
@@ -1125,6 +1422,25 @@ $B1: {  # root
     ASSERT_EQ(before, str());
 
     auto* after = R"(
+S = struct @align(32) {
+  arr:array<mat2x3<f32>, 4> @offset(0) @size(32), @row_major
+}
+
+S_1 = struct @align(32) {
+  arr:array<mat3x2<f32>, 4> @offset(0) @size(32)
+}
+
+$B1: {  # root
+  %s:ptr<storage, S_1, read_write> = var undef @binding_point(0, 0)
+}
+
+%f = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:ptr<storage, array<mat2x3<f32>, 4>, read_write> = access %s, 0u
+    ret
+  }
+}
+
 fn tint_transpose_array(tint_from : @stride(32) array<mat3x2<f32>, 4u>) -> array<mat2x3<f32>, 4u> {
   var tint_result : array<mat2x3<f32>, 4u>;
   for(var i = 0u; (i < 4u); i++) {
@@ -1477,6 +1793,13 @@ fn f() {
     Run(TransposeRowMajor);
     EXPECT_EQ(after, str());
 }
+
+// TODO(dsinclair): Pass ptr<uniform, row-major matrix> into function
+// TODO(dsinclair): Pass ptr<uniform, vec2 from row-major matrix> into function
+// TODO(dsinclair): Pass ptr<uniform, vec2 from row-major matrix> into function and then access in
+//                  callee and caller
+// TODO(dsinclair): Struct with row-major matrix and a stand alone vector, loading the vector should
+//                  not change anything ...
 
 }  // namespace
 }  // namespace tint::spirv::reader::lower
