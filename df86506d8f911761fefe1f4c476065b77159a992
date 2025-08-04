@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80513617_e5b02b5a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-04T15:19:31Z",
+      "side": 1,
+      "message": "Beginning work on some missing tests here: https://dawn-review.googlesource.com/c/dawn/+/255563",
+      "parentUuid": "74c5eb97_11d01200",
+      "revId": "df86506d8f911761fefe1f4c476065b77159a992",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b1d477b1_a4ecb852",
