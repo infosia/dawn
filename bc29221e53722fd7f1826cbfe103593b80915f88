@@ -301,6 +301,24 @@
       "parentUuid": "3dcf606d_fb57f7f2",
       "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3cf6060_336de016",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-04T08:26:18Z",
+      "side": 1,
+      "message": "The proposal should be ok now withe the compat restriction. For the test I believe we can have a second one with two different non-default swizzle draw calls (though thinks look ok now as well as in GL the default swizzle is treated just like a normal swizzle).",
+      "parentUuid": "5def362d_efc8353a",
+      "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
