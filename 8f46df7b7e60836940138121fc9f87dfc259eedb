@@ -162,6 +162,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "135e4065_e69e03fc",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-05T15:25:39Z",
+      "side": 1,
+      "message": "Correct. This is a bit like SyncToken. Which is why i called it SyncId.",
+      "parentUuid": "490ef1a1_ef52f414",
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0ff80fcd_1d00d14b",
         "filename": "src/dawn/native/vulkan/BufferVk.cpp",
         "patchSetId": 12
