@@ -90,6 +90,14 @@ void MemoryTransferService::WriteHandle::SetTarget(void* data) {
 void MemoryTransferService::WriteHandle::SetDataLength(size_t dataLength) {
     mDataLength = dataLength;
 }
+void* MemoryTransferService::WriteHandle::GetTarget() const {
+    return mTargetData;
+}
+size_t MemoryTransferService::WriteHandle::GetDataLength() const {
+    DAWN_ASSERT(mTargetData != nullptr);
+    return mDataLength;
+}
+
 }  // namespace server
 
 }  // namespace dawn::wire
