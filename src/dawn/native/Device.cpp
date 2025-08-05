@@ -706,7 +706,7 @@ void DeviceBase::HandleDeviceLost(wgpu::DeviceLostReason reason, std::string_vie
 void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
                              InternalErrorType additionalAllowedErrors,
                              wgpu::DeviceLostReason lostReason) {
-    auto deviceGuard(GetGuard());
+    auto deviceGuard = GetGuard();
     AppendDebugLayerMessages(error.get());
 
     InternalErrorType type = error->GetType();
