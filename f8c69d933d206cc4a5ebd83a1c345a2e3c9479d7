@@ -34,6 +34,24 @@
       "parentUuid": "35edb073_4fcd3ddc",
       "revId": "f8c69d933d206cc4a5ebd83a1c345a2e3c9479d7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a15d9ab1_fcd8a0d2",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 2161,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-05T00:26:06Z",
+      "side": 1,
+      "message": "Er, right, I forgot we do need it for `firstInstance` because that can be used like a push constant if there are no instance-step-mode attributes. I suppose this is technically also true of `firstVertex` if there are no vertex-step-mode attributes?\n\nBut I think the Counts still shouldn\u0027t need it.",
+      "parentUuid": "1ad40f98_4f08204c",
+      "revId": "f8c69d933d206cc4a5ebd83a1c345a2e3c9479d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
