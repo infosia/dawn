@@ -72,9 +72,9 @@ class SystemEventQueue final : public Queue {
     using Queue::Queue;
     MaybeError Initialize();
     MaybeError NextSerial() override;
-    ResultOrError<ExecutionSerial> CheckCompletedSerialsImpl() override;
-    ResultOrError<bool> WaitForQueueSerialImpl(ExecutionSerial serial,
-                                               Nanoseconds timeout) override;
+    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
+    ResultOrError<ExecutionSerial> WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                          Nanoseconds timeout) override;
     void SetEventOnCompletion(ExecutionSerial serial, HANDLE event) override;
 
   private:
@@ -109,9 +109,9 @@ class DelayFlushQueue final : public Queue {
     using Queue::Queue;
     MaybeError Initialize();
     MaybeError NextSerial() override;
-    ResultOrError<ExecutionSerial> CheckCompletedSerialsImpl() override;
-    ResultOrError<bool> WaitForQueueSerialImpl(ExecutionSerial serial,
-                                               Nanoseconds timeout) override;
+    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
+    ResultOrError<ExecutionSerial> WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                          Nanoseconds timeout) override;
     void SetEventOnCompletion(ExecutionSerial serial, HANDLE event) override;
 
   private:
@@ -548,11 +548,11 @@ ResultOrError<ExecutionSerial> SystemEventQueue::CheckCompletedSerialsImpl() {
     return completedSerial;
 }
 
-ResultOrError<bool> SystemEventQueue::WaitForQueueSerialImpl(ExecutionSerial serial,
-                                                             Nanoseconds timeout) {
+ResultOrError<ExecutionSerial> SystemEventQueue::WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                                        Nanoseconds timeout) {
     ExecutionSerial completedSerial = GetCompletedCommandSerial();
     if (serial <= completedSerial) {
-        return true;
+        return serial;
     }
 
     if (serial > GetLastSubmittedCommandSerial()) {
@@ -561,14 +561,9 @@ ResultOrError<bool> SystemEventQueue::WaitForQueueSerialImpl(ExecutionSerial ser
             uint64_t(serial), uint64_t(GetLastSubmittedCommandSerial()));
     }
 
-    bool didComplete = false;
-    DAWN_TRY_ASSIGN(didComplete, mPendingEvents.Use([=, &completedEventsList = mCompletedEvents](
-                                                        auto pendingEvents) -> ResultOrError<bool> {
-        if (pendingEvents->empty() || serial < pendingEvents->front().serial) {
-            // Empty list must mean the serial have already completed.
-            return true;
-        }
-
+    return mPendingEvents.Use([=, &completedEventsList = mCompletedEvents](
+                                  auto pendingEvents) -> ResultOrError<ExecutionSerial> {
+        DAWN_ASSERT(!pendingEvents->empty());
         DAWN_ASSERT(serial >= pendingEvents->front().serial);
         DAWN_ASSERT(serial <= pendingEvents->back().serial);
         auto it = std::lower_bound(
@@ -583,7 +578,7 @@ ResultOrError<bool> SystemEventQueue::WaitForQueueSerialImpl(ExecutionSerial ser
         DAWN_INTERNAL_ERROR_IF(result == WAIT_FAILED, "WaitForSingleObject() failed");
 
         if (result != WAIT_OBJECT_0) {
-            return false;
+            return kBeginningOfGPUTime;
         }
 
         // Events before |it| should be signalled as well.
@@ -594,10 +589,8 @@ ResultOrError<bool> SystemEventQueue::WaitForQueueSerialImpl(ExecutionSerial ser
         });
         pendingEvents->erase(pendingEvents->begin(), it + 1);
 
-        return true;
-    }));
-
-    return didComplete;
+        return serial;
+    });
 }
 
 void SystemEventQueue::SetEventOnCompletion(ExecutionSerial serial, HANDLE event) {
@@ -696,11 +689,11 @@ ResultOrError<ExecutionSerial> DelayFlushQueue::CheckCompletedSerialsImpl() {
     return completedSerial;
 }
 
-ResultOrError<bool> DelayFlushQueue::WaitForQueueSerialImpl(ExecutionSerial serial,
-                                                            Nanoseconds timeout) {
+ResultOrError<ExecutionSerial> DelayFlushQueue::WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                                       Nanoseconds timeout) {
     ExecutionSerial completedSerial = GetCompletedCommandSerial();
     if (serial <= completedSerial) {
-        return true;
+        return serial;
     }
 
     if (serial > GetLastSubmittedCommandSerial()) {
@@ -737,7 +730,7 @@ ResultOrError<bool> DelayFlushQueue::WaitForQueueSerialImpl(ExecutionSerial seri
     if (timeout == Nanoseconds(0)) {
         if (!done) {
             // Return timed-out immediately without using a timer.
-            return false;
+            return kBeginningOfGPUTime;
         }
     } else {
         auto startTime = std::chrono::steady_clock::now();
@@ -750,7 +743,7 @@ ResultOrError<bool> DelayFlushQueue::WaitForQueueSerialImpl(ExecutionSerial seri
                 auto elapsedNs =
                     std::chrono::duration_cast<std::chrono::nanoseconds>(curTime - startTime);
                 if (static_cast<uint64_t>(elapsedNs.count()) >= uint64_t(timeout)) {
-                    return false;
+                    return kBeginningOfGPUTime;
                 }
                 std::this_thread::yield();
             }
@@ -760,7 +753,7 @@ ResultOrError<bool> DelayFlushQueue::WaitForQueueSerialImpl(ExecutionSerial seri
     // Completed queries will be recycled in CheckCompletedSerialsImpl();
     auto numCompletedQueries = std::distance(mPendingQueries.begin(), it) + 1;
     MarkPendingQueriesAsComplete(numCompletedQueries);
-    return done;
+    return done ? serial : kBeginningOfGPUTime;
 }
 
 MaybeError DelayFlushQueue::BlockWaitForLastSubmittedSerial(
