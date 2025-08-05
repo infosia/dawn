@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e60a11e7_eca78769",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-08-05T21:55:03Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "843df4a2abf68790f18d91362f8188af6ef69c13",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d475c1a7_bedc15eb",
@@ -14,6 +31,30 @@
       "writtenOn": "2025-08-05T20:35:06Z",
       "side": 1,
       "message": "nit. Does it work if we do:\n```\ntemplate \u003ctypename CreateFn,\n          typename ReturnType \u003d std::invoke_result_t\u003cCreateFn, const Key\u0026\u003e\u003e\n```\n\nIf it does, then we could probably update the signature and also remove the `using` below.",
+      "range": {
+        "startLine": 94,
+        "startChar": 4,
+        "endLine": 94,
+        "endChar": 32
+      },
+      "revId": "843df4a2abf68790f18d91362f8188af6ef69c13",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1424f8ee_87153bf6",
+        "filename": "src/dawn/common/LRUCache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-08-05T21:55:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d475c1a7_bedc15eb",
       "range": {
         "startLine": 94,
         "startChar": 4,
