@@ -32,6 +32,7 @@
 #include <vector>
 
 #include "dawn/common/Atomic.h"
+#include "dawn/native/Device.h"
 
 namespace dawn::native {
 
@@ -47,23 +48,36 @@ ExecutionSerial ExecutionQueueBase::GetCompletedCommandSerial() const {
     return ExecutionSerial(mCompletedSerial.load(std::memory_order_acquire));
 }
 
-ResultOrError<bool> ExecutionQueueBase::WaitForQueueSerial(ExecutionSerial serial,
-                                                           Nanoseconds timeout) {
-    ExecutionSerial completedSerial;
-    DAWN_TRY_ASSIGN(completedSerial, WaitForQueueSerialImpl(serial, timeout));
-
-    if (completedSerial == kWaitSerialTimeout) {
-        return false;
+MaybeError ExecutionQueueBase::WaitForQueueSerial(ExecutionSerial waitSerial, Nanoseconds timeout) {
+    std::optional<DeviceGuard> deviceGuard;
+    if (GetDevice()->IsToggleEnabled(Toggle::WaitIsThreadSafe)) {
+        // If thread-safe, WaitFor* functions should never be holding the device lock when called.
+        DAWN_ASSERT(GetDevice()->IsNotLockedByCurrentThread());
+    } else {
+        GetDevice()->GetGuard(deviceGuard);
     }
 
-    // It's critical to update the completed serial right away. If fences are processed by another
-    // thread before CheckAndUpdateCompletedSerials() runs on the current thread,
-    // the fence list will be empty, preventing the current thread from determining the true latest
-    // serial. Pre-emptively updating mCompletedSerial ensures CheckAndUpdateCompletedSerials()
-    // returns an accurate value, preventing stale data.
-    FetchMax(mCompletedSerial, uint64_t(completedSerial));
+    {
+        auto deviceGuard = GetDevice()->GetGuard();
+        if (waitSerial > GetLastSubmittedCommandSerial()) {
+            // Serial has not been submitted yet. Submit it now.
+            DAWN_TRY(EnsureCommandsFlushed(waitSerial));
+        }
+    }
 
-    return true;
+    // Serial is already complete.
+    if (waitSerial <= GetCompletedCommandSerial()) {
+        return {};
+    }
+
+    if (timeout > Nanoseconds(0)) {
+        // Wait on the serial if it hasn't passed yet.
+        ExecutionSerial completedSerial = kWaitSerialTimeout;
+        DAWN_TRY_ASSIGN(completedSerial, WaitForQueueSerialImpl(waitSerial, timeout));
+        UpdateCompletedSerialTo(completedSerial);
+        return {};
+    }
+    return UpdateCompletedSerial();
 }
 
 MaybeError ExecutionQueueBase::CheckPassedSerials() {
@@ -89,27 +103,51 @@ MaybeError ExecutionQueueBase::UpdateCompletedSerial() {
 }
 
 void ExecutionQueueBase::TrackSerialTask(ExecutionSerial serial, Task&& task) {
-    if (serial <= GetCompletedCommandSerial()) {
-        task();
-        return;
+    {
+        std::lock_guard<std::mutex> lock(mMutex);
+        if (serial > GetCompletedCommandSerial()) {
+            mWaitingTasks.Enqueue(std::move(task), serial);
+            return;
+        }
     }
-    mWaitingTasks->Enqueue(std::move(task), serial);
+    task();
 }
 
 void ExecutionQueueBase::UpdateCompletedSerialTo(ExecutionSerial completedSerial) {
-    // Atomically set mCompletedSerial to completedSerial if completedSerial is larger.
-    FetchMax(mCompletedSerial, uint64_t(completedSerial));
+    std::vector<Task> tasks;
+    {
+        std::unique_lock<std::mutex> lock(mMutex);
 
-    mWaitingTasks.Use([&](auto tasks) {
-        // Note that the callbacks need to be called while holding this lock to ensure that callback
-        // ordering is enforced. At the moment, that means that re-entrant callbacks that call async
-        // APIs will deadlock. In the future we may consider making this a recursive lock or
-        // providing some other mechanism in order to enable re-entrant async APIs.
-        for (auto task : tasks->IterateUpTo(completedSerial)) {
-            task();
+        // We update the completed serial as soon as possible before waiting for callback rights so
+        // that we almost always process as many callbacks as possible.
+        FetchMax(mCompletedSerial, uint64_t(completedSerial));
+
+        if (mCallingCallbacks) {
+            mCv.wait(lock, [&] { return !mCallingCallbacks; });
         }
-        tasks->ClearUpTo(completedSerial);
-    });
+
+        auto serial = GetCompletedCommandSerial();
+        for (auto task : mWaitingTasks.IterateUpTo(serial)) {
+            tasks.push_back(std::move(task));
+        }
+        mWaitingTasks.ClearUpTo(serial);
+
+        if (tasks.size() > 0) {
+            mCallingCallbacks = true;
+        }
+    }
+
+    // Call the callbacks without holding the lock on the ExecutionQueue to avoid lock-inversion
+    // issues when dealing with potential re-entrant callbacks.
+    for (auto task : tasks) {
+        task();
+    }
+
+    if (tasks.size() > 0) {
+        std::lock_guard<std::mutex> lock(mMutex);
+        mCallingCallbacks = false;
+        mCv.notify_all();
+    }
 }
 
 MaybeError ExecutionQueueBase::EnsureCommandsFlushed(ExecutionSerial serial) {

@@ -31,6 +31,7 @@
 #include <shared_mutex>
 
 #include <memory>
+#include <optional>
 #include <string>
 #include <utility>
 #include <vector>
@@ -420,15 +421,19 @@ class DeviceBase : public ErrorSink,
     // This guard won't guarantee the wrapped mutex will be alive if the Device is deleted before
     // ~DeviceGuard. It would crash if such thing happens.
     [[nodiscard]] DeviceGuard GetGuard();
+    void GetGuard(std::optional<DeviceGuard>& guard);
     // Defers cleanup or finishing functions that happen once the device mutex is released if we are
     // holding the lock. Otherwise, performs the task now.
     void DeferIfLocked(std::function<void()> f);
 
-    // This method returns true if Feature::ImplicitDeviceSynchronization is turned on and the
-    // device is locked by current thread. This method is only enabled when DAWN_ENABLE_ASSERTS is
-    // turned on. Thus it should only be wrapped inside DAWN_ASSERT() macro. i.e.
-    // DAWN_ASSERT(device.IsLockedByCurrentThread())
+    // These methods are only enabled when DAWN_ENABLE_ASSERTS is turned on. Thus it should only be
+    // wrapped inside DAWN_ASSERT() macro. i.e. DAWN_ASSERT(device.IsLockedByCurrentThread())
+    //   - IsLockedByCurrentThreadIfNeeded: Returns true if Feature::ImplicitDeviceSynchronization
+    //     is turned off or the device is locked by the current thread.
+    //   - IsNotLockedByCurrentThread: Returns true if Feature::ImplicitDeviceSynchronization is
+    //     turned off or the device is NOT locked by the current thread.
     bool IsLockedByCurrentThreadIfNeeded() const;
+    bool IsNotLockedByCurrentThread() const;
 
     Ref<ComputePipelineBase> AddOrGetCachedComputePipeline(
         Ref<ComputePipelineBase> computePipeline);
@@ -460,6 +465,11 @@ class DeviceBase : public ErrorSink,
   protected:
     // Constructor used only for mocking and testing.
     DeviceBase();
+
+    // Protected function to allow granular lock/unlock in internal implementations where the Guards
+    // may be more cumbersome. Prefer to use the Guard when possible.
+    void Lock();
+    void Unlock();
 
     void ForceEnableFeatureForTesting(Feature feature);
 
