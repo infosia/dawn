@@ -286,6 +286,24 @@
       "parentUuid": "464a483d_a8023d9f",
       "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c52738e2_8ae26f4a",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-05T12:47:29Z",
+      "side": 1,
+      "message": "It\u0027s so simple that it is not worth finding a way to deduplicate. We don\u0027t have a way to easily share tiny helper methods like this.",
+      "parentUuid": "e7098240_aee9d440",
+      "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
