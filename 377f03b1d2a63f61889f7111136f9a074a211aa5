@@ -33,6 +33,23 @@
       "message": "LGTM, but adding Corentin also for this one just to verify that the style is ok for us.",
       "revId": "377f03b1d2a63f61889f7111136f9a074a211aa5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "707b9202_788a8376",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-08-05T23:59:31Z",
+      "side": 1,
+      "message": "FWIW the Chromium equivalents guard the attributes with `#if defined(__clang__)`: https://source.chromium.org/chromium/chromium/src/+/main:base/thread_annotations.h;l\u003d43\n\nI don\u0027t think we need to follow that since the `__has_attribute` implementation seems to work fine on both Clang and MSVC.",
+      "revId": "377f03b1d2a63f61889f7111136f9a074a211aa5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
