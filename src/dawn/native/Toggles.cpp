@@ -383,6 +383,10 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "subresource are completely initialized, and StoreOp::Discard is always translated as a "
       "Store.",
       "https://crbug.com/dawn/838", ToggleStage::Device}},
+    {Toggle::MetalPolyfillUnpack2x16snorm,
+     {"metal_polyfill_unpack_2x16_snorm",
+      "Polyfill unpack2x16snorm for MSL due to CTS failures on Mac AMD devices.",
+      "https://crbug.com/407109055", ToggleStage::Device}},
     {Toggle::MetalFillEmptyOcclusionQueriesWithZero,
      {"metal_fill_empty_occlusion_queries_with_zero",
       "Apple GPUs leave stale results in the visibility result buffer instead of writing zero if "
@@ -679,6 +683,9 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
      {"blob_cache_hash_validation",
       "Enable hash validation when loading/storing from/to the blob cache",
       "https://crbug.com/429938352", ToggleStage::Device}},
+    {Toggle::PolyfillSubgroupShuffleXor,
+     {"polyfill_subgroup_shuffle_xor", "Polyfill subgroupShuffleXor builtin function",
+      "https://crbug.com/xxx", ToggleStage::Device}},
     {Toggle::NoWorkaroundSampleMaskBecomesZeroForAllButLastColorTarget,
      {"no_workaround_sample_mask_becomes_zero_for_all_but_last_color_target",
       "MacOS 12.0+ Intel has a bug where the sample mask is only applied for the last color "
