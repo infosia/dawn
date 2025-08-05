@@ -196,6 +196,24 @@
       "parentUuid": "5ca5d255_d213c002",
       "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb700afb_7dc0cf5d",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-08-05T05:29:06Z",
+      "side": 1,
+      "message": "@kainino@chromium.org Are you fine duplicating the `IsNonDefaultSwizzle()` Dawn function in Blink or shall we find a way to expose Dawn\u0027s in Blink?\n\n@cwallez@chromium.org Does this CL LGTY eventually?",
+      "parentUuid": "5e9d7ffe_af99effa",
+      "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
