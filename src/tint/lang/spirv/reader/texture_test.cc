@@ -4125,5 +4125,69 @@ $B1: {  # root
 )");
 }
 
+TEST_F(SpirvReaderTest, Let_Sampler) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+          %1 = OpExtInstImport "GLSL.std.450"
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpSource GLSL 450
+               OpSourceExtension "GL_GOOGLE_cpp_style_line_directive"
+               OpSourceExtension "GL_GOOGLE_include_directive"
+               OpName %main "main"
+               OpName %v "v"
+               OpName %t "t"
+               OpName %s "s"
+               OpDecorate %t Binding 0
+               OpDecorate %t DescriptorSet 0
+               OpDecorate %s Binding 1
+               OpDecorate %s DescriptorSet 0
+       %void = OpTypeVoid
+          %3 = OpTypeFunction %void
+      %float = OpTypeFloat 32
+    %v4float = OpTypeVector %float 4
+%_ptr_Function_v4float = OpTypePointer Function %v4float
+         %10 = OpTypeImage %float 2D 0 0 0 1 Unknown
+%_ptr_UniformConstant_10 = OpTypePointer UniformConstant %10
+          %t = OpVariable %_ptr_UniformConstant_10 UniformConstant
+         %14 = OpTypeSampler
+%_ptr_UniformConstant_14 = OpTypePointer UniformConstant %14
+          %s = OpVariable %_ptr_UniformConstant_14 UniformConstant
+         %18 = OpTypeSampledImage %10
+    %v2float = OpTypeVector %float 2
+    %float_0 = OpConstant %float 0
+         %22 = OpConstantComposite %v2float %float_0 %float_0
+       %main = OpFunction %void None %3
+          %5 = OpLabel
+          %v = OpVariable %_ptr_Function_v4float Function
+         %13 = OpLoad %10 %t
+         %17 = OpLoad %14 %s
+  %100 = OpCopyObject %14 %17
+         %19 = OpSampledImage %18 %13 %100
+         %23 = OpImageSampleExplicitLod %v4float %19 %22 Lod %float_0
+               OpStore %v %23
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %t:ptr<handle, texture_2d<f32>, read> = var undef @binding_point(0, 0)
+  %s:ptr<handle, sampler, read> = var undef @binding_point(0, 1)
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %v:ptr<function, vec4<f32>, read_write> = var undef
+    %5:texture_2d<f32> = load %t
+    %6:sampler = load %s
+    %7:vec4<f32> = textureSampleLevel %5, %6, vec2<f32>(0.0f), 0.0f
+    store %v, %7
+    ret
+  }
+}
+)");
+}
+
 }  // namespace
 }  // namespace tint::spirv::reader
