@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "042764fe_c59d067c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-05T03:50:06Z",
+      "side": 1,
+      "message": "PTAL.\n\nNote, this CL was created with the aid of Gemini.",
+      "revId": "2573ca80a22ae28efef24cc1d263f6316656735b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
