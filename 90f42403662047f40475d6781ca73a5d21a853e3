@@ -214,6 +214,24 @@
       "parentUuid": "5e9d7ffe_af99effa",
       "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acd46c6d_494a02cb",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-05T07:35:10Z",
+      "side": 1,
+      "message": "Right now the C API should produce validation errors if a chained struct is passed but the respective extension not enabled. That\u0027s not what happens in this CL. Let\u0027s keep the C API consistent and change all of the extension struct handling later if we decide that it should behave the other way.",
+      "parentUuid": "eb700afb_7dc0cf5d",
+      "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
