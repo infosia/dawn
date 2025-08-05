@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4ec345b_995662c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-05T17:44:01Z",
+      "side": 1,
+      "message": "Can\u0027t submit yet since the CL we depend on isn\u0027t in, but we can get this ready to land.",
+      "revId": "ef60d77242f04f617aadfb8d7fe5676e80401b62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcc801e8_fa077bdc",
+        "filename": "infra/config/global/generated/luci/commit-queue.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-05T17:44:01Z",
+      "side": 1,
+      "message": "Changes in this file are unrelated, but the files needed to be regenerated to make presubmit happy.",
+      "revId": "ef60d77242f04f617aadfb8d7fe5676e80401b62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
