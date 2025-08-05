@@ -20,6 +20,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "26523a22_1755506d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-05T21:17:58Z",
+      "side": 1,
+      "message": "The other CL has landed and config.luci.app reports that the Dawn project is reading its config from the luci/ subdirectory, so I think we\u0027re clear to submit this now.",
+      "revId": "ef60d77242f04f617aadfb8d7fe5676e80401b62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "dcc801e8_fa077bdc",
         "filename": "infra/config/global/generated/luci/commit-queue.cfg",
         "patchSetId": 1
