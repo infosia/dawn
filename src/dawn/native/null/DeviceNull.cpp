@@ -469,7 +469,7 @@ ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial wai
     return waitSerial;
 }
 
-MaybeError Queue::WaitForIdleForDestruction() {
+MaybeError Queue::WaitForIdleForDestructionImpl() {
     ToBackend(GetDevice())->ForgetPendingOperations();
     return {};
 }
