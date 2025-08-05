@@ -70,6 +70,24 @@
       "parentUuid": "1ad40f98_4f08204c",
       "revId": "f8c69d933d206cc4a5ebd83a1c345a2e3c9479d7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0187d36_bd3470a7",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 2161,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-05T00:34:25Z",
+      "side": 1,
+      "message": "Verified you can do the same trick with firstVertex. So firstInstance and firstVertex both need the conversion to U32.",
+      "parentUuid": "a15d9ab1_fcd8a0d2",
+      "revId": "f8c69d933d206cc4a5ebd83a1c345a2e3c9479d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
