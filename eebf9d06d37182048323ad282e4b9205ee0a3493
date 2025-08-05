@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3211b5ec_882f96b2",
+        "filename": "src/dawn/devtool/CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-08-05T23:06:39Z",
+      "side": 1,
+      "message": "I\u0027m in the swamp of getting CMake build to work because my little experience in the build system. But given that it\u0027s turnned off by default on the bot, I think it\u0027s better to send out review for GN first. Can always split out CMake part and add later.",
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
