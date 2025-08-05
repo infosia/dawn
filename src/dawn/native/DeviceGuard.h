@@ -87,10 +87,6 @@ class DeviceGuard : public detail::DeviceGuardBase,
                     private ::dawn::detail::Guard<DeviceBase, detail::DeviceMutexTraits> {
   public:
     using GuardBase = ::dawn::detail::Guard<DeviceBase, detail::DeviceMutexTraits>;
-
-  private:
-    friend class DeviceBase;
-
     explicit DeviceGuard(DeviceBase* device, DeviceMutex* mutex = nullptr);
 };
 
