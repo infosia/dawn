@@ -2105,5 +2105,102 @@ DAWN_INSTANTIATE_TEST(Tier1StorageValidationTests,
                       MetalBackend(),
                       VulkanBackend());
 
+class Tier2StorageValidationTests : public StorageTextureTests {
+  public:
+    void SetUp() override {
+        StorageTextureTests::SetUp();
+        DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::TextureFormatsTier2}));
+    }
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        if (SupportsFeatures({wgpu::FeatureName::TextureFormatsTier2})) {
+            return {wgpu::FeatureName::TextureFormatsTier2};
+        }
+        return {};
+    }
+};
+
+// Test that kTier2AdditionalIntStorageFormats support "read_write" GPUStorageTextureAccess
+// in compute shaders when 'texture-formats-tier2' is enabled.
+// TODO: Tests for r8unorm/rgba8unorm/r16float/rgba16float/rgba32float.
+TEST_P(Tier2StorageValidationTests, ReadWriteStorageTextureInFragmentShader) {
+    for (const auto format : utils::kTier2AdditionalIntStorageFormats) {
+        SCOPED_TRACE(
+            absl::StrFormat("Test format: %s", utils::GetWGSLImageFormatQualifier(format)));
+        const std::vector<uint8_t> initialTextureData = GetExpectedData(format);
+        std::string componentFmt = utils::GetWGSLColorTextureComponentType(format);
+
+        wgpu::Texture readWriteStorageTexture =
+            CreateTextureWithTestData(initialTextureData.data(), initialTextureData.size(), format);
+
+        std::ostringstream sstream;
+
+        std::string multiplyStatement;
+        if (componentFmt == "f32") {
+            multiplyStatement = "  data1.x = data1.x + 2.0;\n";
+        } else if (componentFmt == "i32") {
+            multiplyStatement = "  data1.x = data1.x + 2;\n";
+        } else {
+            multiplyStatement = "  data1.x = data1.x + 2u;\n";
+        }
+
+        sstream << R"(
+@group(0) @binding(0) var rwImage : texture_storage_2d<)"
+                << utils::GetWGSLImageFormatQualifier(format) << R"(, read_write>;
+
+@compute @workgroup_size()"
+                << kWidth << ", " << kHeight << R"()
+fn main(@builtin(local_invocation_id) local_id: vec3<u32>) {
+  var data1 = textureLoad(rwImage, vec2i(local_id.xy));
+)" << multiplyStatement
+                << R"(  textureStore(rwImage, vec2i(local_id.xy), data1);
+})";
+
+        wgpu::ComputePipeline pipeline = CreateComputePipeline(sstream.str().c_str());
+        wgpu::BindGroup bindGroup = utils::MakeBindGroup(
+            device, pipeline.GetBindGroupLayout(0), {{0, readWriteStorageTexture.CreateView()}});
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder computePassEncoder = encoder.BeginComputePass();
+        computePassEncoder.SetBindGroup(0, bindGroup);
+        computePassEncoder.SetPipeline(pipeline);
+        computePassEncoder.DispatchWorkgroups(1);
+        computePassEncoder.End();
+        wgpu::CommandBuffer commandBuffer = encoder.Finish();
+        queue.Submit(1, &commandBuffer);
+
+        std::vector<uint8_t> expectedModifiedData(initialTextureData.size());
+        const uint32_t texelSizeInBytes = utils::GetTexelBlockSizeInBytes(format);
+
+        for (uint32_t i = 0; i < kWidth * kHeight; ++i) {
+            uint8_t* pixelValuePtr = &expectedModifiedData[i * texelSizeInBytes];
+            const uint32_t x = i % kWidth;
+            const uint32_t y = i / kWidth;
+            FillExpectedData(pixelValuePtr, format, x, y, 0);
+
+            if (componentFmt == "f32") {
+                float* val = reinterpret_cast<float*>(pixelValuePtr);
+                val[0] += 2.0f;
+            } else if (componentFmt == "i32") {
+                int32_t* val = reinterpret_cast<int32_t*>(pixelValuePtr);
+                val[0] += 2;
+            } else {  // u32
+                uint32_t* val = reinterpret_cast<uint32_t*>(pixelValuePtr);
+                val[0] += 2u;
+            }
+        }
+
+        CheckOutputStorageTexture(readWriteStorageTexture, format, {kWidth, kHeight},
+                                  reinterpret_cast<const uint8_t*>(expectedModifiedData.data()),
+                                  expectedModifiedData.size() * sizeof(uint32_t));
+    }
+}
+
+DAWN_INSTANTIATE_TEST(Tier2StorageValidationTests,
+                      D3D11Backend(),
+                      D3D12Backend(),
+                      MetalBackend(),
+                      OpenGLBackend(),
+                      OpenGLESBackend(),
+                      VulkanBackend());
 }  // anonymous namespace
 }  // namespace dawn
