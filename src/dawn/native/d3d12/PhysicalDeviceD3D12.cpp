@@ -30,6 +30,7 @@
 #include <algorithm>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "dawn/common/Constants.h"
 #include "dawn/common/Platform.h"
@@ -217,6 +218,39 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 
     if (SupportsBufferMapExtendedUsages()) {
         EnableFeature(Feature::BufferMapExtendedUsages);
+    }
+
+    bool tier2ReadWriteStorageSupported = false;
+    const std::vector<DXGI_FORMAT> kTier2ReadWriteFormats = {
+        DXGI_FORMAT_R8G8B8A8_UNORM,
+        DXGI_FORMAT_R8G8B8A8_UINT,
+        DXGI_FORMAT_R8G8B8A8_SINT,
+        DXGI_FORMAT_R16G16B16A16_UINT,
+        DXGI_FORMAT_R16G16B16A16_SINT,
+        DXGI_FORMAT_R16G16B16A16_FLOAT,
+        DXGI_FORMAT_R32G32B32A32_UINT,
+        DXGI_FORMAT_R32G32B32A32_SINT,
+        DXGI_FORMAT_R32G32B32A32_FLOAT,
+        DXGI_FORMAT_R8_UNORM,
+        DXGI_FORMAT_R8_UINT,
+        DXGI_FORMAT_R8_SINT,
+        DXGI_FORMAT_R16_UINT,
+        DXGI_FORMAT_R16_SINT,
+        DXGI_FORMAT_R16_FLOAT,
+    };
+    for (const auto& dxgiFormat : kTier2ReadWriteFormats) {
+        D3D12_FEATURE_DATA_FORMAT_SUPPORT formatSupport = {};
+        formatSupport.Format = dxgiFormat;
+        HRESULT hrCheck = mD3d12Device->CheckFeatureSupport(D3D12_FEATURE_FORMAT_SUPPORT,
+                                                            &formatSupport, sizeof(formatSupport));
+        if (SUCCEEDED(hrCheck) && (formatSupport.Support2 & D3D12_FORMAT_SUPPORT2_UAV_TYPED_LOAD) &&
+            (formatSupport.Support2 & D3D12_FORMAT_SUPPORT2_UAV_TYPED_STORE)) {
+            tier2ReadWriteStorageSupported = true;
+            break;
+        }
+    }
+    if (tier2ReadWriteStorageSupported) {
+        EnableFeature(Feature::TextureFormatsTier2);
     }
 }
 
