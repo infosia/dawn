@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "377f03b1d2a63f61889f7111136f9a074a211aa5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d963de52_c870baf9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-05T23:44:54Z",
+      "side": 1,
+      "message": "LGTM, but adding Corentin also for this one just to verify that the style is ok for us.",
+      "revId": "377f03b1d2a63f61889f7111136f9a074a211aa5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
