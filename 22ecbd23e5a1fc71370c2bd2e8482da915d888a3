@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bca5e07b_b685fb50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4231766
+      },
+      "writtenOn": "2025-08-05T00:00:11Z",
+      "side": 1,
+      "message": "seems I need a second CR +2, can you have a look please? thanks!",
+      "revId": "22ecbd23e5a1fc71370c2bd2e8482da915d888a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
