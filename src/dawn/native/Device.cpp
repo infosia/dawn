@@ -706,7 +706,7 @@ void DeviceBase::HandleDeviceLost(wgpu::DeviceLostReason reason, std::string_vie
 void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
                              InternalErrorType additionalAllowedErrors,
                              wgpu::DeviceLostReason lostReason) {
-    auto deviceGuard(GetGuard());
+    auto deviceGuard = GetGuard();
     AppendDebugLayerMessages(error.get());
 
     InternalErrorType type = error->GetType();
@@ -2502,6 +2502,10 @@ void DeviceBase::DeferIfLocked(std::function<void()> f) {
 
 bool DeviceBase::IsLockedByCurrentThreadIfNeeded() const {
     return mMutex == nullptr || mMutex->IsLockedByCurrentThread();
+}
+
+bool DeviceBase::IsNotLockedByCurrentThread() const {
+    return mMutex == nullptr || !mMutex->IsLockedByCurrentThread();
 }
 
 void DeviceBase::DumpMemoryStatistics(dawn::native::MemoryDump* dump) const {
