@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f5f796ce_b5b47373",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-05T14:10:28Z",
+      "side": 1,
+      "message": "The problem is that we need to Sync (Fence) after the we add the barrier. We cannot do it at that location because we dont know until the end if we are adding in the barrier.  \n\nI though of having a list of buffers that would then need updating but I dont like the idea of storing (even temporarily) a list of unowned buffer pointers.",
+      "parentUuid": "ddf6ab40_38362f44",
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0ff80fcd_1d00d14b",
         "filename": "src/dawn/native/vulkan/BufferVk.cpp",
         "patchSetId": 12
@@ -248,6 +266,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "75971021_44d36dae",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-05T14:10:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d7958e6_6b8a5ebe",
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "40e546b1_9425cd70",
@@ -326,6 +362,24 @@
       "side": 1,
       "message": "It was more a reminder for me. For so long I c++ features have sat i the dark. Waiting.",
       "parentUuid": "fc87fa4f_a0c327a6",
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e31dcfdb_360223de",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-05T14:10:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bf85fb6_4c3c1b80",
       "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
