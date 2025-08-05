@@ -16,6 +16,137 @@
       "message": "PTAL.",
       "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1838f8b7_81f7ac04",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-05T20:50:08Z",
+      "side": 1,
+      "message": "You don\u0027t actually use `replacement` here, so I guess you don\u0027t need the loop at all?",
+      "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6acd708b_40b6a2ad",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-05T20:50:08Z",
+      "side": 1,
+      "message": "Should need to replace operands as well. They could be constants, so wouldn\u0027t be updated by replacing results of other instructions.\n\nexample: a var whose initializer is a constant. You\u0027ve changed the type of the var, but not the initializer.\n\nSee DecomposeMatrixStride for the extra check we do for operand updates.",
+      "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be6db1e7_03da19d7",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-05T20:50:08Z",
+      "side": 1,
+      "message": "I feel like it\u0027d be simpler to just do top-down recursion (iteratively, via a worklist) from the `access` instructions that take types containing row-major matrices. That\u0027s the only scenario where you need to chase usages, and from there you can just pass the index that you\u0027re truncating to whatever the load/lve/store/sve is that uses the access, which in turn removes the need for `access_to_vector_index`.\n\nEssentially, I\u0027m suggesting the same structure for processing instructions as the `DecomposeStridedMatrix` transform has. Of course I\u0027m biased towards doing what I did, but I\u0027m really not a fan of these `while(results_to_update.IsEmpty())` loops where you\u0027re adding into that set from various other places.",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 51
+      },
+      "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acef3b1e_288717b5",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-05T20:50:08Z",
+      "side": 1,
+      "message": "Should need to update function parameters at some point too.",
+      "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68fd4756_1e489f20",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-05T20:50:08Z",
+      "side": 1,
+      "message": "Seems unnecessary, since you\u0027ve already updated the result type of all instructions?",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 46
+      },
+      "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "762f3493_8a6972d7",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-05T20:50:08Z",
+      "side": 1,
+      "message": "This would be clearer if actually named `TransposeArrayHelper`, since it doesn\u0027t actually do any loading or storing (aside from its internal temporaries). Then the use from `store` would make more sense.\n\nThat said, it would probably be more efficient to make actual load/store helpers that transpose and load/store one matrix at a time, rather than storing the whole intermediate transposed array. Probably not that important though, assuming that most reasonable shaders would hopefully avoid loading/storing whole arrays of matrices...",
+      "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92ddfda1_e1138c81",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-05T20:50:08Z",
+      "side": 1,
+      "message": "Isn\u0027t this basically the same as the test above?",
+      "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
