@@ -136,8 +136,11 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
                                            size_t deserializeSize,
                                            size_t offset,
                                            size_t size) = 0;
+        void* GetTarget() const;
+        size_t GetDataLength() const;
 
       protected:
+        // TODO(42240963): Move them to private after landing the related changes in Chromium.
         void* mTargetData = nullptr;
         size_t mDataLength = 0;
 
