@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "757fc01b_71cabdeb",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-05T13:58:07Z",
+      "side": 1,
+      "message": "We want to update the sync Id every time we have a bound buffer that is possibly mutated by the operation ( usually the dispatch). We might need a fence for a buffer that end up being read-only forever in the future requiring no new barrier.",
+      "parentUuid": "29586e90_106dfcdf",
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0ff80fcd_1d00d14b",
         "filename": "src/dawn/native/vulkan/BufferVk.cpp",
         "patchSetId": 12
@@ -82,6 +100,24 @@
       "writtenOn": "2025-08-04T17:30:41Z",
       "side": 1,
       "message": "[1] (this could return a `barrierAdded` boolean)",
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aea0da35_be279f48",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-05T13:58:07Z",
+      "side": 1,
+      "message": "Yes this is also my style as well.",
+      "parentUuid": "075eafd6_0a6c851b",
       "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -219,6 +255,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8afd8a31_9fbfe8e7",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-05T13:58:07Z",
+      "side": 1,
+      "message": "Ah nice!",
+      "parentUuid": "40e546b1_9425cd70",
+      "range": {
+        "startLine": 85,
+        "startChar": 12,
+        "endLine": 85,
+        "endChar": 68
+      },
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fc87fa4f_a0c327a6",
         "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.h",
         "patchSetId": 12
@@ -230,6 +290,24 @@
       "writtenOn": "2025-08-04T17:30:41Z",
       "side": 1,
       "message": "No need to mention this, we do it everywhere already ^^",
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bf85fb6_4c3c1b80",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-05T13:58:07Z",
+      "side": 1,
+      "message": "It was more a reminder for me. For so long I c++ features have sat i the dark. Waiting.",
+      "parentUuid": "fc87fa4f_a0c327a6",
       "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
