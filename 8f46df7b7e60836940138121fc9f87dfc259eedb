@@ -108,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "deb366a5_10d31fc5",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-05T14:47:52Z",
+      "side": 1,
+      "message": "I\u0027m not sure that I understand, sync / fences are different concepts from the pipeline barrier in Vulkan. I\u0027m still struggling to see the exact semantic of the serial number we are using here. It seems to mean \"the last time I was written to was before vkCmdPipelineBarrier for buffers with number N\", then we check if there was a barrier matching the one we would generate, that is between N and now. Is that correct?",
+      "parentUuid": "f5f796ce_b5b47373",
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0ff80fcd_1d00d14b",
         "filename": "src/dawn/native/vulkan/BufferVk.cpp",
         "patchSetId": 12
