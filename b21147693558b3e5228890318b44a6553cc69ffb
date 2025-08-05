@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fed5cb02_55829c89",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-08-05T08:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4aabb7a2_ce8ad6a9",
+      "range": {
+        "startLine": 395,
+        "startChar": 51,
+        "endLine": 395,
+        "endChar": 68
+      },
+      "revId": "b21147693558b3e5228890318b44a6553cc69ffb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "665a5da3_405d158b",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-08-05T07:53:02Z",
       "side": 1,
       "message": "nit:\n```suggestion\n    const auto* expandResolveRect \u003d descriptor.Get\u003cRenderPassDescriptorResolveRect\u003e();\n    if (expandResolveRect)\n    {\n        validationState-\u003eSetExpandResolveRect(*expandResolveRect);\n    }\n```",
+      "range": {
+        "startLine": 823,
+        "startChar": 4,
+        "endLine": 827,
+        "endChar": 61
+      },
+      "revId": "b21147693558b3e5228890318b44a6553cc69ffb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8da2e8dd_a096dd3d",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-08-05T08:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "665a5da3_405d158b",
       "range": {
         "startLine": 823,
         "startChar": 4,
