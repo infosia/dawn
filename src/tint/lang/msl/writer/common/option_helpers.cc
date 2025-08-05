@@ -216,7 +216,22 @@ void PopulateBindingRelatedOptions(const Options& options,
             }
         }
 
-        if (options.array_length_from_constants.buffer_sizes_offset) {
+        // Metal suggested using SetBytes|SetVertexBytes|SetFragmentBytes with data lengths smaller
+        // than 4kB.
+        static constexpr uint32_t kMaxOffset = 0x1000;
+        auto valid_buffer_sizes_offset = [](const auto& buffer_sizes_offset) -> bool {
+            if (!buffer_sizes_offset) {
+                return false;
+            }
+
+            if (buffer_sizes_offset.value() > kMaxOffset) {
+                return false;
+            }
+
+            return true;
+        };
+
+        if (valid_buffer_sizes_offset(options.array_length_from_constants.buffer_sizes_offset)) {
             array_length_options.buffer_sizes_offset =
                 options.array_length_from_constants.buffer_sizes_offset;
         } else {
