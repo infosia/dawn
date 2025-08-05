@@ -74,6 +74,10 @@ class Buffer final : public BufferBase {
                                                  CommandRecordingContext* recordingContext,
                                                  const absl::flat_hash_set<Ref<Buffer>>& buffers);
 
+    void UpdateImplicitBarrierSyncId(size_t fence_idx) { mImplicitBarrierSyncId = fence_idx; }
+
+    size_t GetImplicitBarrierSyncId() { return mImplicitBarrierSyncId; }
+
   private:
     ~Buffer() override;
     using BufferBase::BufferBase;
@@ -110,6 +114,8 @@ class Buffer final : public BufferBase {
     // Track which usages have read the buffer since the last write.
     wgpu::BufferUsage mReadUsage = wgpu::BufferUsage::None;
     wgpu::ShaderStage mReadShaderStages = wgpu::ShaderStage::None;
+
+    size_t mImplicitBarrierSyncId = 0u;
 
     bool mHostVisible : 1;
     bool mHostCoherent : 1;
