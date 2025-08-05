@@ -16,6 +16,23 @@
       "message": "FYI, I am currently holding off on landing this, because https://chromium-review.googlesource.com/c/chromium/tools/build/+/6807369 needs to land and bake first.",
       "revId": "df11e39785fe714a9a1917e99e9e1db72246f453",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "012153b9_ae608beb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-05T12:44:23Z",
+      "side": 1,
+      "message": "Switched the builders over to using the Go tool yesterday. Verified the cron job for genenerating the corpus is happy and that the CQ bots are happy.",
+      "revId": "df11e39785fe714a9a1917e99e9e1db72246f453",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
