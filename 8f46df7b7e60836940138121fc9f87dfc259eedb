@@ -126,6 +126,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f93268ae_ffd66fb1",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-05T14:52:24Z",
+      "side": 1,
+      "message": "Yes that is correct. We need to know all of the barriers that were emitted AFTER our dispatch call.",
+      "parentUuid": "deb366a5_10d31fc5",
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0ff80fcd_1d00d14b",
         "filename": "src/dawn/native/vulkan/BufferVk.cpp",
         "patchSetId": 12
