@@ -29,12 +29,15 @@
 #define SRC_DAWN_NATIVE_EXECUTIONQUEUE_H_
 
 #include <atomic>
+#include <condition_variable>
 #include <functional>
+#include <mutex>
 
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/IntegerTypes.h"
+#include "dawn/native/ObjectBase.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native {
@@ -43,7 +46,7 @@ namespace dawn::native {
 // update of the various ExecutionSerials related to that work.
 // TODO(dawn:831, dawn:1413): Make usage of the ExecutionQueue thread-safe. Right now it is
 // only partially safe - where observation of the last-submitted and pending serials is atomic.
-class ExecutionQueueBase {
+class ExecutionQueueBase : public ApiObjectBase {
   public:
     using Task = std::function<void()>;
 
@@ -59,10 +62,9 @@ class ExecutionQueueBase {
     bool HasScheduledCommands() const;
 
     // Check for passed fences and set the new completed serial. Note that the two functions below
-    // effectively do the same thing initially, however, |UpdateCompletedSerials| requires
-    // that the device-wide lock is NOT held since it may additionally trigger user callbacks. Note
-    // that for the purpose of going forwards, |CheckPassedSerials| should not be used anymore since
-    // it assumes that the device-wide lock IS held.
+    // effectively do the same thing initially, however, |UpdateCompletedSerials| may additionally
+    // trigger user callbacks. Note that for the purpose of going forwards, |CheckPassedSerials|
+    // should not be used anymore
     // TODO(crbug.com/42240396): Remove |CheckPassedSerials| in favor of |UpdateCompletedSerial|.
     MaybeError CheckPassedSerials();
     MaybeError UpdateCompletedSerial();
@@ -85,17 +87,18 @@ class ExecutionQueueBase {
     // Increment mLastSubmittedSerial when we submit the next serial
     void IncrementLastSubmittedCommandSerial();
 
-    // WaitForIdleForDestruction waits for GPU to finish, checks errors and gets ready for
-    // destruction. This is only used when properly destructing the device. For a real
-    // device loss, this function doesn't need to be called since the driver already closed all
-    // resources.
-    virtual MaybeError WaitForIdleForDestruction() = 0;
+    // Waits for GPU to finish, checks errors and gets ready for destruction. This is only used when
+    // properly destructing the device. For a real device loss, this function doesn't need to be
+    // called since the driver already closed all resources.
+    MaybeError WaitForIdleForDestruction();
 
     // Wait at most `timeout` synchronously for the ExecutionSerial to pass. Returns true
     // if the serial passed.
-    ResultOrError<bool> WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout);
+    MaybeError WaitForQueueSerial(ExecutionSerial waitSerial, Nanoseconds timeout);
 
-    // Tracks a new task to complete when |serial| is reached.
+    // Tracks new tasks to complete when |serial| is reached. Note that a "re-entrant" task is a
+    // task that may result in trying to acquire the device-wide lock.
+    void TrackReentrantSerialTask(ExecutionSerial serial, Task&& task);
     void TrackSerialTask(ExecutionSerial serial, Task&& task);
 
     // In the 'Normal' mode, currently recorded commands in the backend submitted in the next Tick.
@@ -112,6 +115,8 @@ class ExecutionQueueBase {
     bool mInSubmit = false;
 
   protected:
+    using ApiObjectBase::ApiObjectBase;
+
     static constexpr ExecutionSerial kWaitSerialTimeout = kBeginningOfGPUTime;
 
     // Currently, the queue has two paths for serial updating, one is via DeviceBase::Tick which
@@ -130,20 +135,41 @@ class ExecutionQueueBase {
     virtual ResultOrError<ExecutionSerial> WaitForQueueSerialImpl(ExecutionSerial waitSerial,
                                                                   Nanoseconds timeout) = 0;
 
-    // mCompletedSerial tracks the last completed command serial that the fence has returned.
-    // mLastSubmittedSerial tracks the last submitted command serial.
-    // During device removal, the serials could be artificially incremented
-    // to make it appear as if commands have been compeleted.
-    std::atomic<uint64_t> mCompletedSerial = static_cast<uint64_t>(kBeginningOfGPUTime);
-    std::atomic<uint64_t> mLastSubmittedSerial = static_cast<uint64_t>(kBeginningOfGPUTime);
-
-    MutexProtected<SerialMap<ExecutionSerial, Task>> mWaitingTasks;
+    // Backend specific wait for idle function.
+    virtual MaybeError WaitForIdleForDestructionImpl() = 0;
 
     // Indicates whether the backend has pending commands to be submitted as soon as possible.
     virtual bool HasPendingCommands() const = 0;
 
     // Submit any pending commands that are enqueued.
     virtual MaybeError SubmitPendingCommandsImpl() = 0;
+
+    // |mCompletedSerial| tracks the last completed command serial that the fence has returned. This
+    // is currently implicitly guarded by the lock for |mWaitingTasks| since we only update this
+    // value when holding that lock.
+    // |mLastSubmittedSerial| tracks the last submitted command serial.
+    // During device removal, the serials could be artificially incremented to make it appear as if
+    // commands have been completed.
+    std::atomic<uint64_t> mCompletedSerial = static_cast<uint64_t>(kBeginningOfGPUTime);
+    std::atomic<uint64_t> mLastSubmittedSerial = static_cast<uint64_t>(kBeginningOfGPUTime);
+
+    // Mutex, condition variable, and boolean statuses are used by the class to synchronize task
+    // completion to ensure that:
+    //   1) Callback ordering is guaranteed.
+    //   2) Re-entrant callbacks do not happen when we are waiting for idle.
+    std::mutex mMutex;
+    std::condition_variable mCv;
+    bool mCallingCallbacks = false;
+    bool mWaitingForIdle = false;
+
+    // We use two maps, one which tracks potentially re-entrant tasks w.r.t the device-wide lock.
+    // This is currently necessary to ensure that we defer potentially re-entrant callbacks from
+    // happening on another thread when the main thread is calling |WaitForIdleForDestruction| which
+    // is currently holding the device lock. We also don't want to defer all callbacks because some
+    // backends may use |WaitForSerial| to implement |WaitForIdleDestruction| which may require some
+    // callbacks to run on the other thread.
+    SerialMap<ExecutionSerial, Task> mWaitingTasks;
+    SerialMap<ExecutionSerial, Task> mWaitingReentantTasks;
 };
 
 }  // namespace dawn::native
