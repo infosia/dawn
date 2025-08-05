@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6212bf62_f465b436",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-05T19:12:09Z",
+      "side": 1,
+      "message": "Not looking to spend too much more time on this, but I\u0027d like to land it if I can to make future experimentation easier. The CQ failures are all because the builtin requires HLSL 6.1 but we\u0027re apparently either not sending the right profile when compiling or the systems simply don\u0027t support it. What would be the right way to ensure Tint is rejecting this feature if the underlying compiler doesn\u0027t support the required HLSL version?",
+      "revId": "ef079c7d0e9399bd5d595223e1dae5a95bfde2c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
