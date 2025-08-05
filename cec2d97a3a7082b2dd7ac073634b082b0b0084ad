@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f60029e_2d0d2994",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-05T22:18:54Z",
+      "side": 1,
+      "message": "+gbeaty to review and confirm that this looks reasonable. It won\u0027t be a big deal if these builders break as a result, but I would like this to be at least most of the way there.",
+      "revId": "cec2d97a3a7082b2dd7ac073634b082b0b0084ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
