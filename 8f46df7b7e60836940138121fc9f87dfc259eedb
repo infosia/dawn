@@ -144,6 +144,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "490ef1a1_ef52f414",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-05T15:24:22Z",
+      "side": 1,
+      "message": "Ok so the semantic of the serial is an \"UnbarrieredSegment\" of commands? On the recording context we know which segment we are on, the buffer has a `mLastWriteSegment` and the recording context has a `mLastBarrieredSegmentWith` map?",
+      "parentUuid": "f93268ae_ffd66fb1",
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0ff80fcd_1d00d14b",
         "filename": "src/dawn/native/vulkan/BufferVk.cpp",
         "patchSetId": 12
