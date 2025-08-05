@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f3cda5e_62dcfcd8",
+        "filename": "src/dawn/devtool/IncludeCmdPb.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-08-05T18:28:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f28fe68e_1c82fae6",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 6
+      },
+      "revId": "8bd0fe062c9bd5548c392a473df49f5752d3d4b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2642097a_20ab9bb7",
@@ -54,6 +78,24 @@
       "writtenOn": "2025-08-01T21:05:47Z",
       "side": 1,
       "message": "Question:\nNow that Playback only depends on webgpu.h, it can do command playback using only WGPU* object.\nBut what about inspecting objects (e.g. GetBuffers and its state) Does it still need to depend on dawn::native?",
+      "revId": "8bd0fe062c9bd5548c392a473df49f5752d3d4b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49b087de_3a43f5ba",
+        "filename": "src/dawn/devtool/PlaybackManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-08-05T18:28:06Z",
+      "side": 1,
+      "message": "Answers from Corentin elsewhere: No need to depend on dawn::native. Playback can shadow the states.",
+      "parentUuid": "2642097a_20ab9bb7",
       "revId": "8bd0fe062c9bd5548c392a473df49f5752d3d4b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -83,6 +125,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cbb3af47_d057faad",
+        "filename": "src/dawn/devtool/PlaybackManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-08-05T18:28:06Z",
+      "side": 1,
+      "message": "Yes thanks for the suggestion.\n\nI think the problem is that now `playback` depends on C header, and C Handle WGPU* doesn\u0027t have a base class concept. We can still have `using PerObjectType \u003d ityp::array\u003cObjectType, void*, NUM_OBJECT_TYPE\u003e;`\n\nOr shall use Cpp header for `playback` where wgpu::* objects are based on wgpu::ObjectBase? The playback is unlike `native::webgpu` backend which is producer, to have playback use the static default dawn proc table is fine (meaning playback only playback on dawn)?",
+      "parentUuid": "375746e0_54820690",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 55
+      },
+      "revId": "8bd0fe062c9bd5548c392a473df49f5752d3d4b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43dccc3e_f0008d43",
         "filename": "src/dawn/devtool/RecordManager.h",
         "patchSetId": 11
@@ -94,6 +160,30 @@
       "writtenOn": "2025-08-04T20:25:36Z",
       "side": 1,
       "message": "Is the intention that eventually these would be auto-generated? These seem very similar to the equivalents on the wire which are mostly generated with manual exceptions for special cases.",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 45
+      },
+      "revId": "8bd0fe062c9bd5548c392a473df49f5752d3d4b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89282799_6cc4de30",
+        "filename": "src/dawn/devtool/RecordManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-08-05T18:28:06Z",
+      "side": 1,
+      "message": "Yes. Added a TODO here. Will add codegen in a future CL.",
+      "parentUuid": "43dccc3e_f0008d43",
       "range": {
         "startLine": 58,
         "startChar": 4,
