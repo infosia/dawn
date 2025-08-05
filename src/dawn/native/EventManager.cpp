@@ -154,39 +154,15 @@ void WaitQueueSerials(const QueueWaitSerialsMap& queueWaitSerials, Nanoseconds t
     // Poll/wait on queues up to the lowest wait serial, but do this once per queue instead of
     // per event so that events with same serial complete at the same time instead of racing.
     for (const auto& queueAndSerial : queueWaitSerials) {
-        auto queue = queueAndSerial.first.Promote();
-        if (queue == nullptr) {
+        auto q = queueAndSerial.first.Promote();
+        if (q == nullptr) {
             // If we can't promote the queue, then all the work is already done.
             continue;
         }
         auto waitSerial = queueAndSerial.second;
 
-        auto* device = queue->GetDevice();
-        [[maybe_unused]] bool error;
-        error = device->ConsumedError(
-            [&]() -> MaybeError {
-                auto deviceGuard = device->GetGuard();
-
-                if (waitSerial > queue->GetLastSubmittedCommandSerial()) {
-                    // Serial has not been submitted yet. Submit it now.
-                    DAWN_TRY(queue->EnsureCommandsFlushed(waitSerial));
-                }
-                // Check the completed serial.
-                if (waitSerial > queue->GetCompletedCommandSerial()) {
-                    if (timeout > Nanoseconds(0)) {
-                        // Wait on the serial if it hasn't passed yet.
-                        [[maybe_unused]] bool waitResult = false;
-                        DAWN_TRY_ASSIGN(waitResult, queue->WaitForQueueSerial(waitSerial, timeout));
-                    }
-                }
-                return {};
-            }(),
-            "waiting for work in %s.", queue.Get());
-
-        // Updating completed serial cannot hold the device-wide lock because it may cause user
-        // callbacks to fire.
-        error = device->ConsumedError(queue->UpdateCompletedSerial(),
-                                      "updating completed serial in %s", queue.Get());
+        [[maybe_unused]] bool hadError = q->GetDevice()->ConsumedError(
+            q->WaitForQueueSerial(waitSerial, timeout), "waiting for work in %s.", q.Get());
     }
 }
 
@@ -351,7 +327,7 @@ FutureID EventManager::TrackEvent(Ref<TrackedEvent>&& event) {
 
     if (const auto* queueAndSerial = event->GetIfQueueAndSerial()) {
         if (auto q = queueAndSerial->queue.Promote()) {
-            q->TrackSerialTask(queueAndSerial->completionSerial, [this, event]() {
+            q->TrackSerialTask(queueAndSerial->completionSerial, [this, q, event]() {
                 // If this is executed, we can be sure that the raw pointer to this EventManager is
                 // valid because the Queue is alive and:
                 //   Queue -[refs]->
