@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0272797f_46c8aa2a",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 58
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-05T09:35:03Z",
+      "side": 1,
+      "message": "I removed the lib file from the header artifact and documented the artifacts produced by the job in the commit description. I took advantage of this commit to consolidate the naming of the artifacts produced.",
+      "parentUuid": "d07fdfc4_81947bbf",
+      "revId": "b7eaa5a0a7f3cc20ced3c5863a363e2ce25de92c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ba525fc_ca0cb988",
@@ -49,6 +67,24 @@
       "writtenOn": "2025-08-04T16:34:52Z",
       "side": 1,
       "message": "LGTM with trailing whitespace stripped as well :)",
+      "revId": "b7eaa5a0a7f3cc20ced3c5863a363e2ce25de92c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d16cadff_870515a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 58
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-05T09:35:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ba525fc_ca0cb988",
       "revId": "b7eaa5a0a7f3cc20ced3c5863a363e2ce25de92c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

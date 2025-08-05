@@ -373,6 +373,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "5ce28f7f_732d2314",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 24
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-05T09:35:03Z",
+      "side": 1,
+      "message": "Marked as resolved.",
+      "parentUuid": "cfeb6c8a_6276aa53",
+      "revId": "af8879d09e0a9892d586291cc2d79e3b0d3fbc2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "7718c096_4eaedd49",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 24
