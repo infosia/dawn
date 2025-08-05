@@ -16,6 +16,29 @@
       "message": "PTAL",
       "revId": "5f912f43fc36ab9c258757e6e057a4e102a68d60",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eae2a0c7_bcb382ed",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-08-05T07:17:26Z",
+      "side": 1,
+      "message": "nit: Since there is only one branch now, we can just use the chained struct pointer directly.\n```suggestion\n    const auto* expandResolveRect \u003d renderPassDescriptor.Get\u003cRenderPassDescriptorResolveRect\u003e();\n```",
+      "range": {
+        "startLine": 222,
+        "startChar": 4,
+        "endLine": 225,
+        "endChar": 5
+      },
+      "revId": "5f912f43fc36ab9c258757e6e057a4e102a68d60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
