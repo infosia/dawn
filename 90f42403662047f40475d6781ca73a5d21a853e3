@@ -232,6 +232,24 @@
       "parentUuid": "eb700afb_7dc0cf5d",
       "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ac1409d_17d63815",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-08-05T12:33:28Z",
+      "side": 1,
+      "message": "\u003e  the C API should produce validation errors if a chained struct is passed but the respective extension not enabled\n\nThat\u0027s what is currently happening in Dawn, without this CL. And CTS tests fail as there should be a validation error ONLY for a non-identity swizzle when the feature is not enabled, not all of them. \n\nDo you suggest I only work on Blink then?",
+      "parentUuid": "acd46c6d_494a02cb",
+      "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
