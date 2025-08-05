@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bb353fb_50e270ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-05T19:23:37Z",
+      "side": 1,
+      "message": "You can put something like this at the top of the WGSL input shader, similar to the GLSL flag you already have:\n```\n// [hlsl-dxc] flags: --hlsl-shader-model 62\n```\n\nFor the FXC case you can modify the `CanGenerate` function in the HLSL writer to check for the builtin and reject when `options.compiler \u003d\u003d FXC`:\nhttps://source.chromium.org/chromium/chromium/src/+/refs/tags/140.0.7339.0:third_party/dawn/src/tint/lang/hlsl/writer/writer.cc;l\u003d71\nThen your `fxc.hlsl` expectation file should have a `SKIP: INVALID` at the top.",
+      "parentUuid": "6212bf62_f465b436",
+      "revId": "ef079c7d0e9399bd5d595223e1dae5a95bfde2c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "85089a30_613848e2",
