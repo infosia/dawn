@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49510d0e_9f31d9a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-05T23:28:37Z",
+      "side": 1,
+      "message": "Talked with Quyen offline and he told me to send this out separately and to have this chain supersede the change in https://dawn-review.googlesource.com/c/dawn/+/254374",
+      "revId": "57c3abe705b9cf9808247bed5b05ec926b4295d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
