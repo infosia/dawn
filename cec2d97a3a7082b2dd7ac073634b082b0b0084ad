@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7615051c_62ac0d4b",
+        "filename": "infra/config/global/generated/builders/gn_args_locations.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-06T00:40:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ec19fc2_d85f7cb7",
+      "revId": "cec2d97a3a7082b2dd7ac073634b082b0b0084ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eefd6fa3_8a780cd8",
@@ -65,6 +83,24 @@
       "writtenOn": "2025-08-06T00:02:17Z",
       "side": 1,
       "message": "I would recommend not setting health specs on your builders at this time. The processing of the health specs is performed by a cron job that runs and only examines the health specs from the chromium and chrome repos and only queries builder data from the buildbucket.chrome.builds table, so the config just ends up being noise.",
+      "revId": "cec2d97a3a7082b2dd7ac073634b082b0b0084ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ae74537_ed6dae5f",
+        "filename": "infra/config/global/generated/health-specs/health-specs.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-06T00:40:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eefd6fa3_8a780cd8",
       "revId": "cec2d97a3a7082b2dd7ac073634b082b0b0084ad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
