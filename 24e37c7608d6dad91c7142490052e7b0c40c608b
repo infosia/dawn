@@ -104,6 +104,24 @@
       "parentUuid": "8e73cfd9_b514f55d",
       "revId": "24e37c7608d6dad91c7142490052e7b0c40c608b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d949302_92042865",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-08-06T13:58:29Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "318c53a9_d2ededba",
+      "revId": "24e37c7608d6dad91c7142490052e7b0c40c608b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
