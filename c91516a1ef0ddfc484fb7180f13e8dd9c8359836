@@ -16,6 +16,74 @@
       "message": "PTAL, thanks",
       "revId": "c91516a1ef0ddfc484fb7180f13e8dd9c8359836",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddf9eb47_9d04a5b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-06T08:06:23Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "c91516a1ef0ddfc484fb7180f13e8dd9c8359836",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "418e4efc_c44865a7",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-06T08:06:23Z",
+      "side": 1,
+      "message": "Just to check, this is the only format that we query because they are either all supported for storage or none are? Please comment that as it\u0027s context that\u0027s not clear from just looking at the code.",
+      "revId": "c91516a1ef0ddfc484fb7180f13e8dd9c8359836",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21fef852_2373dc35",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-06T08:06:23Z",
+      "side": 1,
+      "message": "Can we comment that 1) we cannot enable tier 2 if tier1 is not enabled, and that otherwise tier 2 only requires `shaderStorageImageExtendedFormats`?",
+      "revId": "c91516a1ef0ddfc484fb7180f13e8dd9c8359836",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8d1441a_df749de8",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-06T08:06:23Z",
+      "side": 1,
+      "message": "It\u0027s not great to match on strings instead of enums. Can we have an enum version of the same function (and make `GetWGSLColorTextureComponentTypeStr` (see the addition of `Str`) use it?) This would help avoid code failing because we did a typo in one of the strings used to match instead of the enum.",
+      "revId": "c91516a1ef0ddfc484fb7180f13e8dd9c8359836",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
