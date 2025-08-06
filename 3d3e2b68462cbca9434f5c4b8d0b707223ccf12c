@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9482400b_8c6aafa4",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-06T17:59:03Z",
+      "side": 1,
+      "message": "I was using this to kick things off, but it\u0027s become redundant, removed.",
+      "parentUuid": "1838f8b7_81f7ac04",
+      "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6acd708b_40b6a2ad",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-08-05T20:50:08Z",
       "side": 1,
       "message": "Should need to replace operands as well. They could be constants, so wouldn\u0027t be updated by replacing results of other instructions.\n\nexample: a var whose initializer is a constant. You\u0027ve changed the type of the var, but not the initializer.\n\nSee DecomposeMatrixStride for the extra check we do for operand updates.",
+      "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ae075d5_b74053d3",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-06T17:59:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6acd708b_40b6a2ad",
       "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -77,6 +113,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "860208c7_141ca36c",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-06T17:59:03Z",
+      "side": 1,
+      "message": "I started with the structure of DecomposeStridedMatrix and it didn\u0027t fit well with how this works. The things your changing were sufficiently different that the structure didn\u0027t fit.\n\nThe TransposeRowMajor ends up being more complicated as we have to propagate and update usages of things like LoadVectorElement or split the array access into pieces and access through it. I don\u0027t see that kind of requirement in the DecomposeStridedMatrix?\n\nAs to adding from all over, it actually only adds from the setup loop on 117 and then in the access handling below.",
+      "parentUuid": "be6db1e7_03da19d7",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 51
+      },
+      "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "acef3b1e_288717b5",
         "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
         "patchSetId": 8
@@ -88,6 +148,24 @@
       "writtenOn": "2025-08-05T20:50:08Z",
       "side": 1,
       "message": "Should need to update function parameters at some point too.",
+      "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ef6c4e0_597f35e6",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-06T17:59:03Z",
+      "side": 1,
+      "message": "We will, but we\u0027d discussed this offline and are skipping it until someone says they need it.",
+      "parentUuid": "acef3b1e_288717b5",
       "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -115,6 +193,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc72a1ed_928a24c3",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-06T17:59:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68fd4756_1e489f20",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 46
+      },
+      "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "762f3493_8a6972d7",
@@ -132,6 +234,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d91f5c8a_f8655035",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-06T17:59:03Z",
+      "side": 1,
+      "message": "Renamed. Will hold off on making more complicated until we have an example of someone needing that support.",
+      "parentUuid": "762f3493_8a6972d7",
+      "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "92ddfda1_e1138c81",
@@ -145,6 +265,24 @@
       "writtenOn": "2025-08-05T20:50:08Z",
       "side": 1,
       "message": "Isn\u0027t this basically the same as the test above?",
+      "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "921dc11c_ac03e60f",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-06T17:59:03Z",
+      "side": 1,
+      "message": "Similar, except it pulls a value from the loaded vector",
+      "parentUuid": "92ddfda1_e1138c81",
       "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
