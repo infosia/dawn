@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbcfd826_5b1cf29b",
+        "filename": "infra/config/global/generated/luci/luci-scheduler.cfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003631
+      },
+      "writtenOn": "2025-08-06T16:36:47Z",
+      "side": 0,
+      "message": "How do these builders get triggered? Is it alright that this scheduler job is removed?",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 34
+      },
+      "revId": "f3d2d7a47380747bc6d164d6b56fe2f93f06a6d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
