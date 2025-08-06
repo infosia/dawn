@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fe19ef3_8a0fc5dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-06T17:40:48Z",
+      "side": 1,
+      "message": "I\u0027m not sure capturing 3,4,6,7 is a goal and we should get clear on that.\n\nAs an example, the code currently has an example of capturing CreateBuffer calls. But, my understandings, is, there is a desire to have a zero overhead no-capture path, and then in the middle of execution, start capturing.\n\nSo, you go to \n\nhttps://boat-demo.cds.unity3d.com/\n\nYou have not started capturing yet, there is no overhead because Chrome is not going through any capture code.\n\nA few minutes into the game you open devtools and pick \"capture a frame\" (as one option for capturing).\n\nAt that moment, the function pointers to the various WGPU functions in Dawn get reset to the capture versions and a capture is started. While capturing, each resource used is copied if needed. That includes all 100s of buffers and textures that were created minutes before capture started. These buffers and textures will not have gone through `Recorder::EncodeDeviceCreateBuffer`. They already exist and were created before capture started. \n\nGiven that, do we need to capture buffer creation at all? Or do we just need to see a buffer is used and then capture it on usage. In other words, do we need to treat buffers that are created during capture, different from buffers created before capture. If we capture on usage, then we\u0027d get buffers created during capture from the same code that handles buffers created before capture. That doesn\u0027t mean we shouldn\u0027t capture creation calls during capture. I\u0027m just pointing out that one covers the other.\n\nMaybe this has already been figured out? I don\u0027t know.\n\nMaybe my example above is nonsense. Maybe you can\u0027t capture ever unless you first turn on the feature?\n\nScenario 1: You can capture with no prep (the example above)\n\nScenario 2: You can\u0027t capture unless, before loading the page, you tell Chrome \"I plan to capture so prepare\"\n\nDo we know which of those is our goal?\n\nBack to the original point. \n\nIf I do\n\n1. createBuffer\n2. createTexture\n3. createBuffer\n4. createTexture\n5. createBuffer (mapped at creation)\n6. buffer.unmap()\n7. createTexture\n8. startCapture\n9. createCommandBuffer\n10. beginRenderPass\n11. setPipeline\n12. setBindGroup\n13. draw\n14. pass.end\n15. encoder.finish\n16. device.queue.submit\n17. endCapture\n\nI will not get steps 1,2,3,4,5,6,7 in that order. I will at most get them in order 1,3,5,2,4,7 and step 6 will be missing.\n\nSo we\u0027re not recording every step. So, during capture, do we want the more of the same or is resource during capture different?",
+      "parentUuid": "99c0a0ed_471a3c47",
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3211b5ec_882f96b2",
@@ -120,6 +138,24 @@
       "side": 1,
       "message": "I think only capturing referenced resources make sense and is doable by current webgpu backend / serialization format.\n\nThis `SnapshotGlobalState` for now is more like a `SetupRecord` where it records device and default queue to make recording happen. The other part of the context state (extra buffers) yes we can only record them when referenced. I can update to make this clearer.",
       "parentUuid": "38f5891b_563fe0ba",
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f13dcf5_6cbb1e1e",
+        "filename": "src/dawn/devtool/Recorder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-06T17:40:48Z",
+      "side": 1,
+      "message": "I just want to be clear, It doesn\u0027t seem like the solution can be\n\n1. start capture\n2. make a copy of all resource\n3. record which resources were used\n4. serialize only those resources that were used\n\nStep 1 above \u003d out of memory\n\nIt feels like it potentially needs to be\n\n1. start capture\n2. When a resource is used, if we need its content, serialize that content immediately (read it, put on the disk, not in memory)\n\nGrabbing the content when it\u0027s known to be needed is a very different pattern than capture up front. Maybe the current code is fine if all it\u0027s doing is assigning an id to every resource but not actually grabbing content. But then you\u0027re still left with tracking separately which resources are used. Is it better to track that separately or is it better to (has id \u003d used, doesn\u0027t have id \u003d not used)?",
+      "parentUuid": "c8294b87_04142910",
       "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
