@@ -46,6 +46,30 @@
       },
       "revId": "f3d2d7a47380747bc6d164d6b56fe2f93f06a6d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "663ce566_d8571103",
+        "filename": "infra/config/global/generated/luci/luci-scheduler.cfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003631
+      },
+      "writtenOn": "2025-08-06T18:09:27Z",
+      "side": 0,
+      "message": "Without this scheduler job, that won\u0027t be possible, you\u0027ll need to set `schedule \u003d \"triggered\"` on the builder definition to get this back.",
+      "parentUuid": "cdf7906d_7febf690",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 34
+      },
+      "revId": "f3d2d7a47380747bc6d164d6b56fe2f93f06a6d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
