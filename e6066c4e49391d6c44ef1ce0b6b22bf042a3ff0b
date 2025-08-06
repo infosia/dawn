@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "411cf4e1_c2e65a79",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-08-06T23:46:36Z",
+      "side": 1,
+      "message": "The protobuf visibility error:\n\nI see //third_party/dawn/src/tint/* in the list, should I change that to //third_party/dawn/src/* in this case?",
+      "revId": "e6066c4e49391d6c44ef1ce0b6b22bf042a3ff0b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
