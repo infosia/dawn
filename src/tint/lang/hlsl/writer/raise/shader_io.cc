@@ -118,6 +118,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                 return 14;
             case core::BuiltinValue::kSubgroupInvocationId:
             case core::BuiltinValue::kSubgroupSize:
+            case core::BuiltinValue::kPrimitiveId:
                 // These are sorted, but don't actually end up as members. Value doesn't really
                 // matter, so just make it larger than the rest.
                 return std::numeric_limits<uint32_t>::max();
