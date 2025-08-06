@@ -33,6 +33,24 @@
       "message": "Could we return an std::span instead? (Chromium will convert to a base::span but that\u0027s ok)",
       "revId": "cdd08eca50b64671e0aee77206868861c3bf8664",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab67dfca_a6c56a20",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-08-06T08:14:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b70b0b2b_ccd9f5eb",
+      "revId": "cdd08eca50b64671e0aee77206868861c3bf8664",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
