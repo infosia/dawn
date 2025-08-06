@@ -322,6 +322,24 @@
       "parentUuid": "c52738e2_8ae26f4a",
       "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f644cd3_9e6242fd",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-06T03:47:04Z",
+      "side": 1,
+      "message": "After reading through this conversation I do have one additional note about doing it this way, which is that the behavior probably won\u0027t end up being exactly the same between Dawn Native and Emdawnwebgpu. In Emdawnwebgpu we\u0027ll set the JS descriptor if the C descriptor exists. The browser will allow this even if the feature isn\u0027t enabled. If we wanted Emdawnwebgpu to produce an error it would have to implement its own validation to inject one, which isn\u0027t worthwhile.\n\nI feel like there _must_ be existing examples of this difference but I don\u0027t recall ever talking about it. I do know that Emdawnwebgpu is technically supposed to inject errors in some other cases, but does not implement that because it\u0027s not a worthwhile use of code size. (Unfortunately I don\u0027t remember what those cases are anymore.)",
+      "parentUuid": "a4cd5fcb_22e3769b",
+      "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
