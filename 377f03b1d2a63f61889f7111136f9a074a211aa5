@@ -35,6 +35,40 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "185108c7_79941f3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-06T07:54:50Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "377f03b1d2a63f61889f7111136f9a074a211aa5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eaae1f40_d924efe8",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-06T07:54:50Z",
+      "side": 1,
+      "message": "Can we have minimal documentation for each of these?",
+      "revId": "377f03b1d2a63f61889f7111136f9a074a211aa5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "707b9202_788a8376",
@@ -48,6 +82,23 @@
       "writtenOn": "2025-08-05T23:59:31Z",
       "side": 1,
       "message": "FWIW the Chromium equivalents guard the attributes with `#if defined(__clang__)`: https://source.chromium.org/chromium/chromium/src/+/main:base/thread_annotations.h;l\u003d43\n\nI don\u0027t think we need to follow that since the `__has_attribute` implementation seems to work fine on both Clang and MSVC.",
+      "revId": "377f03b1d2a63f61889f7111136f9a074a211aa5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1513724b_1d33c20a",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-06T07:54:50Z",
+      "side": 1,
+      "message": "What does this one do? https://releases.llvm.org/20.1.0/tools/clang/docs/AttributeReference.html#capability-shared-capability doesn\u0027t say anything.",
       "revId": "377f03b1d2a63f61889f7111136f9a074a211aa5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
