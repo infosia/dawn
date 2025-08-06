@@ -140,11 +140,12 @@ class EnumType(Type):
     def __init__(self, is_enabled, name, json_data):
         Type.__init__(self, name, json_data)
 
+        self.is_wire_transparent = True
+
         self.values = []
         self.hasUndefined = False
-        self.contiguous = True
-        self.startValue = None
-        lastValue = None
+        all_values = {}
+        max_value = 0
         for m in self.json_data['values']:
             if not is_enabled(m):
                 continue
@@ -181,27 +182,46 @@ class EnumType(Type):
 
             value += prefix
 
+            if value > max_value:
+                max_value = value
             if value_name == "undefined":
                 self.hasUndefined = True
-            if lastValue == None:
-                self.startValue = value
-            elif value != lastValue + 1:
-                self.contiguous = False
-            lastValue = value
-            self.values.append(
-                EnumValue(Name(value_name), value, m.get('valid', True), m))
+            enum_value = EnumValue(Name(value_name), value,
+                                   m.get('valid', True), m)
+            self.values.append(enum_value)
 
-        # Assert that all values except those with "enum_value_conflict": true are unique in enums
-        all_values = set()
-        for value in self.values:
-            if value.value in all_values:
-                #TODO(42241174) remove this condition once wgpu refactoring is complete.
-                if not value.json_data.get('enum_value_conflict', False):
+            # Assert that all values except those with "enum_value_conflict": true are unique in enums
+            if value in all_values:
+                if not not m.get('enum_value_conflict', False):
                     raise Exception(
                         "Duplicate value {} for '{}' in enum '{}'".format(
-                            hex(value.value), value.name.get(), name))
-            all_values.add(value.value)
-        self.is_wire_transparent = True
+                            hex(value.value), value_name, name))
+            all_values[value] = enum_value
+
+        num_array_holes = max_value + 1 - len(all_values)
+        self.contiguousFromZero = num_array_holes == 0
+
+        # For Emdawnwebgpu code generation, we want to pick between semi-dense syntax like
+        # [,a,b,,,,,c,d] and sparse syntax like Object.assign([,a,b], {1000: c, 1001: d}).
+        # Here we allow up to 20 holes in the semi-dense part, then produce a sparse part if needed.
+        SEMI_DENSE_MAX_HOLES = 20
+        holes_so_far = 0
+        semi_dense_max_value = -1
+        for i in range(max_value + 1):
+            if i in all_values:
+                semi_dense_max_value = i
+            else:
+                holes_so_far += 1
+            if holes_so_far > SEMI_DENSE_MAX_HOLES:
+                break
+
+        self.iterateSemiDensePart = (all_values.get(i)
+                                     for i in range(semi_dense_max_value + 1))
+        self.iterateSparsePart = None
+        if max_value > semi_dense_max_value:
+            self.iterateSparsePart = filter(
+                lambda x: x.value > semi_dense_max_value, self.values)
+
 
 
 BitmaskValue = namedtuple('BitmaskValue', ['name', 'value', 'json_data'])
@@ -914,6 +934,17 @@ def as_jsEnumValue(value):
     return "'" + value.name.js_enum_case() + "'"
 
 
+def as_jsEnumValueOrNothing(value):
+    if value is None:
+        return ''
+    if 'jsrepr' in value.json_data:
+        jsrepr = value.json_data['jsrepr']
+        if jsrepr == 'undefined':
+            return ''
+        return jsrepr
+    return "'" + value.name.js_enum_case() + "'"
+
+
 def has_wasmType(return_type, args):
     return all(map(lambda x: len(as_wasmType(x)) == 1, [return_type] + args))
 
@@ -1171,6 +1202,7 @@ def make_base_render_params(metadata):
             'as_cType': lambda name: as_cType(c_prefix, name),
             'as_cppType': as_cppType,
             'as_jsEnumValue': as_jsEnumValue,
+            'as_jsEnumValueOrNothing': as_jsEnumValueOrNothing,
             'has_wasmType': has_wasmType,
             'as_wasmType': as_wasmType,
             'convert_cType_to_cppType': convert_cType_to_cppType,
