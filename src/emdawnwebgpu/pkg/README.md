@@ -29,6 +29,11 @@ include paths and link the implementation:
 
     --use-port=path/to/emdawnwebgpu_port_or_remoteport_file.py
 
+Emdawnwebgpu's code heavily relies upon being minified by Closure Compiler, so
+for release builds, be sure to also enable Closure at link time:
+
+    --closure=1
+
 If (and only if) using Emscripten before 4.0.7, also pass this flag during link:
 
     --closure-args=--externs=path/to/emdawnwebgpu_pkg/webgpu/src/webgpu-externs.js
