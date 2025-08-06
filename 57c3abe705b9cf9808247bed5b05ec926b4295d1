@@ -16,6 +16,23 @@
       "message": "Talked with Quyen offline and he told me to send this out separately and to have this chain supersede the change in https://dawn-review.googlesource.com/c/dawn/+/254374",
       "revId": "57c3abe705b9cf9808247bed5b05ec926b4295d1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20ccb9b0_a3f4b12b",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-06T08:09:33Z",
+      "side": 1,
+      "message": "```suggestion\n            return kWaitSerialTimeout;\n```",
+      "revId": "57c3abe705b9cf9808247bed5b05ec926b4295d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
