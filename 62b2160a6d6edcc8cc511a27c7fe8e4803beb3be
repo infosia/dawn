@@ -16,6 +16,40 @@
       "message": "PTAL",
       "revId": "62b2160a6d6edcc8cc511a27c7fe8e4803beb3be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de73ba9e_1f092e2a",
+        "filename": "src/tint/lang/msl/writer/common/options.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-06T23:56:21Z",
+      "side": 1,
+      "message": "Missing `buffer_sizes_offset` ?",
+      "revId": "62b2160a6d6edcc8cc511a27c7fe8e4803beb3be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d147a2b3_12afd31e",
+        "filename": "src/tint/lang/msl/writer/common/options.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-06T23:56:21Z",
+      "side": 1,
+      "message": "This seems like it\u0027s going to be brittle. We\u0027ll miss adding entries here when updating them below. This also means there are 3 places to put a new option. The option itself, in HashCode and in the TINT_REFLECT macro.\n\nCould we maybe have TINT_REFECT create a HashCode for us instead of writing them directly?",
+      "revId": "62b2160a6d6edcc8cc511a27c7fe8e4803beb3be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
