@@ -16,6 +16,40 @@
       "message": "PTAL, thanks!",
       "revId": "24e37c7608d6dad91c7142490052e7b0c40c608b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3349e9f6_b2e75846",
+        "filename": "src/dawn/native/d3d12/BufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-06T07:47:50Z",
+      "side": 1,
+      "message": "this can stay a uint64_t because ClearBuffer takes a uint64_t",
+      "revId": "24e37c7608d6dad91c7142490052e7b0c40c608b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7180fc5_e35774c2",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-06T07:47:50Z",
+      "side": 1,
+      "message": "In a lot of cases this makes the code a lot more verbose for not a lot of gains :( I wonder if we could use the constructor to do the cast, like so: `uint32_t(barriers.size())`, it might be a bit lighter on the eyes. WDYT?",
+      "revId": "24e37c7608d6dad91c7142490052e7b0c40c608b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
