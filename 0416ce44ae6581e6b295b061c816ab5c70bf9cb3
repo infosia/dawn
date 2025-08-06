@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41fe9f4b_a4b9f39d",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-06T21:00:09Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem correct. The swizzle is set here but then if it\u0027s a stencil format the swizzle is overridden below.\n\nIt seems like the swizzle below need to look at the effective user swizzle and translate R to G.",
+      "revId": "0416ce44ae6581e6b295b061c816ab5c70bf9cb3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
