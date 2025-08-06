@@ -59,7 +59,7 @@ echo -e '\n#### Compilation done. Printing CSV results to stdout. ####\n' >&2
 fmt_string='%10s , %-27s , %8s , %8s , %8s\n'
 printf "$fmt_string" "Type" "File" "Size" "Gzip" "Brotli"
 for target in "${targets[@]}" ; do
-    for part in "${parts[@]}" ; do
+    for part in "${parts[@]}" ; do # TODO also print the sum
         for type in "${types[@]}" ; do
             filename="$target.$part"
             filepath="$type/$target.$part"
