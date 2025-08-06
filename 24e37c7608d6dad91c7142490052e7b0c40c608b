@@ -86,6 +86,24 @@
       "parentUuid": "d7180fc5_e35774c2",
       "revId": "24e37c7608d6dad91c7142490052e7b0c40c608b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "318c53a9_d2ededba",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-06T08:32:38Z",
+      "side": 1,
+      "message": "I\u0027m not sure, I think the constructor casts would be better than that amount of nice with static_cast, but it\u0027s probably not worth changing it everywhere in Dawn as that will be too much noise as well.\n\nFeel free to ignore.",
+      "parentUuid": "8e73cfd9_b514f55d",
+      "revId": "24e37c7608d6dad91c7142490052e7b0c40c608b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
