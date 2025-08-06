@@ -162,6 +162,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e26d777b_98208031",
+        "filename": "src/dawn/devtool/Recorder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-08-06T17:51:31Z",
+      "side": 1,
+      "message": "I think my incoming change is going to better reflect how this is handled:\n\n1. Recorder will become part of native::webgpu. And native::webgpu always assigns id to each object. No matter record is turned on or not.\n2. on start capture, only snapshot current device and default queue.\n3. during record, when an native::webgpu object is referenced (e.g. queueWriteBuffer references an existing buffer before record with id1), check if id1 is not already in snapshot global state, add it to.\n\nThe snapshot global state handling flush to disk part is something we can add later. For now just write to the ofstream on record end.",
+      "parentUuid": "8f13dcf5_6cbb1e1e",
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ee270d16_f7282101",
         "filename": "src/dawn/devtool/Recorder.h",
         "patchSetId": 14
