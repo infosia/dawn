@@ -77,6 +77,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76030d3f_d3442175",
+        "filename": "infra/config/global/main.star",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-06T18:37:53Z",
+      "side": 1,
+      "message": "Done, needed to add `platforms \u003d {}` in order for generation to work due to https://source.chromium.org/chromium/infra/infra_superproject/+/main:chromium_infra/starlark-libs/chromium-luci/ci.star;l\u003d130?q\u003d-file:%5Eout%20-file:%5Egen%20chromium_infra%20ci.star",
+      "parentUuid": "2777e274_243ac484",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 1
+      },
+      "revId": "4b5f889273957e2d980a0ec7b855d177b68ec46f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20789070_4b782291",
@@ -90,6 +114,30 @@
       "writtenOn": "2025-08-06T18:09:27Z",
       "side": 1,
       "message": "```suggestion\n    main_console_view \u003d \"main\",\n```",
+      "range": {
+        "startLine": 123,
+        "startChar": 24,
+        "endLine": 123,
+        "endChar": 64
+      },
+      "revId": "4b5f889273957e2d980a0ec7b855d177b68ec46f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "046a3402_04ec6ba6",
+        "filename": "infra/config/global/main.star",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-06T18:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20789070_4b782291",
       "range": {
         "startLine": 123,
         "startChar": 24,
@@ -117,6 +165,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e8403b5_34f67a12",
+        "filename": "infra/config/global/project.star",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-06T18:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "434fab9f_2816dc0d",
+      "revId": "4b5f889273957e2d980a0ec7b855d177b68ec46f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61c2fbfc_41e3344a",
@@ -130,6 +196,24 @@
       "writtenOn": "2025-08-06T18:09:27Z",
       "side": 1,
       "message": "This file is unnecessary if the project isn\u0027t being branched.",
+      "revId": "4b5f889273957e2d980a0ec7b855d177b68ec46f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06aaebad_7b06ea93",
+        "filename": "infra/config/global/settings.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-06T18:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61c2fbfc_41e3344a",
       "revId": "4b5f889273957e2d980a0ec7b855d177b68ec46f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
