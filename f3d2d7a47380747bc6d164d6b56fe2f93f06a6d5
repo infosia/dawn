@@ -22,6 +22,30 @@
       },
       "revId": "f3d2d7a47380747bc6d164d6b56fe2f93f06a6d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdf7906d_7febf690",
+        "filename": "infra/config/global/generated/luci/luci-scheduler.cfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-06T17:59:38Z",
+      "side": 0,
+      "message": "I plan for this to be only triggerable through luci-scheduler.appspot.com until we confirm that everything is working as intended.",
+      "parentUuid": "bbcfd826_5b1cf29b",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 34
+      },
+      "revId": "f3d2d7a47380747bc6d164d6b56fe2f93f06a6d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

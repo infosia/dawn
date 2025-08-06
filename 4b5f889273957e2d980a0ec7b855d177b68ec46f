@@ -16,6 +16,24 @@
       "message": "Are there plans to create branch projects for dawn in the future? If not, some things can be simplified.",
       "revId": "4b5f889273957e2d980a0ec7b855d177b68ec46f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4092f3fb_57527b6c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-06T17:59:38Z",
+      "side": 1,
+      "message": "Seems like the Dawn team is happy with the current state, so we won\u0027t look to create branch projects. I\u0027m guessing we can remove `settings.json` and the related Starlark code for that?",
+      "parentUuid": "2adecf3f_2ba174a6",
+      "revId": "4b5f889273957e2d980a0ec7b855d177b68ec46f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
