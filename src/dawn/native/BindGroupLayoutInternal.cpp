@@ -474,7 +474,7 @@ struct ExpandedBindingInfo {
     ityp::vector<BindingIndex, BindingInfo> entries;
     ExternalTextureBindingExpansionMap externalTextureBindingExpansions;
 };
-ExpandedBindingInfo ConvertAndExpandBGLEntries(const BindGroupLayoutDescriptor* descriptor) {
+ExpandedBindingInfo ConvertAndExpandBGLEntries(const UnpackedPtr<BindGroupLayoutDescriptor>& descriptor) {
     ExpandedBindingInfo result;
 
     // When new bgl entries are created, we use binding numbers larger than kMaxBindingsPerBindGroup
@@ -576,9 +576,11 @@ bool CheckBufferBindingsFirst(ityp::span<BindingIndex, const BindingInfo> bindin
 
 BindGroupLayoutInternalBase::BindGroupLayoutInternalBase(
     DeviceBase* device,
-    const BindGroupLayoutDescriptor* descriptor,
+    const BindGroupLayoutDescriptor* descriptorChain,
     ApiObjectBase::UntrackedByDeviceTag tag)
-    : ApiObjectBase(device, descriptor->label) {
+    : ApiObjectBase(device, descriptorChain->label) {
+    UnpackedPtr<BindGroupLayoutDescriptor> descriptor = Unpack(descriptorChain);
+
     ExpandedBindingInfo unpackedBindings = ConvertAndExpandBGLEntries(descriptor);
     mExternalTextureBindingExpansionMap =
         std::move(unpackedBindings.externalTextureBindingExpansions);
@@ -636,6 +638,13 @@ BindGroupLayoutInternalBase::BindGroupLayoutInternalBase(
     for (uint32_t i = 0; i < descriptor->entryCount; i++) {
         UnpackedPtr<BindGroupLayoutEntry> entry = Unpack(&descriptor->entries[i]);
         IncrementBindingCounts(&mValidationBindingCounts, entry);
+    }
+
+    // Handle the dynamic binding array if there is one.
+    if (auto* dynamic = descriptor.Get<BindGroupLayoutDynamicBindingArray>()) {
+        mHasDynamicArray = true;
+        mDynamicArrayStart = BindingNumber(dynamic->dynamicArray.start);
+        mDynamicArrayKind = dynamic->dynamicArray.kind;
     }
 }
 
@@ -743,7 +752,7 @@ bool BindGroupLayoutInternalBase::EqualityFunc::operator()(
 
 bool BindGroupLayoutInternalBase::IsEmpty() const {
     DAWN_ASSERT(!IsError());
-    return mBindingInfo.empty();
+    return mBindingInfo.empty() && !mHasDynamicArray;
 }
 
 BindingIndex BindGroupLayoutInternalBase::GetBindingCount() const {
