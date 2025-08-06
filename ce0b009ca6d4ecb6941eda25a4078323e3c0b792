@@ -34,6 +34,41 @@
       "parentUuid": "e95b4e4b_e07063e9",
       "revId": "ce0b009ca6d4ecb6941eda25a4078323e3c0b792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "437cb948_917643a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-06T10:43:15Z",
+      "side": 1,
+      "message": "Did we measure actual gains on AI workloads using this toggle? As you know I\u0027ve asked Jiajia about data for this but it seemed inconclusive.\n\nI\u0027m uneasy about landing this (esp. if we want to remove the toggle) in part because it is narrowly targeted. The barrier generation in Vulkan is still naive and basically unmaintained for the last N years (apart from one contribution from ARM). Adding patches on top of it for special cases is worrisome because whoever needs to understand barriers in the future will have to also understand this new interaction.\n\nI\u0027m happy to work with you on extending this to making it work outside of compute passes. Also in making the loop at [2] O(1), but it will require changing the way we represent barriers state in buffers internally. (textures too eventually could be nice to handle, but image layouts make this harder)",
+      "parentUuid": "86bfa2f1_0b47f638",
+      "revId": "ce0b009ca6d4ecb6941eda25a4078323e3c0b792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef219b5b_2b6306c0",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-06T10:43:15Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "ce0b009ca6d4ecb6941eda25a4078323e3c0b792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
