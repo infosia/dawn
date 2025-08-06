@@ -33,6 +33,7 @@ main.star: lucicfg configuration for Dawn's standalone builers.
 
 load("@chromium-luci//builders.star", "os")
 load("@chromium-luci//chromium_luci.star", "chromium_luci")
+load("@chromium-luci//consoles.star", "consoles")
 
 # Use LUCI Scheduler BBv2 names and add Scheduler realms configs.
 lucicfg.enable_experiment("crbug.com/1182002")
@@ -118,7 +119,7 @@ chromium_luci.configure_builder_health_indicators(
 )
 
 chromium_luci.configure_ci(
-    main_console_view = "main",
+    main_console_view = "ci",
     test_results_bq_dataset_name = "chromium",
     resultdb_index_by_timestamp = True,
 )
@@ -261,6 +262,18 @@ luci.bucket(
         ),
     ],
     dynamic = True,
+)
+
+consoles.console_view(
+    name = "ci",
+    title = "Dawn CI Builders",
+    repo = "https://dawn.googlesource.com/dawn",
+    refs = ["refs/heads/main"],
+)
+
+consoles.list_view(
+    name = "try",
+    title = "Dawn try Builders",
 )
 
 # Run other non-builder setup.

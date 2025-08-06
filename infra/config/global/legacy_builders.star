@@ -728,17 +728,17 @@ luci.milo(
     logo = "https://storage.googleapis.com/chrome-infra-public/logo/dawn-logo.png",
 )
 
-luci.console_view(
-    name = "ci",
-    title = "Dawn CI Builders",
-    repo = "https://dawn.googlesource.com/dawn",
-    refs = ["refs/heads/main"],
-)
-
-luci.list_view(
-    name = "try",
-    title = "Dawn try Builders",
-)
+#luci.console_view(
+#    name = "ci",
+#    title = "Dawn CI Builders",
+#    repo = "https://dawn.googlesource.com/dawn",
+#    refs = ["refs/heads/main"],
+#)
+#
+#luci.list_view(
+#    name = "try",
+#    title = "Dawn try Builders",
+#)
 
 # CQ
 
