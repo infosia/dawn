@@ -72,6 +72,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be554579_b9505038",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-06T20:37:55Z",
+      "side": 1,
+      "message": "I think I didn\u0027t make my point clear.\n\nYou said above we wanted to capture redundant useless calls (setPipeline 3 times in a row)\n\nI\u0027m pointing out that\u0027s not what we\u0027re getting above. createBuffer \u003d cb, createTexture \u003d ct, um \u003d unmap. \n\n* user does: `cb,um,ct,cb,um,ct,cb,um,ct,startCapture`\n* we emit: `cb,cb,cb,ct,ct,ct`\n\nBecause they all happened before capture their order is not preserved nor is the unmap. Given that we\u0027re not preserving the order, nor are we preserving all calls before capture. Do we need to preserve all calls during capture (like the redundant `setPipeline` calls).\n\nMaybe a better example. user does:\n\n  1. `enc \u003d device.createCommandEncoder()`\n  2. `pass \u003d device.beginRenderPass(...)`\n  3. `pass.setPipeline`\n  4. `pass.setBindGroup`\n  5. `pass.draw`\n  6. `pass.end`\n  7. `cb \u003d enc.finish`\n  8. `startCapture`\n  9. `device.queue.submit([cb])`\n  10. `endCapture`\n\nDoes this work? In this case, none of the commands building the command buffer were captured. But, we need to serialized the command buffer and all of its commands. Note: replace command buffer with render bundle, same issue. render bundles will be created before capture starts.\n\nSo, now we have redundant paths. Example above, at step 9 we have to serialize `cb`\n\nVs\n\n  1. `startCapture`\n  2. `enc \u003d device.createCommandEncoder()`\n  3. `pass \u003d device.beginRenderPass(...)`\n  4. `pass.setPipeline`\n  5. `pass.setBindGroup`\n  6. `pass.draw`\n  7. `pass.end`\n  8. `cb \u003d enc.finish`\n  9. `device.queue.submit([cb])`\n  10. `endCapture`\n\nIn this 2nd example, we don\u0027t have to serialize `cb` as it\u0027s re-created by the commands we recorded (assuming we record commands).  If we support the first example then recording commands in this 2nd example is redundant as step 9 is the same step as it was in the 1st example",
+      "parentUuid": "42b10da4_12663f82",
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3211b5ec_882f96b2",
