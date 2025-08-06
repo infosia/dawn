@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "226f76c1b521448ffd13727592d37a7a835023f9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e43dde3_3725edc7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-06T22:53:35Z",
+      "side": 1,
+      "message": "Looks like I\u0027m going to need to revert the other CL anyways. I\u0027ll include this fix in the reland.",
+      "revId": "226f76c1b521448ffd13727592d37a7a835023f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
