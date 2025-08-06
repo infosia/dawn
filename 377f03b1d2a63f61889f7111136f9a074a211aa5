@@ -104,6 +104,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4df4233f_d19174a9",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-08-06T19:54:40Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "707b9202_788a8376",
+      "revId": "377f03b1d2a63f61889f7111136f9a074a211aa5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1513724b_1d33c20a",
