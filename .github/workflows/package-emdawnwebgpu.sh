@@ -80,6 +80,9 @@ cat << EOF > "$REMOTE_PORT_FILE"
 
 # https://dawn.googlesource.com/dawn/+/${SHA}/src/emdawnwebgpu/pkg/README.md
 r"""
+
+The full README of Emdawnwebgpu follows.
+
 $(cat out/wasm/emdawnwebgpu_pkg/README.md)
 """
 
