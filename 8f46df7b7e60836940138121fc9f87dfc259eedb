@@ -180,6 +180,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "677e099b_44a6b25c",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-06T09:42:56Z",
+      "side": 1,
+      "message": "SyncToken are a Chromium concept that doesn\u0027t bleed into Dawn, but they are also higher level in that the denote dependencies between streams of operations, compared to VkPipelineBarrier that describe cache invalidations and write queue flushes for an abstract GPU model in Vulkan.",
+      "parentUuid": "135e4065_e69e03fc",
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0ff80fcd_1d00d14b",
         "filename": "src/dawn/native/vulkan/BufferVk.cpp",
         "patchSetId": 12
@@ -430,6 +448,24 @@
       "side": 1,
       "message": "There may be a downside to this approach. As this code is written we only skip barriers that would have been inserted. We never introduce new barriers into the flow which might change the timing of when a dispatch can launch (because now you would have inserted new different barriers that were not at this point in the stream).",
       "parentUuid": "7d9b28ed_d3f411bc",
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4174921_6d5f2242",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-06T09:42:56Z",
+      "side": 1,
+      "message": "We probably should do both: when we already have a barrier between, say, Storage-\u003eIndirect, it should be free to have one for Storage-\u003eStorage, so we\u0027d insert that additional barrier in the past. But only do it if there isn\u0027t a barrier for Storage-\u003eStorage in the command stream already.",
+      "parentUuid": "85e4b6a1_fab57f42",
       "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
