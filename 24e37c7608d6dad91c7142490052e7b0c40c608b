@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d07cad7_18bcd8d7",
+        "filename": "src/dawn/native/d3d12/BufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-08-06T08:28:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3349e9f6_b2e75846",
+      "revId": "24e37c7608d6dad91c7142490052e7b0c40c608b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d7180fc5_e35774c2",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-08-06T07:47:50Z",
       "side": 1,
       "message": "In a lot of cases this makes the code a lot more verbose for not a lot of gains :( I wonder if we could use the constructor to do the cast, like so: `uint32_t(barriers.size())`, it might be a bit lighter on the eyes. WDYT?",
+      "revId": "24e37c7608d6dad91c7142490052e7b0c40c608b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e73cfd9_b514f55d",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-08-06T08:28:48Z",
+      "side": 1,
+      "message": "But we have already used `static_cast` everywhere in Dawn instead of such C-style casting. Do you mean we should change them altogether?",
+      "parentUuid": "d7180fc5_e35774c2",
       "revId": "24e37c7608d6dad91c7142490052e7b0c40c608b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
