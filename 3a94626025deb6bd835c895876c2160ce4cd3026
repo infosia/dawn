@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "688435f6_6c5f79fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-06T21:12:13Z",
+      "side": 1,
+      "message": "This is a pretty minor but easy optimization to improve the fact that AttachmentState creation (and deletion) makes up a decent chunk of encoding a BeginRenderPass command. See https://pprof.corp.google.com/?id\u003d094fd7917c7a0686c109e8d2b6647c4f\u0026path\u003d1acexpm14qkju809hmmtg09hmmtg1fo4h2w08vnttk1qnwh0808vnttk1wz9tns13q2veo0x5kff41atla401rrw5sg1fpabeo1rrw5sg1sw8qyo1rrw5sg1fpabeo1rrw5sg1qrlwqo16hb3nk1izqeoo0ywd9pk0ywd9pk0oyb3e01k1n58o0rwlhjk1k1n58o as an example.\n\nBeyond this change, I think ideally we would like to update it so this (and possibly other?) CachedObject use \"Blueprints\" that are more lightweight than creating a full instance of the object in question (ie: simple struct, no Refs, etc.) Happy to discuss further.",
+      "revId": "3a94626025deb6bd835c895876c2160ce4cd3026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
