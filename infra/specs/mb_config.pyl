@@ -5,4 +5,9 @@
   'gn_args_locations_files': [
       '../config/global/generated/builders/gn_args_locations.json',
   ],
+  # configs and mixins are not expected to be used since Dawn specifies its
+  # GN args via Starlark. However, mb.py assumes that these keys exist, so have
+  # empty dicts for each.
+  'configs': {},
+  'mixins': {},
 }
