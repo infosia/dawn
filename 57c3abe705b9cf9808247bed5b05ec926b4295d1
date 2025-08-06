@@ -33,6 +33,24 @@
       "message": "```suggestion\n            return kWaitSerialTimeout;\n```",
       "revId": "57c3abe705b9cf9808247bed5b05ec926b4295d1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a634351_bc8de09b",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-06T16:39:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20ccb9b0_a3f4b12b",
+      "revId": "57c3abe705b9cf9808247bed5b05ec926b4295d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
