@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "631a48eb_bc070a52",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003631
+      },
+      "writtenOn": "2025-08-06T18:41:59Z",
+      "side": 1,
+      "message": "This looks good to me, it\u0027s kind of hard to be sure given the format of cr-buildbucket.cfg changes so much, I don\u0027t know what triggers the switch from properties_j to properties.",
+      "revId": "42f465bb790de2cdc941dc8144f95ed8bbe387f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

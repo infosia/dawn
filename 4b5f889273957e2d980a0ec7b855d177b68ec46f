@@ -101,6 +101,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aeef3449_a1b9c996",
+        "filename": "infra/config/global/main.star",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003631
+      },
+      "writtenOn": "2025-08-06T18:41:59Z",
+      "side": 1,
+      "message": "Ah, that\u0027s actually because there\u0027s a bug in the default value for platforms in the configure_project function; it\u0027s set to an empty list rather than an empty dict.",
+      "parentUuid": "76030d3f_d3442175",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 1
+      },
+      "revId": "4b5f889273957e2d980a0ec7b855d177b68ec46f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20789070_4b782291",
