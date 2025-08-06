@@ -54,6 +54,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d914323c_fc6de5b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2025-08-06T17:58:15Z",
+      "side": 1,
+      "message": "CC\u0027ing Dan, since he\u0027s interested in ramping up on the Vulkan backend, and internalizing this subtle / complex change and the conversation would help toward that goal IMO.",
+      "revId": "ce0b009ca6d4ecb6941eda25a4078323e3c0b792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef219b5b_2b6306c0",
