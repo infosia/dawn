@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2adecf3f_2ba174a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003631
+      },
+      "writtenOn": "2025-08-06T16:35:19Z",
+      "side": 1,
+      "message": "Are there plans to create branch projects for dawn in the future? If not, some things can be simplified.",
+      "revId": "4b5f889273957e2d980a0ec7b855d177b68ec46f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
