@@ -126,6 +126,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ee270d16_f7282101",
+        "filename": "src/dawn/devtool/Recorder.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-08-06T17:04:45Z",
+      "side": 1,
+      "message": "Chatted with Corentin: Recorder will go into native::webgpu. (anything touches native:: stuff should be native internal)\n\nRecorder proxy layer will only expose some static functions like StartCapture, End only passing in public WGPUDevice (like include/dawn/devtool/Record.h)",
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bf065ba9_1a3ae7dc",
         "filename": "src/dawn/devtool/Replayer.cpp",
         "patchSetId": 14
