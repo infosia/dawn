@@ -16,13 +16,19 @@ and then report it at <https://crbug.com/new?component=1570785&noWizard=True>.
 
 ## How to use this package
 
-First, start with either:
+First, start with one of the following distributions:
 
+- A recent release of Emscripten which supports `--use-port=emdawnwebgpu`.
 - A "remote" port file `emdawnwebgpu-v*.remoteport.py` (requires Emscripten 4.0.10+).
 - An `emdawnwebgpu_pkg` containing a local port file `emdawnwebgpu.port.py`.
   (Either from a pre-built zip release, or from a Dawn build output directory.)
 
 ## How to use this package (local or remote)
+
+To use Emdawnwebgpu, simply pass a single flag to `emcc` during both compile and
+link. The flag depends on which distribution you are using (see above):
+
+
 
 Pass the following flag to `emcc`, during both compile and link, to set the
 include paths and link the implementation:
