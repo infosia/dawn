@@ -10,22 +10,33 @@ Dawn-style `<webgpu/webgpu_cpp.h>` with Emscripten.
 
 <!-- TODO(crbug.com/430616385): Link to a sample project. -->
 
+If you find an issue in this release, please download the latest Emdawnwebgpu
+release (see below) and latest Emscripten and verify the bug, then report it at
+<https://crbug.com/new?component=1570785&noWizard=True>.
+
 ## API Stability
 
 Core parts of `webgpu.h` (defined in
-<https://github.com/webgpu-native/webgpu-headers>) are considered a stable API
+<https://github.com/webgpu-native/webgpu-headers>) are considered stable APIs
 and should not change, except for bugfixes (though guarantees are not made).
 Dawn/Emscripten-specific parts, and all of `webgpu_cpp.h`, are **NOT**
 considered stable, and may change.
 
 ## How to use Emdawnwebgpu
 
-Emdawnwebgpu is distributed in three ways. Choose the one that works for you.
+Emdawnwebgpu is distributed in several ways. Choose the one that works for you.
 
 In all cases, it is important to enable Closure to reduce code size in release
 builds. Pass the following flag to `emcc` during linking:
 
     --closure=1
+
+### Cross-targeting Web/Native, using CMake
+
+Consider using this method if you use CMake and your project targets both
+Emscripten and native platforms using Dawn.
+
+<https://developer.chrome.com/docs/web-platform/webgpu/build-app>
 
 ### Easiest: "Remote" port built into Emscripten
 
@@ -40,7 +51,7 @@ Pass the following flag to `emcc` during both compilation and linking:
 
 This is the same as the built-in port, but you can download a newer version if
 you need recent bugfixes or features in Emdawnwebgpu that haven't been rolled
-into Emscripten yet. Requires Emscripten 4.0.10+.
+into Emscripten yet. **Requires Emscripten 4.0.10+.**
 
 Download and extract the `emdawnwebgpu-*.remoteport.py` file from
 <https://github.com/google/dawn/releases>.
@@ -51,11 +62,15 @@ Pass the following flag to `emcc` during both compilation and linking:
 
 ### Latest, without automatic downloading: "Local" port from Dawn release
 
-If your build system requires sources to be local (e.g. checked into your
-repository) instead of automatically downloaded, use this method.
+Use this method if your build system requires sources to be local (e.g. checked
+into your repository) instead of automatically downloaded, or if you use
+Emscripten before 4.0.10.
+**Note that Emdawnwebgpu may not work with older Emscripten releases.**
 
 Download and extract the `emdawnwebgpu_pkg-*.zip` package from
 <https://github.com/google/dawn/releases>.
+Or, if your project already has Dawn source, you can build it from there:
+<https://dawn.googlesource.com/dawn/+/refs/heads/main/src/emdawnwebgpu/README.md>
 
 Pass the following flag to `emcc` during both compilation and linking:
 
