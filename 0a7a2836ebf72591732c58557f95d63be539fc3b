@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cdf5a7d_451448d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-08-06T23:05:58Z",
+      "side": 1,
+      "message": "PTAL in conjunction with https://dawn-review.googlesource.com/c/dawn/+/255573 to see how this will be used",
+      "revId": "0a7a2836ebf72591732c58557f95d63be539fc3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
