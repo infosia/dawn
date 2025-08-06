@@ -16,6 +16,57 @@
       "message": "+gbeaty to review and confirm that this looks reasonable. It won\u0027t be a big deal if these builders break as a result, but I would like this to be at least most of the way there.",
       "revId": "cec2d97a3a7082b2dd7ac073634b082b0b0084ad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e47934e5_e9a2985e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003631
+      },
+      "writtenOn": "2025-08-06T00:02:17Z",
+      "side": 1,
+      "message": "I haven\u0027t fully review this yet, I may have more comments, but I have to end my day.",
+      "revId": "cec2d97a3a7082b2dd7ac073634b082b0b0084ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ec19fc2_d85f7cb7",
+        "filename": "infra/config/global/generated/builders/gn_args_locations.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003631
+      },
+      "writtenOn": "2025-08-06T00:02:17Z",
+      "side": 1,
+      "message": "Using GN args in starlark still uses mb, which will still read the mb_config.pyl. The mb_config.pyl needs to be modified to reference this file, so you\u0027ll need to update //infra/specs/mb_config.pyl to include\n```\n  # Paths to gn_args_locations.json relative to the directory containing mb_config.pyl.\n  # Such json files contain maps of\n  # builder group -\u003e builder ID -\u003e file path of \"gn-args.json\" generated from starlark.\n  \u0027gn_args_locations_files\u0027: [\n      \u0027../config/global/generated/builders/gn_args_locations.json\u0027,\n  ],\n\n```\nas a top-level entry in the dict.",
+      "revId": "cec2d97a3a7082b2dd7ac073634b082b0b0084ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eefd6fa3_8a780cd8",
+        "filename": "infra/config/global/generated/health-specs/health-specs.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003631
+      },
+      "writtenOn": "2025-08-06T00:02:17Z",
+      "side": 1,
+      "message": "I would recommend not setting health specs on your builders at this time. The processing of the health specs is performed by a cron job that runs and only examines the health specs from the chromium and chrome repos and only queries builder data from the buildbucket.chrome.builds table, so the config just ends up being noise.",
+      "revId": "cec2d97a3a7082b2dd7ac073634b082b0b0084ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
