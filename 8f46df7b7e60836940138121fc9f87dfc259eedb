@@ -195,6 +195,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f0fb888_bbebc68c",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-06T02:23:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ff80fcd_1d00d14b",
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "075eafd6_0a6c851b",
@@ -230,6 +248,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "32abff15_f66d371a",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-06T02:23:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aea0da35_be279f48",
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3bb81d16_8a84ff90",
@@ -260,6 +296,30 @@
       "writtenOn": "2025-08-04T17:30:41Z",
       "side": 1,
       "message": "Can we have a TypedInteger for this for type-safety and also self-documentation of function and parameters? (also 64bit to ensure no rollover). We might need to introduce a Vulkan-specific TypedInteger header similar to third_party/dawn/src/dawn/native/opengl/IntegerTypes.h",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 10
+      },
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de44b683_0e73f3b3",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-06T02:23:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cb05bc1_113ea90a",
       "range": {
         "startLine": 118,
         "startChar": 4,
@@ -352,6 +412,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "1d7958e6_6b8a5ebe",
+      "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85e4b6a1_fab57f42",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-06T02:23:00Z",
+      "side": 1,
+      "message": "There may be a downside to this approach. As this code is written we only skip barriers that would have been inserted. We never introduce new barriers into the flow which might change the timing of when a dispatch can launch (because now you would have inserted new different barriers that were not at this point in the stream).",
+      "parentUuid": "7d9b28ed_d3f411bc",
       "revId": "8f46df7b7e60836940138121fc9f87dfc259eedb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
