@@ -244,7 +244,7 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
 
     // Initialize the padding bytes to zero.
     if (GetDevice()->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse) && !mappedAtCreation) {
-        uint32_t paddingBytes = GetAllocatedSize() - GetSize();
+        uint32_t paddingBytes = static_cast<uint32_t>(GetAllocatedSize() - GetSize());
         if (paddingBytes > 0) {
             CommandRecordingContext* commandRecordingContext =
                 ToBackend(GetDevice()->GetQueue())->GetPendingCommandContext();
