@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "99c0a0ed_471a3c47",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-08-06T15:36:16Z",
+      "side": 1,
+      "message": "I think the design is that we want to record 3,4,6,7. If there\u0027s a bug in maybe pipeline state set / pipeline cache hit / bindgroup tracker that\u0027s the way to get it reproduced in recording.\n\nFor recording of the async of the future event, currently I haven\u0027t implemented anything in the code. I did have some thoughts (in design doc) that record the async function invocations as usual, record their in their callback for completes. When playback, playback async function invocations no block, playback their completes as the record appears in the order of cmds in the serialized file",
+      "parentUuid": "ef913642_5159a320",
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3211b5ec_882f96b2",
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "I think that for the initial start here, it\u0027s definitely going to be easier to capture everything. We can probably be smarter about it and optimize more iteratively.",
       "parentUuid": "108a2df1_57863e67",
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8294b87_04142910",
+        "filename": "src/dawn/devtool/Recorder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-08-06T15:36:16Z",
+      "side": 1,
+      "message": "I think only capturing referenced resources make sense and is doable by current webgpu backend / serialization format.\n\nThis `SnapshotGlobalState` for now is more like a `SetupRecord` where it records device and default queue to make recording happen. The other part of the context state (extra buffers) yes we can only record them when referenced. I can update to make this clearer.",
+      "parentUuid": "38f5891b_563fe0ba",
       "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
