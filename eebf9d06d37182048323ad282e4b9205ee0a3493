@@ -72,6 +72,93 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "38f5891b_563fe0ba",
+        "filename": "src/dawn/devtool/Recorder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-06T01:00:30Z",
+      "side": 1,
+      "message": "I think that for the initial start here, it\u0027s definitely going to be easier to capture everything. We can probably be smarter about it and optimize more iteratively.",
+      "parentUuid": "108a2df1_57863e67",
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf065ba9_1a3ae7dc",
+        "filename": "src/dawn/devtool/Replayer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-06T01:00:30Z",
+      "side": 1,
+      "message": "Should we verify that the result is `true` also? (and below) Might honestly be worthwhile to have something like `ResultOrError` like thing in `dawn/devtools`, not sure though.",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 63
+      },
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ec3cce3_7d64b19d",
+        "filename": "src/dawn/devtool/Replayer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-06T01:00:30Z",
+      "side": 1,
+      "message": "We should probably verify that the object doesn\u0027t already exist in the map. Maybe assert or something?",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 44
+      },
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3e07b75_d63a4ce8",
+        "filename": "src/dawn/devtool/Replayer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-06T01:00:30Z",
+      "side": 1,
+      "message": "I think if you move this into the header file, you won\u0027t need the explicit instantiations below.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 1
+      },
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9bab0d66_049b24e8",
         "filename": "src/dawn/devtool/Replayer.h",
         "patchSetId": 14
@@ -83,6 +170,29 @@
       "writtenOn": "2025-08-06T00:18:48Z",
       "side": 1,
       "message": "Thinking out loud, I\u0027d expect to load a recording and then be able to play it up to any point. \n\nIf it makes sense, maybe the thing that plays back the recording should not be the same object as the recording itself?\n\nI don\u0027t have a concrete suggestion. These are just thoughts as I read the code. If it\u0027s one object then I think I\u0027d expect either\n\n```cpp\nReplayer::Load(std::istream \u0026in)\nReplayer::StartPlayback(WGPUDevice device);\n```\n\nIf it\u0027s 2 objects, then I\u0027d expect something like\n\n```cpp\nclass Recording {\n  static Recording* Load(std::istream \u0026in);\n}\n\nclass Replayer {\n  void StartPlayback(WGPDevice device, Recording\u0026 recording);\n}\n```\n\nFollowing what I think I remember of the JS debugger. Maybe something more like\n\n```cpp\nclass Recording {\n  static Recording* Load(std::istream \u0026in);\n}\n\nclass Replayer {\n  static Replayer* Create(WGPDevice device, Recording\u0026 recording);\n  void PlayToPosition(CmdIndex cmdIndex);\n\n  CmdIndex mCurrentIndex;\n}\n```\n\nWhere `PlayToPosition` does something like\n\n```cpp\nvoid Replayer::PlayToPosition(CmdIndex cmdIndex) {\n  if (cmdIndex \u003d\u003d CmdIndex::Start || cmdIndex \u003c mCurrentIndex) {\n    // we need to start the playback so\n    // 1. delete or reset all existing resources (Buffers, Textures)\n    // 2. set all existing resources to the state just before the capture\n    // 3. start playback from beginning\n    mCurrentIndex \u003d CmdIndex::Start;\n  }\n  while (mCurrentIndex \u003c cmdIndex) {\n    Cmd cmd \u003d mPlayback.getCmd(mCurrentIndex++);\n    cmd.Execute(); // \n  }\n}\n```\n\nI don\u0027t know if `Recording` is good vs `Capture` or if it matters.",
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e9fe524_8e7b3394",
+        "filename": "src/dawn/devtool/Replayer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-06T01:00:30Z",
+      "side": 1,
+      "message": "So I thought about this some more, and another option that might be feasible and be a bit more ergonomic to use:\n\nIn `ObjectType.h`:\n```\ntemplate \u003ctypename WGPUHandle\u003e\ninline ObjectType ObjectTypeOf;\n\ntemplate \u003c\u003e\nconstexpr inline ObjectType ObjectTypeOf\u003cWGPUBuffer\u003e \u003d ObjectType::Buffer;\n...\n```\n\nIn `Replayer.h`:\n```\ntemplate \u003ctypename WGPUHandle\u003e\nbool GetFromId(ObjectId, id, WGPUHandle* out) {\n    const auto\u0026 map \u003d mObjectIdMaps[ObjectTypeOf\u003cWGPUHandle\u003e];\n    auto result \u003d map.find(id);\n    if (result \u003d\u003d map.end()) {\n        return false;\n    }\n    *out \u003d reinterpret_cast\u003cWGPUHandle\u003e(result-\u003esecond);\n    return true;\n}\n\ntemplate \u003ctypename WGPUHandle\u003e\nbool SetId(WGPUHandle object, ObjectId id) {\n    mObjectIdMaps[ObjectTypeOf\u003cWGPUHandle\u003e].emplace(id, object);\n    return true;\n}\n```\n\nThen when you use it, I think you can let deduction figure out which one to call, i.e.\n```\nWGPUDevice device \u003d nullptr;\nplayback-\u003eGetFromId(deviceId, \u0026device);\n```\n\nThen in the future, when you have stuff autogenerated, you could probably just generate the mapping between `WGPUHandle` and the actual enum value. You might need to wrap the mapping in a struct though, not entirely sure the rules for that offhand.",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 47
+      },
       "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
