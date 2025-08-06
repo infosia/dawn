@@ -51,6 +51,24 @@
       "message": "```suggestion\n// flags: --glsl-desktop --hlsl-shader-model 61\n```",
       "revId": "ef079c7d0e9399bd5d595223e1dae5a95bfde2c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0941b394_ba9f6716",
+        "filename": "test/tint/extensions/barycentric_coord/basic.wgsl",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-06T03:15:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85089a30_613848e2",
+      "revId": "ef079c7d0e9399bd5d595223e1dae5a95bfde2c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
