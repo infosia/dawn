@@ -92,6 +92,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9b334973_f83b25de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-08-06T21:14:08Z",
+      "side": 1,
+      "message": "For the 2 questions for the first example (cb, ct, um order one):\n1. Are the calls before start capture recorded? No they are not in current impl.\n2. Do we need to preserve these calls before start capture (in cases other than the second example)? I don\u0027t know.\n\nFor the second example (command buffer submit), this is not by any deliberate design, but the current native::webgpu backend implementation will actually record commands encoded before startCapture. Because `CommandEncoder` (and `RenderPassEncoder` not implemented for webgpu backend yet but seems similiar) is a frontend only object, the actual encoding happens at `native::webgpu::Queue::SubmitImpl` ([code search link](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/webgpu/QueueWGPU.cpp;l\u003d61;drc\u003d5313bb8ee332ad42e69c45bd551be262e6d21c58)) And so will the recording. So for the case of command encoder (and pass encoder), the record will include everything as long as `StartCapture` is before `queue.submit`.\n\nIf that\u0027s the only scenario where commands before `StartCapture` is needed, I think we are good with current design of not delibarately recording every command from the start.\n\nBut if we later find some scenario that do need commands before `StartCapture`, I think we can change the native::webgpu backend implementation to record and serialize every command. Only commands after `StartCapture` gets sent to the output stream. This can be gated by a toggle so this differs from the low-overhead path.",
+      "parentUuid": "be554579_b9505038",
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3211b5ec_882f96b2",
         "filename": "src/dawn/devtool/CMakeLists.txt",
         "patchSetId": 14
