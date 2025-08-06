@@ -140,11 +140,12 @@ class EnumType(Type):
     def __init__(self, is_enabled, name, json_data):
         Type.__init__(self, name, json_data)
 
+        self.is_wire_transparent = True
+
         self.values = []
         self.hasUndefined = False
-        self.contiguous = True
-        self.startValue = None
-        lastValue = None
+        all_values = {}
+        max_value = 0
         for m in self.json_data['values']:
             if not is_enabled(m):
                 continue
@@ -181,27 +182,56 @@ class EnumType(Type):
 
             value += prefix
 
+            if value > max_value:
+                max_value = value
             if value_name == "undefined":
                 self.hasUndefined = True
-            if lastValue == None:
-                self.startValue = value
-            elif value != lastValue + 1:
-                self.contiguous = False
-            lastValue = value
-            self.values.append(
-                EnumValue(Name(value_name), value, m.get('valid', True), m))
+            enum_value = EnumValue(Name(value_name), value,
+                                   m.get('valid', True), m)
+            self.values.append(enum_value)
 
-        # Assert that all values except those with "enum_value_conflict": true are unique in enums
-        all_values = set()
-        for value in self.values:
-            if value.value in all_values:
-                #TODO(42241174) remove this condition once wgpu refactoring is complete.
-                if not value.json_data.get('enum_value_conflict', False):
+            # Assert that all values except those with "enum_value_conflict": true are unique in enums
+            if value in all_values:
+                if not m.get('enum_value_conflict', False):
                     raise Exception(
-                        "Duplicate value {} for '{}' in enum '{}'".format(
-                            hex(value.value), value.name.get(), name))
-            all_values.add(value.value)
-        self.is_wire_transparent = True
+                        "Duplicate value {} ('{}' and '{}') in enum '{}'".
+                        format(value, all_values[value].name.get(), value_name,
+                               name))
+            all_values[value] = enum_value
+
+        num_array_holes = max_value + 1 - len(all_values)
+        self.contiguousFromZero = num_array_holes == 0
+
+        # For Emdawnwebgpu code generation, we want to split the enum between semi-dense syntax like
+        # [,a,b,,,,,c,d] and sparse syntax for values that are very far from others.
+        # Here we allow up to 20 holes in the semi-dense part, then produce a sparse part if needed.
+        SEMI_DENSE_MAX_HOLES = 20
+        holes_so_far = 0
+        semi_dense_max_value = -1
+        for i in range(max_value + 1):
+            if i in all_values:
+                semi_dense_max_value = i
+            else:
+                holes_so_far += 1
+            if holes_so_far > SEMI_DENSE_MAX_HOLES:
+                break
+
+        def tableEntryForValue(value):
+            # Filter out entries that would be JS `undefined` literals.
+            if value == None or value.json_data.get('jsrepr') == 'undefined':
+                return None
+            return value
+
+        # Iterate values in the semi-dense part in order, with None in place of holes.
+        self.iterateSemiDensePart = (tableEntryForValue(all_values.get(i))
+                                     for i in range(semi_dense_max_value + 1))
+        # Iterate all the values that weren't in the semi-dense part.
+        self.iterateSparsePart = None
+        if max_value > semi_dense_max_value:
+            self.iterateSparsePart = filter(
+                lambda value: value.value > semi_dense_max_value and
+                tableEntryForValue(value) != None, self.values)
+
 
 
 BitmaskValue = namedtuple('BitmaskValue', ['name', 'value', 'json_data'])

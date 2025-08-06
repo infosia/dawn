@@ -72,38 +72,33 @@
 
     // Maps from enum number to enum string.
     // These appear in the final build result so should be kept minimal.
-    // TODO(crbug.com/377760848): Investigate whether Closure is able
-    // to dead-code-eliminate these; if not, make them library-level
-    // items like the string-to-int tables.
     globalThis.WEBGPU_INT_TO_STRING_TABLES = `
         {% for type in by_category["enum"] if not type.json_data.get("emscripten_no_enum_table") %}
-            //* Use an array if the enum is contiguous, allowing up to an arbitrary 10 blank entries
-            //* at the start before falling back to the object syntax.
-            {{type.name.CamelCase()}}: {% if type.contiguous and type.startValue < 10 -%}
+            //* If the enum is too sparse (adding a lot of commas would inflate the code size), we
+            //* use an alternate syntax to construct a sparse array (so we can use indexOf on it).
+            //* The threshold doesn't matter but is chosen to approximately minimize code size.
+            {{type.name.CamelCase()}}: {% if type.iterateSparsePart -%}
+                //* This IIFE is similar to Object.assign([semiDensePart], {sparsePart}), but
+                //* Closure can't tell that Object.assign has no side effects in that case (for
+                //* some reason, despite being correctly annotated), so we have to do this.
+                (() => {
+                    const a = [
+                        {% for value in type.iterateSemiDensePart %}
+                            {{ as_jsEnumValue(value) if value != None }},
+                        {% endfor %}
+                    ];
+                    {% for value in type.iterateSparsePart %}
+                        a[{{ value.value }}] = {{ as_jsEnumValue(value) }};
+                    {% endfor %}
+                    return a;
+                })(),
+            {% else -%}
                 [
-                    {% for i in range(type.startValue) %}
-                        ,
+                    {% for value in type.iterateSemiDensePart %}
+                        {{ as_jsEnumValue(value) if value != None }},
                     {% endfor %}
-                    {% for value in type.values %}
-                        {% set jsEnumValue = as_jsEnumValue(value) %}
-                        {% if jsEnumValue == 'undefined' %}
-                            //* Blank array element rather than explicit undefined, which mostly
-                            //* has the same effect but saves code size.
-                            ,
-                        {% else %}
-                            {{ jsEnumValue }},
-                        {% endif %}
-                    {% endfor %}
-                ]
-            {%- else -%}
-                // Create a sparse array so we can use indexOf on it.
-                Object.assign([], {
-                    {% for value in type.values %}
-                        {{value.value}}: {{as_jsEnumValue(value)}},
-                    {% endfor %}
-                })
-            {%- endif -%}
-            ,
+                ],
+            {% endif %}
         {% endfor %}
 `;
 
