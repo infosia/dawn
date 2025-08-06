@@ -22,6 +22,30 @@
       },
       "revId": "ce020f36f14041268f932f282f6d2ed633965cc3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "366338be_78f91eaa",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-06T17:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "359bb1d8_c85b91e4",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 50
+      },
+      "revId": "ce020f36f14041268f932f282f6d2ed633965cc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

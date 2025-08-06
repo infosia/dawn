@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "744a5189_711cfd1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-06T17:53:13Z",
+      "side": 1,
+      "message": "Switched to a specific number and added kBarycentricCoord for completeness.",
+      "revId": "75b2c933ccb9e37283afcaa6f796ac8287d9489c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
