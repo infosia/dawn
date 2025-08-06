@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef913642_5159a320",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-06T00:18:48Z",
+      "side": 1,
+      "message": "I\u0027m sorry these comments are late. I threw in some ideas below. I\u0027m not sure they are good or bad.\n\nIt\u0027s been suggested we do not want to capture all resources. Is that true?\n\nAlso, some of my suggestions mean that playback doesn\u0027t match recording by which I mean, in JavaScript (or whatever the client language is), as a non-sense example, I might do\n\n```\n 1. encoder \u003d device.createCommandEncoder();\n 2. pass \u003d encoder.beginRenderPass();\n 3. pass.setPipeline(pipelineA);\n 4. pass.setPipeline(pipelineB);\n 5. pass.setPipeline(pipelineC);\n 6. pass.setBindGroup(0, bg0);\n 7. pass.setBindGroup(0, bg1);\n 8. pass.setBindGroup(0, bg2);\n 9. pass.draw(3);\n10. pass.end();\n```\n\nDo we want to want to record steps 3,4,6,7 even though none of them contributed to the result?\n\nThis comes up in many places. In JS we have `createComputePipelineAsync`. But from the point of view of capture, we only really need to capture pipelines that are used. (pipelines that are set via `pass.setPipeline` and then actually used via `pass.drawXXX` or `pass.dispatchWorkgroupsXXX` etc... In which case `createComputePipelineAsync` would never need to be recorded.\n\nBUT!! Is that in conflict with what the user wants to see? Does the user want to see that\n\n1. they called `createComputePipelineAsync`\n2. they waited\n3. they, at some point, called `pass.setPipeline` and `pass.draw`\n\nOr is it fine that the recording is only\n\n1. they, at some point, called `pass.setPipeline` and `pass.draw`\n\nAnd we retroactively serialized the pipeline creation and the resources needed to create it?",
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3211b5ec_882f96b2",
@@ -32,6 +49,40 @@
       "side": 1,
       "message": "Somehow get it built locally. (Doesn\u0027t seem very equivalent to GN)",
       "parentUuid": "3211b5ec_882f96b2",
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "108a2df1_57863e67",
+        "filename": "src/dawn/devtool/Recorder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-06T00:18:48Z",
+      "side": 1,
+      "message": "This is an interesting issue and i\u0027m not sure there is \"correct\" answer. But, I feel like we, optionally, only want to capture what is used. In other words, if I load 100 textures and have 100 buffers but during the capture I only reference 2 of each, then I think I\u0027d prefer it only capture those 4 objects?\n\nIf that\u0027s good, then I\u0027d expect the design to be more of the pattern of for each resource used, if it\u0027s not already captured (assigned an ID) then assign it an ID. If its contents needs to be captured then capture its contents.\n\nPS: this is super pseudo code. Not trying to be correct, just hopefully conveying the idea.\n\n```cpp\nRecordDrawCommand???(...) {\n  for each bindGroup\n    if (bindGroup is not already captured)\n      for each entry in bindGroup\n        CaptureContentsOfResourceIfNeededAndNotAlreadyCaptured(entry.resource)\n      CaptureBindGroup(bindGroup)\n}\n\nRecordBeginRenderPass(...) {\n  RecordableRenderPass rPass;\n  for each [...colorAttachments, depthStencilAttachment]\n    if attachment.loadOp \u003d\u003d \u0027clear\u0027\n      id \u003d RecordTextureIfNotAlreadyRecorded(attachment.view)\n    else\n      id \u003d CaptureTextureIfNotAlreadyCaptured(attachment.view)\n    rPass.addAttachment(id);\n  ...\n  SaveRenderPassInfo(rPass);\n  ...\n}\n\nuint32_t RecordResourceIfNotAlreadyRecorded(Texture texture) {\n  if (!haveIdFor(texture)) {\n    id \u003d getNextId();\n    params \u003d RecordTextureCreationParameters(texture);\n    SaveTextureCreationParametersAndAssociateId(id, params);\n  }\n  return GetIdForTexture(texture);\n}\n\nuint32_t RecordResourceIfNotAlreadyRecorded(TextureView view) {\n   if (!haveIdFor(view)) {\n     viewId \u003d getNextId();\n     textureId \u003d RecordResourceIfNotAlreadyRecorderd(view.texture);\n     params \u003d RecordTextureViewCreationParamters(view);\n     SaveTextureViewCreationParamtersAndAssociateId(id, params);\n   }\n   return GetIdForTextureView(view);\n}\n\nCaptureContentsOfResourceIfNeededAndNotAlreadyCaptured(resource) {\n  // not sure when a resource capture is NOT needed but an example might\n  // be a buffer that was created but has never been written to.\n  // Not sure if that\u0027s tracked. Can leave that for later and just capture\n  // everything\n  if (!hasIdFoResource(resource)) {\n    id \u003d RecordResourceIfNotAlreadyRecorded(resource);\n    if (needCapture(resource)) {\n      capture initial data for resource\n    }\n  }\n  return GetIdFor(resource)\n    \n}\n```\n\nMaybe capturing all objects is a better way to start? Though if we know now that a minimal capture is preferred then switching later would be a big change.",
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bab0d66_049b24e8",
+        "filename": "src/dawn/devtool/Replayer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-06T00:18:48Z",
+      "side": 1,
+      "message": "Thinking out loud, I\u0027d expect to load a recording and then be able to play it up to any point. \n\nIf it makes sense, maybe the thing that plays back the recording should not be the same object as the recording itself?\n\nI don\u0027t have a concrete suggestion. These are just thoughts as I read the code. If it\u0027s one object then I think I\u0027d expect either\n\n```cpp\nReplayer::Load(std::istream \u0026in)\nReplayer::StartPlayback(WGPUDevice device);\n```\n\nIf it\u0027s 2 objects, then I\u0027d expect something like\n\n```cpp\nclass Recording {\n  static Recording* Load(std::istream \u0026in);\n}\n\nclass Replayer {\n  void StartPlayback(WGPDevice device, Recording\u0026 recording);\n}\n```\n\nFollowing what I think I remember of the JS debugger. Maybe something more like\n\n```cpp\nclass Recording {\n  static Recording* Load(std::istream \u0026in);\n}\n\nclass Replayer {\n  static Replayer* Create(WGPDevice device, Recording\u0026 recording);\n  void PlayToPosition(CmdIndex cmdIndex);\n\n  CmdIndex mCurrentIndex;\n}\n```\n\nWhere `PlayToPosition` does something like\n\n```cpp\nvoid Replayer::PlayToPosition(CmdIndex cmdIndex) {\n  if (cmdIndex \u003d\u003d CmdIndex::Start || cmdIndex \u003c mCurrentIndex) {\n    // we need to start the playback so\n    // 1. delete or reset all existing resources (Buffers, Textures)\n    // 2. set all existing resources to the state just before the capture\n    // 3. start playback from beginning\n    mCurrentIndex \u003d CmdIndex::Start;\n  }\n  while (mCurrentIndex \u003c cmdIndex) {\n    Cmd cmd \u003d mPlayback.getCmd(mCurrentIndex++);\n    cmd.Execute(); // \n  }\n}\n```\n\nI don\u0027t know if `Recording` is good vs `Capture` or if it matters.",
       "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
