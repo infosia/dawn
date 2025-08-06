@@ -5,33 +5,58 @@ WebGPU JS API). It is a fork of Emscripten's original `USE_WEBGPU` bindings,
 and while it is maintained in Dawn, it works in any browser supporting WebGPU
 (modulo individual feature support).
 
-The package includes all of the necessary files to use
-`<webgpu/webgpu.h>` and the Dawn-style `<webgpu/webgpu_cpp.h>` with Emscripten.
-<!-- TODO(crbug.com/371024051): Link to a sample project. -->
+Emdawnwebgpu provides everything necessary to use `<webgpu/webgpu.h>` and the
+Dawn-style `<webgpu/webgpu_cpp.h>` with Emscripten.
 
-Find new versions of this package at <https://github.com/google/dawn/releases>.
+<!-- TODO(crbug.com/430616385): Link to a sample project. -->
 
-If you find any issue with this release, please verify it in the latest release,
-and then report it at <https://crbug.com/new?component=1570785&noWizard=True>.
+## How to use Emdawnwebgpu
 
-## How to use this package
+Emdawnwebgpu is distributed in three ways. Choose the one that works for you.
 
-First, start with either:
+In all cases, it is important to enable Closure to reduce code size in release
+builds. Pass the following flag to `emcc` during linking:
 
-- A "remote" port file `emdawnwebgpu-v*.remoteport.py` (requires Emscripten 4.0.10+).
-- An `emdawnwebgpu_pkg` containing a local port file `emdawnwebgpu.port.py`.
-  (Either from a pre-built zip release, or from a Dawn build output directory.)
+    --closure=1
 
-## How to use this package (local or remote)
+### Easiest: "Remote" port built into Emscripten
 
-Pass the following flag to `emcc`, during both compile and link, to set the
-include paths and link the implementation:
+Recent releases of Emscripten vendor a copy of a "remote" port which
+automatically downloads a pinned version of Emdawnwebgpu and configures it.
 
-    --use-port=path/to/emdawnwebgpu_port_or_remoteport_file.py
+- Pass the following flag to `emcc` during both compilation and linking:
 
-If (and only if) using Emscripten before 4.0.7, also pass this flag during link:
+        --use-port=emdawnwebgpu
 
-    --closure-args=--externs=path/to/emdawnwebgpu_pkg/webgpu/src/webgpu-externs.js
+### Latest: "Remote" port from Dawn release
+
+This is the same as the built-in port, but you can download a newer version if
+you need recent bugfixes or features in Emdawnwebgpu that haven't been rolled
+into Emscripten yet. Requires Emscripten 4.0.10+.
+
+- Download the `emdawnwebgpu-*.remoteport.py` file from
+    <https://github.com/google/dawn/releases>.
+
+- Pass the following flag to `emcc` during both compilation and linking:
+
+        --use-port=path/to/emdawnwebgpu_remoteport_file
+
+### Latest, without automatic downloading: "Local" port from Dawn release
+
+If your build system requires sources to be local (e.g. checked into your
+repository) instead of automatically downloaded, use this method.
+
+- Download the `emdawnwebgpu_pkg-*.zip` package from
+    <https://github.com/google/dawn/releases>.
+
+- Pass the following flag to `emcc` during both compilation and linking:
+
+        --use-port=path/to/emdawnwebgpu_pkg/emdawnwebgpu.port.py
+
+- If (and only if) using Emscripten before 4.0.7, also pass this flag during
+    linking:
+
+        --closure-args=--externs=path/to/emdawnwebgpu_pkg/webgpu/src/webgpu-externs.js
 
 ## Port options
 
@@ -59,4 +84,5 @@ If your build process needs a separate step to build the port before linking,
 use Emscripten's `embuilder`.
 
 Under `embuilder`, some options cannot be set automatically, so they must be
-set manually. See `OPTIONS` in `emdawnwebgpu.port.py` for details.
+set manually. For details, see `OPTIONS` in `emdawnwebgpu.port.py` (in the
+package zip).
