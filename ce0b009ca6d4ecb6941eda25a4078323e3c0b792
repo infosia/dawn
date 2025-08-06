@@ -16,6 +16,24 @@
       "message": "Can you clarify what is the intent with this CL? Is it to live in Gerrit to be cherry-picked for experimentations or is the goal to land something close to this version?",
       "revId": "ce0b009ca6d4ecb6941eda25a4078323e3c0b792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86bfa2f1_0b47f638",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-06T09:50:46Z",
+      "side": 1,
+      "message": "I think we should land something like this. We can have the toggle available and then finch trial it for Chrome.  \n\nThis change gives us the gains of concurrent compute dispatch without significant risk as it is narrowly targeted.",
+      "parentUuid": "e95b4e4b_e07063e9",
+      "revId": "ce0b009ca6d4ecb6941eda25a4078323e3c0b792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
