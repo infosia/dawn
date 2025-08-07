@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "548312cf_571df12c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-07T18:49:49Z",
+      "side": 1,
+      "message": "PTAL, this is patch 6 of 8 for implementing to the prototype I detailed in https://dawn-review.googlesource.com/c/dawn/+/255654",
+      "revId": "da4130c6cbdadea16507ef1826d2211dff631675",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
