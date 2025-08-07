@@ -203,10 +203,6 @@ MaybeError ValidateSampledTextureBinding(DeviceBase* device,
     DAWN_TRY(ValidateTextureBindGroupEntry(device, entry));
 
     TextureViewBase* view = entry.textureView;
-
-    Aspect aspect = view->GetAspects();
-    DAWN_INVALID_IF(!HasOneBit(aspect), "Multiple aspects (%s) selected in %s.", aspect, view);
-
     TextureBase* texture = view->GetTexture();
 
     SampleTypeBit supportedTypes = texture->GetFormat().GetAspectInfo(aspect).supportedSampleTypes;
