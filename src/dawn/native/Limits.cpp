@@ -546,6 +546,9 @@ MaybeError FillLimits(Limits* outputLimits,
     FillExtensionLimits(unpacked.Get<DawnHostMappedPointerLimits>(),
                         &CombinedLimits::hostMappedPointerLimits,
                         wgpu::FeatureName::HostMappedPointer);
+    FillExtensionLimits(unpacked.Get<DynamicBindingArrayLimits>(),
+                        &CombinedLimits::dynamicBindingArrayLimits,
+                        wgpu::FeatureName::ChromiumExperimentalBindless);
 
     return {};
 }
