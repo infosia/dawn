@@ -34,6 +34,24 @@
       "parentUuid": "41fe9f4b_a4b9f39d",
       "revId": "0416ce44ae6581e6b295b061c816ab5c70bf9cb3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dec72eac_819135f6",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-08-07T07:51:40Z",
+      "side": 1,
+      "message": "I thought we should (if it has not been) limit the texture swizzle to plain color texture format?",
+      "parentUuid": "41fe9f4b_a4b9f39d",
+      "revId": "0416ce44ae6581e6b295b061c816ab5c70bf9cb3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
