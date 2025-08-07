@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbd608e6_84b2ffea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-07T18:04:46Z",
+      "side": 1,
+      "message": "+gbeaty to confirm I\u0027m not doing anything wrong\n+dsinclair to stamp",
+      "revId": "b62f3664cd50b9feb97516574a4ebdbd111411d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
