@@ -139,7 +139,12 @@ func (w FSTestFilesystemReaderWriter) ReadFile(name string) ([]byte, error) {
 }
 
 func (w FSTestFilesystemReaderWriter) ReadDir(name string) ([]os.DirEntry, error) {
-	panic("ReadDir() is not currently implemented in fstest wrapper")
+	p := w.CleanPath(name)
+
+	if mapFile, exists := w.FS[p]; exists && !mapFile.Mode.IsDir() {
+		return nil, &os.PathError{Op: "readdir", Path: name, Err: fmt.Errorf("not a directory")}
+	}
+	return fs.ReadDir(w.fs(), p)
 }
 
 func (w FSTestFilesystemReaderWriter) Stat(name string) (os.FileInfo, error) {

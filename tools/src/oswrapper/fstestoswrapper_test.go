@@ -317,67 +317,47 @@ func TestFSTestOSWrapper_ReadFile_MatchesReal(t *testing.T) {
 	}
 }
 
-// --- FilesystemWriter tests ---
-
-func TestFSTestOSWrapper_WriteFile(t *testing.T) {
+func TestFSTestOSWrapper_ReadDir(t *testing.T) {
 	tests := []struct {
-		name          string
-		setup         unittestSetup
-		path          string
-		content       []byte
-		expectContent *string
+		name            string
+		setup           unittestSetup
+		path            string
+		expectedEntries []string
 		expectedError
 	}{
 		{
-			name:          "Create new file",
-			path:          filepath.Join("/", "newfile.txt"),
-			content:       []byte("new content"),
-			expectContent: stringPtr("new content"),
-		},
-		{
-			name: "Overwrite existing file",
-			path: filepath.Join("/", "existing.txt"),
+			name: "Read empty directory",
+			path: filepath.Join("/", "emptydir"),
 			setup: unittestSetup{
-				initialFiles: map[string]string{"/existing.txt": "old content"},
+				initialDirs: []string{"/emptydir"},
 			},
-			content:       []byte("overwritten"),
-			expectContent: stringPtr("overwritten"),
+			expectedEntries: []string{},
 		},
 		{
-			name: "Create file in existing subdirectory",
-			path: filepath.Join("/", "foo", "bar.txt"),
+			name: "Read directory with files and subdirectories",
+			path: filepath.Join("/", "dir"),
 			setup: unittestSetup{
-				initialDirs: []string{"/foo"},
+				initialFiles: map[string]string{
+					"/dir/file1.txt":  "",
+					"/dir/z_file.txt": "",
+				},
+				initialDirs: []string{"/dir/subdir"},
 			},
-			content:       []byte("sub content"),
-			expectContent: stringPtr("sub content"),
+			expectedEntries: []string{"file1.txt", "subdir", "z_file.txt"},
 		},
 		{
-			name:    "Error on non-existent directory",
-			path:    filepath.Join("/", "new", "dir", "file.txt"),
-			content: []byte("some data"),
+			name: "Read non-existent directory",
+			path: filepath.Join("/", "nonexistent"),
 			expectedError: expectedError{
 				wantErrIs: os.ErrNotExist,
 			},
 		},
 		{
-			name: "Error on path is a directory",
-			path: filepath.Join("/", "mydir"),
+			name: "Read a file",
+			path: filepath.Join("/", "file.txt"),
 			setup: unittestSetup{
-				initialDirs: []string{"/mydir"},
+				initialFiles: map[string]string{"/file.txt": ""},
 			},
-			content: []byte("some data"),
-			expectedError: expectedError{
-				wantErrMsg: "is a directory",
-			},
-		},
-		{
-			name: "Error on parent path is a file",
-			path: filepath.Join("/", "file.txt", "another.txt"),
-			setup: unittestSetup{
-				initialFiles: map[string]string{"/file.txt": "i am a file"},
-			},
-			content: []byte("some data"),
 			expectedError: expectedError{
 				wantErrMsg: "not a directory",
 			},
@@ -387,73 +367,58 @@ func TestFSTestOSWrapper_WriteFile(t *testing.T) {
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			wrapper := tc.setup.setup(t)
-			err := wrapper.WriteFile(tc.path, tc.content, 0666)
+			entries, err := wrapper.ReadDir(tc.path)
 
 			if tc.expectedError.Check(t, err) {
 				return
 			}
 
-			if tc.expectContent != nil {
-				content, err := wrapper.ReadFile(tc.path)
-				require.NoError(t, err)
-				require.Equal(t, *tc.expectContent, string(content))
+			entryNames := make([]string, len(entries))
+			for i, e := range entries {
+				entryNames[i] = e.Name()
 			}
+			require.ElementsMatch(t, tc.expectedEntries, entryNames)
 		})
 	}
 }
 
-func TestFSTestOSWrapper_WriteFile_MatchesReal(t *testing.T) {
+func TestFSTestOSWrapper_ReadDir_MatchesReal(t *testing.T) {
 	tests := []struct {
-		name    string
-		setup   matchesRealSetup
-		path    string
-		content []byte
+		name  string
+		setup matchesRealSetup
+		path  string
 	}{
 		{
-			name:    "Create new file",
-			path:    "newfile.txt",
-			content: []byte("new content"),
+			name: "Read empty directory",
+			setup: matchesRealSetup{unittestSetup{
+				initialDirs: []string{"emptydir"},
+			}},
+			path: "emptydir",
 		},
 		{
-			name: "Overwrite existing file",
+			name: "Read directory with files and subdirectories",
 			setup: matchesRealSetup{unittestSetup{
 				initialFiles: map[string]string{
-					"existing.txt": "old content",
+					filepath.Join("dir", "file1.txt"):  "content",
+					filepath.Join("dir", "z_file.txt"): "content",
+				},
+				initialDirs: []string{
+					"dir",
+					filepath.Join("dir", "subdir"),
 				},
 			}},
-			path:    "existing.txt",
-			content: []byte("overwritten"),
+			path: "dir",
 		},
 		{
-			name: "Create file in existing subdirectory",
+			name: "Error on non-existent directory",
+			path: "nonexistent",
+		},
+		{
+			name: "Error on path is a file",
 			setup: matchesRealSetup{unittestSetup{
-				initialDirs: []string{"foo"},
+				initialFiles: map[string]string{"file.txt": "content"},
 			}},
-			path:    filepath.Join("foo", "bar.txt"),
-			content: []byte("sub content"),
-		},
-		{
-			name:    "Error on non-existent directory",
-			path:    filepath.Join("new", "dir", "file.txt"),
-			content: []byte("some data"),
-		},
-		{
-			name: "Error on path is a directory",
-			setup: matchesRealSetup{unittestSetup{
-				initialDirs: []string{"mydir"},
-			}},
-			path:    "mydir",
-			content: []byte("some data"),
-		},
-		{
-			name: "Error on parent path is a file",
-			setup: matchesRealSetup{unittestSetup{
-				initialFiles: map[string]string{
-					"file.txt": "i am a file",
-				},
-			}},
-			path:    filepath.Join("file.txt", "another.txt"),
-			content: []byte("some data"),
+			path: "file.txt",
 		},
 	}
 
@@ -463,12 +428,20 @@ func TestFSTestOSWrapper_WriteFile_MatchesReal(t *testing.T) {
 			defer os.RemoveAll(realRoot)
 
 			// Execute
-			realErr := realFS.WriteFile(filepath.Join(realRoot, tc.path), tc.content, 0666)
-			testErr := testFS.WriteFile("/"+tc.path, tc.content, 0666)
+			realEntries, realErr := realFS.ReadDir(filepath.Join(realRoot, tc.path))
+			testEntries, testErr := testFS.ReadDir("/" + tc.path)
 
 			requireErrorsMatch(t, realErr, testErr)
 			if realErr == nil {
-				requireFileSystemsMatch(t, realRoot, testFS)
+				realNames := make([]string, len(realEntries))
+				for i, e := range realEntries {
+					realNames[i] = e.Name()
+				}
+				testNames := make([]string, len(testEntries))
+				for i, e := range testEntries {
+					testNames[i] = e.Name()
+				}
+				require.ElementsMatch(t, realNames, testNames)
 			}
 		})
 	}
@@ -581,6 +554,8 @@ func TestFSTestOSWrapper_Stat_MatchesReal(t *testing.T) {
 		})
 	}
 }
+
+// --- FilesystemWriter tests ---
 
 func TestFSTestOSWrapper_Mkdir(t *testing.T) {
 	tests := []struct {
@@ -822,6 +797,161 @@ func TestFSTestOSWrapper_MkdirAll_MatchesReal(t *testing.T) {
 			// Execute
 			realErr := realFS.MkdirAll(filepath.Join(realRoot, tc.path), 0755)
 			testErr := testFS.MkdirAll("/"+tc.path, 0755)
+
+			requireErrorsMatch(t, realErr, testErr)
+			if realErr == nil {
+				requireFileSystemsMatch(t, realRoot, testFS)
+			}
+		})
+	}
+}
+
+func TestFSTestOSWrapper_WriteFile(t *testing.T) {
+	tests := []struct {
+		name          string
+		setup         unittestSetup
+		path          string
+		content       []byte
+		expectContent *string
+		expectedError
+	}{
+		{
+			name:          "Create new file",
+			path:          filepath.Join("/", "newfile.txt"),
+			content:       []byte("new content"),
+			expectContent: stringPtr("new content"),
+		},
+		{
+			name: "Overwrite existing file",
+			path: filepath.Join("/", "existing.txt"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{"/existing.txt": "old content"},
+			},
+			content:       []byte("overwritten"),
+			expectContent: stringPtr("overwritten"),
+		},
+		{
+			name: "Create file in existing subdirectory",
+			path: filepath.Join("/", "foo", "bar.txt"),
+			setup: unittestSetup{
+				initialDirs: []string{"/foo"},
+			},
+			content:       []byte("sub content"),
+			expectContent: stringPtr("sub content"),
+		},
+		{
+			name:    "Error on non-existent directory",
+			path:    filepath.Join("/", "new", "dir", "file.txt"),
+			content: []byte("some data"),
+			expectedError: expectedError{
+				wantErrIs: os.ErrNotExist,
+			},
+		},
+		{
+			name: "Error on path is a directory",
+			path: filepath.Join("/", "mydir"),
+			setup: unittestSetup{
+				initialDirs: []string{"/mydir"},
+			},
+			content: []byte("some data"),
+			expectedError: expectedError{
+				wantErrMsg: "is a directory",
+			},
+		},
+		{
+			name: "Error on parent path is a file",
+			path: filepath.Join("/", "file.txt", "another.txt"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{"/file.txt": "i am a file"},
+			},
+			content: []byte("some data"),
+			expectedError: expectedError{
+				wantErrMsg: "not a directory",
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			wrapper := tc.setup.setup(t)
+			err := wrapper.WriteFile(tc.path, tc.content, 0666)
+
+			if tc.expectedError.Check(t, err) {
+				return
+			}
+
+			if tc.expectContent != nil {
+				content, err := wrapper.ReadFile(tc.path)
+				require.NoError(t, err)
+				require.Equal(t, *tc.expectContent, string(content))
+			}
+		})
+	}
+}
+
+func TestFSTestOSWrapper_WriteFile_MatchesReal(t *testing.T) {
+	tests := []struct {
+		name    string
+		setup   matchesRealSetup
+		path    string
+		content []byte
+	}{
+		{
+			name:    "Create new file",
+			path:    "newfile.txt",
+			content: []byte("new content"),
+		},
+		{
+			name: "Overwrite existing file",
+			setup: matchesRealSetup{unittestSetup{
+				initialFiles: map[string]string{
+					"existing.txt": "old content",
+				},
+			}},
+			path:    "existing.txt",
+			content: []byte("overwritten"),
+		},
+		{
+			name: "Create file in existing subdirectory",
+			setup: matchesRealSetup{unittestSetup{
+				initialDirs: []string{"foo"},
+			}},
+			path:    filepath.Join("foo", "bar.txt"),
+			content: []byte("sub content"),
+		},
+		{
+			name:    "Error on non-existent directory",
+			path:    filepath.Join("new", "dir", "file.txt"),
+			content: []byte("some data"),
+		},
+		{
+			name: "Error on path is a directory",
+			setup: matchesRealSetup{unittestSetup{
+				initialDirs: []string{"mydir"},
+			}},
+			path:    "mydir",
+			content: []byte("some data"),
+		},
+		{
+			name: "Error on parent path is a file",
+			setup: matchesRealSetup{unittestSetup{
+				initialFiles: map[string]string{
+					"file.txt": "i am a file",
+				},
+			}},
+			path:    filepath.Join("file.txt", "another.txt"),
+			content: []byte("some data"),
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			realRoot, realFS, testFS := tc.setup.setup(t)
+			defer os.RemoveAll(realRoot)
+
+			// Execute
+			realErr := realFS.WriteFile(filepath.Join(realRoot, tc.path), tc.content, 0666)
+			testErr := testFS.WriteFile("/"+tc.path, tc.content, 0666)
 
 			requireErrorsMatch(t, realErr, testErr)
 			if realErr == nil {
