@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0f0a78c5_f1d41702",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-08-07T09:21:36Z",
+      "side": 1,
+      "message": "The requirements for tier2 are the same as tier1 (see https://github.com/gpuweb/gpuweb/pull/5160)), so I think TextureFormatsTier2  doesn\u0027t only require shaderStorageImageExtendedFormats.",
+      "parentUuid": "a813e7bf_aa64782f",
+      "range": {
+        "startLine": 584,
+        "startChar": 0,
+        "endLine": 584,
+        "endChar": 86
+      },
+      "revId": "6370645d4391fa26bbace6695b0280b8bd4c8ac6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "361b812d_1bd510d1",
         "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
         "patchSetId": 7
@@ -43,6 +67,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8159a71b_c3ee25fa",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2169,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-08-07T09:21:36Z",
+      "side": 1,
+      "message": "No, D3D11 and OpenGL don\u0027t support tier2 according to https://github.com/gpuweb/gpuweb/pull/5160, and the tests for them will be skipped. Should I remove these two lines?",
+      "parentUuid": "361b812d_1bd510d1",
+      "revId": "6370645d4391fa26bbace6695b0280b8bd4c8ac6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f6e5bb33_6c217f80",
         "filename": "src/dawn/utils/TextureUtils.cpp",
         "patchSetId": 7
@@ -54,6 +96,24 @@
       "writtenOn": "2025-08-07T07:55:02Z",
       "side": 1,
       "message": "optional nit: Ah I was thinking it would call `GetWGSLColorTextureComponentType` internally instead of needing the double call. It would make the caller a bit less verbose.",
+      "revId": "6370645d4391fa26bbace6695b0280b8bd4c8ac6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0ab0123_995e49aa",
+        "filename": "src/dawn/utils/TextureUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-08-07T09:21:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6e5bb33_6c217f80",
       "revId": "6370645d4391fa26bbace6695b0280b8bd4c8ac6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
