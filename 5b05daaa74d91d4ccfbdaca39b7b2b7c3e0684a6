@@ -22,6 +22,30 @@
       },
       "revId": "5b05daaa74d91d4ccfbdaca39b7b2b7c3e0684a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77a2a139_2d126e87",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2125,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-08-07T05:04:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8ff357e_ee80db33",
+      "range": {
+        "startLine": 2125,
+        "startChar": 36,
+        "endLine": 2125,
+        "endChar": 75
+      },
+      "revId": "5b05daaa74d91d4ccfbdaca39b7b2b7c3e0684a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

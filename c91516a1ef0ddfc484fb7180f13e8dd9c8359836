@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "639731b9_5fb8879e",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-08-07T05:04:36Z",
+      "side": 1,
+      "message": "I have added comments in patch3 to explain it.",
+      "parentUuid": "418e4efc_c44865a7",
+      "revId": "c91516a1ef0ddfc484fb7180f13e8dd9c8359836",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "21fef852_2373dc35",
@@ -69,6 +87,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84c9e754_e0a95c74",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-08-07T05:04:36Z",
+      "side": 1,
+      "message": "Tthe conditions for enabling Tier 2 are stricter than those for Tier 1. Thus, if Tier 2 conditions are met, Tier 1 is guaranteed to be enabled in D3D12/Vulkan/Metal (see https://github.com/gpuweb/gpuweb/pull/5160). As a result, the scenario described as \u0027otherwise tier 2 only requires shaderStorageImageExtendedFormats\u0027 does not exist.\"",
+      "parentUuid": "21fef852_2373dc35",
+      "revId": "c91516a1ef0ddfc484fb7180f13e8dd9c8359836",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d8d1441a_df749de8",
@@ -82,6 +118,24 @@
       "writtenOn": "2025-08-06T08:06:23Z",
       "side": 1,
       "message": "It\u0027s not great to match on strings instead of enums. Can we have an enum version of the same function (and make `GetWGSLColorTextureComponentTypeStr` (see the addition of `Str`) use it?) This would help avoid code failing because we did a typo in one of the strings used to match instead of the enum.",
+      "revId": "c91516a1ef0ddfc484fb7180f13e8dd9c8359836",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4e650c2_d2694072",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-08-07T05:04:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8d1441a_df749de8",
       "revId": "c91516a1ef0ddfc484fb7180f13e8dd9c8359836",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
