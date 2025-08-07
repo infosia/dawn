@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc02f27c_bfbca15a",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-07T19:21:18Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f880c08a_234db64c",
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e4dc8f4f_b486f934",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "Added a switch to handle matrix correctly, and filed a bug to support arrays here. We\u0027ll probably need to support structs as well.",
       "parentUuid": "e4dc8f4f_b486f934",
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce550649_36259ae6",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-07T19:21:18Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "339f89f1_c68b7d58",
       "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

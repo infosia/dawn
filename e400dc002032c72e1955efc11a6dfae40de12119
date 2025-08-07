@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37ac071a_610e11e5",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-07T19:21:18Z",
+      "side": 1,
+      "message": "Should fix the bots:\n```suggestion\n                        [\u0026](const core::type::Array*) {\n```",
+      "revId": "e400dc002032c72e1955efc11a6dfae40de12119",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "616fdd72_cdb17e60",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-07T19:21:18Z",
+      "side": 1,
+      "message": "Nit: Same change as with StoreVectorElement - could just chain off the original access. Can be done as a follow up but just mentioning since bots are failing so presumably there are other changes to make.",
+      "revId": "e400dc002032c72e1955efc11a6dfae40de12119",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
