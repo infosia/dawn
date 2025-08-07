@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e5dbfb1_548ac8ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-07T23:19:48Z",
+      "side": 1,
+      "message": "Should we split this into the tint changes and the enabling? In case we have to revert the dawn side, we don\u0027t want to lose the tint changes.",
+      "revId": "e0c3ce1dcf0d2fd577872f59da861f1e3002aaa4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
