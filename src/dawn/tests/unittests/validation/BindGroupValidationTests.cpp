@@ -4352,8 +4352,8 @@ class BindGroupValidationTest_ChromiumExperimentalBindless : public BindGroupVal
     }
 };
 
-// Control case where creating a dynamic binding array with the feature enabled is valid.
-TEST_F(BindGroupValidationTest_ChromiumExperimentalBindless, SuccessWithFeatureEnabled) {
+// Control case where creating a dynamic binding array layout with the feature enabled is valid.
+TEST_F(BindGroupValidationTest_ChromiumExperimentalBindless, LayoutSuccessWithFeatureEnabled) {
     wgpu::BindGroupLayoutDynamicBindingArray dynamic;
     dynamic.dynamicArray.kind = wgpu::DynamicBindingKind::SampledTexture;
 
@@ -4364,8 +4364,8 @@ TEST_F(BindGroupValidationTest_ChromiumExperimentalBindless, SuccessWithFeatureE
     device.CreateBindGroupLayout(&desc);
 }
 
-// Error case where creating a dynamic binding array with the feature disabled is an error.
-TEST_F(BindGroupValidationTest, ErrorWithFeatureDisabled) {
+// Error case where creating a dynamic binding array layout with the feature disabled is an error.
+TEST_F(BindGroupValidationTest, LayoutErrorWithFeatureDisabled) {
     wgpu::BindGroupLayoutDynamicBindingArray dynamic;
     dynamic.dynamicArray.kind = wgpu::DynamicBindingKind::SampledTexture;
 
@@ -4373,6 +4373,31 @@ TEST_F(BindGroupValidationTest, ErrorWithFeatureDisabled) {
     desc.nextInChain = &dynamic;
 
     ASSERT_DEVICE_ERROR(device.CreateBindGroupLayout(&desc));
+}
+
+// Control case where creating a dynamic binding array bind group with the feature enabled is valid.
+TEST_F(BindGroupValidationTest_ChromiumExperimentalBindless, GroupSuccessWithFeatureEnabled) {
+    wgpu::BindGroupDynamicBindingArray dynamic;
+    dynamic.dynamicArraySize = 0;
+
+    wgpu::BindGroupDescriptor desc;
+    desc.nextInChain = &dynamic;
+    desc.layout = utils::MakeBindGroupLayout(device, {});
+
+    // No error is produced.
+    device.CreateBindGroup(&desc);
+}
+
+// Error case where creating a dynamic binding array bind group with the feature disabled is an error.
+TEST_F(BindGroupValidationTest, GroupErrorWithFeatureDisabled) {
+    wgpu::BindGroupDynamicBindingArray dynamic;
+    dynamic.dynamicArraySize = 0;
+
+    wgpu::BindGroupDescriptor desc;
+    desc.nextInChain = &dynamic;
+    desc.layout = utils::MakeBindGroupLayout(device, {});
+
+    ASSERT_DEVICE_ERROR(device.CreateBindGroup(&desc));
 }
 
 // Check that using DynamicArrayKind::Undefined is an error.
