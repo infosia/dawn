@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2453309a_765679d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-07T21:44:27Z",
+      "side": 1,
+      "message": "Ok, Brian showed me how to download chromium from the bots. It\u0027s on the Task Page on the right under `Reproducing the task locally-\u003eDownload inputs files into directory foo:`   ran with `chrome.exe --no-sandbox --enable-unsafe-webgpu --enable-webgpu-developer-features --use-mock-keychain --user-data-dir\u003d\u003csome-dir\u003e`\n\nIt passed the CTS swizzle tests where as canary does not.",
+      "revId": "a6b16ae28b146101f569a89757dc245e8937e22f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5a4f9b40_830976db",
