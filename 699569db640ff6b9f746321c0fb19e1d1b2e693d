@@ -33,6 +33,24 @@
       "message": "Nit: Recommend `No-Try: true` for these sorts of changes to avoid hitting the bots.",
       "revId": "699569db640ff6b9f746321c0fb19e1d1b2e693d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b1aeeef_a569579e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-07T14:17:22Z",
+      "side": 1,
+      "message": "It\u0027s early, who\u0027s on the bots at this time, heh. (And it\u0027s been ingrained into me to always run the bots as I\u0027ve done the `this can\u0027t possibly cause an issue` dance before, heh)",
+      "parentUuid": "cbf7a260_ea2452b5",
+      "revId": "699569db640ff6b9f746321c0fb19e1d1b2e693d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
