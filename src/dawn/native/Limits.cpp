@@ -125,8 +125,8 @@
     X(v1,                              Maximum,                    maxBindGroupsPlusVertexBuffers,        24,        24,         24) \
     X(v1,                              Maximum,                           maxBindingsPerBindGroup,      1000,      1000,       1000) \
     X(v1,                              Maximum,                       maxUniformBufferBindingSize,     16384,     65536,      65536) \
-    X(v1,                            Alignment,                 minUniformBufferOffsetAlignment,       256,       256,        256) \
-    X(v1,                            Alignment,                 minStorageBufferOffsetAlignment,       256,       256,        256) \
+    X(v1,                            Alignment,                   minUniformBufferOffsetAlignment,       256,       256,        256) \
+    X(v1,                            Alignment,                   minStorageBufferOffsetAlignment,       256,       256,        256) \
     X(v1,                              Maximum,                                  maxVertexBuffers,         8,         8,          8) \
     X(v1,                              Maximum,                               maxVertexAttributes,        16,        16,         30) \
     X(v1,                              Maximum,                        maxVertexBufferArrayStride,      2048,      2048,       2048) \
@@ -546,6 +546,9 @@ MaybeError FillLimits(Limits* outputLimits,
     FillExtensionLimits(unpacked.Get<DawnHostMappedPointerLimits>(),
                         &CombinedLimits::hostMappedPointerLimits,
                         wgpu::FeatureName::HostMappedPointer);
+    FillExtensionLimits(unpacked.Get<DynamicBindingArrayLimits>(),
+                        &CombinedLimits::dynamicBindingArrayLimits,
+                        wgpu::FeatureName::ChromiumExperimentalBindless);
 
     return {};
 }

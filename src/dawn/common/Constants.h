@@ -112,6 +112,9 @@ static constexpr uint32_t kTimestampQuantizationMask = 0xFFFF0000;
 static constexpr uint32_t kMaxDynamicUniformBuffersPerPipelineLayout = 16u;
 static constexpr uint32_t kMaxDynamicStorageBuffersPerPipelineLayout = 16u;
 
+// Default limit for dynamic binding arrays.
+static constexpr uint32_t kMaxDynamicBindingArraySize = 50'000;
+
 }  // namespace dawn
 
 #endif  // SRC_DAWN_COMMON_CONSTANTS_H_
