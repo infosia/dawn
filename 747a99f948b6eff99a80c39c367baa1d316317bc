@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f880c08a_234db64c",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-07T18:17:06Z",
+      "side": 1,
+      "message": "This only gets called for the top level construct, and it _has_ to be a struct in order to have the annotation on the member.",
+      "parentUuid": "0ec5b491_61637ceb",
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e4dc8f4f_b486f934",
         "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
         "patchSetId": 12
@@ -37,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "339f89f1_c68b7d58",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-07T18:17:06Z",
+      "side": 1,
+      "message": "Added a switch to handle matrix correctly, and filed a bug to support arrays here. We\u0027ll probably need to support structs as well.",
+      "parentUuid": "e4dc8f4f_b486f934",
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3eaff97e_38a3d8b7",
         "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
         "patchSetId": 12
@@ -48,6 +84,24 @@
       "writtenOn": "2025-08-07T15:49:23Z",
       "side": 1,
       "message": "Since you\u0027ve already removed the vector index from the `src_access`, why can\u0027t you just chain the new access off of `src_access` instead of recreating the whole chain?",
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ef1a195_f46b4977",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-07T18:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eaff97e_38a3d8b7",
       "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -93,6 +147,24 @@
           ]
         }
       ],
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56be533f_f2513e05",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-07T18:17:06Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "b476afd5_cca6820a",
       "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -152,6 +224,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "93982767_6095966d",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-07T18:17:06Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "6ede2b41_4e45f5f6",
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "856ed070_1b34b5d4",
@@ -165,6 +255,24 @@
       "writtenOn": "2025-08-07T15:49:23Z",
       "side": 1,
       "message": "```suggestion\n    //   var\u003cfunction\u003e s \u003d S(mat2x3(vec3f(0.f), vec3(1.f)));\n```",
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7aab78d6_df3b02bf",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1995,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-07T18:17:06Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "856ed070_1b34b5d4",
       "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -186,6 +294,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a32af17e_d4167c32",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2069,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-07T18:17:06Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "eb85c06b_905d154a",
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ba8fb4e6_7b049288",
@@ -199,6 +325,24 @@
       "writtenOn": "2025-08-07T15:49:23Z",
       "side": 1,
       "message": "```suggestion\n    // var\u003cprivate\u003e s \u003d S(mat2x3(vec3f(0.f), vec3(1.f)));\n```",
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ddfd8e1_d68307d6",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2138,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-07T18:17:06Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "ba8fb4e6_7b049288",
       "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
