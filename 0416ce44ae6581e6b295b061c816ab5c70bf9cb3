@@ -88,6 +88,24 @@
       "parentUuid": "991c31bc_69f13546",
       "revId": "0416ce44ae6581e6b295b061c816ab5c70bf9cb3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "583d123a_d6699943",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-08-07T11:11:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18774920_a5e984cd",
+      "revId": "0416ce44ae6581e6b295b061c816ab5c70bf9cb3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
