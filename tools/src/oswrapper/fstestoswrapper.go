@@ -143,7 +143,7 @@ func (w FSTestFilesystemReaderWriter) ReadDir(name string) ([]os.DirEntry, error
 }
 
 func (w FSTestFilesystemReaderWriter) Stat(name string) (os.FileInfo, error) {
-	panic("Stat() is not currently implemented in fstest wrapper")
+	return fs.Stat(w.fs(), w.CleanPath(name))
 }
 
 func (w FSTestFilesystemReaderWriter) Walk(root string, fn filepath.WalkFunc) error {
@@ -157,7 +157,24 @@ func (w FSTestFilesystemReaderWriter) Create(name string) (File, error) {
 }
 
 func (w FSTestFilesystemReaderWriter) Mkdir(path string, perm os.FileMode) error {
-	panic("Mkdir() is not currently implemented in fstest wrapper")
+	p := w.CleanPath(path)
+
+	if _, exists := w.FS[p]; exists {
+		return &os.PathError{Op: "mkdir", Path: path, Err: os.ErrExist}
+	}
+
+	parent := filepath.Dir(p)
+	if parent != "." {
+		parentInfo, parentExists := w.FS[parent]
+		if !parentExists {
+			return &os.PathError{Op: "mkdir", Path: path, Err: os.ErrNotExist}
+		}
+		if !parentInfo.Mode.IsDir() {
+			return &os.PathError{Op: "mkdir", Path: path, Err: fmt.Errorf("not a directory")}
+		}
+	}
+	w.FS[p] = &fstest.MapFile{Mode: os.ModeDir | perm, ModTime: time.Now()}
+	return nil
 }
 
 func (w FSTestFilesystemReaderWriter) MkdirAll(path string, perm os.FileMode) error {
