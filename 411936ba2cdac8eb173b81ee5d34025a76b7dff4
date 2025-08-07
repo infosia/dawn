@@ -33,6 +33,80 @@
       "message": "PTAL",
       "revId": "411936ba2cdac8eb173b81ee5d34025a76b7dff4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff8423c0_d99ce1cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-07T07:57:00Z",
+      "side": 1,
+      "message": "LGTM too with nits",
+      "revId": "411936ba2cdac8eb173b81ee5d34025a76b7dff4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22588475_3cd620c5",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-07T07:57:00Z",
+      "side": 1,
+      "message": "u-nit: this can move before its first use now. (so two lines below).",
+      "revId": "411936ba2cdac8eb173b81ee5d34025a76b7dff4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a659b6c3_d4883967",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-07T07:57:00Z",
+      "side": 1,
+      "message": "```suggestion\n    if (auto* expandResolveRect \u003d descriptor.Get\u003cRenderPassDescriptorResolveRect\u003e()) {\n        validationState-\u003eSetExpandResolveRect(*expandResolveRect);\n    }\n\n```",
+      "range": {
+        "startLine": 823,
+        "startChar": 1,
+        "endLine": 827,
+        "endChar": 0
+      },
+      "revId": "411936ba2cdac8eb173b81ee5d34025a76b7dff4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa9f5f30_fefbe542",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-07T07:57:00Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "411936ba2cdac8eb173b81ee5d34025a76b7dff4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
