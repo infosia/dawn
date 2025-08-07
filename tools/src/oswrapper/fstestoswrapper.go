@@ -31,6 +31,7 @@ package oswrapper
 import (
 	"errors"
 	"fmt"
+	"io"
 	"io/fs"
 	"os"
 	"path/filepath"
@@ -84,6 +85,53 @@ func (w FSTestFilesystemReaderWriter) fs() fs.FS {
 	return fstest.MapFS(w.FS)
 }
 
+// mapFileInfo wraps a fstest.MapFile to implement the os.FileInfo interface.
+// It holds a pointer to the MapFile and the file's full path to derive its base name.
+type mapFileInfo struct {
+	path string
+	file *fstest.MapFile
+}
+
+// Name returns the base name of the file.
+func (i *mapFileInfo) Name() string {
+	return filepath.Base(i.path)
+}
+
+// Size returns the length of the file's data in bytes.
+func (i *mapFileInfo) Size() int64 {
+	return int64(len(i.file.Data))
+}
+
+// Mode returns the file mode bits.
+func (i *mapFileInfo) Mode() fs.FileMode {
+	return i.file.Mode
+}
+
+// ModTime returns the modification time.
+func (i *mapFileInfo) ModTime() time.Time {
+	return i.file.ModTime
+}
+
+// IsDir returns true if the entry is a directory.
+func (i *mapFileInfo) IsDir() bool {
+	return i.file.Mode.IsDir()
+}
+
+// Sys returns the underlying data source (can be nil).
+func (i *mapFileInfo) Sys() any {
+	return i.file.Sys
+}
+
+// fstestFileHandle implements the oswrapper.File interface for the in-memory fstest map.
+type fstestFileHandle struct {
+	path    string
+	info    os.FileInfo
+	fsMap   *map[string]*fstest.MapFile
+	content []byte
+	offset  int64
+	flag    int
+}
+
 // --- EnvironProvider implementation ---
 
 func (p FSTestEnvironProvider) Environ() []string {
@@ -105,11 +153,82 @@ func (p FSTestEnvironProvider) UserHomeDir() (string, error) {
 // --- FilesystemReader implementation ---
 
 func (w FSTestFilesystemReaderWriter) Open(name string) (File, error) {
-	panic("Open() is not currently implemented in fstest wrapper")
+	return w.OpenFile(name, os.O_RDONLY, 0)
 }
 
 func (w FSTestFilesystemReaderWriter) OpenFile(name string, flag int, perm os.FileMode) (File, error) {
-	panic("OpenFile() is not currently implemented in fstest wrapper")
+	path := w.CleanPath(name)
+	mapFile, exists := w.FS[path]
+
+	// Check if a parent component of the path is a file.
+	dir := filepath.Dir(path)
+	if dir != "." && dir != "" {
+		parentInfo, parentExists := w.FS[dir]
+		if parentExists && !parentInfo.Mode.IsDir() {
+			return nil, &os.PathError{Op: "open", Path: name, Err: fmt.Errorf("not a directory")}
+		}
+	}
+
+	if flag&os.O_CREATE != 0 {
+		if exists {
+			if flag&os.O_EXCL != 0 {
+				return nil, &os.PathError{Op: "open", Path: name, Err: os.ErrExist}
+			}
+		} else {
+			parent := filepath.Dir(path)
+			if parent != "." && parent != "" {
+				parentInfo, parentExists := w.FS[parent]
+				if !parentExists {
+					return nil, &os.PathError{Op: "open", Path: name, Err: os.ErrNotExist}
+				}
+				if !parentInfo.Mode.IsDir() {
+					return nil, &os.PathError{Op: "open", Path: name, Err: fmt.Errorf("not a directory")}
+				}
+			}
+			newFile := &fstest.MapFile{Data: []byte{}, Mode: perm, ModTime: time.Now()}
+			w.FS[path] = newFile
+			mapFile = newFile
+			exists = true
+		}
+	}
+
+	if !exists {
+		return nil, &os.PathError{Op: "open", Path: name, Err: os.ErrNotExist}
+	}
+
+	if mapFile.Mode.IsDir() {
+		if flag&(os.O_WRONLY|os.O_RDWR) != 0 {
+			return nil, &os.PathError{Op: "open", Path: name, Err: fmt.Errorf("is a directory")}
+		}
+		if flag&os.O_TRUNC != 0 {
+			return nil, &os.PathError{Op: "open", Path: name, Err: fmt.Errorf("is a directory")}
+		}
+	}
+
+	// Create an os.FileInfo compatible wrapper for the fstest.MapFile.
+	info := &mapFileInfo{path: name, file: mapFile}
+	handle := &fstestFileHandle{
+		path:    path,
+		info:    info,
+		fsMap:   &w.FS,
+		flag:    flag,
+		content: nil, // Set below
+		offset:  0,   // Set below
+	}
+
+	initialData := mapFile.Data
+	if flag&os.O_TRUNC != 0 && !mapFile.Mode.IsDir() {
+		initialData = []byte{}
+	}
+
+	handle.content = make([]byte, len(initialData))
+	copy(handle.content, initialData)
+
+	if flag&os.O_APPEND != 0 {
+		handle.offset = int64(len(handle.content))
+	}
+
+	return handle, nil
 }
 
 func (w FSTestFilesystemReaderWriter) ReadFile(name string) ([]byte, error) {
@@ -160,7 +279,7 @@ func (w FSTestFilesystemReaderWriter) Walk(root string, fn filepath.WalkFunc) er
 // --- FilesystemWriter implementation ---
 
 func (w FSTestFilesystemReaderWriter) Create(name string) (File, error) {
-	panic("Create() is not currently implemented in fstest wrapper")
+	return w.OpenFile(name, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 }
 
 func (w FSTestFilesystemReaderWriter) Mkdir(path string, perm os.FileMode) error {
@@ -291,4 +410,77 @@ func (w FSTestFilesystemReaderWriter) WriteFile(name string, data []byte, perm o
 	}
 	w.FS[path] = &fstest.MapFile{Data: data, Mode: perm, ModTime: time.Now()}
 	return nil
+}
+
+// --- File implementation ---
+
+func (h *fstestFileHandle) Stat() (os.FileInfo, error) {
+	return h.info, nil
+}
+
+func (h *fstestFileHandle) Close() error {
+	mapFile, exists := (*h.fsMap)[h.path]
+	if !exists {
+		return &os.PathError{Op: "close", Path: h.info.Name(), Err: os.ErrNotExist}
+	}
+
+	mapFile.Data = h.content
+	mapFile.ModTime = time.Now()
+	return nil
+}
+
+func (h *fstestFileHandle) Read(p []byte) (int, error) {
+	if h.flag&os.O_WRONLY != 0 {
+		return 0, &os.PathError{Op: "read", Path: h.path, Err: os.ErrInvalid}
+	}
+
+	if h.offset >= int64(len(h.content)) {
+		return 0, io.EOF
+	}
+
+	n := copy(p, h.content[h.offset:])
+	h.offset += int64(n)
+	return n, nil
+}
+
+func (h *fstestFileHandle) Write(p []byte) (int, error) {
+	if h.flag&(os.O_WRONLY|os.O_RDWR) == 0 {
+		return 0, &os.PathError{Op: "write", Path: h.path, Err: os.ErrInvalid}
+	}
+
+	if h.flag&os.O_APPEND != 0 {
+		h.offset = int64(len(h.content))
+	}
+
+	n := len(p)
+	end := h.offset + int64(n)
+	if end > int64(len(h.content)) {
+		newContent := make([]byte, end)
+		copy(newContent, h.content)
+		h.content = newContent
+	}
+
+	copy(h.content[h.offset:end], p)
+	h.offset = end
+	return n, nil
+}
+
+func (h *fstestFileHandle) Seek(offset int64, whence int) (int64, error) {
+	var newOffset int64
+	switch whence {
+	case io.SeekStart:
+		newOffset = offset
+	case io.SeekCurrent:
+		newOffset = h.offset + offset
+	case io.SeekEnd:
+		newOffset = int64(len(h.content)) + offset
+	default:
+		return 0, &os.PathError{Op: "seek", Path: h.path, Err: os.ErrInvalid}
+	}
+
+	if newOffset < 0 {
+		return 0, &os.PathError{Op: "seek", Path: h.path, Err: os.ErrInvalid}
+	}
+	h.offset = newOffset
+	return h.offset, nil
 }
