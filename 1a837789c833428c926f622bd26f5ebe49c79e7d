@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47e103d7_a9632164",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-08-07T07:27:51Z",
+      "side": 1,
+      "message": "Gregg, can you try this on D3D12 machine to see if it works as intended?",
+      "revId": "1a837789c833428c926f622bd26f5ebe49c79e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
