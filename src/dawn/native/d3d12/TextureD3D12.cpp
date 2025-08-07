@@ -930,12 +930,14 @@ TextureView::TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDesc
     mSrvDesc.Format =
         d3d::D3DShaderResourceViewFormat(GetDevice(), textureFormat, GetFormat(), aspects);
     if (mSrvDesc.Format != DXGI_FORMAT_UNKNOWN) {
+        D3D12_SHADER_COMPONENT_MAPPING swizzleRed = D3D12ComponentSwizzle(GetSwizzleRed());
+        D3D12_SHADER_COMPONENT_MAPPING swizzleGreen = D3D12ComponentSwizzle(GetSwizzleGreen());
+        D3D12_SHADER_COMPONENT_MAPPING swizzleBlue = D3D12ComponentSwizzle(GetSwizzleBlue());
+        D3D12_SHADER_COMPONENT_MAPPING swizzleAlpha = D3D12ComponentSwizzle(GetSwizzleAlpha());
         mSrvDesc.Shader4ComponentMapping = D3D12_ENCODE_SHADER_4_COMPONENT_MAPPING(
-            D3D12ComponentSwizzle(GetSwizzleRed()), D3D12ComponentSwizzle(GetSwizzleGreen()),
-            D3D12ComponentSwizzle(GetSwizzleBlue()), D3D12ComponentSwizzle(GetSwizzleAlpha()));
+            swizzleRed, swizzleGreen, swizzleBlue, swizzleAlpha);
 
-        // Stencil is accessed using the .g component in the shader. Map it to the zeroth component
-        // to match other APIs.
+        // Stencil is accessed using the .g component in the shader.
         DXGI_FORMAT textureDxgiFormat = d3d::DXGITextureFormat(GetDevice(), textureFormat.format);
         if (d3d::IsDepthStencil(textureDxgiFormat) && aspects == Aspect::Stencil) {
             if (GetDevice()->IsToggleEnabled(Toggle::D3D12ForceStencilComponentReplicateSwizzle) &&
@@ -947,12 +949,10 @@ TextureView::TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDesc
                     D3D12_SHADER_COMPONENT_MAPPING_FROM_MEMORY_COMPONENT_1,
                     D3D12_SHADER_COMPONENT_MAPPING_FROM_MEMORY_COMPONENT_1);
             } else {
-                // Swizzle (s001)
+                // Swizzle (sgba).
                 mSrvDesc.Shader4ComponentMapping = D3D12_ENCODE_SHADER_4_COMPONENT_MAPPING(
-                    D3D12_SHADER_COMPONENT_MAPPING_FROM_MEMORY_COMPONENT_1,
-                    D3D12_SHADER_COMPONENT_MAPPING_FORCE_VALUE_0,
-                    D3D12_SHADER_COMPONENT_MAPPING_FORCE_VALUE_0,
-                    D3D12_SHADER_COMPONENT_MAPPING_FORCE_VALUE_1);
+                    D3D12_SHADER_COMPONENT_MAPPING_FROM_MEMORY_COMPONENT_1, swizzleGreen,
+                    swizzleBlue, swizzleAlpha);
             }
         }
 
