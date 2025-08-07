@@ -35,6 +35,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing/fstest"
+	"time"
 )
 
 // FSTestOSWrapper is an in-memory implementation of OSWrapper for testing.
@@ -110,7 +111,31 @@ func (w FSTestFilesystemReaderWriter) OpenFile(name string, flag int, perm os.Fi
 }
 
 func (w FSTestFilesystemReaderWriter) ReadFile(name string) ([]byte, error) {
-	panic("ReadFile() is not currently implemented in fstest wrapper")
+	p := w.CleanPath(name)
+
+	// If the path is the root, it's always a directory.
+	if p == "." {
+		return nil, &os.PathError{Op: "read", Path: name, Err: fmt.Errorf("is a directory")}
+	}
+
+	// Check for an explicit entry
+	if mapFile, exists := w.FS[p]; exists {
+		if mapFile.Mode.IsDir() {
+			return nil, &os.PathError{Op: "read", Path: name, Err: fmt.Errorf("is a directory")}
+		}
+		data := make([]byte, len(mapFile.Data))
+		copy(data, mapFile.Data)
+		return data, nil
+	}
+
+	// If no explicit entry, check if it's an implicit directory
+	for path := range w.FS {
+		if strings.HasPrefix(path, p+"/") {
+			return nil, &os.PathError{Op: "read", Path: name, Err: fmt.Errorf("is a directory")}
+		}
+	}
+
+	return nil, &os.PathError{Op: "open", Path: name, Err: os.ErrNotExist}
 }
 
 func (w FSTestFilesystemReaderWriter) ReadDir(name string) ([]os.DirEntry, error) {
@@ -136,7 +161,32 @@ func (w FSTestFilesystemReaderWriter) Mkdir(path string, perm os.FileMode) error
 }
 
 func (w FSTestFilesystemReaderWriter) MkdirAll(path string, perm os.FileMode) error {
-	panic("MkdirAll() is not currently implemented in fstest wrapper")
+	p := w.CleanPath(path)
+
+	if p == "." {
+		return nil
+	}
+
+	parts := strings.Split(p, "/")
+	current := ""
+	for i, part := range parts {
+		if current == "" {
+			current = part
+		} else {
+			current = current + "/" + part // Internally FSTestOSWrapper uses '/' for separators
+		}
+		if file, exists := w.FS[current]; !exists {
+			w.FS[current] = &fstest.MapFile{Mode: os.ModeDir | perm, ModTime: time.Now()}
+		} else if !file.Mode.IsDir() {
+			// If this is the last part of the path, the error is that the file exists.
+			// Otherwise, an intermediate path component is not a directory.
+			if i < len(parts)-1 {
+				return &os.PathError{Op: "mkdir", Path: path, Err: fmt.Errorf("not a directory")}
+			}
+			return &os.PathError{Op: "mkdir", Path: path, Err: os.ErrExist}
+		}
+	}
+	return nil
 }
 
 func (w FSTestFilesystemReaderWriter) MkdirTemp(dir, pattern string) (string, error) {
@@ -156,5 +206,22 @@ func (w FSTestFilesystemReaderWriter) Symlink(oldname, newname string) error {
 }
 
 func (w FSTestFilesystemReaderWriter) WriteFile(name string, data []byte, perm os.FileMode) error {
-	panic("WriteFile() is not currently implemented in fstest wrapper")
+	path := w.CleanPath(name)
+
+	if info, exists := w.FS[path]; exists && info.Mode.IsDir() {
+		return &os.PathError{Op: "open", Path: name, Err: fmt.Errorf("is a directory")}
+	}
+
+	dir := filepath.Dir(path)
+	if dir != "." && dir != "" {
+		parentInfo, parentExists := w.FS[dir]
+		if !parentExists {
+			return &os.PathError{Op: "open", Path: name, Err: os.ErrNotExist}
+		}
+		if !parentInfo.Mode.IsDir() {
+			return &os.PathError{Op: "open", Path: name, Err: fmt.Errorf("not a directory")}
+		}
+	}
+	w.FS[path] = &fstest.MapFile{Data: data, Mode: perm, ModTime: time.Now()}
+	return nil
 }
