@@ -28,6 +28,7 @@ package oswrapper_test
 
 import (
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -989,6 +990,263 @@ func TestFSTestOSWrapper_Stat_MatchesReal(t *testing.T) {
 					require.Equal(t, realInfo.Size(), testInfo.Size())
 				}
 			}
+		})
+	}
+}
+
+func TestFSTestOSWrapper_Walk(t *testing.T) {
+	tests := []struct {
+		name          string
+		setup         unittestSetup
+		root          string
+		walkFn        func(t *testing.T, visited *[]string) filepath.WalkFunc
+		expectedPaths []string
+		expectedError
+	}{
+		{
+			name: "Walk directory structure",
+			root: "/",
+			setup: unittestSetup{
+				initialFiles: map[string]string{
+					"/dir/file2.txt":       "",
+					"/dir/subdir/file.txt": "",
+				},
+				initialDirs: []string{"/dir/subdir"},
+			},
+			walkFn: func(t *testing.T, visited *[]string) filepath.WalkFunc {
+				return func(path string, info os.FileInfo, err error) error {
+					require.NoError(t, err)
+					*visited = append(*visited, path)
+					return nil
+				}
+			},
+			expectedPaths: []string{
+				"/",
+				filepath.Join("/", "dir"),
+				filepath.Join("/", "dir", "file2.txt"),
+				filepath.Join("/", "dir", "subdir"),
+				filepath.Join("/", "dir", "subdir", "file.txt"),
+			},
+		},
+		{
+			name: "Walk non-existent root",
+			root: "/nonexistent",
+			walkFn: func(t *testing.T, visited *[]string) filepath.WalkFunc {
+				return func(path string, info os.FileInfo, err error) error {
+					require.Error(t, err, "expected an error for non-existent root")
+					require.ErrorIs(t, err, os.ErrNotExist)
+					require.Nil(t, info, "info should be nil on error")
+					require.Equal(t, "/nonexistent", path)
+					*visited = append(*visited, path)
+					return err // Propagate the error to stop the walk and return it from Walk()
+				}
+			},
+			expectedPaths: []string{"/nonexistent"},
+			expectedError: expectedError{
+				wantErrIs: os.ErrNotExist,
+			},
+		},
+		{
+			name: "Walk a file",
+			root: "/file.txt",
+			setup: unittestSetup{
+				initialFiles: map[string]string{"/file.txt": ""},
+			},
+			walkFn: func(t *testing.T, visited *[]string) filepath.WalkFunc {
+				return func(path string, info os.FileInfo, err error) error {
+					require.NoError(t, err)
+					*visited = append(*visited, path)
+					return nil
+				}
+			},
+			expectedPaths: []string{"/file.txt"},
+		},
+		{
+			name: "Error from walk function",
+			root: "/",
+			setup: unittestSetup{
+				initialFiles: map[string]string{
+					"/dir/a": "",
+					"/dir/b": "",
+				},
+				initialDirs: []string{"/dir"},
+			},
+			walkFn: func(t *testing.T, visited *[]string) filepath.WalkFunc {
+				return func(path string, info os.FileInfo, err error) error {
+					if strings.HasSuffix(path, "b") {
+						return fmt.Errorf("stop walking")
+					}
+					return nil
+				}
+			},
+			expectedError: expectedError{
+				wantErrMsg: "stop walking",
+			},
+		},
+		{
+			name: "Skip a directory",
+			root: "/",
+			setup: unittestSetup{
+				initialFiles: map[string]string{
+					"/dir/subdir/file.txt":      "",
+					"/dir/anotherdir/file2.txt": "",
+				},
+				initialDirs: []string{
+					"/dir/subdir",
+					"/dir/anotherdir",
+				},
+			},
+			walkFn: func(t *testing.T, visited *[]string) filepath.WalkFunc {
+				return func(path string, info os.FileInfo, err error) error {
+					require.NoError(t, err)
+					*visited = append(*visited, path)
+					if info.IsDir() && path == filepath.Join("/", "dir", "subdir") {
+						return filepath.SkipDir
+					}
+					return nil
+				}
+			},
+			expectedPaths: []string{
+				"/",
+				filepath.Join("/", "dir"),
+				filepath.Join("/", "dir", "anotherdir"),
+				filepath.Join("/", "dir", "anotherdir", "file2.txt"),
+				filepath.Join("/", "dir", "subdir"),
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			wrapper := tc.setup.setup(t)
+
+			var visited []string
+			var walkFn filepath.WalkFunc
+			if tc.walkFn != nil {
+				walkFn = tc.walkFn(t, &visited)
+			}
+
+			err := wrapper.Walk(tc.root, walkFn)
+
+			if !tc.expectedError.Check(t, err) {
+				if tc.expectedPaths != nil {
+					require.ElementsMatch(t, tc.expectedPaths, visited)
+				}
+			}
+		})
+	}
+}
+
+func TestFSTestOSWrapper_Walk_MatchesReal(t *testing.T) {
+	tests := []struct {
+		name         string
+		setup        matchesRealSetup
+		root         string
+		walkBehavior func(path string, info os.FileInfo) error
+	}{
+		{
+			name: "Simple walk",
+			setup: matchesRealSetup{unittestSetup{
+				initialFiles: map[string]string{
+					filepath.Join("dir", "subdir", "file.txt"): "",
+					filepath.Join("dir", "file2.txt"):          "",
+				},
+				initialDirs: []string{
+					"dir",
+					filepath.Join("dir", "subdir"),
+				},
+			}},
+			root: "dir",
+		},
+		{
+			name: "Walk a file",
+			setup: matchesRealSetup{unittestSetup{
+				initialFiles: map[string]string{"file.txt": ""},
+			}},
+			root: "file.txt",
+		},
+		{
+			name: "Walk non-existent root",
+			root: "nonexistent",
+		},
+		{
+			name: "Skip a directory",
+			setup: matchesRealSetup{unittestSetup{
+				initialFiles: map[string]string{
+					filepath.Join("dir", "subdir", "file.txt"):     "",
+					filepath.Join("dir", "anotherdir", "file.txt"): "",
+				},
+				initialDirs: []string{
+					"dir",
+					filepath.Join("dir", "subdir"),
+					filepath.Join("dir", "anotherdir"),
+				},
+			}},
+			root: "dir",
+			walkBehavior: func(path string, info os.FileInfo) error {
+				if info.IsDir() && strings.HasSuffix(path, "subdir") {
+					return filepath.SkipDir
+				}
+				return nil
+			},
+		},
+		{
+			name: "Error from walk function",
+			setup: matchesRealSetup{unittestSetup{
+				initialFiles: map[string]string{
+					filepath.Join("dir", "a"): "",
+					filepath.Join("dir", "b"): "",
+				},
+				initialDirs: []string{"dir"},
+			}},
+			root: "dir",
+			walkBehavior: func(path string, info os.FileInfo) error {
+				if !info.IsDir() && strings.HasSuffix(path, "b") {
+					return errors.New("stop walking")
+				}
+				return nil
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			realRoot, realFS, testFS := tc.setup.setup(t)
+			defer os.RemoveAll(realRoot)
+
+			// Execute and Compare
+			var realPaths []string
+			realWalkFn := func(path string, info os.FileInfo, err error) error {
+				if err != nil {
+					return err
+				}
+				relPath, err := filepath.Rel(realRoot, path)
+				require.NoError(t, err)
+				realPaths = append(realPaths, filepath.ToSlash(relPath))
+				if tc.walkBehavior != nil {
+					return tc.walkBehavior(relPath, info)
+				}
+				return nil
+			}
+			realErr := realFS.Walk(filepath.Join(realRoot, tc.root), realWalkFn)
+
+			var testPaths []string
+			testWalkFn := func(path string, info os.FileInfo, err error) error {
+				if err != nil {
+					return err
+				}
+				relPath := strings.TrimPrefix(path, "/")
+				testPaths = append(testPaths, relPath)
+				if tc.walkBehavior != nil {
+					return tc.walkBehavior(relPath, info)
+				}
+				return nil
+			}
+			testErr := testFS.Walk(filepath.Join("/", tc.root), testWalkFn)
+
+			requireErrorsMatch(t, realErr, testErr)
+
+			require.ElementsMatch(t, realPaths, testPaths)
 		})
 	}
 }
