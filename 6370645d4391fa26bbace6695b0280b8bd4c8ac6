@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c9c66399_a66ddf07",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-07T09:28:39Z",
+      "side": 1,
+      "message": "Tier2 just adds storage capabilities so by itself it doesn\u0027t technically need the various format to allow attachment and blend. It requires attachment+blend only because of its dependency on Tier1. I\u0027d like to encode this context in the comment.",
+      "parentUuid": "0f0a78c5_f1d41702",
+      "range": {
+        "startLine": 584,
+        "startChar": 0,
+        "endLine": 584,
+        "endChar": 86
+      },
+      "revId": "6370645d4391fa26bbace6695b0280b8bd4c8ac6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "361b812d_1bd510d1",
         "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
         "patchSetId": 7
@@ -79,6 +103,24 @@
       "side": 1,
       "message": "No, D3D11 and OpenGL don\u0027t support tier2 according to https://github.com/gpuweb/gpuweb/pull/5160, and the tests for them will be skipped. Should I remove these two lines?",
       "parentUuid": "361b812d_1bd510d1",
+      "revId": "6370645d4391fa26bbace6695b0280b8bd4c8ac6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c17e702_ff526fc3",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2169,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-07T09:28:39Z",
+      "side": 1,
+      "message": "That\u0027s fine to keep them. Thanks for the explanation.",
+      "parentUuid": "8159a71b_c3ee25fa",
       "revId": "6370645d4391fa26bbace6695b0280b8bd4c8ac6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
