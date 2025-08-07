@@ -1,0 +1,206 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ec5b491_61637ceb",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-07T15:49:23Z",
+      "side": 1,
+      "message": "What if it\u0027s an array of structures that contain row-major members? We still need rewrite the operands.",
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4dc8f4f_b486f934",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-07T15:49:23Z",
+      "side": 1,
+      "message": "What if the operand is an array of matrices? Or another struct that contains the row-major thing? Can\u0027t just transpose directly here, would need to recursively rewrite the operand.\n\nMaybe we just want a generic `RewriteOperand()` helper that handles both the constant and non-constant cases, then you can call that on all operands of all instructions like you do with RewriteConstant. Then maybe you don\u0027t need to handle `construct` specially at all?",
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3eaff97e_38a3d8b7",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-07T15:49:23Z",
+      "side": 1,
+      "message": "Since you\u0027ve already removed the vector index from the `src_access`, why can\u0027t you just chain the new access off of `src_access` instead of recreating the whole chain?",
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b476afd5_cca6820a",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-07T15:49:23Z",
+      "side": 1,
+      "message": "Nit: Also rename the function to make the generated code clearer.",
+      "fixSuggestions": [
+        {
+          "fixId": "f2d55efc_6d528646",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+              "range": {
+                "startLine": 44,
+                "startChar": 0,
+                "endLine": 45,
+                "endChar": 0
+              },
+              "replacement": "constexpr std::string_view kTintTransposeRowMajorArray \u003d \"tint_transpose_row_major_array\";\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+              "range": {
+                "startLine": 587,
+                "startChar": 0,
+                "endLine": 588,
+                "endChar": 0
+              },
+              "replacement": "            auto* fn \u003d b.Function(kTintTransposeRowMajorArray, to_ty);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ede2b41_4e45f5f6",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-07T15:49:23Z",
+      "side": 1,
+      "message": "Nit: `columns` and 4, if you\u0027re not using the scalar element constructor.",
+      "fixSuggestions": [
+        {
+          "fixId": "19d5dc72_2672be4e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+              "range": {
+                "startLine": 708,
+                "startChar": 0,
+                "endLine": 709,
+                "endChar": 0
+              },
+              "replacement": "                Vector\u003cconst core::constant::Value*, 4\u003e columns;\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+              "range": {
+                "startLine": 718,
+                "startChar": 0,
+                "endLine": 719,
+                "endChar": 0
+              },
+              "replacement": "                    columns.Push(ir.constant_values.Composite(vec_ty, std::move(vec_elements)));\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+              "range": {
+                "startLine": 721,
+                "startChar": 0,
+                "endLine": 722,
+                "endChar": 0
+              },
+              "replacement": "                return ir.constant_values.Composite(new_type, std::move(columns));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "856ed070_1b34b5d4",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1995,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-07T15:49:23Z",
+      "side": 1,
+      "message": "```suggestion\n    //   var\u003cfunction\u003e s \u003d S(mat2x3(vec3f(0.f), vec3(1.f)));\n```",
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb85c06b_905d154a",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2069,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-07T15:49:23Z",
+      "side": 1,
+      "message": "```suggestion\n    //   var\u003cfunction\u003e s \u003d S(mat2x3(vec3f(0.f), vec3(1.f)));\n```",
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba8fb4e6_7b049288",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2138,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-07T15:49:23Z",
+      "side": 1,
+      "message": "```suggestion\n    // var\u003cprivate\u003e s \u003d S(mat2x3(vec3f(0.f), vec3(1.f)));\n```",
+      "revId": "747a99f948b6eff99a80c39c367baa1d316317bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

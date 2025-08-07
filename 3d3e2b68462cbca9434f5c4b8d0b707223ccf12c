@@ -135,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bb037bd_2411614d",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-07T15:49:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "860208c7_141ca36c",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 51
+      },
+      "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "acef3b1e_288717b5",
@@ -283,6 +307,24 @@
       "side": 1,
       "message": "Similar, except it pulls a value from the loaded vector",
       "parentUuid": "92ddfda1_e1138c81",
+      "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71bc9535_ff62497a",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-07T15:49:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "921dc11c_ac03e60f",
       "revId": "3d3e2b68462cbca9434f5c4b8d0b707223ccf12c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
