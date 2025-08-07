@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a813e7bf_aa64782f",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-07T07:55:02Z",
+      "side": 1,
+      "message": "```suggestion\n        // We cannot enable TextureFormatsTier2 if TextureFormatsTier1 is not enabled. TextureFormatsTier2 only requires shaderStorageImageExtendedFormats from Vulkan so we don\u0027t have to check anything else.\n```",
+      "range": {
+        "startLine": 584,
+        "startChar": 0,
+        "endLine": 584,
+        "endChar": 86
+      },
+      "revId": "6370645d4391fa26bbace6695b0280b8bd4c8ac6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "361b812d_1bd510d1",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2169,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-07T07:55:02Z",
+      "side": 1,
+      "message": "Will D3D11 and OpenGL be handled in a follow-up?",
+      "revId": "6370645d4391fa26bbace6695b0280b8bd4c8ac6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6e5bb33_6c217f80",
+        "filename": "src/dawn/utils/TextureUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-07T07:55:02Z",
+      "side": 1,
+      "message": "optional nit: Ah I was thinking it would call `GetWGSLColorTextureComponentType` internally instead of needing the double call. It would make the caller a bit less verbose.",
+      "revId": "6370645d4391fa26bbace6695b0280b8bd4c8ac6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
