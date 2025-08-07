@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "353e901a_6c3d72e1",
+        "filename": "src/dawn/native/ComputePipeline.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-07T09:24:45Z",
+      "side": 1,
+      "message": "The const cast is problematic because it allows turning a `const PipelineBase*` into a `ComputePipeline*`. See [1].",
+      "revId": "6c61b2e2b7dbb83d6ad2cd84fdf273544c3ce6e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68b30cba_bf155ecb",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-07T09:24:45Z",
+      "side": 1,
+      "message": "[1] We could do this instead:\n\n```\n    virtual const ComputePipelineBase* AsComputePipeline() const;\n    virtual const RenderPipelineBase* AsRenderPipeline() const;\n    \n    // Const-cast happens inside these.\n    ComputePipelineBase* AsComputePipeline();\n    RenderPipelineBase* AsRenderPipeline();\n```\n\nAlso we can keep all the implementations in the .cpp files, this isn\u0027t necessary to inline for performance.",
+      "revId": "6c61b2e2b7dbb83d6ad2cd84fdf273544c3ce6e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
