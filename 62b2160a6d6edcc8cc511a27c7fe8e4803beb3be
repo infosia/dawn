@@ -50,6 +50,24 @@
       "message": "This seems like it\u0027s going to be brittle. We\u0027ll miss adding entries here when updating them below. This also means there are 3 places to put a new option. The option itself, in HashCode and in the TINT_REFLECT macro.\n\nCould we maybe have TINT_REFECT create a HashCode for us instead of writing them directly?",
       "revId": "62b2160a6d6edcc8cc511a27c7fe8e4803beb3be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4263df38_800942ae",
+        "filename": "src/tint/lang/msl/writer/common/options.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-07T14:57:38Z",
+      "side": 1,
+      "message": "Yeah, it\u0027d be nice if we could do this more automatically. There\u0027s a `ForeachField` helper in `utils/reflection.h` that could maybe be used? Or maybe create a new helper macro to declare a hash function that hashes all fields since you want this in multiple structs?",
+      "parentUuid": "d147a2b3_12afd31e",
+      "revId": "62b2160a6d6edcc8cc511a27c7fe8e4803beb3be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
