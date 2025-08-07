@@ -342,7 +342,466 @@ func TestFSTestOSWrapper_ReadFile_MatchesReal(t *testing.T) {
 	}
 }
 
+func TestFSTestOSWrapper_Stat(t *testing.T) {
+	tests := []struct {
+		name   string
+		setup  unittestSetup
+		path   string
+		verify func(t *testing.T, info os.FileInfo)
+		expectedError
+	}{
+		{
+			name: "Stat a file",
+			path: filepath.Join("/", "file.txt"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{"/file.txt": "content"},
+			},
+			verify: func(t *testing.T, info os.FileInfo) {
+				require.False(t, info.IsDir())
+				require.Equal(t, "file.txt", info.Name())
+				require.Equal(t, int64(7), info.Size())
+			},
+		},
+		{
+			name: "Stat a directory",
+			path: filepath.Join("/", "dir"),
+			setup: unittestSetup{
+				initialDirs: []string{"/dir"},
+			},
+			verify: func(t *testing.T, info os.FileInfo) {
+				require.True(t, info.IsDir())
+				require.Equal(t, "dir", info.Name())
+			},
+		},
+		{
+			name: "Stat non-existent path",
+			path: filepath.Join("/", "nonexistent"),
+			expectedError: expectedError{
+				wantErrIs: os.ErrNotExist,
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			wrapper := tc.setup.setup(t)
+			info, err := wrapper.Stat(tc.path)
+
+			if tc.expectedError.Check(t, err) {
+				return
+			}
+
+			if tc.verify != nil {
+				tc.verify(t, info)
+			}
+		})
+	}
+}
+
+func TestFSTestOSWrapper_Stat_MatchesReal(t *testing.T) {
+	tests := []struct {
+		name  string
+		setup matchesRealSetup
+		path  string
+	}{
+		{
+			name: "Stat a file",
+			setup: matchesRealSetup{unittestSetup{
+				initialFiles: map[string]string{
+					"file.txt": "content",
+				},
+			}},
+			path: "file.txt",
+		},
+		{
+			name: "Stat a directory",
+			setup: matchesRealSetup{unittestSetup{
+				initialDirs: []string{
+					"dir",
+				},
+			}},
+			path: "dir",
+		},
+		{
+			name: "Stat non-existent path",
+			path: "nonexistent",
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			realRoot, realFS, testFS := tc.setup.setup(t)
+			defer os.RemoveAll(realRoot)
+
+			// Execute
+			realInfo, realErr := realFS.Stat(filepath.Join(realRoot, tc.path))
+			testInfo, testErr := testFS.Stat("/" + tc.path)
+
+			requireErrorsMatch(t, realErr, testErr)
+			if realErr == nil {
+				require.Equal(t, realInfo.Name(), testInfo.Name())
+				require.Equal(t, realInfo.IsDir(), testInfo.IsDir())
+				// The size of a directory is system-dependent, so only compare sizes for files.
+				if !realInfo.IsDir() {
+					require.Equal(t, realInfo.Size(), testInfo.Size())
+				}
+			}
+		})
+	}
+}
+
 // --- FilesystemWriter tests ---
+
+func TestFSTestOSWrapper_Mkdir(t *testing.T) {
+	tests := []struct {
+		name         string
+		setup        unittestSetup
+		path         string
+		mode         os.FileMode
+		expectedMode os.FileMode
+		verify       func(t *testing.T, fs oswrapper.FSTestOSWrapper)
+		expectedError
+	}{
+		{
+			name:         "Create new directory",
+			path:         filepath.Join("/", "newdir"),
+			mode:         0755,
+			expectedMode: 0755,
+			verify: func(t *testing.T, fs oswrapper.FSTestOSWrapper) {
+				info, err := fs.Stat(filepath.Join("/", "newdir"))
+				require.NoError(t, err)
+				require.True(t, info.IsDir())
+			},
+		},
+		{
+			name:         "Create in existing subdirectory",
+			path:         filepath.Join("/", "existing", "newdir"),
+			mode:         0755,
+			expectedMode: 0755,
+			setup: unittestSetup{
+				initialDirs: []string{"/existing"},
+			},
+			verify: func(t *testing.T, fs oswrapper.FSTestOSWrapper) {
+				info, err := fs.Stat(filepath.Join("/", "existing", "newdir"))
+				require.NoError(t, err)
+				require.True(t, info.IsDir())
+			},
+		},
+		{
+			name:         "Create new directory with specific mode",
+			path:         filepath.Join("/", "newdir_mode"),
+			mode:         0700,
+			expectedMode: 0700,
+		},
+		{
+			name: "Directory already exists",
+			path: filepath.Join("/", "mydir"),
+			setup: unittestSetup{
+				initialDirs: []string{"/mydir"},
+			},
+			expectedError: expectedError{
+				wantErrIs: os.ErrExist,
+			},
+		},
+		{
+			name: "Path is a file",
+			path: filepath.Join("/", "myfile.txt"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{"/myfile.txt": ""},
+			},
+			expectedError: expectedError{
+				wantErrIs: os.ErrExist,
+			},
+		},
+		{
+			name: "Parent directory does not exist",
+			path: filepath.Join("/", "nonexistent", "newdir"),
+			expectedError: expectedError{
+				wantErrIs: os.ErrNotExist,
+			},
+		},
+		{
+			name: "Parent path is a file",
+			path: filepath.Join("/", "file.txt", "newdir"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{"/file.txt": ""},
+			},
+			expectedError: expectedError{
+				wantErrMsg: "not a directory",
+			},
+		},
+		{
+			name: "Path is dot",
+			path: ".",
+			expectedError: expectedError{
+				wantErrIs: os.ErrExist,
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			wrapper := tc.setup.setup(t)
+			err := wrapper.Mkdir(tc.path, tc.mode)
+
+			if tc.expectedError.Check(t, err) {
+				return
+			}
+
+			if tc.verify != nil {
+				tc.verify(t, wrapper)
+			}
+
+			if tc.expectedMode != 0 {
+				cleanedPath := wrapper.CleanPath(tc.path)
+				file, ok := wrapper.FS[cleanedPath]
+				require.True(t, ok, "file %v not found in test fs", cleanedPath)
+				require.Equal(t, tc.expectedMode, file.Mode.Perm())
+			}
+		})
+	}
+}
+
+func TestFSTestOSWrapper_Mkdir_MatchesReal(t *testing.T) {
+	tests := []struct {
+		name  string
+		setup matchesRealSetup
+		path  string // path to Mkdir
+	}{
+		{
+			name: "Create new directory",
+			path: "newdir",
+		},
+		{
+			name: "Create in existing subdirectory",
+			setup: matchesRealSetup{unittestSetup{
+				initialDirs: []string{"foo"},
+			}},
+			path: filepath.Join("foo", "newdir"),
+		},
+		{
+			name: "Create in existing nested subdirectory",
+			setup: matchesRealSetup{unittestSetup{
+				initialDirs: []string{filepath.Join("foo", "bar")},
+			}},
+			path: filepath.Join("foo", "bar", "newdir"),
+		},
+		{
+			name: "Error on existing directory",
+			setup: matchesRealSetup{unittestSetup{
+				initialDirs: []string{"mydir"},
+			}},
+			path: "mydir",
+		},
+		{
+			name: "Error on existing file",
+			setup: matchesRealSetup{unittestSetup{
+				initialFiles: map[string]string{"myfile": "content"},
+			}},
+			path: "myfile",
+		},
+		{
+			name: "Error on non-existent parent",
+			path: filepath.Join("nonexistent", "newdir"),
+		},
+		{
+			name: "Error on parent is file",
+			setup: matchesRealSetup{unittestSetup{
+				initialFiles: map[string]string{"file.txt": "content"},
+			}},
+			path: filepath.Join("file.txt", "newdir"),
+		},
+		{
+			name: "Error on dot",
+			path: ".",
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			realRoot, realFS, testFS := tc.setup.setup(t)
+			defer os.RemoveAll(realRoot)
+
+			// Execute
+			realErr := realFS.Mkdir(filepath.Join(realRoot, tc.path), 0755)
+			testErr := testFS.Mkdir("/"+tc.path, 0755)
+
+			requireErrorsMatch(t, realErr, testErr)
+			if realErr == nil {
+				requireFileSystemsMatch(t, realRoot, testFS)
+			}
+		})
+	}
+}
+
+func TestFSTestOSWrapper_MkdirAll(t *testing.T) {
+	tests := []struct {
+		name         string
+		setup        unittestSetup
+		path         string
+		mode         os.FileMode
+		expectedMode os.FileMode
+		verify       func(t *testing.T, fs oswrapper.FSTestOSWrapper)
+		expectedError
+	}{
+		{
+			name:         "Create new nested directory",
+			path:         filepath.Join("/", "a", "b", "c"),
+			mode:         0755,
+			expectedMode: 0755,
+			verify: func(t *testing.T, fs oswrapper.FSTestOSWrapper) {
+				for _, p := range []string{"/a", "/a/b", "/a/b/c"} {
+					info, err := fs.Stat(p)
+					require.NoError(t, err)
+					require.True(t, info.IsDir())
+					file, ok := fs.FS[fs.CleanPath(p)]
+					require.True(t, ok)
+					require.Equal(t, os.FileMode(0755), file.Mode.Perm())
+				}
+			},
+		},
+		{
+			name:         "Create in existing subdirectory",
+			path:         filepath.Join("/", "a", "b"),
+			mode:         0755,
+			expectedMode: 0755,
+			setup: unittestSetup{
+				initialDirs: []string{"/a"},
+			},
+			verify: func(t *testing.T, fs oswrapper.FSTestOSWrapper) {
+				info, err := fs.Stat(filepath.Join("/", "a", "b"))
+				require.NoError(t, err)
+				require.True(t, info.IsDir())
+			},
+		},
+		{
+			name:         "Create new nested directory with specific mode",
+			path:         filepath.Join("/", "d", "e", "f"),
+			mode:         0700,
+			expectedMode: 0700,
+			verify: func(t *testing.T, fs oswrapper.FSTestOSWrapper) {
+				for _, p := range []string{"/d", "/d/e", "/d/e/f"} {
+					info, err := fs.Stat(p)
+					require.NoError(t, err)
+					require.True(t, info.IsDir())
+					file, ok := fs.FS[fs.CleanPath(p)]
+					require.True(t, ok)
+					require.Equal(t, os.FileMode(0700), file.Mode.Perm())
+				}
+			},
+		},
+		{
+			name: "Path already exists as directory",
+			path: filepath.Join("/", "a", "b"),
+			setup: unittestSetup{
+				initialDirs: []string{"/a/b"},
+			},
+		},
+		{
+			name: "Part of path is a file",
+			path: filepath.Join("/", "a", "b", "c"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{"/a/b": "i am a file"},
+				initialDirs:  []string{"/a"},
+			},
+			expectedError: expectedError{
+				wantErrMsg: "not a directory",
+			},
+		},
+		{
+			name: "Destination path is a file",
+			path: filepath.Join("/", "a", "b"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{"/a/b": "i am a file"},
+				initialDirs:  []string{"/a"},
+			},
+			expectedError: expectedError{
+				wantErrIs: os.ErrExist,
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			wrapper := tc.setup.setup(t)
+			err := wrapper.MkdirAll(tc.path, tc.mode)
+
+			if tc.expectedError.Check(t, err) {
+				return
+			}
+
+			if tc.verify != nil {
+				tc.verify(t, wrapper)
+			}
+
+			if tc.expectedMode != 0 {
+				cleanedPath := wrapper.CleanPath(tc.path)
+				file, ok := wrapper.FS[cleanedPath]
+				require.True(t, ok, "file %v not found in test fs", cleanedPath)
+				require.Equal(t, tc.expectedMode, file.Mode.Perm())
+			}
+		})
+	}
+}
+
+func TestFSTestOSWrapper_MkdirAll_MatchesReal(t *testing.T) {
+	tests := []struct {
+		name  string
+		setup matchesRealSetup
+		path  string // path to MkdirAll
+	}{
+		{
+			name: "Create new nested directory",
+			path: filepath.Join("a", "b", "c"),
+		},
+		{
+			name: "Create in existing subdirectory",
+			setup: matchesRealSetup{unittestSetup{
+				initialDirs: []string{"a"},
+			}},
+			path: filepath.Join("a", "b"),
+		},
+		{
+			name: "Path already exists as directory",
+			setup: matchesRealSetup{unittestSetup{
+				initialDirs: []string{filepath.Join("a", "b", "c")},
+			}},
+			path: filepath.Join("a", "b", "c"),
+		},
+		{
+			name: "Part of path is a file",
+			setup: matchesRealSetup{unittestSetup{
+				initialFiles: map[string]string{filepath.Join("a", "b"): "i am a file"},
+				initialDirs:  []string{"a"},
+			}},
+			path: filepath.Join("a", "b", "c"),
+		},
+		{
+			name: "Destination is a file",
+			setup: matchesRealSetup{unittestSetup{
+				initialFiles: map[string]string{filepath.Join("a", "b"): "i am a file"},
+				initialDirs:  []string{"a"},
+			}},
+			path: filepath.Join("a", "b"),
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			realRoot, realFS, testFS := tc.setup.setup(t)
+			defer os.RemoveAll(realRoot)
+
+			// Execute
+			realErr := realFS.MkdirAll(filepath.Join(realRoot, tc.path), 0755)
+			testErr := testFS.MkdirAll("/"+tc.path, 0755)
+
+			requireErrorsMatch(t, realErr, testErr)
+			if realErr == nil {
+				requireFileSystemsMatch(t, realRoot, testFS)
+			}
+		})
+	}
+}
 
 func TestFSTestOSWrapper_WriteFile(t *testing.T) {
 	root := getTestRoot()
