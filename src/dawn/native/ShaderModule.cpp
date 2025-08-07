@@ -457,24 +457,33 @@ MaybeError ParseSPIRV(const std::vector<uint32_t>& spirv,
                       const WGSLAllowedFeatures& allowedFeatures,
                       ShaderModuleParseResult* outputParseResult,
                       bool allowNonUniformDerivatives) {
-    tint::spirv::reader::Options options;
+    tint::Result<tint::core::ir::Module> ir_result = tint::spirv::reader::ReadIR(spirv);
+    if (ir_result != tint::Success) {
+        outputParseResult->SetValidationError(
+            DAWN_VALIDATION_ERROR("Error while parsing SPIR-V: %s\n", ir_result.Failure().reason));
+        DAWN_ASSERT(!outputParseResult->HasTintProgram() && outputParseResult->HasError());
+        return {};
+    }
+
+    tint::wgsl::writer::ProgramOptions options;
     options.allow_non_uniform_derivatives = allowNonUniformDerivatives;
     options.allowed_features = allowedFeatures.ToTint();
+    auto wgsl_result = tint::wgsl::writer::ProgramFromIR(ir_result.Get(), options);
 
-    tint::Program program = tint::spirv::reader::Read(spirv, options);
+    // If WGSL generation succeeded, store the generated Tint program with no validation error.
+    if (wgsl_result == tint::Success) {
+        tint::Program program = wgsl_result.Move();
 
-    // Store the compilation messages into outputParseResult.
-    DAWN_TRY(outputParseResult->compilationMessages.AddMessages(program.Diagnostics()));
+        // Store the compilation messages into outputParseResult.
+        DAWN_TRY(outputParseResult->compilationMessages.AddMessages(program.Diagnostics()));
 
-    // If SpirV parsing succeed, store the generated Tint program with no validation error.
-    if (program.IsValid()) {
         outputParseResult->tintProgram = UnsafeUnserializedValue<std::optional<Ref<TintProgram>>>(
             AcquireRef(new TintProgram(std::move(program), nullptr)));
         DAWN_ASSERT(outputParseResult->HasTintProgram() && !outputParseResult->HasError());
     } else {
         // Otherwise, store the validation error messages to outputParseResult.
-        outputParseResult->SetValidationError(
-            DAWN_VALIDATION_ERROR("Error while parsing SPIR-V: %s\n", program.Diagnostics().Str()));
+        outputParseResult->SetValidationError(DAWN_VALIDATION_ERROR(
+            "Error while generating WGSL: %s\n", wgsl_result.Failure().reason));
         DAWN_ASSERT(!outputParseResult->HasTintProgram() && outputParseResult->HasError());
     }
 

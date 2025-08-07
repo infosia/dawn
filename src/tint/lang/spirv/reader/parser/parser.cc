@@ -785,6 +785,10 @@ class Parser {
                     if (img->sampled() == 0) {
                         TINT_ICE() << "Unsupported texture sample setting: Known at Runtime";
                     }
+                    if (ms == type::Multisampled::kMultisampled &&
+                        arrayed == type::Arrayed::kArrayed) {
+                        TINT_ICE() << "arrayed multisampled textures are not supported";
+                    }
 
                     return ty_.Get<spirv::type::Image>(sampled_ty, dim, depth, arrayed, ms, sampled,
                                                        texel_format, access_mode);
