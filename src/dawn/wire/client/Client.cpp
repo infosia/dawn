@@ -84,8 +84,8 @@ ReservedBuffer Client::ReserveBuffer(WGPUDevice device, const WGPUBufferDescript
         Make<Buffer>(FromAPI(device)->GetEventManagerHandle(), FromAPI(device), descriptor);
 
     ReservedBuffer result;
-    result.handle = buffer->GetWireHandle();
-    result.deviceHandle = FromAPI(device)->GetWireHandle();
+    result.handle = buffer->GetWireHandle(this);
+    result.deviceHandle = FromAPI(device)->GetWireHandle(this);
     result.buffer = ReturnToAPI(std::move(buffer));
     return result;
 }
@@ -94,8 +94,8 @@ ReservedTexture Client::ReserveTexture(WGPUDevice device, const WGPUTextureDescr
     Ref<Texture> texture = Make<Texture>(descriptor);
 
     ReservedTexture result;
-    result.handle = texture->GetWireHandle();
-    result.deviceHandle = FromAPI(device)->GetWireHandle();
+    result.handle = texture->GetWireHandle(this);
+    result.deviceHandle = FromAPI(device)->GetWireHandle(this);
     result.texture = ReturnToAPI(std::move(texture));
     return result;
 }
@@ -105,8 +105,8 @@ ReservedSurface Client::ReserveSurface(WGPUInstance instance,
     Ref<Surface> surface = Make<Surface>(capabilities);
 
     ReservedSurface result;
-    result.handle = surface->GetWireHandle();
-    result.instanceHandle = FromAPI(instance)->GetWireHandle();
+    result.handle = surface->GetWireHandle(this);
+    result.instanceHandle = FromAPI(instance)->GetWireHandle(this);
     result.surface = ReturnToAPI(std::move(surface));
     return result;
 }
@@ -119,10 +119,10 @@ ReservedInstance Client::ReserveInstance(const WGPUInstanceDescriptor* descripto
     }
 
     // Reserve an EventManager for the given instance and make the association in the map.
-    mEventManagers.emplace(instance->GetWireHandle(), std::make_unique<EventManager>());
+    mEventManagers.emplace(instance->GetWireHandle(this), std::make_unique<EventManager>());
 
     ReservedInstance result;
-    result.handle = instance->GetWireHandle();
+    result.handle = instance->GetWireHandle(this);
     result.instance = ReturnToAPI(std::move(instance));
     return result;
 }
@@ -170,7 +170,7 @@ void Client::Disconnect() {
     for (auto& objectList : mObjects) {
         for (auto object : objectList.GetAllObjects()) {
             if (object != nullptr) {
-                object->CancelCallbacksForDisconnect();
+                object->Disconnect();
             }
         }
     }
@@ -181,16 +181,17 @@ bool Client::IsDisconnected() const {
 }
 
 void Client::Unregister(ObjectBase* obj, ObjectType type) {
-    UnregisterObjectCmd cmd;
-    cmd.objectType = type;
-    cmd.objectId = obj->GetWireId();
-    SerializeCommand(cmd);
-
     ReclaimReservation(obj, type);
+    if (!mDisconnected) {
+        UnregisterObjectCmd cmd;
+        cmd.objectType = type;
+        cmd.objectId = obj->GetWireHandle(this).id;
+        SerializeCommand(cmd);
+    }
 }
 
 void Client::ReclaimReservation(ObjectBase* obj, ObjectType type) {
-    mObjects[type].Remove(obj);
+    mObjects[type].Remove(obj, this);
 }
 
 }  // namespace dawn::wire::client
