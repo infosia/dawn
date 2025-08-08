@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "214f7b7e_6276664b",
+        "filename": "src/dawn/wire/client/Client.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T11:46:28Z",
+      "side": 1,
+      "message": "After reading more on the issue I saw that this is a confusion in Blink because it does calls with objects from mixed devices that happen to have the same ID but the wire client doesn\u0027t have any protection against that.",
+      "parentUuid": "a33a6a2b_4f2eac89",
+      "revId": "2ef8640855d53476afeb81599bbdf23abb453f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "66c71ac3_7fedbd3b",
