@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71ea21bb_a504f601",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T22:09:20Z",
+      "side": 1,
+      "message": "PTAL\n\nBuilder should be happy once https://dawn-review.googlesource.com/c/dawn/+/256754 lands.\n\nI\u0027ll confirm that with a manually triggered build before submitting. Will also let chat know.",
+      "revId": "4928cd6ddb001d7f83fdc9580dc4ba78e47a3155",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
