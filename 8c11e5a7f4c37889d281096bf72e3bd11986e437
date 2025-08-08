@@ -16,6 +16,40 @@
       "message": "PTAL",
       "revId": "8c11e5a7f4c37889d281096bf72e3bd11986e437",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ee5daa2_4510ddb7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-08T21:09:56Z",
+      "side": 1,
+      "message": "LGTM with one nit. Thanks!",
+      "revId": "8c11e5a7f4c37889d281096bf72e3bd11986e437",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d728770e_b40580b0",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-08T21:09:56Z",
+      "side": 1,
+      "message": "Nit: I think you could just make this a `case` of the switch below, instead of introducing a third `switch`.",
+      "revId": "8c11e5a7f4c37889d281096bf72e3bd11986e437",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
