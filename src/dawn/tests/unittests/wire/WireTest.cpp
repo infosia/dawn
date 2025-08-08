@@ -49,6 +49,10 @@ using testing::WithArg;
 
 namespace dawn {
 
+namespace {
+uint32_t sWireProcTableRefCount = 0;
+}
+
 WireTest::WireTest() {}
 
 WireTest::~WireTest() {}
@@ -84,7 +88,10 @@ void WireTest::SetUp() {
     mWireClient.reset(new wire::WireClient(clientDesc));
     mS2cBuf->SetHandler(mWireClient.get());
 
-    dawnProcSetProcs(&wire::client::GetProcs());
+    if (sWireProcTableRefCount == 0) {
+        dawnProcSetProcs(&wire::client::GetProcs());
+    }
+    ++sWireProcTableRefCount;
 
     auto reservedInstance = GetWireClient()->ReserveInstance();
     instance = wgpu::Instance::Acquire(reservedInstance.instance);
@@ -193,7 +200,11 @@ void WireTest::TearDown() {
     adapter = nullptr;
     device = nullptr;
     queue = nullptr;
-    dawnProcSetProcs(nullptr);
+
+    --sWireProcTableRefCount;
+    if (sWireProcTableRefCount == 0) {
+        dawnProcSetProcs(nullptr);
+    }
 
     // Derived classes should call the base TearDown() first. The client must
     // be reset before any mocks are deleted.
