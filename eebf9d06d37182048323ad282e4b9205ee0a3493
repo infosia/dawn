@@ -110,6 +110,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3dc6f229_393a1b80",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T12:43:23Z",
+      "side": 1,
+      "message": "@Gregg, at least in the current direction you would tell Dawn to layer the \"passthrough webgpu-on-webgpu\" backend to be able to do a capture. It should have some small overhead, but only CPU.\n\nHowever we should totally be able to start a capture in the middle of the execution instead of having to replay all the commands from the start of the application. That\u0027s the whole point of having webgpu-on-webgpu: to have access to all of the internal state tracked by dawn::native and to serialize it on demand when the capture is started.\n\n@Shrek: the `CommandEncoder` is not the only object/set of commands from before the capture that might need to be recorded, but also recursively all the resources that it uses, recursively as well (for example, but not limited to bindgroup and render bundles).",
+      "parentUuid": "9b334973_f83b25de",
+      "revId": "eebf9d06d37182048323ad282e4b9205ee0a3493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3211b5ec_882f96b2",
         "filename": "src/dawn/devtool/CMakeLists.txt",
         "patchSetId": 14
