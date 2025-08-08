@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e40fc2e1_70dedd85",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T21:32:16Z",
+      "side": 1,
+      "message": "PTAL, looks like the builder is happier with this in place https://ci.chromium.org/ui/p/dawn/builders/try.shadow/dawn-cq-linux-x64-sws-rel/22/infra (step 16 fails without it)",
+      "revId": "b76636319988401c70639270e7d334e2fa227917",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
