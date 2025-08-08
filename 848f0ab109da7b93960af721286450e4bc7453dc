@@ -16,6 +16,75 @@
       "message": "PTAL, this is patch 8 of 8 for implementing to the prototype I detailed in https://dawn-review.googlesource.com/c/dawn/+/255654",
       "revId": "848f0ab109da7b93960af721286450e4bc7453dc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62d54f24_17ffa89f",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T21:14:26Z",
+      "side": 1,
+      "message": "Instead of having a raw `uint32` and using the atomic helpers, use the `atomic.Uint32` type and directly call its `Add`/`Store` methods so `tempCounter` can never accidentally be used in a non-atomic fashion.",
+      "range": {
+        "startLine": 367,
+        "startChar": 0,
+        "endLine": 367,
+        "endChar": 22
+      },
+      "revId": "848f0ab109da7b93960af721286450e4bc7453dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "828107f7_6aa581cc",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T21:14:26Z",
+      "side": 1,
+      "message": "I have concerns about this and how it relates to multiple tests in parallel. This currently isn\u0027t an issue since all the tests are technically a single test (`TestFSTestOSWrapper_MkdirTemp`) as far as `go test` is concerned, and so you don\u0027t have any risk of race conditions. However, if/when another test is added that calls this or `MkdirTemp` and relies on a specific directory name, we could run into flaky test failures. E.g. if both tests are expecting `/tmp/test-1` as the directory name and the following happens:\n\n```\nResetTempCounterForTesting() // test 1\nResetTempCounterForTesting() // test 2\nMkdirTemp() // test 1\nMkdirTemp() // test 2\n```\n\ntest 2 would fail since it would get `/tmp/test-2`. I think there are two ways you could go about this:\n\n1. Relax the checks to allow for any numerical component instead of a specific number, e.g. the regex `temp-\\d+`. I think this would be the preferred option.\n2. If you really need to check for a specific value, add a global mutex that all tests which rely on `MkdirTemp` must acquire at the start of the test.",
+      "range": {
+        "startLine": 371,
+        "startChar": 5,
+        "endLine": 371,
+        "endChar": 31
+      },
+      "revId": "848f0ab109da7b93960af721286450e4bc7453dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9895bff3_7683d9c9",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1757,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T21:14:26Z",
+      "side": 1,
+      "message": "I think there might be value in having at least one to confirm that the file mode for the temporary directories match.",
+      "range": {
+        "startLine": 1757,
+        "startChar": 21,
+        "endLine": 1757,
+        "endChar": 62
+      },
+      "revId": "848f0ab109da7b93960af721286450e4bc7453dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
