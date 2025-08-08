@@ -175,6 +175,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b210ee3_72131fac",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-08-08T10:21:30Z",
+      "side": 1,
+      "message": "Marked as resolved. Yes, then this works. Thank you!",
+      "parentUuid": "298bf152_b9621a66",
+      "range": {
+        "startLine": 823,
+        "startChar": 1,
+        "endLine": 827,
+        "endChar": 0
+      },
+      "revId": "411936ba2cdac8eb173b81ee5d34025a76b7dff4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fa9f5f30_fefbe542",
