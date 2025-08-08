@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a6b02ea_9706521b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-08T13:44:09Z",
+      "side": 1,
+      "message": "Leftover from an old patchset, removed.",
+      "parentUuid": "06601f76_fd3c7ba3",
+      "revId": "6fbcc474834f4edea18a5b53d48a0c4962292e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ea0f3dd_b10560d6",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-08-08T08:32:03Z",
       "side": 1,
       "message": "```suggestion\n    tint::Result\u003ctint::core::ir::Module\u003e irResult \u003d tint::spirv::reader::ReadIR(spirv);\n```",
+      "range": {
+        "startLine": 460,
+        "startChar": 41,
+        "endLine": 460,
+        "endChar": 50
+      },
+      "revId": "6fbcc474834f4edea18a5b53d48a0c4962292e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15ff0df9_85c2b26f",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-08T13:44:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ea0f3dd_b10560d6",
       "range": {
         "startLine": 460,
         "startChar": 41,
@@ -60,6 +102,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "edea38c5_c73e9385",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-08T13:44:09Z",
+      "side": 1,
+      "message": "Yes, we are converting an IR module to a tint::Program. We are not generating textual WGSL if that\u0027s what you\u0027re asking, it\u0027s just that the IR-\u003eAST conversion is in the `wgsl::writer` namespace (mostly just for symmetry with the other backends, but also because it shares some stuff with the WGSL text writer like these options).",
+      "parentUuid": "c0c43fbf_48b8bc5c",
+      "revId": "6fbcc474834f4edea18a5b53d48a0c4962292e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3219d4d5_b7a2d6c7",
         "filename": "src/dawn/native/ShaderModule.cpp",
         "patchSetId": 4
@@ -71,6 +131,24 @@
       "writtenOn": "2025-08-08T08:32:03Z",
       "side": 1,
       "message": "```suggestion\n    auto wgslResult \u003d tint::wgsl::writer::ProgramFromIR(ir_result.Get(), options);\n```",
+      "revId": "6fbcc474834f4edea18a5b53d48a0c4962292e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72b4128f_5ae7692c",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-08T13:44:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3219d4d5_b7a2d6c7",
       "revId": "6fbcc474834f4edea18a5b53d48a0c4962292e89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
