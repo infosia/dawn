@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45099625_3c6eb91d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-08T03:17:37Z",
+      "side": 1,
+      "message": "PTAL, thanks!\njrprice@, pls take a look at tint side changes which I removed the TINT_ASSERT directly. I think you suggestion is about to adding msl allow kBlocks, but I don\u0027t find where is the place to add the rule, would you mind to guide me about this?\n\ncwallez@, pls take a look at dawn side changes. NOTE: I left manage buffer sizes using immediateConstantMask as a TODO for future work.",
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
