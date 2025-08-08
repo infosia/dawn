@@ -37,6 +37,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4f4434f6_8a135cf8",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-08T21:37:03Z",
+      "side": 1,
+      "message": "nit: Should this toggle have this name still? Should it be named something more like enable subgroups on gen9?",
+      "range": {
+        "startLine": 556,
+        "startChar": 7,
+        "endLine": 556,
+        "endChar": 38
+      },
+      "revId": "8c11e5a7f4c37889d281096bf72e3bd11986e437",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d728770e_b40580b0",
         "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
         "patchSetId": 15
