@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0b0866e_58865428",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-08-08T06:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a4f9b40_830976db",
+      "range": {
+        "startLine": 714,
+        "startChar": 23,
+        "endLine": 714,
+        "endChar": 35
+      },
+      "revId": "a6b16ae28b146101f569a89757dc245e8937e22f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59939007_670ae8d8",
@@ -58,6 +82,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "90746bfc_1aae1000",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1749,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-08-08T06:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59939007_670ae8d8",
+      "revId": "a6b16ae28b146101f569a89757dc245e8937e22f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bba0b28e_0075f0b2",
@@ -71,6 +113,24 @@
       "writtenOn": "2025-08-07T17:08:20Z",
       "side": 1,
       "message": "```suggestion\n    wgpu::TextureComponentSwizzle ComposeSwizzle(wgpu::TextureComponentSwizzle swizzle) const;\n```",
+      "revId": "a6b16ae28b146101f569a89757dc245e8937e22f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbdbe84f_fff646a6",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-08-08T06:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bba0b28e_0075f0b2",
       "revId": "a6b16ae28b146101f569a89757dc245e8937e22f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
