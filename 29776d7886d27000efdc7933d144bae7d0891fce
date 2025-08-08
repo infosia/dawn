@@ -16,6 +16,462 @@
       "message": "PTAL, thanks!\njrprice@, pls take a look at tint side changes which I removed the TINT_ASSERT directly. I think you suggestion is about to adding msl allow kBlocks, but I don\u0027t find where is the place to add the rule, would you mind to guide me about this?\n\ncwallez@, pls take a look at dawn side changes. NOTE: I left manage buffer sizes using immediateConstantMask as a TODO for future work.",
       "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ead220a_46c490c3",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "These two seem redundant because all that `Apply` does is copy `dirtyStages` to `stagesToApply` and zero out `dirtyStages`.",
+      "range": {
+        "startLine": 446,
+        "startChar": 0,
+        "endLine": 448,
+        "endChar": 0
+      },
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57284ee0_e0b901f6",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "```suggestion\n    // TODO(crbug.com/366291600): Remove unused storage buffer size in immediate block\n```",
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a05f0ec_6278293a",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "```suggestion\n    // TODO(crbug.com/366291600): Remove unused storage buffer size in immediate block\n```",
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d8b2ede_d7985f79",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "Yeah we should really do that.\n\n```suggestion\n// TODO(crbug.com/366291600): Merge StorageBufferLength in ImmediateConstantTracker\n```",
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30951bea_a478311b",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "nit: the EncoderType could be a new template argument passed during instantiation, or automatically deduced from `T`. It means that we could have two `FlushImmediates` overloads, one for each encoder type.",
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d90ba8b_03ef51da",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "u-nit: This is used only once so we can inline it in its use for less noise.",
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72d03497_0613eb6a",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "This isn\u0027t an upload yet, \"Update the stored immediate constants that have changed ...\"?",
+      "range": {
+        "startLine": 536,
+        "startChar": 11,
+        "endLine": 536,
+        "endChar": 17
+      },
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "034f0b8f_950689a3",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "To try to have loop unrolling happening below.\n\n```suggestion\n        constexpr wgpu::ShaderStage stages \u003d kIsRenderImmediateConstants\n```",
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee0f76ad_2629405d",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "These are just scalars, we don\u0027t need the to be rvalue references.\n\n```suggestion\n        for (auto [offset, size] : IterateRanges(uploadBits)) {\n```",
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "145360a2_d2407bb9",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "```suggestion\n        uint32_t bufferSizeOffset \u003d 0;\n```",
+      "range": {
+        "startLine": 553,
+        "startChar": 17,
+        "endLine": 553,
+        "endChar": 36
+      },
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c94d3f37_ba01c53f",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "Ditto we can do this unconditionally if we change RoundUp to handle 0 (in a pre-CL).",
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ae02401_1e08e56d",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f105e3b_46bf2aed",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "This is where the upload to the GPU happens.\n\n```suggestion\n        UploadImmediates(encoder);\n```",
+      "range": {
+        "startLine": 572,
+        "startChar": 8,
+        "endLine": 572,
+        "endChar": 23
+      },
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39477e52_a91e7206",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "Can we just reuse the constant from `StorageBufferLengthTracker`?",
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85d66b39_ee7ff413",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "The immediate constant tracker is local to a pass, so the dirty bit will always be either just Compute or a subset or Render/Vertex (we can have an ASSERT if that reassures you).\n\nAlso IMHO doing an early out is unnecessary given that we have only two conditions.\n\nFinally we can directly zero-out dirtyStages at the end since we know that we apply everything that could be dirty.",
+      "range": {
+        "startLine": 612,
+        "startChar": 0,
+        "endLine": 617,
+        "endChar": 0
+      },
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77198e9f_aa4c79a6",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 1667,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6641ea9a_0db80a76",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 1965,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "This ASSERT doesn\u0027t seem super needed as things will just work if cmd-\u003esize is 0.",
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19cc324b_b95fe644",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 1967,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "```suggestion\n                uint8_t* value \u003d mCommands.NextData\u003cuint8_t\u003e(cmd-\u003esize);\n```",
+      "range": {
+        "startLine": 1966,
+        "startChar": 0,
+        "endLine": 1967,
+        "endChar": 63
+      },
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fefef5c7_bb904510",
+        "filename": "src/dawn/native/metal/PipelineLayoutMTL.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "Given that the immediate data block has the normal render/compute immediate and the the buffer sizes, please describe the layout here so we have the layout documented in addition to multiple spots in the code that assume a specific layout.\n\nAlso please have both places that use the layout point at this file for the layout description.",
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f0687e0_e2e6fd7a",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "Is there a reason it is a vec4\u003cu32\u003e array and not an array of u32s? Metal shouldn\u0027t have issues loading from an array of u32s.",
+      "range": {
+        "startLine": 330,
+        "startChar": 90,
+        "endLine": 331,
+        "endChar": 16
+      },
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f4435c8_749b067b",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "We could change [this ASSERT](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/Math.cpp;drc\u003daae31cfd0a4d152bacdea12c9eb5c4416d7c79a1;l\u003d132) to be `n \u003e\u003d 0`, add a test, then this line could become:\n\n```\narrayLengthFromConstants.buffer_sizes_offset \u003d RoundUp(pipelineImmediateMask.count() * kImmediateConstantElementByteSize, 16);\n```\n\nAnd if we make the buffers sizes an array\u003cu32\u003e then we can even make this:\n\n```\narrayLengthFromConstants.buffer_sizes_offset \u003d pipelineImmediateMask.count() * kImmediateConstantElementByteSize;\n```",
+      "range": {
+        "startLine": 332,
+        "startChar": 54,
+        "endLine": 335,
+        "endChar": 21
+      },
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acd9dc51_0862aec8",
+        "filename": "src/dawn/tests/end2end/OpArrayLengthTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "IMHO we should separate the tests because it makes the existing tests no longer well targeted. We are going to need a few more tests for good code coverage so IMHO a new fixture will help have something more targeted.\n\nWe need tests like this:\n\n - SetBindGroup + SetImmediate + Draw\n - SetBindGroup + SetImmediate + Draw + SetPipeline (that uses a different amount of immediates) + Draw (should still see the correct buffer sizes)\n - SetBindGroup + SetImmdiate + Daw + SetPipeline (that uses a different amount of buffer lengths) + SetBindGroup + Draw.\n \netc.\n\nBasically the hard part to make work is not the case where a single `Apply` is called, but when `Apply` is called repeatedly with state changing in between.",
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "697b69f2_703ad033",
+        "filename": "src/dawn/tests/end2end/OpArrayLengthTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "?",
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20b9b164_0195dad6",
+        "filename": "src/dawn/tests/end2end/OpArrayLengthTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T09:44:31Z",
+      "side": 1,
+      "message": "?",
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
