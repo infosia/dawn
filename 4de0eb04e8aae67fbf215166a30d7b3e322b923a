@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d898111d_a50418b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-08T21:03:20Z",
+      "side": 1,
+      "message": "Small change but helps quite a bit with Unity shader sizes.",
+      "revId": "4de0eb04e8aae67fbf215166a30d7b3e322b923a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
