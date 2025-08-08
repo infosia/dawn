@@ -171,6 +171,7 @@ void Client::Disconnect() {
         for (auto object : objectList.GetAllObjects()) {
             if (object != nullptr) {
                 object->CancelCallbacksForDisconnect();
+                object->WipeIdForDisconnect();
             }
         }
     }
