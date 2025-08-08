@@ -38,6 +38,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "98e5e46b_01859bbc",
+        "filename": "src/dawn/wire/client/ObjectBase.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-08T18:01:27Z",
+      "side": 1,
+      "message": "Probably should make this a constant and use that everywhere instead. Also, maybe we should us the max `generation` also?",
+      "range": {
+        "startLine": 66,
+        "startChar": 30,
+        "endLine": 66,
+        "endChar": 45
+      },
+      "revId": "2ef8640855d53476afeb81599bbdf23abb453f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "66c71ac3_7fedbd3b",
         "filename": "src/dawn/wire/server/ObjectStorage.h",
         "patchSetId": 5
