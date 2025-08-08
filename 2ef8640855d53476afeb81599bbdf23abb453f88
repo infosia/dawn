@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a33a6a2b_4f2eac89",
+        "filename": "src/dawn/wire/client/Client.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T10:25:04Z",
+      "side": 1,
+      "message": "I would have thought that this line would be enough to make commands not get to the GPU process. Why isn\u0027t it enough?",
+      "revId": "2ef8640855d53476afeb81599bbdf23abb453f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66c71ac3_7fedbd3b",
+        "filename": "src/dawn/wire/server/ObjectStorage.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T10:25:04Z",
+      "side": 1,
+      "message": "Isn\u0027t this going to cause problems for method calls using disconnected objects?",
+      "revId": "2ef8640855d53476afeb81599bbdf23abb453f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
