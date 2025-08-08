@@ -154,11 +154,13 @@ class KnownObjectsBase {
     // Returns an error if the object wasn't previously allocated.
     WireResult GetNativeHandle(ObjectId id, T* handle) const {
         if (id >= mKnown.size()) {
+            printf("%s %d\n", __FILE__, __LINE__);
             return WireResult::FatalError;
         }
 
         const Data* data = &mKnown[id];
         if (data->state != AllocationState::Allocated) {
+            printf("%s %d\n", __FILE__, __LINE__);
             return WireResult::FatalError;
         }
         *handle = data->handle;
@@ -167,12 +169,20 @@ class KnownObjectsBase {
     }
 
     WireResult Get(ObjectId id, Reserved<T>* result) {
+        if (id == UINT32_MAX) {
+            static Data data{{reinterpret_cast<T>(0x1), 0, AllocationState::Allocated}};
+            *result = Reserved<T>{id, &data};
+            return WireResult::Success;
+        }
+
         if (id >= mKnown.size()) {
+            printf("%s %d\n", __FILE__, __LINE__);
             return WireResult::FatalError;
         }
 
         Data* data = &mKnown[id];
         if (data->state == AllocationState::Free) {
+            printf("%s %d\n", __FILE__, __LINE__);
             return WireResult::FatalError;
         }
 
@@ -181,12 +191,20 @@ class KnownObjectsBase {
     }
 
     WireResult Get(ObjectId id, Known<T>* result) {
+        if (id == UINT32_MAX) {
+            static Data data{{reinterpret_cast<T>(0x1), 0, AllocationState::Allocated}};
+            *result = Known<T>{id, &data};
+            return WireResult::Success;
+        }
+
         if (id >= mKnown.size()) {
+            printf("%s %d\n", __FILE__, __LINE__);
             return WireResult::FatalError;
         }
 
         Data* data = &mKnown[id];
         if (data->state != AllocationState::Allocated) {
+            printf("%s %d\n", __FILE__, __LINE__);
             return WireResult::FatalError;
         }
 
@@ -200,6 +218,7 @@ class KnownObjectsBase {
         Data* data = &mKnown[id];
 
         if (data->state != AllocationState::Reserved) {
+            printf("%s %d\n", __FILE__, __LINE__);
             return WireResult::FatalError;
         }
         data->handle = handle;
@@ -217,6 +236,7 @@ class KnownObjectsBase {
                         ObjectHandle handle,
                         AllocationState state = AllocationState::Allocated) {
         if (handle.id == 0 || handle.id > mKnown.size()) {
+            printf("%s %d\n", __FILE__, __LINE__);
             return WireResult::FatalError;
         }
 
@@ -231,11 +251,14 @@ class KnownObjectsBase {
         }
 
         if (mKnown[handle.id].state != AllocationState::Free) {
+            printf("%s %d %u\n", __FILE__, __LINE__, handle.id);
+            DAWN_CHECK(false);
             return WireResult::FatalError;
         }
 
         // The generation should be strictly increasing.
         if (handle.generation <= mKnown[handle.id].generation) {
+            printf("%s %d\n", __FILE__, __LINE__);
             return WireResult::FatalError;
         }
         // update the generation in the slot

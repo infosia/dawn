@@ -902,6 +902,8 @@ void DeviceBase::StoreCachedBlob(const CacheKey& key, const Blob& blob) {
 
 MaybeError DeviceBase::ValidateObject(const ApiObjectBase* object) const {
     DAWN_ASSERT(object != nullptr);
+    DAWN_INVALID_IF(object == reinterpret_cast<ApiObjectBase*>(0x1),
+                    "Object is associated with a lost device, and cannot be used with %s", this);
     DAWN_INVALID_IF(object->GetDevice() != this,
                     "%s is associated with %s, and cannot be used with %s.", object,
                     object->GetDevice(), this);

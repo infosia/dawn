@@ -63,6 +63,8 @@ class ObjectBase : public RefCounted {
     bool IsRegistered() const;
     void Unregister();
 
+    void WipeID() { mHandle = {UINT32_MAX, 0}; }
+
     const ObjectHandle& GetWireHandle() const;
     ObjectId GetWireId() const;
     ObjectGeneration GetWireGeneration() const;
@@ -73,7 +75,7 @@ class ObjectBase : public RefCounted {
 
   private:
     raw_ptr<Client> mClient;
-    const ObjectHandle mHandle;
+    ObjectHandle mHandle;
 };
 
 // Compositable functionality for objects on the client side that need to have access to the event
