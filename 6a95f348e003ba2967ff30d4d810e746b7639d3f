@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d6fc994_03b69fb1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T19:35:08Z",
+      "side": 1,
+      "message": "`Remove()`",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 15
+      },
+      "revId": "6a95f348e003ba2967ff30d4d810e746b7639d3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "2296cf49_f0d09ec3",
@@ -14,6 +37,75 @@
       "writtenOn": "2025-08-07T18:49:24Z",
       "side": 1,
       "message": "PTAL, this is patch 5 of 8 for implementing to the prototype I detailed in https://dawn-review.googlesource.com/c/dawn/+/255654",
+      "revId": "6a95f348e003ba2967ff30d4d810e746b7639d3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0747a584_5dfd622a",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T19:35:08Z",
+      "side": 1,
+      "message": "Previous CLs mentioned that `/` is used internally, so I think that should be used here?",
+      "range": {
+        "startLine": 262,
+        "startChar": 15,
+        "endLine": 262,
+        "endChar": 41
+      },
+      "revId": "6a95f348e003ba2967ff30d4d810e746b7639d3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "168c940a_2284ee09",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T19:35:08Z",
+      "side": 1,
+      "message": "Probably worth having an `expectPresent` or similar as well to catch things being unexpectedly deleted.",
+      "range": {
+        "startLine": 823,
+        "startChar": 3,
+        "endLine": 823,
+        "endChar": 16
+      },
+      "revId": "6a95f348e003ba2967ff30d4d810e746b7639d3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "397db8c2_4096ee60",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T19:35:08Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 936,
+        "startChar": 3,
+        "endLine": 936,
+        "endChar": 16
+      },
       "revId": "6a95f348e003ba2967ff30d4d810e746b7639d3f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
