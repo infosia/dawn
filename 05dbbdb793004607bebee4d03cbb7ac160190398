@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "05dbbdb793004607bebee4d03cbb7ac160190398",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e795f1e_35caeb42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-08T17:56:51Z",
+      "side": 1,
+      "message": "LGTM, but CC-ing Kai because we have TODOs to eventually stop using `CombinedLimits` in favor of `ComboLimits`, so these changes are something we want to keep track of.",
+      "revId": "05dbbdb793004607bebee4d03cbb7ac160190398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
