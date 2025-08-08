@@ -153,6 +153,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "298bf152_b9621a66",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T08:26:56Z",
+      "side": 1,
+      "message": "That block of code line 887 seems like it could be in the same if as `SetExpandResolveRect` and actually come before it. We should validate that the feature is present before using the member for the feature.",
+      "parentUuid": "3675bd7a_31b3a679",
+      "range": {
+        "startLine": 823,
+        "startChar": 1,
+        "endLine": 827,
+        "endChar": 0
+      },
+      "revId": "411936ba2cdac8eb173b81ee5d34025a76b7dff4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fa9f5f30_fefbe542",
         "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
         "patchSetId": 3
