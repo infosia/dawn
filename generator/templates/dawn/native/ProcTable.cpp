@@ -54,6 +54,7 @@ namespace {{native_namespace}} {
                     , {{as_annotated_cType(arg)}}
                 {%- endfor -%}
             ) {
+                DAWN_ASSERT(reinterpret_cast<uintptr_t>(cSelf) != 0x1);
                 //* Perform conversion between C types and frontend types
                 {% if type.category == "object" %}
                     auto self = FromAPI(cSelf);
