@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "844b3acd_1214426e",
+        "filename": "src/dawn/native/ComputePipeline.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-08-08T22:30:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "353e901a_6c3d72e1",
+      "revId": "6c61b2e2b7dbb83d6ad2cd84fdf273544c3ce6e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "68b30cba_bf155ecb",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-08-07T09:24:45Z",
       "side": 1,
       "message": "[1] We could do this instead:\n\n```\n    virtual const ComputePipelineBase* AsComputePipeline() const;\n    virtual const RenderPipelineBase* AsRenderPipeline() const;\n    \n    // Const-cast happens inside these.\n    ComputePipelineBase* AsComputePipeline();\n    RenderPipelineBase* AsRenderPipeline();\n```\n\nAlso we can keep all the implementations in the .cpp files, this isn\u0027t necessary to inline for performance.",
+      "revId": "6c61b2e2b7dbb83d6ad2cd84fdf273544c3ce6e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e48484c5_7c4cb5ff",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-08-08T22:30:27Z",
+      "side": 1,
+      "message": "We can\u0027t do exactly that since the compiler cannot resolve the correct overload - it will recursively call the same function. But I can add a const overload that the subclass can override.",
+      "parentUuid": "68b30cba_bf155ecb",
       "revId": "6c61b2e2b7dbb83d6ad2cd84fdf273544c3ce6e7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
