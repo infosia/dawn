@@ -41,6 +41,7 @@
 namespace dawn::wire::client {
 
 class Client;
+class ClientBase;
 
 struct ObjectBaseParams {
     raw_ptr<Client> client;
@@ -55,7 +56,6 @@ class ObjectBase : public RefCounted {
   public:
     explicit ObjectBase(const ObjectBaseParams& params);
 
-    virtual void CancelCallbacksForDisconnect() {}
     virtual ObjectType GetObjectType() const = 0;
 
     // Objects are assumed to be registered with the wire on creation but can be unregistered
@@ -63,9 +63,9 @@ class ObjectBase : public RefCounted {
     bool IsRegistered() const;
     void Unregister();
 
-    const ObjectHandle& GetWireHandle() const;
-    ObjectId GetWireId() const;
-    ObjectGeneration GetWireGeneration() const;
+    virtual void CancelCallbacksForDisconnect() {}
+
+    const ObjectHandle& GetWireHandle(const ClientBase* forClient) const;
     Client* GetClient() const;
 
   protected:
@@ -73,7 +73,7 @@ class ObjectBase : public RefCounted {
 
   private:
     raw_ptr<Client> mClient;
-    const ObjectHandle mHandle;
+    ObjectHandle mHandle;
 };
 
 // Compositable functionality for objects on the client side that need to have access to the event
