@@ -33,6 +33,57 @@
       "message": "Hello Everyone, I made some changes and contributed to it, so can you please review my code and let me know.\n\nThank you\nVivek Raj",
       "revId": "0cc599e7598d8fa332f4986fb5d7063f1685d51f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a201ecee_4441def9",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T08:42:42Z",
+      "side": 1,
+      "message": "This validation is redundant with the code path that goes [1] -\u003e [2], produces a validation error on the device (that you get with the uncaptured error handler), etc. What is the purpose of this CL? The fact that it returns a null future ID also breaks the semantic of the API.",
+      "revId": "0cc599e7598d8fa332f4986fb5d7063f1685d51f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "593135a9_3f213a52",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T08:42:42Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "0cc599e7598d8fa332f4986fb5d7063f1685d51f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "006a0b52_13ff4aa2",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T08:42:42Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "0cc599e7598d8fa332f4986fb5d7063f1685d51f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
