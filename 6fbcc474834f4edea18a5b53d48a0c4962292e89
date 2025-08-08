@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06601f76_fd3c7ba3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T08:32:03Z",
+      "side": 1,
+      "message": "I don\u0027t see this part in this CL.",
+      "revId": "6fbcc474834f4edea18a5b53d48a0c4962292e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ea0f3dd_b10560d6",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T08:32:03Z",
+      "side": 1,
+      "message": "```suggestion\n    tint::Result\u003ctint::core::ir::Module\u003e irResult \u003d tint::spirv::reader::ReadIR(spirv);\n```",
+      "range": {
+        "startLine": 460,
+        "startChar": 41,
+        "endLine": 460,
+        "endChar": 50
+      },
+      "revId": "6fbcc474834f4edea18a5b53d48a0c4962292e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0c43fbf_48b8bc5c",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T08:32:03Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused, can\u0027t we create a tint::Program directly from the IR module? Is that the validation step mentioned in the commit message that the IR module can be represented as WGSL?",
+      "revId": "6fbcc474834f4edea18a5b53d48a0c4962292e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3219d4d5_b7a2d6c7",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T08:32:03Z",
+      "side": 1,
+      "message": "```suggestion\n    auto wgslResult \u003d tint::wgsl::writer::ProgramFromIR(ir_result.Get(), options);\n```",
+      "revId": "6fbcc474834f4edea18a5b53d48a0c4962292e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
