@@ -42,8 +42,11 @@ using ObjectGeneration = uint32_t;
 // ObjectHandle identifies some WebGPU object in the wire.
 // An ObjectHandle will never be reused, so can be used to uniquely identify an object forever.
 struct ObjectHandle : public Handle {
-    ObjectHandle();
-    ObjectHandle(ObjectId objId, ObjectGeneration objGeneration);
+    constexpr ObjectHandle() = default;
+    constexpr ObjectHandle(ObjectId objId, ObjectGeneration objGeneration)
+        : Handle{objId, objGeneration} {
+        DAWN_ASSERT(id != 0);
+    }
 
     explicit ObjectHandle(const volatile ObjectHandle& rhs);
     ObjectHandle& operator=(const volatile ObjectHandle& rhs);
@@ -66,6 +69,11 @@ struct ObjectHandle : public Handle {
 
     bool IsValid() const;
 };
+
+// Sentinel handle value to be used for objects from previous wire client
+// instances. This essentially represents "unknown object from unknown device
+// that doesn't exist anymore".
+static constexpr ObjectHandle kDisconnectedObjectHandle{UINT32_MAX, UINT32_MAX};
 
 }  // namespace dawn::wire
 

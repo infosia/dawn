@@ -66,10 +66,14 @@ class Client : public ClientBase {
     Ref<T> Make(Args&&... args) {
         constexpr ObjectType type = ObjectTypeToTypeEnum<T>;
 
-        ObjectBaseParams params = {this, mObjects[type].ReserveHandle()};
+        Handle handle = mDisconnected ? kDisconnectedObjectHandle : mObjects[type].ReserveHandle();
+
+        ObjectBaseParams params = {this, handle};
         Ref<T> object = AcquireRef(new T(params, std::forward<Args>(args)...));
 
-        mObjects[type].Insert(object.Get());
+        if (!mDisconnected) {
+            mObjects[type].Insert(object.Get());
+        }
 
         return object;
     }

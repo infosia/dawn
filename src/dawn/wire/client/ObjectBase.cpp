@@ -48,11 +48,17 @@ const ObjectHandle& ObjectBase::GetWireHandle() const {
 
 ObjectId ObjectBase::GetWireId() const {
     DAWN_ASSERT(IsRegistered());
+    // TODO(crbug.com/435630456): Handle this with the correct validation error
+    // instead of crashing.
+    DAWN_CHECK(mHandle != kDisconnectedObjectHandle);
     return mHandle.id;
 }
 
 ObjectGeneration ObjectBase::GetWireGeneration() const {
     DAWN_ASSERT(IsRegistered());
+    // TODO(crbug.com/435630456): Handle this with the correct validation error
+    // instead of crashing.
+    DAWN_CHECK(mHandle != kDisconnectedObjectHandle);
     return mHandle.generation;
 }
 
@@ -73,6 +79,10 @@ void ObjectBase::Unregister() {
 
     mClient->Unregister(this, GetObjectType());
     mClient = nullptr;
+}
+
+void ObjectBase::WipeIdForDisconnect() {
+    mHandle = kDisconnectedObjectHandle;
 }
 
 ObjectWithEventsBase::ObjectWithEventsBase(const ObjectBaseParams& params,
