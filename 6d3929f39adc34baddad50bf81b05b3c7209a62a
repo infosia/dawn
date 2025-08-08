@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "6d3929f39adc34baddad50bf81b05b3c7209a62a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "094c6eb6_f2476713",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-08T10:22:50Z",
+      "side": 1,
+      "message": "Let\u0027s validate before using the member (even if in this case it doesn\u0027t do much, it is a good practice).",
+      "revId": "6d3929f39adc34baddad50bf81b05b3c7209a62a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
