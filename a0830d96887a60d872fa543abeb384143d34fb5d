@@ -16,6 +16,69 @@
       "message": "PTAL, this is patch 4 of 8 for implementing to the prototype I detailed in https://dawn-review.googlesource.com/c/dawn/+/255654",
       "revId": "a0830d96887a60d872fa543abeb384143d34fb5d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcdad194_f54fe051",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T19:20:29Z",
+      "side": 1,
+      "message": "LGTM % nits",
+      "revId": "a0830d96887a60d872fa543abeb384143d34fb5d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54ac4059_61230506",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T19:20:29Z",
+      "side": 1,
+      "message": "Nit: Maybe add another directory under this to test that there isn\u0027t any directories aren\u0027t read recursively. Since we\u0027re just calling `fs.ReadDir` under the hood, I don\u0027t expect this could ever actually happen, but doesn\u0027t hurt to have a test to ensure that.",
+      "range": {
+        "startLine": 344,
+        "startChar": 26,
+        "endLine": 344,
+        "endChar": 39
+      },
+      "revId": "a0830d96887a60d872fa543abeb384143d34fb5d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76874dbc_53dd0ed1",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T19:20:29Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 407,
+        "startChar": 19,
+        "endLine": 407,
+        "endChar": 34
+      },
+      "revId": "a0830d96887a60d872fa543abeb384143d34fb5d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
