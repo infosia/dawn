@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3053f330_433e697a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-08T05:37:05Z",
+      "side": 1,
+      "message": "Huh, I guess rubber stamper can stamp clean relands?",
+      "revId": "f2015be0df08d2845699fcd906b5f2c0e28965c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
