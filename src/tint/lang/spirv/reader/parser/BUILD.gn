@@ -47,6 +47,8 @@ if (tint_build_spv_reader) {
     sources = [
       "parser.cc",
       "parser.h",
+      "usage.cc",
+      "usage.h",
     ]
     deps = [
       "${dawn_root}/src/utils:utils",
@@ -116,6 +118,7 @@ if (tint_build_unittests) {
         "phi_test.cc",
         "struct_test.cc",
         "unary_test.cc",
+        "usage_test.cc",
         "var_test.cc",
       ]
       deps = [
