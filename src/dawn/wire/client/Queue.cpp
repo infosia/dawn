@@ -121,10 +121,16 @@ void Queue::APIWriteBuffer(WGPUBuffer cBuffer,
                            const void* data,
                            size_t size) {
     Buffer* buffer = FromAPI(cBuffer);
+    ObjectId bufferId = buffer->GetWireId();
+
+    if (buffer->GetClient() != GetClient()) {
+        static constexpr ObjectId kFromWrongDevice = UINT32_MAX;
+        bufferId = kFromWrongDevice;
+    }
 
     QueueWriteBufferCmd cmd;
     cmd.queueId = GetWireId();
-    cmd.bufferId = buffer->GetWireId();
+    cmd.bufferId = bufferId;
     cmd.bufferOffset = bufferOffset;
     cmd.data = static_cast<const uint8_t*>(data);
     cmd.size = size;

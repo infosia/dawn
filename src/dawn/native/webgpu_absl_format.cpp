@@ -320,10 +320,14 @@ absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConv
         return {true};
     }
     s->Append("[");
-    if (value->IsError()) {
-        s->Append("Invalid ");
+    if (value == reinterpret_cast<ApiObjectBase*>(0x1)) {
+        s->Append("Object from an unknown lost device");
+    } else {
+        if (value->IsError()) {
+            s->Append("Invalid ");
+        }
+        value->FormatLabel(s);
     }
-    value->FormatLabel(s);
     s->Append("]");
     return {true};
 }

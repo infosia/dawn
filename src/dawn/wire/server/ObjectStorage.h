@@ -153,6 +153,11 @@ class KnownObjectsBase {
     // Get a backend objects for a given client ID.
     // Returns an error if the object wasn't previously allocated.
     WireResult GetNativeHandle(ObjectId id, T* handle) const {
+        if (id == UINT32_MAX) {
+            *handle = reinterpret_cast<T>(0x1);
+            return WireResult::Success;
+        }
+
         if (id >= mKnown.size()) {
             return WireResult::FatalError;
         }
@@ -167,6 +172,12 @@ class KnownObjectsBase {
     }
 
     WireResult Get(ObjectId id, Reserved<T>* result) {
+        if (id == UINT32_MAX) {
+            static Data data{{reinterpret_cast<T>(0x1), 0, AllocationState::Allocated}};
+            *result = Reserved<T>{id, &data};
+            return WireResult::Success;
+        }
+
         if (id >= mKnown.size()) {
             return WireResult::FatalError;
         }
@@ -181,6 +192,12 @@ class KnownObjectsBase {
     }
 
     WireResult Get(ObjectId id, Known<T>* result) {
+        if (id == UINT32_MAX) {
+            static Data data{{reinterpret_cast<T>(0x1), 0, AllocationState::Allocated}};
+            *result = Known<T>{id, &data};
+            return WireResult::Success;
+        }
+
         if (id >= mKnown.size()) {
             return WireResult::FatalError;
         }
@@ -226,6 +243,7 @@ class KnownObjectsBase {
 
         if (handle.id >= mKnown.size()) {
             mKnown.push_back(std::move(data));
+            DAWN_CHECK(mKnown.size() < UINT32_MAX);
             *result = {handle.id, &mKnown.back()};
             return WireResult::Success;
         }
