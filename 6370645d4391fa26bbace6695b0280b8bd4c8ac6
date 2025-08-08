@@ -72,6 +72,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ca90664_2d2972ac",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-08-08T01:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9c66399_a66ddf07",
+      "range": {
+        "startLine": 584,
+        "startChar": 0,
+        "endLine": 584,
+        "endChar": 86
+      },
+      "revId": "6370645d4391fa26bbace6695b0280b8bd4c8ac6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "361b812d_1bd510d1",
