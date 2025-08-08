@@ -45,18 +45,50 @@ try_.defaults.set(
     siso_remote_jobs = siso.remote_jobs.DEFAULT,
 )
 
-def dawn_linux_builder(*, name, **kwargs):
+# These are commonly touched locations which do not have relevant testing on CQ
+# builders. `gn analyze` should avoid compiling/testing for CLs that only touch
+# these locations, but we can avoid starting a build entirely to save a bit of
+# resources.
+LOCATIONS_EXCLUDED_FROM_STANDALONE_CQ = [
+    # Go code.
+    cq.location_filter(exclude = True, path_regexp = "tools/src/.+"),
+    # WebGPU CTS expectation files, which are only relevant for Chromium.
+    cq.location_filter(exclude = True, path_regexp = "webgpu-cts/compat-expectations.txt"),
+    cq.location_filter(exclude = True, path_regexp = "webgpu-cts/expectations.txt"),
+]
+
+# CQ Builders
+
+try_.builder(
+    name = "dawn-cq-linux-x64-rel",
+    description_html = "Tests Dawn on Linux/x64 on multiple hardware configs. Blocks CL submission",
+    max_concurrent_builds = 10,
+    os = os.LINUX_DEFAULT,
+    ssd = None,
+    mirrors = [
+        "ci/dawn-linux-x64-builder-rel",
+        "ci/dawn-linux-x64-sws-rel",
+    ],
+    gn_args = "ci/dawn-linux-x64-builder-rel",
+    tryjob = try_.job(
+        location_filters = LOCATIONS_EXCLUDED_FROM_STANDALONE_CQ,
+    ),
+)
+
+# Manual trybots
+
+def dawn_linux_manual_builder(*, name, **kwargs):
     return try_.builder(
         name = name,
-        max_concurrent_builds = 5,
+        max_concurrent_builds = 1,
         os = os.LINUX_DEFAULT,
         ssd = None,
         **kwargs
     )
 
-dawn_linux_builder(
-    name = "dawn-cq-linux-x64-sws-rel",
-    description_html = "Tests Dawn on Linux/x64 with SwiftShader",
+dawn_linux_manual_builder(
+    name = "dawn-try-linux-x64-sws-rel",
+    description_html = "Tests Dawn on Linux/x64 with SwiftShader. Manual only.",
     mirrors = [
         "ci/dawn-linux-x64-builder-rel",
         "ci/dawn-linux-x64-sws-rel",
