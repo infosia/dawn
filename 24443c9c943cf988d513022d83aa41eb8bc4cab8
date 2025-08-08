@@ -16,6 +16,98 @@
       "message": "PTAL, this is patch 3 of 8 for implementing to the prototype I detailed in https://dawn-review.googlesource.com/c/dawn/+/255654",
       "revId": "24443c9c943cf988d513022d83aa41eb8bc4cab8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13d9c223_32322195",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T17:57:56Z",
+      "side": 1,
+      "message": "Now that `Mkdir` exists, I think this can be simplified by calling `Mkdir` for each iteration of the loop?",
+      "range": {
+        "startLine": 189,
+        "startChar": 1,
+        "endLine": 205,
+        "endChar": 2
+      },
+      "revId": "24443c9c943cf988d513022d83aa41eb8bc4cab8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94d46c72_1326c61e",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T17:57:56Z",
+      "side": 1,
+      "message": "Nit: Probably good to add another test for the case where the directory being created is a subdirectory of a (non-root) directory that does exist.",
+      "range": {
+        "startLine": 468,
+        "startChar": 3,
+        "endLine": 468,
+        "endChar": 43
+      },
+      "revId": "24443c9c943cf988d513022d83aa41eb8bc4cab8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cb1676d_9575977a",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T17:57:56Z",
+      "side": 1,
+      "message": "Like with the file tests, probably worth adding a file mode check.",
+      "range": {
+        "startLine": 489,
+        "startChar": 33,
+        "endLine": 489,
+        "endChar": 37
+      },
+      "revId": "24443c9c943cf988d513022d83aa41eb8bc4cab8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee5a1449_e12a18b5",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T17:57:56Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 614,
+        "startChar": 36,
+        "endLine": 614,
+        "endChar": 40
+      },
+      "revId": "24443c9c943cf988d513022d83aa41eb8bc4cab8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
