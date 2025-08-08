@@ -16,6 +16,46 @@
       "message": "PTAL, this is patch 2 of 8 for implementing to the prototype I detailed in https://dawn-review.googlesource.com/c/dawn/+/255654",
       "revId": "9fb754314d0985e2043d177df1dd9f654c5618e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e4d28d5_72fd73d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T17:42:31Z",
+      "side": 1,
+      "message": "LGTM % feedback on one comment",
+      "revId": "9fb754314d0985e2043d177df1dd9f654c5618e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e44d042b_717f5c98",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T17:42:31Z",
+      "side": 1,
+      "message": "Perhaps we don\u0027t care for testing purposes, but I think this could result in behavior that doesn\u0027t match the real implementation, e.g.:\n\n* Create a file that has an implicit directory\n* Delete the file\n* Real implementation will still find the directory, but FSTestOSWrapper will not\n\nIt looks like MkdirAll creates individual entries for each directory, so maybe this can\u0027t be hit in practice? In which case, this block of code can be removed?",
+      "range": {
+        "startLine": 131,
+        "startChar": 1,
+        "endLine": 131,
+        "endChar": 61
+      },
+      "revId": "9fb754314d0985e2043d177df1dd9f654c5618e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
