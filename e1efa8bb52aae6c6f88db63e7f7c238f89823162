@@ -16,6 +16,23 @@
       "message": "Anyone PTAL",
       "revId": "e1efa8bb52aae6c6f88db63e7f7c238f89823162",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6c1164f_3c69f66f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-08T03:31:53Z",
+      "side": 1,
+      "message": "Build failures due to https://dawn-review.googlesource.com/c/dawn/+/256521. Will resubmit shortly",
+      "revId": "e1efa8bb52aae6c6f88db63e7f7c238f89823162",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
