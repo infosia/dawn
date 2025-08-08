@@ -170,7 +170,7 @@ void Client::Disconnect() {
     for (auto& objectList : mObjects) {
         for (auto object : objectList.GetAllObjects()) {
             if (object != nullptr) {
-                object->CancelCallbacksForDisconnect();
+                object->Disconnect();
             }
         }
     }
@@ -181,12 +181,13 @@ bool Client::IsDisconnected() const {
 }
 
 void Client::Unregister(ObjectBase* obj, ObjectType type) {
-    UnregisterObjectCmd cmd;
-    cmd.objectType = type;
-    cmd.objectId = obj->GetWireId();
-    SerializeCommand(cmd);
-
     ReclaimReservation(obj, type);
+    if (!mDisconnected) {
+        UnregisterObjectCmd cmd;
+        cmd.objectType = type;
+        cmd.objectId = obj->GetWireId();
+        SerializeCommand(cmd);
+    }
 }
 
 void Client::ReclaimReservation(ObjectBase* obj, ObjectType type) {

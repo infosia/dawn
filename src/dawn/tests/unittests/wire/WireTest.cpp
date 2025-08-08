@@ -193,7 +193,8 @@ void WireTest::TearDown() {
     adapter = nullptr;
     device = nullptr;
     queue = nullptr;
-    dawnProcSetProcs(nullptr);
+    // DO NOT SUBMIT: need to fix this, can't unset the procs until BOTH WireTest instances are done
+    // dawnProcSetProcs(nullptr);
 
     // Derived classes should call the base TearDown() first. The client must
     // be reset before any mocks are deleted.

@@ -71,6 +71,10 @@ class Client : public ClientBase {
 
         mObjects[type].Insert(object.Get());
 
+        if (mDisconnected) {
+            object->Disconnect();
+        }
+
         return object;
     }
 
@@ -99,11 +103,17 @@ class Client : public ClientBase {
 
     template <typename Cmd>
     void SerializeCommand(const Cmd& cmd) {
+        if (mDisconnected) {
+            return;
+        }
         mSerializer.SerializeCommand(cmd, *this);
     }
 
     template <typename Cmd, typename... Extensions>
     void SerializeCommand(const Cmd& cmd, Extensions&&... es) {
+        if (mDisconnected) {
+            return;
+        }
         mSerializer.SerializeCommand(cmd, *this, std::forward<Extensions>(es)...);
     }
 

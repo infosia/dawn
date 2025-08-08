@@ -48,6 +48,12 @@ const ObjectHandle& ObjectBase::GetWireHandle() const {
 
 ObjectId ObjectBase::GetWireId() const {
     DAWN_ASSERT(IsRegistered());
+    // This causes a crash if the client manages to reuse an object from a
+    //   disconnected wire on a new wire. This should really be handled with a
+    //   proper validation error, but it's a corner case. crbug.com/435630456
+    // TODO(crbug.com/435630456): Ideally this should crash if the client
+    //   mismatches at all, even if it's not disconnected.
+    DAWN_CHECK(!mDisconnected);
     return mHandle.id;
 }
 
@@ -73,6 +79,11 @@ void ObjectBase::Unregister() {
 
     mClient->Unregister(this, GetObjectType());
     mClient = nullptr;
+}
+
+void ObjectBase::Disconnect() {
+    CancelCallbacksForDisconnect();
+    mDisconnected = true;
 }
 
 ObjectWithEventsBase::ObjectWithEventsBase(const ObjectBaseParams& params,
