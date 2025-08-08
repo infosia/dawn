@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6eb0e1c_ade32d40",
+        "filename": "src/tint/lang/msl/writer/common/options.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-08-08T22:21:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de73ba9e_1f092e2a",
+      "revId": "62b2160a6d6edcc8cc511a27c7fe8e4803beb3be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d147a2b3_12afd31e",
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Yeah, it\u0027d be nice if we could do this more automatically. There\u0027s a `ForeachField` helper in `utils/reflection.h` that could maybe be used? Or maybe create a new helper macro to declare a hash function that hashes all fields since you want this in multiple structs?",
       "parentUuid": "d147a2b3_12afd31e",
+      "revId": "62b2160a6d6edcc8cc511a27c7fe8e4803beb3be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2e27ddc_90139367",
+        "filename": "src/tint/lang/msl/writer/common/options.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-08-08T22:21:26Z",
+      "side": 1,
+      "message": "I added TINT_REFLECT_EQUALS and TINT_REFLECT_HASH_CODE helper macros.",
+      "parentUuid": "4263df38_800942ae",
       "revId": "62b2160a6d6edcc8cc511a27c7fe8e4803beb3be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
