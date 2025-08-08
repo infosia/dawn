@@ -16,6 +16,46 @@
       "message": "PTAL, this is patch 1 of 8 for implementing to the prototype I detailed in https://dawn-review.googlesource.com/c/dawn/+/255654",
       "revId": "d3f3d91d09a8c48398a04ac8672452de8bf10481",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdc01981_6d297dd4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T00:27:11Z",
+      "side": 1,
+      "message": "LGTM % feedback on one comment",
+      "revId": "d3f3d91d09a8c48398a04ac8672452de8bf10481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "460f27bd_68c18001",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T00:27:11Z",
+      "side": 1,
+      "message": "I suspect this might not work quite right on Windows, but we also probably aren\u0027t handling Windows well with the current solution. Is there a reasonable way to properly support Windows now, or will that likely require a fair amount of additional work?",
+      "range": {
+        "startLine": 70,
+        "startChar": 38,
+        "endLine": 70,
+        "endChar": 47
+      },
+      "revId": "d3f3d91d09a8c48398a04ac8672452de8bf10481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
