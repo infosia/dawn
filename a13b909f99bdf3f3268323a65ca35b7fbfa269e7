@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7bf26b3_8b830717",
+        "filename": "src/tint/lang/wgsl/writer/ir_to_program/ir_to_program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1172,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-08T13:45:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7954dbc7_500e1589",
+      "range": {
+        "startLine": 1172,
+        "startChar": 39,
+        "endLine": 1172,
+        "endChar": 42
+      },
+      "revId": "a13b909f99bdf3f3268323a65ca35b7fbfa269e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b57c879_b59acbdf",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "96e3b731_792cde15",
+        "filename": "src/tint/lang/wgsl/writer/ir_to_program/ir_to_program_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-08T13:45:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b57c879_b59acbdf",
+      "range": {
+        "startLine": 1002,
+        "startChar": 7,
+        "endLine": 1002,
+        "endChar": 8
+      },
+      "revId": "a13b909f99bdf3f3268323a65ca35b7fbfa269e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c875e8f_32a3bfc2",
@@ -60,6 +108,30 @@
       "writtenOn": "2025-08-08T05:02:40Z",
       "side": 1,
       "message": "```suggestion\n  var s1 : S;\n```",
+      "range": {
+        "startLine": 1009,
+        "startChar": 11,
+        "endLine": 1009,
+        "endChar": 12
+      },
+      "revId": "a13b909f99bdf3f3268323a65ca35b7fbfa269e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "392516fc_fb8c9437",
+        "filename": "src/tint/lang/wgsl/writer/ir_to_program/ir_to_program_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-08T13:45:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c875e8f_32a3bfc2",
       "range": {
         "startLine": 1009,
         "startChar": 11,
