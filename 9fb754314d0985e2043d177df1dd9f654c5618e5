@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9b5f378_fe57227b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T17:55:01Z",
+      "side": 1,
+      "message": "Actually one more comment.",
+      "revId": "9fb754314d0985e2043d177df1dd9f654c5618e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e44d042b_717f5c98",
@@ -53,6 +70,29 @@
         "startChar": 1,
         "endLine": 131,
         "endChar": 61
+      },
+      "revId": "9fb754314d0985e2043d177df1dd9f654c5618e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6d8e99f_1176a0eb",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-08T17:55:01Z",
+      "side": 1,
+      "message": "Probably worth adding a check that the resulting file\u0027s file mode is what we expect? I think this is implicitly tested by the _MatchesReal test, but it wouldn\u0027t hurt to have an explicit check in the unittest version.",
+      "range": {
+        "startLine": 390,
+        "startChar": 49,
+        "endLine": 390,
+        "endChar": 53
       },
       "revId": "9fb754314d0985e2043d177df1dd9f654c5618e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
