@@ -167,6 +167,12 @@ class KnownObjectsBase {
     }
 
     WireResult Get(ObjectId id, Reserved<T>* result) {
+        if (id == UINT32_MAX) {
+            static Data data{{reinterpret_cast<T>(0x1), 0, AllocationState::Allocated}};
+            *result = Reserved<T>{id, &data};
+            return WireResult::Success;
+        }
+
         if (id >= mKnown.size()) {
             return WireResult::FatalError;
         }
@@ -181,6 +187,12 @@ class KnownObjectsBase {
     }
 
     WireResult Get(ObjectId id, Known<T>* result) {
+        if (id == UINT32_MAX) {
+            static Data data{{reinterpret_cast<T>(0x1), 0, AllocationState::Allocated}};
+            *result = Known<T>{id, &data};
+            return WireResult::Success;
+        }
+
         if (id >= mKnown.size()) {
             return WireResult::FatalError;
         }
