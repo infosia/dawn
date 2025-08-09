@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "894ac79c_83535bc8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-09T19:55:25Z",
+      "side": 1,
+      "message": "I am sympathetic to the fact that we basically have no owners/maintainers for this code. The last thing you want is bugs/additional complexity.\n\nI tend to think of the targeting as a good thing. You get 95% of the value without making major changes. You just skip barriers that are obviously unnecessary. \n\nI think we do have enough indication externally that this feature would bring performance benefits. Certainly enough to enable developers to experiment. (In some ways get the community to do the heavy lifting) \n \nThe loop at [2] is not really concerning as this is simply a conservative optimization. We can simply bail after M tests or keep M in the list. This list is also not the number of barriers but the number of unique barriers.\n\nFinally as you mention below there might be a much cleaner way of doing this universally. We could move all buffer barriers to the earliest possible moment. This will reduce the state tracking and make for a far less intrusive implementation.\n\nI also wonder if there are any plans to make further changes to this code. For example does bindless require us to change the barrier implementation?",
+      "parentUuid": "437cb948_917643a5",
+      "revId": "ce0b009ca6d4ecb6941eda25a4078323e3c0b792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "276e1db3_bae70c14",
         "filename": "src/dawn/native/Toggles.cpp",
         "patchSetId": 14
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "should be 425987598",
       "parentUuid": "276e1db3_bae70c14",
+      "revId": "ce0b009ca6d4ecb6941eda25a4078323e3c0b792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33aac744_6176d376",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-09T19:55:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a870039f_be8ffad5",
       "revId": "ce0b009ca6d4ecb6941eda25a4078323e3c0b792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
