@@ -29,7 +29,9 @@
 #define SRC_DAWN_NATIVE_EXECUTIONQUEUE_H_
 
 #include <atomic>
+#include <condition_variable>
 #include <functional>
+#include <mutex>
 
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
@@ -93,7 +95,9 @@ class ExecutionQueueBase : public ApiObjectBase {
     // Wait at most `timeout` synchronously for the ExecutionSerial to pass.
     MaybeError WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout);
 
-    // Tracks a new task to complete when |serial| is reached.
+    // Tracks new tasks to complete when |serial| is reached. Note that a "re-entrant" task is a
+    // task that may result in trying to acquire the device-wide lock.
+    void TrackReentrantSerialTask(ExecutionSerial serial, Task&& task);
     void TrackSerialTask(ExecutionSerial serial, Task&& task);
 
     // In the 'Normal' mode, currently recorded commands in the backend submitted in the next Tick.
@@ -148,7 +152,23 @@ class ExecutionQueueBase : public ApiObjectBase {
     std::atomic<uint64_t> mCompletedSerial = static_cast<uint64_t>(kBeginningOfGPUTime);
     std::atomic<uint64_t> mLastSubmittedSerial = static_cast<uint64_t>(kBeginningOfGPUTime);
 
-    MutexProtected<SerialMap<ExecutionSerial, Task>> mWaitingTasks;
+    // Mutex, condition variable, and boolean statuses are used by the class to synchronize task
+    // completion to ensure that:
+    //   1) Callback ordering is guaranteed.
+    //   2) Re-entrant callbacks do not happen when we are waiting for idle.
+    std::mutex mMutex;
+    std::condition_variable mCv;
+    bool mCallingCallbacks = false;
+    bool mWaitingForIdle = false;
+
+    // We use two maps, one which tracks potentially re-entrant tasks w.r.t the device-wide lock.
+    // This is currently necessary to ensure that we defer potentially re-entrant callbacks from
+    // happening on another thread when the main thread is calling |WaitForIdleForDestruction| which
+    // is currently holding the device lock. We also don't want to defer all callbacks because some
+    // backends may use |WaitForSerial| to implement |WaitForIdleDestruction| which may require some
+    // callbacks to run on the other thread.
+    SerialMap<ExecutionSerial, Task> mWaitingTasks;
+    SerialMap<ExecutionSerial, Task> mWaitingReentantTasks;
 };
 
 }  // namespace dawn::native
