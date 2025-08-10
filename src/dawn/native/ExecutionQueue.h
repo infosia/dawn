@@ -29,7 +29,9 @@
 #define SRC_DAWN_NATIVE_EXECUTIONQUEUE_H_
 
 #include <atomic>
+#include <condition_variable>
 #include <functional>
+#include <mutex>
 
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
@@ -93,7 +95,7 @@ class ExecutionQueueBase : public ApiObjectBase {
     // Wait at most `timeout` synchronously for the ExecutionSerial to pass.
     MaybeError WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout);
 
-    // Tracks a new task to complete when |serial| is reached.
+    // Tracks new tasks to complete when |serial| is reached.
     void TrackSerialTask(ExecutionSerial serial, Task&& task);
 
     // In the 'Normal' mode, currently recorded commands in the backend submitted in the next Tick.
@@ -148,7 +150,15 @@ class ExecutionQueueBase : public ApiObjectBase {
     std::atomic<uint64_t> mCompletedSerial = static_cast<uint64_t>(kBeginningOfGPUTime);
     std::atomic<uint64_t> mLastSubmittedSerial = static_cast<uint64_t>(kBeginningOfGPUTime);
 
-    MutexProtected<SerialMap<ExecutionSerial, Task>> mWaitingTasks;
+    // Mutex, condition variable, and boolean statuses are used by the class to synchronize task
+    // completion to ensure that:
+    //   1) Callback ordering is guaranteed.
+    //   2) Re-entrant callbacks do not happen when we are waiting for idle.
+    std::mutex mMutex;
+    std::condition_variable mCv;
+    bool mCallingCallbacks = false;
+    bool mWaitingForIdle = false;
+    SerialMap<ExecutionSerial, Task> mWaitingTasks;
 };
 
 }  // namespace dawn::native
