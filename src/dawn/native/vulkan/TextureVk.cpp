@@ -655,6 +655,12 @@ VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
     }
     if (usage & wgpu::TextureUsage::CopyDst) {
         flags |= VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+        if (ToBackend(device)->GetDeviceInfo().HasExt(DeviceExt::HostImageCopy)) {
+            VkFormat vkFormat = VulkanImageFormat(ToBackend(device), format.baseFormat);
+            if (!ToBackend(device->GetPhysicalDevice())->IsHostTranferrable(vkFormat)) {
+                flags |= VK_IMAGE_USAGE_HOST_TRANSFER_BIT;
+            }
+        }
     }
     if (usage & wgpu::TextureUsage::TextureBinding) {
         flags |= VK_IMAGE_USAGE_SAMPLED_BIT;

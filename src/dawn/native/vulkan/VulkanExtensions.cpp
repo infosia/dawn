@@ -142,6 +142,7 @@ static constexpr std::array<DeviceExtInfo, kDeviceExtCount> sDeviceExtInfos{{
     // Promoted in 1.4
     {DeviceExt::PipelineRobustness, "VK_EXT_pipeline_robustness"},
     {DeviceExt::Maintenance5, "VK_KHR_maintenance5"},
+    {DeviceExt::HostImageCopy, "VK_EXT_host_image_copy"},
 
     // Not promoted to core in any version
     {DeviceExt::DepthClipEnable, "VK_EXT_depth_clip_enable"},
@@ -272,6 +273,14 @@ DeviceExtSet EnsureDependencies(const DeviceExtSet& advertisedExts,
 
             case DeviceExt::Maintenance5:
                 hasDependencies = HasDep(DeviceExt::DynamicRendering);
+                break;
+
+            case DeviceExt::HostImageCopy:
+                hasDependencies = version >= VK_VERSION_1_3;
+                // TODO(crbug.com/439630588):
+                // Or VK_KHR_get_physical_device_properties2 &&
+                //    VK_KHR_copy_commands2 &&
+                //    VK_KHR_format_feature_flags2
                 break;
 
             case DeviceExt::EnumCount:
