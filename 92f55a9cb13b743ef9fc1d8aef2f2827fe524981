@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10cf427b_2fc04f1e",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-11T17:57:21Z",
+      "side": 1,
+      "message": "Just for my understanding, how come this can\u0027t be flattened into the struct below?",
+      "range": {
+        "startLine": 524,
+        "startChar": 4,
+        "endLine": 532,
+        "endChar": 6
+      },
+      "revId": "92f55a9cb13b743ef9fc1d8aef2f2827fe524981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1458e0c0_a2803f12",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-11T17:57:21Z",
+      "side": 1,
+      "message": "nit. Feel free to do in follow up or something, but when I was updating some of the validation code, I made a lot of these return the `UnpackedPtr\u003cBindGroupLayoutDescriptor\u003e` (or error) so that upstream we can use that directly. Then depending on whether we have validation enabled or not, I would either call the `Validate*Descriptor` or just straight up call `Unpack` upstream.",
+      "range": {
+        "startLine": 324,
+        "startChar": 0,
+        "endLine": 324,
+        "endChar": 44
+      },
+      "revId": "92f55a9cb13b743ef9fc1d8aef2f2827fe524981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
