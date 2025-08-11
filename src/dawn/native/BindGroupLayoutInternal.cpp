@@ -380,8 +380,7 @@ MaybeError ValidateBindGroupLayoutDescriptor(DeviceBase* device,
                             bindingNumber + arraySize > startOfDynamicArray.value(),
                         "On entries[%u]: the range of binding used [%u, %u) conflicts with the "
                         "dynamic binding array that starts at binding %u.",
-                        i, bindingNumber, bindingNumber + arraySize,
-                        startOfDynamicArray.value());
+                        i, bindingNumber, bindingNumber + arraySize, startOfDynamicArray.value());
 
         // Check that the same binding is not set twice. bindingNumber + arraySize cannot overflow
         // as they are both smaller than kMaxBindingsPerBindGroupTyped.
