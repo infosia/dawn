@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6953ace7_3a986fe9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-11T15:08:22Z",
+      "side": 1,
+      "message": "Loko, Dan PTAL!\n\nKai I\u0027ll CC you on all of these but want to start landing stuff during SIGGRAPH so I\u0027ll ask Loko to review in the meantime.",
+      "revId": "84d3a78c50731d7b459dca112197363aaed75854",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
