@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84f394d1_82b1e234",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 4494,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-08-11T22:12:09Z",
+      "side": 1,
+      "message": "This inference code is copied from the old SPIR-V reader where it is used more extensively to infer texture and sampler types.\n\nI didn\u0027t want to disturb it on its way in, and it has tests.\n\nI think this will be needed when handling textures as function parameters.\nb/42251883",
+      "revId": "2e14f9b32c2be1e93d4de12c29c9165c52e342f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
