@@ -80,6 +80,30 @@
       },
       "revId": "d3f3d91d09a8c48398a04ac8672452de8bf10481",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f0959c2_cda53bc8",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-11T20:08:56Z",
+      "side": 1,
+      "message": "Touch more tricky then I though it would be, since alot of the filepath tools are pretty OS-dependent in their behaviour. I have updated the CleanPath function to normalize to the format that fs.FS uses (which uses unix \u0027/\u0027s, but no root \u0027/\u0027), and unit testing for that. Added in a getRoot helper in the test file to get the OS dependent root path for the tests \u0027/\u0027 vs \u0027C:\\\u0027",
+      "parentUuid": "2b40af7b_3bdf0fea",
+      "range": {
+        "startLine": 70,
+        "startChar": 38,
+        "endLine": 70,
+        "endChar": 47
+      },
+      "revId": "d3f3d91d09a8c48398a04ac8672452de8bf10481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
