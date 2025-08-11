@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9871befc_ed4912f7",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-11T10:30:37Z",
+      "side": 1,
+      "message": "Remaining optional nit from a previous comment, the implementations can be in the .cpp, this isn\u0027t necessary to inline for performance. (but if annoying, feel free to just mark as resolved since if will remove the CR+2)",
+      "revId": "99cc2f174a755fc773e5a276463500383074bff2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
