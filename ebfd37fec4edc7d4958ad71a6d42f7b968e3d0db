@@ -16,6 +16,24 @@
       "message": "Hm, i wonder why we kept the other 2 privates but not this one?",
       "revId": "ebfd37fec4edc7d4958ad71a6d42f7b968e3d0db",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fd88ac4_b994e32f",
+        "filename": "test/tint/bug/oss-fuzz/57795.spv.expected.wgsl",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-11T17:00:54Z",
+      "side": 0,
+      "message": "Bug in the DCE transform. Will fix.",
+      "parentUuid": "0be7b901_3af4d628",
+      "revId": "ebfd37fec4edc7d4958ad71a6d42f7b968e3d0db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

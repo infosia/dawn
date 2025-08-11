@@ -33,6 +33,24 @@
       "message": "```suggestion\n                        TINT_ICE() \u003c\u003c \"Unsupported non-float 32-bit depth texture\";\n```\n\nMaybe make this explicit?",
       "revId": "227761eb97d53e70394a9a2fc5f4140278812715",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adca7b9d_bee052df",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-11T17:00:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f462d4ab_c4c08ed4",
+      "revId": "227761eb97d53e70394a9a2fc5f4140278812715",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
