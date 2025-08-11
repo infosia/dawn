@@ -33,6 +33,24 @@
       "message": "Why do we need to do this check here? Aren\u0027t we now using the `CanGenerate` function to avoid this issue?",
       "revId": "120474d81b0f6582647aee399cc777f4e82229ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a7afa9e_ffd1068a",
+        "filename": "src/tint/lang/msl/writer/common/option_helpers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-11T01:59:50Z",
+      "side": 1,
+      "message": "Right. But does CanGenerate() only be called in Fuzzer case? Do we need to cover the common case or I misunderstand.",
+      "parentUuid": "e579ee09_caae78b7",
+      "revId": "120474d81b0f6582647aee399cc777f4e82229ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
