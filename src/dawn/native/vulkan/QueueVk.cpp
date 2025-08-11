@@ -31,6 +31,7 @@
 #include <optional>
 #include <utility>
 
+#include "dawn/common/Log.h"
 #include "dawn/common/Math.h"
 #include "dawn/native/Buffer.h"
 #include "dawn/native/CommandValidation.h"
@@ -40,6 +41,7 @@
 #include "dawn/native/vulkan/CommandRecordingContextVk.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
+#include "dawn/native/vulkan/PhysicalDeviceVk.h"
 #include "dawn/native/vulkan/TextureVk.h"
 #include "dawn/native/vulkan/UniqueVkHandle.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
@@ -106,6 +108,203 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
     DAWN_TRY(SubmitPendingCommandsImpl());
 
     return {};
+}
+
+Extent3D ComputeTextureCopyExtent(const Texture* texture,
+                                  const Format& format,
+                                  const Aspect& aspect,
+                                  const TexelCopyTextureInfo& textureCopy,
+                                  const Extent3D& copySize) {
+    Extent3D validTextureCopyExtent = copySize;
+    Extent3D virtualSizeAtLevel =
+        texture->GetMipLevelSingleSubresourceVirtualSize(textureCopy.mipLevel, aspect);
+    DAWN_ASSERT(textureCopy.origin.x <= virtualSizeAtLevel.width);
+    DAWN_ASSERT(textureCopy.origin.y <= virtualSizeAtLevel.height);
+    if (copySize.width > virtualSizeAtLevel.width - textureCopy.origin.x) {
+        DAWN_ASSERT(format.isCompressed);
+        validTextureCopyExtent.width = virtualSizeAtLevel.width - textureCopy.origin.x;
+    }
+    if (copySize.height > virtualSizeAtLevel.height - textureCopy.origin.y) {
+        DAWN_ASSERT(format.isCompressed);
+        validTextureCopyExtent.height = virtualSizeAtLevel.height - textureCopy.origin.y;
+    }
+
+    return validTextureCopyExtent;
+}
+
+MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
+                                   const void* data,
+                                   size_t dataSize,
+                                   const TexelCopyBufferLayout& dataLayout,
+                                   const Extent3D& writeSizePixel) {
+    if (writeSizePixel.width == 0 || writeSizePixel.height == 0 ||
+        writeSizePixel.depthOrArrayLayers == 0) {
+        return {};
+    }
+
+    Device* device = ToBackend(GetDevice());
+    if (!device->GetDeviceInfo().HasExt(DeviceExt::HostImageCopy)) {
+        dawn::ErrorLog()
+            << "!! No HostImageCopy Extension, Falling back to default WriteTextureImpl !!";
+        return QueueBase::WriteTextureImpl(destination, data, dataSize, dataLayout, writeSizePixel);
+    }
+
+    dawn::ErrorLog() << "++ HostImageCopy Supported! ++";
+
+    Texture* texture = ToBackend(destination.texture);
+    const Format& format = texture->GetFormat();
+
+    VkFormat vkFormat = VulkanImageFormat(device, format.baseFormat);
+
+    if (!ToBackend(device->GetPhysicalDevice())->IsHostTranferrable(vkFormat)) {
+        dawn::ErrorLog() << "!! HOST_IMAGE_TRANSFER_BIT not supported for this Image, Falling back "
+                            "to default WriteTextureImpl !!";
+        return QueueBase::WriteTextureImpl(destination, data, dataSize, dataLayout, writeSizePixel);
+    }
+
+    const Aspect aspect = SelectFormatAspects(format, destination.aspect);
+    const TexelBlockInfo& blockInfo = format.GetAspectInfo(aspect).block;
+
+    // We are only copying the part of the data that will appear in the texture.
+    // Note that validating texture copy range ensures that writeSizePixel->width and
+    // writeSizePixel->height are multiples of blockWidth and blockHeight respectively.
+    DAWN_ASSERT(writeSizePixel.width % blockInfo.width == 0);
+    DAWN_ASSERT(writeSizePixel.height % blockInfo.height == 0);
+
+    VkMemoryToImageCopyEXT region;
+    region.sType = VK_STRUCTURE_TYPE_MEMORY_TO_IMAGE_COPY;
+    region.pNext = nullptr;
+    region.pHostPointer = reinterpret_cast<const uint8_t*>(data) + dataLayout.offset;
+    region.memoryRowLength = dataLayout.bytesPerRow / blockInfo.byteSize * blockInfo.width;
+    region.memoryImageHeight = dataLayout.rowsPerImage * blockInfo.height;
+
+    region.imageSubresource.aspectMask = VulkanAspectMask(aspect);
+    region.imageSubresource.mipLevel = destination.mipLevel;
+
+    switch (texture->GetDimension()) {
+        case wgpu::TextureDimension::Undefined:
+            DAWN_UNREACHABLE();
+        case wgpu::TextureDimension::e1D:
+            DAWN_ASSERT(destination.origin.z == 0 && writeSizePixel.depthOrArrayLayers == 1);
+            region.imageOffset.x = destination.origin.x;
+            region.imageOffset.y = 0;
+            region.imageOffset.z = 0;
+            region.imageSubresource.baseArrayLayer = 0;
+            region.imageSubresource.layerCount = 1;
+
+            DAWN_ASSERT(!format.isCompressed);
+            region.imageExtent.width = writeSizePixel.width;
+            region.imageExtent.height = 1;
+            region.imageExtent.depth = 1;
+            break;
+
+        case wgpu::TextureDimension::e2D: {
+            region.imageOffset.x = destination.origin.x;
+            region.imageOffset.y = destination.origin.y;
+            region.imageOffset.z = 0;
+            region.imageSubresource.baseArrayLayer = destination.origin.z;
+            region.imageSubresource.layerCount = writeSizePixel.depthOrArrayLayers;
+
+            Extent3D imageExtent =
+                ComputeTextureCopyExtent(texture, format, aspect, destination, writeSizePixel);
+            region.imageExtent.width = imageExtent.width;
+            region.imageExtent.height = imageExtent.height;
+            region.imageExtent.depth = 1;
+            break;
+        }
+
+        case wgpu::TextureDimension::e3D: {
+            region.imageOffset.x = destination.origin.x;
+            region.imageOffset.y = destination.origin.y;
+            region.imageOffset.z = destination.origin.z;
+            region.imageSubresource.baseArrayLayer = 0;
+            region.imageSubresource.layerCount = 1;
+
+            Extent3D imageExtent =
+                ComputeTextureCopyExtent(texture, format, aspect, destination, writeSizePixel);
+            region.imageExtent.width = imageExtent.width;
+            region.imageExtent.height = imageExtent.height;
+            region.imageExtent.depth = writeSizePixel.depthOrArrayLayers;
+            break;
+        }
+    }
+
+    SubresourceRange subresourceRange = {
+        aspect,
+        {region.imageSubresource.baseArrayLayer, region.imageSubresource.layerCount},
+        {destination.mipLevel, 1}};
+
+    if (IsCompleteSubresourceCopiedTo(destination.texture, writeSizePixel, destination.mipLevel,
+                                      destination.aspect)) {
+        // Since texture has been fully overwritten, it has been "initialized"
+        destination.texture->SetIsSubresourceContentInitialized(true, subresourceRange);
+    } else {
+        dawn::ErrorLog() << "!! Not writing to complete subresources, Falling back to default "
+                            "WriteTextureImpl !!";
+        return QueueBase::WriteTextureImpl(destination, data, dataSize, dataLayout, writeSizePixel);
+    }
+
+    {
+        // TODO: Not exactly accurate, doesn't account for full layer range.
+        /*VkImageLayout textureLayout = texture->GetCurrentLayout(
+            aspect, region.imageSubresource.baseArrayLayer, destination.mipLevel);*/
+
+        // TODO: I don't think this is the right thing to do in all cases.
+        VkHostImageLayoutTransitionInfoEXT transition;
+        transition.sType = VK_STRUCTURE_TYPE_HOST_IMAGE_LAYOUT_TRANSITION_INFO;
+        transition.pNext = nullptr;
+        transition.image = texture->GetHandle();
+        // TODO: This will cause the texture contents to be undefined. Doesn't matter here because
+        // we're only using this path for complete subresources, as checked for above.
+        transition.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+        // TODO: This should ideally be the layout that will be used AFTER the copy is done.
+        transition.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+        transition.subresourceRange.aspectMask = VulkanAspectMask(aspect);
+        transition.subresourceRange.baseMipLevel = destination.mipLevel;
+        transition.subresourceRange.levelCount = 1;
+        transition.subresourceRange.baseArrayLayer = region.imageSubresource.baseArrayLayer;
+        transition.subresourceRange.layerCount = region.imageSubresource.layerCount;
+
+        MaybeError maybeError = CheckVkSuccess(
+            device->fn.TransitionImageLayoutEXT(device->GetVkDevice(), 1, &transition),
+            "TransitionImageLayoutEXT");
+        if (maybeError.IsError()) {
+            dawn::ErrorLog() << "##### TRANSITION ERROR #####";
+            std::unique_ptr<ErrorData> error = maybeError.AcquireError();
+            dawn::ErrorLog() << error->GetFormattedMessage().c_str();
+            return maybeError;
+        }
+    }
+
+    VkCopyMemoryToImageInfoEXT copyInfo;
+    copyInfo.sType = VK_STRUCTURE_TYPE_COPY_MEMORY_TO_IMAGE_INFO;
+    copyInfo.pNext = nullptr;
+    copyInfo.flags = 0;
+    copyInfo.dstImage = texture->GetHandle();
+    // TODO: This should ideally be the layout that will be used AFTER the copy is done.
+    copyInfo.dstImageLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+    copyInfo.regionCount = 1;
+    copyInfo.pRegions = &region;
+
+    MaybeError maybeError = CheckVkSuccess(
+        device->fn.CopyMemoryToImageEXT(device->GetVkDevice(), &copyInfo), "CopyMemoryToImage");
+    if (maybeError.IsError()) {
+        dawn::ErrorLog() << "##### WAS ERROR #####";
+        std::unique_ptr<ErrorData> error = maybeError.AcquireError();
+        dawn::ErrorLog() << error->GetFormattedMessage().c_str();
+        return maybeError;
+    } else {
+        dawn::ErrorLog() << "++ No Error ++";
+    }
+
+    // TODO: What needs to be done to synchronize this afterwards? Not this, apparently.
+    // The manual page
+    // (https://registry.khronos.org/vulkan/specs/latest/man/html/vkCopyMemoryToImageEXT.html) says
+    // "there would not be a need for a memory barrier before using the results of this copy
+    // operation on the device."
+    texture->UpdateUsage(wgpu::TextureUsage::CopyDst, wgpu::ShaderStage::None, subresourceRange);
+
+    return maybeError;
 }
 
 void Queue::SetLabelImpl() {

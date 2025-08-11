@@ -416,6 +416,11 @@ MaybeError VulkanFunctions::LoadDeviceProcs(VkInstance instance,
         GET_DEVICE_PROC(CmdDrawIndexedIndirectCountKHR);
     }
 
+    if (deviceInfo.HasExt(DeviceExt::HostImageCopy)) {
+        GET_DEVICE_PROC(CopyMemoryToImageEXT);
+        GET_DEVICE_PROC(TransitionImageLayoutEXT);
+    }
+
 #if VK_USE_PLATFORM_FUCHSIA
     if (deviceInfo.HasExt(DeviceExt::ExternalMemoryZirconHandle)) {
         GET_DEVICE_PROC(GetMemoryZirconHandleFUCHSIA);
