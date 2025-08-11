@@ -22,6 +22,30 @@
       },
       "revId": "c423f88e4ff4fd124c2807fee4efb950b426e831",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1aa2eaa5_b7430ed1",
+        "filename": "tools/android/webgpu/src/main/java/android/dawn/helper/Textures.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3650017
+      },
+      "writtenOn": "2025-08-11T12:40:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da1c0cd4_fcfe1e00",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 19
+      },
+      "revId": "c423f88e4ff4fd124c2807fee4efb950b426e831",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
