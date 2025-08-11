@@ -16,6 +16,24 @@
       "message": "You just need to rename the three folders\n\ntools/android/webgpu/src/androidTest/java/android/dawn -\u003e tools/android/webgpu/src/androidTest/java/androidx/webgpu\n\ntools/android/webgpu/src/test/java/android/dawn -\u003e tools/android/webgpu/src/test/java/androidx/webgpu\n\ntools/android/webgpu/src/main/java/android/dawn -\u003e tools/android/webgpu/src/main/java/androidx/webgpu",
       "revId": "667321631eb0e8e1b6606e2d113c95c65acb571a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92171a75_3323d984",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3650017
+      },
+      "writtenOn": "2025-08-11T13:00:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17da71f2_66cdb28e",
+      "revId": "667321631eb0e8e1b6606e2d113c95c65acb571a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
