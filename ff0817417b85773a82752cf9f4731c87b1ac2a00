@@ -16,6 +16,29 @@
       "message": "PTAL!",
       "revId": "ff0817417b85773a82752cf9f4731c87b1ac2a00",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44665ff6_cc514f73",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-11T20:35:56Z",
+      "side": 1,
+      "message": "I\u0027m not positive, but I *think* that if the values for tier0 and tier1 are the same, we might be able to omit one?",
+      "range": {
+        "startLine": 122,
+        "startChar": 80,
+        "endLine": 122,
+        "endChar": 97
+      },
+      "revId": "ff0817417b85773a82752cf9f4731c87b1ac2a00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
