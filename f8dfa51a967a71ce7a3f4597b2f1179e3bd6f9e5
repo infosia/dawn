@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "506c29d2_ca3d0050",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-11T15:11:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2542327_c9202578",
+      "revId": "f8dfa51a967a71ce7a3f4597b2f1179e3bd6f9e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "966f176a_5108d1c0",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-08-07T15:31:25Z",
       "side": 1,
       "message": "Please fix this WARNING reported by Spellchecker: \"betwwen\" is a possible misspelling of \"between\".\n\nTo bypass Spellchecker, add a...\n\n\"betwwen\" is a possible misspelling of \"between\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 4411,
+        "startChar": 58,
+        "endLine": 4411,
+        "endChar": 65
+      },
+      "revId": "f8dfa51a967a71ce7a3f4597b2f1179e3bd6f9e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dabdd4a4_117f451b",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 4411,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-11T15:11:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "966f176a_5108d1c0",
       "range": {
         "startLine": 4411,
         "startChar": 58,
