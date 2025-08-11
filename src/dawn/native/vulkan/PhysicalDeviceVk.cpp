@@ -153,6 +153,16 @@ bool PhysicalDevice::IsTextureCompressionASTCSliced3DSupported(VkFormat format) 
     return (result == VK_SUCCESS);
 }
 
+bool PhysicalDevice::IsHostTranferrable(VkFormat format) const {
+    VkFormatProperties2 formatProps = {};
+    formatProps.sType = VK_STRUCTURE_TYPE_FORMAT_PROPERTIES_2;
+
+    mVulkanInstance->GetFunctions().GetPhysicalDeviceFormatProperties2(mVkPhysicalDevice, format,
+                                                                       &formatProps);
+    return (formatProps.formatProperties.optimalTilingFeatures &
+            VK_HOST_IMAGE_COPY_MEMCPY_BIT_EXT) != 0;
+}
+
 MaybeError PhysicalDevice::InitializeImpl() {
     DAWN_TRY_ASSIGN(mDeviceInfo, GatherDeviceInfo(*this));
 
