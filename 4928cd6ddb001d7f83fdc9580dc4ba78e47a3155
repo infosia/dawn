@@ -16,6 +16,23 @@
       "message": "PTAL\n\nBuilder should be happy once https://dawn-review.googlesource.com/c/dawn/+/256754 lands.\n\nI\u0027ll confirm that with a manually triggered build before submitting. Will also let chat know.",
       "revId": "4928cd6ddb001d7f83fdc9580dc4ba78e47a3155",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "802cd0aa_f627c54c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-08-11T18:23:41Z",
+      "side": 1,
+      "message": "Woo-hoo! 🎉",
+      "revId": "4928cd6ddb001d7f83fdc9580dc4ba78e47a3155",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
