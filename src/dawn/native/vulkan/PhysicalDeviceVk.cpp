@@ -616,6 +616,50 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
 
     EnableFeature(Feature::TextureComponentSwizzle);
+
+    // Enable support for bindless if WebGPU semantics are supported:
+    //  - We can update descriptor sets while pending.
+    //  - Descriptor set may have variable size and be partially bound.
+    //  - We can declare runtime-sized arrays of resources in SPIRV.
+    //  - Limits are large enough for WebGPU.
+    // Bindless support for WebGPU requires checking a LOT of things, use runtimeDescriptorArray as
+    // good proxy to whether bindless will be available, and do the proper check using separate
+    // boolean variables instead of a giant if-statement. runtimeDescriptorArray checks if we can
+    // declare runtime-sized arrays of resources in SPIRV.
+    if (mDeviceInfo.HasExt[DeviceExt::DescriptorIndexing] &&
+        mDeviceInfo.descriptorIndexingFeatures.runtimeDescriptorArray) {
+        // All shader resource types support update-after-bind, except uniform buffers and input
+        // attachments.
+        bool hasUpdateAfterBind =
+            mDeviceInfo.descriptorIndexingFeatures.descriptorBindingSampledImageUpdateAfterBind &&
+            mDeviceInfo.descriptorIndexingFeatures.descriptorBindingStorageImageUpdateAfterBind &&
+            mDeviceInfo.descriptorIndexingFeatures.descriptorBindingStorageBufferUpdateAfterBind &&
+            mDeviceInfo.descriptorIndexingFeatures
+                .descriptorBindingUniformTexelBufferUpdateAfterBind &&
+            mDeviceInfo.descriptorIndexingFeatures
+                .descriptorBindingStorageTexelBufferUpdateAfterBind;
+
+        // We can modify descriptor sets after binding them, they can have variable size and be
+        // sparse.
+        bool hasOtherFeatures =
+            mDeviceInfo.descriptorIndexingFeatures.descriptorBindingUpdateUnusedWhilePending &&
+            mDeviceInfo.descriptorIndexingFeatures.descriptorBindingPartiallyBound &&
+            mDeviceInfo.descriptorIndexingFeatures.descriptorBindingVariableDescriptorCount;
+
+        // TODO() aaaaaah robustBufferAccessUpdateAfterBind
+        bool
+
+            maxPerStageDescriptorUpdateAfterBindSamplers;
+        maxPerStageDescriptorUpdateAfterBindStorageBuffers;
+        maxPerStageDescriptorUpdateAfterBindSampledImages;
+        maxPerStageDescriptorUpdateAfterBindStorageImages;
+        maxPerStageUpdateAfterBindResources;
+        maxDescriptorSetUpdateAfterBindSamplers;
+        maxDescriptorSetUpdateAfterBindStorageBuffers;
+        maxDescriptorSetUpdateAfterBindSampledImages;
+        maxDescriptorSetUpdateAfterBindStorageImages;
+        maxUpdateAfterBindDescriptorsInAllPools
+    }
 }
 
 MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
