@@ -40,9 +40,11 @@ cc_library(
   name = "parser",
   srcs = [
     "parser.cc",
+    "usage.cc",
   ],
   hdrs = [
     "parser.h",
+    "usage.h",
   ],
   deps = [
     "//src/tint/api/common",
@@ -109,6 +111,7 @@ cc_library(
     "phi_test.cc",
     "struct_test.cc",
     "unary_test.cc",
+    "usage_test.cc",
     "var_test.cc",
   ],
   deps = [
