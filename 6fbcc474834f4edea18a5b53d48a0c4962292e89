@@ -118,6 +118,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "73d18447_47a575f9",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-11T10:28:24Z",
+      "side": 1,
+      "message": "Ah I got confused because I thought a tint::Program was a container for Tint IR and forgot that we have yet to do that change in Dawn (to keep a Tint IR instead of a Tint AST in ShaderModule). Thank you for the explanation, SGTM.",
+      "parentUuid": "edea38c5_c73e9385",
+      "revId": "6fbcc474834f4edea18a5b53d48a0c4962292e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3219d4d5_b7a2d6c7",
