@@ -1,6 +1,6 @@
-package android.dawn
+package androidx.webgpu
 
-import android.dawn.helper.Util
+import androidx.webgpu.helper.Util
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Test
 import org.junit.runner.RunWith

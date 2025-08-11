@@ -1,6 +1,6 @@
 package android.dawn.helper
 
-import android.dawn.*
+import androidx.webgpu.*
 import android.graphics.Bitmap
 import java.nio.ByteBuffer
 
