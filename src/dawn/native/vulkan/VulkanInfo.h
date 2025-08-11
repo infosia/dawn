@@ -75,6 +75,7 @@ struct VulkanDeviceKnobs {
     VkPhysicalDeviceCooperativeMatrixFeaturesKHR cooperativeMatrixFeatures;
     VkPhysicalDeviceDescriptorIndexingFeatures descriptorIndexingFeatures;
     VkPhysicalDevicePipelineRobustnessFeatures pipelineRobustnessFeatures;
+    VkPhysicalDeviceHostImageCopyFeaturesEXT hostImageCopyFeatures;
 
     bool HasExt(DeviceExt ext) const;
     DeviceExtSet extensions;

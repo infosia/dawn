@@ -516,6 +516,12 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         featuresChain.Add(&usedKnobs.shaderIntegerDotProductFeatures);
     }
 
+    if (mDeviceInfo.HasExt(DeviceExt::HostImageCopy)) {
+        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::HostImageCopy));
+        usedKnobs.hostImageCopyFeatures = mDeviceInfo.hostImageCopyFeatures;
+        featuresChain.Add(&usedKnobs.hostImageCopyFeatures);
+    }
+
     if (mDeviceInfo.features.samplerAnisotropy == VK_TRUE) {
         usedKnobs.features.samplerAnisotropy = VK_TRUE;
     }

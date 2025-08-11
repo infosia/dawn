@@ -122,6 +122,7 @@ enum class DeviceExt {
 
     // Promoted to 1.4
     PipelineRobustness,
+    HostImageCopy,
 
     // Others
     DepthClipEnable,

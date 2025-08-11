@@ -185,6 +185,7 @@ static constexpr std::array<DeviceExtInfo, kDeviceExtCount> sDeviceExtInfos{{
     {DeviceExt::SubgroupSizeControl, "VK_EXT_subgroup_size_control", VulkanVersion_1_3},
 
     {DeviceExt::PipelineRobustness, "VK_EXT_pipeline_robustness", VulkanVersion_1_4},
+    {DeviceExt::HostImageCopy, "VK_EXT_host_image_copy", NeverPromoted},
 
     {DeviceExt::DepthClipEnable, "VK_EXT_depth_clip_enable", NeverPromoted},
     {DeviceExt::ImageDrmFormatModifier, "VK_EXT_image_drm_format_modifier", NeverPromoted},
@@ -353,6 +354,14 @@ DeviceExtSet EnsureDependencies(const DeviceExtSet& advertisedExts,
             case DeviceExt::Spirv14:
                 hasDependencies =
                     version >= VK_VERSION_1_1 && HasDep(DeviceExt::ShaderFloatControls);
+                break;
+
+            case DeviceExt::HostImageCopy:
+                hasDependencies = version >= VK_VERSION_1_3;
+                // TODO(crbug.com/439630588):
+                // Or VK_KHR_get_physical_device_properties2 &&
+                //    VK_KHR_copy_commands2 &&
+                //    VK_KHR_format_feature_flags2
                 break;
 
             case DeviceExt::EnumCount:
