@@ -65,6 +65,11 @@ class Queue final : public QueueBase {
     MaybeError Initialize();
 
     MaybeError SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) override;
+    MaybeError WriteTextureImpl(const TexelCopyTextureInfo& destination,
+                                const void* data,
+                                size_t dataSize,
+                                const TexelCopyBufferLayout& dataLayout,
+                                const Extent3D& writeSizePixel) override;
     bool HasPendingCommands() const override;
     ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
     void ForceEventualFlushOfCommands() override;

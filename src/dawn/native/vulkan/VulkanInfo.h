@@ -73,6 +73,7 @@ struct VulkanDeviceKnobs {
     VkPhysicalDeviceShaderSubgroupExtendedTypesFeaturesKHR shaderSubgroupExtendedTypes;
     VkPhysicalDeviceVulkanMemoryModelFeatures vulkanMemoryModelFeatures;
     VkPhysicalDeviceCooperativeMatrixFeaturesKHR cooperativeMatrixFeatures;
+    VkPhysicalDeviceHostImageCopyFeaturesEXT hostImageCopyFeatures;
 
     bool HasExt(DeviceExt ext) const;
     DeviceExtSet extensions;
