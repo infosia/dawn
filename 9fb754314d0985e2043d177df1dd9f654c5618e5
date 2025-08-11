@@ -75,6 +75,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63ef944e_1e767899",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-11T21:11:47Z",
+      "side": 1,
+      "message": "I agree that this case should never occur in practice and should be removed.\n\nI think this was originally introduced before I refactored the test code to have a common FS setup helper, so there was probably some manual examples of this occuring.",
+      "parentUuid": "e44d042b_717f5c98",
+      "range": {
+        "startLine": 131,
+        "startChar": 1,
+        "endLine": 131,
+        "endChar": 61
+      },
+      "revId": "9fb754314d0985e2043d177df1dd9f654c5618e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f6d8e99f_1176a0eb",
@@ -88,6 +112,30 @@
       "writtenOn": "2025-08-08T17:55:01Z",
       "side": 1,
       "message": "Probably worth adding a check that the resulting file\u0027s file mode is what we expect? I think this is implicitly tested by the _MatchesReal test, but it wouldn\u0027t hurt to have an explicit check in the unittest version.",
+      "range": {
+        "startLine": 390,
+        "startChar": 49,
+        "endLine": 390,
+        "endChar": 53
+      },
+      "revId": "9fb754314d0985e2043d177df1dd9f654c5618e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "544b2e03_e4e37b48",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-11T21:11:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6d8e99f_1176a0eb",
       "range": {
         "startLine": 390,
         "startChar": 49,
