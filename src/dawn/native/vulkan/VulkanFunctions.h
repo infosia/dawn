@@ -365,6 +365,12 @@ struct VulkanFunctions {
     VkFn<PFN_vkCmdBeginRenderingKHR> CmdBeginRenderingKHR = nullptr;
     VkFn<PFN_vkCmdEndRenderingKHR> CmdEndRenderingKHR = nullptr;
 
+    // Promoted in 1.4
+
+    // VK_EXT_host_image_copy
+    VkFn<PFN_vkCopyMemoryToImageEXT> CopyMemoryToImageEXT = nullptr;
+    VkFn<PFN_vkTransitionImageLayoutEXT> TransitionImageLayoutEXT = nullptr;
+
     // Not promoted to core in any version
 
     // VK_KHR_external_memory_fd

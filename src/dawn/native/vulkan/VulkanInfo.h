@@ -76,6 +76,7 @@ struct VulkanDeviceKnobs {
     VkPhysicalDeviceDescriptorIndexingFeatures descriptorIndexingFeatures;
     VkPhysicalDevicePipelineRobustnessFeatures pipelineRobustnessFeatures;
     VkPhysicalDeviceDynamicRenderingFeaturesKHR dynamicRenderingFeatures;
+    VkPhysicalDeviceHostImageCopyFeaturesEXT hostImageCopyFeatures;
 
     bool HasExt(DeviceExt ext) const;
     DeviceExtSet extensions;

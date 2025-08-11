@@ -60,6 +60,7 @@ class PhysicalDevice : public PhysicalDeviceBase {
 
     bool IsDepthStencilFormatSupported(VkFormat format) const;
     bool IsTextureCompressionASTCSliced3DSupported(VkFormat format) const;
+    bool IsHostTranferrable(VkFormat format) const;
 
     bool IsAndroidQualcomm() const;
     bool IsAndroidARM() const;
