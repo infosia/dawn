@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "5752d5de_a6b94d35",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-12T19:44:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d6fc994_03b69fb1",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 15
+      },
+      "revId": "6a95f348e003ba2967ff30d4d810e746b7639d3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "2296cf49_f0d09ec3",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
@@ -64,6 +88,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1115cb23_3704b7e9",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-12T19:44:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0747a584_5dfd622a",
+      "range": {
+        "startLine": 262,
+        "startChar": 15,
+        "endLine": 262,
+        "endChar": 41
+      },
+      "revId": "6a95f348e003ba2967ff30d4d810e746b7639d3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "168c940a_2284ee09",
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6724dfc_80abc0ff",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-12T19:44:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "168c940a_2284ee09",
+      "range": {
+        "startLine": 823,
+        "startChar": 3,
+        "endLine": 823,
+        "endChar": 16
+      },
+      "revId": "6a95f348e003ba2967ff30d4d810e746b7639d3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "397db8c2_4096ee60",
@@ -100,6 +172,30 @@
       "writtenOn": "2025-08-08T19:35:08Z",
       "side": 1,
       "message": "Ditto.",
+      "range": {
+        "startLine": 936,
+        "startChar": 3,
+        "endLine": 936,
+        "endChar": 16
+      },
+      "revId": "6a95f348e003ba2967ff30d4d810e746b7639d3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b96e748_41e73a41",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-12T19:44:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "397db8c2_4096ee60",
       "range": {
         "startLine": 936,
         "startChar": 3,
