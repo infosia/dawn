@@ -46,6 +46,30 @@
       },
       "revId": "ed8bae44766fa0380e39525a034b79e9122beb68",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f07ab355_f27ea13a",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-12T21:00:29Z",
+      "side": 1,
+      "message": "Given that we are on the `Buffer` I think `createTexelView` should be sufficient. Especially since on the `Texture` we have `createView` which returns a `TextureView`",
+      "parentUuid": "83d5aa84_f4fb39e5",
+      "range": {
+        "startLine": 638,
+        "startChar": 25,
+        "endLine": 638,
+        "endChar": 36
+      },
+      "revId": "ed8bae44766fa0380e39525a034b79e9122beb68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
