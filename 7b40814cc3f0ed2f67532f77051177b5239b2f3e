@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aac091a8_de5c661a",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-08-12T19:00:54Z",
+      "side": 1,
+      "message": "Rename to `staticBindingMap` now?",
+      "range": {
+        "startLine": 457,
+        "startChar": 51,
+        "endLine": 457,
+        "endChar": 61
+      },
+      "revId": "7b40814cc3f0ed2f67532f77051177b5239b2f3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f6c7d1c4_9c667a0b",
         "filename": "src/dawn/native/BindGroup.cpp",
         "patchSetId": 9
@@ -37,6 +60,30 @@
       "writtenOn": "2025-08-12T15:40:33Z",
       "side": 1,
       "message": "nit. Is this redundant from the check above?",
+      "range": {
+        "startLine": 630,
+        "startChar": 11,
+        "endLine": 633,
+        "endChar": 67
+      },
+      "revId": "7b40814cc3f0ed2f67532f77051177b5239b2f3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e463ebc0_f38457f1",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-08-12T19:00:54Z",
+      "side": 1,
+      "message": "+1. Can be removed or become an assert.",
+      "parentUuid": "331bbee2_6c2b1b22",
       "range": {
         "startLine": 630,
         "startChar": 11,
