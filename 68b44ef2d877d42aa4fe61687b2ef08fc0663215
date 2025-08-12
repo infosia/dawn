@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c086061_baf1728b",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-12T19:21:55Z",
+      "side": 1,
+      "message": "wow that was strange. I wonder what caused this.",
+      "parentUuid": "dd44eb16_8dcea7fe",
+      "revId": "68b44ef2d877d42aa4fe61687b2ef08fc0663215",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c25486e1_1d87e737",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-08-11T21:02:56Z",
       "side": 1,
       "message": "Nit: unpacking",
+      "revId": "68b44ef2d877d42aa4fe61687b2ef08fc0663215",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcabf2d5_4d2d960c",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-12T19:21:55Z",
+      "side": 1,
+      "message": "lets see if gemini detects this\nYes it did. I ask it to check for copypasta.",
+      "parentUuid": "c25486e1_1d87e737",
       "revId": "68b44ef2d877d42aa4fe61687b2ef08fc0663215",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
