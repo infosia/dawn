@@ -16,6 +16,40 @@
       "message": "@rafael.cintron@microsoft.com Please help review this change. Based on this, I\u0027m going to work around the storage buffer binding size issue.",
       "revId": "243638e126b41819ef84ddbf5e6a16ebeff8488a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b1f433b_6843303d",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 3929035
+      },
+      "writtenOn": "2025-08-12T23:10:07Z",
+      "side": 1,
+      "message": "None of the 6xx drivers are good to enable the WebGPU.  So lets delete this line.",
+      "revId": "243638e126b41819ef84ddbf5e6a16ebeff8488a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3ea6b0f_59330db1",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 3929035
+      },
+      "writtenOn": "2025-08-12T23:10:07Z",
+      "side": 1,
+      "message": "Let us keep this line only and remove all other device ids. This device id represents the Snapdragon devices for which we have tested the Dawn E2E and CTS.",
+      "revId": "243638e126b41819ef84ddbf5e6a16ebeff8488a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
