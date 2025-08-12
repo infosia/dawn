@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c98ee5f_a63d60e9",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-12T18:58:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1572aa6c_f6265265",
+      "range": {
+        "startLine": 363,
+        "startChar": 23,
+        "endLine": 363,
+        "endChar": 26
+      },
+      "revId": "765f0bab071ab0f829bcf268438d78f3455b94f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9d3b4594_5730adfa",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-08-12T18:13:37Z",
       "side": 1,
       "message": "Should be using `filepath.Join()` instead of hard-coded `/` ?",
+      "range": {
+        "startLine": 369,
+        "startChar": 26,
+        "endLine": 369,
+        "endChar": 46
+      },
+      "revId": "765f0bab071ab0f829bcf268438d78f3455b94f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09fc6259_37cce21b",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-12T18:58:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d3b4594_5730adfa",
       "range": {
         "startLine": 369,
         "startChar": 26,
