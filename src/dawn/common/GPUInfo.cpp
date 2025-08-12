@@ -76,6 +76,12 @@ std::string DriverVersion::ToString() const {
     return oss.str();
 }
 
+std::strong_ordering DriverVersion::operator<=>(const DriverVersion& other) const {
+    return std::lexicographical_compare_three_way(mDriverVersion.begin(), mDriverVersion.end(),
+                                                  other.mDriverVersion.begin(),
+                                                  other.mDriverVersion.end());
+}
+
 // According to Intel graphics driver version schema, build number is generated from the
 // last two fields.
 // See https://www.intel.com/content/www/us/en/support/articles/000005654/graphics.html for

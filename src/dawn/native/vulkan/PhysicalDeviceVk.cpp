@@ -345,8 +345,10 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         mDeviceInfo.shaderFloat16Int8Features.shaderFloat16 == VK_TRUE &&
         mDeviceInfo._16BitStorageFeatures.storageBuffer16BitAccess == VK_TRUE &&
         mDeviceInfo._16BitStorageFeatures.uniformAndStorageBuffer16BitAccess == VK_TRUE) {
-        // TODO(crbug.com/tint/2164): Investigate crashes in f16 CTS tests to enable on NVIDIA.
-        if (!gpu_info::IsNvidia(GetVendorId())) {
+        // Older NVIDIA drivers crash for many f16 CTS tests (see crbug.com/42251215).
+        const gpu_info::DriverVersion kFirstKnownGoodNvidiaDriverForF16 = {535, 183, 01};
+        if (!gpu_info::IsNvidia(GetVendorId()) ||
+            GetDriverVersion() >= kFirstKnownGoodNvidiaDriverForF16) {
             EnableFeature(Feature::ShaderF16);
             shaderF16Enabled = true;
         }
