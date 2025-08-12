@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1572aa6c_f6265265",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-12T18:13:37Z",
+      "side": 1,
+      "message": "Switch to using the return value of `getTestRoot()` here and elsewhere in this CL? Or is the intention to only use `getTestRoot()` for the `_MatchesReal` tests?",
+      "range": {
+        "startLine": 363,
+        "startChar": 23,
+        "endLine": 363,
+        "endChar": 26
+      },
+      "revId": "765f0bab071ab0f829bcf268438d78f3455b94f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d3b4594_5730adfa",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-12T18:13:37Z",
+      "side": 1,
+      "message": "Should be using `filepath.Join()` instead of hard-coded `/` ?",
+      "range": {
+        "startLine": 369,
+        "startChar": 26,
+        "endLine": 369,
+        "endChar": 46
+      },
+      "revId": "765f0bab071ab0f829bcf268438d78f3455b94f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
