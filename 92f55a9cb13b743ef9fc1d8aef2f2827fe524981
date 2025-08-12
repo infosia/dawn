@@ -69,6 +69,30 @@
       },
       "revId": "92f55a9cb13b743ef9fc1d8aef2f2827fe524981",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b34dadc_8dcbd1ba",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-12T08:51:45Z",
+      "side": 1,
+      "message": "I\u0027ll take a look at what it looks like for other objects and do for both BG and BGL in a follow-up.",
+      "parentUuid": "1458e0c0_a2803f12",
+      "range": {
+        "startLine": 324,
+        "startChar": 0,
+        "endLine": 324,
+        "endChar": 44
+      },
+      "revId": "92f55a9cb13b743ef9fc1d8aef2f2827fe524981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
