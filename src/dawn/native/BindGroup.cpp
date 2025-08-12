@@ -40,7 +40,6 @@
 #include "dawn/native/BindGroupLayoutInternal.h"
 #include "dawn/native/BindingInfo.h"
 #include "dawn/native/Buffer.h"
-#include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandValidation.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/ExternalTexture.h"
@@ -445,9 +444,10 @@ MaybeError ValidateStaticSamplersWithSampledTextures(
 
 }  // anonymous namespace
 
-MaybeError ValidateBindGroupDescriptor(DeviceBase* device,
-                                       const BindGroupDescriptor* descriptorChain,
-                                       UsageValidationMode mode) {
+ResultOrError<UnpackedPtr<BindGroupDescriptor>> ValidateBindGroupDescriptor(
+    DeviceBase* device,
+    const BindGroupDescriptor* descriptorChain,
+    UsageValidationMode mode) {
     UnpackedPtr<BindGroupDescriptor> descriptor;
     DAWN_TRY_ASSIGN(descriptor, ValidateAndUnpack(descriptorChain));
 
@@ -655,13 +655,13 @@ MaybeError ValidateBindGroupDescriptor(DeviceBase* device,
         }
     }
 
-    return {};
+    return descriptor;
 }
 
 // BindGroup
 
 BindGroupBase::BindGroupBase(DeviceBase* device,
-                             const BindGroupDescriptor* descriptor,
+                             const UnpackedPtr<BindGroupDescriptor>& descriptor,
                              void* bindingDataStart)
     : ApiObjectBase(device, descriptor->label),
       mLayout(descriptor->layout),
@@ -669,7 +669,7 @@ BindGroupBase::BindGroupBase(DeviceBase* device,
     GetObjectTrackingList()->Track(this);
 }
 
-MaybeError BindGroupBase::Initialize(const BindGroupDescriptor* descriptor) {
+MaybeError BindGroupBase::Initialize(const UnpackedPtr<BindGroupDescriptor>& descriptor) {
     BindGroupLayoutInternalBase* layout = GetLayout();
 
     for (BindingIndex i{0}; i < layout->GetBindingCount(); ++i) {
