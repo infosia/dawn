@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85266a21_fe8d9145",
+        "filename": "src/dawn/native/TexelBufferView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-12T20:42:50Z",
+      "side": 1,
+      "message": "nit. In `TextureView` we just do `return ApiObjectBase::GetObjectTrackingList();` which I think should work here as well, so I think we should keep it the same here also. Especially since that seems like what you had before also.",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 75
+      },
+      "revId": "49b27cb42814713706d34cae75f22c8ec365a35f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
