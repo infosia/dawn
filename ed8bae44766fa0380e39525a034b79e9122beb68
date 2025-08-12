@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9751e254_228bcabb",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-12T20:49:07Z",
+      "side": 1,
+      "message": "nit. Probably just bikeshedding, and IDR the proposal so feel free to remind me if we already have a resolution, but would it make more sense to say `create texel view` since I can imagine having other possible views (maybe?)",
+      "range": {
+        "startLine": 638,
+        "startChar": 25,
+        "endLine": 638,
+        "endChar": 36
+      },
+      "revId": "ed8bae44766fa0380e39525a034b79e9122beb68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
