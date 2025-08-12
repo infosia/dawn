@@ -22,6 +22,30 @@
       },
       "revId": "49b27cb42814713706d34cae75f22c8ec365a35f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4646d0ed_6dfabdf4",
+        "filename": "src/dawn/native/TexelBufferView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-12T22:40:22Z",
+      "side": 1,
+      "message": "Done. I was hitting segfaults, but the problem was caused by the `ASSERT` in `GetType`.",
+      "parentUuid": "85266a21_fe8d9145",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 75
+      },
+      "revId": "49b27cb42814713706d34cae75f22c8ec365a35f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
