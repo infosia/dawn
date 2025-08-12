@@ -22,6 +22,30 @@
       },
       "revId": "ed8bae44766fa0380e39525a034b79e9122beb68",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83d5aa84_f4fb39e5",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-12T20:58:46Z",
+      "side": 1,
+      "message": "The proposal currently says `createView` but I think that `createTexelBufferView` would be more explicit and thus better.",
+      "parentUuid": "9751e254_228bcabb",
+      "range": {
+        "startLine": 638,
+        "startChar": 25,
+        "endLine": 638,
+        "endChar": 36
+      },
+      "revId": "ed8bae44766fa0380e39525a034b79e9122beb68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
