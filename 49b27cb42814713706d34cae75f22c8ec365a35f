@@ -46,6 +46,30 @@
       },
       "revId": "49b27cb42814713706d34cae75f22c8ec365a35f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53f899f6_b763fe7f",
+        "filename": "src/dawn/native/TexelBufferView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-12T22:41:09Z",
+      "side": 1,
+      "message": "Marked as resolved.",
+      "parentUuid": "4646d0ed_6dfabdf4",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 75
+      },
+      "revId": "49b27cb42814713706d34cae75f22c8ec365a35f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
