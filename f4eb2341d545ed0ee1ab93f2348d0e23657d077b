@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf42110e_ec326fee",
+        "filename": "src/dawn/tests/unittests/validation/TexelBufferValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-12T20:46:48Z",
+      "side": 1,
+      "message": "I think this test and it\u0027s name don\u0027t match? What exactly are we trying to test here? (It also looks like the test below?)",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 49
+      },
+      "revId": "f4eb2341d545ed0ee1ab93f2348d0e23657d077b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "987668e1_52573c6d",
+        "filename": "src/dawn/tests/unittests/validation/TexelBufferValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-12T20:46:48Z",
+      "side": 1,
+      "message": "This suggests that we should have tests that test that with the feature enabled it works.",
+      "range": {
+        "startLine": 60,
+        "startChar": 34,
+        "endLine": 60,
+        "endChar": 70
+      },
+      "revId": "f4eb2341d545ed0ee1ab93f2348d0e23657d077b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
