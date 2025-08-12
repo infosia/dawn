@@ -53,6 +53,8 @@ class DriverVersion {
     uint32_t size() const;
     std::string ToString() const;
 
+    std::strong_ordering operator<=>(const DriverVersion& other) const;
+
   private:
     absl::InlinedVector<uint16_t, kMaxVersionFields> mDriverVersion;
 };
