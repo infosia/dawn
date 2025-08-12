@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a623554b_ee33e3d6",
+        "filename": "src/dawn/tests/unittests/validation/TexelBufferValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-12T22:43:11Z",
+      "side": 1,
+      "message": "They definitely didn\u0027t match. I left it unimplemented by mistake.",
+      "parentUuid": "bf42110e_ec326fee",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 49
+      },
+      "revId": "f4eb2341d545ed0ee1ab93f2348d0e23657d077b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "987668e1_52573c6d",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-08-12T20:46:48Z",
       "side": 1,
       "message": "This suggests that we should have tests that test that with the feature enabled it works.",
+      "range": {
+        "startLine": 60,
+        "startChar": 34,
+        "endLine": 60,
+        "endChar": 70
+      },
+      "revId": "f4eb2341d545ed0ee1ab93f2348d0e23657d077b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12730295_8cdd566e",
+        "filename": "src/dawn/tests/unittests/validation/TexelBufferValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-12T22:43:11Z",
+      "side": 1,
+      "message": "Marked as resolved.",
+      "parentUuid": "987668e1_52573c6d",
       "range": {
         "startLine": 60,
         "startChar": 34,
