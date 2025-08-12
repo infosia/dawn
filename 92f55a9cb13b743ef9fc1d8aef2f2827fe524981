@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d75c9217_1cc3e2bb",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-12T08:51:09Z",
+      "side": 1,
+      "message": "It was so in JS it looks slightly nicer like this:\n\n```\nconst bgl \u003d device.createBindGroupLayout({\n    entries: [...],\n    dynamicBindingArray: {\n        kind: \"sampled-texture\",\n        start: 2,\n    },\n})\n```\n\ninstead of\n\n```\nconst bgl \u003d device.createBindGroupLayout({\n    entries: [...],\n    dynamicBindingArrayKind: \"sampled-texture\",\n    dynamicBindingArrayStart: 2,\n})\n```\n\nI\u0027m sure there will be a ton of bikeshedding on this in the group ^^",
+      "parentUuid": "10cf427b_2fc04f1e",
+      "range": {
+        "startLine": 524,
+        "startChar": 4,
+        "endLine": 532,
+        "endChar": 6
+      },
+      "revId": "92f55a9cb13b743ef9fc1d8aef2f2827fe524981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1458e0c0_a2803f12",
