@@ -94,6 +94,30 @@
       },
       "revId": "ed8bae44766fa0380e39525a034b79e9122beb68",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efbb9692_37e82908",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-12T22:44:54Z",
+      "side": 1,
+      "message": "I agree, `createTexelView` is more clear.",
+      "parentUuid": "fec710cb_30dae37d",
+      "range": {
+        "startLine": 638,
+        "startChar": 25,
+        "endLine": 638,
+        "endChar": 36
+      },
+      "revId": "ed8bae44766fa0380e39525a034b79e9122beb68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
