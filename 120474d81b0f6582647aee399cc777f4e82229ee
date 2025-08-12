@@ -69,6 +69,24 @@
       "parentUuid": "8a7afa9e_ffd1068a",
       "revId": "120474d81b0f6582647aee399cc777f4e82229ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eabcab63_a6defb46",
+        "filename": "src/tint/lang/msl/writer/common/option_helpers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-12T01:23:47Z",
+      "side": 1,
+      "message": "Ah, thanks.",
+      "parentUuid": "c5c2d122_cae29cc9",
+      "revId": "120474d81b0f6582647aee399cc777f4e82229ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
