@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e86a88f_3e51c042",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 3961979
+      },
+      "writtenOn": "2025-08-12T13:59:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f4434f6_8a135cf8",
+      "range": {
+        "startLine": 556,
+        "startChar": 7,
+        "endLine": 556,
+        "endChar": 38
+      },
+      "revId": "8c11e5a7f4c37889d281096bf72e3bd11986e437",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d728770e_b40580b0",
@@ -71,6 +95,24 @@
       "writtenOn": "2025-08-08T21:09:56Z",
       "side": 1,
       "message": "Nit: I think you could just make this a `case` of the switch below, instead of introducing a third `switch`.",
+      "revId": "8c11e5a7f4c37889d281096bf72e3bd11986e437",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2313e43a_01f26925",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 3961979
+      },
+      "writtenOn": "2025-08-12T13:59:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d728770e_b40580b0",
       "revId": "8c11e5a7f4c37889d281096bf72e3bd11986e437",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
