@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "095d85e9_aac5517c",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-12T21:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30c61370_880804d9",
+      "range": {
+        "startLine": 220,
+        "startChar": 25,
+        "endLine": 220,
+        "endChar": 49
+      },
+      "revId": "da4130c6cbdadea16507ef1826d2211dff631675",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "914a43f0_3afd632d",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-08-08T20:28:28Z",
       "side": 1,
       "message": "It seems like the `fstestFileHandle` should keep track of when the file is closed so that the file handle can\u0027t be used afterwards.",
+      "range": {
+        "startLine": 427,
+        "startChar": 1,
+        "endLine": 428,
+        "endChar": 29
+      },
+      "revId": "da4130c6cbdadea16507ef1826d2211dff631675",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8ab40b1_ecc6a17e",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-12T21:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "914a43f0_3afd632d",
       "range": {
         "startLine": 427,
         "startChar": 1,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e1cbda2_375895bf",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-12T21:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10adb3e8_ea75aac0",
+      "range": {
+        "startLine": 377,
+        "startChar": 2,
+        "endLine": 377,
+        "endChar": 3
+      },
+      "revId": "da4130c6cbdadea16507ef1826d2211dff631675",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "66ad994f_d481c332",
@@ -100,6 +172,30 @@
       "writtenOn": "2025-08-08T20:28:28Z",
       "side": 1,
       "message": "Ditto for the additional test cases.",
+      "range": {
+        "startLine": 529,
+        "startChar": 2,
+        "endLine": 529,
+        "endChar": 3
+      },
+      "revId": "da4130c6cbdadea16507ef1826d2211dff631675",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b200d784_d586ca64",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-12T21:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66ad994f_d481c332",
       "range": {
         "startLine": 529,
         "startChar": 2,
