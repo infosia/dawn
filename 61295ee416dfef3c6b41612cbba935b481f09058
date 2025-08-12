@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bde27bd5_b2c49e6e",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-12T18:08:29Z",
+      "side": 1,
+      "message": "Switch to using the return value of `getTestRoot()` here and elsewhere in this CL?",
+      "range": {
+        "startLine": 467,
+        "startChar": 31,
+        "endLine": 467,
+        "endChar": 34
+      },
+      "revId": "61295ee416dfef3c6b41612cbba935b481f09058",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
