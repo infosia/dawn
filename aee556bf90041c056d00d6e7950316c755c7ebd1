@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea9fcf86_6652b261",
+        "filename": "src/dawn/native/TexelBufferView.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-12T20:30:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf2b5740_a56f653e",
+      "revId": "aee556bf90041c056d00d6e7950316c755c7ebd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d958795_88bbf20b",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-07-28T17:57:10Z",
       "side": 1,
       "message": "This is probably no longer necessary now that we have the `dawn` tag. I would leave this unchanged for now until we are ready to implement in Emscripten which will likely be a while off since we would need to standardize it through JS first.",
+      "range": {
+        "startLine": 358,
+        "startChar": 2,
+        "endLine": 358,
+        "endChar": 20
+      },
+      "revId": "aee556bf90041c056d00d6e7950316c755c7ebd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51f11dc8_213a1e88",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/webgpu.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-12T20:30:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d958795_88bbf20b",
       "range": {
         "startLine": 358,
         "startChar": 2,
