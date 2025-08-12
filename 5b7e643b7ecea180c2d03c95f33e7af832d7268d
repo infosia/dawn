@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f48b0652_98111902",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-12T08:50:40Z",
+      "side": 1,
+      "message": "+CC Geoff on the reviewed parts of the stack.",
+      "revId": "5b7e643b7ecea180c2d03c95f33e7af832d7268d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
