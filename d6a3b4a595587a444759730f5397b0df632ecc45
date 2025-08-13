@@ -16,6 +16,57 @@
       "message": "Geoff, Dan, PTAL!\nBrandon FYI",
       "revId": "d6a3b4a595587a444759730f5397b0df632ecc45",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "777bfd45_d7d4c442",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T16:29:23Z",
+      "side": 1,
+      "message": "Dan, note that this capability will need to be declared in the SPIR-V.",
+      "revId": "d6a3b4a595587a444759730f5397b0df632ecc45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a13871a8_652b6298",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T16:29:23Z",
+      "side": 1,
+      "message": "Note: \"update after bind\" means that the VkDescriptorSet may be updated after binding (duh!) because a pointer to the descriptor set is encoded in the command stream (for example a region of memory that contain the descriptors, or multiple regions) contrary to bindful GPUs that inline the descriptors one by one in the command stream (so descriptors cannot be changed after command encoding).",
+      "revId": "d6a3b4a595587a444759730f5397b0df632ecc45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f51342f_02e08b88",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T16:29:23Z",
+      "side": 1,
+      "message": "Note: This is because in the layout we will not know the size of the descriptor sets as that\u0027s chosen when we create the bindgroup.",
+      "revId": "d6a3b4a595587a444759730f5397b0df632ecc45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
