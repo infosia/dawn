@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "137c4797_a50aa751",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T10:13:51Z",
+      "side": 1,
+      "message": "That we reach for Tint concepts inside Buffer which has nothing to do with shaders seems like a layering issue.\n\nIs this because texel buffers is meant to become a core API without an associated feature? I was going to suggest that we gate it on UnsafeAPIs but this is to inflexible because I assume that we\u0027ll want to do a gradual rollout (and certainly don\u0027t want to roll out unsafe APIs). Can we have \"AreTexelBuffersEnabled()\" on DeviceBase and the interaction with Tint concepts there? (we\u0027ll make sure to clean it up eventually).",
+      "revId": "c18471800b8e7f4200ab16d4d42a4c894a9c75dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4591353c_7cf1ff99",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T10:13:51Z",
+      "side": 1,
+      "message": "IIRC texel buffers can be written to, that\u0027s the whole point of them (writing at byte boundary). So we need to separate the usage between readonly and readwrite, similar to storage buffers.",
+      "range": {
+        "startLine": 59,
+        "startChar": 80,
+        "endLine": 59,
+        "endChar": 91
+      },
+      "revId": "c18471800b8e7f4200ab16d4d42a4c894a9c75dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88dc31da_0ce51d0b",
+        "filename": "src/dawn/tests/unittests/validation/TexelBufferValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T10:13:51Z",
+      "side": 1,
+      "message": "This is always true in Dawn tests because by default we enable all the experimental features.",
+      "revId": "c18471800b8e7f4200ab16d4d42a4c894a9c75dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33e21eaf_5c743c46",
+        "filename": "src/dawn/tests/unittests/validation/TexelBufferValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T10:13:51Z",
+      "side": 1,
+      "message": "Can we have this more targeted for WGSL features because in the future when rolling out texel buffers we\u0027ll need to update how the feature is disabled (with the blocklist, the unsafe toggle etc). (this is to make it easy to update the status of the texel buffer feature in the future)\n\nSee WGSLFeatureValidationTest for how to create an instance with the toggle to disable experimental features etc. You\u0027ll need to create an instance descriptor with experimental features disabled, then call [ValidationTest::SetUp()](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/unittests/validation/ValidationTest.h;drc\u003d185257f135fa77811f656f1585b8c04eab82b1bb;l\u003d184) with the descriptor. This will make `device` have texel buffers disabled and you can check validation happens correctly.",
+      "revId": "c18471800b8e7f4200ab16d4d42a4c894a9c75dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
