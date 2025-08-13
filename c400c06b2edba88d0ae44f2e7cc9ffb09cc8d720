@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8cd263d_5b797c3e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T13:03:45Z",
+      "side": 1,
+      "message": "PTAL! That\u0027s the follow up to your comment on the BGL changes earlier in the stack.",
+      "revId": "c400c06b2edba88d0ae44f2e7cc9ffb09cc8d720",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
