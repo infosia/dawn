@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e033f888_93a24783",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T12:03:35Z",
+      "side": 1,
+      "message": "Must have pressed `p` in the wrong spot. Done.",
+      "parentUuid": "7a33e354_a0d318ae",
+      "range": {
+        "startLine": 471,
+        "startChar": 0,
+        "endLine": 472,
+        "endChar": 7
+      },
+      "revId": "dac16fc7b08f480399569cbbbc989d3731d44cab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "899eab00_12a4ed6c",
@@ -64,6 +88,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9280124_f06da7a2",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 4394,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T12:03:35Z",
+      "side": 1,
+      "message": "That\u0027s the same text? (says Chrome search in page highlighting)",
+      "parentUuid": "899eab00_12a4ed6c",
+      "range": {
+        "startLine": 4394,
+        "startChar": 63,
+        "endLine": 4394,
+        "endChar": 86
+      },
+      "revId": "dac16fc7b08f480399569cbbbc989d3731d44cab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81a0b832_43c2d4f7",
@@ -77,6 +125,30 @@
       "writtenOn": "2025-08-12T15:27:56Z",
       "side": 1,
       "message": "nit. Maybe add a case where we are above limit as well?",
+      "range": {
+        "startLine": 4406,
+        "startChar": 4,
+        "endLine": 4406,
+        "endChar": 41
+      },
+      "revId": "dac16fc7b08f480399569cbbbc989d3731d44cab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "563ac54e_2e84fbfd",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 4406,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T12:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81a0b832_43c2d4f7",
       "range": {
         "startLine": 4406,
         "startChar": 4,
