@@ -704,6 +704,7 @@ void DeviceBase::HandleDeviceLost(wgpu::DeviceLostReason reason, std::string_vie
 }
 
 void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
+                             ErrorScope* errorScope,
                              InternalErrorType additionalAllowedErrors,
                              wgpu::DeviceLostReason lostReason) {
     auto deviceGuard(GetGuard());
@@ -769,14 +770,17 @@ void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
         mAsyncTaskManager->WaitAllPendingTasks();
         mCallbackTaskManager->HandleDeviceLoss();
 
-        // Still forward device loss errors to the error scopes so they all reject.
-        GetErrorScopeStack()->HandleError(ToWGPUErrorType(type), messageStr);
+        if (errorScope) {
+            // Still forward device loss errors to the error scopes so they all reject.
+            errorScope->CaptureError(ToWGPUErrorType(type), messageStr);
+        }
     } else {
         // Pass the error to the error scope stack and call the uncaptured error callback
         // if it isn't handled. DeviceLost is not handled here because it should be
         // handled by the lost callback.
-        bool captured = GetErrorScopeStack()->HandleError(ToWGPUErrorType(type), messageStr);
-        if (!captured) {
+        if (errorScope) {
+            errorScope->CaptureError(ToWGPUErrorType(type), messageStr);
+        } else {
             // Only call the uncaptured error callback if the device is alive. After the
             // device is lost, the uncaptured error callback should cease firing.
             if (mUncapturedErrorCallbackInfo.callback != nullptr && mState == State::Alive) {
@@ -792,7 +796,9 @@ void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
 void DeviceBase::ConsumeError(std::unique_ptr<ErrorData> error,
                               InternalErrorType additionalAllowedErrors) {
     DAWN_ASSERT(error != nullptr);
-    HandleError(std::move(error), additionalAllowedErrors);
+    InternalErrorType type = error->GetType();
+    ErrorScope* errorScope = GetErrorScopeStack()->GetErrorScopeForErrorType(ToWGPUErrorType(type));
+    HandleError(std::move(error), errorScope, additionalAllowedErrors);
 }
 
 void DeviceBase::APISetLoggingCallback(const WGPULoggingCallbackInfo& callbackInfo) {
@@ -829,15 +835,32 @@ Future DeviceBase::APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbac
         raw_ptr<void> mUserdata1;
         raw_ptr<void> mUserdata2;
         std::optional<ErrorScope> mScope;
+        std::vector<ErrorScopePendingAsyncTask> mPendingAsyncTasks;
+
+        static Ref<WaitListEvent> CreateWaitListEventForErrorScopeCompletion(
+            const std::optional<ErrorScope>& scope) {
+            uint64_t taskCount = 0;
+            if (scope) {
+                taskCount = scope->GetPendingAsyncTaskCount();
+            }
+            return AcquireRef(new WaitListEvent(taskCount));
+        }
 
         PopErrorScopeEvent(const WGPUPopErrorScopeCallbackInfo& callbackInfo,
                            std::optional<ErrorScope>&& scope)
             : TrackedEvent(static_cast<wgpu::CallbackMode>(callbackInfo.mode),
-                           TrackedEvent::Completed{}),
+                           CreateWaitListEventForErrorScopeCompletion(scope)),
               mCallback(callbackInfo.callback),
               mUserdata1(callbackInfo.userdata1),
               mUserdata2(callbackInfo.userdata2),
-              mScope(std::move(scope)) {}
+              mScope(std::move(scope)) {
+            if (mScope) {
+                mPendingAsyncTasks = mScope->AcquirePendingAsyncTasks();
+                for (auto task : mPendingAsyncTasks) {
+                    task.Task->AddCompletionCallback([this] { GetIfWaitListEvent()->Signal(); });
+                }
+            }
+        }
 
         ~PopErrorScopeEvent() override { EnsureComplete(EventCompletionType::Shutdown); }
 
@@ -848,13 +871,20 @@ Future DeviceBase::APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbac
             WGPUErrorType type;
             WGPUStringView message = kEmptyOutputStringView;
             if (mScope) {
-                type = static_cast<WGPUErrorType>(mScope->GetErrorType());
-                message = mScope->GetErrorMessage();
-            } else {
-                status = WGPUPopErrorScopeStatus_Error;
-                type = WGPUErrorType_NoError;
-                message = ToOutputStringView("No error scopes to pop");
-            }
+                if (completionType == EventCompletionType::Ready) {
+                    for (auto task : mPendingAsyncTasks) {
+                        DAWN_ASSERT(task.Task->GetState() == AsyncTaskState::Finished);
+                        if (task.CaptureErrorFromTask && task.Task->IsError()) {
+                            mScope->CaptureError(wgpu::ErrorType type, std::string_view message)
+                        }
+                    }
+                    type = static_cast<WGPUErrorType>(mScope->GetErrorType());
+                    message = mScope->GetErrorMessage();
+                } else {
+                    status = WGPUPopErrorScopeStatus_Error;
+                    type = WGPUErrorType_NoError;
+                    message = ToOutputStringView("No error scopes to pop");
+                }
 
             mCallback(status, type, message, mUserdata1.ExtractAsDangling(),
                       mUserdata2.ExtractAsDangling());
@@ -866,7 +896,6 @@ Future DeviceBase::APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbac
         // TODO(crbug.com/dawn/831) Manually acquire device lock instead of relying on code-gen for
         // re-entrancy.
         auto deviceGuard = GetGuard();
-
         if (IsLost()) {
             scope = ErrorScope(wgpu::ErrorType::NoError, "");
         } else if (!GetErrorScopeStack()->Empty()) {

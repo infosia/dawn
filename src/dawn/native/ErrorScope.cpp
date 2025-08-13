@@ -67,6 +67,21 @@ WGPUStringView ErrorScope::GetErrorMessage() const {
     return kEmptyOutputStringView;
 }
 
+std::vector<ErrorScopePendingAsyncTask> ErrorScope::AcquirePendingAsyncTasks() {
+    auto tasks = std::move(mAsyncTasks);
+    mAsyncTasks.clear();
+    return tasks;
+}
+
+void ErrorScope::CaptureError(wgpu::ErrorType type, std::string_view message) {
+    DAWN_ASSERT(type == mMatchedErrorType);
+    // Record the error if the scope doesn't have one yet.
+    if (mCapturedError == wgpu::ErrorType::NoError) {
+        mCapturedError = type;
+        mErrorMessage = message;
+    }
+}
+
 ErrorScopeStack::ErrorScopeStack() = default;
 
 ErrorScopeStack::~ErrorScopeStack() = default;
@@ -86,24 +101,61 @@ bool ErrorScopeStack::Empty() const {
     return mScopes.empty();
 }
 
-bool ErrorScopeStack::HandleError(wgpu::ErrorType type, std::string_view message) {
+ErrorScope* ErrorScopeStack::GetErrorScopeForErrorType(wgpu::ErrorType type) {
     for (auto it = mScopes.rbegin(); it != mScopes.rend(); ++it) {
-        if (it->mMatchedErrorType != type) {
-            // Error filter does not match. Move on to the next scope.
-            continue;
+        if (it->mMatchedErrorType == type) {
+            return &(*it);
         }
-
-        // Filter matches.
-        // Record the error if the scope doesn't have one yet.
-        if (it->mCapturedError == wgpu::ErrorType::NoError) {
-            it->mCapturedError = type;
-            it->mErrorMessage = message;
-        }
-        return true;
     }
 
     // The error was not captured.
-    return false;
+    return nullptr;
+}
+
+bool ErrorScopeStack::HandleError(wgpu::ErrorType type, std::string_view message) {
+    ErrorScope* scope = GetErrorScopeForErrorType(type);
+    if (!scope) {
+        return false;
+    }
+
+    scope->CaptureError(type, message);
+    return true;
+}
+
+std::set<wgpu::ErrorType> ErrorScopeStack::HandleErrorGeneratingAsyncTask(
+    Ref<ErrorGeneratingAsyncTask> task) {
+    std::set<wgpu::ErrorType> unhandledErrorTypes;
+
+    for (wgpu::ErrorType errorType : {
+             wgpu::ErrorType::Validation,
+             wgpu::ErrorType::OutOfMemory,
+             wgpu::ErrorType::Internal,
+         }) {
+        if (!HandleErrorGeneratingAsyncTaskErrorType(errorType, task)) {
+            unhandledErrorTypes.insert(errorType);
+        }
+    }
+
+    return unhandledErrorTypes;
+}
+
+bool ErrorScopeStack::HandleErrorGeneratingAsyncTaskErrorType(wgpu::ErrorType type,
+                                                              Ref<ErrorGeneratingAsyncTask> task) {
+    bool matched = false;
+    for (auto it = mScopes.rbegin(); it != mScopes.rend(); ++it) {
+        // If this error type has already been matched with a scope, add it to parent scopes as well
+        // but do not capture the error.
+        if (matched) {
+            it->mAsyncTasks.push_back({task, false});
+        }
+
+        if (!matched && it->mMatchedErrorType == type) {
+            it->mAsyncTasks.push_back({task, true});
+            matched = true;
+        }
+    }
+
+    return matched;
 }
 
 }  // namespace dawn::native

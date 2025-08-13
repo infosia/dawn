@@ -78,6 +78,7 @@ class Blob;
 class BlobCache;
 class CallbackTaskManager;
 class DynamicUploader;
+class ErrorScope;
 class ErrorScopeStack;
 class SharedTextureMemory;
 class OwnedCompilationMessages;
@@ -128,6 +129,7 @@ class DeviceBase : public ErrorSink,
     // (on top of validation and device loss errors). Note that "allowed" is defined as surfacing to
     // users as the respective error rather than causing a device loss instead.
     void HandleError(std::unique_ptr<ErrorData> error,
+                     ErrorScope* errorScope,
                      InternalErrorType additionalAllowedErrors = InternalErrorType::None,
                      wgpu::DeviceLostReason lost_reason = wgpu::DeviceLostReason::Unknown);
 
