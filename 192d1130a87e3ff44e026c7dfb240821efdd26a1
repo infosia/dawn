@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b65776ae_adf0cdd2",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T11:47:35Z",
+      "side": 1,
+      "message": "Saw this because I happened to have a merge conflict with it today. I don\u0027t think that we should use this method to disable subgroups on Intel Gen9 because IIRC this will mean that the GPUAdapter will advertise support for subgroups but that creating a device requesting subgroups will always fail. This will be very confusing to developers and also risks breaking websites because we\u0027re not supposed to fail device creation when only supported features are required.\n\nInstead I suggest looking up the toggle before marking the feature as supported in this class.",
+      "revId": "192d1130a87e3ff44e026c7dfb240821efdd26a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
