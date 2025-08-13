@@ -16,6 +16,46 @@
       "message": "LGTM",
       "revId": "09679ccdab9b393098eb7ec93cb45aa6856fbe29",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6594d83c_5c659036",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T17:28:53Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "09679ccdab9b393098eb7ec93cb45aa6856fbe29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7d06dac_bf1686f3",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T17:28:53Z",
+      "side": 1,
+      "message": "optional nit: `sed -i \"s/also_add/alsoAdd/g\"` Or `:%s/also_add/alsoAdd/g`",
+      "range": {
+        "startLine": 1343,
+        "startChar": 18,
+        "endLine": 1343,
+        "endChar": 26
+      },
+      "revId": "09679ccdab9b393098eb7ec93cb45aa6856fbe29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
