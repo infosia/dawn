@@ -161,6 +161,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "41d8a8d0_4dc7bd53",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1003586
+      },
+      "writtenOn": "2025-08-13T14:37:41Z",
+      "side": 1,
+      "message": "Clarification: Every \"pass\" here is a dispatch within a compute pass, not different compute passes. Sorry for the unclear language.",
+      "parentUuid": "763e4a75_a832d8ec",
+      "revId": "ce0b009ca6d4ecb6941eda25a4078323e3c0b792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ef219b5b_2b6306c0",
         "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
         "patchSetId": 14
