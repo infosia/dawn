@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "282029d3_3a45d26a",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-13T17:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62d54f24_17ffa89f",
+      "range": {
+        "startLine": 367,
+        "startChar": 0,
+        "endLine": 367,
+        "endChar": 22
+      },
+      "revId": "848f0ab109da7b93960af721286450e4bc7453dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "828107f7_6aa581cc",
@@ -64,6 +88,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9c73493_4ad03e1e",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-13T17:48:29Z",
+      "side": 1,
+      "message": "I agree this is a concern and #1 is the better option. Introducing a global mutex for this feels overkill/error prone.\n\nI have rewritten the test runner to only check that the random part is a u32.\n\nI have removed ResetTempCounterForTesting() entirely, since it is no longer used in the tests, and gives the false impression of thread/concurrency safety.",
+      "parentUuid": "828107f7_6aa581cc",
+      "range": {
+        "startLine": 371,
+        "startChar": 5,
+        "endLine": 371,
+        "endChar": 31
+      },
+      "revId": "848f0ab109da7b93960af721286450e4bc7453dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9895bff3_7683d9c9",
@@ -77,6 +125,30 @@
       "writtenOn": "2025-08-08T21:14:26Z",
       "side": 1,
       "message": "I think there might be value in having at least one to confirm that the file mode for the temporary directories match.",
+      "range": {
+        "startLine": 1757,
+        "startChar": 21,
+        "endLine": 1757,
+        "endChar": 62
+      },
+      "revId": "848f0ab109da7b93960af721286450e4bc7453dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41589bbe_7700a8f4",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1757,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-13T17:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9895bff3_7683d9c9",
       "range": {
         "startLine": 1757,
         "startChar": 21,
