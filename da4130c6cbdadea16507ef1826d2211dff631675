@@ -89,6 +89,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b5124e6_5f1208b2",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-13T15:29:12Z",
+      "side": 1,
+      "message": "Sorry about that, should be done now.",
+      "parentUuid": "2edda007_72341f33",
+      "range": {
+        "startLine": 220,
+        "startChar": 25,
+        "endLine": 220,
+        "endChar": 49
+      },
+      "revId": "da4130c6cbdadea16507ef1826d2211dff631675",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "914a43f0_3afd632d",
@@ -196,6 +220,30 @@
       "writtenOn": "2025-08-12T21:15:55Z",
       "side": 1,
       "message": "I think this should be kept - it should be called after the `require.NoError(t, file.Close())`, so it won\u0027t affect the return value there. If it\u0027s causing other issues, I think that\u0027s indicative of the fstest implementation being non-compliant with the real implementation since Go file descriptors can be safely `Close()`d multiple times.",
+      "range": {
+        "startLine": 503,
+        "startChar": 3,
+        "endLine": 503,
+        "endChar": 21
+      },
+      "revId": "da4130c6cbdadea16507ef1826d2211dff631675",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ed3d84f_19139d58",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-13T15:29:12Z",
+      "side": 1,
+      "message": "Acknowledged\n\nWhat happened here is I got a little confused on what the actual behaviour of Close() called multiple times should be, so had changed the test implementation of Close() multiple times, so probably removed the deferred close at some point.\n\nFor context:\nLooking at the Closer interface, it is documented as undefined behaviour, which I took to mean the standard here be dragons warning, but re-reading it, what is meant is that it is implementation defined (I would have avoided the word \u0027undefined\u0027 in the documentation, since that is a pretty loaded term and just had the description about it being implementation defined).\n\nSo I was initially thinking this was untestable, but that is incorrect, since the implementor, File, in this case does define a specific behaviour, that being it will return the error os.ErrClosed, but it is safe to call multiple times, since it is idempotent. (An example of where error is being used to return a status, not necessarily signal an error).\n\nThis combined with me messing my patch merging/rebasing really made a mess of what was in this test. I have corrected things, and it should correct now.",
+      "parentUuid": "157627ff_23b065fd",
       "range": {
         "startLine": 503,
         "startChar": 3,

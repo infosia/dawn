@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f2d31ea_b30b54ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-13T15:29:12Z",
+      "side": 1,
+      "message": "I messed up my rebasing/patching at some point while working on this, so ended up uploading a revert of some aspects of Patchset 3, instead of an update to the final intended version. Sorry about that. This should be the correct version of the CL now.",
+      "revId": "ee5c492a2e6ec8464ca0e263cb9db0edce5b1d38",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
