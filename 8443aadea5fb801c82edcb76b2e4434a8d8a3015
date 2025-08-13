@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13723917_03fb5c03",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-13T21:03:25Z",
+      "side": 1,
+      "message": "PTAL\n\nThe other approach I considered for handling PWD and HOME was having them being members on the struct (probably using the stringPtr \u0027trick\u0027 to have them be nil-able) and using those for the Getwd() and UserHomeDir() calls, but that would require extra logic in Setenv() to make sure that if a test sets those values the members get updated correctly.\n\nI settled on the seeding the keys option since that handles the user getting the values by the API calls or via Getenv() relatively elegantly. Where it breaks down is if the user wants to set value those values and expects the API calls to return a different value or doing something else really weird like depending on that Getwd() returns a value, but PWD wouldn\u0027t be set. These feel like niche usages and I don\u0027t think our code does anythign like that currently. It looks mostly like sensible golden path lookups.",
+      "revId": "8443aadea5fb801c82edcb76b2e4434a8d8a3015",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
