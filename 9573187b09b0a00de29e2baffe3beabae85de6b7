@@ -39,6 +39,30 @@
       },
       "revId": "9573187b09b0a00de29e2baffe3beabae85de6b7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "041c4ea7_065ca6c9",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T12:02:23Z",
+      "side": 1,
+      "message": "It\u0027s an arbitrary number. I added a TODO to update this when the spec decides on something.",
+      "parentUuid": "7b6b9377_22ea4238",
+      "range": {
+        "startLine": 116,
+        "startChar": 56,
+        "endLine": 116,
+        "endChar": 63
+      },
+      "revId": "9573187b09b0a00de29e2baffe3beabae85de6b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
