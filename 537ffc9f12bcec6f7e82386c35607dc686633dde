@@ -22,6 +22,30 @@
       },
       "revId": "537ffc9f12bcec6f7e82386c35607dc686633dde",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e808e164_0701b19e",
+        "filename": "tools/setup-build",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-08-13T15:51:19Z",
+      "side": 1,
+      "message": "whoops. commit message was wrong. Fixed now.",
+      "parentUuid": "b0b98e86_6cac09aa",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 0
+      },
+      "revId": "537ffc9f12bcec6f7e82386c35607dc686633dde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
