@@ -33,6 +33,23 @@
       "message": "Loko or James, please TAL again.",
       "revId": "979d25276a0ee532bd3f01c963a5d2ba1a796bde",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "778559d9_e7a16376",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-13T15:04:03Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "979d25276a0ee532bd3f01c963a5d2ba1a796bde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
