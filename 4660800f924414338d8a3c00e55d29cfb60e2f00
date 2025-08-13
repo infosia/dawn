@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29c3cd52_23cb7f7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-08-13T19:59:43Z",
+      "side": 1,
+      "message": "It passed one real bot, so I put No-Try: true to bypass normal CQ bots",
+      "revId": "4660800f924414338d8a3c00e55d29cfb60e2f00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
