@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "62634553_2365c6e5",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T12:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aac091a8_de5c661a",
+      "range": {
+        "startLine": 457,
+        "startChar": 51,
+        "endLine": 457,
+        "endChar": 61
+      },
+      "revId": "7b40814cc3f0ed2f67532f77051177b5239b2f3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f6c7d1c4_9c667a0b",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-08-12T15:40:33Z",
       "side": 1,
       "message": "Thoughts on moving this into a separate function to keep the logic more separate? Though I guess that might be a bit dependent since we could potentially optimize this more if this becomes more default as an option over just the static bindings... Though I guess in that case we could optimize into a pre-process like step to get the binding numbers and then do stuff. Fine either way?",
+      "range": {
+        "startLine": 598,
+        "startChar": 4,
+        "endLine": 598,
+        "endChar": 36
+      },
+      "revId": "7b40814cc3f0ed2f67532f77051177b5239b2f3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "973c5c9d_33d9f1dc",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T12:15:58Z",
+      "side": 1,
+      "message": "My assumption is that static bindings will keep being a big hot spot, but that dynamic binding arrays won\u0027t because most applications should have only a few of them that are continuously updated, instead of creating them multiple times per frame.\n\nDone",
+      "parentUuid": "f6c7d1c4_9c667a0b",
       "range": {
         "startLine": 598,
         "startChar": 4,
@@ -94,6 +142,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "18a5b460_7f0c32b9",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T12:15:58Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e463ebc0_f38457f1",
+      "range": {
+        "startLine": 630,
+        "startChar": 11,
+        "endLine": 633,
+        "endChar": 67
+      },
+      "revId": "7b40814cc3f0ed2f67532f77051177b5239b2f3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "95c0203b_68bf1359",
@@ -135,6 +207,54 @@
         "startChar": 74,
         "endLine": 4474,
         "endChar": 82
+      },
+      "revId": "7b40814cc3f0ed2f67532f77051177b5239b2f3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "076aae4e_d82548db",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 4474,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T12:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "970db680_6e1b6c2c",
+      "range": {
+        "startLine": 4474,
+        "startChar": 74,
+        "endLine": 4474,
+        "endChar": 82
+      },
+      "revId": "7b40814cc3f0ed2f67532f77051177b5239b2f3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "259ce05b_a6b594cb",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 4474,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-13T12:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95c0203b_68bf1359",
+      "range": {
+        "startLine": 4474,
+        "startChar": 56,
+        "endLine": 4474,
+        "endChar": 58
       },
       "revId": "7b40814cc3f0ed2f67532f77051177b5239b2f3e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
