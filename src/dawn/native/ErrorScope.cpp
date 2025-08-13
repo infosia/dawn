@@ -67,6 +67,33 @@ WGPUStringView ErrorScope::GetErrorMessage() const {
     return kEmptyOutputStringView;
 }
 
+bool ErrorScope::HasPendingAsyncTasks() const {
+    return !mAsyncTasks.empty();
+}
+
+Ref<WaitListEvent> ErrorScope::CreateWaitEventForAsyncTasks() const {
+    Ref<WaitListEvent> event = AcquireRef(new WaitListEvent(mAsyncTasks.size()));
+    for (auto task : mAsyncTasks) {
+        task->AddCompletionCallback([eventRef = Ref<WaitListEvent>(event)] { eventRef->Signal(); });
+    }
+    return event;
+}
+
+void ErrorScope::HandleAsyncTaskErrors() {
+    for (auto task : mAsyncTasks) {
+        DAWN_ASSERT(task->GetState() == AsyncTaskState::Finished);
+    }
+}
+
+void ErrorScope::CaptureError(wgpu::ErrorType type, std::string_view message) {
+    DAWN_ASSERT(type == mMatchedErrorType);
+    // Record the error if the scope doesn't have one yet.
+    if (mCapturedError == wgpu::ErrorType::NoError) {
+        mCapturedError = type;
+        mErrorMessage = message;
+    }
+}
+
 ErrorScopeStack::ErrorScopeStack() = default;
 
 ErrorScopeStack::~ErrorScopeStack() = default;
@@ -94,16 +121,31 @@ bool ErrorScopeStack::HandleError(wgpu::ErrorType type, std::string_view message
         }
 
         // Filter matches.
-        // Record the error if the scope doesn't have one yet.
-        if (it->mCapturedError == wgpu::ErrorType::NoError) {
-            it->mCapturedError = type;
-            it->mErrorMessage = message;
-        }
+        it->CaptureError(type, message);
         return true;
     }
 
     // The error was not captured.
     return false;
+}
+
+std::set<wgpu::ErrorType> ErrorScopeStack::HandleErrorGeneratingAsyncTask(
+    Ref<ErrorGeneratingAsyncTask> task) {
+    // TODO: Combine this logic with ErrorFilterToErrorType
+    std::set<wgpu::ErrorType> unhandledErrorTypes{
+        wgpu::ErrorType::Validation,
+        wgpu::ErrorType::OutOfMemory,
+        wgpu::ErrorType::Internal,
+    };
+
+    for (auto it = mScopes.rbegin(); it != mScopes.rend() && !unhandledErrorTypes.empty(); ++it) {
+        if (unhandledErrorTypes.contains(it->mMatchedErrorType)) {
+            it->mAsyncTasks.push_back(task);
+            unhandledErrorTypes.erase(it->mMatchedErrorType);
+        }
+    }
+
+    return unhandledErrorTypes;
 }
 
 }  // namespace dawn::native

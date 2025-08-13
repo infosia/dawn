@@ -1704,10 +1704,10 @@ Ref<ShaderModuleBase> ShaderModuleBase::MakeError(DeviceBase* device,
 }
 
 void ShaderModuleBase::Initialize() {
-    auto task = [&, shaderModuleRef = Ref<ShaderModuleBase>(this)]() {
-        SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(GetDevice()->GetPlatform(), "CreateShaderModuleUS");
+    auto task = GetDevice()->GetAsyncTaskManager()->PostTask<ErrorGeneratingAsyncTask>(
+        [&, shaderModuleRef = Ref<ShaderModuleBase>(this)]() -> MaybeError {
+            SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(GetDevice()->GetPlatform(), "CreateShaderModuleUS");
 
-        auto taskMaybeError = [&]() -> MaybeError {
             auto parseResultOrError = [&]() -> ResultOrError<ShaderModuleParseResult> {
                 // Check blob cache first before calling ParseShaderModule. ShaderModuleParseResult
                 // returned from blob cache or ParseShaderModule will hold compilation messages and
@@ -1768,23 +1768,21 @@ void ShaderModuleBase::Initialize() {
             DAWN_TRY(InitializeImpl());
 
             return {};
-        }();
+        });
 
-        DAWN_HISTOGRAM_BOOLEAN(GetDevice()->GetPlatform(), "CreateShaderModuleSuccess",
-                               taskMaybeError.IsSuccess());
-        if (taskMaybeError.IsError()) {
-            SetInitializedError();
-            mInitializationError = CachedValidationError(taskMaybeError.AcquireError());
-        } else {
-            SetInitializedNoError();
+    task->Wait();
 
-            // On successful compilation, emit the compilation log
-            GetDevice()->EmitCompilationLog(this);
-        }
-    };
+    DAWN_HISTOGRAM_BOOLEAN(GetDevice()->GetPlatform(), "CreateShaderModuleSuccess",
+                           task->IsSuccess());
+    if (task->IsError()) {
+        SetInitializedError();
+        mInitializationError = CachedValidationError(task->AcquireError());
+    } else {
+        SetInitializedNoError();
 
-    auto asyncTask = GetDevice()->GetAsyncTaskManager()->PostTask(std::move(task));
-    asyncTask->Wait();
+        // On successful compilation, emit the compilation log
+        GetDevice()->EmitCompilationLog(this);
+    }
     DAWN_ASSERT(IsInitialized());
 }
 
