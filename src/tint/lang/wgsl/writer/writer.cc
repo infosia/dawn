@@ -36,11 +36,11 @@
 
 namespace tint::wgsl::writer {
 
-Result<Output> Generate(const Program& program) {
+Result<Output> Generate(const Program& program, const Options& options) {
     Output output;
 
     // Generate the WGSL code.
-    auto impl = std::make_unique<ASTPrinter>(program);
+    auto impl = std::make_unique<ASTPrinter>(program, options);
     if (!impl->Generate()) {
         return Failure{impl->Diagnostics().Str()};
     }
@@ -49,15 +49,15 @@ Result<Output> Generate(const Program& program) {
     return output;
 }
 
-Result<Output> WgslFromIR(core::ir::Module& module, const ProgramOptions& options) {
+Result<Output> WgslFromIR(core::ir::Module& module, const Options& options) {
     auto res = ProgramFromIR(module, options);
     if (res != Success) {
         return res.Failure();
     }
-    return Generate(res.Move());
+    return Generate(res.Move(), options);
 }
 
-Result<Program> ProgramFromIR(core::ir::Module& module, const ProgramOptions& options) {
+Result<Program> ProgramFromIR(core::ir::Module& module, const Options& options) {
     // core-dialect -> WGSL-dialect
     if (auto res = Raise(module); res != Success) {
         return res.Failure();
