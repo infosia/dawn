@@ -327,6 +327,8 @@ TEST_P(MultithreadTests, T2BThenMapInParallel) {
 
 // Test CreateShaderModule on multiple threads. Cache hits should share compilation warnings.
 TEST_P(MultithreadTests, CreateShaderModuleInParallel) {
+    DAWN_TEST_UNSUPPORTED_IF(!IsImplicitDeviceSyncEnabled());
+
     constexpr uint32_t kCacheHitFactor = 4;  // 4 threads will create the same shader module.
 
     std::vector<std::string> shaderSources(10);
