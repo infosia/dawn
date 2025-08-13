@@ -16,6 +16,24 @@
       "message": "Saw this because I happened to have a merge conflict with it today. I don\u0027t think that we should use this method to disable subgroups on Intel Gen9 because IIRC this will mean that the GPUAdapter will advertise support for subgroups but that creating a device requesting subgroups will always fail. This will be very confusing to developers and also risks breaking websites because we\u0027re not supposed to fail device creation when only supported features are required.\n\nInstead I suggest looking up the toggle before marking the feature as supported in this class.",
       "revId": "192d1130a87e3ff44e026c7dfb240821efdd26a1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbb9685c_c32e32f1",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-13T15:37:56Z",
+      "side": 1,
+      "message": "I think it works because the Toggle is an Adapter toggle, not a device toggle. The adapter will call `ValidateFeatureSupportedWithToggles` with the adapter toggles that are enabled, which in turn calls this method. That filters out the feature from being reported by the adapter.\n\nFWIW this is the same as what I had to do above with `SubgroupMatrix` being gated on `UseVulkanMemoryModel`.",
+      "parentUuid": "b65776ae_adf0cdd2",
+      "revId": "192d1130a87e3ff44e026c7dfb240821efdd26a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
