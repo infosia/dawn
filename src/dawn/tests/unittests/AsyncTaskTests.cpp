@@ -88,7 +88,7 @@ TEST_F(AsyncTaskTest, Basic) {
     constexpr size_t kTaskCount = 4u;
     std::set<uint32_t> idset;
     for (uint32_t i = 0; i < kTaskCount; ++i) {
-        taskManager.PostTask([&taskResultQueue, i] { DoTask(&taskResultQueue, i); });
+        taskManager.PostTask<AsyncTask>([&taskResultQueue, i] { DoTask(&taskResultQueue, i); });
         idset.insert(i);
     }
 
@@ -114,7 +114,8 @@ TEST_F(AsyncTaskTest, Status) {
     std::mutex mutex;
     std::unique_lock lock(mutex);
 
-    auto task = taskManager.PostTask([&mutex]() { std::lock_guard<std::mutex> taskLock(mutex); });
+    auto task = taskManager.PostTask<AsyncTask>(
+        [&mutex]() { std::lock_guard<std::mutex> taskLock(mutex); });
 
     task->WaitUntilAtLeastState(AsyncTaskState::Running);
     ASSERT_EQ(task->GetState(), AsyncTaskState::Running);
