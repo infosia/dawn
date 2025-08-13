@@ -54,7 +54,7 @@ TEST_F(DeviceAsyncTaskTests, LongAsyncTaskFinishesBeforeDeviceIsDropped) {
         done = true;
     });
 
-    mDeviceMock->GetAsyncTaskManager()->PostTask(std::move(task));
+    mDeviceMock->GetAsyncTaskManager()->PostTask<AsyncTask>(std::move(task));
     DropDevice();
     // Dropping the device should force the async task to finish.
     EXPECT_TRUE(done.load());
