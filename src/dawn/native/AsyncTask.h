@@ -36,6 +36,7 @@
 #include "dawn/common/NonCopyable.h"
 #include "dawn/common/Ref.h"
 #include "dawn/common/RefCounted.h"
+#include "dawn/native/Error.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::platform {
@@ -66,6 +67,8 @@ class AsyncTask : public RefCounted {
     void Wait();
     void WaitUntilAtLeastState(AsyncTaskState state);
 
+    void AddCompletionCallback(std::function<void()> completionCallback);
+
   private:
     // Friends with the task manager to privately manage when tasks are executed.
     friend class AsyncTaskManager;
@@ -79,6 +82,20 @@ class AsyncTask : public RefCounted {
     std::mutex mStateMutex;
     std::condition_variable mStateConditionVariable;
     std::atomic<AsyncTaskState> mState = AsyncTaskState::Pending;
+    std::vector<std::function<void()>> mCompletionCallbacks;
+};
+
+class ErrorGeneratingAsyncTask : public AsyncTask {
+  public:
+    explicit ErrorGeneratingAsyncTask(std::function<MaybeError()> task);
+
+    bool IsSuccess() const { return mErrorData == nullptr; }
+    bool IsError() const { return mErrorData != nullptr; }
+    InternalErrorType GetErrorType() const;
+    std::unique_ptr<ErrorData> AcquireError() { return std::move(mErrorData); }
+
+  private:
+    std::unique_ptr<ErrorData> mErrorData;
 };
 
 class AsyncTaskManager {
@@ -86,7 +103,12 @@ class AsyncTaskManager {
     explicit AsyncTaskManager(dawn::platform::WorkerTaskPool* workerTaskPool);
     ~AsyncTaskManager();
 
-    Ref<AsyncTask> PostTask(std::function<void()> task);
+    template <typename TaskType, class... Args>
+    Ref<TaskType> PostTask(Args&&... args) {
+        Ref<TaskType> asyncTask = AcquireRef(new TaskType(std::forward<Args>(args)...));
+        PostConstructedTask(asyncTask);
+        return asyncTask;
+    }
 
     void WaitAllPendingTasks();
     bool HasPendingTasks();
@@ -97,6 +119,8 @@ class AsyncTaskManager {
         raw_ptr<AsyncTaskManager> taskManager;
         std::unique_ptr<dawn::platform::WaitableEvent> waitableEvent;
     };
+
+    void PostConstructedTask(Ref<AsyncTask> asyncTask);
 
     static void RunTask(void* task);
     void HandleTaskCompletion(WaitableTask* task);

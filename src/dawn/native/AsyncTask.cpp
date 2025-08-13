@@ -44,6 +44,18 @@ void AsyncTask::WaitUntilAtLeastState(AsyncTaskState state) {
     mStateConditionVariable.wait(lock, [this, state] { return mState >= state; });
 }
 
+void AsyncTask::AddCompletionCallback(std::function<void()> completionCallback) {
+    std::scoped_lock<std::mutex> lock(mStateMutex);
+
+    // If this task has already completed, call the completion callback immediately.
+    if (mState == AsyncTaskState::Finished) {
+        completionCallback();
+        return;
+    }
+
+    mCompletionCallbacks.push_back(completionCallback);
+}
+
 void AsyncTask::Run() {
     {
         std::scoped_lock<std::mutex> lock(mStateMutex);
@@ -55,8 +67,26 @@ void AsyncTask::Run() {
     {
         std::scoped_lock<std::mutex> lock(mStateMutex);
         mState = AsyncTaskState::Finished;
+        for (auto completionCallback : mCompletionCallbacks) {
+            completionCallback();
+        }
+        mCompletionCallbacks.clear();
         mStateConditionVariable.notify_all();
     }
+}
+
+ErrorGeneratingAsyncTask::ErrorGeneratingAsyncTask(std::function<MaybeError()> task)
+    : AsyncTask([this, task] {
+          // Wrap the task which returns a MaybeError in a void function and store the error in a
+          // member.
+          MaybeError taskResult = task();
+          if (taskResult.IsError()) {
+              mErrorData = taskResult.AcquireError();
+          }
+      }) {}
+
+InternalErrorType ErrorGeneratingAsyncTask::GetErrorType() const {
+    return mErrorData ? mErrorData->GetType() : InternalErrorType::None;
 }
 
 AsyncTaskManager::AsyncTaskManager(dawn::platform::WorkerTaskPool* workerTaskPool)
@@ -67,9 +97,7 @@ AsyncTaskManager::~AsyncTaskManager() {
     WaitAllPendingTasks();
 }
 
-Ref<AsyncTask> AsyncTaskManager::PostTask(std::function<void()> task) {
-    Ref<AsyncTask> asyncTask = AcquireRef(new AsyncTask(task));
-
+void AsyncTaskManager::PostConstructedTask(Ref<AsyncTask> asyncTask) {
     // We insert new waitableTask objects into mPendingTasks in main thread (PostTask()),
     // and we may remove waitableTask objects from mPendingTasks in either main thread
     // (WaitAllPendingTasks()) or sub-thread (TaskCompleted), so mPendingTasks should be
@@ -88,8 +116,6 @@ Ref<AsyncTask> AsyncTaskManager::PostTask(std::function<void()> task) {
     waitableTask->taskManager = this;
     waitableTask->asyncTask = asyncTask;
     waitableTask->waitableEvent = mWorkerTaskPool->PostWorkerTask(RunTask, waitableTask);
-
-    return asyncTask;
 }
 
 void AsyncTaskManager::HandleTaskCompletion(WaitableTask* task) {
