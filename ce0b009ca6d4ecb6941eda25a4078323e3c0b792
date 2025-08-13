@@ -144,6 +144,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "763e4a75_a832d8ec",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1003586
+      },
+      "writtenOn": "2025-08-13T14:28:22Z",
+      "side": 1,
+      "message": "Ignoring read-only uses is not valid. This will lead to incorrect handling of some WAR cases. Consider the following scenario (all passes are compute passes):\n\n- Pass 1 writes to buffers A and B\n- Pass 2 reads buffer A\n- Pass 3 writes to buffer A\n- Pass 4 reads buffer B\n- Pass 5 writes to buffer B\n\nPass 5 is a WAR dependency on pass 4. There needs to be a pipeline barrier inbetween passes 4 and 5. So let\u0027s see how this patch will handle this scenario:\n\n(`R \u003d VK_ACCESS_SHADER_READ_BIT`, `W \u003d VK_ACCESS_SHADER_WRITE_BIT`)\n\n- Pass 1\n - Inserts `C-\u003eC, RW-\u003eRW` barrier with ID `0` (assuming previous use was a write in compute)\n - A: `0`\n - B: `0`\n- Pass 2\n - Inserts `C-\u003eC, RW-\u003eR` barrier with ID `1` (barrier from pass 1 (ID `0`) matches (`R` is subset of `RW`), but `A (0) \u003e\u003d 0` so not redundant)\n - A: `0` (not updated as usage is read-only)\n - B: `0`\n- Pass 3\n - Inserts `C-\u003eC, R-\u003eRW` barrier with ID `2` (barrier from pass 1 (ID `0`) matches, but `A (0) \u003e\u003d 0` so not redundant)\n - A: `2`\n - B: `0`\n- Pass 4\n - No barrier inserted. The `C-\u003eC, RW-\u003eR` barrier from pass 2 (ID `1`) matches, and `B (0) \u003c 1`.\n - A: `2`\n - B: `0` (not updated as usage is read-only)\n- Pass 5\n - No barrier inserted. The `C-\u003eC, R-\u003eRW` barrier from pass 3 (ID `2`) matches, and `B (0) \u003c 2`.\n\nThe end result is the following command buffer:\n - Barrier\n- Pass 1\n - Barrier\n- Pass 2\n - Barrier\n- Pass 3\n- Pass 4\n- Pass 5\n\nCorrect command buffer would be:\n - Barrier\n- Pass 1\n - Barrier\n- Pass 2\n - Barrier\n- Pass 3\n- Pass 4\n - Barrier\n- Pass 5",
+      "revId": "ce0b009ca6d4ecb6941eda25a4078323e3c0b792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ef219b5b_2b6306c0",
         "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
         "patchSetId": 14
