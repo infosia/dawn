@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c9c26dcb_c6b0bae8",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-13T11:24:04Z",
+      "side": 1,
+      "message": "We may keep this as it doesn\u0027t mean WebGPU enablement.",
+      "parentUuid": "4b1f433b_6843303d",
+      "revId": "243638e126b41819ef84ddbf5e6a16ebeff8488a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f3ea6b0f_59330db1",
         "filename": "src/dawn/gpu_info.json",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2025-08-12T23:10:07Z",
       "side": 1,
       "message": "Let us keep this line only and remove all other device ids. This device id represents the Snapdragon devices for which we have tested the Dawn E2E and CTS.",
+      "revId": "243638e126b41819ef84ddbf5e6a16ebeff8488a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfe3d8c0_10652101",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-13T11:24:04Z",
+      "side": 1,
+      "message": "This is just for GPU info, not relevant to WebGPU enablement. For WebGPU enablement, we need to check both the GPU gen and driver version.",
+      "parentUuid": "f3ea6b0f_59330db1",
       "revId": "243638e126b41819ef84ddbf5e6a16ebeff8488a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
