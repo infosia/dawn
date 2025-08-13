@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb1fced6_e18d67a6",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-13T11:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9c26dcb_c6b0bae8",
+      "revId": "243638e126b41819ef84ddbf5e6a16ebeff8488a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f3ea6b0f_59330db1",
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "This is just for GPU info, not relevant to WebGPU enablement. For WebGPU enablement, we need to check both the GPU gen and driver version.",
       "parentUuid": "f3ea6b0f_59330db1",
+      "revId": "243638e126b41819ef84ddbf5e6a16ebeff8488a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66b81ff1_3264cf27",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-13T11:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfe3d8c0_10652101",
       "revId": "243638e126b41819ef84ddbf5e6a16ebeff8488a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
