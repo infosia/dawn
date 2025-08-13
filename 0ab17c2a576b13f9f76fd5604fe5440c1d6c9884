@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7494b07c_30daf02d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-13T14:13:10Z",
+      "side": 1,
+      "message": "Need a second reviewer, since the CTS bot isn\u0027t a commiter (KI)",
+      "revId": "0ab17c2a576b13f9f76fd5604fe5440c1d6c9884",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
