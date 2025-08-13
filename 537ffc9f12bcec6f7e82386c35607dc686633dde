@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0b98e86_6cac09aa",
+        "filename": "tools/setup-build",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-13T14:49:04Z",
+      "side": 1,
+      "message": "I am confused are release or debug builds not supported?\n(From the CL description \"The gn release build does not support ubsan, so error out in that case.\")",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 0
+      },
+      "revId": "537ffc9f12bcec6f7e82386c35607dc686633dde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
