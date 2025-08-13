@@ -56,6 +56,30 @@
       },
       "revId": "09679ccdab9b393098eb7ec93cb45aa6856fbe29",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a748d94_6a4497dc",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-08-13T17:39:51Z",
+      "side": 1,
+      "message": "Acknowledged.\nI want to land this so I can roll into g3, then address this nit",
+      "parentUuid": "d7d06dac_bf1686f3",
+      "range": {
+        "startLine": 1343,
+        "startChar": 18,
+        "endLine": 1343,
+        "endChar": 26
+      },
+      "revId": "09679ccdab9b393098eb7ec93cb45aa6856fbe29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
