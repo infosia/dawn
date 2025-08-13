@@ -179,6 +179,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "84a60733_3b81b7e8",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-13T18:01:49Z",
+      "side": 1,
+      "message": "I agree that this definitely seems like an missing edge case.\nWhat I think I should do is add this case as an end2end test.\n\nThe actual implementation of this avoiding redundant barriers will not be this change.",
+      "parentUuid": "41d8a8d0_4dc7bd53",
+      "revId": "ce0b009ca6d4ecb6941eda25a4078323e3c0b792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ef219b5b_2b6306c0",
         "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
         "patchSetId": 14
