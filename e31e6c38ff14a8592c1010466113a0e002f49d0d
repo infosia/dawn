@@ -133,6 +133,24 @@
       "parentUuid": "b10cabc1_0ed063f3",
       "revId": "e31e6c38ff14a8592c1010466113a0e002f49d0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "361d79b4_2057d333",
+        "filename": "infra/config/global/gn_standalone_try.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-14T17:57:58Z",
+      "side": 1,
+      "message": "\u003e Side note: could add test/tint as well, since we only run those tests on CMake bots too.\n\nAck, I\u0027ll include that in the follow-up CL.",
+      "parentUuid": "8ded5cde_82eba4a1",
+      "revId": "e31e6c38ff14a8592c1010466113a0e002f49d0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
