@@ -36,6 +36,7 @@
 #include "dawn/native/Format.h"
 #include "dawn/native/ObjectType_autogen.h"
 #include "dawn/native/Texture.h"
+#include "dawn/native/capture/CaptureContext.h"
 
 namespace dawn::native {
 
