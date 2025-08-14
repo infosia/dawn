@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59ec0317_662e0b60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-14T16:56:39Z",
+      "side": 1,
+      "message": "It was a rename, not a removal, fixed the patch, and confirmed locally it works with the bot linux config",
+      "revId": "b45261aa05048c58588f4c253b12322fcea10dba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
