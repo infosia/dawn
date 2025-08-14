@@ -294,6 +294,9 @@ class DeviceBase : public ErrorSink,
 
     MaybeError ValidateIsAlive() const;
 
+    void APIStartCapture(StringView filename);
+    void APIEndCapture();
+
     BlobCache* GetBlobCache() const;
     Blob LoadCachedBlob(const CacheKey& key);
     void StoreCachedBlob(const CacheKey& key, const Blob& blob);
