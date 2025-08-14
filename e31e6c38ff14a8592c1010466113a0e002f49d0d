@@ -33,6 +33,29 @@
       "message": "Swapping reviewers since Dan is otherwise occupied this week.",
       "revId": "e31e6c38ff14a8592c1010466113a0e002f49d0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d476458_269e9291",
+        "filename": "infra/config/global/gn_standalone_try.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-08-14T17:45:43Z",
+      "side": 1,
+      "message": "This doesn\u0027t match cmake_msvc_file_exclusions exactly (\"go\\\\.(mod|sum)\"), is it intentional?\nI also saw \"\\\\.github/.+\" filter applied elsewhere, but I don\u0027t think it applies to anything.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 38
+      },
+      "revId": "e31e6c38ff14a8592c1010466113a0e002f49d0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
