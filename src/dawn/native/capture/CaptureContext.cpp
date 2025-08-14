@@ -28,6 +28,7 @@
 #include "src/dawn/native/capture/CaptureContext.h"
 
 #include "src/dawn/native/capture/Serialization.h"
+#include "src/dawn/native/CommandBuffer.h"
 
 namespace dawn::native {
 
@@ -55,6 +56,10 @@ void CaptureContext::WriteU64(uint64_t value) {
     mOutputStream.write(reinterpret_cast<const char*>(&value), sizeof(value));
 }
 
+void CaptureContext::WriteSizeT(size_t value) {
+    mOutputStream.write(reinterpret_cast<const char*>(&value), sizeof(value));
+}
+
 void CaptureContext::WriteString(const std::string& value) {
     WriteU64(value.length());
     mOutputStream.write(value.c_str(), value.length());
@@ -64,5 +69,162 @@ void CaptureContext::WriteData(const void* data, size_t size) {
     WriteU64(size);
     mOutputStream.write(reinterpret_cast<const char*>(data), size);
 }
+
+void CaptureContent(CaptureContext& captureContext, const BufferBase* buffer) {
+}
+
+void CaptureContent(CaptureContext& captureContext, const TextureBase* texture) {
+}
+
+void CaptureContent(CaptureContext& captureContext, const ExternalTextureBase* texture) {
+}
+
+void CaptureContent(CaptureContext& captureContext, const QuerySetBase* querySet) {
+}
+
+namespace {
+
+void Capture(CaptureContext& captureContext, const std::string& str) {
+    captureContext.WriteString(str);
+}
+
+void Capture(CaptureContext& captureContext, const BufferBase* buffer) {
+    captureContext.AddResource(buffer);
+}
+
+void Capture(CaptureContext& captureContext, const TextureBase* texture) {
+    captureContext.AddResource(texture);
+}
+
+void Capture(CaptureContext& captureContext, const ExternalTextureBase* texture) {
+    captureContext.AddResource(texture);
+}
+
+void Capture(CaptureContext& captureContext, const QuerySetBase* querySet) {
+    captureContext.AddResource(querySet);
+}
+
+void Capture(CaptureContext& captureContext, const std::vector<BufferBase*>& buffers) {
+    captureContext.WriteSizeT(buffers.size());
+    for (const auto buffer : buffers) {
+        Capture(captureContext, buffer);
+    }
+}
+
+void Capture(CaptureContext& captureContext, const std::vector<TextureBase*>& textures) {
+    captureContext.WriteSizeT(textures.size());
+    for (const auto texture : textures) {
+        Capture(captureContext, texture);
+    }
+}
+
+void Capture(CaptureContext& captureContext, const std::vector<ExternalTextureBase*>& textures) {
+    captureContext.WriteSizeT(textures.size());
+    for (const auto texture : textures) {
+        Capture(captureContext, texture);
+    }
+}
+
+void Capture(CaptureContext& captureContext, const std::vector<QuerySetBase*>& querySets) {
+    captureContext.WriteSizeT(querySets.size());
+    for (const auto querySet : querySets) {
+        Capture(captureContext, querySet);
+    }
+}
+
+void Capture(CaptureContext& captureContext, const absl::flat_hash_set<BufferBase*> buffers) {
+    captureContext.WriteSizeT(buffers.size());
+    for (const auto buffer : buffers) {
+        Capture(captureContext, buffer);
+    }
+}
+
+void Capture(CaptureContext& captureContext, const absl::flat_hash_set<TextureBase*> textures) {
+    captureContext.WriteSizeT(textures.size());
+    for (const auto texture : textures) {
+        Capture(captureContext, texture);
+    }
+}
+
+void Capture(CaptureContext& captureContext, const absl::flat_hash_set<ExternalTextureBase*> textures) {
+    captureContext.WriteSizeT(textures.size());
+    for (const auto texture : textures) {
+        Capture(captureContext, texture);
+    }
+}
+
+void Capture(CaptureContext& captureContext, const absl::flat_hash_set<QuerySetBase*> querySets) {
+    captureContext.WriteSizeT(querySets.size());
+    for (const auto* querySet : querySets) {
+        Capture(captureContext, querySet);
+    }
+}
+
+void Capture(CaptureContext& captureContext, const SyncScopeResourceUsage& usage) {
+    Capture(captureContext, usage.buffers);
+    Capture(captureContext, usage.textures);
+    Capture(captureContext, usage.externalTextures);
+}
+
+void Capture(CaptureContext& captureContext, const RenderPassResourceUsage& usage) {
+    Capture(captureContext, static_cast<const SyncScopeResourceUsage&>(usage));
+    Capture(captureContext, usage.querySets);
+    //Capture(captureContext, usage.queryAvailabilities));
+}
+
+void Capture(CaptureContext& captureContext, const RenderPassUsages& renderPassUsages) {
+    captureContext.WriteSizeT(renderPassUsages.size());
+    for (const auto& usage : renderPassUsages) {
+        Capture(captureContext, usage);
+    }
+}
+
+void Capture(CaptureContext& captureContext, const ComputePassResourceUsage& usage) {
+    captureContext.WriteSizeT(usage.dispatchUsages.size());
+    for (const auto& resourceUsage : usage.dispatchUsages) {
+        Capture(captureContext, resourceUsage);
+    }
+    Capture(captureContext, usage.referencedBuffers);
+    Capture(captureContext, usage.referencedTextures);
+    Capture(captureContext, usage.referencedExternalTextures);
+}
+
+void Capture(CaptureContext& captureContext, const ComputePassUsages& computePassUsages) {
+    captureContext.WriteSizeT(computePassUsages.size());
+    for (const auto& usage : computePassUsages) {
+        Capture(captureContext, usage);
+    }
+}
+
+void Capture(CaptureContext& captureContext, const CommandBufferResourceUsage& resourceUsages) {
+    Capture(captureContext, resourceUsages.renderPasses);
+    Capture(captureContext, resourceUsages.computePasses);
+    Capture(captureContext, resourceUsages.topLevelBuffers);
+    Capture(captureContext, resourceUsages.topLevelTextures);
+    Capture(captureContext, resourceUsages.usedQuerySets);
+}
+
+void Capture(CaptureContext& captureContext, const std::vector<IndirectDrawMetadata>& indirectDrawMetaData) {
+}
+
+void Capture(CaptureContext& captureContext, CommandIterator* cmdIter) {
+}
+
+void Capture(CaptureContext& captureContext, CommandBufferBase* commandBuffer) {
+    Capture(captureContext, commandBuffer->GetEncoderLabel());
+    Capture(captureContext, commandBuffer->GetResourceUsages());
+    Capture(captureContext, commandBuffer->GetIndirectDrawMetadata());
+    Capture(captureContext, commandBuffer->GetCommandIteratorForTesting());
+}
+
+}  // namespace
+
+void CaptureContext::CaptureCommandBuffer(uint32_t commandCount, CommandBufferBase* const* commands) {
+    WriteU32(commandCount);
+    for (uint32_t i = 0; i < commandCount; ++i) {
+        Capture(*this, commands[i]);
+    }
+}
+
 
 }  // namespace dawn::native

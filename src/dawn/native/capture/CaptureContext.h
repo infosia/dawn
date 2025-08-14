@@ -38,9 +38,14 @@
 
 namespace dawn::native {
 
+class CaptureContext;
+class CommandBufferBase;
 class DeviceBase;
 
 using ObjectId = uint64_t;
+
+template<typename T>
+void CaptureContent(CaptureContext& captureContext, const T* object);
 
 class CaptureContext {
   public:
@@ -48,33 +53,29 @@ class CaptureContext {
     ~CaptureContext();
 
     template <typename T>
-    void Capture(const T* object) {
-        static_assert(std::is_base_of<ObjectBase, T>::value ||
-                          std::is_same_v<T, std::remove_cv_t<decltype(nullptr)>>,
-                      "T must be a ObjectBase");
-        if (object == nullptr) {
-            return;
+    bool AddResource(const T* object) {
+        assert(object != nullptr);
+
+        auto it = mObjectIds.find(static_cast<const void*>(object));
+        if (it != mObjectIds.end()) {
+            return false; // Object was already captured
         }
 
-        auto it = mObjectIds.find(object);
-        assert(it != mObjectIds.end()); // Object was already captured
-
-        object->Serialize(this);
+        CaptureContent(*this, object);
 
         ObjectId newId = mNextObjectId++;
         mObjectIds[object] = newId;
+
+        return true;
     }
 
     template <typename T>
     ObjectId GetId(const T* object) {
-        static_assert(std::is_base_of<ObjectBase, T>::value ||
-                          std::is_same_v<T, std::remove_cv_t<decltype(nullptr)>>,
-                      "T must be a ObjectBase");
         if (object == nullptr) {
             return 0;
         }
 
-        auto it = mObjectIds.find(object);
+        auto it = mObjectIds.find(static_cast<const void*>(object));
         assert (it != mObjectIds.end());
         return it->second;
     }
@@ -83,12 +84,15 @@ class CaptureContext {
     void WriteI32(int32_t value);
     void WriteU32(uint32_t value);
     void WriteU64(uint64_t value);
+    void WriteSizeT(size_t value);
     void WriteString(const std::string& value);
     void WriteData(const void* data, size_t size);
 
+    void CaptureCommandBuffer(uint32_t commandCount, CommandBufferBase* const* commands);
+
   private:
     std::ostream& mOutputStream;
-    std::unordered_map<const ObjectBase*, ObjectId> mObjectIds;
+    std::unordered_map<const void*, ObjectId> mObjectIds;
     ObjectId mNextObjectId = 1;
 };
 

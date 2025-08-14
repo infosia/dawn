@@ -600,6 +600,9 @@ MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* c
     DAWN_ASSERT(!IsError());
 
     mInSubmit = true;
+    if (mCaptureContext) {
+        mCaptureContext->CaptureCommandBuffer(commandCount, commands);
+    }
     DAWN_TRY(SubmitImpl(commandCount, commands));
     mInSubmit = false;
 

@@ -30,6 +30,7 @@
 #include "dawn/native/CommandBuffer.h"
 
 #include "dawn/native/Buffer.h"
+#include "dawn/native/capture/CaptureContext.h"
 #include "dawn/native/CommandEncoder.h"
 #include "dawn/native/CommandValidation.h"
 #include "dawn/native/Commands.h"
