@@ -16,6 +16,23 @@
       "message": "PTAL\n\nWill send out a PSA to chat before landing.",
       "revId": "e31e6c38ff14a8592c1010466113a0e002f49d0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c852cdb_098a5d86",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-14T17:39:14Z",
+      "side": 1,
+      "message": "Swapping reviewers since Dan is otherwise occupied this week.",
+      "revId": "e31e6c38ff14a8592c1010466113a0e002f49d0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
