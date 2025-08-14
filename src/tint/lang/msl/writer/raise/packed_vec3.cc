@@ -232,9 +232,6 @@ struct State {
                                                    std::move(new_members), str->Align(),
                                                    str->Size(), str->SizeNoPadding());
 
-        // There are no struct flags that are valid for the MSL backend.
-        TINT_ASSERT(str->StructFlags().Empty());
-
         return new_str;
     }
 
