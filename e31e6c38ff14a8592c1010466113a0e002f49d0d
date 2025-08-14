@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d175986_04a6f35a",
+        "filename": "infra/config/global/gn_standalone_try.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-14T17:51:09Z",
+      "side": 1,
+      "message": "Good call, I\u0027ll update in a follow-up so that the CQ doesn\u0027t need to run again since it\u0027s not a major issue that those files aren\u0027t excluded. I\u0027ll also look into moving these exclusions into a common place in that follow-up.",
+      "parentUuid": "6d476458_269e9291",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 38
+      },
+      "revId": "e31e6c38ff14a8592c1010466113a0e002f49d0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b10cabc1_0ed063f3",
