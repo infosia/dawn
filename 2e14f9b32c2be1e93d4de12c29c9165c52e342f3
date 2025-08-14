@@ -157,6 +157,24 @@
       "parentUuid": "84f394d1_82b1e234",
       "revId": "2e14f9b32c2be1e93d4de12c29c9165c52e342f3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fba7af1d_20fdc071",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 4494,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-08-14T17:47:09Z",
+      "side": 1,
+      "message": "I just tried essentially this example with the old reader path.\nI did writes in the helper, and an additional read in the entry point\n\n```\n               OpCapability Shader\n               OpCapability ImageQuery\n               OpMemoryModel Logical GLSL450\n               OpEntryPoint GLCompute %main \"main\"\n               OpExecutionMode %main LocalSize 1 1 1\n               OpDecorate %var_tex DescriptorSet 0\n               OpDecorate %var_tex Binding 0\n               OpDecorate %var_texb DescriptorSet 0\n               OpDecorate %var_texb Binding 1\n       %void \u003d OpTypeVoid\n      %float \u003d OpTypeFloat 32\n        %int \u003d OpTypeInt 32 1\n        %tex \u003d OpTypeImage %float 2D 0 0 0 2 R32f\n    %ptr_tex \u003d OpTypePointer UniformConstant %tex\n      %v2int \u003d OpTypeVector %int 2\n     %coords \u003d OpConstantNull %v2int\n    %v4float \u003d OpTypeVector %float 4\n    %var_tex \u003d OpVariable %ptr_tex UniformConstant\n   %var_texb \u003d OpVariable %ptr_tex UniformConstant\n    %zero \u003d OpConstantNull %v4float\n    %ep_type \u003d OpTypeFunction %void\n%helper_type \u003d OpTypeFunction %void %tex\n     %helper \u003d OpFunction %void None %helper_type\n   %im_param \u003d OpFunctionParameter %tex\n%helper_entry \u003d OpLabel\n               OpImageWrite %im_param %coords %zero\n               OpReturn\n               OpFunctionEnd\n       %main \u003d OpFunction %void None %ep_type\n %main_start \u003d OpLabel\n         %im \u003d OpLoad %tex %var_tex\n   %fnresult \u003d OpFunctionCall %void %helper %im\n        %imb \u003d OpLoad %tex %var_texb\n  %fnresultb \u003d OpFunctionCall %void %helper %imb\n     %result \u003d OpImageRead %v4float %imb %coords\n               OpReturn\n               OpFunctionEnd\n```\nThe old reader produces this:\n```\n\nenable chromium_disable_uniformity_analysis;\nrequires readonly_and_readwrite_storage_textures;\n\n@group(0) @binding(0) var x_2 : texture_storage_2d\u003cr32float, write\u003e;\n\n@group(0) @binding(1) var x_3 : texture_storage_2d\u003cr32float, read_write\u003e;\n\nfn x_15(x_16 : texture_storage_2d\u003cr32float, write\u003e) {\n  textureStore(x_16, vec2i(), vec4f());\n  return;\n}\n\nfn main_1() {\n  x_15(x_2);\n  x_15(x_3);\n  let x_23 \u003d textureLoad(x_3, vec2i());\n  return;\n}\n\n@compute @workgroup_size(1i, 1i, 1i)\nfn main() {\n  main_1();\n}\n\nerror: type mismatch for argument 1 in call to x_15, expected texture_storage_2d\u003cr32float, write\u003e, got texture_storage_2d\u003cr32float, read_write\u003e\n```\nThat\u0027s because the information flow is only bottom up, and there\u0027s no function splitting.\n\nSo there\u0027s no backward compatibility argument to be made (weak as though it would have been).  I think from a usability perspective, with the new option, I think the right result is to infer different types for the storage textures, and split the helper.  That implies two way flow of information: bottom up to determine types for the storage textures, then downward flow to split functions as needed.\n\nSo I guess the texture transform would be the better place to do this work.",
+      "parentUuid": "9418b13a_48aa4193",
+      "revId": "2e14f9b32c2be1e93d4de12c29c9165c52e342f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
