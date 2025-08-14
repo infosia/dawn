@@ -115,6 +115,24 @@
       "parentUuid": "b10cabc1_0ed063f3",
       "revId": "e31e6c38ff14a8592c1010466113a0e002f49d0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ded5cde_82eba4a1",
+        "filename": "infra/config/global/gn_standalone_try.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-14T17:55:35Z",
+      "side": 1,
+      "message": "The CMake bots do, but I don\u0027t see that in the GN scripts (there\u0027s no reason why GN bots couldn\u0027t run this too, but I\u0027m not sure what it would gain us).\n\nSide note: could add `test/tint` as well, since we only run those tests on CMake bots too.",
+      "parentUuid": "b10cabc1_0ed063f3",
+      "revId": "e31e6c38ff14a8592c1010466113a0e002f49d0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
