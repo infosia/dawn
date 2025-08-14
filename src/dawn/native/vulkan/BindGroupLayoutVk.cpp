@@ -138,7 +138,7 @@ MaybeError BindGroupLayout::Initialize() {
             bindingIndex;
     }
 
-    for (const auto& [_, bindingIndex] : GetBindingMap()) {
+    for (BindingIndex bindingIndex : Range(GetBindingCount())) {
         // This texture will be bound into the VkDescriptorSet at the index for the sampler itself.
         if (mTextureToStaticSamplerIndices.contains(bindingIndex)) {
             continue;
@@ -186,7 +186,7 @@ MaybeError BindGroupLayout::Initialize() {
     // Compute the size of descriptor pools used for this layout.
     absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType;
 
-    for (BindingIndex bindingIndex{0}; bindingIndex < GetBindingCount(); ++bindingIndex) {
+    for (BindingIndex bindingIndex : Range(GetBindingCount())) {
         if (mTextureToStaticSamplerIndices.contains(bindingIndex)) {
             // This texture will be bound into the VkDescriptorSet at the index
             // for the sampler itself.
@@ -230,8 +230,10 @@ MaybeError BindGroupLayout::Initialize() {
 
     // TODO(enga): Consider deduping allocators for layouts with the same descriptor type
     // counts.
+    // XXX open an issue for thi
+    // XXX decide on the mode of the allocator here
     mDescriptorSetAllocator =
-        DescriptorSetAllocator::Create(device, std::move(descriptorCountPerType));
+        DescriptorSetAllocator::CreateStaticBindingsPool(device, std::move(descriptorCountPerType));
 
     SetLabelImpl();
 
@@ -271,7 +273,8 @@ ResultOrError<Ref<BindGroup>> BindGroupLayout::AllocateBindGroup(
     Device* device,
     const UnpackedPtr<BindGroupDescriptor>& descriptor) {
     DescriptorSetAllocation descriptorSetAllocation;
-    DAWN_TRY_ASSIGN(descriptorSetAllocation, mDescriptorSetAllocator->Allocate(this));
+    // XXX decide here
+    DAWN_TRY_ASSIGN(descriptorSetAllocation, mDescriptorSetAllocator->AllocateStaticBindings(this));
 
     return AcquireRef(mBindGroupAllocator->Allocate(device, descriptor, descriptorSetAllocation));
 }

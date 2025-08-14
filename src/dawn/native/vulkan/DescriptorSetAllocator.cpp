@@ -41,45 +41,55 @@ namespace dawn::native::vulkan {
 static constexpr uint32_t kMaxDescriptorsPerPool = 512;
 
 // static
-Ref<DescriptorSetAllocator> DescriptorSetAllocator::Create(
+Ref<DescriptorSetAllocator> DescriptorSetAllocator::CreateStaticBindingsPool(
     DeviceBase* device,
     absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType) {
-    return AcquireRef(new DescriptorSetAllocator(device, descriptorCountPerType));
+    return AcquireRef(
+        new DescriptorSetAllocator(device, descriptorCountPerType, Mode::StaticBindingsPool));
+}
+
+// static
+Ref<DescriptorSetAllocator> DescriptorSetAllocator::CreateUnpooledDynamicArray(DeviceBase* device) {
+    return AcquireRef(new DescriptorSetAllocator(device, {}, Mode::UnpooledDynamicArray));
 }
 
 DescriptorSetAllocator::DescriptorSetAllocator(
     DeviceBase* device,
-    absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType)
-    : ObjectBase(device) {
+    absl::flat_hash_map<VkDescriptorType, uint32_t> staticDescriptorCountPerType,
+    Mode mode)
+    : ObjectBase(device), mMode(mode) {
+    if (mMode == Mode::UnpooledDynamicArray) {
+        mMaxSets = 1;
+        return;
+    }
+    DAWN_ASSERT(mMode == Mode::StaticBindingsPool);
+
     // Compute the total number of descriptors for this layout.
     uint32_t totalDescriptorCount = 0;
-    mPoolSizes.reserve(descriptorCountPerType.size());
-    for (const auto& [type, count] : descriptorCountPerType) {
+    mStaticPoolSizes.reserve(staticDescriptorCountPerType.size());
+    for (const auto& [type, count] : staticDescriptorCountPerType) {
         DAWN_ASSERT(count > 0);
         totalDescriptorCount += count;
-        mPoolSizes.push_back(VkDescriptorPoolSize{type, count});
+        mStaticPoolSizes.push_back(VkDescriptorPoolSize{type, count});
     }
 
+    // Special case to avoid a division by 0 below when creating an empty descriptor set.
     if (totalDescriptorCount == 0) {
-        // Vulkan requires that valid usage of vkCreateDescriptorPool must have a non-zero
-        // number of pools, each of which has non-zero descriptor counts.
-        // Since the descriptor set layout is empty, we should be able to allocate
-        // |kMaxDescriptorsPerPool| sets from this 1-sized descriptor pool.
-        // The type of this descriptor pool doesn't matter because it is never used.
-        mPoolSizes.push_back(VkDescriptorPoolSize{VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1});
         mMaxSets = kMaxDescriptorsPerPool;
-    } else {
-        DAWN_ASSERT(totalDescriptorCount <= kMaxBindingsPerPipelineLayout);
-        static_assert(kMaxBindingsPerPipelineLayout <= kMaxDescriptorsPerPool);
+        return;
+    }
 
-        // Compute the total number of descriptors sets that fits given the max.
-        mMaxSets = kMaxDescriptorsPerPool / totalDescriptorCount;
-        DAWN_ASSERT(mMaxSets > 0);
+    DAWN_ASSERT(mMode == Mode::StaticBindingsPool);
+    DAWN_ASSERT(totalDescriptorCount <= kMaxBindingsPerPipelineLayout);
+    static_assert(kMaxBindingsPerPipelineLayout <= kMaxDescriptorsPerPool);
 
-        // Grow the number of desciptors in the pool to fit the computed |mMaxSets|.
-        for (auto& poolSize : mPoolSizes) {
-            poolSize.descriptorCount *= mMaxSets;
-        }
+    // Compute the total number of descriptors sets that fits given the max.
+    mMaxSets = kMaxDescriptorsPerPool / totalDescriptorCount;
+    DAWN_ASSERT(mMaxSets > 0);
+
+    // Grow the number of desciptors in the pool to fit the computed |mMaxSets|.
+    for (auto& poolSize : mStaticPoolSizes) {
+        poolSize.descriptorCount *= mMaxSets;
     }
 }
 
@@ -93,13 +103,36 @@ DescriptorSetAllocator::~DescriptorSetAllocator() {
     }
 }
 
-ResultOrError<DescriptorSetAllocation> DescriptorSetAllocator::Allocate(BindGroupLayout* layout) {
+ResultOrError<DescriptorSetAllocation> DescriptorSetAllocator::AllocateStaticBindings(
+    BindGroupLayout* layout) {
     Mutex::AutoLock lock(&mMutex);
 
     if (mAvailableDescriptorPoolIndices.empty()) {
-        DAWN_TRY(AllocateDescriptorPool(layout));
+        DAWN_TRY(AllocateDescriptorPool(layout, mStaticPoolSizes));
+    }
+    return AllocateWithExistingPool();
+}
+
+ResultOrError<DescriptorSetAllocation> DescriptorSetAllocator::AllocateDynamicArray(
+    BindGroupLayout* layout,
+    absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType) {
+    std::vector<VkDescriptorPoolSize> sizes;
+    for (const auto& [type, count] : descriptorCountPerType) {
+        DAWN_ASSERT(count > 0);
+        sizes.push_back(VkDescriptorPoolSize{type, count});
     }
 
+    {
+        Mutex::AutoLock lock(&mMutex);
+
+        if (mAvailableDescriptorPoolIndices.empty()) {
+            DAWN_TRY(AllocateDescriptorPool(layout, sizes));
+        }
+        return AllocateWithExistingPool();
+    }
+}
+
+DescriptorSetAllocation DescriptorSetAllocator::AllocateWithExistingPool() {
     DAWN_ASSERT(!mAvailableDescriptorPoolIndices.empty());
 
     const PoolIndex poolIndex = mAvailableDescriptorPoolIndices.back();
@@ -165,17 +198,28 @@ void DescriptorSetAllocator::FinishDeallocation(ExecutionSerial completedSerial)
     mPendingDeallocations.ClearUpTo(completedSerial);
 }
 
-MaybeError DescriptorSetAllocator::AllocateDescriptorPool(BindGroupLayout* layout) {
+MaybeError DescriptorSetAllocator::AllocateDescriptorPool(
+    BindGroupLayout* layout,
+    const std::vector<VkDescriptorPoolSize>& poolSizes) {
     VkDescriptorPoolCreateInfo createInfo;
     createInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
     createInfo.pNext = nullptr;
     createInfo.flags = 0;
     createInfo.maxSets = mMaxSets;
-    createInfo.poolSizeCount = static_cast<PoolIndex>(mPoolSizes.size());
-    createInfo.pPoolSizes = mPoolSizes.data();
+    createInfo.poolSizeCount = static_cast<PoolIndex>(poolSizes.size());
+    createInfo.pPoolSizes = poolSizes.data();
+
+    // Vulkan requires that valid usage of vkCreateDescriptorPool must have a non-zero number of
+    // pools, each of which has non-zero descriptor counts. Since the descriptor set layout is
+    // empty, we should be able to allocate |kMaxDescriptorsPerPool| sets from this 1-sized
+    // descriptor pool. The type of this descriptor pool doesn't matter because it is never used.
+    const VkDescriptorPoolSize kPlaceholderPoolSize = {VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1};
+    if (createInfo.poolSizeCount == 0) {
+        createInfo.poolSizeCount = 1;
+        createInfo.pPoolSizes = &kPlaceholderPoolSize;
+    }
 
     Device* device = ToBackend(GetDevice());
-
     VkDescriptorPool descriptorPool;
     DAWN_TRY(CheckVkSuccess(device->fn.CreateDescriptorPool(device->GetVkDevice(), &createInfo,
                                                             nullptr, &*descriptorPool),
