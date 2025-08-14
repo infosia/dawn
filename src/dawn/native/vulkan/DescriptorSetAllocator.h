@@ -49,22 +49,35 @@ class DescriptorSetAllocator : public ObjectBase {
     using SetIndex = uint16_t;
 
   public:
-    static Ref<DescriptorSetAllocator> Create(
+    enum class Mode {
+        StaticBindingsPool,
+        UnpooledDynamicArray,
+    };
+
+    static Ref<DescriptorSetAllocator> CreateStaticBindingsPool(
         DeviceBase* device,
         absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType);
+    static Ref<DescriptorSetAllocator> CreateUnpooledDynamicArray(DeviceBase* device);
 
-    ResultOrError<DescriptorSetAllocation> Allocate(BindGroupLayout* layout);
+    ResultOrError<DescriptorSetAllocation> AllocateStaticBindings(BindGroupLayout* layout);
+    ResultOrError<DescriptorSetAllocation> AllocateDynamicArray(
+        BindGroupLayout* layout,
+        absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType);
     void Deallocate(DescriptorSetAllocation* allocationInfo);
     void FinishDeallocation(ExecutionSerial completedSerial);
 
   private:
     DescriptorSetAllocator(DeviceBase* device,
-                           absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType);
+                           absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType,
+                           Mode mode);
     ~DescriptorSetAllocator() override;
 
-    MaybeError AllocateDescriptorPool(BindGroupLayout* layout);
+    MaybeError AllocateDescriptorPool(BindGroupLayout* layout,
+                                      const std::vector<VkDescriptorPoolSize>& poolSizes);
+    DescriptorSetAllocation AllocateWithExistingPool();
 
-    std::vector<VkDescriptorPoolSize> mPoolSizes;
+    Mode mMode;
+    std::vector<VkDescriptorPoolSize> mStaticPoolSizes;
     SetIndex mMaxSets;
 
     struct DescriptorPool {
