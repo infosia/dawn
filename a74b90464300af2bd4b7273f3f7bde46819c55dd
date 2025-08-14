@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "beeea97a_9eb16ddf",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-08-14T16:51:22Z",
+      "side": 1,
+      "message": "If it\u0027s still top of mind, can you elaborate?",
+      "range": {
+        "startLine": 457,
+        "startChar": 51,
+        "endLine": 457,
+        "endChar": 88
+      },
+      "revId": "a74b90464300af2bd4b7273f3f7bde46819c55dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
