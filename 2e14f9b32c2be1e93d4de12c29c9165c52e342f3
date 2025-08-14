@@ -1,6 +1,75 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "aed4c79e_67dab571",
+        "filename": "src/tint/lang/spirv/reader/parser/image_sampler_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-14T15:51:26Z",
+      "side": 1,
+      "message": "Nit: write",
+      "fixSuggestions": [
+        {
+          "fixId": "0ecbfdcf_e2228b21",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/parser/image_sampler_test.cc",
+              "range": {
+                "startLine": 753,
+                "startChar": 0,
+                "endLine": 754,
+                "endChar": 0
+              },
+              "replacement": "    // Infer \u0027write\u0027\n"
+            }
+          ]
+        }
+      ],
+      "revId": "2e14f9b32c2be1e93d4de12c29c9165c52e342f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51b0c53d_672dca02",
+        "filename": "src/tint/lang/spirv/reader/parser/image_sampler_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-14T15:51:26Z",
+      "side": 1,
+      "message": "Nit: Infers `read` here",
+      "revId": "2e14f9b32c2be1e93d4de12c29c9165c52e342f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a05f4b0a_787da98d",
+        "filename": "src/tint/lang/spirv/reader/parser/image_sampler_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-14T15:51:26Z",
+      "side": 1,
+      "message": "Nit: Infers read_write here",
+      "revId": "2e14f9b32c2be1e93d4de12c29c9165c52e342f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "84f394d1_82b1e234",
@@ -14,6 +83,24 @@
       "writtenOn": "2025-08-11T22:12:09Z",
       "side": 1,
       "message": "This inference code is copied from the old SPIR-V reader where it is used more extensively to infer texture and sampler types.\n\nI didn\u0027t want to disturb it on its way in, and it has tests.\n\nI think this will be needed when handling textures as function parameters.\nb/42251883",
+      "revId": "2e14f9b32c2be1e93d4de12c29c9165c52e342f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9418b13a_48aa4193",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 4494,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-14T15:51:26Z",
+      "side": 1,
+      "message": "What would we actually want to infer the access mode as for the function parameter case? e.g.\n\n```\nvar tex_a : texture_storage\u003c...\u003e;\nvar tex_b : texture_storage\u003c...\u003e;\n\nfn foo(tex : texture_storage\u003c..\u003e) {\n  // Only read from the parameter.\n  textureLoad(tex, ...);\n}\n\nfn main() {\n  foo(tex_a);\n  foo(tex_b);\n  \n  // Also write to tex_b\n  textureStore(tex_b, ...)\n}\n```\n\nHere `tex_a` is only loaded from (via `foo()`) so presumably we\u0027d want it to be read-only, whereas `tex_b` needs to be read-write. But because they are both passed to `foo()`, they either need to be forced to have the same access mode, or we need to fork `foo()`.\n\nThe desired outcome here may influence where we should do this inference. If we intend to start forking functions based on inferred access modes, then we should probably do this work in the texture transform instead, which already has the forking logic (and gives you utilities for things like topologically ordering functions for free).",
+      "parentUuid": "84f394d1_82b1e234",
       "revId": "2e14f9b32c2be1e93d4de12c29c9165c52e342f3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
