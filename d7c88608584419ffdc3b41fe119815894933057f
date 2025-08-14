@@ -33,6 +33,24 @@
       "message": "nit: this seems unused.",
       "revId": "d7c88608584419ffdc3b41fe119815894933057f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "586d295c_81a497ec",
+        "filename": "src/dawn/tests/unittests/validation/TexelBufferValidationTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-14T16:52:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "070d2e10_df0faa98",
+      "revId": "d7c88608584419ffdc3b41fe119815894933057f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
