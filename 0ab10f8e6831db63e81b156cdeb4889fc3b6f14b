@@ -33,6 +33,24 @@
       "message": "Please move 0x37314400 to Adreno 7xx list",
       "revId": "0ab10f8e6831db63e81b156cdeb4889fc3b6f14b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "412124e2_fef3701c",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-14T08:37:57Z",
+      "side": 1,
+      "message": "@rmuppalla@microsoft.com, thanks for the confirmation! Updated the CL.",
+      "parentUuid": "b6535b11_99aa9b1d",
+      "revId": "0ab10f8e6831db63e81b156cdeb4889fc3b6f14b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
