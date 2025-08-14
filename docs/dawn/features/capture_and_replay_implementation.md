@@ -7,7 +7,7 @@ This document outlines the steps to implement the "Serialize the Queue" design f
     *   This file should contain:
         *   A magic number and version for the file format (e.g., `DAWNCAP\1`).
         *   An `enum class ObjectType` for each serializable Dawn object type (`Device`, `Buffer`, `Texture`, `CommandBuffer`, etc.).
-        *   An `enum class CaptureCommand` for each high-level action we capture (e.g., `QueueSubmit`, `WriteBuffer`, `WriteTexture`, `unmap`). 
+        *   An `enum class CaptureCommand` for each high-level action we capture (e.g., `QueueSubmit`, `WriteBuffer`, `WriteTexture`, `unmap`).
 
 2. **Add `@src/dawn/native/CaptureContext.h` and `@src/dawn/native/CaptureContext.cpp`**
     *   This class will be the central manager for an active capture session.
@@ -19,11 +19,11 @@ This document outlines the steps to implement the "Serialize the Queue" design f
         *   Provide low-level serialization methods for writing primitives to the stream, e.g., `WriteU64(uint64_t)`, `WriteString(const std::string&)`, `WriteData(const void* data, size_t size)`.
     *   **Core Method 2**: `Capture<T>(const T* object);`
         *   This method asserts if the object has already been given an id.
-        *   It assigns it a new `ObjectId`, and calls `object->Serialize(this)`, 
+        *   It assigns it a new `ObjectId`, and calls `object->Serialize(this)`,
     *   **Core Method 1**: `ObjectId GetId<T>(const T* object);`
-        *   This method asserts if the object has NOT been given an id 
+        *   This method asserts if the object has NOT been given an id
         *   It returns the id for the object.
-        
+
 3. **Modify `@src/dawn/native/Device.h` and `@src/dawn/native/Device.cpp`**
     *   **`DeviceBase::StartCapture(std::ostream& stream)`**:
         *   Check if a `CaptureContext` already exists on the `Queue`. If so, generate a validation error.

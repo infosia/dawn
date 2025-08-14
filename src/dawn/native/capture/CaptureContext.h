@@ -44,7 +44,7 @@ class DeviceBase;
 
 using ObjectId = uint64_t;
 
-template<typename T>
+template <typename T>
 void CaptureContent(CaptureContext& captureContext, const T* object);
 
 class CaptureContext {
@@ -58,7 +58,7 @@ class CaptureContext {
 
         auto it = mObjectIds.find(static_cast<const void*>(object));
         if (it != mObjectIds.end()) {
-            return false; // Object was already captured
+            return false;  // Object was already captured
         }
 
         CaptureContent(*this, object);
@@ -76,7 +76,7 @@ class CaptureContext {
         }
 
         auto it = mObjectIds.find(static_cast<const void*>(object));
-        assert (it != mObjectIds.end());
+        assert(it != mObjectIds.end());
         return it->second;
     }
 

@@ -21,7 +21,7 @@ namespace dawn::native::capture {
 
 // A magic number to identify capture files.
 // "DCAP" followed by a version number.
-constexpr uint8_t kMagicNumber[] = { 'D', 'C', 'A', 'P' };
+constexpr uint8_t kMagicNumber[] = {'D', 'C', 'A', 'P'};
 constexpr uint32_t kVersionNumber = 1u;
 
 enum class ObjectType : uint32_t {

@@ -52,7 +52,6 @@
 #include "dawn/native/Buffer.h"
 #include "dawn/native/CacheRequest.h"
 #include "dawn/native/CacheResult.h"
-#include "dawn/native/capture/CaptureContext.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/CommandEncoder.h"
@@ -84,6 +83,7 @@
 #include "dawn/native/Texture.h"
 #include "dawn/native/ValidationUtils_autogen.h"
 #include "dawn/native/WaitListEvent.h"
+#include "dawn/native/capture/CaptureContext.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/metrics/HistogramMacros.h"
@@ -799,14 +799,17 @@ void DeviceBase::ConsumeError(std::unique_ptr<ErrorData> error,
 
 void DeviceBase::APIStartCapture(StringView filename) {
     std::ofstream stream(std::string(utils::NormalizeMessageString(filename)).c_str());
-    MaybeError result = GetQueue()->SetCaptureContext(std::unique_ptr<CaptureContext>(new CaptureContext(stream)));
+    MaybeError result =
+        GetQueue()->SetCaptureContext(std::unique_ptr<CaptureContext>(new CaptureContext(stream)));
     stream.close();
-    [[maybe_unused]] bool hadError = ConsumedError(std::move(result), "calling %s.StartCapture()", this);
+    [[maybe_unused]] bool hadError =
+        ConsumedError(std::move(result), "calling %s.StartCapture()", this);
 }
 
 void DeviceBase::APIEndCapture() {
     MaybeError result = GetQueue()->SetCaptureContext(nullptr);
-    [[maybe_unused]] bool hadError = ConsumedError(std::move(result), "calling %s.EndCapture()", this);
+    [[maybe_unused]] bool hadError =
+        ConsumedError(std::move(result), "calling %s.EndCapture()", this);
 }
 
 void DeviceBase::APISetLoggingCallback(const WGPULoggingCallbackInfo& callbackInfo) {

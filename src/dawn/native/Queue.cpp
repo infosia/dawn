@@ -42,7 +42,6 @@
 #include "dawn/common/ityp_span.h"
 #include "dawn/native/BlitBufferToDepthStencil.h"
 #include "dawn/native/Buffer.h"
-#include "dawn/native/capture/CaptureContext.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/CommandEncoder.h"
 #include "dawn/native/CommandValidation.h"
@@ -58,6 +57,7 @@
 #include "dawn/native/RenderPassEncoder.h"
 #include "dawn/native/RenderPipeline.h"
 #include "dawn/native/Texture.h"
+#include "dawn/native/capture/CaptureContext.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
 #include "partition_alloc/pointers/raw_ptr.h"
@@ -315,7 +315,7 @@ MaybeError QueueBase::SetCaptureContext(std::unique_ptr<CaptureContext> captureC
         mCaptureContext = std::move(captureContext);
     } else {
         DAWN_INVALID_IF(!mCaptureContext, "No capture is in progress.");
-        mCaptureContext.reset(); 
+        mCaptureContext.reset();
     }
     return {};
 }

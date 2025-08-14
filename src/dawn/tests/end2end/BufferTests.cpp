@@ -140,7 +140,6 @@ TEST_P(BufferMappingTests, Capture) {
     uint32_t* versionNumber = reinterpret_cast<uint32_t*>(data.data() + 4);
     EXPECT_EQ(*versionNumber, 1u);
 }
- 
 
 // Test that the simplest map read works
 TEST_P(BufferMappingTests, MapRead_Basic) {
