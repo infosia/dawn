@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b30a639a_8cf43892",
+        "filename": "infra/config/global/legacy_builders.star",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-14T20:17:32Z",
+      "side": 0,
+      "message": "I\u0027m pretty sure this inclusion filter was redundant.",
+      "range": {
+        "startLine": 426,
+        "startChar": 35,
+        "endLine": 426,
+        "endChar": 53
+      },
+      "revId": "0f8814d83d9733eff4ec2c8f2b8c8d0e8d449d73",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
