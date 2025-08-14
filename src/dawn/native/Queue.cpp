@@ -57,6 +57,7 @@
 #include "dawn/native/RenderPassEncoder.h"
 #include "dawn/native/RenderPipeline.h"
 #include "dawn/native/Texture.h"
+#include "dawn/native/capture/CaptureContext.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
 #include "partition_alloc/pointers/raw_ptr.h"
@@ -306,6 +307,17 @@ void QueueBase::HandleDeviceLoss() {
         }
         tasksInFlight->Clear();
     });
+}
+
+MaybeError QueueBase::SetCaptureContext(std::unique_ptr<CaptureContext> captureContext) {
+    if (captureContext) {
+        DAWN_INVALID_IF(mCaptureContext != nullptr, "A capture is already in progress.");
+        mCaptureContext = std::move(captureContext);
+    } else {
+        DAWN_INVALID_IF(!mCaptureContext, "No capture is in progress.");
+        mCaptureContext.reset();
+    }
+    return {};
 }
 
 void QueueBase::APIWriteBuffer(BufferBase* buffer,
@@ -588,6 +600,9 @@ MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* c
     DAWN_ASSERT(!IsError());
 
     mInSubmit = true;
+    if (mCaptureContext) {
+        mCaptureContext->CaptureCommandBuffer(commandCount, commands);
+    }
     DAWN_TRY(SubmitImpl(commandCount, commands));
     mInSubmit = false;
 
