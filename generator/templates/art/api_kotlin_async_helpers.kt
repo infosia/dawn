@@ -39,7 +39,7 @@ import kotlin.coroutines.suspendCoroutine
 
         //* We make a return class for every callback method so that it can be used inline
         //* (without callbacks) in a suspend (async) function.
-        public data class {{ return_name }}(
+        public class {{ return_name }}(
             {% for arg in kotlin_record_members(callback_function.arguments) %}
                 val {{ as_varName(arg.name) }}: {{ kotlin_declaration(arg) }},
             {% endfor %})
