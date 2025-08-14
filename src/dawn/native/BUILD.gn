@@ -409,6 +409,8 @@ source_set("sources") {
     "WaitAnySystemEvent.h",
     "WaitListEvent.cpp",
     "WaitListEvent.h",
+    "capture/CaptureContext.cpp",
+    "capture/CaptureContext.h",
     "dawn_platform.h",
     "stream/BlobSource.cpp",
     "stream/BlobSource.h",
