@@ -47,6 +47,8 @@
 
 namespace dawn::native {
 
+class CaptureContext;
+
 // For the commands with async callback like 'MapAsync' and 'OnSubmittedWorkDone', we track the
 // execution serials of completion in the queue for them. This implements 'CallbackTask' so that the
 // aysnc callback can be fired by 'CallbackTaskManager' in a unified way. This also caches the
@@ -110,6 +112,7 @@ class QueueBase : public ApiObjectBase,
 
     void Tick(ExecutionSerial finishedSerial);
     void HandleDeviceLoss();
+    MaybeError SetCaptureContext(std::unique_ptr<CaptureContext> captureContext);
 
   protected:
     QueueBase(DeviceBase* device, const QueueDescriptor* descriptor);
@@ -153,6 +156,7 @@ class QueueBase : public ApiObjectBase,
     MaybeError SubmitInternal(uint32_t commandCount, CommandBufferBase* const* commands);
 
     MutexProtected<SerialMap<ExecutionSerial, std::unique_ptr<TrackTaskCallback>>> mTasksInFlight;
+    std::unique_ptr<CaptureContext> mCaptureContext;
 };
 
 }  // namespace dawn::native
