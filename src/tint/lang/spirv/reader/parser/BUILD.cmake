@@ -43,6 +43,8 @@ if(TINT_BUILD_SPV_READER)
 tint_add_target(tint_lang_spirv_reader_parser lib
   lang/spirv/reader/parser/parser.cc
   lang/spirv/reader/parser/parser.h
+  lang/spirv/reader/parser/usage.cc
+  lang/spirv/reader/parser/usage.h
 )
 
 tint_target_add_dependencies(tint_lang_spirv_reader_parser lib
@@ -119,6 +121,7 @@ tint_add_target(tint_lang_spirv_reader_parser_test test
   lang/spirv/reader/parser/phi_test.cc
   lang/spirv/reader/parser/struct_test.cc
   lang/spirv/reader/parser/unary_test.cc
+  lang/spirv/reader/parser/usage_test.cc
   lang/spirv/reader/parser/var_test.cc
 )
 

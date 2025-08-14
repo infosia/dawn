@@ -56,8 +56,10 @@ TINT_END_DISABLE_WARNING(NEWLINE_EOF);
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/referenced_module_vars.h"
 #include "src/tint/lang/core/type/builtin_structs.h"
+#include "src/tint/lang/core/type/storage_texture.h"
 #include "src/tint/lang/spirv/builtin_fn.h"
 #include "src/tint/lang/spirv/ir/builtin_call.h"
+#include "src/tint/lang/spirv/reader/parser/usage.h"
 #include "src/tint/lang/spirv/type/explicit_layout_array.h"
 #include "src/tint/lang/spirv/type/image.h"
 #include "src/tint/lang/spirv/type/sampled_image.h"
@@ -84,6 +86,52 @@ struct ReplacementValue {
 
 /// The SPIR-V environment that we validate against.
 constexpr auto kTargetEnv = SPV_ENV_VULKAN_1_1;
+
+// A FunctionTraverser is used to compute an ordering of functions in the
+// module such that callees precede callers.
+class FunctionTraverser {
+  public:
+    explicit FunctionTraverser(const spvtools::opt::Module& module) : module_(module) {}
+
+    // @returns the functions in the modules such that callees precede callers.
+    std::vector<const spvtools::opt::Function*> TopologicallyOrderedFunctions() {
+        visited_.clear();
+        ordered_.clear();
+        id_to_func_.clear();
+        for (const auto& f : module_) {
+            id_to_func_[f.result_id()] = &f;
+        }
+        for (const auto& f : module_) {
+            Visit(f);
+        }
+        return ordered_;
+    }
+
+  private:
+    void Visit(const spvtools::opt::Function& f) {
+        if (visited_.count(&f) != 0u) {
+            return;
+        }
+        visited_.insert(&f);
+        for (const auto& bb : f) {
+            for (const auto& inst : bb) {
+                if (inst.opcode() != spv::Op::OpFunctionCall) {
+                    continue;
+                }
+                const auto* callee = id_to_func_[inst.GetSingleWordInOperand(0)];
+                if (callee) {
+                    Visit(*callee);
+                }
+            }
+        }
+        ordered_.push_back(&f);
+    }
+
+    const spvtools::opt::Module& module_;
+    std::unordered_set<const spvtools::opt::Function*> visited_;
+    std::unordered_map<uint32_t, const spvtools::opt::Function*> id_to_func_;
+    std::vector<const spvtools::opt::Function*> ordered_;
+};
 
 /// PIMPL class for SPIR-V parser.
 /// Validates the SPIR-V module and then parses it to produce a Tint IR module.
@@ -150,6 +198,10 @@ class Parser {
             } else {
                 return Failure("Unrecognized extended instruction set: " + name);
             }
+        }
+
+        if (options_.infer_texture_access_mode_from_usage) {
+            RegisterHandleUsage();
         }
 
         RegisterNames();
@@ -762,7 +814,6 @@ class Parser {
                 }
                 case spvtools::opt::analysis::Type::kImage: {
                     auto* img = type->AsImage();
-
                     auto* sampled_ty = Type(img->sampled_type());
                     auto dim = static_cast<type::Dim>(img->dim());
                     auto depth = static_cast<type::Depth>(img->depth());
@@ -4352,7 +4403,12 @@ class Parser {
             }
         }
 
-        auto* element_ty = Type(inst.type_id(), access_mode)->As<core::type::Pointer>();
+        const auto* element_ty = Type(inst.type_id(), access_mode)->As<core::type::Pointer>();
+
+        if (options_.infer_texture_access_mode_from_usage) {
+            element_ty = InferReducedAccessMode(inst, element_ty);
+        }
+
         if (element_ty->AddressSpace() == core::AddressSpace::kOut &&
             element_ty->StoreType()->IsIntegerScalarOrVector()) {
             io_attributes.interpolation = {
@@ -4393,6 +4449,285 @@ class Parser {
         var_to_original_access_mode_.insert({var, access_mode});
 
         Emit(var, inst.result_id());
+    }
+
+    /// Register sampler and texture usage for memory object declarations.
+    /// This must be called after we've computed the topological ordering
+    /// of functions.
+    /// @returns true if parser is still successful.
+    void RegisterHandleUsage() {
+        if (topologically_ordered_functions_.empty()) {
+            topologically_ordered_functions_ =
+                FunctionTraverser(*(spirv_context_->module())).TopologicallyOrderedFunctions();
+        }
+
+        // Map a function ID to the list of its function parameter instructions, in
+        // order.
+        std::unordered_map<uint32_t, std::vector<const spvtools::opt::Instruction*>>
+            function_params;
+        for (const auto* f : topologically_ordered_functions_) {
+            // Record the instructions defining this function's parameters.
+            auto& params = function_params[f->result_id()];
+            f->ForEachParam(
+                [&params](const spvtools::opt::Instruction* param) { params.push_back(param); });
+        }
+
+        // Returns the memory object declaration for an image underlying the first
+        // operand of the given image instruction.
+        auto get_image = [this](const spvtools::opt::Instruction& image_inst) {
+            return this->GetMemoryObjectDeclarationForHandle(image_inst.GetSingleWordInOperand(0),
+                                                             true);
+        };
+        // Returns the memory object declaration for a sampler underlying the first
+        // operand of the given image instruction.
+        auto get_sampler = [this](const spvtools::opt::Instruction& image_inst) {
+            return this->GetMemoryObjectDeclarationForHandle(image_inst.GetSingleWordInOperand(0),
+                                                             false);
+        };
+
+        // Scan the bodies of functions for image operations, recording their implied
+        // usage properties on the memory object declarations (i.e. variables or
+        // function parameters).  We scan the functions in an order so that callees
+        // precede callers. That way the usage on a function parameter is already
+        // computed before we see the call to that function.  So when we reach
+        // a function call, we can add the usage from the callee formal parameters.
+        for (const auto* f : topologically_ordered_functions_) {
+            for (const auto& bb : *f) {
+                for (const auto& inst : bb) {
+                    switch (inst.opcode()) {
+                            // Single texel reads and writes
+
+                        case spv::Op::OpImageRead:
+                            handle_usage_[get_image(inst)].AddStorageReadTexture();
+                            break;
+                        case spv::Op::OpImageWrite:
+                            handle_usage_[get_image(inst)].AddStorageWriteTexture();
+                            break;
+                        case spv::Op::OpImageFetch:
+                            handle_usage_[get_image(inst)].AddSampledTexture();
+                            break;
+
+                            // Sampling and gathering from a sampled image.
+
+                        case spv::Op::OpImageSampleImplicitLod:
+                        case spv::Op::OpImageSampleExplicitLod:
+                        case spv::Op::OpImageSampleProjImplicitLod:
+                        case spv::Op::OpImageSampleProjExplicitLod:
+                        case spv::Op::OpImageGather:
+                            handle_usage_[get_image(inst)].AddSampledTexture();
+                            handle_usage_[get_sampler(inst)].AddSampler();
+                            break;
+                        case spv::Op::OpImageSampleDrefImplicitLod:
+                        case spv::Op::OpImageSampleDrefExplicitLod:
+                        case spv::Op::OpImageSampleProjDrefImplicitLod:
+                        case spv::Op::OpImageSampleProjDrefExplicitLod:
+                        case spv::Op::OpImageDrefGather:
+                            // Depth reference access implies usage as a depth texture, which
+                            // in turn is a sampled texture.
+                            handle_usage_[get_image(inst)].AddDepthTexture();
+                            handle_usage_[get_sampler(inst)].AddComparisonSampler();
+                            break;
+
+                            // Image queries
+
+                        case spv::Op::OpImageQuerySizeLod:
+                            // Vulkan requires Sampled=1 for this. SPIR-V already requires MS=0.
+                            handle_usage_[get_image(inst)].AddSampledTexture();
+                            break;
+                        case spv::Op::OpImageQuerySize:
+                            // Applies to either MS=1 or Sampled=0 or 2.
+                            // So we can't force it to be multisampled, or storage image.
+                            break;
+                        case spv::Op::OpImageQueryLod:
+                            handle_usage_[get_image(inst)].AddSampledTexture();
+                            handle_usage_[get_sampler(inst)].AddSampler();
+                            break;
+                        case spv::Op::OpImageQueryLevels:
+                            // We can't tell anything more than that it's an image.
+                            handle_usage_[get_image(inst)].AddTexture();
+                            break;
+                        case spv::Op::OpImageQuerySamples:
+                            handle_usage_[get_image(inst)].AddMultisampledTexture();
+                            break;
+
+                            // Function calls
+
+                        case spv::Op::OpFunctionCall: {
+                            // Propagate handle usages from callee function formal parameters to
+                            // the matching caller parameters.  This is where we rely on the
+                            // fact that callees have been processed earlier in the flow.
+                            const auto num_in_operands = inst.NumInOperands();
+                            // The first operand of the call is the function ID.
+                            // The remaining operands are the operands to the function.
+                            if (num_in_operands < 1) {
+                                TINT_ICE() << "Call instruction must have at least one operand"
+                                           << inst.PrettyPrint();
+                            }
+                            const auto function_id = inst.GetSingleWordInOperand(0);
+                            const auto& formal_params = function_params[function_id];
+                            if (formal_params.size() != (num_in_operands - 1)) {
+                                TINT_ICE()
+                                    << "Called function has " << formal_params.size()
+                                    << " parameters, but function call has "
+                                    << (num_in_operands - 1) << " parameters" << inst.PrettyPrint();
+                            }
+                            for (uint32_t i = 1; i < num_in_operands; ++i) {
+                                auto where = handle_usage_.find(formal_params[i - 1]);
+                                if (where == handle_usage_.end()) {
+                                    // We haven't recorded any handle usage on the formal parameter.
+                                    continue;
+                                }
+                                const parser::Usage& formal_param_usage = where->second;
+                                const auto operand_id = inst.GetSingleWordInOperand(i);
+                                const auto* operand_as_sampler =
+                                    GetMemoryObjectDeclarationForHandle(operand_id, false);
+                                const auto* operand_as_image =
+                                    GetMemoryObjectDeclarationForHandle(operand_id, true);
+                                if (operand_as_sampler) {
+                                    handle_usage_[operand_as_sampler].Add(formal_param_usage);
+                                }
+                                if (operand_as_image && (operand_as_image != operand_as_sampler)) {
+                                    handle_usage_[operand_as_image].Add(formal_param_usage);
+                                }
+                            }
+                            break;
+                        }
+
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    /// For a SPIR-V ID that might define a sampler, image, or sampled image
+    /// value, return the SPIR-V instruction that represents the memory object
+    /// declaration for the object.  If we encounter an OpSampledImage along the
+    /// way, follow the image operand when follow_image is true; otherwise follow
+    /// the sampler operand. Returns nullptr if we can't trace back to a memory
+    /// object declaration.  Emits an error and returns nullptr when the scan
+    /// fails due to a malformed module. This method can be used any time after
+    /// BuildInternalModule has been invoked.
+    /// @param id the SPIR-V ID of the sampler, image, or sampled image
+    /// @param follow_image indicates whether to follow the image operand of
+    /// OpSampledImage
+    /// @returns the memory object declaration for the handle, or nullptr
+    const spvtools::opt::Instruction* GetMemoryObjectDeclarationForHandle(uint32_t id,
+                                                                          bool follow_image) {
+        spvtools::opt::analysis::DefUseManager* def_use_mgr = spirv_context_->get_def_use_mgr();
+
+        auto saved_id = id;
+        auto local_fail = [def_use_mgr, saved_id, id, follow_image]() {
+            const auto* inst = def_use_mgr->GetDef(id);
+            TINT_ICE() << "Could not find memory object declaration for the "
+                       << (follow_image ? "image" : "sampler") << " underlying id " << id
+                       << " (from original id " << saved_id << ") "
+                       << (inst ? inst->PrettyPrint() : std::string());
+        };
+
+        auto& memo_table = (follow_image ? mem_obj_decl_image_ : mem_obj_decl_sampler_);
+
+        // Use a visited set to defend against bad input which might have long
+        // chains or even loops.
+        std::unordered_set<uint32_t> visited;
+
+        // Trace backward in the SSA data flow until we hit a memory object
+        // declaration.
+        while (true) {
+            auto where = memo_table.find(id);
+            if (where != memo_table.end()) {
+                return where->second;
+            }
+            // Protect against loops.
+            auto visited_iter = visited.find(id);
+            if (visited_iter != visited.end()) {
+                // We've hit a loop. Mark all the visited nodes
+                // as dead ends.
+                for (auto iter : visited) {
+                    memo_table[iter] = nullptr;
+                }
+                return nullptr;
+            }
+            visited.insert(id);
+
+            const auto* inst = def_use_mgr->GetDef(id);
+            if (inst == nullptr) {
+                local_fail();
+            }
+            switch (inst->opcode()) {
+                case spv::Op::OpFunctionParameter:
+                case spv::Op::OpVariable:
+                    // We found the memory object declaration.
+                    // Remember it as the answer for the whole path.
+                    for (auto iter : visited) {
+                        memo_table[iter] = inst;
+                    }
+                    return inst;
+                case spv::Op::OpLoad:
+                    // Follow the pointer being loaded
+                    id = inst->GetSingleWordInOperand(0);
+                    break;
+                case spv::Op::OpCopyObject:
+                    // Follow the object being copied.
+                    id = inst->GetSingleWordInOperand(0);
+                    break;
+                case spv::Op::OpAccessChain:
+                case spv::Op::OpInBoundsAccessChain:
+                case spv::Op::OpPtrAccessChain:
+                case spv::Op::OpInBoundsPtrAccessChain:
+                    // Follow the base pointer.
+                    id = inst->GetSingleWordInOperand(0);
+                    break;
+                case spv::Op::OpSampledImage:
+                    // Follow the image or the sampler, depending on the follow_image
+                    // parameter.
+                    id = inst->GetSingleWordInOperand(follow_image ? 0 : 1);
+                    break;
+                case spv::Op::OpImage:
+                    // Follow the sampled image
+                    id = inst->GetSingleWordInOperand(0);
+                    break;
+                default:
+                    // Can't trace further.
+                    // Remember it as the answer for the whole path.
+                    for (auto iter : visited) {
+                        memo_table[iter] = nullptr;
+                    }
+                    return nullptr;
+            }
+        }
+    }
+
+    // If the variable declared by inst is a storage texture, then return
+    // them most restrictive access mode that supports the way the texture
+    // is used in the module. If there is no restriction then return kWrite,
+    // because write-only storage textures are the most widely supported option.
+    // Otherwise return the current_type.
+    const core::type::Pointer* InferReducedAccessMode(const spvtools::opt::Instruction& inst,
+                                                      const core::type::Pointer* current_type) {
+        // TODO(dneto): support arrays of textures. In that case, unpack the
+        // array type as well. By Vulkan rule it can only be a single level of
+        // array or runtime array.
+        auto* spirv_image_ty = current_type->StoreType()->As<spirv::type::Image>();
+        if (!spirv_image_ty ||
+            spirv_image_ty->GetSampled() != spirv::type::Sampled::kReadWriteOpCompatible) {
+            return current_type;
+        }
+        if (spirv_image_ty->GetAccess() != core::Access::kReadWrite) {
+            return current_type;
+        }
+
+        parser::Usage usage = handle_usage_[&inst];
+        if (usage.IsStorageReadWriteTexture()) {
+            return current_type;  // It's already kReadWrite.
+        }
+        if (usage.IsStorageReadOnlyTexture()) {
+            // Reduce to read-only
+            return Type(inst.type_id(), core::Access::kRead)->As<core::type::Pointer>();
+        }
+        // Reduce to write-only.
+        return Type(inst.type_id(), core::Access::kWrite)->As<core::type::Pointer>();
     }
 
   private:
@@ -4522,6 +4857,29 @@ class Parser {
 
     // Map of spir-v branch conditional instructions to the related IR if instruction.
     std::unordered_map<const spvtools::opt::Instruction*, core::ir::If*> branch_conditional_to_if_;
+
+    // The functions ordered so that callees precede their callers.
+    std::vector<const spvtools::opt::Function*> topologically_ordered_functions_;
+
+    /// Returns the handle usage for a memory object declaration.
+    /// @param id SPIR-V ID of a sampler or image OpVariable or
+    /// OpFunctionParameter
+    /// @returns the handle usage, or an empty usage object.
+    parser::Usage GetHandleUsage(uint32_t id) const;
+
+    // Maps from a SPIR-V ID to its underlying memory object declaration,
+    // following image paths. This a memoization table for
+    // GetMemoryObjectDeclarationForHandle. (A SPIR-V memory object declaration is
+    // an OpVariable or an OpFunctionParameter with pointer type).
+    std::unordered_map<uint32_t, const spvtools::opt::Instruction*> mem_obj_decl_image_;
+    // Maps from a SPIR-V ID to its underlying memory object declaration,
+    // following sampler paths. This a memoization table for
+    // GetMemoryObjectDeclarationForHandle.
+    std::unordered_map<uint32_t, const spvtools::opt::Instruction*> mem_obj_decl_sampler_;
+
+    // Maps a memory-object-declaration instruction to any sampler or texture
+    // usages implied by usages of the memory-object-declaration.
+    std::unordered_map<const spvtools::opt::Instruction*, parser::Usage> handle_usage_;
 };
 
 }  // namespace

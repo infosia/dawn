@@ -49,6 +49,18 @@ struct Options {
     /// If this map is empty, any binding conflicts will be automatically resolved by incrementing
     /// binding numbers until they are unique.
     std::unordered_map<BindingPoint, BindingPoint> sampler_mappings{};
+
+    /// If true, infers the least-privilege access mode that supports how a
+    /// storage texture is used in the shader module:
+    ///   both OpImageRead and ImageWrite used  -> read_write
+    ///   OpImageRead but not ImageWrite        -> read
+    ///   ImageWrite but not ImageRead          -> write
+    ///   neither ImageWrite nor ImageRead      -> write
+    ///     In this case we choose "write" because write-only storage textures
+    ///     are more widely supported in WebGPU.
+    /// When this is false, access mode is only from decorrations on the
+    /// texture variable.
+    bool infer_texture_access_mode_from_usage = false;
 };
 
 }  // namespace tint::spirv::reader

@@ -398,6 +398,13 @@ violations that may be produced)",
         "each provides a (source:destination) mapping. (e.g. 1,2:3,4) Multiple entries should "
         "be separated with a space.",
         Default{""});
+
+    auto& infer_texture_access_mode = options.Add<BoolOption>(
+        "infer-texture-access-mode",
+        "When using SPIR-V input, infer storage texture access mode from usage.", Default{false});
+    TINT_DEFER(opts->spirv_reader_options.infer_texture_access_mode_from_usage =
+                   *infer_texture_access_mode.value);
+
 #endif
 
 #if TINT_BUILD_SPV_WRITER
