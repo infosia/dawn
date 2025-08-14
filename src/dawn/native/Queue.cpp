@@ -42,6 +42,7 @@
 #include "dawn/common/ityp_span.h"
 #include "dawn/native/BlitBufferToDepthStencil.h"
 #include "dawn/native/Buffer.h"
+#include "dawn/native/capture/CaptureContext.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/CommandEncoder.h"
 #include "dawn/native/CommandValidation.h"
@@ -306,6 +307,17 @@ void QueueBase::HandleDeviceLoss() {
         }
         tasksInFlight->Clear();
     });
+}
+
+MaybeError QueueBase::SetCaptureContext(std::unique_ptr<CaptureContext> captureContext) {
+    if (captureContext) {
+        DAWN_INVALID_IF(mCaptureContext != nullptr, "A capture is already in progress.");
+        mCaptureContext = std::move(captureContext);
+    } else {
+        DAWN_INVALID_IF(!mCaptureContext, "No capture is in progress.");
+        mCaptureContext.reset(); 
+    }
+    return {};
 }
 
 void QueueBase::APIWriteBuffer(BufferBase* buffer,

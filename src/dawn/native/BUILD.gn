@@ -250,6 +250,8 @@ source_set("sources") {
     "CachedObject.h",
     "CallbackTaskManager.cpp",
     "CallbackTaskManager.h",
+    "capture/CaptureContext.cpp",
+    "capture/CaptureContext.h",
     "ChainUtils.h",
     "ChainUtilsImpl.inl",
     "CommandAllocator.cpp",

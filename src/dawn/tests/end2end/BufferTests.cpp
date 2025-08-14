@@ -28,6 +28,9 @@
 #include <algorithm>
 #include <array>
 #include <cstring>
+#include <filesystem>
+#include <fstream>
+#include <iostream>
 #include <limits>
 #include <sstream>
 #include <string>
@@ -122,6 +125,22 @@ void CheckMapping(const void* actual, const void* expected, size_t size) {
         EXPECT_EQ(0, memcmp(actual, expected, size));
     }
 }
+
+TEST_P(BufferMappingTests, Capture) {
+    const char* filename = "temp.dawn_capture";
+    device.StartCapture(filename);
+    device.EndCapture();
+    queue.Submit(0, nullptr);
+    std::streamsize size = std::filesystem::file_size(filename);
+    EXPECT_TRUE(size > 0);
+    std::ifstream file(filename, std::ios::binary);
+    std::string data(size, '\0');
+    file.read(data.data(), size);
+    EXPECT_STREQ(data.substr(0, 4).c_str(), "DCAP");
+    uint32_t* versionNumber = reinterpret_cast<uint32_t*>(data.data() + 4);
+    EXPECT_EQ(*versionNumber, 1u);
+}
+ 
 
 // Test that the simplest map read works
 TEST_P(BufferMappingTests, MapRead_Basic) {

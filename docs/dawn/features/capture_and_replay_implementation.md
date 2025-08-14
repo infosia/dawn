@@ -18,11 +18,12 @@ This document outlines the steps to implement the "Serialize the Queue" design f
         *   Getting an ID for an object will check if the object already has an ID. If so it will return it. If not it will make an id, remember it, and return the new id.
         *   Provide low-level serialization methods for writing primitives to the stream, e.g., `WriteU64(uint64_t)`, `WriteString(const std::string&)`, `WriteData(const void* data, size_t size)`.
     *   **Core Method 2**: `Capture<T>(const T* object);`
-        *   This ch
+        *   This method asserts if the object has already been given an id.
+        *   It assigns it a new `ObjectId`, and calls `object->Serialize(this)`, 
     *   **Core Method 1**: `ObjectId GetId<T>(const T* object);`
-        *   This method checks if the object has already been given 
-        *   If not, it assigns it a new `ObjectId`, and calls `object->Serialize(this)`, 
-
+        *   This method asserts if the object has NOT been given an id 
+        *   It returns the id for the object.
+        
 3. **Modify `@src/dawn/native/Device.h` and `@src/dawn/native/Device.cpp`**
     *   **`DeviceBase::StartCapture(std::ostream& stream)`**:
         *   Check if a `CaptureContext` already exists on the `Queue`. If so, generate a validation error.
@@ -66,7 +67,7 @@ This document outlines the steps to implement the "Serialize the Queue" design f
                 and can be implemented later.
             *   For commands that reference other objects (like `copyBufferToBuffer`), write the `ObjectId` of the referenced object. The `CaptureContext` can provide the ID for a given object pointer.
 
-6. **Create a `dawn_end2end_test` in `@src/dawn/tests/end2end/CaptureReplayTests.cpp`**
+. **Create a `dawn_end2end_test` in `@src/dawn/tests/end2end/CaptureReplayTests.cpp`**
     *   This test validates the capture mechanism.
     *   **Steps**:
         1.  Create a `std::stringstream` to capture to.

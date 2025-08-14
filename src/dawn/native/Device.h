@@ -31,6 +31,7 @@
 #include <shared_mutex>
 
 #include <memory>
+#include <ostream>
 #include <string>
 #include <utility>
 #include <vector>
@@ -293,6 +294,9 @@ class DeviceBase : public ErrorSink,
     Future APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbackInfo);
 
     MaybeError ValidateIsAlive() const;
+
+    void APIStartCapture(StringView filename);
+    void APIEndCapture();
 
     BlobCache* GetBlobCache() const;
     Blob LoadCachedBlob(const CacheKey& key);

@@ -31,6 +31,7 @@
 
 #include <algorithm>
 #include <array>
+#include <fstream>
 #include <mutex>
 #include <string>
 #include <utility>
@@ -51,6 +52,7 @@
 #include "dawn/native/Buffer.h"
 #include "dawn/native/CacheRequest.h"
 #include "dawn/native/CacheResult.h"
+#include "dawn/native/capture/CaptureContext.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/CommandEncoder.h"
@@ -793,6 +795,18 @@ void DeviceBase::ConsumeError(std::unique_ptr<ErrorData> error,
                               InternalErrorType additionalAllowedErrors) {
     DAWN_ASSERT(error != nullptr);
     HandleError(std::move(error), additionalAllowedErrors);
+}
+
+void DeviceBase::APIStartCapture(StringView filename) {
+    std::ofstream stream(std::string(utils::NormalizeMessageString(filename)).c_str());
+    MaybeError result = GetQueue()->SetCaptureContext(std::unique_ptr<CaptureContext>(new CaptureContext(stream)));
+    stream.close();
+    [[maybe_unused]] bool hadError = ConsumedError(std::move(result), "calling %s.StartCapture()", this);
+}
+
+void DeviceBase::APIEndCapture() {
+    MaybeError result = GetQueue()->SetCaptureContext(nullptr);
+    [[maybe_unused]] bool hadError = ConsumedError(std::move(result), "calling %s.EndCapture()", this);
 }
 
 void DeviceBase::APISetLoggingCallback(const WGPULoggingCallbackInfo& callbackInfo) {

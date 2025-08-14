@@ -1509,6 +1509,16 @@
                 ]
             },
             {
+                "name": "start capture",
+                "args": [
+                    {"name": "filename", "type": "string view"}
+                ]
+            },
+            {
+                "name": "end capture",
+                "args": []
+            },
+            {
                 "name": "validate texture descriptor",
                 "tags": ["dawn"],
                 "args": [
