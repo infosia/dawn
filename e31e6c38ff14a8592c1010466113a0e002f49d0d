@@ -97,6 +97,24 @@
       "message": "Do the CQ builders not run something like `go test ./...` somewhere?",
       "revId": "e31e6c38ff14a8592c1010466113a0e002f49d0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c50f6e07_36cd0291",
+        "filename": "infra/config/global/gn_standalone_try.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-14T17:53:34Z",
+      "side": 1,
+      "message": "`//tools/PRESUBMIT.py` appears to run the go tests, so it should be handled by the `presubmit` bot as well as anytime the user runs `git cl upload`.",
+      "parentUuid": "b10cabc1_0ed063f3",
+      "revId": "e31e6c38ff14a8592c1010466113a0e002f49d0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
