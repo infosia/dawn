@@ -214,8 +214,7 @@ MaybeError BindGroup::InitializeImpl() {
     // of BindingNumber.
     mDynamicStorageBufferLengths.resize(bgl->GetDynamicStorageBufferCount());
     uint32_t dynamicStorageBufferIndex = 0;
-    for (BindingIndex bindingIndex(0); bindingIndex < bgl->GetDynamicBufferCount();
-         ++bindingIndex) {
+    for (BindingIndex bindingIndex : layout->GetDynamicBufferCount()) {
         if (bgl->IsStorageBufferBinding(bindingIndex)) {
             mDynamicStorageBufferLengths[dynamicStorageBufferIndex++] =
                 static_cast<uint32_t>(GetBindingAsBufferBinding(bindingIndex).size);

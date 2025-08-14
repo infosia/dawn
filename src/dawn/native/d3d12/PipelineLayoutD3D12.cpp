@@ -223,9 +223,7 @@ MaybeError PipelineLayout::Initialize() {
         // Init root descriptors in root signatures for dynamic buffer bindings.
         // These are packed at the beginning of the layout binding info.
         mDynamicRootParameterIndices[group].resize(bindGroupLayout->GetDynamicBufferCount());
-        for (BindingIndex dynamicBindingIndex{0};
-             dynamicBindingIndex < bindGroupLayout->GetDynamicBufferCount();
-             ++dynamicBindingIndex) {
+        for (BindingIndex dynamicBindingIndex : layout->GetDynamicBufferIndices()) {
             const BindingInfo& bindingInfo = bindGroupLayout->GetBindingInfo(dynamicBindingIndex);
 
             if (bindingInfo.visibility == wgpu::ShaderStage::None) {
@@ -302,8 +300,7 @@ MaybeError PipelineLayout::Initialize() {
         mDynamicStorageBufferLengthInfo[group].bindingAndRegisterOffsets.reserve(
             bgl->GetDynamicStorageBufferCount());
 
-        for (BindingIndex bindingIndex(0); bindingIndex < bgl->GetDynamicBufferCount();
-             ++bindingIndex) {
+        for (BindingIndex bindingIndex : layout->GetDynamicBufferIndices()) {
             if (bgl->IsStorageBufferBinding(bindingIndex)) {
                 mDynamicStorageBufferLengthInfo[group].bindingAndRegisterOffsets.push_back(
                     {bgl->GetBindingInfo(bindingIndex).binding,
