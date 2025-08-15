@@ -1690,6 +1690,7 @@ class Printer : public tint::TextGenerator {
             case core::BuiltinValue::kSampleMask:
                 return "SV_Coverage";
             case core::BuiltinValue::kPrimitiveId:
+            case core::BuiltinValue::kPrimitiveIndex:
                 return "SV_PrimitiveId";
             case core::BuiltinValue::kBarycentricCoord:
                 return "SV_Barycentrics";

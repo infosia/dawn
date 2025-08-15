@@ -434,6 +434,11 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
       "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/tint/extensions/"
       "chromium_experimental_primitive_id.md",
       FeatureInfo::FeatureState::Experimental}},
+    {Feature::PrimitiveIndex,
+     {"Supports the \"enable primitive_index;\" directive in WGSL",
+      "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/tint/extensions/"
+      "chromium_experimental_primitive_id.md",
+      FeatureInfo::FeatureState::Experimental}},
     {Feature::ChromiumExperimentalBindless,
      {"Experimental support for the prototype of a bindless extension",
       "https://hackmd.io/@kangz/bindless-proposal", FeatureInfo::FeatureState::Experimental}}};

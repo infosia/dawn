@@ -400,6 +400,7 @@ class Printer {
                 module_.PushCapability(SpvCapabilityClipDistance);
                 return SpvBuiltInClipDistance;
             case core::BuiltinValue::kPrimitiveId:
+            case core::BuiltinValue::kPrimitiveIndex:
                 // TODO(dsinclair): This can be others, but use geometry for now.
                 module_.PushCapability(SpvCapabilityGeometry);
                 return SpvBuiltInPrimitiveId;

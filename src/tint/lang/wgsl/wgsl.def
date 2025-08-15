@@ -79,6 +79,8 @@ enum extension {
   dual_source_blending
   // WGSL Extension "subgroups"
   subgroups
+  // WGSL Extension "primitive_index"
+  primitive_index
 
   // A Chromium-specific extension for disabling uniformity analysis.
   chromium_disable_uniformity_analysis

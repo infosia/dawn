@@ -125,6 +125,7 @@ enum class Extension : uint8_t {
     kClipDistances,
     kDualSourceBlending,
     kF16,
+    kPrimitiveIndex,
     kSubgroups,
 };
 
@@ -159,6 +160,7 @@ constexpr std::string_view kExtensionStrings[] = {
     "clip_distances",
     "dual_source_blending",
     "f16",
+    "primitive_index",
     "subgroups",
 };
 
@@ -176,6 +178,7 @@ static constexpr Extension kAllExtensions[] = {
     Extension::kClipDistances,
     Extension::kDualSourceBlending,
     Extension::kF16,
+    Extension::kPrimitiveIndex,
     Extension::kSubgroups,
 };
 

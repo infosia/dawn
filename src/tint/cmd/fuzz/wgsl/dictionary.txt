@@ -338,6 +338,7 @@
 "position"
 "pow"
 "primitive_id"
+"primitive_index"
 "print"
 "private"
 "ptr"

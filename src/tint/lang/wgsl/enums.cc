@@ -82,6 +82,9 @@ Extension ParseExtension(std::string_view str) {
     if (str == "f16") {
         return Extension::kF16;
     }
+    if (str == "primitive_index") {
+        return Extension::kPrimitiveIndex;
+    }
     if (str == "subgroups") {
         return Extension::kSubgroups;
     }
@@ -115,6 +118,8 @@ std::string_view ToString(Extension value) {
             return "dual_source_blending";
         case Extension::kF16:
             return "f16";
+        case Extension::kPrimitiveIndex:
+            return "primitive_index";
         case Extension::kSubgroups:
             return "subgroups";
     }
