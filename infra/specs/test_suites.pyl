@@ -30,6 +30,13 @@
         'mixins': [
           'result_adapter_gtest_json',
         ],
+        'swarming': {
+          'dimensions': {
+            # Sharded despite each shard being fairly fast to try to avoid
+            # X11 resource exhaustion like in anglebug.com/408276172.
+            'shards': 2,
+          },
+        },
         'merge': {
           # This should be removed in favor of updating the recipe code to allow
           # the merge script to be skipped entirely. noop is needed currently
