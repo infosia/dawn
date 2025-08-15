@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2760d96d_8cd05953",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-15T22:46:30Z",
+      "side": 1,
+      "message": "PTAL\n\nNo repro in either to the tryjobs I triggered nor any of the 10 retry tasks I triggered, so it seems likely that this resolves the issue.",
+      "revId": "0bc5775aba6ef0b7fbec29760e99eaf9ef2f41f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
