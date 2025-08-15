@@ -7,7 +7,8 @@
         "args": [
           "--backend=opengles",
           "--use-angle=swiftshader",
-          "--enable-toggles=gl_force_es_31_and_no_extensions"
+          "--enable-toggles=gl_force_es_31_and_no_extensions",
+          "--no-xvfb"
         ],
         "merge": {
           "script": "//testing/merge_scripts/noop_merge.py"
@@ -31,7 +32,8 @@
       },
       {
         "args": [
-          "--adapter-vendor-id=0x1AE0"
+          "--adapter-vendor-id=0x1AE0",
+          "--no-xvfb"
         ],
         "merge": {
           "script": "//testing/merge_scripts/noop_merge.py"
@@ -54,6 +56,9 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
       },
       {
+        "args": [
+          "--no-xvfb"
+        ],
         "merge": {
           "script": "//testing/merge_scripts/noop_merge.py"
         },
@@ -76,7 +81,8 @@
       },
       {
         "args": [
-          "--use-wire"
+          "--use-wire",
+          "--no-xvfb"
         ],
         "merge": {
           "script": "//testing/merge_scripts/noop_merge.py"
@@ -99,6 +105,9 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_unittests/"
       },
       {
+        "args": [
+          "--no-xvfb"
+        ],
         "merge": {
           "script": "//testing/merge_scripts/noop_merge.py"
         },
