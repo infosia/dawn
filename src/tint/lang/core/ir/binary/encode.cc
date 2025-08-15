@@ -1081,8 +1081,8 @@ struct Encoder {
                 return pb::BuiltinValue::workgroup_id;
             case core::BuiltinValue::kClipDistances:
                 return pb::BuiltinValue::clip_distances;
-            case core::BuiltinValue::kPrimitiveId:
-                return pb::BuiltinValue::primitive_id;
+            case core::BuiltinValue::kPrimitiveIndex:
+                return pb::BuiltinValue::primitive_index;
             case core::BuiltinValue::kBarycentricCoord:
                 return pb::BuiltinValue::barycentric_coord;
             case core::BuiltinValue::kUndefined:
