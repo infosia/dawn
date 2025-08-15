@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "61a8cfa1_142fceaf",
+        "filename": "tools/src/execwrapper/testexecwrapper.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-15T04:55:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fb18206_c9c97806",
+      "range": {
+        "startLine": 76,
+        "startChar": 1,
+        "endLine": 80,
+        "endChar": 2
+      },
+      "revId": "0653c79ad29ee8312743cc5d04911a9baadfbdfe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "557bcac7_eec65d21",
         "filename": "tools/src/execwrapper/testexecwrapper_test.go",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2025-08-14T22:26:11Z",
       "side": 1,
       "message": "TIL Go tests don\u0027t run in parallel by default. It seems like we should be enabling this for all of our tests, as they should all be independent of each other. It seems like there\u0027s no way to set this as the default behavior, and I\u0027m also not seeing a way to do it on a per-package basis via `TestMain()`. So, I guess we\u0027ll need to add `t.Parallel()` to every test body, including any subtests, in a follow-up CL. Seems like something Gemini should be able to handle pretty easily.",
+      "range": {
+        "startLine": 41,
+        "startChar": 1,
+        "endLine": 41,
+        "endChar": 13
+      },
+      "revId": "0653c79ad29ee8312743cc5d04911a9baadfbdfe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0d53a95_300b3905",
+        "filename": "tools/src/execwrapper/testexecwrapper_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-15T04:55:13Z",
+      "side": 1,
+      "message": "Ack, https://issues.chromium.org/issues/438807263",
+      "parentUuid": "557bcac7_eec65d21",
       "range": {
         "startLine": 41,
         "startChar": 1,
@@ -60,6 +108,30 @@
       "writtenOn": "2025-08-14T22:26:11Z",
       "side": 1,
       "message": "Nit: Add coverage for the error cases where `RunWithCombinedOutput` is called with `stdout` and/or `stderr` set.",
+      "range": {
+        "startLine": 144,
+        "startChar": 5,
+        "endLine": 144,
+        "endChar": 41
+      },
+      "revId": "0653c79ad29ee8312743cc5d04911a9baadfbdfe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff46b2e2_240b9392",
+        "filename": "tools/src/execwrapper/testexecwrapper_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-15T04:55:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9ab81dc_9059cc05",
       "range": {
         "startLine": 144,
         "startChar": 5,
