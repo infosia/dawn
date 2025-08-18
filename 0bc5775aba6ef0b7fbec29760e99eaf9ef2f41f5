@@ -16,6 +16,23 @@
       "message": "PTAL\n\nNo repro in either to the tryjobs I triggered nor any of the 10 retry tasks I triggered, so it seems likely that this resolves the issue.",
       "revId": "0bc5775aba6ef0b7fbec29760e99eaf9ef2f41f5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "721e99bd_74141e22",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-08-18T17:11:00Z",
+      "side": 1,
+      "message": "Hmm, this isn\u0027t how I understand this is supposed to work.\nIn ANGLE we use --no-xvfb on real HW, which has an X11 server.\nBut for tests running on GCEs with do use Xvfb instead, since I think GCEs don\u0027t have an X11 server running.\nLooked at https://ci.chromium.org/ui/p/dawn/builders/try/dawn-try-linux-x64-sws-rel/3/overview, many tests, e.g. in https://chromium-swarm.appspot.com/task?id\u003d72c8b2029df54810 silently fail with:\n```\nError: GLFW error 65550 X11: The DISPLAY environment variable is missing\n```\n\nOne thing we did change in ANGLE after crrev.com/c/5651996 is to use \"--use-xvfb\", which forces xvfb.py to actually use Xvfb instead of Xorg.\nMaybe try that?",
+      "revId": "0bc5775aba6ef0b7fbec29760e99eaf9ef2f41f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
