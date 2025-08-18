@@ -50,6 +50,30 @@
       ],
       "revId": "44ecb8d65e0edbf2545a23b9a67fd651501e1c30",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aebb9543_715716e7",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-18T18:39:54Z",
+      "side": 1,
+      "message": "AI suggestion looks way off, but I assume it\u0027s needed because the error message still uses the WGSL language feature name. Could just hardcode the name if you want to remove the include.",
+      "parentUuid": "ab133313_b412896e",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 33
+      },
+      "revId": "44ecb8d65e0edbf2545a23b9a67fd651501e1c30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
