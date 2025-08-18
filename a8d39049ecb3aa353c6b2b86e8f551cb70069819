@@ -47,6 +47,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a80a9398_61552a82",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-18T20:22:01Z",
+      "side": 1,
+      "message": "Sorry for the confusion. I did exactly that in the next [CL](https://dawn-review.googlesource.com/c/dawn/+/256995/12) in the chain. I introduced `TexelBufferBindingInfo` which enabled `From` implementation. I could combine the CLs if that would make things clearer",
+      "parentUuid": "dff21ec2_4be61020",
+      "range": {
+        "startLine": 479,
+        "startChar": 8,
+        "endLine": 493,
+        "endChar": 47
+      },
+      "revId": "a8d39049ecb3aa353c6b2b86e8f551cb70069819",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8cd7aba5_a44bab44",
