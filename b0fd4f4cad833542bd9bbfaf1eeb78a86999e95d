@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fac0b35e_c54b3eed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-18T20:07:25Z",
+      "side": 1,
+      "message": "PTAL.",
+      "revId": "b0fd4f4cad833542bd9bbfaf1eeb78a86999e95d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a944e42_94e1941e",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-18T20:07:25Z",
+      "side": 1,
+      "message": "I think this comment still makes sense, because if there is something here, it means the entered a value, and if they entered a value then it has to be a constant.",
+      "revId": "b0fd4f4cad833542bd9bbfaf1eeb78a86999e95d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
