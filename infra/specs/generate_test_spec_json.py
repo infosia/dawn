@@ -51,6 +51,11 @@ import generate_buildbot_json
 
 # Add custom mixins here.
 ADDITIONAL_MIXINS = {
+    'enable_xvfb': {
+        'args': [
+            '--use-xvfb',
+        ],
+    },
     'result_adapter_gtest_json': {
         'resultdb': {
             'result_format': 'gtest_json',

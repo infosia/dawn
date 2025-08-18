@@ -8,6 +8,7 @@
           '--enable-toggles=gl_force_es_31_and_no_extensions',
         ],
         'mixins': [
+          'enable_xvfb',
           'result_adapter_gtest_json',
         ],
         'merge': {
@@ -28,6 +29,7 @@
           '--adapter-vendor-id=0x1AE0',
         ],
         'mixins': [
+          'enable_xvfb',
           'result_adapter_gtest_json',
         ],
         'merge': {
@@ -45,6 +47,7 @@
     'dawn_unit_gtests': {
       'dawn_unittests': {
         'mixins': [
+          'enable_xvfb',
           'result_adapter_gtest_json',
         ],
         'merge': {
@@ -64,6 +67,7 @@
           '--use-wire',
         ],
         'mixins': [
+          'enable_xvfb',
           'result_adapter_gtest_json',
         ],
         'merge': {
@@ -81,6 +85,7 @@
     'tint_unit_gtests': {
       'tint_unittests': {
         'mixins': [
+          'enable_xvfb',
           'result_adapter_gtest_json',
         ],
         'merge': {
