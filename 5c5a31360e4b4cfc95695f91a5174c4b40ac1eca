@@ -16,6 +16,40 @@
       "message": "Dan, Geoff PTAL\n\nBrandon FYI",
       "revId": "5c5a31360e4b4cfc95695f91a5174c4b40ac1eca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "707c0c1d_b964ae4d",
+        "filename": "src/dawn/native/vulkan/DescriptorSetAllocator.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-18T15:41:16Z",
+      "side": 1,
+      "message": "```suggestion\n// TODO(https://crbug.com/439522242): Consider adding some better heuristic, like an\n```",
+      "revId": "5c5a31360e4b4cfc95695f91a5174c4b40ac1eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d465d16e_8b6bb9e8",
+        "filename": "src/dawn/native/vulkan/DescriptorSetAllocator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-18T15:41:16Z",
+      "side": 1,
+      "message": "nit, crbug.com is shorter:\n\n```suggestion\n// TODO(https://crbug.com/439522242): We could reuse allocators between\n```",
+      "revId": "5c5a31360e4b4cfc95695f91a5174c4b40ac1eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
