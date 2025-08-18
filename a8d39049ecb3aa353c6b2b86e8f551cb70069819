@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c436c390_6ff56654",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-18T18:14:27Z",
+      "side": 1,
+      "message": "nit. I don\u0027t think this is needed.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 33
+      },
+      "revId": "a8d39049ecb3aa353c6b2b86e8f551cb70069819",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dff21ec2_4be61020",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-18T18:14:27Z",
+      "side": 1,
+      "message": "nit. I know this is just placeholder code, but I think we should still do it the same as the other `BindingInfo`s and implement it as a `From` function like the others for consistency, and move this placeholder code into that function instead.",
+      "range": {
+        "startLine": 479,
+        "startChar": 8,
+        "endLine": 493,
+        "endChar": 47
+      },
+      "revId": "a8d39049ecb3aa353c6b2b86e8f551cb70069819",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8cd7aba5_a44bab44",
+        "filename": "src/dawn/tests/unittests/validation/TexelBufferLayoutValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-18T18:14:27Z",
+      "side": 1,
+      "message": "nit. Maybe can move this into `GetBindGroupLayoutValidationTest.cpp` to keep it consistent. See `GetBindGroupLayoutTests.ExternalTextureBindingType` in that file.\n\nAnd I think the other ones, we could honestly move into `TextureBufferViewValidationTest` as well. Not sure how much value we get in separating into so many different files for this.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 1
+      },
+      "revId": "a8d39049ecb3aa353c6b2b86e8f551cb70069819",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
