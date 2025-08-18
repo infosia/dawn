@@ -33,6 +33,24 @@
       "message": "Doesn\u0027t seem to help 😞\nMaybe we should just skip the failing test?\nOne other thing I thought to try is `--gtest_batch_size\u003d10`, but I\u0027m not sure this arg still exists.",
       "revId": "4f067e6d5f1c9e7e26217183c2ee1604c96580d7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd1a3428_88b97c68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-18T19:20:54Z",
+      "side": 1,
+      "message": "AFAICT it doesn\u0027t exist anymore. I\u0027ll try skipping `SurfaceTests.PresentWithoutConfigure/Vulkan_SwiftShader_Device__Subzero` for this suite.",
+      "parentUuid": "e09d7e9b_15350828",
+      "revId": "4f067e6d5f1c9e7e26217183c2ee1604c96580d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
