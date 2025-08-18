@@ -33,6 +33,29 @@
       "message": "Nice! I think in a follow up we could potentially go even a step further so that we return `BeginEndRange\u003c*BindingInfo\u003e` directly! Or returning some iterator such that we can access the `*BindingInfo` and the index if needed.",
       "revId": "d11eadf29bc25e5c0bfe48dc49b2fdc7941ba03d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9d64be9_8196547d",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-08-18T19:11:23Z",
+      "side": 1,
+      "message": "nit: How about a helper function for this pattern of range from order type and another for count?",
+      "range": {
+        "startLine": 824,
+        "startChar": 11,
+        "endLine": 824,
+        "endChar": 98
+      },
+      "revId": "d11eadf29bc25e5c0bfe48dc49b2fdc7941ba03d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
