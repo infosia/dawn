@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab133313_b412896e",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-18T17:38:20Z",
+      "side": 1,
+      "message": "nit. I think we don\u0027t need this anymore.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 33
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "2529a995_7dde6ddb",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Buffer.cpp",
+              "range": {
+                "startLine": 59,
+                "startChar": 0,
+                "endLine": 60,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/dawn/native/Buffer.cpp",
+              "range": {
+                "startLine": 320,
+                "startChar": 0,
+                "endLine": 320,
+                "endChar": 0
+              },
+              "replacement": "\n    if (usage \u0026 wgpu::BufferUsage::ShaderBinding) {\n        DAWN_INVALID_IF(!device-\u003eHasFeature(Feature::ShaderBinding), \"%s requires %s.\",\n                        \"BufferUsage::ShaderBinding\", ToAPI(Feature::ShaderBinding));\n    }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "44ecb8d65e0edbf2545a23b9a67fd651501e1c30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
