@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-08-13 07:53:20AM
+# Last rolled: 2025-08-19 02:10:39AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -105,21 +105,11 @@
 
 # Unsupported test under minimal ES31 context
 
-# Anisotropic filtering requires GL_EXT_texture_filter_anisotropic
-[ compat-min-es31 ] webgpu:api,operation,sampling,anisotropy:anisotropic_filter_mipmap_color:maxAnisotropy=4 [ Skip ]
-
 # Requires (BC || (ETC2 && ASTC)) texture compression to be supported.
 [ compat-min-es31 ] webgpu:api,validation,capability_checks,features,texture_formats:check_capability_guarantees:* [ Skip ]
 
 # Cube arrays require GL_EXT_texture_cube_map_array
 [ compat-min-es31 ] webgpu:compat,api,validation,texture,createTexture:invalidTextureBindingViewDimension:dimension="2d";textureBindingViewDimension="cube-array" [ Skip ]
-
-# GLES doesn't give us a way to gracefully catch OOM errors, so we just lose the device.
-crbug.com/42241110 webgpu:api,operation,uncapturederror:iff_uncaptured:*errorType="out-of-memory" [ Skip ]
-crbug.com/42241110 webgpu:api,validation,error_scope:balanced_nesting:errorFilter="out-of-memory";* [ Skip ]
-crbug.com/42241110 webgpu:api,validation,error_scope:current_scope:errorFilter="out-of-memory";* [ Skip ]
-crbug.com/42241110 webgpu:api,validation,error_scope:parent_scope:errorFilter="out-of-memory";* [ Skip ]
-crbug.com/42241110 webgpu:api,validation,error_scope:simple:errorType="out-of-memory";* [ Skip ]
 
 ################################################################################
 # Temporary Skip Expectations
@@ -129,12 +119,6 @@ crbug.com/42241110 webgpu:api,validation,error_scope:simple:errorType="out-of-me
 ################################################################################
 
 ### TEMPORARY ANDROID SKIPS
-
-# Compressed texture image_copy failures on Pixel 6
-crbug.com/364917742 [ android arm ] webgpu:api,operation,command_buffer,image_copy:offsets_and_sizes:* [ Skip ]
-
-# Buffer already has an outstanding map pending
-crbug.com/391414855 [ android-Pixel-6 arm ] webgpu:api,validation,buffer,mapping:getMappedRange,state,mappingPending:* [ Skip ]
 
 # Offset broken on Pixel 6
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_2d_coords:*;format="bgra8unorm";*;offset=true [ Skip ]
@@ -326,14 +310,7 @@ crbug.com/373670502 [ android-pixel-6 ] webgpu:shader,execution,expression,call,
 # Triaged or Manually-Added Flakes and Failures
 ################################################################################
 
-# Generates GL_OUT_OF_MEMORY
-crbug.com/361372970 [ android arm ] webgpu:api,validation,image_copy,layout_related:copy_end_overflows_u64:method="WriteTexture" [ Failure ]
-
 # Flaky memory_sync failures on Intel
-crbug.com/42241023 [ intel-0x9bc5 linux ] webgpu:api,operation,memory_sync,buffer,multiple_buffers:ww:boundary="command-buffer";writeOps=["storage","b2b-copy"];contexts=["render-bundle-encoder","command-encoder"] [ Failure ]
-crbug.com/42241023 [ intel-0x9bc5 linux ] webgpu:api,operation,memory_sync,buffer,multiple_buffers:ww:boundary="command-buffer";writeOps=["storage","b2b-copy"];contexts=["render-pass-encoder","command-encoder"] [ Failure ]
-crbug.com/42241023 [ intel-0x9bc5 linux ] webgpu:api,operation,memory_sync,buffer,single_buffer:ww:boundary="command-buffer";writeOps=["storage","b2b-copy"];contexts=["render-bundle-encoder","command-encoder"] [ Failure ]
-crbug.com/42241023 [ intel-0x9bc5 linux ] webgpu:api,operation,memory_sync,buffer,single_buffer:ww:boundary="command-buffer";writeOps=["storage","b2b-copy"];contexts=["render-pass-encoder","command-encoder"] [ Failure ]
 crbug.com/42241023 [ intel-0x9bc5 linux ] webgpu:api,operation,memory_sync,texture,same_subresource:wr:boundary="command-buffer";write={"op":"storage","in":"render-bundle-encoder"};read={"op":"t2b-copy","in":"command-encoder"} [ Failure ]
 crbug.com/42241023 [ intel-0x9bc5 linux ] webgpu:api,operation,memory_sync,texture,same_subresource:wr:boundary="command-buffer";write={"op":"storage","in":"render-pass-encoder"};read={"op":"t2b-copy","in":"command-encoder"} [ Failure ]
 
@@ -368,12 +345,6 @@ crbug.com/42241454 [ intel-0x9bc5 linux mesa_ge_23.2 ] webgpu:api,operation,stor
 crbug.com/42241454 [ intel-0x9bc5 linux mesa_ge_23.2 ] webgpu:api,operation,storage_texture,read_write:basic:format="r32uint";shaderStage="fragment";textureDimension="2d";depthOrArrayLayers=2 [ Failure ]
 crbug.com/42241454 [ intel-0x9bc5 linux mesa_ge_23.2 ] webgpu:api,operation,storage_texture,read_write:basic:format="r32uint";shaderStage="fragment";textureDimension="3d";depthOrArrayLayers=1 [ Failure ]
 crbug.com/42241454 [ intel-0x9bc5 linux mesa_ge_23.2 ] webgpu:api,operation,storage_texture,read_write:basic:format="r32uint";shaderStage="fragment";textureDimension="3d";depthOrArrayLayers=2 [ Failure ]
-crbug.com/42241454 [ intel-0x9bc5 linux mesa_ge_23.2 ] webgpu:shader,execution,memory_model,atomicity:atomicity:memType="atomic_storage";testType="inter_workgroup" [ Failure ]
-
-crbug.com/341282603 [ intel-0x4680 linux ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;* [ Failure ]
-
-crbug.com/341282605 [ intel-0x4680 linux ] webgpu:shader,execution,limits:switch_case_selectors: [ Failure ]
-crbug.com/341282605 [ intel-0x9bc5 ] webgpu:shader,execution,limits:switch_case_selectors: [ Failure ]
 
 # sample_texture_combos test is failing on all Compat platforms
 crbug.com/402772749 [ angle-opengl arch-x86_64 desktop display-server-x memory_ge_16gb nvidia-0x2184 release ubuntu ] webgpu:api,operation,sampling,sampler_texture:sample_texture_combos: [ Failure ]
@@ -454,79 +425,8 @@ crbug.com/42241377 [ linux nvidia-0x2184 ] webgpu:api,operation,storage_texture,
 ### This section represents platform-specific issues that are likely unfixable
 ### in Compat
 
-# clamp expression tests failing on NVidia
-crbug.com/42241262 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,clamp:f32:inputSource="storage_r";vectorize="_undef_" [ Failure ]
-crbug.com/42241262 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,clamp:f32:inputSource="storage_r";vectorize=2 [ Failure ]
-crbug.com/42241262 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,clamp:f32:inputSource="storage_r";vectorize=3 [ Failure ]
-crbug.com/42241262 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,clamp:f32:inputSource="storage_r";vectorize=4 [ Failure ]
-crbug.com/42241262 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,clamp:f32:inputSource="storage_rw";vectorize="_undef_" [ Failure ]
-crbug.com/42241262 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,clamp:f32:inputSource="storage_rw";vectorize=2 [ Failure ]
-crbug.com/42241262 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,clamp:f32:inputSource="storage_rw";vectorize=3 [ Failure ]
-crbug.com/42241262 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,clamp:f32:inputSource="storage_rw";vectorize=4 [ Failure ]
-crbug.com/42241262 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,clamp:f32:inputSource="uniform";vectorize="_undef_" [ Failure ]
-crbug.com/42241262 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,clamp:f32:inputSource="uniform";vectorize=2 [ Failure ]
-crbug.com/42241262 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,clamp:f32:inputSource="uniform";vectorize=3 [ Failure ]
-crbug.com/42241262 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,clamp:f32:inputSource="uniform";vectorize=4 [ Failure ]
-
-# limits:function_variable_combined_byte_size failing on NVidia
-crbug.com/372044248 [ nvidia-0x2184 ] webgpu:shader,execution,limits:function_variable_combined_byte_size:type="bool" [ Failure ]
-crbug.com/372044248 [ nvidia-0x2184 ] webgpu:shader,execution,limits:function_variable_combined_byte_size:type="u32" [ Failure ]
-crbug.com/372044248 [ nvidia-0x2184 ] webgpu:shader,execution,limits:private_array_combined_byte_size:type="bool" [ Failure ]
-crbug.com/372044248 [ nvidia-0x2184 ] webgpu:shader,execution,limits:private_array_combined_byte_size:type="u32" [ Failure ]
-
-# alpha_to_coverage occlusion query tests failing on Intel 630
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="direct";bufferOffset="non-zero";querySetOffset="non-zero";alpha=0 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="direct";bufferOffset="non-zero";querySetOffset="non-zero";alpha=0.25 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="direct";bufferOffset="non-zero";querySetOffset="non-zero";alpha=0.5 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="direct";bufferOffset="non-zero";querySetOffset="non-zero";alpha=0.75 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="direct";bufferOffset="non-zero";querySetOffset="zero";alpha=0 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="direct";bufferOffset="non-zero";querySetOffset="zero";alpha=0.25 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="direct";bufferOffset="non-zero";querySetOffset="zero";alpha=0.5 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="direct";bufferOffset="non-zero";querySetOffset="zero";alpha=0.75 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="direct";bufferOffset="zero";querySetOffset="non-zero";alpha=0 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="direct";bufferOffset="zero";querySetOffset="non-zero";alpha=0.25 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="direct";bufferOffset="zero";querySetOffset="non-zero";alpha=0.5 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="direct";bufferOffset="zero";querySetOffset="non-zero";alpha=0.75 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="direct";bufferOffset="zero";querySetOffset="zero";alpha=0 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="direct";bufferOffset="zero";querySetOffset="zero";alpha=0.25 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="direct";bufferOffset="zero";querySetOffset="zero";alpha=0.5 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="direct";bufferOffset="zero";querySetOffset="zero";alpha=0.75 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="non-zero";querySetOffset="non-zero";alpha=0 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="non-zero";querySetOffset="non-zero";alpha=0.25 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="non-zero";querySetOffset="non-zero";alpha=0.5 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="non-zero";querySetOffset="non-zero";alpha=0.75 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="non-zero";querySetOffset="zero";alpha=0 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="non-zero";querySetOffset="zero";alpha=0.25 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="non-zero";querySetOffset="zero";alpha=0.5 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="non-zero";querySetOffset="zero";alpha=0.75 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="zero";querySetOffset="non-zero";alpha=0 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="zero";querySetOffset="non-zero";alpha=0.25 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="zero";querySetOffset="non-zero";alpha=0.5 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="zero";querySetOffset="non-zero";alpha=0.75 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="zero";querySetOffset="zero";alpha=0 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="zero";querySetOffset="zero";alpha=0.25 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="zero";querySetOffset="zero";alpha=0.5 [ Failure ]
-crbug.com/42241192 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="zero";querySetOffset="zero";alpha=0.75 [ Failure ]
-
-# Limits issues on NVidia GL
-crbug.com/42241064 [ linux nvidia-0x2184 ] webgpu:api,validation,capability_checks,limits,maxBufferSize:createBuffer,at_over:limitTest="atMaximum";testValueName="atLimit" [ Failure ]
-crbug.com/42241064 [ linux nvidia-0x2184 ] webgpu:api,validation,capability_checks,limits,maxStorageBufferBindingSize:createBindGroup,at_over:limitTest="atMaximum";testValueName="atLimit";bufferPart="wholeBuffer" [ Failure ]
-crbug.com/42241064 [ linux nvidia-0x2184 ] webgpu:api,validation,capability_checks,limits,maxStorageBufferBindingSize:createBindGroup,at_over:limitTest="atMaximum";testValueName="overLimit";bufferPart="wholeBuffer" [ Failure ]
-
-# Zero init issues, but only with batch__=9 (NVidia driver bug)
-crbug.com/42241066 [ nvidia-0x2184 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="function";workgroupSize=[1,1,1];batch__=9 [ Failure ]
-crbug.com/42241066 [ nvidia-0x2184 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="private";workgroupSize=[1,1,1];batch__=9 [ Failure ]
-
-# primitive_restart failures on Pixel 6; these pass on Pixel 7 Pro
-crbug.com/42240846 [ android-pixel-6 ] webgpu:api,operation,vertex_state,index_format:primitive_restart:indexFormat="uint32";primitiveTopology="line-list" [ Failure ]
-crbug.com/42240846 [ android-pixel-6 ] webgpu:api,operation,vertex_state,index_format:primitive_restart:indexFormat="uint32";primitiveTopology="point-list" [ Failure ]
-crbug.com/42240846 [ android-pixel-6 ] webgpu:api,operation,vertex_state,index_format:primitive_restart:indexFormat="uint32";primitiveTopology="triangle-list" [ Failure ]
-
 # textureSample() failures on Pixel 6
 # these are also failing on Vulkan (WebGPU Core) on the same device
-
-# limits:const_array_elements failures (also failing in Core on some Android devices)
-crbug.com/407088839 [ linux nvidia-0x2184 ] webgpu:shader,execution,limits:const_array_elements: [ Failure ]
 
 # importExternalTexture,sampleWithVideoFrameWithVisibleRectParam failures on Pixel 6, also failing on Vulkan Pixel 6 (Core)
 crbug.com/329724358 [ android arm ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-vp9-bt601-hflip.mp4";dstColorSpace="display-p3" [ Failure ]
@@ -544,189 +444,16 @@ crbug.com/329724358 [ android arm ] webgpu:web_platform,external_texture,video:i
 crbug.com/329724358 [ android arm ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-vp9-bt709.webm";dstColorSpace="display-p3" [ Failure ]
 crbug.com/329724358 [ android arm ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-vp9-bt709.webm";dstColorSpace="srgb" [ Failure ]
 
-# Derivative test failures on Pixel 6
-crbug.com/42251283 [ android arm ] webgpu:shader,execution,expression,call,builtin,dpdxFine:* [ Failure ]
-crbug.com/42251283 [ android arm ] webgpu:shader,execution,expression,call,builtin,dpdyFine:* [ Failure ]
-crbug.com/42251283 [ android arm ] webgpu:shader,execution,expression,call,builtin,fwidthFine:* [ Failure ]
-
-# Derivative tests don't work on Intel (mostly Linux)
-crbug.com/42251283 [ intel-0x9bc5 linux ] webgpu:shader,execution,expression,call,builtin,dpdxFine:* [ Failure ]
-crbug.com/42251283 [ intel-0x9bc5 linux ] webgpu:shader,execution,expression,call,builtin,dpdyFine:* [ Failure ]
-crbug.com/42251283 [ intel-0x4680 ] webgpu:shader,execution,expression,call,builtin,dpdxFine:* [ Failure ]
-crbug.com/42251283 [ intel-0x4680 ] webgpu:shader,execution,expression,call,builtin,dpdyFine:* [ Failure ]
-crbug.com/42251283 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize="_undef_";non_uniform_discard=false [ Failure ]
-crbug.com/42251283 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize="_undef_";non_uniform_discard=true [ Failure ]
-crbug.com/42251283 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=2;non_uniform_discard=false [ Failure ]
-crbug.com/42251283 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=2;non_uniform_discard=true [ Failure ]
-crbug.com/42251283 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=3;non_uniform_discard=false [ Failure ]
-crbug.com/42251283 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=3;non_uniform_discard=true [ Failure ]
-crbug.com/42251283 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=4;non_uniform_discard=false [ Failure ]
-crbug.com/42251283 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=4;non_uniform_discard=true [ Failure ]
-crbug.com/42251283 [ intel-0x4680 linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:* [ Failure ]
-
-# 'asin' failures on Intel
-crbug.com/341327470 [ intel-0x4680 linux ] webgpu:shader,execution,expression,call,builtin,asin:f32:* [ Failure ]
-crbug.com/341327470 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,asin:f32:inputSource="storage_r";vectorize="_undef_" [ Failure ]
-crbug.com/341327470 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,asin:f32:inputSource="storage_r";vectorize=2 [ Failure ]
-crbug.com/341327470 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,asin:f32:inputSource="storage_r";vectorize=3 [ Failure ]
-crbug.com/341327470 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,asin:f32:inputSource="storage_r";vectorize=4 [ Failure ]
-crbug.com/341327470 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,asin:f32:inputSource="storage_rw";vectorize="_undef_" [ Failure ]
-crbug.com/341327470 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,asin:f32:inputSource="storage_rw";vectorize=2 [ Failure ]
-crbug.com/341327470 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,asin:f32:inputSource="storage_rw";vectorize=3 [ Failure ]
-crbug.com/341327470 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,asin:f32:inputSource="storage_rw";vectorize=4 [ Failure ]
-crbug.com/341327470 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,asin:f32:inputSource="uniform";vectorize="_undef_" [ Failure ]
-crbug.com/341327470 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,asin:f32:inputSource="uniform";vectorize=2 [ Failure ]
-crbug.com/341327470 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,asin:f32:inputSource="uniform";vectorize=3 [ Failure ]
-crbug.com/341327470 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,asin:f32:inputSource="uniform";vectorize=4 [ Failure ]
-
-# constructor w/concrete_array_elements failures on Pixel 6
-crbug.com/373670504 [ android arm ] webgpu:shader,execution,expression,constructor,non_zero:concrete_array_elements:inputSource="storage_r";type="bool";length=10;infer_type=false [ Failure ]
-crbug.com/373670504 [ android arm ] webgpu:shader,execution,expression,constructor,non_zero:concrete_array_elements:inputSource="storage_r";type="bool";length=10;infer_type=true [ Failure ]
-crbug.com/373670504 [ android arm ] webgpu:shader,execution,expression,constructor,non_zero:concrete_array_elements:inputSource="storage_r";type="bool";length=5;infer_type=false [ Failure ]
-crbug.com/373670504 [ android arm ] webgpu:shader,execution,expression,constructor,non_zero:concrete_array_elements:inputSource="storage_r";type="bool";length=5;infer_type=true [ Failure ]
-crbug.com/373670504 [ android arm ] webgpu:shader,execution,expression,constructor,non_zero:concrete_array_elements:inputSource="storage_rw";type="bool";length=10;infer_type=false [ Failure ]
-crbug.com/373670504 [ android arm ] webgpu:shader,execution,expression,constructor,non_zero:concrete_array_elements:inputSource="storage_rw";type="bool";length=10;infer_type=true [ Failure ]
-crbug.com/373670504 [ android arm ] webgpu:shader,execution,expression,constructor,non_zero:concrete_array_elements:inputSource="storage_rw";type="bool";length=5;infer_type=false [ Failure ]
-crbug.com/373670504 [ android arm ] webgpu:shader,execution,expression,constructor,non_zero:concrete_array_elements:inputSource="storage_rw";type="bool";length=5;infer_type=true [ Failure ]
-crbug.com/373670504 [ android arm ] webgpu:shader,execution,expression,constructor,non_zero:concrete_array_elements:inputSource="uniform";type="bool";length=10;infer_type=false [ Failure ]
-crbug.com/373670504 [ android arm ] webgpu:shader,execution,expression,constructor,non_zero:concrete_array_elements:inputSource="uniform";type="bool";length=10;infer_type=true [ Failure ]
-crbug.com/373670504 [ android arm ] webgpu:shader,execution,expression,constructor,non_zero:concrete_array_elements:inputSource="uniform";type="bool";length=5;infer_type=false [ Failure ]
-crbug.com/373670504 [ android arm ] webgpu:shader,execution,expression,constructor,non_zero:concrete_array_elements:inputSource="uniform";type="bool";length=5;infer_type=true [ Failure ]
-
-# Const bool arrays on Pixel 6
-crbug.com/422510023 [ android arm ] webgpu:shader,execution,expression,constructor,non_zero:concrete_array_elements:inputSource="const";type="bool";length=10;infer_type=false [ Failure ]
-crbug.com/422510023 [ android arm ] webgpu:shader,execution,expression,constructor,non_zero:concrete_array_elements:inputSource="const";type="bool";length=10;infer_type=true [ Failure ]
-crbug.com/422510023 [ android arm ] webgpu:shader,execution,expression,constructor,non_zero:concrete_array_elements:inputSource="const";type="bool";length=5;infer_type=false [ Failure ]
-crbug.com/422510023 [ android arm ] webgpu:shader,execution,expression,constructor,non_zero:concrete_array_elements:inputSource="const";type="bool";length=5;infer_type=true [ Failure ]
-crbug.com/422510023 [ android arm ] webgpu:shader,execution,expression,constructor,zero_value:array:type="bool";length=10 [ Failure ]
-crbug.com/422510023 [ android arm ] webgpu:shader,execution,expression,constructor,zero_value:array:type="bool";length=5 [ Failure ]
-
-# set_index_buffer_without_changing_buffer failing on Pixel 6
-crbug.com/373664074 [ android-t arm ] webgpu:api,operation,command_buffer,render,state_tracking:set_index_buffer_without_changing_buffer: [ Failure ]
-
-# Android atomic builtin failures on Pixel 6
-# Note that all of these are also failing on Core (Vulkan)
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAdd:add_workgroup:workgroupSize=2;dispatchSize=16;scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAdd:add_workgroup:workgroupSize=2;dispatchSize=16;scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAdd:add_workgroup:workgroupSize=2;dispatchSize=1;scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAdd:add_workgroup:workgroupSize=2;dispatchSize=1;scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAdd:add_workgroup:workgroupSize=2;dispatchSize=4;scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAdd:add_workgroup:workgroupSize=2;dispatchSize=4;scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAdd:add_workgroup:workgroupSize=2;dispatchSize=8;scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAdd:add_workgroup:workgroupSize=2;dispatchSize=8;scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicMax:max_workgroup:workgroupSize=2;dispatchSize=16;scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicMax:max_workgroup:workgroupSize=2;dispatchSize=16;scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicMax:max_workgroup:workgroupSize=2;dispatchSize=1;scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicMax:max_workgroup:workgroupSize=2;dispatchSize=1;scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicMax:max_workgroup:workgroupSize=2;dispatchSize=4;scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicMax:max_workgroup:workgroupSize=2;dispatchSize=4;scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicMax:max_workgroup:workgroupSize=2;dispatchSize=8;scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicMax:max_workgroup:workgroupSize=2;dispatchSize=8;scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicOr:or_workgroup:workgroupSize=2;dispatchSize=16;mapId="remap";scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicOr:or_workgroup:workgroupSize=2;dispatchSize=16;mapId="remap";scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicOr:or_workgroup:workgroupSize=2;dispatchSize=1;mapId="remap";scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicOr:or_workgroup:workgroupSize=2;dispatchSize=1;mapId="remap";scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicOr:or_workgroup:workgroupSize=2;dispatchSize=4;mapId="remap";scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicOr:or_workgroup:workgroupSize=2;dispatchSize=4;mapId="remap";scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicOr:or_workgroup:workgroupSize=2;dispatchSize=8;mapId="remap";scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicOr:or_workgroup:workgroupSize=2;dispatchSize=8;mapId="remap";scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicSub:sub_workgroup:workgroupSize=2;dispatchSize=16;scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicSub:sub_workgroup:workgroupSize=2;dispatchSize=16;scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicSub:sub_workgroup:workgroupSize=2;dispatchSize=1;scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicSub:sub_workgroup:workgroupSize=2;dispatchSize=1;scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicSub:sub_workgroup:workgroupSize=2;dispatchSize=4;scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicSub:sub_workgroup:workgroupSize=2;dispatchSize=4;scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicSub:sub_workgroup:workgroupSize=2;dispatchSize=8;scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicSub:sub_workgroup:workgroupSize=2;dispatchSize=8;scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicXor:xor_workgroup:workgroupSize=2;dispatchSize=16;mapId="remap";scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicXor:xor_workgroup:workgroupSize=2;dispatchSize=16;mapId="remap";scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicXor:xor_workgroup:workgroupSize=2;dispatchSize=1;mapId="remap";scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicXor:xor_workgroup:workgroupSize=2;dispatchSize=1;mapId="remap";scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicXor:xor_workgroup:workgroupSize=2;dispatchSize=4;mapId="remap";scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicXor:xor_workgroup:workgroupSize=2;dispatchSize=4;mapId="remap";scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicXor:xor_workgroup:workgroupSize=2;dispatchSize=8;mapId="remap";scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicXor:xor_workgroup:workgroupSize=2;dispatchSize=8;mapId="remap";scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAnd:and_workgroup:workgroupSize=2;dispatchSize=16;mapId="remap";scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAnd:and_workgroup:workgroupSize=2;dispatchSize=16;mapId="remap";scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAnd:and_workgroup:workgroupSize=2;dispatchSize=1;mapId="remap";scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAnd:and_workgroup:workgroupSize=2;dispatchSize=1;mapId="remap";scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAnd:and_workgroup:workgroupSize=2;dispatchSize=4;mapId="remap";scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAnd:and_workgroup:workgroupSize=2;dispatchSize=4;mapId="remap";scalarType="u32" [ Failure ]
-crbug.com/42241359 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAnd:and_workgroup:workgroupSize=2;dispatchSize=8;mapId="remap";scalarType="i32" [ Failure ]
-crbug.com/42241359 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAnd:and_workgroup:workgroupSize=2;dispatchSize=8;mapId="remap";scalarType="u32" [ Failure ]
-
-# copyToTexture,canvas:copy_contents_from_gpu_context_canvas too flaky for RetryOnFailure on Android
-crbug.com/393402151 [ android arm ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_gpu_context_canvas:* [ Failure ]
-
-# image_copy of depth/stencil flaky on Pixel 6
-crbug.com/384676198 [ android-pixel-6 android-t ] webgpu:api,operation,command_buffer,image_copy:rowsPerImage_and_bytesPerRow_depth_stencil:* [ RetryOnFailure ]
-
-# copyToTexture,ImageBitmap:* flaky on Pixel 6
-crbug.com/384672477 [ android-pixel-6 ] webgpu:web_platform,copyToTexture,ImageBitmap:copy_subrect_from_ImageData:* [ RetryOnFailure ]
-crbug.com/384672477 [ android-pixel-6 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_canvas:* [ RetryOnFailure ]
-crbug.com/384672477 [ android-pixel-6 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:* [ RetryOnFailure ]
-
-# Compressed texture image_copy failures on Pixel 6
-crbug.com/364917742 [ android-pixel-6 ] webgpu:api,operation,command_buffer,image_copy:origins_and_extents:*;format="astc-*-unorm";dimension="2d" [ Failure ]
-crbug.com/364917742 [ android-pixel-6 ] webgpu:api,operation,command_buffer,image_copy:origins_and_extents:*;format="astc-*-unorm";dimension="3d" [ Failure ]
-crbug.com/364917742 [ android-pixel-6 ] webgpu:api,operation,command_buffer,image_copy:rowsPerImage_and_bytesPerRow:*;format="astc-*-unorm";dimension="2d" [ Failure ]
-crbug.com/364917742 [ android-pixel-6 ] webgpu:api,operation,command_buffer,image_copy:rowsPerImage_and_bytesPerRow:*;format="astc-*-unorm";dimension="3d" [ Failure ]
-
-# robust_access_vertex on Intel
-crbug.com/406978227 [ intel-0x9bc5 ] webgpu:shader,execution,robust_access_vertex:* [ RetryOnFailure ]
-crbug.com/406978227 [ intel-0x4680 ] webgpu:shader,execution,robust_access_vertex:* [ Failure ]
-crbug.com/406978227 [ intel-0x9bc5 linux ] webgpu:shader,execution,robust_access_vertex:vertex_buffer_access:indexed=true;indirect=false;drawCallTestParameter="baseVertex";type="float32x3";additionalBuffers=0;partialLastNumber=false;offsetVertexBuffer=false [ Failure ]
-crbug.com/406978227 [ intel-0x9bc5 linux ] webgpu:shader,execution,robust_access_vertex:vertex_buffer_access:indexed=true;indirect=false;drawCallTestParameter="baseVertex";type="float32x3";additionalBuffers=0;partialLastNumber=false;offsetVertexBuffer=true [ Failure ]
-crbug.com/406978227 [ intel-0x9bc5 linux ] webgpu:shader,execution,robust_access_vertex:vertex_buffer_access:indexed=true;indirect=false;drawCallTestParameter="baseVertex";type="float32x3";additionalBuffers=4;partialLastNumber=false;offsetVertexBuffer=false [ Failure ]
-crbug.com/406978227 [ intel-0x9bc5 linux ] webgpu:shader,execution,robust_access_vertex:vertex_buffer_access:indexed=true;indirect=false;drawCallTestParameter="baseVertex";type="float32x3";additionalBuffers=4;partialLastNumber=false;offsetVertexBuffer=true [ Failure ]
-crbug.com/406978227 [ intel-0x9bc5 linux ] webgpu:shader,execution,robust_access_vertex:vertex_buffer_access:indexed=true;indirect=false;drawCallTestParameter="baseVertex";type="float32x3";additionalBuffers=4;partialLastNumber=true;offsetVertexBuffer=false [ Failure ]
-crbug.com/406978227 [ intel-0x9bc5 linux ] webgpu:shader,execution,robust_access_vertex:vertex_buffer_access:indexed=true;indirect=false;drawCallTestParameter="baseVertex";type="float32x3";additionalBuffers=4;partialLastNumber=true;offsetVertexBuffer=true [ Failure ]
-crbug.com/406978227 [ intel-0x9bc5 linux ] webgpu:shader,execution,robust_access_vertex:vertex_buffer_access:indexed=true;indirect=false;drawCallTestParameter="baseVertex";type="float32x4";additionalBuffers=4;partialLastNumber=false;offsetVertexBuffer=true [ Failure ]
-crbug.com/406978227 [ intel-0x9bc5 linux ] webgpu:shader,execution,robust_access_vertex:vertex_buffer_access:indexed=true;indirect=false;drawCallTestParameter="baseVertex";type="float32x4";additionalBuffers=4;partialLastNumber=true;offsetVertexBuffer=true [ Failure ]
-crbug.com/406978227 [ intel-0x9bc5 linux ] webgpu:shader,execution,robust_access_vertex:vertex_buffer_access:indexed=true;indirect=false;drawCallTestParameter="baseVertex";type="float32x3";additionalBuffers=0;partialLastNumber=true;offsetVertexBuffer=false [ RetryOnFailure ]
-
 # cameraCapture gives PermissionDenied by default, but a flag could be added for testing.
 crbug.com/346799721 webgpu:web_platform,external_texture,video:importExternalTexture,cameraCapture:* [ Failure ]
 
 crbug.com/407109045 [ linux nvidia ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_array_2d_coords:stage="c";format="rgba16float";filt="linear";modeU="r";modeV="m";offset=false [ Failure ]
 crbug.com/407109045 [ linux nvidia ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_array_2d_coords:stage="f";format="r8snorm";filt="linear";modeU="m";modeV="c";offset=true [ Failure ]
 
-crbug.com/407088842 [ android-pixel-6 ] webgpu:web_platform,copyToTexture,image_file:from_multiple_formats:imageName="four-colors.avif";srcDoFlipYDuringCopy=false [ Failure ]
-crbug.com/407088842 [ intel linux ] webgpu:web_platform,copyToTexture,image_file:from_multiple_formats:imageName="four-colors.avif";srcDoFlipYDuringCopy=false [ Failure ]
-crbug.com/407088842 [ linux nvidia ] webgpu:web_platform,copyToTexture,image_file:from_multiple_formats:imageName="four-colors.avif";srcDoFlipYDuringCopy=false [ Failure ]
-crbug.com/407088842 [ android-pixel-6 ] webgpu:web_platform,copyToTexture,image_file:from_multiple_formats:imageName="four-colors.avif";srcDoFlipYDuringCopy=true [ Failure ]
-crbug.com/407088842 [ intel linux ] webgpu:web_platform,copyToTexture,image_file:from_multiple_formats:imageName="four-colors.avif";srcDoFlipYDuringCopy=true [ Failure ]
-crbug.com/407088842 [ linux nvidia ] webgpu:web_platform,copyToTexture,image_file:from_multiple_formats:imageName="four-colors.avif";srcDoFlipYDuringCopy=true [ Failure ]
-
-crbug.com/407076123 [ android-14 android-pixel-6 ] webgpu:api,validation,createBindGroup:buffer,resource_binding_size:type="read-only-storage" [ Failure ]
-crbug.com/407076123 [ android-14 android-pixel-6 ] webgpu:api,validation,createBindGroup:buffer,resource_binding_size:type="storage" [ Failure ]
-crbug.com/407076123 [ linux nvidia ] webgpu:api,validation,createBindGroup:buffer,resource_binding_size:type="read-only-storage" [ Failure ]
-crbug.com/407076123 [ linux nvidia ] webgpu:api,validation,createBindGroup:buffer,resource_binding_size:type="storage" [ Failure ]
-
 # Not implemented yet
 crbug.com/342840940 [ angle-opengl arch-x86_64 compat-min-es31 desktop display-server-x memory_ge_16gb nvidia-0x2184 release ubuntu ] webgpu:api,validation,capability_checks,features,texture_formats:check_capability_guarantees: [ Failure ]
 
 # tint needs to support new storage formats from texture-feature-tier1
-crbug.com/421948908 [ android android-chromium android-pixel-6 angle-opengles arm compat-default mobile ] webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="r16snorm";awaitLost=false [ Failure ]
-crbug.com/421948908 [ angle-opengl arch-x86_64 compat-min-es31 desktop display-server-x memory_ge_16gb nvidia-0x2184 release ubuntu ] webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="r16snorm";awaitLost=false [ Failure ]
-crbug.com/421948908 [ android android-chromium android-pixel-6 angle-opengles arm compat-default mobile ] webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="r16snorm";awaitLost=true [ Failure ]
-crbug.com/421948908 [ angle-opengl arch-x86_64 compat-min-es31 desktop display-server-x memory_ge_16gb nvidia-0x2184 release ubuntu ] webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="r16snorm";awaitLost=true [ Failure ]
-crbug.com/421948908 webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="r16unorm";awaitLost=false [ Failure ]
-crbug.com/421948908 [ android android-chromium android-pixel-6 angle-opengles arm compat-default mobile ] webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="r16unorm";awaitLost=true [ Failure ]
-crbug.com/421948908 [ angle-opengl arch-x86_64 compat-min-es31 desktop display-server-x memory_ge_16gb nvidia-0x2184 release ubuntu ] webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="r16unorm";awaitLost=true [ Failure ]
-crbug.com/421948908 [ android android-chromium android-pixel-6 angle-opengles arm compat-default mobile ] webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rg16snorm";awaitLost=false [ Failure ]
-crbug.com/421948908 [ angle-opengl arch-x86_64 compat-min-es31 desktop display-server-x memory_ge_16gb nvidia-0x2184 release ubuntu ] webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rg16snorm";awaitLost=false [ Failure ]
-crbug.com/421948908 webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rg16snorm";awaitLost=true [ Failure ]
-crbug.com/421948908 [ android android-chromium android-pixel-6 angle-opengles arm compat-default mobile ] webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rg16unorm";awaitLost=false [ Failure ]
-crbug.com/421948908 [ angle-opengl arch-x86_64 compat-min-es31 desktop display-server-x memory_ge_16gb nvidia-0x2184 release ubuntu ] webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rg16unorm";awaitLost=false [ Failure ]
-crbug.com/421948908 [ android android-chromium android-pixel-6 angle-opengles arm compat-default mobile ] webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rg16unorm";awaitLost=true [ Failure ]
-crbug.com/421948908 [ angle-opengl arch-x86_64 compat-min-es31 desktop display-server-x memory_ge_16gb nvidia-0x2184 release ubuntu ] webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rg16unorm";awaitLost=true [ Failure ]
-crbug.com/421948908 [ android android-chromium android-pixel-6 angle-opengles arm compat-default mobile ] webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rgba16snorm";awaitLost=false [ Failure ]
-crbug.com/421948908 [ angle-opengl arch-x86_64 compat-min-es31 desktop display-server-x memory_ge_16gb nvidia-0x2184 release ubuntu ] webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rgba16snorm";awaitLost=false [ Failure ]
-crbug.com/421948908 webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rgba16snorm";awaitLost=true [ Failure ]
-crbug.com/421948908 webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rgba16unorm";awaitLost=false [ Failure ]
-crbug.com/421948908 [ android android-chromium android-pixel-6 angle-opengles arm compat-default mobile ] webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rgba16unorm";awaitLost=true [ Failure ]
-crbug.com/421948908 [ angle-opengl arch-x86_64 compat-min-es31 desktop display-server-x memory_ge_16gb nvidia-0x2184 release ubuntu ] webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rgba16unorm";awaitLost=true [ Failure ]
 crbug.com/421948908 webgpu:shader,validation,types,textures:storage_texture_types:access="read";format="r16float";* [ Failure ]
 crbug.com/421948908 webgpu:shader,validation,types,textures:storage_texture_types:access="read";format="r16sint";* [ Failure ]
 crbug.com/421948908 webgpu:shader,validation,types,textures:storage_texture_types:access="read";format="r16uint";* [ Failure ]
@@ -784,8 +511,6 @@ crbug.com/421948908 webgpu:shader,validation,types,textures:storage_texture_type
 # ##ROLLER_AUTOGENERATED_FAILURES##
 ################################################################################
 crbug.com/0000 [ intel-0x9bc5 linux ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,array:srcFormat="rgba32float";dstFormat="rgba32float";dimension="3d" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,operation,compute,basic:large_dispatch:dispatchSize="maximum" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,buffer,create:limit: [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,capability_checks,features,texture_formats_tier1:render_pipeline,color_target:isAsync=false;format="r16snorm";enable_feature=false;check="RENDER_ATTACHMENT" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,validation,capability_checks,features,texture_formats_tier1:render_pipeline,color_target:isAsync=false;format="r16snorm";enable_feature=false;check="RENDER_ATTACHMENT" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,features,texture_formats_tier1:render_pipeline,color_target:isAsync=false;format="r16snorm";enable_feature=false;check="RENDER_ATTACHMENT" [ Failure ]
@@ -930,95 +655,4 @@ crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,features
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,capability_checks,features,texture_formats_tier1:texture_usage,render_attachment:format="rgba16unorm";enable_feature=false [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,validation,capability_checks,features,texture_formats_tier1:texture_usage,render_attachment:format="rgba16unorm";enable_feature=false [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,features,texture_formats_tier1:texture_usage,render_attachment:format="rgba16unorm";enable_feature=false [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="dispatchWorkgroups" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="dispatchWorkgroups" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="dispatchWorkgroups" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="dispatchWorkgroupsIndirect" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="dispatchWorkgroupsIndirect" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="dispatchWorkgroupsIndirect" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="insertDebugMarker" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="insertDebugMarker" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="insertDebugMarker" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="popDebugGroup" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="popDebugGroup" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="popDebugGroup" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="pushDebugGroup" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="pushDebugGroup" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="pushDebugGroup" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="setBindGroup" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="setBindGroup" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="setBindGroup" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="setPipeline" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="setPipeline" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="setPipeline" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="beginOcclusionQuery" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="beginOcclusionQuery" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="beginOcclusionQuery" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="draw" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="draw" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="draw" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="drawIndexed" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="drawIndexed" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="drawIndexed" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="drawIndexedIndirect" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="drawIndexedIndirect" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="drawIndexedIndirect" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="drawIndirect" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="drawIndirect" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="drawIndirect" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="endOcclusionQuery" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="endOcclusionQuery" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="endOcclusionQuery" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="executeBundles" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="executeBundles" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="executeBundles" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="insertDebugMarker" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="insertDebugMarker" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="insertDebugMarker" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="popDebugGroup" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="popDebugGroup" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="popDebugGroup" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="pushDebugGroup" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="pushDebugGroup" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="pushDebugGroup" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setBindGroup" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setBindGroup" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setBindGroup" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setBlendConstant" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setBlendConstant" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setBlendConstant" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setIndexBuffer" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setIndexBuffer" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setIndexBuffer" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setPipeline" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setPipeline" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setPipeline" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setScissorRect" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setScissorRect" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setScissorRect" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setStencilReference" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setStencilReference" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setStencilReference" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setVertexBuffer" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setVertexBuffer" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setVertexBuffer" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setViewport" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setViewport" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setViewport" [ Failure ]
-crbug.com/0000 [ android arm ] webgpu:api,validation,error_scope:simple:errorType="validation";errorFilter="out-of-memory" [ Skip ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:source_image,crossOrigin:sourceImage="canvas";isOriginClean=true [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,state,device_lost,destroy:command,copyTextureToTexture:stage="submit";awaitLost=false [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,state,device_lost,destroy:command,copyTextureToTexture:stage="submit";awaitLost=false [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,state,device_lost,destroy:command,resolveQuerySet:stage="submit";awaitLost=true [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,state,device_lost,destroy:createBindGroup:resourceType="filtSamp";entry={"sampler":{"type":"filtering"}};awaitLost=true [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,state,device_lost,destroy:createBindGroup:resourceType="nonFiltSamp";entry={"sampler":{"type":"filtering"}};awaitLost=false [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,state,device_lost,destroy:createBindGroup:resourceType="nonFiltSamp";entry={"sampler":{"type":"filtering"}};awaitLost=false [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,state,device_lost,destroy:createBindGroup:resourceType="nonFiltSamp";entry={"sampler":{"type":"filtering"}};awaitLost=true [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,validation,state,device_lost,destroy:createBindGroup:resourceType="nonFiltSamp";entry={"sampler":{"type":"non-filtering"}};awaitLost=false [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:api,validation,state,device_lost,destroy:createBindGroup:resourceType="nonFiltSamp";entry={"sampler":{"type":"non-filtering"}};awaitLost=false [ Failure ]
-crbug.com/0000 [ intel-0x4680 linux ] webgpu:api,validation,state,device_lost,destroy:createBindGroupLayout:entry={"buffer":{"type":"storage"}};awaitLost=false [ Failure ]
-crbug.com/0000 [ compat-min-es31 linux nvidia nvidia_ge_535.183.01 ] webgpu:api,validation,state,device_lost,destroy:queue,copyExternalImageToTexture,canvas:canvasType="onscreen";contextType="webgl";awaitLost=false [ Failure ]
-crbug.com/0000 [ intel-0x4680 linux ] webgpu:shader,execution,expression,access,array,index:runtime_sized:elementType="vec2u";indexType="u32" [ Failure ]
-crbug.com/0000 [ intel-0x4680 linux ] webgpu:shader,execution,expression,access,array,index:runtime_sized:elementType="vec3f";indexType="i32" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:shader,validation,shader_io,workgroup_size:workgroup_size:attr="override_expr" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,canvas,getCurrentTexture:multiple_frames:canvasType="onscreen" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:shader,execution,expression,call,builtin,textureSampleBaseClampToEdge:2d_coords:stage="f";textureType="texture_external";filt="linear";modeU="c";modeV="m" [ Failure ]
