@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30395ae3_d2fc7bef",
+        "filename": "src/dawn/native/vulkan/VulkanInfo.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-18T22:36:50Z",
+      "side": 1,
+      "message": "Sorry, just noticed this while rebasing some of my own code. I suspect that you intended for this to be DeviceExt::PipelineRobustness?",
+      "revId": "caf6f36efa231eb6996b7296a0584475487c37ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
