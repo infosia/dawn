@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f695737c_3f0306af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-18T22:58:43Z",
+      "side": 1,
+      "message": "@cwallez as an FYI. I started this in hopes of offering a significant speedup to WriteTexture on Android after seeing that it was supported on all of the Pixel devices I checked. Turns out those are [among the only Android devices that support it so far](https://vulkan.gpuinfo.org/listdevicescoverage.php?extension\u003dVK_EXT_host_image_copy\u0026platform\u003dandroid), but given that it\u0027s part of Vulkan 1.4 I\u0027d expect that to grow over time.\n\nIn any case, that lessens the need to push this forward but if it proves to be beneficial on the devices where it is supported and solving the remaining issue (mostly sync, I think?) isn\u0027t too hard it might still be a nice way to boost our hardware and future-proof at the same time.",
+      "revId": "078d63f65af25156360a1ce207917798c53719dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
