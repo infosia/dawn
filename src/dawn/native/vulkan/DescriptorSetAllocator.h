@@ -62,7 +62,7 @@ class Device;
 // It is RefCounted because when descriptor set is destroyed, the allocator is added to a
 // notification queue on the device to get called back when the queue serial is completed. As such
 // it has multiple owners: the BindGroupLayout it corresponds to, and sometimes the device as well.
-class DescriptorSetAllocator : public RefCounted {
+class DescriptorSetAllocator final : public RefCounted {
     using PoolIndex = uint32_t;
     using SetIndex = uint16_t;
 
@@ -100,6 +100,33 @@ class DescriptorSetAllocator : public RefCounted {
     };
     SerialQueue<ExecutionSerial, Deallocation> mPendingDeallocations;
     ExecutionSerial mLastDeallocationSerial = ExecutionSerial(0);
+
+    // Used to guard all public member functions.
+    Mutex mMutex;
+
+    const raw_ptr<Device> mDevice;
+};
+
+// A simpler descriptor set allocator for use specifically with dynamic arrays. It doesn't do any
+// reuse because the size of the pools required vary (and we expect few dynamic arrays to be
+// created).
+class DescriptorSetAllocatorDynamicArray {
+  public:
+    static std::unique_ptr<DescriptorSetAllocatorDynamicArray> Create(Device* device);
+
+    DescriptorSetAllocatorDynamicArray(Device* device);
+    ~DescriptorSetAllocatorDynamicArray();
+
+    ResultOrError<DescriptorSetAllocation> Allocate(
+        VkDescriptorSetLayout dsLayout,
+        const absl::flat_hash_map<VkDescriptorType, uint32_t>& descriptorCountPerType,
+        VkDescriptorType variableType,
+        uint32_t variableCount);
+    void Deallocate(DescriptorSetAllocation* allocationInfo);
+
+  private:
+    std::vector<uint32_t> mAvailableSlots;
+    std::vector<VkDescriptorPool> mPools;
 
     // Used to guard all public member functions.
     Mutex mMutex;
