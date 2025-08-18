@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "d11eadf29bc25e5c0bfe48dc49b2fdc7941ba03d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "987203c3_0d19d39c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-18T18:41:12Z",
+      "side": 1,
+      "message": "Nice! I think in a follow up we could potentially go even a step further so that we return `BeginEndRange\u003c*BindingInfo\u003e` directly! Or returning some iterator such that we can access the `*BindingInfo` and the index if needed.",
+      "revId": "d11eadf29bc25e5c0bfe48dc49b2fdc7941ba03d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
