@@ -71,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "029fccad_cbb5e61d",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-18T21:05:06Z",
+      "side": 1,
+      "message": "Oh, sorry I didn\u0027t realize that it was changed in the next CL. (I didn\u0027t review that one yet.) If it\u0027s in the follow up CL, then it\u0027s fine and you can just keep it as is in this one.",
+      "parentUuid": "a80a9398_61552a82",
+      "range": {
+        "startLine": 479,
+        "startChar": 8,
+        "endLine": 493,
+        "endChar": 47
+      },
+      "revId": "a8d39049ecb3aa353c6b2b86e8f551cb70069819",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8cd7aba5_a44bab44",
