@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fad62ed_2b1134f5",
+        "filename": "generator/templates/api_cpp_print.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4297892
+      },
+      "writtenOn": "2025-08-19T18:11:24Z",
+      "side": 1,
+      "message": "Note: This expands to `dawn/wire/client/webgpu_cpp.h` for the wire client case.",
+      "range": {
+        "startLine": 35,
+        "startChar": 14,
+        "endLine": 35,
+        "endChar": 50
+      },
+      "revId": "146d09edfebc42192d0053e2b26a0c7ace5a947f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecddf46c_1b63c930",
+        "filename": "generator/templates/api_cpp_print.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 4297892
+      },
+      "writtenOn": "2025-08-19T18:11:24Z",
+      "side": 1,
+      "message": "Note: `namespace` expands to\n\n* `wgpu::dawn::wire::client` for the wire client case, and\n* `wgpu` for the native case.",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 115,
+        "endChar": 21
+      },
+      "revId": "146d09edfebc42192d0053e2b26a0c7ace5a947f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
