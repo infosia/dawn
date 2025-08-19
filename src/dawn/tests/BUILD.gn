@@ -608,6 +608,7 @@ source_set("end2end_tests_sources") {
     "end2end/ComputeLayoutMemoryBufferTests.cpp",
     "end2end/ComputeSharedMemoryTests.cpp",
     "end2end/ComputeStorageBufferBarrierTests.cpp",
+    "end2end/ConcurrentExecutionTests.cpp",
     "end2end/CopyExternalTextureForBrowserTests.cpp",
     "end2end/CopyTests.cpp",
     "end2end/CopyTextureForBrowserTests.cpp",

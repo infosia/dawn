@@ -33,10 +33,15 @@
 
 #include "absl/container/flat_hash_set.h"
 #include "dawn/common/SerialQueue.h"
+#include "dawn/common/TypedInteger.h"
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/ResourceMemoryAllocation.h"
 
 namespace dawn::native::vulkan {
+
+// Binding numbers get mapped to a packed range of indices
+using ImplicitBarrierSyncId = uint32_t;
+// TypedInteger<struct ImplicitBarrierSyncIdT, uint64_t>;
 
 struct CommandRecordingContext;
 class Device;
@@ -74,6 +79,12 @@ class Buffer final : public BufferBase {
                                                  CommandRecordingContext* recordingContext,
                                                  const absl::flat_hash_set<Ref<Buffer>>& buffers);
 
+    void UpdateImplicitBarrierSyncId(ImplicitBarrierSyncId fence_idx) {
+        mImplicitBarrierSyncId = fence_idx;
+    }
+
+    ImplicitBarrierSyncId GetImplicitBarrierSyncId() { return mImplicitBarrierSyncId; }
+
   private:
     ~Buffer() override;
     using BufferBase::BufferBase;
@@ -110,6 +121,8 @@ class Buffer final : public BufferBase {
     // Track which usages have read the buffer since the last write.
     wgpu::BufferUsage mReadUsage = wgpu::BufferUsage::None;
     wgpu::ShaderStage mReadShaderStages = wgpu::ShaderStage::None;
+
+    ImplicitBarrierSyncId mImplicitBarrierSyncId = ImplicitBarrierSyncId(0u);
 
     bool mHostVisible : 1;
     bool mHostCoherent : 1;

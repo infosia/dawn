@@ -27,6 +27,8 @@
 #ifndef SRC_DAWN_NATIVE_VULKAN_COMMANDRECORDINGCONTEXT_H_
 #define SRC_DAWN_NATIVE_VULKAN_COMMANDRECORDINGCONTEXT_H_
 
+#include <cstdint>
+#include <map>
 #include <vector>
 
 #include "absl/container/flat_hash_set.h"
@@ -38,6 +40,7 @@
 namespace dawn::native::vulkan {
 
 class Texture;
+class Buffer;
 
 // Wrapping class that currently associates a command buffer to it's corresponding pool.
 // TODO(dawn:1601) Revisit this structure since it is where the 1:1 mapping is implied.
@@ -89,22 +92,51 @@ struct CommandRecordingContext {
     // VulkanSplitCommandBufferOnComputePassAfterRenderPass workaround.
     bool hasRecordedRenderPass = false;
 
-    void AddBufferBarrier(VkAccessFlags srcAccessMask,
+    // Returns false if the barrier was deemed to be unnecessary given the 'buffer_barrier_sync_id'.
+    // Returns true if the barrier was added.
+    bool AddBufferBarrier(VkAccessFlags srcAccessMask,
                           VkAccessFlags dstAccessMask,
                           VkPipelineStageFlags srcStages,
-                          VkPipelineStageFlags dstStages);
+                          VkPipelineStageFlags dstStages,
+                          ImplicitBarrierSyncId buffer_barrier_sync_id);
     void EmitBufferBarriers(Device* device);
 
+    void BeginComputePass(bool enabled_skip_redundant) {
+        mImplicitBarrierSyncId = 0u;
+        mEnableSkipRedundantBarriers = enabled_skip_redundant;
+        DAWN_ASSERT(mNonVertexBarrierMapSync.empty());
+    }
+    void EndComputePass() {
+        mNonVertexBarrierMapSync.clear();
+        mEnableSkipRedundantBarriers = false;
+    }
+    void UpdateBarrierSyncId(Buffer* buffer);
+
   private:
+    // Other pipeline barriers can make a specific buffer barrier request unnecessary. We avoid
+    // these where we can to enable concurrent dispatch execution where possible.
+    bool IsRedundantBarrier(VkAccessFlags srcAccessMask,
+                            VkAccessFlags dstAccessMask,
+                            VkPipelineStageFlags srcStages,
+                            VkPipelineStageFlags dstStages,
+                            ImplicitBarrierSyncId buffer_barrier_sync_id);
+
     struct BufferBarrier {
         VkAccessFlags bufferSrcAccessMask = 0;
         VkAccessFlags bufferDstAccessMask = 0;
         VkPipelineStageFlags bufferSrcStages = 0;
         VkPipelineStageFlags bufferDstStages = 0;
+
+        auto operator<=>(const BufferBarrier& other) const = default;
     };
 
     BufferBarrier mVertexBufferBarrier;
     BufferBarrier mNonVertexBufferBarrier;
+
+    // Members below are for skip redundant barrier optimization.
+    bool mEnableSkipRedundantBarriers = false;
+    ImplicitBarrierSyncId mImplicitBarrierSyncId = 0u;
+    std::map<BufferBarrier, ImplicitBarrierSyncId> mNonVertexBarrierMapSync;
 };
 
 }  // namespace dawn::native::vulkan
