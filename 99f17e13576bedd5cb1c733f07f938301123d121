@@ -37,6 +37,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "8c38df9d_5b84775c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-19T16:57:02Z",
+      "side": 1,
+      "message": "Submitting as-is for now so we can start confirming that this works as intended on CI. I\u0027ll move this to the test in a follow-up.",
+      "revId": "99f17e13576bedd5cb1c733f07f938301123d121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "b5fcefb9_cf99e8a3",
         "filename": "infra/specs/ci.json",
         "patchSetId": 3
