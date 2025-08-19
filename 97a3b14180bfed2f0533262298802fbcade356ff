@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ee15c42_512faaca",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-08-19T19:35:46Z",
+      "side": 1,
+      "message": "Much nicer to refactor this.",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 17
+      },
+      "revId": "97a3b14180bfed2f0533262298802fbcade356ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
