@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f3affe8_26e770b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-19T22:14:07Z",
+      "side": 1,
+      "message": "LGTM, with one nit.",
+      "revId": "1ac2162a80fdaa62b765a3e148cfd7504a23d0a4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9079825b_fa69e056",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-19T22:14:07Z",
+      "side": 1,
+      "message": "Lock could move inside the `if` here, since GetCompletedCommandSerial() is pulling from an atomic.",
+      "revId": "1ac2162a80fdaa62b765a3e148cfd7504a23d0a4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
