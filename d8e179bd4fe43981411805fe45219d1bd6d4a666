@@ -16,6 +16,24 @@
       "message": "This doesn\u0027t make sense, the usages are the list of allowed usages. If a buffer is allowed as a TexelBuffer, then it is allowed as a ReadOnly texel buffer. Why have you found this necessary?\n\nCan we rollback this change, commit this CL and see later what\u0027s the proper solution for what this is trying to solve?",
       "revId": "d8e179bd4fe43981411805fe45219d1bd6d4a666",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d44ee615_80d3188c",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-19T18:11:15Z",
+      "side": 1,
+      "message": "You’re right, a buffer created with `TexelBuffer` is inherently allowed to be read as a texel buffer. I was trying to avoid a sync conflict when the same buffer is bound as both a read‑only texel view and a read‑write storage view, which I hit with a end2end test. I fixed the problem by collapsing the read-only in `PassResourceUsageTracker`.",
+      "parentUuid": "dce9a9ef_2a8ae399",
+      "revId": "d8e179bd4fe43981411805fe45219d1bd6d4a666",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
