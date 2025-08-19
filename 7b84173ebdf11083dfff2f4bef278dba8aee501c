@@ -16,6 +16,24 @@
       "message": "Why don\u0027t these tests pass on the Wire?",
       "revId": "7b84173ebdf11083dfff2f4bef278dba8aee501c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e92bb04_ab9c126a",
+        "filename": "src/dawn/tests/unittests/validation/TexelBufferValidationTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-19T20:13:44Z",
+      "side": 1,
+      "message": "The wire backend doesn’t yet encode the `TexelBuffer` usage bit. Would it make sense to add wire support for thiss first?",
+      "parentUuid": "3e003046_ebc6ec3f",
+      "revId": "7b84173ebdf11083dfff2f4bef278dba8aee501c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
