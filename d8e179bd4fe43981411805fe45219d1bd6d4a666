@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dce9a9ef_2a8ae399",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-19T15:52:28Z",
+      "side": 1,
+      "message": "This doesn\u0027t make sense, the usages are the list of allowed usages. If a buffer is allowed as a TexelBuffer, then it is allowed as a ReadOnly texel buffer. Why have you found this necessary?\n\nCan we rollback this change, commit this CL and see later what\u0027s the proper solution for what this is trying to solve?",
+      "revId": "d8e179bd4fe43981411805fe45219d1bd6d4a666",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
