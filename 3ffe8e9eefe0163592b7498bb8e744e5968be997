@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "3ffe8e9eefe0163592b7498bb8e744e5968be997",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b1c3b39_639b5043",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-19T17:19:27Z",
+      "side": 1,
+      "message": "LGTM, but while you\u0027re fixing pipeline robustness stuff can you also take a moment to address https://dawn-review.googlesource.com/c/dawn/+/257156/comment/30395ae3_d2fc7bef/ ?",
+      "revId": "3ffe8e9eefe0163592b7498bb8e744e5968be997",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
