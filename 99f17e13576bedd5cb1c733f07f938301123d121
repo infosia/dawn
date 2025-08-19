@@ -33,6 +33,23 @@
       "message": "Not sure if Dawn folks would prefer a filter like here, or a test suppression like in https://dawn-review.googlesource.com/c/dawn/+/183982/2/src/dawn/tests/end2end/SurfaceTests.cpp.\n\nAlso, maybe a bug report is in order?\n\nCorentin, WDYT?",
       "revId": "99f17e13576bedd5cb1c733f07f938301123d121",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5fcefb9_cf99e8a3",
+        "filename": "infra/specs/ci.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-19T12:37:53Z",
+      "side": 1,
+      "message": "IMHO we could just suppress in the test itself. Either way is fine.",
+      "revId": "99f17e13576bedd5cb1c733f07f938301123d121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
