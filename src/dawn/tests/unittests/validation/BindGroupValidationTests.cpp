@@ -4737,7 +4737,5 @@ TEST_F(BindGroupValidationTest_ChromiumExperimentalBindless, SampledTextureKindR
     ASSERT_DEVICE_ERROR(device.CreateBindGroup(&desc));
 }
 
-// Dynamic entry that's not a texture.
-
 }  // anonymous namespace
 }  // namespace dawn
