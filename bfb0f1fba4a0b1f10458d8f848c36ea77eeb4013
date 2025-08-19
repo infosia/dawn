@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "833fc432_2b4e9530",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-08-19T17:05:21Z",
+      "side": 0,
+      "message": "Per offline conversation, let\u0027s first land the D3D12 buffer access limitation and discuss D3D11 separately.",
+      "range": {
+        "startLine": 281,
+        "startChar": 51,
+        "endLine": 281,
+        "endChar": 61
+      },
+      "revId": "bfb0f1fba4a0b1f10458d8f848c36ea77eeb4013",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

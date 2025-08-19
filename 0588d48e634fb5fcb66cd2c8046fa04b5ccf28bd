@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f8b5e3c_2033f932",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-08-19T17:05:21Z",
+      "side": 1,
+      "message": "This comment is not correct. The limit is documented in the D3D11 functional spec under the [System Limits on Various Resources](https://microsoft.github.io/DirectX-Specs/d3d/archive/D3D11_3_FunctionalSpec.htm#21%20System%20Limits%20on%20Various%20Resources) section.\n\nSpecifically: \"Noted that the Buffer element limit of 2^27 texels continues to apply to the view of Structured Buffers (new in D3D11), but not to Raw Buffer Views (also new in D3D11). In the latter case, addressing is at 32-bit granularity and the entire contents of the Raw Buffer view is available, at most 2048 MB as mentioned above.\"",
+      "range": {
+        "startLine": 280,
+        "startChar": 4,
+        "endLine": 280,
+        "endChar": 77
+      },
+      "revId": "0588d48e634fb5fcb66cd2c8046fa04b5ccf28bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb0f514a_e44d904a",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-08-19T17:05:21Z",
+      "side": 1,
+      "message": "Since all of the \"GetGen\" calls are preceded by a \"IsSomeVendor\" call, you should split \"GetGen\" into GetIntelGen and GetNVidiaGen with an assert for misuse. Makes it more clear to the code author they need to always do the vendor check first.",
+      "range": {
+        "startLine": 334,
+        "startChar": 39,
+        "endLine": 334,
+        "endChar": 56
+      },
+      "revId": "0588d48e634fb5fcb66cd2c8046fa04b5ccf28bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3350d538_4f541877",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-08-19T17:05:21Z",
+      "side": 1,
+      "message": "Please remove this unrelated change from the CL.",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 81
+      },
+      "revId": "0588d48e634fb5fcb66cd2c8046fa04b5ccf28bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
