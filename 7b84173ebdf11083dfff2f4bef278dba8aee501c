@@ -34,6 +34,24 @@
       "parentUuid": "3e003046_ebc6ec3f",
       "revId": "7b84173ebdf11083dfff2f4bef278dba8aee501c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae9d2af1_3a9840f1",
+        "filename": "src/dawn/tests/unittests/validation/TexelBufferValidationTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-19T21:57:43Z",
+      "side": 1,
+      "message": "Sorry, these tests do pass on the Wire.",
+      "parentUuid": "9e92bb04_ab9c126a",
+      "revId": "7b84173ebdf11083dfff2f4bef278dba8aee501c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
