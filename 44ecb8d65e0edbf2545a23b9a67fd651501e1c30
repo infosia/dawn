@@ -122,6 +122,30 @@
       },
       "revId": "44ecb8d65e0edbf2545a23b9a67fd651501e1c30",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc79b30a_7079028f",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-19T14:08:26Z",
+      "side": 1,
+      "message": "I thought I needed the Tint header. Thanks for catching this.",
+      "parentUuid": "0727b061_1c3905d6",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 33
+      },
+      "revId": "44ecb8d65e0edbf2545a23b9a67fd651501e1c30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
