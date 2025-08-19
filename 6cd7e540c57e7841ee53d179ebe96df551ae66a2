@@ -16,6 +16,23 @@
       "message": "LGTM, +CC Antonio FYI",
       "revId": "6cd7e540c57e7841ee53d179ebe96df551ae66a2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b049ce5_41ce0508",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-19T07:25:58Z",
+      "side": 1,
+      "message": "Kai still PTAL because of the 2 reviewer requirement.",
+      "revId": "6cd7e540c57e7841ee53d179ebe96df551ae66a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
