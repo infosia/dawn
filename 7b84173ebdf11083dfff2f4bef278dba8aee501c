@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e003046_ebc6ec3f",
+        "filename": "src/dawn/tests/unittests/validation/TexelBufferValidationTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-19T18:46:11Z",
+      "side": 1,
+      "message": "Why don\u0027t these tests pass on the Wire?",
+      "revId": "7b84173ebdf11083dfff2f4bef278dba8aee501c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
