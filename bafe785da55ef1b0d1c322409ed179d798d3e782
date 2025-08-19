@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f0701da_0fea5020",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-19T16:13:16Z",
+      "side": 1,
+      "message": "Actually 512MB bucket was introduced in https://dawn-review.googlesource.com/c/dawn/+/217035 as we previously set QC\u0027s maxStorageBufferBindingSize to 2^29. I thought now that we will correct it to 2^28, we should change this value to 256MB.\nBut as 512MB bucket is widely used, I just followed your advice to add 256MB instead.",
+      "parentUuid": "d2c192c2_d63106cf",
+      "range": {
+        "startLine": 59,
+        "startChar": 70,
+        "endLine": 59,
+        "endChar": 79
+      },
+      "revId": "bafe785da55ef1b0d1c322409ed179d798d3e782",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e55d2052_c6d7ff84",
@@ -102,6 +126,30 @@
       "side": 1,
       "message": "https://microsoft.github.io/DirectX-Specs/d3d/archive/D3D11_3_FunctionalSpec.htm#21%20System%20Limits%20on%20Various%20Resources\n\n\u003csnip\u003e from above reference\n[D3D11] Noted that the Buffer element limit of 227 texels continues to apply to the view of Structured Buffers (new in D3D11), but not to Raw Buffer Views (also new in D3D11). In the latter case, addressing is at 32-bit granularity and the entire contents of the Raw Buffer view is available, at most 2048 MB as mentioned above.",
       "parentUuid": "e5eff295_f50ca9d2",
+      "range": {
+        "startLine": 401,
+        "startChar": 14,
+        "endLine": 401,
+        "endChar": 40
+      },
+      "revId": "bafe785da55ef1b0d1c322409ed179d798d3e782",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dce7b5a7_7a187cd6",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-19T16:13:16Z",
+      "side": 1,
+      "message": "I don\u0027t think this could be found in any public document. We had internal emails with QC and confirmed this is a hardware limitation, which will be solved in the next gen of device (Adreno 8xx compute).",
+      "parentUuid": "a6b5662b_f734bd74",
       "range": {
         "startLine": 401,
         "startChar": 14,

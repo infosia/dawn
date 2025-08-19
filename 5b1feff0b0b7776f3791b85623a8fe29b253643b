@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fa2dcfa_9121421d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-19T16:13:16Z",
+      "side": 1,
+      "message": "Kai, thanks for the review! I followed your advice and changed the code. \nQC also gave some advice that we should limit the workaround with existing devices, as their next release of device will fix this issue. So I introduced the concept of GPU generation, which hopes to ease the overall workaround mechanism. \nPlease review again!",
+      "revId": "5b1feff0b0b7776f3791b85623a8fe29b253643b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb37b6cb_5dc2c19c",
+        "filename": "src/dawn/common/GPUInfo.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-19T16:13:16Z",
+      "side": 1,
+      "message": "GPU generation in number is a good concept to group a bunch of GPUs with the same architectures and ease the way to work around issues. For example, QC devices have maxStorageBufferBindingSize issue and it will be fixed in the next release of new device. With generation, it will be easy to work around it with generation \u003c\u003d 7 (Adreno 7xx). Intel also has many workarounds, which could be rewritten in this way for simplicity. \nSo I introduced GPU generation concept here, and implement it for both QC and Intel.",
+      "revId": "5b1feff0b0b7776f3791b85623a8fe29b253643b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32df6885_4228eef9",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-19T16:13:16Z",
+      "side": 1,
+      "message": "I did tests on D3D11, and found we had no problem with 2^31 maxStorageBufferBindingSize. So I reverted to the implementation before https://dawn-review.googlesource.com/c/dawn/+/133961.",
+      "revId": "5b1feff0b0b7776f3791b85623a8fe29b253643b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fd147b5_362d7129",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-19T16:13:16Z",
+      "side": 1,
+      "message": "This toggle will hang QC D3D11 so I have to disable it so that we can verify dawn_end2end_tests on D3D11 with related changes in this CL.",
+      "revId": "5b1feff0b0b7776f3791b85623a8fe29b253643b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

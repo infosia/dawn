@@ -22,6 +22,30 @@
       },
       "revId": "ba48c303bc94fcad11b9c39fe9ac1049453e05ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "faf11577_4e5e8a0a",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-19T16:13:16Z",
+      "side": 0,
+      "message": "(D3D11|D3D12)_REQ_BUFFER_RESOURCE_TEXEL_COUNT_2_TO_EXP was introduced in https://dawn-review.googlesource.com/c/dawn/+/133961. Today I read the related stuff and did some more tests, especially on D3D11. I tend to think they are not related. So I changed it to 1 \u003c\u003c 28.",
+      "parentUuid": "6a7c27e0_7712338e",
+      "range": {
+        "startLine": 401,
+        "startChar": 42,
+        "endLine": 402,
+        "endChar": 59
+      },
+      "revId": "ba48c303bc94fcad11b9c39fe9ac1049453e05ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
