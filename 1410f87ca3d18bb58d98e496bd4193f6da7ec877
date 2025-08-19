@@ -16,6 +16,24 @@
       "message": "Same question here - is this skip still needed? I\u0027m not super familiar with where validation happens w.r.t. the wire.",
       "revId": "1410f87ca3d18bb58d98e496bd4193f6da7ec877",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "faa1300a_fdc5569b",
+        "filename": "src/dawn/tests/unittests/validation/TexelBufferValidationTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-19T22:32:49Z",
+      "side": 1,
+      "message": "It\u0027s not specific of texel buffers, \u0027BufferMapExtendedUsages\u0027 doesn\u0027t support the wire.",
+      "parentUuid": "2019c0f6_86d7e17f",
+      "revId": "1410f87ca3d18bb58d98e496bd4193f6da7ec877",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
