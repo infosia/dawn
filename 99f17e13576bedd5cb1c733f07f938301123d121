@@ -16,6 +16,23 @@
       "message": "PTAL\n\n12/12 tasks with this in place ran successfully.",
       "revId": "99f17e13576bedd5cb1c733f07f938301123d121",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2002b86_635c1094",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-08-19T12:14:52Z",
+      "side": 1,
+      "message": "Not sure if Dawn folks would prefer a filter like here, or a test suppression like in https://dawn-review.googlesource.com/c/dawn/+/183982/2/src/dawn/tests/end2end/SurfaceTests.cpp.\n\nAlso, maybe a bug report is in order?\n\nCorentin, WDYT?",
+      "revId": "99f17e13576bedd5cb1c733f07f938301123d121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
