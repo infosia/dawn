@@ -39,6 +39,30 @@
       },
       "revId": "1980138fbb72a8881438a0350928618df809a636",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e72df48c_91f61413",
+        "filename": "tools/src/progressbar/progressbar.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-08-19T17:40:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "700503e8_4cfec196",
+      "range": {
+        "startLine": 164,
+        "startChar": 5,
+        "endLine": 164,
+        "endChar": 20
+      },
+      "revId": "1980138fbb72a8881438a0350928618df809a636",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
