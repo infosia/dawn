@@ -86,6 +86,30 @@
       },
       "revId": "bafe785da55ef1b0d1c322409ed179d798d3e782",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6b5662b_f734bd74",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 3929035
+      },
+      "writtenOn": "2025-08-19T11:43:53Z",
+      "side": 1,
+      "message": "https://microsoft.github.io/DirectX-Specs/d3d/archive/D3D11_3_FunctionalSpec.htm#21%20System%20Limits%20on%20Various%20Resources\n\n\u003csnip\u003e from above reference\n[D3D11] Noted that the Buffer element limit of 227 texels continues to apply to the view of Structured Buffers (new in D3D11), but not to Raw Buffer Views (also new in D3D11). In the latter case, addressing is at 32-bit granularity and the entire contents of the Raw Buffer view is available, at most 2048 MB as mentioned above.",
+      "parentUuid": "e5eff295_f50ca9d2",
+      "range": {
+        "startLine": 401,
+        "startChar": 14,
+        "endLine": 401,
+        "endChar": 40
+      },
+      "revId": "bafe785da55ef1b0d1c322409ed179d798d3e782",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
