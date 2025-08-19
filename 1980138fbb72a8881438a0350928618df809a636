@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff54fa26_fd452b10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-19T17:10:21Z",
+      "side": 1,
+      "message": "LGTM % question/possible fix",
+      "revId": "1980138fbb72a8881438a0350928618df809a636",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "700503e8_4cfec196",
+        "filename": "tools/src/progressbar/progressbar.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-19T17:10:21Z",
+      "side": 1,
+      "message": "Should this be private since we expect all uses in production to created through `New()` and tests shouldn\u0027t be creating a real one?",
+      "range": {
+        "startLine": 164,
+        "startChar": 5,
+        "endLine": 164,
+        "endChar": 20
+      },
+      "revId": "1980138fbb72a8881438a0350928618df809a636",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
