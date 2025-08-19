@@ -35,6 +35,7 @@
 #include "dawn/native/ToBackend.h"
 #include "dawn/native/webgpu/Forward.h"
 #include "dawn/native/webgpu/ObjectWGPU.h"
+#include "dawn/native/webgpu/Recorder.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native::webgpu {
@@ -58,6 +59,16 @@ class Device final : public DeviceBase, public ObjectWGPU<WGPUDevice> {
     WGPUInstance GetInnerInstance() const;
 
     const DawnProcTable& wgpu;
+
+    // record replay related
+    void SetRecord(std::unique_ptr<Recorder> record);
+    Recorder* GetRecorder() const;
+
+    // temp
+    bool IsRecording() const;
+
+    // temp public
+    std::unique_ptr<Recorder> mRecord = nullptr;
 
   private:
     Device(AdapterBase* adapter,

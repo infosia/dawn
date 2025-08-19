@@ -35,6 +35,7 @@
 #include "dawn/native/webgpu/BufferWGPU.h"
 #include "dawn/native/webgpu/CommandBufferWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
+#include "dawn/native/webgpu/Recorder.h"
 #include "dawn/native/webgpu/WebGPUError.h"
 
 namespace dawn::native::webgpu {
@@ -76,9 +77,13 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   const void* data,
                                   size_t size) {
     auto innerBuffer = ToBackend(buffer)->GetInnerHandle();
-    ToBackend(GetDevice())
-        ->wgpu.queueWriteBuffer(mInnerHandle, innerBuffer, bufferOffset, data, size);
+    Device* device = ToBackend(GetDevice());
+    device->wgpu.queueWriteBuffer(mInnerHandle, innerBuffer, bufferOffset, data, size);
     buffer->MarkUsedInPendingCommands();
+
+    if (device->IsRecording()) {
+        device->mRecord->EncodeQueueWriteBuffer(this, ToBackend(buffer), bufferOffset, data, size);
+    }
     return {};
 }
 

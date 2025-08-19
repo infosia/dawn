@@ -61,6 +61,9 @@ declare_args() {
 
   # Whether to build Dawn's NodeJS bindings
   dawn_build_node_bindings = false
+
+  # Is protobuf support present
+  dawn_has_protobuf = dawn_standalone || build_with_chromium
 }
 
 declare_args() {
@@ -85,9 +88,13 @@ declare_args() {
   # (required for unittests, obviously non-conformant)
   dawn_enable_null = true
 
+  # Enables the compilation of Dawn playback devtool protobuf.
+  # For now only build devtool on Dawn standalone.
+  dawn_enable_devtool = dawn_standalone && dawn_has_protobuf
+
   # Enables the compilation of Dawn's WebGPU backend
-  # (used for debugging purpose, capture and replay)
-  dawn_enable_webgpu_on_webgpu = dawn_standalone
+  # (used for debugging purpose)
+  dawn_enable_webgpu_on_webgpu = dawn_standalone && dawn_has_protobuf
 
   # Enables the compilation of Dawn's OpenGL backend
   # (best effort, non-conformant)
@@ -125,6 +132,9 @@ declare_args() {
   # Disable SPIR-V validation on Android because it adds a significant amount
   # to the binary size, and Tint's output should be well-formed.
   dawn_enable_spirv_validation = dawn_enable_vulkan && !is_android
+
+  # Setting separate flag for building devtool playback.
+  dawn_enable_devtool_playback = dawn_enable_devtool
 }
 
 # UWP only supports CoreWindow for windowing
