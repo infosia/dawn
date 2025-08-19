@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2019c0f6_86d7e17f",
+        "filename": "src/dawn/tests/unittests/validation/TexelBufferValidationTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-19T22:18:33Z",
+      "side": 1,
+      "message": "Same question here - is this skip still needed? I\u0027m not super familiar with where validation happens w.r.t. the wire.",
+      "revId": "1410f87ca3d18bb58d98e496bd4193f6da7ec877",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
