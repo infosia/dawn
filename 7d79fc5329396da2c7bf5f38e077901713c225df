@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "928583f4_bb5fe628",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-19T18:30:20Z",
+      "side": 1,
+      "message": "I think it\u0027s still best to do the `ValidateAndUnpack` call first before using the descriptor, so:\n\n```\nUnpackedPtr\u003cTexelBufferViewDescriptor\u003e desc;\nDAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(descOrig));\n\n// Do the actual validations...\nDAWN_INVALID_IF(\n    desc-\u003eformat \u003d\u003d wgpu::TextureFormat::Undefined,\n    \"Format is undefined.\"\n);\n// etc...\n```",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 24
+      },
+      "revId": "7d79fc5329396da2c7bf5f38e077901713c225df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "304cde8c_934f644b",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-19T18:30:20Z",
+      "side": 1,
+      "message": "nit. I don\u0027t think this is necessary since the C++ struct already default initializes `size \u003d kWholeSize`.",
+      "range": {
+        "startLine": 982,
+        "startChar": 10,
+        "endLine": 984,
+        "endChar": 9
+      },
+      "revId": "7d79fc5329396da2c7bf5f38e077901713c225df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "034a83c2_71353967",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-19T18:30:20Z",
+      "side": 1,
+      "message": "This part is analogous to `GetTextureViewDescriptorWithDefaults` here: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Texture.cpp;drc\u003db8271edbc28fc426d4af05f5878c00c11bc6020f;bpv\u003d1;bpt\u003d1;l\u003d899\n\nSo let\u0027s move that out. We should also be calling it before we even call `ValidateTexelBufferViewDescriptor` so that we don\u0027t have to duplicate the size defaulting logic.\n\nSo what I\u0027m imagining:\n```\nTexelBufferViewDescriptor desc \u003d GetTexelViewDescriptorWithDefaults(descOrig);\n\nUnpackedPtr\u003cTexelBufferViewDescriptor\u003e unpacked;\nif (device-\u003eIsValidationEnabled()) {\n        DAWN_TRY_ASSIGN_CONTEXT(\n            unpacked,\n            ValidateTexelBufferViewDescriptor(this, descriptor),\n            \"validating %s\", descriptor\n        );\n} else {\n    unpacked \u003d Unpack(\u0026desc);\n}\n```",
+      "range": {
+        "startLine": 979,
+        "startChar": 8,
+        "endLine": 986,
+        "endChar": 25
+      },
+      "revId": "7d79fc5329396da2c7bf5f38e077901713c225df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
