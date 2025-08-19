@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8440e1e4_cee3ff23",
+        "filename": "src/dawn/native/ExecutionQueue.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-19T02:44:03Z",
+      "side": 1,
+      "message": "I think at least some of these are always guarded by the mutex. Can they be wrapped as a MutexProtected? Just to make it a little simpler to understand the safety.",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 51
+      },
+      "revId": "fd56231fd153fa463eef6dbacf175b01f8feb6e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
