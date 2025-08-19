@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dec101b_da0beb64",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-19T14:37:43Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c436c390_6ff56654",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 33
+      },
+      "revId": "a8d39049ecb3aa353c6b2b86e8f551cb70069819",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dff21ec2_4be61020",
@@ -108,6 +132,30 @@
       "writtenOn": "2025-08-18T18:14:27Z",
       "side": 1,
       "message": "nit. Maybe can move this into `GetBindGroupLayoutValidationTest.cpp` to keep it consistent. See `GetBindGroupLayoutTests.ExternalTextureBindingType` in that file.\n\nAnd I think the other ones, we could honestly move into `TextureBufferViewValidationTest` as well. Not sure how much value we get in separating into so many different files for this.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 1
+      },
+      "revId": "a8d39049ecb3aa353c6b2b86e8f551cb70069819",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0008886e_a45223d6",
+        "filename": "src/dawn/tests/unittests/validation/TexelBufferLayoutValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-19T14:37:43Z",
+      "side": 1,
+      "message": "I agree, separating the tests didn\u0027t have much value.",
+      "parentUuid": "8cd7aba5_a44bab44",
       "range": {
         "startLine": 55,
         "startChar": 0,
