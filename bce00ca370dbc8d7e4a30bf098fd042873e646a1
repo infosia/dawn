@@ -22,6 +22,30 @@
       },
       "revId": "bce00ca370dbc8d7e4a30bf098fd042873e646a1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37c33d40_c8e16f7b",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 975,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-19T14:17:57Z",
+      "side": 1,
+      "message": "This is a much better way of handling things.",
+      "parentUuid": "0d84da5c_553bc86e",
+      "range": {
+        "startLine": 975,
+        "startChar": 4,
+        "endLine": 975,
+        "endChar": 68
+      },
+      "revId": "bce00ca370dbc8d7e4a30bf098fd042873e646a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
