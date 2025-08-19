@@ -22,6 +22,30 @@
       },
       "revId": "fd56231fd153fa463eef6dbacf175b01f8feb6e8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5dabbba_46dfc4a9",
+        "filename": "src/dawn/native/ExecutionQueue.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-19T18:43:57Z",
+      "side": 1,
+      "message": "They are all technically guarded by the mutex. It\u0027s a bit difficult atm to use `MutexProtected` here since that doesn\u0027t provide an easy way to manually lock/unlock which is needed to deal with the condvar and stuff. I can take a look into updating `MutexProtected` to allow for more support for something like this, but will do that in a follow up.",
+      "parentUuid": "8440e1e4_cee3ff23",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 51
+      },
+      "revId": "fd56231fd153fa463eef6dbacf175b01f8feb6e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
