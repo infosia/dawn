@@ -179,7 +179,7 @@ func TestMemMapOSWrapper_WriteFile_Open(t *testing.T) {
 	require.NoErrorf(t, err, "Failed to read from file: %v", err)
 	require.Equal(t, []byte("content"), buffer)
 	require.Equal(t, 7, bytesRead)
-	bytesRead, err = file.Read(buffer)
+	bytesRead, _ = file.Read(buffer)
 	require.Error(t, io.EOF, "Did not get EOF")
 	require.Equal(t, 0, bytesRead)
 }
@@ -408,7 +408,7 @@ func TestMemMapOSWrapper_Remove(t *testing.T) {
 			if testCase.wantErr {
 				require.ErrorContains(t, err, testCase.wantErrMsg)
 			} else {
-				require.NoErrorf(t, err, "Got unexpected error: %v")
+				require.NoErrorf(t, err, "Got unexpected error: %v", err)
 			}
 
 			// Make sure things were actually deleted.
