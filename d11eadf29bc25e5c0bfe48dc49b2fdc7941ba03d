@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7781aed1_476d7db7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-19T07:45:34Z",
+      "side": 1,
+      "message": "Yeah we could do something like that, similar to Enumerate(), I was also thinking about a way to iterate over bindings in the bindgroup and their info at the same time.",
+      "parentUuid": "987203c3_0d19d39c",
+      "revId": "d11eadf29bc25e5c0bfe48dc49b2fdc7941ba03d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c9d64be9_8196547d",
@@ -48,6 +66,30 @@
       "writtenOn": "2025-08-18T19:11:23Z",
       "side": 1,
       "message": "nit: How about a helper function for this pattern of range from order type and another for count?",
+      "range": {
+        "startLine": 824,
+        "startChar": 11,
+        "endLine": 824,
+        "endChar": 98
+      },
+      "revId": "d11eadf29bc25e5c0bfe48dc49b2fdc7941ba03d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d298287_9a7b592b",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-19T07:45:34Z",
+      "side": 1,
+      "message": "I had tried but where it failed is when the getters return ranges / counts for more than just one \"order\" value, like in `GetBufferIndices` below. So the helpers would need to take two arguments for the begin/end and didn\u0027t seem to do much overall.\n\nHappy to address as a follow up if you think it\u0027s still worth it.",
+      "parentUuid": "c9d64be9_8196547d",
       "range": {
         "startLine": 824,
         "startChar": 11,
