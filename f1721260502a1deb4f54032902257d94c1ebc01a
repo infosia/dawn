@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fadcf7a_e28171a1",
+        "filename": "tools/src/bench/bench.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-19T22:13:33Z",
+      "side": 1,
+      "message": "This doesn\u0027t really make sense as a switch/case anymore. Probably better to do\n\n```\nif err \u003d\u003d nil:\n  return r, nil\nreturn Run{}, err\n```",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 3
+      },
+      "revId": "f1721260502a1deb4f54032902257d94c1ebc01a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35ce8282_afee2983",
+        "filename": "tools/src/cmd/check-spec-examples/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-19T22:13:33Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 81,
+        "startChar": 1,
+        "endLine": 81,
+        "endChar": 7
+      },
+      "revId": "f1721260502a1deb4f54032902257d94c1ebc01a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65e30d45_2df22afc",
+        "filename": "tools/src/cmd/cts/treemap/treemap.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-19T22:13:33Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 158,
+        "startChar": 1,
+        "endLine": 158,
+        "endChar": 7
+      },
+      "revId": "f1721260502a1deb4f54032902257d94c1ebc01a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f3f904a_23c1c8fd",
+        "filename": "tools/src/cmd/get-test-plan/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-19T22:13:33Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 112,
+        "startChar": 1,
+        "endLine": 112,
+        "endChar": 7
+      },
+      "revId": "f1721260502a1deb4f54032902257d94c1ebc01a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b313011_866f101e",
+        "filename": "tools/src/cmd/get-test-plan/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-19T22:13:33Z",
+      "side": 1,
+      "message": "Nit: Should be `p :\u003d new(Parser)` ?",
+      "range": {
+        "startLine": 418,
+        "startChar": 1,
+        "endLine": 418,
+        "endChar": 20
+      },
+      "revId": "f1721260502a1deb4f54032902257d94c1ebc01a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc1546ae_9ae4b0b0",
+        "filename": "tools/src/cmd/tests/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-19T22:13:33Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 838,
+        "startChar": 2,
+        "endLine": 838,
+        "endChar": 15
+      },
+      "revId": "f1721260502a1deb4f54032902257d94c1ebc01a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4800cbd8_6065b920",
+        "filename": "tools/src/oswrapper/memmaposwrapper_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-19T22:13:33Z",
+      "side": 1,
+      "message": "This seems like the incorrect fix for `err` being unused? Shouldn\u0027t we be checking if `err` is `io.EOF`?",
+      "range": {
+        "startLine": 182,
+        "startChar": 1,
+        "endLine": 183,
+        "endChar": 44
+      },
+      "revId": "f1721260502a1deb4f54032902257d94c1ebc01a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
