@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a7c27e0_7712338e",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-19T01:43:13Z",
+      "side": 0,
+      "message": "nit: Without a justification, there\u0027s no clear reason why this constant should be `2 ** (D3D12_REQ_BUFFER_RESOURCE_TEXEL_COUNT_2_TO_EXP + 1)`. Do we know it relates at all to that constant? If so we should explain the relation, and if not then we should just write this as `1 \u003c\u003c 28`.",
+      "range": {
+        "startLine": 401,
+        "startChar": 42,
+        "endLine": 402,
+        "endChar": 59
+      },
+      "revId": "ba48c303bc94fcad11b9c39fe9ac1049453e05ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

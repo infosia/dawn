@@ -16,6 +16,52 @@
       "message": "Adding Kai for attention to the limit buckets change.",
       "revId": "bafe785da55ef1b0d1c322409ed179d798d3e782",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2c192c2_d63106cf",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-19T01:43:13Z",
+      "side": 1,
+      "message": "Lowering this is likely to kick some devices into a lower bucket. On Vulkan at least, there are a bunch of Qualcomm devices in the 512MB bucket (as well as the 256MB bucket):\nhttps://vulkan.gpuinfo.org/displaydevicelimit.php?name\u003dmaxStorageBufferRange\u0026platform\u003dall\n\nIt would be safest to avoid removing a bucket in this CL. Could you please modify this CL to just *add* a new 256MB bucket (I think this should work), and open a separate CL where we can more closely consider removing the 512MB bucket? That would also allow us to cleanly revert the removal of the 512MB bucket if it turns out to be necessary (without reverting the rest of this change).",
+      "range": {
+        "startLine": 59,
+        "startChar": 70,
+        "endLine": 59,
+        "endChar": 79
+      },
+      "revId": "bafe785da55ef1b0d1c322409ed179d798d3e782",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e55d2052_c6d7ff84",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-19T01:43:13Z",
+      "side": 1,
+      "message": "Do you happen to know where guarantee is documented? If so I would like to add it (and a note about this Qualcomm bug) to the Correspondence Reference, as right now we have \"No documented limit\": https://gpuweb.github.io/gpuweb/correspondence/\n\nIf not, no worries.",
+      "range": {
+        "startLine": 401,
+        "startChar": 14,
+        "endLine": 401,
+        "endChar": 40
+      },
+      "revId": "bafe785da55ef1b0d1c322409ed179d798d3e782",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
