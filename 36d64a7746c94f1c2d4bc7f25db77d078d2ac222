@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96e050e7_76733430",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-20T22:31:49Z",
+      "side": 1,
+      "message": "PTAL, dropping the chromium_experimental prefix and renaming according to the WG decision.",
+      "revId": "36d64a7746c94f1c2d4bc7f25db77d078d2ac222",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
