@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "6a453b48_babf3ba2",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-20T18:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaf56fdd_2eb6275d",
+      "revId": "f4b57a5b70c52f2d208c124cf514a74c867b14c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "01dc2918_d3f5e5bf",
         "filename": "src/dawn/native/ExecutionQueue.h",
         "patchSetId": 47
@@ -48,6 +66,24 @@
       "writtenOn": "2025-08-20T13:24:35Z",
       "side": 1,
       "message": "I was hoping to separate the concept of execution queue and API queue in the future if we have multiqueue in WebGPU but let\u0027s figure out what to do if, or when we get there.",
+      "revId": "f4b57a5b70c52f2d208c124cf514a74c867b14c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b60fc9bd_7a7ad49a",
+        "filename": "src/dawn/native/ExecutionQueue.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-20T18:50:19Z",
+      "side": 1,
+      "message": "Yea, I was also actively trying to keep them more separated, but for now it was too hard for it to be worth it. Thanks for the review!",
+      "parentUuid": "01dc2918_d3f5e5bf",
       "revId": "f4b57a5b70c52f2d208c124cf514a74c867b14c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
