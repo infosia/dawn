@@ -804,6 +804,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "72497723_39ac9c74",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-20T16:15:34Z",
+      "side": 1,
+      "message": "We also use the transform for GLSL, which I believe has a similar restriction.\n\nWe could potentially split out the `array\u003cu32\u003e` -\u003e `array\u003cvecv4\u003cu32\u003e\u003e` conversion to a separate transform if we think there\u0027s a performance hit for MSL.",
+      "parentUuid": "2d7bbea2_837d1390",
+      "range": {
+        "startLine": 330,
+        "startChar": 90,
+        "endLine": 331,
+        "endChar": 16
+      },
+      "revId": "29776d7886d27000efdc7933d144bae7d0891fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5f4435c8_749b067b",
         "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
         "patchSetId": 15
