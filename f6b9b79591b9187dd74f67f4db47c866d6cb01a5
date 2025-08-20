@@ -34,6 +34,24 @@
       "parentUuid": "f31800dd_af6b01da",
       "revId": "f6b9b79591b9187dd74f67f4db47c866d6cb01a5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9b0883f_aeae203e",
+        "filename": "src/tint/lang/wgsl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-20T20:50:24Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3d69811b_16f8ea6c",
+      "revId": "f6b9b79591b9187dd74f67f4db47c866d6cb01a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
