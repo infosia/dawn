@@ -22,6 +22,30 @@
       },
       "revId": "a92f84e423bba6a58b9f122b0a294fa92477eeb3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1c4396e_e24bfef6",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-08-20T08:36:54Z",
+      "side": 1,
+      "message": "This will be it. I feel it\u0027s simpler to replicate the logic for just 2 places.",
+      "parentUuid": "05f0f94d_6452c488",
+      "range": {
+        "startLine": 172,
+        "startChar": 24,
+        "endLine": 172,
+        "endChar": 106
+      },
+      "revId": "a92f84e423bba6a58b9f122b0a294fa92477eeb3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
