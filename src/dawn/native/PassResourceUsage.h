@@ -49,6 +49,19 @@ class TextureBase;
 struct BufferSyncInfo {
     wgpu::BufferUsage usage = wgpu::BufferUsage::None;
     wgpu::ShaderStage shaderStages = wgpu::ShaderStage::None;
+
+    wgpu::BufferUsage GetBackendUsage() const {
+        // `kIndirectBufferForFrontendValidation` is only for the front-end validation and should be
+        // totally ignored in the backend resource tracking because:
+        // 1. When old usage contains kIndirectBufferForFrontendValidation while new usage just
+        //    removes kIndirectBufferForFrontendValidation, the barrier is actually unnecessary.
+        // 2. When usage == kIndirectBufferForFrontendValidation, dstStages would be NONE, which is
+        //    not allowed by Vulkan SPEC unless synchronization2 is enabled.
+        // We remove `kIndirectBufferForFrontendValidation` in this function instead of in the
+        // function `BufferVk::TrackUsageAndGetResourceBarrier()` because on Vulkan backend this
+        // is the only place that we need to handle `kIndirectBufferForFrontendValidation`.
+        return usage & (~kIndirectBufferForFrontendValidation);
+    }
 };
 
 // Info about how a texture is used and in which shader stages

@@ -353,6 +353,10 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "toggle is enabled by default on Qualcomm GPUs, which have been observed experiencing a "
       "driver crash in this situation.",
       "https://crbug.com/dawn/1564", ToggleStage::Device}},
+    {Toggle::VulkanAvoidRedundantBufferBarriers,
+     {"vulkan_avoid_redundant_buffer_barriers",
+      "Avoid inserting cmd buffer barriers that would be redundant and prevent concurrent dispatch",
+      "https://crbug.com/425987598", ToggleStage::Device}},
     {Toggle::DisableSubAllocationFor2DTextureWithCopyDstOrRenderAttachment,
      {"disable_sub_allocation_for_2d_texture_with_copy_dst_or_render_attachment",
       "Disable resource sub-allocation for the 2D texture with CopyDst or RenderAttachment usage. "
