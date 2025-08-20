@@ -37,6 +37,26 @@
 #include "dawn/native/vulkan/VulkanError.h"
 
 namespace dawn::native::vulkan {
+namespace {
+
+// Validate the pipeline cache header at the start of `blob`. The driver is supposed to be tolerant
+// to bad pipeline cache data but vkCreateGraphicsPipeline() is crashing on some imagination GPUs.
+bool HasValidPipelineCacheHeader(const Blob& blob, const VkPhysicalDeviceProperties& devProps) {
+    VkPipelineCacheHeaderVersionOne header;
+    constexpr size_t kHeaderBytes = sizeof(header);
+    if (blob.Size() < kHeaderBytes) {
+        return false;
+    }
+
+    memcpy(&header, blob.Data(), kHeaderBytes);
+
+    return header.headerVersion == VK_PIPELINE_CACHE_HEADER_VERSION_ONE &&
+           header.headerSize == kHeaderBytes && header.deviceID == devProps.deviceID &&
+           header.vendorID == devProps.vendorID &&
+           !memcmp(header.pipelineCacheUUID, devProps.pipelineCacheUUID, VK_UUID_SIZE);
+}
+
+}  // namespace
 
 // static
 Ref<PipelineCache> PipelineCache::Create(Device* device, const CacheKey& key) {
@@ -101,8 +121,13 @@ void PipelineCache::Initialize() {
     createInfo.flags = 0;
     createInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
     createInfo.pNext = nullptr;
-    createInfo.initialDataSize = blob.Size();
-    createInfo.pInitialData = blob.Data();
+    createInfo.initialDataSize = 0;
+    createInfo.pInitialData = nullptr;
+
+    if (!blob.Empty() && HasValidPipelineCacheHeader(blob, mDevice->GetDeviceInfo().properties)) {
+        createInfo.initialDataSize = blob.Size();
+        createInfo.pInitialData = blob.Data();
+    }
 
     mHandle = VK_NULL_HANDLE;
 
