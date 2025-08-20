@@ -221,7 +221,7 @@ struct State {
                                                  original_array->Count(),  //
                                                  original_array->Align(),  //
                                                  original_array->Size(),   //
-                                                 original_array->Stride());
+                                                 original_array->ImplicitStride());
     }
 
     /// Update the store type of an instruction result to use the forked version if needed.

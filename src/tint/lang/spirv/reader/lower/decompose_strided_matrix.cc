@@ -157,10 +157,10 @@ struct State {
         // of an explicitly laid out array.
         if (arr->Is<spirv::type::ExplicitLayoutArray>()) {
             return ty.Get<spirv::type::ExplicitLayoutArray>(
-                new_element_type, arr->Count(), arr->Align(), arr->Size(), arr->Stride());
+                new_element_type, arr->Count(), arr->Align(), arr->Size(), arr->ImplicitStride());
         }
         return ty.Get<core::type::Array>(new_element_type, arr->Count(), arr->Align(), arr->Size(),
-                                         arr->Stride(), arr->Stride());
+                                         arr->ImplicitStride());
     }
 
     /// Rewrite a structure type to replace structure members that have matrix stride attributes.
