@@ -70,6 +70,30 @@
       },
       "revId": "fd56231fd153fa463eef6dbacf175b01f8feb6e8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed14ffe8_c1bd8a4f",
+        "filename": "src/dawn/native/ExecutionQueue.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-20T18:32:25Z",
+      "side": 1,
+      "message": "I think this won\u0027t work either w.r.t lock inversion because right now the most annoying part about our wait implementations is that `WaitForIdleForDestruction` holds the device lock and a lot of the backends (including Metal) call `WaitForQueueSerial` as a part of waiting for idle. I am trying to make the `WaitForQueueSerial` calls avoid taking the device lock because in a multithreaded environment, holding the device lock while sleeping is problematic, so what can happen with that is:\n\nOrder 1:\n- Call `WaitForQueueSerial`, takes `callbackLock`.\n- Runs callbacks, one of which is a user callback that re-entrantly calls the API, thereby causing us to acquire the device lock.\n\nOrder 2:\n- Call `WaitForIdleForDestruction`, takes device lock.\n- Backend implementation of `WaitForIdleForDestruction` calls `WaitForQueueSerial` which acquires the `callbackLock`.\n\nBasically, from my attempts, it seems like I cannot explicitly hold a lock to ensure callback ordering, otherwise it can lead to potential lock-inversion issues. My goal is to eventually make it such that `WaitForIdleForDestruction` does not hold the device lock, or more generally, ensure that any code that calls `WaitForQueueSerial` does not hold the device lock, but that will take some time since it fundamentally changes a lot of code paths that are currently entirely reliant on the device lock for synchronization depending on the backend (D3D11 being one of the biggest ones).",
+      "parentUuid": "a7f064b2_c956583e",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 51
+      },
+      "revId": "fd56231fd153fa463eef6dbacf175b01f8feb6e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
