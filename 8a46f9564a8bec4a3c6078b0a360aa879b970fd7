@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9dd1e0d_083af1ad",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 26
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-20T12:11:50Z",
+      "side": 1,
+      "message": "The comment needs updating for because the \"buffer length buffer\" no longer exists.",
+      "revId": "8a46f9564a8bec4a3c6078b0a360aa879b970fd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14b0a5f1_cc717c51",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 26
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-20T12:11:50Z",
+      "side": 1,
+      "message": "This might not be correct if we do this:\n\n - SetPipeline that uses 8 immediates\n - SetBindGroup / SetVertex\n - Draw\n - SetPipeline with the same layout but 4 immediates\n - Draw\n \nIn the second draw, the call to Apply will see `kDirtyStages` being `None` and will incorrectly skip writing the immediates for the buffer length at the correct spot in `mImmediateBlockContent`.\n\nWe also need to dirty all the stages if the amount of immediates prior to the buffer length changes.",
+      "revId": "8a46f9564a8bec4a3c6078b0a360aa879b970fd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "227e13d0_76a83780",
+        "filename": "src/dawn/native/metal/PipelineLayoutMTL.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-20T12:11:50Z",
+      "side": 1,
+      "message": "```suggestion\n//    - Optional Paddings to align the following vec4 to 16 bytes\n```",
+      "revId": "8a46f9564a8bec4a3c6078b0a360aa879b970fd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eac7ac2c_43fe87af",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-20T12:11:50Z",
+      "side": 1,
+      "message": "I won\u0027t be able to review this today.",
+      "revId": "8a46f9564a8bec4a3c6078b0a360aa879b970fd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
