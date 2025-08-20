@@ -46,6 +46,30 @@
       },
       "revId": "fd56231fd153fa463eef6dbacf175b01f8feb6e8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7f064b2_c956583e",
+        "filename": "src/dawn/native/ExecutionQueue.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-20T13:50:18Z",
+      "side": 1,
+      "message": "It seems in essence that we have two different critical sections, the part where we gather the tasks and check mWaitingForIdle, and the part where we call callbacks.\n\nCan\u0027t we do something like this:\n\n```\n   std::vector\u003cTask\u003e tasks;\n   std::unique_lock callbackCallingLock;\n   \n   mWaitingTasks.Use([\u0026](auto waiting){\n      // do something with waiting.waitForIdle;\n      PopWaitingTasksInto(serial, waiting.tasks, tasks);\n      \n      callbackCallingLock \u003d mCallbackCallingMutex.lock();\n   });\n   \n    for (auto task : tasks) {\n        task();\n    }\n    \n    // callbackCallingLock is destroyed here\n```\n\nBasically we chain the locks one after the other.",
+      "parentUuid": "8440e1e4_cee3ff23",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 51
+      },
+      "revId": "fd56231fd153fa463eef6dbacf175b01f8feb6e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
