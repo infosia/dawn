@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f31800dd_af6b01da",
+        "filename": "src/tint/lang/wgsl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-20T20:17:18Z",
+      "side": 1,
+      "message": "Can we add a test which handles the wrapping to a couple 2 or 3 character names?",
+      "revId": "f6b9b79591b9187dd74f67f4db47c866d6cb01a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
