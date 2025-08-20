@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64b8c913_3601c01b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 47
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-20T13:24:35Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "f4b57a5b70c52f2d208c124cf514a74c867b14c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eaf56fdd_2eb6275d",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-20T13:24:35Z",
+      "side": 1,
+      "message": "```suggestion\n                // valid because the Queue is kept alive by the lambda capture and:\n```",
+      "revId": "f4b57a5b70c52f2d208c124cf514a74c867b14c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01dc2918_d3f5e5bf",
+        "filename": "src/dawn/native/ExecutionQueue.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-20T13:24:35Z",
+      "side": 1,
+      "message": "I was hoping to separate the concept of execution queue and API queue in the future if we have multiqueue in WebGPU but let\u0027s figure out what to do if, or when we get there.",
+      "revId": "f4b57a5b70c52f2d208c124cf514a74c867b14c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
