@@ -53,16 +53,13 @@ class Array : public Castable<Array, Type> {
     /// @param align the byte alignment of the array
     /// @param size the byte size of the array. The size will be 0 if the array element count is
     ///        pipeline overridable.
-    /// @param stride the number of bytes from the start of one element of the
-    ///        array to the start of the next element
     /// @param implicit_stride the number of bytes from the start of one element
-    /// of the array to the start of the next element, if there was no `@stride`
-    /// attribute applied.
+    ///        of the array to the start of the next element, if there was no `@stride`
+    ///        attribute applied.
     Array(Type const* element,
           const ArrayCount* count,
           uint32_t align,
           uint32_t size,
-          uint32_t stride,
           uint32_t implicit_stride);
 
     /// @param other the other node to compare against
@@ -95,16 +92,7 @@ class Array : public Castable<Array, Type> {
 
     /// @returns the number of bytes from the start of one element of the
     /// array to the start of the next element
-    uint32_t Stride() const { return stride_; }
-
-    /// @returns the number of bytes from the start of one element of the
-    /// array to the start of the next element, if there was no `@stride`
-    /// attribute applied
     uint32_t ImplicitStride() const { return implicit_stride_; }
-
-    /// @returns true if the value returned by Stride() matches the element's
-    /// natural stride
-    bool IsStrideImplicit() const { return stride_ == implicit_stride_; }
 
     /// @returns the name for this type that closely resembles how it would be
     /// declared in WGSL.
@@ -128,20 +116,19 @@ class Array : public Castable<Array, Type> {
     /// @param count the number of elements in the array.
     /// @param align the byte alignment of the array
     /// @param size the byte size of the array.
-    /// @param stride the number of bytes from the start of one element of the array to the start of
+    /// @param implicit_stride the implicit stride
     /// the next element
     Array(size_t hash,
           Type const* element,
           const ArrayCount* count,
           uint32_t align,
           uint32_t size,
-          uint32_t stride);
+          uint32_t implicit_stride);
 
     Type const* const element_;
     const ArrayCount* count_;
     const uint32_t align_;
     const uint32_t size_;
-    const uint32_t stride_;
     const uint32_t implicit_stride_;
 };
 

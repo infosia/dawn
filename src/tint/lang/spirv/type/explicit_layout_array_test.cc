@@ -57,7 +57,7 @@ TEST_F(ExplicitLayoutArrayTest, Equals) {
     auto* c = ty.Get<ExplicitLayoutArray>(ty.u32(), count, 4u, 16u, 4u);
 
     // Make sure it does not match the equivalent regular array.
-    auto* d = ty.Get<core::type::Array>(ty.i32(), count, 4u, 16u, 4u, 4u);
+    auto* d = ty.Get<core::type::Array>(ty.i32(), count, 4u, 16u, 4u);
 
     EXPECT_EQ(a, b);
     EXPECT_NE(a, c);
@@ -89,7 +89,7 @@ TEST_F(ExplicitLayoutArrayTest, CloneArray) {
     EXPECT_NE(val->Count(), ary->Count());
     EXPECT_EQ(val->Align(), 4u);
     EXPECT_EQ(val->Size(), 8u);
-    EXPECT_EQ(val->Stride(), 32u);
+    EXPECT_EQ(val->ImplicitStride(), 32u);
 }
 
 }  // namespace

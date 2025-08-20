@@ -640,10 +640,10 @@ struct State {
         // of an explicitly laid out array.
         if (arr->Is<spirv::type::ExplicitLayoutArray>()) {
             return ty.Get<spirv::type::ExplicitLayoutArray>(elem_ty, arr->Count(), arr->Align(),
-                                                            arr->Size(), arr->Stride());
+                                                            arr->Size(), arr->ImplicitStride());
         }
         return ty.Get<core::type::Array>(elem_ty, arr->Count(), arr->Align(), arr->Size(),
-                                         arr->Stride(), arr->Stride());
+                                         arr->ImplicitStride());
     }
 
     const core::type::Type* RewriteStruct(const core::type::Struct* old_struct) {

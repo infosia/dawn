@@ -596,6 +596,8 @@ Result<SuccessType, std::string> ValidateBuiltinClipDistances(Function::Pipeline
 
     auto is_valid_array = [&] {
         const auto elems = ty->Elements();
+        printf("%p %d %d %s\n", elems.type, elems.type->Is<core::type::F32>(), elems.count,
+               elems.type->TypeInfo().name);
         return elems.type && elems.type->Is<core::type::F32>() && elems.count <= 8;
     };
 

@@ -127,31 +127,28 @@ struct State {
                 [&](const spirv::type::ExplicitLayoutArray* arr) {
                     auto* new_element_type = RewriteType(arr->ElemType());
 
-                    if (!arr->IsStrideImplicit()) {
-                        // The stride does not match the implicit element stride, so we need to wrap
-                        // the element type in a structure that is padded to the target stride.
-                        auto* element_struct =
-                            ty.Struct(sym.New("tint_padded_array_element"),
-                                      Vector{
-                                          ty.Get<core::type::StructMember>(
-                                              sym.New("tint_element"), new_element_type,
-                                              /* index */ 0u,
-                                              /* offset */ 0u,
-                                              /* align */ new_element_type->Align(),
-                                              /* size */ arr->Stride(), core::IOAttributes{}),
-                                      });
-                        new_element_type = element_struct;
-                        padded_structures.Add(element_struct);
-                    }
+                    // The stride does not match the implicit element stride, so we need to wrap
+                    // the element type in a structure that is padded to the target stride.
+                    auto* element_struct =
+                        ty.Struct(sym.New("tint_padded_array_element"),
+                                  Vector{
+                                      ty.Get<core::type::StructMember>(
+                                          sym.New("tint_element"), new_element_type,
+                                          /* index */ 0u,
+                                          /* offset */ 0u,
+                                          /* align */ new_element_type->Align(),
+                                          /* size */ arr->ImplicitStride(), core::IOAttributes{}),
+                                  });
+                    new_element_type = element_struct;
+                    padded_structures.Add(element_struct);
 
                     return ty.Get<core::type::Array>(new_element_type, arr->Count(), arr->Align(),
-                                                     arr->Size(), arr->Stride(), arr->Stride());
+                                                     arr->Size(), arr->ImplicitStride());
                 },
                 [&](const core::type::Array* arr) {
                     auto* new_element_type = RewriteType(arr->ElemType());
-                    TINT_ASSERT(arr->IsStrideImplicit());
                     return ty.Get<core::type::Array>(new_element_type, arr->Count(), arr->Align(),
-                                                     arr->Size(), arr->Stride(), arr->Stride());
+                                                     arr->Size(), arr->ImplicitStride());
                 },
                 [&](const core::type::Struct* str) -> const core::type::Struct* {
                     // Rewrite members of the struct that contain arrays with non-default strides.
