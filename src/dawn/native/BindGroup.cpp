@@ -868,6 +868,15 @@ ObjectType BindGroupBase::GetType() const {
     return ObjectType::BindGroup;
 }
 
+void BindGroupBase::APIDestroy() {
+    if (GetDevice()->IsValidationEnabled() &&
+        GetDevice()->ConsumedError(ValidateDestroy(), "validating %s.Destroy()", this)) {
+        return;
+    }
+
+    DestroyImpl();
+}
+
 BindGroupLayoutBase* BindGroupBase::GetFrontendLayout() {
     DAWN_ASSERT(!IsError());
     return mLayout.Get();
@@ -961,8 +970,17 @@ ityp::span<BindingIndex, const Ref<TextureViewBase>> BindGroupBase::GetDynamicAr
 MaybeError BindGroupBase::ValidateCanUseOnQueueNow() const {
     DAWN_ASSERT(!IsError());
     DAWN_ASSERT(HasDynamicArray());
-    // TODO(crbug.com/435251399): Add wgpu::BindGroup::Destroy that acts only on dynamic array and
-    // prevents future submissions.
+
+    DAWN_INVALID_IF(mDynamicArray->IsDestroyed(), "Destroyed bind group %s used in a submit.",
+                    this);
+    return {};
+}
+
+MaybeError BindGroupBase::ValidateDestroy() const {
+    // One the queue we only validate that dynamic array bind groups are alive in a submit because
+    // validating for all bind groups would be too expensive. For that reason only allow dynamic
+    // arrays to be destroyed early.
+    DAWN_INVALID_IF(!HasDynamicArray(), "%s doesn't contain a dynamic array.", this);
     return {};
 }
 
@@ -979,12 +997,17 @@ ityp::span<BindingIndex, const Ref<TextureViewBase>> BindGroupBase::DynamicArray
     return {mBindings.data(), mBindings.size()};
 }
 
+bool BindGroupBase::DynamicArrayState::IsDestroyed() const {
+    return mDestroyed;
+}
+
 void BindGroupBase::DynamicArrayState::Update(BindingIndex i, TextureViewBase* view) {
     mBindings[i] = view;
 }
 
 void BindGroupBase::DynamicArrayState::Destroy() {
     mBindings.clear();
+    mDestroyed = true;
 }
 
 }  // namespace dawn::native
