@@ -327,10 +327,10 @@ struct State {
 
             // Decompose the type into a base texture type and a potential binding_array size.
             const core::type::Type* handle_type = tex->Result()->Type()->UnwrapPtr();
-            std::optional<uint32_t> binding_array_count = std::nullopt;
+            const core::type::BindingArray* binding_array_type = nullptr;
             if (auto* ba = handle_type->As<core::type::BindingArray>()) {
                 handle_type = ba->ElemType();
-                binding_array_count = ba->Count()->As<core::type::ConstantArrayCount>()->value;
+                binding_array_type = ba;
             }
 
             // Storage textures don't need replacements so they are replaced with themselves.
@@ -346,8 +346,12 @@ struct State {
             }
 
             // Re-wrap the handle type in a binding array for the replacement if needed.
-            if (binding_array_count.has_value()) {
-                replacement_ty = ty.binding_array(replacement_ty, binding_array_count.value());
+            if (binding_array_type != nullptr) {
+                if (auto* cnt = binding_array_type->Count()->As<core::type::ConstantArrayCount>()) {
+                    replacement_ty = ty.binding_array(replacement_ty, cnt->value);
+                } else {
+                    replacement_ty = ty.runtime_binding_array(replacement_ty);
+                }
             }
 
             CombinedTextureSamplerPair key{tex->BindingPoint().value(),
