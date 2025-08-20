@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd74c942_ff08d035",
+        "filename": "src/dawn/wire/client/ObjectBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-20T23:41:13Z",
+      "side": 1,
+      "message": "I started considering how to add tests for this (death tests) and it occurs to me that this issue doesn\u0027t technically require disconnecting the first wire. I believe we should have the same issue with mixing objects from different wires that are alive at the same time - it\u0027s just that Chromium won\u0027t do that. So to make that work too, I might want to change this to a CHECK that the wire is the same instead of wiping the IDs.",
+      "revId": "14c34d3b70be003677776f4f9895ae1388af8ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
