@@ -16,6 +16,46 @@
       "message": "Rafael, thanks for the review! I removed all the changes related to D3D11 and let me address it in the next CL after confirmation with QC.",
       "revId": "2b17a1d6ed71fdfabd4dd3b509f215e3d48cf28d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f4897cc_fe55413e",
+        "filename": "src/dawn/common/GPUInfo.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-20T12:27:31Z",
+      "side": 1,
+      "message": "So Intel marketing doesn\u0027t give \"Gen\"\u0027s anymore? It\u0027s going to be confusing to have a random \"14\" in the code. TBH the previous style seemed better.",
+      "revId": "2b17a1d6ed71fdfabd4dd3b509f215e3d48cf28d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e47a0bf1_682837e1",
+        "filename": "src/dawn/common/GPUInfo.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-20T12:27:31Z",
+      "side": 1,
+      "message": "Aren\u0027t generations the \"marketing\" names for the architectures defined by the vendors? Maybe something like:\n\n```suggestion\n// Some vendors market their architecture with increasing \"generation\" numbers (like Intel Gen11\n// or Adreno 600 series). Map PCI IDs to these as it can be an easy way to detect all the devices\n// before a certain released generation.\n\n// For example returns 11 for Intel Gen 11 devices.\nint GetIntelGen(PCIVendorID venderId, PCIDeviceID deviceId);\n// For example returns 6 for Adreno 600 series devices.\nint GetQualcomm_ACPIGen(PCIVendorID venderId, PCIDeviceID deviceId);\n}  // namespace dawn::gpu_info\n```",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 1
+      },
+      "revId": "2b17a1d6ed71fdfabd4dd3b509f215e3d48cf28d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
