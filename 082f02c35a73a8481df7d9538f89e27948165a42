@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b991eef1_fe7856a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 22
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-20T03:00:57Z",
+      "side": 1,
+      "message": "cwallez@, landed most of the comments but the new added tests caught some issues.\n- 1 I suspect a dawn issue and reported here https://issues.chromium.org/issues/439718691\n- the other is about android bots, I\u0027m a bit confuse and will follow-up.\n\nWould you mind to take a look at the iteration?",
+      "revId": "082f02c35a73a8481df7d9538f89e27948165a42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
