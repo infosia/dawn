@@ -33,6 +33,24 @@
       "message": "Lock could move inside the `if` here, since GetCompletedCommandSerial() is pulling from an atomic.",
       "revId": "1ac2162a80fdaa62b765a3e148cfd7504a23d0a4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fd13cfd_c4dcfea9",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-20T02:26:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9079825b_fa69e056",
+      "revId": "1ac2162a80fdaa62b765a3e148cfd7504a23d0a4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
