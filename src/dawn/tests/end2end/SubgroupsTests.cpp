@@ -922,5 +922,854 @@ DAWN_INSTANTIATE_TEST_P(SubgroupsShaderInclusiveTest,
                             SubgroupOpDataType::I32,
                         });
 
+class SubgroupMMTest : public DawnTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        // Always require related features if available.
+        std::vector<wgpu::FeatureName> requiredFeatures;
+        if (SupportsFeatures({wgpu::FeatureName::ShaderF16})) {
+            requiredFeatures.push_back(wgpu::FeatureName::ShaderF16);
+        }
+        if (SupportsFeatures({wgpu::FeatureName::Subgroups})) {
+            requiredFeatures.push_back(wgpu::FeatureName::Subgroups);
+        }
+        return requiredFeatures;
+    }
+};
+
+TEST_P(SubgroupMMTest, TestMM_16x16_u32) {
+    const char* shader = R"(
+enable f16;
+enable subgroups;
+
+@group(0) @binding(0) var<storage, read> input0 : array<array<u32, 16>, 16>;
+@group(0) @binding(1) var<storage, read> input1 : array<array<u32, 16>, 16>;
+@group(0) @binding(2) var<storage, read_write> output : array<array<u32, 16>, 16>;
+
+@compute @workgroup_size(16, 1, 1)
+fn main(
+    @builtin(local_invocation_id) local_id : vec3u,
+    @builtin(subgroup_invocation_id) sg_id : u32,
+    @builtin(subgroup_size) sg_size : u32
+) {
+    if (sg_size != 16u) {
+        return;
+    }
+
+    for (var x = 0; x < 16; x++) {
+        var local_input1 = input1[sg_id][x];
+
+        var local_output : u32 = 0;
+        local_output += input0[local_id.x][0] * subgroupBroadcast(local_input1, 0);
+        local_output += input0[local_id.x][1] * subgroupBroadcast(local_input1, 1);
+        local_output += input0[local_id.x][2] * subgroupBroadcast(local_input1, 2);
+        local_output += input0[local_id.x][3] * subgroupBroadcast(local_input1, 3);
+        local_output += input0[local_id.x][4] * subgroupBroadcast(local_input1, 4);
+        local_output += input0[local_id.x][5] * subgroupBroadcast(local_input1, 5);
+        local_output += input0[local_id.x][6] * subgroupBroadcast(local_input1, 6);
+        local_output += input0[local_id.x][7] * subgroupBroadcast(local_input1, 7);
+        local_output += input0[local_id.x][8] * subgroupBroadcast(local_input1, 8);
+        local_output += input0[local_id.x][9] * subgroupBroadcast(local_input1, 9);
+        local_output += input0[local_id.x][10] * subgroupBroadcast(local_input1, 10);
+        local_output += input0[local_id.x][11] * subgroupBroadcast(local_input1, 11);
+        local_output += input0[local_id.x][12] * subgroupBroadcast(local_input1, 12);
+        local_output += input0[local_id.x][13] * subgroupBroadcast(local_input1, 13);
+        local_output += input0[local_id.x][14] * subgroupBroadcast(local_input1, 14);
+        local_output += input0[local_id.x][15] * subgroupBroadcast(local_input1, 15);
+ 
+        output[local_id.x][x] = local_output;
+    }
+}
+)";
+    wgpu::ShaderModule shaderModule = utils::CreateShaderModule(device, shader);
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = shaderModule;
+    auto pipeline = device.CreateComputePipeline(&csDesc);
+
+    uint32_t outputBufferSizeInBytes = 16 * 16 * sizeof(uint32_t);
+    wgpu::BufferDescriptor outputBufferDesc;
+    outputBufferDesc.size = outputBufferSizeInBytes;
+    outputBufferDesc.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc;
+    wgpu::Buffer outputBuffer = device.CreateBuffer(&outputBufferDesc);
+
+    std::array<std::array<uint32_t, 16>, 16> input0 = {};
+    std::array<std::array<uint32_t, 16>, 16> input1 = {};
+    for (uint32_t i = 0; i < 16; ++i) {
+        for (uint32_t j = 0; j < 16; ++j) {
+            input0[i][j] = i * 16 + j;
+            input1[i][j] = 2 * (i * 16 + j);
+        }
+    }
+    wgpu::BufferDescriptor input0BufferDesc;
+    input0BufferDesc.size = sizeof(input0);
+    input0BufferDesc.usage =
+        wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
+    wgpu::Buffer input0Buffer = device.CreateBuffer(&input0BufferDesc);
+    queue.WriteBuffer(input0Buffer, 0, &input0, sizeof(input0));
+    wgpu::BufferDescriptor input1BufferDesc;
+    input1BufferDesc.size = sizeof(input1);
+    input1BufferDesc.usage =
+        wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
+    wgpu::Buffer input1Buffer = device.CreateBuffer(&input1BufferDesc);
+    queue.WriteBuffer(input1Buffer, 0, &input1, sizeof(input1));
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {
+                                                         {0, input0Buffer},
+                                                         {1, input1Buffer},
+                                                         {2, outputBuffer},
+                                                     });
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+    pass.SetPipeline(pipeline);
+    pass.SetBindGroup(0, bindGroup);
+    pass.DispatchWorkgroups(1);
+    pass.End();
+
+    wgpu::BufferDescriptor readbackBufferDesc = {};
+    readbackBufferDesc.size = outputBufferSizeInBytes;
+    readbackBufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::MapRead;
+    wgpu::Buffer readbackBuffer = device.CreateBuffer(&readbackBufferDesc);
+    encoder.CopyBufferToBuffer(outputBuffer, 0, readbackBuffer, 0, outputBufferSizeInBytes);
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    bool done = false;
+    readbackBuffer.MapAsync(wgpu::MapMode::Read, 0, outputBufferSizeInBytes,
+                            wgpu::CallbackMode::AllowProcessEvents,
+                            [&done](wgpu::MapAsyncStatus status, wgpu::StringView) {
+                                ASSERT_EQ(status, wgpu::MapAsyncStatus::Success);
+                                done = true;
+                            });
+
+    while (!done) {
+        WaitABit();
+    }
+
+    const uint32_t* actual = static_cast<const uint32_t*>(readbackBuffer.GetConstMappedRange());
+
+    printf("Expected: \n");
+    for (uint32_t i = 0; i < 16; ++i) {
+        for (uint32_t j = 0; j < 16; ++j) {
+            uint32_t expected = 0;
+            for (uint32_t k = 0; k < 16; ++k) {
+                expected += input0[i][k] * input1[k][j];
+            }
+            printf("%d ", expected);
+        }
+        printf("\n");
+    }
+
+    printf("\n");
+    printf("Actual: \n");
+    for (uint32_t i = 0; i < 16; ++i) {
+        for (uint32_t j = 0; j < 16; ++j) {
+            printf("%d ", actual[i * 16 + j]);
+        }
+        printf("\n");
+    }
+
+    for (uint32_t i = 0; i < 16; ++i) {
+        for (uint32_t j = 0; j < 16; ++j) {
+            uint32_t expected = 0;
+            for (uint32_t k = 0; k < 16; ++k) {
+                expected += input0[i][k] * input1[k][j];
+            }
+            uint32_t actualValue = actual[i * 16 + j];
+            if (actualValue != expected) {
+                printf("Error at (%d, %d): expected: %d actual %d\n", i, j, expected, actualValue);
+            }
+        }
+    }
+
+    readbackBuffer.Unmap();
+}
+
+TEST_P(SubgroupMMTest, TestMM_16x16_vec4u) {
+    const char* shader = R"(
+enable subgroups;
+
+@group(0) @binding(0) var<storage, read> input0 : array<array<vec4<u32>, 4>, 16>;
+@group(0) @binding(1) var<storage, read> input1 : array<array<vec4<u32>, 4>, 16>;
+@group(0) @binding(2) var<storage, read_write> output : array<array<vec4<u32>, 4>, 16>;
+
+@compute @workgroup_size(16, 1, 1)
+fn main(
+    @builtin(local_invocation_id) local_id : vec3u,
+    @builtin(subgroup_invocation_id) sg_id : u32,
+    @builtin(subgroup_size) sg_size : u32
+) {
+    if (sg_size != 16u) {
+        return;
+    }
+
+    for (var x = 0; x < 4; x++) {
+        var local_output = vec4u();
+
+        var shared_input1 = input1[sg_id][x];
+
+        var local_input0_vec4u = input0[local_id.x][0];
+        local_output += local_input0_vec4u[0] * subgroupBroadcast(shared_input1, 0);
+        local_output += local_input0_vec4u[1] * subgroupBroadcast(shared_input1, 1);
+        local_output += local_input0_vec4u[2] * subgroupBroadcast(shared_input1, 2);
+        local_output += local_input0_vec4u[3] * subgroupBroadcast(shared_input1, 3);
+
+        local_input0_vec4u = input0[local_id.x][1];
+        local_output += local_input0_vec4u[0] * subgroupBroadcast(shared_input1, 4);
+        local_output += local_input0_vec4u[1] * subgroupBroadcast(shared_input1, 5);
+        local_output += local_input0_vec4u[2] * subgroupBroadcast(shared_input1, 6);
+        local_output += local_input0_vec4u[3] * subgroupBroadcast(shared_input1, 7);
+
+        local_input0_vec4u = input0[local_id.x][2];
+        local_output += local_input0_vec4u[0] * subgroupBroadcast(shared_input1, 8);
+        local_output += local_input0_vec4u[1] * subgroupBroadcast(shared_input1, 9);
+        local_output += local_input0_vec4u[2] * subgroupBroadcast(shared_input1, 10);
+        local_output += local_input0_vec4u[3] * subgroupBroadcast(shared_input1, 11);
+
+        local_input0_vec4u = input0[local_id.x][3];
+        local_output += local_input0_vec4u[0] * subgroupBroadcast(shared_input1, 12);
+        local_output += local_input0_vec4u[1] * subgroupBroadcast(shared_input1, 13);
+        local_output += local_input0_vec4u[2] * subgroupBroadcast(shared_input1, 14);
+        local_output += local_input0_vec4u[3] * subgroupBroadcast(shared_input1, 15);
+
+        output[local_id.x][x] = local_output;
+    }
+}
+)";
+
+    wgpu::ShaderModule shaderModule = utils::CreateShaderModule(device, shader);
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = shaderModule;
+    auto pipeline = device.CreateComputePipeline(&csDesc);
+
+    uint32_t outputBufferSizeInBytes = 16 * 16 * sizeof(uint32_t);
+    wgpu::BufferDescriptor outputBufferDesc;
+    outputBufferDesc.size = outputBufferSizeInBytes;
+    outputBufferDesc.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc;
+    wgpu::Buffer outputBuffer = device.CreateBuffer(&outputBufferDesc);
+
+    std::array<std::array<uint32_t, 16>, 16> input0 = {};
+    std::array<std::array<uint32_t, 16>, 16> input1 = {};
+    for (uint32_t i = 0; i < 16; ++i) {
+        for (uint32_t j = 0; j < 16; ++j) {
+            input0[i][j] = i * 16 + j;
+            input1[i][j] = 2 * (i * 16 + j);
+        }
+    }
+    wgpu::BufferDescriptor input0BufferDesc;
+    input0BufferDesc.size = sizeof(input0);
+    input0BufferDesc.usage =
+        wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
+    wgpu::Buffer input0Buffer = device.CreateBuffer(&input0BufferDesc);
+    queue.WriteBuffer(input0Buffer, 0, &input0, sizeof(input0));
+    wgpu::BufferDescriptor input1BufferDesc;
+    input1BufferDesc.size = sizeof(input1);
+    input1BufferDesc.usage =
+        wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
+    wgpu::Buffer input1Buffer = device.CreateBuffer(&input1BufferDesc);
+    queue.WriteBuffer(input1Buffer, 0, &input1, sizeof(input1));
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {
+                                                         {0, input0Buffer},
+                                                         {1, input1Buffer},
+                                                         {2, outputBuffer},
+                                                     });
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+    pass.SetPipeline(pipeline);
+    pass.SetBindGroup(0, bindGroup);
+    pass.DispatchWorkgroups(1);
+    pass.End();
+
+    wgpu::BufferDescriptor readbackBufferDesc = {};
+    readbackBufferDesc.size = outputBufferSizeInBytes;
+    readbackBufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::MapRead;
+    wgpu::Buffer readbackBuffer = device.CreateBuffer(&readbackBufferDesc);
+    encoder.CopyBufferToBuffer(outputBuffer, 0, readbackBuffer, 0, outputBufferSizeInBytes);
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    bool done = false;
+    readbackBuffer.MapAsync(wgpu::MapMode::Read, 0, outputBufferSizeInBytes,
+                            wgpu::CallbackMode::AllowProcessEvents,
+                            [&done](wgpu::MapAsyncStatus status, wgpu::StringView) {
+                                ASSERT_EQ(status, wgpu::MapAsyncStatus::Success);
+                                done = true;
+                            });
+
+    while (!done) {
+        WaitABit();
+    }
+
+    const uint32_t* actual = static_cast<const uint32_t*>(readbackBuffer.GetConstMappedRange());
+
+    printf("Expected: \n");
+    for (uint32_t i = 0; i < 16; ++i) {
+        for (uint32_t j = 0; j < 16; ++j) {
+            uint32_t expected = 0;
+            for (uint32_t k = 0; k < 16; ++k) {
+                expected += input0[i][k] * input1[k][j];
+            }
+            printf("%d ", expected);
+        }
+        printf("\n");
+    }
+
+    printf("\n");
+    printf("Actual: \n");
+    for (uint32_t i = 0; i < 16; ++i) {
+        for (uint32_t j = 0; j < 16; ++j) {
+            printf("%d ", actual[i * 16 + j]);
+        }
+        printf("\n");
+    }
+
+    for (uint32_t i = 0; i < 16; ++i) {
+        for (uint32_t j = 0; j < 16; ++j) {
+            uint32_t expected = 0;
+            for (uint32_t k = 0; k < 16; ++k) {
+                expected += input0[i][k] * input1[k][j];
+            }
+            uint32_t actualValue = actual[i * 16 + j];
+            if (actualValue != expected) {
+                printf("Error at (%d, %d): expected: %d actual %d\n", i, j, expected, actualValue);
+            }
+        }
+    }
+
+    readbackBuffer.Unmap();
+}
+
+TEST_P(SubgroupMMTest, TestMM_16x12_vec4u) {
+    const char* shader = R"(
+enable subgroups;
+
+@group(0) @binding(0) var<storage, read> input0 : array<array<vec3<u32>, 4>, 16>;
+@group(0) @binding(1) var<storage, read> input1 : array<array<vec4<u32>, 4>, 12>;
+@group(0) @binding(2) var<storage, read_write> output : array<array<vec4<u32>, 4>, 16>;
+
+@compute @workgroup_size(16, 1, 1)
+fn main(
+    @builtin(local_invocation_id) local_id : vec3u,
+    @builtin(subgroup_invocation_id) sg_id : u32,
+    @builtin(subgroup_size) sg_size : u32
+) {
+    if (sg_size != 16u) {
+        return;
+    }
+
+    for (var k = 0; k < 4; k++) {
+        var local_output = vec4u();
+
+        var input1_vec4u = vec4u();
+        if (sg_id < 12) {
+             input1_vec4u = input1[sg_id][k];
+        }
+
+        var input0_vec3u = input0[local_id.x][0];
+        local_output += input0_vec3u[0] * subgroupBroadcast(input1_vec4u, 0);
+        local_output += input0_vec3u[1] * subgroupBroadcast(input1_vec4u, 1);
+        local_output += input0_vec3u[2] * subgroupBroadcast(input1_vec4u, 2);
+
+        input0_vec3u = input0[local_id.x][1];
+        local_output += input0_vec3u[0] * subgroupBroadcast(input1_vec4u, 3);
+        local_output += input0_vec3u[1] * subgroupBroadcast(input1_vec4u, 4);
+        local_output += input0_vec3u[2] * subgroupBroadcast(input1_vec4u, 5);
+
+        input0_vec3u = input0[local_id.x][2];
+        local_output += input0_vec3u[0] * subgroupBroadcast(input1_vec4u, 6);
+        local_output += input0_vec3u[1] * subgroupBroadcast(input1_vec4u, 7);
+        local_output += input0_vec3u[2] * subgroupBroadcast(input1_vec4u, 8);
+
+        input0_vec3u = input0[local_id.x][3];
+        local_output += input0_vec3u[0] * subgroupBroadcast(input1_vec4u, 9);
+        local_output += input0_vec3u[1] * subgroupBroadcast(input1_vec4u, 10);
+        local_output += input0_vec3u[2] * subgroupBroadcast(input1_vec4u, 11);
+
+        output[local_id.x][k] = local_output;
+    }
+}
+)";
+
+    wgpu::ShaderModule shaderModule = utils::CreateShaderModule(device, shader);
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = shaderModule;
+    auto pipeline = device.CreateComputePipeline(&csDesc);
+
+    uint32_t outputBufferSizeInBytes = 16 * 16 * sizeof(uint32_t);
+    wgpu::BufferDescriptor outputBufferDesc;
+    outputBufferDesc.size = outputBufferSizeInBytes;
+    outputBufferDesc.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc;
+    wgpu::Buffer outputBuffer = device.CreateBuffer(&outputBufferDesc);
+
+    std::array<std::array<uint32_t, 16>, 16> input0 = {};
+    std::array<std::array<uint32_t, 16>, 16> input1 = {};
+    for (uint32_t i = 0; i < 16; ++i) {
+        for (uint32_t j = 0; j < 16; ++j) {
+            input0[i][j] = i * 16 + j;
+            input1[i][j] = 2 * (i * 16 + j);
+        }
+    }
+    wgpu::BufferDescriptor input0BufferDesc;
+    input0BufferDesc.size = sizeof(input0);
+    input0BufferDesc.usage =
+        wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
+    wgpu::Buffer input0Buffer = device.CreateBuffer(&input0BufferDesc);
+    queue.WriteBuffer(input0Buffer, 0, &input0, sizeof(input0));
+    wgpu::BufferDescriptor input1BufferDesc;
+    input1BufferDesc.size = sizeof(input1);
+    input1BufferDesc.usage =
+        wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
+    wgpu::Buffer input1Buffer = device.CreateBuffer(&input1BufferDesc);
+    queue.WriteBuffer(input1Buffer, 0, &input1, sizeof(input1));
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {
+                                                         {0, input0Buffer},
+                                                         {1, input1Buffer},
+                                                         {2, outputBuffer},
+                                                     });
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+    pass.SetPipeline(pipeline);
+    pass.SetBindGroup(0, bindGroup);
+    pass.DispatchWorkgroups(1);
+    pass.End();
+
+    wgpu::BufferDescriptor readbackBufferDesc = {};
+    readbackBufferDesc.size = outputBufferSizeInBytes;
+    readbackBufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::MapRead;
+    wgpu::Buffer readbackBuffer = device.CreateBuffer(&readbackBufferDesc);
+    encoder.CopyBufferToBuffer(outputBuffer, 0, readbackBuffer, 0, outputBufferSizeInBytes);
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    bool done = false;
+    readbackBuffer.MapAsync(wgpu::MapMode::Read, 0, outputBufferSizeInBytes,
+                            wgpu::CallbackMode::AllowProcessEvents,
+                            [&done](wgpu::MapAsyncStatus status, wgpu::StringView) {
+                                ASSERT_EQ(status, wgpu::MapAsyncStatus::Success);
+                                done = true;
+                            });
+
+    while (!done) {
+        WaitABit();
+    }
+
+    const uint32_t* actual = static_cast<const uint32_t*>(readbackBuffer.GetConstMappedRange());
+
+    printf("Expected: \n");
+    for (uint32_t i = 0; i < 16; ++i) {
+        for (uint32_t j = 0; j < 16; ++j) {
+            uint32_t expected = 0;
+
+            uint32_t x0 = 0;
+            for (uint32_t k = 0; k < 12; ++k) {
+                if (x0 % 4 == 3) {
+                    x0++;
+                }
+                expected += input0[i][x0] * input1[k][j];
+                x0++;
+            }
+            printf("%d ", expected);
+        }
+        printf("\n");
+    }
+
+    printf("\n");
+    printf("Actual: \n");
+    for (uint32_t i = 0; i < 16; ++i) {
+        for (uint32_t j = 0; j < 16; ++j) {
+            printf("%d ", actual[i * 16 + j]);
+        }
+        printf("\n");
+    }
+
+    for (uint32_t i = 0; i < 16; ++i) {
+        for (uint32_t j = 0; j < 16; ++j) {
+            uint32_t expected = 0;
+            uint32_t x0 = 0;
+            for (uint32_t k = 0; k < 12; ++k) {
+                if (x0 % 4 == 3) {
+                    x0++;
+                }
+                expected += input0[i][x0] * input1[k][j];
+                x0++;
+            }
+            uint32_t actualValue = actual[i * 16 + j];
+            if (actualValue != expected) {
+                printf("Error at (%d, %d): expected: %d actual %d\n", i, j, expected, actualValue);
+            }
+        }
+    }
+
+    readbackBuffer.Unmap();
+}
+
+TEST_P(SubgroupMMTest, TestMM_16x24_vec4u) {
+    const char* shader = R"(
+enable subgroups;
+
+@group(0) @binding(0) var<storage, read> input0 : array<array<vec3<u32>, 8>, 16>;
+@group(0) @binding(1) var<storage, read> input1 : array<array<vec4<u32>, 4>, 24>;
+@group(0) @binding(2) var<storage, read_write> output : array<array<vec4<u32>, 4>, 16>;
+
+@compute @workgroup_size(16, 1, 1)
+fn main(
+    @builtin(local_invocation_id) local_id : vec3u,
+    @builtin(subgroup_invocation_id) sg_id : u32,
+    @builtin(subgroup_size) sg_size : u32
+) {
+    if (sg_size != 16u) {
+        return;
+    }
+
+    for (var k = 0; k < 4; k++) {
+        var local_output = vec4u();
+
+        var input1_vec4u = input1[sg_id][k];
+
+        var input0_vec3u = input0[local_id.x][0];
+        local_output += input0_vec3u[0] * subgroupBroadcast(input1_vec4u, 0);
+        local_output += input0_vec3u[1] * subgroupBroadcast(input1_vec4u, 1);
+        local_output += input0_vec3u[2] * subgroupBroadcast(input1_vec4u, 2);
+
+        input0_vec3u = input0[local_id.x][1];
+        local_output += input0_vec3u[0] * subgroupBroadcast(input1_vec4u, 3);
+        local_output += input0_vec3u[1] * subgroupBroadcast(input1_vec4u, 4);
+        local_output += input0_vec3u[2] * subgroupBroadcast(input1_vec4u, 5);
+
+        input0_vec3u = input0[local_id.x][2];
+        local_output += input0_vec3u[0] * subgroupBroadcast(input1_vec4u, 6);
+        local_output += input0_vec3u[1] * subgroupBroadcast(input1_vec4u, 7);
+        local_output += input0_vec3u[2] * subgroupBroadcast(input1_vec4u, 8);
+
+        input0_vec3u = input0[local_id.x][3];
+        local_output += input0_vec3u[0] * subgroupBroadcast(input1_vec4u, 9);
+        local_output += input0_vec3u[1] * subgroupBroadcast(input1_vec4u, 10);
+        local_output += input0_vec3u[2] * subgroupBroadcast(input1_vec4u, 11);
+
+        input0_vec3u = input0[local_id.x][4];
+        local_output += input0_vec3u[0] * subgroupBroadcast(input1_vec4u, 12);
+        local_output += input0_vec3u[1] * subgroupBroadcast(input1_vec4u, 13);
+        local_output += input0_vec3u[2] * subgroupBroadcast(input1_vec4u, 14);
+
+        input0_vec3u = input0[local_id.x][5];
+        local_output += input0_vec3u[0] * subgroupBroadcast(input1_vec4u, 15);
+
+        var input1_vec4u_after_16 = vec4u();
+        if (sg_id < 8) {
+            input1_vec4u_after_16 = input1[sg_id + 16][k];
+        }
+        local_output += input0_vec3u[1] * subgroupBroadcast(input1_vec4u_after_16, 0);
+        local_output += input0_vec3u[2] * subgroupBroadcast(input1_vec4u_after_16, 1);
+
+        input0_vec3u = input0[local_id.x][6];
+        local_output += input0_vec3u[0] * subgroupBroadcast(input1_vec4u_after_16, 2);
+        local_output += input0_vec3u[1] * subgroupBroadcast(input1_vec4u_after_16, 3);
+        local_output += input0_vec3u[2] * subgroupBroadcast(input1_vec4u_after_16, 4);
+
+        input0_vec3u = input0[local_id.x][7];
+        local_output += input0_vec3u[0] * subgroupBroadcast(input1_vec4u_after_16, 5);
+        local_output += input0_vec3u[1] * subgroupBroadcast(input1_vec4u_after_16, 6);
+        local_output += input0_vec3u[2] * subgroupBroadcast(input1_vec4u_after_16, 7);
+ 
+        output[local_id.x][k] = local_output;
+    }
+}
+)";
+    constexpr uint32_t M = 16;
+    constexpr uint32_t N = 16;
+    constexpr uint32_t K = 24;
+
+    wgpu::ShaderModule shaderModule = utils::CreateShaderModule(device, shader);
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = shaderModule;
+    auto pipeline = device.CreateComputePipeline(&csDesc);
+
+    uint32_t outputBufferSizeInBytes = M * N * sizeof(uint32_t);
+    wgpu::BufferDescriptor outputBufferDesc;
+    outputBufferDesc.size = outputBufferSizeInBytes;
+    outputBufferDesc.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc;
+    wgpu::Buffer outputBuffer = device.CreateBuffer(&outputBufferDesc);
+
+    constexpr uint32_t kColumns0 = K / 3 * 4;
+    std::array<std::array<uint32_t, kColumns0>, M> input0 = {};
+    std::array<std::array<uint32_t, N>, K> input1 = {};
+    for (uint32_t i = 0; i < M; ++i) {
+        for (uint32_t j = 0; j < kColumns0; ++j) {
+            input0[i][j] = i * kColumns0 + j;
+        }
+    }
+    for (uint32_t i = 0; i < K; ++i) {
+        for (uint32_t j = 0; j < N; ++j) {
+            input1[i][j] = 2 * (i * N + j);
+        }
+    }
+    wgpu::BufferDescriptor input0BufferDesc;
+    input0BufferDesc.size = sizeof(input0);
+    input0BufferDesc.usage =
+        wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
+    wgpu::Buffer input0Buffer = device.CreateBuffer(&input0BufferDesc);
+    queue.WriteBuffer(input0Buffer, 0, &input0, sizeof(input0));
+    wgpu::BufferDescriptor input1BufferDesc;
+    input1BufferDesc.size = sizeof(input1);
+    input1BufferDesc.usage =
+        wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
+    wgpu::Buffer input1Buffer = device.CreateBuffer(&input1BufferDesc);
+    queue.WriteBuffer(input1Buffer, 0, &input1, sizeof(input1));
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {
+                                                         {0, input0Buffer},
+                                                         {1, input1Buffer},
+                                                         {2, outputBuffer},
+                                                     });
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+    pass.SetPipeline(pipeline);
+    pass.SetBindGroup(0, bindGroup);
+    pass.DispatchWorkgroups(1);
+    pass.End();
+
+    wgpu::BufferDescriptor readbackBufferDesc = {};
+    readbackBufferDesc.size = outputBufferSizeInBytes;
+    readbackBufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::MapRead;
+    wgpu::Buffer readbackBuffer = device.CreateBuffer(&readbackBufferDesc);
+    encoder.CopyBufferToBuffer(outputBuffer, 0, readbackBuffer, 0, outputBufferSizeInBytes);
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    bool done = false;
+    readbackBuffer.MapAsync(wgpu::MapMode::Read, 0, outputBufferSizeInBytes,
+                            wgpu::CallbackMode::AllowProcessEvents,
+                            [&done](wgpu::MapAsyncStatus status, wgpu::StringView) {
+                                ASSERT_EQ(status, wgpu::MapAsyncStatus::Success);
+                                done = true;
+                            });
+
+    while (!done) {
+        WaitABit();
+    }
+
+    const uint32_t* actual = static_cast<const uint32_t*>(readbackBuffer.GetConstMappedRange());
+
+    printf("Expected: \n");
+    for (uint32_t i = 0; i < M; ++i) {
+        for (uint32_t j = 0; j < N; ++j) {
+            uint32_t expected = 0;
+
+            uint32_t x0 = 0;
+            for (uint32_t k = 0; k < K; ++k) {
+                if (x0 % 4 == 3) {
+                    x0++;
+                }
+                expected += input0[i][x0] * input1[k][j];
+                x0++;
+            }
+            printf("%d ", expected);
+        }
+        printf("\n");
+    }
+
+    printf("\n");
+    printf("Actual: \n");
+    for (uint32_t i = 0; i < M; ++i) {
+        for (uint32_t j = 0; j < N; ++j) {
+            printf("%d ", actual[i * N + j]);
+        }
+        printf("\n");
+    }
+
+    for (uint32_t i = 0; i < M; ++i) {
+        for (uint32_t j = 0; j < N; ++j) {
+            uint32_t expected = 0;
+            uint32_t x0 = 0;
+            for (uint32_t k = 0; k < K; ++k) {
+                if (x0 % 4 == 3) {
+                    x0++;
+                }
+                expected += input0[i][x0] * input1[k][j];
+                x0++;
+            }
+            uint32_t actualValue = actual[i * N + j];
+            if (actualValue != expected) {
+                printf("Error at (%d, %d): expected: %d actual %d\n", i, j, expected, actualValue);
+            }
+        }
+    }
+
+    readbackBuffer.Unmap();
+}
+
+TEST_P(SubgroupMMTest, TestMM_32x16_64x1_vec4u) {
+    const char* shader = R"(
+enable subgroups;
+
+@group(0) @binding(0) var<storage, read> input0 : array<array<vec4<u32>, 4>, 32>;
+@group(0) @binding(1) var<storage, read> input1 : array<array<vec4<u32>, 8>, 16>;
+@group(0) @binding(2) var<storage, read_write> output : array<array<vec4<u32>, 8>, 32>;
+
+@compute @workgroup_size(64, 1, 1)
+fn main(
+    @builtin(local_invocation_index) local_index : u32,
+    @builtin(subgroup_invocation_id) sg_invocation_id : u32,
+    @builtin(subgroup_size) sg_size : u32
+) {
+    if (sg_size != 16u) {
+        return;
+    }
+
+    let subgroup_id = local_index / 16u;
+    let input1_offset_x_vec4u = (subgroup_id / 2u) * 4u;
+    let input0_offset_y = (subgroup_id % 2u) * 16u;
+
+    for (var k = 0u; k < 4u; k++) {
+        var local_output_vec4u = vec4u();
+
+        let output_x_vec4u = k + input1_offset_x_vec4u;
+        let output_y = sg_invocation_id + input0_offset_y;
+
+        var input1_vec4u = input1[sg_invocation_id][output_x_vec4u];
+
+        var input0_vec4u = input0[output_y][0];
+        local_output_vec4u += input0_vec4u[0] * subgroupBroadcast(input1_vec4u, 0);
+        local_output_vec4u += input0_vec4u[1] * subgroupBroadcast(input1_vec4u, 1);
+        local_output_vec4u += input0_vec4u[2] * subgroupBroadcast(input1_vec4u, 2);
+        local_output_vec4u += input0_vec4u[3] * subgroupBroadcast(input1_vec4u, 3);
+
+        input0_vec4u = input0[output_y][1];
+        local_output_vec4u += input0_vec4u[0] * subgroupBroadcast(input1_vec4u, 4);
+        local_output_vec4u += input0_vec4u[1] * subgroupBroadcast(input1_vec4u, 5);
+        local_output_vec4u += input0_vec4u[2] * subgroupBroadcast(input1_vec4u, 6);
+        local_output_vec4u += input0_vec4u[3] * subgroupBroadcast(input1_vec4u, 7);
+
+        input0_vec4u = input0[output_y][2];
+        local_output_vec4u += input0_vec4u[0] * subgroupBroadcast(input1_vec4u, 8);
+        local_output_vec4u += input0_vec4u[1] * subgroupBroadcast(input1_vec4u, 9);
+        local_output_vec4u += input0_vec4u[2] * subgroupBroadcast(input1_vec4u, 10);
+        local_output_vec4u += input0_vec4u[3] * subgroupBroadcast(input1_vec4u, 11);
+
+        input0_vec4u = input0[output_y][3];
+        local_output_vec4u += input0_vec4u[0] * subgroupBroadcast(input1_vec4u, 12);
+        local_output_vec4u += input0_vec4u[1] * subgroupBroadcast(input1_vec4u, 13);
+        local_output_vec4u += input0_vec4u[2] * subgroupBroadcast(input1_vec4u, 14);
+        local_output_vec4u += input0_vec4u[3] * subgroupBroadcast(input1_vec4u, 15);
+
+        output[output_y][output_x_vec4u] = local_output_vec4u;
+    }
+}
+)";
+    constexpr uint32_t M = 32;
+    constexpr uint32_t N = 32;
+    constexpr uint32_t K = 16;
+
+    wgpu::ShaderModule shaderModule = utils::CreateShaderModule(device, shader);
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = shaderModule;
+    auto pipeline = device.CreateComputePipeline(&csDesc);
+
+    uint32_t outputBufferSizeInBytes = M * N * sizeof(uint32_t);
+    wgpu::BufferDescriptor outputBufferDesc;
+    outputBufferDesc.size = outputBufferSizeInBytes;
+    outputBufferDesc.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc;
+    wgpu::Buffer outputBuffer = device.CreateBuffer(&outputBufferDesc);
+
+    std::array<std::array<uint32_t, K>, M> input0 = {};
+    std::array<std::array<uint32_t, N>, K> input1 = {};
+    for (uint32_t i = 0; i < M; ++i) {
+        for (uint32_t j = 0; j < K; ++j) {
+            input0[i][j] = i * K + j;
+        }
+    }
+    for (uint32_t i = 0; i < K; ++i) {
+        for (uint32_t j = 0; j < N; ++j) {
+            input1[i][j] = 2 * (i * N + j);
+        }
+    }
+    wgpu::BufferDescriptor input0BufferDesc;
+    input0BufferDesc.size = sizeof(input0);
+    input0BufferDesc.usage =
+        wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
+    wgpu::Buffer input0Buffer = device.CreateBuffer(&input0BufferDesc);
+    queue.WriteBuffer(input0Buffer, 0, &input0, sizeof(input0));
+    wgpu::BufferDescriptor input1BufferDesc;
+    input1BufferDesc.size = sizeof(input1);
+    input1BufferDesc.usage =
+        wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
+    wgpu::Buffer input1Buffer = device.CreateBuffer(&input1BufferDesc);
+    queue.WriteBuffer(input1Buffer, 0, &input1, sizeof(input1));
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {
+                                                         {0, input0Buffer},
+                                                         {1, input1Buffer},
+                                                         {2, outputBuffer},
+                                                     });
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+    pass.SetPipeline(pipeline);
+    pass.SetBindGroup(0, bindGroup);
+    pass.DispatchWorkgroups(1);
+    pass.End();
+
+    wgpu::BufferDescriptor readbackBufferDesc = {};
+    readbackBufferDesc.size = outputBufferSizeInBytes;
+    readbackBufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::MapRead;
+    wgpu::Buffer readbackBuffer = device.CreateBuffer(&readbackBufferDesc);
+    encoder.CopyBufferToBuffer(outputBuffer, 0, readbackBuffer, 0, outputBufferSizeInBytes);
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    bool done = false;
+    readbackBuffer.MapAsync(wgpu::MapMode::Read, 0, outputBufferSizeInBytes,
+                            wgpu::CallbackMode::AllowProcessEvents,
+                            [&done](wgpu::MapAsyncStatus status, wgpu::StringView) {
+                                ASSERT_EQ(status, wgpu::MapAsyncStatus::Success);
+                                done = true;
+                            });
+
+    while (!done) {
+        WaitABit();
+    }
+
+    const uint32_t* actual = static_cast<const uint32_t*>(readbackBuffer.GetConstMappedRange());
+
+    printf("Expected: \n");
+    for (uint32_t i = 0; i < M; ++i) {
+        for (uint32_t j = 0; j < N; ++j) {
+            uint32_t expected = 0;
+
+            for (uint32_t k = 0; k < K; ++k) {
+                expected += input0[i][k] * input1[k][j];
+            }
+            printf("%d ", expected);
+        }
+        printf("\n");
+    }
+
+    printf("\n");
+    printf("Actual: \n");
+    for (uint32_t i = 0; i < M; ++i) {
+        for (uint32_t j = 0; j < N; ++j) {
+            printf("%d ", actual[i * N + j]);
+        }
+        printf("\n");
+    }
+
+    for (uint32_t i = 0; i < M; ++i) {
+        for (uint32_t j = 0; j < N; ++j) {
+            uint32_t expected = 0;
+            for (uint32_t k = 0; k < K; ++k) {
+                expected += input0[i][k] * input1[k][j];
+            }
+            uint32_t actualValue = actual[i * N + j];
+            if (actualValue != expected) {
+                printf("Error at (%d, %d): expected: %d actual %d\n", i, j, expected, actualValue);
+            }
+        }
+    }
+
+    readbackBuffer.Unmap();
+}
+
+DAWN_INSTANTIATE_TEST(SubgroupMMTest, D3D12Backend());
+
 }  // anonymous namespace
 }  // namespace dawn
