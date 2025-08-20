@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b052e30b_6b3e00b9",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-20T20:07:13Z",
+      "side": 1,
+      "message": "```suggestion\n    tint::wgsl::writer::Options writer_options{\n        .minify \u003d options.minify,\n    };\n```",
+      "range": {
+        "startLine": 947,
+        "startChar": 0,
+        "endLine": 948,
+        "endChar": 43
+      },
+      "revId": "1555fbd363ac3997312c020eedbc6cbcc841dd07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
