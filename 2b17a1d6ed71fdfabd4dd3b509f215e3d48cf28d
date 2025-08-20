@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df5e8c32_d57b1510",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-20T07:11:57Z",
+      "side": 1,
+      "message": "Rafael, thanks for the review! I removed all the changes related to D3D11 and let me address it in the next CL after confirmation with QC.",
+      "revId": "2b17a1d6ed71fdfabd4dd3b509f215e3d48cf28d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

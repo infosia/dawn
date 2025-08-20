@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5620e141_a576524c",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-20T07:11:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f8b5e3c_2033f932",
+      "range": {
+        "startLine": 280,
+        "startChar": 4,
+        "endLine": 280,
+        "endChar": 77
+      },
+      "revId": "0588d48e634fb5fcb66cd2c8046fa04b5ccf28bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb0f514a_e44d904a",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "98740ad1_b1bcc4e3",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-20T07:11:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb0f514a_e44d904a",
+      "range": {
+        "startLine": 334,
+        "startChar": 39,
+        "endLine": 334,
+        "endChar": 56
+      },
+      "revId": "0588d48e634fb5fcb66cd2c8046fa04b5ccf28bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3350d538_4f541877",
@@ -60,6 +108,30 @@
       "writtenOn": "2025-08-19T17:05:21Z",
       "side": 1,
       "message": "Please remove this unrelated change from the CL.",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 81
+      },
+      "revId": "0588d48e634fb5fcb66cd2c8046fa04b5ccf28bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fda8de24_efb3e564",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-20T07:11:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3350d538_4f541877",
       "range": {
         "startLine": 160,
         "startChar": 0,
