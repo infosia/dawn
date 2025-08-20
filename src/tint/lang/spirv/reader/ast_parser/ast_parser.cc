@@ -1605,9 +1605,8 @@ bool ASTParser::EmitModuleScopeVariables() {
                                 storage_type, ast_initializer, {});
 
         builder_.AST().AddGlobalVariable(ast_var);
-        module_variable_.GetOrAdd(builtin_position_.per_vertex_var_id, [&] {
-            return ModuleVariable{ast_var, ast_address_space};
-        });
+        module_variable_.GetOrAdd(builtin_position_.per_vertex_var_id,
+                                  [&] { return ModuleVariable{ast_var, ast_address_space}; });
     }
     return success_;
 }

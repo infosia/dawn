@@ -196,7 +196,7 @@ struct TransposeRowMajor::State {
                             matrix->Columns());
         }
         if (auto* arr = ty->As<core::type::Array>()) {
-            auto* stride = b.Stride(arr->Stride());
+            auto* stride = b.Stride(arr->ImplicitStride());
             if (auto count = arr->ConstantCount()) {
                 return b.ty.array(TransposeType(arr->ElemType()), b.Expr(u32(count.value())),
                                   Vector{stride});

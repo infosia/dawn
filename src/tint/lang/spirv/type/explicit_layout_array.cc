@@ -69,7 +69,7 @@ std::string ExplicitLayoutArray::FriendlyName() const {
 ExplicitLayoutArray* ExplicitLayoutArray::Clone(core::type::CloneContext& ctx) const {
     auto* elem_ty = element_->Clone(ctx);
     auto* count = count_->Clone(ctx);
-    return ctx.dst.mgr->Get<ExplicitLayoutArray>(elem_ty, count, align_, size_, stride_);
+    return ctx.dst.mgr->Get<ExplicitLayoutArray>(elem_ty, count, align_, size_, implicit_stride_);
 }
 
 }  // namespace tint::spirv::type
