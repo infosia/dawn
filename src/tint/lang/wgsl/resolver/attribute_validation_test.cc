@@ -1672,7 +1672,8 @@ INSTANTIATE_TEST_SUITE_P(
         },
         TestParams{
             {AttributeKind::kBinding, AttributeKind::kGroup},
-            R"(1:2 error: '@binding' is not valid for 'array' types)",
+            R"(1:2 error: '@binding' is not valid for 'array' types
+3:4 error: '@group' is not valid for 'array' types)",
         }));
 
 using VariableAttributeTest = TestWithParams;

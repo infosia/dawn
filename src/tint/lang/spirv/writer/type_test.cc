@@ -186,17 +186,6 @@ TEST_F(SpirvWriterTest, Type_Array_DefaultStride) {
     EXPECT_INST("%_arr_float_uint_4 = OpTypeArray %float %uint_4");
 }
 
-TEST_F(SpirvWriterTest, Type_Array_ExplicitStride) {
-    b.Append(b.ir.root_block, [&] {  //
-        auto* v = b.Var("v", ty.ptr<storage>(ty.array<f32, 4>(16)));
-        v->SetBindingPoint(0, 0);
-    });
-
-    ASSERT_TRUE(Generate()) << Error() << output_;
-    EXPECT_INST("OpDecorate %_arr_float_uint_4 ArrayStride 16");
-    EXPECT_INST("%_arr_float_uint_4 = OpTypeArray %float %uint_4");
-}
-
 TEST_F(SpirvWriterTest, Type_Array_NestedArray) {
     b.Append(b.ir.root_block, [&] {  //
         auto* v = b.Var<storage, array<array<f32, 64>, 4>>("v");
@@ -218,17 +207,6 @@ TEST_F(SpirvWriterTest, Type_RuntimeArray_DefaultStride) {
 
     ASSERT_TRUE(Generate()) << Error() << output_;
     EXPECT_INST("OpDecorate %_runtimearr_float ArrayStride 4");
-    EXPECT_INST("%_runtimearr_float = OpTypeRuntimeArray %float");
-}
-
-TEST_F(SpirvWriterTest, Type_RuntimeArray_ExplicitStride) {
-    b.Append(b.ir.root_block, [&] {  //
-        auto* v = b.Var("v", ty.ptr<storage, read_write>(ty.array<f32>(16)));
-        v->SetBindingPoint(0, 0);
-    });
-
-    ASSERT_TRUE(Generate()) << Error() << output_;
-    EXPECT_INST("OpDecorate %_runtimearr_float ArrayStride 16");
     EXPECT_INST("%_runtimearr_float = OpTypeRuntimeArray %float");
 }
 

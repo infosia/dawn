@@ -62,14 +62,14 @@ std::string ExplicitLayoutArray::FriendlyName() const {
     if (!count_->Is<core::type::RuntimeArrayCount>()) {
         out << ", " << count_->FriendlyName();
     }
-    out << ", stride=" << stride_ << ">";
+    out << ", stride=" << implicit_stride_ << ">";
     return out.str();
 }
 
 ExplicitLayoutArray* ExplicitLayoutArray::Clone(core::type::CloneContext& ctx) const {
     auto* elem_ty = element_->Clone(ctx);
     auto* count = count_->Clone(ctx);
-    return ctx.dst.mgr->Get<ExplicitLayoutArray>(elem_ty, count, align_, size_, stride_);
+    return ctx.dst.mgr->Get<ExplicitLayoutArray>(elem_ty, count, align_, size_, implicit_stride_);
 }
 
 }  // namespace tint::spirv::type

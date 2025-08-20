@@ -612,7 +612,7 @@ class Printer {
                     if (arr->Is<type::ExplicitLayoutArray>()) {
                         module_.PushAnnot(
                             spv::Op::OpDecorate,
-                            {id, U32Operand(SpvDecorationArrayStride), arr->Stride()});
+                            {id, U32Operand(SpvDecorationArrayStride), arr->ImplicitStride()});
                     }
                 },
                 [&](const core::type::BindingArray* arr) {
