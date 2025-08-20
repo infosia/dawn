@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03c137d4_db55e75d",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-20T18:51:48Z",
+      "side": 1,
+      "message": "This could result in a race where we enqueue a task for a serial that\u0027s already completed. I think that\u0027s OK though?",
+      "revId": "69e8123d9b7cb18e254a19ec21dcbe6b4f837725",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
