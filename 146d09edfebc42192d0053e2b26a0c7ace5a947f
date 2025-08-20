@@ -20,6 +20,80 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "8f46def2_046e5daa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-20T08:36:06Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "146d09edfebc42192d0053e2b26a0c7ace5a947f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c90eca85_d125f807",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1271,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-20T08:36:06Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "146d09edfebc42192d0053e2b26a0c7ace5a947f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8468e43_5d12ee2c",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-20T08:36:06Z",
+      "side": 1,
+      "message": "Basically the changes to these FileRender would match the one for the two FileRenders at [1] and likewise templates would match api_cpp.h",
+      "revId": "146d09edfebc42192d0053e2b26a0c7ace5a947f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afa3068f_203926ff",
+        "filename": "generator/templates/api_cpp_print.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-20T08:36:06Z",
+      "side": 1,
+      "message": "Can we define it in the other FileRender to undefined and do the same logic as at the top of `api_cpp.h`? Just for consistency (and also to not change to a \u003c\u003e include)",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 17
+      },
+      "revId": "146d09edfebc42192d0053e2b26a0c7ace5a947f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "7fad62ed_2b1134f5",
         "filename": "generator/templates/api_cpp_print.h",
         "patchSetId": 1
