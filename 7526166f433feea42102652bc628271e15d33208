@@ -20,6 +20,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e122131a_5a28f8d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-20T08:08:13Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "7526166f433feea42102652bc628271e15d33208",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "0e0bbeeb_f12d2db4",
         "filename": "src/dawn/tests/end2end/SurfaceTests.cpp",
         "patchSetId": 1
@@ -31,6 +48,30 @@
       "writtenOn": "2025-08-19T22:27:35Z",
       "side": 1,
       "message": "As a note, I think this affects more tests than the filter since the `Device__Subzero` portion of `Vulkan_SwiftShader_Device__Subzero` doesn\u0027t seem like something that can be expressed here.",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 74
+      },
+      "revId": "7526166f433feea42102652bc628271e15d33208",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15652152_d7d04a67",
+        "filename": "src/dawn/tests/end2end/SurfaceTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-20T08:08:13Z",
+      "side": 1,
+      "message": "That\u0027s fine IMHO, likely not specific to subzero.",
+      "parentUuid": "0e0bbeeb_f12d2db4",
       "range": {
         "startLine": 68,
         "startChar": 8,
