@@ -16,6 +16,24 @@
       "message": "Only took a brief look at this so far, and I\u0027m gonna be sparsely online this week, so wanted to get some understanding for this generally first. From what I remember, the `Initialize` function on the pipelines can already be overridden, and I think that currently the only difference between async and sync pipeline initialization is that we call the `Initialize` function on a different thread when async (and do synchronization stuff when we need it). Could you explain a bit more of why this change is necessary to achieve shading caching stuff?",
       "revId": "d67d3779849f08eca73dca2b0a8e3fdbbd382eb0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87a6ea81_2ee0bb56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-08-20T23:15:00Z",
+      "side": 1,
+      "message": "So by customizing async pipeline creation, I mean the ability to extend it beyond merely calling `Initialize()` on a worker thread. You could imagine that async pipeline creation has multiple phases with dependencies like a graph of async tasks. We want to complete the async creation event at the end of the task graph, but there\u0027s no way to do that with the current interfaces in PipelineBase.\n\nA concrete example of what I want to achieve can be seen in this upcoming CL: https://dawn-review.googlesource.com/c/dawn/+/255573/21/src/dawn/native/metal/RenderPipelineMTL.mm",
+      "parentUuid": "08004d56_757741d4",
+      "revId": "d67d3779849f08eca73dca2b0a8e3fdbbd382eb0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
