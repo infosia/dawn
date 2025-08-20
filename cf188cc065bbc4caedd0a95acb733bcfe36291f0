@@ -16,6 +16,23 @@
       "message": "This is funny because at the current stage of the report this does more damage at face value than the bug itself lol\nI get why but it is rather amusing.",
       "revId": "cf188cc065bbc4caedd0a95acb733bcfe36291f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "991152d7_594ced16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-20T22:37:11Z",
+      "side": 1,
+      "message": "After talking with Loko for a long time about this issue, we think this is actually a reasonable fix, at least initially. It\u0027s really difficult to come up with any fully correct solution that doesn\u0027t introduce fragility to some other aspect (needing to handle placeholder objects with either nullptr devices or null-backend devices, extra server checks that are easy to miss, added API surfaces for creating/injecting errors, UB with 0x1 pointer, etc.) So PTAL, would this be an acceptable fix? Of course it would be nice to fix properly, but I wouldn\u0027t have any plans to do so.",
+      "revId": "cf188cc065bbc4caedd0a95acb733bcfe36291f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
