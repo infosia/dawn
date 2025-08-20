@@ -1288,8 +1288,22 @@ class MultiGeneratorFromDawnJSON(Generator):
 
             renders.append(
                 FileRender('api_cpp_print.h',
-                           'include/dawn/' + api + '_cpp_print.h',
-                           [RENDER_PARAMS_BASE, params_dawn]))
+                           'include/dawn/' + api + '_cpp_print.h', [
+                               RENDER_PARAMS_BASE, params_dawn, {
+                                   'cpp_header': api + '/' + api + '_cpp.h',
+                                   'c_namespace': None,
+                               }
+                           ]))
+
+            renders.append(
+                FileRender(
+                    'api_cpp_print.h',
+                    'include/dawn/wire/client/' + api + '_cpp_print.h', [
+                        RENDER_PARAMS_BASE, params_dawn, {
+                            'cpp_header': 'dawn/wire/client/' + api + '_cpp.h',
+                            'c_namespace': Name('dawn wire client'),
+                        }
+                    ]))
 
             renders.append(
                 FileRender('api_cpp_chained_struct.h',
