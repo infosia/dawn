@@ -16,6 +16,24 @@
       "message": "Something is broken still so this requires a bit more work. I\u0027ll be OOO for a few weeks but will pick this back up when I am back.",
       "revId": "30700ab051e30b1ab986f3b27fa162d23058912a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b322752a_ff88fc90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-08-20T13:46:46Z",
+      "side": 1,
+      "message": "The problem was due to buffer being unmapped before map async finished and not resetting `mInvalidateRangeOnMap`. Should be fixed.",
+      "parentUuid": "7240bf4d_4f686d79",
+      "revId": "30700ab051e30b1ab986f3b27fa162d23058912a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
