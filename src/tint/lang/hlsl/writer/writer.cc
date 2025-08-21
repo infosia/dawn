@@ -33,6 +33,7 @@
 #include "src/tint/lang/core/ir/function.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/var.h"
+#include "src/tint/lang/core/type/binding_array.h"
 #include "src/tint/lang/core/type/input_attachment.h"
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/hlsl/writer/common/option_helpers.h"
@@ -46,6 +47,11 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
     for (auto* ty : ir.Types()) {
         if (ty->Is<core::type::SubgroupMatrix>()) {
             return Failure("subgroup matrices are not supported by the HLSL backend");
+        }
+        if (auto* ba = ty->As<core::type::BindingArray>()) {
+            if (ba->Count()->Is<core::type::RuntimeArrayCount>()) {
+                return Failure("runtime binding array not supported by the HLSL backend");
+            }
         }
     }
 
