@@ -60,6 +60,11 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
                 return Failure("runtime binding array not supported by the MSL backend");
             }
         }
+        if (auto* ba = ty->As<core::type::BindingArray>()) {
+            if (ba->Count()->Is<core::type::RuntimeArrayCount>()) {
+                return Failure("runtime binding array not supported by the MSL backend");
+            }
+        }
     }
 
     // Check for unsupported module-scope variable address spaces and types.
