@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-08-13 07:53:20AM
+# Last rolled: 2025-08-21 10:27:48AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -1017,8 +1017,13 @@ crbug.com/0000 [ linux nvidia ] webgpu:api,validation,state,device_lost,destroy:
 crbug.com/0000 [ intel linux ] webgpu:api,validation,state,device_lost,destroy:createBindGroup:resourceType="nonFiltSamp";entry={"sampler":{"type":"non-filtering"}};awaitLost=false [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,state,device_lost,destroy:createBindGroup:resourceType="nonFiltSamp";entry={"sampler":{"type":"non-filtering"}};awaitLost=false [ Failure ]
 crbug.com/0000 [ intel-0x4680 linux ] webgpu:api,validation,state,device_lost,destroy:createBindGroupLayout:entry={"buffer":{"type":"storage"}};awaitLost=false [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:api,validation,state,device_lost,destroy:createBindGroupLayout:entry={"buffer":{"type":"storage"}};awaitLost=true [ Failure ]
 crbug.com/0000 [ compat-min-es31 linux nvidia nvidia_ge_535.183.01 ] webgpu:api,validation,state,device_lost,destroy:queue,copyExternalImageToTexture,canvas:canvasType="onscreen";contextType="webgl";awaitLost=false [ Failure ]
 crbug.com/0000 [ intel-0x4680 linux ] webgpu:shader,execution,expression,access,array,index:runtime_sized:elementType="vec2u";indexType="u32" [ Failure ]
 crbug.com/0000 [ intel-0x4680 linux ] webgpu:shader,execution,expression,access,array,index:runtime_sized:elementType="vec3f";indexType="i32" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_3d_coords:stage="v";format="stencil8";filt="nearest";mode="r" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_2d_coords:stage="f";format="stencil8";filt="nearest";modeU="c";modeV="c";offset=false [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_2d_coords:stage="v";format="astc-10x10-unorm";filt="nearest";modeU="c";modeV="c";offset=false [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:arrayed_2d_coords:format="depth16unorm";filt="linear";modeU="r";modeV="r";offset=true [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:shader,validation,shader_io,workgroup_size:workgroup_size:attr="override_expr" [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,canvas,getCurrentTexture:multiple_frames:canvasType="onscreen" [ Failure ]
