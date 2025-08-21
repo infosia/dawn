@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e3a7523_1d97b398",
+        "filename": "src/dawn/native/PassResourceUsageTracker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad226494_c4ece979",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "5895d39e331d603bded760b242c3ae3bc63af89f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3beb997b_0d5dd38c",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b7c2bef_5e9fb177",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3beb997b_0d5dd38c",
+      "range": {
+        "startLine": 561,
+        "startChar": 26,
+        "endLine": 561,
+        "endChar": 38
+      },
+      "revId": "5895d39e331d603bded760b242c3ae3bc63af89f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "29379df3_c4a6edae",
@@ -60,6 +108,30 @@
       "writtenOn": "2025-08-20T18:49:35Z",
       "side": 1,
       "message": "nit. a destroyed external texture should result in an error.",
+      "range": {
+        "startLine": 575,
+        "startChar": 53,
+        "endLine": 575,
+        "endChar": 94
+      },
+      "revId": "5895d39e331d603bded760b242c3ae3bc63af89f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4443c0e0_1366110f",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29379df3_c4a6edae",
       "range": {
         "startLine": 575,
         "startChar": 53,
