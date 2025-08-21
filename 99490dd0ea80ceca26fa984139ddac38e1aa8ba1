@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbcb8e04_f5f3d71b",
+        "filename": "src/tint/lang/wgsl/inspector/binding_array_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-21T20:17:51Z",
+      "side": 1,
+      "message": "Isn\u0027t this redundant, given that `size` is optional?",
+      "revId": "99490dd0ea80ceca26fa984139ddac38e1aa8ba1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "813cafda_87b85d9e",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 975,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-21T20:17:51Z",
+      "side": 1,
+      "message": "Could we just reuse `ResourceBinding::SampledKind` for this enum, and then this can just use `BaseTypeToSampledKind()`?",
+      "revId": "99490dd0ea80ceca26fa984139ddac38e1aa8ba1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
