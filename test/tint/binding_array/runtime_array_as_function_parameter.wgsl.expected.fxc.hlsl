@@ -1,5 +1,9 @@
-SKIP: FAILED
+Texture2D<float4> sampled_textures[] : register(t0);
+void do_texture_load(Texture2D<float4> ts[]) {
+  float4 texture_load = ts[int(0)].Load(int3((int(0)).xx, int(0)));
+}
 
-runtime binding array not supported by the HLSL backend
+void fs() {
+  do_texture_load(sampled_textures);
+}
 
-tint executable returned error: exit status 1
