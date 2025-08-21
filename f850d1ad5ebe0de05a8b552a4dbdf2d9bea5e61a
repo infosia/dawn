@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8af7d6a_a9f18450",
+        "filename": "docs/tint/extensions/chromium_experimental_dynamic_binding.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-21T17:54:48Z",
+      "side": 1,
+      "message": "We don\u0027t have format-less storage textures (`texture_2d\u003cf32\u003e` is a sampled texture). Format-less storage textures are a whole other feature that we haven\u0027t tried to spec yet.\n\nSo I guess for now we just don\u0027t support storage textures? Or we support them as they currently are, with a fixed format?",
+      "revId": "f850d1ad5ebe0de05a8b552a4dbdf2d9bea5e61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c51af3e5_30122ef4",
+        "filename": "docs/tint/extensions/chromium_experimental_dynamic_binding.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-21T17:54:48Z",
+      "side": 1,
+      "message": "As above, no such thing as a format-less storage texture right now.",
+      "revId": "f850d1ad5ebe0de05a8b552a4dbdf2d9bea5e61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cf68575_f06c0671",
+        "filename": "docs/tint/extensions/chromium_experimental_dynamic_binding.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-21T17:54:48Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "f850d1ad5ebe0de05a8b552a4dbdf2d9bea5e61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
