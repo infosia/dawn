@@ -156,6 +156,10 @@ class BufferBase : public SharedResource {
     // creation. Otherwise, returns false indicating that backend specific mapping was used instead.
     ResultOrError<bool> MapAtCreationInternal();
 
+    wgpu::MapMode MapMode() const { return mMapMode; }
+    size_t MapOffset() const { return mMapOffset; }
+    size_t MapSize() const { return mMapSize; }
+
     uint64_t mAllocatedSize = 0;
 
     ExecutionSerial mLastUsageSerial = ExecutionSerial(0);

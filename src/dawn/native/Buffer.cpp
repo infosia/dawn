@@ -542,6 +542,7 @@ ResultOrError<bool> BufferBase::MapAtCreationInternal() {
     // Only set the state to mapped at creation if we did not fail any point in this helper.
     // Otherwise, if we override the default unmapped state before succeeding to create a
     // staging buffer, we will have issues when we try to destroy the buffer.
+    mMapMode = wgpu::MapMode::Write;
     mMapOffset = 0;
     mMapSize = mSize;
     mStagingBuffer = std::move(stagingBuffer);

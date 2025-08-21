@@ -112,6 +112,13 @@ class Buffer final : public BufferBase {
     wgpu::BufferUsage mReadUsage = wgpu::BufferUsage::None;
     wgpu::ShaderStage mReadShaderStages = wgpu::ShaderStage::None;
 
+    // Memory range that was mapped and needs either flush after write or invalidatation before
+    // reading.
+    // TODO(crbug.com/432691010): The range information is the same information that BufferBase
+    // tracks so this could be eliminated.
+    std::optional<VkMappedMemoryRange> mInvalidateRangeOnMap;
+    std::optional<VkMappedMemoryRange> mFlushRangeOnUnmap;
+
     bool mHostVisible : 1;
     bool mHostCoherent : 1;
     bool mHasWriteTransitioned : 1;
