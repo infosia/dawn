@@ -69,6 +69,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "afdae092_e4545a54",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 4297892
+      },
+      "writtenOn": "2025-08-21T23:10:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8468e43_5d12ee2c",
+      "revId": "146d09edfebc42192d0053e2b26a0c7ace5a947f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "afa3068f_203926ff",
@@ -82,6 +100,30 @@
       "writtenOn": "2025-08-20T08:36:06Z",
       "side": 1,
       "message": "Can we define it in the other FileRender to undefined and do the same logic as at the top of `api_cpp.h`? Just for consistency (and also to not change to a \u003c\u003e include)",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 17
+      },
+      "revId": "146d09edfebc42192d0053e2b26a0c7ace5a947f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad77632f_c1359a8f",
+        "filename": "generator/templates/api_cpp_print.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4297892
+      },
+      "writtenOn": "2025-08-21T23:10:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afa3068f_203926ff",
       "range": {
         "startLine": 34,
         "startChar": 6,

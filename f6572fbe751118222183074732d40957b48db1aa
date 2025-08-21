@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13ac95e0_bd9ae51b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4297892
+      },
+      "writtenOn": "2025-08-21T23:10:45Z",
+      "side": 1,
+      "message": "cwallez@ vasilyt@ The CL lost the LGTM votes after the nits are addressed. Could you please LGTM it again? Thanks.",
+      "revId": "f6572fbe751118222183074732d40957b48db1aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
