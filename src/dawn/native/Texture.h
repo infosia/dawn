@@ -333,7 +333,6 @@ class TextureViewBase : public ApiObjectBase {
     wgpu::ComponentSwizzle GetSwizzleGreen() const;
     wgpu::ComponentSwizzle GetSwizzleBlue() const;
     wgpu::ComponentSwizzle GetSwizzleAlpha() const;
-    bool UsesNonDefaultSwizzle() const;
     wgpu::TextureComponentSwizzle ComposeSwizzle(wgpu::TextureComponentSwizzle swizzle) const;
 
     virtual bool IsYCbCr() const;
