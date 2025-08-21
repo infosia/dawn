@@ -33,6 +33,24 @@
       "message": "What\u0027s the point of keeping `Feature::ChromiumExperimentalPrimitiveId` if developers have to switch to update their WGSL code to `enable primitive_index`. I believe we should remove it as it was \"advertised\" in the name as experimental.",
       "revId": "36d64a7746c94f1c2d4bc7f25db77d078d2ac222",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1ea777c_668f3d65",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-21T13:33:04Z",
+      "side": 1,
+      "message": "We will, but we want land the new one, roll that into chromium, and then we will remove the old one. It means things don\u0027t break immediately on roll as things have time to be updated in the middle.",
+      "parentUuid": "0f989406_99f5a2e4",
+      "revId": "36d64a7746c94f1c2d4bc7f25db77d078d2ac222",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
