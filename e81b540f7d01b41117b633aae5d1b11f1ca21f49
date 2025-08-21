@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47374768_04aae3ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T17:03:47Z",
+      "side": 1,
+      "message": "LGTM! Thank you for splitting this part off, it will help de-risk the rest!",
+      "revId": "e81b540f7d01b41117b633aae5d1b11f1ca21f49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
