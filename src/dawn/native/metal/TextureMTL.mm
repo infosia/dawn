@@ -49,6 +49,13 @@ namespace dawn::native::metal {
 
 namespace {
 
+static constexpr wgpu::TextureComponentSwizzle kR001Swizzle = {
+    wgpu::ComponentSwizzle::R,
+    wgpu::ComponentSwizzle::Zero,
+    wgpu::ComponentSwizzle::Zero,
+    wgpu::ComponentSwizzle::One,
+};
+
 MTLTextureUsage MetalTextureUsage(const Format& format, wgpu::TextureUsage usage) {
     MTLTextureUsage result = MTLTextureUsageUnknown;  // This is 0
 
@@ -121,6 +128,15 @@ MTLTextureSwizzle MetalTextureSwizzle(wgpu::ComponentSwizzle swizzle) {
     }
 }
 
+MTLTextureSwizzleChannels ToMetalTextureSwizzleChannels(wgpu::TextureComponentSwizzle swizzle) {
+    MTLTextureSwizzleChannels mtlSwizzle;
+    mtlSwizzle.red = MetalTextureSwizzle(swizzle.r);
+    mtlSwizzle.green = MetalTextureSwizzle(swizzle.g);
+    mtlSwizzle.blue = MetalTextureSwizzle(swizzle.b);
+    mtlSwizzle.alpha = MetalTextureSwizzle(swizzle.a);
+    return mtlSwizzle;
+}
+
 bool RequiresCreatingNewTextureView(
     const TextureBase* texture,
     wgpu::TextureUsage internalViewUsage,
@@ -174,16 +190,6 @@ bool RequiresCreatingNewTextureView(
             return true;
         default:
             break;
-    }
-
-    // TODO(414312052): Use TextureViewBase::UsesNonDefaultSwizzle() instead of
-    // textureViewDescriptor.
-    if (auto* swizzleDesc = textureViewDescriptor.Get<TextureComponentSwizzleDescriptor>()) {
-        auto swizzle = swizzleDesc->swizzle.WithTrivialFrontendDefaults();
-        if (swizzle.r != wgpu::ComponentSwizzle::R || swizzle.g != wgpu::ComponentSwizzle::G ||
-            swizzle.b != wgpu::ComponentSwizzle::B || swizzle.a != wgpu::ComponentSwizzle::A) {
-            return true;
-        }
     }
 
     return false;
@@ -804,7 +810,9 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
     Aspect aspect = SelectFormatAspects(texture->GetFormat(), descriptor->aspect);
     id<MTLTexture> mtlTexture = texture->GetMTLTexture(aspect);
 
-    bool needsNewView = RequiresCreatingNewTextureView(texture, GetInternalUsage(), descriptor);
+    std::optional<MTLTextureSwizzleChannels> mtlSwizzle = ComputeMetalSwizzle();
+    bool needsNewView = mtlSwizzle.has_value() ||
+                        RequiresCreatingNewTextureView(texture, GetInternalUsage(), descriptor);
     if (device->IsToggleEnabled(Toggle::MetalUseCombinedDepthStencilFormatForStencil8) &&
         GetTexture()->GetFormat().format == wgpu::TextureFormat::Stencil8) {
         // If MetalUseCombinedDepthStencilFormatForStencil8 is true and the format is Stencil8,
@@ -838,18 +846,13 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
         auto mipLevelRange = NSMakeRange(descriptor->baseMipLevel, descriptor->mipLevelCount);
         auto arrayLayerRange = NSMakeRange(descriptor->baseArrayLayer, descriptor->arrayLayerCount);
 
-        if (UsesNonDefaultSwizzle()) {
-            MTLTextureSwizzleChannels swizzle;
-            swizzle.red = MetalTextureSwizzle(GetSwizzleRed());
-            swizzle.green = MetalTextureSwizzle(GetSwizzleGreen());
-            swizzle.blue = MetalTextureSwizzle(GetSwizzleBlue());
-            swizzle.alpha = MetalTextureSwizzle(GetSwizzleAlpha());
+        if (mtlSwizzle) {
             mMtlTextureView =
                 AcquireNSPRef([mtlTexture newTextureViewWithPixelFormat:viewFormat
                                                             textureType:textureViewType
                                                                  levels:mipLevelRange
                                                                  slices:arrayLayerRange
-                                                                swizzle:swizzle]);
+                                                                swizzle:mtlSwizzle.value()]);
         } else {
             mMtlTextureView =
                 AcquireNSPRef([mtlTexture newTextureViewWithPixelFormat:viewFormat
@@ -900,6 +903,27 @@ TextureView::AttachmentInfo TextureView::GetAttachmentInfo() const {
     info.baseMipLevel = GetBaseMipLevel();
     info.baseArrayLayer = GetBaseArrayLayer();
     return info;
+}
+
+std::optional<MTLTextureSwizzleChannels> TextureView::ComputeMetalSwizzle() {
+    if (!SupportTextureComponentSwizzle(ToBackend(GetDevice())->GetMTLDevice())) {
+        // If the device doesn't support texture component swizzling,
+        // we should have caught this during validation.
+        DAWN_ASSERT(AreSwizzleEquivalent(GetSwizzle(), kRGBASwizzle));
+        return {};
+    }
+
+    // A backend swizzle is always used for depth-stencil if supported.
+    // If not, we returned {} above so G/B/A will be undefined.
+    if (GetTexture()->GetFormat().HasDepthOrStencil()) {
+        return ToMetalTextureSwizzleChannels(ComposeSwizzle(kR001Swizzle, GetSwizzle()));
+    }
+
+    if (!AreSwizzleEquivalent(GetSwizzle(), kRGBASwizzle)) {
+        return ToMetalTextureSwizzleChannels(GetSwizzle());
+    }
+
+    return {};
 }
 
 }  // namespace dawn::native::metal

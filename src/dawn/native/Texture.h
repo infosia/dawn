@@ -71,6 +71,23 @@ ResultOrError<TextureViewDescriptor> GetTextureViewDescriptorWithDefaults(
 
 bool IsValidSampleCount(uint32_t sampleCount);
 
+// Applies the `rhs` swizzle to the result of the `lhs` swizzle.
+// The order matches WGSL swizzle composition, where `lhs.rhs` is interpreted as
+// applying `rhs` to the components of `lhs`.
+wgpu::TextureComponentSwizzle ComposeSwizzle(wgpu::TextureComponentSwizzle lhs,
+                                             wgpu::TextureComponentSwizzle rhs);
+
+// Checks if two swizzles are functionally identical.
+bool AreSwizzleEquivalent(wgpu::TextureComponentSwizzle lhs, wgpu::TextureComponentSwizzle rhs);
+
+// The default swizzle as defined by the WebGPU specification.
+static constexpr wgpu::TextureComponentSwizzle kRGBASwizzle = {
+    wgpu::ComponentSwizzle::R,
+    wgpu::ComponentSwizzle::G,
+    wgpu::ComponentSwizzle::B,
+    wgpu::ComponentSwizzle::A,
+};
+
 static constexpr wgpu::TextureUsage kReadOnlyTextureUsages =
     wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::TextureBinding | kReadOnlyRenderAttachment |
     kReadOnlyStorageTexture;
@@ -329,12 +346,11 @@ class TextureViewBase : public ApiObjectBase {
     wgpu::TextureUsage GetUsage() const;
     wgpu::TextureUsage GetInternalUsage() const;
 
+    wgpu::TextureComponentSwizzle GetSwizzle() const;
     wgpu::ComponentSwizzle GetSwizzleRed() const;
     wgpu::ComponentSwizzle GetSwizzleGreen() const;
     wgpu::ComponentSwizzle GetSwizzleBlue() const;
     wgpu::ComponentSwizzle GetSwizzleAlpha() const;
-    bool UsesNonDefaultSwizzle() const;
-    wgpu::TextureComponentSwizzle ComposeSwizzle(wgpu::TextureComponentSwizzle swizzle) const;
 
     virtual bool IsYCbCr() const;
     // Valid to call only if `IsYCbCr()` is true.
