@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a13ee036_3be0421d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-21T21:01:02Z",
+      "side": 1,
+      "message": "LGTM, will let Corentin say if this is the right information for Dawn.",
+      "revId": "a855efeda641af67e66c04777888fd1b55efd004",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
