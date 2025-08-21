@@ -936,4 +936,61 @@ std::vector<Override> Inspector::Overrides() {
     return results;
 }
 
+std::vector<BindingArrayInfo> Inspector::GetBindingArrayInfo(const std::string& entry_point) {
+    auto* func = FindEntryPointByName(entry_point);
+    if (!func) {
+        return {};
+    }
+
+    std::vector<BindingArrayInfo> result;
+    auto* func_sem = program_.Sem().Get(func);
+    for (auto& global : func_sem->TransitivelyReferencedGlobals()) {
+        auto* ba = global->Type()->UnwrapRef()->As<core::type::BindingArray>();
+        if (!ba) {
+            continue;
+        }
+
+        auto* cnt = ba->Count()->As<core::type::ConstantArrayCount>();
+        result.push_back({
+            .group = global->Attributes().binding_point->group,
+            .binding = global->Attributes().binding_point->binding,
+            .is_runtime = ba->Count()->Is<core::type::RuntimeArrayCount>(),
+            .is_typeless = false,  // TODO(439629476): Support typeless binding_array
+            .size = cnt ? std::optional{cnt->value} : std::nullopt,
+        });
+
+        auto& res = result.back();
+
+        // TODO(439629476): Support more types of things going into the binding array.
+        tint::Switch(
+            ba->ElemType(),
+            [&](const core::type::SampledTexture* sa) {
+                res.type_info.push_back({
+                    .type = BindingArrayInfo::ResourceType::kSampledTexture,
+                    .dim = TypeTextureDimensionToResourceBindingTextureDimension(sa->Dim()),
+                });
+
+                auto& b = res.type_info.back();
+                tint::Switch(
+                    sa->Type(),
+                    [&](const core::type::F32*) {
+                        b.sampled_type = BindingArrayInfo::SampledType::kF32;
+                    },
+                    [&](const core::type::I32*) {
+                        b.sampled_type = BindingArrayInfo::SampledType::kI32;
+                    },
+                    [&](const core::type::U32*) {
+                        b.sampled_type = BindingArrayInfo::SampledType::kU32;
+                    },
+                    TINT_ICE_ON_NO_MATCH);
+            },
+            TINT_ICE_ON_NO_MATCH);
+
+        // TODO(439629476): Find instances of `getBinding` and `hasBinding` for typeless binding
+        // array information.
+    }
+
+    return result;
+}
+
 }  // namespace tint::inspector
