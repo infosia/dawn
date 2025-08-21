@@ -48,9 +48,11 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
         if (ty->Is<core::type::SubgroupMatrix>()) {
             return Failure("subgroup matrices are not supported by the HLSL backend");
         }
-        if (auto* ba = ty->As<core::type::BindingArray>()) {
-            if (ba->Count()->Is<core::type::RuntimeArrayCount>()) {
-                return Failure("runtime binding array not supported by the HLSL backend");
+        if (options.compiler == Options::Compiler::kFXC) {
+            if (auto* ba = ty->As<core::type::BindingArray>()) {
+                if (ba->Count()->Is<core::type::RuntimeArrayCount>()) {
+                    return Failure("runtime binding array not supported by the HLSL FXC backend");
+                }
             }
         }
     }
