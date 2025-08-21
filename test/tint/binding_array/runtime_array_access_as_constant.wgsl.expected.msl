@@ -1,5 +1,5 @@
 SKIP: FAILED
 
-runtime binding array snot supported by the GLSL backend
+runtime binding array not supported by the MSL backend
 
 tint executable returned error: exit status 1
