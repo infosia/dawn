@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73a35e72_57488782",
+        "filename": "src/tint/lang/hlsl/writer/writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-21T14:04:26Z",
+      "side": 0,
+      "message": "Need to keep this check when options.compiler is FXC?",
+      "revId": "84709934416d670d3ba864d8a72cee3ac7703650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
