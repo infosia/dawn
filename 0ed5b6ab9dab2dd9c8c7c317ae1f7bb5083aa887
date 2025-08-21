@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5489847_9f16a142",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 22
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-08-21T20:52:26Z",
+      "side": 1,
+      "message": "I split out the ForceSynchronousPipelineCreation Toggle change to https://dawn-review.googlesource.com/c/dawn/+/258557 to keep this CL small and focused on just the async pipeline creation refactor",
+      "revId": "0ed5b6ab9dab2dd9c8c7c317ae1f7bb5083aa887",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
