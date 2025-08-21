@@ -33,6 +33,24 @@
       "message": "LGTM (but to be sure, the goal is to use SBM for UMA support in the future right? This is just to test that the path will work?)",
       "revId": "9daca7b74a9d4593594840cfd8e92174bfd1f800",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55215253_e4d6025b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-08-21T00:48:18Z",
+      "side": 1,
+      "message": "Yes. In Chromium the transfer buffer is based on SBM on Windows so I need to know if we can always import SBM as D3D12 buffer with \"host-mapped-pointer\".",
+      "parentUuid": "9d8c803d_34abe133",
+      "revId": "9daca7b74a9d4593594840cfd8e92174bfd1f800",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
