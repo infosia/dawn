@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0858ee4f_722efc6b",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-08-21T18:18:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71d905e1_365f8862",
+      "revId": "087d65bdbf30815262464c03f80914f529c7c467",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8560f0c3_11bdfcb6",
@@ -70,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "efa776a6_854be8e2",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-08-21T18:18:29Z",
+      "side": 1,
+      "message": "It\u0027s write per offline conversation. Done.",
+      "parentUuid": "94fc1c0b_0b3d6cf2",
+      "revId": "087d65bdbf30815262464c03f80914f529c7c467",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "72d37fc1_c52c469b",
@@ -83,6 +119,24 @@
       "writtenOn": "2025-08-21T07:06:32Z",
       "side": 1,
       "message": "[1]",
+      "revId": "087d65bdbf30815262464c03f80914f529c7c467",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "565c36dc_39932f76",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-08-21T18:18:29Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "72d37fc1_c52c469b",
       "revId": "087d65bdbf30815262464c03f80914f529c7c467",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
