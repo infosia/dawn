@@ -1363,7 +1363,12 @@ class MultiGeneratorFromDawnJSON(Generator):
             renders.append(
                 FileRender('api_cpp_print.h',
                            'src/emdawnwebgpu/include/dawn/webgpu_cpp_print.h',
-                           [RENDER_PARAMS_BASE, params_emscripten]))
+                           [
+                               RENDER_PARAMS_BASE, params_emscripten, {
+                                   'cpp_header': api + '/' + api + '_cpp.h',
+                                   'c_namespace': None,
+                               }
+                           ]))
 
         if 'emdawnwebgpu_js' in targets:
             assert api == 'webgpu'
