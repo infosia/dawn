@@ -41,6 +41,59 @@ Ref<CommandBuffer> CommandBuffer::Create(CommandEncoder* encoder,
 CommandBuffer::CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor)
     : CommandBufferBase(encoder, descriptor) {}
 
+namespace {
+
+inline const WGPUExtent3D ToWGPU(const Extent3D& extent) {
+    return {
+        .width = extent.width,
+        .height = extent.height,
+        .depthOrArrayLayers = extent.depthOrArrayLayers,
+    };
+}
+
+inline const WGPUOrigin3D ToWGPU(const Origin3D& origin) {
+    return {
+        .x = origin.x,
+        .y = origin.y,
+        .z = origin.z,
+    };
+}
+
+inline const WGPUTexelCopyBufferInfo ToWGPU(const BufferCopy& copy) {
+    return {
+        .layout =
+            {
+                .offset = copy.offset,
+                .bytesPerRow = copy.bytesPerRow,
+                .rowsPerImage = copy.rowsPerImage,
+            },
+        .buffer = dawn::native::webgpu::ToBackend(copy.buffer)->GetInnerHandle(),
+    };
+}
+
+inline WGPUTextureAspect ToWGPU(const Aspect aspect) {
+    switch (aspect) {
+        case Aspect::Depth:
+            return WGPUTextureAspect_DepthOnly;
+        case Aspect::Stencil:
+            return WGPUTextureAspect_StencilOnly;
+        default:
+            return WGPUTextureAspect_All;
+    }
+}
+
+inline const WGPUTexelCopyTextureInfo ToWGPU(const TextureCopy& copy) {
+    return {
+        // TODO(gman): Do this when GetInnerHandle is implemented for TextureWGPU
+        .texture = nullptr,  // ToBackend(copy.texture)->GetInnerHandle(),
+        .mipLevel = copy.mipLevel,
+        .origin = ToWGPU(copy.origin),
+        .aspect = ToWGPU(copy.aspect),
+    };
+}
+
+}  // anonymous namespace
+
 WGPUCommandBuffer CommandBuffer::Encode() {
     auto& wgpu = ToBackend(GetDevice())->wgpu;
 
@@ -51,12 +104,74 @@ WGPUCommandBuffer CommandBuffer::Encode() {
     Command type;
     while (mCommands.NextCommandId(&type)) {
         switch (type) {
+            case Command::BeginComputePass: {
+                // TBD
+                break;
+            }
+            case Command::BeginRenderPass: {
+                // TBD
+                break;
+            }
             case Command::CopyBufferToBuffer: {
-                CopyBufferToBufferCmd* copy = mCommands.NextCommand<CopyBufferToBufferCmd>();
+                auto copy = mCommands.NextCommand<CopyBufferToBufferCmd>();
                 wgpu.commandEncoderCopyBufferToBuffer(
                     innerEncoder, ToBackend(copy->source)->GetInnerHandle(), copy->sourceOffset,
                     ToBackend(copy->destination)->GetInnerHandle(), copy->destinationOffset,
                     copy->size);
+                break;
+            }
+            case Command::CopyBufferToTexture: {
+                auto cmd = mCommands.NextCommand<CopyBufferToTextureCmd>();
+                WGPUTexelCopyBufferInfo source = ToWGPU(cmd->source);
+                WGPUTexelCopyTextureInfo destination = ToWGPU(cmd->destination);
+                WGPUExtent3D size = ToWGPU(cmd->copySize);
+                wgpu.commandEncoderCopyBufferToTexture(innerEncoder, &source, &destination, &size);
+                break;
+            }
+            case Command::CopyTextureToBuffer: {
+                auto cmd = mCommands.NextCommand<CopyTextureToBufferCmd>();
+                WGPUTexelCopyTextureInfo source = ToWGPU(cmd->source);
+                WGPUTexelCopyBufferInfo destination = ToWGPU(cmd->destination);
+                WGPUExtent3D size = ToWGPU(cmd->copySize);
+                wgpu.commandEncoderCopyTextureToBuffer(innerEncoder, &source, &destination, &size);
+                break;
+            }
+            case Command::CopyTextureToTexture: {
+                auto cmd = mCommands.NextCommand<CopyTextureToTextureCmd>();
+                WGPUTexelCopyTextureInfo source = ToWGPU(cmd->source);
+                WGPUTexelCopyTextureInfo destination = ToWGPU(cmd->destination);
+                WGPUExtent3D size = ToWGPU(cmd->copySize);
+                wgpu.commandEncoderCopyTextureToTexture(innerEncoder, &source, &destination, &size);
+                break;
+            }
+            case Command::ClearBuffer: {
+                // auto cmd = mCommands.NextCommand<ClearBufferCmd>();
+                break;
+            }
+            case Command::ResolveQuerySet: {
+                // auto cmd = mCommands.NextCommand<ResolveQuerySetCmd>();
+                break;
+            }
+            case Command::WriteTimestamp: {
+                // auto cmd = mCommands.NextCommand<WriteTimestampCmd>();
+                break;
+            }
+            case Command::InsertDebugMarker: {
+                // auto cmd = mCommands.NextCommand<InsertDebugMarkerCmd>(), commands);
+                // char* label = mCommands.NextData<char>(cmd->length + 1);
+                break;
+            }
+            case Command::PopDebugGroup: {
+                // auto cmd = mCommands.NextCommand<PopDebugGroupCmd>();
+                break;
+            }
+            case Command::PushDebugGroup: {
+                // auto cmd = mCommands.NextCommand<PushDebugGroupCmd>(), commands);
+                // char* label = mCommands.NextData<char>(cmd->length + 1);
+                break;
+            }
+            case Command::WriteBuffer: {
+                // auto cmd = mCommands.NextCommand<WriteBufferCmd>();
                 break;
             }
             default:
