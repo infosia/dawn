@@ -29,6 +29,7 @@
 
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/var.h"
+#include "src/tint/lang/core/type/binding_array.h"
 #include "src/tint/lang/core/type/f16.h"
 #include "src/tint/lang/core/type/f32.h"
 #include "src/tint/lang/core/type/input_attachment.h"
@@ -48,6 +49,11 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
             }
             if (m->Columns() != 8 || m->Rows() != 8) {
                 return Failure("the MSL backend only supports 8x8 subgroup matrices");
+            }
+        }
+        if (auto* ba = ty->As<core::type::BindingArray>()) {
+            if (ba->Count()->Is<core::type::RuntimeArrayCount>()) {
+                return Failure("runtime binding array snot supported by the GLSL backend");
             }
         }
     }
