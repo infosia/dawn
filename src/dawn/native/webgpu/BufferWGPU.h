@@ -50,6 +50,7 @@ class Buffer final : public BufferBase, public ObjectWGPU<WGPUBuffer> {
     bool IsCPUWritableAtCreation() const override;
     MaybeError MapAtCreationImpl() override;
     void* GetMappedPointerImpl() override;
+    void DestroyImpl() override;
 
     raw_ptr<void> mMappedData = nullptr;
 };
