@@ -71,8 +71,6 @@ struct ImmediateDataContent {
     alignas(T) unsigned char mData[sizeof(T)] = {0};
 };
 
-// TODO(crbug.com/366291600): Add inheritance ability(like BindGroupTracker) so that it can inherit
-// immediate constants in native backend if supported.
 template <typename T, typename PipelineType>
 class UserImmediateConstantsTrackerBase {
   public:
