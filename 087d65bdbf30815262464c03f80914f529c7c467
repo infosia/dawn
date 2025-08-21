@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5210d07f_2ede7a25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:06:32Z",
+      "side": 1,
+      "message": "LGTM, suggestions to avoid storing state and computing ranges to invalidate/flush directly in the correct points of the execution.",
+      "revId": "087d65bdbf30815262464c03f80914f529c7c467",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71d905e1_365f8862",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:06:32Z",
+      "side": 1,
+      "message": "It seems that now that we have `FinalizeMapAsync` called for both mappedAdCreation and MapAsync, (should it be renamed to `FinalizeMap` then?) we can handle the setting of `mFlushRangeOnUnmap` there, unifying this logic with the one at [1]. Or even move it to `UnmapImpl`.",
+      "revId": "087d65bdbf30815262464c03f80914f529c7c467",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8560f0c3_11bdfcb6",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:06:32Z",
+      "side": 1,
+      "message": "This can be computed directly in `FinalizeMapAsyncImpl` so we don\u0027t need to store the range to invalidate on the object.\n\nLikewise it seems that we could probably compute `mFlushRangeOnUnmap` in `UnmapImpl` and not need to store it on the object either.",
+      "revId": "087d65bdbf30815262464c03f80914f529c7c467",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72d37fc1_c52c469b",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:06:32Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "087d65bdbf30815262464c03f80914f529c7c467",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
