@@ -721,7 +721,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
 #endif
 
-    if ([*mDevice supportsFamily:MTLGPUFamilyMac2]) {
+    if (SupportTextureComponentSwizzle(*mDevice)) {
         EnableFeature(Feature::TextureComponentSwizzle);
     }
 
