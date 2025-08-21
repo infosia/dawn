@@ -121,10 +121,10 @@ MTLTextureSwizzle MetalTextureSwizzle(wgpu::ComponentSwizzle swizzle) {
     }
 }
 
-bool RequiresCreatingNewTextureView(
-    const TextureBase* texture,
-    wgpu::TextureUsage internalViewUsage,
-    const UnpackedPtr<TextureViewDescriptor>& textureViewDescriptor) {
+bool RequiresCreatingNewTextureView(const TextureBase* texture,
+                                    wgpu::TextureUsage internalViewUsage,
+                                    const UnpackedPtr<TextureViewDescriptor>& textureViewDescriptor,
+                                    bool usesNonDefaultSwizzle) {
     constexpr wgpu::TextureUsage kShaderUsageNeedsView =
         wgpu::TextureUsage::StorageBinding | wgpu::TextureUsage::TextureBinding;
     constexpr wgpu::TextureUsage kUsageNeedsView = kShaderUsageNeedsView |
@@ -176,14 +176,8 @@ bool RequiresCreatingNewTextureView(
             break;
     }
 
-    // TODO(414312052): Use TextureViewBase::UsesNonDefaultSwizzle() instead of
-    // textureViewDescriptor.
-    if (auto* swizzleDesc = textureViewDescriptor.Get<TextureComponentSwizzleDescriptor>()) {
-        auto swizzle = swizzleDesc->swizzle.WithTrivialFrontendDefaults();
-        if (swizzle.r != wgpu::ComponentSwizzle::R || swizzle.g != wgpu::ComponentSwizzle::G ||
-            swizzle.b != wgpu::ComponentSwizzle::B || swizzle.a != wgpu::ComponentSwizzle::A) {
-            return true;
-        }
+    if (usesNonDefaultSwizzle) {
+        return true;
     }
 
     return false;
@@ -804,7 +798,9 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
     Aspect aspect = SelectFormatAspects(texture->GetFormat(), descriptor->aspect);
     id<MTLTexture> mtlTexture = texture->GetMTLTexture(aspect);
 
-    bool needsNewView = RequiresCreatingNewTextureView(texture, GetInternalUsage(), descriptor);
+    bool usesNonDefaultSwizzle = UsesNonDefaultSwizzle();
+    bool needsNewView = RequiresCreatingNewTextureView(texture, GetInternalUsage(), descriptor,
+                                                       usesNonDefaultSwizzle);
     if (device->IsToggleEnabled(Toggle::MetalUseCombinedDepthStencilFormatForStencil8) &&
         GetTexture()->GetFormat().format == wgpu::TextureFormat::Stencil8) {
         // If MetalUseCombinedDepthStencilFormatForStencil8 is true and the format is Stencil8,
@@ -838,18 +834,33 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
         auto mipLevelRange = NSMakeRange(descriptor->baseMipLevel, descriptor->mipLevelCount);
         auto arrayLayerRange = NSMakeRange(descriptor->baseArrayLayer, descriptor->arrayLayerCount);
 
-        if (UsesNonDefaultSwizzle()) {
-            MTLTextureSwizzleChannels swizzle;
-            swizzle.red = MetalTextureSwizzle(GetSwizzleRed());
-            swizzle.green = MetalTextureSwizzle(GetSwizzleGreen());
-            swizzle.blue = MetalTextureSwizzle(GetSwizzleBlue());
-            swizzle.alpha = MetalTextureSwizzle(GetSwizzleAlpha());
+        wgpu::TextureComponentSwizzle swizzle = {
+            .r = GetSwizzleRed(),
+            .g = GetSwizzleGreen(),
+            .b = GetSwizzleBlue(),
+            .a = GetSwizzleAlpha(),
+        };
+        if (texture->GetFormat().HasDepthOrStencil()) {
+            wgpu::TextureComponentSwizzle depthStencilSwizzle = {
+                .r = wgpu::ComponentSwizzle::R,
+                .g = wgpu::ComponentSwizzle::Zero,
+                .b = wgpu::ComponentSwizzle::Zero,
+                .a = wgpu::ComponentSwizzle::One,
+            };
+            swizzle = ComposeSwizzle(depthStencilSwizzle);
+        }
+        if (usesNonDefaultSwizzle) {
+            MTLTextureSwizzleChannels mtlSwizzle;
+            mtlSwizzle.red = MetalTextureSwizzle(swizzle.r);
+            mtlSwizzle.green = MetalTextureSwizzle(swizzle.g);
+            mtlSwizzle.blue = MetalTextureSwizzle(swizzle.b);
+            mtlSwizzle.alpha = MetalTextureSwizzle(swizzle.a);
             mMtlTextureView =
                 AcquireNSPRef([mtlTexture newTextureViewWithPixelFormat:viewFormat
                                                             textureType:textureViewType
                                                                  levels:mipLevelRange
                                                                  slices:arrayLayerRange
-                                                                swizzle:swizzle]);
+                                                                swizzle:mtlSwizzle]);
         } else {
             mMtlTextureView =
                 AcquireNSPRef([mtlTexture newTextureViewWithPixelFormat:viewFormat
