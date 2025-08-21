@@ -87,7 +87,7 @@ class Buffer final : public BufferBase {
                      uint64_t size = 0);
 
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override;
-    void FinalizeMapImpl() override;
+    void FinalizeMapImpl(BufferState newState) override;
     void UnmapImpl() override;
     void DestroyImpl() override;
     bool IsCPUWritableAtCreation() const override;
@@ -111,6 +111,13 @@ class Buffer final : public BufferBase {
     // Track which usages have read the buffer since the last write.
     wgpu::BufferUsage mReadUsage = wgpu::BufferUsage::None;
     wgpu::ShaderStage mReadShaderStages = wgpu::ShaderStage::None;
+
+    // Memory range that was mapped and needs either flush after write or invalidatation before
+    // reading.
+    // TODO(crbug.com/432691010): The range information is the same information that BufferBase
+    // tracks so this could be eliminated.
+    std::optional<VkMappedMemoryRange> mInvalidateRangeOnMap;
+    std::optional<VkMappedMemoryRange> mFlushRangeOnUnmap;
 
     bool mHostVisible : 1;
     bool mHostCoherent : 1;
