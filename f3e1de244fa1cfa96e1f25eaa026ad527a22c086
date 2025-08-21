@@ -52,6 +52,24 @@
       "parentUuid": "2cc3c3b7_40519871",
       "revId": "f3e1de244fa1cfa96e1f25eaa026ad527a22c086",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b548214_a321c077",
+        "filename": "docs/tint/extensions/chromium_experimental_dynamic_binding.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-21T19:03:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba19fa0c_76bbc536",
+      "revId": "f3e1de244fa1cfa96e1f25eaa026ad527a22c086",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
