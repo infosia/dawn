@@ -82,6 +82,7 @@ using InspectorGetEntryPointTest = InspectorTest;
 using InspectorOverridesTest = InspectorTest;
 using InspectorGetConstantNameToIdMapTest = InspectorTest;
 using InspectorGetResourceBindingsTest = InspectorTest;
+using InspectorGetBindingArrayInfoTest = InspectorTest;
 using InspectorGetUsedExtensionNamesTest = InspectorTest;
 using InspectorGetBlendSrcTest = InspectorTest;
 using InspectorSubgroupMatrixTest = InspectorTest;
@@ -2790,6 +2791,152 @@ fn f() {
     EXPECT_EQ(1u, result[0].binding);
     EXPECT_TRUE(result[0].array_size.has_value());
     EXPECT_EQ(5u, result[0].array_size.value());
+}
+
+TEST_F(InspectorGetBindingArrayInfoTest, NoBindingArray) {
+    auto* src = R"(
+@group(0) @binding(1) var toto: texture_2d<f32>;
+@fragment fn ep() {
+  _ = textureDimensions(toto);
+}
+)";
+
+    Inspector& inspector = Initialize(src);
+
+    auto result = inspector.GetBindingArrayInfo("ep");
+    ASSERT_FALSE(inspector.has_error()) << inspector.error();
+
+    EXPECT_TRUE(result.empty());
+}
+
+TEST_F(InspectorGetBindingArrayInfoTest, BindingArray_TypeAndSize) {
+    auto* src = R"(
+enable chromium_experimental_dynamic_binding;
+
+@group(0) @binding(1) var toto: binding_array<texture_2d<f32>, 5>;
+@fragment fn ep() {
+  _ = textureDimensions(toto[3]);
+}
+)";
+
+    Inspector& inspector = Initialize(src);
+
+    auto result = inspector.GetBindingArrayInfo("ep");
+    ASSERT_FALSE(inspector.has_error()) << inspector.error();
+
+    ASSERT_EQ(1u, result.size());
+
+    EXPECT_EQ(0u, result[0].group);
+    EXPECT_EQ(1u, result[0].binding);
+    EXPECT_FALSE(result[0].is_runtime);
+    EXPECT_FALSE(result[0].is_typeless);
+    EXPECT_TRUE(result[0].size.has_value());
+    EXPECT_EQ(5u, result[0].size.value());
+}
+
+TEST_F(InspectorGetBindingArrayInfoTest, BindingArray_TypeRuntime) {
+    auto* src = R"(
+enable chromium_experimental_dynamic_binding;
+
+@group(0) @binding(1) var toto: binding_array<texture_2d<f32>>;
+@fragment fn ep() {
+  _ = textureDimensions(toto[3]);
+}
+)";
+
+    Inspector& inspector = Initialize(src);
+
+    auto result = inspector.GetBindingArrayInfo("ep");
+    ASSERT_FALSE(inspector.has_error()) << inspector.error();
+
+    ASSERT_EQ(1u, result.size());
+
+    EXPECT_EQ(0u, result[0].group);
+    EXPECT_EQ(1u, result[0].binding);
+    EXPECT_TRUE(result[0].is_runtime);
+    EXPECT_FALSE(result[0].is_typeless);
+    EXPECT_FALSE(result[0].size.has_value());
+    ASSERT_EQ(1u, result[0].type_info.size());
+
+    EXPECT_EQ(ResourceBinding::TextureDimension::k2d, result[0].type_info[0].dim);
+    EXPECT_EQ(ResourceBinding::SampledKind::kFloat, result[0].type_info[0].sampled_kind);
+}
+
+// TODO(439629476): Support typeless binding array
+TEST_F(InspectorGetBindingArrayInfoTest, DISABLED_BindingArray_TypeLessRuntime) {
+    auto* src = R"(
+enable chromium_experimental_dynamic_binding;
+
+@group(0) @binding(1) var toto: binding_array;
+@fragment fn ep() {
+  _ = hasBinding<texture_2d<f32>>(toto, 0);
+  _ = getBinding<texture_3d<i32>>(toto, 1);
+}
+)";
+
+    Inspector& inspector = Initialize(src);
+
+    auto result = inspector.GetBindingArrayInfo("ep");
+    ASSERT_FALSE(inspector.has_error()) << inspector.error();
+
+    ASSERT_EQ(1u, result.size());
+
+    EXPECT_EQ(0u, result[0].group);
+    EXPECT_EQ(1u, result[0].binding);
+    EXPECT_TRUE(result[0].is_runtime);
+    EXPECT_TRUE(result[0].is_typeless);
+    EXPECT_FALSE(result[0].size.has_value());
+    ASSERT_EQ(2u, result[0].type_info.size());
+
+    EXPECT_EQ(ResourceBinding::TextureDimension::k2d, result[0].type_info[0].dim);
+    EXPECT_EQ(ResourceBinding::SampledKind::kFloat, result[0].type_info[0].sampled_kind);
+
+    EXPECT_EQ(ResourceBinding::TextureDimension::k3d, result[0].type_info[1].dim);
+    EXPECT_EQ(ResourceBinding::SampledKind::kSInt, result[0].type_info[1].sampled_kind);
+}
+
+// TODO(439629476): Support typeless binding array
+TEST_F(InspectorGetBindingArrayInfoTest, BindingArray_Multiple) {
+    auto* src = R"(
+enable chromium_experimental_dynamic_binding;
+
+@group(1) @binding(1) var toto: binding_array<texture_2d<f32>, 4>;
+@group(2) @binding(0) var moto: binding_array<texture_1d<u32>>;
+//@group(0) @binding(1) var zoto: binding_array;
+@fragment fn ep() {
+  _ = textureDimensions(toto[3]);
+  _ = textureDimensions(moto[3]);
+
+//  _ = hasBinding<texture_2d<f32>>(zoto, 0);
+//  _ = getBinding<texture_3d<f32>>(zoto, 1);
+}
+)";
+
+    Inspector& inspector = Initialize(src);
+
+    auto result = inspector.GetBindingArrayInfo("ep");
+    ASSERT_FALSE(inspector.has_error()) << inspector.error();
+
+    ASSERT_EQ(2u, result.size());
+
+    EXPECT_EQ(1u, result[0].group);
+    EXPECT_EQ(1u, result[0].binding);
+    EXPECT_FALSE(result[0].is_runtime);
+    EXPECT_FALSE(result[0].is_typeless);
+    EXPECT_TRUE(result[0].size.has_value());
+    EXPECT_EQ(4u, result[0].size.value());
+    ASSERT_EQ(1u, result[0].type_info.size());
+    EXPECT_EQ(ResourceBinding::TextureDimension::k2d, result[0].type_info[0].dim);
+    EXPECT_EQ(ResourceBinding::SampledKind::kFloat, result[0].type_info[0].sampled_kind);
+
+    EXPECT_EQ(2u, result[1].group);
+    EXPECT_EQ(0u, result[1].binding);
+    EXPECT_TRUE(result[1].is_runtime);
+    EXPECT_FALSE(result[1].is_typeless);
+    EXPECT_FALSE(result[1].size.has_value());
+    ASSERT_EQ(1u, result[1].type_info.size());
+    EXPECT_EQ(ResourceBinding::TextureDimension::k1d, result[1].type_info[0].dim);
+    EXPECT_EQ(ResourceBinding::SampledKind::kUInt, result[1].type_info[0].sampled_kind);
 }
 
 class InspectorGetSamplerTextureUsesTest : public TestHelper, public testing::Test {
