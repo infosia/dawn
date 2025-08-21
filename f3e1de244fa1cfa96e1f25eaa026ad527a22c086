@@ -16,6 +16,24 @@
       "message": "Is the behaviour the same regardless of robustness? i.e. must be built outside of robustness",
       "revId": "f3e1de244fa1cfa96e1f25eaa026ad527a22c086",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cc3c3b7_40519871",
+        "filename": "docs/tint/extensions/chromium_experimental_dynamic_binding.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-21T17:36:47Z",
+      "side": 1,
+      "message": "Probably this should match: \n\n`e: binding_array\u003cT, N\u003e and i: i32 or u32 -\u003e e[i]: T. The result is the value of the ith element of the array value e. If i is outside of the range [0, N-1]:`\n\nwith only the typeless version being special.",
+      "parentUuid": "b431a10f_c14b5377",
+      "revId": "f3e1de244fa1cfa96e1f25eaa026ad527a22c086",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
