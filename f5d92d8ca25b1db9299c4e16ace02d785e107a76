@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7184988d_f586fbb1",
+        "filename": "src/dawn/native/CreatePipelineAsyncEvent.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-21T01:38:35Z",
+      "side": 1,
+      "message": "nit. Maybe `OnInitialized`, I think for a lot of callbacks we usually use the \"On\" prefix.",
+      "range": {
+        "startLine": 167,
+        "startChar": 78,
+        "endLine": 167,
+        "endChar": 91
+      },
+      "revId": "f5d92d8ca25b1db9299c4e16ace02d785e107a76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0db74142_860577ea",
+        "filename": "src/dawn/native/CreatePipelineAsyncEvent.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-21T01:38:35Z",
+      "side": 1,
+      "message": "nit. I think the `startTime` could probably be a member of the event instead of needing to be passed around.",
+      "range": {
+        "startLine": 168,
+        "startChar": 4,
+        "endLine": 168,
+        "endChar": 20
+      },
+      "revId": "f5d92d8ca25b1db9299c4e16ace02d785e107a76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "911724a8_bcdacfaf",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-21T01:38:35Z",
+      "side": 1,
+      "message": "I think this isn\u0027t actually needed here.\n\n\nPlease fix this WARNING reported by ClangTidy: check: misc-header-include-cycle\n\ncircular header file dependency detected while...\n\ncheck: misc-header-include-cycle\n\ncircular header file dependency detected while including \u0027CreatePipelineAsyncEvent.h\u0027, please check the include path (https://clang.llvm.org/extra/clang-tidy/checks/misc/header-include-cycle.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: misc-header-include-cycle` footer to the CL description to skip the check)\n\n(Note: running clang-tidy on this file failed; this diagnostic might be incorrect as a result.)\n\n(Lint observed on `android-clang-tidy-rel` and `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "f5d92d8ca25b1db9299c4e16ace02d785e107a76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c2d6584_cc02ec6d",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-21T01:38:35Z",
+      "side": 1,
+      "message": "Hmm, I\u0027m trying to decide if passing a callback is better or the alternative I thought of below. But basically, when I see that a callback can be passed, it looks like more arbitrary stuff can happen when in reality, IIUC, this callback is always the same thing (effectively calling `OnInitialized` on the event from above.\n\nAlternative:\n- Make a base class `CreatePipelineAsyncEventBase` which holds the two fields `Ref\u003cPipelineType\u003e mPipeline` and `std::unique_ptr\u003cErrorData\u003e mError` from the existing `CreatePipelineAsyncEvent` above, and implements the `OnInitialized` or `DidInitialize` function.\n- Pass a `CreatePipelineAsyncEventBase*` to this function, and then backends that override this function can directly call `OnInitialized` on the event to note that the pipeline is error or ready.",
+      "range": {
+        "startLine": 107,
+        "startChar": 33,
+        "endLine": 107,
+        "endChar": 83
+      },
+      "revId": "f5d92d8ca25b1db9299c4e16ace02d785e107a76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
