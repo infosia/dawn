@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "040c244a_d1006107",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-21T03:44:43Z",
+      "side": 1,
+      "message": "This is less close to working than I thought, so will change significantly. But still want to know what you think of crashing the client.",
+      "revId": "14c34d3b70be003677776f4f9895ae1388af8ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bd74c942_ff08d035",
         "filename": "src/dawn/wire/client/ObjectBase.cpp",
         "patchSetId": 3
