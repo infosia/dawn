@@ -39,6 +39,7 @@
 # Kind:      lib
 ################################################################################
 tint_add_target(tint_lang_wgsl_inspector lib
+  lang/wgsl/inspector/binding_array_info.h
   lang/wgsl/inspector/entry_point.cc
   lang/wgsl/inspector/entry_point.h
   lang/wgsl/inspector/inspector.cc
