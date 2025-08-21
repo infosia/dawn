@@ -304,6 +304,12 @@ class TextureViewBase : public ApiObjectBase {
     ~TextureViewBase() override;
 
     static Ref<TextureViewBase> MakeError(DeviceBase* device, StringView label = nullptr);
+    static wgpu::TextureComponentSwizzle GetDefaultSwizzle(Format format);
+    static wgpu::TextureComponentSwizzle ComposeSwizzle(
+        wgpu::TextureComponentSwizzle firstSwizzle,
+        wgpu::TextureComponentSwizzle secondSwizzle);
+    static bool AreSwizzleEquivalent(wgpu::TextureComponentSwizzle firstSwizzle,
+                                     wgpu::TextureComponentSwizzle secondSwizzle);
 
     ObjectType GetType() const override;
     void FormatLabel(absl::FormatSink* s) const override;
@@ -333,8 +339,6 @@ class TextureViewBase : public ApiObjectBase {
     wgpu::ComponentSwizzle GetSwizzleGreen() const;
     wgpu::ComponentSwizzle GetSwizzleBlue() const;
     wgpu::ComponentSwizzle GetSwizzleAlpha() const;
-    bool UsesNonDefaultSwizzle() const;
-    wgpu::TextureComponentSwizzle ComposeSwizzle(wgpu::TextureComponentSwizzle swizzle) const;
 
     virtual bool IsYCbCr() const;
     // Valid to call only if `IsYCbCr()` is true.
