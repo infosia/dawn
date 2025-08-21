@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "39221e1c_7bc2c2f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-21T17:28:34Z",
+      "side": 1,
+      "message": "@hao.x.li@intel.com and @jiawei.shao@intel.com, please review this CL as it introduces the generation definition for Intel GPUs, and I also hope to have the most consistency with https://chromium-review.googlesource.com/c/chromium/src/+/6860507.\nFor all the enum names in generation definition, I prefixed them with Genxx so that it\u0027s easy to know a number. Maybe it\u0027s hard for Chromium to change accordingly, as they\u0027re already attached to histograms.",
+      "revId": "2b17a1d6ed71fdfabd4dd3b509f215e3d48cf28d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2f4897cc_fe55413e",
