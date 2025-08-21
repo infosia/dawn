@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "94fc1c0b_0b3d6cf2",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-08-21T17:04:45Z",
+      "side": 1,
+      "message": "The one thing missing in FinalizeMapAsyncImpl() is the mode. BufferBase::mMapMode is set for MapAsyncImpl so that could be used from FinalizeMapAsyncImpl(). For mapped at creation we don\u0027t set mMapMode but I think we could. What mode should correspond to mapped at creation? Is it just `Write` or is `Read|Write`?",
+      "parentUuid": "8560f0c3_11bdfcb6",
+      "revId": "087d65bdbf30815262464c03f80914f529c7c467",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "72d37fc1_c52c469b",
         "filename": "src/dawn/native/vulkan/BufferVk.cpp",
         "patchSetId": 9
