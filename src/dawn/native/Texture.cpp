@@ -1736,11 +1736,12 @@ wgpu::ComponentSwizzle TextureViewBase::GetSwizzleAlpha() const {
 }
 
 bool TextureViewBase::UsesNonDefaultSwizzle() const {
-    // TODO(414312052): Refine this condition. A view might not be strictly necessary
-    // in case of the given swizzle works identically to default with the original
-    // format, e.g. a R8Unorm texture with swizzle.r set to R and swizzle.g set to One.
-    // This current check provides a correct, though potentially overly broad,
-    // first approximation.
+    if (GetFormat().HasDepthOrStencil()) {
+        return mSwizzleRed != wgpu::ComponentSwizzle::R ||
+               mSwizzleGreen != wgpu::ComponentSwizzle::Zero ||
+               mSwizzleBlue != wgpu::ComponentSwizzle::Zero ||
+               mSwizzleAlpha != wgpu::ComponentSwizzle::One;
+    }
     return mSwizzleRed != wgpu::ComponentSwizzle::R || mSwizzleGreen != wgpu::ComponentSwizzle::G ||
            mSwizzleBlue != wgpu::ComponentSwizzle::B || mSwizzleAlpha != wgpu::ComponentSwizzle::A;
 }
