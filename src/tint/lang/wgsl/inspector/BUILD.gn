@@ -45,6 +45,7 @@ if (tint_build_unittests || tint_build_benchmarks) {
 
 libtint_source_set("inspector") {
   sources = [
+    "binding_array_info.h",
     "entry_point.cc",
     "entry_point.h",
     "inspector.cc",
