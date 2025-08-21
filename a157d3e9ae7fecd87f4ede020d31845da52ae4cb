@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "a157d3e9ae7fecd87f4ede020d31845da52ae4cb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca826e1a_38f0b1a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-08-21T12:32:39Z",
+      "side": 1,
+      "message": "WebGPU gardener FYI",
+      "revId": "a157d3e9ae7fecd87f4ede020d31845da52ae4cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
