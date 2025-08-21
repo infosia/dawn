@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "514e7aee_78f6b155",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-21T01:22:26Z",
+      "side": 1,
+      "message": "Here\u0027s 3 more copy commands which I think are okay to commit or at least review (small CLs and all)\n\nQuestions:\n\n1. Converting from Aspect back to WGPUTextureAspect. Is this going to work? Aspect has color,depth,stencil,plane0,plane1,plane2 as bits where as WGPUTextureAspect is an enum.\n\n2. Are the `ToWGPU` conversion functions OK. Do they already exist somewhere else. I think they don\u0027t but maybe `Extent3D` -\u003e `WGPUExtent3D` and `Origin3D` to `WGPUOrigin3D` already exist? Or maybe they should just be `reinterpret_cast\u003c\u003e`?",
+      "revId": "ff25d8af7219e497455f34919f0f96fe07d30a3c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
