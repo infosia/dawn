@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8157a639_e70d179e",
+        "filename": "src/dawn/common/GPUInfo.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:57:12Z",
+      "side": 1,
+      "message": "I understand that there is a certain logic in the number you picked, but unless it matches some external known number, referring to Xe3 as \"14\" is confusing in the code. The previous helper function make it super clear what we were checking.\n\nAlternatively we could have a enum class with named generations and return that here, so the code says `if (GetIntelGen(...) \u003c\u003d IntelGen::Gen11/Xe3)`.",
+      "parentUuid": "43e3ac34_93d73fc5",
+      "revId": "2b17a1d6ed71fdfabd4dd3b509f215e3d48cf28d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e47a0bf1_682837e1",
         "filename": "src/dawn/common/GPUInfo.h",
         "patchSetId": 8
