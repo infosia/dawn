@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "928456df_d9e898f2",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-21T16:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d6ce27_6c8c1b8c",
+      "revId": "ff25d8af7219e497455f34919f0f96fe07d30a3c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ff2e4306_67455ea8",
@@ -65,6 +83,30 @@
       "writtenOn": "2025-08-21T07:16:46Z",
       "side": 1,
       "message": "Here and in other places\n\n```suggestion\n        .buffer \u003d ToBackend(copy.buffer)-\u003eGetInnerHandle(),\n```",
+      "range": {
+        "startLine": 70,
+        "startChar": 18,
+        "endLine": 70,
+        "endChar": 62
+      },
+      "revId": "ff25d8af7219e497455f34919f0f96fe07d30a3c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a92f5b03_70091a2f",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-21T16:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff2e4306_67455ea8",
       "range": {
         "startLine": 70,
         "startChar": 18,
@@ -92,6 +134,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "70d4e48a_05df171c",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-21T16:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f28c59ff_42aaf0eb",
+      "revId": "ff25d8af7219e497455f34919f0f96fe07d30a3c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "92e98da2_2f9cfc75",
@@ -109,6 +169,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "86b3a4ad_d899aee9",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-21T16:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92e98da2_2f9cfc75",
+      "revId": "ff25d8af7219e497455f34919f0f96fe07d30a3c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ef748ab_d799be7a",
@@ -122,6 +200,30 @@
       "writtenOn": "2025-08-21T07:16:46Z",
       "side": 1,
       "message": "nit: the DAWN_UNREACHABLE() below will take care of making sure that we implement these commands, so we don\u0027t need to add TBD, or commented out code in the commands below [1].",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 13
+      },
+      "revId": "ff25d8af7219e497455f34919f0f96fe07d30a3c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99ab2437_296455bc",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-21T16:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ef748ab_d799be7a",
       "range": {
         "startLine": 107,
         "startChar": 0,
