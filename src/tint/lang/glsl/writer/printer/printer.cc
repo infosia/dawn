@@ -886,9 +886,11 @@ class Printer : public tint::TextGenerator {
             }
         }
 
-        auto* constant_count = ary->Count()->As<core::type::ConstantArrayCount>();
-        TINT_ASSERT(constant_count != nullptr);
-        out << "[" << constant_count->value << "]";
+        out << "[";
+        if (auto* cnt = ary->Count()->As<core::type::ConstantArrayCount>()) {
+            out << cnt->value;
+        }
+        out << "]";
     }
 
     void EmitTextureType(StringStream& out, const core::type::Texture* t) {

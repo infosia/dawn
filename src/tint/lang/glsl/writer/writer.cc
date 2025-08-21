@@ -45,11 +45,6 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
         if (ty->Is<core::type::SubgroupMatrix>()) {
             return Failure("subgroup matrices are not supported by the GLSL backend");
         }
-        if (auto* ba = ty->As<core::type::BindingArray>()) {
-            if (ba->Count()->Is<core::type::RuntimeArrayCount>()) {
-                return Failure("runtime binding array not supported by the GLSL backend");
-            }
-        }
     }
 
     // Make sure that every texture variable is in the texture_builtins_from_uniform binding list,
@@ -76,7 +71,9 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
             uint32_t count = 1;
             if (auto* ba = handle_type->As<core::type::BindingArray>()) {
                 handle_type = ba->ElemType();
-                count = ba->Count()->As<core::type::ConstantArrayCount>()->value;
+                if (auto* cnt = ba->Count()->As<core::type::ConstantArrayCount>()) {
+                    count = cnt->value;
+                }
             }
 
             // Check texture types that need metadata for texture_builtins_from_uniform.
