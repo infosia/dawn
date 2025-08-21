@@ -45,6 +45,7 @@ cc_library(
     "scalar.cc",
   ],
   hdrs = [
+    "binding_array_info.h",
     "entry_point.h",
     "inspector.h",
     "resource_binding.h",
