@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b431a10f_c14b5377",
+        "filename": "docs/tint/extensions/chromium_experimental_dynamic_binding.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-21T17:25:10Z",
+      "side": 1,
+      "message": "Is the behaviour the same regardless of robustness? i.e. must be built outside of robustness",
+      "revId": "f3e1de244fa1cfa96e1f25eaa026ad527a22c086",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
