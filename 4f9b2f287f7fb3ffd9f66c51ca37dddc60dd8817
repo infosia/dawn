@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52a529d5_bcf130f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-08-21T22:24:12Z",
+      "side": 1,
+      "message": "Just fill the bits needed immediately in CommandBufferWGPU.\nCopyFromStagingToTextureImpl and writeTextureImpl unimplemented.",
+      "revId": "4f9b2f287f7fb3ffd9f66c51ca37dddc60dd8817",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
