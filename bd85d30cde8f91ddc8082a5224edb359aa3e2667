@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4051cbd9_65f01327",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fd06952_a6ad0709",
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b05efc96_07ad9de2",
@@ -48,6 +66,30 @@
       "writtenOn": "2025-08-20T15:21:00Z",
       "side": 1,
       "message": "```suggestion\n    // Build a map of texture indices to sampler indices. This maps the texture to\n    // the sampler which will be used in VK in the combined image sampler entry.\n```\n\nStruggled to parse this one, is the suggestion accurate?",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 40
+      },
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aaec8d46_fcce07ce",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b05efc96_07ad9de2",
       "range": {
         "startLine": 76,
         "startChar": 0,
@@ -75,6 +117,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a39f3d5a_7aac7775",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "404ca952_046bf55b",
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1de2b293_9dfa6dac",
@@ -88,6 +148,30 @@
       "writtenOn": "2025-08-20T15:21:00Z",
       "side": 1,
       "message": "```suggestion\n        VkDescriptorSetLayoutBinding vkBinding{\n            .binding \u003d uint32_t(bindingIndex),\n            .descriptorType \u003d VulkanDescriptorType(bindingInfo),\n            .descriptorCount \u003d uint32_t(bindingInfo.arraySize),\n            .stageFlags \u003d VulkanShaderStageFlags(bindingInfo.visibility),\n        };\n```",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 78
+      },
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed946a96_155b690b",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1de2b293_9dfa6dac",
       "range": {
         "startLine": 114,
         "startChar": 0,
@@ -115,6 +199,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d5b0ea7_d4a1f606",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "That\u0027s not exactly what it does, tried to add a comment to make it clearer.",
+      "parentUuid": "ebfb4f64_dd6f999b",
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59ce3862_136284b5",
@@ -128,6 +230,30 @@
       "writtenOn": "2025-08-20T15:21:00Z",
       "side": 1,
       "message": "```suggestion\n        }\n```\n\nThe designated initializer if used above should zero this out already",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 9
+      },
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d8c1bef_9499ca96",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59ce3862_136284b5",
       "range": {
         "startLine": 124,
         "startChar": 0,
@@ -155,6 +281,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2322c779_5890513a",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6e9cd75_4baaf732",
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e963666_ecdd3288",
@@ -168,6 +312,30 @@
       "writtenOn": "2025-08-20T15:21:00Z",
       "side": 1,
       "message": "```suggestion\n    VkDescriptorSetLayoutCreateInfo createInfo{\n        .sType \u003d VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO,\n        .pNext \u003d nullptr,\n        .flags \u003d 0,\n        .bindingCount \u003d uint32_t(bindings.bindings.size()),\n        .pBindings \u003d bindings.bindings.data(),\n    };\n```",
+      "range": {
+        "startLine": 323,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 52
+      },
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83d58a61_d02dda3c",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e963666_ecdd3288",
       "range": {
         "startLine": 323,
         "startChar": 0,
@@ -201,6 +369,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77549769_3f375bd8",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "This forced me to explictly set pImmutableSmaplers:\n\n```\n../../src/dawn/native/vulkan/BindGroupLayoutVk.cpp:384:5: error: missing field \u0027pImmutableSamplers\u0027 initializer [-Werror,-Wmissing-designated-field-initializers]\n```",
+      "parentUuid": "09daa30c_a5b1df12",
+      "range": {
+        "startLine": 376,
+        "startChar": 1,
+        "endLine": 383,
+        "endChar": 65
+      },
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "836fafac_5edf3091",
@@ -218,6 +410,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2819916a_00402078",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "836fafac_5edf3091",
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b57e66f9_f2071fb8",
@@ -231,6 +441,30 @@
       "writtenOn": "2025-08-20T15:21:00Z",
       "side": 1,
       "message": "```suggestion\n    VkDescriptorSetLayoutBindingFlagsCreateInfo flagCreateInfo{\n        .sType \u003d VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO,\n        .pNext \u003d nullptr,\n        .bindingCount \u003d uint32_t(flags.size()),\n        .pBindingFlags \u003d flags.data(),\n    };\n```",
+      "range": {
+        "startLine": 394,
+        "startChar": 0,
+        "endLine": 398,
+        "endChar": 48
+      },
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc7447dd_0e300803",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b57e66f9_f2071fb8",
       "range": {
         "startLine": 394,
         "startChar": 0,
@@ -264,6 +498,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64ba656a_6a7f7dd2",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59214ef0_2658ef20",
+      "range": {
+        "startLine": 400,
+        "startChar": 0,
+        "endLine": 405,
+        "endChar": 43
+      },
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98903272_05ea81f5",
@@ -277,6 +535,24 @@
       "writtenOn": "2025-08-20T15:21:00Z",
       "side": 1,
       "message": "```suggestion\n// Note that this is a base class for two different implementations depending on whether the layout\n```",
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dd0b3e9_4497903f",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98903272_05ea81f5",
       "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -298,6 +574,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "00c25a39_7643c7b3",
+        "filename": "src/dawn/native/vulkan/DescriptorSetAllocator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79e3d387_4e2c9efa",
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "411d33d8_69c6f386",
@@ -315,6 +609,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cea7a684_4efe665d",
+        "filename": "src/dawn/native/vulkan/DescriptorSetAllocator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "411d33d8_69c6f386",
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6b7ce8ff_bf8aad5b",
@@ -328,6 +640,30 @@
       "writtenOn": "2025-08-20T15:21:00Z",
       "side": 1,
       "message": "```suggestion\n    VkDescriptorPoolCreateInfo createInfo{\n        .sType \u003d VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO,\n        .pNext \u003d nullptr,\n        .flags \u003d VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT,\n        .maxSets \u003d 1,\n        .poolSizeCount \u003d sizes.size(),\n        .pPoolSizes \u003d sizes.data(),\n    };\n```",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 261,
+        "endChar": 41
+      },
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6aa2654e_6c9a1bb6",
+        "filename": "src/dawn/native/vulkan/DescriptorSetAllocator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b7ce8ff_bf8aad5b",
       "range": {
         "startLine": 255,
         "startChar": 0,
@@ -361,6 +697,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb335b2a_bd54ddff",
+        "filename": "src/dawn/native/vulkan/DescriptorSetAllocator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f04dc867_ab3ad835",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 57
+      },
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "677e012c_84a7a180",
@@ -384,6 +744,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bec198d_4317dd63",
+        "filename": "src/dawn/native/vulkan/DescriptorSetAllocator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "677e012c_84a7a180",
+      "range": {
+        "startLine": 294,
+        "startChar": 0,
+        "endLine": 299,
+        "endChar": 42
+      },
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2905334_60eecfe7",
@@ -397,6 +781,24 @@
       "writtenOn": "2025-08-20T15:21:00Z",
       "side": 1,
       "message": "```suggestion\n    // Clear the content of the allocation so that use after frees are more visible.\n```",
+      "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7700804_27842545",
+        "filename": "src/dawn/native/vulkan/DescriptorSetAllocator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-21T07:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2905334_60eecfe7",
       "revId": "bd85d30cde8f91ddc8082a5224edb359aa3e2667",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
