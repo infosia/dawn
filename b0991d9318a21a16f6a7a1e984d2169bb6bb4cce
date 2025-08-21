@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c6cb56d_4567c78d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-21T18:56:18Z",
+      "side": 1,
+      "message": "PTAL. First pass at inspector data for binding array. cwallez@ does this seem like it would suit your needs?",
+      "revId": "b0991d9318a21a16f6a7a1e984d2169bb6bb4cce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
