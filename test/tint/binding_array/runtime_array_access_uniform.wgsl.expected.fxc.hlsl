@@ -1,3 +1,4 @@
+
 cbuffer cbuffer_index : register(b0, space1) {
   uint4 index[1];
 };
