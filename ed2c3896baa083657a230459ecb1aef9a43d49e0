@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36b4931e_92e82f7e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T15:28:36Z",
+      "side": 1,
+      "message": "LGTM still. Quyen for +2",
+      "revId": "ed2c3896baa083657a230459ecb1aef9a43d49e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d07f6a44_07e531c7",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T15:28:36Z",
+      "side": 1,
+      "message": "I worry this might fail if we are mapped at creation? Let\u0027s see with the CQ.",
+      "revId": "ed2c3896baa083657a230459ecb1aef9a43d49e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
