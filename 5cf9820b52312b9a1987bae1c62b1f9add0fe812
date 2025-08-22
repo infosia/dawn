@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4a0433b_795e3cdd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T06:57:19Z",
+      "side": 1,
+      "message": "LGTM with nits! Thank you for this iteration, I think one more patchset and this is good to land from my PoV.\n\nBrandon or Quyen, also PTAL.",
+      "revId": "5cf9820b52312b9a1987bae1c62b1f9add0fe812",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5a6f86d_1a4eedf0",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T06:57:19Z",
+      "side": 1,
+      "message": "```suggestion\n    wgpu::MapMode GetMapMode() const { return mMapMode; }\n    size_t GetMapOffset() const { return mMapOffset; }\n    size_t GetMapSize() const { return mMapSize; }\n\n```\n\nAlso the definition can be in the .cpp with the assumption that LTCG will inline it.\n\nAlso any chance we can have ASSERTs that they are called only when the buffer is mapped?",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 0
+      },
+      "revId": "5cf9820b52312b9a1987bae1c62b1f9add0fe812",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2cb60c4_afa0d5cf",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T06:57:19Z",
+      "side": 1,
+      "message": "These are no longer needed!",
+      "revId": "5cf9820b52312b9a1987bae1c62b1f9add0fe812",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12762f20_3e73aec5",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T06:57:19Z",
+      "side": 1,
+      "message": "u-nit: it\u0027s better to associate TODOs with issues instead of people because as soon as the CL lands, it is no longer \"your\" code, but \"our\" code.",
+      "revId": "5cf9820b52312b9a1987bae1c62b1f9add0fe812",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
