@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a70ed4c2_86087917",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T15:43:32Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "30108f88eb9d08af98f599af3912e86ba12824fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a019b486_061ca040",
+        "filename": "src/dawn/tests/unittests/wire/WireTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T15:43:32Z",
+      "side": 1,
+      "message": "Can we have a comment why this is needed? It\u0027s not immediately clear in this file.",
+      "revId": "30108f88eb9d08af98f599af3912e86ba12824fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9b825e8_99f81c62",
+        "filename": "src/dawn/wire/client/Client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T15:43:32Z",
+      "side": 1,
+      "message": "Why is this needed? We replace with the noop serializer on disconnect.",
+      "revId": "30108f88eb9d08af98f599af3912e86ba12824fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f73fcee3_d026bb10",
+        "filename": "src/dawn/wire/client/ObjectBase.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T15:43:32Z",
+      "side": 1,
+      "message": "nit: unused?",
+      "revId": "30108f88eb9d08af98f599af3912e86ba12824fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
