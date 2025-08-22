@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9bd03b1c_bd698618",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T14:34:33Z",
+      "side": 1,
+      "message": "This needs handling of the runtime binding array. Locally I added a skip. Ditto for the buffer case eventually.\n\nSee https://dawn-review.googlesource.com/c/dawn/+/258698/comment/cffcc560_2b7612ac/",
+      "revId": "d6cf88cc5021041dd4bfec0407348bed38443260",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ad1d0465_df8d4b89",
         "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
         "patchSetId": 7
@@ -31,6 +48,24 @@
       "writtenOn": "2025-08-22T11:42:22Z",
       "side": 1,
       "message": "This is already reflected for sized arrays in the existing resources binding reflection. Dawn will only care about runtime arrays for bindless, and I believe that we will only need to check the \"ResourceType\" (called DynamicArrayKind in Dawn) for SampledTexture vs. StorageTexture vs. ...\n\nNote that the runtime arrays will be potentially sparse, so Dawn will require that a runtime array is exactly for the dynamic array part.",
+      "revId": "d6cf88cc5021041dd4bfec0407348bed38443260",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef163e41_d59e4ff5",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T14:34:33Z",
+      "side": 1,
+      "message": "Here is the CL using the new inspector API: https://dawn-review.googlesource.com/c/dawn/+/258697/1/src/dawn/native/ShaderModule.h",
+      "parentUuid": "ad1d0465_df8d4b89",
       "revId": "d6cf88cc5021041dd4bfec0407348bed38443260",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
