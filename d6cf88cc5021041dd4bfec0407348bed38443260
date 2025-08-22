@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "829c7106_c216bd23",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T11:42:22Z",
+      "side": 1,
+      "message": "I can work with this, I just think it might give too much information that\u0027s not relevant for Dawn.",
+      "revId": "d6cf88cc5021041dd4bfec0407348bed38443260",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad1d0465_df8d4b89",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T11:42:22Z",
+      "side": 1,
+      "message": "This is already reflected for sized arrays in the existing resources binding reflection. Dawn will only care about runtime arrays for bindless, and I believe that we will only need to check the \"ResourceType\" (called DynamicArrayKind in Dawn) for SampledTexture vs. StorageTexture vs. ...\n\nNote that the runtime arrays will be potentially sparse, so Dawn will require that a runtime array is exactly for the dynamic array part.",
+      "revId": "d6cf88cc5021041dd4bfec0407348bed38443260",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
