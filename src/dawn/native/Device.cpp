@@ -1736,6 +1736,10 @@ void DeviceBase::SetWGSLExtensionAllowList() {
         mEnabledFeatures.IsEnabled(Feature::ChromiumExperimentalPrimitiveId)) {
         mWGSLAllowedFeatures.extensions.insert(tint::wgsl::Extension::kPrimitiveIndex);
     }
+    if (mEnabledFeatures.IsEnabled(Feature::ChromiumExperimentalBindless)) {
+        mWGSLAllowedFeatures.extensions.insert(
+            tint::wgsl::Extension::kChromiumExperimentalDynamicBinding);
+    }
 
     // Language features are enabled instance-wide.
     const auto& allowedFeatures = GetInstance()->GetAllowedWGSLLanguageFeatures();
