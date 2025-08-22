@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f13884de_4c9629e8",
+        "filename": "src/dawn/common/GPUInfo.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-22T08:44:15Z",
+      "side": 1,
+      "message": "You\u0027re right and we don\u0027t need to map all the architectures to generation enum. I uploaded another version and PTAL.\nSome minor diff than your suggestions: 1) I don\u0027t think we need to define non\u003cvendor\u003e in \u003cvendor\u003eGen enum 2) We don\u0027t have gpu_info::GetArchitecture(), so I keep the previous impl.",
+      "parentUuid": "8bb1edba_1c16453d",
+      "revId": "2b17a1d6ed71fdfabd4dd3b509f215e3d48cf28d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e47a0bf1_682837e1",
