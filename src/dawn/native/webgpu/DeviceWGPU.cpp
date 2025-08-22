@@ -61,6 +61,26 @@
 
 namespace dawn::native::webgpu {
 
+namespace {
+// temp
+WGPUTextureAspect ToWGPU(const Aspect aspect) {
+    switch (aspect) {
+        case Aspect::Depth:
+            return WGPUTextureAspect_DepthOnly;
+        case Aspect::Stencil:
+            return WGPUTextureAspect_StencilOnly;
+        case Aspect::Plane0:
+            return WGPUTextureAspect_Plane0Only;
+        case Aspect::Plane1:
+            return WGPUTextureAspect_Plane1Only;
+        case Aspect::Plane2:
+            return WGPUTextureAspect_Plane2Only;
+        default:
+            return WGPUTextureAspect_All;
+    }
+}
+}  // namespace
+
 // static
 ResultOrError<Ref<Device>> Device::Create(AdapterBase* adapter,
                                           WGPUAdapter innerAdapter,
@@ -217,7 +237,43 @@ MaybeError Device::CopyFromStagingToTextureImpl(const BufferBase* source,
                                                 const TexelCopyBufferLayout& src,
                                                 const TextureCopy& dst,
                                                 const Extent3D& copySizePixels) {
-    return DAWN_UNIMPLEMENTED_ERROR("webgpu::Device implementation is incomplete.");
+    const webgpu::Buffer* srcBuffer = ToBackend(source);
+    const webgpu::Texture* dstTexture = ToBackend(dst.texture.Get());
+    webgpu::Queue* queue = ToBackend(GetQueue());
+
+    WGPUCommandEncoderDescriptor encoderDesc = {};
+    WGPUCommandEncoder encoder = wgpu.deviceCreateCommandEncoder(mInnerHandle, &encoderDesc);
+
+    WGPUTexelCopyBufferInfo srcInfo = {
+        .layout =
+            {
+                .offset = src.offset,
+                .bytesPerRow = src.bytesPerRow,
+                .rowsPerImage = src.rowsPerImage,
+            },
+        .buffer = srcBuffer->GetInnerHandle(),
+    };
+
+    WGPUTexelCopyTextureInfo dstInfo = {
+        .texture = dstTexture->GetInnerHandle(),
+        .mipLevel = dst.mipLevel,
+        .origin = {dst.origin.x, dst.origin.y, dst.origin.z},
+        .aspect = ToWGPU(dst.aspect),
+    };
+
+    WGPUExtent3D copySize = {copySizePixels.width, copySizePixels.height,
+                             copySizePixels.depthOrArrayLayers};
+
+    wgpu.commandEncoderCopyBufferToTexture(encoder, &srcInfo, &dstInfo, &copySize);
+
+    WGPUCommandBufferDescriptor cmdBufDesc = {};
+    WGPUCommandBuffer cmdBuf = wgpu.commandEncoderFinish(encoder, &cmdBufDesc);
+    wgpu.queueSubmit(queue->GetInnerHandle(), 1, &cmdBuf);
+
+    wgpu.commandBufferRelease(cmdBuf);
+    wgpu.commandEncoderRelease(encoder);
+
+    return {};
 }
 
 MaybeError Device::TickImpl() {
