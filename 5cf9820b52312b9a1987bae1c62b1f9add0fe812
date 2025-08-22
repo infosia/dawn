@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ecbb851_c631831f",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-08-22T15:14:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5a6f86d_1a4eedf0",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 0
+      },
+      "revId": "5cf9820b52312b9a1987bae1c62b1f9add0fe812",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a5d3668_386e9350",
@@ -54,6 +78,24 @@
       "writtenOn": "2025-08-22T09:35:42Z",
       "side": 1,
       "message": "I see that we have added a new generic `FinalizeMapImpl` function to replace the backend implementation details\u0027 version below. But it\u0027s unimplemented for now. Could we add a TODO here to make it less confusing why we have two \"FinalizeMap\" functions.\n\nNevertheless, I think the generic function could be difficult to replace the function below. The current version depends on `ScopedCommandRecordingContext` which contains a scoped lock. Our current implementation locks the context once then calls `FinalizeMap` on multiple buffers.\n```\n  ScopedCommandRecordingContext context(...);\n  for (pendingBuffers) {\n  \tFinalizeMap(\u0026context, pendingBuffers);\n  }\n```\n\nIf we wanted to use the generic `FinalizeMapImpl` in future, we could have to lock the context repeatedly for each buffer. That would increase the overhead.",
+      "revId": "5cf9820b52312b9a1987bae1c62b1f9add0fe812",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39e336cb_b593824f",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-08-22T15:14:29Z",
+      "side": 1,
+      "message": "I filed a bug and added a TODO here to use FinalizeMapImpl() if possible. I agree this might not work with D3D11 after looking at it closer. Uf we can\u0027t get a generic system working I can definitely revert adding FinalizeMapImpl() to every implementation.",
+      "parentUuid": "3a5d3668_386e9350",
       "revId": "5cf9820b52312b9a1987bae1c62b1f9add0fe812",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -75,6 +117,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83e1b5b5_a1a15b32",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-08-22T15:14:29Z",
+      "side": 1,
+      "message": "Ah I guess I didn\u0027t save this file before uploading.",
+      "parentUuid": "c2cb60c4_afa0d5cf",
+      "revId": "5cf9820b52312b9a1987bae1c62b1f9add0fe812",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "12762f20_3e73aec5",
@@ -88,6 +148,24 @@
       "writtenOn": "2025-08-22T06:57:19Z",
       "side": 1,
       "message": "u-nit: it\u0027s better to associate TODOs with issues instead of people because as soon as the CL lands, it is no longer \"your\" code, but \"our\" code.",
+      "revId": "5cf9820b52312b9a1987bae1c62b1f9add0fe812",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43b775a6_ac23ed4e",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-08-22T15:14:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12762f20_3e73aec5",
       "revId": "5cf9820b52312b9a1987bae1c62b1f9add0fe812",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
