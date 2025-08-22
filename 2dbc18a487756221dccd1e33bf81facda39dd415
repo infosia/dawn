@@ -33,6 +33,24 @@
       "message": "I have large concerns about blanket reverting immediates because limits regressed. It seems that we could change the buckets, but ultimately we are going to change how we partition the root signature because immediates use space there.\n\nShaobo, did you have ideas on how to optimize the root signature more? (for later)",
       "revId": "2dbc18a487756221dccd1e33bf81facda39dd415",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c43245f7_87e6905c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-22T19:35:17Z",
+      "side": 1,
+      "message": "I think we need to do something and merge it back to 140. Doesn\u0027t necessarily have to be a revert, but it\u0027s easiest to revert first so we have a chance to actually consider the limits changes when relanding.\n\nThe limits that changed are\n- `maxDynamic{Storage,Uniform}BuffersPerPipelineLayout` - these changed directly\n- `maxStorageTextures{InFragmentStage,InVertexStage,PerShaderStage}` - I think these changed due to tiering changes on `maxDynamic*`\n\nI don\u0027t think it\u0027s unsolvable.\n- We could have an extra limit for `immediates + dynamic offsets`. (I don\u0027t think this is the only backend where they\u0027re effectively the same thing.)\n- We could change the definition of `maxImmediateSize` so it includes dynamic offsets too (same reason).\n- We could move either or both into a uniform buffer so they take fixed space.\n\nBut we can\u0027t do that in 2 days (for 140 Stable).",
+      "parentUuid": "8ce06556_3dc8ea8a",
+      "revId": "2dbc18a487756221dccd1e33bf81facda39dd415",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
