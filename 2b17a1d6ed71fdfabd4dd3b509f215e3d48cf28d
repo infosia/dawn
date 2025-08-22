@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8bb1edba_1c16453d",
+        "filename": "src/dawn/common/GPUInfo.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000030
+      },
+      "writtenOn": "2025-08-22T04:33:24Z",
+      "side": 1,
+      "message": "We don\u0027t need to match the generations with number values, and the \u0027Gen\u0027 in `IntelGen` will introduce the concept of Gen13/14 again, although it is only used internally, but I\u0027d like to avoid this after Xe GPUs, and better to use the architecture names defined in `gpu_info.json` for generation detection, we just need to know Gen7,Gen8,Gen9,Gen11,Xe,Xe2,and so on. If we need more details, we already have `gpu_info::IsIntelGen12LP` and `gpu_info::IsIntelGen12HP`. \n\nFor example:\n```\nenum class IntelGen() {\n    kNonIntel \u003d 0;\n    kUnKnown \u003d 1;\n    kGen7 \u003d 7;\n    kGen8 \u003d 8;\n    ...\n    kGen11 \u003d 11;\n    kXe \u003d 12;\n    kXe2 \u003d 13;\n    kXe3 \u003d 14;\n};\n\nIntelGen GenIntelGen(PCIVendorID venderId, PCIDeviceID deviceId) {\n    gpu_info::Architecture arch \u003d gpu_info::GetArchitecture(vendorId, deviceId);\n    if (gpu_info::IsIntel(venderId) {\n        switch(arc) {\n            case gpu_info::Architecture::Intel_Gen7:\n                return IntelGen::kGen7;\n            case gpu_info::Architecture::Intel_Gen8:\n                return IntelGen::kGen8;\n            ...\n            case gpu_info::Architecture::Intel_Gen12LP:\n            case gpu_info::Architecture::Intel_Gen12HP:\n            case gpu_info::Architecture::Intel_XeLPG:\n                 return IntelGen::kXe;\n            case gpu_info::Architecture::Intel_Xe2LPG:\n            case gpu_info::Architecture::Intel_Xe2LHG:\n                 return IntelGen::kXe2;\n            case gpu_info::Architecture::Intel_Xe3LPG:\n                 return IntelGen::kXe3;\n            default:\n                return IntelGen::kUnKnown;\n        }\n    }\n    return IntelGen::kNonIntel;\n}\n```",
+      "parentUuid": "8157a639_e70d179e",
+      "revId": "2b17a1d6ed71fdfabd4dd3b509f215e3d48cf28d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e47a0bf1_682837e1",
         "filename": "src/dawn/common/GPUInfo.h",
         "patchSetId": 8
