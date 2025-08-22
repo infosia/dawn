@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f44cfab_2619c509",
+        "filename": "src/dawn/tests/unittests/wire/WireTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-22T22:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a019b486_061ca040",
+      "revId": "30108f88eb9d08af98f599af3912e86ba12824fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e9b825e8_99f81c62",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1772b688_31b269ae",
+        "filename": "src/dawn/wire/client/Client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-22T22:31:09Z",
+      "side": 1,
+      "message": "`GetId` was still getting called. Turns out this is because `ChunkedCommandSerializer` tries to chunk into 0-sized chunks which requires it to pre-serialize. Fixed that instead.",
+      "parentUuid": "e9b825e8_99f81c62",
+      "revId": "30108f88eb9d08af98f599af3912e86ba12824fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f73fcee3_d026bb10",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-08-22T15:43:32Z",
       "side": 1,
       "message": "nit: unused?",
+      "revId": "30108f88eb9d08af98f599af3912e86ba12824fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1491eba4_68b78b0c",
+        "filename": "src/dawn/wire/client/ObjectBase.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-22T22:31:09Z",
+      "side": 1,
+      "message": "Oops, leftover from before I switched to checking for client equality.",
+      "parentUuid": "f73fcee3_d026bb10",
       "revId": "30108f88eb9d08af98f599af3912e86ba12824fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
