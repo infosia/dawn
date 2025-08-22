@@ -91,7 +91,7 @@ class ErrorBuffer final : public BufferBase {
         return {};
     }
 
-    void FinalizeMapImpl() override {}
+    void FinalizeMapImpl(BufferState newState) override {}
 
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override {
         DAWN_UNREACHABLE();
@@ -103,6 +103,11 @@ class ErrorBuffer final : public BufferBase {
 
     std::unique_ptr<uint8_t[]> mFakeMappedData;
 };
+
+bool IsMappedState(BufferBase::BufferState state) {
+    return state == BufferBase::BufferState::Mapped ||
+           state == BufferBase::BufferState::MappedAtCreation;
+}
 
 // GetMappedRange on a zero-sized buffer returns a pointer to this value.
 static uint32_t sZeroSizedMappingData = 0xCAFED00D;
@@ -479,7 +484,7 @@ void BufferBase::FinalizeMap(BufferState newState) {
 
     mState.store(newState, std::memory_order::release);
 
-    FinalizeMapImpl();
+    FinalizeMapImpl(newState);
 }
 
 MaybeError BufferBase::MapAtCreation() {
@@ -542,11 +547,27 @@ ResultOrError<bool> BufferBase::MapAtCreationInternal() {
     // Only set the state to mapped at creation if we did not fail any point in this helper.
     // Otherwise, if we override the default unmapped state before succeeding to create a
     // staging buffer, we will have issues when we try to destroy the buffer.
+    mMapMode = wgpu::MapMode::Write;
     mMapOffset = 0;
     mMapSize = mSize;
     mStagingBuffer = std::move(stagingBuffer);
     FinalizeMap(BufferState::MappedAtCreation);
     return mStagingBuffer != nullptr;
+}
+
+wgpu::MapMode BufferBase::MapMode() const {
+    DAWN_ASSERT(IsMappedState(mState.load(std::memory_order::acquire)));
+    return mMapMode;
+}
+
+size_t BufferBase::MapOffset() const {
+    DAWN_ASSERT(IsMappedState(mState.load(std::memory_order::acquire)));
+    return mMapOffset;
+}
+
+size_t BufferBase::MapSize() const {
+    DAWN_ASSERT(IsMappedState(mState.load(std::memory_order::acquire)));
+    return mMapSize;
 }
 
 MaybeError BufferBase::ValidateCanUseOnQueueNow() const {
@@ -650,8 +671,7 @@ wgpu::Status BufferBase::APIReadMappedRange(size_t offset, void* data, size_t si
 }
 
 void* BufferBase::GetMappedPointer() {
-    BufferState state = mState.load(std::memory_order::acquire);
-    if (state != BufferState::MappedAtCreation && state != BufferState::Mapped) {
+    if (!IsMappedState(mState.load(std::memory_order::acquire))) {
         return nullptr;
     }
     void** ptr = std::get_if<void*>(&mMapData);

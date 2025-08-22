@@ -231,7 +231,7 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
     return {};
 }
 
-void Buffer::FinalizeMapImpl() {}
+void Buffer::FinalizeMapImpl(BufferState newState) {}
 
 void* Buffer::GetMappedPointerImpl() {
     // The mapping offset has already been removed.
