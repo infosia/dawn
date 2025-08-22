@@ -16,6 +16,24 @@
       "message": "Re tests, I wish I could simply add `Depth16Unorm` in [`TextureComponentSwizzleTest`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp;l\u003d228;drc\u003d69a3c35781be269333e7a28b5bff43470891d4d2) but tests currently fail. I wonder if it\u0027s because I\u0027m using `RGBA8Unorm` format for the output texture and/or if there\u0027s more.\nI wonder if the CTS should be enough to cover this addition but I\u0027d prefer to add Dawn tests for this still.",
       "revId": "48efe0476e6b815f055481e9e86151602288a803",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24562f77_cfd6eb60",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-08-22T10:38:24Z",
+      "side": 1,
+      "message": "cc @kainino@chromium.org",
+      "parentUuid": "090e5dc2_3cf7c22b",
+      "revId": "48efe0476e6b815f055481e9e86151602288a803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
