@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "2dbc18a487756221dccd1e33bf81facda39dd415",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ce06556_3dc8ea8a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T07:08:12Z",
+      "side": 1,
+      "message": "I have large concerns about blanket reverting immediates because limits regressed. It seems that we could change the buckets, but ultimately we are going to change how we partition the root signature because immediates use space there.\n\nShaobo, did you have ideas on how to optimize the root signature more? (for later)",
+      "revId": "2dbc18a487756221dccd1e33bf81facda39dd415",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
