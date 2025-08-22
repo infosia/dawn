@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0944c98_676a5e8a",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-08-22T19:25:10Z",
+      "side": 1,
+      "message": "I ended up exposing a getting for mState since UnmapImpl() also needed the state now. This allowed me to undo the change to plumb BufferState into FinalizeMapImpl(). An alternative is plumb it into both functions just let me know I\u0027ll put up another CL to do that.",
+      "revId": "d0ed53f857e0f37290994a67d4fd2f59b8622a58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
