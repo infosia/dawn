@@ -91,7 +91,7 @@ class ErrorBuffer final : public BufferBase {
         return {};
     }
 
-    void FinalizeMapImpl() override {}
+    void FinalizeMapImpl(BufferState newState) override {}
 
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override {
         DAWN_UNREACHABLE();
@@ -479,7 +479,7 @@ void BufferBase::FinalizeMap(BufferState newState) {
 
     mState.store(newState, std::memory_order::release);
 
-    FinalizeMapImpl();
+    FinalizeMapImpl(newState);
 }
 
 MaybeError BufferBase::MapAtCreation() {
@@ -542,11 +542,27 @@ ResultOrError<bool> BufferBase::MapAtCreationInternal() {
     // Only set the state to mapped at creation if we did not fail any point in this helper.
     // Otherwise, if we override the default unmapped state before succeeding to create a
     // staging buffer, we will have issues when we try to destroy the buffer.
+    mMapMode = wgpu::MapMode::Write;
     mMapOffset = 0;
     mMapSize = mSize;
     mStagingBuffer = std::move(stagingBuffer);
     FinalizeMap(BufferState::MappedAtCreation);
     return mStagingBuffer != nullptr;
+}
+
+wgpu::MapMode BufferBase::MapMode() const {
+    DAWN_ASSERT(mState.load(std::memory_order::acquire) == BufferState::Mapped);
+    return mMapMode;
+}
+
+size_t BufferBase::MapOffset() const {
+    DAWN_ASSERT(mState.load(std::memory_order::acquire) == BufferState::Mapped);
+    return mMapOffset;
+}
+
+size_t BufferBase::MapSize() const {
+    DAWN_ASSERT(mState.load(std::memory_order::acquire) == BufferState::Mapped);
+    return mMapSize;
 }
 
 MaybeError BufferBase::ValidateCanUseOnQueueNow() const {

@@ -156,6 +156,10 @@ class BufferBase : public SharedResource {
     // creation. Otherwise, returns false indicating that backend specific mapping was used instead.
     ResultOrError<bool> MapAtCreationInternal();
 
+    wgpu::MapMode MapMode() const;
+    size_t MapOffset() const;
+    size_t MapSize() const;
+
     uint64_t mAllocatedSize = 0;
 
     ExecutionSerial mLastUsageSerial = ExecutionSerial(0);
@@ -165,7 +169,7 @@ class BufferBase : public SharedResource {
 
     virtual MaybeError MapAtCreationImpl() = 0;
     virtual MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) = 0;
-    virtual void FinalizeMapImpl() = 0;
+    virtual void FinalizeMapImpl(BufferState newState) = 0;
     virtual void* GetMappedPointerImpl() = 0;
     virtual void UnmapImpl() = 0;
 
