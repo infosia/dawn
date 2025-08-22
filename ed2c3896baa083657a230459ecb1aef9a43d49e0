@@ -33,6 +33,24 @@
       "message": "I worry this might fail if we are mapped at creation? Let\u0027s see with the CQ.",
       "revId": "ed2c3896baa083657a230459ecb1aef9a43d49e0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd43e698_9436cafb",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-08-22T15:30:16Z",
+      "side": 1,
+      "message": "It will fail. Just uploading another patch now to allow both states.",
+      "parentUuid": "d07f6a44_07e531c7",
+      "revId": "ed2c3896baa083657a230459ecb1aef9a43d49e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
