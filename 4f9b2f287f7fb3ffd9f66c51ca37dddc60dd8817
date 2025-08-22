@@ -16,6 +16,57 @@
       "message": "Just fill the bits needed immediately in CommandBufferWGPU.\nCopyFromStagingToTextureImpl and writeTextureImpl unimplemented.",
       "revId": "4f9b2f287f7fb3ffd9f66c51ca37dddc60dd8817",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e778ac3_4886a2aa",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T07:06:45Z",
+      "side": 1,
+      "message": "This never happens. If there\u0027s a GPU OOM you get an error texture. If there is a CPU OOM the application crashes.",
+      "revId": "4f9b2f287f7fb3ffd9f66c51ca37dddc60dd8817",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c8e23b5_f4777750",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T07:06:45Z",
+      "side": 1,
+      "message": "Please override DestroyImpl() to call destroy. Likewise on the buffer if it isn\u0027t the case already.",
+      "revId": "4f9b2f287f7fb3ffd9f66c51ca37dddc60dd8817",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f56a48db_ca3847e7",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-22T07:06:45Z",
+      "side": 1,
+      "message": "This constructor import isn\u0027t used.",
+      "revId": "4f9b2f287f7fb3ffd9f66c51ca37dddc60dd8817",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
