@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3ce633a_4a407a57",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 17
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-22T19:33:00Z",
+      "side": 1,
+      "message": "Right, automatic binding of texel buffers is something I would like to work on if possible, but this not appropriate for the current scope of the implementation.",
+      "parentUuid": "cf56e508_fa774fc4",
+      "revId": "f667893409498e2a4cc52477460772cc54e94c20",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d37c389_22346fe8",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-08-22T12:35:09Z",
       "side": 1,
       "message": "Where is the format validated?\nWhere do we check that the format is allowed for texel buffers? (for example depth formats are not allowed).",
+      "revId": "f667893409498e2a4cc52477460772cc54e94c20",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00cce5a5_2716d916",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-22T19:33:00Z",
+      "side": 1,
+      "message": "Acknowledged. I should have validated with the proposal\u0027s allowed formats.",
+      "parentUuid": "4d37c389_22346fe8",
       "revId": "f667893409498e2a4cc52477460772cc54e94c20",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3126be95_bb9e5653",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-22T19:33:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ce48ddc3_03365786",
+      "revId": "f667893409498e2a4cc52477460772cc54e94c20",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "06a00b59_9258f8a8",
@@ -65,6 +119,24 @@
       "writtenOn": "2025-08-22T12:35:09Z",
       "side": 1,
       "message": "This logic would disappear.",
+      "revId": "f667893409498e2a4cc52477460772cc54e94c20",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "577701c6_0754398a",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 2340,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-22T19:33:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "06a00b59_9258f8a8",
       "revId": "f667893409498e2a4cc52477460772cc54e94c20",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76446c44_1d9d79c0",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-22T19:33:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "627a0787_19238ebf",
+      "revId": "f667893409498e2a4cc52477460772cc54e94c20",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b7f5d1eb_e5254498",
@@ -99,6 +189,24 @@
       "writtenOn": "2025-08-22T12:35:09Z",
       "side": 1,
       "message": "Why do they need to be friends? TextureBase doesn\u0027t need to be.",
+      "revId": "f667893409498e2a4cc52477460772cc54e94c20",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86978405_c23a3563",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-22T19:33:00Z",
+      "side": 1,
+      "message": "Sorry, it\u0027s actually not needed, just old code.",
+      "parentUuid": "b7f5d1eb_e5254498",
       "revId": "f667893409498e2a4cc52477460772cc54e94c20",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
