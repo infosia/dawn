@@ -43,6 +43,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3a5d3668_386e9350",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-08-22T09:35:42Z",
+      "side": 1,
+      "message": "I see that we have added a new generic `FinalizeMapImpl` function to replace the backend implementation details\u0027 version below. But it\u0027s unimplemented for now. Could we add a TODO here to make it less confusing why we have two \"FinalizeMap\" functions.\n\nNevertheless, I think the generic function could be difficult to replace the function below. The current version depends on `ScopedCommandRecordingContext` which contains a scoped lock. Our current implementation locks the context once then calls `FinalizeMap` on multiple buffers.\n```\n  ScopedCommandRecordingContext context(...);\n  for (pendingBuffers) {\n  \tFinalizeMap(\u0026context, pendingBuffers);\n  }\n```\n\nIf we wanted to use the generic `FinalizeMapImpl` in future, we could have to lock the context repeatedly for each buffer. That would increase the overhead.",
+      "revId": "5cf9820b52312b9a1987bae1c62b1f9add0fe812",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c2cb60c4_afa0d5cf",
         "filename": "src/dawn/native/vulkan/BufferVk.h",
         "patchSetId": 12
