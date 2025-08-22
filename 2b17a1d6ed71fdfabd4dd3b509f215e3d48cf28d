@@ -169,6 +169,30 @@
       },
       "revId": "2b17a1d6ed71fdfabd4dd3b509f215e3d48cf28d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8558237b_def46c3c",
+        "filename": "src/dawn/common/GPUInfo.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-08-22T08:44:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38c63bc2_9cf74e65",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 1
+      },
+      "revId": "2b17a1d6ed71fdfabd4dd3b509f215e3d48cf28d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
