@@ -72,6 +72,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8adb8a0_29753725",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 58
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-23T09:03:51Z",
+      "side": 1,
+      "message": "the artifacts are available in the status checks, click on \"summary\": https://github.com/google/dawn/actions/runs/16745627909?pr\u003d39",
+      "parentUuid": "1e5b847b_48f94ad1",
+      "revId": "b7eaa5a0a7f3cc20ced3c5863a363e2ce25de92c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ba525fc_ca0cb988",
