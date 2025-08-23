@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "abfa8c6c_a499708e",
+        "filename": ".github/workflows/dawn-ci.cmake",
+        "patchSetId": 61
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-23T12:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b633fde5_618c1423",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 4
+      },
+      "revId": "bd12b234a3b4ca3c81077f0f612f627cca642763",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b0070881_53acf3d3",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-08-18T15:07:19Z",
       "side": 1,
       "message": "Please fix this WARNING reported by Check Contents: Please remove the trailing whitespace.\n\nTo rerun the analyzer locally, run: `ali...\n\nPlease remove the trailing whitespace.\n\nTo rerun the analyzer locally, run: `alint -- -c CheckContents`\n\nFor more information, see go/alint.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 4
+      },
+      "revId": "bd12b234a3b4ca3c81077f0f612f627cca642763",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbedd1ab_5d37dcb6",
+        "filename": ".github/workflows/dawn-ci.cmake",
+        "patchSetId": 61
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-23T12:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0070881_53acf3d3",
       "range": {
         "startLine": 29,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d93227c_781abce2",
+        "filename": ".github/workflows/dawn-ci.cmake",
+        "patchSetId": 61
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-23T12:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01691a9f_d361d292",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 8
+      },
+      "revId": "bd12b234a3b4ca3c81077f0f612f627cca642763",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48db5f35_11b1a93e",
@@ -93,6 +165,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6096cc32_3393357e",
+        "filename": ".github/workflows/dawn-ci.cmake",
+        "patchSetId": 61
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-23T12:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48db5f35_11b1a93e",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 4
+      },
+      "revId": "bd12b234a3b4ca3c81077f0f612f627cca642763",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c31bc605_f7db9321",
@@ -106,6 +202,30 @@
       "writtenOn": "2025-08-18T15:07:19Z",
       "side": 1,
       "message": "Please fix this WARNING reported by Check Contents: Please remove the trailing whitespace.\n\nTo rerun the analyzer locally, run: `ali...\n\nPlease remove the trailing whitespace.\n\nTo rerun the analyzer locally, run: `alint -- -c CheckContents`\n\nFor more information, see go/alint.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 4
+      },
+      "revId": "bd12b234a3b4ca3c81077f0f612f627cca642763",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0bf2c15_49ff82e7",
+        "filename": ".github/workflows/dawn-ci.cmake",
+        "patchSetId": 61
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-08-23T12:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c31bc605_f7db9321",
       "range": {
         "startLine": 53,
         "startChar": 0,
