@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "206772b3_6268fae0",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 14
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-23T15:28:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "771b4b05_600f4bfb",
+      "range": {
+        "startLine": 536,
+        "startChar": 0,
+        "endLine": 537,
+        "endChar": 56
+      },
+      "revId": "eefbf7ff0bf5a7a48067e37b4bc4af094959ef85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a0fd5b31_3e4ccd68",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-08-22T12:41:37Z",
       "side": 1,
       "message": "Can we have a TODO to add support for it like for storage textures?",
+      "revId": "eefbf7ff0bf5a7a48067e37b4bc4af094959ef85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aadd6731_59dd881e",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-23T15:28:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0fd5b31_3e4ccd68",
       "revId": "eefbf7ff0bf5a7a48067e37b4bc4af094959ef85",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -64,6 +106,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee6784e6_160ed679",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-23T15:28:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f3025253_8add6580",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 271,
+        "endChar": 68
+      },
+      "revId": "eefbf7ff0bf5a7a48067e37b4bc4af094959ef85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "17b236f7_cc432d82",
@@ -77,6 +143,24 @@
       "writtenOn": "2025-08-22T12:41:37Z",
       "side": 1,
       "message": "This will need to be a new variant in `bindingInfo.bindingLayout` specifically for texel buffers. Did you mean to add a TODO here?",
+      "revId": "eefbf7ff0bf5a7a48067e37b4bc4af094959ef85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9909beda_dd169196",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-23T15:28:41Z",
+      "side": 1,
+      "message": "I needed `TexelBufferBindingInfo` for that, the next [CL](https://dawn-review.googlesource.com/c/dawn/+/256995/12) in the chain adds the new variant.",
+      "parentUuid": "17b236f7_cc432d82",
       "revId": "eefbf7ff0bf5a7a48067e37b4bc4af094959ef85",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
