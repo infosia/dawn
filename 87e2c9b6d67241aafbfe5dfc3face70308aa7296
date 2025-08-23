@@ -16,6 +16,24 @@
       "message": "What\u0027s stored is not a texture view, but a texel buffer view. It needs to be separate otherwise code that tries to iterate on all texture views will crash when trying to access the texel buffer view.",
       "revId": "87e2c9b6d67241aafbfe5dfc3face70308aa7296",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c6b3aec_42b96e62",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-23T16:20:58Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "725d4b6b_512e50ff",
+      "revId": "87e2c9b6d67241aafbfe5dfc3face70308aa7296",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
