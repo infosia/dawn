@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "2f268111222a9a049284bee20c2adb7ad1fd027f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2547ce02_41fdb01a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T14:33:31Z",
+      "side": 1,
+      "message": "I added this test in a follow up commit to avoid rebase pain due to the move of tests to a different file.",
+      "revId": "2f268111222a9a049284bee20c2adb7ad1fd027f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
