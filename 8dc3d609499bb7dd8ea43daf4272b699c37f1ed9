@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ec6c9b5_da099323",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-25T13:23:54Z",
+      "side": 1,
+      "message": "```suggestion\n    // Gather dynamic binding entries in a second loop to put the handling off the critical path.\n```",
+      "revId": "8dc3d609499bb7dd8ea43daf4272b699c37f1ed9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2598729_995d370b",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-25T13:23:54Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"availibility\" is a possible misspelling of \"availability\".\n\nTo bypass Spellchec...\n\n\"availibility\" is a possible misspelling of \"availability\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 217,
+        "startChar": 62,
+        "endLine": 217,
+        "endChar": 74
+      },
+      "revId": "8dc3d609499bb7dd8ea43daf4272b699c37f1ed9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
