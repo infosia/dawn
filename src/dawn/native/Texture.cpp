@@ -1051,6 +1051,9 @@ void TextureBase::DestroyImpl() {
     // - It may be called when the last ref to the texture is dropped and the texture
     //   is implicitly destroyed. This case is thread-safe because there are no
     //   other threads using the texture since there are no other live refs.
+
+    Unpin();
+
     mState.destroyed = true;
 
     // Drop all the cache references to TextureViews.
@@ -1259,6 +1262,9 @@ void TextureBase::SetInitialized(bool initialized) {
 }
 
 ExecutionSerial TextureBase::OnEndAccess() {
+    // TODO(https://crbug.com/435317394): Consider if we should notify backends to unpin (if they
+    // have fence exporting to do) so that they always see balanced Pin/Unpin pairs.
+
     mState.hasAccess = false;
     ExecutionSerial lastUsageSerial = mLastSharedTextureMemoryUsageSerial;
     mLastSharedTextureMemoryUsageSerial = kBeginningOfGPUTime;
@@ -1564,9 +1570,14 @@ void TextureBase::APIPin(wgpu::TextureUsage usage) {
 }
 
 MaybeError TextureBase::Pin(wgpu::TextureUsage usage) {
-    if (GetDevice()->IsValidationEnabled()) {
-        DAWN_TRY(ValidatePin(usage));
+    // Ensure backends only see useful and balanced Pin/Unpin pairs.
+    if (mPinnedUsage == usage) {
+        return {};
     }
+    if (HasPinnedUsage()) {
+        Unpin();
+    }
+    DAWN_ASSERT(!HasPinnedUsage());
 
     DAWN_TRY(PinImpl(usage));
 
@@ -1589,6 +1600,11 @@ void TextureBase::APIUnpin() {
 }
 
 void TextureBase::Unpin() {
+    // Ensure backends only see useful and balanced Pin/Unpin pairs.
+    if (!HasPinnedUsage()) {
+        return;
+    }
+
     UnpinImpl();
 
     // Update the frontend state.
