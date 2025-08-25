@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddd4cab9_57dd3c80",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-25T12:53:46Z",
+      "side": 1,
+      "message": "```suggestion\n        BindGroupLayoutEntry availabilityEntry{\n            .buffer.type \u003d wgpu::BufferBindingType::ReadOnlyStorage,\n            .buffer.minBindingSize \u003d 4,\n            .visibility \u003d kAllStages,\n        };\n```",
+      "range": {
+        "startLine": 352,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 50
+      },
+      "revId": "276cd0ad39aec878652625cc204858adc0bdae5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
