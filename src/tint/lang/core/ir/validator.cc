@@ -920,8 +920,8 @@ class Validator {
     /// @returns true if the result is not null
     bool CheckResult(const Instruction* inst, size_t idx);
 
-    /// Checks the results (and their types) for @p inst are not null. If count is specified then
-    /// number of results is checked to be exact.
+    /// Checks the results (and their types) for @p inst are not null. If count is specified
+    /// then number of results is checked to be exact.
     /// @param inst the instruction
     /// @param count the number of results to check
     /// @returns true if the results count is as expected and none are null
@@ -1698,6 +1698,7 @@ StyledText Validator::NameOf(const Block* block) {
 
 bool Validator::CheckResult(const Instruction* inst, size_t idx) {
     auto* result = inst->Result(idx);
+
     if (DAWN_UNLIKELY(result == nullptr)) {
         AddResultError(inst, idx) << "result is undefined";
         return false;
@@ -1732,8 +1733,14 @@ bool Validator::CheckResults(const ir::Instruction* inst, std::optional<size_t> 
     }
 
     bool passed = true;
+    Hashset<const InstructionResult*, 4> seen_instruction_results;
     for (size_t i = 0; i < inst->Results().Length(); i++) {
         if (DAWN_UNLIKELY(!CheckResult(inst, i))) {
+            passed = false;
+        }
+
+        if (!seen_instruction_results.Add(inst->Result(i))) {
+            AddResultError(inst, i) << "result was seen previously as a result";
             passed = false;
         }
     }
