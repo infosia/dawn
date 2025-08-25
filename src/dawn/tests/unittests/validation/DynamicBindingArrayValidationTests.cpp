@@ -1138,10 +1138,11 @@ TEST_F(DynamicBindingArrayTests, GetBGLArrayStartMatchesBetweenStages) {
 // Test that pinning / unpinning is valid for a simple case. This is a control for the test that
 // errors are produced when the feature is not enabled.
 TEST_F(DynamicBindingArrayTests, PinUnpinTextureSuccess) {
-    wgpu::TextureDescriptor desc;
-    desc.format = wgpu::TextureFormat::R32Float;
-    desc.usage = wgpu::TextureUsage::TextureBinding;
-    desc.size = {1, 1};
+    wgpu::TextureDescriptor desc{
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {1, 1},
+        .format = wgpu::TextureFormat::R32Float,
+    };
     wgpu::Texture tex = device.CreateTexture(&desc);
 
     tex.Pin(wgpu::TextureUsage::TextureBinding);
@@ -1150,10 +1151,11 @@ TEST_F(DynamicBindingArrayTests, PinUnpinTextureSuccess) {
 
 // Test that calling pin/unpin is an error when the feature is not enabled.
 TEST_F(DynamicBindingArrayTests_FeatureDisabled, PinUnpinTextureSuccess) {
-    wgpu::TextureDescriptor desc;
-    desc.format = wgpu::TextureFormat::R32Float;
-    desc.usage = wgpu::TextureUsage::TextureBinding;
-    desc.size = {1, 1};
+    wgpu::TextureDescriptor desc{
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {1, 1},
+        .format = wgpu::TextureFormat::R32Float,
+    };
     wgpu::Texture tex = device.CreateTexture(&desc);
 
     ASSERT_DEVICE_ERROR(tex.Pin(wgpu::TextureUsage::TextureBinding));
@@ -1162,9 +1164,10 @@ TEST_F(DynamicBindingArrayTests_FeatureDisabled, PinUnpinTextureSuccess) {
 
 // Test the validation of the usage parameter of Pin.
 TEST_F(DynamicBindingArrayTests, PinUnpinTextureUsageConstraint) {
-    wgpu::TextureDescriptor desc;
-    desc.format = wgpu::TextureFormat::R32Float;
-    desc.size = {1, 1};
+    wgpu::TextureDescriptor desc{
+        .size = {1, 1},
+        .format = wgpu::TextureFormat::R32Float,
+    };
 
     desc.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::CopySrc |
                  wgpu::TextureUsage::StorageBinding;
@@ -1192,10 +1195,11 @@ TEST_F(DynamicBindingArrayTests, PinUnpinTextureUsageConstraint) {
 
 // Test that pinning / unpinning don't need to be balanced.
 TEST_F(DynamicBindingArrayTests, PinUnpinUnbalancedIsValid) {
-    wgpu::TextureDescriptor desc;
-    desc.format = wgpu::TextureFormat::R32Float;
-    desc.usage = wgpu::TextureUsage::TextureBinding;
-    desc.size = {1, 1};
+    wgpu::TextureDescriptor desc{
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {1, 1},
+        .format = wgpu::TextureFormat::R32Float,
+    };
     wgpu::Texture tex = device.CreateTexture(&desc);
 
     // Pinning right after creation is valid.
