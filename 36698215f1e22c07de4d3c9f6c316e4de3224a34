@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d94cd10_242ec94a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-25T13:34:19Z",
+      "side": 1,
+      "message": "I\u0027m having trouble connecting the summary to the description. This says to require a dynamic array for size 0, but description says to disallow it?",
+      "revId": "36698215f1e22c07de4d3c9f6c316e4de3224a34",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
