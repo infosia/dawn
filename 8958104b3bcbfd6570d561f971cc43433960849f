@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c2f0322_bdfb26e5",
+        "filename": "src/dawn/native/BindGroup.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-08-25T18:15:58Z",
+      "side": 1,
+      "message": "Given that `DynamicArrayState::mBindings` is already dynamically allocated, I don\u0027t think there\u0027s any need for this to be as well. It could be in an std::optional or just a regular member.",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 53
+      },
+      "revId": "8958104b3bcbfd6570d561f971cc43433960849f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a4f2f8e_1afd2b16",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-08-25T18:15:58Z",
+      "side": 1,
+      "message": "Channeling Dan\u0027s other comments to use designated initializers here.",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 43
+      },
+      "revId": "8958104b3bcbfd6570d561f971cc43433960849f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
