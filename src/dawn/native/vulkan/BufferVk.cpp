@@ -404,6 +404,7 @@ void Buffer::TransitionUsageNow(CommandRecordingContext* recordingContext,
                                 wgpu::ShaderStage shaderStage) {
     TrackUsageAndGetResourceBarrier(recordingContext, usage, shaderStage);
     recordingContext->EmitBufferBarriers(ToBackend(GetDevice()));
+    recordingContext->UpdateBarrierSyncId(this);
 }
 
 void Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingContext,
@@ -506,9 +507,9 @@ void Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingC
         MarkUsedInPendingCommands();
     }
 
-    recordingContext->AddBufferBarrier(srcAccess, /* dstAccess */ VulkanAccessFlags(usage),
-                                       srcStage,
-                                       /* dstStage */ VulkanPipelineStage(usage, shaderStage));
+    recordingContext->AddBufferBarrier(
+        srcAccess, /* dstAccess */ VulkanAccessFlags(usage), srcStage,
+        /* dstStage */ VulkanPipelineStage(usage, shaderStage), GetImplicitBarrierSyncId());
 }
 
 bool Buffer::IsCPUWritableAtCreation() const {
@@ -741,8 +742,10 @@ void Buffer::TransitionMappableBuffersEagerly(Device* device,
     }
     // TrackUsageAndGetResourceBarrier() should not modify recordingContext for map usages.
     DAWN_ASSERT(buffers.size() == originalBufferCount);
-
     recordingContext->EmitBufferBarriers(device);
+    for (const Ref<Buffer>& buffer : buffers) {
+        recordingContext->UpdateBarrierSyncId(buffer.Get());
+    }
 }
 
 void Buffer::SetLabelImpl() {

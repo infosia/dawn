@@ -252,17 +252,7 @@ MaybeError TransitionAndClearForSyncScope(Device* device,
         Buffer* buffer = ToBackend(scope.buffers[i]);
         buffer->EnsureDataInitialized(recordingContext);
 
-        // `kIndirectBufferForFrontendValidation` is only for the front-end validation and should be
-        // totally ignored in the backend resource tracking because:
-        // 1. When old usage contains kIndirectBufferForFrontendValidation while new usage just
-        //    removes kIndirectBufferForFrontendValidation, the barrier is actually unnecessary.
-        // 2. When usage == kIndirectBufferForFrontendValidation, dstStages would be NONE, which is
-        //    not allowed by Vulkan SPEC unless synchronization2 is enabled.
-        // We remove `kIndirectBufferForFrontendValidation` in this function instead of in the
-        // function `BufferVk::TrackUsageAndGetResourceBarrier()` because on Vulkan backend this
-        // is the only place that we need to handle `kIndirectBufferForFrontendValidation`.
-        wgpu::BufferUsage usage =
-            scope.bufferSyncInfos[i].usage & (~kIndirectBufferForFrontendValidation);
+        wgpu::BufferUsage usage = scope.bufferSyncInfos[i].GetBackendUsage();
 
         buffer->TrackUsageAndGetResourceBarrier(recordingContext, usage,
                                                 scope.bufferSyncInfos[i].shaderStages);
@@ -314,6 +304,13 @@ MaybeError TransitionAndClearForSyncScope(Device* device,
     }
     recordingContext->EmitBufferBarriers(device);
 
+    for (size_t i = 0; i < scope.buffers.size(); ++i) {
+        Buffer* buffer = ToBackend(scope.buffers[i]);
+
+        // Only barriers after the current operation can be considered to implicitly sync for
+        // this buffer.
+        recordingContext->UpdateBarrierSyncId(buffer);
+    }
     return {};
 }
 
@@ -878,6 +875,9 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
             case Command::BeginComputePass: {
                 BeginComputePassCmd* cmd = mCommands.NextCommand<BeginComputePassCmd>();
 
+                bool enabled_skip_redundant =
+                    GetDevice()->IsToggleEnabled(Toggle::VulkanAvoidRedundantBufferBarriers);
+                recordingContext->BeginComputePass(enabled_skip_redundant);
                 // If required, split the command buffer any time a compute pass follows a render
                 // pass to work around a Qualcomm bug.
                 if (recordingContext->hasRecordedRenderPass &&
@@ -892,7 +892,7 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                 DAWN_TRY(
                     RecordComputePass(recordingContext, cmd,
                                       GetResourceUsages().computePasses[nextComputePassNumber]));
-
+                recordingContext->EndComputePass();
                 nextComputePassNumber++;
                 break;
             }
@@ -1035,6 +1035,9 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
                                             const ComputePassResourceUsage& resourceUsages) {
     Device* device = ToBackend(GetDevice());
 
+    for (auto* res : resourceUsages.referencedBuffers) {
+        recordingContext->UpdateBarrierSyncId(ToBackend(res));
+    }
     // Write timestamp at the beginning of compute pass if it's set
     if (computePassCmd->timestampWrites.beginningOfPassWriteIndex !=
         wgpu::kQuerySetIndexUndefined) {
