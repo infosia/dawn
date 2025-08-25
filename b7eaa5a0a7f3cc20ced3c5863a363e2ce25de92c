@@ -90,6 +90,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7100e747_e839b426",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 58
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-25T23:20:58Z",
+      "side": 1,
+      "message": "Thanks. I looked at the latest run on https://github.com/google/dawn/actions/runs/17175344740?pr\u003d39\nIt seems there is still `libwebgpu_dawn.a` in dawn-headers. I don\u0027t know what that is.\n\nI\u0027m OK with landing this as-is, though it has lost the second review flag for some reason so I can\u0027t submit it yet.",
+      "parentUuid": "d8adb8a0_29753725",
+      "revId": "b7eaa5a0a7f3cc20ced3c5863a363e2ce25de92c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ba525fc_ca0cb988",
