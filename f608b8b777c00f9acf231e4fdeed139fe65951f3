@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "62fbcedb_14f25aea",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-25T23:24:14Z",
+      "side": 1,
+      "message": "Sorry I thought I needed it for `kReadOnlyTexelBuffers`.",
+      "parentUuid": "20e97db1_fc94bfae",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 38
+      },
+      "revId": "f608b8b777c00f9acf231e4fdeed139fe65951f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb250b56_10f34b45",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-08-25T19:52:33Z",
       "side": 1,
       "message": "It\u0027s not a lot of code right now, but given it\u0027s split separately in the frontend, we should split this out to it\u0027s own files as well.",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 2
+      },
+      "revId": "f608b8b777c00f9acf231e4fdeed139fe65951f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f675ce5_8f7ecacc",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-25T23:24:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "eb250b56_10f34b45",
       "range": {
         "startLine": 121,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "376f2443_be3fdef6",
+        "filename": "src/dawn/tests/end2end/TexelBufferTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-25T23:24:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "27a11226_1cb24e96",
+      "range": {
+        "startLine": 338,
+        "startChar": 78,
+        "endLine": 338,
+        "endChar": 96
+      },
+      "revId": "f608b8b777c00f9acf231e4fdeed139fe65951f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e599035_c2053448",
@@ -83,6 +155,30 @@
       "writtenOn": "2025-08-25T19:52:33Z",
       "side": 1,
       "message": "nit. Could you use `rgba8unorm` instead and use `utils::RGBA8` constants like you did in `RenderFragmentColorPalette` above also?",
+      "range": {
+        "startLine": 398,
+        "startChar": 8,
+        "endLine": 398,
+        "endChar": 56
+      },
+      "revId": "f608b8b777c00f9acf231e4fdeed139fe65951f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63f391a2_12fde8f5",
+        "filename": "src/dawn/tests/end2end/TexelBufferTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-25T23:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e599035_c2053448",
       "range": {
         "startLine": 398,
         "startChar": 8,
@@ -116,6 +212,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c3f2dcb_d8cbd9f4",
+        "filename": "src/dawn/tests/end2end/TexelBufferTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-25T23:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "503b6925_fe2273e0",
+      "range": {
+        "startLine": 474,
+        "startChar": 8,
+        "endLine": 474,
+        "endChar": 76
+      },
+      "revId": "f608b8b777c00f9acf231e4fdeed139fe65951f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e2a0f76_e80355c6",
@@ -129,6 +249,30 @@
       "writtenOn": "2025-08-25T19:52:33Z",
       "side": 1,
       "message": "nit. same comment as above w.r.t to the values in this one.",
+      "range": {
+        "startLine": 531,
+        "startChar": 78,
+        "endLine": 531,
+        "endChar": 96
+      },
+      "revId": "f608b8b777c00f9acf231e4fdeed139fe65951f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a1807d1_26ebee46",
+        "filename": "src/dawn/tests/end2end/TexelBufferTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-25T23:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e2a0f76_e80355c6",
       "range": {
         "startLine": 531,
         "startChar": 78,
@@ -200,6 +344,30 @@
       "side": 1,
       "message": "Ah, yes, this should probably be a validation test then!",
       "parentUuid": "1780a35b_ef3dd872",
+      "range": {
+        "startLine": 666,
+        "startChar": 25,
+        "endLine": 666,
+        "endChar": 41
+      },
+      "revId": "f608b8b777c00f9acf231e4fdeed139fe65951f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "428dcdee_260b15ec",
+        "filename": "src/dawn/tests/end2end/TexelBufferTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-25T23:24:14Z",
+      "side": 1,
+      "message": "I meant to add an expectation check at the end. Thank you for mentioning `queue.CopyBufferToBuffer` it does make the test simpler.",
+      "parentUuid": "ec87d5dd_ec533df0",
       "range": {
         "startLine": 666,
         "startChar": 25,

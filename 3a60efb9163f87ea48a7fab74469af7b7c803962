@@ -22,6 +22,30 @@
       },
       "revId": "3a60efb9163f87ea48a7fab74469af7b7c803962",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "511aacfc_f97cdc67",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-25T23:24:14Z",
+      "side": 0,
+      "message": "Thank you for catching this, it was a leftover when my code had `BindGroupVK` as the owner the `VkBufferViews`.",
+      "parentUuid": "4e9cfd45_e757ece5",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 193,
+        "endChar": 44
+      },
+      "revId": "3a60efb9163f87ea48a7fab74469af7b7c803962",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
