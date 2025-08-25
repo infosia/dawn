@@ -16,6 +16,29 @@
       "message": "PTAL, hope this is a reasonable use of an internal error. Unfortunately not really reliably testable AFAICT.",
       "revId": "2086c14e9f0775a7e22a7c484a650e56775438ff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4bfbb92e_03fbfeea",
+        "filename": "src/dawn/native/metal/ComputePipelineMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-25T19:34:39Z",
+      "side": 1,
+      "message": "Hmm, an internal error will cause a device loss, maybe that\u0027s fine for now, but I\u0027m wondering if we should instead create the pipeline while explicitly passing the computed `totalInvocations` into the `MTLComputePipelineDescriptor` to avoid this entirely? Then if that fails, we do the internal error? The docs suggests that this could result in potentially suboptimal pipelines though I guess? But I\u0027m worried that this additional check could have further reaches than we know since from what I can tell, we never explicitly passed in the limit before, so it\u0027s possible that this could break in a bunch of places if Metal was doing some behind the scene optimizations that ended up working most of the times anyways?\n\nOr alternatively, and probably the most user friendly, we could consider doing check when we actually submit to the compute pipeline, and if we need to upgrade the pipeline to match the limit, do it then, otherwise generating the internal error then?",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 42
+      },
+      "revId": "2086c14e9f0775a7e22a7c484a650e56775438ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
