@@ -63,6 +63,30 @@
       },
       "revId": "2086c14e9f0775a7e22a7c484a650e56775438ff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01274790_c2970573",
+        "filename": "src/dawn/native/metal/ComputePipelineMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-25T20:02:44Z",
+      "side": 1,
+      "message": "I\u0027m not sure which of the two are better honestly. Probably fine to go either route for now?",
+      "parentUuid": "d9740119_099bdfc7",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 42
+      },
+      "revId": "2086c14e9f0775a7e22a7c484a650e56775438ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
