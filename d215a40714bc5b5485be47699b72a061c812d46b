@@ -16,6 +16,23 @@
       "message": "PTAL! The part in `ReflectEntryPointUsingTint` might be updated slightly depending on what lands in Tint.",
       "revId": "d215a40714bc5b5485be47699b72a061c812d46b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01fcd797_398d1c22",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-25T13:40:36Z",
+      "side": 1,
+      "message": "Just to make sure I understand, a binding_array must be all SampledTexture (or in the future StorageTexture). We can\u0027t mix the two together? Or is this a restriction that will life in the future (and should have TODO)?",
+      "revId": "d215a40714bc5b5485be47699b72a061c812d46b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
