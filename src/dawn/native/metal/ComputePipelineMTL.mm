@@ -89,6 +89,15 @@ MaybeError ComputePipeline::InitializeImpl() {
     // Copy over the local workgroup size as it is passed to dispatch explicitly in Metal
     mLocalWorkgroupSize = computeData.localWorkgroupSize;
 
+    // A specific shader may have a lower maximum workgroup size than the device's maximum.
+    uint32_t totalInvocations =
+        mLocalWorkgroupSize.width * mLocalWorkgroupSize.height * mLocalWorkgroupSize.depth;
+    uint32_t maxInvocations = mMtlComputePipelineState.Get().maxTotalThreadsPerThreadgroup;
+    DAWN_INTERNAL_ERROR_IF(
+        totalInvocations > maxInvocations,
+        "total number of invocations (%u) exceeds maximum allowed by this pipeline (%u)",
+        totalInvocations, maxInvocations);
+
     mRequiresStorageBufferLength = computeData.needsStorageBufferLength;
     mWorkgroupAllocations = std::move(computeData.workgroupAllocations);
     return {};
