@@ -1401,6 +1401,7 @@ class Validator {
     diag::List diagnostics_;
     Hashset<const Function*, 4> all_functions_;
     Hashset<const Instruction*, 4> visited_instructions_;
+    Hashset<const InstructionResult*, 4> seen_instruction_results_;
     Hashmap<const Loop*, const Continue*, 4> first_continues_;
     Vector<const ControlInstruction*, 8> control_stack_;
     Vector<const Block*, 8> block_stack_;
@@ -1698,6 +1699,7 @@ StyledText Validator::NameOf(const Block* block) {
 
 bool Validator::CheckResult(const Instruction* inst, size_t idx) {
     auto* result = inst->Result(idx);
+
     if (DAWN_UNLIKELY(result == nullptr)) {
         AddResultError(inst, idx) << "result is undefined";
         return false;
@@ -1716,6 +1718,11 @@ bool Validator::CheckResult(const Instruction* inst, size_t idx) {
     if (DAWN_UNLIKELY(result->Instruction() != inst)) {
         AddResultError(inst, idx)
             << "result instruction does not match instruction (possible double usage)";
+        return false;
+    }
+
+    if (!seen_instruction_results_.Add(result)) {
+        AddResultError(inst, idx) << "result was seen previously as a result";
         return false;
     }
 
