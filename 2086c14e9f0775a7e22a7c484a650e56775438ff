@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0eb7b617_cf50de1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-25T19:19:56Z",
+      "side": 1,
+      "message": "PTAL, hope this is a reasonable use of an internal error. Unfortunately not really reliably testable AFAICT.",
+      "revId": "2086c14e9f0775a7e22a7c484a650e56775438ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
