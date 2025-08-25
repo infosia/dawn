@@ -22,6 +22,30 @@
       },
       "revId": "276cd0ad39aec878652625cc204858adc0bdae5f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "422a30db_b3835038",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T14:31:57Z",
+      "side": 1,
+      "message": "Had to do a bit more to get clang happy. Done.",
+      "parentUuid": "ddd4cab9_57dd3c80",
+      "range": {
+        "startLine": 352,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 50
+      },
+      "revId": "276cd0ad39aec878652625cc204858adc0bdae5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
