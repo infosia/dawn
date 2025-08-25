@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "580ca214_b761f854",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-25T23:02:41Z",
+      "side": 1,
+      "message": "Is there a bug?",
+      "revId": "16817f6b0eb7aece5c7592a8bfa62bdebbd93cbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

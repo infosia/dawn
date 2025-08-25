@@ -111,6 +111,30 @@
       },
       "revId": "2086c14e9f0775a7e22a7c484a650e56775438ff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac8f8a77_6b246c50",
+        "filename": "src/dawn/native/metal/ComputePipelineMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-25T23:02:41Z",
+      "side": 1,
+      "message": "\u003e Hmm, an internal error will cause a device loss\n\nIs that true for pipelines or do we translate it to GPUInternalError?\n\n---\n\nI don\u0027t really understand maxTotalThreadsPerThreadgroup but it sounds like it shouldn\u0027t do anything if all of our kernels have fixed workgroup sizes - unless Metal can adjust maxTotalThreadsPerThreadgroup even if the workgroup size isn\u0027t automatic. Which perhaps seems plausible, it could pack multiple workgroups into one core, I don\u0027t know if it could split a workgroup across multiple cores. If it can do those things then this might have significant impacts on performance.",
+      "parentUuid": "e1b64e12_a264b7fa",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 42
+      },
+      "revId": "2086c14e9f0775a7e22a7c484a650e56775438ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
