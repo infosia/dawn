@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0a6a4d01_6613ed03",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-25T14:05:58Z",
+      "side": 1,
+      "message": "Updated to not set the count, but it still emits the resource.",
+      "parentUuid": "9bd03b1c_bd698618",
+      "revId": "d6cf88cc5021041dd4bfec0407348bed38443260",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ad1d0465_df8d4b89",
         "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
         "patchSetId": 7
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Here is the CL using the new inspector API: https://dawn-review.googlesource.com/c/dawn/+/258697/1/src/dawn/native/ShaderModule.h",
       "parentUuid": "ad1d0465_df8d4b89",
+      "revId": "d6cf88cc5021041dd4bfec0407348bed38443260",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d85113f3_e5b95b93",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-25T14:05:58Z",
+      "side": 1,
+      "message": "K, dropped the non-runtime binding arrays from the list, so this only holds runtime. I renamed the method to make it clear this is only Runtime binding arrays.",
+      "parentUuid": "ef163e41_d59e4ff5",
       "revId": "d6cf88cc5021041dd4bfec0407348bed38443260",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
