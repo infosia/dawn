@@ -82,6 +82,36 @@ bool IsBCTextureFormat(wgpu::TextureFormat textureFormat) {
     }
 }
 
+// NOTE: Only partial normalized formats are listed here, not a complete set.
+bool IsNormTextureFormat(wgpu::TextureFormat textureFormat) {
+    switch (textureFormat) {
+        case wgpu::TextureFormat::R8Unorm:
+        case wgpu::TextureFormat::RG8Unorm:
+        case wgpu::TextureFormat::RGBA8Unorm:
+        case wgpu::TextureFormat::R8Snorm:
+        case wgpu::TextureFormat::RG8Snorm:
+        case wgpu::TextureFormat::RGBA8Snorm:
+            return true;
+        default:
+            return false;
+    }
+}
+
+float GetNormalizedFormatMaxComponentValue(wgpu::TextureFormat textureFormat) {
+    switch (textureFormat) {
+        case wgpu::TextureFormat::R8Unorm:
+        case wgpu::TextureFormat::RG8Unorm:
+        case wgpu::TextureFormat::RGBA8Unorm:
+            return 255.0f;
+        case wgpu::TextureFormat::R8Snorm:
+        case wgpu::TextureFormat::RG8Snorm:
+        case wgpu::TextureFormat::RGBA8Snorm:
+            return 127.0f;
+        default:
+            return 1.0f;
+    }
+}
+
 bool IsETC2TextureFormat(wgpu::TextureFormat textureFormat) {
     switch (textureFormat) {
         case wgpu::TextureFormat::ETC2RGB8Unorm:
