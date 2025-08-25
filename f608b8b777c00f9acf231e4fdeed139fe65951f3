@@ -160,6 +160,30 @@
       },
       "revId": "f608b8b777c00f9acf231e4fdeed139fe65951f3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1780a35b_ef3dd872",
+        "filename": "src/dawn/tests/end2end/TexelBufferTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-25T20:02:48Z",
+      "side": 1,
+      "message": "The point of this test was to ensure that we are correctly validating the usage flags according to the use in the shaders, and not falsely detecting a read-write race (as was happening in a previous version of this change). So I think using the two compute passes makes sense? Or should this actually be a validation test, since its not really backend specific (hence the lack of expectations)?",
+      "parentUuid": "b97e857b_ffb93194",
+      "range": {
+        "startLine": 666,
+        "startChar": 25,
+        "endLine": 666,
+        "endChar": 41
+      },
+      "revId": "f608b8b777c00f9acf231e4fdeed139fe65951f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
