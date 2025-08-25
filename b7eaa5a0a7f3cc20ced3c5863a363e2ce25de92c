@@ -108,6 +108,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "87cc2b70_4ba2fa13",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 58
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-25T23:29:05Z",
+      "side": 1,
+      "message": "That is to say - I think we should land this since it\u0027s a significant step forward, but afterward I think:\n\n- probably the headers can be included in the packages with the libraries, and don\u0027t need to be a separate artifact\n- or otherwise, remove `libwebgpu_dawn.a` from the dawn-headers artifact\n- I\u0027m not positive whether all of those headers should be in the dawn-headers artifact:\n  - backend headers\n  - dawn_proc_table.h\n  - wire/client headers\n- generally need documentation on how to use these\n  - in particular how to use `lib/cmake/Dawn`",
+      "parentUuid": "7100e747_e839b426",
+      "revId": "b7eaa5a0a7f3cc20ced3c5863a363e2ce25de92c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ba525fc_ca0cb988",
