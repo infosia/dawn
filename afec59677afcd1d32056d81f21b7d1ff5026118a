@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c53aacef_448f1e1c",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-25T22:21:11Z",
+      "side": 1,
+      "message": "I think this one shouldn\u0027t be here, it will be the same value as `array_length` in the storage buffer.\n\nThat also means the struct will have a runtime array as we don\u0027t know the array size until runtime. So, I think this goes away and the struct becomes:\n\n```\nstruct SB {\n  array_length: u32,\n  array\u003cu32\u003e bindings,\n}\n```",
+      "revId": "afec59677afcd1d32056d81f21b7d1ff5026118a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "814ff54f_d6092801",
         "filename": "src/tint/api/common/runtime_binding_array_config.h",
         "patchSetId": 1
