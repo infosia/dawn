@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "052d7389_c7c0cb43",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-25T18:22:07Z",
+      "side": 1,
+      "message": "PTAL",
+      "revId": "43dd13fed075b7961c6053dc8a5a580ba3732b64",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15288500_7e5c0cba",
+        "filename": "infra/config/global/main.star",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-25T18:22:07Z",
+      "side": 1,
+      "message": "As a note, Chromium uses `@root` for this with a TODO to switch it to `@project` when it\u0027s supported. It seems like it\u0027s supported now, though.\n\nhttps://source.chromium.org/chromium/chromium/src/+/main:infra/config/main.star;l\u003d270?q\u003d%22resultdb.baselineReader%22\u0026ss\u003dchromium%2Fchromium%2Fsrc:infra%2Fconfig%2F",
+      "range": {
+        "startLine": 181,
+        "startChar": 12,
+        "endLine": 181,
+        "endChar": 20
+      },
+      "revId": "43dd13fed075b7961c6053dc8a5a580ba3732b64",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad7669c0_d20cc0e3",
+        "filename": "infra/config/global/main.star",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-25T18:22:07Z",
+      "side": 1,
+      "message": "I suspect the fact that the CI builder isn\u0027t running into issues without this means that we might not be trying to write baselines at all, which means that the new test querying on the try builders won\u0027t find anything. Something to address after these permission issues are resolved, though.",
+      "range": {
+        "startLine": 186,
+        "startChar": 17,
+        "endLine": 186,
+        "endChar": 32
+      },
+      "revId": "43dd13fed075b7961c6053dc8a5a580ba3732b64",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
