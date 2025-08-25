@@ -16,6 +16,24 @@
       "message": "I\u0027m having trouble connecting the summary to the description. This says to require a dynamic array for size 0, but description says to disallow it?",
       "revId": "36698215f1e22c07de4d3c9f6c316e4de3224a34",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8e2cea3_d2f56059",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T14:32:14Z",
+      "side": 1,
+      "message": "They both say the same thing as far as I can tell, but the description uses a double negative. Reworded a bit to try to make it more clear.",
+      "parentUuid": "3d94cd10_242ec94a",
+      "revId": "36698215f1e22c07de4d3c9f6c316e4de3224a34",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
