@@ -69,6 +69,24 @@
       "parentUuid": "c43245f7_87e6905c",
       "revId": "2dbc18a487756221dccd1e33bf81facda39dd415",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20887b34_30bf05d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-25T01:59:55Z",
+      "side": 1,
+      "message": "A possible fix for this 140 urgent case is to limit the maxImmediateData in physicalDeviceD3D12 to 32 (tier 1)https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Limits.cpp;drc\u003d1f9b8206044d02f348d2716e59a9f2122c6bd11e;l\u003d11.\n\nIn this case it occupies 8 root signature slots so that maxDynamicStorageBuffersPerPipelineLayout could be 8 (24 slots) and maxDynamicUniformBuffersPerPipelineLayout could be 10 (20 slots.\n\nConsidering maxBindGroup (8 slots) and 3 reserved slots, there would be 63 slots int total and 1 slot remains.\n\nAnd graphite currently needs 32 bytes for intrinsic uniforms so it would be Ok for them.",
+      "parentUuid": "b0d92d37_395bf76b",
+      "revId": "2dbc18a487756221dccd1e33bf81facda39dd415",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
