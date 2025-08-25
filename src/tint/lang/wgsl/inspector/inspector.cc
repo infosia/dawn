@@ -152,7 +152,9 @@ ResourceBinding ConvertHandleToResourceBinding(const tint::sem::GlobalVariable* 
 
     // BindingArray only modifies the array_size member of the ResourceBinding of its inner type.
     if (auto* array = handle_type->As<core::type::BindingArray>()) {
-        result.array_size = array->Count()->As<core::type::ConstantArrayCount>()->value;
+        if (auto* count = array->Count()->As<core::type::ConstantArrayCount>()) {
+            result.array_size = count->value;
+        }
         handle_type = array->ElemType();
     }
 
@@ -934,6 +936,53 @@ std::vector<Override> Inspector::Overrides() {
         results.push_back(MkOverride(global, global->Attributes().override_id.value()));
     }
     return results;
+}
+
+std::vector<RuntimeBindingArrayInfo> Inspector::GetRuntimeBindingArrayInfo(
+    const std::string& entry_point) {
+    auto* func = FindEntryPointByName(entry_point);
+    if (!func) {
+        return {};
+    }
+
+    std::vector<RuntimeBindingArrayInfo> result;
+    auto* func_sem = program_.Sem().Get(func);
+    for (auto& global : func_sem->TransitivelyReferencedGlobals()) {
+        auto* ba = global->Type()->UnwrapRef()->As<core::type::BindingArray>();
+        if (!ba) {
+            continue;
+        }
+
+        auto* cnt = ba->Count()->As<core::type::ConstantArrayCount>();
+        if (cnt) {
+            continue;
+        }
+
+        result.push_back({
+            .group = global->Attributes().binding_point->group,
+            .binding = global->Attributes().binding_point->binding,
+            .is_typeless = false,  // TODO(439629476): Support typeless binding_array
+        });
+
+        auto& res = result.back();
+
+        // TODO(439629476): Support more types of things going into the binding array.
+        tint::Switch(
+            ba->ElemType(),
+            [&](const core::type::SampledTexture* sa) {
+                res.type_info.push_back(RuntimeBindingArrayInfo::Type{
+                    .type = RuntimeBindingArrayInfo::ResourceType::kSampledTexture,
+                    .dim = TypeTextureDimensionToResourceBindingTextureDimension(sa->Dim()),
+                    .sampled_kind = BaseTypeToSampledKind(sa->Type()),
+                });
+            },
+            TINT_ICE_ON_NO_MATCH);
+
+        // TODO(439629476): Find instances of `getBinding` and `hasBinding` for typeless binding
+        // array information.
+    }
+
+    return result;
 }
 
 }  // namespace tint::inspector
