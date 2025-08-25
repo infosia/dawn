@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f05ef48_cf23e817",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-25T19:45:23Z",
+      "side": 1,
+      "message": "PTAL. Skeleton which includes the config struct for passing info to Tint from Dawn. Want to make sure the information I\u0027ve specified makes sense, and covers what we need to know.",
+      "revId": "afec59677afcd1d32056d81f21b7d1ff5026118a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "814ff54f_d6092801",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-25T19:45:23Z",
+      "side": 1,
+      "message": "This `bindings` entry may not be here if `dynamic_binding_count + default_binding_count \u003d\u003d 0` (the case of a type-full runtime binding_array.",
+      "revId": "afec59677afcd1d32056d81f21b7d1ff5026118a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
