@@ -39,6 +39,30 @@
       },
       "revId": "2086c14e9f0775a7e22a7c484a650e56775438ff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9740119_099bdfc7",
+        "filename": "src/dawn/native/metal/ComputePipelineMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-25T19:51:52Z",
+      "side": 1,
+      "message": "Interesting, I didn\u0027t know you could actually set the maximum before creating the pipeline. I assumed it would still fail if the shader used more resources than the device could handle, but it seems to actually work fine for the scenario I was hitting locally.\n\nI think that\u0027s a good solution for now, so I\u0027ve changed to that. I don\u0027t think we should worry too much about the poor performance warning, since you can also use too many resources and get poor performance anyway.\n\nI see now that we could handle this in Tint by emitting `[[max_total_threads_per_threadgroup(x)]]` on the shader. Tempted to go that route instead. Thoughts?",
+      "parentUuid": "4bfbb92e_03fbfeea",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 42
+      },
+      "revId": "2086c14e9f0775a7e22a7c484a650e56775438ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
