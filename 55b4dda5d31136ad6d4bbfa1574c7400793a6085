@@ -33,6 +33,24 @@
       "message": "```suggestion\n    {\"chromium_experimental_dynamic_binding\", true, {\"chromium-experimental-bindless\"}, {}}\n```",
       "revId": "55b4dda5d31136ad6d4bbfa1574c7400793a6085",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "445adea6_e56e5b35",
+        "filename": "src/dawn/tests/unittests/validation/ShaderModuleValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T14:32:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "026b2942_3848ad40",
+      "revId": "55b4dda5d31136ad6d4bbfa1574c7400793a6085",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
