@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "625db1e8_78ffbd35",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-25T22:07:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b161cea8_2a271b9e",
+      "revId": "438f024830fb6a4130242d167f5dbf4e76f8ee9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a1aff0ff_cdb2d39e",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-08-25T19:59:15Z",
       "side": 1,
       "message": "For this one there\u0027s already existing helper: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/StringViewUtils.h;l\u003d46;drc\u003d03d6e0e163824da1ae085fcc700ea60eee7b9b2b\n\n+1 for ToWGPU in a utility header file. They should be useful when translating other descriptors in other webgpu::* backend objects. (Can be `src/dawn/native/webgpu/UtilsWGPU.h`) Can be in a separate CL.",
+      "parentUuid": "a1aff0ff_cdb2d39e",
+      "revId": "438f024830fb6a4130242d167f5dbf4e76f8ee9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a330882_bdbba844",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-25T22:07:40Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "a1aff0ff_cdb2d39e",
       "revId": "438f024830fb6a4130242d167f5dbf4e76f8ee9f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
