@@ -4017,6 +4017,17 @@
             },
             {
                 "name": "destroy"
+            },
+            {
+                "name": "pin",
+                "tags": ["dawn"],
+                "args": [
+                    {"name": "usage", "type": "texture usage"}
+                ]
+            },
+            {
+                "name": "unpin",
+                "tags": ["dawn"]
             }
         ]
     },

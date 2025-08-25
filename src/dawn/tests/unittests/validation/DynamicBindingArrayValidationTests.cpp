@@ -1135,5 +1135,12 @@ TEST_F(DynamicBindingArrayTests, GetBGLArrayStartMatchesBetweenStages) {
 //  - Test what happens when only DynamicArrayKind::Undefined is used in the defaulted layout. Is
 //    that even valid?
 
+// Test pin unpin without validation.
+// Test usage must be one from the texture.
+// Test usage that's a garbage number.
+// Test usage must be a shader usage.
+// Test usage must be texture binding.
+// Add TODO to check with submit usage.
+
 }  // anonymous namespace
 }  // namespace dawn
