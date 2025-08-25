@@ -33,6 +33,24 @@
       "message": "Nit: The check above already covers the case where an instruction result is used by two different instructions. So we only need to add extra handling for the case where the result is used multiple times by the same instruction. In which case, can we do the check in `CheckResults` and just use a local hashset, instead of the global one?",
       "revId": "5382c812b64cf006b8755396ea962238d6a4a4c1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebed5ec0_22d26c7c",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1724,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-25T18:44:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "004df458_a9d90d13",
+      "revId": "5382c812b64cf006b8755396ea962238d6a4a4c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
