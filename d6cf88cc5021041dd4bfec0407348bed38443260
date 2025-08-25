@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8669fb87_c4b635e6",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T14:17:39Z",
+      "side": 1,
+      "message": "I believe that this is going to cause issues in Dawn because the function will return the same `ResourceBinding` structure for `texture_2d\u003cf32\u003e` and `array\u003ctexture_2d\u003cf32\u003e\u003e`. This means that Dawn will have to first get the runtime binding arrays, then when converting resource bindings, filter out bindings that are in the list of runtime binding arrays.",
+      "parentUuid": "0a6a4d01_6613ed03",
+      "revId": "d6cf88cc5021041dd4bfec0407348bed38443260",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ad1d0465_df8d4b89",
         "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
         "patchSetId": 7
