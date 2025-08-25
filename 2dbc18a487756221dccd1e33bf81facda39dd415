@@ -51,6 +51,24 @@
       "parentUuid": "8ce06556_3dc8ea8a",
       "revId": "2dbc18a487756221dccd1e33bf81facda39dd415",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0d92d37_395bf76b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-25T01:37:20Z",
+      "side": 1,
+      "message": "\u003eShaobo, did you have ideas on how to optimize the root signature more? (for later)\n\nRaised an issue about this https://issues.chromium.org/issues/428802462 before. And some potential ways to do:\n1. Storage Buffer Sizes might not used always, we could set them on demand.\n2. Compress sizes things into uint16_t to reserve some space.\n3, Investigating DBO supporting, it occupies lots of spaces.",
+      "parentUuid": "c43245f7_87e6905c",
+      "revId": "2dbc18a487756221dccd1e33bf81facda39dd415",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
