@@ -1228,6 +1228,18 @@ wgpu::TextureUsage TextureBase::GetInternalUsage() const {
     DAWN_ASSERT(!IsError());
     return mInternalUsage;
 }
+
+bool TextureBase::HasPinnedUsage() const {
+    DAWN_ASSERT(!IsError());
+    return mPinnedUsage != wgpu::TextureUsage::None;
+}
+
+wgpu::TextureUsage TextureBase::GetPinnedUsage() const {
+    DAWN_ASSERT(!IsError());
+    DAWN_ASSERT(HasPinnedUsage());
+    return mPinnedUsage;
+}
+
 void TextureBase::AddInternalUsage(wgpu::TextureUsage usage) {
     DAWN_ASSERT(!IsError());
     mInternalUsage |= usage;
@@ -1536,6 +1548,75 @@ wgpu::TextureFormat TextureBase::APIGetFormat() const {
 
 wgpu::TextureUsage TextureBase::APIGetUsage() const {
     return mUsage;
+}
+
+void TextureBase::APIPin(wgpu::TextureUsage usage) {
+    // There is no status to return so we don't need to handle the case where an error has been
+    // consumed.
+    [[maybe_unused]] bool hadError =
+        GetDevice()->ConsumedError(Pin(usage), "calling %s.Pin(%u)", this, usage);
+}
+
+MaybeError TextureBase::Pin(wgpu::TextureUsage usage) {
+    if (GetDevice()->IsValidationEnabled()) {
+        DAWN_TRY(ValidatePin(usage));
+    }
+
+    DAWN_TRY(PinImpl(usage));
+    mPinnedUsage = usage;
+    return {};
+}
+
+MaybeError TextureBase::PinImpl(wgpu::TextureUsage usage) {
+    DAWN_UNREACHABLE();
+}
+
+void TextureBase::APIUnpin() {
+    // There is no status to return so we don't need to handle the case where an error has been
+    // consumed.
+    [[maybe_unused]] bool hadError =
+        GetDevice()->ConsumedError(Unpin(), "calling %s.Unpin()", this);
+}
+
+MaybeError TextureBase::Unpin() {
+    if (GetDevice()->IsValidationEnabled()) {
+        DAWN_TRY(ValidateUnpin());
+    }
+
+    DAWN_TRY(UnpinImpl());
+    mPinnedUsage = wgpu::TextureUsage::None;
+    return {};
+}
+
+MaybeError TextureBase::UnpinImpl() {
+    DAWN_UNREACHABLE();
+}
+
+MaybeError TextureBase::ValidatePin(wgpu::TextureUsage usage) const {
+    DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::ChromiumExperimentalBindless),
+                    "Texture pinning used without the %s feature enabled.",
+                    wgpu::FeatureName::ChromiumExperimentalBindless);
+
+    DAWN_TRY(ValidateTextureUsage(usage));
+    DAWN_INVALID_IF(!IsSubset(usage, mUsage),
+                    "Pinned usages %s are not a subset of %s's usages (%u).", usage, this, mUsage);
+    DAWN_INVALID_IF(!IsSubset(usage, kShaderTextureUsages),
+                    "Pinned usages %s contain non-shader usages.", usage);
+
+    // TODO(https://crbug.com/435317394): Support pinning for readonly storage and storage as well.
+    // This might require adding readonly storage in the API so it can be specified.
+    DAWN_INVALID_IF(
+        usage != wgpu::TextureUsage::TextureBinding,
+        "Pinned usages %s is not %s (which is required in the current bindless prototype).", usage,
+        wgpu::TextureUsage::TextureBinding);
+    return {};
+}
+
+MaybeError TextureBase::ValidateUnpin() const {
+    DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::ChromiumExperimentalBindless),
+                    "Texture pinning used without the %s feature enabled.",
+                    wgpu::FeatureName::ChromiumExperimentalBindless);
+    return {};
 }
 
 // TextureViewQuery
