@@ -33,6 +33,24 @@
       "message": "Isn\u0027t this always assigning `nullptr` ?",
       "revId": "7a426dc936817596cbb66c1b27fb8933d432d880",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ca27f2d_a3b99ecb",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T14:35:21Z",
+      "side": 1,
+      "message": "It is, I added it preventively as it will avoid errors in the future when someone copy pastes that code and puts it above or below. WDYT?",
+      "parentUuid": "aaf53c06_d98d455a",
+      "revId": "7a426dc936817596cbb66c1b27fb8933d432d880",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
