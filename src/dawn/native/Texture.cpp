@@ -1051,6 +1051,9 @@ void TextureBase::DestroyImpl() {
     // - It may be called when the last ref to the texture is dropped and the texture
     //   is implicitly destroyed. This case is thread-safe because there are no
     //   other threads using the texture since there are no other live refs.
+
+    Unpin();
+
     mState.destroyed = true;
 
     // Drop all the cache references to TextureViews.
@@ -1259,6 +1262,9 @@ void TextureBase::SetInitialized(bool initialized) {
 }
 
 ExecutionSerial TextureBase::OnEndAccess() {
+    // TODO(https://crbug.com/435317394): Consider if we should notify backends to unpin (if they
+    // have fence exporting to do) so that they always see balanced Pin/Unpin pairs.
+
     mState.hasAccess = false;
     ExecutionSerial lastUsageSerial = mLastSharedTextureMemoryUsageSerial;
     mLastSharedTextureMemoryUsageSerial = kBeginningOfGPUTime;
@@ -1553,16 +1559,29 @@ wgpu::TextureUsage TextureBase::APIGetUsage() const {
 void TextureBase::APIPin(wgpu::TextureUsage usage) {
     // There is no status to return so we don't need to handle the case where an error has been
     // consumed.
-    [[maybe_unused]] bool hadError =
-        GetDevice()->ConsumedError(Pin(usage), "calling %s.Pin(%u)", this, usage);
+    [[maybe_unused]] bool hadError = GetDevice()->ConsumedError(
+        [&]() -> MaybeError {
+            if (GetDevice()->IsValidationEnabled()) {
+                DAWN_TRY(ValidatePin(usage));
+            }
+            return Pin(usage);
+        }(),
+        "calling %s.Pin(%u)", this, usage);
 }
 
 MaybeError TextureBase::Pin(wgpu::TextureUsage usage) {
-    if (GetDevice()->IsValidationEnabled()) {
-        DAWN_TRY(ValidatePin(usage));
+    // Ensure backends only see useful and balanced Pin/Unpin pairs.
+    if (mPinnedUsage == usage) {
+        return {};
     }
+    if (HasPinnedUsage()) {
+        Unpin();
+    }
+    DAWN_ASSERT(!HasPinnedUsage());
 
     DAWN_TRY(PinImpl(usage));
+
+    // Update the frontend state.
     mPinnedUsage = usage;
     return {};
 }
@@ -1572,30 +1591,37 @@ MaybeError TextureBase::PinImpl(wgpu::TextureUsage usage) {
 }
 
 void TextureBase::APIUnpin() {
-    // There is no status to return so we don't need to handle the case where an error has been
-    // consumed.
-    [[maybe_unused]] bool hadError =
-        GetDevice()->ConsumedError(Unpin(), "calling %s.Unpin()", this);
-}
-
-MaybeError TextureBase::Unpin() {
-    if (GetDevice()->IsValidationEnabled()) {
-        DAWN_TRY(ValidateUnpin());
+    if (GetDevice()->IsValidationEnabled() &&
+        GetDevice()->ConsumedError(ValidateUnpin(), "calling %s.Unpin()", this)) {
+        return;
     }
 
-    DAWN_TRY(UnpinImpl());
-    mPinnedUsage = wgpu::TextureUsage::None;
-    return {};
+    Unpin();
 }
 
-MaybeError TextureBase::UnpinImpl() {
+void TextureBase::Unpin() {
+    // Ensure backends only see useful and balanced Pin/Unpin pairs.
+    if (!HasPinnedUsage()) {
+        return;
+    }
+
+    UnpinImpl();
+
+    // Update the frontend state.
+    mPinnedUsage = wgpu::TextureUsage::None;
+}
+
+void TextureBase::UnpinImpl() {
     DAWN_UNREACHABLE();
 }
 
 MaybeError TextureBase::ValidatePin(wgpu::TextureUsage usage) const {
     DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::ChromiumExperimentalBindless),
-                    "Texture pinning used without the %s feature enabled.",
+                    "Texture pinning used without %s enabled.",
                     wgpu::FeatureName::ChromiumExperimentalBindless);
+
+    DAWN_INVALID_IF(mState.destroyed || !mState.hasAccess,
+                    "Texture is destroyed or without access.");
 
     DAWN_TRY(ValidateTextureUsage(usage));
     DAWN_INVALID_IF(!IsSubset(usage, mUsage),
@@ -1614,7 +1640,7 @@ MaybeError TextureBase::ValidatePin(wgpu::TextureUsage usage) const {
 
 MaybeError TextureBase::ValidateUnpin() const {
     DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::ChromiumExperimentalBindless),
-                    "Texture pinning used without the %s feature enabled.",
+                    "Texture unpinning used without %s enabled.",
                     wgpu::FeatureName::ChromiumExperimentalBindless);
     return {};
 }

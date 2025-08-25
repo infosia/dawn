@@ -606,8 +606,6 @@ MaybeError Texture::PinImpl(wgpu::TextureUsage usage) {
     return {};
 }
 
-MaybeError Texture::UnpinImpl() {
-    return {};
-}
+void Texture::UnpinImpl() {}
 
 }  // namespace dawn::native::null

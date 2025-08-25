@@ -352,7 +352,7 @@ class Texture : public TextureBase {
 
   private:
     MaybeError PinImpl(wgpu::TextureUsage usage) override;
-    MaybeError UnpinImpl() override;
+    void UnpinImpl() override;
 };
 
 }  // namespace dawn::native::null

@@ -189,7 +189,7 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
     Extent3D GetMipLevelSubresourceVirtualSize(uint32_t level, Aspect aspect) const;
 
     MaybeError Pin(wgpu::TextureUsage usage);
-    MaybeError Unpin();
+    void Unpin();
 
     ResultOrError<Ref<TextureViewBase>> CreateView(
         const TextureViewDescriptor* descriptor = nullptr);
@@ -233,7 +233,7 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
     ExecutionSerial mLastSharedTextureMemoryUsageSerial{kBeginningOfGPUTime};
 
     virtual MaybeError PinImpl(wgpu::TextureUsage usage);
-    virtual MaybeError UnpinImpl();
+    virtual void UnpinImpl();
 
   private:
     struct TextureState {

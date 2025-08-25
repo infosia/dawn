@@ -1207,12 +1207,31 @@ TEST_F(DynamicBindingArrayTests, PinUnpinUnbalancedIsValid) {
 
     // Pinning twice is valid.
     tex.Pin(wgpu::TextureUsage::TextureBinding);
+    // TODO(https://crbug.com/435317394): Use a different usage here when another is valid.
     tex.Pin(wgpu::TextureUsage::TextureBinding);
 
     // Unpinning twice (plus one more to make sure we are unbalanced) is valid.
     tex.Unpin();
     tex.Unpin();
     tex.Unpin();
+}
+
+// Test that pinning is not allowed on a destroyed texture.
+TEST_F(DynamicBindingArrayTests, PinDestroyedTextureInvalid) {
+    wgpu::TextureDescriptor desc{
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {1, 1},
+        .format = wgpu::TextureFormat::R32Float,
+    };
+    wgpu::Texture tex = device.CreateTexture(&desc);
+
+    // Success case, pinning before Destroy() is valid.
+    tex.Pin(wgpu::TextureUsage::TextureBinding);
+    tex.Unpin();
+
+    // Error case, pinning a destroyed texture is not allowed.
+    tex.Destroy();
+    ASSERT_DEVICE_ERROR(tex.Pin(wgpu::TextureUsage::TextureBinding));
 }
 
 // TODO(https://crbug.com/435317394): This is missing the most important part of the pinned usage
