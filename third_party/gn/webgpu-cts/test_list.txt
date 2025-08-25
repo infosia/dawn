@@ -11129,7 +11129,10 @@ webgpu:api,validation,capability_checks,features,texture_formats_tier1:render_pi
 webgpu:api,validation,capability_checks,features,texture_formats_tier1:render_pipeline,color_target:isAsync=true;format="rg11b10ufloat";enable_feature=false;check="RENDER_ATTACHMENT"
 webgpu:api,validation,capability_checks,features,texture_formats_tier1:render_pipeline,color_target:isAsync=true;format="rg11b10ufloat";enable_feature=false;check="blendable"
 webgpu:api,validation,capability_checks,features,texture_formats_tier1:render_pipeline,color_target:isAsync=true;format="rg11b10ufloat";enable_feature=false;check="multisample"
-webgpu:api,validation,capability_checks,features,texture_formats_tier1:render_pass,resolvable:
+webgpu:api,validation,capability_checks,features,texture_formats_tier1:render_pass,resolvable:format="r8snorm";enable_feature=true
+webgpu:api,validation,capability_checks,features,texture_formats_tier1:render_pass,resolvable:format="rg8snorm";enable_feature=true
+webgpu:api,validation,capability_checks,features,texture_formats_tier1:render_pass,resolvable:format="rgba8snorm";enable_feature=true
+webgpu:api,validation,capability_checks,features,texture_formats_tier1:render_pass,resolvable:format="rg11b10ufloat";enable_feature=true
 webgpu:api,validation,capability_checks,features,texture_formats_tier1:bind_group_layout,storage_texture:format="r8unorm";access="read-only";enable_feature=true
 webgpu:api,validation,capability_checks,features,texture_formats_tier1:bind_group_layout,storage_texture:format="r8unorm";access="read-only";enable_feature=false
 webgpu:api,validation,capability_checks,features,texture_formats_tier1:bind_group_layout,storage_texture:format="r8unorm";access="write-only";enable_feature=true
