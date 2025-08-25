@@ -348,6 +348,10 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
     //  - dynamic uniform buffer: 2 slots for a root descriptor
     //  - dynamic storage buffer: 3 slots for a root descriptor + root constant
 
+    // We want to support a minimum of 8 and 10 for these limits.
+    limits->v1.maxDynamicUniformBuffersPerPipelineLayout = 10;
+    limits->v1.maxDynamicStorageBuffersPerPipelineLayout = 8;
+
     // Available slots after base limits considered.
     uint32_t availableRootSignatureSlots =
         kMaxRootSignatureSize - kReservedSlots - 2 * limits->v1.maxBindGroups -
@@ -381,10 +385,11 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
         }
     }
 
+    DAWN_ASSERT(limits->v1.maxImmediateSize >= 32);
     DAWN_ASSERT(
         2 * limits->v1.maxBindGroups + 2 * limits->v1.maxDynamicUniformBuffersPerPipelineLayout +
             3 * limits->v1.maxDynamicStorageBuffersPerPipelineLayout +
-            limits->v1.maxImmediateSize / kImmediateConstantElementByteSize + kReservedSlots ==
+            limits->v1.maxImmediateSize / kImmediateConstantElementByteSize + kReservedSlots <=
         kMaxRootSignatureSize);
 
     // https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/sm5-attributes-numthreads
