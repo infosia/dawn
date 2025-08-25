@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "90596166_defd0338",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-25T14:19:09Z",
+      "side": 1,
+      "message": "Ah, so your preference for Dawn is to not get _any_ runtime binding array values in ResourceBindings?",
+      "parentUuid": "8669fb87_c4b635e6",
+      "revId": "d6cf88cc5021041dd4bfec0407348bed38443260",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ad1d0465_df8d4b89",
         "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
         "patchSetId": 7
