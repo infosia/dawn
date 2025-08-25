@@ -67,10 +67,16 @@ MaybeError ComputePipeline::InitializeImpl() {
     NSError* error = nullptr;
     NSRef<NSString> label = MakeDebugName(GetDevice(), "Dawn_ComputePipeline", GetLabel());
 
+    // Copy over the local workgroup size as it is passed to dispatch explicitly in Metal
+    mLocalWorkgroupSize = computeData.localWorkgroupSize;
+    uint32_t totalWorkgroupSize =
+        mLocalWorkgroupSize.width * mLocalWorkgroupSize.height * mLocalWorkgroupSize.depth;
+
     NSRef<MTLComputePipelineDescriptor> descriptorRef =
         AcquireNSRef([MTLComputePipelineDescriptor new]);
     MTLComputePipelineDescriptor* descriptor = descriptorRef.Get();
     descriptor.computeFunction = computeData.function.Get();
+    descriptor.maxTotalThreadsPerThreadgroup = totalWorkgroupSize;
     descriptor.label = label.Get();
 
     platform::metrics::DawnHistogramTimer timer(GetDevice()->GetPlatform());
@@ -85,9 +91,6 @@ MaybeError ComputePipeline::InitializeImpl() {
     }
     DAWN_ASSERT(mMtlComputePipelineState != nil);
     timer.RecordMicroseconds("Metal.newComputePipelineStateWithDescriptor.CacheMiss");
-
-    // Copy over the local workgroup size as it is passed to dispatch explicitly in Metal
-    mLocalWorkgroupSize = computeData.localWorkgroupSize;
 
     mRequiresStorageBufferLength = computeData.needsStorageBufferLength;
     mWorkgroupAllocations = std::move(computeData.workgroupAllocations);
