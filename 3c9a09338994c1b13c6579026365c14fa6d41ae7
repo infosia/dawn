@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1369691_e322df11",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-25T20:34:23Z",
+      "side": 1,
+      "message": "So IIUC, this is now always `std::min(17, 16) \u003d 16` right?",
+      "range": {
+        "startLine": 365,
+        "startChar": 4,
+        "endLine": 366,
+        "endChar": 79
+      },
+      "revId": "3c9a09338994c1b13c6579026365c14fa6d41ae7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cee7765_9dd7abc5",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-25T20:34:23Z",
+      "side": 1,
+      "message": "nit. This comment is now out of date.",
+      "range": {
+        "startLine": 375,
+        "startChar": 8,
+        "endLine": 377,
+        "endChar": 24
+      },
+      "revId": "3c9a09338994c1b13c6579026365c14fa6d41ae7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
