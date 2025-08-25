@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0328e686_11998876",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T14:32:07Z",
+      "side": 1,
+      "message": "This shouldn\u0027t because we rely on this getter at [1] to know whether to track the dynamic binding array and later during ValidateSubmit check if it is destroyed.",
+      "parentUuid": "724eab23_2cde6074",
+      "revId": "606514e510fadd46e9202f0d53306639fe400eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1627c08b_7e008285",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7acc42dd_3b5871f2",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T14:32:07Z",
+      "side": 1,
+      "message": "Added the ASSERTs inside of the DynamicArrayState methods instead of here. Done.",
+      "parentUuid": "1627c08b_7e008285",
+      "revId": "606514e510fadd46e9202f0d53306639fe400eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "85897929_38ac4d20",
@@ -48,6 +84,41 @@
       "writtenOn": "2025-08-25T13:32:30Z",
       "side": 1,
       "message": "```suggestion\n    // On the queue we only validate that dynamic array bind groups are alive in a submit because\n```",
+      "revId": "606514e510fadd46e9202f0d53306639fe400eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "449a0264_f99707ec",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T14:32:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85897929_38ac4d20",
+      "revId": "606514e510fadd46e9202f0d53306639fe400eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35134a25_183f5ced",
+        "filename": "src/dawn/native/PassResourceUsageTracker.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T14:32:07Z",
+      "side": 1,
+      "message": "[1]",
       "revId": "606514e510fadd46e9202f0d53306639fe400eea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
