@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "860e767d_3c0ac000",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-25T22:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d143c7e_7e62f0d0",
+      "revId": "d3f200bdc58f5390becbe813c855f7ee60ab2955",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f018fd65_4d195509",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-08-25T08:12:03Z",
       "side": 1,
       "message": "```suggestion\nWGPURenderPassColorAttachment ToWGPU(const RenderPassColorAttachmentInfo\u0026 info) {\n```",
+      "revId": "d3f200bdc58f5390becbe813c855f7ee60ab2955",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfa045c6_3e13eab6",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-25T22:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f018fd65_4d195509",
       "revId": "d3f200bdc58f5390becbe813c855f7ee60ab2955",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -65,6 +101,42 @@
       "writtenOn": "2025-08-25T08:12:03Z",
       "side": 1,
       "message": "```suggestion\nWGPURenderPassDepthStencilAttachment ToWGPU(\n```",
+      "revId": "d3f200bdc58f5390becbe813c855f7ee60ab2955",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f27fe68_9b03e533",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-25T22:08:41Z",
+      "side": 1,
+      "message": "Sure but there AFAICT there is nothing in RenderPassDepthStencilAttachmentInfo that requires a chain ATM.",
+      "parentUuid": "57e6c76b_c4aa2bce",
+      "revId": "d3f200bdc58f5390becbe813c855f7ee60ab2955",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1f02a02_014cb838",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-25T22:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3698ac68_7ca5c7f1",
       "revId": "d3f200bdc58f5390becbe813c855f7ee60ab2955",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
