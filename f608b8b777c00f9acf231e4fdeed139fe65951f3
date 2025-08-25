@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20e97db1_fc94bfae",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-25T19:52:33Z",
+      "side": 1,
+      "message": "nit. What is this for?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 38
+      },
+      "revId": "f608b8b777c00f9acf231e4fdeed139fe65951f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb250b56_10f34b45",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-25T19:52:33Z",
+      "side": 1,
+      "message": "It\u0027s not a lot of code right now, but given it\u0027s split separately in the frontend, we should split this out to it\u0027s own files as well.",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 2
+      },
+      "revId": "f608b8b777c00f9acf231e4fdeed139fe65951f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27a11226_1cb24e96",
+        "filename": "src/dawn/tests/end2end/TexelBufferTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-25T19:52:33Z",
+      "side": 1,
+      "message": "nit. I think it\u0027s a little less confusing w.r.t the indices, if this is just `{0u, 1u, 2u, 3u}` since then it\u0027s pretty obvious what the expected results should be.",
+      "range": {
+        "startLine": 338,
+        "startChar": 78,
+        "endLine": 338,
+        "endChar": 96
+      },
+      "revId": "f608b8b777c00f9acf231e4fdeed139fe65951f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e599035_c2053448",
+        "filename": "src/dawn/tests/end2end/TexelBufferTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-25T19:52:33Z",
+      "side": 1,
+      "message": "nit. Could you use `rgba8unorm` instead and use `utils::RGBA8` constants like you did in `RenderFragmentColorPalette` above also?",
+      "range": {
+        "startLine": 398,
+        "startChar": 8,
+        "endLine": 398,
+        "endChar": 56
+      },
+      "revId": "f608b8b777c00f9acf231e4fdeed139fe65951f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "503b6925_fe2273e0",
+        "filename": "src/dawn/tests/end2end/TexelBufferTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-25T19:52:33Z",
+      "side": 1,
+      "message": "nit. Same here about using the color constants and potentially `rgba8unorm`",
+      "range": {
+        "startLine": 474,
+        "startChar": 8,
+        "endLine": 474,
+        "endChar": 76
+      },
+      "revId": "f608b8b777c00f9acf231e4fdeed139fe65951f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e2a0f76_e80355c6",
+        "filename": "src/dawn/tests/end2end/TexelBufferTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-25T19:52:33Z",
+      "side": 1,
+      "message": "nit. same comment as above w.r.t to the values in this one.",
+      "range": {
+        "startLine": 531,
+        "startChar": 78,
+        "endLine": 531,
+        "endChar": 96
+      },
+      "revId": "f608b8b777c00f9acf231e4fdeed139fe65951f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b97e857b_ffb93194",
+        "filename": "src/dawn/tests/end2end/TexelBufferTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-25T19:52:33Z",
+      "side": 1,
+      "message": "I think this test is missing expectation checks at the end? Also, would it make sense to test this with stuff like `queue.CopyBufferToBuffer` or something like that instead of using two compute passes? I feel like the compute pass copying is pretty similar to some of the other tests already.",
+      "range": {
+        "startLine": 666,
+        "startChar": 25,
+        "endLine": 666,
+        "endChar": 41
+      },
+      "revId": "f608b8b777c00f9acf231e4fdeed139fe65951f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
