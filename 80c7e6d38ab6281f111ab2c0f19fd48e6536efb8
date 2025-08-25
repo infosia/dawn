@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bd2eac6_ff22db2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-25T17:09:56Z",
+      "side": 1,
+      "message": "*sigh* Seriously? Deleting a .md file clears the review bits?",
+      "revId": "80c7e6d38ab6281f111ab2c0f19fd48e6536efb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
