@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d561f02f_85e256df",
+        "filename": "src/dawn/native/BindGroup.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T18:44:05Z",
+      "side": 1,
+      "message": "mBindings is slab allocated with [SlabAllocator](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/SlabAllocator.h;l\u003d192?q\u003dSlabAllocato\u0026sq\u003d) to be in the [same allocation as the BindGroup](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BindGroupLayoutInternal.h;drc\u003d48f660fbabd7ec824f280cbdf7f33dac87ef37dc;l\u003d170). It directly follows it in the allocation. I could make it an std::optional but it would bloat the normal bindgroups for now reason (`DynamicArrayState` is expected to grow a bunch) so it would be nice to keep it separate, though if it were an `std::optional` it would still require a single branch to skip it in the destructor.",
+      "parentUuid": "8c2f0322_bdfb26e5",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 53
+      },
+      "revId": "8958104b3bcbfd6570d561f971cc43433960849f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4a4f2f8e_1afd2b16",
         "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
         "patchSetId": 14
