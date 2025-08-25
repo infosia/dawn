@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d655b28_3ce4a7f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T08:13:36Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "fa1c22cb6a6f79f91e9e70691fe639eb8e750e9b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2686d5f_c7708319",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T08:13:36Z",
+      "side": 1,
+      "message": "```suggestion\n            // RenderPipelineWGPU\n```",
+      "revId": "fa1c22cb6a6f79f91e9e70691fe639eb8e750e9b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
