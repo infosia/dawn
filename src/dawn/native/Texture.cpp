@@ -1051,6 +1051,10 @@ void TextureBase::DestroyImpl() {
     // - It may be called when the last ref to the texture is dropped and the texture
     //   is implicitly destroyed. This case is thread-safe because there are no
     //   other threads using the texture since there are no other live refs.
+
+    // TODO(https://crbug.com/435317394): Consider if we should notify backends to unpin (if they
+    // have fence exporting to do) so that they always see balanced Pin/Unpin pairs.
+
     mState.destroyed = true;
 
     // Drop all the cache references to TextureViews.
@@ -1259,6 +1263,9 @@ void TextureBase::SetInitialized(bool initialized) {
 }
 
 ExecutionSerial TextureBase::OnEndAccess() {
+    // TODO(https://crbug.com/435317394): Consider if we should notify backends to unpin (if they
+    // have fence exporting to do) so that they always see balanced Pin/Unpin pairs.
+
     mState.hasAccess = false;
     ExecutionSerial lastUsageSerial = mLastSharedTextureMemoryUsageSerial;
     mLastSharedTextureMemoryUsageSerial = kBeginningOfGPUTime;
@@ -1562,6 +1569,16 @@ MaybeError TextureBase::Pin(wgpu::TextureUsage usage) {
         DAWN_TRY(ValidatePin(usage));
     }
 
+    // Ensure backends only see useful and balanced Pin/Unpin pairs.
+    if (mPinnedUsage == usage) {
+        return {};
+    }
+
+    if (HasPinnedUsage()) {
+        DAWN_TRY(Unpin());
+    }
+    DAWN_ASSERT(!HasPinnedUsage());
+
     DAWN_TRY(PinImpl(usage));
     mPinnedUsage = usage;
     return {};
@@ -1583,6 +1600,11 @@ MaybeError TextureBase::Unpin() {
         DAWN_TRY(ValidateUnpin());
     }
 
+    // Ensure backends only see useful and balanced Pin/Unpin pairs.
+    if (!HasPinnedUsage()) {
+        return {};
+    }
+
     DAWN_TRY(UnpinImpl());
     mPinnedUsage = wgpu::TextureUsage::None;
     return {};
@@ -1594,7 +1616,7 @@ MaybeError TextureBase::UnpinImpl() {
 
 MaybeError TextureBase::ValidatePin(wgpu::TextureUsage usage) const {
     DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::ChromiumExperimentalBindless),
-                    "Texture pinning used without the %s feature enabled.",
+                    "Texture pinning used without %s enabled.",
                     wgpu::FeatureName::ChromiumExperimentalBindless);
 
     DAWN_TRY(ValidateTextureUsage(usage));
@@ -1614,7 +1636,7 @@ MaybeError TextureBase::ValidatePin(wgpu::TextureUsage usage) const {
 
 MaybeError TextureBase::ValidateUnpin() const {
     DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::ChromiumExperimentalBindless),
-                    "Texture pinning used without the %s feature enabled.",
+                    "Texture unpinning used without %s enabled.",
                     wgpu::FeatureName::ChromiumExperimentalBindless);
     return {};
 }
