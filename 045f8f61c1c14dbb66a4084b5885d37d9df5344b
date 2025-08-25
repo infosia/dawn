@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5260797_b583360d",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T07:53:53Z",
+      "side": 1,
+      "message": "These two checks are redundant with `GetInternalFormat` and `ValidateTexelBufferAccess` because these values are `valid: false` in `dawn.json`. You can look at the generated code.\n\nHowever what if `texelBufferLayout-\u003eaccess \u003d\u003d BindingNotUsed`? That seems not valid, or something that we should check to early out of this code path (we need to choose one of the options because backends won\u0027t know how to translate a BindingsNotUsed).",
+      "range": {
+        "startLine": 275,
+        "startChar": 1,
+        "endLine": 278,
+        "endChar": 68
+      },
+      "revId": "045f8f61c1c14dbb66a4084b5885d37d9df5344b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0414242_8049e95b",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T07:53:53Z",
+      "side": 1,
+      "message": "```suggestion\n        const Format* format;\n```",
+      "revId": "045f8f61c1c14dbb66a4084b5885d37d9df5344b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
