@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d143c7e_7e62f0d0",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T08:12:03Z",
+      "side": 1,
+      "message": "That\u0027s a Dawn extension for Graphite that inside the render pass expands the , we should translate to the same enum value, or keep DAWN_UNREACHABLE() until we add the support for that extension in the WGPU backend (we\u0027ll find the UNREACHABLE when we enable tests).",
+      "revId": "d3f200bdc58f5390becbe813c855f7ee60ab2955",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f018fd65_4d195509",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T08:12:03Z",
+      "side": 1,
+      "message": "```suggestion\nWGPURenderPassColorAttachment ToWGPU(const RenderPassColorAttachmentInfo\u0026 info) {\n```",
+      "revId": "d3f200bdc58f5390becbe813c855f7ee60ab2955",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57e6c76b_c4aa2bce",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T08:12:03Z",
+      "side": 1,
+      "message": "Not that in the future if there are things chained to some structures we\u0027ll need to return them as well, but cannot reference the stack of this function, so we\u0027ll need some \"Combo\" struct that contains everything in the caller\u0027s stack.",
+      "revId": "d3f200bdc58f5390becbe813c855f7ee60ab2955",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3698ac68_7ca5c7f1",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T08:12:03Z",
+      "side": 1,
+      "message": "```suggestion\nWGPURenderPassDepthStencilAttachment ToWGPU(\n```",
+      "revId": "d3f200bdc58f5390becbe813c855f7ee60ab2955",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
