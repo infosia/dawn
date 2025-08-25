@@ -16,6 +16,29 @@
       "message": "LGTM!",
       "revId": "d33aac0a8db7ecdff72c2ac4e295a2e0917fcb7b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad270529_86191ab4",
+        "filename": "src/dawn/tests/unittests/wire/WireConfusionDeathTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-25T19:02:52Z",
+      "side": 1,
+      "message": "I\u0027m not sure if there\u0027s really a difference between Before and Mid in the tests because the Mid one just disconnects the client before executing the lambda, but that\u0027s also true for the Before case?",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 38
+      },
+      "revId": "d33aac0a8db7ecdff72c2ac4e295a2e0917fcb7b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
