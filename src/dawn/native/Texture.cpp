@@ -1051,6 +1051,10 @@ void TextureBase::DestroyImpl() {
     // - It may be called when the last ref to the texture is dropped and the texture
     //   is implicitly destroyed. This case is thread-safe because there are no
     //   other threads using the texture since there are no other live refs.
+
+    // TODO(https://crbug.com/435317394): Consider if we should notify backends to unpin (if they
+    // have fence exporting to do) so that they always see balanced Pin/Unpin pairs.
+
     mState.destroyed = true;
 
     // Drop all the cache references to TextureViews.
@@ -1561,6 +1565,16 @@ void TextureBase::APIPin(wgpu::TextureUsage usage) {
 }
 
 MaybeError TextureBase::Pin(wgpu::TextureUsage usage) {
+    // Ensure backends only see useful and balanced Pin/Unpin pairs.
+    if (mPinnedUsage == usage) {
+        return {};
+    }
+
+    if (HasPinnedUsage()) {
+        DAWN_TRY(Unpin());
+    }
+    DAWN_ASSERT(!HasPinnedUsage());
+
     DAWN_TRY(PinImpl(usage));
     mPinnedUsage = usage;
     return {};
@@ -1581,6 +1595,11 @@ void TextureBase::APIUnpin() {
 }
 
 MaybeError TextureBase::Unpin() {
+    // Ensure backends only see useful and balanced Pin/Unpin pairs.
+    if (!HasPinnedUsage()) {
+        return {};
+    }
+
     DAWN_TRY(UnpinImpl());
     mPinnedUsage = wgpu::TextureUsage::None;
     return {};
