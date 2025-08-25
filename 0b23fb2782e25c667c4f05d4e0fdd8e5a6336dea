@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4b73acd_1a96d14e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-25T14:30:13Z",
+      "side": 1,
+      "message": "Should also remove docs/tint/extensions/chromium_experimental_primitive_id.md ?",
+      "revId": "0b23fb2782e25c667c4f05d4e0fdd8e5a6336dea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
