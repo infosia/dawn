@@ -39,6 +39,30 @@
       },
       "revId": "63ae0f66a7ba1e1e45e3ec8c58a71922af284fc8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23a85d3f_7b7f081c",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T14:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "166f7f47_605bb514",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "63ae0f66a7ba1e1e45e3ec8c58a71922af284fc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
