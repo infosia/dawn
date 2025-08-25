@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b161cea8_2a271b9e",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T08:08:25Z",
+      "side": 1,
+      "message": "nit: unused.",
+      "revId": "438f024830fb6a4130242d167f5dbf4e76f8ee9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1aff0ff_cdb2d39e",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-25T08:08:25Z",
+      "side": 1,
+      "message": "The const here does nothing.\n\n```suggestion\nWGPUStringView ToWGPU(const std::string\u0026 str) {\n```\n\nAlso it might be worth eventually moving some of these helpers to a utility file when we start using them for more than just CommandBufferWGPU.",
+      "revId": "438f024830fb6a4130242d167f5dbf4e76f8ee9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
