@@ -78,6 +78,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "64e28ef4_c354814a",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T13:53:50Z",
+      "side": 1,
+      "message": "Or we can make Dawn use the enum above to tag the various types, and the vector below is just for the order for a `DefaultBindingOffsetFor\u003cT\u003e` used in the else clause.",
+      "parentUuid": "3cfcc091_f4bf459f",
+      "revId": "30cc213d6672c535801eedd53011c38688d5c143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a7165c82_873d45b1",
         "filename": "src/tint/api/common/runtime_binding_array_config.h",
         "patchSetId": 2
