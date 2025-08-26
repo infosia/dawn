@@ -703,6 +703,7 @@ void DeviceBase::HandleDeviceLost(wgpu::DeviceLostReason reason, std::string_vie
 }
 
 void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
+                             bool writeToErrorScope,
                              InternalErrorType additionalAllowedErrors,
                              wgpu::DeviceLostReason lostReason) {
     auto deviceGuard = GetGuard();
@@ -768,31 +769,57 @@ void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
         // TODO(crbug.com/dawn/826): Cancel the tasks that are in flight if possible.
         mAsyncTaskManager->WaitAllPendingTasks();
         mCallbackTaskManager->HandleDeviceLoss();
-
-        // Still forward device loss errors to the error scopes so they all reject.
-        GetErrorScopeStack()->HandleError(ToWGPUErrorType(type), messageStr);
-    } else {
-        // Pass the error to the error scope stack and call the uncaptured error callback
-        // if it isn't handled. DeviceLost is not handled here because it should be
-        // handled by the lost callback.
-        bool captured = GetErrorScopeStack()->HandleError(ToWGPUErrorType(type), messageStr);
-        if (!captured) {
-            // Only call the uncaptured error callback if the device is alive. After the
-            // device is lost, the uncaptured error callback should cease firing.
-            if (mUncapturedErrorCallbackInfo.callback != nullptr && mState == State::Alive) {
-                auto device = ToAPI(this);
-                mUncapturedErrorCallbackInfo.callback(
-                    &device, ToAPI(ToWGPUErrorType(type)), ToOutputStringView(messageStr),
-                    mUncapturedErrorCallbackInfo.userdata1, mUncapturedErrorCallbackInfo.userdata2);
-            }
-        }
     }
+
+    // Pass the error to the error scope stack and call the uncaptured error callback
+    // if it isn't handled.
+    bool captured = false;
+    if (writeToErrorScope) {
+        captured = GetErrorScopeStack()->HandleError(ToWGPUErrorType(type), messageStr);
+    }
+
+    // Only call the uncaptured error callback if the device is alive. After the
+    // device is lost, the uncaptured error callback should cease firing.
+    if (!captured && mUncapturedErrorCallbackInfo.callback != nullptr && mState == State::Alive) {
+        auto device = ToAPI(this);
+        mUncapturedErrorCallbackInfo.callback(
+            &device, ToAPI(ToWGPUErrorType(type)), ToOutputStringView(messageStr),
+            mUncapturedErrorCallbackInfo.userdata1, mUncapturedErrorCallbackInfo.userdata2);
+    }
+}
+
+void DeviceBase::HandleErrorGeneratingAsyncTask(Ref<ErrorGeneratingAsyncTask> task,
+                                                InternalErrorType additionalAllowedErrors) {
+    auto deviceGuard(GetGuard());
+
+    // Set up handlers for wgpu error types.
+    auto unhandledErrorTypes = GetErrorScopeStack()->HandleErrorGeneratingAsyncTask(task);
+
+    // Set up handlers for internal, device lost and extra allowed error types.
+    task->AddCompletionCallback([this, task, errorTypes = std::move(unhandledErrorTypes)] {
+        if (!task->IsError()) {
+            return;
+        }
+
+        wgpu::ErrorType taskErrorType = ToWGPUErrorType(task->GetErrorType());
+
+        // Skip this error if it is a valid wgpu::ErrorType and already handled by an error scope
+        if (taskErrorType != wgpu::ErrorType::Unknown && !errorTypes.contains(taskErrorType)) {
+            return;
+        }
+
+        // There is no error scope to capture this error or it is a InternalErrorType not
+        // representable as wgpu::ErrorTYpe. Forward it to HandleError but disable error scope
+        // capturing. This will handle device loss and call the uncaptured error callback if one is
+        // set.
+        HandleError(task->AcquireError(), false);
+    });
 }
 
 void DeviceBase::ConsumeError(std::unique_ptr<ErrorData> error,
                               InternalErrorType additionalAllowedErrors) {
     DAWN_ASSERT(error != nullptr);
-    HandleError(std::move(error), additionalAllowedErrors);
+    HandleError(std::move(error), true, additionalAllowedErrors);
 }
 
 void DeviceBase::APISetLoggingCallback(const WGPULoggingCallbackInfo& callbackInfo) {
@@ -829,15 +856,32 @@ Future DeviceBase::APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbac
         raw_ptr<void> mUserdata1;
         raw_ptr<void> mUserdata2;
         std::optional<ErrorScope> mScope;
+        std::vector<ErrorScopePendingAsyncTask> mPendingAsyncTasks;
+
+        static Ref<WaitListEvent> CreateWaitListEventForErrorScopeCompletion(
+            const std::optional<ErrorScope>& scope) {
+            uint64_t taskCount = 0;
+            if (scope) {
+                taskCount = scope->GetPendingAsyncTaskCount();
+            }
+            return AcquireRef(new WaitListEvent(taskCount));
+        }
 
         PopErrorScopeEvent(const WGPUPopErrorScopeCallbackInfo& callbackInfo,
                            std::optional<ErrorScope>&& scope)
             : TrackedEvent(static_cast<wgpu::CallbackMode>(callbackInfo.mode),
-                           TrackedEvent::Completed{}),
+                           CreateWaitListEventForErrorScopeCompletion(scope)),
               mCallback(callbackInfo.callback),
               mUserdata1(callbackInfo.userdata1),
               mUserdata2(callbackInfo.userdata2),
-              mScope(std::move(scope)) {}
+              mScope(std::move(scope)) {
+            if (mScope) {
+                mPendingAsyncTasks = mScope->AcquirePendingAsyncTasks();
+                for (auto task : mPendingAsyncTasks) {
+                    task.Task->AddCompletionCallback([this] { GetIfWaitListEvent()->Signal(); });
+                }
+            }
+        }
 
         ~PopErrorScopeEvent() override { EnsureComplete(EventCompletionType::Shutdown); }
 
@@ -848,6 +892,19 @@ Future DeviceBase::APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbac
             WGPUErrorType type;
             WGPUStringView message = kEmptyOutputStringView;
             if (mScope) {
+                // Resolve errors from async tasks
+                for (auto task : mPendingAsyncTasks) {
+                    // All the tasks should have completed unless this event was canceled.
+                    DAWN_ASSERT(task.Task->GetState() == AsyncTaskState::Finished ||
+                                completionType != EventCompletionType::Ready);
+                    if (task.Task->GetState() == AsyncTaskState::Finished && task.Task->IsError() &&
+                        task.CaptureErrorType == ToWGPUErrorType(task.Task->GetErrorType())) {
+                        std::unique_ptr<ErrorData> error = task.Task->AcquireError();
+                        mScope->CaptureError(ToWGPUErrorType(error->GetType()),
+                                             error->GetMessage());
+                    }
+                }
+
                 type = static_cast<WGPUErrorType>(mScope->GetErrorType());
                 message = mScope->GetErrorMessage();
             } else {
@@ -933,7 +990,7 @@ void DeviceBase::APIForceLoss(wgpu::DeviceLostReason reason, StringView messageI
     // Note that since we are passing None as the allowedErrors, an additional message will be
     // appended noting that the error was unexpected. Since this call is for testing only it is not
     // too important, but useful for users to understand where the extra message is coming from.
-    HandleError(DAWN_INTERNAL_ERROR(std::string(message)), InternalErrorType::None, reason);
+    HandleError(DAWN_INTERNAL_ERROR(std::string(message)), true, InternalErrorType::None, reason);
 }
 
 DeviceBase::State DeviceBase::GetState() const {
@@ -1521,7 +1578,7 @@ BufferBase* DeviceBase::APICreateErrorBuffer(const BufferDescriptor* desc) {
         auto* clientErrorInfo = unpacked.Get<DawnBufferDescriptorErrorInfoFromWireClient>();
         if (clientErrorInfo != nullptr && clientErrorInfo->outOfMemory) {
             HandleError(DAWN_OUT_OF_MEMORY_ERROR("Failed to allocate memory for buffer mapping"),
-                        InternalErrorType::OutOfMemory);
+                        true, InternalErrorType::OutOfMemory);
         }
     }
 
@@ -1898,12 +1955,13 @@ void DeviceBase::APIInjectError(wgpu::ErrorType type, StringView message) {
     // LoseForTesting function that can be used instead.
     if (type != wgpu::ErrorType::Validation && type != wgpu::ErrorType::OutOfMemory) {
         HandleError(
-            DAWN_VALIDATION_ERROR("Invalid injected error, must be Validation or OutOfMemory"));
+            DAWN_VALIDATION_ERROR("Invalid injected error, must be Validation or OutOfMemory"),
+            true);
         return;
     }
 
     message = utils::NormalizeMessageString(message);
-    HandleError(DAWN_MAKE_ERROR(FromWGPUErrorType(type), std::string(message)),
+    HandleError(DAWN_MAKE_ERROR(FromWGPUErrorType(type), std::string(message)), true,
                 InternalErrorType::OutOfMemory);
 }
 
