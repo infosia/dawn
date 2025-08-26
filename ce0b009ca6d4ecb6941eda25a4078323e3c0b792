@@ -215,6 +215,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1aaafed1_267982bb",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-26T00:49:30Z",
+      "side": 1,
+      "message": "And finally now removing the readonly check and the test now passes.",
+      "parentUuid": "0ef60d6b_93630a33",
+      "revId": "ce0b009ca6d4ecb6941eda25a4078323e3c0b792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ef219b5b_2b6306c0",
         "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
         "patchSetId": 14
@@ -226,6 +244,24 @@
       "writtenOn": "2025-08-06T10:43:15Z",
       "side": 1,
       "message": "[2]",
+      "revId": "ce0b009ca6d4ecb6941eda25a4078323e3c0b792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b52f13d5_030d16e7",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-26T00:49:30Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ef219b5b_2b6306c0",
       "revId": "ce0b009ca6d4ecb6941eda25a4078323e3c0b792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
