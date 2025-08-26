@@ -46,6 +46,7 @@
 #include "dawn/common/RefCountedWithExternalCount.h"
 #include "dawn/common/Sha3.h"
 #include "dawn/common/ityp_array.h"
+#include "dawn/native/AsyncTask.h"
 #include "dawn/native/BindingInfo.h"
 #include "dawn/native/CachedObject.h"
 #include "dawn/native/CompilationMessages.h"
@@ -374,7 +375,6 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
                                            ParsedCompilationMessages&& compilationMessages);
 
     void Initialize();
-    std::unique_ptr<ErrorData> GetInitializationError();
 
     ObjectType GetType() const override;
 
@@ -382,7 +382,9 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
     bool HasEntryPoint(absl::string_view entryPoint) const;
 
     // Return the number of entry points for a stage.
-    size_t GetEntryPointCount(SingleShaderStage stage) const { return mEntryPointCounts[stage]; }
+    size_t GetEntryPointCount(SingleShaderStage stage) const {
+        return GetCompiledState().entryPointCounts[stage];
+    }
 
     // Return the entry point for a stage. If no entry point name, returns the default one.
     ShaderModuleEntryPoint ReifyEntryPointName(StringView entryPointName,
@@ -451,25 +453,34 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
     // Right now D3D uses strictness by default, and Vulkan/Metal use fast math by default.
     std::optional<bool> mStrictMath;
 
-    EntryPointMetadataTable mEntryPoints;
-    PerStage<std::string> mDefaultEntryPointNames;
-    PerStage<size_t> mEntryPointCounts;
+    const std::vector<tint::wgsl::Extension> mInternalExtensions;
 
     struct TintData {
         // tintProgram is nullable so that it can be lazily (re)generated right before actual using.
         Ref<TintProgram> tintProgram = nullptr;
         int tintProgramRecreateCount = 0;
     };
-    MutexProtected<TintData> mTintData;
 
-    std::unique_ptr<const OwnedCompilationMessages> mCompilationMessages;
+    struct AsyncInitializedState {
+        EntryPointMetadataTable entryPoints;
+        PerStage<std::string> defaultEntryPointNames;
+        PerStage<size_t> entryPointCounts;
 
-    const std::vector<tint::wgsl::Extension> mInternalExtensions;
+        MutexProtected<TintData> tintData;
 
-    // Storage of any error generated during initialization. When initialization is fully
-    // asynchronous, this will be removed and inserted into a stored error scope during
-    // initialization.
-    std::optional<CachedValidationError> mInitializationError;
+        std::unique_ptr<const OwnedCompilationMessages> compilationMessages;
+
+        // Explicit move operator which copies the mutex protected tintData instead of moving it.
+        AsyncInitializedState& operator=(AsyncInitializedState&& source);
+    };
+    // TODO(geofflang): Instead of keeping this as a raw struct member, it could be wrapped in a
+    // thin object which does various safety checks before accessing the data.
+    AsyncInitializedState mCompiledState;
+    AsyncInitializedState& GetCompiledState();
+    const AsyncInitializedState& GetCompiledState() const;
+
+    std::atomic_bool mInitializeTaskExplicitlyWaitedOn = true;
+    Ref<AsyncTask> mInitializeTask;
 };
 
 }  // namespace dawn::native
