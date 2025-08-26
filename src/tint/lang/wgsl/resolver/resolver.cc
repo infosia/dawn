@@ -4281,32 +4281,6 @@ sem::Struct* Resolver::Structure(const ast::Struct* str) {
             Mark(attribute);
             bool ok = Switch(
                 attribute,  //
-                [&](const ast::StructMemberOffsetAttribute* attr) {
-                    // Offset attributes are not part of the WGSL spec, but are emitted by the
-                    // SPIR-V reader.
-
-                    ExprEvalStageConstraint constraint{core::EvaluationStage::kConstant,
-                                                       "@offset value"};
-                    TINT_SCOPED_ASSIGNMENT(expr_eval_stage_constraint_, constraint);
-
-                    auto* materialized = Materialize(ValueExpression(attr->expr));
-                    if (!materialized) {
-                        return false;
-                    }
-                    auto const_value = materialized->ConstantValue();
-                    if (!const_value) {
-                        AddError(attr->expr->source) << "@offset must be constant expression";
-                        return false;
-                    }
-                    offset = const_value->ValueAs<uint64_t>();
-
-                    if (offset < struct_size) {
-                        AddError(attr->source) << "offsets must be in ascending order";
-                        return false;
-                    }
-                    has_offset_attr = true;
-                    return true;
-                },
                 [&](const ast::StructMemberAlignAttribute* attr) {
                     ExprEvalStageConstraint constraint{core::EvaluationStage::kConstant, "@align"};
                     TINT_SCOPED_ASSIGNMENT(expr_eval_stage_constraint_, constraint);
