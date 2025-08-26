@@ -203,9 +203,9 @@ T As(const Scalar& s) {
 }
 
 using ast_type_func_ptr = ast::Type (*)(ProgramBuilder& b);
-using ast_expr_func_ptr = const ast::Expression* (*)(ProgramBuilder& b, VectorRef<Scalar> args);
-using ast_expr_from_double_func_ptr = const ast::Expression* (*)(ProgramBuilder& b, double v);
-using sem_type_func_ptr = const core::type::Type* (*)(ProgramBuilder& b);
+using ast_expr_func_ptr = const ast::Expression* (*)(ProgramBuilder & b, VectorRef<Scalar> args);
+using ast_expr_from_double_func_ptr = const ast::Expression* (*)(ProgramBuilder & b, double v);
+using sem_type_func_ptr = const core::type::Type* (*)(ProgramBuilder & b);
 using type_name_func_ptr = std::string (*)();
 
 struct UnspecializedElementType {};

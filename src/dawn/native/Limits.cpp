@@ -394,7 +394,9 @@ void ApplyLimitTiers(CombinedLimits* limits) {
 }
 
 #define DAWN_INTERNAL_LIMITS_MEMBER_ASSIGNMENT(type, name) \
-    { result.name = limits.name; }
+    {                                                      \
+        result.name = limits.name;                         \
+    }
 #define DAWN_INTERNAL_LIMITS_FOREACH_MEMBER_ASSIGNMENT(MEMBERS) \
     MEMBERS(DAWN_INTERNAL_LIMITS_MEMBER_ASSIGNMENT)
 LimitsForCompilationRequest LimitsForCompilationRequest::Create(const Limits& limits) {

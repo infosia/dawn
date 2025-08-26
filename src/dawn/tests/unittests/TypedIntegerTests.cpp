@@ -426,24 +426,24 @@ TEST_F(TypedIntegerTest, DecrementSignedUnderflow) {
 TEST_F(TypedIntegerTest, UnsignedAdditionOverflow) {
     Unsigned value(std::numeric_limits<uint32_t>::max() - 1);
 
-    value + Unsigned(1);                    // Doesn't overflow.
-    EXPECT_DEATH(value + Unsigned(2), "");  // Overflows.
+    value + Unsigned(1);                     // Doesn't overflow.
+    EXPECT_DEATH(value + Unsigned(2), "");   // Overflows.
     EXPECT_DEATH(value += Unsigned(2), "");  // Overflows.
 }
 
 TEST_F(TypedIntegerTest, SignedAdditionOverflow) {
     Signed value(std::numeric_limits<int32_t>::max() - 1);
 
-    value + Signed(1);                    // Doesn't overflow.
-    EXPECT_DEATH(value + Signed(2), "");  // Overflows.
+    value + Signed(1);                     // Doesn't overflow.
+    EXPECT_DEATH(value + Signed(2), "");   // Overflows.
     EXPECT_DEATH(value += Signed(2), "");  // Overflows.
 }
 
 TEST_F(TypedIntegerTest, SignedAdditionUnderflow) {
     Signed value(std::numeric_limits<int32_t>::min() + 1);
 
-    value + Signed(-1);                    // Doesn't underflow.
-    EXPECT_DEATH(value + Signed(-2), "");  // Underflows.
+    value + Signed(-1);                     // Doesn't underflow.
+    EXPECT_DEATH(value + Signed(-2), "");   // Underflows.
     EXPECT_DEATH(value += Signed(-2), "");  // Underflows.
 }
 
@@ -458,16 +458,16 @@ TEST_F(TypedIntegerTest, UnsignedSubtractionUnderflow) {
 TEST_F(TypedIntegerTest, SignedSubtractionOverflow) {
     Signed value(std::numeric_limits<int32_t>::max() - 1);
 
-    value - Signed(-1);                    // Doesn't overflow.
-    EXPECT_DEATH(value - Signed(-2), "");  // Overflows.
+    value - Signed(-1);                     // Doesn't overflow.
+    EXPECT_DEATH(value - Signed(-2), "");   // Overflows.
     EXPECT_DEATH(value -= Signed(-2), "");  // Overflows.
 }
 
 TEST_F(TypedIntegerTest, SignedSubtractionUnderflow) {
     Signed value(std::numeric_limits<int32_t>::min() + 1);
 
-    value - Signed(1);                    // Doesn't underflow.
-    EXPECT_DEATH(value - Signed(2), "");  // Underflows.
+    value - Signed(1);                     // Doesn't underflow.
+    EXPECT_DEATH(value - Signed(2), "");   // Underflows.
     EXPECT_DEATH(value -= Signed(2), "");  // Underflows.
 }
 

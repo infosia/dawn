@@ -312,20 +312,19 @@ MaybeError RenderPassWorkaroundsHelper::ApplyOnPostEncoding(
                 }
             }
 
-            passEndOperations.emplace_back(
-                [encoder, temporaryResolveAttachments =
-                              std::move(temporaryResolveAttachments)]() -> MaybeError {
-                    // Called once the render pass has been ended.
-                    // Handles any separate resolve passes needed for the
-                    // ResolveMultipleAttachmentInSeparatePasses workaround immediately after the
-                    // render pass ends and before any additional commands are recorded.
-                    for (auto& deferredResolve : temporaryResolveAttachments) {
-                        ResolveWithRenderPass(encoder, deferredResolve.copySrc.Get(),
-                                              deferredResolve.copyDst.Get(),
-                                              deferredResolve.storeOp);
-                    }
-                    return {};
-                });
+            passEndOperations.emplace_back([encoder,
+                                            temporaryResolveAttachments = std::move(
+                                                temporaryResolveAttachments)]() -> MaybeError {
+                // Called once the render pass has been ended.
+                // Handles any separate resolve passes needed for the
+                // ResolveMultipleAttachmentInSeparatePasses workaround immediately after the
+                // render pass ends and before any additional commands are recorded.
+                for (auto& deferredResolve : temporaryResolveAttachments) {
+                    ResolveWithRenderPass(encoder, deferredResolve.copySrc.Get(),
+                                          deferredResolve.copyDst.Get(), deferredResolve.storeOp);
+                }
+                return {};
+            });
         }
     }
 

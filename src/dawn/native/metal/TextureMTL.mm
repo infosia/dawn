@@ -279,7 +279,7 @@ NSRef<MTLTextureDescriptor> Texture::CreateMetalTextureDescriptor() const {
     // the texture should be created in memoryless storage mode.
     mtlDesc.storageMode = MTLStorageModePrivate;
     if (GetInternalUsage() & wgpu::TextureUsage::TransientAttachment) {
-            mtlDesc.storageMode = MTLStorageModeMemoryless;
+        mtlDesc.storageMode = MTLStorageModeMemoryless;
     }
 
     // Choose the correct MTLTextureType and paper over differences in how the array layer count
@@ -440,15 +440,15 @@ MaybeError Texture::InitializeFromSharedTextureMemory(
 }
 
 void Texture::SynchronizeTextureBeforeUse(CommandRecordingContext* commandContext) {
-        SharedTextureMemoryBase::PendingFenceList fences;
-        SharedResourceMemoryContents* contents = GetSharedResourceMemoryContents();
-        if (contents != nullptr) {
-            contents->AcquirePendingFences(&fences);
-        }
-        for (const auto& fence : fences) {
-            commandContext->WaitForSharedEvent(ToBackend(fence.object)->GetMTLSharedEvent(),
-                                               fence.signaledValue);
-        }
+    SharedTextureMemoryBase::PendingFenceList fences;
+    SharedResourceMemoryContents* contents = GetSharedResourceMemoryContents();
+    if (contents != nullptr) {
+        contents->AcquirePendingFences(&fences);
+    }
+    for (const auto& fence : fences) {
+        commandContext->WaitForSharedEvent(ToBackend(fence.object)->GetMTLSharedEvent(),
+                                           fence.signaledValue);
+    }
 
     mLastSharedTextureMemoryUsageSerial = GetDevice()->GetQueue()->GetPendingCommandSerial();
 }
