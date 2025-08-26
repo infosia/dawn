@@ -98,6 +98,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fafafabe_e769f7df",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-26T16:02:45Z",
+      "side": 1,
+      "message": "Really good point, we can always reincoraporate `BindingNotUsed` once we support texel buffers as a valid binding entry.",
+      "parentUuid": "f733296f_fa73732c",
+      "range": {
+        "startLine": 275,
+        "startChar": 1,
+        "endLine": 278,
+        "endChar": 68
+      },
+      "revId": "045f8f61c1c14dbb66a4084b5885d37d9df5344b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a0414242_8049e95b",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 16
