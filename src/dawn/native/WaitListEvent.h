@@ -45,7 +45,7 @@ namespace dawn::native {
 
 class WaitListEvent : public RefCounted {
   public:
-    WaitListEvent();
+    explicit WaitListEvent(uint64_t requiredSignalCount = 1);
 
     bool IsSignaled() const;
     void Signal();
@@ -65,7 +65,9 @@ class WaitListEvent : public RefCounted {
     };
 
     mutable std::mutex mMutex;
-    std::atomic_bool mSignaled{false};
+    // Store the remaining signal counter in a signed integer. Signal is sometimes called more than
+    // once for Events that only require one signal.
+    std::atomic<int64_t> mRemainingSignalCount;
     std::vector<raw_ptr<SyncWaiter>> mSyncWaiters;
     std::vector<SystemEventPipeSender> mAsyncWaiters;
 };
