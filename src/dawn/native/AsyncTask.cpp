@@ -81,6 +81,20 @@ void AsyncTask::Run() {
     }
 }
 
+ErrorGeneratingAsyncTask::ErrorGeneratingAsyncTask(std::function<MaybeError()> task)
+    : AsyncTask([this, task] {
+          // Wrap the task which returns a MaybeError in a void function and store the error in a
+          // member.
+          MaybeError taskResult = task();
+          if (taskResult.IsError()) {
+              mErrorData = taskResult.AcquireError();
+          }
+      }) {}
+
+InternalErrorType ErrorGeneratingAsyncTask::GetErrorType() const {
+    return mErrorData ? mErrorData->GetType() : InternalErrorType::None;
+}
+
 AsyncTaskManager::AsyncTaskManager(dawn::platform::WorkerTaskPool* workerTaskPool)
     : mWorkerTaskPool(workerTaskPool) {}
 
