@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1421d6f9_5fb9126d",
+        "filename": "src/tint/lang/core/type/array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-26T18:11:10Z",
+      "side": 1,
+      "message": "Update comment.",
+      "revId": "748a6f518bc023b447b7059c89ea01b98d231c6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b3bd1ad_915013e9",
+        "filename": "src/tint/lang/spirv/type/explicit_layout_array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-26T18:11:10Z",
+      "side": 1,
+      "message": "Did we need this anywhere? Feels like it shouldn\u0027t be necessary, since this is an explicit layout array.",
+      "revId": "748a6f518bc023b447b7059c89ea01b98d231c6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
