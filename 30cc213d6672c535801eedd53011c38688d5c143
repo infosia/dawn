@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ed65c78_313fdbab",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T14:11:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2542a470_5bbbb12a",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 39,
+        "endChar": 22
+      },
+      "revId": "30cc213d6672c535801eedd53011c38688d5c143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b6693919_765df75f",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-08-26T13:46:46Z",
       "side": 1,
       "message": "```suggestion\n    kNull \u003d 0,\n```\n\nor `kEmpty`. It will also useable for buffer, storage textures, samplers, ...",
+      "revId": "30cc213d6672c535801eedd53011c38688d5c143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9f3f441_4c173724",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T14:11:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6693919_765df75f",
       "revId": "30cc213d6672c535801eedd53011c38688d5c143",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -96,6 +138,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a868c705_0a8d8acb",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T14:11:15Z",
+      "side": 1,
+      "message": "I was thinking of it in our `or` case. Added some text to hope clarify?\n\nOh, are you expecting Dawn to _always_ put in default textures for all the types regardless of if that type is used? I\u0027m assuming it only puts in defaults for the types the inspector told Dawn were referenced.",
+      "parentUuid": "64e28ef4_c354814a",
+      "revId": "30cc213d6672c535801eedd53011c38688d5c143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a7165c82_873d45b1",
         "filename": "src/tint/api/common/runtime_binding_array_config.h",
         "patchSetId": 2
@@ -107,6 +167,24 @@
       "writtenOn": "2025-08-26T13:46:46Z",
       "side": 1,
       "message": "nit: this should likely be next to the enum definition to have a higher chance of getting updated.",
+      "revId": "30cc213d6672c535801eedd53011c38688d5c143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3769369_a0831d9f",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T14:11:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7165c82_873d45b1",
       "revId": "30cc213d6672c535801eedd53011c38688d5c143",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -124,6 +202,24 @@
       "writtenOn": "2025-08-26T13:46:46Z",
       "side": 1,
       "message": "nit: for type-full we will also need to check the types because they may be sparse.",
+      "revId": "30cc213d6672c535801eedd53011c38688d5c143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9dbf2a4c_c6e4258c",
+        "filename": "src/tint/lang/core/ir/transform/runtime_binding_array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T14:11:15Z",
+      "side": 1,
+      "message": "Why would type-full be sparse? There is only one type, so we don\u0027t really need to do anything other then swap in array length. Any out of bounds access will just return an item in the array (similar to what we do now)",
+      "parentUuid": "0fa04a85_3d9c5c1d",
       "revId": "30cc213d6672c535801eedd53011c38688d5c143",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
