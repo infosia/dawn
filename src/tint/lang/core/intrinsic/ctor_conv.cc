@@ -1,4 +1,4 @@
-// Copyright 2021 The Dawn & Tint Authors
+// Copyright 2025 The Dawn & Tint Authors
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -33,6 +33,8 @@
 //
 //                       Do not modify this file directly
 ////////////////////////////////////////////////////////////////////////////////
+
+// clang-format off
 
 #include "src/tint/lang/core/intrinsic/ctor_conv.h"
 
@@ -87,3 +89,5 @@ const char* str(CtorConv i) {
 }
 
 }  // namespace tint::core::intrinsic
+
+// clang-format on

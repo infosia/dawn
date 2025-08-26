@@ -1,4 +1,4 @@
-// Copyright 2024 The Dawn & Tint Authors
+// Copyright 2025 The Dawn & Tint Authors
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -33,6 +33,8 @@
 //
 //                       Do not modify this file directly
 ////////////////////////////////////////////////////////////////////////////////
+
+// clang-format off
 
 #include "src/tint/lang/hlsl/builtin_fn.h"
 
@@ -173,8 +175,7 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kInterlockedOr:
         case BuiltinFn::kInterlockedXor:
         case BuiltinFn::kWaveReadLaneAt:
-            return core::ir::Instruction::Accesses{core::ir::Instruction::Access::kLoad,
-                                                   core::ir::Instruction::Access::kStore};
+            return core::ir::Instruction::Accesses{core::ir::Instruction::Access::kLoad, core::ir::Instruction::Access::kStore};
 
         case BuiltinFn::kTextureStore:
         case BuiltinFn::kStore:
@@ -236,3 +237,5 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
 }
 
 }  // namespace tint::hlsl
+
+// clang-format on

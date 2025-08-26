@@ -1,4 +1,4 @@
-// Copyright 2023 The Dawn & Tint Authors
+// Copyright 2025 The Dawn & Tint Authors
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -33,6 +33,8 @@
 //
 //                       Do not modify this file directly
 ////////////////////////////////////////////////////////////////////////////////
+
+// clang-format off
 
 #include "src/tint/lang/msl/builtin_fn.h"
 
@@ -144,8 +146,7 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kThreadgroupBarrier:
         case BuiltinFn::kSimdBallot:
         case BuiltinFn::kQuadShuffleXor:
-            return core::ir::Instruction::Accesses{core::ir::Instruction::Access::kLoad,
-                                                   core::ir::Instruction::Access::kStore};
+            return core::ir::Instruction::Accesses{core::ir::Instruction::Access::kLoad, core::ir::Instruction::Access::kStore};
 
         case BuiltinFn::kAtomicLoadExplicit:
         case BuiltinFn::kGather:
@@ -185,3 +186,5 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
 }
 
 }  // namespace tint::msl
+
+// clang-format on

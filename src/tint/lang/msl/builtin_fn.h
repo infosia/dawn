@@ -1,4 +1,4 @@
-// Copyright 2023 The Dawn & Tint Authors
+// Copyright 2025 The Dawn & Tint Authors
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -37,11 +37,13 @@
 #ifndef SRC_TINT_LANG_MSL_BUILTIN_FN_H_
 #define SRC_TINT_LANG_MSL_BUILTIN_FN_H_
 
+// clang-format off
+
 #include <cstdint>
 #include <string>
 
-#include "src/tint/lang/core/ir/call.h"
 #include "src/tint/utils/rtti/traits.h"
+#include "src/tint/lang/core/ir/call.h"
 
 // \cond DO_NOT_DOCUMENT
 namespace tint::msl {
@@ -99,7 +101,7 @@ const char* str(BuiltinFn i);
 template <typename STREAM>
     requires(traits::IsOStream<STREAM>)
 auto& operator<<(STREAM& o, BuiltinFn i) {
-    return o << str(i);
+  return o << str(i);
 }
 
 /// @returns access restrictions for a function
@@ -107,5 +109,7 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn);
 
 }  // namespace tint::msl
 // \endcond
+
+// clang-format on
 
 #endif  // SRC_TINT_LANG_MSL_BUILTIN_FN_H_
