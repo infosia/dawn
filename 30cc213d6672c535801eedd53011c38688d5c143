@@ -154,6 +154,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5db81396_751688fa",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T14:19:17Z",
+      "side": 1,
+      "message": "Thank you, that\u0027s a lot more clear and matches my understanding 100%!",
+      "parentUuid": "a868c705_0a8d8acb",
+      "revId": "30cc213d6672c535801eedd53011c38688d5c143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7165c82_873d45b1",
@@ -220,6 +238,24 @@
       "side": 1,
       "message": "Why would type-full be sparse? There is only one type, so we don\u0027t really need to do anything other then swap in array length. Any out of bounds access will just return an item in the array (similar to what we do now)",
       "parentUuid": "0fa04a85_3d9c5c1d",
+      "revId": "30cc213d6672c535801eedd53011c38688d5c143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aea47ffc_5608a099",
+        "filename": "src/tint/lang/core/ir/transform/runtime_binding_array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T14:19:17Z",
+      "side": 1,
+      "message": "One the WebGPU API side we won\u0027t make a difference between a type-full array and a type-less one. This means that it will be allowed to have a BindGroup with non-existent entries or one with a different type, and we need to allow that.\n\nIn a way the type-full version is a way to get us testing end2end with less Tint changes required, but still the full mechanisms for dynamic types + array OOB.",
+      "parentUuid": "9dbf2a4c_c6e4258c",
       "revId": "30cc213d6672c535801eedd53011c38688d5c143",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

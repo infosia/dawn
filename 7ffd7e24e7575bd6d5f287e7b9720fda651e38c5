@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "228e7340_1db012f5",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T14:19:17Z",
+      "side": 1,
+      "message": "```suggestion\n    // texture type (or out of bounds).\n    //\n    // These `default_binding_type_order` entries will be used when we need to substitute in a\n```\n\nThis is not needed anymore. I was asking for it when I imagined the defaulting to use `return bindings[metadata.arrayLengthWithDefault - index_in_binding_order(T)];` because the last binding of the array would have been `metadata.arrayLengthWithDefault - 1`. But that\u0027s no longer the approach.",
+      "range": {
+        "startLine": 83,
+        "startChar": 3,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "7ffd7e24e7575bd6d5f287e7b9720fda651e38c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a3944a1_d3229c75",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T14:19:17Z",
+      "side": 1,
+      "message": "```suggestion\n    // `[user 1 (2d_i32), user 2 (3d_f32), user 3 (1d_u32), 1d_u32_default, 2d_f32_default,\n```",
+      "revId": "7ffd7e24e7575bd6d5f287e7b9720fda651e38c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "caaee523_ea32a6c4",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T14:19:17Z",
+      "side": 1,
+      "message": "In practice Dawn would never pass in empty because we would never need a default empty binding.\n\n```suggestion\n    // `[1d_u32, 2d_f32, 3d_f32]`\n```",
+      "revId": "7ffd7e24e7575bd6d5f287e7b9720fda651e38c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9d82591_f50cb54c",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T14:19:17Z",
+      "side": 1,
+      "message": "There\u0027s weird grammar here.\n```suggestion\n    // Then when we compile a `getBinding\u003cT\u003e(ary, i)` call, we will have created the storage\n    // buffer, call it `metadata` in this case:\n```",
+      "range": {
+        "startLine": 98,
+        "startChar": 60,
+        "endLine": 99,
+        "endChar": 47
+      },
+      "revId": "7ffd7e24e7575bd6d5f287e7b9720fda651e38c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
