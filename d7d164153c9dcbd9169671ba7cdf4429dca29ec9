@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df0ebd46_883b8b58",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T16:06:29Z",
+      "side": 1,
+      "message": "constants are unused?",
+      "range": {
+        "startLine": 63,
+        "startChar": 41,
+        "endLine": 64,
+        "endChar": 67
+      },
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c611b11e_b16dcd62",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T16:06:29Z",
+      "side": 1,
+      "message": "nit: the entryPoint can be left null (the default) value if there is a single entrypoint for that stage in the module.",
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ab55978_028705a9",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T16:06:29Z",
+      "side": 1,
+      "message": "nit: These are creating buffers mapped on creation and writing 10000 zeroes in it. Creating a buffer directly would avoid this. (the utils helper is mainly useful to upload some initial data).",
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc24e3f1_1c364b98",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T16:06:29Z",
+      "side": 1,
+      "message": "Can we have a small explanation of how this shader checks for both WAR, RAW and WAW races?",
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3776c80d_d85b7854",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T16:06:29Z",
+      "side": 1,
+      "message": "nit: these are dispatch not passes",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 36
+      },
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99ccff31_06c10e3c",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T16:06:29Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f09bfe55_bb0993d6",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T16:06:29Z",
+      "side": 1,
+      "message": "Is all the code above 1 needed to check this? There\u0027s a lot of dependencies that are confusing so reducing the test to be more targeted (if possible) would help a bit.",
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
