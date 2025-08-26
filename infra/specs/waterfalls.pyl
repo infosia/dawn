@@ -6,6 +6,16 @@
       'swarming_containment_auto',
     ],
     'machines': {
+      'dawn-linux-x64-sws-fuzz-rel': {
+        'os_type': 'linux',
+        'mixins': [
+          'gpu-swarming-pool',
+          'no_gpu',
+          'linux-jammy',
+          'x86-64',
+        ],
+        'test_suites': {},
+      },
       'dawn-linux-x64-sws-rel': {
         'os_type': 'linux',
         'mixins': [
