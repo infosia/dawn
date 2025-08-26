@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2542a470_5bbbb12a",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T13:46:46Z",
+      "side": 1,
+      "message": "```suggestion\n// The type of the binding in a runtime binding array slot\n```",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 39,
+        "endChar": 22
+      },
+      "revId": "30cc213d6672c535801eedd53011c38688d5c143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6693919_765df75f",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T13:46:46Z",
+      "side": 1,
+      "message": "```suggestion\n    kNull \u003d 0,\n```\n\nor `kEmpty`. It will also useable for buffer, storage textures, samplers, ...",
+      "revId": "30cc213d6672c535801eedd53011c38688d5c143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52de9cea_6befe607",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T13:46:46Z",
+      "side": 1,
+      "message": "Rereviewing this, I just realized that the latest iteration does the following for `getBinding\u003cT\u003e(binding, i)`:\n\n```\nif (i \u003c metadata.arrayLength \u0026\u0026 TypeIdOf\u003cT\u003e \u003d\u003d metadata.bindings[i]) {\n    return bindings[i];\n} else {\n    return bindings[metadata.arrayLengthWithDefaultBindings - i];\n}\n```\n\nWhich needs a second array length in the metadata. Instead we should do:\n\n```\nif (i \u003c metadata.arrayLength \u0026\u0026 TypeIdOf\u003cT\u003e \u003d\u003d metadata.bindings[i]) {\n    return bindings[i];\n} else {\n    return bindings[metadata.arrayLength + i];\n}\n```\n\nTo have a single arrayLength in the metadata. This means that we no longer need the constraint on `kTextureNull`!\n\nCan we have the pseudo code above in this class, so that it serves as documentation of where Dawn needs to add the default bindings?",
+      "revId": "30cc213d6672c535801eedd53011c38688d5c143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7165c82_873d45b1",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T13:46:46Z",
+      "side": 1,
+      "message": "nit: this should likely be next to the enum definition to have a higher chance of getting updated.",
+      "revId": "30cc213d6672c535801eedd53011c38688d5c143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fa04a85_3d9c5c1d",
+        "filename": "src/tint/lang/core/ir/transform/runtime_binding_array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T13:46:46Z",
+      "side": 1,
+      "message": "nit: for type-full we will also need to check the types because they may be sparse.",
+      "revId": "30cc213d6672c535801eedd53011c38688d5c143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
