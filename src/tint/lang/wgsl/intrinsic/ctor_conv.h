@@ -1,4 +1,4 @@
-// Copyright 2021 The Dawn & Tint Authors
+// Copyright 2025 The Dawn & Tint Authors
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -36,6 +36,8 @@
 
 #ifndef SRC_TINT_LANG_WGSL_INTRINSIC_CTOR_CONV_H_
 #define SRC_TINT_LANG_WGSL_INTRINSIC_CTOR_CONV_H_
+
+// clang-format off
 
 #include <cstdint>
 
@@ -76,7 +78,7 @@ const char* str(CtorConv i);
 template <typename STREAM>
     requires(traits::IsOStream<STREAM>)
 auto& operator<<(STREAM& o, CtorConv c) {
-    return o << str(c);
+  return o << str(c);
 }
 
 /// @param n the width of the vector
@@ -121,5 +123,7 @@ inline CtorConv MatrixCtorConv(uint32_t c, uint32_t r) {
 }
 
 }  // namespace tint::wgsl::intrinsic
+
+// clang-format on
 
 #endif  // SRC_TINT_LANG_WGSL_INTRINSIC_CTOR_CONV_H_
