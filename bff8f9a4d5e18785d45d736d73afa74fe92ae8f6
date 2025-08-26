@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31bc32a1_5ed1bfd1",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003586
+      },
+      "writtenOn": "2025-08-26T09:28:35Z",
+      "side": 1,
+      "message": "Unused include.",
+      "revId": "bff8f9a4d5e18785d45d736d73afa74fe92ae8f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c43cf51a_f97f89b6",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1003586
+      },
+      "writtenOn": "2025-08-26T09:28:35Z",
+      "side": 1,
+      "message": "I just noticed this. Not caused by this commit, but was introduced when moving from using buffer memory barriers to global memory barriers. I can create a separate commit to fix it.\n\nIssuing both the vertex and non-vertex barriers in a single call removes the purpose of separating them in the first place, and can cause barriers to unnecessarily sync late stages -\u003e early stages. Two pipeline barrier commands should be issued.",
+      "revId": "bff8f9a4d5e18785d45d736d73afa74fe92ae8f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e1409e8_06b4b1d8",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003586
+      },
+      "writtenOn": "2025-08-26T09:28:35Z",
+      "side": 1,
+      "message": "`BufferVk.h` is included so forward declaration should be unnecessary.",
+      "revId": "bff8f9a4d5e18785d45d736d73afa74fe92ae8f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
