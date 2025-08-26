@@ -60,6 +60,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3cfcc091_f4bf459f",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T13:48:48Z",
+      "side": 1,
+      "message": "The code blocks should have read:\n\n```\nif (i \u003c metadata.arrayLength \u0026\u0026 TypeIdOf\u003cT\u003e \u003d\u003d metadata.bindings[i]) {\n    return bindings[i];\n} else {\n    return bindings[metadata.arrayLengthWithDefaultBindings - TypeIdOf\u003cT\u003e];\n}\n```\n\nand\n\n```\nif (i \u003c metadata.arrayLength \u0026\u0026 TypeIdOf\u003cT\u003e \u003d\u003d metadata.bindings[i]) {\n    return bindings[i];\n} else {\n    return bindings[metadata.arrayLength + TypeIdOf\u003cT\u003e];\n}\n```\n\nWith `TypeIdOf\u003cT\u003e` the index of the enum for T in `default_binding_type_order`.",
+      "parentUuid": "52de9cea_6befe607",
+      "revId": "30cc213d6672c535801eedd53011c38688d5c143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a7165c82_873d45b1",
         "filename": "src/tint/api/common/runtime_binding_array_config.h",
         "patchSetId": 2
