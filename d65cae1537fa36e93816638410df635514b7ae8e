@@ -16,6 +16,63 @@
       "message": "PTAL!",
       "revId": "d65cae1537fa36e93816638410df635514b7ae8e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2305094c_3bc9e652",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T12:42:15Z",
+      "side": 1,
+      "message": "Do we ever worry about double initialization of these structures? Like should we have something like?\n\n```suggestion\nMaybeError BindGroupBase::DynamicArrayState::Initialize() {\n    DAWN_ASSERT(!mMetadataBuffer);\n```",
+      "revId": "d65cae1537fa36e93816638410df635514b7ae8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04fa3061_72e94b19",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T12:42:15Z",
+      "side": 1,
+      "message": "```suggestion\n    BufferDescriptor metadataDesc{\n        .size \u003d 4,\n        .usage \u003d wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopyDst,\n        .mappedAtCreation \u003d true,\n    };\n```",
+      "range": {
+        "startLine": 1007,
+        "startChar": 0,
+        "endLine": 1010,
+        "endChar": 41
+      },
+      "revId": "d65cae1537fa36e93816638410df635514b7ae8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ca1568d_ac757bc0",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T12:42:15Z",
+      "side": 1,
+      "message": "```suggestion\n    // creating a bindgroup. Otherwise a misbehaved application could try injecting its own planes\n```",
+      "revId": "d65cae1537fa36e93816638410df635514b7ae8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
