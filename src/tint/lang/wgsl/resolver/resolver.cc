@@ -50,6 +50,7 @@
 #include "src/tint/lang/core/type/multisampled_texture.h"
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/core/type/reference.h"
+#include "src/tint/lang/core/type/resource_buffer.h"
 #include "src/tint/lang/core/type/sampled_texture.h"
 #include "src/tint/lang/core/type/sampler.h"
 #include "src/tint/lang/core/type/storage_texture.h"
@@ -2620,6 +2621,8 @@ const core::type::Type* Resolver::BuiltinType(core::BuiltinType builtin_ty,
             return Array(ident);
         case core::BuiltinType::kBindingArray:
             return BindingArray(ident);
+        case core::BuiltinType::kResourceBuffer:
+            return ResourceBuffer(ident);
         case core::BuiltinType::kAtomic:
             return Atomic(ident);
         case core::BuiltinType::kPtr:
@@ -2887,6 +2890,14 @@ const core::type::Type* Resolver::Array(const ast::Identifier* ident) {
         subgroup_matrix_uses_.Add(out);
     }
 
+    return out;
+}
+
+const core::type::ResourceBuffer* Resolver::ResourceBuffer(const ast::Identifier* ident) {
+    auto* out = b.create<core::type::ResourceBuffer>();
+    if (DAWN_UNLIKELY(!validator_.ResourceBuffer(out, ident->source))) {
+        return nullptr;
+    }
     return out;
 }
 

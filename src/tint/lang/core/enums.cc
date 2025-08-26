@@ -627,6 +627,9 @@ BuiltinType ParseBuiltinType(std::string_view str) {
     if (str == "ptr") {
         return BuiltinType::kPtr;
     }
+    if (str == "resource_buffer") {
+        return BuiltinType::kResourceBuffer;
+    }
     if (str == "sampler") {
         return BuiltinType::kSampler;
     }
@@ -879,6 +882,8 @@ std::string_view ToString(BuiltinType value) {
             return "mat4x4h";
         case BuiltinType::kPtr:
             return "ptr";
+        case BuiltinType::kResourceBuffer:
+            return "resource_buffer";
         case BuiltinType::kSampler:
             return "sampler";
         case BuiltinType::kSamplerComparison:
