@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a98a291c_50a2502f",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T16:17:30Z",
+      "side": 1,
+      "message": "Initialization always happens on allocation, never after (like on an appliation-called method on the object) so there is less risk of it running twice compared to destruction that happens in the call graph of `wgpu::BindGroup::Destroy` that the application could call twice.",
+      "parentUuid": "2305094c_3bc9e652",
+      "revId": "d65cae1537fa36e93816638410df635514b7ae8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "04fa3061_72e94b19",
@@ -58,6 +76,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a62e9a30_27a1771c",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T16:17:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04fa3061_72e94b19",
+      "range": {
+        "startLine": 1007,
+        "startChar": 0,
+        "endLine": 1010,
+        "endChar": 41
+      },
+      "revId": "d65cae1537fa36e93816638410df635514b7ae8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ca1568d_ac757bc0",
@@ -71,6 +113,24 @@
       "writtenOn": "2025-08-26T12:42:15Z",
       "side": 1,
       "message": "```suggestion\n    // creating a bindgroup. Otherwise a misbehaved application could try injecting its own planes\n```",
+      "revId": "d65cae1537fa36e93816638410df635514b7ae8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3663b24c_e7a47cbf",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T16:17:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ca1568d_ac757bc0",
       "revId": "d65cae1537fa36e93816638410df635514b7ae8e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
