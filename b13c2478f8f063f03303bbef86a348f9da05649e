@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88cc61b8_e771911c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T17:03:41Z",
+      "side": 1,
+      "message": "```suggestion\nunpin pairs as it could duplicate logic if they had to sanitize\n```",
+      "revId": "b13c2478f8f063f03303bbef86a348f9da05649e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
