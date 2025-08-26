@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "70811e4e_091c4a4d",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 26
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T15:35:47Z",
+      "side": 1,
+      "message": "Please check the whole comment for updating. A bunch of it no longer applies or is now different.",
+      "parentUuid": "fc70abae_1522e036",
+      "revId": "8a46f9564a8bec4a3c6078b0a360aa879b970fd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "14b0a5f1_cc717c51",
         "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
         "patchSetId": 26
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "Right. Thanks for pointing it out. Add a test case for this and change logics.",
       "parentUuid": "14b0a5f1_cc717c51",
+      "revId": "8a46f9564a8bec4a3c6078b0a360aa879b970fd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0934a71_50910553",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 26
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T15:35:47Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c04e56a7_c999d58b",
       "revId": "8a46f9564a8bec4a3c6078b0a360aa879b970fd7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -137,6 +173,24 @@
       "side": 1,
       "message": "Tests are ready for review",
       "parentUuid": "eac7ac2c_43fe87af",
+      "revId": "8a46f9564a8bec4a3c6078b0a360aa879b970fd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53b7865e_3e7502fb",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T15:35:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edb2614d_25b65532",
       "revId": "8a46f9564a8bec4a3c6078b0a360aa879b970fd7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

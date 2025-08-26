@@ -16,6 +16,228 @@
       "message": "PTAL again, thanks!",
       "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b84b321c_9696021c",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 30
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T15:35:47Z",
+      "side": 1,
+      "message": "```suggestion\n    // TODO(crbug.com/366291600): Remove this logic when merging\n    // StorageBufferLengthTracker in ImmediateConstantTracker.\n```",
+      "range": {
+        "startLine": 459,
+        "startChar": 34,
+        "endLine": 460,
+        "endChar": 32
+      },
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "195dbd48_01533ab6",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T15:35:47Z",
+      "side": 1,
+      "message": "The bind groups with the same size are always in the same position so it\u0027s not clear that we test that when bind group are updated (but nothing else is), the sizes are updated.",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9f58589_eafe0596",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T15:35:47Z",
+      "side": 1,
+      "message": "that\u0027s a `resultIndex` since that\u0027s where we want to write in the result buffer.",
+      "range": {
+        "startLine": 132,
+        "startChar": 45,
+        "endLine": 132,
+        "endChar": 58
+      },
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36e14918_f3187c8c",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T15:35:47Z",
+      "side": 1,
+      "message": "The order of the arguments is inverted with their order in the test name. That\u0027s pretty confusing.",
+      "range": {
+        "startLine": 190,
+        "startChar": 26,
+        "endLine": 190,
+        "endChar": 61
+      },
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d749781f_fcb80b1a",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T15:35:47Z",
+      "side": 1,
+      "message": "```suggestion\n    wgpu::ComputePipeline MakeComputePipelineWithImmediateAndBuffers(uint32_t numStorageBuffers,\n```",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e5ed883_02abc8bd",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T15:35:47Z",
+      "side": 1,
+      "message": "the entry points are not needed if there is a single entry point for that stage in the module.",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68cdce17_5ff5e533",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T15:35:47Z",
+      "side": 1,
+      "message": "WDYT of making this take `resultIndex` explicitly, such that we avoid the vector\u003cvector\u003e and instead call it twice when we need to?",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75333b47_0661f625",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T15:35:47Z",
+      "side": 1,
+      "message": "What I\u0027ve found useful for tests like these is to built an interpreter of WebGPU commands so that the fixture automatically computes the expected values. It means that test code can look like this:\n\n```\nUseCompute();\n\nSetPipeline({immediateCount \u003d 3, bufferCount \u003d 2});\nSetStorageBuffers(3, Size::Small);\nSetImmediateData({42, 123, 456});\nDispatch();\n\nCheckExpectedResults();\n```",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b89e7a9e_a5725cea",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T15:35:47Z",
+      "side": 1,
+      "message": "nit: We could have an std::array\u003cuint32_t, 32\u003e for the full expected data that we\u0027d check entirely against the result buffer. It\u0027s ok to check that data not written is filled with zeroes.",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dbe65e3_b026b732",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T15:35:47Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cb95ea9_3660653d",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T15:35:47Z",
+      "side": 1,
+      "message": "Isn\u0027t this the same test at [1] basically?",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1849170b_1a2d7807",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T15:35:47Z",
+      "side": 1,
+      "message": "Same comments below.",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
