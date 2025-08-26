@@ -43,12 +43,14 @@
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/SharedTextureMemory.h"
 #include "dawn/native/Subresource.h"
+#include "dawn/native/IntegerTypes.h"
 #include "partition_alloc/pointers/raw_ref.h"
 
 #include "dawn/native/dawn_platform.h"
 
 namespace dawn::native {
 
+class DynamicArrayState;
 class MemoryDump;
 
 enum class AllowMultiPlanarTextureFormat {
@@ -190,6 +192,8 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
 
     MaybeError Pin(wgpu::TextureUsage usage);
     MaybeError Unpin();
+    void AddDynamicArraySlot(DynamicArrayState* dynamicArray, BindingIndex i);
+    void RemoveDynamicArraySlot(DynamicArrayState* dynamicArray, BindingIndex i);
 
     ResultOrError<Ref<TextureViewBase>> CreateView(
         const TextureViewDescriptor* descriptor = nullptr);
