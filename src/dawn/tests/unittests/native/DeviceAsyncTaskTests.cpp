@@ -60,5 +60,46 @@ TEST_F(DeviceAsyncTaskTests, LongAsyncTaskFinishesBeforeDeviceIsDropped) {
     EXPECT_TRUE(done.load());
 }
 
+// Test that error scope resolution is blocked on AsyncTask completion.
+TEST_F(DeviceAsyncTaskTests, ErrorScopeBlockedOnAsyncTask) {
+    mDeviceMock->APIPushErrorScope(wgpu::ErrorFilter::Validation);
+
+    // Set up a task that won't complete until the mutex is unlocked
+    std::mutex mutex;
+    std::unique_lock lock(mutex);
+    auto task = mDeviceMock->GetAsyncTaskManager()->PostTask<ErrorGeneratingAsyncTask>(
+        [&mutex]() -> MaybeError {
+            std::scoped_lock<std::mutex> taskLock(mutex);
+            return {};
+        });
+
+    // Register the error generating task with the device so it's associated with the current error
+    // scopes
+    mDeviceMock->HandleErrorGeneratingAsyncTask(task);
+
+    // Set up a simple callback which sets `callbackTriggered`
+    std::atomic_bool callbackTriggered = false;
+    WGPUPopErrorScopeCallbackInfo callback = WGPU_POP_ERROR_SCOPE_CALLBACK_INFO_INIT;
+    callback.mode = WGPUCallbackMode_AllowProcessEvents;
+    callback.callback = [](WGPUPopErrorScopeStatus status, WGPUErrorType type,
+                           WGPUStringView message, WGPU_NULLABLE void* userdata1,
+                           WGPU_NULLABLE void* userdata2) {
+        std::atomic_bool* callbackTriggered = reinterpret_cast<std::atomic_bool*>(userdata1);
+        *callbackTriggered = true;
+    };
+    callback.userdata1 = &callbackTriggered;
+    mDeviceMock->APIPopErrorScope(callback);
+
+    // Expect that the callback is not called yet since the AsyncTask has not completed.
+    ProcessEvents();
+    EXPECT_FALSE(callbackTriggered);
+
+    // Complete the async task and expect that the future resolves and callback is triggered
+    lock.unlock();
+    task->Wait();
+    ProcessEvents();
+    EXPECT_TRUE(callbackTriggered);
+}
+
 }  // anonymous namespace
 }  // namespace dawn::native
