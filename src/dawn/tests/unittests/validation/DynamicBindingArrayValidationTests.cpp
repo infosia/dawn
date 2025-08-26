@@ -1242,4 +1242,3 @@ TEST_F(DynamicBindingArrayTests, PinDestroyedTextureInvalid) {
 
 }  // anonymous namespace
 }  // namespace dawn
-
