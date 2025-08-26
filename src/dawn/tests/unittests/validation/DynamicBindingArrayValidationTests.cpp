@@ -1252,5 +1252,18 @@ TEST_F(DynamicBindingArrayTests, PinDestroyedTextureInvalid) {
 // of bindless as it could cause perf regressions. Instead backends will ASSERT when possible that
 // no barriers are emitted for the texture while it is pinned.
 
+// TODO(https://crbug.com/435317394): Add tests that texture pinning / unpinning is reflected in the
+// availability of the binding in the shader. This can be done with a compute shader that loops over
+// [0, arrayLength(&resource_binding)) and returns hasBinding<T>(i) in a result storage buffer.
+//  - Test adding one texture binding in the middle of a dynamic binding array, unpinned the pinned
+//  - Test adding one texture binding multiple times, pinning it then unpinning it.
+//  - Test adding multiple textures and the same texture twice (pinned). then unpinning one of them
+//  - Test adding a texture, pinning it, then destroying it.
+//  - Test adding the same texture to multiple dynamic binding arrays, pinning it, then destroying
+//  one of the arrays.
+//  - Add TODO to test with binding array updates in the future.
+//  - Test for each possible sampled type, a shader that check hasBinding on every possible sampled
+//  type as well (to know that we correctly pass in the type ID).
+
 }  // anonymous namespace
 }  // namespace dawn
