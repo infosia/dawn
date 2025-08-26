@@ -365,7 +365,6 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
                                            ParsedCompilationMessages&& compilationMessages);
 
     void Initialize();
-    std::unique_ptr<ErrorData> GetInitializationError();
 
     ObjectType GetType() const override;
 
@@ -458,11 +457,6 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
     std::unique_ptr<const OwnedCompilationMessages> mCompilationMessages;
 
     const std::vector<tint::wgsl::Extension> mInternalExtensions;
-
-    // Storage of any error generated during initialization. When initialization is fully
-    // asynchronous, this will be removed and inserted into a stored error scope during
-    // initialization.
-    std::optional<CachedValidationError> mInitializationError;
 };
 
 }  // namespace dawn::native
