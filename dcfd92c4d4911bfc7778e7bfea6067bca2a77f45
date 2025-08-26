@@ -33,6 +33,24 @@
       "message": "String matching like this is brittle and hardcoding the 255 constant is the same.\n\nInstead, can we check the component type is snorm/unorm (that\u0027s what tells us we are in stuck in the [0, 1] or [-1, 1] range). Then use some other way to compute the expected value. (like a new getter to get the value that matches 1.0 for the snorm/unorm formats).",
       "revId": "dcfd92c4d4911bfc7778e7bfea6067bca2a77f45",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7db3a85_e91a1a95",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-08-26T09:03:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50ecddbe_b51c20b2",
+      "revId": "dcfd92c4d4911bfc7778e7bfea6067bca2a77f45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
