@@ -16,6 +16,24 @@
       "message": "Also remove this and its usages below.",
       "revId": "cee0c08a2cb27f1b509e82c475d0722190012964",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3c383de_5fb84b14",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4276,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T19:34:15Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f03c41af_d944bcd8",
+      "revId": "cee0c08a2cb27f1b509e82c475d0722190012964",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
