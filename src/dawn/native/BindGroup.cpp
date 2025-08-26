@@ -815,8 +815,8 @@ MaybeError BindGroupBase::Initialize(const UnpackedPtr<BindGroupDescriptor>& des
 
     // Gather dynamic binding entries in a second loop to put the handling off the critical path.
     if (auto* dynamic = descriptor.Get<BindGroupDynamicBindingArray>()) {
-        mDynamicArray = std::make_unique<DynamicArrayState>(
-            GetDevice(), BindingIndex(dynamic->dynamicArraySize));
+        mDynamicArray =
+            AcquireRef(new DynamicArrayState(GetDevice(), BindingIndex(dynamic->dynamicArraySize)));
         DAWN_TRY(mDynamicArray->Initialize());
 
         for (uint32_t i = 0; i < descriptor->entryCount; ++i) {

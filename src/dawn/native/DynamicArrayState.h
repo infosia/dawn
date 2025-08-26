@@ -31,6 +31,8 @@
 #include <vector>
 
 #include "dawn/common/Ref.h"
+#include "dawn/common/RefCounted.h"
+#include "dawn/common/WeakRefSupport.h"
 #include "dawn/common/ityp_span.h"
 #include "dawn/common/ityp_vector.h"
 #include "dawn/native/Error.h"
@@ -45,11 +47,16 @@ namespace dawn::native {
 // binding array part. It helps maintain the metadata buffer that's used in shaders to know if it is
 // valid to access an entry of the dynamic binding array with a given type (note that the writing of
 // the updates to the buffer are done by the backends).
-class DynamicArrayState {
+//
+// DynamicArrayState has a single strong reference owned by the BindGroup that created it, however
+// all resources contained in the dynamic array need WeakRefs to update it on Pin/Unpin. (They use
+// WeakRef to avoid a reference cycle between the dynamic array and its bindings).
+class DynamicArrayState : public RefCounted, public WeakRefSupport<DynamicArrayState> {
   public:
     DynamicArrayState(DeviceBase* device, BindingIndex size);
 
     MaybeError Initialize();
+    void Destroy();
 
     BindingIndex GetSize() const;
     ityp::span<BindingIndex, const Ref<TextureViewBase>> GetBindings() const;
@@ -57,13 +64,30 @@ class DynamicArrayState {
     bool IsDestroyed() const;
 
     void Update(BindingIndex i, TextureViewBase* view);
-    void Destroy();
+    void OnPinned(BindingIndex i, TextureBase* texture);
+    void OnUnpinned(BindingIndex i, TextureBase* texture);
+
+    struct BindingStateUpdate {
+        uint32_t offset;
+        uint32_t data;
+    };
+    std::vector<BindingStateUpdate> AcquireDirtyBindingUpdates();
 
   private:
-    bool mDestroyed = false;
-    ityp::vector<BindingIndex, Ref<TextureViewBase>> mBindings;
     raw_ptr<DeviceBase> mDevice;
+    bool mDestroyed = false;
+
+    ityp::vector<BindingIndex, Ref<TextureViewBase>> mBindings;
     Ref<BufferBase> mMetadataBuffer;
+
+    void MarkStateDirty(BindingIndex i);
+    struct BindingState {
+        uint32_t typeId = 0;
+        bool dirty = false;
+        bool pinned = false;
+    };
+    ityp::vector<BindingIndex, BindingState> mBindingState;
+    std::vector<BindingIndex> mDirtyBindings;
 };
 
 }  // namespace dawn::native
