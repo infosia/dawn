@@ -258,6 +258,24 @@
       "parentUuid": "9dbf2a4c_c6e4258c",
       "revId": "30cc213d6672c535801eedd53011c38688d5c143",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "defbca4e_d78a1d6d",
+        "filename": "src/tint/lang/core/ir/transform/runtime_binding_array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T17:19:04Z",
+      "side": 1,
+      "message": "Chatting with James, since it seems like type-full and type-less are the same implementation, there isn\u0027t less work to do type-full, so we\u0027re thinking of just dropping type-full and going full type-less (since we need `getBinding` and `hasBinding` for type-full).\n\nThinking through full type-less we actually think it\u0027s easier to rename the type so we have `binding_array\u003cT, size\u003e` and  `resource_buffer` which is type-less (parsing a new type is easier then dealing with maybe templated).",
+      "parentUuid": "aea47ffc_5608a099",
+      "revId": "30cc213d6672c535801eedd53011c38688d5c143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

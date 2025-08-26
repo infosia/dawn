@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "195d5f36_fbe75173",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T17:19:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "228e7340_1db012f5",
+      "range": {
+        "startLine": 83,
+        "startChar": 3,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "7ffd7e24e7575bd6d5f287e7b9720fda651e38c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a3944a1_d3229c75",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-08-26T14:19:17Z",
       "side": 1,
       "message": "```suggestion\n    // `[user 1 (2d_i32), user 2 (3d_f32), user 3 (1d_u32), 1d_u32_default, 2d_f32_default,\n```",
+      "revId": "7ffd7e24e7575bd6d5f287e7b9720fda651e38c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b68156d_48ce967b",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T17:19:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a3944a1_d3229c75",
       "revId": "7ffd7e24e7575bd6d5f287e7b9720fda651e38c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "95d4c34b_15e139f7",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T17:19:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caaee523_ea32a6c4",
+      "revId": "7ffd7e24e7575bd6d5f287e7b9720fda651e38c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9d82591_f50cb54c",
@@ -71,6 +131,30 @@
       "writtenOn": "2025-08-26T14:19:17Z",
       "side": 1,
       "message": "There\u0027s weird grammar here.\n```suggestion\n    // Then when we compile a `getBinding\u003cT\u003e(ary, i)` call, we will have created the storage\n    // buffer, call it `metadata` in this case:\n```",
+      "range": {
+        "startLine": 98,
+        "startChar": 60,
+        "endLine": 99,
+        "endChar": 47
+      },
+      "revId": "7ffd7e24e7575bd6d5f287e7b9720fda651e38c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5801741_43f5e944",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T17:19:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9d82591_f50cb54c",
       "range": {
         "startLine": 98,
         "startChar": 60,
