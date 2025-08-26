@@ -334,6 +334,10 @@ const core::type::Array* Manager::runtime_array(const core::type::Type* elem_ty,
         /* implicit stride */ implicit_stride);
 }
 
+const core::type::ResourceBuffer* Manager::resource_buffer() {
+    return Get<core::type::ResourceBuffer>();
+}
+
 const core::type::BindingArray* Manager::binding_array(const core::type::Type* elem_ty,
                                                        uint32_t count) {
     return Get<core::type::BindingArray>(elem_ty, Get<ConstantArrayCount>(count));

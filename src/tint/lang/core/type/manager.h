@@ -39,6 +39,7 @@
 #include "src/tint/lang/core/type/external_texture.h"
 #include "src/tint/lang/core/type/input_attachment.h"
 #include "src/tint/lang/core/type/multisampled_texture.h"
+#include "src/tint/lang/core/type/resource_buffer.h"
 #include "src/tint/lang/core/type/sampler.h"
 #include "src/tint/lang/core/type/string.h"
 #include "src/tint/lang/core/type/struct.h"
@@ -559,6 +560,9 @@ class Manager final {
             return array(Get<T>(), N, stride);
         }
     }
+
+    /// @returns the resource buffer type
+    const core::type::ResourceBuffer* resource_buffer();
 
     /// @param elem_ty the array element type
     /// @param count the array element count
