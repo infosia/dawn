@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "65ee5f33_fcc802dd",
+        "filename": "src/dawn/native/BindGroup.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T07:11:38Z",
+      "side": 1,
+      "message": "Marking as resolved without changes to keep pushing on the stack but happy to address in a follow-up if needed!",
+      "parentUuid": "d561f02f_85e256df",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 53
+      },
+      "revId": "8958104b3bcbfd6570d561f971cc43433960849f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4a4f2f8e_1afd2b16",
@@ -61,6 +85,30 @@
       "writtenOn": "2025-08-25T18:15:58Z",
       "side": 1,
       "message": "Channeling Dan\u0027s other comments to use designated initializers here.",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 43
+      },
+      "revId": "8958104b3bcbfd6570d561f971cc43433960849f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "091f3996_2193029b",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-26T07:11:38Z",
+      "side": 1,
+      "message": "Done, but ISO C++ + warnings makes this not as pretty as it could be:\n\n```\n../../src/dawn/native/vulkan/BindGroupVk.cpp:245:28: error: ISO C++ requires field designators to be specified in declaration order; field \u0027descriptorType\u0027 will be initialized after field \u0027descriptorCount\u0027 [-Werror,-Wreorder-init-list]\n  245 |         .descriptorCount \u003d 1,\n      |         ~~~~~~~~~~~~~~~~~~~^\n../../src/dawn/native/vulkan/BindGroupVk.cpp:244:27: note: previous initialization for field \u0027descriptorType\u0027 is here\n  244 |         .descriptorType \u003d VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE,\n      |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n../../src/dawn/native/vulkan/BindGroupVk.cpp:248:10: error: field designator \u0027pTexelBufferInfo\u0027 does not refer to any field in type \u0027VkWriteDescriptorSet\u0027; did you mean \u0027pTexelBufferView\u0027?\n  248 |         .pTexelBufferInfo \u003d nullptr,\n      |          ^~~~~~~~~~~~~~~~\n      |          pTexelBufferView\n../../third_party/vulkan-headers/src/include/vulkan/vulkan_core.h:4132:38: note: \u0027pTexelBufferView\u0027 declared here\n 4132 |     const VkBufferView*              pTexelBufferView;\n      |                                      ^\n2 errors generated.\n```",
+      "parentUuid": "4a4f2f8e_1afd2b16",
       "range": {
         "startLine": 238,
         "startChar": 0,
