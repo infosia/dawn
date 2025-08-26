@@ -33,16 +33,21 @@
 
 namespace dawn::native {
 
-WaitListEvent::WaitListEvent() = default;
+WaitListEvent::WaitListEvent(uint64_t requiredSignalCount)
+    : mRemainingSignalCount(requiredSignalCount) {
+    // Ensure that the uint->int conversion didn't overflow and a positive requiredSignalCount was
+    // used.
+    DAWN_ASSERT(mRemainingSignalCount > 0);
+}
 WaitListEvent::~WaitListEvent() = default;
 
 bool WaitListEvent::IsSignaled() const {
-    return mSignaled.load(std::memory_order_acquire);
+    return mRemainingSignalCount.load(std::memory_order_acquire) <= 0;
 }
 
 void WaitListEvent::Signal() {
-    std::lock_guard<std::mutex> lock(mMutex);
-    if (!mSignaled.exchange(true, std::memory_order_release)) {
+    if (mRemainingSignalCount.fetch_sub(1, std::memory_order_release) == 1) {
+        std::lock_guard<std::mutex> lock(mMutex);
         for (SyncWaiter* w : std::move(mSyncWaiters)) {
             {
                 std::lock_guard<std::mutex> waiterLock(w->mutex);
