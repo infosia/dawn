@@ -1223,4 +1223,3 @@ TEST_F(DynamicBindingArrayTests, PinUnpinUnbalancedIsValid) {
 
 }  // anonymous namespace
 }  // namespace dawn
-
