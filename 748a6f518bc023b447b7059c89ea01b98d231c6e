@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "09b6e6e9_50d3aa14",
+        "filename": "src/tint/lang/core/type/array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T18:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1421d6f9_5fb9126d",
+      "revId": "748a6f518bc023b447b7059c89ea01b98d231c6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4b3bd1ad_915013e9",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-08-26T18:11:10Z",
       "side": 1,
       "message": "Did we need this anywhere? Feels like it shouldn\u0027t be necessary, since this is an explicit layout array.",
+      "revId": "748a6f518bc023b447b7059c89ea01b98d231c6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b14501d3_c209c1af",
+        "filename": "src/tint/lang/spirv/type/explicit_layout_array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T18:40:17Z",
+      "side": 1,
+      "message": "There is one usage in `decompose_strided_array`. It is possible that, even with an explicit layout array, that `stride \u003d\u003d implicit_stride` in which case we wouldn\u0027t need to decompose. So, if we do want to remove this, I think we should do it as a followup.",
+      "parentUuid": "4b3bd1ad_915013e9",
       "revId": "748a6f518bc023b447b7059c89ea01b98d231c6e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
