@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f03c41af_d944bcd8",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4276,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-26T19:18:43Z",
+      "side": 0,
+      "message": "Also remove this and its usages below.",
+      "revId": "cee0c08a2cb27f1b509e82c475d0722190012964",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
