@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "decd3a5a_ddfdc3d0",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T13:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d75aeb8_551af2cc",
+      "revId": "afec59677afcd1d32056d81f21b7d1ff5026118a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58e14dc7_0d83ec6e",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-08-26T07:48:55Z",
       "side": 1,
       "message": "This will be a post-remapping binding point ideally.",
+      "revId": "afec59677afcd1d32056d81f21b7d1ff5026118a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6686144_45e04a4f",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T13:33:07Z",
+      "side": 1,
+      "message": "Clarified in the comment. Done",
+      "parentUuid": "58e14dc7_0d83ec6e",
       "revId": "afec59677afcd1d32056d81f21b7d1ff5026118a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -87,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "318fdd84_9b1b68d3",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T13:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad89dda7_6a76d08c",
+      "revId": "afec59677afcd1d32056d81f21b7d1ff5026118a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5b47f56c_50235f7e",
@@ -100,6 +154,24 @@
       "writtenOn": "2025-08-26T07:48:55Z",
       "side": 1,
       "message": "This would be `binding_type_order.size()` or `binding_type_order.size() - 1`. But also why is this information needed? It seems redundant with the rest.",
+      "revId": "afec59677afcd1d32056d81f21b7d1ff5026118a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1750af4e_aee524af",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T13:33:07Z",
+      "side": 1,
+      "message": "Didn\u0027t think of using the map size, but using the vector size is even clearer. removed.",
+      "parentUuid": "5b47f56c_50235f7e",
       "revId": "afec59677afcd1d32056d81f21b7d1ff5026118a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -152,6 +224,42 @@
       "side": 1,
       "message": "Even in a typeful binding array we need it to be sparse, so it would contain `metadata.array_length` entries. Actually that might inform that the type (in the future, when discussing in the group) should either be only typeless, or have a different name from the dense binding_array. (please let\u0027s not change names now for the prototype, it doesn\u0027t matter at this stage)",
       "parentUuid": "814ff54f_d6092801",
+      "revId": "afec59677afcd1d32056d81f21b7d1ff5026118a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bbb28d3_33ca5b53",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T13:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1488255_607d007b",
+      "revId": "afec59677afcd1d32056d81f21b7d1ff5026118a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2915e69a_63735e75",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T13:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e82ee2c_7ce7f2e7",
       "revId": "afec59677afcd1d32056d81f21b7d1ff5026118a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
