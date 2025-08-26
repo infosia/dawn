@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2a05007_f09f8391",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T12:57:15Z",
+      "side": 1,
+      "message": "This mentions re-pinned but I didn\u0027t see reference to re-pin below or in the test. Is re-pin just calling Pin twice?",
+      "revId": "ef66a253fbaac67e297862bf40746ab0d66fae2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43e01878_c2ef7c3a",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1560,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T12:57:15Z",
+      "side": 1,
+      "message": "Is there a future `TODO` to handle this error?",
+      "revId": "ef66a253fbaac67e297862bf40746ab0d66fae2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddee3516_677a97cb",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1580,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T12:57:15Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ef66a253fbaac67e297862bf40746ab0d66fae2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23b13dca_8c425a78",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1615,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T12:57:15Z",
+      "side": 1,
+      "message": "```suggestion\n                    \"Texture unpin used without the %s feature enabled.\",\n```\n\nIs the error on the feature, or the thing you\u0027re doing?",
+      "revId": "ef66a253fbaac67e297862bf40746ab0d66fae2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a92e094_ab63eb08",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T12:57:15Z",
+      "side": 1,
+      "message": "```suggestion\n    wgpu::TextureDescriptor desc{\n        .format \u003d wgpu::TextureFormat::R32Float,\n        .usage \u003d wgpu::TextureUsage::TextureBinding,\n        .size \u003d {1, 1},\n    };\n```",
+      "range": {
+        "startLine": 1141,
+        "startChar": 0,
+        "endLine": 1144,
+        "endChar": 23
+      },
+      "revId": "ef66a253fbaac67e297862bf40746ab0d66fae2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a123b91_8b9b7b1f",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T12:57:15Z",
+      "side": 1,
+      "message": "```suggestion\n    wgpu::TextureDescriptor desc{\n        .format \u003d wgpu::TextureFormat::R32Float,\n        .usage \u003d wgpu::TextureUsage::TextureBinding,\n        .size \u003d {1, 1},\n    };\n```",
+      "range": {
+        "startLine": 1153,
+        "startChar": 0,
+        "endLine": 1156,
+        "endChar": 23
+      },
+      "revId": "ef66a253fbaac67e297862bf40746ab0d66fae2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b90856b0_a0c433d5",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T12:57:15Z",
+      "side": 1,
+      "message": "```suggestion\n    wgpu::TextureDescriptor desc{\n        .format \u003d wgpu::TextureFormat::R32Float,\n        .size \u003d {1, 1},\n    };\n```",
+      "range": {
+        "startLine": 1165,
+        "startChar": 0,
+        "endLine": 1167,
+        "endChar": 23
+      },
+      "revId": "ef66a253fbaac67e297862bf40746ab0d66fae2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b490efa_586b6ee0",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1198,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-26T12:57:15Z",
+      "side": 1,
+      "message": "```suggestion\n    wgpu::TextureDescriptor desc{\n        .format \u003d wgpu::TextureFormat::R32Float,\n        .usage \u003d wgpu::TextureUsage::TextureBinding,\n        .size \u003d {1, 1},\n    };\n```",
+      "range": {
+        "startLine": 1195,
+        "startChar": 0,
+        "endLine": 1198,
+        "endChar": 23
+      },
+      "revId": "ef66a253fbaac67e297862bf40746ab0d66fae2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
