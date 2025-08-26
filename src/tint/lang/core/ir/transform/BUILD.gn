@@ -92,6 +92,8 @@ libtint_source_set("transform") {
     "rename_conflicts.h",
     "robustness.cc",
     "robustness.h",
+    "runtime_binding_array.cc",
+    "runtime_binding_array.h",
     "shader_io.cc",
     "shader_io.h",
     "signed_integer_polyfill.cc",
