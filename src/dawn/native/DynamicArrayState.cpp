@@ -32,8 +32,24 @@
 
 namespace dawn::native {
 
+namespace {
+
+uint32_t ComputeTypeId(const TextureViewBase* view) {
+    // TODO use tint enums
+    if (view == nullptr) {
+        return 0;
+    }
+
+    return 1;
+}
+
+}  // anonymous namespace
+
 DynamicArrayState::DynamicArrayState(DeviceBase* device, BindingIndex size) : mDevice(device) {
     mBindings.resize(size);
+
+    DAWN_ASSERT(ComputeTypeId(nullptr) == 0);
+    mBindingState.resize(size);
 }
 
 MaybeError DynamicArrayState::Initialize() {
@@ -53,6 +69,21 @@ MaybeError DynamicArrayState::Initialize() {
     DAWN_TRY(mMetadataBuffer->Unmap());
 
     return {};
+}
+
+void DynamicArrayState::Destroy() {
+    DAWN_ASSERT(!mDestroyed);
+
+    for (auto [i, view] : mBindings) {
+        if (view != nullptr) {
+            // view->GetTexture()->RemoveDynamicArraySlot(this, i);
+        }
+    }
+
+    mBindings.clear();
+    mMetadataBuffer->Destroy();
+    mMetadataBuffer = nullptr;
+    mDestroyed = true;
 }
 
 BindingIndex DynamicArrayState::GetSize() const {
@@ -76,15 +107,50 @@ bool DynamicArrayState::IsDestroyed() const {
 
 void DynamicArrayState::Update(BindingIndex i, TextureViewBase* view) {
     DAWN_ASSERT(!mDestroyed);
+    if (mBindings[i] != nullptr) {
+        // mBindings[i]->GetTexture()->AddDynamicArraySlot(this, i);
+    }
+
     mBindings[i] = view;
+
+    uint32_t typeId = ComputeTypeId(view);
+    bool pinned = view != nullptr && view->GetTexture()->HasPinnedUsage();
+
+    BindingState& state = mBindingState[i];
+    if (state.typeId != typeId || state.pinned != pinned) {
+        state.typeId = typeId;
+        state.pinned = pinned;
+        MarkStateDirty(i);
+    }
+
+    if (mBindings[i] != nullptr) {
+        // mBindings[i]->GetTexture()->RemoveDynamicArraySlot(this, i);
+    }
 }
 
-void DynamicArrayState::Destroy() {
+void DynamicArrayState::OnPinned(BindingIndex i, TextureBase* texture) {
     DAWN_ASSERT(!mDestroyed);
-    mBindings.clear();
-    mMetadataBuffer->Destroy();
-    mMetadataBuffer = nullptr;
-    mDestroyed = true;
+    DAWN_ASSERT(mBindings[i] != nullptr);
+    DAWN_ASSERT(mBindings[i]->GetTexture() == texture);
+    DAWN_ASSERT(!mBindingState[i].pinned);
+    mBindingState[i].pinned = true;
+    MarkStateDirty(i);
+}
+
+void DynamicArrayState::OnUnpinned(BindingIndex i, TextureBase* texture) {
+    DAWN_ASSERT(!mDestroyed);
+    DAWN_ASSERT(mBindings[i] != nullptr);
+    DAWN_ASSERT(mBindings[i]->GetTexture() == texture);
+    DAWN_ASSERT(mBindingState[i].pinned);
+    mBindingState[i].pinned = false;
+    MarkStateDirty(i);
+}
+
+void DynamicArrayState::MarkStateDirty(BindingIndex i) {
+    if (!mBindingState[i].dirty) {
+        mDirtyBindings.push_back(i);
+        mBindingState[i].dirty = true;
+    }
 }
 
 }  // namespace dawn::native
