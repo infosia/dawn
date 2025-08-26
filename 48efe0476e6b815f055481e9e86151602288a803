@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9095fd63_1b978218",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-26T20:56:15Z",
+      "side": 1,
+      "message": "nit: could we rename `ComposeSwizzle` and `ComposeSwizzleComponent`? They don\u0027t really tell me what these functions do. Maybe something like `GetRemappedSwizzle(srcMap)` and `RemapSwizzleComponent(srcMap)` Yea, that\u0027s horrible too, naming is hard, but `ComposeSwizzle` provides me no info and the name of the argument `swizzle` doesn\u0027t help me know what\u0027s really happening. Like is `swizzle` what\u0027s getting composed? I have to go look at the code to figure out that no, `swizzle` is some map/src and the thing being returned is the TextureView\u0027s remapped swizzle values.",
+      "revId": "48efe0476e6b815f055481e9e86151602288a803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d43a2d96_2bb7219b",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-26T20:56:15Z",
+      "side": 1,
+      "message": "This code returns `false` because `RequiresCreatingNewTextureView` sees the swizzle is the identity so it never makes it to the swizzle code below for depth/stencil textures",
+      "revId": "48efe0476e6b815f055481e9e86151602288a803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "090e5dc2_3cf7c22b",
@@ -32,6 +66,23 @@
       "side": 1,
       "message": "cc @kainino@chromium.org",
       "parentUuid": "090e5dc2_3cf7c22b",
+      "revId": "48efe0476e6b815f055481e9e86151602288a803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a081df58_49371c85",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-08-26T20:56:15Z",
+      "side": 1,
+      "message": "this check won\u0027t work will it? `UsesNonDefaultSwizzle()` will return false for RGBA but for depth it\u0027s supposed to be R,0,0,1 so it won\u0027t use the mapped swizzle.",
       "revId": "48efe0476e6b815f055481e9e86151602288a803",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
