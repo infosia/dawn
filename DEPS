@@ -128,7 +128,7 @@ deps = {
 
   # Dependencies required to use GN, and Clang in standalone.
 
-  # The //build and //tools/clang deps should all be updated in
+  # The //build, //tools/clang, and //tools/memory deps should all be updated in
   # unison, as there are dependencies between them.
   'build': {
     'url': '{chromium_git}/chromium/src/build@c734cf94f4e1501e80663319392cfbe0ce26dbb1',
@@ -136,6 +136,10 @@ deps = {
   },
   'tools/clang': {
     'url': '{chromium_git}/chromium/src/tools/clang@7ade8a8f2a759b822022560e08d49b33a2e8496d',
+    'condition': 'dawn_standalone',
+  },
+  'tools/memory': {
+    'url': '{chromium_git}/chromium/src/tools/memory@3c7b1f4daab1520239cb172059e2e16684fd3128',
     'condition': 'dawn_standalone',
   },
 

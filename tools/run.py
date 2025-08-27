@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Copyright 2025 The Dawn & Tint Authors
 #
 # Redistribution and use in source and binary forms, with or without
@@ -25,7 +26,44 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# The rules in this file are only applied at compile time. If you can modify the
-# source in question, consider function attributes to disable instrumentation.
-#
-# Please think twice before you add or remove these rules.
+import argparse
+import os
+import subprocess
+import sys
+
+SCRIPT_DIR = os.path.dirname(__file__)
+CMD_DIR = os.path.join(SCRIPT_DIR, 'src', 'cmd')
+DAWN_ROOT = os.path.realpath(os.path.join(SCRIPT_DIR, '..'))
+GO_BINARY = os.path.join(DAWN_ROOT, 'tools', 'golang', 'bin', 'go')
+if sys.platform == 'win32':
+    GO_BINARY += '.exe'
+
+
+def _get_available_tools() -> list[str]:
+    return os.listdir(CMD_DIR)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description='Builds and runs the specified Go tool in //tools/src/cmd')
+    parser.add_argument(
+        'tool_name',
+        help='The name of the tool under //tools/src/cmd to run',
+        choices=_get_available_tools())
+    parser.add_argument('--isolated-script-test-output',
+                        help='Currently unused')
+    args, unknown_args = parser.parse_known_args()
+
+    cmd = [
+        GO_BINARY,
+        'run',
+        os.path.join(CMD_DIR, args.tool_name),
+    ]
+    cmd.extend(unknown_args)
+
+    proc = subprocess.run(cmd, check=False, cwd=DAWN_ROOT)
+    return proc.returncode
+
+
+if __name__ == '__main__':
+    sys.exit(main())
