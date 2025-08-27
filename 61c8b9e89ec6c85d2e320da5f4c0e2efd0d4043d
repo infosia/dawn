@@ -16,6 +16,29 @@
       "message": "PTAL",
       "revId": "61c8b9e89ec6c85d2e320da5f4c0e2efd0d4043d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d8ade33_07e67baa",
+        "filename": "infra/config/global/gn_standalone_ci.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-08-27T14:44:27Z",
+      "side": 1,
+      "message": "I believe these don\u0027t actually use SwiftShader, right?\nSince fuzzer tests build with SwiftShader disabled originally.\nThis is a deviation from how I thought to group bots by the GPU platform they execute on.\nProbably just dawn-linux-x64-fuzz-rel is enough in this case. (I was also considering adding -gce- or -null-).",
+      "range": {
+        "startLine": 143,
+        "startChar": 27,
+        "endLine": 143,
+        "endChar": 30
+      },
+      "revId": "61c8b9e89ec6c85d2e320da5f4c0e2efd0d4043d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
