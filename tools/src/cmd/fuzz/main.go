@@ -243,6 +243,15 @@ func generateTaskConfig(tm TaskMode, c *cmdConfig) (*taskConfig, error) {
 		taskMode:  tm,
 	}
 
+	entries, err := os.ReadDir(t.build)
+	if err != nil {
+		return nil, fmt.Errorf("Unable to list directory")
+	}
+
+	for _, entry := range entries {
+		fmt.Println(entry.Name())
+	}
+
 	type depConfig struct {
 		name string
 		path *string
