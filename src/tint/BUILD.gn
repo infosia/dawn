@@ -342,10 +342,23 @@ group("fuzzers") {
 
 group("fuzzer_corpus_tools") {
   testonly = true
-  deps = [ ":fuzzers" ]
+  data_deps = [ ":fuzzers" ]
   if (tint_has_fuzzers && tint_build_ir_binary) {
-    deps += [ "${tint_src_dir}/cmd/fuzz/ir/as" ]
+    data_deps += [ "${tint_src_dir}/cmd/fuzz/ir/as" ]
   }
+}
+
+group("fuzzer_corpus_tests") {
+  testonly = true
+  deps = [ ":fuzzer_corpus_tools" ]
+  data = [
+    "//go.mod",
+    "//go.sum",
+    "//tools/run.py",
+
+    "//tools/golang/",
+    "//tools/src/",
+  ]
 }
 
 group("tests") {
