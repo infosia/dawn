@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84e60637_255422d9",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-27T22:28:46Z",
+      "side": 1,
+      "message": "Is this needed? From what I can tell, it looks like we are only really using it as storage buffers? Or alternatively, should we be adding the uniform one only if the usage contains `wgpu::BufferUsage::Uniform`?",
+      "range": {
+        "startLine": 78,
+        "startChar": 55,
+        "endLine": 78,
+        "endChar": 95
+      },
+      "revId": "5f63ee392cfb7d13984540a5f4eb47e4a432d9fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "970ba59a_2cf536fa",
+        "filename": "src/dawn/native/vulkan/TexelBufferViewVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-27T22:28:46Z",
+      "side": 1,
+      "message": "Should we return an error in this case? This is equivalent to silently failing which could potentially cause issues? Or is there justification for this?",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 18
+      },
+      "revId": "5f63ee392cfb7d13984540a5f4eb47e4a432d9fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
