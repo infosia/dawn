@@ -16,6 +16,75 @@
       "message": "Mind taking a quick look? Want to make sure that I\u0027m using this as expected.",
       "revId": "b2c57a4652e8d6335b0e97379b678fbe6fdfdf15",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4911ab76_b8dc4813",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-27T01:00:38Z",
+      "side": 1,
+      "message": "I think you shouldn\u0027t need this (and the one below) anymore.",
+      "range": {
+        "startLine": 142,
+        "startChar": 16,
+        "endLine": 142,
+        "endChar": 39
+      },
+      "revId": "b2c57a4652e8d6335b0e97379b678fbe6fdfdf15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89c4cc21_e7fa2cb3",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-27T01:00:38Z",
+      "side": 1,
+      "message": "It seems like before this would surface as an error in `BeginVkCommandBuffer()` above. I\u0027m not sure if it\u0027s important to surface these atm since it seems like we could just create a new pool and do stuff (probably?), but we could probably just do the same as before and use `DAWN_TRY_WITH_CLEANUP` here to deal with destroying it if it fails?",
+      "range": {
+        "startLine": 390,
+        "startChar": 16,
+        "endLine": 390,
+        "endChar": 70
+      },
+      "revId": "b2c57a4652e8d6335b0e97379b678fbe6fdfdf15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38b191a7_d8becc14",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-27T01:00:38Z",
+      "side": 1,
+      "message": "Lmk if removing this is possible also. (I think it should, so if it causes issues I can investigate.)",
+      "range": {
+        "startLine": 462,
+        "startChar": 4,
+        "endLine": 462,
+        "endChar": 49
+      },
+      "revId": "b2c57a4652e8d6335b0e97379b678fbe6fdfdf15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
