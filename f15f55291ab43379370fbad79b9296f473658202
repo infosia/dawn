@@ -68,6 +68,24 @@
       "parentUuid": "6353c7a6_96c4f877",
       "revId": "f15f55291ab43379370fbad79b9296f473658202",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f08ab9bb_a302eff7",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3976,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-27T22:49:09Z",
+      "side": 1,
+      "message": "As we talked about offline, this is already true for a lot of the other entry point (`CreateBuffer`, `Create*Pipeline`, etc), so while this is technically UB, I think it should be fine.",
+      "parentUuid": "6353c7a6_96c4f877",
+      "revId": "f15f55291ab43379370fbad79b9296f473658202",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
