@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbdd2fcc_a28e87ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-27T14:09:48Z",
+      "side": 1,
+      "message": "LGTM I assume that you checked that view creation and async pipeline initialization do not need the device lock?",
+      "revId": "f15f55291ab43379370fbad79b9296f473658202",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
