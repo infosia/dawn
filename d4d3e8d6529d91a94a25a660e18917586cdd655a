@@ -16,6 +16,23 @@
       "message": "Moving this back to WIP,  will bring back when I\u0027ve rebased on the new chain with the new name.",
       "revId": "d4d3e8d6529d91a94a25a660e18917586cdd655a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94d8c9f8_9f0f154b",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-27T12:35:26Z",
+      "side": 1,
+      "message": "Could we use this same enum in the list of types of RuntimeBindingArray in the inspector as well in the future?",
+      "revId": "d4d3e8d6529d91a94a25a660e18917586cdd655a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
