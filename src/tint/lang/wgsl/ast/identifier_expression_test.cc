@@ -37,12 +37,12 @@ using IdentifierExpressionDeathTest = IdentifierExpressionTest;
 
 TEST_F(IdentifierExpressionTest, Creation) {
     auto* i = Expr("ident");
-    EXPECT_EQ(i->identifier->symbol, Symbol(1, Symbols().GenerationID(), "ident"));
+    EXPECT_EQ(i->identifier->symbol, Symbols().Get("ident"));
 }
 
 TEST_F(IdentifierExpressionTest, CreationTemplated) {
     auto* i = Expr(Ident("ident", true));
-    EXPECT_EQ(i->identifier->symbol, Symbol(1, Symbols().GenerationID(), "ident"));
+    EXPECT_EQ(i->identifier->symbol, Symbols().Get("ident"));
     auto* tmpl_ident = i->identifier->As<TemplatedIdentifier>();
     ASSERT_NE(tmpl_ident, nullptr);
     EXPECT_EQ(tmpl_ident->arguments.Length(), 1_u);
@@ -51,7 +51,7 @@ TEST_F(IdentifierExpressionTest, CreationTemplated) {
 
 TEST_F(IdentifierExpressionTest, Creation_WithSource) {
     auto* i = Expr(Source{{20, 2}}, "ident");
-    EXPECT_EQ(i->identifier->symbol, Symbol(1, Symbols().GenerationID(), "ident"));
+    EXPECT_EQ(i->identifier->symbol, Symbols().Get("ident"));
 
     EXPECT_EQ(i->source.range, (Source::Range{{20, 2}}));
     EXPECT_EQ(i->identifier->source.range, (Source::Range{{20, 2}}));
