@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1bd499e_c8afcbb3",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1004326
+      },
+      "writtenOn": "2025-08-27T21:25:25Z",
+      "side": 0,
+      "message": "I can roll this to the most recent build and tools/clang commit if that\u0027s preferable, there\u0027 just a lot of other dependencies that would need to be rolled as well.",
+      "range": {
+        "startLine": 134,
+        "startChar": 46,
+        "endLine": 134,
+        "endChar": 86
+      },
+      "revId": "954d265bb8a777d85ac3891c01f35c7a618f37a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
