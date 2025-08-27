@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7b6351e_6b63478a",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-08-27T14:18:27Z",
+      "side": 1,
+      "message": "nit: Add TODO about testing changing the usage here when more than one is valid.",
+      "range": {
+        "startLine": 1210,
+        "startChar": 4,
+        "endLine": 1210,
+        "endChar": 48
+      },
+      "revId": "34a17aadc2e4609e37fd77249d98086489fc77e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
