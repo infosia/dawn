@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "5a720f2486fd9af0f0116cfb896c2adc95a4e9a5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fce77150_518f48e1",
+        "filename": "src/dawn/native/BindGroup.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-27T13:17:21Z",
+      "side": 1,
+      "message": "```suggestion\n    // The dynamic array is separate so as to not bloat the size and destructor of bind groups\n```",
+      "revId": "5a720f2486fd9af0f0116cfb896c2adc95a4e9a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
