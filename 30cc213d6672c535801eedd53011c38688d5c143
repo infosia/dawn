@@ -294,6 +294,24 @@
       "parentUuid": "defbca4e_d78a1d6d",
       "revId": "30cc213d6672c535801eedd53011c38688d5c143",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f78363b_79a16667",
+        "filename": "src/tint/lang/core/ir/transform/runtime_binding_array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-27T22:24:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8eb13f58_2855847b",
+      "revId": "30cc213d6672c535801eedd53011c38688d5c143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

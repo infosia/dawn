@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "d73605c1_4ee31a65",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-27T22:24:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "071df792_10c28452",
+      "revId": "d4d3e8d6529d91a94a25a660e18917586cdd655a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "94d8c9f8_9f0f154b",
         "filename": "src/tint/api/common/runtime_binding_array_config.h",
         "patchSetId": 4
@@ -85,6 +103,24 @@
       "side": 1,
       "message": "I think it makes sense, i\u0027ll move it over when I\u0027m updating the inspector.",
       "parentUuid": "e61c2304_028d6d54",
+      "revId": "d4d3e8d6529d91a94a25a660e18917586cdd655a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b60d8ec2_629a04a8",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-27T22:24:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85b91f41_d0697c5c",
       "revId": "d4d3e8d6529d91a94a25a660e18917586cdd655a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
