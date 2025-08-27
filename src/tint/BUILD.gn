@@ -348,6 +348,19 @@ group("fuzzer_corpus_tools") {
   }
 }
 
+group("fuzzer_corpus_tests") {
+  testonly = true
+  deps = [ ":fuzzer_corpus_tools" ]
+  data = [
+    "//go.mod",
+    "//go.sum",
+    "//tools/run.py",
+
+    "//tools/golang/",
+    "//tools/src/",
+  ]
+}
+
 group("tests") {
   testonly = true
   deps = []
