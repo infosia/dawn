@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "a2f9283dfcf8efe07326353bf32d714b6bf1d432",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e6b625c_db84b2ea",
+        "filename": "src/tint/lang/core/intrinsic/ctor_conv.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-27T02:29:01Z",
+      "side": 1,
+      "message": "Why did this get changed? I think we\u0027re supposed to keep the year it was first published. There\u0027s a few of these.",
+      "revId": "a2f9283dfcf8efe07326353bf32d714b6bf1d432",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
