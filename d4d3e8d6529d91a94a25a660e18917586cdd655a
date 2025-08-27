@@ -51,6 +51,24 @@
       "parentUuid": "94d8c9f8_9f0f154b",
       "revId": "d4d3e8d6529d91a94a25a660e18917586cdd655a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e61c2304_028d6d54",
+        "filename": "src/tint/api/common/runtime_binding_array_config.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-27T12:42:46Z",
+      "side": 1,
+      "message": "We could make it as specific, so Tint doesn\u0027t need to know what type goes in what `DynamicArrayKind`. WDYT? We can definitely do it later though.",
+      "parentUuid": "06e8f286_24feacfc",
+      "revId": "d4d3e8d6529d91a94a25a660e18917586cdd655a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
