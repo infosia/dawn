@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b316858e_8e1071f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-27T20:20:53Z",
+      "side": 1,
+      "message": "+dsinclair to stamp since it\u0027s past EoD for Yuly and the previous +1 got dropped as a result of removing the child tester",
+      "revId": "c68587ec18e4d2267dca9cd82a8d2b6be3d36360",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

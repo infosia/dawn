@@ -39,6 +39,30 @@
       },
       "revId": "61c8b9e89ec6c85d2e320da5f4c0e2efd0d4043d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac7505a7_ec9e0206",
+        "filename": "infra/config/global/gn_standalone_ci.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-27T20:20:53Z",
+      "side": 1,
+      "message": "Done, and updated the GN args since we were building with SwiftShader for this.\n\nSomewhat moot for now since I\u0027ve decided to not have the child tester for now. I\u0027ll need to do some more work to support isolating these tests since they rely on Go binaries which Dawn does not currently support in GN. I plan on supporting this longer-term, but for now, running the tests on the builder should allow us to get to parity with the older builders and unblock migration.",
+      "parentUuid": "9d8ade33_07e67baa",
+      "range": {
+        "startLine": 143,
+        "startChar": 27,
+        "endLine": 143,
+        "endChar": 30
+      },
+      "revId": "61c8b9e89ec6c85d2e320da5f4c0e2efd0d4043d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
