@@ -32,43 +32,12 @@
 #include <optional>
 #include <vector>
 
+#include "src/tint/api/common/resource_type.h"
+
 namespace tint::inspector {
 
 /// Container for information about how a resource is bound
 struct ResourceBindingInfo {
-    enum class ResourceType {
-        kEmpty,
-
-        kTexture1d_f32,
-        kTexture1d_i32,
-        kTexture1d_u32,
-        kTexture2d_f32,
-        kTexture2d_i32,
-        kTexture2d_u32,
-        kTexture2dArray_f32,
-        kTexture2dArray_i32,
-        kTexture2dArray_u32,
-        kTexture3d_f32,
-        kTexture3d_i32,
-        kTexture3d_u32,
-        kTextureCube_f32,
-        kTextureCube_i32,
-        kTextureCube_u32,
-        kTextureCubeArray_f32,
-        kTextureCubeArray_i32,
-        kTextureCubeArray_u32,
-
-        kTextureMultisampled2d_f32,
-        kTextureMultisampled2d_i32,
-        kTextureMultisampled2d_u32,
-
-        kTextureDepth2d,
-        kTextureDepth2dArray,
-        kTextureDepthCube,
-        kTextureDepthCubeArray,
-        kTextureDepthMultisampled2d,
-    };
-
     /// Bind group the binding belongs
     uint32_t group;
     /// Identifier to identify this binding within the bind group
