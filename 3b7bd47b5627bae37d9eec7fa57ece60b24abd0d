@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d68ae6b5_444ff9a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-27T17:02:33Z",
+      "side": 1,
+      "message": "LGTM at a high level but could use another review pass from someone the Dawn team.",
+      "revId": "3b7bd47b5627bae37d9eec7fa57ece60b24abd0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
