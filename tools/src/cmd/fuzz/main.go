@@ -288,6 +288,7 @@ func generateTaskConfig(tm TaskMode, c *cmdConfig) (*taskConfig, error) {
 // checkFuzzer runs the fuzzer against all the test files the inputs directory,
 // ensuring that the fuzzers do not error for the given file.
 func checkFuzzer(t *taskConfig) error {
+	fmt.Printf("Checking with fuzzer %s\n", t.fuzzer)
 	var files []string
 	var err error
 	switch t.fuzzMode {
