@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "491d8fce_b5cfbf3d",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-08-27T14:08:50Z",
+      "side": 1,
+      "message": "nit: Do you plan on using mDevice in other future methods? If not, can you just pass it to ::Initialize?",
+      "range": {
+        "startLine": 1013,
+        "startChar": 37,
+        "endLine": 1013,
+        "endChar": 44
+      },
+      "revId": "63aaa004b60c7b4a39ef4be8c763786bab9b0d09",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
