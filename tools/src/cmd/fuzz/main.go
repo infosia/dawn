@@ -288,6 +288,7 @@ func generateTaskConfig(tm TaskMode, c *cmdConfig) (*taskConfig, error) {
 // checkFuzzer runs the fuzzer against all the test files the inputs directory,
 // ensuring that the fuzzers do not error for the given file.
 func checkFuzzer(t *taskConfig) error {
+	fmt.Printf("Checking with fuzzer %s\n", t.fuzzer)
 	var files []string
 	var err error
 	switch t.fuzzMode {
@@ -486,10 +487,12 @@ func gatherWgslFiles(inputs string, out string, fsReaderWriter oswrapper.Filesys
 	mapping := make(map[string]string, len(files))
 	for _, f := range files {
 		// paths returned by glob.Glob are absolute, but only want to use the relative path in the dest name
+		fmt.Printf("Making %s relative to %s\n", inputs, f)
 		relPath, err := filepath.Rel(inputs, f)
 		if err != nil {
 			return fmt.Errorf("failed to calculate relative path for '%v' from base '%v': %w", f, inputs, err)
 		}
+		fmt.Printf("Relpath: %s\n", relPath)
 		mapping[f] = strings.ReplaceAll(filepath.ToSlash(relPath), "/", "_")
 	}
 
