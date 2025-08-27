@@ -276,6 +276,24 @@
       "parentUuid": "aea47ffc_5608a099",
       "revId": "30cc213d6672c535801eedd53011c38688d5c143",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8eb13f58_2855847b",
+        "filename": "src/tint/lang/core/ir/transform/runtime_binding_array.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-27T08:38:50Z",
+      "side": 1,
+      "message": "Going directly to typeless seems good (it\u0027s just that it will make plugging Dawn and Tint together happen later). Naming is hard and I\u0027m sure we\u0027ll bikeshed a TON in the WebGPU group, but I still like `binding_array` without template parameters. We can use another name, but let\u0027s avoid putting \"buffer\" in it because it can be very confusing with `wgpu::Buffer` (both Metal and Vulkan have ways to provide resources by putting descriptor bytes in buffers). `dynamic_binding_array` (that\u0027s the terrible name I came up with on the API side), `resource_array`, `resource_set` all seem fine-ish.",
+      "parentUuid": "defbca4e_d78a1d6d",
+      "revId": "30cc213d6672c535801eedd53011c38688d5c143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
