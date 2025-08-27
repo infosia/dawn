@@ -16,6 +16,24 @@
       "message": "```suggestion\nunpin pairs as it could duplicate logic if they had to sanitize\n```",
       "revId": "b13c2478f8f063f03303bbef86a348f9da05649e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b8c86bc_994fc473",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-27T09:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88cc61b8_e771911c",
+      "revId": "b13c2478f8f063f03303bbef86a348f9da05649e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
