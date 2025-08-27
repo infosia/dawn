@@ -100,6 +100,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "021d9239_44361e96",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-27T17:17:22Z",
+      "side": 1,
+      "message": "This was copied from Albins comment. I will update it.",
+      "parentUuid": "3776c80d_d85b7854",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 36
+      },
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "99ccff31_06c10e3c",
         "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
         "patchSetId": 11
@@ -128,6 +152,24 @@
       "writtenOn": "2025-08-26T16:06:29Z",
       "side": 1,
       "message": "Is all the code above 1 needed to check this? There\u0027s a lot of dependencies that are confusing so reducing the test to be more targeted (if possible) would help a bit.",
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2726317_563a0f10",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-27T17:17:22Z",
+      "side": 1,
+      "message": "I have done my best to simplify the as much as possible but yes they are needed. You need to do this operation twice to have the code that would remove the barrier fire correctly (aka the incorrect concurrent execution)",
+      "parentUuid": "f09bfe55_bb0993d6",
       "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
