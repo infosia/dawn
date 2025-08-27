@@ -22,6 +22,30 @@
       },
       "revId": "63aaa004b60c7b4a39ef4be8c763786bab9b0d09",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df22c201_5433c3cf",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-27T14:38:49Z",
+      "side": 1,
+      "message": "I\u0027m not sure yet, so I\u0027ll remove the array member and pass it explicitly. I\u0027ll fold that change in the follow up where the DynamicArrayState is moved to its own class.",
+      "parentUuid": "491d8fce_b5cfbf3d",
+      "range": {
+        "startLine": 1013,
+        "startChar": 37,
+        "endLine": 1013,
+        "endChar": 44
+      },
+      "revId": "63aaa004b60c7b4a39ef4be8c763786bab9b0d09",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
