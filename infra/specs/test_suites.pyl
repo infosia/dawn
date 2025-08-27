@@ -78,6 +78,33 @@
         'test': 'dawn_unittests',
       },
     },
+    'tint_fuzzer_corpus_tests': {
+      'tint_wgsl_fuzzer_corpus_tests': {
+        'args': [
+          '-build',
+          '.',
+          '-check',
+        ],
+        'mixins': [
+          # 'no_resultdb',
+          'no_swarming',
+        ],
+        'test': 'fuzzer_corpus_tests',
+      },
+      'tint_ir_fuzzer_corpus_tests': {
+        'args': [
+          '-build',
+          '.',
+          '-check',
+          '-ir',
+        ],
+        'mixins': [
+          # 'no_resultdb',
+          'no_swarming',
+        ],
+        'test': 'fuzzer_corpus_tests',
+      },
+    },
     'tint_unit_gtests': {
       'tint_unittests': {
         'mixins': [
