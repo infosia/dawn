@@ -16,6 +16,52 @@
       "message": "More moving work into tasks, building off of https://dawn-review.googlesource.com/c/dawn/+/251974 This CL assumes the issue of task pumping has been resolved by something upstream. As such won\u0027t be ready to land for a but but I\u0027d appreciate feedback if you think it might be heading in the wring direction.",
       "revId": "402dbba1fd49baddd54e7cd1dc226019e836c189",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c584739d_0ca38f4e",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-27T22:39:53Z",
+      "side": 1,
+      "message": "nit. We should probably add a comment detailing why `this` is always valid in this scope. (I think `FencedDeleted` is owned by the device which must exist at if this is executed because the queue is still valid?)",
+      "range": {
+        "startLine": 126,
+        "startChar": 46,
+        "endLine": 126,
+        "endChar": 50
+      },
+      "revId": "402dbba1fd49baddd54e7cd1dc226019e836c189",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98a00e69_17ca0912",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-27T22:39:53Z",
+      "side": 1,
+      "message": "nit. Can probably make this private now?",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 47
+      },
+      "revId": "402dbba1fd49baddd54e7cd1dc226019e836c189",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
