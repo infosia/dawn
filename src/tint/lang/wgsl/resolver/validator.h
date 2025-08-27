@@ -454,6 +454,12 @@ class Validator {
                                        const core::type::Type* type,
                                        const Source& source) const;
 
+    /// Validates a resource buffer type
+    /// @param t the resource buffer to validate
+    /// @param source the source of the resource buffer type
+    /// @returns true on success, false otherwise
+    bool ResourceBuffer(const core::type::ResourceBuffer* t, const Source& source) const;
+
     /// Validates a binding array type
     /// @param t the binding array to validate
     /// @param source the source of the binding array type
