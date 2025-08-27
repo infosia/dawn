@@ -16,6 +16,23 @@
       "message": "Need another +1, lost after rebasing.",
       "revId": "dd27296cd79e98fda1de63cfc2fc11f026d37f4b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56b6c7ce_970c7cee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-08-27T21:39:42Z",
+      "side": 1,
+      "message": "Moving Dan to CC and requesting a stamp from Kai since Dan\u0027s day ended between the initial stamp and the rebase.",
+      "revId": "dd27296cd79e98fda1de63cfc2fc11f026d37f4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
