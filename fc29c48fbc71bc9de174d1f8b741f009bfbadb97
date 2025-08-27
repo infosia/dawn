@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "171e764b_eb59fa9b",
+        "filename": "src/dawn/utils/TextureUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-08-27T02:43:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18022b1d_245c21be",
+      "revId": "fc29c48fbc71bc9de174d1f8b741f009bfbadb97",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe430256_196173c4",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fa48abb_b60ba6f2",
+        "filename": "src/dawn/utils/TextureUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-08-27T02:43:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe430256_196173c4",
+      "revId": "fc29c48fbc71bc9de174d1f8b741f009bfbadb97",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e19e85dc_257ab358",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-08-26T10:17:46Z",
       "side": 1,
       "message": "Likewise we should handle all the u/snorm formats and also ensure that any missing ones cause a crash if we call the function:\n\n```suggestion\n            DAWN_UNREACHBLE();\n```",
+      "revId": "fc29c48fbc71bc9de174d1f8b741f009bfbadb97",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "397a99f1_93314235",
+        "filename": "src/dawn/utils/TextureUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-08-27T02:43:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e19e85dc_257ab358",
       "revId": "fc29c48fbc71bc9de174d1f8b741f009bfbadb97",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
