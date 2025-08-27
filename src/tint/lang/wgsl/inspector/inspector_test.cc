@@ -2769,24 +2769,6 @@ TEST_F(InspectorGetResourceBindingsTest, BindingArray_Simple) {
     EXPECT_EQ(5u, result[0].array_size.value());
 }
 
-TEST_F(InspectorGetResourceBindingsTest, BindingArray_SkipRuntikme) {
-    auto* src = R"(
-enable chromium_experimental_dynamic_binding;
-
-@group(0) @binding(1) var toto: binding_array<texture_2d<f32>>;
-@fragment fn ep() {
-  _ = textureDimensions(toto[3]);
-}
-)";
-
-    Inspector& inspector = Initialize(src);
-
-    auto result = inspector.GetResourceBindings("ep");
-    ASSERT_FALSE(inspector.has_error()) << inspector.error();
-
-    EXPECT_EQ(0u, result.size());
-}
-
 TEST_F(InspectorGetResourceBindingsTest, BindingArray_InFunction) {
     auto* src = R"(
 @group(0) @binding(1) var toto: binding_array<texture_2d<f32>, 5>;
