@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f467623d_d070005d",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-27T21:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4911ab76_b8dc4813",
+      "range": {
+        "startLine": 142,
+        "startChar": 16,
+        "endLine": 142,
+        "endChar": 39
+      },
+      "revId": "b2c57a4652e8d6335b0e97379b678fbe6fdfdf15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "89c4cc21_e7fa2cb3",
@@ -64,6 +88,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cddd0a84_db3ddf7b",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-27T21:21:47Z",
+      "side": 1,
+      "message": "DAWN_TRY_WITH_CLEANUP has a path that returns an Error, so it\u0027s not usable in the context of the Serial Task. I\u0027m happy to let this be a silent failure, since as you pointed out it has an elegant fallback path. Mostly thinking about if there\u0027s a way that we could notice if we hit a scenario/device where this fails consistently.",
+      "parentUuid": "89c4cc21_e7fa2cb3",
+      "range": {
+        "startLine": 390,
+        "startChar": 16,
+        "endLine": 390,
+        "endChar": 70
+      },
+      "revId": "b2c57a4652e8d6335b0e97379b678fbe6fdfdf15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "38b191a7_d8becc14",
@@ -77,6 +125,30 @@
       "writtenOn": "2025-08-27T01:00:38Z",
       "side": 1,
       "message": "Lmk if removing this is possible also. (I think it should, so if it causes issues I can investigate.)",
+      "range": {
+        "startLine": 462,
+        "startChar": 4,
+        "endLine": 462,
+        "endChar": 49
+      },
+      "revId": "b2c57a4652e8d6335b0e97379b678fbe6fdfdf15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec25cd80_b9f5a40e",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-27T21:21:47Z",
+      "side": 1,
+      "message": "Discussed offline. This can be removed because the owning device flushes the serial tasks prior to destroying the queue. Added a DAWN_ASSERT to ensure that\u0027s the case.",
+      "parentUuid": "38b191a7_d8becc14",
       "range": {
         "startLine": 462,
         "startChar": 4,
