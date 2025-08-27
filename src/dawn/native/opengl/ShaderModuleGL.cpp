@@ -498,7 +498,8 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     req.tintOptions.version = tint::glsl::writer::Version(ToTintGLStandard(version.GetStandard()),
                                                           version.GetMajor(), version.GetMinor());
 
-    req.tintOptions.disable_robustness = false;
+    req.tintOptions.disable_robustness = !device->IsRobustnessEnabled();
+    req.tintOptions.disable_workgroup_init = device->IsToggleEnabled(Toggle::DisableWorkgroupInit);
 
     if (usesVertexIndex) {
         req.tintOptions.first_vertex_offset = 4 * PipelineLayout::ImmediateLocation::FirstVertex;
