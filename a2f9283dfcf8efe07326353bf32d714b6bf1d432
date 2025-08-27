@@ -69,6 +69,24 @@
       "parentUuid": "723bcfc5_4070418a",
       "revId": "a2f9283dfcf8efe07326353bf32d714b6bf1d432",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "696bedbc_e3824381",
+        "filename": "src/tint/lang/core/intrinsic/ctor_conv.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-27T03:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae078388_c9147833",
+      "revId": "a2f9283dfcf8efe07326353bf32d714b6bf1d432",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
