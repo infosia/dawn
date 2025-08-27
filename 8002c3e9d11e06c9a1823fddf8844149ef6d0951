@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9c19148_fc24ebcb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-27T16:57:25Z",
+      "side": 1,
+      "message": "LGTM, seems like all comments from Dawn folks have been addressed.",
+      "revId": "8002c3e9d11e06c9a1823fddf8844149ef6d0951",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
