@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7e63851_8beeaf2b",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1297,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-27T22:08:35Z",
+      "side": 1,
+      "message": "I don\u0027t think any other async things use `no autolock`. I know EventManager is supposed to be thread-safe but this might be the first time we expose it it in this particular way.",
+      "revId": "f15f55291ab43379370fbad79b9296f473658202",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6353c7a6_96c4f877",
@@ -31,6 +48,24 @@
       "writtenOn": "2025-08-27T14:13:33Z",
       "side": 1,
       "message": "Creating view ends up in `DeviceBase::CreateTextureView()`. That calls into `DeviceBase::ValidateIsAlive()` which checks the value of `mState`. `mState` is modified in Destroy() which can run on a different thread. I think current code assumes that mState is synchronized via device lock so this is technically not safe. If that\u0027s a real problem it\u0027s easy to fix at least.",
+      "revId": "f15f55291ab43379370fbad79b9296f473658202",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc8a8155_9565786b",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3976,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-08-27T22:08:35Z",
+      "side": 1,
+      "message": "We might theoretically need to make that state atomic, but I think this is fine for now - CreateBuffer doesn\u0027t hold the lock while calling ValidateIsAlive either.\n\nFWIW GetBindGroupLayout also calls ValidateIsAlive.",
+      "parentUuid": "6353c7a6_96c4f877",
       "revId": "f15f55291ab43379370fbad79b9296f473658202",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
