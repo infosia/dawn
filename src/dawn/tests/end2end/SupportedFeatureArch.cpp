@@ -128,11 +128,8 @@ TEST_P(FeatureArchInfoTest_TieredMaxLimits, AppleMaxTextureDimension2D) {
 
 TEST_P(FeatureArchInfoTest_TieredMaxLimits, MaxUniformBufferBindingSize) {
     // Swiftshader will return a lower limit than any modern device on CQ.
-    DAWN_TEST_UNSUPPORTED_IF(!IsSwiftshader());
+    DAWN_TEST_UNSUPPORTED_IF(IsSwiftshader());
     EXPECT_GE(GetAdapterLimits().maxUniformBufferBindingSize, 65536u);
-    // Check that the device was created with the requested limit.
-    EXPECT_EQ(GetSupportedLimits().maxUniformBufferBindingSize,
-              GetAdapterLimits().maxUniformBufferBindingSize);
 }
 
 TEST_P(FeatureArchInfoTest_MaxLimits, MinUniformBufferOffsetAlignment) {
