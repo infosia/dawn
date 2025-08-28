@@ -16,6 +16,24 @@
       "message": "?",
       "revId": "a9327635c693c9e0383326c1d2a0a1e679d9b703",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31097036_aab7b562",
+        "filename": "tools/src/cmd/fuzz/\u0027",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-28T18:36:59Z",
+      "side": 1,
+      "message": "oops",
+      "parentUuid": "adc1f57d_6a535712",
+      "revId": "a9327635c693c9e0383326c1d2a0a1e679d9b703",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
