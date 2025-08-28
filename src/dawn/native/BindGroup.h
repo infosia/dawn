@@ -135,13 +135,10 @@ class BindGroupBase : public ApiObjectBase {
     // without them.
     class DynamicArrayState {
       public:
-        explicit DynamicArrayState(DeviceBase* device, BindingIndex size);
-
-        MaybeError Initialize();
+        explicit DynamicArrayState(BindingIndex size);
 
         BindingIndex GetSize() const;
         ityp::span<BindingIndex, const Ref<TextureViewBase>> GetBindings() const;
-        BufferBase* GetMetadataBuffer() const;
         bool IsDestroyed() const;
 
         void Update(BindingIndex i, TextureViewBase* view);
@@ -150,8 +147,6 @@ class BindGroupBase : public ApiObjectBase {
       private:
         bool mDestroyed = false;
         ityp::vector<BindingIndex, Ref<TextureViewBase>> mBindings;
-        raw_ptr<DeviceBase> mDevice;
-        Ref<BufferBase> mMetadataBuffer;
     };
     std::unique_ptr<DynamicArrayState> mDynamicArray;
 };

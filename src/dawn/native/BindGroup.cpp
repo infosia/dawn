@@ -814,9 +814,8 @@ MaybeError BindGroupBase::Initialize(const UnpackedPtr<BindGroupDescriptor>& des
 
     // Gather dynamic binding entries in a second loop to put the handling off the critical path.
     if (auto* dynamic = descriptor.Get<BindGroupDynamicBindingArray>()) {
-        mDynamicArray = std::make_unique<DynamicArrayState>(
-            GetDevice(), BindingIndex(dynamic->dynamicArraySize));
-        DAWN_TRY(mDynamicArray->Initialize());
+        mDynamicArray =
+            std::make_unique<DynamicArrayState>(BindingIndex(dynamic->dynamicArraySize));
 
         for (uint32_t i = 0; i < descriptor->entryCount; ++i) {
             UnpackedPtr<BindGroupEntry> entry = Unpack(&descriptor->entries[i]);
@@ -827,12 +826,6 @@ MaybeError BindGroupBase::Initialize(const UnpackedPtr<BindGroupDescriptor>& des
             }
             mDynamicArray->Update(layout->GetDynamicBindingIndex(binding), entry->textureView);
         }
-
-        // Add the metadata storage buffer in the static bindings.
-        BindingIndex metadataIndex = layout->GetDynamicArrayMetadataBinding();
-        mBindingData.bindings[metadataIndex] = mDynamicArray->GetMetadataBuffer();
-        mBindingData.bufferData[metadataIndex].offset = 0;
-        mBindingData.bufferData[metadataIndex].size = mDynamicArray->GetMetadataBuffer()->GetSize();
     }
 
     DAWN_TRY(InitializeImpl());
@@ -997,28 +990,8 @@ MaybeError BindGroupBase::ValidateDestroy() const {
     return {};
 }
 
-BindGroupBase::DynamicArrayState::DynamicArrayState(DeviceBase* device, BindingIndex size)
-    : mDevice(device) {
+BindGroupBase::DynamicArrayState::DynamicArrayState(BindingIndex size) {
     mBindings.resize(size);
-}
-
-MaybeError BindGroupBase::DynamicArrayState::Initialize() {
-    // Create a storage buffer that will hold the shader-visible metadata for the dynamic array.
-    BufferDescriptor metadataDesc{
-        .label = "binding array metadata",
-        .usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopyDst,
-        .size = 4,
-        .mappedAtCreation = true,
-    };
-    DAWN_TRY_ASSIGN(mMetadataBuffer, mDevice->CreateBuffer(&metadataDesc));
-
-    // TODO(https://crbug.com/439522242): For now it only contains the size but we also need to add
-    // type information for each entry in the future.
-    uint32_t* data = static_cast<uint32_t*>(mMetadataBuffer->GetMappedRange(0, metadataDesc.size));
-    *data = uint32_t(mBindings.size());
-    DAWN_TRY(mMetadataBuffer->Unmap());
-
-    return {};
 }
 
 BindingIndex BindGroupBase::DynamicArrayState::GetSize() const {
@@ -1030,11 +1003,6 @@ ityp::span<BindingIndex, const Ref<TextureViewBase>> BindGroupBase::DynamicArray
     const {
     DAWN_ASSERT(!mDestroyed);
     return {mBindings.data(), mBindings.size()};
-}
-
-BufferBase* BindGroupBase::DynamicArrayState::GetMetadataBuffer() const {
-    DAWN_ASSERT(!mDestroyed);
-    return mMetadataBuffer.Get();
 }
 
 bool BindGroupBase::DynamicArrayState::IsDestroyed() const {
@@ -1049,8 +1017,6 @@ void BindGroupBase::DynamicArrayState::Update(BindingIndex i, TextureViewBase* v
 void BindGroupBase::DynamicArrayState::Destroy() {
     DAWN_ASSERT(!mDestroyed);
     mBindings.clear();
-    mMetadataBuffer->Destroy();
-    mMetadataBuffer = nullptr;
     mDestroyed = true;
 }
 
