@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/wgsl/inspector/inspector.h"
 
+#include <iostream>
 #include <unordered_set>
 #include <utility>
 
@@ -663,6 +664,12 @@ const Inspector::EntryPointTextureMetadata& Inspector::ComputeTextureMetadata(
                     int sampler_index = signature.IndexOf(core::ParameterUsage::kSampler);
 
                     if (texture_index == -1) {
+                        return;
+                    }
+
+                    // A texture of `sem::Call` means we're dealing with a `getBinding` or
+                    // `hasBinding` call. Skip it.
+                    if (call->Arguments()[size_t(texture_index)]->Is<sem::Call>()) {
                         return;
                     }
 
