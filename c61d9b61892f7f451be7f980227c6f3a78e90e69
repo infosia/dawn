@@ -1,0 +1,74 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5823aee_61bd366a",
+        "filename": "src/tint/api/common/resource_binding_config.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-28T20:56:23Z",
+      "side": 1,
+      "message": "Nit: resource_binding",
+      "fixSuggestions": [
+        {
+          "fixId": "d5757ae9_26fe3603",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/api/common/resource_binding_config.h",
+              "range": {
+                "startLine": 40,
+                "startChar": 0,
+                "endLine": 41,
+                "endChar": 0
+              },
+              "replacement": "/// Binding information for a `resource_binding`\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c61d9b61892f7f451be7f980227c6f3a78e90e69",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86d2afec_f1092e8f",
+        "filename": "src/tint/api/common/resource_type.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-28T20:56:23Z",
+      "side": 1,
+      "message": "kTextureDepthMultisampled2d is the last entry",
+      "fixSuggestions": [
+        {
+          "fixId": "db9c79b2_6045325d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/api/common/resource_type.h",
+              "range": {
+                "startLine": 67,
+                "startChar": 0,
+                "endLine": 68,
+                "endChar": 0
+              },
+              "replacement": "TINT_REFLECT_ENUM_RANGE(tint::ResourceType, kEmpty, kTextureDepthMultisampled2d);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c61d9b61892f7f451be7f980227c6f3a78e90e69",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
