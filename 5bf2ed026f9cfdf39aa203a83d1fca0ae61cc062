@@ -16,6 +16,122 @@
       "message": "PTAL.",
       "revId": "5bf2ed026f9cfdf39aa203a83d1fca0ae61cc062",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81a997db_4a02d45a",
+        "filename": "src/tint/lang/core/type/resource_binding.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-28T17:53:18Z",
+      "side": 1,
+      "message": "Nit: Don\u0027t need a bunch of these.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 43
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "f0914361_b047eee4",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/type/resource_binding.h",
+              "range": {
+                "startLine": 31,
+                "startChar": 0,
+                "endLine": 32,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/lang/core/type/resource_binding.h",
+              "range": {
+                "startLine": 33,
+                "startChar": 0,
+                "endLine": 34,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/lang/core/type/resource_binding.h",
+              "range": {
+                "startLine": 35,
+                "startChar": 0,
+                "endLine": 36,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/lang/core/type/resource_binding.h",
+              "range": {
+                "startLine": 37,
+                "startChar": 0,
+                "endLine": 38,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "5bf2ed026f9cfdf39aa203a83d1fca0ae61cc062",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f5cac49_50f09274",
+        "filename": "src/tint/lang/core/type/resource_binding_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-28T17:53:18Z",
+      "side": 1,
+      "message": "Nit: We\u0027d usually add another case here to show that the type is *not* equal to something else like a texture. Just to make sure we don\u0027t accidentally always return `true` from `Equals` (which has been done in the past).",
+      "fixSuggestions": [
+        {
+          "fixId": "88eacb07_5ec449fa",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/type/resource_binding_test.cc",
+              "range": {
+                "startLine": 58,
+                "startChar": 0,
+                "endLine": 58,
+                "endChar": 0
+              },
+              "replacement": "    auto* tex \u003d ty.Get\u003cSampledTexture\u003e(ty.Get\u003cF32\u003e());\n"
+            },
+            {
+              "path": "src/tint/lang/core/type/resource_binding_test.cc",
+              "range": {
+                "startLine": 60,
+                "startChar": 0,
+                "endLine": 60,
+                "endChar": 0
+              },
+              "replacement": "    EXPECT_NE(rb1, tex);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5bf2ed026f9cfdf39aa203a83d1fca0ae61cc062",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
