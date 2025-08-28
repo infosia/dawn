@@ -689,6 +689,74 @@ class DynamicBindingArrayTests : public DawnTest {
 
         return device.CreateBindGroup(&descriptor);
     }
+
+    // Test that `dynamicArray` (with layout `bgl` and `dynamicArrayStart`), has bindings of
+    // `wgslType` in the `expected` slots.
+    void TestHasBinding(wgpu::BindGroupLayout bgl,
+                        wgpu::BindGroup dynamicArray,
+                        std::vector<bool> expected,
+                        uint32_t dynamicArrayStart = 0,
+                        std::string wgslType = "texture_2d<f32>") {
+        // Create the test pipeline.
+        std::array<wgpu::BindGroupLayout, 2> bgls = {
+            bgl,
+            utils::MakeBindGroupLayout(
+                device, {{0, wgpu::ShaderStage::Compute, wgpu::BufferBindingType::Storage}}),
+        };
+        wgpu::PipelineLayoutDescriptor plDesc = {
+            .bindGroupLayoutCount = 2,
+            .bindGroupLayouts = bgls.data(),
+        };
+
+        wgpu::ShaderModule module =
+            utils::CreateShaderModule(device, R"(
+            enable chromium_experimental_dynamic_binding;
+            @group(0) @binding()" + std::to_string(dynamicArrayStart) +
+                                                  R"() var bindings : resource_binding;
+            @group(1) @binding(0) var<storage, read_write> results : array<u32>;
+
+            @compute @workgroup_size(1) fn main() {
+                for (var i = 0u; i < arrayLength(bindings); i++) {
+                    results[i] = u32(hasBinding<)" +
+                                                  wgslType + R"(>(bindings, i));
+                }
+            }
+        )");
+
+        wgpu::ComputePipelineDescriptor csDesc = {.layout = device.CreatePipelineLayout(&plDesc),
+                                                  .compute = {
+                                                      .module = module,
+                                                  }};
+        wgpu::ComputePipeline testPipeline = device.CreateComputePipeline(&csDesc);
+
+        // Create the result buffer.
+        wgpu::BufferDescriptor bDesc = {
+            .usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc,
+            .size = sizeof(uint32_t) * expected.size(),
+        };
+        wgpu::Buffer resultBuffer = device.CreateBuffer(&bDesc);
+        wgpu::BindGroup resultBG = utils::MakeBindGroup(device, bgls[1], {{0, resultBuffer}});
+
+        // Run the test.
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetBindGroup(0, dynamicArray);
+        pass.SetBindGroup(1, resultBG);
+        pass.SetPipeline(testPipeline);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+
+        wgpu::CommandBuffer commands = encoder.Finish();
+        device.GetQueue().Submit(1, &commands);
+
+        // Check we have the expected results.
+        std::vector<uint32_t> expectedU32;
+        for (bool b : expected) {
+            expectedU32.push_back(b ? 1u : 0u);
+        }
+
+        EXPECT_BUFFER_U32_RANGE_EQ(expectedU32.data(), resultBuffer, 0, expectedU32.size());
+    }
 };
 
 // Tests that creating the bind group that's only a dynamic array doesn't crash in backends.
@@ -860,6 +928,30 @@ TEST_P(DynamicBindingArrayTests, ArrayLengthBuiltin) {
     // The result buffer should contain the lengths of the dynamic binding arrays.
     EXPECT_BUFFER_U32_EQ(17, resultBuffer, 0);
     EXPECT_BUFFER_U32_EQ(3, resultBuffer, 4);
+}
+
+// Test WGSL `hasBinding` reflects the state of a dynamic binding array.
+TEST_P(DynamicBindingArrayTests, HasBindingOneTexturePinUnpin) {
+    wgpu::TextureDescriptor tDesc{
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {1, 1},
+        .format = wgpu::TextureFormat::R32Float,
+    };
+    wgpu::Texture tex = device.CreateTexture(&tDesc);
+
+    wgpu::BindGroupLayout bgl = MakeBindGroupLayout(wgpu::DynamicBindingKind::SampledTexture);
+    wgpu::BindGroup bg = MakeBindGroup(bgl, 3, {{1, tex.CreateView()}});
+
+    // Before pinning, the bind group has no valid entries.
+    TestHasBinding(bgl, bg, {false, false, false});
+
+    // After pinning it has the one valid entry valid.
+    tex.Pin(wgpu::TextureUsage::TextureBinding);
+    TestHasBinding(bgl, bg, {false, true, false});
+
+    // After unpinning it has the no more valid entries.
+    tex.Unpin();
+    TestHasBinding(bgl, bg, {false, false, false});
 }
 
 // TODO(https://crbug.com/435317394): Add tests that texture pinning / unpinning is reflected in the

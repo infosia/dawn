@@ -249,8 +249,11 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         // The resourceBindingConfig only uses remapped bind points.
         resourceBindingConfig.bindings[remappedDynamicArrayBindPoint] = {
             .storage_buffer_binding = metadataBindPoint,
-            // TODO(https://crbug.com/435317394): Support for all the resource types.
-            .default_binding_type_order = {},
+            // TODO(https://crbug.com/435317394): Support for all the resource types. For now only a
+            // few are hardcoded so we can use them in get/hasBinding<T> in tests.
+            .default_binding_type_order = {tint::ResourceType::kTexture2d_f32,
+                                           tint::ResourceType::kTexture2d_i32,
+                                           tint::ResourceType::kTexture2d_u32},
         };
     }
 
