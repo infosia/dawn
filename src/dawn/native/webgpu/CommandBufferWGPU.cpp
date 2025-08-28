@@ -27,6 +27,7 @@
 
 #include "dawn/native/webgpu/CommandBufferWGPU.h"
 
+#include "dawn/native/webgpu/BindGroupWGPU.h"
 #include "dawn/native/webgpu/BufferWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
@@ -143,12 +144,9 @@ void EncodeComputePass(const DawnProcTable& wgpu,
                 if (cmd->dynamicOffsetCount > 0) {
                     dynamicOffsets = commands.NextData<uint32_t>(cmd->dynamicOffsetCount);
                 }
-                // TODO(crbug.com/440123094): remove nullptr when GetInnerHandle is implemented for
-                // BindGroupWGPU
-                wgpu.computePassEncoderSetBindGroup(
-                    passEncoder, static_cast<uint32_t>(cmd->index),
-                    nullptr /*ToBackend(cmd->group)->GetInnerHandle()*/, cmd->dynamicOffsetCount,
-                    dynamicOffsets);
+                wgpu.computePassEncoderSetBindGroup(passEncoder, static_cast<uint32_t>(cmd->index),
+                                                    ToBackend(cmd->group)->GetInnerHandle(),
+                                                    cmd->dynamicOffsetCount, dynamicOffsets);
                 break;
             }
             case Command::InsertDebugMarker: {
