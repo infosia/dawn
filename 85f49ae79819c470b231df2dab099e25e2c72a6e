@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0eb6468_f4e36aa4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-28T17:01:46Z",
+      "side": 1,
+      "message": "PTAL.\n\nThis should get something generating. The validation is missing, but we can generate the accesses for multiple types against the same resource binding.",
+      "revId": "85f49ae79819c470b231df2dab099e25e2c72a6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
