@@ -425,6 +425,9 @@ std::vector<ResourceBinding> Inspector::GetResourceBindings(const std::string& e
                 result.push_back(ConvertBufferToResourceBinding(global));
                 break;
             case core::AddressSpace::kHandle:
+                if (global->Type()->UnwrapRef()->Is<core::type::ResourceBinding>()) {
+                    continue;
+                }
                 result.push_back(ConvertHandleToResourceBinding(global));
                 break;
         }
