@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e08a9b62_b0e191d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-28T21:42:04Z",
+      "side": 1,
+      "message": "Missing unit tests? I guess they\u0027d go in the SPIR-V raise directory.",
+      "revId": "77f0a7c8464c27716d955f4d69a4b1f170f7c552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e5055a4_77a05a8d",
+        "filename": "src/tint/lang/core/ir/transform/resource_binding.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-28T21:42:04Z",
+      "side": 1,
+      "message": "Move this assertion to after the check for `ResourceBinding`, since not all module-scope vars have binding points.",
+      "fixSuggestions": [
+        {
+          "fixId": "d4b909f1_10143e99",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/resource_binding.cc",
+              "range": {
+                "startLine": 72,
+                "startChar": 0,
+                "endLine": 73,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/lang/core/ir/transform/resource_binding.cc",
+              "range": {
+                "startLine": 78,
+                "startChar": 0,
+                "endLine": 78,
+                "endChar": 0
+              },
+              "replacement": "            TINT_ASSERT(var-\u003eBindingPoint().has_value());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "77f0a7c8464c27716d955f4d69a4b1f170f7c552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e84bd4c_04bed2ca",
+        "filename": "src/tint/lang/core/ir/transform/resource_binding.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-28T21:42:04Z",
+      "side": 1,
+      "message": "Nit: Already did this in the caller, could pass it in.",
+      "revId": "77f0a7c8464c27716d955f4d69a4b1f170f7c552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c18d53f_87c749dc",
+        "filename": "src/tint/lang/core/ir/transform/resource_binding.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-28T21:42:04Z",
+      "side": 1,
+      "message": "Do you need this map, since you just return `sb` and use that in the caller?",
+      "revId": "77f0a7c8464c27716d955f4d69a4b1f170f7c552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe8be85c_3a4f7a73",
+        "filename": "src/tint/lang/spirv/type/resource_binding.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-28T21:42:04Z",
+      "side": 1,
+      "message": "Nit: OpTypeRuntimeArray of resources? Won\u0027t always be images.",
+      "fixSuggestions": [
+        {
+          "fixId": "970de682_79caa59f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/type/resource_binding.h",
+              "range": {
+                "startLine": 38,
+                "startChar": 0,
+                "endLine": 39,
+                "endChar": 0
+              },
+              "replacement": "/// ResourceBinding represents an OpTypeRuntimeArray of resources\n"
+            }
+          ]
+        }
+      ],
+      "revId": "77f0a7c8464c27716d955f4d69a4b1f170f7c552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
