@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "615647ab_1d8a1402",
+        "filename": "test/tint/builtins/gen/literal/getBinding/004d72.wgsl",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-28T20:48:58Z",
+      "side": 1,
+      "message": "I think you\u0027re going to be getting rid of these based on our offline discussion earlier?",
+      "revId": "3b5fd4c104ed5b0acd7e1edcc8035ec296abdfb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
