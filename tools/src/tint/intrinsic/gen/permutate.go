@@ -387,6 +387,9 @@ func (s *permutationState) permuteFQN(in sem.FullyQualifiedName) ([]sem.FullyQua
 }
 
 func validate(fqn sem.FullyQualifiedName, uses *sem.StageUses) bool {
+	if strings.HasPrefix(fqn.Target.GetName(), "getBinding") {
+		return false // Sufficiently different it doesn't generate correctly
+	}
 	if strings.HasPrefix(fqn.Target.GetName(), "_") {
 		return false // Builtin, untypeable return type
 	}
