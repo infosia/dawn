@@ -16,6 +16,24 @@
       "message": "Nit: Could just use `DirectlyCalledBuiltins`.",
       "revId": "0d67168b7340c3b40c9db911fdc840c24fc038ed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45077668_815444cb",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-28T20:14:27Z",
+      "side": 1,
+      "message": "I need the call so i can get the explicit template params, doesn\u0027t seem to have that on a BuiltinFn.",
+      "parentUuid": "baee4297_0a95f476",
+      "revId": "0d67168b7340c3b40c9db911fdc840c24fc038ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
