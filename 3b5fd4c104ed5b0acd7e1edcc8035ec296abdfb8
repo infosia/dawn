@@ -16,6 +16,24 @@
       "message": "I think you\u0027re going to be getting rid of these based on our offline discussion earlier?",
       "revId": "3b5fd4c104ed5b0acd7e1edcc8035ec296abdfb8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "228f5314_e6600252",
+        "filename": "test/tint/builtins/gen/literal/getBinding/004d72.wgsl",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-28T22:38:12Z",
+      "side": 1,
+      "message": "Yes, I just did it in the wrong CL ....",
+      "parentUuid": "615647ab_1d8a1402",
+      "revId": "3b5fd4c104ed5b0acd7e1edcc8035ec296abdfb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
