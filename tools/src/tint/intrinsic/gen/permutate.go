@@ -398,6 +398,7 @@ func validate(fqn sem.FullyQualifiedName, uses *sem.StageUses) bool {
 			strings.Contains(elTyName, "u8"),
 			strings.Contains(elTyName, "sampler"),
 			strings.Contains(elTyName, "texture"),
+			strings.Contains(elTyName, "resource_binding"),
 			IsAbstract(DeepestElementType(elTy)):
 			return false
 		}
@@ -409,6 +410,8 @@ func validate(fqn sem.FullyQualifiedName, uses *sem.StageUses) bool {
 	}
 
 	switch fqn.Target.GetName() {
+	case "resource_binding":
+		return false
 	case "array":
 	case "runtime_array":
 		if !isHostShareable(fqn.TemplateArguments[0].(sem.FullyQualifiedName)) {

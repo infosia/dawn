@@ -245,8 +245,8 @@ bool Validator::IsPlain(const core::type::Type* type) const {
 
 // https://gpuweb.github.io/gpuweb/wgsl.html#storable-types
 bool Validator::IsStorable(const core::type::Type* type) const {
-    return IsPlain(type) ||
-           type->IsAnyOf<core::type::BindingArray, core::type::Texture, core::type::Sampler>();
+    return IsPlain(type) || type->IsAnyOf<core::type::BindingArray, core::type::ResourceBinding,
+                                          core::type::Texture, core::type::Sampler>();
 }
 
 const ast::Statement* Validator::ClosestContinuing(bool stop_at_loop,
@@ -462,6 +462,18 @@ bool Validator::InputAttachmentIndexAttribute(const ast::InputAttachmentIndexAtt
     return true;
 }
 
+bool Validator::ResourceBinding([[maybe_unused]] const core::type::ResourceBinding* t,
+                                const Source& source) const {
+    if (!enabled_extensions_.Contains(wgsl::Extension::kChromiumExperimentalDynamicBinding)) {
+        AddError(source) << "use of a " << style::Attribute("resource_binding")
+                         << " requires enabling extension "
+                         << style::Code("chromium_experimental_dynamic_binding");
+        return false;
+    }
+
+    return true;
+}
+
 bool Validator::BindingArray(const core::type::BindingArray* t, const Source& source) const {
     if (allowed_features_.features.count(wgsl::LanguageFeature::kSizedBindingArray) == 0) {
         AddError(source) << "use of " << style::Type("binding_array") << " requires the "
@@ -479,7 +491,7 @@ bool Validator::BindingArray(const core::type::BindingArray* t, const Source& so
         }
     }
 
-    if (!t->Count()->IsAnyOf<core::type::ConstantArrayCount, core::type::RuntimeArrayCount>()) {
+    if (!t->Count()->Is<core::type::ConstantArrayCount>()) {
         AddError(source) << "binding_array count must be a constant expression";
         return false;
     }
@@ -992,7 +1004,7 @@ bool Validator::Parameter(const sem::Variable* var) const {
             AddError(decl->type->source) << "type of function parameter must be constructible";
             return false;
         }
-    } else if (is_runtime_binding_array ||
+    } else if (var->Type()->Is<core::type::ResourceBinding>() || is_runtime_binding_array ||
                (!var->Type()->Is<core::type::Pointer>() && !var->Type()->IsHandle())) {
         AddError(decl->source) << "type of function parameter cannot be "
                                << sem_.TypeNameOf(var->Type());

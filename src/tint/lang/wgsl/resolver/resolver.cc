@@ -50,6 +50,7 @@
 #include "src/tint/lang/core/type/multisampled_texture.h"
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/core/type/reference.h"
+#include "src/tint/lang/core/type/resource_binding.h"
 #include "src/tint/lang/core/type/sampled_texture.h"
 #include "src/tint/lang/core/type/sampler.h"
 #include "src/tint/lang/core/type/storage_texture.h"
@@ -2580,6 +2581,8 @@ const core::type::Type* Resolver::BuiltinType(core::BuiltinType builtin_ty,
             return Array(ident);
         case core::BuiltinType::kBindingArray:
             return BindingArray(ident);
+        case core::BuiltinType::kResourceBinding:
+            return ResourceBinding(ident);
         case core::BuiltinType::kAtomic:
             return Atomic(ident);
         case core::BuiltinType::kPtr:
@@ -2849,8 +2852,16 @@ const core::type::Type* Resolver::Array(const ast::Identifier* ident) {
     return out;
 }
 
+const core::type::ResourceBinding* Resolver::ResourceBinding(const ast::Identifier* ident) {
+    auto* out = b.create<core::type::ResourceBinding>();
+    if (DAWN_UNLIKELY(!validator_.ResourceBinding(out, ident->source))) {
+        return nullptr;
+    }
+    return out;
+}
+
 const core::type::BindingArray* Resolver::BindingArray(const ast::Identifier* ident) {
-    auto* tmpl_ident = TemplatedIdentifier(ident, 1, 2);
+    auto* tmpl_ident = TemplatedIdentifier(ident, 2);
     if (DAWN_UNLIKELY(!tmpl_ident)) {
         return nullptr;
     }
@@ -2860,9 +2871,7 @@ const core::type::BindingArray* Resolver::BindingArray(const ast::Identifier* id
         return nullptr;
     }
 
-    const core::type::ArrayCount* el_count = tmpl_ident->arguments.Length() > 1
-                                                 ? ArrayCount(tmpl_ident->arguments[1])
-                                                 : b.create<core::type::RuntimeArrayCount>();
+    const core::type::ArrayCount* el_count = ArrayCount(tmpl_ident->arguments[1]);
     if (!el_count) {
         return nullptr;
     }

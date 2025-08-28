@@ -402,6 +402,7 @@ enum class BuiltinType : uint8_t {
     kMat4X4F,
     kMat4X4H,
     kPtr,
+    kResourceBinding,
     kSampler,
     kSamplerComparison,
     kSubgroupMatrixLeft,
@@ -526,6 +527,7 @@ constexpr std::string_view kBuiltinTypeStrings[] = {
     "mat4x4f",
     "mat4x4h",
     "ptr",
+    "resource_binding",
     "sampler",
     "sampler_comparison",
     "subgroup_matrix_left",
@@ -722,6 +724,7 @@ enum class ParameterUsage : uint8_t {
     kId,
     kImage,
     kImageOperands,
+    kIndex,
     kInputAttachment,
     kInsert,
     kLevel,
@@ -920,6 +923,8 @@ enum class BuiltinFn : uint8_t {
     kSubgroupMatrixMultiply,
     kSubgroupMatrixMultiplyAccumulate,
     kPrint,
+    kHasBinding,
+    kGetBinding,
     kNone,
 };
 
@@ -1093,6 +1098,8 @@ constexpr BuiltinFn kBuiltinFns[] = {
     BuiltinFn::kSubgroupMatrixMultiply,
     BuiltinFn::kSubgroupMatrixMultiplyAccumulate,
     BuiltinFn::kPrint,
+    BuiltinFn::kHasBinding,
+    BuiltinFn::kGetBinding,
 };
 
 /// All builtin function names
@@ -1247,6 +1254,8 @@ constexpr const char* kBuiltinFnStrings[] = {
     "subgroupMatrixMultiply",
     "subgroupMatrixMultiplyAccumulate",
     "print",
+    "hasBinding",
+    "getBinding",
 };
 
 /// Determines if the given `f` is a coarse derivative.
