@@ -890,8 +890,7 @@ struct Decoder {
             return mod_out_.Types().invalid();
         }
 
-        return count > 0 ? mod_out_.Types().binding_array(element, count)
-                         : mod_out_.Types().runtime_binding_array(element);
+        return mod_out_.Types().binding_array(element, count);
     }
 
     const type::Type* CreateTypeDepthTexture(const pb::TypeDepthTexture& texture_in) {
