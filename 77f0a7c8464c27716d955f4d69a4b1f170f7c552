@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8d8c31f7_17def280",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-28T22:58:49Z",
+      "side": 1,
+      "message": "I\u0027m sort of leaning on the e2e tests at the moment. I\u0027m not quite sure where/how these unit tests should live at the moment, so pushing them off while I get the pieces in place and see how it fits together.",
+      "parentUuid": "e08a9b62_b0e191d9",
+      "revId": "77f0a7c8464c27716d955f4d69a4b1f170f7c552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8e5055a4_77a05a8d",
         "filename": "src/tint/lang/core/ir/transform/resource_binding.cc",
         "patchSetId": 6
@@ -63,6 +81,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c579659b_26486868",
+        "filename": "src/tint/lang/core/ir/transform/resource_binding.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-28T22:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e5055a4_77a05a8d",
+      "revId": "77f0a7c8464c27716d955f4d69a4b1f170f7c552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e84bd4c_04bed2ca",
@@ -80,6 +116,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe02559c_6cd2e4a8",
+        "filename": "src/tint/lang/core/ir/transform/resource_binding.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-28T22:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e84bd4c_04bed2ca",
+      "revId": "77f0a7c8464c27716d955f4d69a4b1f170f7c552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c18d53f_87c749dc",
@@ -93,6 +147,24 @@
       "writtenOn": "2025-08-28T21:42:04Z",
       "side": 1,
       "message": "Do you need this map, since you just return `sb` and use that in the caller?",
+      "revId": "77f0a7c8464c27716d955f4d69a4b1f170f7c552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbe30d67_c256e3fc",
+        "filename": "src/tint/lang/core/ir/transform/resource_binding.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-28T22:58:49Z",
+      "side": 1,
+      "message": "Yea, thought I needed and forgot to remove it.",
+      "parentUuid": "4c18d53f_87c749dc",
       "revId": "77f0a7c8464c27716d955f4d69a4b1f170f7c552",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -128,6 +200,24 @@
           ]
         }
       ],
+      "revId": "77f0a7c8464c27716d955f4d69a4b1f170f7c552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e7f7430_41fabd58",
+        "filename": "src/tint/lang/spirv/type/resource_binding.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-28T22:58:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe8be85c_3a4f7a73",
       "revId": "77f0a7c8464c27716d955f4d69a4b1f170f7c552",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
