@@ -902,15 +902,35 @@ TEST_F(DynamicBindingArrayTests, ShaderTwoDynamicArraysSameGroupIsAnError) {
     )"));
 }
 
+// Test that a shader using only arrayLength on the dynamic binding array is compatible with any
+// DynamicBindingKind.
+TEST_F(DynamicBindingArrayTests, DynamicArrayKindWithoutTypeInfoValidWithAllLayouts) {
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = utils::CreateShaderModule(device, R"(
+        enable chromium_experimental_dynamic_binding;
+        @group(0) @binding(0) var a : resource_binding;
+
+        @compute @workgroup_size(1) fn main() {
+            _ = arrayLength(a);
+        }
+    )");
+
+    // Check that it is compatible with DynamicBindingKind::SampledTexture.
+    {
+        wgpu::BindGroupLayout bgl = MakeBindGroupLayout(wgpu::DynamicBindingKind::SampledTexture);
+        csDesc.layout = utils::MakeBasicPipelineLayout(device, &bgl);
+        device.CreateComputePipeline(&csDesc);
+    }
+
+    // TODO(https://crbug.com/435317394): Add tests with additional DynamicBindingKind.
+}
+
 // TODO(https://crbug.com/435317394): Add tests for the DynamicArrayKind. It is not possible to do
-// it at the moment because we cannot reflect DynamicArrayKind::Undefined (would require referencing
-// but not indexing the array) or any value that's not DynamicArrayKind::SampledTexture (no support
-// in Dawn or Tint for other cases). Tests to add after that are:
+// it at the moment because we cannot use any value that's not DynamicArrayKind::SampledTexture (no
+// support in Dawn or Tint for other cases). Tests to add after that are:
 //  - The kind in the layout must matche the deduced kind for the shader.
 //     - Case with a runtime but typed binding_array.
 //     - Case with an untyped binding_array.
-//  - A shader only referencing but not indexing an untyped binding_array is valid to use with any
-//    DynamicArrayKind in the layout.
 //  - An error is produced at shader module compilation time if it uses the same binding_array with
 //    different DynamicArrayKinds.
 
@@ -1135,13 +1155,100 @@ TEST_F(DynamicBindingArrayTests, GetBGLArrayStartMatchesBetweenStages) {
     }
 }
 
+// Test that defaulting the layout when no type information is given on for the dynamic binding
+// array is an error.
+TEST_F(DynamicBindingArrayTests, DefaultedDynamicArrayKindMustNotBeUndefined) {
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = utils::CreateShaderModule(device, R"(
+        enable chromium_experimental_dynamic_binding;
+        @group(0) @binding(0) var a : resource_binding;
+
+        @compute @workgroup_size(1) fn main() {
+            _ = arrayLength(a);
+        }
+    )");
+
+    // Control case, explicitly giving a layout works
+    wgpu::BindGroupLayout bgl = MakeBindGroupLayout(wgpu::DynamicBindingKind::SampledTexture);
+    csDesc.layout = utils::MakeBasicPipelineLayout(device, &bgl);
+    device.CreateComputePipeline(&csDesc);
+
+    // Error case, defaulting the layout is not possible.
+    csDesc.layout = nullptr;
+    ASSERT_DEVICE_ERROR(device.CreateComputePipeline(&csDesc));
+}
+
+// Test merging of DynamicBindingKind between and VS and FS (FS typed case)
+TEST_F(DynamicBindingArrayTests, MergingUnknowVSDynamicArrayKindInFS) {
+    wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
+        enable chromium_experimental_dynamic_binding;
+
+        @group(0) @binding(0) var untyped : resource_binding;
+        @vertex fn vs() -> @builtin(position) vec4f {
+            _ = arrayLength(untyped);
+            return vec4f();
+        }
+
+        @group(0) @binding(0) var typed : resource_binding;
+        @fragment fn fs() -> @location(0) vec4f {
+            _ = hasBinding<texture_2d<f32>>(typed, 42);
+            return vec4f();
+        }
+    )");
+
+    utils::ComboRenderPipelineDescriptor pDesc;
+    pDesc.layout = nullptr;
+    pDesc.vertex.module = module;
+    pDesc.cFragment.module = module;
+    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pDesc);
+
+    // Check that this is a DynamicBindingKind::SampledTexture dynamic binding array.
+    wgpu::TextureDescriptor tDesc = {
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {1, 1},
+        .format = wgpu::TextureFormat::RGBA8Unorm,
+    };
+    wgpu::Texture tex = device.CreateTexture(&tDesc);
+    MakeBindGroup(pipeline.GetBindGroupLayout(0), 1, {{0, tex.CreateView()}});
+}
+
+// Test merging of DynamicBindingKind between and VS and FS (VS typed case)
+TEST_F(DynamicBindingArrayTests, MergingUnknowFSDynamicArrayKindInVS) {
+    wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
+        enable chromium_experimental_dynamic_binding;
+
+        @group(0) @binding(0) var typed : resource_binding;
+        @vertex fn vs() -> @builtin(position) vec4f {
+            _ = hasBinding<texture_2d<f32>>(typed, 42);
+            return vec4f();
+        }
+
+        @group(0) @binding(0) var untyped : resource_binding;
+        @fragment fn fs() -> @location(0) vec4f {
+            _ = arrayLength(untyped);
+            return vec4f();
+        }
+    )");
+
+    utils::ComboRenderPipelineDescriptor pDesc;
+    pDesc.layout = nullptr;
+    pDesc.vertex.module = module;
+    pDesc.cFragment.module = module;
+    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pDesc);
+
+    // Check that this is a DynamicBindingKind::SampledTexture dynamic binding array.
+    wgpu::TextureDescriptor tDesc = {
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {1, 1},
+        .format = wgpu::TextureFormat::RGBA8Unorm,
+    };
+    wgpu::Texture tex = device.CreateTexture(&tDesc);
+    MakeBindGroup(pipeline.GetBindGroupLayout(0), 1, {{0, tex.CreateView()}});
+}
+
 // TODO(https://crbug.com/435317394): Add tests for the DynamicArrayKind defaulting / merging
 // between stages. Tests to add are:
 //  - Using two incompatible kinds between stages produces an error.
-//  - Using DynamicArrayKind::Undefined in a stage and not the other makes the BGL default to the
-//    non-Unknown DynamicArrayKind. (test both VS-FS and FS-VS directions to be safe).
-//  - Test what happens when only DynamicArrayKind::Undefined is used in the defaulted layout. Is
-//    that even valid?
 
 // Test that pinning / unpinning is valid for a simple case. This is a control for the test that
 // errors are produced when the feature is not enabled.
