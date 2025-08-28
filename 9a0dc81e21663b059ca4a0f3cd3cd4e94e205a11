@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c0c3fa2_061555be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-28T14:18:55Z",
+      "side": 1,
+      "message": "PTAL. I can\u0027t find any uses of `use-ir-reader` unless I\u0027m looking in the wrong infra repos.",
+      "revId": "9a0dc81e21663b059ca4a0f3cd3cd4e94e205a11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
