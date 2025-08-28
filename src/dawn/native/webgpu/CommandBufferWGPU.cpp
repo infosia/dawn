@@ -33,7 +33,9 @@
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/native/webgpu/BindGroupWGPU.h"
 #include "dawn/native/webgpu/BufferWGPU.h"
+#include "dawn/native/webgpu/ComputePipelineWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
+#include "dawn/native/webgpu/RenderPipelineWGPU.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
 
 namespace dawn::native::webgpu {
@@ -192,11 +194,12 @@ void EncodeComputePass(const DawnProcTable& wgpu,
                        WGPUCommandEncoder innerEncoder,
                        CommandIterator& commands,
                        BeginComputePassCmd* computePassCmd) {
-    WGPUPassTimestampWrites timestampWrites = ToWGPU(computePassCmd->timestampWrites);
+    // WGPUPassTimestampWrites timestampWrites = ToWGPU(computePassCmd->timestampWrites);
     WGPUComputePassDescriptor passDescriptor{
         .nextInChain = nullptr,
         .label = ToOutputStringView(computePassCmd->label),
-        .timestampWrites = &timestampWrites,
+        .timestampWrites = nullptr,
+        // .timestampWrites = &timestampWrites,
     };
     WGPUComputePassEncoder passEncoder =
         wgpu.commandEncoderBeginComputePass(innerEncoder, &passDescriptor);
@@ -225,11 +228,9 @@ void EncodeComputePass(const DawnProcTable& wgpu,
             }
 
             case Command::SetComputePipeline: {
-                // TODO(crbug.com/440123094): remove nullptr when GetInnerHandle is implemented for
-                // ComputePipelineWGPU
-                /*auto cmd = */ commands.NextCommand<SetComputePipelineCmd>();
-                wgpu.computePassEncoderSetPipeline(
-                    passEncoder, nullptr /*ToBackend(cmd->pipeline)->GetInnerHandle()*/);
+                auto cmd = commands.NextCommand<SetComputePipelineCmd>();
+                wgpu.computePassEncoderSetPipeline(passEncoder,
+                                                   ToBackend(cmd->pipeline)->GetInnerHandle());
                 break;
             }
 
