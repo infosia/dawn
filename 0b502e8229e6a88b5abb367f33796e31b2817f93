@@ -16,6 +16,76 @@
       "message": "PTAL.",
       "revId": "0b502e8229e6a88b5abb367f33796e31b2817f93",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27b861b8_1efdf6f0",
+        "filename": "docs/tint/extensions/chromium_experimental_dynamic_binding.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-28T14:55:22Z",
+      "side": 1,
+      "message": "Nit: cannot",
+      "fixSuggestions": [
+        {
+          "fixId": "0c4ac8d8_394c37f2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "docs/tint/extensions/chromium_experimental_dynamic_binding.md",
+              "range": {
+                "startLine": 27,
+                "startChar": 0,
+                "endLine": 28,
+                "endChar": 0
+              },
+              "replacement": "* A `resource_binding` cannot be passed as a function parameter. This is because there is no way\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0b502e8229e6a88b5abb367f33796e31b2817f93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3be77df_d90302f2",
+        "filename": "docs/tint/extensions/chromium_experimental_dynamic_binding.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-28T14:55:22Z",
+      "side": 1,
+      "message": "There\u0027s a mismatch here between `arrayLength` and `{get,has}Binding`, where you pass the `resource_binding` by value for the latter. I see in your later CL that you also pass by-value for `arrayLength`, so maybe that should just be changed here.\n\nIt implies you need to \"load\" the `resource_binding` to use it, but maybe that makes sense because we\u0027re treating it as a handle itself.",
+      "fixSuggestions": [
+        {
+          "fixId": "7a96e738_adaac988",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "docs/tint/extensions/chromium_experimental_dynamic_binding.md",
+              "range": {
+                "startLine": 66,
+                "startChar": 0,
+                "endLine": 66,
+                "endChar": 0
+              },
+              "replacement": "@must_use fn arrayLength(a: resource_binding) -\u003e u32\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0b502e8229e6a88b5abb367f33796e31b2817f93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
