@@ -522,7 +522,6 @@ struct Encoder {
                          << internal_limits::kMaxArrayElementCount << "\n";
                 }
             },
-            [&](const core::type::RuntimeArrayCount*) { array_out.set_count(0); },
             TINT_ICE_ON_NO_MATCH);
     }
 
@@ -1393,6 +1392,10 @@ struct Encoder {
                 return pb::BuiltinFn::subgroup_matrix_multiply_accumulate;
             case core::BuiltinFn::kPrint:
                 return pb::BuiltinFn::print;
+            case core::BuiltinFn::kHasBinding:
+                return pb::BuiltinFn::has_binding;
+            case core::BuiltinFn::kGetBinding:
+                return pb::BuiltinFn::get_binding;
             case core::BuiltinFn::kNone:
                 break;
         }

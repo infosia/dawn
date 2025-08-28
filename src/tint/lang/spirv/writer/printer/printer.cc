@@ -91,6 +91,7 @@
 #include "src/tint/lang/spirv/ir/copy_logical.h"
 #include "src/tint/lang/spirv/ir/literal_operand.h"
 #include "src/tint/lang/spirv/type/explicit_layout_array.h"
+#include "src/tint/lang/spirv/type/resource_binding.h"
 #include "src/tint/lang/spirv/type/sampled_image.h"
 #include "src/tint/lang/spirv/writer/common/binary_writer.h"
 #include "src/tint/lang/spirv/writer/common/function.h"
@@ -615,16 +616,15 @@ class Printer {
                     }
                 },
                 [&](const core::type::BindingArray* arr) {
-                    if (auto* cnt = arr->Count()->As<core::type::ConstantArrayCount>()) {
-                        auto* count = b_.ConstantValue(u32(cnt->value));
-                        module_.PushType(spv::Op::OpTypeArray,
-                                         {id, Type(arr->ElemType()), Constant(count)});
-                    } else {
-                        TINT_ASSERT(arr->Count()->Is<core::type::RuntimeArrayCount>());
-                        module_.PushCapability(SpvCapabilityRuntimeDescriptorArray);
-                        module_.PushExtension("SPV_EXT_descriptor_indexing");
-                        module_.PushType(spv::Op::OpTypeRuntimeArray, {id, Type(arr->ElemType())});
-                    }
+                    auto* count = b_.ConstantValue(
+                        u32(arr->Count()->As<core::type::ConstantArrayCount>()->value));
+                    module_.PushType(spv::Op::OpTypeArray,
+                                     {id, Type(arr->ElemType()), Constant(count)});
+                },
+                [&](const spirv::type::ResourceBinding* rb) {
+                    module_.PushCapability(SpvCapabilityRuntimeDescriptorArray);
+                    module_.PushExtension("SPV_EXT_descriptor_indexing");
+                    module_.PushType(spv::Op::OpTypeRuntimeArray, {id, Type(rb->GetBindingType())});
                 },
                 [&](const core::type::Pointer* ptr) {
                     module_.PushType(spv::Op::OpTypePointer,

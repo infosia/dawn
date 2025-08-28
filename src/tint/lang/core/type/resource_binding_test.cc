@@ -25,41 +25,56 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_TINT_LANG_WGSL_INSPECTOR_RUNTIME_BINDING_ARRAY_INFO_H_
-#define SRC_TINT_LANG_WGSL_INSPECTOR_RUNTIME_BINDING_ARRAY_INFO_H_
+#include "src/tint/lang/core/type/helper_test.h"
 
-#include <cstdint>
-#include <optional>
-#include <vector>
+#include "src/tint/lang/core/type/f32.h"
+#include "src/tint/lang/core/type/manager.h"
+#include "src/tint/lang/core/type/resource_binding.h"
+#include "src/tint/lang/core/type/sampled_texture.h"
+#include "src/tint/lang/core/type/u32.h"
 
-#include "src/tint/lang/wgsl/inspector/resource_binding.h"
+namespace tint::core::type {
+namespace {
 
-namespace tint::inspector {
+using ResourceBindingTest = TestHelper;
 
-/// Container for information about how a resource is bound
-struct RuntimeBindingArrayInfo {
-    enum class ResourceType {
-        kNone,
-        kSampledTexture,
-    };
+TEST_F(ResourceBindingTest, Creation) {
+    Manager ty;
+    auto* a = ty.resource_binding();
+    EXPECT_NE(a, nullptr);
+}
 
-    /// Bind group the binding belongs
-    uint32_t group;
-    /// Identifier to identify this binding within the bind group
-    uint32_t binding;
+TEST_F(ResourceBindingTest, Hash) {
+    Manager ty;
+    auto* a = ty.resource_binding();
+    auto* a2 = ty.resource_binding();
+    EXPECT_EQ(a->unique_hash, a2->unique_hash);
+}
 
-    // True if this is a typeless binding array
-    bool is_typeless;
+TEST_F(ResourceBindingTest, Equals) {
+    Manager ty;
+    auto* rb1 = ty.resource_binding();
+    auto* rb2 = ty.resource_binding();
 
-    struct Type {
-        ResourceType type = ResourceType::kNone;
-        ResourceBinding::TextureDimension dim = ResourceBinding::TextureDimension::kNone;
-        ResourceBinding::SampledKind sampled_kind = ResourceBinding::SampledKind::kUnknown;
-    };
-    /// The types used with the binding array
-    std::vector<Type> type_info{};
-};
+    EXPECT_EQ(rb1, rb2);
+}
 
-}  // namespace tint::inspector
+TEST_F(ResourceBindingTest, FriendlyName) {
+    Manager ty;
+    auto* a = ty.resource_binding();
+    EXPECT_EQ(a->FriendlyName(), "resource_binding");
+}
 
-#endif  // SRC_TINT_LANG_WGSL_INSPECTOR_RUNTIME_BINDING_ARRAY_INFO_H_
+TEST_F(ResourceBindingTest, Clone) {
+    Manager ty;
+    auto* t = ty.resource_binding();
+
+    core::type::Manager mgr;
+    core::type::CloneContext ctx{{nullptr}, {nullptr, &mgr}};
+
+    auto* s = t->Clone(ctx);
+    EXPECT_NE(s, nullptr);
+}
+
+}  // namespace
+}  // namespace tint::core::type

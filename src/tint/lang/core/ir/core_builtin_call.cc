@@ -122,6 +122,7 @@ tint::core::ir::Instruction::Accesses CoreBuiltinCall::GetSideEffects() const {
         case BuiltinFn::kWorkgroupBarrier:
         case BuiltinFn::kTextureBarrier:
         case BuiltinFn::kPrint:
+        case BuiltinFn::kGetBinding:
             return Accesses{Access::kLoad, Access::kStore};
 
         case BuiltinFn::kAbs:
@@ -213,6 +214,7 @@ tint::core::ir::Instruction::Accesses CoreBuiltinCall::GetSideEffects() const {
         case BuiltinFn::kUnpack4XU8:
         case BuiltinFn::kSubgroupMatrixMultiply:
         case BuiltinFn::kSubgroupMatrixMultiplyAccumulate:
+        case BuiltinFn::kHasBinding:
         case BuiltinFn::kNone:
             break;
     }

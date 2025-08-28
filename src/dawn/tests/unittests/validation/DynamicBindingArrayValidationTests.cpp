@@ -657,10 +657,10 @@ TEST_F(DynamicBindingArrayTests, DestroyedDynamicBindingArrayUsedInRenderBundle)
 TEST_F(DynamicBindingArrayTests_FeatureDisabled, WGSLEnableNotAllowed) {
     ASSERT_DEVICE_ERROR(utils::CreateShaderModule(device, R"(
         enable chromium_experimental_dynamic_binding;
-        @group(0) @binding(0) var a : binding_array<texture_2d<f32>>;
+        @group(0) @binding(0) var a : resource_binding;
 
         @compute @workgroup_size(1) fn main() {
-            _ = a[42];
+            _ = hasBinding<texture_2d<f32>>(a, 42);
         }
     )"));
 }
@@ -670,10 +670,10 @@ TEST_F(DynamicBindingArrayTests, ShaderRequiresLayoutWithDynamicArray) {
     wgpu::ComputePipelineDescriptor csDesc;
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_dynamic_binding;
-        @group(0) @binding(0) var a : binding_array<texture_2d<f32>>;
+        @group(0) @binding(0) var a : resource_binding;
 
         @compute @workgroup_size(1) fn main() {
-            _ = a[42];
+            _ = hasBinding<texture_2d<f32>>(a, 42);
         }
     )");
 
@@ -715,10 +715,10 @@ TEST_F(DynamicBindingArrayTests, ShaderAndLayoutDynamicArrayStartMatches) {
     wgpu::ComputePipelineDescriptor csDesc;
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_dynamic_binding;
-        @group(0) @binding(1) var a : binding_array<texture_2d<f32>>;
+        @group(0) @binding(1) var a : resource_binding;
 
         @compute @workgroup_size(1) fn main() {
-            _ = a[42];
+            _ = hasBinding<texture_2d<f32>>(a, 42);
         }
     )");
 
@@ -746,14 +746,13 @@ TEST_F(DynamicBindingArrayTests, ShaderArrayStartLessThanMaxBindingsPerBindGroup
     // Control case, we are just below the limit.
     {
         wgpu::ComputePipelineDescriptor csDesc;
-        csDesc.compute.module =
-            utils::CreateShaderModule(device, R"(
+        csDesc.compute.module = utils::CreateShaderModule(device, R"(
                 enable chromium_experimental_dynamic_binding;
                 @group(0) @binding()" + std::to_string(kMaxBindingsPerBindGroup - 1) +
-                                                  R"() var a : binding_array<texture_2d<f32>>;
+                                                                      R"() var a : resource_binding;
 
                 @compute @workgroup_size(1) fn main() {
-                    _ = a[42];
+                    _ = hasBinding<texture_2d<f32>>(a, 42);
                 }
             )");
         csDesc.layout = utils::MakeBasicPipelineLayout(device, &bgl);
@@ -763,14 +762,13 @@ TEST_F(DynamicBindingArrayTests, ShaderArrayStartLessThanMaxBindingsPerBindGroup
     // Error case, we are above the limit.
     {
         wgpu::ComputePipelineDescriptor csDesc;
-        csDesc.compute.module =
-            utils::CreateShaderModule(device, R"(
+        csDesc.compute.module = utils::CreateShaderModule(device, R"(
                 enable chromium_experimental_dynamic_binding;
                 @group(0) @binding()" + std::to_string(kMaxBindingsPerBindGroup) +
-                                                  R"() var a : binding_array<texture_2d<f32>>;
+                                                                      R"() var a : resource_binding;
 
                 @compute @workgroup_size(1) fn main() {
-                    _ = a[42];
+                    _ = hasBinding<texture_2d<f32>>(a, 42);
                 }
             )");
         csDesc.layout = utils::MakeBasicPipelineLayout(device, &bgl);
@@ -799,10 +797,10 @@ TEST_F(DynamicBindingArrayTests, ShaderArrayAtMaxBindGroups) {
                                       R"(
                 enable chromium_experimental_dynamic_binding;
                 @group()" + std::to_string(kMaxBindGroups - 1) +
-                                          R"() @binding(0) var a : binding_array<texture_2d<f32>>;
+                                          R"() @binding(0) var a : resource_binding;
 
                 @compute @workgroup_size(1) fn main() {
-                    _ = a[42];
+                    _ = hasBinding<texture_2d<f32>>(a, 42);
                 }
             )");
         csDesc.layout = pl;
@@ -817,10 +815,10 @@ TEST_F(DynamicBindingArrayTests, ShaderArrayAtMaxBindGroups) {
                                       R"(
                 enable chromium_experimental_dynamic_binding;
                 @group()" + std::to_string(kMaxBindGroups) +
-                                          R"() @binding(0) var a : binding_array<texture_2d<f32>>;
+                                          R"() @binding(0) var a : resource_binding;
 
                 @compute @workgroup_size(1) fn main() {
-                    _ = a[42];
+                    _ = hasBinding<texture_2d<f32>>(a, 42);
                 }
             )");
         csDesc.layout = pl;
@@ -846,10 +844,10 @@ TEST_F(DynamicBindingArrayTests, ShaderBindingArrayMustHaveGroupInPipelineLayout
     // Control case, the group is in the pipeline layout.
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_dynamic_binding;
-        @group(1) @binding(0) var a : binding_array<texture_2d<f32>>;
+        @group(1) @binding(0) var a : resource_binding;
 
         @compute @workgroup_size(1) fn main() {
-            _ = a[42];
+            _ = hasBinding<texture_2d<f32>>(a, 42);
         }
     )");
     device.CreateComputePipeline(&csDesc);
@@ -857,10 +855,10 @@ TEST_F(DynamicBindingArrayTests, ShaderBindingArrayMustHaveGroupInPipelineLayout
     // Error case, the group is not in the layout (@group(0) case)
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_dynamic_binding;
-        @group(0) @binding(0) var a : binding_array<texture_2d<f32>>;
+        @group(0) @binding(0) var a : resource_binding;
 
         @compute @workgroup_size(1) fn main() {
-            _ = a[42];
+            _ = hasBinding<texture_2d<f32>>(a, 42);
         }
     )");
     ASSERT_DEVICE_ERROR(device.CreateComputePipeline(&csDesc));
@@ -868,10 +866,10 @@ TEST_F(DynamicBindingArrayTests, ShaderBindingArrayMustHaveGroupInPipelineLayout
     // Error case, the group is not in the layout (@group(2) case)
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_dynamic_binding;
-        @group(2) @binding(0) var a : binding_array<texture_2d<f32>>;
+        @group(2) @binding(0) var a : resource_binding;
 
         @compute @workgroup_size(1) fn main() {
-            _ = a[42];
+            _ = hasBinding<texture_2d<f32>>(a, 42);
         }
     )");
     ASSERT_DEVICE_ERROR(device.CreateComputePipeline(&csDesc));
@@ -882,23 +880,23 @@ TEST_F(DynamicBindingArrayTests, ShaderTwoDynamicArraysSameGroupIsAnError) {
     // Control case, the two dynamic binding arrays are on different groups.
     utils::CreateShaderModule(device, R"(
         enable chromium_experimental_dynamic_binding;
-        @group(0) @binding(0) var a : binding_array<texture_2d<f32>>;
-        @group(1) @binding(1) var b : binding_array<texture_2d<f32>>;
+        @group(0) @binding(0) var a : resource_binding;
+        @group(1) @binding(1) var b : resource_binding;
 
         @compute @workgroup_size(1) fn main() {
-            _ = a[42];
-            _ = b[42];
+            _ = hasBinding<texture_2d<f32>>(a, 42);
+            _ = hasBinding<texture_2d<f32>>(b, 42);
         }
     )");
 
     // Error case, the two dynamic binding arrays are on the same group.
     ASSERT_DEVICE_ERROR(utils::CreateShaderModule(device, R"(
         enable chromium_experimental_dynamic_binding;
-        @group(0) @binding(0) var a : binding_array<texture_2d<f32>>;
-        @group(0) @binding(1) var b : binding_array<texture_2d<f32>>;
+        @group(0) @binding(0) var a : resource_binding;
+        @group(0) @binding(1) var b : resource_binding;
 
         @compute @workgroup_size(1) fn main() {
-            _ = a[42];
+            _ = hasBinding<texture_2d<f32>>(a, 42);
             _ = b[42];
         }
     )"));
@@ -922,10 +920,10 @@ TEST_F(DynamicBindingArrayTests, GetBGLSuccess) {
     csDesc.layout = nullptr;
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_dynamic_binding;
-        @group(0) @binding(0) var a : binding_array<texture_2d<f32>>;
+        @group(0) @binding(0) var a : resource_binding;
 
         @compute @workgroup_size(1) fn main() {
-            _ = a[42];
+            _ = hasBinding<texture_2d<f32>>(a, 42);
         }
     )");
     wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&csDesc);
@@ -939,10 +937,10 @@ TEST_F(DynamicBindingArrayTests, GetBGLDefaultedArrayStart) {
     csDesc.layout = nullptr;
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_dynamic_binding;
-        @group(0) @binding(7) var a : binding_array<texture_2d<f32>>;
+        @group(0) @binding(7) var a : resource_binding;
 
         @compute @workgroup_size(1) fn main() {
-            _ = a[42];
+            _ = hasBinding<texture_2d<f32>>(a, 42);
         }
     )");
     wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&csDesc);
@@ -980,10 +978,10 @@ TEST_F(DynamicBindingArrayTests, GetBGLDefaultedArrayKind) {
     csDesc.layout = nullptr;
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_dynamic_binding;
-        @group(0) @binding(0) var a : binding_array<texture_2d<f32>>;
+        @group(0) @binding(0) var a : resource_binding;
 
         @compute @workgroup_size(1) fn main() {
-            _ = a[42];
+            _ = hasBinding<texture_2d<f32>>(a, 42);
         }
     )");
     wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&csDesc);
@@ -1012,14 +1010,13 @@ TEST_F(DynamicBindingArrayTests, GetBGLMaxBindingsPerGroupLimit) {
     {
         wgpu::ComputePipelineDescriptor csDesc;
         csDesc.layout = nullptr;
-        csDesc.compute.module =
-            utils::CreateShaderModule(device, R"(
+        csDesc.compute.module = utils::CreateShaderModule(device, R"(
                 enable chromium_experimental_dynamic_binding;
                 @group(0) @binding()" + std::to_string(kMaxBindingsPerBindGroup - 1) +
-                                                  R"() var a : binding_array<texture_2d<f32>>;
+                                                                      R"() var a : resource_binding;
 
                 @compute @workgroup_size(1) fn main() {
-                    _ = a[42];
+                    _ = hasBinding<texture_2d<f32>>(a, 42);
                 }
             )");
         device.CreateComputePipeline(&csDesc);
@@ -1029,14 +1026,13 @@ TEST_F(DynamicBindingArrayTests, GetBGLMaxBindingsPerGroupLimit) {
     {
         wgpu::ComputePipelineDescriptor csDesc;
         csDesc.layout = nullptr;
-        csDesc.compute.module =
-            utils::CreateShaderModule(device, R"(
+        csDesc.compute.module = utils::CreateShaderModule(device, R"(
                 enable chromium_experimental_dynamic_binding;
                 @group(0) @binding()" + std::to_string(kMaxBindingsPerBindGroup) +
-                                                  R"() var a : binding_array<texture_2d<f32>>;
+                                                                      R"() var a : resource_binding;
 
                 @compute @workgroup_size(1) fn main() {
-                    _ = a[42];
+                    _ = hasBinding<texture_2d<f32>>(a, 42);
                 }
             )");
         ASSERT_DEVICE_ERROR(device.CreateComputePipeline(&csDesc));
@@ -1054,10 +1050,10 @@ TEST_F(DynamicBindingArrayTests, GetBGLMaxBindGroupsLimit) {
                                       R"(
                 enable chromium_experimental_dynamic_binding;
                 @group()" + std::to_string(kMaxBindGroups - 1) +
-                                          R"() @binding(0) var a : binding_array<texture_2d<f32>>;
+                                          R"() @binding(0) var a : resource_binding;
 
                 @compute @workgroup_size(1) fn main() {
-                    _ = a[42];
+                    _ = hasBinding<texture_2d<f32>>(a, 42);
                 }
             )");
         device.CreateComputePipeline(&csDesc);
@@ -1072,10 +1068,10 @@ TEST_F(DynamicBindingArrayTests, GetBGLMaxBindGroupsLimit) {
                                       R"(
                 enable chromium_experimental_dynamic_binding;
                 @group()" + std::to_string(kMaxBindGroups) +
-                                          R"() @binding(0) var a : binding_array<texture_2d<f32>>;
+                                          R"() @binding(0) var a : resource_binding;
 
                 @compute @workgroup_size(1) fn main() {
-                    _ = a[42];
+                    _ = hasBinding<texture_2d<f32>>(a, 42);
                 }
             )");
         ASSERT_DEVICE_ERROR(device.CreateComputePipeline(&csDesc));
@@ -1088,10 +1084,10 @@ TEST_F(DynamicBindingArrayTests, GetBGLArrayStartMatchesBetweenStages) {
     pDesc.layout = nullptr;
     pDesc.vertex.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_dynamic_binding;
-        @group(0) @binding(38) var a : binding_array<texture_2d<f32>>;
+        @group(0) @binding(38) var a : resource_binding;
 
         @vertex fn vs() -> @builtin(position) vec4f {
-            _ = a[42];
+            _ = hasBinding<texture_2d<f32>>(a, 42);
             return vec4f();
         }
     )");
@@ -1100,10 +1096,10 @@ TEST_F(DynamicBindingArrayTests, GetBGLArrayStartMatchesBetweenStages) {
     {
         pDesc.cFragment.module = utils::CreateShaderModule(device, R"(
             enable chromium_experimental_dynamic_binding;
-            @group(0) @binding(38) var a : binding_array<texture_2d<f32>>;
+            @group(0) @binding(38) var a : resource_binding;
 
             @fragment fn fs() -> @location(0) vec4f {
-                _ = a[42];
+                _ = hasBinding<texture_2d<f32>>(a, 42);
                 return vec4f();
             }
         )");
@@ -1114,10 +1110,10 @@ TEST_F(DynamicBindingArrayTests, GetBGLArrayStartMatchesBetweenStages) {
     {
         pDesc.cFragment.module = utils::CreateShaderModule(device, R"(
             enable chromium_experimental_dynamic_binding;
-            @group(1) @binding(3) var a : binding_array<texture_2d<f32>>;
+            @group(1) @binding(3) var a : resource_binding;
 
             @fragment fn fs() -> @location(0) vec4f {
-                _ = a[42];
+                _ = hasBinding<texture_2d<f32>>(a, 42);
                 return vec4f();
             }
         )");
@@ -1128,10 +1124,10 @@ TEST_F(DynamicBindingArrayTests, GetBGLArrayStartMatchesBetweenStages) {
     {
         pDesc.cFragment.module = utils::CreateShaderModule(device, R"(
             enable chromium_experimental_dynamic_binding;
-            @group(0) @binding(3) var a : binding_array<texture_2d<f32>>;
+            @group(0) @binding(3) var a : resource_binding;
 
             @fragment fn fs() -> @location(0) vec4f {
-                _ = a[42];
+                _ = hasBinding<texture_2d<f32>>(a, 42);
                 return vec4f();
             }
         )");

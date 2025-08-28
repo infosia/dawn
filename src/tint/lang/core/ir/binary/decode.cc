@@ -890,8 +890,7 @@ struct Decoder {
             return mod_out_.Types().invalid();
         }
 
-        return count > 0 ? mod_out_.Types().binding_array(element, count)
-                         : mod_out_.Types().runtime_binding_array(element);
+        return mod_out_.Types().binding_array(element, count);
     }
 
     const type::Type* CreateTypeDepthTexture(const pb::TypeDepthTexture& texture_in) {
@@ -1925,6 +1924,10 @@ struct Decoder {
                 return core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate;
             case pb::BuiltinFn::print:
                 return core::BuiltinFn::kPrint;
+            case pb::BuiltinFn::has_binding:
+                return core::BuiltinFn::kHasBinding;
+            case pb::BuiltinFn::get_binding:
+                return core::BuiltinFn::kGetBinding;
 
             case pb::BuiltinFn::BuiltinFn_INT_MIN_SENTINEL_DO_NOT_USE_:
             case pb::BuiltinFn::BuiltinFn_INT_MAX_SENTINEL_DO_NOT_USE_:

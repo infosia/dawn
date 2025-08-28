@@ -46,6 +46,7 @@
 #include "src/tint/lang/core/type/texture.h"
 #include "src/tint/lang/spirv/ir/builtin_call.h"
 #include "src/tint/lang/spirv/ir/literal_operand.h"
+#include "src/tint/lang/spirv/type/resource_binding.h"
 #include "src/tint/lang/spirv/type/sampled_image.h"
 #include "src/tint/utils/ice/ice.h"
 #include "src/tint/utils/internal_limits.h"
@@ -148,11 +149,14 @@ const core::type::Type* ReplacementType(core::type::Manager& ty, const core::typ
         },
         [&](const core::type::BindingArray* arr) -> const core::type::Type* {
             if (auto* replacement = ReplacementType(ty, arr->ElemType())) {
-                if (auto* cnt = arr->Count()->As<core::type::ConstantArrayCount>()) {
-                    return ty.binding_array(replacement, cnt->value);
-                }
-                TINT_ASSERT(arr->Count()->Is<core::type::RuntimeArrayCount>());
-                return ty.runtime_binding_array(replacement);
+                return ty.binding_array(replacement,
+                                        arr->Count()->As<core::type::ConstantArrayCount>()->value);
+            }
+            return nullptr;
+        },
+        [&](const spirv::type::ResourceBinding* rb) -> const core::type::Type* {
+            if (auto* replacement = ReplacementType(ty, rb->GetBindingType())) {
+                return ty.Get<spirv::type::ResourceBinding>(replacement);
             }
             return nullptr;
         },
