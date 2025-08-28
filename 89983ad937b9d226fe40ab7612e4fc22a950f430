@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b6990e7_59a10bba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-28T08:27:07Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "89983ad937b9d226fe40ab7612e4fc22a950f430",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1000ec1e_b7a214f0",
+        "filename": "src/tint/api/common/resource_binding_config.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-28T08:27:07Z",
+      "side": 1,
+      "message": "```suggestion\n    // as the index to lookup the given `ResourceType` if the user accesses with an incorrect\n```",
+      "revId": "89983ad937b9d226fe40ab7612e4fc22a950f430",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
