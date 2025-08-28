@@ -28,8 +28,13 @@
 #ifndef SRC_TINT_LANG_CORE_IR_TRANSFORM_RESOURCE_BINDING_H_
 #define SRC_TINT_LANG_CORE_IR_TRANSFORM_RESOURCE_BINDING_H_
 
+#include <vector>
+
 #include "src/tint/api/common/resource_binding_config.h"
+#include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/validator.h"
+#include "src/tint/lang/core/ir/var.h"
+#include "src/tint/lang/core/type/type.h"
 #include "src/tint/utils/result.h"
 
 // Forward declarations.
@@ -39,6 +44,21 @@ class Module;
 
 namespace tint::core::ir::transform {
 
+// Backend specific override methods for resource binding
+class ResourceBindingHelper {
+  public:
+    virtual ~ResourceBindingHelper();
+
+    // Returns a map of types to the var which is used to access the memory of that type
+    virtual Hashmap<const core::type::Type*, core::ir::Var*, 4> GenerateAliases(
+        core::ir::Builder& b,
+        core::ir::Var*,
+        const std::vector<ResourceType>& types) const = 0;
+
+    // Returns true if the original `resource_binding` var should be deleted
+    virtual bool DeleteSourceVar() const { return true; }
+};
+
 /// This transform updates the provided IR to support the necessary `resource_binding`
 /// restrictions/requirements.
 ///
@@ -47,8 +67,11 @@ namespace tint::core::ir::transform {
 ///
 /// @param module the module to transform
 /// @param config the transform configuration
+/// @param helper the resource binding helper
 /// @returns success or failure
-Result<SuccessType> ResourceBinding(core::ir::Module& module, const ResourceBindingConfig& config);
+Result<SuccessType> ResourceBinding(core::ir::Module& module,
+                                    const ResourceBindingConfig& config,
+                                    ResourceBindingHelper* helper);
 
 }  // namespace tint::core::ir::transform
 
