@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/core/ir/transform/resource_binding.h"
 
+#include <unordered_map>
 #include <utility>
 
 #include "src/tint/lang/core/ir/builder.h"
@@ -47,25 +48,127 @@ struct State {
     /// The IR module.
     core::ir::Module& ir;
 
+    /// The helper
+    ResourceBindingHelper* helper;
+
     /// The IR builder.
     core::ir::Builder b{ir};
 
     /// The type manager.
     core::type::Manager& ty{ir.Types()};
 
+    /// Map of var of type resource_binding to the supporting storage buffer
+    std::unordered_map<core::ir::Var*, core::ir::Var*> resource_binding_to_storage_buffer{};
+
     /// Process the module.
-    void Process() {}
+    void Process() {
+        std::vector<core::ir::Var*> resource_bindings;
+
+        for (auto* inst : *ir.root_block) {
+            auto* var = inst->As<core::ir::Var>();
+            if (!var) {
+                continue;
+            }
+            TINT_ASSERT(var->BindingPoint().has_value());
+
+            auto* type = var->Result()->Type()->UnwrapPtr()->As<core::type::ResourceBinding>();
+            if (!type) {
+                continue;
+            }
+
+            resource_bindings.push_back(var);
+        }
+
+        std::vector<core::ir::Instruction*> to_delete;
+        for (auto* var : resource_bindings) {
+            auto iter = config.bindings.find(var->BindingPoint().value());
+            TINT_ASSERT(iter != config.bindings.end());
+
+            auto alias_for_type =
+                helper->GenerateAliases(b, var, iter->second.default_binding_type_order);
+
+            auto* sb = InjectStorageBuffer(var);
+
+            std::vector<core::ir::Value*> to_fix;
+            to_fix.push_back(var->Result());
+
+            while (!to_fix.empty()) {
+                auto* val = to_fix.back();
+                to_fix.pop_back();
+
+                for (auto& usage : val->UsagesUnsorted()) {
+                    tint::Switch(
+                        usage->instruction,
+                        [&](core::ir::Load* l) {
+                            to_fix.push_back(l->Result());
+                            to_delete.push_back(l);
+                        },
+                        [&](core::ir::CoreBuiltinCall* call) {
+                            switch (call->Func()) {
+                                case core::BuiltinFn::kArrayLength:
+                                    b.InsertBefore(call, [&] {
+                                        auto* access =
+                                            b.Access(ty.ptr<storage, u32, read>(), sb, 0_u);
+                                        b.LoadWithResult(call->DetachResult(), access);
+                                    });
+                                    to_delete.push_back(call);
+                                    break;
+                                default:
+                                    TINT_UNREACHABLE();
+                            }
+                        },
+                        TINT_ICE_ON_NO_MATCH);
+                }
+            }
+
+            if (helper->DeleteSourceVar()) {
+                to_delete.push_back(var);
+            }
+        }
+
+        for (auto* inst : to_delete) {
+            inst->Destroy();
+        }
+    }
+
+    core::ir::Var* InjectStorageBuffer(core::ir::Var* var) {
+        auto iter = config.bindings.find(var->BindingPoint().value());
+        TINT_ASSERT(iter != config.bindings.end());
+
+        auto& info = iter->second;
+
+        core::ir::Var* sb = nullptr;
+        b.InsertBefore(var, [&] {
+            auto* str = ty.Struct(ir.symbols.New("tint_resource_binding_buffer"),
+                                  Vector<core::type::Manager::StructMemberDesc, 2>{
+                                      {ir.symbols.New("array_length"), ty.u32()},
+                                      {ir.symbols.New("bindings"), ty.array<u32>()},
+                                  });
+
+            auto* sb_ty = ty.ptr(storage, str, read);
+            sb = b.Var(sb_ty);
+            sb->SetBindingPoint(info.storage_buffer_binding.group,
+                                info.storage_buffer_binding.binding);
+            resource_binding_to_storage_buffer.emplace(var, sb);
+        });
+
+        return sb;
+    }
 };
 
 }  // namespace
 
-Result<SuccessType> ResourceBinding(core::ir::Module& ir, const ResourceBindingConfig& config) {
+ResourceBindingHelper::~ResourceBindingHelper() = default;
+
+Result<SuccessType> ResourceBinding(core::ir::Module& ir,
+                                    const ResourceBindingConfig& config,
+                                    ResourceBindingHelper* helper) {
     auto result = ValidateAndDumpIfNeeded(ir, "core.ResourceBinding");
     if (result != Success) {
         return result.Failure();
     }
 
-    State{config, ir}.Process();
+    State{config, ir, helper}.Process();
 
     return Success;
 }
