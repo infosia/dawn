@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d72f941d_71cf66a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-28T13:29:33Z",
+      "side": 1,
+      "message": "PTAL. The ir/transform will need some cleanup, but I want to get the 3 methods in place first to figure out the commonality.\n\nThe general structure (and the helper object setup) and the helper object usage is the main things in this CL that I want to make sure are right, we can refactor the internals at the end of the stack.",
+      "revId": "903a5477f7a871004dc8ef96188639ba7b654e14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
