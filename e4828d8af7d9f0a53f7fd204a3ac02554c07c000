@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb6267f2_b0e77082",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-28T19:17:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97eec199_317108ca",
+      "revId": "e4828d8af7d9f0a53f7fd204a3ac02554c07c000",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6bcec722_4171e423",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-08-28T14:09:28Z",
       "side": 1,
       "message": "nit: Could we keep a small comment here?",
+      "revId": "e4828d8af7d9f0a53f7fd204a3ac02554c07c000",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d940e6bd_d5b1da92",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-28T19:17:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bcec722_4171e423",
       "revId": "e4828d8af7d9f0a53f7fd204a3ac02554c07c000",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
