@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eefb352c_3c663a9f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000861
+      },
+      "writtenOn": "2025-08-28T20:33:41Z",
+      "side": 1,
+      "message": "More WebGPU-WebNN interop related changes",
+      "revId": "9f6665d065a3a8ee1cf68698877b61a9cc7e0693",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
