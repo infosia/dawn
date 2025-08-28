@@ -420,37 +420,36 @@ ResultOrError<PixelLocalMemberType> FromTintPixelLocalMemberType(
     DAWN_UNREACHABLE();
 }
 
-ResultOrError<wgpu::DynamicBindingKind> FromArrayResourceType(
-    tint::inspector::ResourceBindingInfo::ResourceType type) {
+ResultOrError<wgpu::DynamicBindingKind> FromArrayResourceType(tint::ResourceType type) {
     switch (type) {
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTexture1d_f32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTexture1d_i32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTexture1d_u32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTexture2d_f32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTexture2d_i32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTexture2d_u32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTexture2dArray_f32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTexture2dArray_i32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTexture2dArray_u32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTexture3d_f32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTexture3d_i32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTexture3d_u32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTextureCube_f32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTextureCube_i32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTextureCube_u32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTextureCubeArray_f32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTextureCubeArray_i32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTextureCubeArray_u32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTextureMultisampled2d_f32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTextureMultisampled2d_i32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTextureMultisampled2d_u32:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTextureDepth2d:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTextureDepth2dArray:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTextureDepthCube:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTextureDepthCubeArray:
-        case tint::inspector::ResourceBindingInfo::ResourceType::kTextureDepthMultisampled2d:
+        case tint::ResourceType::kTexture1d_f32:
+        case tint::ResourceType::kTexture1d_i32:
+        case tint::ResourceType::kTexture1d_u32:
+        case tint::ResourceType::kTexture2d_f32:
+        case tint::ResourceType::kTexture2d_i32:
+        case tint::ResourceType::kTexture2d_u32:
+        case tint::ResourceType::kTexture2dArray_f32:
+        case tint::ResourceType::kTexture2dArray_i32:
+        case tint::ResourceType::kTexture2dArray_u32:
+        case tint::ResourceType::kTexture3d_f32:
+        case tint::ResourceType::kTexture3d_i32:
+        case tint::ResourceType::kTexture3d_u32:
+        case tint::ResourceType::kTextureCube_f32:
+        case tint::ResourceType::kTextureCube_i32:
+        case tint::ResourceType::kTextureCube_u32:
+        case tint::ResourceType::kTextureCubeArray_f32:
+        case tint::ResourceType::kTextureCubeArray_i32:
+        case tint::ResourceType::kTextureCubeArray_u32:
+        case tint::ResourceType::kTextureMultisampled2d_f32:
+        case tint::ResourceType::kTextureMultisampled2d_i32:
+        case tint::ResourceType::kTextureMultisampled2d_u32:
+        case tint::ResourceType::kTextureDepth2d:
+        case tint::ResourceType::kTextureDepth2dArray:
+        case tint::ResourceType::kTextureDepthCube:
+        case tint::ResourceType::kTextureDepthCubeArray:
+        case tint::ResourceType::kTextureDepthMultisampled2d:
             return wgpu::DynamicBindingKind::SampledTexture;
-        case tint::inspector::ResourceBindingInfo::ResourceType::kEmpty:
+        case tint::ResourceType::kEmpty:
             return DAWN_VALIDATION_ERROR(
                 "Attempted to convert 'None' array resource type from Tint.");
     }
