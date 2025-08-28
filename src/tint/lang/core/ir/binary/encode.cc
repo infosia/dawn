@@ -395,6 +395,9 @@ struct Encoder {
                 [&](const core::type::BindingArray* a) {
                     TypeBindingArray(*type_out.mutable_binding_array(), a);
                 },
+                [&](const core::type::ResourceBinding* a) {
+                    TypeResourceBinding(*type_out.mutable_resource_binding(), a);
+                },
                 [&](const core::type::DepthTexture* t) {
                     TypeDepthTexture(*type_out.mutable_depth_texture(), t);
                 },
@@ -525,6 +528,9 @@ struct Encoder {
             [&](const core::type::RuntimeArrayCount*) { array_out.set_count(0); },
             TINT_ICE_ON_NO_MATCH);
     }
+
+    void TypeResourceBinding(pb::TypeResourceBinding& rb_out,
+                             const core::type::ResourceBinding* rb_in) {}
 
     void TypeDepthTexture(pb::TypeDepthTexture& texture_out,
                           const core::type::DepthTexture* texture_in) {
