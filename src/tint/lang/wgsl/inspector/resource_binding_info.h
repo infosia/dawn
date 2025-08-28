@@ -33,6 +33,7 @@
 #include <vector>
 
 #include "src/tint/api/common/resource_type.h"
+#include "src/tint/lang/core/type/type.h"
 
 namespace tint::inspector {
 
@@ -46,6 +47,9 @@ struct ResourceBindingInfo {
     /// The types used with the binding array
     std::vector<ResourceType> type_info{};
 };
+
+// Converts a `in_type` into a resource type
+ResourceType TypeToResourceType(const core::type::Type* in_type);
 
 }  // namespace tint::inspector
 
