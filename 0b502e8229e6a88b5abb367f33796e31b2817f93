@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28b39b71_290302aa",
+        "filename": "docs/tint/extensions/chromium_experimental_dynamic_binding.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-28T18:27:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b861b8_1efdf6f0",
+      "revId": "0b502e8229e6a88b5abb367f33796e31b2817f93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c3be77df_d90302f2",
@@ -84,6 +102,24 @@
           ]
         }
       ],
+      "revId": "0b502e8229e6a88b5abb367f33796e31b2817f93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0174964_36a21e8d",
+        "filename": "docs/tint/extensions/chromium_experimental_dynamic_binding.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-28T18:27:24Z",
+      "side": 1,
+      "message": "Kinda? We don\u0027t actually use the texture for arrayLength, so we can just remove the \"load\" that gets inserted.",
+      "parentUuid": "c3be77df_d90302f2",
       "revId": "0b502e8229e6a88b5abb367f33796e31b2817f93",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
