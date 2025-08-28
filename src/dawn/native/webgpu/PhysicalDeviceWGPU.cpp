@@ -131,7 +131,12 @@ void PhysicalDevice::SetupBackendAdapterToggles(dawn::platform::Platform* platfo
                                                 TogglesState* adapterToggles) const {}
 
 void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platform,
-                                               TogglesState* deviceToggles) const {}
+                                               TogglesState* deviceToggles) const {
+    // // WebGPU Backend objects blob cache can have the same blueprint key as the inner handle
+    // objects.
+    // // Disable blob Cache for WebGPU backend.
+    // deviceToggles->Default(Toggle::DisableBlobCache, true);
+}
 
 ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
     AdapterBase* adapter,
