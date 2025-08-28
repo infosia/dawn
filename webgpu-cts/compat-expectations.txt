@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-08-13 07:53:20AM
+# Last rolled: 2025-08-28 09:19:39AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -1007,6 +1007,7 @@ crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setViewport" [ Failure ]
 crbug.com/0000 [ android arm ] webgpu:api,validation,error_scope:simple:errorType="validation";errorFilter="out-of-memory" [ Skip ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:source_image,crossOrigin:sourceImage="canvas";isOriginClean=true [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:source_image,crossOrigin:sourceImage="offscreenCanvas";isOriginClean=true [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,validation,state,device_lost,destroy:command,copyTextureToTexture:stage="submit";awaitLost=false [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,state,device_lost,destroy:command,copyTextureToTexture:stage="submit";awaitLost=false [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,validation,state,device_lost,destroy:command,resolveQuerySet:stage="submit";awaitLost=true [ Failure ]
