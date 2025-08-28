@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5537e151_98e48593",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 26
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-28T09:22:48Z",
+      "side": 1,
+      "message": "TBH, I read it previously and thought it is Ok? Anyway, updated some part and if anything missing, pls correct me. Thanks!",
+      "parentUuid": "70811e4e_091c4a4d",
+      "revId": "8a46f9564a8bec4a3c6078b0a360aa879b970fd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "14b0a5f1_cc717c51",
         "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
         "patchSetId": 26

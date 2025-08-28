@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f430db0b_53b55fd7",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 30
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-28T09:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b84b321c_9696021c",
+      "range": {
+        "startLine": 459,
+        "startChar": 34,
+        "endLine": 460,
+        "endChar": 32
+      },
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "195dbd48_01533ab6",
@@ -58,6 +82,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3046ab6_bb954dd0",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-28T09:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "195dbd48_01533ab6",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b9f58589_eafe0596",
@@ -71,6 +113,30 @@
       "writtenOn": "2025-08-26T15:35:47Z",
       "side": 1,
       "message": "that\u0027s a `resultIndex` since that\u0027s where we want to write in the result buffer.",
+      "range": {
+        "startLine": 132,
+        "startChar": 45,
+        "endLine": 132,
+        "endChar": 58
+      },
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e87622b_9757f8fc",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-28T09:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9f58589_eafe0596",
       "range": {
         "startLine": 132,
         "startChar": 45,
@@ -121,6 +187,48 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f3a96e1_23ad373b",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-28T09:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d749781f_fcb80b1a",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a90e0f25_d32e6123",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-28T09:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36e14918_f3187c8c",
+      "range": {
+        "startLine": 190,
+        "startChar": 26,
+        "endLine": 190,
+        "endChar": 61
+      },
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0e5ed883_02abc8bd",
@@ -138,6 +246,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "71bb4b00_da14f8cc",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-28T09:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e5ed883_02abc8bd",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "68cdce17_5ff5e533",
@@ -151,6 +277,24 @@
       "writtenOn": "2025-08-26T15:35:47Z",
       "side": 1,
       "message": "WDYT of making this take `resultIndex` explicitly, such that we avoid the vector\u003cvector\u003e and instead call it twice when we need to?",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04ad033f_0f6e1e13",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-28T09:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68cdce17_5ff5e533",
       "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -174,6 +318,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ed427015_d13fe27f",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-28T09:22:48Z",
+      "side": 1,
+      "message": "Adopt this approach to refactor all tests. PTAL, thanks!",
+      "parentUuid": "75333b47_0661f625",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b89e7a9e_a5725cea",
         "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
         "patchSetId": 30
@@ -185,6 +347,24 @@
       "writtenOn": "2025-08-26T15:35:47Z",
       "side": 1,
       "message": "nit: We could have an std::array\u003cuint32_t, 32\u003e for the full expected data that we\u0027d check entirely against the result buffer. It\u0027s ok to check that data not written is filled with zeroes.",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3b218e3_a6c34852",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-28T09:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b89e7a9e_a5725cea",
       "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -225,6 +405,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fb93ec51_223d6036",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-28T09:22:48Z",
+      "side": 1,
+      "message": "Slightly different. This tests immediates count from large to small and previous test immediates count from small to large.",
+      "parentUuid": "2cb95ea9_3660653d",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1849170b_1a2d7807",
         "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
         "patchSetId": 30
@@ -236,6 +434,24 @@
       "writtenOn": "2025-08-26T15:35:47Z",
       "side": 1,
       "message": "Same comments below.",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7429784_331b5b0d",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-08-28T09:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1849170b_1a2d7807",
       "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
