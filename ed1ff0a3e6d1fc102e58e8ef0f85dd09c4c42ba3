@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9d4e96b_6d1768a8",
+        "filename": "src/tint/lang/core/ir/core_builtin_call.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-28T19:37:59Z",
+      "side": 1,
+      "message": "Should just be load?\n\nArguably could also just be \"none\", because it\u0027s not actually touching mutable memory. Kinda like textureNumDimensions(). There\u0027s nothing that can break by inlining it over other stuff.",
+      "revId": "ed1ff0a3e6d1fc102e58e8ef0f85dd09c4c42ba3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
