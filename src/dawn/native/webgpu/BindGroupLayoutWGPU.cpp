@@ -36,20 +36,18 @@ namespace dawn::native::webgpu {
 ResultOrError<Ref<BindGroupLayout>> BindGroupLayout::Create(
     Device* device,
     const UnpackedPtr<BindGroupLayoutDescriptor>& descriptor) {
-    Ref<BindGroupLayout> bgl = AcquireRef(new BindGroupLayout(device, descriptor));
-
-    auto desc = ToAPI(*descriptor);
-    bgl->mInnerHandle = device->wgpu.deviceCreateBindGroupLayout(device->GetInnerHandle(), desc);
-    DAWN_ASSERT(bgl->mInnerHandle);
-
-    return bgl;
+    return AcquireRef(new BindGroupLayout(device, descriptor));
 }
 
 BindGroupLayout::BindGroupLayout(Device* device,
                                  const UnpackedPtr<BindGroupLayoutDescriptor>& descriptor)
     : BindGroupLayoutInternalBase(device, descriptor),
       ObjectWGPU(device->wgpu.bindGroupLayoutRelease),
-      mBindGroupAllocator(MakeFrontendBindGroupAllocator<BindGroup>(4096)) {}
+      mBindGroupAllocator(MakeFrontendBindGroupAllocator<BindGroup>(4096)) {
+    auto desc = ToAPI(*descriptor);
+    mInnerHandle = device->wgpu.deviceCreateBindGroupLayout(device->GetInnerHandle(), desc);
+    DAWN_ASSERT(mInnerHandle);
+}
 
 Ref<BindGroup> BindGroupLayout::AllocateBindGroup(
     const UnpackedPtr<BindGroupDescriptor>& descriptor) {

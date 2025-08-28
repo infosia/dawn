@@ -27,10 +27,47 @@
 
 #include "dawn/native/webgpu/BindGroupWGPU.h"
 
+#include "absl/container/inlined_vector.h"
+#include "dawn/common/StringViewUtils.h"
 #include "dawn/native/webgpu/BindGroupLayoutWGPU.h"
+#include "dawn/native/webgpu/BufferWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
 
 namespace dawn::native::webgpu {
+
+WGPUBindGroupEntry ToWGPU(const BindGroupEntry* entry) {
+    return {
+        .nextInChain = nullptr,
+        .binding = entry->binding,
+        .buffer = entry->buffer == nullptr ? nullptr : ToBackend(entry->buffer)->GetInnerHandle(),
+        .offset = entry->offset,
+        .size = entry->size,
+        // TODO(crbug.com/413053623): replace with the following when the object implementation is
+        // done.
+        .sampler = nullptr,
+        .textureView = nullptr,
+    };
+}
+
+class ComboBindGroupDescriptor {
+  public:
+    explicit ComboBindGroupDescriptor(const BindGroupDescriptor* desc) {
+        cDesc.nextInChain = nullptr;
+        cDesc.label = ToOutputStringView(desc->label);
+        cDesc.layout = ToBackend(desc->layout->GetInternalBindGroupLayout())->GetInnerHandle();
+        cDesc.entryCount = desc->entryCount;
+        for (uint32_t i = 0; i < desc->entryCount; ++i) {
+            cEntries.push_back(ToWGPU(&desc->entries[i]));
+        }
+        cDesc.entries = cEntries.data();
+    }
+
+    const WGPUBindGroupDescriptor* Get() const { return &cDesc; }
+
+  private:
+    WGPUBindGroupDescriptor cDesc;
+    absl::InlinedVector<WGPUBindGroupEntry, 8> cEntries;
+};
 
 // static
 ResultOrError<Ref<BindGroup>> BindGroup::Create(
@@ -44,9 +81,10 @@ ResultOrError<Ref<BindGroup>> BindGroup::Create(
 
 BindGroup::BindGroup(Device* device, const UnpackedPtr<BindGroupDescriptor>& descriptor)
     : BindGroupBase(this, device, descriptor), ObjectWGPU(device->wgpu.bindGroupRelease) {
-    auto desc = ToAPI(*descriptor);
-    mInnerHandle = ToBackend(GetDevice())
-                       ->wgpu.deviceCreateBindGroup(ToBackend(GetDevice())->GetInnerHandle(), desc);
+    ComboBindGroupDescriptor desc(*descriptor);
+    mInnerHandle =
+        ToBackend(GetDevice())
+            ->wgpu.deviceCreateBindGroup(ToBackend(GetDevice())->GetInnerHandle(), desc.Get());
     DAWN_ASSERT(mInnerHandle);
 }
 
