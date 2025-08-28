@@ -34,6 +34,24 @@
       "parentUuid": "baee4297_0a95f476",
       "revId": "0d67168b7340c3b40c9db911fdc840c24fc038ed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8447e10_25356f8a",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-28T20:35:51Z",
+      "side": 1,
+      "message": "Acknowledged. Kinda strange it\u0027s not part of the `CallSignature`, but we can look into that another time.",
+      "parentUuid": "45077668_815444cb",
+      "revId": "0d67168b7340c3b40c9db911fdc840c24fc038ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
