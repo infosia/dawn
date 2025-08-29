@@ -22,6 +22,30 @@
       },
       "revId": "040dda791b377d33e3b2dcdeebc471fdf054e7ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "386d9b0c_52acda1c",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-29T16:42:02Z",
+      "side": 0,
+      "message": "Not clear on if this is necessary in `WaitForQueueSerialImpl`. If we\u0027re forcing all the tasks to flush below anyway, and the device is \"lost\" anyway, under what circumstances would it matter if the tasks are resolved at the right time or not? None of the data is going to be valid anyway.\n\nI suppose that once, for example, the fenced deleter is moved over to tasks then you could end up deleting a resource that may still be in use by a device that hasn\u0027t been completely lost. May be possible to trigger driver crashes that way?",
+      "parentUuid": "ec45913e_920be7a4",
+      "range": {
+        "startLine": 187,
+        "startChar": 16,
+        "endLine": 195,
+        "endChar": 17
+      },
+      "revId": "040dda791b377d33e3b2dcdeebc471fdf054e7ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
