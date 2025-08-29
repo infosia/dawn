@@ -270,7 +270,8 @@ MaybeError ValidateBindGroupLayoutEntry(DeviceBase* device,
 
         DAWN_INVALID_IF(entry->visibility & wgpu::ShaderStage::Vertex &&
                             texelBufferLayout->access != wgpu::TexelBufferAccess::ReadOnly,
-                        "Vertex visibility requires read-only texel buffer access.");
+                        "Writeable texel buffer access (%s) used with visibility in %s.",
+                        texelBufferLayout->access, wgpu::ShaderStage::Vertex);
 
         const Format* format;
         DAWN_TRY_ASSIGN(format, device->GetInternalFormat(texelBufferLayout->format));
