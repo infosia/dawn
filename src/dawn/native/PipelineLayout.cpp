@@ -275,12 +275,13 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
     };
 
     // Does the trivial conversions from a ShaderBindingInfo to a BindGroupLayoutEntry
-    std::vector<std::unique_ptr<wgpu::TexelBufferBindingLayout>> texelBufferLayouts;
-
-    auto ConvertMetadataToEntry =
-        [&texelBufferLayouts](
-            BindGroupIndex /*group*/, const ShaderBindingInfo& shaderBinding,
-            const ExternalTextureBindingLayout* externalTextureBindingEntry) -> EntryData {
+    // Stores some information on the stack with new allocations to make sure that pointers that
+    // chained structs don't move.
+    std::vector<std::unique_ptr<TexelBufferBindingLayout>> texelBufferLayouts;
+    std::vector<std::unique_ptr<ExternalTextureBindingLayout>> externalTextureLayouts;
+    auto ConvertMetadataToEntry = [&texelBufferLayouts](
+                                      BindGroupIndex /*group*/,
+                                      const ShaderBindingInfo& shaderBinding) -> EntryData {
         EntryData entry = {};
         entry.bindingArraySize = uint32_t(shaderBinding.arraySize);
 
@@ -308,14 +309,14 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
                 entry.storageTexture.viewDimension = bindingInfo.viewDimension;
             },
             [&](const TexelBufferBindingInfo& bindingInfo) {
-                auto layout = std::make_unique<wgpu::TexelBufferBindingLayout>();
+                texelBufferLayout.push_back(std::make_unique<TexelBufferBindingLayout>());
                 layout->format = bindingInfo.format;
                 layout->access = bindingInfo.access;
-                texelBufferLayouts.push_back(std::move(layout));
                 entry.nextInChain = texelBufferLayouts.back().get();
             },
             [&](const ExternalTextureBindingInfo&) {
-                entry.nextInChain = externalTextureBindingEntry;
+                externalTextureLayout.push_back(std::make_unique<ExternalTextureBindingLayout>());
+                entry.nextInChain = externalTextureLayouts.back().get();
             },
             [&](const InputAttachmentBindingInfo& bindingInfo) {
                 entry.texture.sampleType = bindingInfo.sampleType;
@@ -361,14 +362,6 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
 
     // Data which BindGroupLayoutDescriptor will point to for creation
     PerBindGroup<EntryMap> entryData = {};
-
-    // External texture binding layouts are chained structs that are set as a pointer within
-    // the bind group layout entry. We declare an entry here so that it can be used when needed
-    // in each BindGroupLayoutEntry and so it can stay alive until the call to
-    // GetOrCreateBindGroupLayout. Because ExternalTextureBindingLayout is an empty struct,
-    // there's no issue with using the same struct multiple times.
-    ExternalTextureBindingLayout externalTextureBindingLayout;
-
     uint32_t immediateDataRangeByteSize = 0;
 
     // Loops over all the reflected BindGroupLayoutEntries from shaders.
@@ -383,8 +376,7 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
         for (auto [group, groupBindings] : Enumerate(metadata.bindings)) {
             for (const auto& [bindingNumber, shaderBinding] : groupBindings) {
                 // Create the BindGroupLayoutEntry
-                EntryData entry =
-                    ConvertMetadataToEntry(group, shaderBinding, &externalTextureBindingLayout);
+                EntryData entry = ConvertMetadataToEntry(group, shaderBinding);
                 entry.binding = uint32_t(bindingNumber);
                 entry.visibility = StageBit(stage.shaderStage);
 

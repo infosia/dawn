@@ -36,6 +36,7 @@ namespace dawn::native {
 // Supported Texel buffer formats proposed in
 // https://github.com/gpuweb/gpuweb/blob/main/proposals/texel-buffers.md#plain-color-formats
 bool IsFormatSupportedForTexelBuffer(wgpu::TextureFormat format) {
+    // TODO(https://crbug.com/382544164): Move this information in Format.h/.cpp.
     switch (format) {
         case wgpu::TextureFormat::RGBA8Unorm:
         case wgpu::TextureFormat::RGBA8Uint:
@@ -57,8 +58,6 @@ bool IsFormatSupportedForTexelBuffer(wgpu::TextureFormat format) {
 
 ResultOrError<const Format*> ValidateTexelBufferFormat(DeviceBase* device,
                                                        wgpu::TextureFormat format) {
-    DAWN_INVALID_IF(format == wgpu::TextureFormat::Undefined, "Texel buffer format is undefined.");
-
     const Format* internalFormat = nullptr;
     DAWN_TRY_ASSIGN(internalFormat, device->GetInternalFormat(format));
 

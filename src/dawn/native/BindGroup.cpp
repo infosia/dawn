@@ -321,6 +321,8 @@ MaybeError ValidateTexelBufferBinding(DeviceBase* device,
                                       const TexelBufferBindingEntry* texelBufferBindingEntry,
                                       const TexelBufferBindingInfo& layout,
                                       UsageValidationMode mode) {
+    // TODO(https://crbug.com/382544164): Also check only one thing can be chained. It is not valid
+    // to chain both external textures and texel buffer.
     DAWN_INVALID_IF(
         entry.buffer != nullptr || entry.sampler != nullptr || entry.textureView != nullptr,
         "Expected only texelBufferView to be set for binding entry.");
@@ -335,6 +337,7 @@ MaybeError ValidateTexelBufferBinding(DeviceBase* device,
                     texelBufferBindingEntry->texelBufferView->GetFormat(),
                     texelBufferBindingEntry->texelBufferView, layout.format);
 
+    // TODO(https://crbug.com/382544164): This constraint isn't in the proposal, remove it.
     if (layout.access == wgpu::TexelBufferAccess::ReadWrite) {
         DAWN_TRY(ValidateCanUseAs(buffer, wgpu::BufferUsage::Storage));
     }
@@ -619,12 +622,6 @@ ResultOrError<UnpackedPtr<BindGroupDescriptor>> ValidateBindGroupDescriptor(
                 i);
         }
 
-        const TexelBufferBindingEntry* texelBufferEntry = unpacked.Get<TexelBufferBindingEntry>();
-        DAWN_INVALID_IF(
-            texelBufferEntry != nullptr &&
-                !std::holds_alternative<TexelBufferBindingInfo>(bindingInfo.bindingLayout),
-            "nextInChain must be nullptr.");
-
         // Perform binding-type specific validation.
         DAWN_TRY(MatchVariant(
             bindingInfo.bindingLayout,
@@ -656,18 +653,19 @@ ResultOrError<UnpackedPtr<BindGroupDescriptor>> ValidateBindGroupDescriptor(
                 return {};
             },
             [&](const TexelBufferBindingInfo& layout) -> MaybeError {
-                if (texelBufferEntry) {
-                    DAWN_TRY_CONTEXT(
-                        ValidateTexelBufferBinding(device, entry, texelBufferEntry, layout, mode),
-                        "validating entries[%u] as a Texel Buffer."
-                        "\nExpected entry layout: %s",
-                        i, layout);
-                    return {};
-                }
-                return DAWN_VALIDATION_ERROR(
-                    "entries[%u] not a TexelBuffer when the layout contains an TexelBuffer "
-                    "entry.",
-                    i);
+                const TexelBufferBindingEntry* texelBufferEntry =
+                    unpacked.Get<TexelBufferBindingEntry>();
+                DAWN_INVALID_IF(texelBufferEntry == nullptr,
+                                "entries[%u] not a TexelBufferView when the layout contains a "
+                                "TexelBufferBinding entry.",
+                                i);
+
+                DAWN_TRY_CONTEXT(
+                    ValidateTexelBufferBinding(device, entry, texelBufferEntry, layout, mode),
+                    "validating entries[%u] as a Texel Buffer."
+                    "\nExpected entry layout: %s",
+                    i, layout);
+                return {};
             },
             [&](const SamplerBindingInfo& layout) -> MaybeError {
                 DAWN_TRY_CONTEXT(ValidateSamplerBinding(device, entry, layout),

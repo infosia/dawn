@@ -210,6 +210,7 @@ void SyncScopeUsageTracker::AddBindGroup(BindGroupBase* group) {
                 usage = kReadOnlyTexelBuffer;
                 break;
             case wgpu::TexelBufferAccess::ReadWrite:
+                // TODO(https://crbug.com/382544164): This should be TexelBuffer
                 usage = wgpu::BufferUsage::Storage;
                 break;
             case wgpu::TexelBufferAccess::Undefined:
