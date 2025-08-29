@@ -516,6 +516,14 @@ void EnforceLimitSpecInvariants(CombinedLimits* limits, wgpu::FeatureLevel featu
     }
 }
 
+std::vector<std::string> GetLimitsNames() {
+    std::vector<std::string> vec;
+#define X(Scope, Class, limitName, ...) vec.push_back(#limitName);
+    LIMITS(X)
+#undef X
+    return vec;
+}
+
 MaybeError FillLimits(Limits* outputLimits,
                       const FeaturesSet& supportedFeatures,
                       const CombinedLimits& combinedLimits) {

@@ -28,7 +28,9 @@
 #ifndef SRC_DAWN_NATIVE_LIMITS_H_
 #define SRC_DAWN_NATIVE_LIMITS_H_
 
+#include <string>
 #include <unordered_set>
+#include <vector>
 
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Error.h"
@@ -66,6 +68,9 @@ MaybeError ValidateLimits(const CombinedLimits& supportedLimits,
 MaybeError ValidateAndUnpackLimitsIn(const Limits* chainedLimits,
                                      const std::unordered_set<wgpu::FeatureName>& supportedFeatures,
                                      CombinedLimits* out);
+
+// Returns a list (as an unordered set) of all the limit field members as strings.
+std::vector<std::string> GetLimitsNames();
 
 // Unpack |chainedLimits| into |out|.
 void UnpackLimitsIn(const Limits* chainedLimits, CombinedLimits* out);
