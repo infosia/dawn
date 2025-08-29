@@ -1598,6 +1598,9 @@ TEST_P(DynamicBindingArrayTests, PinDoesZeroInit) {
     }
 }
 
+// TODO check size is zero and filled with zeroes for a few default resources.
+// TODO check a few cases with non-default resources.
+
 DAWN_INSTANTIATE_TEST(DynamicBindingArrayTests, D3D12Backend(), MetalBackend(), VulkanBackend());
 
 }  // anonymous namespace
