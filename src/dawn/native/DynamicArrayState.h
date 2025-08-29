@@ -47,6 +47,10 @@ enum class ResourceType : uint32_t;
 
 namespace dawn::native {
 
+// Returns the order in which we will put the default bindings at the end of the dynamic binding
+// array.
+std::vector<tint::ResourceType> GetDefaultBindingOrder(wgpu::DynamicBindingKind kind);
+
 // An optional component of a BindGroup that's used to track the resources that are in the dynamic
 // binding array part. It helps maintain the metadata buffer that's used in shaders to know if it is
 // valid to access an entry of the dynamic binding array with a given type (note that the writing of

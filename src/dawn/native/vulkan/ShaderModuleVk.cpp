@@ -41,6 +41,7 @@
 #include "dawn/native/CacheRequest.h"
 #include "dawn/native/ComputePipeline.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/DynamicArrayState.h"
 #include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/PhysicalDevice.h"
@@ -249,8 +250,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         // The resourceBindingConfig only uses remapped bind points.
         resourceBindingConfig.bindings[remappedDynamicArrayBindPoint] = {
             .storage_buffer_binding = metadataBindPoint,
-            // TODO(https://crbug.com/435317394): Support for all the resource types.
-            .default_binding_type_order = {},
+            .default_binding_type_order = GetDefaultBindingOrder(bgl->GetDynamicArrayKind()),
         };
     }
 
