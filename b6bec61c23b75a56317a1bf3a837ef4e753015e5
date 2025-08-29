@@ -211,6 +211,30 @@
       },
       "revId": "b6bec61c23b75a56317a1bf3a837ef4e753015e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3dcf365_9c719374",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-08-29T07:52:07Z",
+      "side": 1,
+      "message": "In we don\u0027t need it because this metadata is used in three inspector calls that are irrelevant for bindless:\n\n - [GetSamplerTextureUses]( https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/wgsl/inspector/inspector.h;drc\u003d838cd911eec65e5379f4650f81dc7c45e77bc3da;l\u003d91) which is not use outside of Tint.\n - [GetSamplerAndNonSamplerTextureUses](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/wgsl/inspector/inspector.h;drc\u003d838cd911eec65e5379f4650f81dc7c45e77bc3da;l\u003d99) unpacked into [samplerAndNonSamplerTexturePairs](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/ShaderModule.h;drc\u003db7338571b509ecbe3ce428ce1aac23e1143ade0c;l\u003d291) used only in the GL backend (which won\u0027t support bindless) and for computing the SampleType in [PipelineLayout defaulting](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/PipelineLayout.cpp;drc\u003d9a44a5027dd82f1bda410419dbbaa7b6066bed97;l\u003d398)\n - [GetTextureQueries](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/wgsl/inspector/inspector.h;drc\u003d838cd911eec65e5379f4650f81dc7c45e77bc3da;l\u003d144) which is only used for emulation in the GL backend (which won\u0027t support bindless).\n \nOf note: in the future we\u0027ll need to add `texture_2d\u003cunfilterable, f32\u003e` of sorts with some matching in Tint. This is because right now it is Dawn that requires in the layout that the texture sample type matches \"float\" or \"unfilterable-float\" but with bindless that will need to be changed to be a runtime type check.",
+      "parentUuid": "3b7c1fc3_b019a060",
+      "range": {
+        "startLine": 670,
+        "startChar": 0,
+        "endLine": 674,
+        "endChar": 21
+      },
+      "revId": "b6bec61c23b75a56317a1bf3a837ef4e753015e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
