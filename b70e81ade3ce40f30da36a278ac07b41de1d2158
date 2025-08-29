@@ -16,6 +16,24 @@
       "message": "Heaps may use `D3D12_CPU_PAGE_PROPERTY_UNKNOWN` (but kinda rare). On UMA, `UNKNOWN` + `L0` could be either `READBACK` or `UPLOAD`, while on discrete GPUs `UNKNOWN` + `L1` maps only to `DEFAULT`. I haven\u0027t seen WebNN produce anything `UNKNOWN`, yet. Suggest to at-least reject the UMA case to avoid misclassification. The rest of the code LGTM.",
       "revId": "b70e81ade3ce40f30da36a278ac07b41de1d2158",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b77482c_a3ff9557",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000861
+      },
+      "writtenOn": "2025-08-29T21:09:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bdbbd68_01dd53dd",
+      "revId": "b70e81ade3ce40f30da36a278ac07b41de1d2158",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

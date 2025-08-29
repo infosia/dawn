@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56fcce7b_ec04b314",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000861
+      },
+      "writtenOn": "2025-08-29T21:09:28Z",
+      "side": 1,
+      "message": "WebNN/SharedImage buffers use CUSTOM heaps for UMA",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
