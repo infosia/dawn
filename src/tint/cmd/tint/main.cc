@@ -48,6 +48,7 @@
 #include "src/tint/lang/core/ir/load.h"
 #include "src/tint/lang/core/ir/transform/single_entry_point.h"
 #include "src/tint/lang/core/ir/transform/substitute_overrides.h"
+#include "src/tint/api/common/resource_binding_config.h"
 #include "src/tint/lang/core/ir/var.h"
 #include "src/tint/lang/core/type/f16.h"
 #include "src/tint/lang/core/type/resource_type.h"
