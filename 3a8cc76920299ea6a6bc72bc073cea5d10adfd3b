@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec1e86e2_fb317b8f",
+        "filename": "src/tint/lang/core/ir/transform/resource_binding.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-29T01:23:00Z",
+      "side": 1,
+      "message": "I think this needs to check the array_length member first? Otherwise you\u0027re relying on robustness to clamp the access, which could lead to weird results here (e.g sometimes returning `true` for an OOB index). I\u0027m assuming that an OOB index should always return `false`.",
+      "revId": "3a8cc76920299ea6a6bc72bc073cea5d10adfd3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
