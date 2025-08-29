@@ -94,9 +94,65 @@ ResultOrError<Ref<SharedBufferMemory>> SharedBufferMemory::Create(
             }
             break;
         case D3D12_HEAP_TYPE_CUSTOM:
-            return DAWN_VALIDATION_ERROR(
-                "ID3D12Resources allocated on D3D12_HEAP_TYPE_CUSTOM heaps are not supported by "
-                "SharedBufferMemory.");
+            if (device->GetDeviceInfo().isUMA) {
+                // On UMA system, CUSTOM heap is treated as DEFAULT heap + additional usages
+                // depending on CPU access.
+                usages |= wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst |
+                          wgpu::BufferUsage::Vertex | wgpu::BufferUsage::Index |
+                          wgpu::BufferUsage::Indirect | wgpu::BufferUsage::QueryResolve;
+
+                if (desc.Flags & D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS) {
+                    usages |= wgpu::BufferUsage::Storage;
+                }
+                if (IsAligned(desc.Width, D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT)) {
+                    usages |= wgpu::BufferUsage::Uniform;
+                }
+
+                switch (heapProperties.CPUPageProperty) {
+                    case D3D12_CPU_PAGE_PROPERTY_WRITE_COMBINE:
+                        usages |= wgpu::BufferUsage::MapWrite;
+                        break;
+                    case D3D12_CPU_PAGE_PROPERTY_WRITE_BACK:
+                        usages |= wgpu::BufferUsage::MapRead;
+                        if (device->GetDeviceInfo().isCacheCoherentUMA) {
+                            usages |= wgpu::BufferUsage::MapWrite;
+                        }
+                        break;
+                    case D3D12_CPU_PAGE_PROPERTY_NOT_AVAILABLE:
+                        // Do nothing
+                        break;
+                    default:
+                        return DAWN_VALIDATION_ERROR(
+                            "ID3D12Resources allocated on unsupported heap.");
+                }
+            } else {
+                if (heapProperties.CPUPageProperty == D3D12_CPU_PAGE_PROPERTY_NOT_AVAILABLE &&
+                    heapProperties.MemoryPoolPreference == D3D12_MEMORY_POOL_L1) {
+                    // CUSTOM heap with no CPU access and in L1 is equivalent to DEFAULT heap.
+                    usages |= wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst |
+                              wgpu::BufferUsage::Vertex | wgpu::BufferUsage::Index |
+                              wgpu::BufferUsage::Indirect | wgpu::BufferUsage::QueryResolve;
+
+                    if (desc.Flags & D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS) {
+                        usages |= wgpu::BufferUsage::Storage;
+                    }
+                    if (IsAligned(desc.Width, D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT)) {
+                        usages |= wgpu::BufferUsage::Uniform;
+                    }
+                } else if (heapProperties.CPUPageProperty == D3D12_CPU_PAGE_PROPERTY_WRITE_BACK &&
+                           heapProperties.MemoryPoolPreference == D3D12_MEMORY_POOL_L0) {
+                    // CUSTOM heap with WRITE_BACK + L0 is equivalent to READBACK heap.
+                    usages |= wgpu::BufferUsage::MapRead | wgpu::BufferUsage::CopyDst;
+                } else if (heapProperties.CPUPageProperty ==
+                               D3D12_CPU_PAGE_PROPERTY_WRITE_COMBINE &&
+                           heapProperties.MemoryPoolPreference == D3D12_MEMORY_POOL_L0) {
+                    // CUSTOM heap with WRITE_COMBINE + L0 is equivalent to UPLOAD heap.
+                    usages |= wgpu::BufferUsage::MapWrite | wgpu::BufferUsage::CopySrc;
+                } else {
+                    return DAWN_VALIDATION_ERROR("ID3D12Resources allocated on unsupported heap.");
+                }
+            }
+            break;
         default:
             DAWN_UNREACHABLE();
     }
