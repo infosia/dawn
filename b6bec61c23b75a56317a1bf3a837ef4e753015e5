@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bdb8dda_10f85eb2",
+        "filename": "src/tint/lang/core/ir/transform/resource_binding.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-29T01:34:52Z",
+      "side": 1,
+      "message": "Do the array_length check in `hasBinding`, and then you only need to check `hasBinding` here.",
+      "revId": "b6bec61c23b75a56317a1bf3a837ef4e753015e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7070cc3c_e720c1fe",
+        "filename": "src/tint/lang/core/ir/transform/resource_binding.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-29T01:34:52Z",
+      "side": 1,
+      "message": "What needs to be fixed?",
+      "revId": "b6bec61c23b75a56317a1bf3a837ef4e753015e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "269df887_123017b4",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-29T01:34:52Z",
+      "side": 1,
+      "message": "Nit: remove",
+      "fixSuggestions": [
+        {
+          "fixId": "b0de9f01_c73a3f37",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/wgsl/inspector/inspector.cc",
+              "range": {
+                "startLine": 30,
+                "startChar": 0,
+                "endLine": 31,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "b6bec61c23b75a56317a1bf3a837ef4e753015e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdd0e8fc_14f54b78",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-29T01:34:52Z",
+      "side": 1,
+      "message": "This seems problematic. The stuff we figure out in `RecordBuiltinCallMetadata` is presumably still important even for textures that come from `getBinding`. Dawn needs to know that information for each texture that it binds. But the indices aren\u0027t always constant, so we won\u0027t know here which texture the metadata corresponds to.\n\nI\u0027m not sure how we solve this.",
+      "range": {
+        "startLine": 670,
+        "startChar": 0,
+        "endLine": 674,
+        "endChar": 21
+      },
+      "revId": "b6bec61c23b75a56317a1bf3a837ef4e753015e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
