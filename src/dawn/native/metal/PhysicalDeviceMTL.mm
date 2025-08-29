@@ -449,6 +449,11 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::MetalPolyfillUnpack2x16snorm, true);
     }
 
+    // chromium:407109056: Floating point clamp is slightly inaccurate for subnormal values.
+    if (gpu_info::IsAMD(vendorId)) {
+        deviceToggles->Default(Toggle::PolyfillClampFloat, true);
+    }
+
     // On some Intel GPUs vertex only render pipeline get wrong depth result if no fragment
     // shader provided. Create a placeholder fragment shader module to work around this issue.
     if (gpu_info::IsIntel(vendorId)) {
