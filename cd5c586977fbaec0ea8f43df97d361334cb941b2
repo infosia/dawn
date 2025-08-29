@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71b4271e_41e75f20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-08-29T18:58:05Z",
+      "side": 1,
+      "message": "This CL is now dependent on https://dawn-review.googlesource.com/c/dawn/+/259915, but some some reason it won\u0027t let me upload it if I actually have it rebased on that? In any case, it should be able to land after that does.",
+      "revId": "cd5c586977fbaec0ea8f43df97d361334cb941b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
