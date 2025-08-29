@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec45913e_920be7a4",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-29T00:31:49Z",
+      "side": 0,
+      "message": "Note, might need to add this special handling in `WaitForQueueSerialImpl`.",
+      "range": {
+        "startLine": 187,
+        "startChar": 16,
+        "endLine": 195,
+        "endChar": 17
+      },
+      "revId": "040dda791b377d33e3b2dcdeebc471fdf054e7ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
