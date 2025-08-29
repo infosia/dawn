@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "57b28c26_3747a1cf",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-29T15:47:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df0ebd46_883b8b58",
+      "range": {
+        "startLine": 63,
+        "startChar": 41,
+        "endLine": 64,
+        "endChar": 67
+      },
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c611b11e_b16dcd62",
@@ -41,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9112672_ce646977",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-29T15:47:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c611b11e_b16dcd62",
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ab55978_028705a9",
@@ -54,6 +96,24 @@
       "writtenOn": "2025-08-26T16:06:29Z",
       "side": 1,
       "message": "nit: These are creating buffers mapped on creation and writing 10000 zeroes in it. Creating a buffer directly would avoid this. (the utils helper is mainly useful to upload some initial data).",
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8a2967a_94010da2",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-29T15:47:23Z",
+      "side": 1,
+      "message": "I think what you are getting at is that we get zero by default so trying to load zeros in is pointless and possibly wasteful.",
+      "parentUuid": "4ab55978_028705a9",
       "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -122,6 +182,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9d4d62f_59e73254",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-29T15:47:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "021d9239_44361e96",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 36
+      },
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99ccff31_06c10e3c",
@@ -135,6 +219,24 @@
       "writtenOn": "2025-08-26T16:06:29Z",
       "side": 1,
       "message": "[1]",
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6789609a_22f1442d",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-08-29T15:47:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99ccff31_06c10e3c",
       "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
