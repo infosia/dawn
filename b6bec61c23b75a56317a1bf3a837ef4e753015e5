@@ -235,6 +235,30 @@
       },
       "revId": "b6bec61c23b75a56317a1bf3a837ef4e753015e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7212526c_e5dab320",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-29T13:22:14Z",
+      "side": 1,
+      "message": "Not caring about GL always makes everything better. Thanks for the information.",
+      "parentUuid": "d3dcf365_9c719374",
+      "range": {
+        "startLine": 670,
+        "startChar": 0,
+        "endLine": 674,
+        "endChar": 21
+      },
+      "revId": "b6bec61c23b75a56317a1bf3a837ef4e753015e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
