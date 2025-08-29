@@ -132,9 +132,8 @@ ResultOrError<UnpackedPtr<TexelBufferViewDescriptor>> ValidateTexelBufferViewDes
     DAWN_INVALID_IF(desc->offset % texelSize != 0,
                     "Texel buffer view offset (%u) must be %u-byte aligned.", desc->offset,
                     texelSize);
-    DAWN_INVALID_IF(size % texelSize != 0,
-                    "Texel buffer view size (%u) is not a multiple of texel size %u.", size,
-                    texelSize);
+    DAWN_INVALID_IF(size % texelSize != 0, "Texel buffer view size (%u) must be %u-byte aligned.",
+                    size, texelSize);
 
     return desc;
 }

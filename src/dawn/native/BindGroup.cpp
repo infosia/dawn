@@ -338,6 +338,7 @@ MaybeError ValidateTexelBufferBinding(DeviceBase* device,
                     texelBufferEntry->texelBufferView->GetFormat(),
                     texelBufferEntry->texelBufferView, layout.format);
 
+    // TODO(https://crbug.com/382544164): This constraint isn't in the proposal, remove it.
     if (layout.access == wgpu::TexelBufferAccess::ReadWrite) {
         DAWN_TRY(ValidateCanUseAs(buffer, wgpu::BufferUsage::Storage));
     }
