@@ -46,6 +46,30 @@
       },
       "revId": "040dda791b377d33e3b2dcdeebc471fdf054e7ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cf895a9_7df727a2",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-29T20:01:15Z",
+      "side": 0,
+      "message": "The main part I needed to update was to ensure that we don\u0027t use the `INJECT_ERROR_OR_RUN` macro when we are in the `Disconnected` state. I believe that macro is used for the fuzzers to inject errors, and effectively, we just want to make sure the fuzzer doesn\u0027t find a way to keep injecting errors recursively and never allow the device to fully teardown.\n\nAnyways, I added the condition with the `[[unlikely]]` attribute since it should only ever need to happen once.",
+      "parentUuid": "386d9b0c_52acda1c",
+      "range": {
+        "startLine": 187,
+        "startChar": 16,
+        "endLine": 195,
+        "endChar": 17
+      },
+      "revId": "040dda791b377d33e3b2dcdeebc471fdf054e7ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
