@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9ec08945_66c840f4",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-29T01:24:46Z",
+      "side": 1,
+      "message": "Also, if I’m not mistaken, these usages are mainly for Vulkan device capability checks. I’m not aware of devices that support only uniform or only storage texel buffers, but it seems reasonable to minimize assumptions here, as Vulkan does.",
+      "parentUuid": "b92be923_f30153bb",
+      "range": {
+        "startLine": 78,
+        "startChar": 55,
+        "endLine": 78,
+        "endChar": 95
+      },
+      "revId": "5f63ee392cfb7d13984540a5f4eb47e4a432d9fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "970ba59a_2cf536fa",
         "filename": "src/dawn/native/vulkan/TexelBufferViewVk.cpp",
         "patchSetId": 6
