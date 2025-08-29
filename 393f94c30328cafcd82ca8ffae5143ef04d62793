@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "041a3ec3_9d47bae8",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-29T13:18:36Z",
+      "side": 1,
+      "message": "```suggestion\n[[maybe_unused]] std::optional\u003ctint::ResourceBindingConfig\u003e GenerateResourceBindingConfig(\n```",
+      "revId": "393f94c30328cafcd82ca8ffae5143ef04d62793",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
