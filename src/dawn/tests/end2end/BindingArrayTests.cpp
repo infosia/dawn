@@ -1494,6 +1494,9 @@ TEST_P(DynamicBindingArrayTests, HasBindingOOBIsFalse) {
     EXPECT_BUFFER_U32_EQ(0, resultBuffer, 12);
 }
 
+// TODO check size is zero and filled with zeroes for a few default resources.
+// TODO check a few cases with non-default resources.
+
 DAWN_INSTANTIATE_TEST(DynamicBindingArrayTests, D3D12Backend(), MetalBackend(), VulkanBackend());
 
 }  // anonymous namespace
