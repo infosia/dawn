@@ -34,6 +34,24 @@
       "parentUuid": "ec1e86e2_fb317b8f",
       "revId": "3a8cc76920299ea6a6bc72bc073cea5d10adfd3b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bd8068e_6f1aad1f",
+        "filename": "src/tint/lang/core/ir/transform/resource_binding.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-29T01:55:15Z",
+      "side": 1,
+      "message": "Yea, the dawn side to provide the validation isn\u0027t done, so getting this in lets dawn test the method, and we add the validation afterwards when dawn is ready.",
+      "parentUuid": "9bee4826_71b1bd8f",
+      "revId": "3a8cc76920299ea6a6bc72bc073cea5d10adfd3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
