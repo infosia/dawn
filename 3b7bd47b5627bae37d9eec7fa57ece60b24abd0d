@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f0fa62e_8c678732",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-29T01:19:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f8575e1a_56ade2a3",
+      "range": {
+        "startLine": 323,
+        "startChar": 4,
+        "endLine": 323,
+        "endChar": 98
+      },
+      "revId": "3b7bd47b5627bae37d9eec7fa57ece60b24abd0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1215eb63_9457baeb",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-08-27T22:16:10Z",
       "side": 1,
       "message": "We should move this out of this `if` clause and do it unconditionally now. That way we don\u0027t need the explicit check at [1].",
+      "range": {
+        "startLine": 596,
+        "startChar": 12,
+        "endLine": 597,
+        "endChar": 65
+      },
+      "revId": "3b7bd47b5627bae37d9eec7fa57ece60b24abd0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2adccdd9_2656aca0",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-29T01:19:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1215eb63_9457baeb",
       "range": {
         "startLine": 596,
         "startChar": 12,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a4e0ed6_16757a36",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-29T01:19:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6a9ccdaf_d6e56e0b",
+      "range": {
+        "startLine": 617,
+        "startChar": 8,
+        "endLine": 620,
+        "endChar": 56
+      },
+      "revId": "3b7bd47b5627bae37d9eec7fa57ece60b24abd0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2405bea5_33cf737c",
@@ -100,6 +172,30 @@
       "writtenOn": "2025-08-27T22:16:10Z",
       "side": 1,
       "message": "This should just be simplified to something like:\n\n```\nif (auto* texelBufferEntry \u003d unpacked.Get\u003cTexelBufferBindingEntry\u003e()) {\n    DAWN_TRY_CONTEXT(\n        ValidateTexelBufferBinding(device, unpacked, texelBufferEntry, layout, mode),\n        \"validating entries[%u] as a Texel Buffer.\"\n        \"\\nExpected entry layout: %s\",\n        i, layout);\n    return {};\n}\nreturn DAWN_VALIDATION_ERROR(\n    \"entries[%u] not a TexelBuffer when the layout contains an TexelBuffer \"\n    \"entry.\", i);\n```",
+      "range": {
+        "startLine": 653,
+        "startChar": 16,
+        "endLine": 671,
+        "endChar": 31
+      },
+      "revId": "3b7bd47b5627bae37d9eec7fa57ece60b24abd0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f67bf401_34fa2032",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-29T01:19:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2405bea5_33cf737c",
       "range": {
         "startLine": 653,
         "startChar": 16,
@@ -133,6 +229,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "00a1eac5_17fe6feb",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-29T01:19:31Z",
+      "side": 1,
+      "message": "I don\u0027t think we need it neither, having just a vector to maintain the lifetime makes sense.",
+      "parentUuid": "f74713c7_83c715cf",
+      "range": {
+        "startLine": 278,
+        "startChar": 4,
+        "endLine": 278,
+        "endChar": 98
+      },
+      "revId": "3b7bd47b5627bae37d9eec7fa57ece60b24abd0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b9deab57_b7989e5e",
@@ -146,6 +266,30 @@
       "writtenOn": "2025-08-27T22:16:10Z",
       "side": 1,
       "message": "nit. Should we just have a `DAWN_CHECK` here until we implement the rest for Metal?",
+      "range": {
+        "startLine": 79,
+        "startChar": 49,
+        "endLine": 79,
+        "endChar": 84
+      },
+      "revId": "3b7bd47b5627bae37d9eec7fa57ece60b24abd0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94bf2bfc_e2627e6d",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 23
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-29T01:19:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b9deab57_b7989e5e",
       "range": {
         "startLine": 79,
         "startChar": 49,
@@ -179,6 +323,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "59b28256_9c966575",
+        "filename": "src/dawn/native/metal/PipelineLayoutMTL.mm",
+        "patchSetId": 23
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-29T01:19:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a109d2d3_73ddeaef",
+      "range": {
+        "startLine": 82,
+        "startChar": 24,
+        "endLine": 83,
+        "endChar": 38
+      },
+      "revId": "3b7bd47b5627bae37d9eec7fa57ece60b24abd0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d04ac891_0048d72a",
@@ -192,6 +360,30 @@
       "writtenOn": "2025-08-27T22:16:10Z",
       "side": 1,
       "message": "Maybe to ensure that this comment is true in this CL, we should be using `DAWN_UNREACHABLE` or an equivalent here instead? (And then actually implementing it like this without the comment in the child CL?)",
+      "range": {
+        "startLine": 226,
+        "startChar": 12,
+        "endLine": 227,
+        "endChar": 59
+      },
+      "revId": "3b7bd47b5627bae37d9eec7fa57ece60b24abd0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "491a1e39_03fe6426",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-29T01:19:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d04ac891_0048d72a",
       "range": {
         "startLine": 226,
         "startChar": 12,
@@ -225,6 +417,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "acc0a871_3323eb83",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-29T01:19:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0f495a93_9731d77d",
+      "range": {
+        "startLine": 200,
+        "startChar": 20,
+        "endLine": 200,
+        "endChar": 87
+      },
+      "revId": "3b7bd47b5627bae37d9eec7fa57ece60b24abd0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6d78c93_845d06c9",
@@ -238,6 +454,30 @@
       "writtenOn": "2025-08-27T22:16:10Z",
       "side": 1,
       "message": "Is this necessary? Or does it actually work on the wire? (I think it might?)",
+      "range": {
+        "startLine": 554,
+        "startChar": 4,
+        "endLine": 554,
+        "endChar": 34
+      },
+      "revId": "3b7bd47b5627bae37d9eec7fa57ece60b24abd0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8fb476e_b816d3e4",
+        "filename": "src/dawn/tests/unittests/validation/GetBindGroupLayoutValidationTests.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-29T01:19:31Z",
+      "side": 1,
+      "message": "I was getting this error:\n```\nExpected: bind group layout cache eq (other: 8-byte object \u003c40-EC 06-00 EC-2A 00-00\u003e)\n  Actual: 8-byte object \u003cC0-ED 06-00 EC-2A 00-00\u003e\n```\nIt looks like the server and client are using different internal pointers for the created `BindGroupLayout`. That makes me think skipping the wire path might be reasonable.",
+      "parentUuid": "d6d78c93_845d06c9",
       "range": {
         "startLine": 554,
         "startChar": 4,
@@ -271,6 +511,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a301feee_9ebdcd2a",
+        "filename": "src/dawn/tests/unittests/validation/TexelBufferValidationTests.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-29T01:19:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "40708f15_14f99c96",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 20
+      },
+      "revId": "3b7bd47b5627bae37d9eec7fa57ece60b24abd0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fa42fe90_239ff4bc",
@@ -284,6 +548,30 @@
       "writtenOn": "2025-08-27T22:16:10Z",
       "side": 1,
       "message": "I think this test doesn\u0027t make sense here. This is using native specific stuff in the validation tests which we try to avoid because in theory, these tests should be able to run against just the webgpu header. If anything it might make more sense to try to bind a TexelBuffer to a Texture binding slot to verify that it fails instead?",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 0
+      },
+      "revId": "3b7bd47b5627bae37d9eec7fa57ece60b24abd0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "203f398c_63849eaa",
+        "filename": "src/dawn/tests/unittests/validation/TexelBufferValidationTests.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-08-29T01:19:31Z",
+      "side": 1,
+      "message": "Acknowledged. I agree that relying on native headers for a validation test feels odd. Binding to a texture instead achieves the behavior I wanted to test.",
+      "parentUuid": "fa42fe90_239ff4bc",
       "range": {
         "startLine": 193,
         "startChar": 0,
