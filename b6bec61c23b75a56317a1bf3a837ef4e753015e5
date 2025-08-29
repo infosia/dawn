@@ -109,6 +109,30 @@
       },
       "revId": "b6bec61c23b75a56317a1bf3a837ef4e753015e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89aa6c3c_d6e7604b",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-29T01:48:26Z",
+      "side": 1,
+      "message": "How does this work for `binding_array`? We just return the metadata for the whole binding array, and so Dawn applies that information to every single element?\n\nIf so, so we do the same here? Does that break stuff?\n(I\u0027m not particularly familiar with what Dawn does with all of this information, need to read up).",
+      "parentUuid": "cdd0e8fc_14f54b78",
+      "range": {
+        "startLine": 670,
+        "startChar": 0,
+        "endLine": 674,
+        "endChar": 21
+      },
+      "revId": "b6bec61c23b75a56317a1bf3a837ef4e753015e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
