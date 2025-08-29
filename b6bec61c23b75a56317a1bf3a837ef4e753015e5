@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "80e29935_ada4990c",
+        "filename": "src/tint/lang/core/ir/transform/resource_binding.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-29T02:02:06Z",
+      "side": 1,
+      "message": "I don\u0027t think it should be `read` but based on ... the var? Or maybe that is the right access mode?",
+      "parentUuid": "7070cc3c_e720c1fe",
+      "revId": "b6bec61c23b75a56317a1bf3a837ef4e753015e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "269df887_123017b4",
         "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
         "patchSetId": 7
@@ -84,6 +102,24 @@
           ]
         }
       ],
+      "revId": "b6bec61c23b75a56317a1bf3a837ef4e753015e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "855bc274_73d7d1a0",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-29T02:02:06Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "269df887_123017b4",
       "revId": "b6bec61c23b75a56317a1bf3a837ef4e753015e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -125,6 +161,30 @@
       "side": 1,
       "message": "How does this work for `binding_array`? We just return the metadata for the whole binding array, and so Dawn applies that information to every single element?\n\nIf so, so we do the same here? Does that break stuff?\n(I\u0027m not particularly familiar with what Dawn does with all of this information, need to read up).",
       "parentUuid": "cdd0e8fc_14f54b78",
+      "range": {
+        "startLine": 670,
+        "startChar": 0,
+        "endLine": 674,
+        "endChar": 21
+      },
+      "revId": "b6bec61c23b75a56317a1bf3a837ef4e753015e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b7c1fc3_b019a060",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-08-29T02:02:06Z",
+      "side": 1,
+      "message": "I discussed this with cwallez@ as I was working on it, from the Dawn side the preference was to not have this information come back as texture data. If Dawn decides they need it in here we can add it in later, but for now, the request was to skip resource_binding data.",
+      "parentUuid": "89aa6c3c_d6e7604b",
       "range": {
         "startLine": 670,
         "startChar": 0,
