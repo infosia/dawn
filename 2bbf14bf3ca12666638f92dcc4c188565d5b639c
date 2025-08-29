@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc2ce26c_de962678",
+        "filename": "src/tint/lang/core/ir/transform/resource_binding.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-29T01:45:48Z",
+      "side": 1,
+      "message": "übernit: I think these could just be actual methods, instead of lambas. They don\u0027t seem to capture much except `sb` and `resource_type_to_idx`, which can just be passed in. Keeps `Process` a little smaller and easier to read.",
+      "revId": "2bbf14bf3ca12666638f92dcc4c188565d5b639c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
