@@ -143,6 +143,7 @@ enum class Toggle {
     ExposeWGSLExperimentalFeatures,
     DisablePolyfillsOnIntegerDivisonAndModulo,
     ScalarizeMaxMinClamp,
+    PolyfillClampFloat,
     SubgroupShuffleClamped,
     MetalDisableModuleConstantF16,
     EnableImmediateErrorHandling,
