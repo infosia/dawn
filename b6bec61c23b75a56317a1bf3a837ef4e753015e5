@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca428194_2713120c",
+        "filename": "src/tint/lang/core/ir/transform/resource_binding.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-08-29T02:07:44Z",
+      "side": 1,
+      "message": "For `handle` it\u0027ll always be read.\n\nBut I guess if this was a storage buffer, then the alias would be an array of pointers? I don\u0027t actually know what that is going to look like, so I guess we\u0027ll deal with that when we get there.",
+      "parentUuid": "80e29935_ada4990c",
+      "revId": "b6bec61c23b75a56317a1bf3a837ef4e753015e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "269df887_123017b4",
