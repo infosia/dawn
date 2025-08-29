@@ -16,6 +16,23 @@
       "message": "More WebGPU-WebNN interop related changes",
       "revId": "9f6665d065a3a8ee1cf68698877b61a9cc7e0693",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5645cbe4_47b05759",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000861
+      },
+      "writtenOn": "2025-08-29T18:02:38Z",
+      "side": 1,
+      "message": "PTAL",
+      "revId": "9f6665d065a3a8ee1cf68698877b61a9cc7e0693",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
