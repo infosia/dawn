@@ -147,6 +147,41 @@ tint::ResourceType ComputeTypeId(const TextureViewBase* view) {
 
 }  // anonymous namespace
 
+std::vector<tint::ResourceType> GetDefaultBindingOrder(wgpu::DynamicBindingKind kind) {
+    DAWN_ASSERT(kind == wgpu::DynamicBindingKind::SampledTexture);
+
+    return {
+        tint::ResourceType::kTexture1d_f32,
+        tint::ResourceType::kTexture1d_i32,
+        tint::ResourceType::kTexture1d_u32,
+        tint::ResourceType::kTexture2d_f32,
+        tint::ResourceType::kTexture2d_i32,
+        tint::ResourceType::kTexture2d_u32,
+        tint::ResourceType::kTexture2dArray_f32,
+        tint::ResourceType::kTexture2dArray_i32,
+        tint::ResourceType::kTexture2dArray_u32,
+        tint::ResourceType::kTexture3d_f32,
+        tint::ResourceType::kTexture3d_i32,
+        tint::ResourceType::kTexture3d_u32,
+        tint::ResourceType::kTextureCube_f32,
+        tint::ResourceType::kTextureCube_i32,
+        tint::ResourceType::kTextureCube_u32,
+        tint::ResourceType::kTextureCubeArray_f32,
+        tint::ResourceType::kTextureCubeArray_i32,
+        tint::ResourceType::kTextureCubeArray_u32,
+
+        tint::ResourceType::kTextureMultisampled2d_f32,
+        tint::ResourceType::kTextureMultisampled2d_i32,
+        tint::ResourceType::kTextureMultisampled2d_u32,
+
+        tint::ResourceType::kTextureDepth2d,
+        tint::ResourceType::kTextureDepth2dArray,
+        tint::ResourceType::kTextureDepthCube,
+        tint::ResourceType::kTextureDepthCubeArray,
+        tint::ResourceType::kTextureDepthMultisampled2d,
+    };
+}
+
 DynamicArrayState::DynamicArrayState(BindingIndex size) {
     mBindings.resize(size);
 
