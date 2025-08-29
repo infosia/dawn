@@ -16,6 +16,24 @@
       "message": "Seems like this will cause more flushing, I think that\u0027s fine though since there aren\u0027t that many server-\u003eclient messages.",
       "revId": "040dda791b377d33e3b2dcdeebc471fdf054e7ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01ea7c17_7145aa0b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 127
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-08-29T21:51:48Z",
+      "side": 1,
+      "message": "Yea, I think this does increase the flushing frequency a bit, though the data throughput will be the same. There\u0027s just a little less batching of the server-\u003eclient messages. To be clear though, the increased frequency is only w.r.t async commands that are not immediately ready. As your investigation revealed, async commands that are immediately ready are actually immediately flushed without batching as well. This just makes the ones that aren\u0027t immediately ready end up looking the same as the others in terms of flushing frequency. Like you said though, I think it should be fine because there aren\u0027t as many server-\u003eclient messages. This also greatly increases the observed performance and is necessary to implement `WaitAny` on the wire client eventually.",
+      "parentUuid": "72fa9fe6_858da217",
+      "revId": "040dda791b377d33e3b2dcdeebc471fdf054e7ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
