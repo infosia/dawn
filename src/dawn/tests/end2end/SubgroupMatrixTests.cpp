@@ -241,6 +241,31 @@ struct Matrix {
     }
 };
 
+void GenerateReferenceMatrixMultiply(Matrix& expected,
+                                     const Matrix& lhs,
+                                     const Matrix& rhs,
+                                     const Matrix& acc) {
+    const bool is_float = expected.component_type == wgpu::SubgroupMatrixComponentType::F16 ||
+                          expected.component_type == wgpu::SubgroupMatrixComponentType::F32;
+    for (uint32_t r = 0; r < expected.rows; r++) {
+        for (uint32_t c = 0; c < expected.cols; c++) {
+            if (is_float) {
+                float ref = acc.GetFloat(c, r);
+                for (uint32_t k = 0; k < lhs.cols; k++) {
+                    ref += lhs.GetFloat(k, r) * rhs.GetFloat(c, k);
+                }
+                expected.SetFloat(ref, c, r);
+            } else {
+                int64_t ref = acc.GetInt(c, r);
+                for (uint32_t k = 0; k < lhs.cols; k++) {
+                    ref += lhs.GetInt(k, r) * rhs.GetInt(c, k);
+                }
+                expected.SetInt(ref, c, r);
+            }
+        }
+    }
+}
+
 class SubgroupMatrixTest : public DawnTest {
   protected:
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
@@ -336,10 +361,13 @@ enum MatrixOp {
     MatrixScalarMultiply,
 };
 using ColumnMajor = bool;
-DAWN_TEST_PARAM_STRUCT(MatrixMatrixArithmeticParams, MatrixOp, ColumnMajor);
+DAWN_TEST_PARAM_STRUCT(MatrixArithmeticParams, MatrixOp, ColumnMajor);
 
-class SubgroupMatrixArithmeticTest : public DawnTestWithParams<MatrixMatrixArithmeticParams> {
+template <typename Params>
+class SubgroupMatrixArithmeticTest : public DawnTestWithParams<Params> {
   protected:
+    using DawnTestBase::SupportsFeatures;
+
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         std::vector<wgpu::FeatureName> features;
         if (SupportsFeatures({wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix})) {
@@ -352,7 +380,8 @@ class SubgroupMatrixArithmeticTest : public DawnTestWithParams<MatrixMatrixArith
     }
 };
 
-class SubgroupMatrix_MatrixMatrixArithmeticTest : public SubgroupMatrixArithmeticTest {
+class SubgroupMatrix_MatrixMatrixArithmeticTest
+    : public SubgroupMatrixArithmeticTest<MatrixArithmeticParams> {
   public:
     wgpu::ComputePipeline GetComputePipelineFromSubgroupMatrixConfig(
         const wgpu::SubgroupMatrixConfig& config,
@@ -435,31 +464,6 @@ fn main() {
         return device.CreateComputePipeline(&csDesc);
     }
 
-    void GenerateReferenceResult(Matrix& expected,
-                                 const Matrix& lhs,
-                                 const Matrix& rhs,
-                                 const Matrix& acc) {
-        const bool is_float = expected.component_type == wgpu::SubgroupMatrixComponentType::F16 ||
-                              expected.component_type == wgpu::SubgroupMatrixComponentType::F32;
-        for (uint32_t r = 0; r < expected.rows; r++) {
-            for (uint32_t c = 0; c < expected.cols; c++) {
-                if (is_float) {
-                    float ref = acc.GetFloat(c, r);
-                    for (uint32_t k = 0; k < lhs.cols; k++) {
-                        ref += lhs.GetFloat(k, r) * rhs.GetFloat(c, k);
-                    }
-                    expected.SetFloat(ref, c, r);
-                } else {
-                    int64_t ref = acc.GetInt(c, r);
-                    for (uint32_t k = 0; k < lhs.cols; k++) {
-                        ref += lhs.GetInt(k, r) * rhs.GetInt(c, k);
-                    }
-                    expected.SetInt(ref, c, r);
-                }
-            }
-        }
-    }
-
     void TestSubgroupMatrixConfig(const wgpu::SubgroupMatrixConfig& config,
                                   MatrixOp op,
                                   uint32_t subgroupMaxSize,
@@ -521,7 +525,7 @@ fn main() {
 
         // Verify the result against a reference implementation.
         Matrix expected(config.N, config.M, config.resultComponentType, columnMajor);
-        GenerateReferenceResult(expected, inputLHS, inputRHS, acc);
+        GenerateReferenceMatrixMultiply(expected, inputLHS, inputRHS, acc);
         EXPECT_BUFFER_U8_RANGE_EQ(expected.data, output, 0, expected.TotalByteSize());
     }
 };
@@ -570,7 +574,151 @@ DAWN_INSTANTIATE_TEST_P(SubgroupMatrix_MatrixMatrixArithmeticTest,
                             false,
                         });
 
-class SubgroupMatrix_MatrixScalarArithmeticTest : public SubgroupMatrixArithmeticTest {
+using SubgroupMatrix_TiledMatrixMultiplyTest = SubgroupMatrixArithmeticTest<AdapterTestParam>;
+TEST_P(SubgroupMatrix_TiledMatrixMultiplyTest, MatrixMultiply) {
+    // We will test a single workgroup that processes a matrix with size (N*kTileDim, M*kTileDim).
+    // TODO: parameterize this. Bigger causes issues on Metal.
+    constexpr uint32_t kTileDim = 16;
+
+    DAWN_TEST_UNSUPPORTED_IF(
+        !adapter.HasFeature(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix));
+
+    // Query the supported subgroup matrix configurations.
+    wgpu::AdapterInfo info;
+    wgpu::AdapterPropertiesSubgroupMatrixConfigs subgroupMatrixConfigs;
+    info.nextInChain = &subgroupMatrixConfigs;
+    ASSERT_EQ(adapter.GetInfo(&info), wgpu::Status::Success);
+
+    // Test each supported config.
+    for (size_t i = 0; i < subgroupMatrixConfigs.configCount; i++) {
+        auto& config = subgroupMatrixConfigs.configs[i];
+        uint32_t resultComponentByteSize = ComponentTypeToByteSize(config.resultComponentType);
+
+        std::stringstream configInfo;
+        configInfo << "Testing " << config.M << "x" << config.N << "x" << config.K << " "
+                   << ComponentTypeToWgslType(config.componentType) << " -> "
+                   << ComponentTypeToWgslType(config.resultComponentType);
+        SCOPED_TRACE(configInfo.str());
+
+        const uint32_t matrix_cols = config.N * kTileDim;
+        const uint32_t matrix_rows = config.M * kTileDim;
+        const uint32_t matrix_k = config.K * kTileDim;
+
+        // Generate a shader that performs a matrix multiplication that matches the config.
+        std::ostringstream shader;
+        shader << "enable chromium_experimental_subgroup_matrix;\n";
+        if (config.componentType == wgpu::SubgroupMatrixComponentType::F16 ||
+            config.resultComponentType == wgpu::SubgroupMatrixComponentType::F16) {
+            shader << "enable f16;\n";
+        }
+        shader << "\n";
+        shader << "alias ComponentType = " << ComponentTypeToWgslType(config.componentType)
+               << ";\n";
+        shader << "alias ResultComponentType = "
+               << ComponentTypeToWgslType(config.resultComponentType) << ";\n";
+        shader << "\n";
+        shader << "alias LeftType = subgroup_matrix_left<ComponentType, K, M>;";
+        shader << "alias RightType = subgroup_matrix_right<ComponentType, N, K>;";
+        shader << "alias ResultType = subgroup_matrix_result<ResultComponentType, N, M>;";
+        shader << "const M = " << config.M << ";\n";
+        shader << "const N = " << config.N << ";\n";
+        shader << "const K = " << config.K << ";\n";
+        shader << "const kTileDim = " << kTileDim << ";\n";
+        shader << "const kMatrixCols = " << matrix_cols << ";\n";
+        shader << "const kMatrixRows = " << matrix_rows << ";\n";
+        shader << "const kMatrixK = " << matrix_k << ";\n";
+        shader << "const SubgroupMaxSize = " << info.subgroupMaxSize << ";\n";
+        shader << R"(
+            @group(0) @binding(0) var<storage, read>       inputs : array<ComponentType, kMatrixK*kMatrixRows + kMatrixCols*kMatrixK>;
+            @group(0) @binding(1) var<storage, read_write> output : array<ResultComponentType, kMatrixCols*kMatrixRows>;
+
+@compute @workgroup_size(SubgroupMaxSize)
+fn main() {
+  // The LHS matrix is (kMatrixK * kMatrixRows) elements.
+  // The RHS matrix is (kMatrixCols * kMatrixK) elements.
+  // The LHS and RHS matrices are stored in the same buffer.
+  // The RHS matrix starts after the LHS matrix.
+  const kRhsBase = kMatrixK * kMatrixRows;
+
+  // Accumulate results for each tile of the output matrix.
+  var acc: array<array<ResultType, kTileDim>, kTileDim>;
+
+  for (var k = 0u; k < kMatrixK; k+=K) {
+    for (var r = 0u; r < kTileDim; r++) {
+      for (var c = 0u; c < kTileDim; c++) {
+        let lhs = subgroupMatrixLoad<LeftType>(&inputs,  k + (r*M)*kMatrixK, false, kMatrixK);
+        let rhs = subgroupMatrixLoad<RightType>(&inputs, (c*N) + k*kMatrixCols + kRhsBase, false, kMatrixCols);
+        acc[r][c] = subgroupMatrixMultiplyAccumulate(lhs, rhs, acc[r][c]);
+      }
+    }
+  }
+
+  // Store the results to the output buffer.
+  for (var r = 0u; r < kTileDim; r++) {
+    for (var c = 0u; c < kTileDim; c++) {
+      subgroupMatrixStore(&output, (c*N) + (r*M)*kMatrixCols, acc[r][c], false, kMatrixCols);
+    }
+  }
+})";
+
+        wgpu::ComputePipelineDescriptor csDesc;
+        csDesc.compute.module = utils::CreateShaderModule(device, shader.str());
+        wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&csDesc);
+
+        // Create the input matrices and fill them with values.
+        Matrix inputLHS(matrix_k, matrix_rows, config.componentType, false);
+        Matrix inputRHS(matrix_cols, matrix_k, config.componentType, false);
+        Matrix acc(matrix_cols, matrix_rows, config.resultComponentType, false);
+        // Offset the values for each matrix so that they are all different.
+        inputLHS.Fill(0);
+        inputRHS.Fill(1);
+        acc.FillWithZero();
+
+        // Create the input buffer and copy the input matrices to it.
+        wgpu::BufferDescriptor inputDescriptor{
+            .usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::Storage,
+            .size = inputLHS.TotalByteSize() + inputRHS.TotalByteSize(),
+            .mappedAtCreation = true,
+        };
+        wgpu::Buffer inputs = device.CreateBuffer(&inputDescriptor);
+        memcpy(inputs.GetMappedRange(), inputLHS.data, inputLHS.TotalByteSize());
+        memcpy(static_cast<uint8_t*>(inputs.GetMappedRange()) + inputLHS.TotalByteSize(),
+               inputRHS.data, inputRHS.TotalByteSize());
+        inputs.Unmap();
+
+        // Create the output buffer.
+        wgpu::BufferDescriptor outputDescriptor{
+            .usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::Storage,
+            .size = matrix_cols * matrix_rows * resultComponentByteSize,
+        };
+        wgpu::Buffer output = device.CreateBuffer(&outputDescriptor);
+
+        wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                         {{0, inputs}, {1, output}});
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bindGroup);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+
+        // Verify the result against a reference implementation.
+        Matrix expected(matrix_cols, matrix_rows, config.resultComponentType, false);
+        GenerateReferenceMatrixMultiply(expected, inputLHS, inputRHS, acc);
+        EXPECT_BUFFER_U8_RANGE_EQ(expected.data, output, 0, expected.TotalByteSize());
+    }
+}
+
+DAWN_INSTANTIATE_TEST(SubgroupMatrix_TiledMatrixMultiplyTest,
+                      D3D12Backend(),
+                      MetalBackend(),
+                      VulkanBackend({"use_vulkan_memory_model"}));
+
+class SubgroupMatrix_MatrixScalarArithmeticTest
+    : public SubgroupMatrixArithmeticTest<MatrixArithmeticParams> {
   public:
     wgpu::ComputePipeline GetComputePipelineFromSubgroupMatrixConfig(
         const wgpu::SubgroupMatrixConfig& config,
