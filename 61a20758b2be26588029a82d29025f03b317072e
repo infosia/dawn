@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95a050ea_f9616038",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-01T06:34:38Z",
+      "side": 1,
+      "message": "LGTM, thank you for the fix.\n\nGeoff PTAL as well.",
+      "revId": "61a20758b2be26588029a82d29025f03b317072e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
