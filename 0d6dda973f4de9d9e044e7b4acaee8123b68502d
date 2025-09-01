@@ -16,6 +16,24 @@
       "message": "Could we somehow make sure that the robustness transform runs before this so that we don\u0027t get a double bounds-check?",
       "revId": "0d6dda973f4de9d9e044e7b4acaee8123b68502d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5a59bcf_da4e2dd9",
+        "filename": "src/tint/lang/core/ir/transform/resource_binding.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-01T16:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6506880_7418b388",
+      "revId": "0d6dda973f4de9d9e044e7b4acaee8123b68502d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
