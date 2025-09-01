@@ -16,6 +16,74 @@
       "message": "WebNN/SharedImage buffers use CUSTOM heaps for UMA",
       "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1a2b0ad_e7b88e83",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-01T12:40:26Z",
+      "side": 1,
+      "message": "Could we separate this into a helper function so that early returns can be used to simplify control flow a bit potentially?",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "174523d0_53536b88",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-01T12:40:26Z",
+      "side": 1,
+      "message": "Is there a link to documentation that explains this? It seems non-obvious even for UMA system because there might be pagetable stuff that could make this not true.",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3a21d69_0c284c55",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-01T12:40:26Z",
+      "side": 1,
+      "message": "If possible, I\u0027d rather avoid adding MapWrite here because there is no way for Dawn to ensure that the application won\u0027t read the mapped memory, which would be insanely slow in this mode.",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e391301a_ce198f14",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-01T12:40:26Z",
+      "side": 1,
+      "message": "Why is `MapWrite` added only when `isCacheCoherent`? It would be slower then if it were cache coherent, but wouldn\u0027t it always be faster than doing an intermediate copy?",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
