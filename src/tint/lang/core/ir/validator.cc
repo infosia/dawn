@@ -81,6 +81,7 @@
 #include "src/tint/lang/core/ir/user_call.h"
 #include "src/tint/lang/core/ir/var.h"
 #include "src/tint/lang/core/type/array.h"
+#include "src/tint/lang/core/type/binding_array.h"
 #include "src/tint/lang/core/type/bool.h"
 #include "src/tint/lang/core/type/f16.h"
 #include "src/tint/lang/core/type/f32.h"
@@ -2069,6 +2070,18 @@ void Validator::CheckType(const core::type::Type* root,
                          ->IsAnyOf<core::type::F16, core::type::F32, core::type::I8,
                                    core::type::I32, core::type::U8, core::type::U32>()) {
                     diag() << "invalid subgroup matrix component type: " << NameOf(m->Type());
+                    return false;
+                }
+                return true;
+            },
+            [&](const core::type::BindingArray* t) {
+                if (!t->Count()->Is<core::type::ConstantArrayCount>()) {
+                    diag() << "binding_array count must be a constant expression";
+                    return false;
+                }
+
+                if (!t->ElemType()->Is<core::type::SampledTexture>()) {
+                    diag() << "binding_array element type must be a sampled texture type";
                     return false;
                 }
                 return true;
