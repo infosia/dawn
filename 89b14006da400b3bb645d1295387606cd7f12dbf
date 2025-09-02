@@ -16,6 +16,23 @@
       "message": "PTAL\n\nSample build with these tests passing: https://ci.chromium.org/ui/p/dawn/builders/try.shadow/dawn-try-linux-x64-fuzz-rel/22/infra\n\nI\u0027ll send out a PSA to chat about the ASan blocklist changing to Chromium\u0027s version before landing this in case it does end up causing problems.",
       "revId": "89b14006da400b3bb645d1295387606cd7f12dbf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b272304e_497b52c1",
+        "filename": "tools/run.py",
+        "patchSetId": 24
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T19:02:31Z",
+      "side": 1,
+      "message": "Can we drop the `.py` suffix on this script and remove the bash script completely so only the python version exists?",
+      "revId": "89b14006da400b3bb645d1295387606cd7f12dbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
