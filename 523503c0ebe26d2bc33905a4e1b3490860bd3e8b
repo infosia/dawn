@@ -50,6 +50,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e6c26276_c887bc4f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T15:28:33Z",
+      "side": 1,
+      "message": "```suggestion\nThis metadata is used inside a shader to know what to return for\n```",
+      "revId": "523503c0ebe26d2bc33905a4e1b3490860bd3e8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18e355a6_b8471e4a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T15:28:33Z",
+      "side": 1,
+      "message": "On the tint side we\u0027d just say `iu32`\n\n```suggestion\nhasBinding\u003cT\u003e(resource_binding, iu32) for the various kinds of T.\n```",
+      "range": {
+        "startLine": 10,
+        "startChar": 32,
+        "endLine": 10,
+        "endChar": 37
+      },
+      "revId": "523503c0ebe26d2bc33905a4e1b3490860bd3e8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "27ef8203_c8a4988e",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
@@ -95,6 +135,97 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a9c1af6_6b4e2523",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T15:28:33Z",
+      "side": 1,
+      "message": "```suggestion\n - In Textures, add a map of all the (DynamicArrayState, slot) they are\n```",
+      "revId": "523503c0ebe26d2bc33905a4e1b3490860bd3e8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8db5f9d6_188b4d40",
+        "filename": "src/dawn/native/DynamicArrayState.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T15:28:33Z",
+      "side": 1,
+      "message": "Not sure what this mean?",
+      "revId": "523503c0ebe26d2bc33905a4e1b3490860bd3e8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eef78efe_2edab14a",
+        "filename": "src/dawn/native/DynamicArrayState.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T15:28:33Z",
+      "side": 1,
+      "message": "Is this just a safety check? Could we make `ComputeTypeId` a constexpr and do it as a `static_assert`?",
+      "revId": "523503c0ebe26d2bc33905a4e1b3490860bd3e8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c5c465a_009f30df",
+        "filename": "src/dawn/native/DynamicArrayState.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T15:28:33Z",
+      "side": 1,
+      "message": "We unset, but then set the same value again? Is this just to kick off some machinery? If not, why?",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 5
+      },
+      "revId": "523503c0ebe26d2bc33905a4e1b3490860bd3e8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7678e927_49eb2bcf",
+        "filename": "src/dawn/native/DynamicArrayState.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T15:28:33Z",
+      "side": 1,
+      "message": "Maybe add a note that this `uint32_t` size must match the type of `tint/api/common/resource_type::ResourceType`",
+      "revId": "523503c0ebe26d2bc33905a4e1b3490860bd3e8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cfec24da_6c721fe5",
@@ -108,6 +239,29 @@
       "writtenOn": "2025-09-02T15:09:21Z",
       "side": 1,
       "message": "[1]",
+      "revId": "523503c0ebe26d2bc33905a4e1b3490860bd3e8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdcf5249_cdc575cf",
+        "filename": "src/dawn/native/DynamicArrayState.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T15:28:33Z",
+      "side": 1,
+      "message": "```suggestion\n    //     arrayLength: u32,  // Doesn\u0027t include the default bindings\n    //     bindings: array\u003cu32\u003e,  // `arrayLength` entries\n```",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 94,
+        "endChar": 98
+      },
       "revId": "523503c0ebe26d2bc33905a4e1b3490860bd3e8b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
