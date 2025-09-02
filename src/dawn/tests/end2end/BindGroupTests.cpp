@@ -1259,7 +1259,7 @@ TEST_P(BindGroupTests, DynamicAndNonDynamicBindingsDoNotConflictAfterRemapping) 
     RunTestWith(false);
 }
 
-// Test that visibility of bindings in BindGroupLayout can be none
+// Test that visibility of bindings in BindGroupLayout can be none.
 // This test passes by not asserting or crashing.
 TEST_P(BindGroupTests, BindGroupLayoutVisibilityCanBeNone) {
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
