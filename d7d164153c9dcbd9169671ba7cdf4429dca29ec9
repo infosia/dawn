@@ -118,6 +118,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6d711d3_9a6a2b78",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-02T15:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8a2967a_94010da2",
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc24e3f1_1c364b98",
@@ -131,6 +149,24 @@
       "writtenOn": "2025-08-26T16:06:29Z",
       "side": 1,
       "message": "Can we have a small explanation of how this shader checks for both WAR, RAW and WAW races?",
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ba54f34_361868ea",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-02T15:26:07Z",
+      "side": 1,
+      "message": "I have added quite a bit of comments about what is being tested.\nWAR is targeted here. RAW and WAW might incidentally be tested but that was not the goal with this test. WAR needs a specific test because it is not invalid vulkan since no memory barrier is required for WAR (availible/visible).",
+      "parentUuid": "dc24e3f1_1c364b98",
       "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
