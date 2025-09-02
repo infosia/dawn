@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3751e92_a7c6257a",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-02T15:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93659703_97f11fb4",
+      "revId": "836f0bdb73636a27fb32a8ce48e1a80200bb8bf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c79a66b0_e3fd6735",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b93fd8e_c8694d27",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-02T15:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c79a66b0_e3fd6735",
+      "revId": "836f0bdb73636a27fb32a8ce48e1a80200bb8bf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0a322d8_ca07b16a",
@@ -48,6 +84,30 @@
       "writtenOn": "2025-09-02T13:13:27Z",
       "side": 1,
       "message": "```suggestion\n    utils::ComboRenderPipelineDescriptor pDesc{\n        .layout \u003d nullptr,\n        .vertex.module \u003d module,\n        .cFragment.module \u003d module,\n    };\n```",
+      "range": {
+        "startLine": 1200,
+        "startChar": 0,
+        "endLine": 1203,
+        "endChar": 36
+      },
+      "revId": "836f0bdb73636a27fb32a8ce48e1a80200bb8bf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "180e0e0f_88e3f089",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-02T15:07:20Z",
+      "side": 1,
+      "message": "I cannot do this one:\n\n```\n../../src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp:1274:42: error: initialization of non-aggregate type \u0027utils::ComboRenderPipelineDescriptor\u0027 with a designated initializer list\n 1274 |     utils::ComboRenderPipelineDescriptor pDesc {\n      |                                          ^     ~\n 1275 |     .layout \u003d nullptr,\n      |     ~~~~~~~~~~~~~~~~~~\n 1276 |     .vertex \u003d {.module \u003d module},\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n 1277 |     .cFragment \u003d {.module \u003d module},\n      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n 1278 |     };\n      |     ~\n```",
+      "parentUuid": "d0a322d8_ca07b16a",
       "range": {
         "startLine": 1200,
         "startChar": 0,
@@ -93,6 +153,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "109bb1bb_182faf6b",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-02T15:07:20Z",
+      "side": 1,
+      "message": "Exactly, that the test doesn\u0027t require an `ASSERT_DEVICE_ERROR` is what checks that the `DynamicBindingKind::SampledTexture` because it means that the BG can take a sampled texture.",
+      "parentUuid": "1ea9d57f_5a967bc9",
+      "revId": "836f0bdb73636a27fb32a8ce48e1a80200bb8bf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c7f6dec8_67820d7d",
@@ -106,6 +184,24 @@
       "writtenOn": "2025-09-02T13:13:27Z",
       "side": 1,
       "message": "```suggestion\n// Test merging of DynamicBindingKind between VS and FS (VS typed case)\n```",
+      "revId": "836f0bdb73636a27fb32a8ce48e1a80200bb8bf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d64c372f_80383c79",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-02T15:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7f6dec8_67820d7d",
       "revId": "836f0bdb73636a27fb32a8ce48e1a80200bb8bf3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
