@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50e8b8f8_af97b2e7",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-02T15:03:10Z",
+      "side": 1,
+      "message": "This check was inverted.",
+      "range": {
+        "startLine": 128,
+        "startChar": 4,
+        "endLine": 128,
+        "endChar": 70
+      },
+      "revId": "0767d341f4a8c6b160a3b642fadfd3c70c5a89fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
