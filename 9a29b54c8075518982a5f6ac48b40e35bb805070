@@ -33,6 +33,24 @@
       "message": "Dan, let me know if you\u0027d like me to address this before submitting this CL, or if I should just transform into a TODO.",
       "revId": "9a29b54c8075518982a5f6ac48b40e35bb805070",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5ca0a3c_6981c395",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T13:18:08Z",
+      "side": 1,
+      "message": "I think a `TODO` is fine, and maybe file a Tint bug to add a `resource_binding` entry to bindings?",
+      "parentUuid": "84b7c995_58cd6049",
+      "revId": "9a29b54c8075518982a5f6ac48b40e35bb805070",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
