@@ -51,6 +51,24 @@
       ],
       "revId": "da61e475abfe0042660c105e168258f41ad3b226",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e153e3a9_deb3adb9",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T18:51:01Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "2eea6484_5e2a3b2e",
+      "revId": "da61e475abfe0042660c105e168258f41ad3b226",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
