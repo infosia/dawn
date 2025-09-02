@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b8ece0e_e830a56f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 27
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-02T20:23:32Z",
+      "side": 1,
+      "message": "Will need another +1 due to the revert to having the bash wrapper.",
+      "revId": "d20d8c97b7865ceb64669f0e6a3d7bc410e6eb42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
