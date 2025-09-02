@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93659703_97f11fb4",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T13:13:27Z",
+      "side": 1,
+      "message": "```suggestion\n// Test that defaulting the layout when no type information is given for the dynamic binding\n```",
+      "revId": "836f0bdb73636a27fb32a8ce48e1a80200bb8bf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c79a66b0_e3fd6735",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T13:13:27Z",
+      "side": 1,
+      "message": "```suggestion\n// Test merging of DynamicBindingKind between VS and FS (FS typed case)\n```",
+      "revId": "836f0bdb73636a27fb32a8ce48e1a80200bb8bf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0a322d8_ca07b16a",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T13:13:27Z",
+      "side": 1,
+      "message": "```suggestion\n    utils::ComboRenderPipelineDescriptor pDesc{\n        .layout \u003d nullptr,\n        .vertex.module \u003d module,\n        .cFragment.module \u003d module,\n    };\n```",
+      "range": {
+        "startLine": 1200,
+        "startChar": 0,
+        "endLine": 1203,
+        "endChar": 36
+      },
+      "revId": "836f0bdb73636a27fb32a8ce48e1a80200bb8bf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "767d8cd7_7ce81f33",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T13:13:27Z",
+      "side": 1,
+      "message": "Just to verify, the MakeBindGroup will through an ASSERT if something goes wrong? If not, how does this test fail?",
+      "revId": "836f0bdb73636a27fb32a8ce48e1a80200bb8bf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7f6dec8_67820d7d",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T13:13:27Z",
+      "side": 1,
+      "message": "```suggestion\n// Test merging of DynamicBindingKind between VS and FS (VS typed case)\n```",
+      "revId": "836f0bdb73636a27fb32a8ce48e1a80200bb8bf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
