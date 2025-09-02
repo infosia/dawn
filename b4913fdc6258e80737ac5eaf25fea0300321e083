@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57fd4a26_de2801a1",
+        "filename": "tools/run",
+        "patchSetId": 25
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T19:30:32Z",
+      "side": 1,
+      "message": "I think you wan to keep this as 755 instead of 644? (We use it by doing `./tools/run` so needs executable)",
+      "revId": "b4913fdc6258e80737ac5eaf25fea0300321e083",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
