@@ -334,6 +334,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b917e4c0_f23ad8ea",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-02T14:55:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed427015_d13fe27f",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b89e7a9e_a5725cea",
@@ -417,6 +435,24 @@
       "side": 1,
       "message": "Slightly different. This tests immediates count from large to small and previous test immediates count from small to large.",
       "parentUuid": "2cb95ea9_3660653d",
+      "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bdc8a9d_6cf0d4c1",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-02T14:55:50Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "fb93ec51_223d6036",
       "revId": "aa68fe6a1adcb2c01b60dca988036577bc775fbd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
