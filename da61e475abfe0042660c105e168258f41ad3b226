@@ -16,6 +16,41 @@
       "message": "PTAL.",
       "revId": "da61e475abfe0042660c105e168258f41ad3b226",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2eea6484_5e2a3b2e",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-02T18:50:10Z",
+      "side": 1,
+      "message": "Nit: Produce an error when this happens (like above), so we see why decoding failed.",
+      "fixSuggestions": [
+        {
+          "fixId": "3ada14f8_b8703a37",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/binary/decode.cc",
+              "range": {
+                "startLine": 881,
+                "startChar": 0,
+                "endLine": 881,
+                "endChar": 0
+              },
+              "replacement": "            err_ \u003c\u003c \"array element type is invalid\\n\";\n"
+            }
+          ]
+        }
+      ],
+      "revId": "da61e475abfe0042660c105e168258f41ad3b226",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
