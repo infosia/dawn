@@ -553,6 +553,20 @@ class TimestampQueryInsidePassesValidationTest : public QuerySetValidationTest {
     }
 };
 
+// Verify that writeTimestamp in passes is rejected when the feature isn't enabled.
+TEST_F(QuerySetValidationTest, WriteTimestampInsidePassesRequiresFeature) {
+    PlaceholderRenderPass renderPass(device);
+    // Creating a timestamp query set requires the TimestampQuery feature. Expect a device error
+    // here when the feature isn't enabled for this fixture.
+    StartExpectDeviceError(testing::HasSubstr("Timestamp query set requires either"));
+    // Use the API directly to avoid helper behavior interfering with error capture.
+    wgpu::QuerySetDescriptor desc;
+    desc.type = wgpu::QueryType::Timestamp;
+    desc.count = 2;
+    (void)device.CreateQuerySet(&desc);
+    ASSERT_TRUE(EndExpectDeviceError());
+}
+
 // Test write timestamp on compute pass encoder
 TEST_F(TimestampQueryInsidePassesValidationTest, WriteTimestampOnComputePassEncoder) {
     wgpu::QuerySet timestampQuerySet = CreateQuerySet(device, wgpu::QueryType::Timestamp, 2);
