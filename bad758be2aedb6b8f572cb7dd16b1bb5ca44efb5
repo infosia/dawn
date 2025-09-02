@@ -22,6 +22,29 @@
       },
       "revId": "bad758be2aedb6b8f572cb7dd16b1bb5ca44efb5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "947b0f1a_14060777",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-02T18:49:12Z",
+      "side": 1,
+      "message": "We do insert clamps later to polyfill other functions in metal.\nThis is part of the reason why I think we should just have one large polyfill system.",
+      "range": {
+        "startLine": 412,
+        "startChar": 9,
+        "endLine": 412,
+        "endChar": 14
+      },
+      "revId": "bad758be2aedb6b8f572cb7dd16b1bb5ca44efb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
