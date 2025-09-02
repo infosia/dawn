@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2d4bd6d_b4aece3d",
+        "filename": "src/dawn/tests/end2end/BindingArrayTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1444,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-02T17:01:53Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed?",
+      "revId": "735164262a5a6fc403c86d3fef09a8ddb5058872",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
