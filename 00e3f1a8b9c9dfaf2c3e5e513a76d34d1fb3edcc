@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "7301649f_73247320",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000861
+      },
+      "writtenOn": "2025-09-02T22:17:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "278bccee_bf42aeda",
+      "range": {
+        "startLine": 7,
+        "startChar": 22,
+        "endLine": 7,
+        "endChar": 44
+      },
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "56fcce7b_ec04b314",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
@@ -94,6 +118,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4c224ca2_4c4b60ee",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000861
+      },
+      "writtenOn": "2025-09-02T22:17:12Z",
+      "side": 1,
+      "message": "I believe that https://microsoft.github.io/DirectX-Specs/d3d/D3D12GPUUploadHeaps.html explains it. I\u0027m just following the specification for READBACK/UPLOAD/DEFAULT and ignoring GPU_UPLOAD. I\u0027ll add a table in the comments and cite that link.",
+      "parentUuid": "174523d0_53536b88",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d3a21d69_0c284c55",
         "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
         "patchSetId": 2
@@ -111,6 +153,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e99cdb40_edb4f4a2",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000861
+      },
+      "writtenOn": "2025-09-02T22:17:12Z",
+      "side": 1,
+      "message": "The problem is that L0 + WRITE_COMBINE is equivalent to UPLOAD heaps on non ccUMA architectures. We use [d3d12_device_-\u003eGetCustomHeapProperties(0, D3D12_HEAP_TYPE_UPLOAD)](https://source.chromium.org/chromium/chromium/src/+/main:gpu/command_buffer/service/shared_image/d3d_image_backing_factory.cc;l\u003d824;drc\u003d9b4c9ad003587ffb6878dd7e3aa7f83c07d7747d) in shared image. That said, we don\u0027t currently have a use-case for MapAsync from WebGPU. WebNN can always WriteTensor/ReadTensor to/from these resources (even if it would be slow).",
+      "parentUuid": "d3a21d69_0c284c55",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e391301a_ce198f14",
         "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
         "patchSetId": 2
@@ -122,6 +182,24 @@
       "writtenOn": "2025-09-01T12:40:26Z",
       "side": 1,
       "message": "Why is `MapWrite` added only when `isCacheCoherent`? It would be slower then if it were cache coherent, but wouldn\u0027t it always be faster than doing an intermediate copy?",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4aef370_59667cfb",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000861
+      },
+      "writtenOn": "2025-09-02T22:17:12Z",
+      "side": 1,
+      "message": "I don\u0027t believe that it is safe to write to WHITE_BACK memory on non-ccUMA architectures. We would need to flush the CPU cache before the device can read it.",
+      "parentUuid": "e391301a_ce198f14",
       "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
