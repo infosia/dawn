@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60eb55bc_cb0d0bf0",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-02T14:28:35Z",
+      "side": 0,
+      "message": "Adapter limits sometimes appear to return non Tiered limits. This has been observed on m2 and intel UHD 630. This could be a race condition or it could just be a normal part of dawn native.",
+      "range": {
+        "startLine": 98,
+        "startChar": 14,
+        "endLine": 98,
+        "endChar": 30
+      },
+      "revId": "38cb50af2756e11ccee89998a976ccd733fbe61f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
