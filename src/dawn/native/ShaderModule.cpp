@@ -1339,6 +1339,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
             const auto it =
                 bindingGroupInfoMap.find(BindingNumber(pair.texture_binding_point.binding));
             auto isExternalTexture =
+                it != bindGroupInfoMap.end() &&
                 std::holds_alternative<ExternalTextureBindingInfo>(it->second.bindingInfo);
             if (isExternalTexture) {
                 ++numSamplerExternalTexturePairs;
