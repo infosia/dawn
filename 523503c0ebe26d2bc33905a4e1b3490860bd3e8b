@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "11432b2e_24f8c66a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-02T15:09:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95e341c9_8043a93f",
+      "range": {
+        "startLine": 9,
+        "startChar": 29,
+        "endLine": 9,
+        "endChar": 35
+      },
+      "revId": "523503c0ebe26d2bc33905a4e1b3490860bd3e8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27ef8203_c8a4988e",
@@ -47,6 +71,47 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab34e4e9_6219eea0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-02T15:09:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27ef8203_c8a4988e",
+      "range": {
+        "startLine": 14,
+        "startChar": 33,
+        "endLine": 14,
+        "endChar": 37
+      },
+      "revId": "523503c0ebe26d2bc33905a4e1b3490860bd3e8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfec24da_6c721fe5",
+        "filename": "src/dawn/native/DynamicArrayState.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-02T15:09:21Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "523503c0ebe26d2bc33905a4e1b3490860bd3e8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c48f30e8_f5155b1d",
@@ -60,6 +125,30 @@
       "writtenOn": "2025-09-02T14:13:38Z",
       "side": 1,
       "message": "Any reason for keeping this separate from mBindings? Ease of implementation for AcquireDirtyBindingUpdates?",
+      "range": {
+        "startLine": 105,
+        "startChar": 45,
+        "endLine": 105,
+        "endChar": 58
+      },
+      "revId": "523503c0ebe26d2bc33905a4e1b3490860bd3e8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "826d8850_41a37957",
+        "filename": "src/dawn/native/DynamicArrayState.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-02T15:09:21Z",
+      "side": 1,
+      "message": "The main reason is so BindGroup implementations in the backend can call `GetBindings` [1] without getting a bunch of internal stuff along with it.",
+      "parentUuid": "c48f30e8_f5155b1d",
       "range": {
         "startLine": 105,
         "startChar": 45,
