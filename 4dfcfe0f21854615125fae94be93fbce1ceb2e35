@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f2d7d9a_01a64ca4",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-02T15:23:09Z",
+      "side": 0,
+      "message": "Proving that it works by running the  try dawn AMD exp",
+      "range": {
+        "startLine": 625,
+        "startChar": 0,
+        "endLine": 626,
+        "endChar": 133
+      },
+      "revId": "4dfcfe0f21854615125fae94be93fbce1ceb2e35",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67e065da_54205430",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-02T15:23:09Z",
+      "side": 1,
+      "message": "I could Prefix with Metal?",
+      "range": {
+        "startLine": 590,
+        "startChar": 13,
+        "endLine": 590,
+        "endChar": 31
+      },
+      "revId": "bad758be2aedb6b8f572cb7dd16b1bb5ca44efb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
