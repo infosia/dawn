@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "278bccee_bf42aeda",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-02T17:45:13Z",
+      "side": 1,
+      "message": "```suggestion\n[dawn][d3d12] Support D3D12_HEAP_TYPE_CUSTOM in SRB\n```",
+      "range": {
+        "startLine": 7,
+        "startChar": 22,
+        "endLine": 7,
+        "endChar": 44
+      },
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "56fcce7b_ec04b314",
@@ -48,6 +71,23 @@
       "writtenOn": "2025-09-01T12:40:26Z",
       "side": 1,
       "message": "Is there a link to documentation that explains this? It seems non-obvious even for UMA system because there might be pagetable stuff that could make this not true.",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3dac9435_a7208efe",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-02T17:45:13Z",
+      "side": 1,
+      "message": "Just to be clear, are *we* defining CUSTOM heap this way, or is something external (d3d12 or driver or chromium?) define it this way?\n\nIn general I\u0027m a bit confused about the high level logic here so a high level comment would be helpful. For example why do we branch on `isUMA` instead of some driver-reported info for this specific heap from `heapProperties`? `isUMA` seems possibly too broad. (Maybe this is the same as Corentin\u0027s comment.)",
       "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
