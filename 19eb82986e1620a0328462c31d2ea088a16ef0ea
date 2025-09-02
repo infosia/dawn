@@ -33,6 +33,24 @@
       "message": "Hmm, need to figure out how to deal with a `spirv.image` type, so I can\u0027t just check for `SampledTexture`.",
       "revId": "19eb82986e1620a0328462c31d2ea088a16ef0ea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7356af34_5d08c155",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-02T15:29:10Z",
+      "side": 1,
+      "message": "Maybe just also allow non-core types, if the non-core types capability is present?",
+      "parentUuid": "967ba0fa_a0654bdd",
+      "revId": "19eb82986e1620a0328462c31d2ea088a16ef0ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
