@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10fefccd_862fb49c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-02T20:50:42Z",
+      "side": 1,
+      "message": "PTAL! Easiest CL you\u0027ll review today. 😊",
+      "revId": "475903e9ee42b6f878a3e4b4e8ade4e537823d2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
