@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "dadcd58da9cb85b0d6d483a7eb79b140d0b9640f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b4c4603_a83ff6f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-02T04:59:10Z",
+      "side": 1,
+      "message": "Softly ping for review 😊",
+      "revId": "dadcd58da9cb85b0d6d483a7eb79b140d0b9640f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
