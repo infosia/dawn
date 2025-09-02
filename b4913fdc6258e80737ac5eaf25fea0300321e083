@@ -34,6 +34,24 @@
       "parentUuid": "57fd4a26_de2801a1",
       "revId": "b4913fdc6258e80737ac5eaf25fea0300321e083",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e321ff0_b5228d10",
+        "filename": "tools/run",
+        "patchSetId": 25
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-02T20:08:13Z",
+      "side": 1,
+      "message": "It seems that the current standalone Windows testers are reliant on the bash version of `//tools/run`, as shebangs are not supported by Windows and the old standalone recipe does not specify `python3` when running `tools/run` (since it\u0027s not a Python script on ToT)\n\nI think we\u0027ll eventually be able to drop the bash version entirely after everything is switched to the gn_v2 recipes, but not right now.\n\nI\u0027m going to revert back to PS 24 with an added TODO to remove the bash version in the future.",
+      "parentUuid": "ac960975_4863d980",
+      "revId": "b4913fdc6258e80737ac5eaf25fea0300321e083",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
