@@ -16,6 +16,24 @@
       "message": "I think you wan to keep this as 755 instead of 644? (We use it by doing `./tools/run` so needs executable)",
       "revId": "b4913fdc6258e80737ac5eaf25fea0300321e083",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac960975_4863d980",
+        "filename": "tools/run",
+        "patchSetId": 25
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-02T19:41:30Z",
+      "side": 1,
+      "message": "Done, mistakenly dropped since I removed the `//tools/run` first.",
+      "parentUuid": "57fd4a26_de2801a1",
+      "revId": "b4913fdc6258e80737ac5eaf25fea0300321e083",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
