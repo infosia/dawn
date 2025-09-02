@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab887b41_000b3834",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-02T18:32:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c584739d_0ca38f4e",
+      "range": {
+        "startLine": 126,
+        "startChar": 46,
+        "endLine": 126,
+        "endChar": 50
+      },
+      "revId": "402dbba1fd49baddd54e7cd1dc226019e836c189",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98a00e69_17ca0912",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-08-27T22:39:53Z",
       "side": 1,
       "message": "nit. Can probably make this private now?",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 47
+      },
+      "revId": "402dbba1fd49baddd54e7cd1dc226019e836c189",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d113ca80_7b6d97c8",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-02T18:32:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98a00e69_17ca0912",
       "range": {
         "startLine": 71,
         "startChar": 4,
