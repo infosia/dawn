@@ -77,6 +77,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1ea9d57f_5a967bc9",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-02T13:45:43Z",
+      "side": 1,
+      "message": "I think any error generated outside of scopes like `ASSERT_DEVICE_ERROR` causes test failures.",
+      "parentUuid": "767d8cd7_7ce81f33",
+      "revId": "836f0bdb73636a27fb32a8ce48e1a80200bb8bf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c7f6dec8_67820d7d",
         "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
         "patchSetId": 7
