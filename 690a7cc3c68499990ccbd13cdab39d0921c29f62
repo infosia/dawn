@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa0a5705_8b298132",
+        "filename": "src/dawn/native/AsyncTask.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-02T20:56:48Z",
+      "side": 1,
+      "message": "nit. Maybe this should be an assert on the result of a `compare_exchange` result instead? That way we would always catch using this function in multiple threads when we aren\u0027t supposed to as opposed to we might unluckily miss the assert if we race in just the right way?",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 37
+      },
+      "revId": "690a7cc3c68499990ccbd13cdab39d0921c29f62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2df517e5_5cd19ef4",
+        "filename": "src/dawn/native/AsyncTask.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-02T20:56:48Z",
+      "side": 1,
+      "message": "I think that we can potentially have a race w.r.t to the completion callbacks and the waitableEvent. In the tests, it looks like the assumption is that if `Wait()` returns, then all the completion callbacks should have been called, but from what I can tell, we don\u0027t actually guarantee that here? Unless the dtor on `WaitableEvent` is the one that signals it?",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 37
+      },
+      "revId": "690a7cc3c68499990ccbd13cdab39d0921c29f62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6ad5a5d_7575859c",
+        "filename": "src/dawn/native/AsyncTask.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-02T20:56:48Z",
+      "side": 1,
+      "message": "I think this `ASSERT` is redundant with the one that we call in `Run` already.",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 80
+      },
+      "revId": "690a7cc3c68499990ccbd13cdab39d0921c29f62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86fc4935_105eac6b",
+        "filename": "src/dawn/native/AsyncTask.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-02T20:56:48Z",
+      "side": 1,
+      "message": "Thoughts on moving this `ASSERT` into `HandleTaskCompletion` instead?",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 82
+      },
+      "revId": "690a7cc3c68499990ccbd13cdab39d0921c29f62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "527b949e_d8bf90be",
+        "filename": "src/dawn/native/AsyncTask.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-02T20:56:48Z",
+      "side": 1,
+      "message": "nit. I think that we can make a private struct and wrap it with a `MutexProtected` so it\u0027s clear which members are actually protected via this mutex.",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 66
+      },
+      "revId": "690a7cc3c68499990ccbd13cdab39d0921c29f62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ba43868_0250aea0",
+        "filename": "src/dawn/native/AsyncTask.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-02T20:56:48Z",
+      "side": 1,
+      "message": "Maybe I\u0027m missing something, but couldn\u0027t this take a `WaitableTask*` instead of a `void*`? Especially since it seems like we are going to static cast it as such anyways\u003e",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 36
+      },
+      "revId": "690a7cc3c68499990ccbd13cdab39d0921c29f62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1da2cdd9_1a8782bf",
+        "filename": "src/dawn/tests/unittests/AsyncTaskTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-02T20:56:48Z",
+      "side": 1,
+      "message": "nit. Maybe we could just assert that `preWaitState !\u003d AsyncTaskState::Completed`?",
+      "range": {
+        "startLine": 121,
+        "startChar": 16,
+        "endLine": 121,
+        "endChar": 98
+      },
+      "revId": "690a7cc3c68499990ccbd13cdab39d0921c29f62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
