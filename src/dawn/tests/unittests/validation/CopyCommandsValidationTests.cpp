@@ -359,6 +359,26 @@ TEST_F(CopyCommandTest_B2B, UnalignedOffset) {
     }
 }
 
+// Even when copy size is zero, offsets must still satisfy 4-byte alignment.
+TEST_F(CopyCommandTest_B2B, ZeroSizeStillRequiresAlignedOffsets) {
+    wgpu::Buffer source = CreateBuffer(16, wgpu::BufferUsage::CopySrc);
+    wgpu::Buffer destination = CreateBuffer(16, wgpu::BufferUsage::CopyDst);
+
+    // Unaligned source offset with zero size
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        encoder.CopyBufferToBuffer(source, 1, destination, 0, 0);
+        ASSERT_DEVICE_ERROR(encoder.Finish());
+    }
+
+    // Unaligned destination offset with zero size
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        encoder.CopyBufferToBuffer(source, 0, destination, 2, 0);
+        ASSERT_DEVICE_ERROR(encoder.Finish());
+    }
+}
+
 // Test B2B copies with buffers in error state cause errors.
 TEST_F(CopyCommandTest_B2B, BuffersInErrorState) {
     wgpu::BufferDescriptor errorBufferDescriptor;
