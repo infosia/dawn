@@ -56,3 +56,19 @@ group("webgpu-cts") {
     "../third_party/webgpu-cts/tsconfig.json",
   ]
 }
+
+group("dawn_node_cts") {
+  testonly = true
+  data_deps = [
+    "//src/dawn/node:dawn_node",
+    "//tools:go_tools",
+  ]
+  data = [
+    "node_helpers.py",
+    "run_dawn_node_cts.py",
+    "run_npx.py",
+    "run_npx.sh",
+    "//third_party/node/",
+    "//third_party/webgpu-cts/",
+  ]
+}
