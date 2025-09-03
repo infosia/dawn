@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "add0f61d_1180a4ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2025-09-03T23:05:51Z",
+      "side": 1,
+      "message": "I used Corentin\u0027s suggestion and moved the check to pipeline time. The test crashed without the changes. Now it gets an error for the group being out of range. I wasn\u0027t sure if I should put a crbug.com link there or not. Though this CL is public",
+      "revId": "349ac9a463451ceb40c0f57bbe9125abdc8fc946",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
