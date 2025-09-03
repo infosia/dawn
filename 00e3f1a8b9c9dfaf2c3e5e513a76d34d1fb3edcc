@@ -171,6 +171,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "67985ceb_1e3bcedf",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-03T08:15:50Z",
+      "side": 1,
+      "message": "Mmmh ok let\u0027s keep as is but with a comment explaining that this matches UPLOAD on ccUMA so we trust applications won\u0027t try to read the data when mapping. (this is ok because using SBM means you\u0027re supposed to know what you\u0027re doing)",
+      "parentUuid": "e99cdb40_edb4f4a2",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e391301a_ce198f14",
         "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
         "patchSetId": 2
@@ -200,6 +218,24 @@
       "side": 1,
       "message": "I don\u0027t believe that it is safe to write to WHITE_BACK memory on non-ccUMA architectures. We would need to flush the CPU cache before the device can read it.",
       "parentUuid": "e391301a_ce198f14",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42c5952d_990a6aab",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-03T08:15:50Z",
+      "side": 1,
+      "message": "Isn\u0027t that done automatically in D3D12 when submitting to the queue? https://learn.microsoft.com/en-us/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_architecture doesn\u0027t mention a flush being necessary when !ccUMA.",
+      "parentUuid": "e4aef370_59667cfb",
       "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
