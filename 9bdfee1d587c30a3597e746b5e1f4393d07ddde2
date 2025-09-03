@@ -16,6 +16,23 @@
       "message": "Ack. Having another CL for tests and copy all the comments to that CL. Mark all comments in test as Ack.",
       "revId": "9bdfee1d587c30a3597e746b5e1f4393d07ddde2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e2f6fb4_7efb1b32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 33
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-03T07:44:10Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "9bdfee1d587c30a3597e746b5e1f4393d07ddde2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
