@@ -34,6 +34,40 @@
       "parentUuid": "72fa9fe6_858da217",
       "revId": "040dda791b377d33e3b2dcdeebc471fdf054e7ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33cb71c3_b6706523",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 127
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-03T18:04:32Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "040dda791b377d33e3b2dcdeebc471fdf054e7ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bf7ec6e_cbfc64e2",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 127
+      },
+      "lineNbr": 1796,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-03T18:04:32Z",
+      "side": 1,
+      "message": "Any hope to have this in the wire helper somehow? (it uses dawn::native directly so maybe not)",
+      "revId": "040dda791b377d33e3b2dcdeebc471fdf054e7ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
