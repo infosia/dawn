@@ -57,27 +57,19 @@ class array : private ::std::array<Value, Size> {
     constexpr array(Values&&... values) : Base{std::forward<Values>(values)...} {}
 
     constexpr Value& operator[](Index i) {
-        I index = static_cast<I>(i);
-        DAWN_ASSERT(index >= 0 && index < I(Size));
-        return Base::operator[](index);
+        return Base::operator[](static_cast<I>(i));
     }
 
     constexpr const Value& operator[](Index i) const {
-        I index = static_cast<I>(i);
-        DAWN_ASSERT(index >= 0 && index < I(Size));
-        return Base::operator[](index);
+        return Base::operator[](static_cast<I>(i));
     }
 
     Value& at(Index i) {
-        I index = static_cast<I>(i);
-        DAWN_ASSERT(index >= 0 && index < I(Size));
-        return Base::at(index);
+        return Base::at(static_cast<I>(i));
     }
 
     constexpr const Value& at(Index i) const {
-        I index = static_cast<I>(i);
-        DAWN_ASSERT(index >= 0 && index < I(Size));
-        return Base::at(index);
+        return Base::at(static_cast<I>(i));
     }
 
     typename Base::iterator begin() noexcept { return Base::begin(); }
