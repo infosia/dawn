@@ -16,6 +16,98 @@
       "message": "Looks like this is passing the CQ now, so please take another look!",
       "revId": "5e6b4615ace7c713ed78603b05269d9c5afffd1c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24ec64eb_5b83f435",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-03T20:42:01Z",
+      "side": 1,
+      "message": "nit. Maybe we could just combine the two and have an additional argument that specifies whether to use `vkDevice` or `instance` in the `DeleteFn` call?",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 94
+      },
+      "revId": "5e6b4615ace7c713ed78603b05269d9c5afffd1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b48742cd_0d0bf380",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-03T20:42:01Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"sufficent\" is a possible misspelling of \"sufficient\".\n\nTo bypass Spellchecker, ...\n\n\"sufficent\" is a possible misspelling of \"sufficient\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 140,
+        "startChar": 30,
+        "endLine": 140,
+        "endChar": 39
+      },
+      "revId": "5e6b4615ace7c713ed78603b05269d9c5afffd1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c69aee0_94db781c",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-03T20:42:01Z",
+      "side": 1,
+      "message": "nit. These could probably be generated via the macro as well? Though maybe we would need to add an additional field or something for the var name? But also, maybe the var name could just be `obj` or `handle` since the type is pretty self-explanatory?",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 52
+      },
+      "revId": "5e6b4615ace7c713ed78603b05269d9c5afffd1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c87b225a_b6b9c887",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-03T20:42:01Z",
+      "side": 1,
+      "message": "nit. I think we should move the `FENCED_DEVICE_DELETER_TYPES` macro from the .cpp file into here and then use that macro to generate this as well. Could also maybe shorten the names and drop the `ToDelete` from them since that\u0027s kind of obvious.\n\nAlso, WDYT about doing something like:\n```\nstruct ToDeletes {\n  // Macro magic to generate all the `SerialQueue\u003c\u003e mType` members.\n};\nMutexProtected\u003cToDeletes\u003e mToDeletes;\n```",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 69
+      },
+      "revId": "5e6b4615ace7c713ed78603b05269d9c5afffd1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
