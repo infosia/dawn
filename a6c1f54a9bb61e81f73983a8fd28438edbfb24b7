@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1c037d6_e8699c3a",
+        "filename": "docs/dawn/features/subgroup_matrix.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-09-03T14:07:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee2f180e_6b0f2cb8",
+      "range": {
+        "startLine": 822,
+        "startChar": 29,
+        "endLine": 822,
+        "endChar": 45
+      },
+      "revId": "a6c1f54a9bb61e81f73983a8fd28438edbfb24b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9e8357b_0b9d834e",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-09-03T13:53:39Z",
       "side": 1,
       "message": "```suggestion\n   \u003ctd\u003eOpTypeCooperativeMatrixKHR\n\u003cp\u003e\nMatrixAKHR use\n```",
+      "range": {
+        "startLine": 888,
+        "startChar": 8,
+        "endLine": 890,
+        "endChar": 1
+      },
+      "revId": "a6c1f54a9bb61e81f73983a8fd28438edbfb24b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5544a32d_81a6e2ce",
+        "filename": "docs/dawn/features/subgroup_matrix.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-09-03T14:07:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9e8357b_0b9d834e",
       "range": {
         "startLine": 888,
         "startChar": 8,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1a7c9ac_569b434f",
+        "filename": "docs/dawn/features/subgroup_matrix.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-09-03T14:07:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fa98379_949b63c5",
+      "range": {
+        "startLine": 1042,
+        "startChar": 7,
+        "endLine": 1042,
+        "endChar": 43
+      },
+      "revId": "a6c1f54a9bb61e81f73983a8fd28438edbfb24b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "de46a5c3_731ffd08",
@@ -100,6 +172,30 @@
       "writtenOn": "2025-09-03T13:53:39Z",
       "side": 1,
       "message": "```suggestion\n   \u003ctd\u003esimdgroup_matrix_multiply_accumulate with diagonal matrix for b and filled inverted matrix scalar value for c\n```",
+      "range": {
+        "startLine": 1050,
+        "startChar": 7,
+        "endLine": 1050,
+        "endChar": 44
+      },
+      "revId": "a6c1f54a9bb61e81f73983a8fd28438edbfb24b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51cae869_b871347d",
+        "filename": "docs/dawn/features/subgroup_matrix.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 1050,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-09-03T14:07:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de46a5c3_731ffd08",
       "range": {
         "startLine": 1050,
         "startChar": 7,
@@ -133,6 +229,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "16141c21_0294c354",
+        "filename": "docs/dawn/features/subgroup_matrix.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-09-03T14:07:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af8447c3_5261bfc4",
+      "range": {
+        "startLine": 1058,
+        "startChar": 7,
+        "endLine": 1058,
+        "endChar": 32
+      },
+      "revId": "a6c1f54a9bb61e81f73983a8fd28438edbfb24b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "395fb64e_5260d181",
@@ -156,6 +276,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aab0644b_cbe6f6cd",
+        "filename": "docs/dawn/features/subgroup_matrix.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-09-03T14:07:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "395fb64e_5260d181",
+      "range": {
+        "startLine": 1066,
+        "startChar": 12,
+        "endLine": 1066,
+        "endChar": 37
+      },
+      "revId": "a6c1f54a9bb61e81f73983a8fd28438edbfb24b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e940f3c_40fbc68b",
@@ -169,6 +313,24 @@
       "writtenOn": "2025-09-03T13:53:39Z",
       "side": 1,
       "message": "```suggestion\n1. This works because MSL only supports floating-point component types.\n```\n\nThis is used in the deleted row, but but also the row before that one.",
+      "revId": "a6c1f54a9bb61e81f73983a8fd28438edbfb24b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "698a1bc7_7dbc6b65",
+        "filename": "docs/dawn/features/subgroup_matrix.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-09-03T14:07:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e940f3c_40fbc68b",
       "revId": "a6c1f54a9bb61e81f73983a8fd28438edbfb24b7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
