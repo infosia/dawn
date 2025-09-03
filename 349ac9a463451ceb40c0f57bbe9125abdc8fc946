@@ -76,6 +76,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "33162dbb_7a8df09f",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-09-03T23:51:54Z",
+      "side": 1,
+      "message": "```\n../../src/dawn/native/BindingInfo.h:168:20: error: explicitly defaulted three-way comparison operator is implicitly deleted [-Werror,-Wdefaulted-function-deleted]\n  168 |     constexpr auto operator\u003c\u003d\u003e(const BindingSlot\u0026) const \u003d default;\n      |                    ^\n../../src/dawn/native/BindingInfo.h:167:1: note: defaulted \u0027operator\u003c\u003d\u003e\u0027 is implicitly deleted because there is no viable three-way comparison function for base class \u0027BindingSlot__Contents\u0027\n  167 | DAWN_SERIALIZABLE(struct, BindingSlot, BINDING_SLOT_MEMBER){\n      | ^\n../../src/dawn/native/Serializable.h:127:22: note: expanded from macro \u0027DAWN_SERIALIZABLE\u0027\n  127 |     qualifier Name : Name##__Contents, public ::dawn::native::Serializable\u003cName\u003e\n      |                      ^\n\u003cscratch space\u003e:250:1: note: expanded from here\n  250 | BindingSlot__Contents\n      | ^\n```",
+      "parentUuid": "fb2a9371_ff749cbe",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 5
+      },
+      "revId": "349ac9a463451ceb40c0f57bbe9125abdc8fc946",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9b401168_7918069b",
@@ -89,6 +113,30 @@
       "writtenOn": "2025-09-03T23:29:21Z",
       "side": 1,
       "message": "nit:\n```suggestion\n// Note: this is only used in compatibility mode.\n```",
+      "range": {
+        "startLine": 52,
+        "startChar": 22,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "349ac9a463451ceb40c0f57bbe9125abdc8fc946",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "708d6cea_793ff828",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-09-03T23:51:54Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "9b401168_7918069b",
       "range": {
         "startLine": 52,
         "startChar": 22,
