@@ -969,7 +969,7 @@ bool GenerateSpirv([[maybe_unused]] const Options& options,
         return false;
     }
 
-    if (options.format == Format::kSpvAsm) {
+    if (options.format == Format::kSpirv) {
         if (!tint::cmd::WriteFile(options.output_file, "w", Disassemble(result.Get().spirv))) {
             return false;
         }
