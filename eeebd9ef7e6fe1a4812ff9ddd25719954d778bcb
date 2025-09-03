@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6e5b78c_3c32bff6",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3150,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-03T21:21:59Z",
+      "side": 1,
+      "message": "Nit: Seems more like a TINT_ASSERT since we shouldn\u0027t be able to hit this. Also it should have been \u003e\u003d.",
+      "fixSuggestions": [
+        {
+          "fixId": "83e75d4a_298397cc",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 3150,
+                "startChar": 0,
+                "endLine": 3154,
+                "endChar": 0
+              },
+              "replacement": "        TINT_ASSERT(idx \u003c call-\u003eArgs().Length());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "eeebd9ef7e6fe1a4812ff9ddd25719954d778bcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "972c0e8d_ebd17966",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3176,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-03T21:21:59Z",
+      "side": 1,
+      "message": "Why are function parameters allowed when we\u0027re expecting a constant?",
+      "revId": "eeebd9ef7e6fe1a4812ff9ddd25719954d778bcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
