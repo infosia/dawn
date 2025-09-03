@@ -310,6 +310,24 @@
       "parentUuid": "f09bfe55_bb0993d6",
       "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea5e93d5_a640456a",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-03T08:33:05Z",
+      "side": 1,
+      "message": "I guess I\u0027m a bit confused because the comment now at [1] only has A and B, while here we do a lot of dancing with A, B, C and D. Are we testing more cases than what\u0027s suggested in the comment? Is it because we want to keep the values in the buffer in lockstep to make it easy to check what the expected value is? (we could use immediates for that as they wouldn\u0027t cause any barriers, at least in Dawn\u0027s Vk backend).",
+      "parentUuid": "c2726317_563a0f10",
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
