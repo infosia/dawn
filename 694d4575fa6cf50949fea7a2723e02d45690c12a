@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "14f7b3a0_38f4fdcc",
+        "filename": "src/dawn/common/RefCounted.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-03T18:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b428767a_4a2d85b5",
+      "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d35eaa9_167227bf",
@@ -69,6 +87,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7911510c_70b5984d",
+        "filename": "src/dawn/common/RefCounted.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-03T18:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d35eaa9_167227bf",
+      "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdc73855_70ddf650",
+        "filename": "src/dawn/common/RefCounted.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-03T18:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef0f59d0_434144f6",
+      "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f83fdc00_e726d474",
@@ -82,6 +136,30 @@
       "writtenOn": "2025-09-03T08:11:29Z",
       "side": 1,
       "message": "I\u0027m not sure that I understand why the wire client is a concern here: this code is in dawn::native and not visible (and not used) by the wire client.",
+      "range": {
+        "startLine": 56,
+        "startChar": 3,
+        "endLine": 56,
+        "endChar": 40
+      },
+      "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3571dfc7_01b8e532",
+        "filename": "src/dawn/native/ObjectBase.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-03T18:29:38Z",
+      "side": 1,
+      "message": "It\u0027s really to make some tests which do \"bad things\" happy (calling this in wire tests https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/DawnNative.cpp;l\u003d250;drc\u003deacc76afbe1d2a055571fc8f66ab67d17530956c).\n\nI\u0027ll remove this part of the comment. The choice of `kInitializedErrorPayload \u003d 0` has value though.",
+      "parentUuid": "f83fdc00_e726d474",
       "range": {
         "startLine": 56,
         "startChar": 3,
@@ -111,6 +189,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "baecb4a4_a9d925d3",
+        "filename": "src/dawn/native/ObjectBase.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-03T18:29:38Z",
+      "side": 1,
+      "message": "These look like tests of the webgpu_cpp object base wrapper. Want a new set of tests for the internal ObjectBase?",
+      "parentUuid": "66b32b04_2e3f7355",
+      "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d60d44f4_7ef22979",
         "filename": "src/dawn/native/ObjectBase.h",
         "patchSetId": 15
@@ -122,6 +218,24 @@
       "writtenOn": "2025-09-03T08:11:29Z",
       "side": 1,
       "message": "Maybe mention the lack of synchronization guarantees as well?",
+      "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a468e04c_83f6f928",
+        "filename": "src/dawn/native/ObjectBase.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-03T18:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d60d44f4_7ef22979",
       "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
