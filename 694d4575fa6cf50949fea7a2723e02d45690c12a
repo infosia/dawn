@@ -207,6 +207,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e2e6d40a_e57fe9bb",
+        "filename": "src/dawn/native/ObjectBase.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-03T20:52:07Z",
+      "side": 1,
+      "message": "Yea, I don\u0027t think we have a place for this yet atm. If you do create the tests, maybe under `unittest/native`?",
+      "parentUuid": "baecb4a4_a9d925d3",
+      "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d60d44f4_7ef22979",
         "filename": "src/dawn/native/ObjectBase.h",
         "patchSetId": 15
