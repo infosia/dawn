@@ -617,6 +617,7 @@ size_t BufferBase::MapSize() const {
 
 MaybeError BufferBase::ValidateCanUseOnQueueNow() const {
     DAWN_ASSERT(!IsError());
+    DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
 
     switch (mState.load(std::memory_order::acquire)) {
         case BufferState::Destroyed:
@@ -762,6 +763,8 @@ void BufferBase::APIUnmap() {
 }
 
 MaybeError BufferBase::Unmap() {
+    DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
+
     switch (mState.load(std::memory_order::acquire)) {
         case BufferState::Mapped:
             UnmapImpl();
@@ -789,6 +792,8 @@ MaybeError BufferBase::Unmap() {
 }
 
 MaybeError BufferBase::UnmapInternal(WGPUMapAsyncStatus status, std::string_view message) {
+    DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
+
     BufferState state = mState.load(std::memory_order::acquire);
 
     // If the buffer is already destroyed, we don't need to do anything.
@@ -937,12 +942,14 @@ bool BufferBase::NeedsInitialization() const {
 }
 
 void BufferBase::MarkUsedInPendingCommands() {
+    DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
     ExecutionSerial serial = GetDevice()->GetQueue()->GetPendingCommandSerial();
     DAWN_ASSERT(serial >= mLastUsageSerial);
     mLastUsageSerial = serial;
 }
 
 ExecutionSerial BufferBase::GetLastUsageSerial() const {
+    DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
     return mLastUsageSerial;
 }
 
@@ -960,6 +967,7 @@ MaybeError BufferBase::UploadData(uint64_t bufferOffset, const void* data, size_
 }
 
 ExecutionSerial BufferBase::OnEndAccess() {
+    DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
     mState.store(BufferState::SharedMemoryNoAccess, std::memory_order::release);
     ExecutionSerial lastUsageSerial = mLastUsageSerial;
     mLastUsageSerial = kBeginningOfGPUTime;
