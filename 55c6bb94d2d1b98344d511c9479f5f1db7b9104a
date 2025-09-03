@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18d5f9ad_8fd901f5",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:20:24Z",
+      "side": 1,
+      "message": "(Corentin)\nUnfortunately enum classes suck to use as numbers as well. The usual way to do it is with conversion functions doing a switch on them, but TBH just a raw number here would work.",
+      "revId": "55c6bb94d2d1b98344d511c9479f5f1db7b9104a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "737eb998_b7db00d6",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:20:24Z",
+      "side": 1,
+      "message": "(Corentin)\nSuggested edit \n        size_t resultStart \u003d resultIndex * kResultSizeInExpectation;",
+      "revId": "55c6bb94d2d1b98344d511c9479f5f1db7b9104a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "550101e3_02aded94",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:20:24Z",
+      "side": 1,
+      "message": "(Corentin)\nnit: this is used repeatedly and could be a constant defined somewhere.",
+      "revId": "55c6bb94d2d1b98344d511c9479f5f1db7b9104a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81137833_8c34fa7e",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:20:24Z",
+      "side": 1,
+      "message": "(Corentin)\nHandleInheritStates is only needed because the code handling SetImmediate/SetBindGroup is the one updating the result.\n\nInstead we could have:\n```\ntemplate\u003ctypename Pass\u003e\n   void SetStorageBuffer(Pass pass,\n                          StorageBufferCount count,\n                          const std::array\u003cSize, 3\u003e\u0026 bufferSizes) {\n        pass.SetBindGroup(\n            0, MakeBindGroupWithBuffers(MakeStorageBindGroupLayout(count), count, bufferSizes));\n        mCurrentBufferLength \u003d ...;\n        // This one is done before the operation instead\n        // wgpu::BindGroup resultBindGroup \u003d MakeResultBindGroup();\n        // pass.SetBindGroup(1, resultBindGroup);\n    }\n\n    template\u003ctypename Pass\u003e\n    void SetImmediates(Pass pass, const std::vector\u003cuint32_t\u003e\u0026 immediates) {\n        std::vector\u003cuint32_t\u003e immediateData;\n        immediateData.push_back(resultIndex);  // First value is always the draw call index\n        immediateData.insert(immediateData.end(), immediates.begin(), immediates.end());\n        pass.SetImmediateData(0, reinterpret_cast\u003cuint8_t*\u003e(immediateData.data()),\n                              immediateData.size() * sizeof(uint32_t));\n\n        Copy immediates at the start of mCurrentImmediates\n    }\n\n\n    void UseRenderPipeline(wgpu::RenderPassEncoder pass,\n                           uint32_t immediateCount,\n                           StorageBufferCount bufferCount) {\n        mCurrentPipelineImmediateCOunt \u003d ..\n        // same for buffer\n        // We no longer need to keep the whole history.\n        pass.SetPipeline(MakeRenderPipelineWithImmediateAndBuffers(immediateCount, bufferCount));\n    }\n\n\n   void Draw(wgpu::RenderPassEncoder pass) {\n        if(resultIndex \u003d\u003d 0) {\n          wgpu::BindGroup resultBindGroup \u003d MakeResultBindGroup();\n          pass.SetBindGroup(1, resultBindGroup);\n        }\n\n        pass.Draw(1);\n\n        OnOperationWritingExpected()\n    }\n\n    void OnOperationWritingExpected() {\n        startOffset \u003d ;\n        for (mCurrentPipelineImmadeatCount) {\n            copy from mCurrentImmediates to mExpectedResults\n        }\n         for (mCurrentPipelineBufferCount) {\n            copy from mCurrentBufferSizes to mExpectedResults\n        }   \n\n        resultIndex++;\n    }\n```",
+      "revId": "55c6bb94d2d1b98344d511c9479f5f1db7b9104a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "891d63a0_ff3081bf",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:20:24Z",
+      "side": 1,
+      "message": "(Corentin)\nnit: this can be an early return to reduce nesting.",
+      "revId": "55c6bb94d2d1b98344d511c9479f5f1db7b9104a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f244d4d8_1c00ed11",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:20:24Z",
+      "side": 1,
+      "message": "(Corentin)\nThe buffer length should be inherited only when SetBindGroup hasn\u0027t been called again no? In which case we would copy the entirety of the results from the previous draw/dispatch, but only in that case. (if the previous pipeline had more buffers than the current one, we shouldn\u0027t add extra buffer lengths to the result).",
+      "revId": "55c6bb94d2d1b98344d511c9479f5f1db7b9104a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27893020_c5e17c9e",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:20:24Z",
+      "side": 1,
+      "message": "(Corentin)\nThis two helpers can be shared if we make wgpu::ShaderStage::Compute | wgpu::ShaderStage::Fragment (which should be fine given the implementation has a different template instantiation for each).",
+      "revId": "55c6bb94d2d1b98344d511c9479f5f1db7b9104a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27a6096e_66946d1c",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:20:24Z",
+      "side": 1,
+      "message": "(Corentin)\nThese as well if we are ok templating on the encoder type.",
+      "revId": "55c6bb94d2d1b98344d511c9479f5f1db7b9104a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "361bb554_b0deca20",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:20:24Z",
+      "side": 1,
+      "message": "(Corentin)\nAnd the rest also seem like they could be moved in the base fixture (but that\u0027s very optional!)",
+      "revId": "55c6bb94d2d1b98344d511c9479f5f1db7b9104a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
