@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0ddfd2f_0be0eb87",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-03T14:17:42Z",
+      "side": 1,
+      "message": "Dan PTAL again!",
+      "revId": "052516c4c7dd6cab0e27abbb41ab150d9b2748ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
