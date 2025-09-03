@@ -136,6 +136,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2427ed87_2e9bf453",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000268
+      },
+      "writtenOn": "2025-09-03T22:45:12Z",
+      "side": 1,
+      "message": "@enrico.galli@intel.com GPU upload heaps are a special case that WebNN cannot export. The `ID3D12Device::GetCustomHeapProperties` API used by WebNN simply maps READBACK, UPLOAD, and DEFAULT heap types to their corresponding custom heap properties (i.e., for UMA systems, these properties are still predefined by D3D). See `ID3D12Device::GetCustomHeapProperties` [1] for the documented mappings.\n\n[1] https://learn.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12device-getcustomheapproperties(uint_d3d12_heap_type)",
+      "parentUuid": "4c224ca2_4c4b60ee",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d3a21d69_0c284c55",
         "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
         "patchSetId": 2
