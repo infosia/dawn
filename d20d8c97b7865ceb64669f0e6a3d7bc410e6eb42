@@ -39,6 +39,30 @@
       },
       "revId": "d20d8c97b7865ceb64669f0e6a3d7bc410e6eb42",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e23a50e2_43416838",
+        "filename": "infra/specs/waterfalls.pyl",
+        "patchSetId": 27
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-03T17:49:17Z",
+      "side": 1,
+      "message": "I plan on renaming this in a follow-up before enabling the CI builder. From the design doc for this effort, \"The build type should always be present and come last.\", so I think `dawn-linux-x64-fuzz-rel` is what I\u0027ll go with.",
+      "parentUuid": "e92c2bca_98b12228",
+      "range": {
+        "startLine": 9,
+        "startChar": 7,
+        "endLine": 9,
+        "endChar": 38
+      },
+      "revId": "d20d8c97b7865ceb64669f0e6a3d7bc410e6eb42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
