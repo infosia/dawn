@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60bd1c40_e0e78c06",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-03T22:06:56Z",
+      "side": 1,
+      "message": "Done. This is such a dumb macro trick. 😂",
+      "parentUuid": "24ec64eb_5b83f435",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 94
+      },
+      "revId": "5e6b4615ace7c713ed78603b05269d9c5afffd1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b48742cd_0d0bf380",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-09-03T20:42:01Z",
       "side": 1,
       "message": "Please fix this WARNING reported by Spellchecker: \"sufficent\" is a possible misspelling of \"sufficient\".\n\nTo bypass Spellchecker, ...\n\n\"sufficent\" is a possible misspelling of \"sufficient\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 140,
+        "startChar": 30,
+        "endLine": 140,
+        "endChar": 39
+      },
+      "revId": "5e6b4615ace7c713ed78603b05269d9c5afffd1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87ea64f8_e135c7bb",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-03T22:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b48742cd_0d0bf380",
       "range": {
         "startLine": 140,
         "startChar": 30,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "70a420a2_0d934094",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-03T22:06:56Z",
+      "side": 1,
+      "message": "Done. \"handle\" is what I used on the .cpp side, so using it here as well.",
+      "parentUuid": "4c69aee0_94db781c",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 52
+      },
+      "revId": "5e6b4615ace7c713ed78603b05269d9c5afffd1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c87b225a_b6b9c887",
@@ -100,6 +172,30 @@
       "writtenOn": "2025-09-03T20:42:01Z",
       "side": 1,
       "message": "nit. I think we should move the `FENCED_DEVICE_DELETER_TYPES` macro from the .cpp file into here and then use that macro to generate this as well. Could also maybe shorten the names and drop the `ToDelete` from them since that\u0027s kind of obvious.\n\nAlso, WDYT about doing something like:\n```\nstruct ToDeletes {\n  // Macro magic to generate all the `SerialQueue\u003c\u003e mType` members.\n};\nMutexProtected\u003cToDeletes\u003e mToDeletes;\n```",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 69
+      },
+      "revId": "5e6b4615ace7c713ed78603b05269d9c5afffd1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca5b306f_c104f8b4",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-03T22:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c87b225a_b6b9c887",
       "range": {
         "startLine": 76,
         "startChar": 4,
