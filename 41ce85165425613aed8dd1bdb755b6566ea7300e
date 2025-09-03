@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "313a2ca0_b1d2b0b4",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:21:35Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "bbff22d1_abf629fa",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 10
+      },
+      "revId": "41ce85165425613aed8dd1bdb755b6566ea7300e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5c9943e_d42d8f16",
@@ -54,6 +78,24 @@
       "writtenOn": "2025-09-02T14:55:50Z",
       "side": 1,
       "message": "```suggestion\n        size_t resultStart \u003d resultIndex * kResultSizeInExpectation;\n```",
+      "revId": "41ce85165425613aed8dd1bdb755b6566ea7300e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6db97d4_7554d93c",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:21:35Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b5c9943e_d42d8f16",
       "revId": "41ce85165425613aed8dd1bdb755b6566ea7300e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -81,6 +123,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "416aff20_fd0e7a0b",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:21:35Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "25679b91_e08e91ca",
+      "range": {
+        "startLine": 172,
+        "startChar": 26,
+        "endLine": 172,
+        "endChar": 97
+      },
+      "revId": "41ce85165425613aed8dd1bdb755b6566ea7300e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc9bd933_8a5395e9",
@@ -94,6 +160,24 @@
       "writtenOn": "2025-09-02T14:55:50Z",
       "side": 1,
       "message": "`HandleInheritStates` is only needed because the code handling `SetImmediate/SetBindGroup` is the one updating the result.\n\nInstead we could have:\n\n```\ntemplate\u003ctypename Pass\u003e\n   void SetStorageBuffer(Pass pass,\n                          StorageBufferCount count,\n                          const std::array\u003cSize, 3\u003e\u0026 bufferSizes) {\n        pass.SetBindGroup(\n            0, MakeBindGroupWithBuffers(MakeStorageBindGroupLayout(count), count, bufferSizes));\n        mCurrentBufferLength \u003d ...;\n        // This one is done before the operation instead\n        // wgpu::BindGroup resultBindGroup \u003d MakeResultBindGroup();\n        // pass.SetBindGroup(1, resultBindGroup);\n    }\n    \n    template\u003ctypename Pass\u003e\n    void SetImmediates(Pass pass, const std::vector\u003cuint32_t\u003e\u0026 immediates) {\n        std::vector\u003cuint32_t\u003e immediateData;\n        immediateData.push_back(resultIndex);  // First value is always the draw call index\n        immediateData.insert(immediateData.end(), immediates.begin(), immediates.end());\n        pass.SetImmediateData(0, reinterpret_cast\u003cuint8_t*\u003e(immediateData.data()),\n                              immediateData.size() * sizeof(uint32_t));\n                              \n        Copy immediates at the start of mCurrentImmediates\n    }\n\n\n    void UseRenderPipeline(wgpu::RenderPassEncoder pass,\n                           uint32_t immediateCount,\n                           StorageBufferCount bufferCount) {\n        mCurrentPipelineImmediateCOunt \u003d ..\n        // same for buffer\n        // We no longer need to keep the whole history.\n        pass.SetPipeline(MakeRenderPipelineWithImmediateAndBuffers(immediateCount, bufferCount));\n    }\n\n\n   void Draw(wgpu::RenderPassEncoder pass) {\n        if(resultIndex \u003d\u003d 0) {\n          wgpu::BindGroup resultBindGroup \u003d MakeResultBindGroup();\n          pass.SetBindGroup(1, resultBindGroup);\n        }\n\n        pass.Draw(1);\n        \n        OnOperationWritingExpected()\n    }\n    \n    void OnOperationWritingExpected() {\n        startOffset \u003d ;\n        for (mCurrentPipelineImmadeatCount) {\n            copy from mCurrentImmediates to mExpectedResults\n        }\n         for (mCurrentPipelineBufferCount) {\n            copy from mCurrentBufferSizes to mExpectedResults\n        }   \n\n        resultIndex++;\n    }\n```",
+      "revId": "41ce85165425613aed8dd1bdb755b6566ea7300e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1841ca33_05bcc156",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:21:35Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "bc9bd933_8a5395e9",
       "revId": "41ce85165425613aed8dd1bdb755b6566ea7300e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -115,6 +199,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb628254_361fe652",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:21:35Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a66207d3_01071bbb",
+      "revId": "41ce85165425613aed8dd1bdb755b6566ea7300e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c3162d9c_7d05c95a",
@@ -132,6 +234,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed9dd9d8_7b7a0252",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:21:35Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c3162d9c_7d05c95a",
+      "revId": "41ce85165425613aed8dd1bdb755b6566ea7300e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "46d1fdea_4f110ea0",
@@ -145,6 +265,30 @@
       "writtenOn": "2025-09-02T14:55:50Z",
       "side": 1,
       "message": "This two helpers can be shared if we make `wgpu::ShaderStage::Compute | wgpu::ShaderStage::Fragment` (which should be fine given the implementation has a different template instantiation for each).",
+      "range": {
+        "startLine": 277,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 0
+      },
+      "revId": "41ce85165425613aed8dd1bdb755b6566ea7300e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f8efa1f_3a676133",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:21:35Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "46d1fdea_4f110ea0",
       "range": {
         "startLine": 277,
         "startChar": 0,
@@ -178,6 +322,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "92a49679_05442667",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:21:35Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "522e7166_3f330b8f",
+      "range": {
+        "startLine": 315,
+        "startChar": 0,
+        "endLine": 334,
+        "endChar": 0
+      },
+      "revId": "41ce85165425613aed8dd1bdb755b6566ea7300e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "68b604f2_ffca7f21",
@@ -191,6 +359,24 @@
       "writtenOn": "2025-09-02T14:55:50Z",
       "side": 1,
       "message": "And the rest also seem like they could be moved in the base fixture (but that\u0027s very optional!)",
+      "revId": "41ce85165425613aed8dd1bdb755b6566ea7300e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2691701b_602a2feb",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:21:35Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "68b604f2_ffca7f21",
       "revId": "41ce85165425613aed8dd1bdb755b6566ea7300e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

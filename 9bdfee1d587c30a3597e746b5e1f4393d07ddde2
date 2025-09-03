@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1edb109d_c83da9dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 33
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-03T02:21:35Z",
+      "side": 1,
+      "message": "Ack. Having another CL for tests and copy all the comments to that CL. Mark all comments in test as Ack.",
+      "revId": "9bdfee1d587c30a3597e746b5e1f4393d07ddde2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
