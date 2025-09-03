@@ -133,6 +133,7 @@ static_library("dawn_node_interop") {
     ":idlgen_webgpu_cpp",
     ":idlgen_webgpu_h",
     "$dawn_root/include/dawn:cpp_headers",
+    "$dawn_root/src/utils",
   ]
 }
 
@@ -208,8 +209,8 @@ static_library("dawn_node_binding") {
     "binding/TogglesLoader.h",
   ]
   include_dirs = [ "${dawn_node_gen_dir}" ]
+  public_deps = [ ":dawn_node_interop" ]
   deps = [
-    ":dawn_node_interop",
     "$dawn_root/src/dawn/native:native",
     "$dawn_root/src/dawn/utils:wgpu_utils",
   ]
