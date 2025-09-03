@@ -1750,6 +1750,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_2d_WithOffset) {
     auto* s = b.FunctionParam("s", ty.sampler());
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* offset = b.FunctionParam("offset", ty.vec2<i32>());
+
     auto* func = b.Function("foo", ty.vec4<f32>());
     func->SetParams({t, s, coords, offset});
     b.Append(func->Block(), [&] {
