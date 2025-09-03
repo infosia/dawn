@@ -106,5 +106,16 @@ TEST_F(ITypArrayTest, BeginEndFrontBackData) {
     ASSERT_EQ(constArr.data(), &constArr[Key(0)]);
 }
 
+using ITypArrayDeathTest = ITypArrayTest;
+
+// Out of bounds accesses should crash even in release (the underlying
+// std::array should have asserts enabled).
+TEST_F(ITypArrayDeathTest, OutOfBounds) {
+    Array arr;
+    EXPECT_DEATH(arr[Key(10)], "");
+    const Array& constArr = arr;
+    EXPECT_DEATH(constArr[Key(10)], "");
+}
+
 }  // anonymous namespace
 }  // namespace dawn
