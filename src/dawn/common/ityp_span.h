@@ -46,7 +46,6 @@ class span {
     constexpr span(Value* data, Index size) : mData(data), mSize(size) {}
 
     constexpr Value& operator[](Index i) const {
-        DAWN_ASSERT(i < mSize);
         return mData[static_cast<I>(i)];
     }
 
