@@ -67,6 +67,7 @@ ci.builder(
     ),
     gn_args = gn_args.config(
         configs = [
+            "dawn_node_bindings",
             "dawn_swiftshader",
             "linux_clang",
             "component",
