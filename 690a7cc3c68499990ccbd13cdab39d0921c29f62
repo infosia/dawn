@@ -95,6 +95,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b106717_1b794f45",
+        "filename": "src/dawn/native/AsyncTask.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-03T20:50:13Z",
+      "side": 1,
+      "message": "Ack, got it!",
+      "parentUuid": "e92bd9b9_957ce749",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 37
+      },
+      "revId": "690a7cc3c68499990ccbd13cdab39d0921c29f62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f6ad5a5d_7575859c",
@@ -238,6 +262,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4db4127a_7c6f1d20",
+        "filename": "src/dawn/native/AsyncTask.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-03T20:50:13Z",
+      "side": 1,
+      "message": "I think you could just keep `mState` outside of the private struct in that case and it should work the same? Or I guess in that case, you would only need it to be `MutexProtected\u003cstd::vector\u003cAsyncTaskCompletionCallback\u003e\u003e` without an additional private struct. Then you can choose to update `mState` only in the `Use` scope of `mCompletionCallabacks` for the specific case.\n\nUp to you, but I think in general we\u0027ve been trying to keep the mutex guarded members to make it easier to understand and ensure that we can\u0027t accidentally use fields without the lock.",
+      "parentUuid": "5f9ec9cf_f77ac2b1",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 66
+      },
+      "revId": "690a7cc3c68499990ccbd13cdab39d0921c29f62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6ba43868_0250aea0",
         "filename": "src/dawn/native/AsyncTask.h",
         "patchSetId": 16
@@ -273,6 +321,30 @@
       "side": 1,
       "message": "This is the callback passed to PostTask so it\u0027s required to have this prototype.",
       "parentUuid": "6ba43868_0250aea0",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 36
+      },
+      "revId": "690a7cc3c68499990ccbd13cdab39d0921c29f62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a69ff24e_39496154",
+        "filename": "src/dawn/native/AsyncTask.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-03T20:50:13Z",
+      "side": 1,
+      "message": "Ah! That makes sense. I knew I had to be missing something.",
+      "parentUuid": "9ae10590_fa103700",
       "range": {
         "startLine": 117,
         "startChar": 4,
