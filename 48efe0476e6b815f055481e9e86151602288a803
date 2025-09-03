@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "870921ee_5bfb131e",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-03T09:11:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d43a2d96_2bb7219b",
+      "revId": "48efe0476e6b815f055481e9e86151602288a803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "090e5dc2_3cf7c22b",
@@ -83,6 +101,24 @@
       "writtenOn": "2025-08-26T20:56:15Z",
       "side": 1,
       "message": "this check won\u0027t work will it? `UsesNonDefaultSwizzle()` will return false for RGBA but for depth it\u0027s supposed to be R,0,0,1 so it won\u0027t use the mapped swizzle.",
+      "revId": "48efe0476e6b815f055481e9e86151602288a803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c712ff8a_6c27ff0b",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-03T09:11:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a081df58_49371c85",
       "revId": "48efe0476e6b815f055481e9e86151602288a803",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
