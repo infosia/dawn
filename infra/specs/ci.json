@@ -144,6 +144,18 @@
         "test": "tint_unittests",
         "test_id_prefix": "ninja://src/tint/cmd/test:tint_unittests/"
       }
+    ],
+    "scripts": [
+      {
+        "args": [
+          "-backend",
+          "vulkan",
+          "-adapter",
+          "SwiftShader",
+          "webgpu:api,operation,adapter,requestDevice:default:*"
+        ],
+        "name": "dawn_node_sws_cts"
+      }
     ]
   }
 }
