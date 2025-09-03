@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04edf6b6_96c3c2f1",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-03T22:17:43Z",
+      "side": 1,
+      "message": "Is this call needed here? I was hoping that we wouldn\u0027t need to do this call and the assertions should still hold true assuming we use the `FencedDeleter` correctly on the outside.",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 36
+      },
+      "revId": "33bc745714d6bcbb86bf2d79424cbd21d0938ca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
