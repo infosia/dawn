@@ -28,6 +28,8 @@
 #ifndef SRC_DAWN_COMMON_MUTEXPROTECTED_H_
 #define SRC_DAWN_COMMON_MUTEXPROTECTED_H_
 
+#include <chrono>
+#include <condition_variable>
 #include <mutex>
 #include <utility>
 
@@ -37,6 +39,7 @@
 #include "dawn/common/NonMovable.h"
 #include "dawn/common/Ref.h"
 #include "dawn/common/StackAllocated.h"
+#include "dawn/common/Time.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 #include "partition_alloc/pointers/raw_ptr_exclusion.h"
 
@@ -44,6 +47,9 @@ namespace dawn {
 
 template <typename T, template <typename, typename> class Guard>
 class MutexProtected;
+
+template <typename T, template <typename, typename> class Guard>
+class MutexCondVarProtected;
 
 template <typename T, template <typename, typename> class Guard>
 class MutexProtectedSupport;
@@ -99,13 +105,34 @@ class DAWN_SCOPED_LOCKABLE Guard : public NonMovable, StackAllocated {
         mDefer->Append(std::move(f));
     }
 
+    template <typename Predicate>
+    void Wait(Predicate pred) {
+        DAWN_ASSERT(mCv);
+        mCv->wait(mLock, [&] { return pred((*mObj)); });
+    }
+    template <typename Predicate>
+    bool WaitFor(Nanoseconds timeout, Predicate pred) {
+        DAWN_ASSERT(mCv);
+        if (timeout < kMaxDurationNanos) {
+            return mCv->wait_for(mLock, std::chrono::nanoseconds(static_cast<uint64_t>(timeout)),
+                                 [&] { return pred(*mObj); });
+        } else {
+            Wait(pred);
+            return true;
+        }
+    }
+
   protected:
-    Guard(T* obj, typename Traits::MutexType& mutex, class Defer* defer = nullptr)
-        : mLock(Traits::GetMutex(mutex)), mObj(obj), mDefer(defer) {}
+    Guard(T* obj,
+          typename Traits::MutexType& mutex,
+          class Defer* defer = nullptr,
+          std::condition_variable* cv = nullptr)
+        : mLock(Traits::GetMutex(mutex)), mObj(obj), mDefer(defer), mCv(cv) {}
     Guard(Guard&& other)
         : mLock(std::move(other.mLock)),
           mObj(std::move(other.mObj)),
-          mDefer(std::move(other.mDefer)) {
+          mDefer(std::move(other.mDefer)),
+          mCv(std::move(other.mCv)) {
         other.mObj = nullptr;
     }
 
@@ -119,6 +146,7 @@ class DAWN_SCOPED_LOCKABLE Guard : public NonMovable, StackAllocated {
     using NonConstT = typename std::remove_const<T>::type;
     friend class MutexProtectedSupport<NonConstT, Guard>;
     friend class MutexProtected<NonConstT, Guard>;
+    friend class MutexCondVarProtected<NonConstT, Guard>;
 
     typename Traits::LockType mLock;
     // RAW_PTR_EXCLUSION: This pointer is created/destroyed on each access to a MutexProtected.
@@ -126,6 +154,7 @@ class DAWN_SCOPED_LOCKABLE Guard : public NonMovable, StackAllocated {
     // unlikely to be used after it is freed.
     RAW_PTR_EXCLUSION T* mObj = nullptr;
     raw_ptr<class Defer> mDefer = nullptr;
+    raw_ptr<std::condition_variable> mCv = nullptr;
 };
 
 template <typename T, typename Traits, template <typename, typename> class Guard = detail::Guard>
@@ -213,12 +242,56 @@ class MutexProtected
     using Base::Use;
     using Base::UseWithDefer;
 
+  protected:
+    T mObj;
+
   private:
     Usage Use() override { return Usage(&mObj, this->mMutex); }
     Usage UseWithDefer(Defer& defer) override { return Usage(&mObj, this->mMutex, &defer); }
     ConstUsage Use() const override { return ConstUsage(&mObj, this->mMutex); }
+};
 
-    T mObj;
+// Wrapping class for object members to provide the protections with a mutex of a MutexProtected
+// with some additional helpers to allow waiting with a conditional variable as well. The general
+// usage should look the same as MutexProtected above, with additional usages like the following
+// example:
+//     class Example {
+//       public:
+//         void Complete() {
+//             mDone.Use([](auto done) {
+//                 // Do somehting
+//                 mDone = true;
+//             });
+//             mDone.NotifyAll();
+//         }
+//         void WaitUntilDone() {
+//             mDone.Use([](auto done) {
+//                 done.Wait([](auto done) { return done; });
+//             });
+//         }
+//       private:
+//         MutexCondVarProtected<bool> mDone = false;
+//     };
+template <typename T, template <typename, typename> class Guard = detail::Guard>
+class MutexCondVarProtected : public MutexProtected<T, Guard> {
+  public:
+    using Base = MutexProtected<T, Guard>;
+    using typename Base::ConstUsage;
+    using typename Base::Usage;
+
+    using Base::Base::Use;
+    using Base::Base::UseWithDefer;
+
+    void NotifyAll() { mCv.notify_all(); }
+
+  private:
+    Usage Use() override { return Usage(&this->mObj, this->mMutex, nullptr, &mCv); }
+    Usage UseWithDefer(Defer& defer) override {
+        return Usage(&this->mObj, this->mMutex, &defer, &mCv);
+    }
+    ConstUsage Use() const override { return ConstUsage(&this->mObj, this->mMutex); }
+
+    std::condition_variable mCv;
 };
 
 // CRTP wrapper to help create classes that are generally MutexProtected, but may wish to implement

@@ -188,7 +188,7 @@ WGPUFuture Instance::APIRequestAdapter(const WGPURequestAdapterOptions* options,
     Client* client = GetClient();
     Ref<Adapter> adapter = client->Make<Adapter>(GetEventManagerHandle());
     auto [futureIDInternal, tracked] =
-        GetEventManager().TrackEvent(std::make_unique<RequestAdapterEvent>(callbackInfo, adapter));
+        GetEventManager().TrackEvent(AcquireRef(new RequestAdapterEvent(callbackInfo, adapter)));
     if (!tracked) {
         return {futureIDInternal};
     }
@@ -334,7 +334,8 @@ DAWN_WIRE_EXPORT WGPUStatus wgpuDawnWireClientGetInstanceLimits(WGPUInstanceLimi
 }
 
 // No features listed here because CreateInstance is not supported in the wire.
-static constexpr auto kSupportedFeatures = std::array<WGPUInstanceFeatureName, 0>{};
+static constexpr auto kSupportedFeatures =
+    std::array<WGPUInstanceFeatureName, 1>{WGPUInstanceFeatureName_TimedWaitAny};
 
 DAWN_WIRE_EXPORT WGPUBool wgpuDawnWireClientHasInstanceFeature(WGPUInstanceFeatureName feature) {
     return std::find(kSupportedFeatures.begin(), kSupportedFeatures.end(), feature) !=
