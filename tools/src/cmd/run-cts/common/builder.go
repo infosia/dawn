@@ -121,7 +121,8 @@ func (b *Builder) Build(verbose bool, fsReaderWrapper oswrapper.FilesystemReader
 		return fmt.Errorf("cannot find npx at '%v'", b.npx)
 	}
 
-	for _, action := range []string{"run:generate-version", b.Name} {
+	// for _, action := range []string{"run:generate-version", b.Name} {
+	for _, action := range []string{b.Name} {
 		cmd := exec.Command(b.npx, "grunt", action)
 		cmd.Dir = b.CTS
 		out, err := cmd.CombinedOutput()
