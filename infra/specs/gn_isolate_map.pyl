@@ -3,6 +3,11 @@
     'label': '//src/dawn/tests:dawn_end2end_tests',
     'type': 'windowed_test_launcher',
   },
+  'dawn_node_cts': {
+    'label': '//webgpu-cts:dawn_node_cts',
+    'type': 'script',
+    'script': '//webgpu-cts/run_dawn_node_cts.py',
+  },
   'dawn_unittests': {
     'label': '//src/dawn/tests:dawn_unittests',
     'type': 'windowed_test_launcher',

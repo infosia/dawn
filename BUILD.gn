@@ -67,6 +67,7 @@ group("tests") {
   deps = [
     "src/dawn/tests",
     "src/tint:tests",
+    "webgpu-cts:dawn_node_cts",
   ]
 }
 
