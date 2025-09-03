@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebac6cd9_d67669c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-03T11:00:06Z",
+      "side": 1,
+      "message": "Hey Kai, does this approach look good to you?\n\nGregg is adding tests for this at https://github.com/gpuweb/cts/pull/4427 which should tell us which backend need to be updated. I\u0027ve started with macOS as I have a machine to try it out locally. I\u0027ve also tried Vulkan with `forceFallbackAdapter` in the CTS and it seems to pass.",
+      "revId": "8be82ddc2b5bdd40d8f041f76f011bb35f47ba6b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
