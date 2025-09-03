@@ -16,6 +16,87 @@
       "message": "I used Corentin\u0027s suggestion and moved the check to pipeline time. The test crashed without the changes. Now it gets an error for the group being out of range. I wasn\u0027t sure if I should put a crbug.com link there or not. Though this CL is public",
       "revId": "349ac9a463451ceb40c0f57bbe9125abdc8fc946",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c1f72f3_c56bf99c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-03T23:29:21Z",
+      "side": 1,
+      "message": "In a comment? It\u0027s fine to put a protected crbug in a comment, it\u0027ll become public eventually. Don\u0027t think it\u0027s necessary though",
+      "parentUuid": "add0f61d_1180a4ee",
+      "revId": "349ac9a463451ceb40c0f57bbe9125abdc8fc946",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60d8a8d5_6f3ab833",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-03T23:29:21Z",
+      "side": 1,
+      "message": "LGTM, up to you if you want to address nits or just submit it",
+      "revId": "349ac9a463451ceb40c0f57bbe9125abdc8fc946",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb2a9371_ff749cbe",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-03T23:29:21Z",
+      "side": 1,
+      "message": "nit: I think this could all be\n`constexpr auto operator\u003c\u003d\u003e(const BindingSlot\u0026) const \u003d default;`\n\nhttps://en.cppreference.com/w/cpp/language/default_comparisons.html",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 5
+      },
+      "revId": "349ac9a463451ceb40c0f57bbe9125abdc8fc946",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b401168_7918069b",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-03T23:29:21Z",
+      "side": 1,
+      "message": "nit:\n```suggestion\n// Note: this is only used in compatibility mode.\n```",
+      "range": {
+        "startLine": 52,
+        "startChar": 22,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "349ac9a463451ceb40c0f57bbe9125abdc8fc946",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
