@@ -44,15 +44,27 @@ group("webgpu-cts") {
   testonly = true
   data_deps = [
     ":webgpu_cts_resources",
-    "../third_party/gn/webgpu-cts",
+    "//third_party/gn/webgpu-cts",
   ]
   data = [
     "scripts/",
-    "../third_party/webgpu-cts/src/",
+    "//third_party/webgpu-cts/src/",
     "//third_party/node/",
 
     "expectations.txt",
-    "../third_party/webgpu-cts/node.tsconfig.json",
-    "../third_party/webgpu-cts/tsconfig.json",
+    "//third_party/webgpu-cts/node.tsconfig.json",
+    "//third_party/webgpu-cts/tsconfig.json",
+  ]
+}
+
+group("dawn_node_cts") {
+  testonly = true
+  data_deps = [
+    ":webgpu-cts",
+    "//src/dawn/node:dawn_node",
+    "//tools:go_tools",
+  ]
+  data = [
+    "run_dawn_node_cts.py",
   ]
 }
