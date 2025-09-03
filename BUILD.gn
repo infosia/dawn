@@ -65,6 +65,7 @@ group("libs") {
 group("tests") {
   testonly = true
   deps = [
+    "scripts/dawn_node_cts",
     "src/dawn/tests",
     "src/tint:tests",
   ]
