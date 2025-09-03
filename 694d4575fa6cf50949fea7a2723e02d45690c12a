@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cbc36e2_0ca1d494",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-03T08:11:29Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b428767a_4a2d85b5",
+        "filename": "src/dawn/common/RefCounted.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-03T08:11:29Z",
+      "side": 1,
+      "message": "Is it possible to have the discussion of object initialization etc be in ObjectBase? Technically `RefCounted` doesn\u0027t care about that.",
+      "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d35eaa9_167227bf",
+        "filename": "src/dawn/common/RefCounted.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-03T08:11:29Z",
+      "side": 1,
+      "message": "nit: Can we have a scary comment that they are not synchronized and the user has to be super careful about it?",
+      "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef0f59d0_434144f6",
+        "filename": "src/dawn/common/RefCounted.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-03T08:11:29Z",
+      "side": 1,
+      "message": "Could we have tests of this in RefCountedTest.cpp?",
+      "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f83fdc00_e726d474",
+        "filename": "src/dawn/native/ObjectBase.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-03T08:11:29Z",
+      "side": 1,
+      "message": "I\u0027m not sure that I understand why the wire client is a concern here: this code is in dawn::native and not visible (and not used) by the wire client.",
+      "range": {
+        "startLine": 56,
+        "startChar": 3,
+        "endLine": 56,
+        "endChar": 40
+      },
+      "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66b32b04_2e3f7355",
+        "filename": "src/dawn/native/ObjectBase.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-03T08:11:29Z",
+      "side": 1,
+      "message": "And tests for these in ObjectBaseTest.cpp?",
+      "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d60d44f4_7ef22979",
+        "filename": "src/dawn/native/ObjectBase.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-03T08:11:29Z",
+      "side": 1,
+      "message": "Maybe mention the lack of synchronization guarantees as well?",
+      "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
