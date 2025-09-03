@@ -328,6 +328,24 @@
       "parentUuid": "c2726317_563a0f10",
       "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f601efeb_0f939ab5",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-03T20:22:52Z",
+      "side": 1,
+      "message": "We cannot have dispatches that simply read from a buffer as that would be a NOP (the shader could just do nothing). I would figure non storage would be read only. So we need a storage buffer to write. This is what the additional buffers are for.\n\nWe need at least two different buffers to avoid WAW Write after Write hazards between different dispatches (as those will also add barriers but not the barriers we are trying to test here). So this is why the test needs C/D to test [1] which only has A and B.",
+      "parentUuid": "ea5e93d5_a640456a",
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
