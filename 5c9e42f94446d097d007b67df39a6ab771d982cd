@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a22fd057_fd96b667",
+        "filename": "src/dawn/native/d3d11/UtilsD3D11.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-03T20:25:57Z",
+      "side": 1,
+      "message": "Do you envision using this in other places as well? If not, I\u0027m thinking maybe we should just inline this in `TextureD3D11.cpp` in an anonymous namespace and not even expose it via the header.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 76
+      },
+      "revId": "5c9e42f94446d097d007b67df39a6ab771d982cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
