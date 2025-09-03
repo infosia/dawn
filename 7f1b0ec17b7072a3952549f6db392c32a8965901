@@ -1,0 +1,214 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "623ec6d5_3b9edd5e",
+        "filename": "docs/dawn/features/subgroup_matrix.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-03T15:44:10Z",
+      "side": 1,
+      "message": "Nit: simdgroup_multiply",
+      "fixSuggestions": [
+        {
+          "fixId": "f0162cad_1cc9c2bf",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "docs/dawn/features/subgroup_matrix.md",
+              "range": {
+                "startLine": 1024,
+                "startChar": 0,
+                "endLine": 1025,
+                "endChar": 0
+              },
+              "replacement": "   \u003ctd\u003esimdgroup_multiply\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7f1b0ec17b7072a3952549f6db392c32a8965901",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca36c936_bbfb8709",
+        "filename": "docs/dawn/features/subgroup_matrix.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-03T15:44:10Z",
+      "side": 1,
+      "message": "simdgroup_multiply_accumulate",
+      "fixSuggestions": [
+        {
+          "fixId": "dbf3119f_8a1e42ea",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "docs/dawn/features/subgroup_matrix.md",
+              "range": {
+                "startLine": 1034,
+                "startChar": 0,
+                "endLine": 1035,
+                "endChar": 0
+              },
+              "replacement": "   \u003ctd\u003esimdgroup_multiply_accumulate\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7f1b0ec17b7072a3952549f6db392c32a8965901",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f91c7c40_dc43da30",
+        "filename": "docs/dawn/features/subgroup_matrix.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-03T15:44:10Z",
+      "side": 1,
+      "message": "simdgroup_multiply_accumulate",
+      "fixSuggestions": [
+        {
+          "fixId": "5f3b2ee5_2fb08335",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "docs/dawn/features/subgroup_matrix.md",
+              "range": {
+                "startLine": 1042,
+                "startChar": 0,
+                "endLine": 1043,
+                "endChar": 0
+              },
+              "replacement": "   \u003ctd\u003esimdgroup_multiply_accumulate with identity matrix for b and filled matrix scalar value for c\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7f1b0ec17b7072a3952549f6db392c32a8965901",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18cdceb1_5d713cb6",
+        "filename": "docs/dawn/features/subgroup_matrix.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 1050,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-03T15:44:10Z",
+      "side": 1,
+      "message": "simdgroup_multiply_accumulate",
+      "fixSuggestions": [
+        {
+          "fixId": "550373c8_5855bdb5",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "docs/dawn/features/subgroup_matrix.md",
+              "range": {
+                "startLine": 1050,
+                "startChar": 0,
+                "endLine": 1051,
+                "endChar": 0
+              },
+              "replacement": "   \u003ctd\u003esimdgroup_multiply_accumulate with diagonal matrix for b and filled inverted matrix scalar value for c\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7f1b0ec17b7072a3952549f6db392c32a8965901",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2e526dc_f4da0fb3",
+        "filename": "docs/dawn/features/subgroup_matrix.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-03T15:44:10Z",
+      "side": 1,
+      "message": "simdgroup_multiply",
+      "fixSuggestions": [
+        {
+          "fixId": "5a1a73a0_aefd3a6e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "docs/dawn/features/subgroup_matrix.md",
+              "range": {
+                "startLine": 1058,
+                "startChar": 0,
+                "endLine": 1059,
+                "endChar": 0
+              },
+              "replacement": "   \u003ctd\u003esimdgroup_multiply with diagonal matrix scalar value for b\u003csup\u003e1\u003c/sup\u003e\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7f1b0ec17b7072a3952549f6db392c32a8965901",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd082ffa_78118c10",
+        "filename": "docs/dawn/features/subgroup_matrix.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-03T15:44:10Z",
+      "side": 1,
+      "message": "simdgroup_multiply",
+      "fixSuggestions": [
+        {
+          "fixId": "29efe1f8_a9c7d94d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "docs/dawn/features/subgroup_matrix.md",
+              "range": {
+                "startLine": 1066,
+                "startChar": 0,
+                "endLine": 1067,
+                "endChar": 0
+              },
+              "replacement": "   \u003ctd\u003e\u003cdel\u003esimdgroup_multiply with diagonal matrix reciprocal scalar value for b\u003csup\u003e1\u003c/sup\u003e\u003c/del\u003e\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7f1b0ec17b7072a3952549f6db392c32a8965901",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
