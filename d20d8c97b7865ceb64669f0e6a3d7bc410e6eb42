@@ -16,6 +16,29 @@
       "message": "Will need another +1 due to the revert to having the bash wrapper.",
       "revId": "d20d8c97b7865ceb64669f0e6a3d7bc410e6eb42",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e92c2bca_98b12228",
+        "filename": "infra/specs/waterfalls.pyl",
+        "patchSetId": 27
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-09-03T17:46:36Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer dawn-linux-x64-fuzz-rel\nMaybe even dawn-linux-x64-fuzz if there are no plans for fuzzing -dbg.",
+      "range": {
+        "startLine": 9,
+        "startChar": 7,
+        "endLine": 9,
+        "endChar": 38
+      },
+      "revId": "d20d8c97b7865ceb64669f0e6a3d7bc410e6eb42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
