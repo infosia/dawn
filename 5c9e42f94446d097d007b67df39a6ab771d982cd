@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "23b94975_93aaa82b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T07:28:33Z",
+      "side": 1,
+      "message": "LGTM too!",
+      "revId": "5c9e42f94446d097d007b67df39a6ab771d982cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e08d29b_9d5e4d64",
+        "filename": "src/dawn/native/d3d11/TextureD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T07:28:33Z",
+      "side": 1,
+      "message": "```suggestion\n        \"%s\", SRVCreationStr(GetD3D11Resource(), srvDesc));\n```",
+      "revId": "5c9e42f94446d097d007b67df39a6ab771d982cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a22fd057_fd96b667",
