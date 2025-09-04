@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec180266_3418ba84",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-09-04T14:12:21Z",
+      "side": 1,
+      "message": "Will it be able to isolate the built dawn_node binaries, upload them to the server and then the tester will run them?",
+      "revId": "5f7c96f2732960c7a96dca86de2897a0894e5b9e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
