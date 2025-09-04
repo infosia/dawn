@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e66b33d0_1b53fa8e",
+        "filename": "src/dawn/native/webgpu/BindGroupLayoutWGPU.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-09-04T16:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab02a944_c6b3ae9a",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "d96c190cd839d0c4539f5778b7e31a756bd54e3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4028d1a4_3572cc16",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dc03417_8535942f",
+        "filename": "src/dawn/native/webgpu/BindGroupLayoutWGPU.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-09-04T16:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4028d1a4_3572cc16",
+      "range": {
+        "startLine": 53,
+        "startChar": 1,
+        "endLine": 55,
+        "endChar": 1
+      },
+      "revId": "d96c190cd839d0c4539f5778b7e31a756bd54e3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "104e596e_f228258c",
@@ -60,6 +108,30 @@
       "writtenOn": "2025-09-04T07:37:45Z",
       "side": 1,
       "message": "nit: these can use the `mStuff` convention. The reason for `cFragment` in ComboRenderPipelineDescriptor etc is because calling the member `fragment` in there would conflict with the `wgpu::RenderPipelineDescriptor::fragment` member, so we prefixed with C for \"combo\".\n\nThere is no conflict here, and these are private members anyway so can use `mStuff`",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 56
+      },
+      "revId": "d96c190cd839d0c4539f5778b7e31a756bd54e3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13a87130_5c7e42b2",
+        "filename": "src/dawn/native/webgpu/BindGroupWGPU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-09-04T16:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "104e596e_f228258c",
       "range": {
         "startLine": 68,
         "startChar": 0,
