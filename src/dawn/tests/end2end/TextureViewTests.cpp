@@ -1256,9 +1256,10 @@ DAWN_INSTANTIATE_TEST(TextureView1DTest,
                       D3D11Backend(),
                       D3D12Backend(),
                       MetalBackend(),
-                      VulkanBackend(),
                       OpenGLBackend(),
-                      OpenGLESBackend());
+                      OpenGLESBackend(),
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 }  // anonymous namespace
 }  // namespace dawn
