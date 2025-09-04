@@ -16,6 +16,63 @@
       "message": "PTAL, thanks!",
       "revId": "a994d578eee672728b46e9cd1240d533de136b23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5159e115_3ebd332a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T08:16:33Z",
+      "side": 1,
+      "message": "Thank you for the iteration, it looks much better!",
+      "revId": "a994d578eee672728b46e9cd1240d533de136b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31f9bd7c_29be69e8",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T08:16:33Z",
+      "side": 1,
+      "message": "nit: it\u0027s a bit weird how these are used outside of `OnOperationWritingExpected` as we could just pass the pipeline creation arguments around etc, but it\u0027s kinda fine.",
+      "range": {
+        "startLine": 275,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 52
+      },
+      "revId": "a994d578eee672728b46e9cd1240d533de136b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b8a9722_07766aac",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T08:16:33Z",
+      "side": 1,
+      "message": "```suggestion\n    std::array\u003cuint32_t,  kMaxExecutionTime * kResultSizeInExpectation\u003e expectedResults \u003d {};\n```",
+      "revId": "a994d578eee672728b46e9cd1240d533de136b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
