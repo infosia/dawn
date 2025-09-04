@@ -596,6 +596,8 @@ source_set("end2end_tests_sources") {
     "end2end/BasicTests.cpp",
     "end2end/BindGroupTests.cpp",
     "end2end/BindingArrayTests.cpp",
+    "end2end/BufferHostMappedFileHandleTests.cpp",
+    "end2end/BufferHostMappedFileHandleTests.h",
     "end2end/BufferHostMappedPointerTests.cpp",
     "end2end/BufferHostMappedPointerTests.h",
     "end2end/BufferTests.cpp",
@@ -742,7 +744,10 @@ source_set("end2end_tests_sources") {
     sources += [ "end2end/BufferHostMappedPointerTests_posix.cpp" ]
   }
   if (is_win) {
-    sources += [ "end2end/BufferHostMappedPointerTests_win.cpp" ]
+    sources += [
+      "end2end/BufferHostMappedFileHandleTests_win.cpp",
+      "end2end/BufferHostMappedPointerTests_win.cpp",
+    ]
   }
 
   if (dawn_supports_glfw_for_windowing) {

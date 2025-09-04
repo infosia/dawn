@@ -43,6 +43,7 @@ struct CombinedLimits {
     Limits v1;
     CompatibilityModeLimits compat;
     DawnHostMappedPointerLimits hostMappedPointerLimits;
+    DawnHostMappedFileHandleLimits hostMappedFileHandleLimits;
     DawnTexelCopyBufferRowAlignmentLimits texelCopyBufferRowAlignmentLimits;
     DynamicBindingArrayLimits dynamicBindingArrayLimits;
 };

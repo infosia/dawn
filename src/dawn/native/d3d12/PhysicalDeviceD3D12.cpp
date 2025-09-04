@@ -208,6 +208,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
 
     if (GetDeviceInfo().supportsExistingHeap) {
+        EnableFeature(Feature::HostMappedFileHandle);
         EnableFeature(Feature::HostMappedPointer);
     }
 
@@ -424,6 +425,8 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
     if (mDeviceInfo.supportsExistingHeap) {
         // The alignment of host mapped pointer and host mapped buffer size is same as the one of
         // D3D12_HEAP_DESC.alignment.
+        limits->hostMappedFileHandleLimits.hostMappedFileHandleAlignment =
+            D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT;
         limits->hostMappedPointerLimits.hostMappedPointerAlignment =
             D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT;
     }

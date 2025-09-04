@@ -143,6 +143,8 @@ ResultOrError<Ref<Buffer>> Buffer::Create(Device* device,
 
     if (auto* hostMappedDesc = descriptor.Get<BufferHostMappedPointer>()) {
         DAWN_TRY(buffer->InitializeHostMapped(hostMappedDesc));
+    } else if (auto* hostMappedFileHandleDesc = descriptor.Get<BufferHostMappedFileHandle>()) {
+        DAWN_TRY(buffer->InitializeHostMappedFileHandle(hostMappedFileHandleDesc));
     } else {
         DAWN_TRY(buffer->Initialize(descriptor->mappedAtCreation));
     }
@@ -258,17 +260,11 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
     return {};
 }
 
-MaybeError Buffer::InitializeHostMapped(const BufferHostMappedPointer* hostMappedDesc) {
+MaybeError Buffer::InitializeHostMappedWithExistingHeap(ComPtr<ID3D12Heap> d3d12Heap,
+                                                        void* hostMappedPointer,
+                                                        WGPUCallback disposeCallback,
+                                                        void* userdata) {
     Device* device = ToBackend(GetDevice());
-
-    ComPtr<ID3D12Device3> d3d12Device3;
-    DAWN_TRY(CheckHRESULT(device->GetD3D12Device()->QueryInterface(IID_PPV_ARGS(&d3d12Device3)),
-                          "QueryInterface ID3D12Device3"));
-
-    ComPtr<ID3D12Heap> d3d12Heap;
-    DAWN_TRY(CheckOutOfMemoryHRESULT(d3d12Device3->OpenExistingHeapFromAddress(
-                                         hostMappedDesc->pointer, IID_PPV_ARGS(&d3d12Heap)),
-                                     "ID3D12Device3::OpenExistingHeapFromAddress"));
 
     uint64_t heapSize = d3d12Heap->GetDesc().SizeInBytes;
 
@@ -291,9 +287,11 @@ MaybeError Buffer::InitializeHostMapped(const BufferHostMappedPointer* hostMappe
     DAWN_INVALID_IF(resourceInfo.SizeInBytes > heapSize,
                     "Resource required %u bytes, but heap is %u bytes.", resourceInfo.SizeInBytes,
                     heapSize);
-    DAWN_INVALID_IF(!IsPtrAligned(hostMappedDesc->pointer, resourceInfo.Alignment),
-                    "Host-mapped pointer (%p) did not satisfy required alignment (%u).",
-                    hostMappedDesc->pointer, resourceInfo.Alignment);
+    if (hostMappedPointer != nullptr) {
+        DAWN_INVALID_IF(!IsPtrAligned(hostMappedPointer, resourceInfo.Alignment),
+                        "Host-mapped pointer (%p) did not satisfy required alignment (%u).",
+                        hostMappedPointer, resourceInfo.Alignment);
+    }
 
     mAllocatedSize = resourceInfo.SizeInBytes;
     mLastState = D3D12_RESOURCE_STATE_COMMON;
@@ -318,14 +316,48 @@ MaybeError Buffer::InitializeHostMapped(const BufferHostMappedPointer* hostMappe
                            /* heap is external, and not tracked for residency */ nullptr,
                            ResourceHeapKind::InvalidEnum};
     mHostMappedHeap = std::move(heap);
-    mHostMappedDisposeCallback = hostMappedDesc->disposeCallback;
-    mHostMappedDisposeUserdata = hostMappedDesc->userdata;
+    mHostMappedDisposeCallback = disposeCallback;
+    mHostMappedDisposeUserdata = userdata;
 
     SetLabelImpl();
 
     // Assume the data is initialized since an external pointer was provided.
     SetInitialized(true);
     return {};
+}
+
+MaybeError Buffer::InitializeHostMapped(const BufferHostMappedPointer* hostMappedDesc) {
+    Device* device = ToBackend(GetDevice());
+
+    ComPtr<ID3D12Device3> d3d12Device3;
+    DAWN_TRY(CheckHRESULT(device->GetD3D12Device()->QueryInterface(IID_PPV_ARGS(&d3d12Device3)),
+                          "QueryInterface ID3D12Device3"));
+
+    ComPtr<ID3D12Heap> d3d12Heap;
+    DAWN_TRY(CheckOutOfMemoryHRESULT(d3d12Device3->OpenExistingHeapFromAddress(
+                                         hostMappedDesc->pointer, IID_PPV_ARGS(&d3d12Heap)),
+                                     "ID3D12Device3::OpenExistingHeapFromAddress"));
+
+    return InitializeHostMappedWithExistingHeap(std::move(d3d12Heap), hostMappedDesc->pointer,
+                                                hostMappedDesc->disposeCallback,
+                                                hostMappedDesc->userdata);
+}
+
+MaybeError Buffer::InitializeHostMappedFileHandle(
+    const BufferHostMappedFileHandle* hostMappedDesc) {
+    Device* device = ToBackend(GetDevice());
+
+    ComPtr<ID3D12Device3> d3d12Device3;
+    DAWN_TRY(CheckHRESULT(device->GetD3D12Device()->QueryInterface(IID_PPV_ARGS(&d3d12Device3)),
+                          "QueryInterface ID3D12Device3"));
+
+    ComPtr<ID3D12Heap> d3d12Heap;
+    DAWN_TRY(CheckOutOfMemoryHRESULT(d3d12Device3->OpenExistingHeapFromFileMapping(
+                                         hostMappedDesc->handle, IID_PPV_ARGS(&d3d12Heap)),
+                                     "ID3D12Device3::OpenExistingHeapFromFileMapping"));
+
+    return InitializeHostMappedWithExistingHeap(
+        std::move(d3d12Heap), nullptr, hostMappedDesc->disposeCallback, hostMappedDesc->userdata);
 }
 
 Buffer::~Buffer() = default;

@@ -302,6 +302,10 @@ MaybeError ValidateAndUnpackLimitsIn(const Limits* chainedLimits,
         dawn::WarningLog() << "DawnHostMappedPointerLimits is not supported in required limits";
     }
 
+    if (unpacked.Get<DawnHostMappedFileHandleLimits>()) {
+        dawn::WarningLog() << "DawnHostMappedFileHandleLimits is not supported in required limits";
+    }
+
     return {};
 }
 
@@ -561,6 +565,9 @@ MaybeError FillLimits(Limits* outputLimits,
     FillExtensionLimits(unpacked.Get<DawnHostMappedPointerLimits>(),
                         &CombinedLimits::hostMappedPointerLimits,
                         wgpu::FeatureName::HostMappedPointer);
+    FillExtensionLimits(unpacked.Get<DawnHostMappedFileHandleLimits>(),
+                        &CombinedLimits::hostMappedFileHandleLimits,
+                        wgpu::FeatureName::HostMappedFileHandle);
     FillExtensionLimits(unpacked.Get<DynamicBindingArrayLimits>(),
                         &CombinedLimits::dynamicBindingArrayLimits,
                         wgpu::FeatureName::ChromiumExperimentalBindless);

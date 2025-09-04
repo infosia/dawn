@@ -435,7 +435,13 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
       FeatureInfo::FeatureState::Experimental}},
     {Feature::ChromiumExperimentalBindless,
      {"Experimental support for the prototype of a bindless extension",
-      "https://hackmd.io/@kangz/bindless-proposal", FeatureInfo::FeatureState::Experimental}}};
+      "https://hackmd.io/@kangz/bindless-proposal", FeatureInfo::FeatureState::Experimental}},
+    {Feature::HostMappedFileHandle,
+     {"Support creation of buffers from host-mapped file handle.",
+      "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
+      "host_mapped_pointer.md",
+      FeatureInfo::FeatureState::Experimental}},
+};
 
 }  // anonymous namespace
 
