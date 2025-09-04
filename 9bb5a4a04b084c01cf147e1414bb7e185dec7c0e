@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "baf5dda8_21c8b336",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-09-04T16:26:40Z",
+      "side": 1,
+      "message": "(Corentin, if you are still in, free feel to review)",
+      "revId": "9bb5a4a04b084c01cf147e1414bb7e185dec7c0e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
