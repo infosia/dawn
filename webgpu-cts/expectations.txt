@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-08-28 01:14:31PM
+# Last rolled: 2025-09-03 01:29:30PM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -1131,7 +1131,6 @@ crbug.com/419852381 [ linux nvidia ] webgpu:api,validation,capability_checks,lim
 crbug.com/419852381 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:createPipeline,at_over:limitTest="underDefault";testValueName="overLimit";async=false;bindingCombination="vertexAndFragmentWithPossibleVertexStageOverflow";access="read-only" [ Failure ]
 crbug.com/419852381 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:createPipeline,at_over:limitTest="underDefault";testValueName="overLimit";async=true;bindingCombination="compute";access="read-write" [ Failure ]
 crbug.com/419852381 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxUniformBuffersPerShaderStage:createPipeline,at_over:limitTest="underDefault";testValueName="atLimit";async=false;bindingCombination="vertex";order="backward";bindGroupTest="differentGroups" [ Failure ]
-
 
 # WebGPU-WebGPU canvas copy crashes in D3D12 debug layer on Windows Nvidia with Graphite enabled
 crbug.com/412395829 [ dawn-backend-validation graphite-enabled nvidia win ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_gpu_context_canvas:canvasType="offscreen";srcAndDstInSameGPUDevice=false;* [ RetryOnFailure ]
@@ -2600,3 +2599,5 @@ crbug.com/0000 [ intel mac webgpu-adapter-swiftshader ] webgpu:web_platform,copy
 crbug.com/0000 [ intel mac webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,video:copy_from_video:videoName="four-colors-vp9-bt601.webm";sourceType="VideoFrame";srcDoFlipYDuringCopy=true;dstColorSpace="srgb" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:web_platform,worker,worker:service_worker: [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:web_platform,worker,worker:service_worker: [ Failure ]
+crbug.com/0000 webgpu:api,validation,capability_checks,limits,maxStorageBuffersInFragmentStage: [ Failure ]
+crbug.com/0000 webgpu:api,validation,capability_checks,limits,maxStorageBuffersInVertexStage: [ Failure ]
