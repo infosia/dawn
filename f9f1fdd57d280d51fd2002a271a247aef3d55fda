@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4504c832_c3127ec5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-04T23:18:25Z",
+      "side": 1,
+      "message": "Hi Shaobo, PTAL, do you think this is a good idea?",
+      "revId": "f9f1fdd57d280d51fd2002a271a247aef3d55fda",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
