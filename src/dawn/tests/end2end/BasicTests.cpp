@@ -102,8 +102,11 @@ TEST_P(BasicTests, GetInstanceFeatures) {
     auto features = std::unordered_set(out.features, out.features + out.featureCount);
 
     if (UsesWire()) {
-        // Wire exposes no features because it doesn't support CreateInstance.
-        EXPECT_EQ(features.size(), 0u);
+        // Wire exposes a subset of features.
+        static const auto kWireFeatures = std::unordered_set{
+            wgpu::InstanceFeatureName::TimedWaitAny,
+        };
+        EXPECT_EQ(features, kWireFeatures);
     } else {
         // Native (currently) exposes all known features.
         EXPECT_EQ(features, kKnownFeatures);
