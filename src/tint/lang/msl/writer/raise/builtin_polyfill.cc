@@ -1004,9 +1004,18 @@ struct State {
             auto* ptr = p->Type()->As<core::type::Pointer>();
             auto* arr = ptr->StoreType()->As<core::type::Array>();
 
-            // Make a pointer to the first element of the array that we will read from.
-            auto* elem_ptr = ty.ptr(ptr->AddressSpace(), arr->ElemType(), ptr->Access());
-            auto* src = b.Access(elem_ptr, p, offset);
+            core::ir::Value* src = nullptr;
+            if (arr) {
+                // Make a pointer to the first element of the array that we will read from.
+                auto* elem_ptr = ty.ptr(ptr->AddressSpace(), arr->ElemType(), ptr->Access());
+                src = b.Access(elem_ptr, p, offset)->Result();
+            } else {
+                // Add the offset.
+                src = b.Call<msl::ir::BuiltinCall>(
+                           p->Type(), msl::BuiltinFn::kPointerOffset, p,
+                           b.Multiply<u32>(offset, u32(ptr->StoreType()->Size())))
+                          ->Result();
+            }
 
             // The origin is always (0, 0), as we use `offset` to set the start of the data.
             auto* matrix_origin = b.Zero<vec2<u64>>();
@@ -1042,9 +1051,18 @@ struct State {
             auto* ptr = p->Type()->As<core::type::Pointer>();
             auto* arr = ptr->StoreType()->As<core::type::Array>();
 
-            // Make a pointer to the first element of the array that we will write to.
-            auto* elem_ptr = ty.ptr(ptr->AddressSpace(), arr->ElemType(), ptr->Access());
-            auto* dst = b.Access(elem_ptr, p, offset);
+            core::ir::Value* dst = nullptr;
+            if (arr) {
+                // Make a pointer to the first element of the array that we will write to.
+                auto* elem_ptr = ty.ptr(ptr->AddressSpace(), arr->ElemType(), ptr->Access());
+                dst = b.Access(elem_ptr, p, offset)->Result();
+            } else {
+                // Add the offset.
+                dst = b.Call<msl::ir::BuiltinCall>(
+                           p->Type(), msl::BuiltinFn::kPointerOffset, p,
+                           b.Multiply<u32>(offset, u32(ptr->StoreType()->Size())))
+                          ->Result();
+            }
 
             // Convert the u32 stride to the ulong that MSL expects.
             auto* elements_per_row =

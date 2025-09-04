@@ -969,9 +969,13 @@ class Printer : public tint::TextGenerator {
             return;
         }
         if (c->Func() == msl::BuiltinFn::kPointerOffset) {
+            auto* ptr = c->Result()->Type()->As<core::type::Pointer>();
+            auto* char_ptr = ir_.Types().ptr(ptr->AddressSpace(), ir_.Types().u8(), ptr->Access());
             out << "reinterpret_cast<";
-            EmitType(out, c->Result()->Type());
-            out << ">(reinterpret_cast<const constant char*>(";
+            EmitPointerType(out, ptr);
+            out << ">(reinterpret_cast<";
+            EmitPointerType(out, char_ptr);
+            out << ">(";
             EmitValue(out, c->Operand(0));
             out << ") + ";
             EmitValue(out, c->Operand(1));
