@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e6069e3_422c90f4",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1743,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-04T02:41:12Z",
+      "side": 0,
+      "message": "This TODO still seems relevant?",
+      "range": {
+        "startLine": 1739,
+        "startChar": 0,
+        "endLine": 1743,
+        "endChar": 27
+      },
+      "revId": "bfb0f1fba4a0b1f10458d8f848c36ea77eeb4013",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

@@ -16,6 +16,40 @@
       "message": "Hey Kai, does this approach look good to you?\n\nGregg is adding tests for this at https://github.com/gpuweb/cts/pull/4427 which should tell us which backend need to be updated. I\u0027ve started with macOS as I have a machine to try it out locally. I\u0027ve also tried Vulkan with `forceFallbackAdapter` in the CTS and it seems to pass.",
       "revId": "8be82ddc2b5bdd40d8f041f76f011bb35f47ba6b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d4b8242_b846e7ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-04T02:41:12Z",
+      "side": 1,
+      "message": "What is the high-level approach here? Note in particular we need to support MTLGPUFamilyMac1 which doesn\u0027t support swizzled views.\n\nTwo possible approaches:\n1. The frontend is responsible for composing the requested swizzle with `.r001` if the target is depth/stencil. On Metal Mac1 where that\u0027s not supported, we detect that case and ignore it so the user gets `.rXXX` (X\u003dundefined).\n2. Each backend is responsible for composing the requested swizzle with whatever swizzle it needs (`.r001` in most cases, `.g001` for stencil on D3D, and no swizzle for Metal Mac1).\n\nThere are tradeoffs both ways. Tentatively I think 2 would result in less confusing Dawn code, but I\u0027m not positive. But in this CL, I can\u0027t quite tell what the intended approach is.\n\nI have various comments on the logic but I would need to know what the intent is first.",
+      "revId": "8be82ddc2b5bdd40d8f041f76f011bb35f47ba6b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d32e8d7c_706b6d20",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-04T02:41:12Z",
+      "side": 1,
+      "message": "Swizzle on Metal requires `MTLGPUFamilyMac2` but I think we still support `Mac1`. (`Mac1` was deprecated in macOS 13, but Chrome still supports 12.) So we can only do this conditionally.",
+      "revId": "8be82ddc2b5bdd40d8f041f76f011bb35f47ba6b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

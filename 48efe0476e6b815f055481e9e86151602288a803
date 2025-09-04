@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6d29f29f_e6f2b3ae",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-04T02:41:12Z",
+      "side": 1,
+      "message": "I\u0027d need to know *how* it failed in TextureComponentSwizzleTest to advise on how you could make it work.\nCTS should be fine though.",
+      "parentUuid": "24562f77_cfd6eb60",
+      "revId": "48efe0476e6b815f055481e9e86151602288a803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a081df58_49371c85",
         "filename": "src/dawn/native/metal/TextureMTL.mm",
         "patchSetId": 2
