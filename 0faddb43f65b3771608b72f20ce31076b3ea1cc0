@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "57775a0c_2d03d65c",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-04T02:50:37Z",
+      "side": 1,
+      "message": "I think we need CQ to fail if there\u0027s a new bot that has a new param string. Otherwise this test will slowly lose coverage over time as we add new and remove old hardware.\n\nOf course we don\u0027t want to fail on every local machine though. The idea you had to skip the test based on some environment/flag seemed good.",
+      "revId": "0faddb43f65b3771608b72f20ce31076b3ea1cc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "00caedd9_6596a0a9",
         "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
         "patchSetId": 20
