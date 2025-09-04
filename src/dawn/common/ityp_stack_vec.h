@@ -47,20 +47,14 @@ class stack_vec : private absl::InlinedVector<Value, StaticCapacity> {
     stack_vec() : Base() {}
     explicit stack_vec(Index size) : Base() { Base::resize(static_cast<I>(size)); }
 
-    Value& operator[](Index i) {
-        return Base::operator[](static_cast<I>(i));
-    }
-
-    constexpr const Value& operator[](Index i) const {
-        return Base::operator[](static_cast<I>(i));
-    }
+    Value& operator[](Index i) { return Base::operator[](static_cast<I>(i)); }
+    constexpr const Value& operator[](Index i) const { return Base::operator[](static_cast<I>(i)); }
 
     void resize(Index size) { Base::resize(static_cast<I>(size)); }
 
     void reserve(Index size) { Base::reserve(static_cast<I>(size)); }
 
     Value* data() { return Base::data(); }
-
     const Value* data() const { return Base::data(); }
 
     Index size() const { return Index(static_cast<I>(Base::size())); }
