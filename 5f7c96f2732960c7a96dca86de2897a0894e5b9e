@@ -16,6 +16,24 @@
       "message": "Will it be able to isolate the built dawn_node binaries, upload them to the server and then the tester will run them?",
       "revId": "5f7c96f2732960c7a96dca86de2897a0894e5b9e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f0b75fe_7cad6b0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-04T16:37:22Z",
+      "side": 1,
+      "message": "In theory. I suspect there will be other things that aren\u0027t properly getting put into the isolate right now due to dependencies not being properly declared in the BUILD.gn files, but we\u0027ll see.",
+      "parentUuid": "ec180266_3418ba84",
+      "revId": "5f7c96f2732960c7a96dca86de2897a0894e5b9e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
