@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e9c81af_c55d8267",
+        "filename": "src/dawn/native/webgpu/BindGroupLayoutWGPU.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-04T20:35:55Z",
+      "side": 1,
+      "message": "nit. Could use `Forward.h` here also, or just remove this entirely because I think that it should already be declared by `BindGroupLayoutInternal.h`.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 13
+      },
+      "revId": "0abadc9afebb8694cd1a65676426922b2c5ca0c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a6ced3c_c74100e9",
+        "filename": "src/dawn/native/webgpu/BindGroupWGPU.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-04T20:35:55Z",
+      "side": 1,
+      "message": "nit. Probably unnecessary because of `Forward.h`",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 13
+      },
+      "revId": "0abadc9afebb8694cd1a65676426922b2c5ca0c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
