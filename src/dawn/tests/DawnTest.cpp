@@ -427,10 +427,8 @@ std::unique_ptr<native::Instance> DawnTestEnvironment::CreateInstance(
     wgpu::InstanceDescriptor instanceDesc{};
     instanceDesc.nextInChain = &dawnInstanceDesc;
     std::vector<wgpu::InstanceFeatureName> features = {
-        wgpu::InstanceFeatureName::MultipleDevicesPerAdapter};
-    if (!UsesWire()) {
-        features.push_back(wgpu::InstanceFeatureName::TimedWaitAny);
-    }
+        wgpu::InstanceFeatureName::MultipleDevicesPerAdapter,
+        wgpu::InstanceFeatureName::TimedWaitAny};
     instanceDesc.requiredFeatureCount = features.size();
     instanceDesc.requiredFeatures = features.data();
 

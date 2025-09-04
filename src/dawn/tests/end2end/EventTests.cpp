@@ -140,14 +140,13 @@ class EventCompletionTests : public DawnTestWithParams<EventCompletionTestParams
     void SetUp() override {
         DawnTestWithParams::SetUp();
         WaitTypeAndCallbackMode mode = GetParam().mWaitTypeAndCallbackMode;
-        if (UsesWire()) {
-            DAWN_TEST_UNSUPPORTED_IF(mode == WaitTypeAndCallbackMode::TimedWaitAny_WaitAnyOnly ||
-                                     mode ==
-                                         WaitTypeAndCallbackMode::TimedWaitAny_AllowSpontaneous ||
-                                     mode == WaitTypeAndCallbackMode::Spin_AllowSpontaneous);
-        }
         if (!IsMetal()) {
             DAWN_TEST_UNSUPPORTED_IF(mode == WaitTypeAndCallbackMode::Spin_AllowSpontaneous);
+            if (UsesWire()) {
+                DAWN_TEST_UNSUPPORTED_IF(
+                    mode == WaitTypeAndCallbackMode::TimedWaitAny_WaitAnyOnly ||
+                    mode == WaitTypeAndCallbackMode::TimedWaitAny_AllowSpontaneous);
+            }
         }
         testInstance = GetInstance();
         testDevice = device;
@@ -159,11 +158,9 @@ class EventCompletionTests : public DawnTestWithParams<EventCompletionTestParams
 
     void UseSecondInstance() {
         wgpu::InstanceDescriptor desc;
-        if (!UsesWire()) {
             static constexpr auto kTimedWaitAny = wgpu::InstanceFeatureName::TimedWaitAny;
             desc.requiredFeatureCount = 1;
             desc.requiredFeatures = &kTimedWaitAny;
-        }
         std::tie(testInstance, testDevice) = CreateExtraInstance(&desc);
         testQueue = testDevice.GetQueue();
     }
@@ -270,10 +267,10 @@ class EventCompletionTests : public DawnTestWithParams<EventCompletionTestParams
                 // Loop at least once so we can test it with 0 futures.
                 do {
                     ASSERT_FALSE(testTimeExceeded());
-                    DAWN_ASSERT(!UsesWire());
                     wgpu::WaitStatus status;
 
                     uint64_t oldCompletionCount = mCallbacksCompletedCount;
+                    FlushWire();
                     // Any futures should succeed within a few milliseconds at most.
                     status = testInstance.WaitAny(mFutures.size(), mFutures.data(), UINT64_MAX);
                     ASSERT_EQ(status, wgpu::WaitStatus::Success);
@@ -331,6 +328,7 @@ class EventCompletionTests : public DawnTestWithParams<EventCompletionTestParams
             case WaitType::Spin: {
                 do {
                     ASSERT_FALSE(testTimeExceeded());
+                    FlushWire();
                     utils::USleep(100);
                 } while (mCallbacksCompletedCount < mCallbacksIssuedCount);
             } break;
