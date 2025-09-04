@@ -33,6 +33,91 @@
       "message": "[1]",
       "revId": "d6336629499f88e04b5d7c86c09842992abec769",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "636ea186_6bc7458e",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T08:37:26Z",
+      "side": 1,
+      "message": "Is that to ensure that the rest of the test does transitions from wgpu::BufferUsage::Storage?",
+      "revId": "d6336629499f88e04b5d7c86c09842992abec769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9628f04_53222aba",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T08:37:26Z",
+      "side": 1,
+      "message": "Is this [1]?",
+      "revId": "d6336629499f88e04b5d7c86c09842992abec769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7273c1bb_cff09a26",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T08:37:26Z",
+      "side": 1,
+      "message": "Is this [2]?",
+      "revId": "d6336629499f88e04b5d7c86c09842992abec769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "441600c8_89650544",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T08:37:26Z",
+      "side": 1,
+      "message": "Is this [3]?",
+      "revId": "d6336629499f88e04b5d7c86c09842992abec769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bf818c0_ca4dec5b",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T08:37:26Z",
+      "side": 1,
+      "message": "Is this [4]?",
+      "revId": "d6336629499f88e04b5d7c86c09842992abec769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

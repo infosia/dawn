@@ -346,6 +346,24 @@
       "parentUuid": "ea5e93d5_a640456a",
       "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82c7b6c7_8f790b36",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T08:37:26Z",
+      "side": 1,
+      "message": "I spent another 15 minutes trying to understand which lines of code match which of the dispatches in the list at [1] and really get confused with when C and D are used? Added comments to try to understand.\n\nHow about the following: have A and B, then one temporary buffer per operation (so 6 of them?) so we know that barrier reuse on them is not going to interfere with the test.",
+      "parentUuid": "f601efeb_0f939ab5",
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
