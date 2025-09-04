@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3cbd317_d47f7f58",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-04T02:26:08Z",
+      "side": 1,
+      "message": "We skip swiftshader, is this needed?",
+      "revId": "0faddb43f65b3771608b72f20ce31076b3ea1cc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00caedd9_6596a0a9",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-04T02:26:08Z",
+      "side": 1,
+      "message": "This isn\u0027t true is it? We report all the errors, each of the `EXPECT_EQ` entries would fire for any value that doesn\u0027t match. This just tells us to emit the extra info at the end?\n\nOr, is the extra info what you consider the \"error\" and not the result of `EXPECT_EQ`?",
+      "revId": "0faddb43f65b3771608b72f20ce31076b3ea1cc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
