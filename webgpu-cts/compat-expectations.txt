@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-08-28 01:14:31PM
+# Last rolled: 2025-09-03 01:29:30PM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -973,3 +973,5 @@ crbug.com/0000 [ intel-0x4680 linux ] webgpu:shader,execution,expression,access,
 crbug.com/0000 [ linux nvidia ] webgpu:shader,execution,expression,call,builtin,textureSampleBaseClampToEdge:2d_coords:stage="f";textureType="texture_external";filt="linear";modeU="m";modeV="m" [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:shader,validation,shader_io,workgroup_size:workgroup_size:attr="override_expr" [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,canvas,getCurrentTexture:multiple_frames:canvasType="onscreen" [ Failure ]
+crbug.com/0000 webgpu:api,validation,capability_checks,limits,maxStorageBuffersInFragmentStage:* [ Failure ]
+crbug.com/0000 webgpu:api,validation,capability_checks,limits,maxStorageBuffersInVertexStage:* [ Failure ]
