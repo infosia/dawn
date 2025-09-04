@@ -284,6 +284,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c540ca15_a159990e",
+        "filename": "src/dawn/native/AsyncTask.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-04T14:56:04Z",
+      "side": 1,
+      "message": "I\u0027m going to not use MutexProtected in this case just because there are non-obvious locking patterns here. I may regret it.\n\nDefinitely helped to use it in the manager though.",
+      "parentUuid": "4db4127a_7c6f1d20",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 66
+      },
+      "revId": "690a7cc3c68499990ccbd13cdab39d0921c29f62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ba43868_0250aea0",

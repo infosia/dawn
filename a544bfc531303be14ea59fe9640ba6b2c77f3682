@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "97bf7826_b1f3c3d3",
+        "filename": "src/dawn/native/AsyncTask.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-04T14:56:04Z",
+      "side": 1,
+      "message": "The mutex guards against this. The task only transitions from running -\u003e completed while holding the mutex.",
+      "parentUuid": "2bfd1b46_034aa436",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "a544bfc531303be14ea59fe9640ba6b2c77f3682",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e62048f_5a322869",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-09-04T07:54:25Z",
       "side": 1,
       "message": "This part seems like it could be done outside of the scoped_lock (as long as we move the completion callbacks to a local variable inside the scoped_lock)",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 33
+      },
+      "revId": "a544bfc531303be14ea59fe9640ba6b2c77f3682",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad1a3a67_2de0ef29",
+        "filename": "src/dawn/native/AsyncTask.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-04T14:56:04Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "6e62048f_5a322869",
       "range": {
         "startLine": 80,
         "startChar": 0,
