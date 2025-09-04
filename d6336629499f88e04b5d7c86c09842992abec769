@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "375c573f_b4150a00",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-04T13:32:02Z",
+      "side": 1,
+      "message": "I am not 100% sure how we initialize/zero all buffers on all platforms. So they might be in on state (coming say from transfer) before the first dispatch.  After the first dispatch should be uniformly in the same state (aka a state of having been written to by the compute pipe)",
+      "parentUuid": "636ea186_6bc7458e",
+      "revId": "d6336629499f88e04b5d7c86c09842992abec769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c9628f04_53222aba",
         "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
         "patchSetId": 13
