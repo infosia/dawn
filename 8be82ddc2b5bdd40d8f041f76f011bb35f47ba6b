@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a8c3bf79_cc85cd0f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-04T04:57:08Z",
+      "side": 1,
+      "message": "Thanks Kai!\n\nWhen I started working on this Corentin told me offline: \"We\u0027d force the swizzles to zero zero one using the feature in the backend APIs.\" hence option 2 here.",
+      "parentUuid": "3d4b8242_b846e7ce",
+      "revId": "8be82ddc2b5bdd40d8f041f76f011bb35f47ba6b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d32e8d7c_706b6d20",
         "filename": "src/dawn/native/metal/TextureMTL.mm",
         "patchSetId": 4
