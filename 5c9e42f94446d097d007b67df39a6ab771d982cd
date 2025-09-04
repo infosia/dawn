@@ -22,6 +22,30 @@
       },
       "revId": "5c9e42f94446d097d007b67df39a6ab771d982cd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c24b8422_9e248e3e",
+        "filename": "src/dawn/native/d3d11/UtilsD3D11.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-09-04T05:55:09Z",
+      "side": 1,
+      "message": "This function could be used by BufferD3D11.cpp in future.",
+      "parentUuid": "a22fd057_fd96b667",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 76
+      },
+      "revId": "5c9e42f94446d097d007b67df39a6ab771d982cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
