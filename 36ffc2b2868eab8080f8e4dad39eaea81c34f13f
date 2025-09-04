@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c04d22c_6b7df6e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-04T16:19:14Z",
+      "side": 1,
+      "message": "Dug into it this morning and the reason the bots failed is because after we we call AssumeCommandsCompleted tasks start executing immediately (after the previous change I made). That means that with this code if multiple deletions are sent through with the same serial after AssumeCommandsCompleted has been called only the first one will be processed because the task fires immediately rather than waiting for the serial to be complete. Since the other deletions with the same serial assume that a task has been scheduled for them they only enqueue the deletion but don\u0027t schedule a new task, and thus we have non-empty queues in the destructor.\n\nWays I can see addressing this:\n  - Take the asserts out of the destructor and replace it with DeleteUpTo(maxSerial), like I had yesterday. (This is what the latest patch does)\n  - Have the TrackSerialTask return state indicating whether or not it deferred the task of executed it immediately.\n  \nThoughts?",
+      "revId": "36ffc2b2868eab8080f8e4dad39eaea81c34f13f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
