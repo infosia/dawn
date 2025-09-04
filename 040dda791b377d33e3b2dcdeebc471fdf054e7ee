@@ -68,6 +68,24 @@
       "message": "Any hope to have this in the wire helper somehow? (it uses dawn::native directly so maybe not)",
       "revId": "040dda791b377d33e3b2dcdeebc471fdf054e7ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "032f84ad_e009d2c8",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 127
+      },
+      "lineNbr": 1796,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-04T00:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bf7ec6e_cbfc64e2",
+      "revId": "040dda791b377d33e3b2dcdeebc471fdf054e7ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
