@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab02a944_c6b3ae9a",
+        "filename": "src/dawn/native/webgpu/BindGroupLayoutWGPU.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T07:37:45Z",
+      "side": 1,
+      "message": "```suggestion\n    static ResultOrError\u003cRef\u003cBindGroupLayout\u003e\u003e Create(\n        Device* device,\n        const UnpackedPtr\u003cBindGroupLayoutDescriptor\u003e\u0026 descriptor);\n\n    Ref\u003cBindGroup\u003e AllocateBindGroup(const UnpackedPtr\u003cBindGroupDescriptor\u003e\u0026 descriptor);\n    void DeallocateBindGroup(BindGroup* bindGroup);\n    void ReduceMemoryUsage() override;\n\n```",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "d96c190cd839d0c4539f5778b7e31a756bd54e3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4028d1a4_3572cc16",
+        "filename": "src/dawn/native/webgpu/BindGroupLayoutWGPU.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T07:37:45Z",
+      "side": 1,
+      "message": "```suggestion\n    ~BindGroupLayout() override \u003d default;\n\n    MutexProtected\u003cSlabAllocator\u003cBindGroup\u003e\u003e mBindGroupAllocator;\n};\n```",
+      "range": {
+        "startLine": 53,
+        "startChar": 1,
+        "endLine": 55,
+        "endChar": 1
+      },
+      "revId": "d96c190cd839d0c4539f5778b7e31a756bd54e3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "104e596e_f228258c",
+        "filename": "src/dawn/native/webgpu/BindGroupWGPU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T07:37:45Z",
+      "side": 1,
+      "message": "nit: these can use the `mStuff` convention. The reason for `cFragment` in ComboRenderPipelineDescriptor etc is because calling the member `fragment` in there would conflict with the `wgpu::RenderPipelineDescriptor::fragment` member, so we prefixed with C for \"combo\".\n\nThere is no conflict here, and these are private members anyway so can use `mStuff`",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 56
+      },
+      "revId": "d96c190cd839d0c4539f5778b7e31a756bd54e3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
