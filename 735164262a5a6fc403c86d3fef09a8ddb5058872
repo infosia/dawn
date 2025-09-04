@@ -16,6 +16,24 @@
       "message": "This shouldn\u0027t be needed?",
       "revId": "735164262a5a6fc403c86d3fef09a8ddb5058872",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfeeb130_5fe77d6a",
+        "filename": "src/dawn/tests/end2end/BindingArrayTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1444,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T07:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2d4bd6d_b4aece3d",
+      "revId": "735164262a5a6fc403c86d3fef09a8ddb5058872",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
