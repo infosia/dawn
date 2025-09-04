@@ -16,6 +16,23 @@
       "message": "(Corentin, if you are still in, free feel to review)",
       "revId": "9bb5a4a04b084c01cf147e1414bb7e185dec7c0e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bb7d18f_af8f2568",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-09-04T17:28:37Z",
+      "side": 1,
+      "message": "Can do in another CL but we eventually need to capture there code from the descriptor as nothing below keeps that code around and so there would be no way to recreate a shader module on replay",
+      "revId": "9bb5a4a04b084c01cf147e1414bb7e185dec7c0e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
