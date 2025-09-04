@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "07205fce_15cfef1e",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-04T09:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31f9bd7c_29be69e8",
+      "range": {
+        "startLine": 275,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 52
+      },
+      "revId": "a994d578eee672728b46e9cd1240d533de136b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b8a9722_07766aac",
@@ -71,6 +95,24 @@
       "writtenOn": "2025-09-04T08:16:33Z",
       "side": 1,
       "message": "```suggestion\n    std::array\u003cuint32_t,  kMaxExecutionTime * kResultSizeInExpectation\u003e expectedResults \u003d {};\n```",
+      "revId": "a994d578eee672728b46e9cd1240d533de136b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b64e004_b39464c6",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-04T09:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b8a9722_07766aac",
       "revId": "a994d578eee672728b46e9cd1240d533de136b23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
