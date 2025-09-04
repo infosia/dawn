@@ -22,6 +22,30 @@
       },
       "revId": "bfb0f1fba4a0b1f10458d8f848c36ea77eeb4013",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f64cadc6_d30a3cb0",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1743,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-04T08:37:15Z",
+      "side": 0,
+      "message": "I\u0027ll keep it for now then.",
+      "parentUuid": "1e6069e3_422c90f4",
+      "range": {
+        "startLine": 1739,
+        "startChar": 0,
+        "endLine": 1743,
+        "endChar": 27
+      },
+      "revId": "bfb0f1fba4a0b1f10458d8f848c36ea77eeb4013",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

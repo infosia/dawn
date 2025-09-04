@@ -68,6 +68,24 @@
       "message": "Swizzle on Metal requires `MTLGPUFamilyMac2` but I think we still support `Mac1`. (`Mac1` was deprecated in macOS 13, but Chrome still supports 12.) So we can only do this conditionally.",
       "revId": "8be82ddc2b5bdd40d8f041f76f011bb35f47ba6b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d98303e2_5417538d",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-04T08:37:15Z",
+      "side": 1,
+      "message": "We do enable the `TextureComponentSwizzle` feature only on `MTLGPUFamilyMac2` in\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/metal/PhysicalDeviceMTL.mm;l\u003d724;drc\u003dd57639fceba51750cbf6d13a1cad552e865753aa but it\u0027s not clear if we should apply swizzle *only* if `GetDevice()-\u003eHasFeature(Feature::TextureComponentSwizzle)` or if we should check against adapter supported features, which is not exposed AFAICT. \n\nMy understanding is that we should try to apply swizzle whenever we can on supported platforms, even if the feature is not enabled by developers as hinted in https://github.com/gpuweb/gpuweb/blob/main/proposals/texture-component-swizzle.md#:~:text\u003dTo%20reduce%20compatibility%20issues%20in%20practice%2C%20implementations%20should%20provide%20(V%2C%200%2C%200%2C%201)%20wherever%20possible%2C%20even%20if%20this%20feature%20is%20not%20enabled.\nShould we expose something like `virtual bool DeviceBase::SupportsTextureComponentSwizzle() const;` then and use it there?\n\n```cpp\nif (!GetDevice()-\u003eSupportsTextureComponentSwizzle()) {\n  mMtlTextureView \u003d ... // without swizzle\n} else {\n  wgpu::TextureComponentSwizzle swizzle \u003d {...}\n  if (texture-\u003eGetFormat().HasDepthOrStencil()) {\n    swizzle \u003d ComposeSwizzle(depthStencilSwizzle);\n  }\n  mMtlTextureView \u003d  ... // with swizzle\n}\n```",
+      "parentUuid": "d32e8d7c_706b6d20",
+      "revId": "8be82ddc2b5bdd40d8f041f76f011bb35f47ba6b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
