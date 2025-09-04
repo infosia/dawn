@@ -170,6 +170,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "588ecb37_2fb21568",
+        "filename": "src/dawn/native/ObjectBase.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T07:43:38Z",
+      "side": 1,
+      "message": "Ew that function is called when running in the wire? That seems like the test should gate on !IsWire.",
+      "parentUuid": "3571dfc7_01b8e532",
+      "range": {
+        "startLine": 56,
+        "startChar": 3,
+        "endLine": 56,
+        "endChar": 40
+      },
+      "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "66b32b04_2e3f7355",
@@ -219,6 +243,24 @@
       "side": 1,
       "message": "Yea, I don\u0027t think we have a place for this yet atm. If you do create the tests, maybe under `unittest/native`?",
       "parentUuid": "baecb4a4_a9d925d3",
+      "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "039d3fe1_5a4e0d0b",
+        "filename": "src/dawn/native/ObjectBase.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T07:43:38Z",
+      "side": 1,
+      "message": "Ah yeah I got confused by the file name :) Either way sounds good!",
+      "parentUuid": "e2e6d40a_e57fe9bb",
       "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
