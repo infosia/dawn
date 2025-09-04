@@ -56,4 +56,27 @@ void Texture::DestroyImpl() {
     wgpu.textureDestroy(mInnerHandle);
 }
 
+// TextureView
+
+// static
+ResultOrError<Ref<TextureView>> TextureView::Create(
+    TextureBase* texture,
+    const UnpackedPtr<TextureViewDescriptor>& descriptor) {
+    Device* device = ToBackend(texture->GetDevice());
+    auto* desc = ToAPI(*descriptor);
+    WGPUTextureView innerView =
+        device->wgpu.textureCreateView(ToBackend(texture)->GetInnerHandle(), desc);
+    DAWN_ASSERT(innerView);
+    Ref<TextureView> view = AcquireRef(new TextureView(texture, descriptor, innerView));
+    return std::move(view);
+}
+
+TextureView::TextureView(TextureBase* texture,
+                         const UnpackedPtr<TextureViewDescriptor>& descriptor,
+                         WGPUTextureView innerView)
+    : TextureViewBase(texture, descriptor),
+      ObjectWGPU(ToBackend(texture->GetDevice())->wgpu.textureViewRelease) {
+    mInnerHandle = innerView;
+}
+
 }  // namespace dawn::native::webgpu
