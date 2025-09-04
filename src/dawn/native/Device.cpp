@@ -382,6 +382,8 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
 
     // Get hostMappedPointerLimits from physical device
     mLimits.hostMappedPointerLimits = GetPhysicalDevice()->GetLimits().hostMappedPointerLimits;
+    mLimits.hostMappedFileHandleLimits =
+        GetPhysicalDevice()->GetLimits().hostMappedFileHandleLimits;
 
     // Handle maxXXXPerStage/maxXXXInStage.
     EnforceLimitSpecInvariants(&mLimits, effectiveFeatureLevel);

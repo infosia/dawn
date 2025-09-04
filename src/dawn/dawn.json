@@ -759,6 +759,17 @@
             {"name": "userdata", "type": "void *"}
         ]
     },
+    "buffer host mapped file handle": {
+        "category": "structure",
+        "chained": "in",
+        "chain roots": ["buffer descriptor"],
+        "tags": ["dawn"],
+        "members": [
+            {"name": "handle", "type": "void *"},
+            {"name": "dispose callback", "type": "callback"},
+            {"name": "userdata", "type": "void *"}
+        ]
+    },
     "callback": {
         "category": "function pointer",
         "tags": ["dawn"],
@@ -1704,6 +1715,15 @@
             {"name": "host mapped pointer alignment", "type": "uint32_t", "default": "limit u32 undefined"}
         ]
     },
+    "dawn host mapped file handle limits": {
+        "category": "structure",
+        "chained": "out",
+        "chain roots": ["limits"],
+        "tags": ["dawn"],
+        "members": [
+            {"name": "host mapped file handle alignment", "type": "uint32_t", "default": "limit u32 undefined"}
+        ]
+    },
     "dynamic binding array limits": {
         "category": "structure",
         "chained": "out",
@@ -2441,7 +2461,8 @@
             {"value": 56, "name": "shared fence EGL sync", "tags": ["dawn", "native"]},
             {"value": 57, "name": "dawn device allocator control", "tags": ["dawn"]},
             {"value": 58, "name": "texture component swizzle", "tags": ["dawn"]},
-            {"value": 60, "name": "chromium experimental bindless", "tags": ["dawn"]}
+            {"value": 60, "name": "chromium experimental bindless", "tags": ["dawn"]},
+            {"value": 61, "name": "host mapped file handle", "tags": ["dawn"]}
         ]
     },
     "filter mode": {
@@ -4003,7 +4024,9 @@
             {"value": 75, "name": "dynamic binding array limits", "tags": ["dawn"]},
             {"value": 76, "name": "bind group dynamic binding array", "tags": ["dawn"]},
             {"value": 77, "name": "texel buffer binding entry", "tags": ["dawn"]},
-            {"value": 78, "name": "texel buffer binding layout", "tags": ["dawn"]}
+            {"value": 78, "name": "texel buffer binding layout", "tags": ["dawn"]},
+            {"value": 79, "name": "buffer host mapped file handle", "tags": ["dawn"]},
+            {"value": 80, "name": "dawn host mapped file handle limits", "tags": ["dawn"]}
         ]
     },
     "texture": {

@@ -321,6 +321,13 @@ ResultOrError<UnpackedPtr<BufferDescriptor>> ValidateBufferDescriptor(
 
     DAWN_TRY(ValidateBufferUsage(descriptor->usage));
 
+    DAWN_INVALID_IF(
+        unpacked.Get<BufferHostMappedPointer>() && unpacked.Get<BufferHostMappedFileHandle>(),
+        "Buffer descriptor must not contain both %s and %s structures in the "
+        "pNext chain.",
+        unpacked.Get<BufferHostMappedPointer>()->sType,
+        unpacked.Get<BufferHostMappedFileHandle>()->sType);
+
     if (const auto* hostMappedDesc = unpacked.Get<BufferHostMappedPointer>()) {
         uint32_t requiredAlignment =
             device->GetLimits().hostMappedPointerLimits.hostMappedPointerAlignment;
@@ -334,10 +341,24 @@ ResultOrError<UnpackedPtr<BufferDescriptor>> ValidateBufferDescriptor(
                         "Host-mapped memory pointer (%p) was not aligned to %u.",
                         hostMappedDesc->pointer, requiredAlignment);
 
-        // TODO(dawn:2018) consider allowing the host-mapped buffers to be mapped through WebGPU.
+        // TODO(42240963): consider allowing the host-mapped buffers to be mapped through WebGPU.
         DAWN_INVALID_IF(
             descriptor->mappedAtCreation,
             "Buffer created from host-mapped pointer requires mappedAtCreation to be false.");
+    } else if (const auto* hostMappedFileHandleDesc = unpacked.Get<BufferHostMappedFileHandle>()) {
+        uint32_t requiredAlignment =
+            device->GetLimits().hostMappedFileHandleLimits.hostMappedFileHandleAlignment;
+
+        DAWN_INVALID_IF(!device->HasFeature(Feature::HostMappedFileHandle), "%s requires %s.",
+                        hostMappedFileHandleDesc->sType, ToAPI(Feature::HostMappedFileHandle));
+        DAWN_INVALID_IF(!IsAligned(descriptor->size, requiredAlignment),
+                        "Buffer size (%u) wrapping host-mapped memory was not aligned to %u.",
+                        descriptor->size, requiredAlignment);
+
+        // TODO(42240963): consider allowing the host-mapped buffers to be mapped through WebGPU.
+        DAWN_INVALID_IF(
+            descriptor->mappedAtCreation,
+            "Buffer created from host-mapped file handle requires mappedAtCreation to be false.");
     }
 
     wgpu::BufferUsage usage = descriptor->usage;
@@ -394,8 +415,10 @@ BufferBase::BufferBase(DeviceBase* device, const UnpackedPtr<BufferDescriptor>& 
       mSize(descriptor->size),
       mUsage(descriptor->usage),
       mInternalUsage(ComputeInternalBufferUsages(device, descriptor->usage, descriptor->size)),
-      mState(descriptor.Has<BufferHostMappedPointer>() ? BufferState::HostMappedPersistent
-                                                       : BufferState::Unmapped) {
+      mState((descriptor.Has<BufferHostMappedPointer>() ||
+              descriptor.Has<BufferHostMappedFileHandle>())
+                 ? BufferState::HostMappedPersistent
+                 : BufferState::Unmapped) {
     GetObjectTrackingList()->Track(this);
 }
 
