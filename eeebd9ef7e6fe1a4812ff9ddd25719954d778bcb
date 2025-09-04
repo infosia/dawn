@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b78e3623_f6f12051",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3150,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-04T15:47:56Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "e6e5b78c_3c32bff6",
+      "revId": "eeebd9ef7e6fe1a4812ff9ddd25719954d778bcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "972c0e8d_ebd17966",
@@ -49,6 +67,24 @@
       "writtenOn": "2025-09-03T21:21:59Z",
       "side": 1,
       "message": "Why are function parameters allowed when we\u0027re expecting a constant?",
+      "revId": "eeebd9ef7e6fe1a4812ff9ddd25719954d778bcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4f894a0_dbb470ea",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3176,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-04T15:47:56Z",
+      "side": 1,
+      "message": "Brain failure. And making the assumption that the tests made sense, heh. Fixed.",
+      "parentUuid": "972c0e8d_ebd17966",
       "revId": "eeebd9ef7e6fe1a4812ff9ddd25719954d778bcb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
