@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2128c1e8_c487ab17",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-04T15:36:58Z",
+      "side": 1,
+      "message": "Yeah I think so, makes it easier to see why the toggle exists when scanning this list.",
+      "parentUuid": "67e065da_54205430",
+      "range": {
+        "startLine": 590,
+        "startChar": 13,
+        "endLine": 590,
+        "endChar": 31
+      },
+      "revId": "bad758be2aedb6b8f572cb7dd16b1bb5ca44efb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "947b0f1a_14060777",
         "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
         "patchSetId": 5
@@ -37,6 +61,30 @@
       "writtenOn": "2025-09-02T18:49:12Z",
       "side": 1,
       "message": "We do insert clamps later to polyfill other functions in metal.\nThis is part of the reason why I think we should just have one large polyfill system.",
+      "range": {
+        "startLine": 412,
+        "startChar": 9,
+        "endLine": 412,
+        "endChar": 14
+      },
+      "revId": "bad758be2aedb6b8f572cb7dd16b1bb5ca44efb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86092f14_d104a38f",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-04T15:36:58Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "947b0f1a_14060777",
       "range": {
         "startLine": 412,
         "startChar": 9,
