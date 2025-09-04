@@ -16,6 +16,46 @@
       "message": "Thanks for reviewing!",
       "revId": "82b1cf452b9aa5ee81e22adc13d14d70289348c6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5ac478c_f8d0b953",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T09:26:08Z",
+      "side": 1,
+      "message": "LGTM, feel free to CQ after the last comment is addressed.",
+      "revId": "82b1cf452b9aa5ee81e22adc13d14d70289348c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22056575_98061314",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-04T09:26:08Z",
+      "side": 1,
+      "message": "this can be replaced with an std::vector",
+      "range": {
+        "startLine": 228,
+        "startChar": 36,
+        "endLine": 228,
+        "endChar": 97
+      },
+      "revId": "82b1cf452b9aa5ee81e22adc13d14d70289348c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
