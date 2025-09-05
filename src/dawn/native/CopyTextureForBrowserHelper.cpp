@@ -263,28 +263,19 @@ MaybeError ValidateCopyTextureSourceFormat(const wgpu::TextureFormat srcFormat) 
     return {};
 }
 
-MaybeError ValidateCopyForBrowserDestinationFormat(const wgpu::TextureFormat dstFormat) {
+MaybeError ValidateCopyForBrowserDestinationNotDepthOrStencilFormat(
+    const wgpu::TextureFormat dstFormat) {
     switch (dstFormat) {
-        case wgpu::TextureFormat::R8Unorm:
-        case wgpu::TextureFormat::R16Float:
-        case wgpu::TextureFormat::R32Float:
-        case wgpu::TextureFormat::RG8Unorm:
-        case wgpu::TextureFormat::RG16Float:
-        case wgpu::TextureFormat::RG32Float:
-        case wgpu::TextureFormat::RGBA8Unorm:
-        case wgpu::TextureFormat::RGBA8UnormSrgb:
-        case wgpu::TextureFormat::BGRA8Unorm:
-        case wgpu::TextureFormat::BGRA8UnormSrgb:
-        case wgpu::TextureFormat::RGB10A2Unorm:
-        case wgpu::TextureFormat::RGBA16Float:
-        case wgpu::TextureFormat::RGBA32Float:
-            break;
-        default:
+        case wgpu::TextureFormat::Depth16Unorm:
+        case wgpu::TextureFormat::Depth24Plus:
+        case wgpu::TextureFormat::Depth32Float:
+        case wgpu::TextureFormat::Depth24PlusStencil8:
+        case wgpu::TextureFormat::Depth32FloatStencil8:
+        case wgpu::TextureFormat::Stencil8:
             return DAWN_VALIDATION_ERROR("Destination texture format (%s) is not supported.",
                                          dstFormat);
-    }
-
-    return {};
+        default:
+            return {};
 }
 
 RenderPipelineBase* GetCachedCopyTexturePipeline(InternalPipelineStore* store,
@@ -617,12 +608,12 @@ MaybeError ValidateCopyForBrowserDestination(DeviceBase* device,
         options.internalUsage ? UsageValidationMode::Internal : UsageValidationMode::Default;
     DAWN_TRY(ValidateCanUseAs(destination.texture, wgpu::TextureUsage::CopyDst, mode));
     DAWN_TRY(ValidateCanUseAs(destination.texture, wgpu::TextureUsage::RenderAttachment, mode));
+    DAWN_TRY(ValidateCopyForBrowserDestinationNotDepthOrStencilFormat(
+        destination.texture->GetFormat().format));
 
     DAWN_INVALID_IF(destination.texture->GetSampleCount() > 1,
                     "The destination texture sample count (%u) is not 1.",
                     destination.texture->GetSampleCount());
-
-    DAWN_TRY(ValidateCopyForBrowserDestinationFormat(destination.texture->GetFormat().format));
 
     // The valid destination formats are all color formats.
     DAWN_INVALID_IF(
