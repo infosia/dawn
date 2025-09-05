@@ -364,6 +364,24 @@
       "parentUuid": "f601efeb_0f939ab5",
       "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0381b884_9ccf2180",
+        "filename": "src/dawn/tests/end2end/ConcurrentExecutionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-05T00:49:54Z",
+      "side": 1,
+      "message": "I added \"STEPS\" to help document. I can also add 2 more independent buffers but keep in mind they are not required to test the WAR as that is only happening between the Read and Write to B.",
+      "parentUuid": "82c7b6c7_8f790b36",
+      "revId": "d7d164153c9dcbd9169671ba7cdf4429dca29ec9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
