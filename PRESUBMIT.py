@@ -328,6 +328,105 @@ def _CheckCopyrightHeaders(input_api, output_api):
 
     return errors
 
+def _ReportErrorFileAndLine(filename, line_num, dummy_line):
+    """Default error formatter for _FindNewViolationsOfRule."""
+    return '%s:%s' % (filename, line_num)
+
+def _GenerateAffectedFileExtList(input_api, source_file_filter):
+    """Generate a list of (file, extension) tuples from affected files.
+
+    The result can be fed to _FindNewViolationsOfRule() directly, or
+    could be filtered before doing that.
+
+    Args:
+        input_api: object to enumerate the affected files.
+        source_file_filter: a filter to be passed to the input api.
+    Yields:
+        A list of (file, extension) tuples, where |file| is an affected
+        file, and |extension| its file path extension.
+    """
+    for f in input_api.AffectedFiles(include_deletes=False,
+                                     file_filter=source_file_filter):
+        extension = str(f.LocalPath()).rsplit('.', 1)[-1]
+        yield (f, extension)
+
+def _FindNewViolationsOfRuleForList(callable_rule,
+                                    file_ext_list,
+                                    error_formatter=_ReportErrorFileAndLine):
+    """Find all newly introduced violations of a per-line rule (a callable).
+
+  Prefer calling _FindNewViolationsOfRule() instead of this function, unless
+    the list of affected files need to be filtered in a special way.
+
+    Arguments:
+        callable_rule: a callable taking a file extension and line of input and
+            returning True if the rule is satisfied and False if there was a problem.
+        file_ext_list: a list of input (file, extension) tuples, as returned by
+            _GenerateAffectedFileExtList().
+        error_formatter: a callable taking (filename, line_number, line) and
+            returning a formatted error string.
+
+    Returns:
+        A list of the newly-introduced violations reported by the rule.
+    """
+    errors = []
+    for f, extension in file_ext_list:
+        # For speed, we do two passes, checking first the full file.  Shelling
+        # out to the SCM to determine the changed region can be quite expensive
+        # on Win32.  Assuming that most files will be kept problem-free, we can
+        # skip the SCM operations most of the time.
+        if all(callable_rule(extension, line) for line in f.NewContents()):
+            continue  # No violation found in full text: can skip considering diff.
+
+        for line_num, line in f.ChangedContents():
+            if not callable_rule(extension, line):
+                errors.append(error_formatter(f.LocalPath(), line_num, line))
+
+    return errors
+
+def _FindNewViolationsOfRule(callable_rule,
+                             input_api,
+                             source_file_filter=None,
+                             error_formatter=_ReportErrorFileAndLine):
+    """Find all newly introduced violations of a per-line rule (a callable).
+
+    Arguments:
+        callable_rule: a callable taking a file extension and line of input and
+            returning True if the rule is satisfied and False if there was a problem.
+        input_api: object to enumerate the affected files.
+        source_file_filter: a filter to be passed to the input api.
+        error_formatter: a callable taking (filename, line_number, line) and
+            returning a formatted error string.
+
+    Returns:
+        A list of the newly-introduced violations reported by the rule.
+    """
+    if input_api.no_diffs:
+        return []
+    return _FindNewViolationsOfRuleForList(
+        callable_rule,
+        _GenerateAffectedFileExtList(input_api, source_file_filter),
+        error_formatter)
+
+def CheckChangeTodoHasIssue(input_api, output_api, source_file_filter=None):
+    """Checks that the user didn't add TODO(...issue123): without an issue number
+    The required format is `TODO(...number123):` or `TODO: ...number123 -`.
+    Examples:
+        // TODO(crbug.com/123456789): fix this
+        // TODO(123456789): fix this
+        // TODO:123456789 - fix this
+        // TODO:crbug.com/123456789 - fix this
+    """
+    legacyTODO = '\\s*\\([^\\s]*?\\d+\\)\\s*:'
+    modernTODO = ':\\s*[^\\s]+\\d+\\s*\\-'
+    unowned_todo = input_api.re.compile('TODO(?!(%s|%s))' %
+                                        (legacyTODO, modernTODO))
+    errors = _FindNewViolationsOfRule(lambda _, x: not unowned_todo.search(x),
+                                      input_api, source_file_filter)
+    errors = ['Found TODO with no issue in ' + x for x in errors]
+    if errors:
+        return [output_api.PresubmitPromptWarning('\n'.join(errors))]
+    return []
 
 def CheckChange(input_api, output_api):
     results = []
