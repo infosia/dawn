@@ -84,6 +84,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "19825550_52fe1037",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000861
+      },
+      "writtenOn": "2025-09-05T06:05:26Z",
+      "side": 1,
+      "message": "I flipped how we do the logic. Per MSDN, I have mapped the custom heaps with specific settings back to standard heaps. Does this help?",
+      "parentUuid": "f1a2b0ad_e7b88e83",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "174523d0_53536b88",
         "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
         "patchSetId": 2
@@ -152,6 +170,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "00cea95c_37ec2c2b",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000861
+      },
+      "writtenOn": "2025-09-05T06:05:26Z",
+      "side": 1,
+      "message": "I added a link to the `GetCustomHeapProperties` MSDN page in mapping function.",
+      "parentUuid": "2427ed87_2e9bf453",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d58f4523_9bbd5582",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000861
+      },
+      "writtenOn": "2025-09-05T06:05:26Z",
+      "side": 1,
+      "message": "\u003e Just to be clear, are we defining CUSTOM heap this way, or is something external (d3d12 or driver or chromium?) define it this way?\n\nA little bit of both. We are using the definitions from `ID3D12Device::GetCustomHeapProperties(UINT,D3D12_HEAP_TYPE)` plus the fact that in UMA systems, the GPU always has access to the buffers.\n\n\u003e In general I\u0027m a bit confused about the high level logic here so a high level comment would be helpful. For example why do we branch on isUMA instead of some driver-reported info for this specific heap from heapProperties? isUMA seems possibly too broad. (Maybe this is the same as Corentin\u0027s comment.)\n\nUnfortunately, we need to know if we are running in a UMA system to know if we can give the `DEFAULT`-like usages to `UPLOAD`/`READBACK`-equivalent `heapProperties`. For example, a heap in `L0` (system ram) and `WRITE_BACK` could either be `READBACK`-equivalent (NUMA system), `READBACK` + `DEFAULT` (non-cache coherent UMA), or `READBACK` + `UPLOAD` + `DEFAULT` (ccUMA).",
+      "parentUuid": "3dac9435_a7208efe",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3a21d69_0c284c55",
@@ -205,6 +259,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5dfe951_ea33397a",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000861
+      },
+      "writtenOn": "2025-09-05T06:05:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67985ceb_1e3bcedf",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e391301a_ce198f14",
@@ -254,6 +326,24 @@
       "side": 1,
       "message": "Isn\u0027t that done automatically in D3D12 when submitting to the queue? https://learn.microsoft.com/en-us/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_architecture doesn\u0027t mention a flush being necessary when !ccUMA.",
       "parentUuid": "e4aef370_59667cfb",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aad3f048_38507a1c",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000861
+      },
+      "writtenOn": "2025-09-05T06:05:26Z",
+      "side": 1,
+      "message": "You are correct, I believe that it gets done before submitting to the queue. I have changed it so that we set MapRead and MapWrite for WRITE_BACK heaps.",
+      "parentUuid": "42c5952d_990a6aab",
       "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
