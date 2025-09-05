@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "856c6d4b_d68c91fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-05T15:45:31Z",
+      "side": 1,
+      "message": "PTAL\n\nNo tests directly in this CL but some tests start to fail later once we create ShaderModules from regenerated descriptors.",
+      "revId": "4151c50cd98a16879302fd3b367078109e775f01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
