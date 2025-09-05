@@ -265,6 +265,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b7a0b8b_e288c696",
+        "filename": "src/dawn/native/ObjectBase.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-05T13:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "039d3fe1_5a4e0d0b",
+      "revId": "694d4575fa6cf50949fea7a2723e02d45690c12a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d60d44f4_7ef22979",
