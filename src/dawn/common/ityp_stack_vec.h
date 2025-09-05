@@ -48,10 +48,18 @@ class stack_vec : private absl::InlinedVector<Value, StaticCapacity> {
     explicit stack_vec(Index size) : Base() { Base::resize(static_cast<I>(size)); }
 
     Value& operator[](Index i) {
+#if !defined(ABSL_OPTION_HARDENED) || ABSL_OPTION_HARDENED == 0
+        // Insert our own bounds check if not already enabled in absl
+        DAWN_CHECK(i < size());
+#endif
         return Base::operator[](static_cast<I>(i));
     }
 
     constexpr const Value& operator[](Index i) const {
+#if !defined(ABSL_OPTION_HARDENED) || ABSL_OPTION_HARDENED == 0
+        // Insert our own bounds check if not already enabled in absl
+        DAWN_CHECK(i < size());
+#endif
         return Base::operator[](static_cast<I>(i));
     }
 
@@ -60,7 +68,6 @@ class stack_vec : private absl::InlinedVector<Value, StaticCapacity> {
     void reserve(Index size) { Base::reserve(static_cast<I>(size)); }
 
     Value* data() { return Base::data(); }
-
     const Value* data() const { return Base::data(); }
 
     Index size() const { return Index(static_cast<I>(Base::size())); }
