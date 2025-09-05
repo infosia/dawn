@@ -263,30 +263,6 @@ MaybeError ValidateCopyTextureSourceFormat(const wgpu::TextureFormat srcFormat) 
     return {};
 }
 
-MaybeError ValidateCopyForBrowserDestinationFormat(const wgpu::TextureFormat dstFormat) {
-    switch (dstFormat) {
-        case wgpu::TextureFormat::R8Unorm:
-        case wgpu::TextureFormat::R16Float:
-        case wgpu::TextureFormat::R32Float:
-        case wgpu::TextureFormat::RG8Unorm:
-        case wgpu::TextureFormat::RG16Float:
-        case wgpu::TextureFormat::RG32Float:
-        case wgpu::TextureFormat::RGBA8Unorm:
-        case wgpu::TextureFormat::RGBA8UnormSrgb:
-        case wgpu::TextureFormat::BGRA8Unorm:
-        case wgpu::TextureFormat::BGRA8UnormSrgb:
-        case wgpu::TextureFormat::RGB10A2Unorm:
-        case wgpu::TextureFormat::RGBA16Float:
-        case wgpu::TextureFormat::RGBA32Float:
-            break;
-        default:
-            return DAWN_VALIDATION_ERROR("Destination texture format (%s) is not supported.",
-                                         dstFormat);
-    }
-
-    return {};
-}
-
 RenderPipelineBase* GetCachedCopyTexturePipeline(InternalPipelineStore* store,
                                                  wgpu::TextureFormat dstFormat) {
     auto pipeline = store->copyTextureForBrowserPipelines.find(dstFormat);
@@ -621,8 +597,6 @@ MaybeError ValidateCopyForBrowserDestination(DeviceBase* device,
     DAWN_INVALID_IF(destination.texture->GetSampleCount() > 1,
                     "The destination texture sample count (%u) is not 1.",
                     destination.texture->GetSampleCount());
-
-    DAWN_TRY(ValidateCopyForBrowserDestinationFormat(destination.texture->GetFormat().format));
 
     // The valid destination formats are all color formats.
     DAWN_INVALID_IF(
