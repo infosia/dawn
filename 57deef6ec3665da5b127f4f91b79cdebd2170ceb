@@ -33,6 +33,23 @@
       "message": "This CL proposes to clarify that renderable formats enabled by Tier 1 can be used as the dstformat in the CopyTextureForBrowser_Formats test, which calls copyExternalImageToTexture (for context: https://github.com/gpuweb/gpuweb/issues/5289).",
       "revId": "57deef6ec3665da5b127f4f91b79cdebd2170ceb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dad92a41_3b8806b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-09-05T07:33:45Z",
+      "side": 1,
+      "message": "The previous information is incorrect, please ignore it.\n\nThis CL is proposed to illustrate that renderable formats enabled by Tier 1 \ncan be used as the dstformat in the CopyTextureForBrowser_Formats test, \nwhich calls copyExternalImageToTexture (for context: https://github.com/gpuweb/gpuweb/issues/5289).",
+      "revId": "57deef6ec3665da5b127f4f91b79cdebd2170ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
