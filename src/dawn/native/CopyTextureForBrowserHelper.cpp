@@ -278,6 +278,16 @@ MaybeError ValidateCopyForBrowserDestinationFormat(const wgpu::TextureFormat dst
         case wgpu::TextureFormat::RGB10A2Unorm:
         case wgpu::TextureFormat::RGBA16Float:
         case wgpu::TextureFormat::RGBA32Float:
+        case wgpu::TextureFormat::R16Unorm:
+        case wgpu::TextureFormat::RG16Unorm:
+        case wgpu::TextureFormat::RGBA16Unorm:
+        case wgpu::TextureFormat::R16Snorm:
+        case wgpu::TextureFormat::RG16Snorm:
+        case wgpu::TextureFormat::RGBA16Snorm:
+        case wgpu::TextureFormat::R8Snorm:
+        case wgpu::TextureFormat::RG8Snorm:
+        case wgpu::TextureFormat::RGBA8Snorm:
+        case wgpu::TextureFormat::RG11B10Ufloat:
             break;
         default:
             return DAWN_VALIDATION_ERROR("Destination texture format (%s) is not supported.",
