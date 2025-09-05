@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e8e3a85a_5dff9b0e",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-09-05T01:02:48Z",
+      "side": 1,
+      "message": "Oh I once wondered if I should add a new feature for importing file handle or adding an option to the existing host mapped pointer feature.\n\nDo you mean we should merge the host mapped pointer feature into shared buffer memory?",
+      "parentUuid": "897bc963_da89205c",
+      "revId": "8776010bbfb4bf5cd71ea9d4b70b17e7506791bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "84b3db56_b019ca08",
         "filename": "src/dawn/dawn.json",
         "patchSetId": 2
