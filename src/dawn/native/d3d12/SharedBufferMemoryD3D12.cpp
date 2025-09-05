@@ -40,6 +40,41 @@
 
 namespace dawn::native::d3d12 {
 
+namespace {
+
+ResultOrError<D3D12_HEAP_TYPE> MapCustomHeapTypeToStandard(
+    const D3D12_HEAP_PROPERTIES& heapProperties,
+    const Device* device) {
+    if (heapProperties.Type != D3D12_HEAP_TYPE_CUSTOM) {
+        return heapProperties.Type;
+    }
+
+    if (device->GetDeviceInfo().isUMA) {
+        // On UMA systems, all heaps are effectively DEFAULT heaps.
+        return D3D12_HEAP_TYPE_DEFAULT;
+    }
+
+    // Map D3D12_HEAP_TYPE_CUSTOM heap to one of the standard heap types if possible.
+    // See:
+    // https://learn.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12device-getcustomheapproperties(uint_d3d12_heap_type)
+    if (heapProperties.CPUPageProperty == D3D12_CPU_PAGE_PROPERTY_NOT_AVAILABLE &&
+        heapProperties.MemoryPoolPreference == D3D12_MEMORY_POOL_L1) {
+        // A CUSTOM heap with no CPU access and in L1 is equivalent to a DEFAULT heap.
+        return D3D12_HEAP_TYPE_DEFAULT;
+    } else if (heapProperties.CPUPageProperty == D3D12_CPU_PAGE_PROPERTY_WRITE_BACK &&
+               heapProperties.MemoryPoolPreference == D3D12_MEMORY_POOL_L0) {
+        // A CUSTOM heap with WRITE_BACK + L0 is equivalent to a READBACK heap.
+        return D3D12_HEAP_TYPE_READBACK;
+    } else if (heapProperties.CPUPageProperty == D3D12_CPU_PAGE_PROPERTY_WRITE_COMBINE &&
+               heapProperties.MemoryPoolPreference == D3D12_MEMORY_POOL_L0) {
+        // A CUSTOM heap with WRITE_COMBINE + L0 is equivalent to a UPLOAD heap.
+        return D3D12_HEAP_TYPE_UPLOAD;
+    } else {
+        return DAWN_VALIDATION_ERROR("ID3D12Resources allocated on unsupported heap.");
+    }
+}
+}  // namespace
+
 SharedBufferMemory::SharedBufferMemory(Device* device,
                                        StringView label,
                                        SharedBufferMemoryProperties properties,
@@ -74,8 +109,10 @@ ResultOrError<Ref<SharedBufferMemory>> SharedBufferMemory::Create(
     d3d12Resource->GetHeapProperties(&heapProperties, &heapFlags);
 
     wgpu::BufferUsage usages = wgpu::BufferUsage::None;
+    D3D12_HEAP_TYPE heapType;
+    DAWN_TRY_ASSIGN(heapType, MapCustomHeapTypeToStandard(heapProperties, device));
 
-    switch (heapProperties.Type) {
+    switch (heapType) {
         case D3D12_HEAP_TYPE_UPLOAD:
             usages |= wgpu::BufferUsage::MapWrite | wgpu::BufferUsage::CopySrc;
             break;
@@ -93,13 +130,20 @@ ResultOrError<Ref<SharedBufferMemory>> SharedBufferMemory::Create(
                 usages |= wgpu::BufferUsage::Uniform;
             }
             break;
-        case D3D12_HEAP_TYPE_CUSTOM:
-            return DAWN_VALIDATION_ERROR(
-                "ID3D12Resources allocated on D3D12_HEAP_TYPE_CUSTOM heaps are not supported by "
-                "SharedBufferMemory.");
+
+        // D3D12_HEAP_TYPE_CUSTOM heaps should have been mapped to one of the standard heap types.
         default:
             DAWN_UNREACHABLE();
     }
+    // On UMA systems, buffers with WRITE_COMBINE or WRITE_BACK heaps can also be mapped.
+    if (device->GetDeviceInfo().isUMA && device->HasFeature(Feature::BufferMapExtendedUsages)) {
+        if (heapProperties.CPUPageProperty == D3D12_CPU_PAGE_PROPERTY_WRITE_COMBINE) {
+            usages |= wgpu::BufferUsage::MapWrite;
+        } else if (heapProperties.CPUPageProperty == D3D12_CPU_PAGE_PROPERTY_WRITE_BACK) {
+            usages |= wgpu::BufferUsage::MapRead | wgpu::BufferUsage::MapWrite;
+        }
+    }
+
     SharedBufferMemoryProperties properties;
     properties.size = desc.Width;
     properties.usage = usages;
