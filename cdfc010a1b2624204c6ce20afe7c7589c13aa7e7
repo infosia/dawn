@@ -16,6 +16,23 @@
       "message": "OK pretty sure this will pass. PTAL",
       "revId": "cdfc010a1b2624204c6ce20afe7c7589c13aa7e7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "094bef3b_a6c982fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-05T18:44:37Z",
+      "side": 1,
+      "message": "LGTM! Always nice to see more lines of code dropped than added. 😊",
+      "revId": "cdfc010a1b2624204c6ce20afe7c7589c13aa7e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
