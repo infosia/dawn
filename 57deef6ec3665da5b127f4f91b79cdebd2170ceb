@@ -50,6 +50,29 @@
       "message": "The previous information is incorrect, please ignore it.\n\nThis CL is proposed to illustrate that renderable formats enabled by Tier 1 \ncan be used as the dstformat in the CopyTextureForBrowser_Formats test, \nwhich calls copyExternalImageToTexture (for context: https://github.com/gpuweb/gpuweb/issues/5289).",
       "revId": "57deef6ec3665da5b127f4f91b79cdebd2170ceb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0e42e34_aa0e0b0b",
+        "filename": "src/dawn/tests/end2end/CopyTextureForBrowserTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-05T19:12:25Z",
+      "side": 1,
+      "message": "nit. I think you can maybe just use `IsRenderableFormat(device, format)` from `TextureUtils.h`.",
+      "range": {
+        "startLine": 720,
+        "startChar": 8,
+        "endLine": 730,
+        "endChar": 9
+      },
+      "revId": "57deef6ec3665da5b127f4f91b79cdebd2170ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
