@@ -405,7 +405,42 @@ MaybeError Queue::WaitForIdleForDestruction() {
     DAWN_TRY(CheckPassedSerials());
     DAWN_ASSERT(mFencesInFlight->empty());
     mHasPendingCommands = false;
+
+    if (mReadFBO != 0) {
+        gl.DeleteFramebuffers(1, &mReadFBO);
+        mReadFBO = 0;
+    }
+    if (mWriteFBO != 0) {
+        gl.DeleteFramebuffers(1, &mWriteFBO);
+        mWriteFBO = 0;
+    }
+    if (mRenderFBO != 0) {
+        gl.DeleteFramebuffers(1, &mRenderFBO);
+        mRenderFBO = 0;
+    }
+
     return {};
+}
+
+ResultOrError<GLuint> Queue::GetReadFBO(const OpenGLFunctions& gl) {
+    if (mReadFBO == 0) {
+        DAWN_GL_TRY(gl, GenFramebuffers(1, &mReadFBO));
+    }
+    return mReadFBO;
+}
+
+ResultOrError<GLuint> Queue::GetWriteFBO(const OpenGLFunctions& gl) {
+    if (mWriteFBO == 0) {
+        DAWN_GL_TRY(gl, GenFramebuffers(1, &mWriteFBO));
+    }
+    return mWriteFBO;
+}
+
+ResultOrError<GLuint> Queue::GetRenderFBO(const OpenGLFunctions& gl) {
+    if (mRenderFBO == 0) {
+        DAWN_GL_TRY(gl, GenFramebuffers(1, &mRenderFBO));
+    }
+    return mRenderFBO;
 }
 
 }  // namespace dawn::native::opengl

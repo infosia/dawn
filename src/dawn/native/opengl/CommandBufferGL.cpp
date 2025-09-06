@@ -623,7 +623,8 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
     VectorDirtyRangeInfo mDirtyRangeArrayLength;
 };
 
-MaybeError ResolveMultisampledRenderTargets(const OpenGLFunctions& gl,
+MaybeError ResolveMultisampledRenderTargets(Queue* queue,
+                                            const OpenGLFunctions& gl,
                                             const BeginRenderPassCmd* renderPass) {
     DAWN_ASSERT(renderPass != nullptr);
 
@@ -632,13 +633,14 @@ MaybeError ResolveMultisampledRenderTargets(const OpenGLFunctions& gl,
 
     GLuint readFbo = 0;
     GLuint writeFbo = 0;
+    bool generatedFbos = false;
 
     for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
         if (renderPass->colorAttachments[i].resolveTarget != nullptr) {
-            if (readFbo == 0) {
-                DAWN_ASSERT(writeFbo == 0);
-                DAWN_GL_TRY(gl, GenFramebuffers(1, &readFbo));
-                DAWN_GL_TRY(gl, GenFramebuffers(1, &writeFbo));
+            if (!generatedFbos) {
+                DAWN_TRY_ASSIGN(readFbo, queue->GetReadFBO(gl));
+                DAWN_TRY_ASSIGN(writeFbo, queue->GetWriteFBO(gl));
+                generatedFbos = true;
             }
 
             TextureView* colorView = ToBackend(renderPass->colorAttachments[i].view.Get());
@@ -653,12 +655,15 @@ MaybeError ResolveMultisampledRenderTargets(const OpenGLFunctions& gl,
             DAWN_GL_TRY(gl, BlitFramebuffer(0, 0, renderPass->width, renderPass->height, 0, 0,
                                             renderPass->width, renderPass->height,
                                             GL_COLOR_BUFFER_BIT, GL_NEAREST));
+
+            DAWN_GL_TRY(gl, FramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+                                                 colorView->GetGLTarget(), 0, 0));
+            DAWN_GL_TRY(gl, FramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+                                                 resolveView->GetGLTarget(), 0, 0));
         }
     }
 
     DAWN_GL_TRY(gl, Enable(GL_SCISSOR_TEST));
-    DAWN_GL_TRY(gl, DeleteFramebuffers(1, &readFbo));
-    DAWN_GL_TRY(gl, DeleteFramebuffers(1, &writeFbo));
     return {};
 }
 
@@ -746,7 +751,7 @@ MaybeError CommandBuffer::Execute(Queue* queue) {
                 DAWN_TRY(
                     LazyClearSyncScope(GetResourceUsages().renderPasses[nextRenderPassNumber]));
                 LazyClearRenderPassAttachments(cmd);
-                DAWN_TRY(ExecuteRenderPass(cmd));
+                DAWN_TRY(ExecuteRenderPass(queue, cmd));
 
                 nextRenderPassNumber++;
                 break;
@@ -848,8 +853,8 @@ MaybeError CommandBuffer::Execute(Queue* queue) {
                 // glReadPixels with a pack buffer. Create a temporary FBO for the copy.
                 DAWN_GL_TRY(gl, BindTexture(target, texture->GetHandle()));
 
-                GLuint readFBO = 0;
-                DAWN_GL_TRY(gl, GenFramebuffers(1, &readFBO));
+                GLuint readFBO;
+                DAWN_TRY_ASSIGN(readFBO, queue->GetReadFBO(gl));
                 DAWN_GL_TRY(gl, BindFramebuffer(GL_READ_FRAMEBUFFER, readFBO));
 
                 const TexelBlockInfo& blockInfo = formatInfo.GetAspectInfo(src.aspect).block;
@@ -941,7 +946,8 @@ MaybeError CommandBuffer::Execute(Queue* queue) {
                 DAWN_GL_TRY(gl, PixelStorei(GL_PACK_ROW_LENGTH, 0));
                 DAWN_GL_TRY(gl, PixelStorei(GL_PACK_ALIGNMENT, 4));  // Reset to default
                 DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_PACK_BUFFER, 0));
-                DAWN_GL_TRY(gl, DeleteFramebuffers(1, &readFBO));
+                DAWN_GL_TRY(gl, FramebufferTexture2D(GL_READ_FRAMEBUFFER, glAttachment,
+                                                     texture->GetGLTarget(), 0, 0));
 
                 queue->TrackCopyDstBuffer(buffer);
                 buffer->TrackUsage();
@@ -1159,23 +1165,56 @@ MaybeError CommandBuffer::ExecuteComputePass() {
     DAWN_UNREACHABLE();
 }
 
-MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass) {
+struct ScopedFBOUnbindings {
+    ScopedFBOUnbindings(const OpenGLFunctions& gl, GLuint fbo, const BeginRenderPassCmd* renderPass)
+        : mGl(gl), mFbo(fbo), mRenderPass(renderPass) {}
+
+    ~ScopedFBOUnbindings() {
+        if (mFbo == 0) {
+            return;
+        }
+        // Unbind attachments
+        for (auto i : mRenderPass->attachmentState->GetColorAttachmentsMask()) {
+            TextureView* view = ToBackend(mRenderPass->colorAttachments[i].view.Get());
+            GLenum glAttachment = GL_COLOR_ATTACHMENT0 + static_cast<uint8_t>(i);
+            DAWN_GL_TRY_IGNORE_ERRORS(mGl, FramebufferTexture2D(GL_DRAW_FRAMEBUFFER, glAttachment,
+                                                                view->GetGLTarget(), 0, 0));
+        }
+        if (mRenderPass->attachmentState->HasDepthStencilAttachment()) {
+            TextureView* view = ToBackend(mRenderPass->depthStencilAttachment.view.Get());
+            const Format& format = view->GetTexture()->GetFormat();
+            if (format.HasDepth()) {
+                DAWN_GL_TRY_IGNORE_ERRORS(
+                    mGl, FramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                                              view->GetGLTarget(), 0, 0));
+            }
+            if (format.HasStencil()) {
+                DAWN_GL_TRY_IGNORE_ERRORS(
+                    mGl, FramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_STENCIL_ATTACHMENT,
+                                              view->GetGLTarget(), 0, 0));
+            }
+        }
+    }
+
+    const OpenGLFunctions& mGl;
+    GLuint mFbo;
+    const BeginRenderPassCmd* mRenderPass;
+};
+
+MaybeError CommandBuffer::ExecuteRenderPass(Queue* queue, BeginRenderPassCmd* renderPass) {
     const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
     GLuint fbo = 0;
+    DAWN_TRY_ASSIGN(fbo, queue->GetRenderFBO(gl));
+    // TODO(kainino@chromium.org): This is added to possibly work around an issue seen on
+    // Windows/Intel. It should break any feedback loop before the clears, even if there
+    // shouldn't be any negative effects from this. Investigate whether it's actually
+    // needed.
+    DAWN_GL_TRY(gl, BindFramebuffer(GL_READ_FRAMEBUFFER, 0));
+    DAWN_GL_TRY(gl, BindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo));
 
-    // Create the framebuffer used for this render pass and calls the correct glDrawBuffers
+    ScopedFBOUnbindings scopedUnbindings(gl, fbo, renderPass);
+
     {
-        // TODO(kainino@chromium.org): This is added to possibly work around an issue seen on
-        // Windows/Intel. It should break any feedback loop before the clears, even if there
-        // shouldn't be any negative effects from this. Investigate whether it's actually
-        // needed.
-        DAWN_GL_TRY(gl, BindFramebuffer(GL_READ_FRAMEBUFFER, 0));
-        // TODO(kainino@chromium.org): possible future optimization: create these framebuffers
-        // at Framebuffer build time (or maybe CommandBuffer build time) so they don't have to
-        // be created and destroyed at draw time.
-        DAWN_GL_TRY(gl, GenFramebuffers(1, &fbo));
-        DAWN_GL_TRY(gl, BindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo));
-
         // Mapping from attachmentSlot to GL framebuffer attachment points. Defaults to zero
         // (GL_NONE).
         PerColorAttachment<GLenum> drawBuffers = {};
@@ -1471,9 +1510,8 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass) {
                 mCommands.NextCommand<EndRenderPassCmd>();
 
                 if (renderPass->attachmentState->GetSampleCount() > 1) {
-                    DAWN_TRY(ResolveMultisampledRenderTargets(gl, renderPass));
+                    DAWN_TRY(ResolveMultisampledRenderTargets(queue, gl, renderPass));
                 }
-                DAWN_GL_TRY(gl, DeleteFramebuffers(1, &fbo));
                 return {};
             }
 

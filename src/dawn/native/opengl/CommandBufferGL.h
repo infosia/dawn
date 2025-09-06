@@ -48,7 +48,7 @@ class CommandBuffer final : public CommandBufferBase {
 
   private:
     MaybeError ExecuteComputePass();
-    MaybeError ExecuteRenderPass(BeginRenderPassCmd* renderPass);
+    MaybeError ExecuteRenderPass(Queue* queue, BeginRenderPassCmd* renderPass);
 };
 
 // Like glTexSubImage*, the "data" argument is either a pointer to image data or

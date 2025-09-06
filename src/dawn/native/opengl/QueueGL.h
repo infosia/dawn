@@ -43,6 +43,7 @@ namespace dawn::native::opengl {
 class Buffer;
 class Device;
 class SharedFence;
+struct OpenGLFunctions;
 
 class Queue final : public QueueBase {
   public:
@@ -60,6 +61,10 @@ class Queue final : public QueueBase {
     // fence or newly created.
     ResultOrError<Ref<SharedFence>> GetOrCreateSharedFence(ExecutionSerial lastUsageSerial,
                                                            wgpu::SharedFenceType type);
+
+    ResultOrError<GLuint> GetReadFBO(const OpenGLFunctions& gl);
+    ResultOrError<GLuint> GetWriteFBO(const OpenGLFunctions& gl);
+    ResultOrError<GLuint> GetRenderFBO(const OpenGLFunctions& gl);
 
   private:
     Queue(Device* device, const QueueDescriptor* descriptor);
@@ -92,6 +97,10 @@ class Queue final : public QueueBase {
 
     // Has pending GL commands which are not associated with a fence.
     bool mHasPendingCommands = false;
+
+    GLuint mReadFBO = 0;
+    GLuint mWriteFBO = 0;
+    GLuint mRenderFBO = 0;
 };
 
 }  // namespace dawn::native::opengl
