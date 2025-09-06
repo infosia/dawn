@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ad51905_c583478f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-06T01:34:35Z",
+      "side": 1,
+      "message": "Is there a specific reason we need this or is it just for completeness?",
+      "revId": "57deef6ec3665da5b127f4f91b79cdebd2170ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "482488ee_948ac904",
@@ -65,6 +82,30 @@
       "writtenOn": "2025-09-05T19:12:25Z",
       "side": 1,
       "message": "nit. I think you can maybe just use `IsRenderableFormat(device, format)` from `TextureUtils.h`.",
+      "range": {
+        "startLine": 720,
+        "startChar": 8,
+        "endLine": 730,
+        "endChar": 9
+      },
+      "revId": "57deef6ec3665da5b127f4f91b79cdebd2170ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79943826_51390a96",
+        "filename": "src/dawn/tests/end2end/CopyTextureForBrowserTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-06T01:34:35Z",
+      "side": 1,
+      "message": "If that\u0027s the case then `ValidateCopyForBrowserDestinationFormat` could probably also just be replaced with a check that the format is renderable.",
+      "parentUuid": "d0e42e34_aa0e0b0b",
       "range": {
         "startLine": 720,
         "startChar": 8,
