@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "601c6628_02a63869",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 24
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-06T03:19:19Z",
+      "side": 1,
+      "message": "nit: IIUC all footers should be in the last paragraph (though it seems it picked it up anyway)",
+      "revId": "2068f784888bdb026dffa17f68660a220f656db8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
