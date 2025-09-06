@@ -86,6 +86,24 @@
       "parentUuid": "d32e8d7c_706b6d20",
       "revId": "8be82ddc2b5bdd40d8f041f76f011bb35f47ba6b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eacd172d_4c78f029",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-06T00:43:13Z",
+      "side": 1,
+      "message": "For depth/stencil, yes, we should do it regardless of whether the feature is enabled. We could check the PhysicalDevice (`GetDevice()-\u003eGetPhysicalDevice()`) but that\u0027s not really the right layer - it only has `ValidateFeatureSupportedWithToggles` as it should.\n\nWhat we care about here is whether Metal has it, not whether Dawn has it. So we can just check the MTLDevice (`ToBackend(GetDevice())-\u003eGetMTLDevice()`).\n\nSide note though, it\u0027s supported on Apple2 as well as Mac2, so both the PhysicalDeviceMTL.mm check and this one should allow Apple2. (Could factor that check out into a helper `MTLDeviceSupportsTextureComponentSwizzle(MTLDevice*)` but I don\u0027t think it\u0027s super necessary.)\n\n---\n\nOther than that, that code looks good. I would also add a DAWN_ASSERT in the first branch, to check that a different swizzle wasn\u0027t requested.",
+      "parentUuid": "d98303e2_5417538d",
+      "revId": "8be82ddc2b5bdd40d8f041f76f011bb35f47ba6b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
