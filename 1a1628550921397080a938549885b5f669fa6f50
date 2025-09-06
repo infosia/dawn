@@ -16,6 +16,24 @@
       "message": "Since we don\u0027t support combining map usages with non-mapping usages by default, I had to gate map usages behind `BufferMapExtendedUsages`. This should be good enough for WebNN. Please let me know if you would prefer a different solution.",
       "revId": "1a1628550921397080a938549885b5f669fa6f50",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "180e06bb_a0246576",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-06T03:12:33Z",
+      "side": 1,
+      "message": "OK with me.",
+      "parentUuid": "338e31dd_2bf943e6",
+      "revId": "1a1628550921397080a938549885b5f669fa6f50",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

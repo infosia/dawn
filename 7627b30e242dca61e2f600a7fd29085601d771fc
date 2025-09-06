@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ddb142d_21052b50",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-06T03:12:33Z",
+      "side": 1,
+      "message": "This comment is a bit confusing. It seems to contradict [docs](https://learn.microsoft.com/en-us/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_architecture):\n\u003e [on non-CC UMA], a single residency budget is available but the UMA design commonly benefits from the three heap attributions.\n\u003e ... some UMA adapters benefit from both the no-CPU-access and write-combine properties of default and upload heaps.\n\nBut in practice the result of the outer logic is that we\u0027re saying \"on UMA, all heaps are GPU-queue-accessible\". I think it would be clearer if instead of a `D3D12_HEAP_TYPE` we returned our own `enum class { Readback, Upload, GPUQueueAccessible }`.\n\nWith the caveat that I don\u0027t think \"GPU-queue-accessible\" necessarily means \"fast to access\".",
+      "revId": "7627b30e242dca61e2f600a7fd29085601d771fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3675e92_39e0d5a7",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-06T03:12:33Z",
+      "side": 1,
+      "message": "In practice will this ever do anything when `heapType !\u003d DEFAULT`?\nIt would require the user requested `READBACK` + `WRITE_COMBINE` (seems nonsensical and not sure it\u0027s even valid).\nIMO it would be a bit easier to follow if this were inside `case D3D12_HEAP_TYPE_DEFAULT:` if that would be valid.",
+      "revId": "7627b30e242dca61e2f600a7fd29085601d771fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81ad8f35_da8d4914",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-06T03:12:33Z",
+      "side": 1,
+      "message": "Please comment to explain why WRITE_BACK allows both map flags",
+      "range": {
+        "startLine": 143,
+        "startChar": 22,
+        "endLine": 143,
+        "endChar": 78
+      },
+      "revId": "7627b30e242dca61e2f600a7fd29085601d771fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

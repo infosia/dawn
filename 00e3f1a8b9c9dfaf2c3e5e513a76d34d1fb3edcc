@@ -208,6 +208,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "39b7e2e1_49f9b293",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-06T03:12:33Z",
+      "side": 1,
+      "message": "I guess D3D12 has a narrower definition of UMA than I expected.",
+      "parentUuid": "d58f4523_9bbd5582",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d3a21d69_0c284c55",
         "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
         "patchSetId": 2
