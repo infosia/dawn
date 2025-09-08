@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb31ea1a_e632abaa",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-08T21:05:58Z",
+      "side": 1,
+      "message": "Previously this would be applied to UPLOAD and READBACK types on UMA as well. Just want to confirm that doing it only on CUSTOM is intended. (Either way seems to me like it would work fine, just changes exactly what the user needs to pass to trigger this behavior.)",
+      "revId": "ebabff911b155c07371d1a6b6dbe5115c6d194f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
