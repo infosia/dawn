@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e29dfcb6_49f21040",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-08T14:27:57Z",
+      "side": 1,
+      "message": "Thanks, saw this on the weekend, saves me the effort of removing them heh.",
+      "revId": "44403978a711cfb312245b35a1b9dd40b0e0de8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
