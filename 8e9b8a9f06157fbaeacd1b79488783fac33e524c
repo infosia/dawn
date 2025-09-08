@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de64e1e2_f1529203",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-08T15:59:44Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"utilty\" is a possible misspelling of \"utility\".\n\nTo bypass Spellchecker, add a ...\n\n\"utilty\" is a possible misspelling of \"utility\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "8e9b8a9f06157fbaeacd1b79488783fac33e524c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
