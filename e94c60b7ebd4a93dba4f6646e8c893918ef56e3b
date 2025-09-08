@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55fe6c56_e4af10fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-08T19:11:19Z",
+      "side": 1,
+      "message": "LGTM, but I think we can clean up some complexity first.",
+      "revId": "e94c60b7ebd4a93dba4f6646e8c893918ef56e3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db410d44_342f3e09",
+        "filename": "src/dawn/native/CopyTextureForBrowserHelper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-08T19:11:19Z",
+      "side": 1,
+      "message": "If we plan to support every renderable format (and it\u0027s trivial to do so), then I think we can remove this validation entirely. We already validate that the texture itself [has the RenderAttachment usage](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/CopyTextureForBrowserHelper.cpp;l\u003d619;drc\u003d4128411589187a396829a827f59a655bed876aa7), which means it must have a renderable format.",
+      "revId": "e94c60b7ebd4a93dba4f6646e8c893918ef56e3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
