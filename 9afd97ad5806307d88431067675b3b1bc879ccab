@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0f4550a6_55bfaefb",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-08T15:21:26Z",
+      "side": 1,
+      "message": "If we are testing dawn on the farm and we dont find a matching device/param limit list we will report an error with what we expected. So I think this is correct.",
+      "parentUuid": "986af36a_183f75ce",
+      "revId": "9afd97ad5806307d88431067675b3b1bc879ccab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "93c0581e_a0b7f451",
         "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
         "patchSetId": 26
