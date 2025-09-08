@@ -49,6 +49,7 @@ MaybeError CopyImageSubData(const OpenGLFunctions& gl,
                             const Origin3D& dst,
                             const Extent3D& size);
 bool HasAnisotropicFiltering(const OpenGLFunctions& gl);
+bool SupportTextureComponentSwizzle(const OpenGLFunctions& gl);
 
 const char* GLErrorAsString(GLenum error);
 
