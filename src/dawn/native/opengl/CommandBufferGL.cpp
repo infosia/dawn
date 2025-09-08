@@ -427,19 +427,30 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                         DAWN_GL_TRY(
                             gl, TexParameteri(target, GL_TEXTURE_MAX_LEVEL,
                                               view->GetBaseMipLevel() + view->GetLevelCount() - 1));
-                        if (mPipelineLayout->GetDevice()->HasFeature(
-                                Feature::TextureComponentSwizzle)) {
+                        if (SupportTextureComponentSwizzle(gl)) {
+                            wgpu::TextureComponentSwizzle swizzle = {
+                                .r = view->GetSwizzleRed(),
+                                .g = view->GetSwizzleGreen(),
+                                .b = view->GetSwizzleBlue(),
+                                .a = view->GetSwizzleAlpha(),
+                            };
+                            if (view->GetTexture()->GetFormat().HasDepthOrStencil()) {
+                                wgpu::TextureComponentSwizzle depthStencilSwizzle = {
+                                    .r = wgpu::ComponentSwizzle::R,
+                                    .g = wgpu::ComponentSwizzle::Zero,
+                                    .b = wgpu::ComponentSwizzle::Zero,
+                                    .a = wgpu::ComponentSwizzle::One,
+                                };
+                                swizzle = ComposeSwizzle(depthStencilSwizzle);
+                            }
                             DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_SWIZZLE_R,
-                                                          ComponentSwizzle(view->GetSwizzleRed())));
-                            DAWN_GL_TRY(gl,
-                                        TexParameteri(target, GL_TEXTURE_SWIZZLE_G,
-                                                      ComponentSwizzle(view->GetSwizzleGreen())));
-                            DAWN_GL_TRY(gl,
-                                        TexParameteri(target, GL_TEXTURE_SWIZZLE_B,
-                                                      ComponentSwizzle(view->GetSwizzleBlue())));
-                            DAWN_GL_TRY(gl,
-                                        TexParameteri(target, GL_TEXTURE_SWIZZLE_A,
-                                                      ComponentSwizzle(view->GetSwizzleAlpha())));
+                                                          ComponentSwizzle(swizzle.r)));
+                            DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_SWIZZLE_G,
+                                                          ComponentSwizzle(swizzle.g)));
+                            DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_SWIZZLE_B,
+                                                          ComponentSwizzle(swizzle.b)));
+                            DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_SWIZZLE_A,
+                                                          ComponentSwizzle(swizzle.a)));
                         }
                     }
 
