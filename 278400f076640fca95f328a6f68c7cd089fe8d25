@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c69f108c_d1acdffd",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-08T23:28:21Z",
+      "side": 1,
+      "message": "Really what matters here is the final Metal swizzle, not the frontend swizzle. Technically I think the current code has the correct outcome (it\u0027s just pessimistic for depth/stencil textures), but that\u0027s hard to tell since there\u0027s non-trivial logic to determine the actual Metal swizzle later.\n\nDoing it up front would be more direct, something like this:\n\n```\nstd::optional\u003cMTLTextureSwizzleChannels\u003e mtlSwizzle;\nif (SupportTextureComponentSwizzle(...)) {\n  wgpu::TextureComponentSwizzle swizzle \u003d // ... compute the swizzle...\n  if (UsesNonDefaultSwizzle(swizzle)) {\n    mtlSwizzle \u003d ToMetalTextureSwizzle(swizzle);\n  }\n} else {\n  DAWN_ASSERT(!UsesNonDefaultSwizzle(texture, swizzle));\n}\nbool needsNewView \u003d ...; // now simply just checks mtlSwizzle.has_value()\n\n// ...\n\nif (mtlSwizzle) {\n  mtlTextureView \u003d ...;\n} else {\n  mtlTextureView \u003d ...;\n}\n```\n\nSorry for a slightly structural late comment. Should be a pretty small change overall though.",
+      "range": {
+        "startLine": 827,
+        "startChar": 80,
+        "endLine": 827,
+        "endChar": 87
+      },
+      "revId": "278400f076640fca95f328a6f68c7cd089fe8d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb4a06ee_84398aa9",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-08T23:28:21Z",
+      "side": 1,
+      "message": "aside: It\u0027s very hard to remember which direction this swizzle applies in because it looks kind of backward. I\u0027d like to refactor later so it\u0027s static and this is written `swizzle \u003d ComposeSwizzle(depthStencilSwizzle, swizzle)`, in the same order as it would be in WGSL `.r001.rgba`. This should be a follow-up though.",
+      "revId": "278400f076640fca95f328a6f68c7cd089fe8d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d82fb4b0_bea6e5e1",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-08T23:28:21Z",
+      "side": 1,
+      "message": "nit: factor this conversion out into a helper function",
+      "range": {
+        "startLine": 878,
+        "startChar": 0,
+        "endLine": 882,
+        "endChar": 62
+      },
+      "revId": "278400f076640fca95f328a6f68c7cd089fe8d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
