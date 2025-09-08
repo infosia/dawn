@@ -656,6 +656,7 @@
         "methods": [
             {
                 "name": "map async",
+                "no autolock": true,
                 "returns": "future",
                 "args": [
                     {"name": "mode", "type": "map mode"},
@@ -728,13 +729,16 @@
             },
             {
                 "name": "get map state",
+                "no autolock": true,
                 "returns": "buffer map state"
             },
             {
-                "name": "unmap"
+                "name": "unmap",
+                "no autolock": true
             },
             {
-                "name": "destroy"
+                "name": "destroy",
+                "no autolock": true
             }
         ]
     },
