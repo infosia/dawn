@@ -51,6 +51,24 @@
       "parentUuid": "c4ed346e_9cb06df9",
       "revId": "cfe1aad4c59bd5e801ac6a6053b86c0aaeab6256",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c603f20b_4e5950d0",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1860,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-08T09:13:42Z",
+      "side": 1,
+      "message": "I\u0027ve fixed this in latest patchset. Sorry for the noise.",
+      "parentUuid": "0454f1a5_7a650deb",
+      "revId": "cfe1aad4c59bd5e801ac6a6053b86c0aaeab6256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

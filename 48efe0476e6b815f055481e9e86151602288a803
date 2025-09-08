@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "df174d06_528dad9b",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-08T09:13:42Z",
+      "side": 1,
+      "message": "Let\u0027s go with CTS for now then since Gregg is actively and extensively working on those.",
+      "parentUuid": "6d29f29f_e6f2b3ae",
+      "revId": "48efe0476e6b815f055481e9e86151602288a803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a081df58_49371c85",
