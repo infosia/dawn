@@ -16,6 +16,24 @@
       "message": "This probably needs a TODO and a bug filed to validate we aren\u0027t creating 16-bit Integer types which the extension seems to allow.",
       "revId": "90441d17a09856984384eca5f6f7ef5e7c6d3306",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "207fb74e_779df26b",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-08T14:38:42Z",
+      "side": 1,
+      "message": "The extension just allows them to be stored, you only need the `Int16` capability to declare them (and we already allow all capabilities). If you have `OpTypeInt 16` in your shader then the parser will ICE, so I think we\u0027re good.",
+      "parentUuid": "b2dea0ef_6b848617",
+      "revId": "90441d17a09856984384eca5f6f7ef5e7c6d3306",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
