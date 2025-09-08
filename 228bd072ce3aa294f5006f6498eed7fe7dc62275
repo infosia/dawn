@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa7ede51_21e47be6",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-08T11:01:14Z",
+      "side": 1,
+      "message": "How do I access swizzle in this static function since TextureView has not been created? I need it even if `textureViewDescriptor.Has\u003cTextureComponentSwizzleDescriptor\u003e()` is false as I need to test different values.",
+      "revId": "228bd072ce3aa294f5006f6498eed7fe7dc62275",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
