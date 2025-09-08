@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "477d535a_f5c20d3d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-08T18:08:22Z",
+      "side": 1,
+      "message": "Test looks good. No comments on the tryjobs :)",
+      "revId": "94535f2a04d0ca2688c609e6d04b2db5e1077668",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
