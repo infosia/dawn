@@ -122,6 +122,24 @@
       "parentUuid": "00caedd9_6596a0a9",
       "revId": "0faddb43f65b3771608b72f20ce31076b3ea1cc0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77e851af_734974ef",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-08T15:19:10Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "22b63e27_1ad87675",
+      "revId": "0faddb43f65b3771608b72f20ce31076b3ea1cc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
