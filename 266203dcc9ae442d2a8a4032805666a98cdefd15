@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd99ea6b_aabde550",
+        "filename": "src/dawn/native/webgpu/ComputePipelineWGPU.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-09-08T23:16:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdf5a315_0b6e5f1f",
+      "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "26da7ec6_914e4b81",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-09-08T07:28:29Z",
       "side": 1,
       "message": "nit: this would disappear.",
+      "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a064a17_303faf16",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-09-08T23:16:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26da7ec6_914e4b81",
       "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b27ef791_70b5bfad",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-09-08T23:16:54Z",
+      "side": 1,
+      "message": "Call EmitLog of the `outerDeviceRef`",
+      "parentUuid": "c20564fd_fc00bac4",
+      "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6460aae6_8bc48ac4",
@@ -82,6 +136,24 @@
       "writtenOn": "2025-09-08T07:28:29Z",
       "side": 1,
       "message": "Likewise, can we recreate (even in the constructor directly) the `WGPUPipelineLayoutDescriptor` from the information stored in PipelineLayoutBase? This is to take advantage of all the sanitization done in the frontend (empty BGL and nullptr BGL are equivalent for example).",
+      "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f73b3d3_3d4207f3",
+        "filename": "src/dawn/native/webgpu/PipelineLayoutWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-09-08T23:16:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6460aae6_8bc48ac4",
       "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -103,6 +175,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8698eb8_ae4ac952",
+        "filename": "src/dawn/native/webgpu/RenderPipelineWGPU.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-09-08T23:16:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75c2b724_10a52e06",
+      "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "116fbcc6_46891003",
@@ -116,6 +206,24 @@
       "writtenOn": "2025-09-08T07:28:29Z",
       "side": 1,
       "message": "```suggestion\n// A bunch of ToWGPU helper functions to convert dawn::native descriptors to WGPU C descriptors.\n```",
+      "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "251ea534_3605e037",
+        "filename": "src/dawn/native/webgpu/ToWGPU.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-09-08T23:16:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "116fbcc6_46891003",
       "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -137,6 +245,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cec6d9f_f09196a9",
+        "filename": "src/dawn/native/webgpu/ToWGPU.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-09-08T23:16:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9af1f45_0c29f82f",
+      "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c153ab0_4dbcd483",
@@ -150,6 +276,24 @@
       "writtenOn": "2025-09-08T07:28:29Z",
       "side": 1,
       "message": "This always returns entries-\u003edata(), can we instead return the vector itself so and let the caller call data() on it?",
+      "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2d4c3f7_8ff6bdce",
+        "filename": "src/dawn/native/webgpu/ToWGPU.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-09-08T23:16:54Z",
+      "side": 1,
+      "message": "Change to `PopulateWGPUConstants` returns void",
+      "parentUuid": "0c153ab0_4dbcd483",
       "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
