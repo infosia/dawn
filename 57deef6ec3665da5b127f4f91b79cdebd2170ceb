@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "16462702_a829bad3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-09-08T07:28:12Z",
+      "side": 1,
+      "message": "This CL confirms that all renderable formats enabled by Tier1 can technically be used as dstformats in the CopyTextureForBrowser_Formats test (which uses copyExternalImageToTexture).\n\nYou mentioned in https://github.com/gpuweb/gpuweb/issues/5289 that 16-bit unorm need to be added to dstformats. I\u0027m unsure whether 16-bit snorm, 8-bit snorm, and rg11b10ufloat need to be included, do you have any suggestion about this?",
+      "parentUuid": "8ad51905_c583478f",
+      "revId": "57deef6ec3665da5b127f4f91b79cdebd2170ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "482488ee_948ac904",
@@ -106,6 +124,30 @@
       "side": 1,
       "message": "If that\u0027s the case then `ValidateCopyForBrowserDestinationFormat` could probably also just be replaced with a check that the format is renderable.",
       "parentUuid": "d0e42e34_aa0e0b0b",
+      "range": {
+        "startLine": 720,
+        "startChar": 8,
+        "endLine": 730,
+        "endChar": 9
+      },
+      "revId": "57deef6ec3665da5b127f4f91b79cdebd2170ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf88b732_0ac384a2",
+        "filename": "src/dawn/tests/end2end/CopyTextureForBrowserTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-09-08T07:28:12Z",
+      "side": 1,
+      "message": "Thanks for your suggestions!\n\nIMHO, maybe not all of the renderable formats could be supported in ValidateCopyForBrowserDestinationFormat?( according to https://www.w3.org/TR/webgpu/#dom-gpuqueue-copyexternalimagetotexture) @kainino@chromium.org.I\u0027m not sure if my understanding is correct.",
+      "parentUuid": "79943826_51390a96",
       "range": {
         "startLine": 720,
         "startChar": 8,
