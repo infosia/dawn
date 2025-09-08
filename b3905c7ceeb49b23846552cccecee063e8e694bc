@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a59c4bb_be2f35c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-08T20:53:03Z",
+      "side": 1,
+      "message": "PTAL, only a small speculative change between PS1 and PS2. Couldn\u0027t reproduce the issue locally or with the trybot of the CI bot which was failing.",
+      "revId": "b3905c7ceeb49b23846552cccecee063e8e694bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
