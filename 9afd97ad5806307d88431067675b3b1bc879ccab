@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2d152a43_5ac4bb60",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-08T15:25:51Z",
+      "side": 1,
+      "message": "```suggestion\n        // CQ bots will pass in \u0027--test-launcher-bot-mode\u0027 as a command line parameter.\n        // In this case, we didn\u0027t find any results, so we want to make sure we\n        // report an error as this is a new CQ bot and we need to update the\n        // test results.\n```",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 87
+      },
+      "revId": "9afd97ad5806307d88431067675b3b1bc879ccab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "986af36a_183f75ce",
         "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
         "patchSetId": 26
@@ -32,6 +55,24 @@
       "side": 1,
       "message": "If we are testing dawn on the farm and we dont find a matching device/param limit list we will report an error with what we expected. So I think this is correct.",
       "parentUuid": "986af36a_183f75ce",
+      "revId": "9afd97ad5806307d88431067675b3b1bc879ccab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15a2e107_0bb04953",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-08T15:25:51Z",
+      "side": 1,
+      "message": "Ah, I see. Suggested a comment for clarity.",
+      "parentUuid": "0f4550a6_55bfaefb",
       "revId": "9afd97ad5806307d88431067675b3b1bc879ccab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
