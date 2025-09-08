@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b7bf81d_43f66436",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000861
+      },
+      "writtenOn": "2025-09-08T19:57:32Z",
+      "side": 1,
+      "message": "FWIW, once [259896](https://dawn-review.googlesource.com/c/dawn/+/259896) lands, you should be able to use SBM to import placed resources created on OpenExistingHeapFromFileMapping heaps.",
+      "revId": "8776010bbfb4bf5cd71ea9d4b70b17e7506791bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "897bc963_da89205c",
