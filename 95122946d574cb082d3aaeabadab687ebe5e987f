@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c3fafd7_24083330",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-08T07:14:51Z",
+      "side": 1,
+      "message": "Why isn\u0027t this a public dependency of `src/tint/api`? Any user of `src/tint/api` will need `src/tint/api/common` so it\u0027s a bit redundant to have to list both.",
+      "revId": "95122946d574cb082d3aaeabadab687ebe5e987f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
