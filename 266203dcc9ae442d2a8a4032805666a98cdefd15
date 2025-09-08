@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0e39604_f1b3b769",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-08T07:28:29Z",
+      "side": 1,
+      "message": "LGTM overall, but it would be better IMHO to reuse the frontend getters instead of manually unpacking the descriptors to recreate them. This is because the frontend handles a lot of sanitization and could do more in the future.",
+      "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdf5a315_0b6e5f1f",
+        "filename": "src/dawn/native/webgpu/ComputePipelineWGPU.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-08T07:28:29Z",
+      "side": 1,
+      "message": "Instead of keeping mDescriptor around, would it be possible to recreate it from the information that can be queried from ComputePipelineBase / PipelineBase?",
+      "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26da7ec6_914e4b81",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-08T07:28:29Z",
+      "side": 1,
+      "message": "nit: this would disappear.",
+      "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c20564fd_fc00bac4",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-08T07:28:29Z",
+      "side": 1,
+      "message": "Could we call the device logging callback instead? It should be a hard error to have uncaptured validation errors, but OOM should be ok to start.",
+      "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6460aae6_8bc48ac4",
+        "filename": "src/dawn/native/webgpu/PipelineLayoutWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-08T07:28:29Z",
+      "side": 1,
+      "message": "Likewise, can we recreate (even in the constructor directly) the `WGPUPipelineLayoutDescriptor` from the information stored in PipelineLayoutBase? This is to take advantage of all the sanitization done in the frontend (empty BGL and nullptr BGL are equivalent for example).",
+      "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75c2b724_10a52e06",
+        "filename": "src/dawn/native/webgpu/RenderPipelineWGPU.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-08T07:28:29Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "116fbcc6_46891003",
+        "filename": "src/dawn/native/webgpu/ToWGPU.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-08T07:28:29Z",
+      "side": 1,
+      "message": "```suggestion\n// A bunch of ToWGPU helper functions to convert dawn::native descriptors to WGPU C descriptors.\n```",
+      "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9af1f45_0c29f82f",
+        "filename": "src/dawn/native/webgpu/ToWGPU.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-08T07:28:29Z",
+      "side": 1,
+      "message": "nit: there unless we see in benchmarking that inline is necessary, can we move the implementation to a .cpp file?",
+      "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c153ab0_4dbcd483",
+        "filename": "src/dawn/native/webgpu/ToWGPU.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-08T07:28:29Z",
+      "side": 1,
+      "message": "This always returns entries-\u003edata(), can we instead return the vector itself so and let the caller call data() on it?",
+      "revId": "266203dcc9ae442d2a8a4032805666a98cdefd15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
