@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2dea0ef_6b848617",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-08T14:32:55Z",
+      "side": 1,
+      "message": "This probably needs a TODO and a bug filed to validate we aren\u0027t creating 16-bit Integer types which the extension seems to allow.",
+      "revId": "90441d17a09856984384eca5f6f7ef5e7c6d3306",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
