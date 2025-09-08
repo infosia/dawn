@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "185b8035_4f0cb69c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-08T21:22:34Z",
+      "side": 1,
+      "message": "LGTM on the code changes! For the naming though, I was wondering if we could think of something different to name it than `Signal` because I find it a bit misleading now that it\u0027s not a single boolean state. I couldn\u0027t think of something I prefer better though, so fine for now.",
+      "revId": "7d1a41a68d081e392f01a5993a9423a2e6e26bfe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
