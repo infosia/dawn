@@ -302,7 +302,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
 
     // TextureComponentSwizzle
-    if (mFunctions.IsAtLeastGLES(3, 0) || mFunctions.IsAtLeastGL(3, 3)) {
+    if (SupportTextureComponentSwizzle(mFunctions) {
         EnableFeature(Feature::TextureComponentSwizzle);
     }
 }
