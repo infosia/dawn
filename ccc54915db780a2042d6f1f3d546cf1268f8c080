@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a0574707_5c8efbf1",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3549,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2025-09-08T22:12:47Z",
+      "side": 1,
+      "message": "Maybe I mis-understood the `CheckOperands`, I want to verify that there is 1 operand, not validate operand number `1` specifically. Is this not the right usage of `CheckOperands` ?",
+      "parentUuid": "3abf0fb1_89496b31",
+      "revId": "ccc54915db780a2042d6f1f3d546cf1268f8c080",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "61599e68_b91954e4",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 2
