@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8f221cb6_ce744ed4",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-08T09:19:19Z",
+      "side": 1,
+      "message": "\u003e Oh I once wondered if I should add a new feature for importing file handle or adding an option to the existing host mapped pointer feature.\n\u003e \n\u003e Do you mean we should merge the host mapped pointer feature into shared buffer memory?\n\nYes eventually we want to remove host mapped buffers and migrate all of its functionality and users to SBM. For that reason I think it is better to start adding file handle imports to SBM instead of adding it to host mapped and then migrating that usage to SBM as well.\n\nenrico.galli@intel.com has been doing work in SBM and can help with pointers if needed.",
+      "parentUuid": "e8e3a85a_5dff9b0e",
+      "revId": "8776010bbfb4bf5cd71ea9d4b70b17e7506791bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "84b3db56_b019ca08",
         "filename": "src/dawn/dawn.json",
         "patchSetId": 2
