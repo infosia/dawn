@@ -224,6 +224,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3777b16b_fa298cc9",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-08T19:14:58Z",
+      "side": 1,
+      "message": "Oops, sorry, I thought I deleted that last comment before submitting. It turned out to be wrong after I finished reading the docs.\n\nWill rereview shortly.",
+      "parentUuid": "39b7e2e1_49f9b293",
+      "revId": "00e3f1a8b9c9dfaf2c3e5e513a76d34d1fb3edcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3a21d69_0c284c55",
