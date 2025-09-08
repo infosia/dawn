@@ -16,6 +16,74 @@
       "message": "PTAL.",
       "revId": "ccc54915db780a2042d6f1f3d546cf1268f8c080",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30302516_4d9bcd9a",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3548,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-08T21:14:27Z",
+      "side": 1,
+      "message": "question:\nDoes an \u0027if\u0027 have a variable number of expected results? Since that is what this is testing, basically just checking that they are all not null, but not their arity.\n\nI don\u0027t think you can assign the result of an if to a var in WGSL, so my intuitive response is that it should have 0 results. But there might be something related to how true/false blocks and flow control operate that I am not familiar with requires there to be a result(s).\n\nBriefly looking at the implementation of if, it wasn\u0027t obvious to me if it should have or not have results. The Clone method copies them if they are present, and there is a test where they are manually set, but they are not set by the constructor, etc.\n\nSo yeah, I just wanted to check that this CheckResults is actually validating the behaviour we expect, or if this should be tigthened up too.",
+      "revId": "ccc54915db780a2042d6f1f3d546cf1268f8c080",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3abf0fb1_89496b31",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3549,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-08T21:14:27Z",
+      "side": 1,
+      "message": "nit: The style for other similar checks in the validator has to been to avoid using literal numbers, instead having a constexpr in the type class, e.g. If::kNumOperands, with the value.\n\nA reference example https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/core/ir/load.h",
+      "revId": "ccc54915db780a2042d6f1f3d546cf1268f8c080",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61599e68_b91954e4",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3657,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-08T21:14:27Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ccc54915db780a2042d6f1f3d546cf1268f8c080",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55251e7e_20962381",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3658,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-08T21:14:27Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ccc54915db780a2042d6f1f3d546cf1268f8c080",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
