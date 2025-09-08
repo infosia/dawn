@@ -172,6 +172,10 @@ bool HasAnisotropicFiltering(const OpenGLFunctions& gl) {
     return gl.IsAtLeastGL(4, 6) || gl.IsGLExtensionSupported("GL_EXT_texture_filter_anisotropic");
 }
 
+bool SupportTextureComponentSwizzle(const OpenGLFunctions& gl) {
+    return gl.IsAtLeastGLES(3, 0) || gl.IsAtLeastGL(3, 3);
+}
+
 const char* GLErrorAsString(GLenum error) {
 #define ERROR_CASE_STRING(errorEnum) \
     case errorEnum:                  \
