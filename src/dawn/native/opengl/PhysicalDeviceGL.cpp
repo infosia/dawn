@@ -91,6 +91,11 @@ uint32_t GetDeviceIdFromRender(std::string_view render) {
     return deviceId;
 }
 
+bool IsANGLED3D11(std::string_view renderer) {
+    return renderer.find("ANGLE") != std::string::npos &&
+           renderer.find("Direct3D11") != std::string::npos;
+}
+
 bool IsANGLEDesktopGL(std::string_view renderer) {
     return renderer.find("ANGLE") != std::string::npos &&
            renderer.find("OpenGL") != std::string::npos &&
@@ -302,7 +307,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
 
     // TextureComponentSwizzle
-    if (mFunctions.IsAtLeastGLES(3, 0) || mFunctions.IsAtLeastGL(3, 3)) {
+    if (SupportTextureComponentSwizzle()) {
         EnableFeature(Feature::TextureComponentSwizzle);
     }
 }
@@ -571,5 +576,9 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
 }
 
 void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) const {}
+
+bool PhysicalDevice::SupportTextureComponentSwizzle() const {
+    return (mFunctions.IsAtLeastGLES(3, 0) || mFunctions.IsAtLeastGL(3, 3)) && !IsANGLED3D11(mName);
+}
 
 }  // namespace dawn::native::opengl
