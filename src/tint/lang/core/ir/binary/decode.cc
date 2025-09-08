@@ -1112,6 +1112,12 @@ struct Decoder {
 
     ir::InstructionResult* InstructionResult(const pb::InstructionResult& res_in) {
         auto* type = Type(res_in.type());
+        if (!type) {
+            err_ << "invalid type provided to InstructionResult: " << std::to_string(res_in.type())
+                 << "\n";
+            return nullptr;
+        }
+
         auto* res_out = b.InstructionResult(type);
         if (!res_in.name().empty()) {
             if (DAWN_UNLIKELY(res_in.name().find('\0') != std::string::npos)) {
