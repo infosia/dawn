@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bd79c01_c7705bbd",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-08T21:44:46Z",
+      "side": 1,
+      "message": "From the docs IIUC it\u0027s not always fast to access an L0 heap from the CPU on UMA, depending on cache stuff. I\u0027m not totally clear if it\u0027s always fast to access L0 from the GPU though.",
+      "parentUuid": "f1f01dc8_b13265ac",
+      "revId": "7627b30e242dca61e2f600a7fd29085601d771fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f3675e92_39e0d5a7",
