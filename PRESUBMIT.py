@@ -26,6 +26,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import hashlib
+import pprint
 import re
 import sys
 
@@ -150,6 +151,8 @@ def _CalculateEnumeratedEntriesAndTypes(lines):
     """
     push_re = re.compile(r'(\w+) {(.*)')
     value_re = re.compile(r'(\w+) = (\d+);(.*)')
+    reserved_re = re.compile(r'^\s*reserved\s+(.*);(.*)')
+    number_re = re.compile(r'\d+')
     pop_re = re.compile(r'}(.*)')
 
     prefix_stack = []
@@ -165,6 +168,14 @@ def _CalculateEnumeratedEntriesAndTypes(lines):
                 prefix_str = '.'.join(prefix_stack)
                 types.append(prefix_str)
                 l = match.group(2)
+                continue
+            if match := re.search(reserved_re, l):
+                new_numbers = number_re.findall(match.group(0))
+                reserved_numbers = enumerated_entries.get(
+                    f"{prefix_str}.reserved", [])
+                reserved_numbers.extend(new_numbers)
+                enumerated_entries[f"{prefix_str}.reserved"] = reserved_numbers
+                l = match.group(1)
                 continue
             if match := re.search(value_re, l):
                 enumerated_entries[
@@ -205,8 +216,13 @@ def CheckIRBinaryCompatibility(input_api, output_api):
     changes = []
     for k in old_entries:
         if k not in new_entries:
+            entry_prefix = k.rsplit('.', 1)[0]
+            reserved = new_entries.get(f"{entry_prefix}.reserved", [])
+            if old_entries[k] in reserved:
+                continue
             changes.append(
-                f"entry '{k}' has been removed, old={old_entries[k]}")
+                f"entry '{k}' has been removed without reserving, old={old_entries[k]}"
+            )
             continue
         if old_entries[k] != new_entries[k]:
             changes.append(
