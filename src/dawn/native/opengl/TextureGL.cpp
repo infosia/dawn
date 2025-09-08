@@ -129,6 +129,14 @@ bool RequiresCreatingNewTextureView(
     // textureViewDescriptor.
     if (auto* swizzleDesc = textureViewDescriptor.Get<TextureComponentSwizzleDescriptor>()) {
         auto swizzle = swizzleDesc->swizzle.WithTrivialFrontendDefaults();
+        if (texture->GetFormat().HasDepthOrStencil()) {
+            if (swizzle.r != wgpu::ComponentSwizzle::R ||
+                swizzle.g != wgpu::ComponentSwizzle::Zero ||
+                swizzle.b != wgpu::ComponentSwizzle::Zero ||
+                swizzle.a != wgpu::ComponentSwizzle::One) {
+                return true;
+            }
+        }
         if (swizzle.r != wgpu::ComponentSwizzle::R || swizzle.g != wgpu::ComponentSwizzle::G ||
             swizzle.b != wgpu::ComponentSwizzle::B || swizzle.a != wgpu::ComponentSwizzle::A) {
             return true;
