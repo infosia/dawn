@@ -76,9 +76,9 @@ GLenum TargetForTextureViewDimension(wgpu::TextureViewDimension dimension, uint3
     }
 }
 
-bool RequiresCreatingNewTextureView(
-    const TextureBase* texture,
-    const UnpackedPtr<TextureViewDescriptor>& textureViewDescriptor) {
+bool RequiresCreatingNewTextureView(const TextureBase* texture,
+                                    const UnpackedPtr<TextureViewDescriptor>& textureViewDescriptor,
+                                    wgpu::TextureComponentSwizzle swizzle) {
     // Compatibility mode validation should prevent the need for creation of
     // new texture views.
     if (ToBackend(texture->GetDevice())->IsCompatibilityMode()) {
@@ -125,14 +125,15 @@ bool RequiresCreatingNewTextureView(
         return true;
     }
 
-    // TODO(414312052): Use TextureViewBase::UsesNonDefaultSwizzle() instead of
-    // textureViewDescriptor.
-    if (auto* swizzleDesc = textureViewDescriptor.Get<TextureComponentSwizzleDescriptor>()) {
-        auto swizzle = swizzleDesc->swizzle.WithTrivialFrontendDefaults();
-        if (swizzle.r != wgpu::ComponentSwizzle::R || swizzle.g != wgpu::ComponentSwizzle::G ||
-            swizzle.b != wgpu::ComponentSwizzle::B || swizzle.a != wgpu::ComponentSwizzle::A) {
+    if (texture->GetFormat().HasDepthOrStencil()) {
+        if (swizzle.r != wgpu::ComponentSwizzle::R || swizzle.g != wgpu::ComponentSwizzle::Zero ||
+            swizzle.b != wgpu::ComponentSwizzle::Zero || swizzle.a != wgpu::ComponentSwizzle::One) {
             return true;
         }
+    }
+    if (swizzle.r != wgpu::ComponentSwizzle::R || swizzle.g != wgpu::ComponentSwizzle::G ||
+        swizzle.b != wgpu::ComponentSwizzle::B || swizzle.a != wgpu::ComponentSwizzle::A) {
+        return true;
     }
 
     return false;
@@ -629,10 +630,17 @@ ResultOrError<Ref<TextureView>> TextureView::Create(
     GLuint handle = 0;
     OwnsHandle ownsHandle = OwnsHandle::No;
 
+    wgpu::TextureComponentSwizzle swizzle = {
+        .r = GetSwizzleRed(),
+        .g = GetSwizzleGreen(),
+        .b = GetSwizzleBlue(),
+        .a = GetSwizzleAlpha(),
+    };
+
     // Texture could be destroyed by the time we make a view.
     if (texture->IsDestroyed()) {
         handle = 0;
-    } else if (!RequiresCreatingNewTextureView(texture, descriptor)) {
+    } else if (!RequiresCreatingNewTextureView(texture, descriptor, swizzle)) {
         handle = ToBackend(texture)->GetHandle();
     } else {
         if (gl.IsAtLeastGL(4, 3)) {
