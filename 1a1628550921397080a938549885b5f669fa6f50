@@ -34,6 +34,24 @@
       "parentUuid": "338e31dd_2bf943e6",
       "revId": "1a1628550921397080a938549885b5f669fa6f50",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "023bfd11_226c6da0",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-08T09:17:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "180e06bb_a0246576",
+      "revId": "1a1628550921397080a938549885b5f669fa6f50",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
