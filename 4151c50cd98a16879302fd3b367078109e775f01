@@ -16,6 +16,29 @@
       "message": "PTAL\n\nNo tests directly in this CL but some tests start to fail later once we create ShaderModules from regenerated descriptors.",
       "revId": "4151c50cd98a16879302fd3b367078109e775f01",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c99afc6c_28b12c9c",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-08T14:36:48Z",
+      "side": 1,
+      "message": "nit: I believe moving this up will remove some padding that will get added to the class .\n\n```suggestion\n    enum class Type : uint8_t { Undefined, Spirv, Wgsl };\n    Type mType;\n    bool mAllowSpirvNonUniformDerivitives \u003d false;\n    std::vector\u003cuint32_t\u003e mOriginalSpirv;\n```",
+      "range": {
+        "startLine": 436,
+        "startChar": 0,
+        "endLine": 439,
+        "endChar": 50
+      },
+      "revId": "4151c50cd98a16879302fd3b367078109e775f01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
