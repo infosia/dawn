@@ -34,6 +34,24 @@
       "parentUuid": "b2dea0ef_6b848617",
       "revId": "90441d17a09856984384eca5f6f7ef5e7c6d3306",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "993cdced_0259729d",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-08T14:40:08Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "207fb74e_779df26b",
+      "revId": "90441d17a09856984384eca5f6f7ef5e7c6d3306",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
