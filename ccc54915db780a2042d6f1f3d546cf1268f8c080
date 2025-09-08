@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "14ce6e0f_67de4f73",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3548,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-08T21:21:07Z",
+      "side": 1,
+      "message": "Control flow instructions can produce results in IR. We use this property for `if` instructions to represent short-circuiting operators.\n\ne.g. something like:\n```\nx \u003d (a \u003d\u003d 0 \u0026\u0026 b \u003d\u003d 0);\n```\nbecomes something like:\n```\n%a_eq_zero:bool \u003d eq %a, 0u\n%x:bool \u003d if %a_eq_zero [t: $B5, f: $B6] {\n  $B5: {  # true\n    %b_eq_zero:bool \u003d eq %b, 0u\n    exit_if %b_eq_zero\n  }\n  $B6: {  # false\n    exit_if false  # if_1\n  }\n}\n```",
+      "parentUuid": "30302516_4d9bcd9a",
+      "revId": "ccc54915db780a2042d6f1f3d546cf1268f8c080",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3abf0fb1_89496b31",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 2
