@@ -34,6 +34,24 @@
       "parentUuid": "4c3fafd7_24083330",
       "revId": "95122946d574cb082d3aaeabadab687ebe5e987f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27468aca_3419f4cd",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-08T14:27:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "58fe54e3_28e748a4",
+      "revId": "95122946d574cb082d3aaeabadab687ebe5e987f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
