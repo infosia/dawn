@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e71bb9fd_9585fc54",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-08T07:17:00Z",
+      "side": 1,
+      "message": "u-nit: Can we have a little bit of structure with empty lines to delimitate logical blocks?",
+      "revId": "6f72767b3fc4e2dbbb1ad115525ae1fa3b3007cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
