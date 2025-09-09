@@ -30,4 +30,19 @@
 
 #include "dawn/native/WebGPUBackend.h"
 
-namespace dawn::native::webgpu {}  // namespace dawn::native::webgpu
+#include "dawn/native/webgpu/DeviceWGPU.h"
+
+namespace dawn::native::webgpu {
+
+void StartCapture(WGPUDevice device, CaptureStream& stream) {
+    Device* backendDevice = ToBackend(FromAPI(device));
+    backendDevice->StartCapture(stream);
+}
+
+// Ends a capture on the given device.
+void EndCapture(WGPUDevice device) {
+    Device* backendDevice = ToBackend(FromAPI(device));
+    backendDevice->EndCapture();
+}
+
+}  // namespace dawn::native::webgpu

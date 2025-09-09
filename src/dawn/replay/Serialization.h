@@ -1,0 +1,56 @@
+// Copyright 2025 The Dawn & Tint Authors
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS-IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#ifndef SRC_DAWN_REPLAY_SERIALIZATION_H_
+#define SRC_DAWN_REPLAY_SERIALIZATION_H_
+
+#include <cstdint>
+
+namespace dawn::replay {
+
+// TODO(crbug.com/413053623): Switch to protobufs.
+// This is just to get stuff working. We'll switch to protobufs once we're
+// sure of the data we want to capture.
+
+using ObjectId = uint64_t;
+
+enum class ObjectType : uint32_t {
+    BindGroup,
+    BindGroupLayout,
+    Buffer,
+    CommandBuffer,
+    ComputePipeline,
+    Device,
+    PipelineLayout,
+    QuerySet,
+    RenderPipeline,
+    Sampler,
+    ShaderModule,
+    Texture,
+    TextureView,
+};
+
+enum class RootCommand : uint32_t {
+    CreateResource,
+    QueueSubmit,
+    WriteBuffer,
+    WriteTexture,
+    Unmap,
+
+    End,
+};
+
+}  // namespace dawn::replay
+
+#endif  // SRC_DAWN_REPLAY_SERIALIZATION_H_

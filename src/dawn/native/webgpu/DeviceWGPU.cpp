@@ -52,6 +52,7 @@
 #include "dawn/native/webgpu/BindGroupLayoutWGPU.h"
 #include "dawn/native/webgpu/BindGroupWGPU.h"
 #include "dawn/native/webgpu/BufferWGPU.h"
+#include "dawn/native/webgpu/CaptureContext.h"
 #include "dawn/native/webgpu/CommandBufferWGPU.h"
 #include "dawn/native/webgpu/ComputePipelineWGPU.h"
 #include "dawn/native/webgpu/PhysicalDeviceWGPU.h"
@@ -233,7 +234,7 @@ MaybeError Device::CopyFromStagingToTextureImpl(const BufferBase* source,
 }
 
 MaybeError Device::TickImpl() {
-    wgpu.deviceTick(mInnerHandle);
+    wgpu.deviceTick(mInnerHandle);\
     return {};
 }
 
@@ -247,6 +248,19 @@ uint64_t Device::GetOptimalBufferToTextureCopyOffsetAlignment() const {
 
 float Device::GetTimestampPeriodInNS() const {
     return 1.0f;
+}
+
+void Device::StartCapture(CaptureStream& stream) {
+    MaybeError result = ToBackend(GetQueue())->SetCaptureContext(std::unique_ptr<CaptureContext>(new CaptureContext(this, stream)));
+    [[maybe_unused]] bool hadError = ConsumedError(
+        std::move(result), "calling %s.StartCapture()", this);
+}
+
+
+void Device::EndCapture() {
+    MaybeError result = ToBackend(GetQueue())->SetCaptureContext(nullptr);
+    [[maybe_unused]] bool hadError = ConsumedError(
+        std::move(result), "calling %s.EndCapture()", this);
 }
 
 }  // namespace dawn::native::webgpu
