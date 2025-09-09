@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed41b577_4b3ea46e",
+        "filename": "src/tint/cmd/common/helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-09T13:15:20Z",
+      "side": 1,
+      "message": "We don\u0027t usually indent preprocessor directives.",
+      "revId": "e63afc0f95ffaf9a10a6040bce2456a87e4d302d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50ca0ee9_3b6c95f2",
+        "filename": "src/tint/cmd/common/helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-09T13:15:20Z",
+      "side": 1,
+      "message": "Maybe name these as constants:\n\n\n\n```suggestion\n    constexpr size_t kInitialBuffersize \u003d 1024; // \u003d\u003d 1 \u003c\u003c 10;\n    constexpr size_t kMaxTmpBuffers \u003d 21;\n```",
+      "range": {
+        "startLine": 266,
+        "startChar": 0,
+        "endLine": 267,
+        "endChar": 38
+      },
+      "revId": "e63afc0f95ffaf9a10a6040bce2456a87e4d302d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae903ffe_7e84e3e8",
+        "filename": "src/tint/cmd/common/helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-09T13:15:20Z",
+      "side": 1,
+      "message": "Maybe add an assert that `bytes_to_read \u003e 0`.",
+      "revId": "e63afc0f95ffaf9a10a6040bce2456a87e4d302d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1705ab76_673ebdee",
+        "filename": "src/tint/cmd/common/helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-09T13:15:20Z",
+      "side": 1,
+      "message": "I\u0027m surprised this didn\u0027t trigger a pointer arithmetic error? @rharrison@chromium.org shouldn\u0027t this cause the unsafe buffer usage warning to fire?",
+      "revId": "e63afc0f95ffaf9a10a6040bce2456a87e4d302d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
