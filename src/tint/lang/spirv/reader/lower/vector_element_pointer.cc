@@ -162,6 +162,7 @@ Result<SuccessType> VectorElementPointer(core::ir::Module& ir) {
                                               core::ir::Capability::kAllowPhonyInstructions,
                                               core::ir::Capability::kAllowNonCoreTypes,
                                               core::ir::Capability::kAllowStructMatrixDecorations,
+                                              core::ir::Capability::kAllowLocationOnStruct,
                                           });
     if (result != Success) {
         return result.Failure();
