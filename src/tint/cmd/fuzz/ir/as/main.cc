@@ -262,6 +262,7 @@ bool ProcessFile(const Options& options) {
     tint::cmd::LoadProgramOptions opts;
     opts.filename = options.input_filename;
     opts.printer = options.printer.get();
+    opts.input_format = tint::cmd::InputFormat::kWgsl;
 
     auto info = tint::cmd::LoadProgramInfo(opts);
     if (!info.program.IsValid()) {
