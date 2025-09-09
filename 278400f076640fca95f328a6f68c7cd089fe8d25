@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "07e3ced3_9ee8b743",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-09T07:54:32Z",
+      "side": 1,
+      "message": "Thanks for the suggestion!\n\nIn your example, the second `UsesNonDefaultSwizzle(texture, swizzle)` check was not valid because `swizzle` didn\u0027t exist in this branch so I\u0027ve updated to the following:\n\n```\nstd::optional\u003cMTLTextureSwizzleChannels\u003e mtlSwizzle;\nwgpu::TextureComponentSwizzle swizzle \u003d // ... compute the swizzle...\nif (SupportTextureComponentSwizzle(...)) {\n  if (UsesNonDefaultSwizzle(swizzle)) {\n    mtlSwizzle \u003d ToMetalTextureSwizzle(swizzle);\n  }\n} else {\n  DAWN_ASSERT(!UsesNonDefaultSwizzle(texture, swizzle));\n}\n...\n```\n\nLet me know if that still looks good to you.",
+      "parentUuid": "c69f108c_d1acdffd",
+      "range": {
+        "startLine": 827,
+        "startChar": 80,
+        "endLine": 827,
+        "endChar": 87
+      },
+      "revId": "278400f076640fca95f328a6f68c7cd089fe8d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cb4a06ee_84398aa9",
@@ -41,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "04ec0750_cae5ad09",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-09T07:54:32Z",
+      "side": 1,
+      "message": "I\u0027ll do this in a follow-up.",
+      "parentUuid": "cb4a06ee_84398aa9",
+      "revId": "278400f076640fca95f328a6f68c7cd089fe8d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d82fb4b0_bea6e5e1",
@@ -54,6 +96,30 @@
       "writtenOn": "2025-09-08T23:28:21Z",
       "side": 1,
       "message": "nit: factor this conversion out into a helper function",
+      "range": {
+        "startLine": 878,
+        "startChar": 0,
+        "endLine": 882,
+        "endChar": 62
+      },
+      "revId": "278400f076640fca95f328a6f68c7cd089fe8d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2b7ed7a_8e5474e9",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-09T07:54:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d82fb4b0_bea6e5e1",
       "range": {
         "startLine": 878,
         "startChar": 0,
