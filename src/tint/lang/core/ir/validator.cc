@@ -4039,6 +4039,13 @@ void Validator::CheckLoadVectorElement(const LoadVectorElement* l) {
         AddError(l, LoadVectorElement::kIndexOperandOffset)
             << "load vector element index must be an integer scalar";
     }
+    if (auto* c = l->Index()->As<core::ir::Constant>()) {
+        auto val = c->Value()->ValueAs<uint32_t>();
+        if (val > 3) {
+            AddError(l, LoadVectorElement::kIndexOperandOffset)
+                << "load vector element index must be <= 3";
+        }
+    }
 }
 
 void Validator::CheckStoreVectorElement(const StoreVectorElement* s) {
@@ -4060,6 +4067,13 @@ void Validator::CheckStoreVectorElement(const StoreVectorElement* s) {
     if (!s->Index()->Type()->IsIntegerScalar()) {
         AddError(s, StoreVectorElement::kIndexOperandOffset)
             << "store vector element index must be an integer scalar";
+    }
+    if (auto* c = s->Index()->As<core::ir::Constant>()) {
+        auto val = c->Value()->ValueAs<uint32_t>();
+        if (val > 3) {
+            AddError(s, StoreVectorElement::kIndexOperandOffset)
+                << "store vector element index must be <= 3";
+        }
     }
 }
 
