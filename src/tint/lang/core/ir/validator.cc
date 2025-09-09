@@ -2911,6 +2911,7 @@ Result<SuccessType, std::string> Validator::ValidateShaderIOAnnotations(
     if (binding_point.has_value()) {
         annotations.Add(IOAnnotation::kBindingPoint);
     }
+
     if (auto* mv = ty->As<core::type::MemoryView>()) {
         if (mv->AddressSpace() == AddressSpace::kWorkgroup) {
             annotations.Add(IOAnnotation::kWorkgroup);
@@ -2924,6 +2925,25 @@ Result<SuccessType, std::string> Validator::ValidateShaderIOAnnotations(
         return Success;
     }
 
+    if (attr.location.has_value()) {
+        if (capabilities_.Contains(Capability::kAllowLocationOnStruct)) {
+            if (!ty->UnwrapPtrOrRef()->IsNumericScalarOrVector() &&
+                !ty->UnwrapPtrOrRef()->Is<core::type::Struct>()) {
+                return ToString(kind) +
+                       " with a location attribute must be  a numeric scalar, a numeric vector or "
+                       "a struct, but has type " +
+                       ty->FriendlyName();
+            }
+        } else {
+            if (!ty->UnwrapPtrOrRef()->IsNumericScalarOrVector()) {
+                return ToString(kind) +
+                       " with a location attribute must be a numeric scalar or vector, but has "
+                       "type " +
+                       ty->FriendlyName();
+            }
+        }
+    }
+
     if (auto* ty_struct = ty->UnwrapPtrOrRef()->As<core::type::Struct>()) {
         for (const auto* mem : ty_struct->Members()) {
             EnumSet<IOAnnotation> mem_annotations = annotations;
@@ -2932,6 +2952,25 @@ Result<SuccessType, std::string> Validator::ValidateShaderIOAnnotations(
                 return ToString(kind) +
                        " struct member has same IO annotation, as top-level struct, '" +
                        ToString(add_result.Failure()) + "'";
+            }
+
+            if (mem->Attributes().location.has_value()) {
+                if (capabilities_.Contains(Capability::kAllowLocationOnStruct)) {
+                    if (!mem->Type()->UnwrapPtrOrRef()->IsNumericScalarOrVector() &&
+                        !mem->Type()->UnwrapPtrOrRef()->Is<core::type::Struct>()) {
+                        return ToString(kind) +
+                               " struct member with a location attribute must be a numeric scalar, "
+                               "a numeric vector or a struct, but has type " +
+                               mem->Type()->FriendlyName();
+                    }
+                } else {
+                    if (!mem->Type()->UnwrapPtrOrRef()->IsNumericScalarOrVector()) {
+                        return ToString(kind) +
+                               " struct member with a location attribute must be a numeric scalar "
+                               "or vector, but has type " +
+                               mem->Type()->FriendlyName();
+                    }
+                }
             }
 
             if (capabilities_.Contains(Capability::kAllowPointersAndHandlesInStructures)) {
