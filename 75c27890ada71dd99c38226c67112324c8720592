@@ -33,6 +33,24 @@
       "message": "```suggestion\n    bool mAllowSpirvNonUniformDerivatives \u003d false;\n```",
       "revId": "75c27890ada71dd99c38226c67112324c8720592",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1c5d127_cf2206f2",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-09T13:57:35Z",
+      "side": 1,
+      "message": "Next time I make a pass over this file :)",
+      "parentUuid": "9879a4ac_86081ac1",
+      "revId": "75c27890ada71dd99c38226c67112324c8720592",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
