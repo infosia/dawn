@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "55325524_678adbe0",
+        "filename": "src/tint/cmd/common/helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 3578208
+      },
+      "writtenOn": "2025-09-09T14:07:24Z",
+      "side": 1,
+      "message": "I will change that",
+      "parentUuid": "ed41b577_4b3ea46e",
+      "revId": "e63afc0f95ffaf9a10a6040bce2456a87e4d302d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "50ca0ee9_3b6c95f2",
         "filename": "src/tint/cmd/common/helper.h",
         "patchSetId": 1
@@ -43,6 +61,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2381244b_97ab55d6",
+        "filename": "src/tint/cmd/common/helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 3578208
+      },
+      "writtenOn": "2025-09-09T14:07:24Z",
+      "side": 1,
+      "message": "I will change the names. \n\nAre you fine with those high values? 2GiB is unrealistically large for a shader program or a collection of shader programs like WGSL allows. It might be beneficial for the user if we lower the constants and before the system memory is filled report an error in the spirit of \"obviously wrong input\".\n\nHowever the same argument also works with the `ReadFileImpl` function. I leave the values up to you.",
+      "parentUuid": "50ca0ee9_3b6c95f2",
+      "range": {
+        "startLine": 266,
+        "startChar": 0,
+        "endLine": 267,
+        "endChar": 38
+      },
+      "revId": "e63afc0f95ffaf9a10a6040bce2456a87e4d302d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ae903ffe_7e84e3e8",
         "filename": "src/tint/cmd/common/helper.h",
         "patchSetId": 1
@@ -54,6 +96,24 @@
       "writtenOn": "2025-09-09T13:15:20Z",
       "side": 1,
       "message": "Maybe add an assert that `bytes_to_read \u003e 0`.",
+      "revId": "e63afc0f95ffaf9a10a6040bce2456a87e4d302d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a3232a2_909d4344",
+        "filename": "src/tint/cmd/common/helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 3578208
+      },
+      "writtenOn": "2025-09-09T14:07:24Z",
+      "side": 1,
+      "message": "`size_t` is unsigned, the `std::min` keeps `bytes_to_read` in allowed bounds if anything underflows or overflows. If the value turns out to be `0` the `memcpy` should still be legal, thus no assert needed.",
+      "parentUuid": "ae903ffe_7e84e3e8",
       "revId": "e63afc0f95ffaf9a10a6040bce2456a87e4d302d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
