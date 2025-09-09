@@ -169,6 +169,24 @@
       "parentUuid": "1705ab76_673ebdee",
       "revId": "e63afc0f95ffaf9a10a6040bce2456a87e4d302d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "078bf890_f6b4f5a8",
+        "filename": "src/tint/cmd/common/helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 3578208
+      },
+      "writtenOn": "2025-09-09T14:35:58Z",
+      "side": 1,
+      "message": "Could you briefly explain where the error is here? As far as I can tell `buffer-\u003edata() + total_bytes_copied` will never overflow.\nI am working on MSVC only.",
+      "parentUuid": "63857821_1a1dcdcd",
+      "revId": "e63afc0f95ffaf9a10a6040bce2456a87e4d302d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
