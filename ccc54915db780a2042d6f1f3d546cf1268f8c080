@@ -124,6 +124,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "71937a2c_ab02c7af",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3549,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-09T14:05:49Z",
+      "side": 1,
+      "message": "Oh, I mis-read what you were asking. Fixed.",
+      "parentUuid": "47158bcd_99560444",
+      "revId": "ccc54915db780a2042d6f1f3d546cf1268f8c080",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61599e68_b91954e4",
@@ -172,6 +190,24 @@
       "writtenOn": "2025-09-08T21:14:27Z",
       "side": 1,
       "message": "ditto",
+      "revId": "ccc54915db780a2042d6f1f3d546cf1268f8c080",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7f74761_f58e9517",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3658,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-09T14:05:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55251e7e_20962381",
       "revId": "ccc54915db780a2042d6f1f3d546cf1268f8c080",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
