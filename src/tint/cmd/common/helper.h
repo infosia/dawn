@@ -48,6 +48,13 @@ class InternalCompilerError;
 
 namespace tint::cmd {
 
+enum class InputFormat {
+    kUnknown,
+    kWgsl,
+    kSpirvBin,
+    kSpirvAsm,
+};
+
 /// Information on a loaded program
 struct ProgramInfo {
     /// The loaded program
@@ -72,8 +79,10 @@ void PrintInspectorBindings(tint::inspector::Inspector& inspector);
 
 /// Options for the LoadProgramInfo call
 struct LoadProgramOptions {
-    /// The file to be loaded
+    /// The file to be loaded, might be "-" for stdin
     std::string filename;
+    /// The input format. Optional for files, mandatory for stdin
+    InputFormat input_format;
 #if TINT_BUILD_SPV_READER
     /// Spirv-reader options
     tint::spirv::reader::Options spirv_reader_options;
@@ -130,6 +139,10 @@ std::string OverrideTypeToString(tint::inspector::Override::Type type);
 
 /// Returns true if the given `name` is either empty or `-` which signifies `stdout` is selected.
 bool IsStdout(const std::string& name);
+
+/// On Windows, sets the standard input stream stdin into binary mode. Non-Windows platforms are
+/// not affected. If stdin is in text mode reading the byte 0x1A might be interpreted as EOF signal.
+void SetStdinModeBinary();
 
 /// Writes the given `buffer` to standard output. If any error occurs, returns false and outputs
 /// error message to standard error. The ContainerT type must have data() and size() methods, like
@@ -201,12 +214,7 @@ bool WriteFile(const std::string& output_file, const std::string mode, const Con
 /// Assumes the size of a `T` object is divisible by its required alignment.
 /// @returns true if we successfully read the file.
 template <typename T>
-bool ReadFile(const std::string& input_file, std::vector<T>* buffer) {
-    if (!buffer) {
-        std::cerr << "The buffer pointer was null\n";
-        return false;
-    }
-
+bool ReadFileImpl(const std::string& input_file, std::vector<T>* buffer) {
     FILE* file = nullptr;
 #if defined(_MSC_VER)
     fopen_s(&file, input_file.c_str(), "rb");
@@ -240,6 +248,90 @@ bool ReadFile(const std::string& input_file, std::vector<T>* buffer) {
     }
 
     return true;
+}
+
+/// Copies the content from stdin to `buffer`,
+/// assuming each element in the file is of type `T`.
+/// Maximally allowed input size is 2 GiB. If any error occurs,
+/// writes error messages to the standard error stream and returns false.
+/// Assumes the size of a `T` object is divisible by its required alignment.
+/// @returns true if we successfully read the file.
+template <typename T>
+bool ReadStdinImpl(std::vector<T>* buffer) {
+    // Following values are guessed, please change them if they are unsatisfying.
+    // Largest temporary buffer has size 1024 << 20 = 1.074 GB = 1 GiB
+    // Maximum size of all temporary buffers combined is therefore 1024 << 21 = 2.714 GB = 2 GiB
+    // When this data is copied to the result buffer a total of 4GiB =  might
+    // be allocated at the same time
+    const size_t INITIAL_BUFFER_SIZE = 1024; // == 1 << 10;
+    const size_t MAX_TMP_BUFFERS = 21;
+
+    // Create temporary buffers holding data as we read from the stdin stream
+    // The data is copied only twice:
+    // 1. from stream to tmp_buffers
+    // 2. from tmp_buffers to the `buffer`argument
+    tint::Vector<std::vector<uint8_t>, MAX_TMP_BUFFERS> tmp_buffers;
+
+    SetStdinModeBinary();
+
+    size_t total_bytes_read = 0;
+    bool is_stdin_fully_read = false;
+    for (size_t current_buffer = 0; current_buffer < MAX_TMP_BUFFERS; current_buffer += 1) {
+        // Exponential growth with exponent 2
+        size_t current_buffer_size = INITIAL_BUFFER_SIZE << current_buffer;
+        // Allocate buffer. std::vector unnecessarily initializes with default value 0 here
+        tmp_buffers.Push(std::vector<uint8_t>(current_buffer_size));
+        size_t bytes_read = fread(tmp_buffers.Back().data(), 1, current_buffer_size, stdin);
+        total_bytes_read += bytes_read;
+        // If the temporary buffer did not fill up completely we can end the loop
+        if (bytes_read < current_buffer_size) {
+            is_stdin_fully_read = true;
+            break;
+        }
+    }
+    // stdin is too large, we cannot fully read the file
+    if (!is_stdin_fully_read)
+    {
+        std::cerr << "Standard input stream size exceeds maximum of 2.714 GB";
+        return false;
+    }
+
+    if (0 != total_bytes_read % sizeof(T))
+    {
+        std::cerr << "Standard input stream"
+            << " does not contain an integral number of objects: " << total_bytes_read
+            << " bytes in the stream, require " << sizeof(T) << " bytes per object\n";
+        return false;
+    }
+
+    size_t total_bytes_copied = 0;
+    buffer->clear();
+    buffer->resize(total_bytes_read / sizeof(T));
+    for (const std::vector<uint8_t>& tmp_buffer : tmp_buffers) {
+        size_t bytes_to_read = std::min(tmp_buffer.size(), total_bytes_read - total_bytes_copied);
+        std::memcpy(reinterpret_cast<uint8_t*>(buffer->data()) + total_bytes_copied, tmp_buffer.data(), bytes_to_read);
+        total_bytes_copied += bytes_to_read;
+    }
+
+    return true;
+}
+
+/// Copies the content from the file named `input_file` to `buffer`.
+/// If `input_file` is empty or "-", reads from standard input.
+/// assuming each element in the file is of type `T`.  If any error occurs,
+/// writes error messages to the standard error stream and returns false.
+/// @returns true on success
+template <typename T>
+bool ReadFile(const std::string& input_file, std::vector<T>* buffer) {
+    if (!buffer) {
+        std::cerr << "The buffer pointer was null\n";
+        return false;
+    }
+
+    if (input_file.empty() || input_file == "-") {
+        return ReadStdinImpl(buffer);
+    }
+    return ReadFileImpl(input_file, buffer);
 }
 
 }  // namespace tint::cmd

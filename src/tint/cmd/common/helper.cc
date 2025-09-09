@@ -32,6 +32,11 @@
 #include <utility>
 #include <vector>
 
+#ifdef _WIN32
+#include <io.h>     // for _setmode, _fileno
+#include <fcntl.h>  // for _O_BINARY
+#endif
+
 #if TINT_BUILD_SPV_READER
 #include "spirv-tools/libspirv.hpp"
 #include "src/tint/lang/spirv/reader/reader.h"
@@ -55,13 +60,6 @@
 
 namespace tint::cmd {
 namespace {
-
-enum class InputFormat {
-    kUnknown,
-    kWgsl,
-    kSpirvBin,
-    kSpirvAsm,
-};
 
 /// @param out the stream to write to
 /// @param value the InputFormat
@@ -156,7 +154,14 @@ void PrintWGSL(std::ostream& out, const tint::Program& program) {
 }
 
 ProgramInfo LoadProgramInfo(const LoadProgramOptions& opts) {
-    auto input_format = InputFormatFromFilename(opts.filename);
+    InputFormat input_format = opts.input_format;
+    if (input_format == InputFormat::kUnknown) {
+        input_format = InputFormatFromFilename(opts.filename);
+    }
+    if (input_format == InputFormat::kUnknown && (opts.filename.empty() || opts.filename == "-")){
+        std::cerr << "No input format given for data read from stdin";
+        exit(1);
+    }
 
     auto load = [&]() -> ProgramInfo {
         switch (input_format) {
@@ -605,6 +610,12 @@ std::string OverrideTypeToString(tint::inspector::Override::Type type) {
 
 bool IsStdout(const std::string& name) {
     return name.empty() || name == "-";
+}
+
+void SetStdinModeBinary() {
+    #ifdef _WIN32
+    _setmode(_fileno(stdin), _O_BINARY);
+    #endif
 }
 
 }  // namespace tint::cmd
