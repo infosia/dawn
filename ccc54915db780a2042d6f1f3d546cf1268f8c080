@@ -108,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "47158bcd_99560444",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3549,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-09T13:51:25Z",
+      "side": 1,
+      "message": "CheckOperands is the correct function to use here. (CheckOperands checks that you have N operands, CheckOperand checks the Nth operand)\n\nI was just commenting on the use of the literal `1` vs a having a constexpr like `If::kNumOperands`. Sorry for the confusion.",
+      "parentUuid": "a0574707_5c8efbf1",
+      "revId": "ccc54915db780a2042d6f1f3d546cf1268f8c080",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "61599e68_b91954e4",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 2
