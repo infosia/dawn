@@ -151,6 +151,24 @@
       "message": "I\u0027m surprised this didn\u0027t trigger a pointer arithmetic error? @rharrison@chromium.org shouldn\u0027t this cause the unsafe buffer usage warning to fire?",
       "revId": "e63afc0f95ffaf9a10a6040bce2456a87e4d302d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63857821_1a1dcdcd",
+        "filename": "src/tint/cmd/common/helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-09T14:21:22Z",
+      "side": 1,
+      "message": "It does fire on Linux + CMake for me, but only as a warning, it doesn\u0027t get raised to an error and I didn\u0027t see it fire for Linux + GN, which I am pretty sure it should have fired for.\n\nBriefly looking at the defines, it looks like it is a no-op for MSVC and GCC, so it will only fire on Clang. Dawn is doing some things to suppress it :-/",
+      "parentUuid": "1705ab76_673ebdee",
+      "revId": "e63afc0f95ffaf9a10a6040bce2456a87e4d302d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
