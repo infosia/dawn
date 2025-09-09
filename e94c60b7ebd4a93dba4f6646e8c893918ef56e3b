@@ -51,6 +51,24 @@
       "parentUuid": "db410d44_342f3e09",
       "revId": "e94c60b7ebd4a93dba4f6646e8c893918ef56e3b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ad46dc6_806ff65e",
+        "filename": "src/dawn/native/CopyTextureForBrowserHelper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-09T07:41:23Z",
+      "side": 1,
+      "message": "I think the latest iteration allows renderable non-color formats. We should still validate that we\u0027re copying to a renderable color format as copying to a depth format would require a different kind of blit.\n\nLet\u0027s have a validation test for that specifically.",
+      "parentUuid": "821e2e07_bd7725b9",
+      "revId": "e94c60b7ebd4a93dba4f6646e8c893918ef56e3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

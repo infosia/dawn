@@ -16,6 +16,29 @@
       "message": "Thanks for your suggestions! PTAL again.",
       "revId": "3accf8edab087e2fc17f003d6e09e3e05e4b4cc6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "651c2c29_81a61880",
+        "filename": "src/dawn/utils/TextureUtils.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-09T07:41:23Z",
+      "side": 1,
+      "message": "Isn\u0027t `RG11B10UfloatRenderable` implicitly enabled when `TextureFormatsTier1` is enabled? In that case we don\u0027t need to check for `TextureFormatsTier1` here.",
+      "range": {
+        "startLine": 258,
+        "startChar": 19,
+        "endLine": 258,
+        "endChar": 76
+      },
+      "revId": "3accf8edab087e2fc17f003d6e09e3e05e4b4cc6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
