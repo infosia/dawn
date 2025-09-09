@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40293542_bea1f38d",
+        "filename": "src/dawn/native/webgpu/ComputePipelineWGPU.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-09T08:00:47Z",
+      "side": 1,
+      "message": "```suggestion\n        std::vector\u003cWGPUConstantEntry\u003e constants \u003d ToWGPU(stage.constants);\n        mDesc.compute.constants \u003d constants.data();\n        mDesc.compute.constantCount \u003d constants.size();\n```",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 56
+      },
+      "revId": "f1340cda8aaac5b21e5a82a363780949e7024ba2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12f9a37b_29c2cf27",
+        "filename": "src/dawn/native/webgpu/PipelineLayoutWGPU.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-09T08:00:47Z",
+      "side": 1,
+      "message": "At this point since it is just one function (the constructor of the combo descriptor), IMHO we can move it in the constructor, or remove the class and just make it a function that computes the descriptor and calls the creation function at [1].\n\nDitto for compute / render pipeline.",
+      "revId": "f1340cda8aaac5b21e5a82a363780949e7024ba2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e7e98dd_b015c6e3",
+        "filename": "src/dawn/native/webgpu/PipelineLayoutWGPU.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-09T08:00:47Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "f1340cda8aaac5b21e5a82a363780949e7024ba2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7d98419_387af4c3",
+        "filename": "src/dawn/native/webgpu/ToWGPU.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-09T08:00:47Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "f1340cda8aaac5b21e5a82a363780949e7024ba2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb371868_ef8fd40b",
+        "filename": "src/dawn/native/webgpu/ToWGPU.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-09T08:00:47Z",
+      "side": 1,
+      "message": "nit: we can directly return `std::vector\u003cWGPUConstantEntry\u003e`. The vector doesn\u0027t need to be appended to as far as I can tell, so there is no need to take it as inout parameter. Also InlinedVectors are useful in performance sensitive code, but something done once per shader module is not performance sensitive.",
+      "revId": "f1340cda8aaac5b21e5a82a363780949e7024ba2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
