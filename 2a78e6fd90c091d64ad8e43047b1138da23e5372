@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aec2ea56_6b88678a",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-09T12:19:04Z",
+      "side": 1,
+      "message": "Isn\u0027t this and ComposeSwizzle going to be used in most backends (or more than one)?",
+      "revId": "2a78e6fd90c091d64ad8e43047b1138da23e5372",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3c8410b_5de5bf2f",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-09T12:19:04Z",
+      "side": 1,
+      "message": "```suggestion\n    wgpu::TextureComponentSwizzle swizzle \u003d ComposeSwizzle(GetDefaultSwizzle(texture-\u003eGetFormat()));\n    DAWN_ASSERT(IsDefaultSwizzle(texture-\u003eGetFormat(), swizzle) || device-\u003eIsFeatureEnabled(Feature::TextureComponentSwizzle));\n    \n    bool needsSwizzle \u003d !IsDefaultSwizzle(texture-\u003eGetFormat(), swizzle);\n    bool needsNewView \u003d needsSwizzle || RequiresCreatingNewTextureView(texture, GetInternalUsage(), descriptor);\n```\n\nThe three helper functions seem like they could be shared across backends.",
+      "range": {
+        "startLine": 829,
+        "startChar": 0,
+        "endLine": 851,
+        "endChar": 5
+      },
+      "revId": "2a78e6fd90c091d64ad8e43047b1138da23e5372",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
