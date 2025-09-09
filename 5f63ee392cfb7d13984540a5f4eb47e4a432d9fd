@@ -72,6 +72,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "49cc8aa9_e6928548",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-09-09T01:06:00Z",
+      "side": 1,
+      "message": "Marked as resolved.",
+      "parentUuid": "9ec08945_66c840f4",
+      "range": {
+        "startLine": 78,
+        "startChar": 55,
+        "endLine": 78,
+        "endChar": 95
+      },
+      "revId": "5f63ee392cfb7d13984540a5f4eb47e4a432d9fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "970ba59a_2cf536fa",
@@ -109,6 +133,30 @@
       "side": 1,
       "message": "I agree this is silently failing when the buffer is destroyed and there’s an API call to create a texel view. That said, this seems to be the expected assumption for functions like this. For example, [TextureVK](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/TextureVk.cpp;l\u003d1938;drc\u003d87c3217dc3fec0f441b68f33d339b7f3a707b11d). I would say that we don\u0027t want to crash the driver, so issuing a no-op command kind of makes sense?",
       "parentUuid": "970ba59a_2cf536fa",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 18
+      },
+      "revId": "5f63ee392cfb7d13984540a5f4eb47e4a432d9fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57f258c5_9f816bbd",
+        "filename": "src/dawn/native/vulkan/TexelBufferViewVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-09-09T01:06:00Z",
+      "side": 1,
+      "message": "Marked as resolved.",
+      "parentUuid": "0d69e149_e22e5673",
       "range": {
         "startLine": 54,
         "startChar": 8,
