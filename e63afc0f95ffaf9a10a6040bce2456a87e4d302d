@@ -118,6 +118,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "735c4f0a_7f24b7e0",
+        "filename": "src/tint/cmd/common/helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-09T14:11:11Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9a3232a2_909d4344",
+      "revId": "e63afc0f95ffaf9a10a6040bce2456a87e4d302d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1705ab76_673ebdee",
