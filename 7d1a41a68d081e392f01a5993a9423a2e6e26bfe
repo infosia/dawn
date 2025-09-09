@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3c7b7e9_8b4deb6d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-09T12:23:35Z",
+      "side": 1,
+      "message": "Can that be fixed? It seems kind wrong without more context on why it happens.",
+      "revId": "7d1a41a68d081e392f01a5993a9423a2e6e26bfe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "185b8035_4f0cb69c",
