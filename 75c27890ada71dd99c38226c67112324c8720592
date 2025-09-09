@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33830fd7_4b23e87b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-09T12:06:47Z",
+      "side": 1,
+      "message": "^^",
+      "revId": "75c27890ada71dd99c38226c67112324c8720592",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9879a4ac_86081ac1",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-09T12:06:47Z",
+      "side": 1,
+      "message": "```suggestion\n    bool mAllowSpirvNonUniformDerivatives \u003d false;\n```",
+      "revId": "75c27890ada71dd99c38226c67112324c8720592",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
