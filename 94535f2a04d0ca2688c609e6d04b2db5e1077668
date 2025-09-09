@@ -16,6 +16,23 @@
       "message": "Test looks good. No comments on the tryjobs :)",
       "revId": "94535f2a04d0ca2688c609e6d04b2db5e1077668",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6fe9ccb_edb95e48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-09T12:28:08Z",
+      "side": 1,
+      "message": "Thanks! The failure is because this requires Dawn to pass information to Tint for the order of default bindings, and that\u0027s only done later in the stack. I\u0027ll land this CL after the default binding change is done.",
+      "revId": "94535f2a04d0ca2688c609e6d04b2db5e1077668",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
