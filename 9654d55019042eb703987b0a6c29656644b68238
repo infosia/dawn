@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c7afd98_ab82745a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-09T07:42:22Z",
+      "side": 1,
+      "message": "LGTM, gman@ also PTAL",
+      "revId": "9654d55019042eb703987b0a6c29656644b68238",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c6becc0_614b6c23",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-09T07:42:22Z",
+      "side": 1,
+      "message": "u-nit: it seems like `return AcquireRef(new TextureView(texture, descriptor, innerView))` should work, or `return {AcquireRef(new TextureView(texture, descriptor, innerView))};`",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 1
+      },
+      "revId": "9654d55019042eb703987b0a6c29656644b68238",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
