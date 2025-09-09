@@ -32,16 +32,20 @@
 
 #include "dawn/native/webgpu/Forward.h"
 #include "dawn/native/webgpu/ObjectWGPU.h"
+#include "dawn/native/webgpu/RecordableObject.h"
 
 namespace dawn::native::webgpu {
 
 class Device;
 
-class Buffer final : public BufferBase, public ObjectWGPU<WGPUBuffer> {
+class Buffer final : public BufferBase, public RecordableObject, public ObjectWGPU<WGPUBuffer> {
   public:
     static ResultOrError<Ref<Buffer>> Create(Device* device,
                                              const UnpackedPtr<BufferDescriptor>& descriptor);
     Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor, WGPUBuffer innerBuffer);
+
+    void AddReferenced(CaptureContext& captureContext) const override;
+    void CaptureCreationParameters(CaptureContext& context) const override;
 
   private:
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override;
