@@ -16,6 +16,24 @@
       "message": "As Brian pointed out there\u0027s always a possibility that infra will remove this flag at some point and then this test will start bitrotting.\n\nPerhaps the best solution would be to make this a separate test binary, then it doesn\u0027t matter if it fails locally. It\u0027s just extra work to add that to the bots so IMO would be better to do as a followup.",
       "revId": "27cc0322ce4a69c8429ba45a26e5c23498450490",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "792a9917_31dca2da",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-09T00:06:15Z",
+      "side": 1,
+      "message": "I tend to agree. Also if you look at the data (aka those big list of numbers) i think we will be able to start making some assumptions and then just not have these tables.",
+      "parentUuid": "d0937801_f01db39c",
+      "revId": "27cc0322ce4a69c8429ba45a26e5c23498450490",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
