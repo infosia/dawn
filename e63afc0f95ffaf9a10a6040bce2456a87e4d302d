@@ -205,6 +205,47 @@
       "parentUuid": "078bf890_f6b4f5a8",
       "revId": "e63afc0f95ffaf9a10a6040bce2456a87e4d302d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7876db5_940f6acd",
+        "filename": "src/tint/cmd/common/helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-09T17:21:35Z",
+      "side": 1,
+      "message": "We can avoid doing pointer math entirely here, if we use std::copy \u0026 a back_inserter to copy between the vectors, instead of memcpy.\n\nThis requires some changes to the vector element type, so I have added a suggested edit demonstating what I am thinking. I also reworked the entire function to just use a single temp buffer for reading instead of trying to cache the entire input file before doing the copies, which simplifies a bunch of the logic.\n\nTechinically my version will error if there is a misaligned read on any of the chunks, not just if the file is misaligned, but given that T is u32 or u8, realistically that chance of that ever happening seems low.\n\nThere is probably better ways to do the reserving on the buffer to be more efficient, instead of one chunk at a time, but realistically we are reading from a disk, so RAM allocation/shuffling is unlikely to be the bottleneck for operations.\n\nFeel free to either take my suggestion whole clothe, or modify your existing code to use reserve and copy instead of resize and memcpy.\n\n(There is probably something smart with ranges or other C++20 features to get something like a view into the buffer, so you can just resize and skip the temporary buffer entirely)\n\n(There is also probably something smart with std::fstream that one could do to unify the file and stdin implementations)\n\n(for context, if this was performance critical code we would consider leaving the memcpy and just suppressing the warning for the function, but then would want more testing/analysis)",
+      "parentUuid": "cd51065a_836565c4",
+      "revId": "e63afc0f95ffaf9a10a6040bce2456a87e4d302d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87703829_214f71d3",
+        "filename": "src/tint/cmd/common/helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-09T17:21:35Z",
+      "side": 1,
+      "message": "```suggestion\nbool ReadStdinImpl(std::vector\u003cT\u003e* buffer) {\n    buffer-\u003eclear();\n    SetStdinModeBinary();\n\n    constexpr size_t kItemsPerChunk \u003d 1024;\n    constexpr size_t kBytesPerChunk \u003d sizeof(T) * kItemsPerChunk;\n    std::vector\u003cT\u003e chunk(kItemsPerChunk);\n\n    while (!feof(stdin)) {\n        size_t bytes_read \u003d fread(chunk.data(), 1, kBytesPerChunk, stdin);\n        size_t items_read \u003d bytes_read / sizeof(T);\n        if (bytes_read \u003d\u003d 0) {\n            if (ferror(stdin)) {\n                std::cerr \u003c\u003c \"Error reading from standard input\\n\";\n                return false;\n            }\n            // EOF\n            break;\n        }\n\n        if (bytes_read % sizeof(T) !\u003d 0) {\n            std::cerr \u003c\u003c \"Encountered non-aligned read from input stream, read \u0027\" \u003c\u003c bytes_read\n                      \u003c\u003c \"\u0027 bytes, which is not an integral number of objects of size \u0027\"\n                      \u003c\u003c sizeof(T) \u003c\u003c \"\u0027\\n\";\n            return false;\n        }\n\n        buffer-\u003ereserve(buffer-\u003esize() + items_read);\n        std::copy(chunk.begin(), chunk.end(), std::back_inserter(*buffer));\n    }\n\n    return true;\n}\n```",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 317,
+        "endChar": 1
+      },
+      "revId": "e63afc0f95ffaf9a10a6040bce2456a87e4d302d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
