@@ -918,6 +918,11 @@ if (DAWN_ENABLE_D3D12)
     endif()
 endif()
 
+# Add dependency for d3dcompiler_47.dll when not using system component loading
+if (WIN32 AND NOT DAWN_FORCE_SYSTEM_COMPONENT_LOAD AND (DAWN_ENABLE_D3D11 OR DAWN_ENABLE_D3D12))
+    add_dependencies(dawn_native copy_d3dcompiler_dll)
+endif()
+
 if ((DAWN_ENABLE_OPENGL OR DAWN_ENABLE_VULKAN) AND DAWN_ENABLE_SPIRV_VALIDATION)
     target_compile_definitions(dawn_native PRIVATE "DAWN_ENABLE_SPIRV_VALIDATION")
     target_compile_definitions(dawn_native_objects PRIVATE "DAWN_ENABLE_SPIRV_VALIDATION")
