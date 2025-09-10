@@ -143,7 +143,7 @@ device_map["D3D12_Intel_R__UHD_Graphics_630"]               = {  16384, 16384, 2
 device_map["D3D11_Intel_R__UHD_Graphics_630"]               = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 32, 10, 8, 10, 8,};
 device_map["OpenGLES_ANGLE__Intel__Intel_R__UHD_Graphics_630__0x00009BC5__Direct3D11_vs_5_0_ps_5_0__D3D11_31_0_101_2127__compat"]
                                                             = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  134217728, 256, 256, 8, 2147483648, 16, 2048, 16, 8,  32, 32768, 1024, 1024, 1024, 64, 65535,  0, 10, 8, 10, 8,};
-device_map["OpenGLES_Mali_G78_compat"]                      = {   8192,  8192, 2048,  256, 4, 24, 1000,  8, 4, 16, 16,  8, 4, 12, 65536,  268435456, 256, 256, 8, 2147483648, 30, 2048, 16, 8,  32, 32768,  256,  256,  256, 64, 65535,  0,  0, 0,  4, 4,};
+device_map["OpenGLES_Mali_G78_compat"]                      = {   8192,  8192, 2048,  256, 4, 24, 1000,  8, 4, 16, 16,  8, 4, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 16, 8,  32, 32768,  256,  256,  256, 64, 65535,  0,  0, 0,  4, 4,};
 device_map["OpenGLES_ANGLE__NVIDIA__NVIDIA_GeForce_GTX_1660__0x00002184__Direct3D11_vs_5_0_ps_5_0__D3D11_31_0_15_4601__compat"]
                                                             = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  134217728, 256, 256, 8, 2147483648, 16, 2048, 16, 8,  32, 32768, 1024, 1024, 1024, 64, 65535,  0, 10, 8, 10, 8,};
 device_map["Vulkan_Intel_R__UHD_Graphics_630"]              = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  536870912, 256, 256, 8, 4294967296, 30, 2048, 28, 8,  32, 32768,  256,  256,  256, 64, 65535, 32, 10, 8, 10, 8,};
@@ -161,26 +161,27 @@ device_map["OpenGLES_ANGLE__Intel__Intel_R__UHD_Graphics_770__0x00004680__Direct
 device_map["OpenGLES_ANGLE__NVIDIA__NVIDIA_GeForce_GTX_1660__0x00002184__Direct3D11_vs_5_0_ps_5_0__D3D11_32_0_15_7602__compat"]
                                                             = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  134217728, 256, 256, 8, 2147483648, 16, 2048, 16, 8,  32, 32768, 1024, 1024, 1024, 64, 65535,  0, 10, 8, 10, 8,};
 device_map["Vulkan_Adreno__TM__640"]                        = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  536870912, 256, 256, 8, 1073741824, 30, 2048, 16, 8,  32, 32768, 1024, 1024, 1024, 64, 65535, 32, 10, 8, 10, 8,};
-device_map["Vulkan_Mali_G78"]                               = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  268435456, 256, 256, 8, 4294967296, 30, 2048, 28, 8,  32, 32768,  256,  256,  256, 64, 65535, 32, 10, 8, 10, 8,};
+device_map["Vulkan_Mali_G78"]                               = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8,  32, 32768,  256,  256,  256, 64, 65535, 32, 10, 8, 10, 8,};
 device_map["Vulkan_GeForce_GTX_1660"]                       = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8,  32, 49152, 1024, 1024, 1024, 64, 65535, 32, 10, 8, 10, 8,};
 device_map["Vulkan_Intel_R__UHD_Graphics_630__CML_GT2"]     = {  16384, 16384, 2048, 2048, 4, 24, 1000,  8, 4, 16, 16, 10, 4, 12, 65536, 4294967292, 256, 256, 8, 4294967296, 16, 2048, 28, 8,  32, 65536,  256,  256,  256, 64, 65535, 32, 10, 4, 10, 4,};
 device_map["Metal_Apple_M2"]                                = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 4294967292, 256, 256, 8, 4294967296, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 32, 10, 8, 10, 8,};
+device_map["Metal_AMD_Radeon_Pro_560X"]                     = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 32, 10, 8, 10, 8,};
     // clang-format on
     auto& supported_limits = GetSupportedLimits();
 
     bool encountered_error = false;
     auto iter_curr_limits = device_map.find(full_param);
     if (iter_curr_limits == device_map.end()) {
-        // CQ bots will pass in '--test-launcher-bot-mode' as a command line parameter.
-        // In this case, we didn't find any results, so we want to make sure we report an error as
-        // this is a new CQ bot and we need to update the  test results.
-        if (IsTestLauncherBotMode()) {
-            encountered_error = true;
-        } else {
-            // Skipping the test when the device params does not match limits us to only testing
-            // known CQ (and try) bots.
-            GTEST_SKIP();
-        }
+    // CQ bots will pass in '--test-launcher-bot-mode' as a command line parameter.
+    // In this case, we didn't find any results, so we want to make sure we report an error as
+    // this is a new CQ bot and we need to update the  test results.
+    if (IsTestLauncherBotMode()) {
+        encountered_error = true;
+    } else {
+        // Skipping the test when the device params does not match limits us to only testing
+        // known CQ (and try) bots.
+        GTEST_SKIP();
+    }
     }
 
     int curr_idx = 0;
