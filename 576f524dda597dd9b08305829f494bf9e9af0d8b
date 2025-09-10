@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a02797e9_0f02228a",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-09-10T20:35:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98daccbf_4ac2bd46",
+      "range": {
+        "startLine": 273,
+        "startChar": 9,
+        "endLine": 273,
+        "endChar": 27
+      },
+      "revId": "576f524dda597dd9b08305829f494bf9e9af0d8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7214e95e_0018af5e",
@@ -165,6 +189,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb6adcb8_372ccc6f",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-09-10T20:35:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4c2db91_16f8c8f8",
+      "revId": "576f524dda597dd9b08305829f494bf9e9af0d8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b444c64_1f7ab16e",
@@ -178,6 +220,30 @@
       "writtenOn": "2025-09-10T18:45:35Z",
       "side": 1,
       "message": "It would be better if this was in `src/dawn/native/CMakeLists.txt` so that we\u0027d have:\n\n```\n# Copy d3dcompiler_47.dll from Windows SDK when not using system component loading\nif (WIN32 AND NOT DAWN_FORCE_SYSTEM_COMPONENT_LOAD)\n    CopyWindowsSDKDLL(\"d3dcompiler_47.dll\" \"copy_d3dcompiler_dll\" \"main\")\n    add_dependencies(dawn_native copy_d3dcompiler_dll)\nendif()\n```\n\nTo do this, we\u0027d have to extract both `function(DetectWindowsSDK)` and `function(CopyWindowsSDKDLL)` to a new file `third_party/CopyWindowsSDKDLL.cmake` and include it here and in `third_party/CMakeLists.txt`.",
+      "range": {
+        "startLine": 429,
+        "startChar": 0,
+        "endLine": 433,
+        "endChar": 0
+      },
+      "revId": "576f524dda597dd9b08305829f494bf9e9af0d8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0343c633_9d252263",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-09-10T20:35:31Z",
+      "side": 1,
+      "message": "Done. Let me know if this is what you were looking for.",
+      "parentUuid": "7b444c64_1f7ab16e",
       "range": {
         "startLine": 429,
         "startChar": 0,
