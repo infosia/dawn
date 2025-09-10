@@ -1,0 +1,192 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28a24c0c_b185e263",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T15:17:49Z",
+      "side": 1,
+      "message": "Thank you for being more precise on what\u0027s backend-specific and what\u0027s logic that can be shared in the frontend. Approach LGTM, with a bunch of comments still.",
+      "revId": "39437d89f09bf609195daf60e4b96697da5cb3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "259bb668_c3603352",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T15:17:49Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "39437d89f09bf609195daf60e4b96697da5cb3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f4f5a29_62bea455",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T15:17:49Z",
+      "side": 1,
+      "message": "These don\u0027t need to be in TextureView and can be freestanding function around [1].",
+      "revId": "39437d89f09bf609195daf60e4b96697da5cb3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6a25908_0ae20f0c",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T15:17:49Z",
+      "side": 1,
+      "message": "Comment as to what these helpers do. For example for this one, it returns the default swizzle required by the WebGPU spec.",
+      "revId": "39437d89f09bf609195daf60e4b96697da5cb3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6eabe0ca_b5cf7525",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T15:17:49Z",
+      "side": 1,
+      "message": "This order should actually be inverted so as to look like math function composition. https://en.wikipedia.org/wiki/Function_composition",
+      "range": {
+        "startLine": 309,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 53
+      },
+      "revId": "39437d89f09bf609195daf60e4b96697da5cb3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a30dce5d_86f9c75b",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T15:17:49Z",
+      "side": 1,
+      "message": "There is no ordering constraints.\n\n```suggestion\n    static bool AreSwizzleEquivalent(wgpu::TextureComponentSwizzle a,\n                                     wgpu::TextureComponentSwizzle b);\n```",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 82
+      },
+      "revId": "39437d89f09bf609195daf60e4b96697da5cb3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3bada11_965fbf75",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T15:17:49Z",
+      "side": 1,
+      "message": "Maybe explain that we have this function separate from TextureViewBase::GetDefaultSwizzle because Metal doesn\u0027t actually guarantee the values for DS so we need to mark them undefined so that we know to potentially override them with a swizzle (some text like that)",
+      "revId": "39437d89f09bf609195daf60e4b96697da5cb3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15113f04_f1a6a460",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T15:17:49Z",
+      "side": 1,
+      "message": "It\u0027s a bit unnecessary to pass a whole optional just to check has_value, IMHO we could use `needsSwizzle` like in the earlier comment and handle it outside of this function.",
+      "range": {
+        "startLine": 153,
+        "startChar": 36,
+        "endLine": 153,
+        "endChar": 87
+      },
+      "revId": "39437d89f09bf609195daf60e4b96697da5cb3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8eee50c_7806b4d0",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T15:17:49Z",
+      "side": 1,
+      "message": "nit: Can we have a getter for this on TextureView so we don\u0027t need to reconstruct the swizzle every time in the backends?",
+      "revId": "39437d89f09bf609195daf60e4b96697da5cb3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cad1322d_31ec9d0c",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T15:17:49Z",
+      "side": 1,
+      "message": "```suggestion\n    requestedSwizzle \u003d TextureViewBase::ComposeSwizzle(defaultSwizzle, swizzle);\n```",
+      "revId": "39437d89f09bf609195daf60e4b96697da5cb3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
