@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "98daccbf_4ac2bd46",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-09-10T18:45:35Z",
+      "side": 1,
+      "message": "I think we should name this `AddCopyWindowsSDKDLLTarget` to make clear that this does not actually perform the copy. Also `target_name` should be the first parameter to like for `add_custom_target`.\n\nIf we remove the `destination_target` parameter as I suggest below, perhaps we should rename to `AddCopyWindowsSDKDLLToBuildDirTarget`, thought its becoming a mouthful.",
+      "range": {
+        "startLine": 273,
+        "startChar": 9,
+        "endLine": 273,
+        "endChar": 27
+      },
+      "revId": "576f524dda597dd9b08305829f494bf9e9af0d8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7214e95e_0018af5e",
         "filename": "third_party/CMakeLists.txt",
         "patchSetId": 2
@@ -65,6 +88,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eaf71281_fcebd4be",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-09-10T18:45:35Z",
+      "side": 1,
+      "message": "Yep, I wrote the original code that this is refactored from, and we only support x64 DXC builds for CMake at the moment.",
+      "parentUuid": "daae1721_6d9779c7",
+      "range": {
+        "startLine": 277,
+        "startChar": 65,
+        "endLine": 277,
+        "endChar": 68
+      },
+      "revId": "576f524dda597dd9b08305829f494bf9e9af0d8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d4587eb_42c18e5d",
@@ -96,6 +143,47 @@
       "side": 1,
       "message": "Yes.",
       "parentUuid": "1d4587eb_42c18e5d",
+      "revId": "576f524dda597dd9b08305829f494bf9e9af0d8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4c2db91_16f8c8f8",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-09-10T18:45:35Z",
+      "side": 1,
+      "message": "Can do away with `destination_target` and always copy to the output directory as you do here? This should also work for dxil.dll, and simplifies the code.",
+      "parentUuid": "c154668b_787fd9fa",
+      "revId": "576f524dda597dd9b08305829f494bf9e9af0d8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b444c64_1f7ab16e",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-09-10T18:45:35Z",
+      "side": 1,
+      "message": "It would be better if this was in `src/dawn/native/CMakeLists.txt` so that we\u0027d have:\n\n```\n# Copy d3dcompiler_47.dll from Windows SDK when not using system component loading\nif (WIN32 AND NOT DAWN_FORCE_SYSTEM_COMPONENT_LOAD)\n    CopyWindowsSDKDLL(\"d3dcompiler_47.dll\" \"copy_d3dcompiler_dll\" \"main\")\n    add_dependencies(dawn_native copy_d3dcompiler_dll)\nendif()\n```\n\nTo do this, we\u0027d have to extract both `function(DetectWindowsSDK)` and `function(CopyWindowsSDKDLL)` to a new file `third_party/CopyWindowsSDKDLL.cmake` and include it here and in `third_party/CMakeLists.txt`.",
+      "range": {
+        "startLine": 429,
+        "startChar": 0,
+        "endLine": 433,
+        "endChar": 0
+      },
       "revId": "576f524dda597dd9b08305829f494bf9e9af0d8b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
