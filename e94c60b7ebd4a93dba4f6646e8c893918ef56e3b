@@ -69,6 +69,24 @@
       "parentUuid": "821e2e07_bd7725b9",
       "revId": "e94c60b7ebd4a93dba4f6646e8c893918ef56e3b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0ceb7e9_fb4f858e",
+        "filename": "src/dawn/native/CopyTextureForBrowserHelper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-09-10T02:35:29Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2ad46dc6_806ff65e",
+      "revId": "e94c60b7ebd4a93dba4f6646e8c893918ef56e3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
