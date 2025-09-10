@@ -16,6 +16,24 @@
       "message": "```suggestion\n/// @returns text describing the shader IO kind for error logging\n```",
       "revId": "cabb55878f60f3cf269276b92a10b3680b2f4ca4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3878e3e0_69d8eea1",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-10T18:41:43Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "e55604bb_d6f3623a",
+      "revId": "cabb55878f60f3cf269276b92a10b3680b2f4ca4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
