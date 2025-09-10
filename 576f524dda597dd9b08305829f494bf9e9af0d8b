@@ -252,6 +252,30 @@
       },
       "revId": "576f524dda597dd9b08305829f494bf9e9af0d8b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06d1fc41_a2b859c7",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-09-10T20:41:42Z",
+      "side": 1,
+      "message": "Exactly what I was looking for! Thank you!",
+      "parentUuid": "0343c633_9d252263",
+      "range": {
+        "startLine": 429,
+        "startChar": 0,
+        "endLine": 433,
+        "endChar": 0
+      },
+      "revId": "576f524dda597dd9b08305829f494bf9e9af0d8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
