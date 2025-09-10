@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "042727e5_bce356c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-10T01:04:10Z",
+      "side": 1,
+      "message": "Note that the MSVC failures are a separate issue, and should be handled once https://chromium-review.googlesource.com/c/chromium/src/+/6933124 lands and we roll it into Dawn.",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
