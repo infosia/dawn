@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b27f41c0_b60c486e",
+        "filename": "src/tint/lang/core/ir/validator_function_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-10T13:13:15Z",
+      "side": 1,
+      "message": "Hm, why didn\u0027t we emit the `@location` here?",
+      "revId": "ab2021744feec12829d7a1ec0a2d84a6110ef6b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0526d6a8_d6a422ee",
+        "filename": "src/tint/lang/core/ir/validator_value_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-10T13:13:15Z",
+      "side": 1,
+      "message": "This one is confusing because the type of `var` is MyStruct, and we don\u0027t show the location line at all in the error.",
+      "revId": "ab2021744feec12829d7a1ec0a2d84a6110ef6b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
