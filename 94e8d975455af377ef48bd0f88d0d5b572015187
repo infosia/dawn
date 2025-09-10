@@ -16,6 +16,267 @@
       "message": "Note that the MSVC failures are a separate issue, and should be handled once https://chromium-review.googlesource.com/c/chromium/src/+/6933124 lands and we roll it into Dawn.",
       "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f15e4e25_e787288e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T12:38:24Z",
+      "side": 1,
+      "message": "LGTM overall, bunch of nits, and IDK why MSVC is unhappy",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2ba3ecf_27e34617",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T12:38:24Z",
+      "side": 1,
+      "message": "u-nit: can this return a pointer since it is mutable?",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1bff689_d147c8d0",
+        "filename": "src/dawn/tests/end2end/EventTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T12:38:24Z",
+      "side": 1,
+      "message": "Note that this call will not take place in Release, did you mean to do\n\n```\nbool flushSuccess \u003d wireHelper.FlushClient();\nDAWN_ASSERT(flushSuccess);\n```\n?",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fa5ec4f_c2ef092e",
+        "filename": "src/dawn/tests/end2end/EventTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T12:38:24Z",
+      "side": 1,
+      "message": "Can we have comments for all the UNSUPPORTED as to why? It\u0027s not super clear.",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b005084_015e7dd3",
+        "filename": "src/dawn/tests/end2end/EventTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T12:38:24Z",
+      "side": 1,
+      "message": "Can we have a TODO to revisit when other backends support the same thing?",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27d0b67d_c149122e",
+        "filename": "src/dawn/wire/client/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T12:38:24Z",
+      "side": 1,
+      "message": "Don\u0027t we want to reload inside `TryComplete`? Otherwise we could be stuck in `EventState::Ready` forever. (we try to exchange Ready for Running, but it was already Running during the CAS and the next iterations it\u0027s Completed)",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6eaf749_db624f00",
+        "filename": "src/dawn/wire/client/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T12:38:24Z",
+      "side": 1,
+      "message": "Do we really want to spinlock in this case instead of using the condition variable? ... Turns out it isn\u0027t a spinlock, wut there\u0027s futex support in C++20 now?",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7a77abb_d7124333",
+        "filename": "src/dawn/wire/client/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T12:38:24Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a53bf961_ef2b93fd",
+        "filename": "src/dawn/wire/client/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T12:38:24Z",
+      "side": 1,
+      "message": "```suggestion\n                               const EventManager::EventMap\u0026 allEvents,\n```",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bc47a1e_84d3605e",
+        "filename": "src/dawn/wire/client/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T12:38:24Z",
+      "side": 1,
+      "message": "```suggestion\n                               EventManager::EventMap* eventsToComplete) {\n```",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1d4ab58_bb2be82d",
+        "filename": "src/dawn/wire/client/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T12:38:24Z",
+      "side": 1,
+      "message": "nit: this seems unnecessary, if the application does it then it does an call with locking and stuff for nothing, but the loops in this function should still work correctly.",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c00ac36f_e73fd625",
+        "filename": "src/dawn/wire/client/EventManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T12:38:24Z",
+      "side": 1,
+      "message": "Is this constructor needed still?",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10f13403_987e317f",
+        "filename": "src/dawn/wire/client/EventManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T12:38:24Z",
+      "side": 1,
+      "message": "nit: Maybe comment what we notify?",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f436069_b954dae9",
+        "filename": "src/dawn/wire/client/EventManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T12:38:24Z",
+      "side": 1,
+      "message": "This patterns appear 3 times, can we do something like \"CleanupCompletedEvents(span\u003cevents\u003e)\" that does the erase and notify?",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 35
+      },
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e750e730_32aabac9",
+        "filename": "src/dawn/wire/client/EventManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T12:38:24Z",
+      "side": 1,
+      "message": "nit: Maybe comment what the condvar is used for?",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
