@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5047c5b1_024efee9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T10:06:16Z",
+      "side": 1,
+      "message": "Very nice! A couple questions but LGTM overall",
+      "revId": "576f524dda597dd9b08305829f494bf9e9af0d8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7214e95e_0018af5e",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T10:06:16Z",
+      "side": 1,
+      "message": "nit: this means that we only support x64 windows CMake builds?",
+      "range": {
+        "startLine": 277,
+        "startChar": 65,
+        "endLine": 277,
+        "endChar": 68
+      },
+      "revId": "576f524dda597dd9b08305829f494bf9e9af0d8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d4587eb_42c18e5d",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-10T10:06:16Z",
+      "side": 1,
+      "message": "Is the copy in main because we force loading of the dll that\u0027s next to the binary?",
+      "revId": "576f524dda597dd9b08305829f494bf9e9af0d8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
