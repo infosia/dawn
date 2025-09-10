@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7080dbef_ae6d602f",
+        "filename": "src/tint/lang/core/ir/validator_function_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-10T20:59:03Z",
+      "side": 1,
+      "message": "The @location is on a member of MyStruct, not on the struct itself or the return value of the function.\n\n(The error is attached to the function itself, because currently the code it structured in a manner that makes it difficult to attach it directly to the return type or the member of the return type.)",
+      "parentUuid": "b27f41c0_b60c486e",
+      "revId": "ab2021744feec12829d7a1ec0a2d84a6110ef6b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0526d6a8_d6a422ee",
         "filename": "src/tint/lang/core/ir/validator_value_test.cc",
         "patchSetId": 2
@@ -31,6 +49,24 @@
       "writtenOn": "2025-09-10T13:13:15Z",
       "side": 1,
       "message": "This one is confusing because the type of `var` is MyStruct, and we don\u0027t show the location line at all in the error.",
+      "revId": "ab2021744feec12829d7a1ec0a2d84a6110ef6b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bcd8e60_f21c31db",
+        "filename": "src/tint/lang/core/ir/validator_value_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-10T20:59:03Z",
+      "side": 1,
+      "message": "Same fundamental issue as above, there is a seperation in the code where validation and error string generation are done in a helper function, and the calling function i.e CheckVar or CheckFunction, is responsible for attaching that error to the output. So the fact that the issue is within a struct type isn\u0027t know at the point where the error is being attached, so it just gets slapped onto the var or func.\n\nThis is consequence of the organic growth of the code, and probably needs a cleanup refactoring. I have filed https://issues.chromium.org/issues/444259584 to investigate this is a followup CL.",
+      "parentUuid": "0526d6a8_d6a422ee",
       "revId": "ab2021744feec12829d7a1ec0a2d84a6110ef6b4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
