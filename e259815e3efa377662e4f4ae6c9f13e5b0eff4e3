@@ -16,6 +16,23 @@
       "message": "Thanks to @rharrison@chromium.org and @dsinclair@chromium.org for their help",
       "revId": "e259815e3efa377662e4f4ae6c9f13e5b0eff4e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a58a51ee_c8469453",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-10T13:03:43Z",
+      "side": 1,
+      "message": "LGTM. Will leave to James to approve.",
+      "revId": "e259815e3efa377662e4f4ae6c9f13e5b0eff4e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
