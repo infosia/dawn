@@ -33,6 +33,24 @@
       "message": "We should check against the actual width of the vector.",
       "revId": "08edecedde8b395e3abe93755d5cd8531188c3bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec8f699a_f6bd03d4",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4044,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-10T13:44:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4893f90c_aa9476e8",
+      "revId": "08edecedde8b395e3abe93755d5cd8531188c3bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
