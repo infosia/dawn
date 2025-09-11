@@ -1751,6 +1751,83 @@ $B1: {  # root
     ASSERT_EQ(expect, str());
 }
 
+// If a location is read with a non-atomic load and later used with an atomic compare-exchange,
+// the atomics lowering must: (1) re-type the storage to atomic<T>, (2) rewrite the earlier load
+// to an atomicLoad, and (3) lower the compare-exchange to atomicCompareExchangeWeak.
+TEST_F(SpirvReader_AtomicsTest, LoadThenAtomicCompareExchange_RewritesLoadToAtomicLoad) {
+    auto* f = b.ComputeFunction("main");
+
+    auto* sb = ty.Struct(mod.symbols.New("S"), {{mod.symbols.New("x"), ty.u32()}});
+
+    core::ir::Var* buf = nullptr;
+    b.Append(mod.root_block, [&] {
+        buf = b.Var("sb", ty.ptr(storage, sb, read_write));
+        buf->SetBindingPoint(0, 0);
+    });
+
+    b.Append(f->Block(), [&] {
+        // Non-atomic load first
+        auto* p = b.Access(ty.ptr<storage, u32, read_write>(), buf, 0_u);
+        b.Load(p);
+        // Then an atomic compare-exchange on the same location
+        b.Call<spirv::ir::BuiltinCall>(ty.u32(), spirv::BuiltinFn::kAtomicCompareExchange, p, 1_u,
+                                       0_u, 0_u, 4_u, 5_u);
+        b.Return(f);
+    });
+
+    auto* src = R"(
+S = struct @align(4) {
+  x:u32 @offset(0)
+}
+
+$B1: {  # root
+  %sb:ptr<storage, S, read_write> = var undef @binding_point(0, 0)
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:ptr<storage, u32, read_write> = access %sb, 0u
+    %4:u32 = load %3
+    %5:u32 = spirv.atomic_compare_exchange %3, 1u, 0u, 0u, 4u, 5u
+    ret
+  }
+}
+)";
+    ASSERT_EQ(src, str());
+
+    Run(Atomics);
+
+    auto* expect = R"(
+S = struct @align(4) {
+  x:u32 @offset(0)
+}
+
+__atomic_compare_exchange_result_u32 = struct @align(4) {
+  old_value:u32 @offset(0)
+  exchanged:bool @offset(4)
+}
+
+S_atomic = struct @align(4) {
+  x:atomic<u32> @offset(0)
+}
+
+$B1: {  # root
+  %sb:ptr<storage, S_atomic, read_write> = var undef @binding_point(0, 0)
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:ptr<storage, atomic<u32>, read_write> = access %sb, 0u
+    %4:u32 = atomicLoad %3
+    %5:__atomic_compare_exchange_result_u32 = atomicCompareExchangeWeak %3, 5u, 4u
+    %6:u32 = access %5, 0u
+    ret
+  }
+}
+)";
+    ASSERT_EQ(expect, str());
+}
+
 TEST_F(SpirvReader_AtomicsTest, AtomicStore) {
     auto* f = b.ComputeFunction("main");
 

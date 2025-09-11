@@ -179,6 +179,9 @@ struct State {
             }
         }
 
+        // Find and convert all loads/stores from atomic storage that weren't already converted
+        ConvertRemainingAtomicAccesses();
+
         ProcessForkedStructs();
         ReplaceStructTypes();
 
@@ -347,6 +350,42 @@ struct State {
                 }
             },
             TINT_ICE_ON_NO_MATCH);
+    }
+
+    void ConvertRemainingAtomicAccesses() {
+        // Find all loads/stores from atomic storage that haven't been converted yet
+        for (auto* inst : ir.Instructions()) {
+            tint::Switch(
+                inst,
+                [&](core::ir::Load* ld) {
+                    auto* from_ty = ld->From()->Type()->As<core::type::Pointer>();
+                    if (!from_ty) return;
+                    
+                    // Check if loading from atomic storage
+                    if (from_ty->StoreType()->Is<core::type::Atomic>()) {
+                        // Convert to atomic load
+                        b.InsertBefore(ld, [&] {
+                            b.CallWithResult(ld->DetachResult(), core::BuiltinFn::kAtomicLoad,
+                                             ld->From());
+                        });
+                        ld->Destroy();
+                    }
+                },
+                [&](core::ir::Store* st) {
+                    auto* to_ty = st->To()->Type()->As<core::type::Pointer>();
+                    if (!to_ty) return;
+                    
+                    // Check if storing to atomic storage
+                    if (to_ty->StoreType()->Is<core::type::Atomic>()) {
+                        // Convert to atomic store
+                        b.InsertBefore(st, [&] {
+                            b.Call(ty.void_(), core::BuiltinFn::kAtomicStore, st->To(), st->From());
+                        });
+                        st->Destroy();
+                    }
+                }
+            );
+        }
     }
 
     void ConvertUsagesToAtomic(core::ir::Value* val) {
