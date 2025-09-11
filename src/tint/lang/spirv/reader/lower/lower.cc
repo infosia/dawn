@@ -30,6 +30,7 @@
 #include "src/tint/lang/core/ir/transform/dead_code_elimination.h"
 #include "src/tint/lang/core/ir/transform/remove_terminator_args.h"
 #include "src/tint/lang/core/ir/validator.h"
+#include "src/tint/lang/spirv/reader/lower/localize_pointers.h"
 #include "src/tint/lang/spirv/reader/lower/atomics.h"
 #include "src/tint/lang/spirv/reader/lower/builtins.h"
 #include "src/tint/lang/spirv/reader/lower/decompose_strided_array.h"
@@ -72,6 +73,10 @@ Result<SuccessType> Lower(core::ir::Module& mod) {
     // transform is also complicated because of the way it currently detects multi element `&&` and
     // `||` statements.
     RUN_TRANSFORM(core::ir::transform::RemoveTerminatorArgs, mod);
+
+    // Guarantee dominance for pointer operands used after conditionalization by
+    // re-materializing simple access chains at the use site.
+    RUN_TRANSFORM(lower::LocalizePointers, mod);
 
     auto res =
         core::ir::ValidateAndDumpIfNeeded(mod, "spirv.Lower",
