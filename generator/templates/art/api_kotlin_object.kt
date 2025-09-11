@@ -33,6 +33,7 @@ import java.nio.ByteBuffer
 
 public class {{ obj.name.CamelCase() }}(public val handle: Long): AutoCloseable {
     {% for method in obj.methods if include_method(method) %}
+        @JvmOverloads
         @FastNative
         @JvmName("{{ method.name.camelCase() }}")
         {{ kotlin_annotation(kotlin_return(method)) }} public external fun {{ method.name.camelCase() }}(
