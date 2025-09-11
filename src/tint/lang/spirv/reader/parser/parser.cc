@@ -1492,9 +1492,19 @@ class Parser {
         for (auto& func : *spirv_context_->module()) {
             current_spirv_function_ = &func;
 
+            Vector<size_t, 2> params_needing_load;
             Vector<core::ir::FunctionParam*, 4> params;
             func.ForEachParam([&](spvtools::opt::Instruction* spirv_param) {
-                auto* param = b_.FunctionParam(Type(spirv_param->type_id()));
+                auto* param_ty = Type(spirv_param->type_id());
+                // A pointer to a texture or sampler needs to remove the pointer from the param
+                if (auto* ptr = param_ty->As<core::type::Pointer>()) {
+                    if (ptr->StoreType()->IsAnyOf<spirv::type::Image, core::type::Sampler>()) {
+                        param_ty = ptr->StoreType();
+                        params_needing_load.Push(params.Length());
+                    }
+                }
+
+                auto* param = b_.FunctionParam(param_ty);
                 values_.Add(spirv_param->result_id(), param);
 
                 Symbol name = GetSymbolFor(spirv_param->result_id());
@@ -1515,6 +1525,7 @@ class Parser {
             }
 
             functions_.Add(func.result_id(), current_function_);
+            function_params_needing_load_.Add(current_function_, std::move(params_needing_load));
             current_spirv_function_ = nullptr;
         }
 
@@ -4278,7 +4289,29 @@ class Parser {
 
     /// @param inst the SPIR-V instruction for OpFunctionCall
     void EmitFunctionCall(const spvtools::opt::Instruction& inst) {
-        Emit(b_.Call(Function(inst.GetSingleWordInOperand(0)), Args(inst, 3)), inst.result_id());
+        auto* fn = Function(inst.GetSingleWordInOperand(0));
+        auto args_needing_load = function_params_needing_load_.Get(fn);
+
+        Vector<core::ir::Value*, 4> args;
+        for (uint32_t i = 3; i < inst.NumOperandWords(); i++) {
+            auto* val = Value(inst.GetSingleWordOperand(i));
+            if (args_needing_load) {
+                auto len = args.Length();
+                for (auto idx : *args_needing_load) {
+                    if (idx == len) {
+                        auto* ld = b_.Load(val);
+                        EmitWithoutSpvResult(ld);
+                        val = ld->Result();
+                    }
+                    if (idx > len) {
+                        break;
+                    }
+                }
+            }
+            args.Push(val);
+        }
+
+        Emit(b_.Call(fn, args), inst.result_id());
     }
 
     /// @param inst the SPIR-V instruction for OpVariable
@@ -4442,6 +4475,10 @@ class Parser {
     Hashmap<TypeKey, const core::type::Type*, 16> types_;
     /// A map from a SPIR-V function definition result ID to the corresponding Tint function object.
     Hashmap<uint32_t, core::ir::Function*, 8> functions_;
+    /// A map from a IR function to any parameter indexes which are required to be loaded when
+    /// calling the function (this is for things like spirv.image or sampler which do not get passed
+    /// as pointers in WGSL.
+    Hashmap<core::ir::Function*, Vector<size_t, 2>, 2> function_params_needing_load_;
     /// A map from a SPIR-V result ID to the corresponding Tint value object.
     Hashmap<uint32_t, core::ir::Value*, 8> values_;
     /// Maps a `group` number to the largest seen `binding` value for that group
