@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0c0327e8_24556ef9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-11T18:59:02Z",
+      "side": 1,
+      "message": "Looks like the underlying issue is that the assembler doesn\u0027t explicitly set the input_format, so it can be any random value (yay UB), which causes annoying fallthrough/failure.\n\nSo the patch for the assembler is in \u0027src/tint/cmd/fuzz/ir/as/main.cc\u0027 to do something like this:\n```\ndiff --git a/src/tint/cmd/fuzz/ir/as/main.cc b/src/tint/cmd/fuzz/ir/as/main.cc\nindex 51e1b1e609..edce03b55d 100644\n--- a/src/tint/cmd/fuzz/ir/as/main.cc\n+++ b/src/tint/cmd/fuzz/ir/as/main.cc\n@@ -261,6 +261,7 @@ bool ProcessFile(const Options\u0026 options) {\n     tint::cmd::LoadProgramOptions opts;\n     opts.filename \u003d options.input_filename;\n     opts.printer \u003d options.printer.get();\n+    opts.input_format \u003d tint::cmd::InputFormat::kWgsl;\n \n     auto info \u003d tint::cmd::LoadProgramInfo(opts);\n     if (!info.program.IsValid()) {\n```\n\nI would suggest changing load() in LoadProgramInfo to not use fallthrough in the kUnknown case, but instead move the error message/exit up into that case branch and assert (either using TINT_ICE or UNREACHABLE) if we manage to get to the bottom of the switch-case block to catch problems like this, since it is unclear currently with teh error message is it is a \u0027kUnknown\u0027 value or an unexpected value.",
+      "parentUuid": "f0b09bd3_62b5c2c1",
+      "revId": "4ffa5ea7a6d398fa4f3ed3e2b427c6f4796df60d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0db65281_ae10f696",
         "filename": "src/tint/cmd/common/helper.h",
         "patchSetId": 3
