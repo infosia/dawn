@@ -16,6 +16,29 @@
       "message": "Patchset 3: Added `#include\u003calgorithm\u003e` presubmit apparently complained about. I cannot debug the other checks because I do not have a running Linux or Mac system.",
       "revId": "4ffa5ea7a6d398fa4f3ed3e2b427c6f4796df60d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0db65281_ae10f696",
+        "filename": "src/tint/cmd/common/helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-11T12:03:40Z",
+      "side": 1,
+      "message": "The mac build error is due to the change of sign for `items_read`. It\u0027s a `size_t` but the addition here expects a long. Maybe just change to `uint32_t(items_read)` ?",
+      "range": {
+        "startLine": 285,
+        "startChar": 49,
+        "endLine": 285,
+        "endChar": 59
+      },
+      "revId": "4ffa5ea7a6d398fa4f3ed3e2b427c6f4796df60d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
