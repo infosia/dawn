@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9e4fbb5_900da8b0",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T00:00:05Z",
+      "side": 1,
+      "message": "My bad, sorry. IMO the DAWN_ASSERT only needs to check the *requested* swizzle \u003d\u003d RGBA, it\u0027s more complicated and unnecessary to check the metal-specific swizzle with R001 applied. The goal is just to have an ASSERT that validation has prevented us from reaching a case where we ignore the swizzle provided by the user.\n\nHow about factoring it out (I should have suggested that before):\n\n```\nstatic constexpr wgpu::TextureComponentSwizzle kR001Swizzle \u003d {\n  wgpu::ComponentSwizzle::R,\n  wgpu::ComponentSwizzle::Zero,\n  wgpu::ComponentSwizzle::Zero,\n  wgpu::ComponentSwizzle::One,\n};\nstatic constexpr wgpu::TextureComponentSwizzle kRGBASwizzle \u003d {\n  wgpu::ComponentSwizzle::R,\n  wgpu::ComponentSwizzle::G,\n  wgpu::ComponentSwizzle::B,\n  wgpu::ComponentSwizzle::A,\n};\n\nstd::optional\u003cMTLTextureSwizzleChannels\u003e TextureView::ComputeMetalSwizzle() {\n  if (!SupportTextureComponentSwizzle(ToBackend(device)-\u003eGetMTLDevice())) {\n    // Validation should have prevented the user requesting a swizzle.\n    DAWN_ASSERT(AreSwizzleEquivalent(GetFrontendSwizzle(), kRGBASwizzle));\n    return {};\n  }\n\n  // If possible, a backend swizzle is always used for depth-stencil.\n  // If not, we returned {} above so G/B/A will be undefined.\n  if (texture-\u003eGetFormat().HasDepthOrStencil()) {\n    return ToMetalTextureSwizzleChannels(ComposeSwizzle(kR001Swizzle, GetFrontendSwizzle()));\n  }\n\n  if (!AreSwizzleEquivalent(GetFrontendSwizzle(), kRGBASwizzle)) {\n    return ToMetalTextureSwizzleChannels(GetFrontendSwizzle());\n  }\n\n  return {};\n}\n```\n\nThis will eliminate the need for several of the other helpers.",
+      "parentUuid": "07e3ced3_9ee8b743",
+      "range": {
+        "startLine": 827,
+        "startChar": 80,
+        "endLine": 827,
+        "endChar": 87
+      },
+      "revId": "278400f076640fca95f328a6f68c7cd089fe8d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cb4a06ee_84398aa9",

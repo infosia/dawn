@@ -18,6 +18,29 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae7b5b11_ad943b00",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1756,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T00:00:05Z",
+      "side": 1,
+      "message": "This is Metal-specific and shouldn\u0027t be here. R001 as a special concept should ONLY exist in Metal, not the frontend.",
+      "range": {
+        "startLine": 1749,
+        "startChar": 0,
+        "endLine": 1756,
+        "endChar": 5
+      },
+      "revId": "39437d89f09bf609195daf60e4b96697da5cb3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "259bb668_c3603352",
@@ -94,6 +117,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8482cb0a_aec52e19",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T00:00:05Z",
+      "side": 1,
+      "message": "I requested it be in this order so it would match WGSL `value.r001.rgba` for example. Personally I think that makes it easier to understand instead of looking at it the other way like `swiz_rgba(swiz_r001(value))` or `(swiz_rgba ∘ swiz_r001)(value)`.\n\nRegardless we should have a comment at least that explains the order succinctly, it\u0027s hard to read the code to figure it out.",
+      "parentUuid": "6eabe0ca_b5cf7525",
+      "range": {
+        "startLine": 309,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 53
+      },
+      "revId": "39437d89f09bf609195daf60e4b96697da5cb3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a30dce5d_86f9c75b",
         "filename": "src/dawn/native/Texture.h",
         "patchSetId": 11
@@ -105,6 +152,29 @@
       "writtenOn": "2025-09-10T15:17:49Z",
       "side": 1,
       "message": "There is no ordering constraints.\n\n```suggestion\n    static bool AreSwizzleEquivalent(wgpu::TextureComponentSwizzle a,\n                                     wgpu::TextureComponentSwizzle b);\n```",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 82
+      },
+      "revId": "39437d89f09bf609195daf60e4b96697da5cb3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a161ad36_3fd03d19",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T00:00:05Z",
+      "side": 1,
+      "message": "nit: The need for this helper could be eliminated by adding a [default comparison](https://en.cppreference.com/w/cpp/language/default_comparisons.html) `bool operator\u003d\u003d(const TextureComponentSwizzle\u0026) const \u003d default;` to the definition in `webgpu_cpp.h`.",
       "range": {
         "startLine": 311,
         "startChar": 0,
@@ -168,6 +238,24 @@
       "writtenOn": "2025-09-10T15:17:49Z",
       "side": 1,
       "message": "nit: Can we have a getter for this on TextureView so we don\u0027t need to reconstruct the swizzle every time in the backends?",
+      "revId": "39437d89f09bf609195daf60e4b96697da5cb3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37a7f2fb_d3ac059a",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T00:00:05Z",
+      "side": 1,
+      "message": "in my pseudocode I\u0027ll call this `GetFrontendSwizzle()`",
+      "parentUuid": "d8eee50c_7806b4d0",
       "revId": "39437d89f09bf609195daf60e4b96697da5cb3f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
