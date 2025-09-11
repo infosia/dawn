@@ -50,6 +50,24 @@
       "message": "What if we haven\u0027t processed the callee function yet? SPIR-V doesn\u0027t require that callees are defined before their callers.",
       "revId": "19a11b7179a6e197e930fd84bd1ac8bb00dd4fe3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a30dbe9_3f20891d",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4293,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-11T19:44:49Z",
+      "side": 1,
+      "message": "If you look in `EmitFunction` we emit all the functions, and then emit all the functions bodies, so the functions are guaranteed to already exist.",
+      "parentUuid": "df97fc89_ef3968c4",
+      "revId": "19a11b7179a6e197e930fd84bd1ac8bb00dd4fe3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
