@@ -73,6 +73,9 @@
                         //* This container type is represented in Kotlin as a primitive array.
                         out = reinterpret_cast<const uint32_t*>(c->GetIntArrayElements(in));
                         outLength = env->GetArrayLength(in);
+                    {% elif member.type.category in ['bitmask', 'enum']%}
+                        out = reinterpret_cast<const {{ as_cType(member.type.name) }}*>(c->GetIntArrayElements(in));
+                        outLength = env->GetArrayLength(in);
                     {% elif member.type.name.get() == 'void' %}
                         out = env->GetDirectBufferAddress(in);
                         outLength = env->GetDirectBufferCapacity(in);
@@ -82,15 +85,7 @@
                         auto array = c->AllocArray<{{ as_cType(member.type.name) }}>(outLength);
                         out = array;
 
-                        {% if member.type.category in ['bitmask', 'enum'] %}
-                            jclass memberClass = classes->{{ member.type.name.camelCase() }};
-                            jmethodID getValue = env->GetMethodID(memberClass, "getValue", "()I");
-                            for (int idx = 0; idx != outLength; idx++) {
-                                jobject element = env->GetObjectArrayElement(in, idx);
-                                array[idx] = static_cast<{{ as_cType(member.type.name) }}>(
-                                        env->CallIntMethod(element, getValue));
-                            }
-                        {% elif member.type.category == 'object' %}
+                        {% if member.type.category == 'object' %}
                             jclass memberClass = classes->{{ member.type.name.camelCase() }};
                             jmethodID getHandle = env->GetMethodID(memberClass, "getHandle", "()J");
                             for (int idx = 0; idx != outLength; idx++) {
