@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8e33dd6_7697f4e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T22:26:18Z",
+      "side": 1,
+      "message": "LGTM but I think this needs a second review",
+      "revId": "8fce6bdae03c456e93b2db46c8197607f9f33534",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08292a92_1dc77f5b",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T22:26:18Z",
+      "side": 1,
+      "message": "Comment here or in the class summary that unlike MutexProtected these don\u0027t guarantee the lock is held for the entire callback, because waiting on the condvar releases it",
+      "revId": "8fce6bdae03c456e93b2db46c8197607f9f33534",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fdfb8c4_c2ac6a85",
+        "filename": "src/dawn/tests/unittests/MutexProtectedTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T22:26:18Z",
+      "side": 1,
+      "message": "Couldn\u0027t this condition potentially be satisfied many times, depending on the order of increments and decrements?\n\nIIUC line 306 should be safe because the lock is still held after the WaitFor (I assume the condvar guarantees its condition is still true until the lock is released), but line 308 could fail?",
+      "revId": "8fce6bdae03c456e93b2db46c8197607f9f33534",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
