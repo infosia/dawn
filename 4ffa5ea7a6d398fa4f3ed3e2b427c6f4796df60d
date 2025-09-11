@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f0b09bd3_62b5c2c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-11T17:54:17Z",
+      "side": 1,
+      "message": "Looks like the issue is that this change has impacted how the assembler handles inputs, since it uses some of the shared helper code. I will need to dig in a bit to determine the exact cause/fix/",
+      "parentUuid": "e9cf036e_fe7557a3",
+      "revId": "4ffa5ea7a6d398fa4f3ed3e2b427c6f4796df60d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0db65281_ae10f696",
         "filename": "src/tint/cmd/common/helper.h",
         "patchSetId": 3
