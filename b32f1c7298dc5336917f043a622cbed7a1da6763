@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c1aa6b7_c5948397",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3578208
+      },
+      "writtenOn": "2025-09-11T14:17:37Z",
+      "side": 1,
+      "message": "Patch Set 4: New try",
+      "revId": "b32f1c7298dc5336917f043a622cbed7a1da6763",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

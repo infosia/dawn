@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a9b4f817_f5cb31ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3578208
+      },
+      "writtenOn": "2025-09-11T14:17:37Z",
+      "side": 1,
+      "message": "I am having difficulty parsing the command line of the error report. Which part is the `tint` executable? Is it possible to view the content of the files?",
+      "parentUuid": "ca202ecd_dae22757",
+      "revId": "4ffa5ea7a6d398fa4f3ed3e2b427c6f4796df60d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0db65281_ae10f696",
         "filename": "src/tint/cmd/common/helper.h",
         "patchSetId": 3
@@ -48,6 +66,30 @@
       "writtenOn": "2025-09-11T12:03:40Z",
       "side": 1,
       "message": "The mac build error is due to the change of sign for `items_read`. It\u0027s a `size_t` but the addition here expects a long. Maybe just change to `uint32_t(items_read)` ?",
+      "range": {
+        "startLine": 285,
+        "startChar": 49,
+        "endLine": 285,
+        "endChar": 59
+      },
+      "revId": "4ffa5ea7a6d398fa4f3ed3e2b427c6f4796df60d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "595da244_b6903745",
+        "filename": "src/tint/cmd/common/helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 3578208
+      },
+      "writtenOn": "2025-09-11T14:17:37Z",
+      "side": 1,
+      "message": "Patch set 4: Casting to `int32_t` explicitly",
+      "parentUuid": "0db65281_ae10f696",
       "range": {
         "startLine": 285,
         "startChar": 49,
