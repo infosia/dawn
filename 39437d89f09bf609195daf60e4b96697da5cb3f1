@@ -341,6 +341,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db7cdcfb_668b7143",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T20:34:12Z",
+      "side": 1,
+      "message": "You can also search for a C++ symbol name even if the string doesn\u0027t actually appear in the code, e.g. [`TextureViewQuery::operator\u003d\u003d`](https://source.chromium.org/search?q\u003df:%5Ethird_party%2Fdawn%20TextureViewQuery::operator%3D%3D\u0026ss\u003dchromium%2Fchromium%2Fsrc\u0026ssfr\u003d1).",
+      "parentUuid": "0933c359_1b7d308e",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 82
+      },
+      "revId": "39437d89f09bf609195daf60e4b96697da5cb3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3bada11_965fbf75",

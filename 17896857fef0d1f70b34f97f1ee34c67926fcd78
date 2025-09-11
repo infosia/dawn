@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44f26de7_0ec1879d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T20:34:12Z",
+      "side": 1,
+      "message": "a",
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df1e0442_828de122",
@@ -147,6 +164,24 @@
       "side": 1,
       "message": "It sounds like `RequiresCreatingNewTextureView` is misnamed. It checks both whether we *allow* creating a new texture view and whether we require it. It should be something like `ShouldCreateNewTextureView`. (Since evidently that method has somewhat complex logic, I think putting the `mtlSwizzle` check inside there makes sense, even though it\u0027s a trivial check.)\n\nI am guessing this is related to `RENDER_ATTACHMENT` and `STORAGE_BINDING` not allowing swizzles. Specifically one of these two [`return false;`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/metal/TextureMTL.mm;l\u003d134,148;drc\u003de095571be47008e6deca936cd0b8b45d1c937ca9) cases is probably no longer correct. I am not exactly sure why though.\n\nIf you run this with `--enable-backend-validation` (dawn) / `--enable-dawn-backend-validation` (chrome) hopefully you can get the Metal debug layer to tell you the exact error.",
       "parentUuid": "75ece351_ed836f23",
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59ac0071_ec4bb03e",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T20:34:12Z",
+      "side": 1,
+      "message": "Right after I wrote this I think I realized the problem. The logic in ComputeMetalSwizzle assumes all depth-stencil views should have R001 applied to them. Of course most depth-stencil views are just for using as RENDER_ATTACHMENT which means the swizzle doesn\u0027t mean anything and probably isn\u0027t allowed.\n\nThis does raise a problem though, if you create a view of a depth-stencil view with default swizzle and RENDER_ATTACHMENT|TEXTURE_BINDING usages, then we need R001 for the TEXTURE_BINDING usage but can\u0027t have it for the RENDER_ATTACHMENT usage.\n\nIf my guess is correct that Metal doesn\u0027t allow swizzles on render attachments, that means we would actually need each depth-stencil GPUTextureView to potentially have two different MTLTexture views behind it, a readable one with R001 and a writable one without. And what we should do for now is ONLY apply the R001 if the view has an appropriate subset of usages. Later we can figure out if we want to have two MTLTexture views. We\u0027ll also have to mention this to the WG, even though the spec does not require the R001 fix, because others will be interested. I also think as soon as WebGPU stops supporting Mac1 devices, we will want to require the R001 fix.",
+      "parentUuid": "70f775e9_6ee94698",
       "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
