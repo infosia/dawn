@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da24bf59_1cd0f22c",
+        "filename": "src/tint/lang/core/ir/validator_function_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-11T00:33:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7080dbef_ae6d602f",
+      "revId": "ab2021744feec12829d7a1ec0a2d84a6110ef6b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0526d6a8_d6a422ee",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "Same fundamental issue as above, there is a seperation in the code where validation and error string generation are done in a helper function, and the calling function i.e CheckVar or CheckFunction, is responsible for attaching that error to the output. So the fact that the issue is within a struct type isn\u0027t know at the point where the error is being attached, so it just gets slapped onto the var or func.\n\nThis is consequence of the organic growth of the code, and probably needs a cleanup refactoring. I have filed https://issues.chromium.org/issues/444259584 to investigate this is a followup CL.",
       "parentUuid": "0526d6a8_d6a422ee",
+      "revId": "ab2021744feec12829d7a1ec0a2d84a6110ef6b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca8a30ca_5466e9d9",
+        "filename": "src/tint/lang/core/ir/validator_value_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-11T00:33:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3bcd8e60_f21c31db",
       "revId": "ab2021744feec12829d7a1ec0a2d84a6110ef6b4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
