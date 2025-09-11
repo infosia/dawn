@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f10bb3bb_4a230eff",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1855,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-11T09:07:53Z",
+      "side": 1,
+      "message": "Note that I\u0027ll remove `GetSwizzleRed` and friends in follow-up CLs.",
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

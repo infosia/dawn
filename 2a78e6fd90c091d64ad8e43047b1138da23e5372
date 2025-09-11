@@ -81,6 +81,30 @@
       },
       "revId": "2a78e6fd90c091d64ad8e43047b1138da23e5372",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bc299a4_d689c3b8",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-11T09:07:53Z",
+      "side": 1,
+      "message": "I\u0027ve switched to `TextureView::ComputeMetalSwizzle()` as suggested by Kai.",
+      "parentUuid": "ed04a057_e2d382ee",
+      "range": {
+        "startLine": 829,
+        "startChar": 0,
+        "endLine": 851,
+        "endChar": 5
+      },
+      "revId": "2a78e6fd90c091d64ad8e43047b1138da23e5372",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
