@@ -68,6 +68,24 @@
       "parentUuid": "df97fc89_ef3968c4",
       "revId": "19a11b7179a6e197e930fd84bd1ac8bb00dd4fe3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f2d688b_d7035589",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4293,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-11T19:47:32Z",
+      "side": 1,
+      "message": "Ah yes, that\u0027s good.",
+      "parentUuid": "5a30dbe9_3f20891d",
+      "revId": "19a11b7179a6e197e930fd84bd1ac8bb00dd4fe3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
