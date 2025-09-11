@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b86bc454_dbef3fbe",
+        "filename": "src/dawn/native/CopyTextureForBrowserHelper.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-09-11T00:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bb94365_bdf5945d",
+      "revId": "e808514ec5c9e41fc293219ac69979c4d506d1d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "45e7218a_6dd63ab2",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-09-10T10:01:35Z",
       "side": 1,
       "message": "```suggestion\n    const Format\u0026 dstFormat \u003d destination.texture-\u003eGetFormat();\n    DAWN_INVALID_IF(dstFormat.aspects !\u003d Aspect::Color, \"The destination %s is not a color texture.\", destination.texture);\n    DAWN_INVALID_IF(dstFormat.GetAspectInfo(Aspect::Color).baseType !\u003d TextureComponentType::Float, \"The destination %s is not a floating point texture.\", destination.texture);\n```",
+      "range": {
+        "startLine": 612,
+        "startChar": 0,
+        "endLine": 613,
+        "endChar": 50
+      },
+      "revId": "e808514ec5c9e41fc293219ac69979c4d506d1d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19100e6c_2a6a42cd",
+        "filename": "src/dawn/native/CopyTextureForBrowserHelper.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-09-11T00:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45e7218a_6dd63ab2",
       "range": {
         "startLine": 612,
         "startChar": 0,
