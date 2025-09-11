@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "32f9c97b_891d84b1",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-11T07:02:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2ba3ecf_27e34617",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a1bff689_d147c8d0",
@@ -65,6 +83,24 @@
       "writtenOn": "2025-09-10T12:38:24Z",
       "side": 1,
       "message": "Note that this call will not take place in Release, did you mean to do\n\n```\nbool flushSuccess \u003d wireHelper.FlushClient();\nDAWN_ASSERT(flushSuccess);\n```\n?",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e671895_d5b16ed9",
+        "filename": "src/dawn/tests/end2end/EventTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-11T07:02:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1bff689_d147c8d0",
       "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +122,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "99ca7943_7763f815",
+        "filename": "src/dawn/tests/end2end/EventTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-11T07:02:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fa5ec4f_c2ef092e",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5b005084_015e7dd3",
@@ -99,6 +153,24 @@
       "writtenOn": "2025-09-10T12:38:24Z",
       "side": 1,
       "message": "Can we have a TODO to revisit when other backends support the same thing?",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5eff9cd2_5d38d001",
+        "filename": "src/dawn/tests/end2end/EventTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-11T07:02:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b005084_015e7dd3",
       "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -120,6 +192,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b442570_4492c85c",
+        "filename": "src/dawn/wire/client/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-11T07:02:54Z",
+      "side": 1,
+      "message": "`compare_exchange_strong` actually loads the value into `state` if it\u0027s not `EventState::Running` already.",
+      "parentUuid": "27d0b67d_c149122e",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c6eaf749_db624f00",
@@ -133,6 +223,24 @@
       "writtenOn": "2025-09-10T12:38:24Z",
       "side": 1,
       "message": "Do we really want to spinlock in this case instead of using the condition variable? ... Turns out it isn\u0027t a spinlock, wut there\u0027s futex support in C++20 now?",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "300e7904_d7ad12f0",
+        "filename": "src/dawn/wire/client/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-11T07:02:54Z",
+      "side": 1,
+      "message": "🥳! This is also the reason why it\u0027s failing on msvc though. But that should be solved once I land some upstream chromium changes and roll them into `build`.\n\nAlso, even if it is a spinlock, I don\u0027t think it\u0027s too bad since it would effectively appear as if we are running the callback which would\u0027ve happened anyways?",
+      "parentUuid": "c6eaf749_db624f00",
       "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -154,6 +262,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a9b29de_4a3e4f3e",
+        "filename": "src/dawn/wire/client/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-11T07:02:54Z",
+      "side": 1,
+      "message": "No longer applicable based on other comment.",
+      "parentUuid": "a7a77abb_d7124333",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a53bf961_ef2b93fd",
@@ -167,6 +293,24 @@
       "writtenOn": "2025-09-10T12:38:24Z",
       "side": 1,
       "message": "```suggestion\n                               const EventManager::EventMap\u0026 allEvents,\n```",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be9578ca_bb872092",
+        "filename": "src/dawn/wire/client/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-11T07:02:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a53bf961_ef2b93fd",
       "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -188,6 +332,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e758ea5_cacdc8f1",
+        "filename": "src/dawn/wire/client/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-11T07:02:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bc47a1e_84d3605e",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1d4ab58_bb2be82d",
@@ -205,6 +367,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c97b5702_c7fba7e4",
+        "filename": "src/dawn/wire/client/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-11T07:02:54Z",
+      "side": 1,
+      "message": "I think it actually matters right now because `anyCompleted` will actually be `false` and we will get `WGPUWaitStatus_TimedOut` instead of `WGPUWaitStatus_Success` which is what is expected.",
+      "parentUuid": "e1d4ab58_bb2be82d",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c00ac36f_e73fd625",
@@ -218,6 +398,24 @@
       "writtenOn": "2025-09-10T12:38:24Z",
       "side": 1,
       "message": "Is this constructor needed still?",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e50b7eba_ca60b7c7",
+        "filename": "src/dawn/wire/client/EventManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-11T07:02:54Z",
+      "side": 1,
+      "message": "Nope! Done.",
+      "parentUuid": "c00ac36f_e73fd625",
       "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -262,6 +460,48 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b16e598_770e2f66",
+        "filename": "src/dawn/wire/client/EventManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-11T07:02:54Z",
+      "side": 1,
+      "message": "Removed the notify call and moved it upwards so that it\u0027s in the helper wrapper. (See parent CL where `Use` now automatically notifies the cv, whereas `ConstUse` does not.)",
+      "parentUuid": "10f13403_987e317f",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bd0a1fb_12de3df0",
+        "filename": "src/dawn/wire/client/EventManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-11T07:02:54Z",
+      "side": 1,
+      "message": "No longer applicable based on other comment.",
+      "parentUuid": "6f436069_b954dae9",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 35
+      },
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e750e730_32aabac9",
@@ -275,6 +515,24 @@
       "writtenOn": "2025-09-10T12:38:24Z",
       "side": 1,
       "message": "nit: Maybe comment what the condvar is used for?",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "248bc3ff_bbd2ad16",
+        "filename": "src/dawn/wire/client/EventManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-11T07:02:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e750e730_32aabac9",
       "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
