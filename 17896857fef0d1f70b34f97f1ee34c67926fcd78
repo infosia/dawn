@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "df1e0442_828de122",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T19:09:36Z",
+      "side": 1,
+      "message": "Could you switch the order of this function to match? Also, these two helpers should be next to each other.",
+      "range": {
+        "startLine": 992,
+        "startChar": 13,
+        "endLine": 992,
+        "endChar": 36
+      },
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f10bb3bb_4a230eff",
         "filename": "src/dawn/native/Texture.cpp",
         "patchSetId": 12
@@ -14,6 +37,81 @@
       "writtenOn": "2025-09-11T09:07:53Z",
       "side": 1,
       "message": "Note that I\u0027ll remove `GetSwizzleRed` and friends in follow-up CLs.",
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31cf460b_5fe40fc9",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1855,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T19:09:36Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f10bb3bb_4a230eff",
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65be2445_d8651ee7",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T19:09:36Z",
+      "side": 1,
+      "message": "suggestion for clarity:\n\n```suggestion\n// Computes a swizzle which, when applied, is equivalent to applying `firstSwizzle`\n// then `secondSwizzle`, like the order of WGSL swizzles (`value.rgba.rgba`).\n```",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 45
+      },
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d69bf627_438f1da8",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T19:09:36Z",
+      "side": 1,
+      "message": "nit: for this one, \"firstSwizzle\" / \"secondSwizzle\" naming was clearer.",
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ac99a5f_b809c94c",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T19:09:36Z",
+      "side": 1,
+      "message": "nit: IMO this should be close to where it\u0027s used.\n(Actually, it\u0027s only used once, so it could just be *inside* the function now that I think of it.)",
       "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -31,6 +129,24 @@
       "writtenOn": "2025-09-11T13:57:28Z",
       "side": 1,
       "message": "This causes GPU to crash because we\u0027re asking to create new view regardless of the other cases in `RequiresCreatingNewTextureView`  where we returned `false`. I\u0027ve added logs as you can see, and creating a texture view with `R001` swizzle on `Depth16Unorm` is not allowed and makes GPU crash on macOS.\n\n```\nComputeMetalSwizzle() for texture format: TextureFormat::Depth16Unorm\nHasDepthOrStencil()\nswizzle: [ComponentSwizzle::R, ComponentSwizzle::Zero, ComponentSwizzle::Zero, ComponentSwizzle::One]\n[18518:12168639:0911/152041.772513:ERROR:gpu/command_buffer/service/dawn_context_provider.cc:111] Failed to create MTLTexture view.\n - While handling unexpected error type Internal when allowed errors are (Validation|DeviceLost).\n    at Initialize (../../third_party/dawn/src/dawn/native/metal/TextureMTL.mm:884)\n    at Create (../../third_party/dawn/src/dawn/native/metal/TextureMTL.mm:815)\n```\n\nI\u0027ve fixed the GPU crash by going back to this code (which I\u0027m not sure anymore is the right way) but CTS tests still fail.\n\n```\n    bool needsNewView \u003d RequiresCreatingNewTextureView(texture, GetInternalUsage(), descriptor,\n                                                       mtlSwizzle.has_value());\n```\n\nI can\u0027t figure out what is going on anymore... 😢",
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70f775e9_6ee94698",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T19:09:36Z",
+      "side": 1,
+      "message": "It sounds like `RequiresCreatingNewTextureView` is misnamed. It checks both whether we *allow* creating a new texture view and whether we require it. It should be something like `ShouldCreateNewTextureView`. (Since evidently that method has somewhat complex logic, I think putting the `mtlSwizzle` check inside there makes sense, even though it\u0027s a trivial check.)\n\nI am guessing this is related to `RENDER_ATTACHMENT` and `STORAGE_BINDING` not allowing swizzles. Specifically one of these two [`return false;`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/metal/TextureMTL.mm;l\u003d134,148;drc\u003de095571be47008e6deca936cd0b8b45d1c937ca9) cases is probably no longer correct. I am not exactly sure why though.\n\nIf you run this with `--enable-backend-validation` (dawn) / `--enable-dawn-backend-validation` (chrome) hopefully you can get the Metal debug layer to tell you the exact error.",
+      "parentUuid": "75ece351_ed836f23",
       "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

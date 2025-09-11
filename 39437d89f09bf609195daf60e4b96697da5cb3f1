@@ -317,6 +317,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0933c359_1b7d308e",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T19:09:36Z",
+      "side": 1,
+      "message": "In general I don\u0027t think that\u0027s a good reason to avoid `operator\u003d\u003d`. It improves readability of the code itself and reduces the amount of code. However in this specific case I don\u0027t feel very strongly, because adding it to `webgpu_cpp.h` is nontrivial, so this is fine.\n\nRe: code search, you can click on the `\u003d\u003d` in an expression to get to the relevant `operator\u003d\u003d` implementation ([example](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Texture.cpp;l\u003d1747;drc\u003d48d6f7175422b2c969c14258f9f8d5b196c28d18)).",
+      "parentUuid": "8c41ea08_a2203517",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 82
+      },
+      "revId": "39437d89f09bf609195daf60e4b96697da5cb3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3bada11_965fbf75",
