@@ -16,6 +16,23 @@
       "message": "Thanks for your advice! PTAL again.",
       "revId": "4f018821e5d482a33f520174e559a4db6c1ec9e8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58abb4f8_24eb40cd",
+        "filename": "src/dawn/native/CopyTextureForBrowserHelper.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T04:11:55Z",
+      "side": 1,
+      "message": "nit: This is confusing, it sounds like it doesn\u0027t allow unorm/snorm.\n```suggestion\n                    \"The destination %s must not be an integer format.\", destination.texture);\n```",
+      "revId": "4f018821e5d482a33f520174e559a4db6c1ec9e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
