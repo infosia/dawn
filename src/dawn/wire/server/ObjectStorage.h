@@ -147,7 +147,7 @@ class KnownObjectsBase {
         Data reservation;
         reservation.handle = nullptr;
         reservation.state = AllocationState::Free;
-        mKnown.push_back(std::move(reservation));
+        mKnown.push_back(std::make_unique<Data>(std::move(reservation)));
     }
 
     // Get a backend objects for a given client ID.
@@ -157,7 +157,7 @@ class KnownObjectsBase {
             return WireResult::FatalError;
         }
 
-        const Data* data = &mKnown[id];
+        const Data* data = mKnown[id].get();
         if (data->state != AllocationState::Allocated) {
             return WireResult::FatalError;
         }
@@ -171,7 +171,7 @@ class KnownObjectsBase {
             return WireResult::FatalError;
         }
 
-        Data* data = &mKnown[id];
+        Data* data = mKnown[id].get();
         if (data->state == AllocationState::Free) {
             return WireResult::FatalError;
         }
@@ -185,7 +185,7 @@ class KnownObjectsBase {
             return WireResult::FatalError;
         }
 
-        Data* data = &mKnown[id];
+        Data* data = mKnown[id].get();
         if (data->state != AllocationState::Allocated) {
             return WireResult::FatalError;
         }
@@ -197,7 +197,7 @@ class KnownObjectsBase {
     WireResult FillReservation(ObjectId id, T handle, Known<T>* known = nullptr) {
         DAWN_ASSERT(id < mKnown.size());
         DAWN_ASSERT(handle != nullptr);
-        Data* data = &mKnown[id];
+        Data* data = mKnown[id].get();
 
         if (data->state != AllocationState::Reserved) {
             return WireResult::FatalError;
@@ -225,25 +225,25 @@ class KnownObjectsBase {
         data.handle = nullptr;
 
         if (handle.id >= mKnown.size()) {
-            mKnown.push_back(std::move(data));
-            *result = {handle.id, &mKnown.back()};
+            mKnown.push_back(std::make_unique<Data>(std::move(data)));
+            *result = {handle.id, mKnown.back().get()};
             return WireResult::Success;
         }
 
-        if (mKnown[handle.id].state != AllocationState::Free) {
+        if (mKnown[handle.id]->state != AllocationState::Free) {
             return WireResult::FatalError;
         }
 
         // The generation should be strictly increasing.
-        if (handle.generation <= mKnown[handle.id].generation) {
+        if (handle.generation <= mKnown[handle.id]->generation) {
             return WireResult::FatalError;
         }
         // update the generation in the slot
         data.generation = handle.generation;
 
-        mKnown[handle.id] = std::move(data);
+        *mKnown[handle.id] = std::move(data);
 
-        *result = {handle.id, &mKnown[handle.id]};
+        *result = {handle.id, mKnown[handle.id].get()};
         return WireResult::Success;
     }
 
@@ -251,18 +251,18 @@ class KnownObjectsBase {
     void Free(ObjectId id) {
         DAWN_ASSERT(id < mKnown.size());
         Data data;
-        data.generation = mKnown[id].generation;
+        data.generation = mKnown[id]->generation;
         data.state = AllocationState::Free;
-        mKnown[id] = std::move(data);
+        *mKnown[id] = std::move(data);
     }
 
     std::vector<T> AcquireAllHandles() {
         std::vector<T> objects;
-        for (Data& data : mKnown) {
-            if (data.state == AllocationState::Allocated && data.handle != nullptr) {
-                objects.push_back(data.handle);
-                data.state = AllocationState::Free;
-                data.handle = nullptr;
+        for (auto& data : mKnown) {
+            if (data->state == AllocationState::Allocated && data->handle != nullptr) {
+                objects.push_back(data->handle);
+                data->state = AllocationState::Free;
+                data->handle = nullptr;
             }
         }
 
@@ -271,9 +271,9 @@ class KnownObjectsBase {
 
     std::vector<T> GetAllHandles() const {
         std::vector<T> objects;
-        for (const Data& data : mKnown) {
-            if (data.state == AllocationState::Allocated && data.handle != nullptr) {
-                objects.push_back(data.handle);
+        for (const auto& data : mKnown) {
+            if (data->state == AllocationState::Allocated && data->handle != nullptr) {
+                objects.push_back(data->handle);
             }
         }
 
@@ -281,7 +281,7 @@ class KnownObjectsBase {
     }
 
   protected:
-    std::vector<Data> mKnown;
+    std::vector<std::unique_ptr<Data>> mKnown;
 };
 
 template <typename T>
@@ -311,7 +311,7 @@ class KnownObjects<WGPUDevice> : public KnownObjectsBase<WGPUDevice> {
     }
 
     void Free(ObjectId id) {
-        mKnownSet.erase(mKnown[id].handle);
+        mKnownSet.erase(mKnown[id]->handle);
         KnownObjectsBase<WGPUDevice>::Free(id);
     }
 
