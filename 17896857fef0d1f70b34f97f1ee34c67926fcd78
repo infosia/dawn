@@ -16,6 +16,23 @@
       "message": "Note that I\u0027ll remove `GetSwizzleRed` and friends in follow-up CLs.",
       "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75ece351_ed836f23",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-11T13:57:28Z",
+      "side": 1,
+      "message": "This causes GPU to crash because we\u0027re asking to create new view regardless of the other cases in `RequiresCreatingNewTextureView`  where we returned `false`. I\u0027ve added logs as you can see, and creating a texture view with `R001` swizzle on `Depth16Unorm` is not allowed and makes GPU crash on macOS.\n\n```\nComputeMetalSwizzle() for texture format: TextureFormat::Depth16Unorm\nHasDepthOrStencil()\nswizzle: [ComponentSwizzle::R, ComponentSwizzle::Zero, ComponentSwizzle::Zero, ComponentSwizzle::One]\n[18518:12168639:0911/152041.772513:ERROR:gpu/command_buffer/service/dawn_context_provider.cc:111] Failed to create MTLTexture view.\n - While handling unexpected error type Internal when allowed errors are (Validation|DeviceLost).\n    at Initialize (../../third_party/dawn/src/dawn/native/metal/TextureMTL.mm:884)\n    at Create (../../third_party/dawn/src/dawn/native/metal/TextureMTL.mm:815)\n```\n\nI\u0027ve fixed the GPU crash by going back to this code (which I\u0027m not sure anymore is the right way) but CTS tests still fail.\n\n```\n    bool needsNewView \u003d RequiresCreatingNewTextureView(texture, GetInternalUsage(), descriptor,\n                                                       mtlSwizzle.has_value());\n```\n\nI can\u0027t figure out what is going on anymore... 😢",
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
