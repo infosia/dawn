@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed14714f_c73294a8",
+        "filename": "src/tint/lang/hlsl/writer/writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-11T00:57:27Z",
+      "side": 1,
+      "message": "For the parts of this where we validate the immediate configuration, is the validation the same over all backends? If so, can we extract this out somewhere and share it as I think this validation will also fix https://issues.chromium.org/issues/441816632 if applied to the MSL backend.",
+      "revId": "f37f313318c2632a4d388761822ff98685e14feb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
