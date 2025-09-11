@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a4919d9a_c0bc0594",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2950,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-11T14:12:25Z",
+      "side": 1,
+      "message": "That is what I thought initially, but from re-reading the spec apparently a struct can be a member of a struct, from the spec one of the options for a member is `a structure type that has a creation-fixed footprint`, so like a struct of 2 floats or something.\n\nIf we want to restrict the behaviour of kAllowLocationOnStruct to only apply to non-member structs that is fine with me, since that was the only test case form that I was struggling with.",
+      "parentUuid": "4684a71f_89078521",
+      "revId": "8146090d9c54254027ed83c51017ff4a709dfc8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28dac29d_d68ff9ed",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 3
@@ -31,6 +49,30 @@
       "writtenOn": "2025-09-11T00:33:25Z",
       "side": 1,
       "message": "```suggestion\n                               \"or vector, but has type \" +\n```",
+      "range": {
+        "startLine": 2962,
+        "startChar": 31,
+        "endLine": 2963,
+        "endChar": 56
+      },
+      "revId": "8146090d9c54254027ed83c51017ff4a709dfc8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47f4d519_09402599",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2963,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-11T14:12:25Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "28dac29d_d68ff9ed",
       "range": {
         "startLine": 2962,
         "startChar": 31,
