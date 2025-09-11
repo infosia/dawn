@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5501d0c_4044db66",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-11T17:02:27Z",
+      "side": 1,
+      "message": "I plan on adding at least one more test so this is just common code.",
+      "range": {
+        "startLine": 67,
+        "startChar": 16,
+        "endLine": 67,
+        "endChar": 34
+      },
+      "revId": "95899f6de6e38c27036c49793e48456c5dde9686",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce711b26_58e921d8",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-11T17:02:27Z",
+      "side": 1,
+      "message": "is CI only",
+      "range": {
+        "startLine": 178,
+        "startChar": 12,
+        "endLine": 178,
+        "endChar": 37
+      },
+      "revId": "95899f6de6e38c27036c49793e48456c5dde9686",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
