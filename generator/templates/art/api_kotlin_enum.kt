@@ -26,22 +26,30 @@
 //* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package {{ kotlin_package }}
 
-@JvmInline
-public value class {{ enum.name.CamelCase() }}(public val value: Int) {
+import androidx.annotation.IntDef
+
+@Retention(AnnotationRetention.SOURCE)
+@IntDef(
     {% if enum.category == 'bitmask' %}
-        public infix fun or(b: {{ enum.name.CamelCase() }}): {{ enum.name.CamelCase() }} ={{ ' ' }}
-            {{- enum.name.CamelCase() }}(this.value or b.value)
+        flag = true,
     {% endif %}
+    value = [
+        {% for value in enum.values %}
+            {{ enum.name.CamelCase() }}.{{ as_ktName(value.name.CamelCase()) }},
+        {% endfor %}
+    ]
+)
+@Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY, AnnotationTarget.TYPE)
+public annotation class {{ enum.name.CamelCase() }} {
     public companion object {
         {% for value in enum.values %}
-            public val {{ as_ktName(value.name.CamelCase()) }}: {{ enum.name.CamelCase() }} ={{' '}}
-                {{- enum.name.CamelCase() }}({{ '{:#010x}'.format(value.value) }})
+            public const val {{ as_ktName(value.name.CamelCase()) }}: @{{ enum.name.CamelCase() }} Int = {{ '{:#010x}'.format(value.value) }}
         {% endfor %}
         internal val names: Map<Int, String> = mapOf(
             {% for value in enum.values %}
                 {{ '{:#010x}'.format(value.value) }} to "{{ as_ktName(value.name.CamelCase()) }}",
             {% endfor %}
         )
+        public fun toString(value: @{{ enum.name.CamelCase() }} Int): String = names[value] ?: value.toString()
     }
-    override fun toString(): String = names[value]?:value.toString()
 }
