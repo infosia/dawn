@@ -16,6 +16,24 @@
       "message": "For the parts of this where we validate the immediate configuration, is the validation the same over all backends? If so, can we extract this out somewhere and share it as I think this validation will also fix https://issues.chromium.org/issues/441816632 if applied to the MSL backend.",
       "revId": "f37f313318c2632a4d388761822ff98685e14feb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae688cff_6f14a142",
+        "filename": "src/tint/lang/hlsl/writer/writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-11T03:13:12Z",
+      "side": 1,
+      "message": "Yes, I think most of them are common logic except for kMaxOffset in some backends(Actually, spirv kMaxOffset is not correct).\n\nLet me move it to a more common place.",
+      "parentUuid": "ed14714f_c73294a8",
+      "revId": "f37f313318c2632a4d388761822ff98685e14feb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
