@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "626633a8_168853b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-11T21:00:13Z",
+      "side": 1,
+      "message": "I think No-Try didn\u0027t apply because it wasn\u0027t in the \"last paragraph\". I\u0027ve removed the paragraph break to try again.",
+      "revId": "1f0511ce7b256a62de75240ca25f2815480c3e54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
