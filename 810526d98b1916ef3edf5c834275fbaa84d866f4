@@ -16,6 +16,23 @@
       "message": "Forgot about this after I had to drop it to do https://dawn-review.googlesource.com/c/dawn/+/260658 . Needs restamp after rebase, PTAL",
       "revId": "810526d98b1916ef3edf5c834275fbaa84d866f4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "304033d9_11956ebe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-11T20:49:11Z",
+      "side": 1,
+      "message": "Still LGTM.",
+      "revId": "810526d98b1916ef3edf5c834275fbaa84d866f4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
