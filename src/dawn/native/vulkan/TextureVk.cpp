@@ -2118,9 +2118,18 @@ VkImageViewCreateInfo TextureView::GetCreateInfo(wgpu::TextureFormat format,
         createInfo.format = VulkanImageFormat(device, format);
     }
 
-    createInfo.components = VkComponentMapping{
-        VulkanComponentSwizzle(GetSwizzleRed()), VulkanComponentSwizzle(GetSwizzleGreen()),
-        VulkanComponentSwizzle(GetSwizzleBlue()), VulkanComponentSwizzle(GetSwizzleAlpha())};
+    const wgpu::TextureComponentSwizzle kDefaultSwizzle =
+        GetTexture()->GetFormat().HasDepthOrStencil() ? kR001Swizzle : kRGBASwizzle;
+
+    auto swizzle = ComposeSwizzle(kDefaultSwizzle, GetSwizzle());
+    if (AreSwizzleEquivalent(swizzle, kDefaultSwizzle)) {
+        createInfo.components = VkComponentMapping{VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G,
+                                                   VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_A};
+    } else {
+        createInfo.components = VkComponentMapping{
+            VulkanComponentSwizzle(swizzle.r), VulkanComponentSwizzle(swizzle.g),
+            VulkanComponentSwizzle(swizzle.b), VulkanComponentSwizzle(swizzle.a)};
+    }
 
     const SubresourceRange& subresources = GetSubresourceRange();
     createInfo.subresourceRange.baseMipLevel = subresources.baseMipLevel;
