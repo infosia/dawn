@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4e7bd7a_223a66b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-12T05:24:53Z",
+      "side": 1,
+      "message": "Any way we can get the driver version in the device string? Otherwise this is fine.",
+      "revId": "c5d9f947b94a66cb5f3b1c291bdff589b7815b78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
