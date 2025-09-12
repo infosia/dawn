@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee7b961c_3242139a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-12T20:37:15Z",
+      "side": 1,
+      "message": "Standalone linux builders are happy now and the Chromium builder gets past the analyze and gen steps, so I think we\u0027re in a good state now.",
+      "parentUuid": "f4dc2b29_743ccf7a",
+      "revId": "25ff842b56a449b56b28ca08a4877fc7ad4b5a14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7dff370d_6c1f7b35",
@@ -65,6 +83,42 @@
       "writtenOn": "2025-09-12T19:39:19Z",
       "side": 1,
       "message": "It occured to me to check the auto-downloading behavior of npx. I think we only want to use packages we\u0027ve already installed from `npm ci`, so really we should pass `--no`, especially because:\n\n\u003e If any requested packages are not present in the local project\ndependencies, then a prompt is printed, which can be suppressed by\nproviding either --yes or --no. **When standard input is not a TTY or a\nCI environment is detected, --yes is assumed.** The requested packages\nare installed to a folder in the npm cache, which is added to the PATH\nenvironment variable in the executed process.\n\nfrom `npm help exec`\n\nNot sure if we should pass it here or if we `run-cts` should pass it (or both). Perhaps even better if at some point we can make `run-cts` not use npx...",
+      "revId": "25ff842b56a449b56b28ca08a4877fc7ad4b5a14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cfe1758_58a6ae1b",
+        "filename": "webgpu-cts/run_npx.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-12T20:37:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dff370d_6c1f7b35",
+      "revId": "25ff842b56a449b56b28ca08a4877fc7ad4b5a14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "737c16cd_24be8b91",
+        "filename": "webgpu-cts/run_npx.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-12T20:37:15Z",
+      "side": 1,
+      "message": "Added it to this script for now.",
+      "parentUuid": "c2b1ef46_633ef857",
       "revId": "25ff842b56a449b56b28ca08a4877fc7ad4b5a14",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
