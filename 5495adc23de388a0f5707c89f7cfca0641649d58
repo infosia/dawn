@@ -16,6 +16,24 @@
       "message": "This comment is out of date.",
       "revId": "5495adc23de388a0f5707c89f7cfca0641649d58",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43268f88_5a1ba686",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-12T19:26:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff122947_02a33762",
+      "revId": "5495adc23de388a0f5707c89f7cfca0641649d58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
