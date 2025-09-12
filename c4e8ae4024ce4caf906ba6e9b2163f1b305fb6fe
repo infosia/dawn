@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6084102_cde74e57",
+        "filename": "src/dawn/tests/end2end/EventTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-12T05:12:33Z",
+      "side": 1,
+      "message": "We are not supposed to allow mixed source waiting at all, we haven\u0027t added an instance feature for it yet https://github.com/webgpu-native/webgpu-headers/issues/505\n\nThough if it\u0027s significantly extra work to validate it, maybe we don\u0027t worry about it for now? I believe we also are missing validation in Emdawnwebgpu, and I\u0027m not even sure if we\u0027re going to add it.",
+      "revId": "c4e8ae4024ce4caf906ba6e9b2163f1b305fb6fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
