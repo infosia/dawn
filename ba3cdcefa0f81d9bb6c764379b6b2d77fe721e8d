@@ -33,6 +33,24 @@
       "message": "Can we open an issue about the harcoded x64 here? Eventually developers are going to run into this issue.",
       "revId": "ba3cdcefa0f81d9bb6c764379b6b2d77fe721e8d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e7e009a_8087c3e5",
+        "filename": "third_party/CopyWindowsSDKDLL.cmake",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-09-12T13:39:15Z",
+      "side": 1,
+      "message": "Done: https://g-issues.chromium.org/issues/444648575",
+      "parentUuid": "d0f9eb79_4902495d",
+      "revId": "ba3cdcefa0f81d9bb6c764379b6b2d77fe721e8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
