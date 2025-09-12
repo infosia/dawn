@@ -410,6 +410,7 @@ VkComponentSwizzle VulkanComponentSwizzle(wgpu::ComponentSwizzle swizzle) {
             DAWN_UNREACHABLE();
     }
 }
+
 }  // namespace
 
 #define SIMPLE_FORMAT_MAPPING(X)                                                      \
@@ -2118,9 +2119,19 @@ VkImageViewCreateInfo TextureView::GetCreateInfo(wgpu::TextureFormat format,
         createInfo.format = VulkanImageFormat(device, format);
     }
 
-    createInfo.components = VkComponentMapping{
-        VulkanComponentSwizzle(GetSwizzleRed()), VulkanComponentSwizzle(GetSwizzleGreen()),
-        VulkanComponentSwizzle(GetSwizzleBlue()), VulkanComponentSwizzle(GetSwizzleAlpha())};
+    auto swizzle = GetSwizzle();
+    if (textureFormat.HasDepthOrStencil()) {
+        static constexpr wgpu::TextureComponentSwizzle kR001Swizzle = {
+            wgpu::ComponentSwizzle::R,
+            wgpu::ComponentSwizzle::Zero,
+            wgpu::ComponentSwizzle::Zero,
+            wgpu::ComponentSwizzle::One,
+        };
+        swizzle = ComposeSwizzle(kR001Swizzle, GetSwizzle());
+    }
+    createInfo.components =
+        VkComponentMapping{VulkanComponentSwizzle(swizzle.r), VulkanComponentSwizzle(swizzle.g),
+                           VulkanComponentSwizzle(swizzle.b), VulkanComponentSwizzle(swizzle.a)};
 
     const SubresourceRange& subresources = GetSubresourceRange();
     createInfo.subresourceRange.baseMipLevel = subresources.baseMipLevel;
