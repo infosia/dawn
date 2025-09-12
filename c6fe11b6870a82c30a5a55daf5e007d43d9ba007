@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96d938c9_37914c81",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4337941
+      },
+      "writtenOn": "2025-09-12T16:00:44Z",
+      "side": 1,
+      "message": "\u003e If the author is a Dawn committer, code review is required from one other committer (see https://dawn.googlesource.com/dawn/+/HEAD/docs/becoming-committer.md). Otherwise, code review is required from two committers.\n\nNot a Dawn committer \u003d\u003e two reviewers from `src/dawn/OWNERS`",
+      "revId": "c6fe11b6870a82c30a5a55daf5e007d43d9ba007",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
