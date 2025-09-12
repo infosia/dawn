@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0e26a70_eded6476",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-12T17:44:27Z",
+      "side": 1,
+      "message": "PTAL, still trying to get the experimental Mac Intel bot green on CI. Getting closer...",
+      "revId": "b25acccf8333ac7a2cef8db87b289f0b2ef26de8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
