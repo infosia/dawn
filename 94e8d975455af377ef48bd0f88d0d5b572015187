@@ -210,6 +210,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce26a135_d2cdb727",
+        "filename": "src/dawn/wire/client/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-12T07:51:43Z",
+      "side": 1,
+      "message": "Ugh, mutability being implicit in C++ is a pain. Makes sense!",
+      "parentUuid": "7b442570_4492c85c",
+      "revId": "94e8d975455af377ef48bd0f88d0d5b572015187",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c6eaf749_db624f00",
