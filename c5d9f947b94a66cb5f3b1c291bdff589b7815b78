@@ -16,6 +16,24 @@
       "message": "Any way we can get the driver version in the device string? Otherwise this is fine.",
       "revId": "c5d9f947b94a66cb5f3b1c291bdff589b7815b78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3dedbaea_bc650e98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-12T13:33:18Z",
+      "side": 1,
+      "message": "Discussed with james and I decided against full versions.\n\nThe reason why is that if the driver version changed (which it can easily do) we MUST update these (which is a bit burdensome). It is more rare that the version changes and we get different features (many driver versions will hopefully be bug fixes)",
+      "parentUuid": "a4e7bd7a_223a66b7",
+      "revId": "c5d9f947b94a66cb5f3b1c291bdff589b7815b78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
