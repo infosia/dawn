@@ -1168,6 +1168,27 @@ bool DawnTestBase::SupportsFeatures(const std::vector<wgpu::FeatureName>& featur
     return true;
 }
 
+std::set<std::string> DawnTestBase::GetSupportsFeatures() {
+    DAWN_ASSERT(mBackendAdapter);
+    wgpu::SupportedFeatures supportedFeatures;
+    native::GetProcs().adapterGetFeatures(
+        mBackendAdapter.Get(), reinterpret_cast<WGPUSupportedFeatures*>(&supportedFeatures));
+
+    std::set<std::string> rtn;
+    for (uint32_t i = 0; i < supportedFeatures.featureCount; ++i) {
+        wgpu::FeatureName f = supportedFeatures.features[i];
+        std::stringstream feature_name;
+        feature_name << f;
+        auto feature_name_string = feature_name.str();
+        std::string prefix = "FeatureName::";
+        if (feature_name_string.find(prefix) != std::string::npos) {
+            feature_name_string = feature_name_string.substr(prefix.size());
+        }
+        rtn.insert(feature_name_string);
+    }
+
+    return rtn;
+}
 uint64_t DawnTestBase::GetDeprecationWarningCountForTesting() const {
     return gTestEnv->GetInstance()->GetDeprecationWarningCountForTesting();
 }
