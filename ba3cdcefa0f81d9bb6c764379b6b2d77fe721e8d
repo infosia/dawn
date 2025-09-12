@@ -51,6 +51,24 @@
       "parentUuid": "d0f9eb79_4902495d",
       "revId": "ba3cdcefa0f81d9bb6c764379b6b2d77fe721e8d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85c5ff48_42b66764",
+        "filename": "third_party/CopyWindowsSDKDLL.cmake",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-09-12T15:51:01Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0e7e009a_8087c3e5",
+      "revId": "ba3cdcefa0f81d9bb6c764379b6b2d77fe721e8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
