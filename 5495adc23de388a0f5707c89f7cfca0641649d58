@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff122947_02a33762",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-12T09:00:33Z",
+      "side": 1,
+      "message": "This comment is out of date.",
+      "revId": "5495adc23de388a0f5707c89f7cfca0641649d58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
