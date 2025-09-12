@@ -27,11 +27,11 @@ import androidx.webgpu.requestAdapter
 import androidx.webgpu.requestDevice
 
 public class DeviceLostException(
-    public val device: Device, public val reason: @DeviceLostReason Int, message: String
+    public val device: Device, @DeviceLostReason public val reason: Int, message: String
 ) : Exception(message)
 
 public class UncapturedErrorException(
-    public val device: Device, public val type: @ErrorType Int, message: String
+    public val device: Device, @ErrorType public val type: Int, message: String
 ) : Exception(message)
 
 private const val POLLING_DELAY_MS = 100L
@@ -46,7 +46,7 @@ public suspend fun createWebGpu(
     surface: Surface? = null,
     instanceDescriptor: InstanceDescriptor = InstanceDescriptor(),
     requestAdapterOptions: RequestAdapterOptions = RequestAdapterOptions(),
-    requiredFeatures: @FeatureName IntArray = intArrayOf()
+    @FeatureName requiredFeatures: IntArray = intArrayOf()
 ): WebGpu {
     initLibrary()
 
@@ -106,7 +106,7 @@ private suspend fun requestAdapter(
     return adapter
 }
 
-private suspend fun requestDevice(adapter: Adapter, requiredFeatures: @FeatureName IntArray): Device {
+private suspend fun requestDevice(adapter: Adapter, @FeatureName requiredFeatures: IntArray): Device {
     val (status, device, message) =
         adapter.requestDevice(
             DeviceDescriptor(
