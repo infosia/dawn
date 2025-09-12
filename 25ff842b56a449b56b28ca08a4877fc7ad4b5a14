@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "578d482b_1ff590d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-12T18:49:27Z",
+      "side": 1,
+      "message": "PTAL\n\nI believe that once this lands, the gn_v2 Linux/x64/SwiftShader testers should be at parity with the linux-clang-rel-x64, so we should be able to start migrating off the old recipe.",
+      "revId": "25ff842b56a449b56b28ca08a4877fc7ad4b5a14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
