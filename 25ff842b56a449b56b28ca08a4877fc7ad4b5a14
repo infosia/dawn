@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b336121a_11625fe3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-12T21:50:42Z",
+      "side": 1,
+      "message": "Looks like this was due to a combination of the `dawn_node` gclient variable not being set for x86 builds (which makes prevents //third_party/gpuweb from being downloaded) and the new test target not being gated behind `dawn_build_node_bindings` (which implicitly depends on //third_party/gpuweb).\n\nI suspect a number of things in `src/dawn/node/BUILD.gn` should be hidden behind `dawn_build_node_bindings`, but that can be fixed in a follow-up.",
+      "parentUuid": "53a9f85c_139a254e",
+      "revId": "25ff842b56a449b56b28ca08a4877fc7ad4b5a14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7dff370d_6c1f7b35",
