@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb28596f_2c10172f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3578208
+      },
+      "writtenOn": "2025-09-12T06:34:07Z",
+      "side": 1,
+      "message": "Patchset 5: Incorporated suggestions by @rharrison@chromium.org. Also added `IsStdin` analogous to the existing `IsStdout` .",
+      "revId": "163f1454f567fdd8b1c7d806ff54d6bb079d0c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
