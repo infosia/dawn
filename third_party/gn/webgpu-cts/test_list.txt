@@ -277326,6 +277326,8 @@ webgpu:shader,validation,shader_io,invariant:valid_only_with_vertex_position_bui
 webgpu:shader,validation,shader_io,invariant:valid_only_with_vertex_position_builtin:name="clip_distances";stage="vertex";io="out";type="array%3Cf32,8%3E";use_struct=false
 webgpu:shader,validation,shader_io,invariant:valid_only_with_vertex_position_builtin:name="primitive_id";stage="fragment";io="in";type="u32";use_struct=true
 webgpu:shader,validation,shader_io,invariant:valid_only_with_vertex_position_builtin:name="primitive_id";stage="fragment";io="in";type="u32";use_struct=false
+webgpu:shader,validation,shader_io,invariant:valid_only_with_position_in_non_entry_point_struct:has_position=true
+webgpu:shader,validation,shader_io,invariant:valid_only_with_position_in_non_entry_point_struct:has_position=false
 webgpu:shader,validation,shader_io,invariant:not_valid_on_user_defined_io:use_invariant=true
 webgpu:shader,validation,shader_io,invariant:not_valid_on_user_defined_io:use_invariant=false
 webgpu:shader,validation,shader_io,layout_constraints:layout_constraints:case="u32"
