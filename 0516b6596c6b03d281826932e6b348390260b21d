@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d36620d5_9294ba79",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-12T04:52:09Z",
+      "side": 1,
+      "message": "Sigh, my bad. I added No-Try to avoid CQ time/flakiness and was going to use rubber-stamper to review, but I forgot this would prevent the Code-Owners check from passing.\n\nYou can try CR+2, or edit the commit message again to reclaim uploadership and my review should be valid again.",
+      "revId": "0516b6596c6b03d281826932e6b348390260b21d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
