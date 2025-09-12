@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8eec9506_ea046bb1",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-12T09:06:55Z",
+      "side": 1,
+      "message": "I\u0027ve switched the order. Since `ComposeSwizzleComponent` is in the anonymous namespace though while this one is in `dawn::native`, I didn\u0027t move it. Let me know if that\u0027s okay with you.",
+      "parentUuid": "df1e0442_828de122",
+      "range": {
+        "startLine": 992,
+        "startChar": 13,
+        "endLine": 992,
+        "endChar": 36
+      },
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f10bb3bb_4a230eff",
         "filename": "src/dawn/native/Texture.cpp",
         "patchSetId": 12
@@ -99,6 +123,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d1d428c_de37cc22",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-12T09:06:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65be2445_d8651ee7",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 45
+      },
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d69bf627_438f1da8",
@@ -116,6 +164,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc506c59_95267924",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-12T09:06:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d69bf627_438f1da8",
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ac99a5f_b809c94c",
@@ -129,6 +195,24 @@
       "writtenOn": "2025-09-11T19:09:36Z",
       "side": 1,
       "message": "nit: IMO this should be close to where it\u0027s used.\n(Actually, it\u0027s only used once, so it could just be *inside* the function now that I think of it.)",
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96aca07b_24cd43c8",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-12T09:06:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ac99a5f_b809c94c",
       "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -200,6 +284,24 @@
       "side": 1,
       "message": "your guess is correct:\n\n\u003e 2025-09-11 13:47:12.743 main[29462:15319348] Metal API Validation Enabled\n-[MTLTextureDescriptorInternal validateWithDevice:]:1405: failed assertion `Texture Descriptor Validation\nTexture swizzling is not compatable with MTLTextureUsageRenderTarget",
       "parentUuid": "59ac0071_ec4bb03e",
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ee3d5a2_247da46d",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-12T09:06:55Z",
+      "side": 1,
+      "message": "Thanks for all the pointers and explanations! With the latest patchset, I don\u0027t stumble upon this issue anymore. One thing worth noting is that the [proposal](https://github.com/gpuweb/gpuweb/blob/main/proposals/texture-component-swizzle.md#validation) has the following validation already:\n```\nIf descriptor.usage includes the RENDER_ATTACHMENT or STORAGE_BINDING bit:\n- descriptor.swizzle.r must be \"r\".\n- descriptor.swizzle.g must be \"g\".\n- descriptor.swizzle.b must be \"b\".\n- descriptor.swizzle.a must be \"a\".\n```",
+      "parentUuid": "7352e95a_e91571c2",
       "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
