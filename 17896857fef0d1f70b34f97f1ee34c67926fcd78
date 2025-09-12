@@ -65,6 +65,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed83fc34_1fbc3023",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-12T20:36:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8eec9506_ea046bb1",
+      "range": {
+        "startLine": 992,
+        "startChar": 13,
+        "endLine": 992,
+        "endChar": 36
+      },
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f10bb3bb_4a230eff",
@@ -302,6 +326,24 @@
       "side": 1,
       "message": "Thanks for all the pointers and explanations! With the latest patchset, I don\u0027t stumble upon this issue anymore. One thing worth noting is that the [proposal](https://github.com/gpuweb/gpuweb/blob/main/proposals/texture-component-swizzle.md#validation) has the following validation already:\n```\nIf descriptor.usage includes the RENDER_ATTACHMENT or STORAGE_BINDING bit:\n- descriptor.swizzle.r must be \"r\".\n- descriptor.swizzle.g must be \"g\".\n- descriptor.swizzle.b must be \"b\".\n- descriptor.swizzle.a must be \"a\".\n```",
       "parentUuid": "7352e95a_e91571c2",
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfd881b5_f127bb98",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-12T20:36:41Z",
+      "side": 1,
+      "message": "Right, the problem I described is with the internal R001 swizzle, not with the swizzle feature since that\u0027s validated. I\u0027ve gone through the latest logic and I think it handles that correctly.\n\nHowever, now I\u0027m realizing there may be a problem with the swizzle feature too: Metal cannot create views with a subset of usages. The spec allows creating a texture with `RENDER_ATTACHMENT | TEXTURE_BINDING` and then creating a view with a swizzle if the view usage is only `TEXTURE_BINDING`. But the Metal view still has all usages, so Metal may not allow this.\n\nWe need to make sure that this is tested.",
+      "parentUuid": "9ee3d5a2_247da46d",
       "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
