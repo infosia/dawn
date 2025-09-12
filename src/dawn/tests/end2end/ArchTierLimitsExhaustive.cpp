@@ -25,8 +25,10 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <algorithm>
 #include <cstdint>
 #include <map>
+#include <set>
 #include <string>
 
 #include "dawn/tests/DawnTest.h"
@@ -64,7 +66,7 @@ class TierArchInfoTest_TieredMaxLimits : public TierArchInfoTestBase {
         supported.UnlinkedCopyTo(&required);
     }
 
-    std::string GetFullParamString(int alternate) {
+    std::string GetFullParamString(int alternate = 0) {
         std::stringstream param_names_all;
         param_names_all << this->GetParam();
 
@@ -239,8 +241,121 @@ device_map["Metal_AMD_Radeon_Pro_560X"]                     = {  16384, 16384, 2
         EXPECT_FALSE(encountered_error);
     }
 }
-
 // clang-format on
+
+TEST_P(TierArchInfoTest_TieredMaxLimits, ExhaustiveTestAllFeatures) {
+    // SwiftShader will return a lower limit than any modern device on CQ.
+    DAWN_TEST_UNSUPPORTED_IF(IsSwiftshader());
+
+    std::map<std::string, std::set<std::string>> device_map;
+
+    // clang-format off
+ device_map["Vulkan_llvmpipe__LLVM_19_1_7__256_bits"]
+            = { "AdapterPropertiesMemoryHeaps", "AdapterPropertiesVk", "BGRA8UnormStorage", "BufferMapExtendedUsages", "ChromiumExperimentalBindless", "ChromiumExperimentalTimestampQueryInsidePasses", "ClipDistances", "CoreFeaturesAndLimits", "DawnDeviceAllocatorControl", "DawnDrmFormatCapabilities", "DawnFormatCapabilities", "DawnInternalUsages", "DawnLoadResolveTexture", "DawnMultiPlanarFormats", "DawnNative", "Depth32FloatStencil8", "DepthClipControl", "DualSourceBlending", "FlexibleTextureViews", "Float32Blendable", "Float32Filterable", "HostMappedPointer", "ImplicitDeviceSynchronization", "IndirectFirstInstance", "MultiDrawIndirect", "MultiPlanarFormatExtendedUsages", "PrimitiveIndex", "R8UnormStorage", "RG11B10UfloatRenderable", "ShaderF16", "SharedFenceSyncFD", "SharedTextureMemoryDmaBuf", "SharedTextureMemoryOpaqueFD", "StaticSamplers", "Subgroups", "TextureComponentSwizzle", "TextureCompressionBC", "TextureCompressionBCSliced3D", "TimestampQuery", "TransientAttachments", "Unorm16TextureFormats", "YCbCrVulkanSamplers", };
+ device_map["Vulkan_Intel_R__Iris_R__Xe_Graphics__TGL_GT2"]
+            = { "AdapterPropertiesMemoryHeaps", "AdapterPropertiesVk", "BGRA8UnormStorage", "BufferMapExtendedUsages", "ChromiumExperimentalBindless", "ChromiumExperimentalTimestampQueryInsidePasses", "ClipDistances", "CoreFeaturesAndLimits", "DawnDeviceAllocatorControl", "DawnDrmFormatCapabilities", "DawnFormatCapabilities", "DawnInternalUsages", "DawnLoadResolveTexture", "DawnMultiPlanarFormats", "DawnNative", "Depth32FloatStencil8", "DepthClipControl", "DualSourceBlending", "FlexibleTextureViews", "Float32Blendable", "Float32Filterable", "HostMappedPointer", "ImplicitDeviceSynchronization", "IndirectFirstInstance", "MultiDrawIndirect", "MultiPlanarFormatExtendedUsages", "Norm16TextureFormats", "PrimitiveIndex", "R8UnormStorage", "RG11B10UfloatRenderable", "ShaderF16", "SharedFenceSyncFD", "SharedFenceVkSemaphoreOpaqueFD", "SharedTextureMemoryDmaBuf", "SharedTextureMemoryOpaqueFD", "Snorm16TextureFormats", "StaticSamplers", "Subgroups", "TextureComponentSwizzle", "TextureCompressionASTC", "TextureCompressionASTCSliced3D", "TextureCompressionBC", "TextureCompressionBCSliced3D", "TextureCompressionETC2", "TextureFormatsTier1", "TextureFormatsTier2", "TimestampQuery", "TransientAttachments", "Unorm16TextureFormats", };
+ device_map["OpenGLES_ANGLE__Google__Vulkan_1_3_0__SwiftShader_Device__Subzero___0x0000C0DE____SwiftShader_driver_5_0_0__compat"]
+            = { "ANGLETextureSharing", "DawnFormatCapabilities", "DawnInternalUsages", "DawnNative", "Float32Blendable", "ImplicitDeviceSynchronization", "SharedFenceEGLSync", "StaticSamplers", "TextureComponentSwizzle", "TextureCompressionASTC", "TextureCompressionBC", "TextureCompressionETC2", };
+ device_map["Vulkan_GeForce_GTX_1660"]
+            = { "AdapterPropertiesMemoryHeaps", "AdapterPropertiesVk", "BGRA8UnormStorage", "ChromiumExperimentalBindless", "ChromiumExperimentalTimestampQueryInsidePasses", "ClipDistances", "CoreFeaturesAndLimits", "DawnDeviceAllocatorControl", "DawnFormatCapabilities", "DawnInternalUsages", "DawnLoadResolveTexture", "DawnMultiPlanarFormats", "DawnNative", "Depth32FloatStencil8", "DepthClipControl", "DualSourceBlending", "FlexibleTextureViews", "Float32Blendable", "Float32Filterable", "ImplicitDeviceSynchronization", "IndirectFirstInstance", "MultiDrawIndirect", "MultiPlanarFormatExtendedUsages", "Norm16TextureFormats", "PrimitiveIndex", "R8UnormStorage", "RG11B10UfloatRenderable", "SharedFenceVkSemaphoreOpaqueFD", "SharedTextureMemoryOpaqueFD", "Snorm16TextureFormats", "StaticSamplers", "Subgroups", "TextureComponentSwizzle", "TextureCompressionBC", "TextureCompressionBCSliced3D", "TextureFormatsTier1", "TextureFormatsTier2", "TimestampQuery", "TransientAttachments", "Unorm16TextureFormats", };
+ device_map["Vulkan_Intel_R__UHD_Graphics_630__CML_GT2"]
+            = { "AdapterPropertiesMemoryHeaps", "AdapterPropertiesVk", "BGRA8UnormStorage", "BufferMapExtendedUsages", "ChromiumExperimentalBindless", "ChromiumExperimentalTimestampQueryInsidePasses", "ClipDistances", "CoreFeaturesAndLimits", "DawnDeviceAllocatorControl", "DawnDrmFormatCapabilities", "DawnFormatCapabilities", "DawnInternalUsages", "DawnLoadResolveTexture", "DawnMultiPlanarFormats", "DawnNative", "Depth32FloatStencil8", "DepthClipControl", "DualSourceBlending", "FlexibleTextureViews", "Float32Blendable", "Float32Filterable", "HostMappedPointer", "ImplicitDeviceSynchronization", "IndirectFirstInstance", "MultiDrawIndirect", "MultiPlanarFormatExtendedUsages", "Norm16TextureFormats", "PrimitiveIndex", "R8UnormStorage", "RG11B10UfloatRenderable", "ShaderF16", "SharedFenceSyncFD", "SharedFenceVkSemaphoreOpaqueFD", "SharedTextureMemoryDmaBuf", "SharedTextureMemoryOpaqueFD", "Snorm16TextureFormats", "StaticSamplers", "TextureComponentSwizzle", "TextureCompressionASTC", "TextureCompressionASTCSliced3D", "TextureCompressionBC", "TextureCompressionBCSliced3D", "TextureCompressionETC2", "TextureFormatsTier1", "TextureFormatsTier2", "TimestampQuery", "TransientAttachments", "Unorm16TextureFormats", };
+ device_map["Metal_Apple_M2"]
+            = { "AdapterPropertiesMemoryHeaps", "BGRA8UnormStorage", "BufferMapExtendedUsages", "ChromiumExperimentalSubgroupMatrix", "ClipDistances", "CoreFeaturesAndLimits", "DawnFormatCapabilities", "DawnInternalUsages", "DawnLoadResolveTexture", "DawnMultiPlanarFormats", "DawnNative", "Depth32FloatStencil8", "DepthClipControl", "DualSourceBlending", "FlexibleTextureViews", "Float32Blendable", "Float32Filterable", "FramebufferFetch", "HostMappedPointer", "ImplicitDeviceSynchronization", "IndirectFirstInstance", "MultiPlanarFormatExtendedUsages", "MultiPlanarFormatNv12a", "MultiPlanarFormatNv16", "MultiPlanarFormatNv24", "MultiPlanarFormatP010", "MultiPlanarFormatP210", "MultiPlanarFormatP410", "MultiPlanarRenderTargets", "Norm16TextureFormats", "PrimitiveIndex", "R8UnormStorage", "RG11B10UfloatRenderable", "ShaderF16", "ShaderModuleCompilationOptions", "SharedFenceMTLSharedEvent", "SharedTextureMemoryIOSurface", "Snorm16TextureFormats", "Subgroups", "TextureComponentSwizzle", "TextureCompressionASTC", "TextureCompressionASTCSliced3D", "TextureCompressionBC", "TextureCompressionBCSliced3D", "TextureCompressionETC2", "TextureFormatsTier1", "TextureFormatsTier2", "TimestampQuery", "TransientAttachments", "Unorm16TextureFormats", };
+ device_map["Metal_AMD_Radeon_Pro_5300M"]
+            = { "AdapterPropertiesMemoryHeaps", "BGRA8UnormStorage", "ChromiumExperimentalTimestampQueryInsidePasses", "ClipDistances", "CoreFeaturesAndLimits", "DawnFormatCapabilities", "DawnInternalUsages", "DawnLoadResolveTexture", "DawnMultiPlanarFormats", "DawnNative", "Depth32FloatStencil8", "DepthClipControl", "DualSourceBlending", "FlexibleTextureViews", "Float32Blendable", "Float32Filterable", "HostMappedPointer", "ImplicitDeviceSynchronization", "IndirectFirstInstance", "MultiPlanarFormatExtendedUsages", "MultiPlanarFormatNv12a", "MultiPlanarFormatNv16", "MultiPlanarFormatNv24", "MultiPlanarFormatP010", "MultiPlanarFormatP210", "MultiPlanarFormatP410", "MultiPlanarRenderTargets", "Norm16TextureFormats", "R8UnormStorage", "RG11B10UfloatRenderable", "ShaderF16", "ShaderModuleCompilationOptions", "SharedFenceMTLSharedEvent", "SharedTextureMemoryIOSurface", "Snorm16TextureFormats", "Subgroups", "TextureComponentSwizzle", "TextureCompressionBC", "TextureCompressionBCSliced3D", "TextureFormatsTier1", "TextureFormatsTier2", "TimestampQuery", "Unorm16TextureFormats", };
+ device_map["Metal_Intel_R__UHD_Graphics_630"]
+            = { "AdapterPropertiesMemoryHeaps", "BGRA8UnormStorage", "BufferMapExtendedUsages", "ChromiumExperimentalTimestampQueryInsidePasses", "ClipDistances", "CoreFeaturesAndLimits", "DawnFormatCapabilities", "DawnInternalUsages", "DawnLoadResolveTexture", "DawnMultiPlanarFormats", "DawnNative", "Depth32FloatStencil8", "DepthClipControl", "DualSourceBlending", "FlexibleTextureViews", "Float32Blendable", "Float32Filterable", "HostMappedPointer", "ImplicitDeviceSynchronization", "IndirectFirstInstance", "MultiPlanarFormatExtendedUsages", "MultiPlanarFormatNv12a", "MultiPlanarFormatNv16", "MultiPlanarFormatNv24", "MultiPlanarFormatP010", "MultiPlanarFormatP210", "MultiPlanarFormatP410", "MultiPlanarRenderTargets", "Norm16TextureFormats", "R8UnormStorage", "RG11B10UfloatRenderable", "ShaderF16", "ShaderModuleCompilationOptions", "SharedFenceMTLSharedEvent", "SharedTextureMemoryIOSurface", "Snorm16TextureFormats", "TextureComponentSwizzle", "TextureCompressionBC", "TextureCompressionBCSliced3D", "TextureFormatsTier1", "TimestampQuery", "Unorm16TextureFormats", };
+ device_map["D3D11_Intel_R__UHD_Graphics_630"]
+            = { "AdapterPropertiesD3D", "AdapterPropertiesMemoryHeaps", "BGRA8UnormStorage", "BufferMapExtendedUsages", "ClipDistances", "CoreFeaturesAndLimits", "D3D11MultithreadProtected", "DawnFormatCapabilities", "DawnInternalUsages", "DawnLoadResolveTexture", "DawnMultiPlanarFormats", "DawnNative", "DawnPartialLoadResolveTexture", "DawnTexelCopyBufferRowAlignment", "Depth32FloatStencil8", "DepthClipControl", "DualSourceBlending", "FlexibleTextureViews", "Float32Blendable", "Float32Filterable", "ImplicitDeviceSynchronization", "MultiPlanarFormatP010", "MultiPlanarRenderTargets", "Norm16TextureFormats", "PixelLocalStorageCoherent", "PrimitiveIndex", "R8UnormStorage", "RG11B10UfloatRenderable", "ShaderModuleCompilationOptions", "SharedFenceDXGISharedHandle", "SharedTextureMemoryD3D11Texture2D", "SharedTextureMemoryDXGISharedHandle", "Snorm16TextureFormats", "TextureCompressionBC", "TextureCompressionBCSliced3D", "TextureFormatsTier1", "Unorm16TextureFormats", };
+ device_map["D3D11_NVIDIA_GeForce_GTX_1660"]
+            = { "AdapterPropertiesD3D", "AdapterPropertiesMemoryHeaps", "BGRA8UnormStorage", "ClipDistances", "CoreFeaturesAndLimits", "D3D11MultithreadProtected", "DawnFormatCapabilities", "DawnInternalUsages", "DawnLoadResolveTexture", "DawnMultiPlanarFormats", "DawnNative", "DawnPartialLoadResolveTexture", "DawnTexelCopyBufferRowAlignment", "Depth32FloatStencil8", "DepthClipControl", "DualSourceBlending", "FlexibleTextureViews", "Float32Blendable", "Float32Filterable", "ImplicitDeviceSynchronization", "MultiPlanarFormatP010", "MultiPlanarRenderTargets", "Norm16TextureFormats", "PixelLocalStorageCoherent", "PrimitiveIndex", "R8UnormStorage", "RG11B10UfloatRenderable", "ShaderModuleCompilationOptions", "SharedFenceDXGISharedHandle", "SharedTextureMemoryD3D11Texture2D", "SharedTextureMemoryDXGISharedHandle", "Snorm16TextureFormats", "TextureCompressionBC", "TextureCompressionBCSliced3D", "TextureFormatsTier1", "Unorm16TextureFormats", };
+ device_map["D3D12_Intel_R__UHD_Graphics_630"]
+            = { "AdapterPropertiesD3D", "AdapterPropertiesMemoryHeaps", "BGRA8UnormStorage", "BufferMapExtendedUsages", "ChromiumExperimentalTimestampQueryInsidePasses", "ClipDistances", "CoreFeaturesAndLimits", "DawnFormatCapabilities", "DawnInternalUsages", "DawnLoadResolveTexture", "DawnMultiPlanarFormats", "DawnNative", "DawnPartialLoadResolveTexture", "Depth32FloatStencil8", "DepthClipControl", "DualSourceBlending", "FlexibleTextureViews", "Float32Blendable", "Float32Filterable", "HostMappedPointer", "ImplicitDeviceSynchronization", "IndirectFirstInstance", "MultiDrawIndirect", "MultiPlanarRenderTargets", "Norm16TextureFormats", "PrimitiveIndex", "R8UnormStorage", "RG11B10UfloatRenderable", "ShaderModuleCompilationOptions", "SharedBufferMemoryD3D12Resource", "SharedFenceDXGISharedHandle", "SharedTextureMemoryDXGISharedHandle", "Snorm16TextureFormats", "StaticSamplers", "TextureComponentSwizzle", "TextureCompressionBC", "TextureCompressionBCSliced3D", "TextureFormatsTier1", "TextureFormatsTier2", "TimestampQuery", "Unorm16TextureFormats", };
+ device_map["D3D12_NVIDIA_GeForce_GTX_1660"]
+            = { "AdapterPropertiesD3D", "AdapterPropertiesMemoryHeaps", "BGRA8UnormStorage", "ChromiumExperimentalTimestampQueryInsidePasses", "ClipDistances", "CoreFeaturesAndLimits", "DawnFormatCapabilities", "DawnInternalUsages", "DawnLoadResolveTexture", "DawnMultiPlanarFormats", "DawnNative", "DawnPartialLoadResolveTexture", "Depth32FloatStencil8", "DepthClipControl", "DualSourceBlending", "FlexibleTextureViews", "Float32Blendable", "Float32Filterable", "HostMappedPointer", "ImplicitDeviceSynchronization", "IndirectFirstInstance", "MultiDrawIndirect", "MultiPlanarRenderTargets", "Norm16TextureFormats", "PrimitiveIndex", "R8UnormStorage", "RG11B10UfloatRenderable", "ShaderModuleCompilationOptions", "SharedBufferMemoryD3D12Resource", "SharedFenceDXGISharedHandle", "SharedTextureMemoryDXGISharedHandle", "Snorm16TextureFormats", "StaticSamplers", "TextureComponentSwizzle", "TextureCompressionBC", "TextureCompressionBCSliced3D", "TextureFormatsTier1", "TextureFormatsTier2", "TimestampQuery", "Unorm16TextureFormats", };
+ device_map["OpenGLES_ANGLE__Intel__Intel_R__UHD_Graphics_630__0x00009BC5__Direct3D11_vs_5_0_ps_5_0__D3D11_31_0_101_2127__compat"]
+            = { "ANGLETextureSharing", "DawnFormatCapabilities", "DawnInternalUsages", "DawnNative", "DualSourceBlending", "Float32Blendable", "ImplicitDeviceSynchronization", "Norm16TextureFormats", "Snorm16TextureFormats", "StaticSamplers", "TextureComponentSwizzle", "TextureCompressionBC", "TextureCompressionETC2", "Unorm16TextureFormats", };
+ device_map["OpenGLES_ANGLE__NVIDIA__NVIDIA_GeForce_GTX_1660__0x00002184__Direct3D11_vs_5_0_ps_5_0__D3D11_31_0_15_4601__compat"]
+            = { "ANGLETextureSharing", "DawnFormatCapabilities", "DawnInternalUsages", "DawnNative", "DualSourceBlending", "Float32Blendable", "ImplicitDeviceSynchronization", "Norm16TextureFormats", "Snorm16TextureFormats", "StaticSamplers", "TextureComponentSwizzle", "TextureCompressionBC", "TextureCompressionETC2", "Unorm16TextureFormats", };
+ device_map["OpenGLES_ANGLE__Google__Vulkan_1_3_0__SwiftShader_Device__Subzero___0x0000C0DE____SwiftShader_driver_5_0_0__compat"]
+            = { "ANGLETextureSharing", "DawnFormatCapabilities", "DawnInternalUsages", "DawnNative", "ImplicitDeviceSynchronization", "SharedFenceEGLSync", "StaticSamplers", "TextureComponentSwizzle", "TextureCompressionETC2", };
+ device_map["Vulkan_Intel_R__UHD_Graphics_630"]
+            = { "AdapterPropertiesMemoryHeaps", "AdapterPropertiesVk", "BGRA8UnormStorage", "BufferMapExtendedUsages", "ChromiumExperimentalBindless", "ChromiumExperimentalTimestampQueryInsidePasses", "ClipDistances", "CoreFeaturesAndLimits", "DawnDeviceAllocatorControl", "DawnFormatCapabilities", "DawnInternalUsages", "DawnLoadResolveTexture", "DawnMultiPlanarFormats", "DawnNative", "Depth32FloatStencil8", "DepthClipControl", "DualSourceBlending", "FlexibleTextureViews", "Float32Blendable", "Float32Filterable", "HostMappedPointer", "ImplicitDeviceSynchronization", "IndirectFirstInstance", "MultiDrawIndirect", "MultiPlanarFormatExtendedUsages", "Norm16TextureFormats", "PrimitiveIndex", "R8UnormStorage", "RG11B10UfloatRenderable", "ShaderF16", "Snorm16TextureFormats", "StaticSamplers", "TextureComponentSwizzle", "TextureCompressionASTC", "TextureCompressionBC", "TextureCompressionBCSliced3D", "TextureCompressionETC2", "TextureFormatsTier1", "TextureFormatsTier2", "TimestampQuery", "TransientAttachments", "Unorm16TextureFormats", };
+ device_map["Vulkan_NVIDIA_GeForce_GTX_1660"]
+            = { "AdapterPropertiesMemoryHeaps", "AdapterPropertiesVk", "BGRA8UnormStorage", "ChromiumExperimentalBindless", "ChromiumExperimentalTimestampQueryInsidePasses", "ClipDistances", "CoreFeaturesAndLimits", "DawnDeviceAllocatorControl", "DawnFormatCapabilities", "DawnInternalUsages", "DawnLoadResolveTexture", "DawnMultiPlanarFormats", "DawnNative", "Depth32FloatStencil8", "DepthClipControl", "DualSourceBlending", "FlexibleTextureViews", "Float32Blendable", "Float32Filterable", "HostMappedPointer", "ImplicitDeviceSynchronization", "IndirectFirstInstance", "MultiDrawIndirect", "MultiPlanarFormatExtendedUsages", "Norm16TextureFormats", "PrimitiveIndex", "R8UnormStorage", "RG11B10UfloatRenderable", "Snorm16TextureFormats", "StaticSamplers", "Subgroups", "TextureComponentSwizzle", "TextureCompressionBC", "TextureCompressionBCSliced3D", "TextureFormatsTier1", "TextureFormatsTier2", "TimestampQuery", "TransientAttachments", "Unorm16TextureFormats", };
+  device_map["D3D12_Intel_R__UHD_Graphics_630"]
+            = { "AdapterPropertiesD3D", "AdapterPropertiesMemoryHeaps", "BGRA8UnormStorage", "BufferMapExtendedUsages", "ChromiumExperimentalTimestampQueryInsidePasses", "ClipDistances", "CoreFeaturesAndLimits", "DawnFormatCapabilities", "DawnInternalUsages", "DawnLoadResolveTexture", "DawnMultiPlanarFormats", "DawnNative", "DawnPartialLoadResolveTexture", "Depth32FloatStencil8", "DepthClipControl", "DualSourceBlending", "FlexibleTextureViews", "Float32Blendable", "Float32Filterable", "HostMappedPointer", "ImplicitDeviceSynchronization", "IndirectFirstInstance", "MultiDrawIndirect", "MultiPlanarRenderTargets", "Norm16TextureFormats", "PrimitiveIndex", "R8UnormStorage", "RG11B10UfloatRenderable", "ShaderF16", "ShaderModuleCompilationOptions", "SharedBufferMemoryD3D12Resource", "SharedFenceDXGISharedHandle", "SharedTextureMemoryDXGISharedHandle", "Snorm16TextureFormats", "StaticSamplers", "TextureComponentSwizzle", "TextureCompressionBC", "TextureCompressionBCSliced3D", "TextureFormatsTier1", "TextureFormatsTier2", "TimestampQuery", "Unorm16TextureFormats", };
+ device_map["D3D12_NVIDIA_GeForce_GTX_1660"]
+            = { "AdapterPropertiesD3D", "AdapterPropertiesMemoryHeaps", "BGRA8UnormStorage", "ChromiumExperimentalTimestampQueryInsidePasses", "ClipDistances", "CoreFeaturesAndLimits", "DawnFormatCapabilities", "DawnInternalUsages", "DawnLoadResolveTexture", "DawnMultiPlanarFormats", "DawnNative", "DawnPartialLoadResolveTexture", "Depth32FloatStencil8", "DepthClipControl", "DualSourceBlending", "FlexibleTextureViews", "Float32Blendable", "Float32Filterable", "HostMappedPointer", "ImplicitDeviceSynchronization", "IndirectFirstInstance", "MultiDrawIndirect", "MultiPlanarRenderTargets", "Norm16TextureFormats", "PrimitiveIndex", "R8UnormStorage", "RG11B10UfloatRenderable", "ShaderF16", "ShaderModuleCompilationOptions", "SharedBufferMemoryD3D12Resource", "SharedFenceDXGISharedHandle", "SharedTextureMemoryDXGISharedHandle", "Snorm16TextureFormats", "StaticSamplers", "Subgroups", "TextureComponentSwizzle", "TextureCompressionBC", "TextureCompressionBCSliced3D", "TextureFormatsTier1", "TextureFormatsTier2", "TimestampQuery", "Unorm16TextureFormats", };
+
+    // clang-format on
+    auto supported_features = this->GetSupportsFeatures();
+
+    // We need alternates mostly due to differences in driver versions.
+    // Some devices might be on one driver that supports limit X while others might be on a driver
+    // that supports limit Y. In the case of alternates we append a "_alt{n}" where n starts at 1
+    // (first alternate).
+    bool encountered_error = false;
+    std::string full_param = GetFullParamString();
+
+    auto iter_curr_features = device_map.find(full_param);
+    if (iter_curr_features == device_map.end()) {
+        // CQ bots will pass in '--test-launcher-bot-mode' as a command line parameter.
+        // In this case, we didn't find any results, so we want to make sure we report an error as
+        // this is a new CQ bot and we need to update the  test results.
+        if (IsTestLauncherBotMode()) {
+            encountered_error = true;
+        } else {
+            // Skipping the test when the device params does not match features us to only testing
+            // known CQ (and try) bots.
+            GTEST_SKIP();
+        }
+    }
+
+    if (!encountered_error) {
+        std::set<std::string> missing_features;
+        std::set_difference(supported_features.begin(), supported_features.end(),
+                            iter_curr_features->second.begin(), iter_curr_features->second.end(),
+                            std::inserter(missing_features, missing_features.begin()));
+
+        std::set<std::string> unexpected_features;
+
+        std::set_difference(iter_curr_features->second.begin(), iter_curr_features->second.end(),
+                            supported_features.begin(), supported_features.end(),
+                            std::inserter(unexpected_features, unexpected_features.begin()));
+
+        std::string error_str;
+        error_str += "\nMissing features= ";
+        for (auto& each : missing_features) {
+            encountered_error = true;
+            error_str += each + ", ";
+        }
+        error_str += "\nUnexpected features= ";
+        for (auto& each : unexpected_features) {
+            encountered_error = true;
+            error_str += each + ", ";
+        }
+
+        if (encountered_error) {
+            SCOPED_TRACE(error_str);
+            EXPECT_FALSE(encountered_error);
+        }
+    }
+
+    if (encountered_error) {
+        std::string expected_str =
+            "\n Mismatch found! The full set of correct features for device are:\n\n "
+            "device_map[\"" +
+            full_param + "\"] = { ";
+        for (auto& each : supported_features) {
+            expected_str += "\"" + each + "\", ";
+        }
+        expected_str += "};";
+        SCOPED_TRACE(expected_str);
+        EXPECT_FALSE(encountered_error);
+    }
+}
 
 DAWN_INSTANTIATE_TEST(TierArchInfoTest_TieredMaxLimits,
                       D3D11Backend(),
