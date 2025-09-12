@@ -2,7 +2,7 @@ Name: Dawn
 Short Name: dawn
 URL: https://dawn.googlesource.com/dawn
 Version: N/A
-Revision: DEPS
+Revision: 0c8d2cd8fbe6a0755441ba3f6402bb241a3f6f1e
 License: BSD-3-Clause
 License File: LICENSE
 Security Critical: yes
