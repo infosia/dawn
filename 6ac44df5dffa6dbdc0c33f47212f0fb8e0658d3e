@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f58889c9_27d8142e",
+        "filename": "scripts/BUILD.gn",
+        "patchSetId": 20
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-12T19:39:19Z",
+      "side": 1,
+      "message": "This stuff could perhaps be in a subdirectory of scripts/ to make it easier to tell they all go together.",
+      "revId": "6ac44df5dffa6dbdc0c33f47212f0fb8e0658d3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
