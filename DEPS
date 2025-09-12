@@ -67,7 +67,7 @@ vars = {
 
 deps = {
   'buildtools': {
-    'url': '{chromium_git}/chromium/src/buildtools@bb0dbc354cf9dd386f59a4db38564a21be756cd9',
+    'url': '{chromium_git}/chromium/src/buildtools@958004daacdd90070d44b236a1581c81d71740ca',
     'condition': 'dawn_standalone',
   },
   'third_party/clang-format/script': {
@@ -131,11 +131,11 @@ deps = {
   # The //build, //tools/clang, //tools/memory, and '//tools/valgrind' deps
   # should all be updated in unison, as there are dependencies between them.
   'build': {
-  'url': '{chromium_git}/chromium/src/build@5b9c84abf9780026fc4ede5c09a6f0d2652f8f83',
+  'url': '{chromium_git}/chromium/src/build@0c8d2cd8fbe6a0755441ba3f6402bb241a3f6f1e',
     'condition': 'dawn_standalone',
   },
   'tools/clang': {
-  'url': '{chromium_git}/chromium/src/tools/clang@2ca74111d25f5c3bc96d3bb18aa54fa445b961eb',
+  'url': '{chromium_git}/chromium/src/tools/clang@8e6c4696e2aee88cf2c60c1e6a527069fb735c14',
     'condition': 'dawn_standalone',
   },
   'tools/memory': {
@@ -237,7 +237,7 @@ deps = {
 
   # Testing, GTest and GMock
   'testing': {
-    'url': '{chromium_git}/chromium/src/testing@ae9705179f821d1dbd2b0a2ba7a6582faac7f86b',
+    'url': '{chromium_git}/chromium/src/testing@2b39694741d609b78948e2330a47d684e723f229',
     'condition': 'dawn_standalone',
   },
   'third_party/libFuzzer/src': {
@@ -339,7 +339,7 @@ deps = {
   },
 
   'third_party/zlib': {
-    'url': '{chromium_git}/chromium/src/third_party/zlib@209717dd69cd62f24cbacc4758261ae2dd78cfac',
+    'url': '{chromium_git}/chromium/src/third_party/zlib@caf4afa1afc92e16fef429f182444bed98a46a6c',
     'condition': 'dawn_standalone',
   },
 
@@ -376,7 +376,7 @@ deps = {
   'third_party/emsdk': {
     # Note: Always use an emsdk hash referring to a tagged release, just so
     # emsdk and emscripten are always in sync with an exact release.
-    'url': '{chromium_git}/external/github.com/emscripten-core/emsdk.git@419021fa040428bc69ef1559b325addb8e10211f',
+    'url': '{chromium_git}/external/github.com/emscripten-core/emsdk.git@eff90ca04a3785f571a8095b3a42b63799cf384a',
     'condition': 'dawn_wasm',
   },
 
@@ -479,7 +479,7 @@ deps = {
   # Dependencies for PartitionAlloc.
   # Doc: https://docs.google.com/document/d/1wz45t0alQthsIU9P7_rQcfQyqnrBMXzrOjSzdQo-V-A
   'third_party/partition_alloc': {
-    'url': '{chromium_git}/chromium/src/base/allocator/partition_allocator.git@2041003ba674f918c33b1afaaad74e652f34bcea',
+    'url': '{chromium_git}/chromium/src/base/allocator/partition_allocator.git@fae4df38cef9720a13dd55a6b1d20600919e671b',
     'condition': 'dawn_standalone',
   },
 }
