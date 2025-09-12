@@ -141,6 +141,7 @@ function(tint_default_compile_options TARGET)
       /bigobj
       /EHsc
       /W4
+      /wd4018 # '>=': signed/unsigned mismatch (Comes from protobuf library)
       /wd4068 # unknown pragma
       /wd4127 # conditional expression is constant
       /wd4244 # 'conversion' conversion from 'type1' to 'type2', possible loss of data
