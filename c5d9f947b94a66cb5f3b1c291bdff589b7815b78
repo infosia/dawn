@@ -34,6 +34,24 @@
       "parentUuid": "a4e7bd7a_223a66b7",
       "revId": "c5d9f947b94a66cb5f3b1c291bdff589b7815b78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c082cba_ce993a6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-12T19:03:35Z",
+      "side": 1,
+      "message": "Drivers don\u0027t change on CQ _that_ often, it\u0027s a manual process, but yes we would need to update it every time. The \u0027alternates\u0027 logic does give some wiggle room for regressions but it seems very unlikely that it would actually allow one so I think it\u0027s fine.",
+      "parentUuid": "3dedbaea_bc650e98",
+      "revId": "c5d9f947b94a66cb5f3b1c291bdff589b7815b78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
