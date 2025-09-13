@@ -346,6 +346,24 @@
       "parentUuid": "9ee3d5a2_247da46d",
       "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9577ba63_7ada6c38",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-13T06:00:46Z",
+      "side": 1,
+      "message": "I believe this is tested already. See https://github.com/gpuweb/cts/blob/e1be9a27ac05c1bb638eff56c5b2705989bea1ed/src/webgpu/api/operation/texture_view/texture_component_swizzle.spec.ts#L372 and @gman@chromium.org to confirm.",
+      "parentUuid": "bfd881b5_f127bb98",
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

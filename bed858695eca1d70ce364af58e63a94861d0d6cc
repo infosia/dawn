@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3090a6b0_af636d0c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-13T06:00:46Z",
+      "side": 1,
+      "message": "Will do",
+      "parentUuid": "b10d1cae_46e4542f",
+      "revId": "bed858695eca1d70ce364af58e63a94861d0d6cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2ffc8dc4_ef70add7",
         "filename": "src/dawn/native/metal/TextureMTL.mm",
         "patchSetId": 13
@@ -31,6 +49,24 @@
       "writtenOn": "2025-09-12T20:36:41Z",
       "side": 1,
       "message": "BTW I noticed that the proposal allows creating a view with only COPY usages (which is useless) with a swizzle. That will do something slightly weird here (`mtlSwizzle` will have a value but we won\u0027t create a new texture view).\n\nThis Dawn code should handle that fine, but it\u0027s a case that should be tested (or disallowed) too, to make sure.",
+      "revId": "bed858695eca1d70ce364af58e63a94861d0d6cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65f1b9ec_964fff77",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-13T06:00:46Z",
+      "side": 1,
+      "message": "@gman@chromium.org What is your preference there? Shall we disallow `createView({swizzle, usage: GPUTextureUsage.COPY_SRC})` in the spec proposal or test it in the CTS?",
+      "parentUuid": "2ffc8dc4_ef70add7",
       "revId": "bed858695eca1d70ce364af58e63a94861d0d6cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
