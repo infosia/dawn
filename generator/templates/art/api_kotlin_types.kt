@@ -137,3 +137,11 @@
     {{ declaration_with_defaults(arg, false) }}
 {%- endmacro %}
 
+{% macro kotlin_annotation(arg) -%}
+    {%- if arg != None -%}
+        {% set type = arg.type %}
+        {% if type.category in ['bitmask', 'enum'] -%}
+            @{{ type.name.CamelCase() -}}
+        {% endif -%}
+    {% endif -%}
+{% endmacro %}

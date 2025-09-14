@@ -27,8 +27,10 @@
 package {{ kotlin_package }}
 
 import androidx.annotation.IntDef
+import androidx.annotation.RestrictTo;
+import androidx.annotation.RestrictTo.Scope;
 
-@Retention(AnnotationRetention.SOURCE)
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 @IntDef(
     {% if enum.category == 'bitmask' %}
         flag = true,
@@ -39,17 +41,17 @@ import androidx.annotation.IntDef
         {% endfor %}
     ]
 )
-@Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY, AnnotationTarget.TYPE)
+@Target(AnnotationTarget.FUNCTION, AnnotationTarget.VALUE_PARAMETER)
 public annotation class {{ enum.name.CamelCase() }} {
     public companion object {
         {% for value in enum.values %}
-            public const val {{ as_ktName(value.name.CamelCase()) }}: @{{ enum.name.CamelCase() }} Int = {{ '{:#010x}'.format(value.value) }}
+            public const val {{ as_ktName(value.name.CamelCase()) }}: Int = {{ '{:#010x}'.format(value.value) }}
         {% endfor %}
         internal val names: Map<Int, String> = mapOf(
             {% for value in enum.values %}
                 {{ '{:#010x}'.format(value.value) }} to "{{ as_ktName(value.name.CamelCase()) }}",
             {% endfor %}
         )
-        public fun toString(value: @{{ enum.name.CamelCase() }} Int): String = names[value] ?: value.toString()
+        public fun toString(@{{ enum.name.CamelCase() }} value: Int): String = names[value] ?: value.toString()
     }
 }
