@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/glsl/writer/printer/printer.h"
 
+#include <iostream>
 #include <string>
 #include <utility>
 
@@ -736,16 +737,61 @@ class Printer : public tint::TextGenerator {
         // Padding members need to be named consistently between different shader stages to satisfy
         // GLSL's interface matching rules.
         uint32_t pad_id = 0;
-        auto add_padding = [&](uint32_t size) {
-            auto pad_size = size / 4;
-            for (size_t i = 0; i < pad_size; ++i) {
-                std::string name;
-                do {
-                    name = "tint_pad_" + std::to_string(pad_id++);
-                } while (str->FindMember(ir_.symbols.Get(name)));
+        auto add_pad_member = [&](uint32_t member_size) {
+            std::string name;
+            do {
+                name = "tint_pad_" + std::to_string(pad_id++);
+            } while (str->FindMember(ir_.symbols.Get(name)));
 
+            if (member_size == 2) {
+                Line(&str_buf) << "float16_t " << name << ";";
+                new_struct_to_old.Push(std::nullopt);
+                return;
+            }
+            if (member_size == 4) {
                 Line(&str_buf) << "uint " << name << ";";
                 new_struct_to_old.Push(std::nullopt);
+                return;
+            }
+            if (member_size == 16) {
+                Line(&str_buf) << "vec4u " << name << ";";
+                new_struct_to_old.Push(std::nullopt);
+                return;
+            }
+            if (member_size % 16 == 0) {
+                Line(&str_buf) << "vec4u " << name << "[" << (member_size / 16) << "];";
+                new_struct_to_old.Push(std::nullopt);
+                return;
+            }
+            TINT_UNREACHABLE() << "member size must divide 2";
+        };
+        // Adds members occupying `size` bytes starting at offset `from`.
+        auto add_padding = [&](uint32_t from, uint32_t size) {
+            TINT_ASSERT(size > 0);
+            // 2-byte offsets can happen with float16_t
+            TINT_ASSERT(size % 2 == 0);
+            // Add 4 byte chunks until aligned to 16 bytes.
+            while ((from % 16) && size >= 4) {
+                add_pad_member(4);
+                size -= 4;
+                from += 4;
+            }
+            // Add a single member that is a multiple of 16 bytes,
+            // aligned to 16 bytes.
+            if (size >= 16) {
+                auto chunk = (size / 16) * 16;
+                add_pad_member(chunk);
+                size -= chunk;
+            }
+            // Add individual 4-byte members.
+            while (size >= 4) {
+                add_pad_member(4);
+                size -= 4;
+            }
+            // Add individual 2-byte members.
+            while (size >= 2) {
+                add_pad_member(2);
+                size -= 2;
             }
         };
 
@@ -763,7 +809,7 @@ class Printer : public tint::TextGenerator {
 
                 // Generate padding if required
                 if (auto padding = ir_offset - glsl_offset) {
-                    add_padding(padding);
+                    add_padding(glsl_offset, padding);
                     glsl_offset += padding;
                 }
             }
@@ -786,7 +832,7 @@ class Printer : public tint::TextGenerator {
         }
         if (is_host_shareable && !str->StructFlags().Contains(core::type::kBlock) &&
             str->Size() > glsl_offset) {
-            add_padding(str->Size() - glsl_offset);
+            add_padding(glsl_offset, str->Size() - glsl_offset);
         }
 
         // If the lengths differ then we've added padding, so we need to handle it when constructing

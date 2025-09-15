@@ -1123,6 +1123,7 @@ precision highp int;
 layout(binding = 0, std140)
 uniform f_v_block_std140_ubo {
   f16vec3 inner_col0;
+  float16_t tint_pad_0;
   f16vec3 inner_col1;
 } v_1;
 void main() {
@@ -1374,6 +1375,7 @@ precision highp int;
 struct SB {
   int a;
   float16_t b;
+  float16_t tint_pad_0;
 };
 
 layout(binding = 0, std140)
@@ -1948,6 +1950,7 @@ precision highp int;
 struct SB {
   int a;
   float16_t b;
+  float16_t tint_pad_0;
 };
 
 layout(binding = 0, std430)
