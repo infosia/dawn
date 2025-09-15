@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ba37c8a_f124a314",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-15T09:35:10Z",
+      "side": 1,
+      "message": "I would need to access `swizzle` in this static function (instead of textureViewDescriptor.Has\u003cTextureComponentSwizzleDescriptor\u003e()` but since TextureView has not been created in [1], it\u0027s not possible for now. \nDo you know if this requires refactoring or if there is another way I\u0027m not seeing?",
+      "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a14057c7_6514e03b",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-15T09:35:10Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
