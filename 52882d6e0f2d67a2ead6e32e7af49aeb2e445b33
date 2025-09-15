@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c7d5930_0db4a6be",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2935,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-15T15:24:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c88e0dd_d7f87765",
+      "revId": "52882d6e0f2d67a2ead6e32e7af49aeb2e445b33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60e3f0a9_dcdd4991",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-09-15T14:29:14Z",
       "side": 1,
       "message": "What does this mean, if `@location` is applied to a struct, then it\u0027s fine if every element of the struct bottoms out at a scalar?",
+      "revId": "52882d6e0f2d67a2ead6e32e7af49aeb2e445b33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61fced00_afb81b04",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2939,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-15T15:24:24Z",
+      "side": 1,
+      "message": "Yup, my understanding of the ShaderIO transform is that it rewrites all of the complex containers of numerics (i.e. structs, matrices, arrays) into set of scalars and vectors. There are existing tests for the transform for combinations like a matrix in a struct.",
+      "parentUuid": "60e3f0a9_dcdd4991",
       "revId": "52882d6e0f2d67a2ead6e32e7af49aeb2e445b33",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
