@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fecf0ee5_942e9b7c",
+        "filename": "src/dawn/native/DynamicArrayState.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-15T14:28:18Z",
+      "side": 1,
+      "message": "This ordering, coupled with the insertion order below seems fragile. Would a function like `CreateDefaultBinding(tint::ResourceIndex)` be too many branches to be readable? You could then iterate over this array and always insert in the right order.",
+      "range": {
+        "startLine": 153,
+        "startChar": 26,
+        "endLine": 153,
+        "endChar": 49
+      },
+      "revId": "0808c6842cfdeb0e1116df1347ca9dd0583468a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
