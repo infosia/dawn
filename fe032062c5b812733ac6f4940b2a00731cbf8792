@@ -16,6 +16,24 @@
       "message": "The \u0027linux-dawn-rel` try bot fails with the following error:\n\n```\n[ RUN      ] ClipSpaceTest.ClipSpace/Vulkan_GeForce_GTX_1660\nunknown file: Failure\n\nUnexpected mock function call - returning directly.\n    Function call: Call(@0x7ffc26c25590 8-byte object \u003c00-40 40-00 C4-32 00-00\u003e, DeviceLostReason::Unknown, The Vulkan validation layer reported uncaught errors.\n - While handling unexpected error type Internal when allowed errors are (Validation|DeviceLost).\n    at CheckDebugLayerAndGenerateErrors (../../third_party/dawn/src/dawn/native/vulkan/DeviceVk.cpp:916)\n    at TickImpl (../../third_party/dawn/src/dawn/native/vulkan/DeviceVk.cpp:361)\n    at Tick (../../third_party/dawn/src/dawn/native/Device.cpp:1579)\n    at SubmitInternal (../../third_party/dawn/src/dawn/native/Queue.cpp:599)\n\nBackend messages:\n * vkCreateFramebuffer(): pCreateInfo-\u003epAttachments[1] has non-identy swizzle. All framebuffer attachments must have been created with the identity swizzle. Here are the actual swizzle values:\nr swizzle \u003d VK_COMPONENT_SWIZZLE_R\ng swizzle \u003d VK_COMPONENT_SWIZZLE_ZERO\nb swizzle \u003d VK_COMPONENT_SWIZZLE_ZERO\na swizzle \u003d VK_COMPONENT_SWIZZLE_ONE\nThe Vulkan spec states: If flags does not include VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT, each element of pAttachments must have been created with the identity swizzle (https://docs.vulkan.org/spec/latest/chapters/renderpass.html#VUID-VkFramebufferCreateInfo-pAttachments-00884)\n)\nGoogle Mock tried the following 1 expectation, but it didn\u0027t match:\n\n../../third_party/dawn/src/dawn/tests/DawnTest.cpp:1267: EXPECT_CALL(mDeviceLostCallback, Call(_, wgpu::DeviceLostReason::Destroyed, _))...\n  Expected arg #1: is equal to DeviceLostReason::Destroyed\n           Actual: DeviceLostReason::Unknown\n         Expected: to be called at most once\n           Actual: never called - satisfied and active\n```",
       "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6ac948c_2d2ddcab",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-15T08:16:07Z",
+      "side": 1,
+      "message": "@cwallez@chromium.org Any idea if we should take into consideration this `VUID-VkFramebufferCreateInfo-pAttachments-00884` rule?",
+      "parentUuid": "e78372f7_1c0a84ff",
+      "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
