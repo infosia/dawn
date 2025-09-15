@@ -16,6 +16,41 @@
       "message": "Patchset 6: Fix complaint about unused `operator\u003c\u003c` of enum",
       "revId": "d1aa6d7cf7d9173e53a0a61435c836aacb0f8253",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1798ff4f_0cccc1d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3578208
+      },
+      "writtenOn": "2025-09-15T07:19:44Z",
+      "side": 1,
+      "message": "Now `win-clang-rel-x64` fails which was successful previously, we we re-run it? Then there is still the `presubmit` check. I do not know how to find or solve the error of either issue.",
+      "revId": "d1aa6d7cf7d9173e53a0a61435c836aacb0f8253",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc041918_5a2ffabe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3578208
+      },
+      "writtenOn": "2025-09-15T07:19:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cebbe69c_35ef41c9",
+      "revId": "d1aa6d7cf7d9173e53a0a61435c836aacb0f8253",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

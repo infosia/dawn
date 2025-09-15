@@ -16,6 +16,24 @@
       "message": "Patch Set 4: New try",
       "revId": "b32f1c7298dc5336917f043a622cbed7a1da6763",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db35cad3_a0d1aaa2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3578208
+      },
+      "writtenOn": "2025-09-15T07:19:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c1aa6b7_c5948397",
+      "revId": "b32f1c7298dc5336917f043a622cbed7a1da6763",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
