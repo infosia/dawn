@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c88e0dd_d7f87765",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2935,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-15T14:29:14Z",
+      "side": 1,
+      "message": "I think these two (array and matrix) can just move down into Default and have default get the `-\u003eDeepestElement()`, so make it `t-\u003eDeepestElement()-\u003eIsNumericScalarOrVector()`",
+      "revId": "52882d6e0f2d67a2ead6e32e7af49aeb2e445b33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60e3f0a9_dcdd4991",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2939,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-15T14:29:14Z",
+      "side": 1,
+      "message": "What does this mean, if `@location` is applied to a struct, then it\u0027s fine if every element of the struct bottoms out at a scalar?",
+      "revId": "52882d6e0f2d67a2ead6e32e7af49aeb2e445b33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
