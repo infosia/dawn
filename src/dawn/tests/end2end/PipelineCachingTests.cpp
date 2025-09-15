@@ -619,8 +619,8 @@ TEST_P(SinglePipelineCachingTests, RenderPipelineBlobCacheLayout) {
     }
 
     // Cache should not hit for the fragment shader, but should hit for the pipeline.
-    // On Metal and Vulkan, the shader is different but compiles to the same due to binding number
-    // remapping. On other backends, the compiled shader is different and so is the pipeline.
+    // On Metal, GL and Vulkan, the shader is different but compiles to the same due to binding
+    // number remapping. On other backends, the compiled shader is different and so is the pipeline.
     {
         wgpu::Device device = CreateDevice();
         utils::ComboRenderPipelineDescriptor desc;
@@ -637,7 +637,7 @@ TEST_P(SinglePipelineCachingTests, RenderPipelineBlobCacheLayout) {
                                 {1, wgpu::ShaderStage::Fragment, wgpu::BufferBindingType::Uniform},
                             }),
                     });
-        if (IsMetal() || IsVulkan()) {
+        if (IsMetal() || IsOpenGL() || IsOpenGLES() || IsDesIsVulkan()) {
             EXPECT_CACHE_STATS(mMockCache, Hit(counts.shaderModule + counts.pipeline),
                                Add(counts.shaderModule), device.CreateRenderPipeline(&desc));
         } else {
