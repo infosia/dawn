@@ -54,6 +54,9 @@ BindingInfoType GetBindingInfoType(const BindingInfo& info) {
         },
         [](const InputAttachmentBindingInfo&) -> BindingInfoType {
             return BindingInfoType::InputAttachment;
+        },
+        [](const ExternalTextureBindingInfo&) -> BindingInfoType {
+            return BindingInfoType::ExternalTexture;
         });
 }
 
@@ -369,6 +372,16 @@ StaticSamplerBindingInfo StaticSamplerBindingInfo::From(const StaticSamplerBindi
         .sampledTextureBinding = BindingNumber{layout.sampledTextureBinding},
         .isUsedForSingleTextureBinding = layout.sampledTextureBinding < WGPU_LIMIT_U32_UNDEFINED,
     };
+}
+
+// ExternalTextureBindingInfo
+
+// static
+ExternalTextureBindingInfo ExternalTextureBindingInfo::From(
+    const ExternalTextureBindingLayout& layout) {
+    // The layout needs to be patched up later, with the indices to the expanded entries. Do nothing
+    // for now.
+    return {};
 }
 
 }  // namespace dawn::native
