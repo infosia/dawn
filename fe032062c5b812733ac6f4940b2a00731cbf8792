@@ -34,6 +34,24 @@
       "parentUuid": "e78372f7_1c0a84ff",
       "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74326be4_60382698",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-15T11:24:41Z",
+      "side": 1,
+      "message": "FWIW I cannot reproduce locally on macOS when running CTS tests with `force_fallback_adapter\u003d1`",
+      "parentUuid": "d6ac948c_2d2ddcab",
+      "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
