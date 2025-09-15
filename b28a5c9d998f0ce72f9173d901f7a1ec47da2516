@@ -16,6 +16,23 @@
       "message": "PTAL\n\nWill send out a PSA in chat before landing this.",
       "revId": "b28a5c9d998f0ce72f9173d901f7a1ec47da2516",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f4e7004_1e879d18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-15T22:47:03Z",
+      "side": 1,
+      "message": "Adding Kai as a reviewer since it\u0027s past EoD for Yuly.",
+      "revId": "b28a5c9d998f0ce72f9173d901f7a1ec47da2516",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
