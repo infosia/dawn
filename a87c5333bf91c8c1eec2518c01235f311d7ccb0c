@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41fc07b1_59b3373d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003681
+      },
+      "writtenOn": "2025-09-15T17:22:10Z",
+      "side": 1,
+      "message": "This needs a retroactive second review due to b/444276410",
+      "revId": "a87c5333bf91c8c1eec2518c01235f311d7ccb0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
