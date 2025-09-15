@@ -51,6 +51,24 @@
       "parentUuid": "cebbe69c_35ef41c9",
       "revId": "d1aa6d7cf7d9173e53a0a61435c836aacb0f8253",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf486f0b_61cc8189",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-15T14:20:15Z",
+      "side": 1,
+      "message": "I\u0027m guessing the `win-clang-rel-x64` is a flake from D3D warp. I\u0027ve kicked the bot to run again.\n\nFor presubmit it looks like a formatting issue with a trailing space. You can do `git cl format` to run the formatter locally and it should clear it up for you. \n\n(Specifically, trailing space in src/tint/cmd/common/helper.cc#170 is what the linter bot has commented in the Cl)",
+      "parentUuid": "1798ff4f_0cccc1d8",
+      "revId": "d1aa6d7cf7d9173e53a0a61435c836aacb0f8253",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
