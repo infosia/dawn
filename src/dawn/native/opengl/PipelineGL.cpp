@@ -124,11 +124,7 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
         // all in this vector.
         absl::InlinedVector<GLint, 1> uniformsToSet;
 
-        const BindGroupLayoutInternalBase* textureBgl =
-            layout->GetBindGroupLayout(combined.textureLocation.group);
-        BindingIndex textureArrayStart =
-            textureBgl->GetBindingIndex(combined.textureLocation.binding);
-
+        BindingIndex textureArrayStart = combined.textureLocation.binding;
         for (auto textureArrayElement : Range(combined.textureLocation.arraySize)) {
             FlatBindingIndex textureGLIndex =
                 indices[combined.textureLocation.group][textureArrayStart + textureArrayElement];
@@ -140,11 +136,7 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
                 mPlaceholderSamplerUnits.push_back(textureUnit);
             } else {
                 // Record that the sampler used in the shader must be set for this texture unit.
-                const BindGroupLayoutInternalBase* samplerBgl =
-                    layout->GetBindGroupLayout(combined.samplerLocation->group);
-                BindingIndex samplerBindingIndex =
-                    samplerBgl->GetBindingIndex(combined.samplerLocation->binding);
-
+                BindingIndex samplerBindingIndex = combined.samplerLocation->binding;
                 FlatBindingIndex samplerGLIndex =
                     indices[combined.samplerLocation->group][samplerBindingIndex];
                 mUnitsForSamplers[samplerGLIndex].push_back(textureUnit);
