@@ -171,25 +171,28 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
 
     tint::hlsl::writer::Bindings bindings;
 
-    const BindingInfoArray& moduleBindingInfo = entryPoint.bindings;
     for (BindGroupIndex group : layout->GetBindGroupLayoutsMask()) {
         const BindGroupLayout* bgl = ToBackend(layout->GetBindGroupLayout(group));
-        const BindingGroupInfoMap& moduleGroupBindingInfo = moduleBindingInfo[group];
 
-        // d3d12::BindGroupLayout packs the bindings per HLSL register-space. We modify
-        // the Tint AST to make the "bindings" decoration match the offset chosen by
-        // d3d12::BindGroupLayout so that Tint produces HLSL with the correct registers
-        // assigned to each interface variable.
-        for (const auto& [binding, shaderBindingInfo] : moduleGroupBindingInfo) {
-            BindingIndex bindingIndex = bgl->GetBindingIndex(binding);
-            BindingPoint srcBindingPoint{static_cast<uint32_t>(group),
-                                         static_cast<uint32_t>(binding)};
-            BindingPoint dstBindingPoint{static_cast<uint32_t>(group),
-                                         bgl->GetShaderRegister(bindingIndex)};
+        // d3d12::BindGroupLayout packs the bindings per HLSL register-space. We modify the Tint AST
+        // to make the "bindings" decoration match the offset chosen by d3d12::BindGroupLayout so
+        // that Tint produces HLSL with the correct registers assigned to each interface variable.
+        for (const auto& [binding, bindingIndex] : bgl->GetBindingMap()) {
+            tint::BindingPoint srcBindingPoint{
+                .group = uint32_t(group),
+                .binding = uint32_t(binding),
+            };
+
+            auto ComputeDestinationBindingPoint = [&](BindingIndex bindingIndex) {
+                return tint::BindingPoint{.group = uint32_t(group),
+                                          .binding = bgl->GetShaderRegister(bindingIndex)};
+            };
 
             MatchVariant(
-                shaderBindingInfo.bindingInfo,
+                bgl->GetAPIBindingInfo(bindingIndex).bindingLayout,
                 [&](const BufferBindingInfo& bindingInfo) {
+                    tint::BindingPoint dstBindingPoint =
+                        ComputeDestinationBindingPoint(bgl->AsBindingIndex(bindingIndex));
                     switch (bindingInfo.type) {
                         case wgpu::BufferBindingType::Uniform:
                             bindings.uniform.emplace(srcBindingPoint, dstBindingPoint);
@@ -206,41 +209,37 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
                             break;
                     }
                 },
+
                 [&](const SamplerBindingInfo& bindingInfo) {
-                    bindings.sampler.emplace(srcBindingPoint, dstBindingPoint);
+                    bindings.sampler.emplace(
+                        srcBindingPoint,
+                        ComputeDestinationBindingPoint(bgl->AsBindingIndex(bindingIndex)));
                 },
                 [&](const TextureBindingInfo& bindingInfo) {
-                    bindings.texture.emplace(srcBindingPoint, dstBindingPoint);
+                    bindings.texture.emplace(
+                        srcBindingPoint,
+                        ComputeDestinationBindingPoint(bgl->AsBindingIndex(bindingIndex)));
                 },
                 [&](const StorageTextureBindingInfo& bindingInfo) {
-                    bindings.storage_texture.emplace(srcBindingPoint, dstBindingPoint);
+                    bindings.storage_texture.emplace(
+                        srcBindingPoint,
+                        ComputeDestinationBindingPoint(bgl->AsBindingIndex(bindingIndex)));
                 },
                 [&](const TexelBufferBindingInfo& bindingInfo) {
                     // TODO(crbug/382544164): Prototype texel buffer feature
                     DAWN_UNREACHABLE();
                 },
                 [&](const ExternalTextureBindingInfo& bindingInfo) {
-                    const auto& bindingMap = bgl->GetExternalTextureBindingExpansionMap();
-                    const auto& expansion = bindingMap.find(binding);
-                    DAWN_ASSERT(expansion != bindingMap.end());
-
-                    const auto& bindingExpansion = expansion->second;
-                    tint::BindingPoint plane0{
-                        static_cast<uint32_t>(group),
-                        static_cast<uint32_t>(bgl->GetBindingIndex(bindingExpansion.plane0))};
-                    tint::BindingPoint plane1{
-                        static_cast<uint32_t>(group),
-                        static_cast<uint32_t>(bgl->GetBindingIndex(bindingExpansion.plane1))};
-                    tint::BindingPoint metadata{
-                        static_cast<uint32_t>(group),
-                        static_cast<uint32_t>(bgl->GetBindingIndex(bindingExpansion.params))};
-
                     bindings.external_texture.emplace(
                         srcBindingPoint,
-                        tint::hlsl::writer::ExternalTexture{metadata, plane0, plane1});
+                        tint::spirv::writer::ExternalTexture{
+                            .metadata = ComputeDestinationBindingPoint(bindingInfo.params),
+                            .plane0 = ComputeDestinationBindingPoint(bindingInfo.plane0),
+                            .plane1 = ComputeDestinationBindingPoint(bindingInfo.plane1)});
                 },
 
-                [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); });
+                [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); },
+                [](const StaticSamplerBindingInfo&) { DAWN_UNREACHABLE(); });
         }
     }
 

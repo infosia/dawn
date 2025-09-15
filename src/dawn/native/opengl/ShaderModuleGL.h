@@ -57,7 +57,7 @@ std::string GetBindingName(BindGroupIndex group, BindingNumber bindingNumber);
 
 #define COMBINED_SAMPLER_ELEMENT_MEMBERS(X)                                                 \
     X(BindGroupIndex, group)                                                                \
-    X(BindingNumber, binding)                                                               \
+    X(BindingIndex, binding)                                                                \
     /* Return the array size of the element in the WGSL / GLSL as OpenGL requires that a */ \
     /* non-arrayed (arraySize = 1) binding uses glUniform1i and not glUniform1iv. */        \
     X(BindingIndex, arraySize, 1)
