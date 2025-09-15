@@ -2031,6 +2031,10 @@ void Validator::CheckType(const core::type::Type* root,
                 return true;
             },
             [&](const core::type::Array* arr) {
+                if (!arr->ElemType()->UnwrapPtrOrRef()->IsConstructible()) {
+                    diag() << "array elements, " << NameOf(type) << ", must be constructible";
+                    return false;
+                }
                 if (arr->Count()->Is<core::type::RuntimeArrayCount>()) {
                     auto* mv = root->As<core::type::MemoryView>();
                     if (mv && mv->AddressSpace() != AddressSpace::kStorage) {
