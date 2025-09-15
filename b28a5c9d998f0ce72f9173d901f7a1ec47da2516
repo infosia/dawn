@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc5d12fc_bdf9f065",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-15T17:12:24Z",
+      "side": 1,
+      "message": "PTAL\n\nWill send out a PSA in chat before landing this.",
+      "revId": "b28a5c9d998f0ce72f9173d901f7a1ec47da2516",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
