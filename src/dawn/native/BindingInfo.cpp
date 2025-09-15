@@ -374,4 +374,14 @@ StaticSamplerBindingInfo StaticSamplerBindingInfo::From(const StaticSamplerBindi
     };
 }
 
+// ExternalTextureBindingInfo
+
+// static
+ExternalTextureBindingInfo ExternalTextureBindingInfo::From(
+    const ExternalTextureBindingLayout& layout) {
+    // The layout needs to be patched up later, with the indices to the expanded entries. Do nothing
+    // for now.
+    return {};
+}
+
 }  // namespace dawn::native
