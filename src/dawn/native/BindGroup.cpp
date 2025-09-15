@@ -658,16 +658,8 @@ ResultOrError<UnpackedPtr<BindGroupDescriptor>> ValidateBindGroupDescriptor(
                     return ValidateExternalTextureBinding(device, entry,
                                                           externalTextureBindingEntry);
                 }
-                if (!device->IsToggleEnabled(
-                        Toggle::DisableTextureViewBindingUsedAsExternalTexture)) {
-                    DAWN_TRY_CONTEXT(ValidateTextureViewBindingUsedAsExternalTexture(device, entry),
-                                     "validating entries[%u] for an ExternalTexture.", i);
-                } else {
-                    return DAWN_VALIDATION_ERROR(
-                        "entries[%u] not an ExternalTexture when the layout contains an "
-                        "ExternalTexture entry.",
-                        i);
-                }
+                DAWN_TRY_CONTEXT(ValidateTextureViewBindingUsedAsExternalTexture(device, entry),
+                                 "validating entries[%u] for an ExternalTexture.", i);
                 return {};
             },
 
