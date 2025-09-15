@@ -34,6 +34,24 @@
       "parentUuid": "ed14714f_c73294a8",
       "revId": "f37f313318c2632a4d388761822ff98685e14feb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f2b7923_ee35bc58",
+        "filename": "src/tint/lang/hlsl/writer/writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-09-15T08:53:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae688cff_6f14a142",
+      "revId": "f37f313318c2632a4d388761822ff98685e14feb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
