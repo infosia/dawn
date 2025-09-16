@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "680970b4_890a38a0",
+        "filename": "infra/config/global/legacy_builders.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-09-16T19:05:51Z",
+      "side": 0,
+      "message": "Looks like this one is without fuzzing, so what does `dawn-cq-linux-x64-fuzz-rel` replace?",
+      "range": {
+        "startLine": 580,
+        "startChar": 89,
+        "endLine": 580,
+        "endChar": 103
+      },
+      "revId": "d559cca01823fc99f5e655d0f1053e48ffbe7a69",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
