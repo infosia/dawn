@@ -27,8 +27,17 @@
 package {{ kotlin_package }}
 {% from 'art/api_kotlin_types.kt' import kotlin_definition with context %}
 
+{% if structure.category == 'callback info' %}
+    import java.util.concurrent.Executor
+    import java.util.concurrent.ForkJoinPool
+{% endif %}
+
 public class {{ structure.name.CamelCase() }}(
     {% for member in kotlin_record_members(structure.members) %}
+        {% if member.type.category == 'callback function' %}
+            {# We add an Executor alongside every callback function #}
+            public var executor: Executor = ForkJoinPool.commonPool(),
+        {% endif -%}
         {# We supply a getter that is excluded from name mangling to allow Inline Value Classed
            enums/bitmasks to be accessible as integers from the JVM adapter layer. #}
         {% if member.type.category in ['bitmask', 'enum'] %}
