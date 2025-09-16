@@ -13,9 +13,7 @@
 # we don't have control over their contents.
 -build/
 -src/dawn/native/
--src/dawn/samples
 -src/dawn/tests
--src/dawn/utils
 -src/tint
 -src/utils
 -testing/
