@@ -1,0 +1,24 @@
+#
+# Copyright 2024 The ANGLE Project Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+#
+
+# See `docs/unsafe_buffers.md`.
+
+# Checks to enforce
+.buffers,libc
+
+# These directories are excluded because they come from outside PDFium and
+# we don't have control over their contents.
+-build/
+-src/dawn/common
+-src/dawn/native/
+-src/dawn/samples
+-src/dawn/tests
+-src/dawn/utils
+-src/tint
+-src/utils
+-testing/
+-third_party/
+-tools/
