@@ -27,7 +27,7 @@
 
 """Try Dawn builders using GN and a standalone Dawn checkout (instead of Chromium)."""
 
-load("@chromium-luci//builders.star", "os")
+load("@chromium-luci//builders.star", "builders", "os")
 load("@chromium-luci//try.star", "try_")
 load("//constants.star", "siso")
 load("//location_filters.star", "exclusion_filters")
@@ -47,7 +47,9 @@ try_.defaults.set(
     siso_remote_jobs = siso.remote_jobs.DEFAULT,
 )
 
-# CQ Builders
+################################################################################
+# CQ Builders                                                                  #
+################################################################################
 
 try_.builder(
     name = "dawn-cq-linux-x64-rel",
@@ -80,7 +82,9 @@ try_.builder(
     ),
 )
 
-# Manual trybots
+################################################################################
+# Manual Trybots                                                               #
+################################################################################
 
 def dawn_linux_manual_builder(*, name, **kwargs):
     return try_.builder(
@@ -88,6 +92,15 @@ def dawn_linux_manual_builder(*, name, **kwargs):
         max_concurrent_builds = 1,
         os = os.LINUX_DEFAULT,
         ssd = None,
+        **kwargs
+    )
+
+def dawn_win_manual_builder(*, name, **kwargs):
+    return try_.builder(
+        name = name,
+        max_concurrent_builds = 1,
+        os = os.WINDOWS_DEFAULT,
+        ssd = builders.with_expiration(True, expiration = 5 * time.minute),
         **kwargs
     )
 
@@ -146,4 +159,14 @@ dawn_linux_manual_builder(
         "ci/dawn-linux-x86-fuzz-rel",
     ],
     gn_args = "ci/dawn-linux-x86-fuzz-rel",
+)
+
+dawn_win_manual_builder(
+    name = "dawn-try-win-x64-sws-rel",
+    description_html = "Tests release Dawn on Windows/x64 with SwiftShader. Manual only.",
+    mirrors = [
+        "ci/dawn-win-x64-builder-rel",
+        "ci/dawn-win-x64-sws-rel",
+    ],
+    gn_args = "ci/dawn-win-x64-builder-rel",
 )
