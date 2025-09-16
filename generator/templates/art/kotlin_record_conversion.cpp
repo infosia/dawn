@@ -29,6 +29,9 @@
 {% macro define_kotlin_record_structure(struct_name, members) %}
     struct {{struct_name}} {
         {% for member in kotlin_record_members(members) %}
+            {% if member.type.category == 'callback function' %}
+                jobject executor;
+            {% endif -%}
             //* HACK: Hardcode that ANativeWindow is a jlong instead of an actual pointer. Instead
             //* of this, we should have manually written method that directly creates the
             //* wgpu::Surface from the Java Surface.
@@ -176,15 +179,40 @@
                                 {{- jni_signature(callbackArg) -}}
                             {%- endfor %})V");
 
-                        //* Call the callback with all converted parameters.
-                        env->CallVoidMethod(userData1->callback, callbackMethod
-                        {%- for callbackArg in kotlin_record_members(member.type.arguments) %}
-                             {{- ', ' }}_{{ callbackArg.name.camelCase() }}
-                        {%- endfor %});
+                        jclass ktClass = classes->{{ member.type.name.camelCase() }}Kt;
+
+                        const char* methodName = "{{ member.type.name.camelCase() }}Runnable";
+
+                        const char* methodSignature =
+                            "({{ jni_signature(member) }}"
+                            {% for callbackArg in kotlin_record_members(member.type.arguments) %}
+                                "{{ jni_signature(callbackArg) }}"
+                            {% endfor %}
+                            ")Ljava/lang/Runnable;";
+
+                        jmethodID methodId = env->GetStaticMethodID(ktClass, methodName, methodSignature);
+
+                        jobject runnable = env->CallStaticObjectMethod(
+                                ktClass, methodId, userData1->callback
+                            {%- for callbackArg in kotlin_record_members(member.type.arguments) -%}
+                                , _{{ callbackArg.name.camelCase() }}
+                            {%- endfor %});
+                        {#
+                            jclass runnableClass = env->GetObjectClass(runnable);
+                            jmethodID runMethod = env->GetMethodID(runnableClass, "run", "()V");
+                            env->CallVoidMethod(runnable, runMethod);
+                        #}
+
+                        jclass executorClass = env->FindClass("java/util/concurrent/Executor");
+
+                        jmethodID executeMethodID = env->GetMethodID(executorClass,
+                                                                     "execute",
+                                                                     "(Ljava/lang/Runnable;)V");
+                        env->CallVoidMethod(userData1->executor, executeMethodID, runnable);
                     };
                     //* TODO(b/330293719): free associated resources.
                     outStruct->{{ userdata }} = new UserData(
-                            {.callback = env->NewGlobalRef(in), .jvm = c->jvm});
+                            {.callback = env->NewGlobalRef(in), .executor = env->NewGlobalRef(inStruct.executor), .jvm = c->jvm});  {# need global ref for executor? #}
 
                 {% else %}
                     {{ unreachable_code() }}

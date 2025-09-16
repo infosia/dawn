@@ -165,6 +165,13 @@ jobject ToKotlin(JNIEnv* env, const WGPUStringView* s) {
         //* Use getters to fill in the Kotlin record that will get converted to our struct.
         {{KotlinRecord}} kotlinRecord;
         {% for member in kotlin_record_members(structure.members) %}
+            {% if member.type.category == 'callback function' %}
+                {# We add an Executor alongside every callback function #}
+                {
+                    jmethodID getter = env->GetMethodID(clz, "getExecutor", "()Ljava/util/concurrent/Executor;");
+                    CallGetter(env, getter, obj, &kotlinRecord.executor);
+                }
+            {% endif -%}
             {
                 jmethodID getter = env->GetMethodID(clz, "get{{member.name.CamelCase()}}", "(){{jni_signature(member)}}");
                 CallGetter(env, getter, obj, &kotlinRecord.{{as_varName(member.name)}});

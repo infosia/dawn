@@ -37,3 +37,15 @@ public fun interface {{ function_pointer.name.CamelCase() }} {
         {{ as_varName(arg.name) }}: {{ kotlin_declaration(arg) }},{{ ' ' }}
     {%- endfor -%});
 }
+
+@JvmName("{{ function_pointer.name.camelCase() }}Runnable")
+internal fun {{ function_pointer.name.camelCase() }}Runnable(
+    callback: {{ function_pointer.name.CamelCase() }},
+    {%- for arg in kotlin_record_members(function_pointer.arguments) -%}
+        {{ arg.name.camelCase() }}: {{ kotlin_declaration(arg) }},
+    {% endfor %}) = Runnable {
+    callback.{{ callbackName }}(
+    {%- for arg in kotlin_record_members(function_pointer.arguments) -%}
+        {{- arg.name.camelCase() }},
+    {%- endfor %})
+}
