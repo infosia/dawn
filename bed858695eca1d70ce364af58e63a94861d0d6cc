@@ -87,6 +87,24 @@
       "parentUuid": "2ffc8dc4_ef70add7",
       "revId": "bed858695eca1d70ce364af58e63a94861d0d6cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85b41241_f3d4180a",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2025-09-16T14:03:39Z",
+      "side": 1,
+      "message": "You can already create a texture with only COPY_SRC and then of course create a view and that view will also only have COPY_SRC so if we think this should be validated out, it\u0027s arguably not related to this swizzle. It\u0027s a separate issue.",
+      "parentUuid": "65f1b9ec_964fff77",
+      "revId": "bed858695eca1d70ce364af58e63a94861d0d6cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
