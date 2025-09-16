@@ -93,6 +93,12 @@ SharedBufferMemory::SharedBufferMemory(Device* device,
                                        ComPtr<ID3D12Resource> resource)
     : SharedBufferMemoryBase(device, label, properties), mResource(std::move(resource)) {}
 
+SharedBufferMemory::SharedBufferMemory(Device* device,
+                                       StringView label,
+                                       SharedBufferMemoryProperties properties,
+                                       ComPtr<ID3D12Heap> heap)
+    : SharedBufferMemoryBase(device, label, properties), mHeap(std::move(heap)) {}
+
 void SharedBufferMemory::DestroyImpl() {
     ToBackend(GetDevice())->ReferenceUntilUnused(std::move(mResource));
 }
@@ -167,6 +173,69 @@ ResultOrError<Ref<SharedBufferMemory>> SharedBufferMemory::Create(
 
     auto result =
         AcquireRef(new SharedBufferMemory(device, label, properties, std::move(d3d12Resource)));
+    result->Initialize();
+    return result;
+}
+
+// static
+ResultOrError<Ref<SharedBufferMemory>> SharedBufferMemory::Create(
+    Device* device,
+    StringView label,
+    const SharedBufferMemoryD3D12SharedMemoryFileHandleDescriptor* descriptor) {
+    DAWN_INVALID_IF(descriptor->handle == nullptr, "shared HANDLE is missing.");
+
+    ComPtr<ID3D12Device3> d3d12Device3;
+    DAWN_TRY(CheckHRESULT(device->GetD3D12Device()->QueryInterface(IID_PPV_ARGS(&d3d12Device3)),
+                          "QueryInterface ID3D12Device3"));
+
+    ComPtr<ID3D12Heap> d3d12Heap;
+    DAWN_TRY(CheckOutOfMemoryHRESULT(
+        d3d12Device3->OpenExistingHeapFromFileMapping(descriptor->handle, IID_PPV_ARGS(&d3d12Heap)),
+        "ID3D12Device3::OpenExistingHeapFromFileMapping"));
+
+    D3D12_HEAP_DESC heapDesc = d3d12Heap->GetDesc();
+    D3D12_HEAP_PROPERTIES heapProperties = heapDesc.Properties;
+    HeapAccessType heapType;
+    DAWN_TRY_ASSIGN(heapType, MapToHeapAccessType(heapProperties, device));
+
+    wgpu::BufferUsage usages = wgpu::BufferUsage::None;
+    switch (heapType) {
+        case HeapAccessType::Upload:
+            usages |= wgpu::BufferUsage::MapWrite | wgpu::BufferUsage::CopySrc;
+            break;
+        case HeapAccessType::Readback:
+            usages |= wgpu::BufferUsage::MapRead | wgpu::BufferUsage::CopyDst;
+            break;
+        case HeapAccessType::GPUQueueAccessible:
+            usages |= wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst |
+                      wgpu::BufferUsage::Vertex | wgpu::BufferUsage::Index |
+                      wgpu::BufferUsage::Indirect | wgpu::BufferUsage::QueryResolve |
+                      wgpu::BufferUsage::Storage | wgpu::BufferUsage::Uniform;
+            if (device->GetDeviceInfo().isUMA &&
+                device->HasFeature(Feature::BufferMapExtendedUsages)) {
+                // On UMA systems, buffers with WRITE_COMBINE or WRITE_BACK heaps can also be
+                // mapped.
+                if (heapProperties.CPUPageProperty == D3D12_CPU_PAGE_PROPERTY_WRITE_COMBINE) {
+                    usages |= wgpu::BufferUsage::MapWrite;
+                } else if (heapProperties.CPUPageProperty == D3D12_CPU_PAGE_PROPERTY_WRITE_BACK) {
+                    // On cache-coherent UMA systems, writes are immediately visible to the GPU. On
+                    // non-cache-coherent UMA systems, writes are flushed to the GPU when unmapping
+                    // or submitting work to the queue (driver dependent). Since Dawn doesn't
+                    // support submitting work to the queue while the buffer is mapped, it should be
+                    // safe to allow MapWrite on WRITE_BACK heaps. For reads, the data is guaranteed
+                    // to be available to the CPU after Map().
+                    usages |= wgpu::BufferUsage::MapRead | wgpu::BufferUsage::MapWrite;
+                }
+            }
+            break;
+    }
+
+    SharedBufferMemoryProperties properties;
+    properties.size = heapDesc.SizeInBytes;
+    properties.usage = usages;
+
+    auto result =
+        AcquireRef(new SharedBufferMemory(device, label, properties, std::move(d3d12Heap)));
     result->Initialize();
     return result;
 }

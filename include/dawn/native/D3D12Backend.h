@@ -63,6 +63,17 @@ struct DAWN_NATIVE_EXPORT SharedBufferMemoryD3D12ResourceDescriptor : wgpu::Chai
     Microsoft::WRL::ComPtr<ID3D12Resource> resource;
 };
 
+// May be chained on SharedBufferMemoryDescriptor
+struct DAWN_NATIVE_EXPORT SharedBufferMemoryD3D12SharedMemoryFileHandleDescriptor
+    : wgpu::ChainedStruct {
+    SharedBufferMemoryD3D12SharedMemoryFileHandleDescriptor() {
+        sType = static_cast<wgpu::SType>(
+            WGPUSType_SharedBufferMemoryD3D12SharedMemoryFileMappingHandleDescriptor);
+    }
+    // A handle to a shared memory file created with CreateFileMapping.
+    HANDLE handle = nullptr;
+};
+
 }  // namespace dawn::native::d3d12
 
 #endif  // INCLUDE_DAWN_NATIVE_D3D12BACKEND_H_

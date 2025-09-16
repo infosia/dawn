@@ -215,6 +215,22 @@ class D3D12ResourceBackend : public SharedBufferMemoryTestBackend {
     D3D12ResourceBackend() {}
 };
 
+class D3D12SharedMemoryFileHandleBackend : public SharedBufferMemoryTestBackend {
+  public:
+    static Backend GetInstance() {
+        static D3D12SharedMemoryFileHandleBackend b;
+        return &b;
+    }
+
+    std::vector<wgpu::FeatureName> RequiredFeatures(const wgpu::Adapter& adapter) const override {
+        return {wgpu::FeatureName::SharedBufferMemoryD3D12SharedMemoryFileMappingHandle,
+                wgpu::FeatureName::SharedFenceDXGISharedHandle};
+    }
+
+  private:
+    D3D12SharedMemoryFileHandleBackend() {}
+};
+
 // Ensure that importing a nullptr ID3D12Resource results in error.
 TEST_P(SharedBufferMemoryTests, nullResourceFailure) {
     native::d3d12::SharedBufferMemoryD3D12ResourceDescriptor sharedD3d12ResourceDesc;

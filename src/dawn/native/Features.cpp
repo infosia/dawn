@@ -435,7 +435,11 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
       FeatureInfo::FeatureState::Stable}},
     {Feature::ChromiumExperimentalBindless,
      {"Experimental support for the prototype of a bindless extension",
-      "https://hackmd.io/@kangz/bindless-proposal", FeatureInfo::FeatureState::Experimental}}};
+      "https://hackmd.io/@kangz/bindless-proposal", FeatureInfo::FeatureState::Experimental}},
+    {Feature::SharedBufferMemoryD3D12SharedMemoryFileMappingHandle,
+     {"Supports importing a shared memory file mapping handle as shared buffer memory.",
+      "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/shared_buffer.md",
+      FeatureInfo::FeatureState::Experimental}}};
 
 }  // anonymous namespace
 

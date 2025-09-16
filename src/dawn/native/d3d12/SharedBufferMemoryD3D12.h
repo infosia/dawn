@@ -43,6 +43,11 @@ class SharedBufferMemory final : public SharedBufferMemoryBase {
         StringView label,
         const SharedBufferMemoryD3D12ResourceDescriptor* descriptor);
 
+    static ResultOrError<Ref<SharedBufferMemory>> Create(
+        Device* device,
+        StringView label,
+        const SharedBufferMemoryD3D12SharedMemoryFileHandleDescriptor* descriptor);
+
     ID3D12Resource* GetD3DResource() const;
 
   private:
@@ -50,6 +55,11 @@ class SharedBufferMemory final : public SharedBufferMemoryBase {
                        StringView label,
                        SharedBufferMemoryProperties properties,
                        ComPtr<ID3D12Resource> resource);
+
+    SharedBufferMemory(Device* device,
+                       StringView label,
+                       SharedBufferMemoryProperties properties,
+                       ComPtr<ID3D12Heap> heap);
 
     void DestroyImpl() override;
 
@@ -61,6 +71,7 @@ class SharedBufferMemory final : public SharedBufferMemoryBase {
                                                      ExecutionSerial lastUsageSerial,
                                                      UnpackedPtr<EndAccessState>& state) override;
 
+    ComPtr<ID3D12Heap> mHeap;
     ComPtr<ID3D12Resource> mResource;
 };
 
