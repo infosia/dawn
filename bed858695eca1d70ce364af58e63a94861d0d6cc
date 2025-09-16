@@ -105,6 +105,24 @@
       "parentUuid": "65f1b9ec_964fff77",
       "revId": "bed858695eca1d70ce364af58e63a94861d0d6cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15c1ace4_d69f81b2",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-16T15:04:25Z",
+      "side": 1,
+      "message": "I\u0027ve filed https://github.com/gpuweb/gpuweb/issues/5317",
+      "parentUuid": "85b41241_f3d4180a",
+      "revId": "bed858695eca1d70ce364af58e63a94861d0d6cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
