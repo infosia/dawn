@@ -16,6 +16,29 @@
       "message": "PTAL\n\nNot enabling autosubmit since I suspect there will be merge conflicts with other builders being added.",
       "revId": "ad2e4836f1e5abcb864752cfc03b45a5904cc6c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2743ccc8_22481dce",
+        "filename": "infra/config/global/gn_standalone_try.star",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-09-16T19:02:28Z",
+      "side": 1,
+      "message": "Should we reserve SSD for longer running builds perhaps?\nLike, building standalone Dawn should be much faster than building Chromium, so we wouldn\u0027t want to reduce the size of the pool available for building Chromium, while the Dawn build is running, I think?",
+      "range": {
+        "startLine": 99,
+        "startChar": 8,
+        "endLine": 99,
+        "endChar": 12
+      },
+      "revId": "ad2e4836f1e5abcb864752cfc03b45a5904cc6c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
