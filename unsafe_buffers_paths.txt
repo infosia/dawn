@@ -12,7 +12,6 @@
 # These directories are excluded because they come from outside PDFium and
 # we don't have control over their contents.
 -build/
--src/dawn/common
 -src/dawn/native/
 -src/dawn/samples
 -src/dawn/tests
