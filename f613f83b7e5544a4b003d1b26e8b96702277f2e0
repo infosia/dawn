@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "527000a4_fe024b9f",
+        "filename": "src/dawn/tests/end2end/SurfaceTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-16T17:59:47Z",
+      "side": 1,
+      "message": "nit. Can\u0027t this just be \n```\nstd::set\u003cwgpu::PresentMode\u003e presentModes { \n  wgpu::PresentMode::Undefined,\n  wgpu::PresentMode::Fifo,\n  config.presentMode\n}\n```\n\nAlso, should probably add a `SCOPED_TRACE()` with the present mode type.",
+      "range": {
+        "startLine": 224,
+        "startChar": 4,
+        "endLine": 227,
+        "endChar": 44
+      },
+      "revId": "f613f83b7e5544a4b003d1b26e8b96702277f2e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
