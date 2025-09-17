@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "fa4bc16a8b51f25427ed8c0bd9f6569d8dcc185d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "daf0c6bd_c36d1961",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-09-17T19:29:12Z",
+      "side": 1,
+      "message": "I didn\u0027t trigger Auto-Submit, since this will probably conflict with enabling tests on the Linux x86 Release builders.",
+      "revId": "fa4bc16a8b51f25427ed8c0bd9f6569d8dcc185d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
