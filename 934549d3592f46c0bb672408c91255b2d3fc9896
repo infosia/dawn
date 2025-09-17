@@ -63,6 +63,30 @@
       },
       "revId": "934549d3592f46c0bb672408c91255b2d3fc9896",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bf2feef_4d846c0b",
+        "filename": "infra/config/global/gn_standalone_ci.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-09-17T17:42:16Z",
+      "side": 1,
+      "message": "I leaned more towards enabling ASAN and UBSAN rather then dropping.",
+      "parentUuid": "91d98cdd_97ff07de",
+      "range": {
+        "startLine": 127,
+        "startChar": 12,
+        "endLine": 127,
+        "endChar": 35
+      },
+      "revId": "934549d3592f46c0bb672408c91255b2d3fc9896",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
