@@ -35,6 +35,7 @@ if (dawn_build_node_bindings) {
     testonly = true
     data_deps = [
       "${dawn_root}/src/dawn/node:dawn_node",
+      "${dawn_root}/testing:test_scripts_shared",
       "${dawn_root}/tools:go_tools",
     ]
     data = [
