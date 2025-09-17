@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-09-12 10:20:24AM
+# Last rolled: 2025-09-17 08:14:01PM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -1180,7 +1180,6 @@ crbug.com/421941589 [ angle-opengl arch-x86_64 desktop display-server-x graphite
 crbug.com/421941589 [ android-chromium android-pixel-4 android-r angle-opengles graphite-disabled mobile no-asan no-clang-coverage qualcomm renderer-skia-gl target-cpu-32 ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:* [ Failure ]
 crbug.com/421941589 [ angle-metal arch-x86_64 dawn-no-backend-validation desktop graphite-enabled intel-0x3e9b memory_ge_16gb no-asan no-clang-coverage release renderer-skia-gl sequoia target-cpu-64 ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:* [ Failure ]
 crbug.com/421941589 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:format="rgb10a2unorm";* [ Failure ]
-
 
 # CTS needs to add checks for renderable formats with texture-format-tier1 enabled，
 # will be removed after the latest CTS rolling into Dawn
