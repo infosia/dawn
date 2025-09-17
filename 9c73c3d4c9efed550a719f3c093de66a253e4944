@@ -68,6 +68,24 @@
       "message": "LGTM! Makes you wonder why this was split into two loops in the first place? 😊",
       "revId": "9c73c3d4c9efed550a719f3c093de66a253e4944",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91938f87_31eab0c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-17T13:20:54Z",
+      "side": 1,
+      "message": "Because someone .... *cough* me *cough* ... didn\u0027t know how bind groups worked, heh.",
+      "parentUuid": "1d27146f_2abb5c95",
+      "revId": "9c73c3d4c9efed550a719f3c093de66a253e4944",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
