@@ -83,6 +83,8 @@ enum class Capability : uint8_t {
     kAllowStructMatrixDecorations,
     /// Allows @location on structs, matrices, and arrays that have numeric elements
     kAllowLocationForNumericElements,
+    /// Allows a pointer to a handle type
+    kAllowPointerToHandle,
 };
 
 /// Capabilities is a set of Capability

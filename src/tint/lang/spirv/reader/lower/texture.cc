@@ -91,6 +91,8 @@ struct State {
 
     /// Process the module.
     void Process() {
+        ReplacePointerToHandle();
+
         for (auto* inst : *ir.root_block) {
             auto* var = inst->As<core::ir::Var>();
             if (!var) {
@@ -258,6 +260,78 @@ struct State {
         }
     }
 
+    void ReplacePointerToHandle() {
+        Vector<core::ir::Value*, 4> usages_to_update;
+        Vector<core::ir::Function*, 4> called_functions_to_fixup;
+        for (auto& func : ir.DependencyOrderedFunctions()) {
+            bool changed = false;
+            for (auto* param : func->Params()) {
+                auto* ptr = param->Type()->As<core::type::Pointer>();
+                if (ptr && ptr->StoreType()->IsHandle()) {
+                    param->SetType(ptr->StoreType());
+                    usages_to_update.Push(param);
+                    changed = true;
+                }
+            }
+
+            if (changed) {
+                called_functions_to_fixup.Push(func);
+            }
+        }
+
+        Vector<core::ir::Instruction*, 4> inst_to_delete;
+        while (!usages_to_update.IsEmpty()) {
+            auto* val = usages_to_update.Pop();
+            for (auto& usage : val->UsagesUnsorted()) {
+                tint::Switch(
+                    usage->instruction,  //
+                    [&](core::ir::Load* ld) {
+                        ld->Result()->ReplaceAllUsesWith(ld->From());
+                        inst_to_delete.Push(ld);
+                    },
+                    [&](core::ir::Let* l) {
+                        l->Result()->ReplaceAllUsesWith(l->Value());
+                        inst_to_delete.Push(l);
+                    });
+            }
+        }
+
+        for (auto& fn : called_functions_to_fixup) {
+            for (auto& usage : fn->UsagesUnsorted()) {
+                auto* call = usage->instruction->As<core::ir::UserCall>();
+                if (!call) {
+                    continue;
+                }
+
+                auto args = call->Args();
+                for (size_t i = 0; i < args.Length(); ++i) {
+                    auto& arg = args[i];
+
+                    auto* ptr_ty = arg->Type()->As<core::type::Pointer>();
+                    if (!ptr_ty) {
+                        continue;
+                    }
+
+                    if (!ptr_ty->StoreType()->IsHandle()) {
+                        continue;
+                    }
+
+                    // We inject the load here but it will get cleaned up when we deal with the
+                    // function itself, if required.
+                    b.InsertBefore(usage->instruction, [&] {
+                        auto* ld = b.Load(arg);
+                        call->SetArg(i, ld->Result());
+                    });
+                }
+            }
+        }
+
+        while (!inst_to_delete.IsEmpty()) {
+            auto* inst = inst_to_delete.Pop();
+            inst->Destroy();
+        }
+    }
+
     void UpdateValues() {
         // The double loop happens because when we convert user calls, that will
         // add more values to convert, but those values can find user calls to
@@ -273,8 +347,8 @@ struct State {
                 auto* let = lets_to_inline_.Pop();
                 TINT_ASSERT(let->Value());
                 let->Result()->ReplaceAllUsesWith(let->Value());
-                // We may have done this value already, but push it back on as any of the let usages
-                // will now point to it and they need to be updated.
+                // We may have done this value already, but push it back on as any of the
+                // let usages will now point to it and they need to be updated.
                 values_to_fix_usages_.Push(let->Value());
                 let->Destroy();
             }
@@ -415,8 +489,8 @@ struct State {
         ir.Destroy(target);
     }
 
-    // Record the sampled image so we can extract the texture/sampler information as we process the
-    // builtins. It will be destroyed after all builtins are done.
+    // Record the sampled image so we can extract the texture/sampler information as we
+    // process the builtins. It will be destroyed after all builtins are done.
     void SampledImage(spirv::ir::BuiltinCall* call) { sampled_images_.Add(call->Result(), call); }
 
     std::pair<core::ir::Value*, core::ir::Value*> GetTextureSampler(core::ir::Value* sampled) {
@@ -607,8 +681,8 @@ struct State {
             } else if (!tex_ty->IsAnyOf<core::type::DepthMultisampledTexture,
                                         core::type::MultisampledTexture,
                                         core::type::StorageTexture>()) {
-                // textureLoad requires an explicit level-of-detail parameter for non-multisampled
-                // and non-storage texture types.
+                // textureLoad requires an explicit level-of-detail parameter for
+                // non-multisampled and non-storage texture types.
                 new_args.Push(b.Zero(ty.i32()));
             }
             if (HasSample(operand_mask)) {
@@ -740,8 +814,8 @@ struct State {
                 fn = core::BuiltinFn::kTextureSampleCompareLevel;
                 idx++;  // Skip over the index
 
-                // Metal only supports Lod = 0 for comparison sampling without derivatives. So, WGSL
-                // doesn't take a level value, drop the LOD param.
+                // Metal only supports Lod = 0 for comparison sampling without derivatives.
+                // So, WGSL doesn't take a level value, drop the LOD param.
             }
             if (HasConstOffset(operand_mask)) {
                 ProcessOffset(args[idx++], new_args);
@@ -968,6 +1042,7 @@ Result<SuccessType> Texture(core::ir::Module& ir) {
                                               core::ir::Capability::kAllowMultipleEntryPoints,
                                               core::ir::Capability::kAllowOverrides,
                                               core::ir::Capability::kAllowNonCoreTypes,
+                                              core::ir::Capability::kAllowPointerToHandle,
                                           });
     if (result != Success) {
         return result.Failure();
