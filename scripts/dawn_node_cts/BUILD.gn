@@ -42,6 +42,7 @@ if (dawn_build_node_bindings) {
       "run_dawn_node_cts.py",
       "run_npx.py",
       "run_npx.sh",
+      "${dawn_root}/testing:test_scripts_shared",
       "${dawn_root}/third_party/node/",
       "${dawn_root}/third_party/webgpu-cts/",
     ]
