@@ -16,6 +16,23 @@
       "message": "PTAL\n\nTests look happy.",
       "revId": "5f2aa860f3554e5f4abb6de07f14bae5ab73a008",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fc621ea_e2ad079d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-09-17T19:23:57Z",
+      "side": 1,
+      "message": "Clang team claims Linux x86 isn\u0027t supported, so this builder can get broken whenever.",
+      "revId": "5f2aa860f3554e5f4abb6de07f14bae5ab73a008",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
