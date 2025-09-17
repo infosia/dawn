@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e978ffa4_1d0a0884",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-09-17T15:39:02Z",
+      "side": 1,
+      "message": "Do you think if this change may cause a lot of crashes on various GPUs? If so, maybe we need a feature flag to control it.",
+      "revId": "0ad26e1571472550a86e4d47943c9ec6cf978e34",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
