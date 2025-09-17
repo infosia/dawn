@@ -48,6 +48,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "376c2dea_a314ae8a",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-17T19:11:25Z",
+      "side": 1,
+      "message": "That works and is nicer, the `changed` variable will also go away.",
+      "parentUuid": "a79fd8f1_c847ba6c",
+      "revId": "2f79cbeb99b5311a5d8a667f77a624388e9b5741",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9c3ed7a7_a720d811",
         "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
         "patchSetId": 3
@@ -83,6 +101,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "243cf375_3c169347",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-17T19:11:25Z",
+      "side": 1,
+      "message": "I\u0027ll add a test, but I think this should work? We replace the let uses with the source, and then delete the let. So, if there is a chain of let\u0027s we\u0027d just update each one as we come to it and set it to be destroyed.\n\nThe ordering should be fine as we start with the param, and we\u0027d just walk the chain from there.",
+      "parentUuid": "9c3ed7a7_a720d811",
+      "revId": "2f79cbeb99b5311a5d8a667f77a624388e9b5741",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cc37b596_10d60ca1",
         "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
         "patchSetId": 3
@@ -94,6 +130,24 @@
       "writtenOn": "2025-09-17T18:55:16Z",
       "side": 1,
       "message": "How does this work in a nested user function, where the argument is coming from another user function parameter? Won\u0027t this inject a load on a parameter that has already been replaced with a value?",
+      "revId": "2f79cbeb99b5311a5d8a667f77a624388e9b5741",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39484601_07c25ff6",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-17T19:11:25Z",
+      "side": 1,
+      "message": "I\u0027ll add a test, but I think this should work. We go in dependency order, so we\u0027d have replaced the caller already, and the usages are updated so the call itself should be fixed before we get here. So, it should no longer be a pointer to handle.",
+      "parentUuid": "cc37b596_10d60ca1",
       "revId": "2f79cbeb99b5311a5d8a667f77a624388e9b5741",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
