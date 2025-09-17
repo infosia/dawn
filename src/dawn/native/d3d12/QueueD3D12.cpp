@@ -237,7 +237,7 @@ MaybeError Queue::OpenPendingCommands() {
         DAWN_TRY(RecycleUnusedCommandLists());
     }
 
-    DAWN_ASSERT(mFreeAllocators.any());
+    DAWN_CHECK(mFreeAllocators.any());
     ID3D12Device* d3d12Device = ToBackend(GetDevice())->GetD3D12Device();
 
     // Get the index of the first free allocator from the bitset
