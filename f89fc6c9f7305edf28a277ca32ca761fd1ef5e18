@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1535aa67_24d7dbe3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-17T16:05:27Z",
+      "side": 1,
+      "message": "```suggestion\ncode that uses them will either include the disallowed type, or\n```",
+      "revId": "f89fc6c9f7305edf28a277ca32ca761fd1ef5e18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b4d715e_6f13caa1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-17T16:05:27Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"genrating\" is a possible misspelling of \"generating\".\n\nTo bypass Spellchecker, ...\n\n\"genrating\" is a possible misspelling of \"generating\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 18,
+        "startChar": 35,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "f89fc6c9f7305edf28a277ca32ca761fd1ef5e18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
