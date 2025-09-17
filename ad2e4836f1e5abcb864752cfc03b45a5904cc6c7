@@ -39,6 +39,30 @@
       },
       "revId": "ad2e4836f1e5abcb864752cfc03b45a5904cc6c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b68e31f_2a153ac2",
+        "filename": "infra/config/global/gn_standalone_try.star",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-17T00:10:03Z",
+      "side": 1,
+      "message": "Done, with a comment mentioning that it can be switched to prefer SSDs after we get our 2026 requested capacity.",
+      "parentUuid": "2743ccc8_22481dce",
+      "range": {
+        "startLine": 99,
+        "startChar": 8,
+        "endLine": 99,
+        "endChar": 12
+      },
+      "revId": "ad2e4836f1e5abcb864752cfc03b45a5904cc6c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
