@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a79fd8f1_c847ba6c",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-17T18:55:16Z",
+      "side": 1,
+      "message": "Nit: Maybe a Hashset so that you don\u0027t add the same function multiple times if it has multiple pointer-to-handle parameters?",
+      "fixSuggestions": [
+        {
+          "fixId": "b9c497bf_9da2db88",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/lower/texture.cc",
+              "range": {
+                "startLine": 265,
+                "startChar": 0,
+                "endLine": 266,
+                "endChar": 0
+              },
+              "replacement": "        Hashset\u003ccore::ir::Function*, 4\u003e called_functions_to_fixup;\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/lower/texture.cc",
+              "range": {
+                "startLine": 278,
+                "startChar": 0,
+                "endLine": 279,
+                "endChar": 0
+              },
+              "replacement": "                called_functions_to_fixup.Add(func);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "2f79cbeb99b5311a5d8a667f77a624388e9b5741",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c3ed7a7_a720d811",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-17T18:55:16Z",
+      "side": 1,
+      "message": "I think you need to add `l-\u003eResult()` to `usages_to_update`. Missing a unit test for this case (chain of `let` followed by a `load`).",
+      "fixSuggestions": [
+        {
+          "fixId": "25d3d9dc_88bf0e6b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/lower/texture.cc",
+              "range": {
+                "startLine": 294,
+                "startChar": 0,
+                "endLine": 294,
+                "endChar": 0
+              },
+              "replacement": "                        usages_to_update.Push(l-\u003eResult());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "2f79cbeb99b5311a5d8a667f77a624388e9b5741",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc37b596_10d60ca1",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-17T18:55:16Z",
+      "side": 1,
+      "message": "How does this work in a nested user function, where the argument is coming from another user function parameter? Won\u0027t this inject a load on a parameter that has already been replaced with a value?",
+      "revId": "2f79cbeb99b5311a5d8a667f77a624388e9b5741",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
