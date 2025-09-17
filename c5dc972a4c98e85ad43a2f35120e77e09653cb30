@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7395b9d_79e3ce87",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-17T20:09:19Z",
+      "side": 1,
+      "message": "Actually probably better to submit the debug/x86 CL first since it doesn\u0027t need to run through the CQ again.",
+      "revId": "c5dc972a4c98e85ad43a2f35120e77e09653cb30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
