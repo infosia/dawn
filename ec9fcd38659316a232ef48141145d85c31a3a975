@@ -20,6 +20,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "f6a72c31_1b8db453",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-18T21:55:14Z",
+      "side": 1,
+      "message": "Removing autosubmit for now since the Node change this is dependent on may get reverted.",
+      "revId": "ec9fcd38659316a232ef48141145d85c31a3a975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "f1d4277e_c4bb3305",
         "filename": "infra/specs/waterfalls.pyl",
         "patchSetId": 7
