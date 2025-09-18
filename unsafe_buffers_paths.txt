@@ -15,7 +15,6 @@
 -src/dawn/native/
 -src/dawn/node
 -src/dawn/tests
--src/utils
 -testing/
 -third_party/
 -tools/
