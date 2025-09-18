@@ -64,6 +64,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef5b977d_8542984e",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-18T13:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "376c2dea_a314ae8a",
+      "revId": "2f79cbeb99b5311a5d8a667f77a624388e9b5741",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9c3ed7a7_a720d811",
@@ -117,6 +135,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc980ae5_8bd36cdc",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-18T13:55:11Z",
+      "side": 1,
+      "message": "Added a test. The problem here is we end up mutating the usages as we walk the usages.",
+      "parentUuid": "243cf375_3c169347",
+      "revId": "2f79cbeb99b5311a5d8a667f77a624388e9b5741",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc37b596_10d60ca1",
@@ -148,6 +184,24 @@
       "side": 1,
       "message": "I\u0027ll add a test, but I think this should work. We go in dependency order, so we\u0027d have replaced the caller already, and the usages are updated so the call itself should be fixed before we get here. So, it should no longer be a pointer to handle.",
       "parentUuid": "cc37b596_10d60ca1",
+      "revId": "2f79cbeb99b5311a5d8a667f77a624388e9b5741",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcf636ce_a6bd04da",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-18T13:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39484601_07c25ff6",
       "revId": "2f79cbeb99b5311a5d8a667f77a624388e9b5741",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
