@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fda86682_14c27e71",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-18T06:56:37Z",
+      "side": 1,
+      "message": "Thanks for cleaning this. I\u0027ve forgot to do that.",
+      "revId": "0b58a576ca94eaffbd60a4fcfa698fdb257f1ed6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
