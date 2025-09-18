@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c90733ce_e0228d9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-18T21:17:56Z",
+      "side": 1,
+      "message": "PTAL\n\nPS7 has a green run on the trybot and tests look to be running normally.",
+      "revId": "ec9fcd38659316a232ef48141145d85c31a3a975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1d4277e_c4bb3305",
+        "filename": "infra/specs/waterfalls.pyl",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-18T21:17:56Z",
+      "side": 1,
+      "message": "This is technically a misnomer since we\u0027re running one a suite with WARP in addition to SwiftShader. I think it\u0027s okay to leave for now, though - we can consider renaming in the future.",
+      "range": {
+        "startLine": 107,
+        "startChar": 20,
+        "endLine": 107,
+        "endChar": 23
+      },
+      "revId": "ec9fcd38659316a232ef48141145d85c31a3a975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4434099e_6487893f",
+        "filename": "scripts/dawn_node_cts/run_npx.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-18T21:17:56Z",
+      "side": 1,
+      "message": "Not needed since Linux/Mac can use the shebang in the Python script and Windows can\u0027t use the bash script.",
+      "revId": "ec9fcd38659316a232ef48141145d85c31a3a975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
