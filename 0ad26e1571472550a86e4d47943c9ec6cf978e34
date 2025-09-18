@@ -39,6 +39,30 @@
       },
       "revId": "0ad26e1571472550a86e4d47943c9ec6cf978e34",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4b2a3df_b277c11d",
+        "filename": "src/dawn/native/d3d12/QueueD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-09-18T16:26:06Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. Done!",
+      "parentUuid": "b441ae17_185a0728",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 1
+      },
+      "revId": "0ad26e1571472550a86e4d47943c9ec6cf978e34",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
