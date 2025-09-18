@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "be6ed34d_c53efa65",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1933,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-18T18:44:48Z",
+      "side": 1,
+      "message": "Move this after the member checks and make it check that the `str-\u003eAlign() \u003d\u003d max\u003cmember alignment value\u003e`",
+      "parentUuid": "4f92ce9f_987c70a2",
+      "revId": "b315ee6aef68aa8882cf00ff8b86c0249d1644b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ed154678_644f82e5",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2025-09-18T18:36:10Z",
       "side": 1,
       "message": "Ditto",
+      "revId": "b315ee6aef68aa8882cf00ff8b86c0249d1644b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3c1b17f_963b5fe5",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1954,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-18T18:44:48Z",
+      "side": 1,
+      "message": "Should be `\u003d\u003d 0 || member-\u003eAlign() % Type-\u003eAlign() !\u003d 0`",
+      "parentUuid": "ed154678_644f82e5",
       "revId": "b315ee6aef68aa8882cf00ff8b86c0249d1644b4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
