@@ -16,6 +16,29 @@
       "message": "Do you think if this change may cause a lot of crashes on various GPUs? If so, maybe we need a feature flag to control it.",
       "revId": "0ad26e1571472550a86e4d47943c9ec6cf978e34",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b441ae17_185a0728",
+        "filename": "src/dawn/native/d3d12/QueueD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-18T13:45:23Z",
+      "side": 1,
+      "message": "```suggestion\n\n    // This is a release check is to catch a potential issue where allocator recycling didn\u0027t seem to work correctly so we want to get crash reports if it happens again.\n    DAWN_CHECK(mFreeAllocators.any());\n```",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 1
+      },
+      "revId": "0ad26e1571472550a86e4d47943c9ec6cf978e34",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
