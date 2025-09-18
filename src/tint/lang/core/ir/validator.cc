@@ -1930,6 +1930,11 @@ void Validator::CheckType(const core::type::Type* root,
                     return true;
                 }
 
+                if (str->Align() == 0) {
+                    diag() << "struct must not have an alignment of 0";
+                    return false;
+                }
+
                 for (auto* member : str->Members()) {
                     if (member->RowMajor()) {
                         diag() << "Row major annotation not allowed on structures";
@@ -1944,6 +1949,10 @@ void Validator::CheckType(const core::type::Type* root,
                                << " with size=" << member->Size()
                                << " must be at least as large as the type with size "
                                << member->Type()->Size();
+                        return false;
+                    }
+                    if (member->Align() == 0) {
+                        diag() << "struct member must not have an alignment of 0";
                         return false;
                     }
                     if (member->Type()->Is<core::type::Void>()) {
