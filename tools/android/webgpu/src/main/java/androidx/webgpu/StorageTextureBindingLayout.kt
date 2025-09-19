@@ -1,6 +1,13 @@
 package androidx.webgpu
 
+import java.util.concurrent.Executor
+import java.util.concurrent.ForkJoinPool
+
 public class StorageTextureBindingLayout(
+    /**
+     * If set to @see StorageTextureAccess.Undefined, defaults to @see
+     * StorageTextureAccess.WriteOnly.
+     */
     @get:JvmName("getAccess")
     public var access: StorageTextureAccess = StorageTextureAccess.WriteOnly,
     @get:JvmName("getFormat")
