@@ -1,5 +1,8 @@
 package androidx.webgpu
 
+import java.util.concurrent.Executor
+import java.util.concurrent.ForkJoinPool
+
 public class DepthStencilState(
     @get:JvmName("getFormat")
     public var format: TextureFormat = TextureFormat.Undefined,

@@ -1,9 +1,16 @@
 package androidx.webgpu
 
+import java.util.concurrent.Executor
+import java.util.concurrent.ForkJoinPool
+
 public class TextureDescriptor(
     public var label: String? = null,
     @get:JvmName("getUsage")
     public var usage: TextureUsage,
+    /**
+     * If set to @ref WGPUTextureDimension_Undefined, [defaults](@ref SentinelValues)
+     * to @ref WGPUTextureDimension_2D.
+     */
     @get:JvmName("getDimension")
     public var dimension: TextureDimension = TextureDimension._2D,
     public var size: Extent3D,

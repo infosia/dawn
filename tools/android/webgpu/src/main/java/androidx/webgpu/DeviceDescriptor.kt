@@ -1,5 +1,8 @@
 package androidx.webgpu
 
+import java.util.concurrent.Executor
+import java.util.concurrent.ForkJoinPool
+
 public class DeviceDescriptor(
     public var label: String? = null,
     @get:JvmName("getRequiredFeatures")

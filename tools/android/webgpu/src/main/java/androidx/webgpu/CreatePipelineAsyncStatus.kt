@@ -4,6 +4,9 @@ package androidx.webgpu
 public value class CreatePipelineAsyncStatus(public val value: Int) {
     public companion object {
         public val Success: CreatePipelineAsyncStatus = CreatePipelineAsyncStatus(0x00000001)
+        /**
+         * See @ref CallbackStatuses.
+         */
         public val CallbackCancelled: CreatePipelineAsyncStatus = CreatePipelineAsyncStatus(0x00000002)
         public val ValidationError: CreatePipelineAsyncStatus = CreatePipelineAsyncStatus(0x00000003)
         public val InternalError: CreatePipelineAsyncStatus = CreatePipelineAsyncStatus(0x00000004)

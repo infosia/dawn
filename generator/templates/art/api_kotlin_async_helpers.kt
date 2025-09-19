@@ -30,6 +30,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 {% from 'art/api_kotlin_types.kt' import kotlin_declaration, kotlin_definition with context %}
 
+{% set all_callback_info = kdocs.callbacks %}
 //* Provide an async wrapper for the 'callback info' type of async methods.
 {% for obj in by_category['object'] %}
     {% for method in obj.methods if has_callbackInfoStruct(method) %}
@@ -37,6 +38,39 @@ import kotlin.coroutines.suspendCoroutine
         {% set callback_function = callback_info.members[-1].type %}
         {% set return_name = callback_function.name.chunks[:-1] | map('title') | join + 'Return' %}
 
+        {% set curr_callback_info = all_callback_info.get(callback_info.name.get()) %}
+        {% set doc_str = curr_callback_info.doc if curr_callback_info else "" %}
+        {% set all_args = curr_callback_info.args if curr_callback_info else [] %}
+        {% set has_any_arg_doc = namespace(found=false) %}
+        {%- for arg in kotlin_record_members(callback_function.arguments) %}
+            {% set camel_name = as_varName(arg.name) %}
+            {% set snake_name = arg.name.snake_case() %}
+            {% set arg_name = camel_name if camel_name in all_args else (snake_name if snake_name in all_args else None) %}
+            {%- if arg_name and all_args.get(arg_name) %}
+                {% set has_any_arg_doc.found = true %}
+                {% break %}
+            {%- endif %}
+        {%- endfor %}
+        {% if doc_str or has_any_arg_doc.found %}
+            /**
+            {%- if doc_str %}
+
+                 * {{ doc_str | trim | wordwrap(90, break_long_words=False, break_on_hyphens=False, wrapstring = "\n*  ") }}
+            {%- endif %}
+
+            {%- for arg in kotlin_record_members(callback_function.arguments) %}
+                {% set camel_name = as_varName(arg.name) %}
+                {% set arg_doc = curr_callback_info.args.get(arg.name.snake_case()) if curr_callback_info else "" %}
+                {% set snake_name = arg.name.snake_case() %}
+                {% set arg_name = camel_name if camel_name in all_args else (snake_name if snake_name in all_args else None) %}
+                {%- if has_any_arg_doc.found and all_args.get(arg_name) %}
+
+                     * @param {{ as_varName(arg.name) + " " +  all_args.get(arg_name) | trim | wordwrap(90, break_long_words=False, break_on_hyphens=False, wrapstring = "\n * ") }}
+                {%- endif %}
+            {%- endfor %}
+
+             */
+        {% endif %}
         //* We make a return class for every callback method so that it can be used inline
         //* (without callbacks) in a suspend (async) function.
         public class {{ return_name }}(

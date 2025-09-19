@@ -1,5 +1,19 @@
 package androidx.webgpu
 
+import java.util.concurrent.Executor
+import java.util.concurrent.ForkJoinPool
+
+/**
+ * If `attributes` is empty *and* `stepMode` is @ref WGPUVertexStepMode_Undefined,
+ * indicates a "hole" in the parent @ref WGPUVertexState `buffers` array, with
+ * behavior equivalent to `null` in the JS API.  If `attributes` is empty but
+ * `stepMode` is *not* @ref WGPUVertexStepMode_Undefined, indicates a vertex buffer
+ * with no attributes, with behavior equivalent to `{ attributes: [] }` in the JS
+ * API. (: If the JS API changes not to distinguish these cases, then this
+ * distinction doesn't matter and we can remove this documentation.)  If `stepMode`
+ * is @ref WGPUVertexStepMode_Undefined but `attributes` is *not* empty, `stepMode`
+ * [defaults](@ref SentinelValues) to @ref WGPUVertexStepMode_Vertex.
+ */
 public class VertexBufferLayout(
     @get:JvmName("getStepMode")
     public var stepMode: VertexStepMode = VertexStepMode.Undefined,

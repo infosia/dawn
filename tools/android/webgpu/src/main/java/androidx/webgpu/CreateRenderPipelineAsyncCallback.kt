@@ -6,3 +6,15 @@ public fun interface CreateRenderPipelineAsyncCallback {
     @JvmName("onCreateRenderPipelineAsync")
     public fun onCreateRenderPipelineAsync(status: CreatePipelineAsyncStatus, pipeline: RenderPipeline?, message: String, );
 }
+
+
+internal class CreateRenderPipelineAsyncCallbackRunnable(
+private val callback: CreateRenderPipelineAsyncCallback,
+private val status: CreatePipelineAsyncStatus,
+private val pipeline: RenderPipeline?,
+private val message: String
+) : Runnable {
+    override fun run() {
+        callback.onCreateRenderPipelineAsync(status, pipeline, message)
+    }
+}
