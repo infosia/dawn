@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6381a3ed_d39ffc00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-19T18:47:04Z",
+      "side": 1,
+      "message": "basic question, what is the difference between running them on `win-clang-rel-x64` and running them on `dawn-win-x64-sws-rel`? The latter is gn_v2? Or specific reason we want to split out the software ones to a separate tryjob?",
+      "revId": "39df260c997c863b988e3d9aeacbb51dfd0e3aba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
