@@ -3,7 +3,14 @@ package androidx.webgpu
 @JvmInline
 public value class TextureSampleType(public val value: Int) {
     public companion object {
+        /**
+         * Indicates that this @ref WGPUTextureBindingLayout member of its parent @ref
+         * WGPUBindGroupLayoutEntry is not used. (See also @ref SentinelValues.)
+         */
         public val BindingNotUsed: TextureSampleType = TextureSampleType(0x00000000)
+        /**
+         * `1`. Indicates no value is passed for this argument. See @ref SentinelValues.
+         */
         public val Undefined: TextureSampleType = TextureSampleType(0x00000001)
         public val Float: TextureSampleType = TextureSampleType(0x00000002)
         public val UnfilterableFloat: TextureSampleType = TextureSampleType(0x00000003)

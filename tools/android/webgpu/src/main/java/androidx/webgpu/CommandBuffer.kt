@@ -5,6 +5,9 @@ import java.nio.ByteBuffer
 
 
 public class CommandBuffer(public val handle: Long): AutoCloseable {
+    /**
+    * @param label    
+    */
     @FastNative
     @JvmName("setLabel")
     public external fun setLabel(label: String, ): Unit

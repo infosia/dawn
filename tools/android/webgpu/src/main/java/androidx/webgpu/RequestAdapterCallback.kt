@@ -1,6 +1,11 @@
 package androidx.webgpu
 
 
+/**
+* @param status
+* @param adapter
+* @param message
+*/
 public fun interface RequestAdapterCallback {
     @Suppress("INAPPLICABLE_JVM_NAME")
     @JvmName("onRequestAdapter")

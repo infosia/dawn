@@ -23,6 +23,9 @@ public class QuerySet(public val handle: Long): AutoCloseable {
     @get:JvmName("type")
     public val type: QueryType get() = getType()
 
+    /**
+    * @param label    
+    */
     @FastNative
     @JvmName("setLabel")
     public external fun setLabel(label: String, ): Unit

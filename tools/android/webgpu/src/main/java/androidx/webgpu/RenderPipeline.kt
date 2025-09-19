@@ -5,10 +5,16 @@ import java.nio.ByteBuffer
 
 
 public class RenderPipeline(public val handle: Long): AutoCloseable {
+    /**
+    * @param groupIndex    
+    */
     @FastNative
     @JvmName("getBindGroupLayout")
     public external fun getBindGroupLayout(groupIndex: Int, ): BindGroupLayout
 
+    /**
+    * @param label    
+    */
     @FastNative
     @JvmName("setLabel")
     public external fun setLabel(label: String, ): Unit
