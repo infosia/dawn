@@ -3,7 +3,14 @@ package androidx.webgpu
 @JvmInline
 public value class BufferBindingType(public val value: Int) {
     public companion object {
+        /**
+         * Indicates that this @see BufferBindingLayout member of its parent @see
+         * BindGroupLayoutEntry is not used.
+         */
         public val BindingNotUsed: BufferBindingType = BufferBindingType(0x00000000)
+        /**
+         * `1`. Indicates no value is passed for this argument.
+         */
         public val Undefined: BufferBindingType = BufferBindingType(0x00000001)
         public val Uniform: BufferBindingType = BufferBindingType(0x00000002)
         public val Storage: BufferBindingType = BufferBindingType(0x00000003)
