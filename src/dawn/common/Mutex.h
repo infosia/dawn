@@ -42,6 +42,16 @@
 
 namespace dawn {
 
+// Provides callbacks to report begin/end of mutex contention.
+class MutexContentionReporter {
+  public:
+    virtual void BeginContention() = 0;
+    virtual void EndContention() = 0;
+
+  protected:
+    ~MutexContentionReporter() = default;
+};
+
 template <typename MutexT>
 class DAWN_MUTEX_CAPABILITY MutexBase : public RefCounted, NonCopyable {
   public:
@@ -84,7 +94,7 @@ class DAWN_MUTEX_CAPABILITY MutexBase : public RefCounted, NonCopyable {
     }
 
   protected:
-    void Lock() DAWN_EXCLUSIVE_LOCK_FUNCTION {
+    void Lock(MutexContentionReporter* reporter = nullptr) DAWN_EXCLUSIVE_LOCK_FUNCTION {
 #if defined(DAWN_ENABLE_ASSERTS)
         auto currentThread = std::this_thread::get_id();
         if constexpr (!std::is_same_v<MutexT, std::recursive_mutex>) {
@@ -92,7 +102,15 @@ class DAWN_MUTEX_CAPABILITY MutexBase : public RefCounted, NonCopyable {
         }
 #endif  // DAWN_ENABLE_ASSERTS
 
-        mNativeMutex.lock();
+        if (reporter) {
+            if (!mNativeMutex.try_lock()) {
+                reporter->BeginContention();
+                mNativeMutex.lock();
+                reporter->EndContention();
+            }
+        } else {
+            mNativeMutex.lock();
+        }
 
 #if defined(DAWN_ENABLE_ASSERTS)
         mRecursionStackDepth++;
