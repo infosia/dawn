@@ -4,6 +4,9 @@ package androidx.webgpu
 public value class CompilationInfoRequestStatus(public val value: Int) {
     public companion object {
         public val Success: CompilationInfoRequestStatus = CompilationInfoRequestStatus(0x00000001)
+        /**
+         * See @ref CallbackStatuses.
+         */
         public val CallbackCancelled: CompilationInfoRequestStatus = CompilationInfoRequestStatus(0x00000002)
         internal val names: Map<Int, String> = mapOf(
             0x00000001 to "Success",

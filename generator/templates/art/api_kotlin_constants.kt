@@ -26,13 +26,27 @@
 //* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {% from 'art/api_kotlin_types.kt' import kotlin_declaration with context %}
 package {{ kotlin_package }}
+{% set all_constants = kdocs.constants %}
 
 public object Constants {
-    private const val UINT32_MAX: Int = -1   // -1 to max int is resolved at compile time
-    private const val UINT64_MAX: Long = -1L   // -1L to max long is resolved at compile time
-    private const val SIZE_MAX = UINT64_MAX
+    /**
+     * -1 to max int is resolved at compile time
+     */
+    private const val UINT32_MAX: Int = -1
 
+    /**
+     * -1L to max long is resolved at compile time
+     */
+    private const val UINT64_MAX: Long = -1L
+    private const val SIZE_MAX = UINT64_MAX
     {% for constant in by_category['constant'] %}
+        {% set curr_constant = all_constants.get(constant.name.get()) %}
+        {% if curr_constant %}
+
+            /**
+             * {{ curr_constant | trim | wordwrap(80, break_long_words=False, break_on_hyphens=False, wrapstring = "\n     * ") }}
+             */
+        {% endif %}
         public const val {{ as_ktName(constant.name.SNAKE_CASE() ) }}:{{ ' ' }}
         {{- kotlin_declaration(constant) }} =
         {%- if constant.value == 'NAN' %}
