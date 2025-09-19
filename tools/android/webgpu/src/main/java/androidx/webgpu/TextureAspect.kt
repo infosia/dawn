@@ -3,6 +3,9 @@ package androidx.webgpu
 @JvmInline
 public value class TextureAspect(public val value: Int) {
     public companion object {
+        /**
+         * Indicates no value is passed for this argument.
+         */
         public val Undefined: TextureAspect = TextureAspect(0x00000000)
         public val All: TextureAspect = TextureAspect(0x00000001)
         public val StencilOnly: TextureAspect = TextureAspect(0x00000002)

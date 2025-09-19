@@ -5,6 +5,9 @@ import java.nio.ByteBuffer
 
 
 public class Adapter(public val handle: Long): AutoCloseable {
+    /**
+     * Get the list of @see FeatureName values supported by the adapter.
+     */
     @FastNative
     @JvmName("getFeatures")
     public external fun getFeatures(): SupportedFeatures

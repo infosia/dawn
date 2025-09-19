@@ -53,6 +53,9 @@ public class RenderPassEncoder(public val handle: Long): AutoCloseable {
     @JvmName("setBindGroup")
     public external fun setBindGroup(groupIndex: Int, group: BindGroup? = null, dynamicOffsets: IntArray = intArrayOf(), ): Unit
 
+    /**
+     * @param color The RGBA blend constant. Represents an `f32` color using @see Color.
+     */
     @FastNative
     @JvmName("setBlendConstant")
     public external fun setBlendConstant(color: Color, ): Unit
