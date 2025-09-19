@@ -31,15 +31,31 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/native/Device.h"
+#include "dawn/platform/DawnPlatform.h"
+#include "dawn/platform/tracing/TraceEvent.h"
 
 namespace dawn::native {
+namespace {
+
+constexpr char kContentionEventName[] = "DeviceMutex Contention";
+
+}
+
+DeviceMutex::DeviceMutex(dawn::platform::Platform* platform) : mPlatform(platform) {}
 
 DeviceMutex::~DeviceMutex() {
     DAWN_ASSERT(mRecursionStackDepth == 0);
 }
 
+void DeviceMutex::BeginContention() {
+    TRACE_EVENT_BEGIN0(mPlatform, General, kContentionEventName);
+}
+void DeviceMutex::EndContention() {
+    TRACE_EVENT_END0(mPlatform, General, kContentionEventName);
+}
+
 void DeviceMutex::Lock() {
-    RecursiveMutex::Lock();
+    RecursiveMutex::Lock(this);
     if (mRecursionStackDepth == 0) {
         mDefer.emplace();
     }
@@ -56,7 +72,6 @@ void DeviceMutex::Unlock() {
     }
     RecursiveMutex::Unlock();
 }
-
 namespace detail {
 
 DeviceGuardBase::DeviceGuardBase(DeviceMutex* mutex) : mMutex(mutex) {}
