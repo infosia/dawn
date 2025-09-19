@@ -483,6 +483,17 @@ wgpu::TextureUsage GetTextureViewUsage(wgpu::TextureUsage sourceTextureUsage,
                                                             : sourceTextureUsage;
 }
 
+bool IsIdentitySwizzle(const TextureComponentSwizzle& swizzle) {
+    return (
+        (swizzle.r == wgpu::ComponentSwizzle::R ||
+         swizzle.r == wgpu::ComponentSwizzle::Undefined) &&
+        (swizzle.g == wgpu::ComponentSwizzle::G ||
+         swizzle.g == wgpu::ComponentSwizzle::Undefined) &&
+        (swizzle.b == wgpu::ComponentSwizzle::B ||
+         swizzle.b == wgpu::ComponentSwizzle::Undefined) &&
+        (swizzle.a == wgpu::ComponentSwizzle::A || swizzle.a == wgpu::ComponentSwizzle::Undefined));
+}
+
 MaybeError ValidateTextureComponentSwizzle(const DeviceBase* device,
                                            const TextureBase* texture,
                                            const UnpackedPtr<TextureViewDescriptor>& descriptor) {
@@ -491,9 +502,10 @@ MaybeError ValidateTextureComponentSwizzle(const DeviceBase* device,
         return {};
     }
 
-    DAWN_INVALID_IF(!device->HasFeature(Feature::TextureComponentSwizzle),
-                    "swizzle used without the %s feature enabled.",
-                    wgpu::FeatureName::TextureComponentSwizzle);
+    auto swizzle = swizzleDesc->swizzle.WithTrivialFrontendDefaults();
+    DAWN_INVALID_IF(
+        !IsIdentitySwizzle(swizzle) && !device->HasFeature(Feature::TextureComponentSwizzle),
+        "swizzle used without the %s feature enabled.", wgpu::FeatureName::TextureComponentSwizzle);
 
     wgpu::TextureUsage usage = GetTextureViewUsage(texture->GetUsage(), descriptor->usage);
     if ((usage & (wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::StorageBinding)) ==
@@ -501,7 +513,6 @@ MaybeError ValidateTextureComponentSwizzle(const DeviceBase* device,
         return {};
     }
 
-    auto swizzle = swizzleDesc->swizzle.WithTrivialFrontendDefaults();
     DAWN_INVALID_IF(swizzle.r != wgpu::ComponentSwizzle::R,
                     "The texture view's component swizzle r (%s) must be %s when usage "
                     "includes %s or %s.",
