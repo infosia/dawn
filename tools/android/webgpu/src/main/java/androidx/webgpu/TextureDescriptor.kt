@@ -4,6 +4,10 @@ public class TextureDescriptor(
     public var label: String? = null,
     @get:JvmName("getUsage")
     public var usage: TextureUsage,
+    /**
+     * If set to @see TextureDimension.Undefined, defaults to @see TextureDimension.2D
+     * .
+     */
     @get:JvmName("getDimension")
     public var dimension: TextureDimension = TextureDimension._2D,
     public var size: Extent3D,

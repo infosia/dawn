@@ -3,6 +3,9 @@ package androidx.webgpu
 @JvmInline
 public value class BlendFactor(public val value: Int) {
     public companion object {
+        /**
+         * Indicates no value is passed for this argument.
+         */
         public val Undefined: BlendFactor = BlendFactor(0x00000000)
         public val Zero: BlendFactor = BlendFactor(0x00000001)
         public val One: BlendFactor = BlendFactor(0x00000002)

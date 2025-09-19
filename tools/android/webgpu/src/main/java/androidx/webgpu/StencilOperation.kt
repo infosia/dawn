@@ -3,6 +3,9 @@ package androidx.webgpu
 @JvmInline
 public value class StencilOperation(public val value: Int) {
     public companion object {
+        /**
+         * Indicates no value is passed for this argument.
+         */
         public val Undefined: StencilOperation = StencilOperation(0x00000000)
         public val Keep: StencilOperation = StencilOperation(0x00000001)
         public val Zero: StencilOperation = StencilOperation(0x00000002)

@@ -9,5 +9,9 @@ public class RequestAdapterOptions(
     @get:JvmName("getBackendType")
     public var backendType: BackendType = BackendType.Undefined,
     public var compatibleSurface: Surface? = null,
+    /**
+     * Extension providing requestAdapter options for implementations with WebXR
+     * interop (i.e. Wasm).
+     */
     public var requestAdapterWebXROptions: RequestAdapterWebXROptions? = null,
 )
