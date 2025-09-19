@@ -1,5 +1,8 @@
 package androidx.webgpu
 
+import java.util.concurrent.Executor
+import java.util.concurrent.ForkJoinPool
+
 public class Limits(
     public var maxTextureDimension1D: Int = Constants.LIMIT_U32_UNDEFINED,
     public var maxTextureDimension2D: Int = Constants.LIMIT_U32_UNDEFINED,

@@ -66,6 +66,11 @@ public suspend fun Device.createRenderPipelineAsync(descriptor: RenderPipelineDe
         })
     }
 
+/**
+ * @param status @see PopErrorScopeStatus.
+ * @param type The type of the error caught by the scope, or @see ErrorType.NoError if there was none. If
+ * the `status` is not @see PopErrorScopeStatus.Success, this is @see ErrorType.NoError.
+ */
 public class PopErrorScopeReturn(
     public val status: PopErrorScopeStatus,
     public val type: ErrorType,
@@ -98,6 +103,9 @@ public suspend fun Instance.requestAdapter(options: RequestAdapterOptions? = Req
         })
     }
 
+/**
+ * @param status @see QueueWorkDoneStatus.
+ */
 public class QueueWorkDoneReturn(
     public val status: QueueWorkDoneStatus,
     public val message: String,
