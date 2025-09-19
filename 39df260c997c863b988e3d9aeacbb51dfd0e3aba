@@ -16,6 +16,24 @@
       "message": "basic question, what is the difference between running them on `win-clang-rel-x64` and running them on `dawn-win-x64-sws-rel`? The latter is gn_v2? Or specific reason we want to split out the software ones to a separate tryjob?",
       "revId": "39df260c997c863b988e3d9aeacbb51dfd0e3aba",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1cab431_273e837f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-09-19T19:05:08Z",
+      "side": 1,
+      "message": "The end goal is to move dawn_end2end_tests to the new bots.\nWhich would give proper testing to vulkan-deps-\u003eDawn rolls, remove unnecessary end2end runs from CTS rolls, etc.",
+      "parentUuid": "6381a3ed_d39ffc00",
+      "revId": "39df260c997c863b988e3d9aeacbb51dfd0e3aba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
