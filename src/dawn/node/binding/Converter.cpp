@@ -628,7 +628,9 @@ bool Converter::Convert(interop::GPUTextureFormat& out, wgpu::TextureFormat in) 
         CASE(ETC2RGBA8UnormSrgb, kEtc2Rgba8UnormSrgb);
         CASE(R16Float, kR16Float);
         CASE(R16Sint, kR16Sint);
+        CASE(R16Snorm, kR16Snorm);
         CASE(R16Uint, kR16Uint);
+        CASE(R16Unorm, kR16Unorm);
         CASE(R32Float, kR32Float);
         CASE(R32Sint, kR32Sint);
         CASE(R32Uint, kR32Uint);
@@ -639,7 +641,9 @@ bool Converter::Convert(interop::GPUTextureFormat& out, wgpu::TextureFormat in) 
         CASE(RG11B10Ufloat, kRg11B10Ufloat);
         CASE(RG16Float, kRg16Float);
         CASE(RG16Sint, kRg16Sint);
+        CASE(RG16Snorm, kRg16Snorm);
         CASE(RG16Uint, kRg16Uint);
+        CASE(RG16Unorm, kRg16Unorm);
         CASE(RG32Float, kRg32Float);
         CASE(RG32Sint, kRg32Sint);
         CASE(RG32Uint, kRg32Uint);
@@ -652,7 +656,9 @@ bool Converter::Convert(interop::GPUTextureFormat& out, wgpu::TextureFormat in) 
         CASE(RGB9E5Ufloat, kRgb9E5Ufloat);
         CASE(RGBA16Float, kRgba16Float);
         CASE(RGBA16Sint, kRgba16Sint);
+        CASE(RGBA16Snorm, kRgba16Snorm);
         CASE(RGBA16Uint, kRgba16Uint);
+        CASE(RGBA16Unorm, kRgba16Unorm);
         CASE(RGBA32Float, kRgba32Float);
         CASE(RGBA32Sint, kRgba32Sint);
         CASE(RGBA32Uint, kRgba32Uint);
@@ -664,8 +670,6 @@ bool Converter::Convert(interop::GPUTextureFormat& out, wgpu::TextureFormat in) 
         CASE(Stencil8, kStencil8);
 #undef CASE
 
-        case wgpu::TextureFormat::R16Snorm:
-        case wgpu::TextureFormat::R16Unorm:
         case wgpu::TextureFormat::R8BG8Biplanar420Unorm:
         case wgpu::TextureFormat::R8BG8Biplanar422Unorm:
         case wgpu::TextureFormat::R8BG8Biplanar444Unorm:
@@ -673,10 +677,6 @@ bool Converter::Convert(interop::GPUTextureFormat& out, wgpu::TextureFormat in) 
         case wgpu::TextureFormat::R10X6BG10X6Biplanar420Unorm:
         case wgpu::TextureFormat::R10X6BG10X6Biplanar422Unorm:
         case wgpu::TextureFormat::R10X6BG10X6Biplanar444Unorm:
-        case wgpu::TextureFormat::RG16Snorm:
-        case wgpu::TextureFormat::RG16Unorm:
-        case wgpu::TextureFormat::RGBA16Snorm:
-        case wgpu::TextureFormat::RGBA16Unorm:
         case wgpu::TextureFormat::External:
 
         case wgpu::TextureFormat::Undefined:
