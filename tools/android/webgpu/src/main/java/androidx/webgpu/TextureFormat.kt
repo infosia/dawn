@@ -3,6 +3,9 @@ package androidx.webgpu
 @JvmInline
 public value class TextureFormat(public val value: Int) {
     public companion object {
+        /**
+         * Indicates no value is passed for this argument.
+         */
         public val Undefined: TextureFormat = TextureFormat(0x00000000)
         public val R8Unorm: TextureFormat = TextureFormat(0x00000001)
         public val R8Snorm: TextureFormat = TextureFormat(0x00000002)
