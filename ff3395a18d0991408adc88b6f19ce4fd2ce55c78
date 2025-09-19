@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a2b0b8a_e5e31b98",
+        "filename": "unsafe_buffers_paths.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-19T18:10:46Z",
+      "side": 1,
+      "message": "I think it would make sense to move this inside `tools/`, that\u0027s where cfi and ubsan ignorelists canonically live. Not a strong opinion though, here is fine if that would be unconventional.",
+      "revId": "ff3395a18d0991408adc88b6f19ce4fd2ce55c78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "697a1099_958bc9d5",
+        "filename": "unsafe_buffers_paths.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-19T18:10:46Z",
+      "side": 1,
+      "message": "update comment",
+      "revId": "ff3395a18d0991408adc88b6f19ce4fd2ce55c78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
