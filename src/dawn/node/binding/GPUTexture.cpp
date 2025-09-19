@@ -52,6 +52,7 @@ interop::Interface<interop::GPUTextureView> GPUTexture::createView(
     }
 
     wgpu::TextureViewDescriptor desc{};
+    wgpu::TextureComponentSwizzle swizzle;
     Converter conv(env, device_);
     if (!conv(desc.baseMipLevel, descriptor.baseMipLevel) ||        //
         !conv(desc.mipLevelCount, descriptor.mipLevelCount) ||      //
@@ -61,13 +62,13 @@ interop::Interface<interop::GPUTextureView> GPUTexture::createView(
         !conv(desc.dimension, descriptor.dimension) ||              //
         !conv(desc.aspect, descriptor.aspect) ||                    //
         !conv(desc.label, descriptor.label) ||                      //
-        !conv(desc.usage, descriptor.usage)) {
+        !conv(desc.usage, descriptor.usage) ||                      //
+        !conv(swizzle, descriptor.swizzle)) {
         return {};
     }
 
     wgpu::TextureComponentSwizzleDescriptor swizzle_desc{};
-    wgpu::TextureComponentSwizzle swizzle;
-    if (conv(swizzle, descriptor.swizzle)) {
+    if (descriptor.swizzle != "rgba") {
         swizzle_desc.swizzle = swizzle;
         desc.nextInChain = reinterpret_cast<wgpu::ChainedStruct*>(&swizzle_desc);
     }
