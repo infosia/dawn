@@ -5,22 +5,37 @@ import java.nio.ByteBuffer
 
 
 public class Adapter(public val handle: Long): AutoCloseable {
+    /**
+    * Get the list of @ref WGPUFeatureName values supported by the adapter.    
+    */
     @FastNative
     @JvmName("getFeatures")
     public external fun getFeatures(): SupportedFeatures
 
+    /**
+    * @return Indicates if there was an @ref OutStructChainError.    
+    */
     @FastNative
     @JvmName("getInfo")
     public external fun getInfo(): AdapterInfo
 
+    /**
+    * @return Indicates if there was an @ref OutStructChainError.    
+    */
     @FastNative
     @JvmName("getLimits")
     public external fun getLimits(): Limits
 
+    /**
+    * @param feature    
+    */
     @FastNative
     @JvmName("hasFeature")
     public external fun hasFeature(feature: FeatureName, ): Boolean
 
+    /**
+    * @param descriptor    
+    */
     @FastNative
     @JvmName("requestDevice")
     public external fun requestDevice(descriptor: DeviceDescriptor? = null, callbackInfo: RequestDeviceCallbackInfo, ): Future

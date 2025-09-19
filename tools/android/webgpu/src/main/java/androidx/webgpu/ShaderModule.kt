@@ -9,6 +9,9 @@ public class ShaderModule(public val handle: Long): AutoCloseable {
     @JvmName("getCompilationInfo")
     public external fun getCompilationInfo(callbackInfo: CompilationInfoCallbackInfo, ): Future
 
+    /**
+    * @param label    
+    */
     @FastNative
     @JvmName("setLabel")
     public external fun setLabel(label: String, ): Unit

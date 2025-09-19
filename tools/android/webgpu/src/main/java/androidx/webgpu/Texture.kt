@@ -5,6 +5,9 @@ import java.nio.ByteBuffer
 
 
 public class Texture(public val handle: Long): AutoCloseable {
+    /**
+    * @param descriptor    
+    */
     @FastNative
     @JvmName("createView")
     public external fun createView(descriptor: TextureViewDescriptor? = null, ): TextureView
@@ -69,6 +72,9 @@ public class Texture(public val handle: Long): AutoCloseable {
     @get:JvmName("width")
     public val width: Int get() = getWidth()
 
+    /**
+    * @param label    
+    */
     @FastNative
     @JvmName("setLabel")
     public external fun setLabel(label: String, ): Unit
