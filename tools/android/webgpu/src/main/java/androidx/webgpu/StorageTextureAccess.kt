@@ -3,7 +3,14 @@ package androidx.webgpu
 @JvmInline
 public value class StorageTextureAccess(public val value: Int) {
     public companion object {
+        /**
+         * Indicates that this @ref WGPUStorageTextureBindingLayout member of its parent
+         * @ref WGPUBindGroupLayoutEntry is not used. (See also @ref SentinelValues.)
+         */
         public val BindingNotUsed: StorageTextureAccess = StorageTextureAccess(0x00000000)
+        /**
+         * `1`. Indicates no value is passed for this argument. See @ref SentinelValues.
+         */
         public val Undefined: StorageTextureAccess = StorageTextureAccess(0x00000001)
         public val WriteOnly: StorageTextureAccess = StorageTextureAccess(0x00000002)
         public val ReadOnly: StorageTextureAccess = StorageTextureAccess(0x00000003)

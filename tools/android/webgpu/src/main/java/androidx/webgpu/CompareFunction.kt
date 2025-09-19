@@ -3,6 +3,9 @@ package androidx.webgpu
 @JvmInline
 public value class CompareFunction(public val value: Int) {
     public companion object {
+        /**
+         * Indicates no value is passed for this argument. See @ref SentinelValues.
+         */
         public val Undefined: CompareFunction = CompareFunction(0x00000000)
         public val Never: CompareFunction = CompareFunction(0x00000001)
         public val Less: CompareFunction = CompareFunction(0x00000002)

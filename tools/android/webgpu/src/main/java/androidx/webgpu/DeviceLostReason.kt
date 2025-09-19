@@ -5,6 +5,9 @@ public value class DeviceLostReason(public val value: Int) {
     public companion object {
         public val Unknown: DeviceLostReason = DeviceLostReason(0x00000001)
         public val Destroyed: DeviceLostReason = DeviceLostReason(0x00000002)
+        /**
+         * See @ref CallbackStatuses.
+         */
         public val CallbackCancelled: DeviceLostReason = DeviceLostReason(0x00000003)
         public val FailedCreation: DeviceLostReason = DeviceLostReason(0x00000004)
         internal val names: Map<Int, String> = mapOf(

@@ -53,6 +53,9 @@ public class RenderPassEncoder(public val handle: Long): AutoCloseable {
     @JvmName("setBindGroup")
     public external fun setBindGroup(groupIndex: Int, group: BindGroup? = null, dynamicOffsets: IntArray = intArrayOf(), ): Unit
 
+    /**
+     * @param color The RGBA blend constant. Represents an `f32` color using @ref DoubleAsSupertype.
+     */
     @FastNative
     @JvmName("setBlendConstant")
     public external fun setBlendConstant(color: Color, ): Unit
@@ -81,6 +84,9 @@ public class RenderPassEncoder(public val handle: Long): AutoCloseable {
     @JvmName("setVertexBuffer")
     public external fun setVertexBuffer(slot: Int, buffer: Buffer? = null, offset: Long = 0, size: Long = Constants.WHOLE_SIZE, ): Unit
 
+    /**
+     * If any argument is non-finite, produces a @ref NonFiniteFloatValueError.
+     */
     @FastNative
     @JvmName("setViewport")
     public external fun setViewport(x: Float, y: Float, width: Float, height: Float, minDepth: Float, maxDepth: Float, ): Unit
