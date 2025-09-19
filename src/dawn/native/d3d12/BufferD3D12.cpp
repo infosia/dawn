@@ -509,11 +509,13 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
 
 void Buffer::FinalizeMapImpl() {}
 
-void Buffer::UnmapImpl() {
+void Buffer::UnmapImpl(BufferState fromState) {
     GetD3D12Resource()->Unmap(0, &mWrittenMappedRange);
+    // TODO: Does this race with explicit APIDestroy() call?
     mMappedData = nullptr;
     mWrittenMappedRange = {0, 0};
 
+    // TODO: Does this need the device lock?
     // When buffers are mapped, they are locked to keep them in resident memory. We must unlock
     // them when they are unmapped.
     if (mResourceAllocation.GetInfo().mMethod != AllocationMethod::kExternal) {
@@ -704,7 +706,7 @@ MaybeError Buffer::ClearBuffer(CommandRecordingContext* commandContext,
         DAWN_TRY(MapInternal(true, static_cast<size_t>(offset), static_cast<size_t>(size),
                              "D3D12 map at clear buffer"));
         memset(mMappedData, clearValue, size);
-        UnmapImpl();
+        UnmapImpl(BufferState fromState);
     } else if (clearValue == 0u) {
         DAWN_TRY(device->ClearBufferToZero(commandContext, this, offset, size));
     } else {
