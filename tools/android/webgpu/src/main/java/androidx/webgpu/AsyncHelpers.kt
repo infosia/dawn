@@ -28,6 +28,11 @@ public class BufferMapReturn(
     public operator fun component2() : String =message
 }
 
+/**
+ * @param offset Byte offset relative to beginning of the buffer.
+ * @param size Byte size of the region to map. If this is @see Constants.WHOLE_MAP_SIZE, it defaults to
+ * `buffer.size - offset`.
+*/
 public suspend fun Buffer.mapAsync(mode: MapMode,offset: Long,size: Long,): BufferMapReturn = suspendCoroutine {
         mapAsync(mode, offset, size, callbackInfo = BufferMapCallbackInfo(CallbackMode.AllowSpontaneous){status,message, -> it.resume(BufferMapReturn(status , message , )
             )
@@ -66,6 +71,11 @@ public suspend fun Device.createRenderPipelineAsync(descriptor: RenderPipelineDe
         })
     }
 
+/**
+ * @param status @see PopErrorScopeStatus.
+ * @param type The type of the error caught by the scope, or @see ErrorType.NoError if there was none. If
+ * the `status` is not @see PopErrorScopeStatus.Success, this is @see ErrorType.NoError .
+ */
 public class PopErrorScopeReturn(
     public val status: PopErrorScopeStatus,
     public val type: ErrorType,
@@ -76,6 +86,10 @@ public class PopErrorScopeReturn(
     public operator fun component3() : String =message
 }
 
+/**
+ * Pops an error scope to the current thread's error scope stack, asynchronously returning
+ * the result. @see ErrorScopes.
+*/
 public suspend fun Device.popErrorScope(): PopErrorScopeReturn = suspendCoroutine {
         popErrorScope(callbackInfo = PopErrorScopeCallbackInfo(CallbackMode.AllowSpontaneous){status,type,message, -> it.resume(PopErrorScopeReturn(status , type , message , )
             )
@@ -98,6 +112,9 @@ public suspend fun Instance.requestAdapter(options: RequestAdapterOptions? = Req
         })
     }
 
+/**
+ * @param status @see QueueWorkDoneStatus.
+ */
 public class QueueWorkDoneReturn(
     public val status: QueueWorkDoneStatus,
     public val message: String,
