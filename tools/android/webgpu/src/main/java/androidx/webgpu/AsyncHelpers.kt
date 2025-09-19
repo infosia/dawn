@@ -66,6 +66,15 @@ public suspend fun Device.createRenderPipelineAsync(descriptor: RenderPipelineDe
         })
     }
 
+/**
+* @param status See @ref WGPUPopErrorScopeStatus.
+* @param type The type of the error caught by the scope, or @ref WGPUErrorType_NoError if there was
+* none. If the `status` is not @ref WGPUPopErrorScopeStatus_Success, this is @ref
+* WGPUErrorType_NoError.
+* @param message If the `status` is not @ref WGPUPopErrorScopeStatus_Success **or** the `type` is not @ref
+* WGPUErrorType_NoError, this is a non-empty @ref LocalizableHumanReadableMessageString;
+* otherwise, this is an empty string.
+*/
 public class PopErrorScopeReturn(
     public val status: PopErrorScopeStatus,
     public val type: ErrorType,
@@ -98,6 +107,11 @@ public suspend fun Instance.requestAdapter(options: RequestAdapterOptions? = Req
         })
     }
 
+/**
+* @param status See @ref WGPUQueueWorkDoneStatus.
+* @param message If the `status` is not @ref WGPUQueueWorkDoneStatus_Success, this is a non-empty @ref
+* LocalizableHumanReadableMessageString; otherwise, this is an empty string.
+*/
 public class QueueWorkDoneReturn(
     public val status: QueueWorkDoneStatus,
     public val message: String,
@@ -112,6 +126,10 @@ public suspend fun Queue.onSubmittedWorkDone(): QueueWorkDoneReturn = suspendCor
         })
     }
 
+/**
+* @param compilationInfo This argument contains multiple @ref ImplementationAllocatedStructChain roots. Arbitrary
+* chains must be handled gracefully by the application!
+*/
 public class CompilationInfoReturn(
     public val status: CompilationInfoRequestStatus,
     public val compilationInfo: CompilationInfo,
