@@ -34,6 +34,24 @@
       "parentUuid": "6381a3ed_d39ffc00",
       "revId": "39df260c997c863b988e3d9aeacbb51dfd0e3aba",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6133db7b_62db353b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-19T20:11:02Z",
+      "side": 1,
+      "message": "From a user\u0027s perspective, there shouldn\u0027t be much difference at the moment other than (hopefully) somewhat faster build times due to caching + use of Swarming for running tests. There are a number of other benefits behind the scenes that Yuly pointed out, though. The `-sws-` bots are meant to provide the same compile/test coverage as the existing Dawn standalone builders that do everything directly in the recipe.\n\nLonger-term, we\u0027ll also be able to run Dawn standalone tests on real hardware instead of relying on the Chromium builders.",
+      "parentUuid": "f1cab431_273e837f",
+      "revId": "39df260c997c863b988e3d9aeacbb51dfd0e3aba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
