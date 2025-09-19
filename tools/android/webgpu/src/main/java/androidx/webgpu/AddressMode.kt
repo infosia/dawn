@@ -3,6 +3,9 @@ package androidx.webgpu
 @JvmInline
 public value class AddressMode(public val value: Int) {
     public companion object {
+        /**
+         * Indicates no value is passed for this argument.
+         */
         public val Undefined: AddressMode = AddressMode(0x00000000)
         public val ClampToEdge: AddressMode = AddressMode(0x00000001)
         public val Repeat: AddressMode = AddressMode(0x00000002)

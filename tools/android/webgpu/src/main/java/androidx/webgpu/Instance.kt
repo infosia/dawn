@@ -5,10 +5,17 @@ import java.nio.ByteBuffer
 
 
 public class Instance(public val handle: Long): AutoCloseable {
+    /**
+     * @param descriptor The description of the @see Surface to create.
+     * @return A new @see Surface for this descriptor (or an error @see Surface).
+     */
     @FastNative
     @JvmName("createSurface")
     public external fun createSurface(descriptor: SurfaceDescriptor = SurfaceDescriptor(), ): Surface
 
+    /**
+     * Get the list of @see WGSLLanguageFeatureName values supported by the instance.
+     */
     @FastNative
     @JvmName("getWGSLLanguageFeatures")
     public external fun getWGSLLanguageFeatures(): SupportedWGSLLanguageFeatures

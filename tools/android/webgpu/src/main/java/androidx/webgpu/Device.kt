@@ -13,6 +13,10 @@ public class Device(public val handle: Long): AutoCloseable {
     @JvmName("createBindGroupLayout")
     public external fun createBindGroupLayout(descriptor: BindGroupLayoutDescriptor, ): BindGroupLayout
 
+    /**
+     * If @see BufferDescriptor.mappedAtCreation is `true` and the mapping allocation
+     * fails, returns `NULL`.
+     */
     @FastNative
     @JvmName("createBuffer")
     public external fun createBuffer(descriptor: BufferDescriptor, ): Buffer
@@ -69,6 +73,9 @@ public class Device(public val handle: Long): AutoCloseable {
     @JvmName("getAdapterInfo")
     public external fun getAdapterInfo(): AdapterInfo
 
+    /**
+     * Get the list of @see FeatureName values supported by the device.
+     */
     @FastNative
     @JvmName("getFeatures")
     public external fun getFeatures(): SupportedFeatures
@@ -77,6 +84,9 @@ public class Device(public val handle: Long): AutoCloseable {
     @JvmName("getLimits")
     public external fun getLimits(): Limits
 
+    /**
+     * @return The @see Future for the device-lost event of the device.
+     */
     @FastNative
     @JvmName("getLostFuture")
     public external fun getLostFuture(): Future
@@ -95,10 +105,18 @@ public class Device(public val handle: Long): AutoCloseable {
     @JvmName("hasFeature")
     public external fun hasFeature(feature: FeatureName, ): Boolean
 
+    /**
+     * Pops an error scope to the current thread's error scope stack, asynchronously
+     * returning the result. @see ErrorScopes.
+     */
     @FastNative
     @JvmName("popErrorScope")
     public external fun popErrorScope(callbackInfo: PopErrorScopeCallbackInfo, ): Future
 
+    /**
+     * Pushes an error scope to the current thread's error scope stack. @see
+     * ErrorScopes.
+     */
     @FastNative
     @JvmName("pushErrorScope")
     public external fun pushErrorScope(filter: ErrorFilter, ): Unit

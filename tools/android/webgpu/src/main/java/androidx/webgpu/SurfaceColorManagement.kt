@@ -1,5 +1,8 @@
 package androidx.webgpu
 
+/**
+ * Extension of @see SurfaceConfiguration for color spaces and HDR.
+ */
 public class SurfaceColorManagement(
     @get:JvmName("getColorSpace")
     public var colorSpace: PredefinedColorSpace,
