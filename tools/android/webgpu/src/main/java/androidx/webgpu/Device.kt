@@ -4,6 +4,10 @@ import dalvik.annotation.optimization.FastNative
 import java.nio.ByteBuffer
 
 
+/**
+ * Releasing the last ref to a `WGPUDevice` also calls @ref wgpuDeviceDestroy. For
+ * more info, see @ref DeviceRelease.
+ */
 public class Device(public val handle: Long): AutoCloseable {
     @FastNative
     @JvmName("createBindGroup")
@@ -13,6 +17,10 @@ public class Device(public val handle: Long): AutoCloseable {
     @JvmName("createBindGroupLayout")
     public external fun createBindGroupLayout(descriptor: BindGroupLayoutDescriptor, ): BindGroupLayout
 
+    /**
+    * If @ref WGPUBufferDescriptor::mappedAtCreation is `true` and the mapping
+    * allocation fails, returns `NULL`.
+    */
     @FastNative
     @JvmName("createBuffer")
     public external fun createBuffer(descriptor: BufferDescriptor, ): Buffer
@@ -65,18 +73,30 @@ public class Device(public val handle: Long): AutoCloseable {
     @JvmName("destroy")
     public external fun destroy(): Unit
 
+    /**
+    * @return Indicates if there was an @ref OutStructChainError.
+    */
     @FastNative
     @JvmName("getAdapterInfo")
     public external fun getAdapterInfo(): AdapterInfo
 
+    /**
+    * Get the list of @ref WGPUFeatureName values supported by the device.
+    */
     @FastNative
     @JvmName("getFeatures")
     public external fun getFeatures(): SupportedFeatures
 
+    /**
+    * @return Indicates if there was an @ref OutStructChainError.
+    */
     @FastNative
     @JvmName("getLimits")
     public external fun getLimits(): Limits
 
+    /**
+    * @return The @ref WGPUFuture for the device-lost event of the device.
+    */
     @FastNative
     @JvmName("getLostFuture")
     public external fun getLostFuture(): Future
@@ -95,10 +115,18 @@ public class Device(public val handle: Long): AutoCloseable {
     @JvmName("hasFeature")
     public external fun hasFeature(feature: FeatureName, ): Boolean
 
+    /**
+    * Pops an error scope to the current thread's error scope stack, asynchronously
+    * returning the result. See @ref ErrorScopes.
+    */
     @FastNative
     @JvmName("popErrorScope")
     public external fun popErrorScope(callbackInfo: PopErrorScopeCallbackInfo, ): Future
 
+    /**
+    * Pushes an error scope to the current thread's error scope stack. See @ref
+    * ErrorScopes.
+    */
     @FastNative
     @JvmName("pushErrorScope")
     public external fun pushErrorScope(filter: ErrorFilter, ): Unit
