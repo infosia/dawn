@@ -1,5 +1,10 @@
 package androidx.webgpu
 
+/**
+ * Status code returned (synchronously) from many operations. Generally indicates
+ * an invalid input like an unknown enum value or @ref OutStructChainError. Read
+ * the function's documentation for specific error conditions.
+ */
 @JvmInline
 public value class Status(public val value: Int) {
     public companion object {

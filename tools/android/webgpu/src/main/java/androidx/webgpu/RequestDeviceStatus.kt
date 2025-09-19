@@ -4,6 +4,9 @@ package androidx.webgpu
 public value class RequestDeviceStatus(public val value: Int) {
     public companion object {
         public val Success: RequestDeviceStatus = RequestDeviceStatus(0x00000001)
+        /**
+         * See @ref CallbackStatuses.
+         */
         public val CallbackCancelled: RequestDeviceStatus = RequestDeviceStatus(0x00000002)
         public val Error: RequestDeviceStatus = RequestDeviceStatus(0x00000003)
         internal val names: Map<Int, String> = mapOf(
