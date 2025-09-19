@@ -16,6 +16,23 @@
       "message": "PTAL\n\nNot enabling autosubmit since I want to let the recently added CI builders actually run a handful of builds with tests enabled, but I don\u0027t expect any issues since the trybot runs were good.",
       "revId": "beccfd7ed4e7851bd58c646b18abeae1ab769ad2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed93274e_4fc97f0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-19T18:04:00Z",
+      "side": 1,
+      "message": "Hm, the tests take ~2x longer to run on the gn_v2 bots compared to the the old bots. See https://ci.chromium.org/ui/p/dawn/builders/ci/linux-clang-dbg-x64/b8703304773957108657/infra (~10 minutes for `dawn_end2end_tests`) compared to https://ci.chromium.org/ui/p/dawn/builders/ci/dawn-linux-x64-sws-dbg/21/infra (~18 minutes for the same suite).\n\nI\u0027ll want to track down the cause of that before fully switching over.",
+      "revId": "beccfd7ed4e7851bd58c646b18abeae1ab769ad2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
