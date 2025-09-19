@@ -4,6 +4,9 @@ package androidx.webgpu
 public value class RequestAdapterStatus(public val value: Int) {
     public companion object {
         public val Success: RequestAdapterStatus = RequestAdapterStatus(0x00000001)
+        /**
+         * See @ref CallbackStatuses.
+         */
         public val CallbackCancelled: RequestAdapterStatus = RequestAdapterStatus(0x00000002)
         public val Unavailable: RequestAdapterStatus = RequestAdapterStatus(0x00000003)
         public val Error: RequestAdapterStatus = RequestAdapterStatus(0x00000004)
