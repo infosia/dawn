@@ -35,6 +35,7 @@
 #include "dawn/common/Defer.h"
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/Ref.h"
+#include "dawn/platform/DawnPlatform.h"
 
 namespace dawn::native {
 
@@ -42,6 +43,7 @@ class DeviceBase;
 
 class DeviceMutex : public RecursiveMutex {
   public:
+    DeviceMutex(dawn::platform::Platform* platform);
     ~DeviceMutex() override;
 
   private:
@@ -51,6 +53,7 @@ class DeviceMutex : public RecursiveMutex {
     void Lock() DAWN_EXCLUSIVE_LOCK_FUNCTION;
     void Unlock() DAWN_UNLOCK_FUNCTION;
 
+    dawn::platform::Platform* mPlatform;
     uint32_t mRecursionStackDepth = 0;
     std::optional<class Defer> mDefer = std::nullopt;
 };

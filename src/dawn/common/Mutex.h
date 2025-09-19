@@ -39,6 +39,8 @@
 #include "dawn/common/NonMovable.h"
 #include "dawn/common/Ref.h"
 #include "dawn/common/RefCounted.h"
+#include "dawn/platform/DawnPlatform.h"
+#include "dawn/platform/tracing/TraceEvent.h"
 
 namespace dawn {
 
@@ -84,7 +86,7 @@ class DAWN_MUTEX_CAPABILITY MutexBase : public RefCounted, NonCopyable {
     }
 
   protected:
-    void Lock() DAWN_EXCLUSIVE_LOCK_FUNCTION {
+    void Lock(dawn::platform::Platform* platform = nullptr) DAWN_EXCLUSIVE_LOCK_FUNCTION {
 #if defined(DAWN_ENABLE_ASSERTS)
         auto currentThread = std::this_thread::get_id();
         if constexpr (!std::is_same_v<MutexT, std::recursive_mutex>) {
@@ -92,7 +94,14 @@ class DAWN_MUTEX_CAPABILITY MutexBase : public RefCounted, NonCopyable {
         }
 #endif  // DAWN_ENABLE_ASSERTS
 
-        mNativeMutex.lock();
+        if (platform) {
+            if (!mNativeMutex.try_lock()) {
+                TRACE_EVENT0(platform, General, "DeviceMutex Contention");
+                mNativeMutex.lock();
+            }
+        } else {
+            mNativeMutex.lock();
+        }
 
 #if defined(DAWN_ENABLE_ASSERTS)
         mRecursionStackDepth++;

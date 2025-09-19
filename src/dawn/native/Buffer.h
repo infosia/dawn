@@ -199,6 +199,8 @@ class BufferBase : public SharedResource {
     // Updates internal state to reflect that the buffer is now mapped.
     void FinalizeMap(BufferState newState);
 
+    const uint64_t mId;
+
     const uint64_t mSize = 0;
     const wgpu::BufferUsage mUsage = wgpu::BufferUsage::None;
     const wgpu::BufferUsage mInternalUsage = wgpu::BufferUsage::None;

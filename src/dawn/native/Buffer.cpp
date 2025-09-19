@@ -389,8 +389,11 @@ bool BufferBase::IsMappedState(BufferState state) {
            state == BufferBase::BufferState::MappedAtCreation;
 }
 
+static std::atomic<uint64_t> g_next_id = 0;
+
 BufferBase::BufferBase(DeviceBase* device, const UnpackedPtr<BufferDescriptor>& descriptor)
     : SharedResource(device, descriptor->label),
+      mId(++g_next_id),
       mSize(descriptor->size),
       mUsage(descriptor->usage),
       mInternalUsage(ComputeInternalBufferUsages(device, descriptor->usage, descriptor->size)),
@@ -403,6 +406,7 @@ BufferBase::BufferBase(DeviceBase* device,
                        const BufferDescriptor* descriptor,
                        ObjectBase::ErrorTag tag)
     : SharedResource(device, tag, descriptor->label),
+      mId(++g_next_id),
       mSize(descriptor->size),
       mUsage(descriptor->usage),
       mInternalUsage(descriptor->usage),
@@ -508,6 +512,8 @@ wgpu::BufferMapState BufferBase::APIGetMapState() const {
 }
 
 void BufferBase::FinalizeMap(BufferState newState) {
+    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "BufferBase::FinalizeMap", "id", mId);
+
     // There are only 2 valid transitions:
     //   1) Nominal: PendingMap -> Mapped
     //   2) MappedAtCreation case because initial state is unmapped: Unmapped -> MappedAtCreation.
@@ -617,6 +623,8 @@ size_t BufferBase::MapSize() const {
 
 MaybeError BufferBase::ValidateCanUseOnQueueNow() const {
     DAWN_ASSERT(!IsError());
+    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "BufferBase::ValidateCanUseOnQueueNow", "id",
+                 mId);
 
     switch (mState.load(std::memory_order::acquire)) {
         case BufferState::Destroyed:
@@ -642,6 +650,7 @@ Future BufferBase::APIMapAsync(wgpu::MapMode mode,
     // TODO(crbug.com/dawn/2052): Once we always return a future, change this to log to the instance
     // (note, not raise a validation error to the device) and return the null future.
     DAWN_ASSERT(callbackInfo.nextInChain == nullptr);
+    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "BufferBase::APIMapAsync", "id", mId);
 
     Ref<MapAsyncEvent> event;
     {
@@ -762,6 +771,8 @@ void BufferBase::APIUnmap() {
 }
 
 MaybeError BufferBase::Unmap() {
+    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "BufferBase::Unmap", "id", mId);
+
     switch (mState.load(std::memory_order::acquire)) {
         case BufferState::Mapped:
             UnmapImpl();
@@ -789,6 +800,7 @@ MaybeError BufferBase::Unmap() {
 }
 
 MaybeError BufferBase::UnmapInternal(WGPUMapAsyncStatus status, std::string_view message) {
+    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "BufferBase::UnmapInternal", "id", mId);
     BufferState state = mState.load(std::memory_order::acquire);
 
     // If the buffer is already destroyed, we don't need to do anything.
@@ -937,12 +949,16 @@ bool BufferBase::NeedsInitialization() const {
 }
 
 void BufferBase::MarkUsedInPendingCommands() {
+    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "BufferBase::MarkUsedInPendingCommands", "id",
+                 mId);
+
     ExecutionSerial serial = GetDevice()->GetQueue()->GetPendingCommandSerial();
     DAWN_ASSERT(serial >= mLastUsageSerial);
     mLastUsageSerial = serial;
 }
 
 ExecutionSerial BufferBase::GetLastUsageSerial() const {
+    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "BufferBase::GetLastUsageSerial", "id", mId);
     return mLastUsageSerial;
 }
 

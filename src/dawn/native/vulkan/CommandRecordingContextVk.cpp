@@ -28,6 +28,8 @@
 #include "src/dawn/native/vulkan/CommandRecordingContextVk.h"
 
 #include "dawn/native/vulkan/DeviceVk.h"
+#include "dawn/platform/tracing/TraceEvent.h"
+#include "include/dawn/platform/DawnPlatform.h"
 #include "vulkan/vulkan_core.h"
 
 namespace dawn::native::vulkan {
@@ -86,6 +88,8 @@ void CommandRecordingContext::EmitBufferBarriers(Device* device) {
     CreateBarrierIfNeeded(mNonVertexBufferBarrier);
 
     if (idx > 0) {
+        TRACE_EVENT1(device->GetPlatform(), General, "vkCmdPipelineBarrier", "idx", idx);
+
         device->fn.CmdPipelineBarrier(commandBuffer, srcStages, dstStages, 0, idx, barriers.data(),
                                       0, nullptr, 0, nullptr);
     }

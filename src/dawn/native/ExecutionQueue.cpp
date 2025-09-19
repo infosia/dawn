@@ -34,6 +34,8 @@
 #include "dawn/common/Atomic.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/Error.h"
+#include "dawn/platform/DawnPlatform.h"
+#include "dawn/platform/tracing/TraceEvent.h"
 
 namespace dawn::native {
 namespace {
@@ -288,6 +290,8 @@ void ExecutionQueueBase::AssumeCommandsComplete() {
 }
 
 void ExecutionQueueBase::IncrementLastSubmittedCommandSerial() {
+    TRACE_EVENT0(GetDevice()->GetPlatform(), General, "IncrementLastSubmittedCommandSerial");
+
     mLastSubmittedSerial.fetch_add(1u, std::memory_order_release);
 }
 

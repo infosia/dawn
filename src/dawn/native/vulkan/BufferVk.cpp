@@ -47,6 +47,7 @@
 #include "dawn/native/vulkan/ResourceMemoryAllocatorVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
+#include "dawn/platform/tracing/TraceEvent.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native::vulkan {
@@ -426,9 +427,59 @@ VkBuffer Buffer::GetHandle() const {
     return mHandle;
 }
 
+static std::string BufferUsageToString(wgpu::BufferUsage usage) {
+    auto ToString = [](wgpu::BufferUsage usage) -> const char* {
+        switch (usage) {
+            case wgpu::BufferUsage::None:
+                return "None";
+            case wgpu::BufferUsage::MapRead:
+                return "MapRead";
+            case wgpu::BufferUsage::MapWrite:
+                return "MapWrite";
+            case wgpu::BufferUsage::CopySrc:
+                return "CopySrc";
+            case wgpu::BufferUsage::CopyDst:
+                return "CopyDst";
+            case wgpu::BufferUsage::Index:
+                return "Index";
+            case wgpu::BufferUsage::Vertex:
+                return "Vertex";
+            case wgpu::BufferUsage::Uniform:
+                return "Uniform";
+            case wgpu::BufferUsage::Storage:
+                return "Storage";
+            case wgpu::BufferUsage::Indirect:
+                return "Indirect";
+            case wgpu::BufferUsage::QueryResolve:
+                return "QueryResolve";
+            case wgpu::BufferUsage::TexelBuffer:
+                return "TexelBuffer";
+        }
+    };
+
+    wgpu::BufferUsage kUsages[] = {
+        wgpu::BufferUsage::MapRead,      wgpu::BufferUsage::MapWrite,   wgpu::BufferUsage::CopySrc,
+        wgpu::BufferUsage::CopyDst,      wgpu::BufferUsage::Index,      wgpu::BufferUsage::Vertex,
+        wgpu::BufferUsage::Uniform,      wgpu::BufferUsage::Storage,    wgpu::BufferUsage::Indirect,
+        wgpu::BufferUsage::QueryResolve, wgpu::BufferUsage::TexelBuffer};
+
+    std::string s;
+    for (auto& possible : kUsages) {
+        if (possible & usage) {
+            if (!s.empty()) {
+                s += "|";
+            }
+            s += ToString(usage);
+        }
+    }
+    return s;
+}
 void Buffer::TransitionUsageNow(CommandRecordingContext* recordingContext,
                                 wgpu::BufferUsage usage,
                                 wgpu::ShaderStage shaderStage) {
+    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "Buffer::TransitionUsageNow", "usage",
+                 BufferUsageToString(usage));
+
     TrackUsageAndGetResourceBarrier(recordingContext, usage, shaderStage);
     recordingContext->EmitBufferBarriers(ToBackend(GetDevice()));
 }
@@ -436,6 +487,9 @@ void Buffer::TransitionUsageNow(CommandRecordingContext* recordingContext,
 void Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingContext,
                                              wgpu::BufferUsage usage,
                                              wgpu::ShaderStage shaderStage) {
+    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "Buffer::TrackUsageAndGetResourceBarrier",
+                 "usage", BufferUsageToString(usage));
+
     if (shaderStage == wgpu::ShaderStage::None) {
         // If the buffer isn't used in any shader stages, ignore shader usages. Eg. ignore a uniform
         // buffer that isn't actually read in any shader.

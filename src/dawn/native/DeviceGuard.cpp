@@ -31,15 +31,18 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/native/Device.h"
+#include "dawn/platform/DawnPlatform.h"
 
 namespace dawn::native {
+
+DeviceMutex::DeviceMutex(dawn::platform::Platform* platform) : mPlatform(platform) {}
 
 DeviceMutex::~DeviceMutex() {
     DAWN_ASSERT(mRecursionStackDepth == 0);
 }
 
 void DeviceMutex::Lock() {
-    RecursiveMutex::Lock();
+    RecursiveMutex::Lock(mPlatform);
     if (mRecursionStackDepth == 0) {
         mDefer.emplace();
     }
