@@ -1,6 +1,10 @@
 package androidx.webgpu
 
 public class StencilFaceState(
+    /**
+     * If set to @see CompareFunction.Undefined, defaults to @see
+     * CompareFunction.Always.
+     */
     @get:JvmName("getCompare")
     public var compare: CompareFunction = CompareFunction.Always,
     @get:JvmName("getFailOp")

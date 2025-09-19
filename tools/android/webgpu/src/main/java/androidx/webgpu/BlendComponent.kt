@@ -1,6 +1,9 @@
 package androidx.webgpu
 
 public class BlendComponent(
+    /**
+     * If set to @see BlendOperation.Undefined, defaults to @see BlendOperation.Add.
+     */
     @get:JvmName("getOperation")
     public var operation: BlendOperation = BlendOperation.Add,
     @get:JvmName("getSrcFactor")

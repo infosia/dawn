@@ -26,10 +26,10 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import json, os, sys
+import json, os, sys, re
 from collections import namedtuple, defaultdict
 from copy import deepcopy
-
+import yaml
 from generator_lib import Generator, run_generator, FileRender, GeneratorOutput
 
 ############################################################
@@ -791,8 +791,267 @@ def compute_wire_params(api_params, wire_json):
 # KOTLIN STUFF
 ############################################################
 
+TARGETED_CATEGORIES = [
+    'structure',
+    'enum',
+    'bitmask',
+    'callback function',
+    'function',
+    'object',
+    'constant',
+    'callback info',
+]
 
-def compute_kotlin_params(loaded_json, kotlin_json):
+def cleanup_doc_map(doc_map, by_category):
+  """Post-processes the documentation map to fix and validate cross-references."""
+  all_valid_names_normalized = set()
+  for cat in TARGETED_CATEGORIES:
+    for item in by_category.get(cat, []):
+      all_valid_names_normalized.add(item.name.CamelCase().lower())
+
+  enum_and_bitflag_names = set()
+  for cat in ('enum', 'bitmask'):
+    for item in by_category.get(cat, []):
+      enum_and_bitflag_names.add(item.name.CamelCase())
+
+  def clean_doc_string(doc):
+    if not doc:
+      return doc
+
+    references = re.findall(r'@see (\S+)', doc)
+    for ref in references:
+      is_valid = False
+      # If the docstring contains a C++-style scope resolution
+      # (e.g. ClassName::Function), convert it to Kotlin style.
+      if '::' in ref:
+        doc = doc.replace(ref, ref.replace('::', '.'))
+        continue
+
+      if ref.startswith('Constants.'):
+        continue
+
+      ref = ref.replace('.', '').replace(')', '')
+
+      # Check for hyphenated references, like 'my-struct-name'.
+      # Normalized by removing hyphens and checking against valid names.
+      if '-' in ref:
+        normalized_ref = ref.replace('-', '').lower()
+        is_valid = normalized_ref in all_valid_names_normalized
+      # Check for references prefixed with 'wgpu', like 'wgpuMyObject'.
+      elif ref.lower().startswith('wgpu'):
+        rest = ref[4:]
+        # A reference might be to an enum value, e.g., 'WGPUEnum_Value'.
+        # The check for '_' handles this case.
+        # Otherwise, the rest of the string is normalized and checked.
+        is_valid = '_' in rest or rest.lower() in all_valid_names_normalized
+      # If none of the above, assume it's a valid reference.
+      # This could be a simple type name like 'MyObject' that doesn't need
+      # special handling.
+      else:
+        is_valid = True
+
+      # If a reference is invalid, discard the entire doc string to avoid
+      # generating incorrect KDoc.
+      if not is_valid:
+        return ''
+
+    # Strip WGPU/wgpu prefixes from @see references.
+    doc = re.sub(r'@see (?:WGPU|wgpu)(\S+)', r'@see \1', doc)
+    # Convert @see references to enum members from C-style (Enum_Member) to dot-style
+    # (Enum.Member).
+    doc = re.sub(
+        r'@see (\w+)_(\w+)',
+        lambda m: f'@see {m.group(1)}.{m.group(2)}'
+        if m.group(1) in enum_and_bitflag_names
+        else m.group(0),
+        doc,
+    )
+    # Remove hyphens from @see references to make them valid identifiers.
+    doc = re.sub(r'@see (\S+-\S+)', lambda m: f"@see {m.group(1).replace('-', '')}", doc)
+    return doc
+
+  def recursive_clean(d):
+    if isinstance(d, dict):
+      for k, v in d.items():
+        d[k] = (
+            recursive_clean(v)
+            if isinstance(v, (dict, list))
+            else clean_doc_string(v)
+        )
+    elif isinstance(d, list):
+      return [recursive_clean(item) for item in d]
+    return d
+
+  recursive_clean(doc_map)
+  return doc_map
+
+
+def clean_raw_doc(doc, kdocs_blocklist=None, kdoc_replacements=None):
+  """Performs initial cleaning of a raw docstring from YAML."""
+  if not doc or doc.strip() == 'TODO':
+    return ''
+
+  for old, new in kdoc_replacements.items():
+    doc = doc.replace(old, new)
+
+  if any(sub in doc for sub in kdocs_blocklist):
+    return ''
+
+  doc = re.sub(r'WGPU_([A-Z][A-Z_]*)', r'Constants.\1', doc)
+  doc = re.sub(r'(?:[Ss]ee\s+)?@ref\s+(\S+)', r'@see \1', doc)
+
+  return doc.replace('TODO', '').replace('\n', ' ').strip()
+
+
+def build_doc_map(
+    by_category,
+    yml_data,
+    kdocs_blocklist=None,
+    kdoc_replacements=None,
+):
+  """Builds a nested documentation map by correlating API items (by_category)."""
+  if not yml_data:
+    return {}
+
+  doc_map = defaultdict(lambda: defaultdict(dict))
+
+  yaml_lookups = {
+      yaml_cat: {
+          item['name']: item for item in items if item and 'name' in item
+      }
+      for yaml_cat, items in yml_data.items()
+      if isinstance(items, list)
+  }
+
+  def find_in_yaml(yaml_cat, name):
+    lookup = yaml_lookups.get(yaml_cat, {})
+    # 1. Exact match first
+    if name in lookup:
+      return lookup[name]
+
+    # 2. Try removing callback suffixes
+    # (e.g., dawn.json's 'create_compute_pipeline_async_callback' matches yml's 'create_compute_pipeline_async')
+    suffixes_to_try = ['_callback_info', '_callback']
+    for suffix in suffixes_to_try:
+      if name.endswith(suffix):
+        trimmed_name = name[: -len(suffix)]
+        if trimmed_name in lookup:
+          return lookup[trimmed_name]
+    return None
+
+  def extract_named_docs(dict_list):
+    """Helper to extract {'name': doc} from a list of dicts (like members/args)."""
+    return {
+        item['name']: clean_raw_doc(
+            item.get('doc'), kdocs_blocklist, kdoc_replacements
+        )
+        for item in dict_list
+        if item and 'name' in item and 'doc' in item
+    }
+
+  # --- 2. Define Handlers for each Category ---
+  def process_common_doc(yaml_cat, item_name, yaml_item):
+    """Processes the top-level 'doc' key, common to most categories."""
+    if 'doc' in yaml_item:
+      doc_map[yaml_cat][item_name]['doc'] = clean_raw_doc(
+          yaml_item['doc'], kdocs_blocklist, kdoc_replacements
+      )
+
+  def process_constant(yaml_cat, item_name, yaml_item):
+    """Handler for 'constants', which have a unique, flat doc structure."""
+    if 'doc' in yaml_item:
+      # Constants are stored directly, not in a ['doc'] sub-dict
+      doc_map[yaml_cat][item_name] = clean_raw_doc(
+          yaml_item['doc'], kdocs_blocklist, kdoc_replacements
+      )
+
+  def process_struct(yaml_cat, item_name, yaml_item):
+    """Handler for 'structs'. Processes members."""
+    process_common_doc(yaml_cat, item_name, yaml_item)
+    if 'members' in yaml_item:
+      doc_map[yaml_cat][item_name]['members'] = extract_named_docs(
+          yaml_item['members']
+      )
+
+  def process_collection(yaml_cat, item_name, yaml_item):
+    """Handler for 'enums' and 'bitflags'. Processes entries."""
+    process_common_doc(yaml_cat, item_name, yaml_item)
+    if 'entries' in yaml_item:
+      doc_map[yaml_cat][item_name]['entries'] = extract_named_docs(
+          yaml_item['entries']
+      )
+
+  def process_function(yaml_cat, item_name, yaml_item):
+    """Handler for 'callbacks' and 'functions'. Processes args and returns."""
+    process_common_doc(yaml_cat, item_name, yaml_item)
+    item_docs = doc_map[yaml_cat][item_name]
+    if 'args' in yaml_item:
+      item_docs['args'] = extract_named_docs(yaml_item['args'])
+    if yaml_item.get('returns', {}).get('doc'):
+      item_docs['returns_doc'] = clean_raw_doc(
+          yaml_item['returns']['doc'], kdocs_blocklist, kdoc_replacements
+      )
+
+  def process_object(yaml_cat, item_name, yaml_item):
+    """Handler for 'objects'. Processes methods, args, and returns."""
+    process_common_doc(yaml_cat, item_name, yaml_item)
+    method_docs = defaultdict(dict)
+    for method in yaml_item.get('methods', []):
+      if not (method and 'name' in method):
+        continue
+      m_docs = method_docs[method['name']]
+      if 'doc' in method:
+        m_docs['doc'] = clean_raw_doc(
+            method['doc'], kdocs_blocklist, kdoc_replacements
+        )
+      if method.get('returns', {}).get('doc'):
+        m_docs['returns_doc'] = clean_raw_doc(
+            method['returns']['doc'], kdocs_blocklist, kdoc_replacements
+        )
+      if 'args' in method:
+        m_docs['args'] = extract_named_docs(method['args'])
+    if method_docs:
+      doc_map[yaml_cat][item_name]['methods'] = method_docs
+
+  # Map dawn.json categories to webgpu.yml categories
+  category_map = {
+      'structure': 'structs',
+      'enum': 'enums',
+      'bitmask': 'bitflags',
+      'callback function': 'callbacks',
+      'function': 'functions',
+      'object': 'objects',
+      'constant': 'constants',
+      'callback info': 'callbacks',
+  }
+  # --- 3. Map YAML Categories to Handlers ---
+  handler_map = {
+      'structs': process_struct,
+      'enums': process_collection,
+      'bitflags': process_collection,
+      'callbacks': process_function,
+      'functions': process_function,
+      'objects': process_object,
+      'constants': process_constant,
+  }
+
+  # --- 4. Main Processing Loop ---
+  for category, items in by_category.items():
+    yaml_category = category_map.get(category)
+    if not yaml_category or yaml_category not in handler_map:
+      continue
+    handler = handler_map[yaml_category]
+    for item in items:
+      item_name_snake = item.name.snake_case()
+      yaml_item = find_in_yaml(yaml_category, item_name_snake)
+      if yaml_item:
+        # Call the specific handler for this category
+        handler(yaml_category, item.name.get(), yaml_item)
+
+  return cleanup_doc_map(doc_map, by_category)
+
+
+def compute_kotlin_params(loaded_json, kotlin_json, yml_data=None):
     params_kotlin = parse_json(loaded_json, enabled_tags=['art'])
     params_kotlin['kotlin_package'] = kotlin_json['kotlin_package']
     params_kotlin['jni_primitives'] = kotlin_json['jni_primitives']
@@ -863,6 +1122,7 @@ def compute_kotlin_params(loaded_json, kotlin_json):
     for structure in by_category['structure']:
         for chain_root in structure.chain_roots:
             chain_children[chain_root.name.get()].append(structure)
+    params_kotlin['kdocs'] = build_doc_map(by_category, yml_data, kotlin_json['kdocs_blocklist'], kotlin_json['kdoc_replacements'])
     params_kotlin['chain_children'] = chain_children
     params_kotlin['kotlin_return'] = kotlin_return
     params_kotlin['include_method'] = include_method
@@ -1207,6 +1467,10 @@ class MultiGeneratorFromDawnJSON(Generator):
                             default=None,
                             type=str,
                             help='The KOTLIN JSON definition to use.')
+        parser.add_argument('--webgpu-yml',
+                            default=None,
+                            type=str,
+                            help='The WebGPU API documentation to use.')
         parser.add_argument(
             '--targets',
             required=True,
@@ -1230,6 +1494,11 @@ class MultiGeneratorFromDawnJSON(Generator):
         if args.kotlin_json:
             with open(args.kotlin_json) as f:
                 kotlin_json = json.loads(f.read())
+
+        yml_data = None
+        if args.webgpu_yml:
+            with open(args.webgpu_yml) as f:
+                yml_data = yaml.safe_load(f)
 
         renders = []
         imported_templates = []
@@ -1573,7 +1842,7 @@ class MultiGeneratorFromDawnJSON(Generator):
                            wire_params))
 
         if 'kotlin' in targets:
-            params_kotlin = compute_kotlin_params(loaded_json, kotlin_json)
+            params_kotlin = compute_kotlin_params(loaded_json, kotlin_json, yml_data)
             kt_file_path = params_kotlin['kotlin_package'].replace('.', '/')
             jni_name = params_kotlin['jni_name']
 
@@ -1634,7 +1903,7 @@ class MultiGeneratorFromDawnJSON(Generator):
                            [RENDER_PARAMS_BASE, params_kotlin]))
 
         if "jni" in targets:
-            params_kotlin = compute_kotlin_params(loaded_json, kotlin_json)
+            params_kotlin = compute_kotlin_params(loaded_json, kotlin_json, yml_data)
 
             imported_templates += [
                 "art/api_jni_types.cpp",

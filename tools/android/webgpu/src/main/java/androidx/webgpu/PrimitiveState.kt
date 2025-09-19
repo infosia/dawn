@@ -1,6 +1,10 @@
 package androidx.webgpu
 
 public class PrimitiveState(
+    /**
+     * If set to @see PrimitiveTopology.Undefined, defaults to @see
+     * PrimitiveTopology.TriangleList.
+     */
     @get:JvmName("getTopology")
     public var topology: PrimitiveTopology = PrimitiveTopology.TriangleList,
     @get:JvmName("getStripIndexFormat")

@@ -10,6 +10,9 @@ public class TextureViewDescriptor(
     public var mipLevelCount: Int = Constants.MIP_LEVEL_COUNT_UNDEFINED,
     public var baseArrayLayer: Int = 0,
     public var arrayLayerCount: Int = Constants.ARRAY_LAYER_COUNT_UNDEFINED,
+    /**
+     * If set to @see TextureAspect.Undefined, defaults to @see TextureAspect.All.
+     */
     @get:JvmName("getAspect")
     public var aspect: TextureAspect = TextureAspect.All,
     @get:JvmName("getUsage")
