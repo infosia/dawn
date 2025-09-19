@@ -252,8 +252,8 @@ copy("copy_index_js") {
   outputs = [ "$root_build_dir/index.js" ]
 }
 copy("copy_cts_js") {
-  sources = [ "$dawn_root/src/dawn/node/cts.js" ]
-  outputs = [ "$root_build_dir/cts.js" ]
+  sources = [ "$dawn_root/src/dawn/node/cts.cjs" ]
+  outputs = [ "$root_build_dir/cts.cjs" ]
 }
 
 shared_library("dawn_node") {
