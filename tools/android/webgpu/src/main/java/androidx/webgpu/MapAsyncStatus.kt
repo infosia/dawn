@@ -4,6 +4,9 @@ package androidx.webgpu
 public value class MapAsyncStatus(public val value: Int) {
     public companion object {
         public val Success: MapAsyncStatus = MapAsyncStatus(0x00000001)
+        /**
+         * See @ref CallbackStatuses.
+         */
         public val CallbackCancelled: MapAsyncStatus = MapAsyncStatus(0x00000002)
         public val Error: MapAsyncStatus = MapAsyncStatus(0x00000003)
         public val Aborted: MapAsyncStatus = MapAsyncStatus(0x00000004)

@@ -29,7 +29,7 @@
 import json, os, sys
 from collections import namedtuple, defaultdict
 from copy import deepcopy
-
+import yaml
 from generator_lib import Generator, run_generator, FileRender, GeneratorOutput
 
 ############################################################
@@ -301,7 +301,7 @@ class RecordMember(AnnotatedTypedMember):
             return self.type.any_member_requires_struct_defaulting
         elif self.type.category == "enum":
             return (self.type.hasUndefined
-                    and self.default_value not in [None, "undefined"])
+                and self.default_value not in [None, "undefined"])
         else:
             return False
 
@@ -791,8 +791,158 @@ def compute_wire_params(api_params, wire_json):
 # KOTLIN STUFF
 ############################################################
 
+############################################################
 
-def compute_kotlin_params(loaded_json, kotlin_json):
+def build_doc_map(by_category, yml_data):
+    """
+    Builds a nested documentation map by correlating API items (by_category)
+    with documentation data from a YAML file (yml_data).
+    """
+    if not yml_data:
+        return {}
+
+    doc_map = defaultdict(lambda: defaultdict(dict))
+
+    def clean_doc(doc):
+        """Returns an empty string for 'TODO' or the stripped docstring."""
+        if not doc or doc.strip() == 'TODO':
+            return ''
+        return doc.replace("TODO", "").replace("\n", " ").strip()
+
+    def find_in_yaml(yaml_list, name):
+        # 1. Exact match first
+        for item in yaml_list:
+            if item and item.get('name') == name:
+                return item
+
+        # 2. Try removing callback suffixes
+        # (e.g., dawn.json's 'create_compute_pipeline_async_callback' matches yml's 'create_compute_pipeline_async')
+        suffixes_to_try = ["_callback_info", "_callback"]
+        for suffix in suffixes_to_try:
+            if name.endswith(suffix):
+                trimmed_name = name[:-len(suffix)]
+                for item in yaml_list:
+                    if item and item.get('name') == trimmed_name:
+                        return item
+        return None
+
+    def extract_named_docs(dict_list):
+        """Helper to extract {'name': doc} from a list of dicts (like members/args)."""
+        docs = {}
+        for item in dict_list:
+            if item and 'name' in item and 'doc' in item:
+                docs[item['name']] = clean_doc(item.get('doc'))
+        return docs
+
+    def process_common_doc(yaml_cat, item_name, yaml_item):
+        """Processes the top-level 'doc' key, common to most categories."""
+        if 'doc' in yaml_item:
+            item_docs = doc_map[yaml_cat][item_name]
+            item_docs['doc'] = clean_doc(yaml_item['doc'])
+
+    def process_constant(yaml_cat, item_name, yaml_item):
+        """Handler for 'constants', which have a unique, flat doc structure."""
+        if 'doc' in yaml_item:
+            # Constants are stored directly, not in a ['doc'] sub-dict
+            doc_map[yaml_cat][item_name] = clean_doc(yaml_item['doc'])
+
+    def process_struct(yaml_cat, item_name, yaml_item):
+        """Handler for 'structs'. Processes members."""
+        process_common_doc(yaml_cat, item_name, yaml_item)
+        member_docs = extract_named_docs(yaml_item.get('members', []))
+        if member_docs:
+            doc_map[yaml_cat][item_name]['members'] = member_docs
+
+    def process_collection(yaml_cat, item_name, yaml_item):
+        """Handler for 'enums' and 'bitflags'. Processes entries."""
+        process_common_doc(yaml_cat, item_name, yaml_item)
+        entry_docs = extract_named_docs(yaml_item.get('entries', []))
+        if entry_docs:
+            doc_map[yaml_cat][item_name]['entries'] = entry_docs
+
+    def process_function(yaml_cat, item_name, yaml_item):
+        """Handler for 'callbacks' and 'functions'. Processes args and returns."""
+        process_common_doc(yaml_cat, item_name, yaml_item)
+        item_docs = doc_map[yaml_cat][item_name]
+
+        arg_docs = extract_named_docs(yaml_item.get('args', []))
+        if arg_docs:
+            item_docs['args'] = arg_docs
+
+        if yaml_cat == 'functions' and yaml_item.get('returns', {}).get('doc'):
+            item_docs['returns_doc'] = clean_doc(yaml_item['returns']['doc'])
+
+    def process_object(yaml_cat, item_name, yaml_item):
+        """Handler for 'objects'. Processes methods, args, and returns."""
+        process_common_doc(yaml_cat, item_name, yaml_item)
+
+        all_method_docs = defaultdict(dict)
+        for method in yaml_item.get('methods', []):
+            if not (method and 'name' in method):
+                continue
+
+            method_name = method['name']
+            method_doc_entry = all_method_docs[method_name] # Get the dict for this method
+
+            if 'doc' in method:
+                method_doc_entry['doc'] = clean_doc(method['doc'])
+
+            if method.get('returns', {}).get('doc'):
+                method_doc_entry['returns_doc'] = clean_doc(method['returns']['doc'])
+
+            arg_docs = extract_named_docs(method.get('args', []))
+            if arg_docs:
+                method_doc_entry['args'] = arg_docs
+
+        if all_method_docs:
+            doc_map[yaml_cat][item_name]['methods'] = all_method_docs
+
+
+    # Map dawn.json categories to webgpu.yml categories
+    category_map = {
+        'structure': 'structs',
+        'enum': 'enums',
+        'bitmask': 'bitflags',
+        'callback function': 'callbacks',
+        'function': 'functions',
+        'object': 'objects',
+        'constant': 'constants',
+        'callback info': 'callbacks',
+    }
+
+    handler_map = {
+        'structs': process_struct,
+        'enums': process_collection,
+        'bitflags': process_collection,
+        'callbacks': process_function,
+        'functions': process_function,
+        'objects': process_object,
+        'constants': process_constant,
+    }
+
+    for category, yaml_category in category_map.items():
+        # Check if we have data in both sources AND a handler for it
+        if (
+            category not in by_category
+            or yaml_category not in yml_data
+            or yaml_category not in handler_map
+        ):
+            continue
+
+        yaml_list = yml_data[yaml_category]
+        handler = handler_map[yaml_category]
+
+        for item in by_category[category]:
+            item_name_snake = item.name.snake_case()
+            yaml_item = find_in_yaml(yaml_list, item_name_snake)
+            if yaml_item:
+                # Call the specific handler for this category
+                handler(yaml_category, item.name.get(), yaml_item)
+
+    return doc_map
+
+
+def compute_kotlin_params(loaded_json, kotlin_json, yml_data=None):
     params_kotlin = parse_json(loaded_json, enabled_tags=['art'])
     params_kotlin['kotlin_package'] = kotlin_json['kotlin_package']
     params_kotlin['jni_primitives'] = kotlin_json['jni_primitives']
@@ -829,7 +979,7 @@ def compute_kotlin_params(loaded_json, kotlin_json):
                     return container_type
                 if ((method.returns == None
                      or method.returns.type.name.get() == 'status')
-                        and argument.type.category == 'structure'):
+                    and argument.type.category == 'structure'):
                     return argument
 
         # Return values are not treated as optional to keep the Kotlin API simple.
@@ -863,6 +1013,7 @@ def compute_kotlin_params(loaded_json, kotlin_json):
     for structure in by_category['structure']:
         for chain_root in structure.chain_roots:
             chain_children[chain_root.name.get()].append(structure)
+    params_kotlin['kdocs'] = build_doc_map(by_category, yml_data)
     params_kotlin['chain_children'] = chain_children
     params_kotlin['kotlin_return'] = kotlin_return
     params_kotlin['include_method'] = include_method
@@ -1106,14 +1257,14 @@ def is_wire_serializable(type):
     # Function pointers, callback functions, and "void *" types (i.e. userdata) cannot
     # be serialized.
     return (type.category != 'function pointer'
-            and type.category != 'callback info'
-            and type.category != 'callback function'
-            and type.name.get() != 'void *')
+        and type.category != 'callback info'
+        and type.category != 'callback function'
+        and type.name.get() != 'void *')
 
 
 def is_enum_value_proxy(value):
     return ('deprecated' in value.json_data.get('tags', [])
-            and value.json_data.get('enum_value_conflict', False))
+        and value.json_data.get('enum_value_conflict', False))
 
 
 def unreachable_code(msg="unreachable_code"):
@@ -1207,6 +1358,10 @@ class MultiGeneratorFromDawnJSON(Generator):
                             default=None,
                             type=str,
                             help='The KOTLIN JSON definition to use.')
+        parser.add_argument('--webgpu-yml',
+                            default=None,
+                            type=str,
+                            help='The WebGPU API documentation to use.')
         parser.add_argument(
             '--targets',
             required=True,
@@ -1230,6 +1385,11 @@ class MultiGeneratorFromDawnJSON(Generator):
         if args.kotlin_json:
             with open(args.kotlin_json) as f:
                 kotlin_json = json.loads(f.read())
+
+        yml_data = None
+        if args.webgpu_yml:
+            with open(args.webgpu_yml) as f:
+                yml_data = yaml.safe_load(f)
 
         renders = []
         imported_templates = []
@@ -1573,7 +1733,7 @@ class MultiGeneratorFromDawnJSON(Generator):
                            wire_params))
 
         if 'kotlin' in targets:
-            params_kotlin = compute_kotlin_params(loaded_json, kotlin_json)
+            params_kotlin = compute_kotlin_params(loaded_json, kotlin_json, yml_data)
             kt_file_path = params_kotlin['kotlin_package'].replace('.', '/')
             jni_name = params_kotlin['jni_name']
 
@@ -1634,7 +1794,7 @@ class MultiGeneratorFromDawnJSON(Generator):
                            [RENDER_PARAMS_BASE, params_kotlin]))
 
         if "jni" in targets:
-            params_kotlin = compute_kotlin_params(loaded_json, kotlin_json)
+            params_kotlin = compute_kotlin_params(loaded_json, kotlin_json, yml_data)
 
             imported_templates += [
                 "art/api_jni_types.cpp",
