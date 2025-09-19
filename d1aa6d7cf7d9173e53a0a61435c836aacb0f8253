@@ -69,6 +69,23 @@
       "parentUuid": "1798ff4f_0cccc1d8",
       "revId": "d1aa6d7cf7d9173e53a0a61435c836aacb0f8253",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5331307_7350e664",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3578208
+      },
+      "writtenOn": "2025-09-19T07:27:50Z",
+      "side": 1,
+      "message": "Patchset 7 only removes the whitespace formatting error. I will try debug the Microsoft Driver issue when I have time for it.",
+      "revId": "d1aa6d7cf7d9173e53a0a61435c836aacb0f8253",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
