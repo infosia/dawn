@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4afabdb_5a11cf68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-09-19T00:49:45Z",
+      "side": 1,
+      "message": "Comments:\n\n* There are 2 streams. The command stream and the content stream\n\n  This is from initial discussion of a common format for various tools @F2F.\n  People seem to want JSON plus a binary blob for binary data. In particular\n  they want to be able to hand edit the JSON after capture, before replay.\n\n  So, the 2 streams allows putting the big data in a separate file though\n  maybe that\u0027s premature.\n\n* It\u0027s just using istream and ostream currently\n\n  Ideally it would buffer and chunk\n\n* It loads the entire capture into memory\n\n  This less than ideal but it\u0027s easy to get started\n\n* I expect we need options for low-mem usage\n\n  Default to capture in memory but allow capturing\n  to file. What I mean here, we saw the demo of\n  WebGPUReconstruct. It was running in JS which means\n  it could only do queued/async copies to new buffers to capture\n  contents. Vs, the *next* PR is effectively doing synchronous\n  mapping for buffer contents. This would be slower\n  so the default should probably be buffer/texture copies\n  but if you\u0027re trying to capture something larger and\n  run out of memory it would be good to have the option\n  to sync stream to a file like the next PR is doing now.\n\nQuestions:\n\n* Should the Replay use the C or CPP API?\n\n  currently it uses the CPP API\n\n* How much should I separate from dawn?\n\n  This is related the previous question. If I separate from dawn and just\n  use webgpu.h then the code is reusable. But, if I separate from dawn\n  I can\u0027t capture dawn specific extensions.\n\n* Should the map of ids to Objects in CaptureContext use something other than void*?\n\n  currently the map of ids to Objects is just a ids to pointers. Those pointers\n  aren\u0027t used except to get an id of some existing object. Objects will need\n  to be removed when destroyed but otherwise this seems fine?\n\n* Should the capture code share serialization with the replay code.\n\n  In dawn there are things like DAWN_SERIALIZABLE that code generate\n  both the serialization and deserialization code. It\u0027s good because\n  things don\u0027t get out of sync. But, if we\u0027re going to do some common\n  format, or protobufs, then it\u0027s not really important? Or maybe if\n  we\u0027re going to get to first usable without a common format we should\n  use something like DAWN_SERIALIZABLE for now?\n\n* Should the code use 2 types for the 2 streams?\n\n  The code is currently using 2 streams in CaptureContext and in Capture,\n  one for commands and one for content. It\u0027s not likely but you could\n  accidentally use the wrong stream. Should I make CommandStream and ContentStream\n  types so that it\u0027s less likely to use the wrong one? The change to use\n  two streams as at the last moment and the content stream is only referenced\n  in one place. But, ContentStream is rarely used (buffer and texture data only)",
+      "revId": "37ad54600589c20b7b44fb3c9010a3fd25afe8ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
