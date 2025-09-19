@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4a7bc903_e528db66",
+        "filename": "unsafe_buffers_paths.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-19T18:14:17Z",
+      "side": 1,
+      "message": "nit. Is this the right license for us? Also 2025?",
+      "range": {
+        "startLine": 2,
+        "startChar": 2,
+        "endLine": 2,
+        "endChar": 43
+      },
+      "revId": "ff3395a18d0991408adc88b6f19ce4fd2ce55c78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "697a1099_958bc9d5",
         "filename": "unsafe_buffers_paths.txt",
         "patchSetId": 2
