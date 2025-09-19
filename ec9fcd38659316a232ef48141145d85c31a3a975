@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "84d7cfae_51f3cdeb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-09-19T11:04:40Z",
+      "side": 1,
+      "message": "nit: duplication",
+      "range": {
+        "startLine": 12,
+        "startChar": 18,
+        "endLine": 12,
+        "endChar": 24
+      },
+      "revId": "ec9fcd38659316a232ef48141145d85c31a3a975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c90733ce_e0228d9d",
@@ -48,6 +71,30 @@
       "writtenOn": "2025-09-18T21:17:56Z",
       "side": 1,
       "message": "This is technically a misnomer since we\u0027re running one a suite with WARP in addition to SwiftShader. I think it\u0027s okay to leave for now, though - we can consider renaming in the future.",
+      "range": {
+        "startLine": 107,
+        "startChar": 20,
+        "endLine": 107,
+        "endChar": 23
+      },
+      "revId": "ec9fcd38659316a232ef48141145d85c31a3a975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "744140f7_f3f16441",
+        "filename": "infra/specs/waterfalls.pyl",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-09-19T11:04:40Z",
+      "side": 1,
+      "message": "I think just `sw` (for SoftWare) works?",
+      "parentUuid": "f1d4277e_c4bb3305",
       "range": {
         "startLine": 107,
         "startChar": 20,
