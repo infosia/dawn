@@ -6,3 +6,12 @@ public fun interface Proc {
     @JvmName("on")
     public fun on();
 }
+
+
+internal class ProcRunnable(
+private val callback: Proc,
+) : Runnable {
+    override fun run() {
+        callback.on()
+    }
+}

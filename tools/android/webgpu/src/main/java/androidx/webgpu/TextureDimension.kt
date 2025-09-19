@@ -3,6 +3,9 @@ package androidx.webgpu
 @JvmInline
 public value class TextureDimension(public val value: Int) {
     public companion object {
+        /**
+         * Indicates no value is passed for this argument.
+         */
         public val Undefined: TextureDimension = TextureDimension(0x00000000)
         public val _1D: TextureDimension = TextureDimension(0x00000001)
         public val _2D: TextureDimension = TextureDimension(0x00000002)
