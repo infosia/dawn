@@ -50,6 +50,24 @@
       "message": "nit: can assign `Invalid \u003d 0,` to make it more explicit",
       "revId": "37ad54600589c20b7b44fb3c9010a3fd25afe8ad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3c05f67_0ce054b3",
+        "filename": "src/dawn/replay/Serialization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-09-20T00:56:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "070771a3_732a8a46",
+      "revId": "37ad54600589c20b7b44fb3c9010a3fd25afe8ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
