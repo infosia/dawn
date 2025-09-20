@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88b13893_9cefdf2b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-09-20T01:48:55Z",
+      "side": 1,
+      "message": "Thank you all for the comments and let\u0027s give a try with the current solution. I didn\u0027t repro this issue with any other GPU vendors than Qualcomm. And if this is Qualcomm only, it may crash after https://chromium-review.googlesource.com/c/chromium/src/+/6896137 is in any release channel and Qualcomm begins to roll out 31.0.117.0 driver (The latest public version is still 31.0.112.0 according to https://softwarecenter.qualcomm.com/catalog/item/Windows_Graphics_Driver). \nAnyway, please help to keep an eye on the crashes, thanks!",
+      "revId": "7819d9a5cc608e77a5f6501574fa319f458b9abc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
