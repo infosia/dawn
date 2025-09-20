@@ -1930,7 +1930,10 @@ void Validator::CheckType(const core::type::Type* root,
                     return true;
                 }
 
+                uint32_t max_member_align = 0;
                 for (auto* member : str->Members()) {
+                    max_member_align = std::max(max_member_align, member->Align());
+
                     if (member->RowMajor()) {
                         diag() << "Row major annotation not allowed on structures";
                         return false;
@@ -1950,6 +1953,22 @@ void Validator::CheckType(const core::type::Type* root,
                         diag() << "struct member " << member->Index() << " cannot have void type";
                         return false;
                     }
+                    if (member->Align() == 0) {
+                        diag() << "struct member must not have an alignment of 0";
+                        return false;
+                    }
+                    if (member->Align() % member->Type()->Align() != 0) {
+                        diag() << "struct member alignment (" << member->Align()
+                               << ") must be divisible by type alignment ("
+                               << member->Type()->Align() << ")";
+                        return false;
+                    }
+                }
+                if (str->Align() != max_member_align) {
+                    diag() << "struct must have an alignment matching the maximum member "
+                              "alignment. Got: "
+                           << str->Align() << ", expected: " << max_member_align;
+                    return false;
                 }
                 return true;
             },
