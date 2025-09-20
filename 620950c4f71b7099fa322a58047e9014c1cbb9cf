@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "450f30af_38a35967",
+        "filename": "src/dawn/node/binding/Converter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-20T00:15:06Z",
+      "side": 1,
+      "message": "Same problem as in the Chromium CL, this narrowing cast is invalid.\n\nHere, validation and conversion happen at the same time, so this can be more straightforward, something like:\n\n```cpp\nif (!Convert(out.r, in[0])) return false;\nif (!Convert(out.g, in[1])) return false;\nif (!Convert(out.b, in[2])) return false;\nif (!Convert(out.a, in[3])) return false;\nreturn true;\n```\n\n(It would be nice if it were like that in Chromium too, but it\u0027s not a very easy refactor.)",
+      "range": {
+        "startLine": 702,
+        "startChar": 38,
+        "endLine": 702,
+        "endChar": 62
+      },
+      "revId": "620950c4f71b7099fa322a58047e9014c1cbb9cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
