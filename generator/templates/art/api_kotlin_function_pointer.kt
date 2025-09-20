@@ -25,6 +25,7 @@
 //* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 //* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package {{ kotlin_package }}
+
 {% from 'art/api_kotlin_types.kt' import kotlin_declaration with context %}
 
 {% set callbackName = 'on' + function_pointer.name.chunks[:-1] | map('title') | join %}
@@ -36,4 +37,22 @@ public fun interface {{ function_pointer.name.CamelCase() }} {
     {%- for arg in kotlin_record_members(function_pointer.arguments) -%}
         {{ as_varName(arg.name) }}: {{ kotlin_declaration(arg) }},{{ ' ' }}
     {%- endfor -%});
+}
+
+{% set args_list = kotlin_record_members(function_pointer.arguments) | list %}
+
+internal class {{ function_pointer.name.CamelCase() }}Runnable(
+private val callback: {{ function_pointer.name.CamelCase() }},
+{%for arg in args_list %}
+    private val {{ as_varName(arg.name) }}: {{ kotlin_declaration(arg) }}{{ ','
+    if not loop.last }}
+{%endfor %}
+) : Runnable {
+    override fun run() {
+        callback.{{ callbackName }}(
+            {%- for arg in args_list -%}
+            {{ as_varName(arg.name) }}{{ ', ' if not loop.last }}
+            {%- endfor -%}
+        )
+    }
 }
