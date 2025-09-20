@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9a941e5_67f52cb3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-20T01:36:36Z",
+      "side": 1,
+      "message": "I think it\u0027s probably fine. Any CL can turn out to be crashy, our rollout process is supposed to catch them. It seems probably unsound to continue past this point anyway if this fails, so making it a CHECK makes sense.\n\nThat said, Chromium has `base::debug::DumpWithoutCrashing` for this purpose. If you want to be sure we won\u0027t regress, you could wire that through `DawnPlatform` and use it here.",
+      "parentUuid": "e978ffa4_1d0a0884",
+      "revId": "0ad26e1571472550a86e4d47943c9ec6cf978e34",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b441ae17_185a0728",
