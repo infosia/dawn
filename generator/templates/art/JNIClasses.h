@@ -38,8 +38,11 @@ class JNIClasses {
          static JNIClasses* getInstance(JNIEnv* env);
         {% for entity in has_kotlin_classes %}
             jclass {{ entity.name.camelCase() }};
+            {%if entity.category == 'callback function' %}
+                jclass {{ entity.name.camelCase() }}Runnable;
+            {%endif %}
         {% endfor %}
-
+        jclass executor;
     private:
         JNIClasses(JNIEnv *env);
 };

@@ -38,6 +38,7 @@
 #include "dawn/common/Log.h"
 #include "JNIClasses.h"
 #include "JNIContext.h"
+#include <android/log.h>
 
 // Converts Kotlin objects representing Dawn structures into native structures that can be passed
 // into the native Dawn API.
@@ -170,6 +171,10 @@ jobject ToKotlin(JNIEnv* env, const WGPUStringView* s) {
                 CallGetter(env, getter, obj, &kotlinRecord.{{as_varName(member.name)}});
             }
         {% endfor %}
+        {% if structure.category == 'callback info' %}
+                jmethodID getter = env->GetMethodID(clz, "getExecutor", "()Ljava/util/concurrent/Executor;");
+                CallGetter(env, getter, obj, &kotlinRecord.executor);
+        {% endif %}
 
         //* Fill all struct members from the Kotlin record.
         ConvertInternal(c, kotlinRecord, converted);
