@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b188970_319b369d",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1933,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-20T15:18:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be6ed34d_c53efa65",
+      "revId": "b315ee6aef68aa8882cf00ff8b86c0249d1644b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed154678_644f82e5",
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "Should be `\u003d\u003d 0 || member-\u003eAlign() % Type-\u003eAlign() !\u003d 0`",
       "parentUuid": "ed154678_644f82e5",
+      "revId": "b315ee6aef68aa8882cf00ff8b86c0249d1644b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "981e13bb_e6bfe380",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1954,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-20T15:18:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3c1b17f_963b5fe5",
       "revId": "b315ee6aef68aa8882cf00ff8b86c0249d1644b4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
