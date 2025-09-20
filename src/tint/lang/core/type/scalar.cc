@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/core/type/scalar.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::Scalar);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::Scalar, "ty::Scalar");
 
 namespace tint::core::type {
 

@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/core/constant/string.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::String);
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::String, "const::String");
 
 namespace tint::core::constant {
 

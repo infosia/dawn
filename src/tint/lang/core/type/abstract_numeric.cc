@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/core/type/abstract_numeric.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::AbstractNumeric);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::AbstractNumeric, "ty::ANumeric");
 
 namespace tint::core::type {
 

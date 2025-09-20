@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/wgsl/ast/literal_expression.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::LiteralExpression);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::LiteralExpression, "ast::LiteralExpression");
 
 namespace tint::ast {
 

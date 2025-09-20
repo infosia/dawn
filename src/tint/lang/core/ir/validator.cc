@@ -1906,8 +1906,8 @@ void Validator::CheckType(const core::type::Type* root,
     }
 
     if (!capabilities_.Contains(Capability::kAllowNonCoreTypes)) {
-        // Check for core types, which are the only types declared in the `tint::core` namespace.
-        if (!std::string_view(root->TypeInfo().name).starts_with("tint::core")) {
+        // Check for core types, which are the only types declared in the `ty::` namespace.
+        if (!std::string_view(root->TypeInfo().name).starts_with("ty::")) {
             diag() << "non-core types not allowed in core IR";
             return;
         }

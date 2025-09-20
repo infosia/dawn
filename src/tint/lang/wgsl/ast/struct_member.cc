@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::StructMember);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::StructMember, "ast::StructMember");
 
 namespace tint::ast {
 

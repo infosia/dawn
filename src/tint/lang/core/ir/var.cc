@@ -33,7 +33,7 @@
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/utils/ice/ice.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Var);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Var, "ir::Var");
 
 namespace tint::core::ir {
 

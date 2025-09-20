@@ -32,7 +32,7 @@
 //! @cond Doxygen_Suppress
 // Doxygen gets confused with tint::ast::Extension and tint::wgsl::Extension
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::Extension);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::Extension, "ast::Extension");
 
 namespace tint::ast {
 

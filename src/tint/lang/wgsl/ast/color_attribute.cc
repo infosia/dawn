@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::ColorAttribute);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::ColorAttribute, "ast::ColorAttribute");
 
 namespace tint::ast {
 

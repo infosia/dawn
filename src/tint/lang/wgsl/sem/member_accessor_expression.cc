@@ -30,8 +30,8 @@
 
 #include <utility>
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::StructMemberAccess);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::Swizzle);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::StructMemberAccess, "sem::StructMemberAccess");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::Swizzle, "sem::Swizzle");
 
 namespace tint::sem {
 

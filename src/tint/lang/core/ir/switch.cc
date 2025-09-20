@@ -33,7 +33,7 @@
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/utils/ice/ice.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Switch);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Switch, "ir::Switch");
 
 namespace tint::core::ir {
 

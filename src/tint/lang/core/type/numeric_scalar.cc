@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/core/type/numeric_scalar.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::NumericScalar);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::NumericScalar, "ty::NumericScalar");
 
 namespace tint::core::type {
 

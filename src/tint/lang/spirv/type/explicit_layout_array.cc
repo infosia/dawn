@@ -33,7 +33,7 @@
 #include "src/tint/utils/math/hash.h"
 #include "src/tint/utils/text/string_stream.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::spirv::type::ExplicitLayoutArray);
+TINT_INSTANTIATE_TYPEINFO(tint::spirv::type::ExplicitLayoutArray, "spirv::ExplicitLayoutArray");
 
 namespace tint::spirv::type {
 

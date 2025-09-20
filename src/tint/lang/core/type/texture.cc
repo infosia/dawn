@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/core/type/texture.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::Texture);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::Texture, "ty::Texture");
 
 namespace tint::core::type {
 

@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::LocationAttribute);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::LocationAttribute, "ast::LocationAttribute");
 
 namespace tint::ast {
 

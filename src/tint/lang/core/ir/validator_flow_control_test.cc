@@ -99,7 +99,7 @@ TEST_F(IR_ValidatorTest, Discard_RootBlock) {
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
-                    R"(:2:3 error: discard: root block: invalid instruction: tint::core::ir::Discard
+                    R"(:2:3 error: discard: root block: invalid instruction: ir::Discard
   discard
   ^^^^^^^
 )")) << res.Failure();
@@ -157,7 +157,7 @@ TEST_F(IR_ValidatorTest, Terminate_RootBlock) {
     EXPECT_THAT(
         res.Failure().reason,
         testing::HasSubstr(
-            R"(:2:3 error: terminate_invocation: root block: invalid instruction: tint::core::ir::TerminateInvocation
+            R"(:2:3 error: terminate_invocation: root block: invalid instruction: ir::TerminateInvocation
   terminate_invocation
   ^^^^^^^^^^^^^^^^^^^^
 )")) << res.Failure();
@@ -204,9 +204,8 @@ TEST_F(IR_ValidatorTest, If_RootBlock) {
 
     auto res = ir::Validate(mod, core::ir::Capabilities{core::ir::Capability::kAllowOverrides});
     ASSERT_NE(res, Success);
-    EXPECT_THAT(
-        res.Failure().reason,
-        testing::HasSubstr(R"(:2:3 error: if: root block: invalid instruction: tint::core::ir::If
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr(R"(:2:3 error: if: root block: invalid instruction: ir::If
   if true [t: $B2] {  # if_1
   ^^^^^^^^^^^^^^^^
 )")) << res.Failure();
@@ -347,7 +346,7 @@ TEST_F(IR_ValidatorTest, Loop_RootBlock) {
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
-                    R"(:2:3 error: loop: root block: invalid instruction: tint::core::ir::Loop
+                    R"(:2:3 error: loop: root block: invalid instruction: ir::Loop
   loop [b: $B2] {  # loop_1
   ^^^^^^^^^^^^^
 )")) << res.Failure();
@@ -450,7 +449,7 @@ TEST_F(IR_ValidatorTest, Switch_RootBlock) {
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
-                    R"(:2:3 error: switch: root block: invalid instruction: tint::core::ir::Switch
+                    R"(:2:3 error: switch: root block: invalid instruction: ir::Switch
   switch 1i [c: (default, $B2)] {  # switch_1
   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 )")) << res.Failure();
@@ -2059,7 +2058,7 @@ TEST_F(IR_ValidatorTest, Return_RootBlock) {
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
-                    R"(:2:3 error: return: root block: invalid instruction: tint::core::ir::Return
+                    R"(:2:3 error: return: root block: invalid instruction: ir::Return
   ret
   ^^^
 )")) << res.Failure();
@@ -2120,10 +2119,9 @@ TEST_F(IR_ValidatorTest, Unreachable_RootBlock) {
     mod.root_block->Append(b.Unreachable());
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
-    EXPECT_THAT(
-        res.Failure().reason,
-        testing::HasSubstr(
-            R"(:2:3 error: unreachable: root block: invalid instruction: tint::core::ir::Unreachable
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr(
+                    R"(:2:3 error: unreachable: root block: invalid instruction: ir::Unreachable
   unreachable
   ^^^^^^^^^^^
 )")) << res.Failure();

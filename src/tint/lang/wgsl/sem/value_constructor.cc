@@ -29,7 +29,7 @@
 
 #include <utility>
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::ValueConstructor);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::ValueConstructor, "sem::ValueConstructor");
 
 namespace tint::sem {
 

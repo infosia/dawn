@@ -31,7 +31,7 @@
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/utils/ice/ice.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::spirv::ir::CopyLogical);
+TINT_INSTANTIATE_TYPEINFO(tint::spirv::ir::CopyLogical, "spirv::CopyLogical");
 
 namespace tint::spirv::ir {
 

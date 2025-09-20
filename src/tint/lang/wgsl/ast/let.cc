@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::Let);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::Let, "ast::Let");
 
 namespace tint::ast {
 

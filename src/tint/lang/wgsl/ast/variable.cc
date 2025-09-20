@@ -30,7 +30,7 @@
 #include "src/tint/lang/wgsl/ast/group_attribute.h"
 #include "src/tint/lang/wgsl/ast/templated_identifier.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::Variable);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::Variable, "ast::Variable");
 
 namespace tint::ast {
 

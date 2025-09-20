@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::WhileStatement);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::WhileStatement, "ast::WhileStatement");
 
 namespace tint::ast {
 

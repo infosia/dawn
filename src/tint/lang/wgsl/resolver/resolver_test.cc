@@ -2078,7 +2078,7 @@ TEST_F(ResolverDeathTest, ASTNodeNotReached) {
             b.Ident("ident");
             Resolver(&b, {}).Resolve();
         },
-        "internal compiler error: AST node 'tint::ast::Identifier' was not reached by the "
+        "internal compiler error: AST node 'ast::Identifier' was not reached by the "
         "resolver");
 }
 
@@ -2091,7 +2091,7 @@ TEST_F(ResolverDeathTest, ASTNodeReachedTwice) {
             b.GlobalVar("b", b.ty.i32(), core::AddressSpace::kPrivate, expr);
             Resolver(&b, {}).Resolve();
         },
-        "internal compiler error: AST node 'tint::ast::IntLiteralExpression' was encountered twice "
+        "internal compiler error: AST node 'ast::IntLiteralExpression' was encountered twice "
         "in the same AST of a Program");
 }
 

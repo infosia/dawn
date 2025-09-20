@@ -33,7 +33,7 @@
 #include "src/tint/utils/math/hash.h"
 #include "src/tint/utils/text/string_stream.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::Vector);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::Vector, "ty::Vector");
 
 namespace tint::core::type {
 

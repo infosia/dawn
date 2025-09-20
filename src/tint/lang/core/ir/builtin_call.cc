@@ -29,7 +29,7 @@
 
 #include <utility>
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::BuiltinCall);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::BuiltinCall, "ir::BuiltinCall");
 
 namespace tint::core::ir {
 

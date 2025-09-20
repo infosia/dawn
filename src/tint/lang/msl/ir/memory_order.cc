@@ -30,7 +30,7 @@
 #include "src/tint/lang/core/constant/value.h"
 #include "src/tint/utils/rtti/castable.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::msl::ir::MemoryOrder);
+TINT_INSTANTIATE_TYPEINFO(tint::msl::ir::MemoryOrder, "msl::MemoryOrder");
 
 namespace tint::msl::ir {
 

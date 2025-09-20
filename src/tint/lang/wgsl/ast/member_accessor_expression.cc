@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::MemberAccessorExpression);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::MemberAccessorExpression, "ast::MemberAccessorExpression");
 
 namespace tint::ast {
 

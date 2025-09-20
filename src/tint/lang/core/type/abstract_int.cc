@@ -30,7 +30,7 @@
 #include "src/tint/lang/core/type/manager.h"
 #include "src/tint/utils/math/hash.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::AbstractInt);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::AbstractInt, "ty::AInt");
 
 namespace tint::core::type {
 

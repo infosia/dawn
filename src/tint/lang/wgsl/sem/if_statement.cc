@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/if_statement.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::IfStatement);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::IfStatement, "sem::IfStatement");
 
 namespace tint::sem {
 

@@ -126,7 +126,7 @@ TEST_F(IR_ValidatorTest, RootBlock_NonVar) {
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
-                    R"(:2:3 error: loop: root block: invalid instruction: tint::core::ir::Loop
+                    R"(:2:3 error: loop: root block: invalid instruction: ir::Loop
   loop [b: $B2] {  # loop_1
   ^^^^^^^^^^^^^
 )")) << res.Failure();
@@ -137,9 +137,8 @@ TEST_F(IR_ValidatorTest, RootBlock_Let) {
 
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
-    EXPECT_THAT(
-        res.Failure().reason,
-        testing::HasSubstr(R"(:2:12 error: let: root block: invalid instruction: tint::core::ir::Let
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr(R"(:2:12 error: let: root block: invalid instruction: ir::Let
   %a:f32 = let 1.0f
            ^^^
 )")) << res.Failure();
@@ -157,10 +156,9 @@ TEST_F(IR_ValidatorTest, RootBlock_Construct) {
 
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
-    EXPECT_THAT(
-        res.Failure().reason,
-        testing::HasSubstr(
-            R"(:2:18 error: construct: root block: invalid instruction: tint::core::ir::Construct
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr(
+                    R"(:2:18 error: construct: root block: invalid instruction: ir::Construct
   %1:vec2<f32> = construct 1.0f, 2.0f
                  ^^^^^^^^^
 )")) << res.Failure();
@@ -1049,8 +1047,8 @@ TEST_F(IR_ValidatorTest, Instruction_AppendedDead) {
     auto arrows = std::string(addr.length(), '^');
 
     std::string expected = R"(:3:5 error: var: destroyed instruction found in instruction list
-    <destroyed tint::core::ir::Var $ADDRESS>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^$ARROWS^
+    <destroyed ir::Var $ADDRESS>
+    ^^^^^^^^^^^^^^^^^^^$ARROWS^
 
 :2:3 note: in block
   $B1: {
@@ -1059,7 +1057,7 @@ TEST_F(IR_ValidatorTest, Instruction_AppendedDead) {
 note: # Disassembly
 %my_func = func():void {
   $B1: {
-    <destroyed tint::core::ir::Var $ADDRESS>
+    <destroyed ir::Var $ADDRESS>
     ret
   }
 }
@@ -1557,10 +1555,9 @@ TEST_F(IR_ValidatorTest, OverrideWithoutCapability) {
 
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
-    EXPECT_THAT(
-        res.Failure().reason,
-        testing::HasSubstr(
-            R"(:2:12 error: override: root block: invalid instruction: tint::core::ir::Override
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr(
+                    R"(:2:12 error: override: root block: invalid instruction: ir::Override
   %a:u32 = override 1u
            ^^^^^^^^
 )")) << res.Failure();
@@ -1571,10 +1568,9 @@ TEST_F(IR_ValidatorTest, InstructionInRootBlockWithoutOverrideCap) {
 
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
-    EXPECT_THAT(
-        res.Failure().reason,
-        testing::HasSubstr(
-            R"(:2:3 error: binary: root block: invalid instruction: tint::core::ir::CoreBinary
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr(
+                    R"(:2:3 error: binary: root block: invalid instruction: ir::CoreBinary
   %1:u32 = add 3u, 2u
   ^^^^^^^^^^^^^^^^^^^
 )")) << res.Failure();
@@ -1672,7 +1668,7 @@ TEST_F(IR_ValidatorTest, InstructionInRootBlockOnlyUsedInRootBlock) {
     EXPECT_THAT(
         res.Failure().reason,
         testing::HasSubstr(
-            R"(:3:3 error: binary: root block: instruction used outside of root block tint::core::ir::CoreBinary
+            R"(:3:3 error: binary: root block: instruction used outside of root block ir::CoreBinary
   %2:u32 = add %1, 2u
   ^^^^^^^^^^^^^^^^^^^
 )")) << res.Failure();

@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::Struct);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::Struct, "ast::Struct");
 
 namespace tint::ast {
 

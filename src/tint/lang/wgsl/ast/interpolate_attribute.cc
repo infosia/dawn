@@ -32,7 +32,7 @@
 #include "src/tint/lang/core/interpolation.h"
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::InterpolateAttribute);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::InterpolateAttribute, "ast::InterpolateAttribute");
 
 namespace tint::ast {
 

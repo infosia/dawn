@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/core/type/manager.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::U8);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::U8, "ty::U8");
 
 namespace tint::core::type {
 

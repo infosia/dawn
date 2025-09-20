@@ -32,7 +32,7 @@
 #include "src/tint/lang/wgsl/ast/must_use_attribute.h"
 #include "src/tint/lang/wgsl/sem/variable.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::Function);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::Function, "sem::Function");
 
 namespace tint::sem {
 

@@ -29,8 +29,8 @@
 
 #include "src/tint/lang/wgsl/ast/struct_member.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::Struct);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::StructMember);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::Struct, "sem::Struct");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::StructMember, "sem::StructMember");
 
 namespace tint::sem {
 

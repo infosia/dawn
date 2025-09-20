@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/core/type/manager.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::Bool);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::Bool, "ty::Bool");
 
 namespace tint::core::type {
 

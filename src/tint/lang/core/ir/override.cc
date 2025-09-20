@@ -33,7 +33,7 @@
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/utils/ice/ice.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Override);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Override, "ir::Override");
 
 namespace tint::core::ir {
 

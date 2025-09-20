@@ -190,7 +190,7 @@ TEST_F(ResolverValidationDeathTest, UnhandledStmt) {
             resolver::Resolve(b);
         },
         testing::HasSubstr(
-            "internal compiler error: Switch() matched no cases. Type: tint::resolver::FakeStmt"));
+            "internal compiler error: Switch() matched no cases. Type: resolver::FakeStmt"));
 }
 
 TEST_F(ResolverValidationTest, Stmt_If_NonBool) {
@@ -221,7 +221,7 @@ TEST_F(ResolverValidationDeathTest, Expr_ErrUnknownExprType) {
             Resolver(&b, {}).Resolve();
         },
         testing::HasSubstr(
-            "internal compiler error: Switch() matched no cases. Type: tint::resolver::FakeExpr"));
+            "internal compiler error: Switch() matched no cases. Type: resolver::FakeExpr"));
 }
 
 TEST_F(ResolverValidationTest, UsingUndefinedVariable_Fail) {
@@ -1479,5 +1479,5 @@ TEST_F(ResolverValidationTest, WorkgroupUniformLoad_ArraySize_NamedConstant) {
 }  // namespace
 }  // namespace tint::resolver
 
-TINT_INSTANTIATE_TYPEINFO(tint::resolver::FakeStmt);
-TINT_INSTANTIATE_TYPEINFO(tint::resolver::FakeExpr);
+TINT_INSTANTIATE_TYPEINFO(tint::resolver::FakeStmt, "resolver::FakeStmt");
+TINT_INSTANTIATE_TYPEINFO(tint::resolver::FakeExpr, "resolver::FakeExpr");

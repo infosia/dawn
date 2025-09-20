@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/for_loop_statement.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::ForLoopStatement);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::ForLoopStatement, "sem::ForLoopStatement");
 
 namespace tint::sem {
 

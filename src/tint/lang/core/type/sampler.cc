@@ -30,7 +30,7 @@
 #include "src/tint/lang/core/type/manager.h"
 #include "src/tint/utils/math/hash.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::Sampler);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::Sampler, "ty::Sampler");
 
 namespace tint::core::type {
 

@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/index_accessor_expression.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::IndexAccessorExpression);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::IndexAccessorExpression, "sem::IndexAccessorExpression");
 
 namespace tint::sem {
 
