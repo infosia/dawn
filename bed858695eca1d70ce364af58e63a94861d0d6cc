@@ -123,6 +123,24 @@
       "parentUuid": "85b41241_f3d4180a",
       "revId": "bed858695eca1d70ce364af58e63a94861d0d6cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63dc8481_78b92887",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-20T00:03:44Z",
+      "side": 1,
+      "message": "I didn\u0027t mean to suggest that we should validate it (at least, not immediately). Gregg\u0027s correct, it\u0027s not really related since that\u0027s already possible.\n\nMy concern is that it would be very easy to end up making an invalid call to Metal (if Metal doesn\u0027t allow creating a view with swizzle on a copy-only texture, like it doesn\u0027t allow that on an attachment-only texture). This CL only handles that case correctly by accident.\n\nHence we need to make sure we test this.",
+      "parentUuid": "15c1ace4_d69f81b2",
+      "revId": "bed858695eca1d70ce364af58e63a94861d0d6cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

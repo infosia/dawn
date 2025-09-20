@@ -400,6 +400,24 @@
       "parentUuid": "b28bf6d0_63bd9c48",
       "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4269a878_ec4ee364",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-20T00:03:44Z",
+      "side": 1,
+      "message": "Do I understand correctly then that the actual Metal validation is not\n\"a swizzled view cannot be created on textures with MTLTextureUsageRenderTarget enabled\"\nbut\n\"creating a swizzled view requires the texture to have MTLTextureUsageShaderRead enabled\"\nor something like that?\n\nIn other words:\n- if we create a `GPUTexture` with `RENDER_ATTACHMENT | TEXTURE_BINDING`\n  - which creates a `MTLTexture` with `RenderTarget | ShaderRead`,\n- then it is valid to create a swizzled `GPUTextureView` with `TEXTURE_BINDING`\n  - which creates a `MTLTexture` that\u0027s a view of the original texture and thus still has `RenderTarget | ShaderRead`\n\n?\n\nAlso, what happens if you use that Metal view as a render target? Is that invalid because the view has swizzle, or is the swizzle just ignored? If it\u0027s just ignored, do we actually need the usage restriction (the subject of [#5298](https://github.com/gpuweb/gpuweb/issues/5298))? I can\u0027t find an investigation for that restriction.",
+      "parentUuid": "b8295dc7_70ac23ba",
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
