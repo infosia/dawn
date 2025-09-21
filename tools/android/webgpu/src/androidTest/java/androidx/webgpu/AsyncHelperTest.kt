@@ -1,6 +1,7 @@
 package androidx.webgpu
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.SmallTest
 import androidx.webgpu.helper.createWebGpu
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -8,6 +9,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
+@SmallTest
 class AsyncHelperTest {
     @Test
     fun asyncMethodTest() {
@@ -15,14 +17,16 @@ class AsyncHelperTest {
             val webGpu = createWebGpu()
             val device = webGpu.device
             /* Set up a shader module to support the async call. */
-            val shaderModule = device.createShaderModule(
-                ShaderModuleDescriptor(shaderSourceWGSL = ShaderSourceWGSL(""))
-            )
+            val shaderModule =
+                device.createShaderModule(
+                    ShaderModuleDescriptor(shaderSourceWGSL = ShaderSourceWGSL(""))
+                )
 
             /* Call an asynchronous method, converted from a callback pattern by a helper. */
-            val result = device.createRenderPipelineAsync(
-                RenderPipelineDescriptor(vertex = VertexState(module = shaderModule))
-            )
+            val result =
+                device.createRenderPipelineAsync(
+                    RenderPipelineDescriptor(vertex = VertexState(module = shaderModule))
+                )
 
             assert(result.status == CreatePipelineAsyncStatus.ValidationError) {
                 """Create render pipeline (async) should fail when no shader entry point exists.
@@ -37,10 +41,12 @@ class AsyncHelperTest {
             val webGpu = createWebGpu()
             val device = webGpu.device
             /* Set up a shader module to support the async call. */
-            val shaderModule = device.createShaderModule(
-                ShaderModuleDescriptor(
-                    shaderSourceWGSL = ShaderSourceWGSL(
-                        """
+            val shaderModule =
+                device.createShaderModule(
+                    ShaderModuleDescriptor(
+                        shaderSourceWGSL =
+                            ShaderSourceWGSL(
+                                """
 @vertex fn vertexMain(@builtin(vertex_index) i : u32) ->
 @builtin(position) vec4f {
     return vec4f();
@@ -49,24 +55,26 @@ class AsyncHelperTest {
     return vec4f();
 }
                         """
+                            )
                     )
                 )
-            )
 
             /* Call an asynchronous method, converted from a callback pattern by a helper. */
-            val result = device.createRenderPipelineAsync(
-                RenderPipelineDescriptor(
-                    vertex = VertexState(module = shaderModule),
-                    fragment = FragmentState(
-                        module = shaderModule,
-                        targets = arrayOf(ColorTargetState(format = TextureFormat.RGBA8Unorm))
+            val result =
+                device.createRenderPipelineAsync(
+                    RenderPipelineDescriptor(
+                        vertex = VertexState(module = shaderModule),
+                        fragment =
+                            FragmentState(
+                                module = shaderModule,
+                                targets =
+                                    arrayOf(ColorTargetState(format = TextureFormat.RGBA8Unorm)),
+                            ),
                     )
                 )
-            )
 
-          /* Create render pipeline (async) should pass with a simple shader.. */
-          assertEquals(result.status, CreatePipelineAsyncStatus.Success)
-
+            /* Create render pipeline (async) should pass with a simple shader.. */
+            assertEquals(result.status, CreatePipelineAsyncStatus.Success)
         }
     }
 }
