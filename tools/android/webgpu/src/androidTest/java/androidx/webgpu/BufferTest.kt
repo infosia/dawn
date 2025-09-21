@@ -1,15 +1,17 @@
 package androidx.webgpu
 
+import androidx.test.filters.SmallTest
 import androidx.webgpu.helper.createWebGpu
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertThrows
 import org.junit.Test
 
+@SmallTest
 class BufferTest {
     @Test
-    /**
-     * Test that calling getMappedRange() on a mapped buffer does not raise an exception.
-     */
+            /**
+             * Test that calling getMappedRange() on a mapped buffer does not raise an exception.
+             */
     fun bufferMapTest() {
         runBlocking {
             val webGpu = createWebGpu()
@@ -27,9 +29,9 @@ class BufferTest {
     }
 
     @Test
-    /**
-     * Test that calling getMappedRange() on a non-mapped buffer raises an exception.
-     */
+            /**
+             * Test that calling getMappedRange() on a non-mapped buffer raises an exception.
+             */
     fun bufferMapFailureTest() {
         runBlocking {
             val webGpu = createWebGpu()
