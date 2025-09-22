@@ -16,6 +16,24 @@
       "message": "It should be one change per issue and each should be accompanied by a bug number.\n\nPlease find/make a bug and CL for each of the issues:\n- Save generated images to the external cache for easier debugging + Add an @AfterClass method to clean up the saved images.\n- Updates related test dependencies.\n- Add time filters to integration tests.\n\nHaving a bug is important because that is where we would discuss the motivation of the change (the bug is where we would discuss the *why* and on the CL discuss the *how*). Currently for example I don\u0027t know what the benefit of adding @SmallTest, @MediumTest would be. Sometimes you might add that in a brief comment in the CL description body but a bug is usually preferred. \n\nThe Mockito dependency changes should be accompanied by something that actually benefits from the improvement. We want all CLs to have value in their own right so each change can be reviewed with full context (e.g not adding a library but not actually using it in that CL). There may be a bug you can use already but that refers to difficulties with mocking that affect Google3; https://buganizer.corp.google.com/issues/407503560. You could check that TexturesTest.kt will run on Google3 after your changes (you may also need a mockito dependency change on Google3).\n\nRegarding the test image changes, the current setup is designed mainly for Google3 development, so if you run for example:\n\nblaze test //third_party/dawn/tools/android/webgpu/src/androidTest/java/android/dawn:ImageTest\n\n.. you can see the output in the Sponge Artifacts, e.g. https://fusion2.corp.google.com/invocations/14613901-0c7f-4a1d-bfa7-a9447b37f75c/targets;showStatuses\u003dfailed,passed/%2F%2Fthird_party%2Fdawn%2Ftools%2Fandroid%2Fwebgpu%2Fsrc%2FandroidTest%2Fjava%2Fandroid%2Fdawn:ImageTest_generic_phone_slim_35_x86_64;config\u003d4f34bfcf6341e28806f5c820b6c263a1aabb166cf4e537923bd4fd8a51d79632/artifacts (search for \u0027generated_image.png\u0027) ... https://fusion.corp.googleusercontent.com/file/autoview/googlefile%3A%2F%2F%2Fobjfs%2F710%2Fed26dad89783d57c4675d59f0aceaea6a28d824059be184babb279e0fad8a894_011083d1/archiveEntry/ImageTest-imageCompareGreen/test_outputfiles/generated_image.png?invocationId\u003d14613901-0c7f-4a1d-bfa7-a9447b37f75c\u0026actionName\u003dinvocations%2F14613901-0c7f-4a1d-bfa7-a9447b37f75c%2Ftargets%2F%252F%252Fthird_party%252Fdawn%252Ftools%252Fandroid%252Fwebgpu%252Fsrc%252FandroidTest%252Fjava%252Fandroid%252Fdawn%253AImageTest_generic_phone_slim_35_x86_64%2FconfiguredTargets%2F4f34bfcf6341e28806f5c820b6c263a1aabb166cf4e537923bd4fd8a51d79632%2Factions%2Ftest_shard0_run0_attempt0\u0026contentType\u003dimage%2Fpng\n\nI\u0027m not sure that cleaning up the images is the right thing to do for images that are written purely for inspection by devs when tests fail. Please check that copy your proposed changes won\u0027t break the Sponge artifacts by copying the changes to a Google3 workspace, running the test with Blaze, and seeing if the artifacts are present in the Sponge output.",
       "revId": "f7d1c2b31e4386c847a35bd62c4c8e175375a8c9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69714204_42bf08f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-09-22T11:19:04Z",
+      "side": 1,
+      "message": "Thanks Jim for the detailed feedback,\nI\u0027ll review these points and make the necessary changes.",
+      "parentUuid": "0f7313f2_1951e0ec",
+      "revId": "f7d1c2b31e4386c847a35bd62c4c8e175375a8c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
