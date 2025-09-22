@@ -191,7 +191,7 @@ TEST_P(DeviceLifetimeTests, DroppedThenMapBuffer) {
     device = nullptr;
 
     MockMapAsyncCallback cb;
-    EXPECT_CALL(cb, Call(wgpu::MapAsyncStatus::Aborted, HasSubstr("lost"))).Times(1);
+    EXPECT_CALL(cb, Call(wgpu::MapAsyncStatus::Error, HasSubstr("destroyed"))).Times(1);
 
     buffer.MapAsync(wgpu::MapMode::Read, 0, wgpu::kWholeMapSize,
                     wgpu::CallbackMode::AllowProcessEvents, cb.Callback());
@@ -212,15 +212,15 @@ TEST_P(DeviceLifetimeTests, Dropped_ThenMapBuffer_ThenMapBufferInCallback) {
     buffer.MapAsync(wgpu::MapMode::Read, 0, wgpu::kWholeMapSize,
                     wgpu::CallbackMode::AllowProcessEvents,
                     [&buffer](wgpu::MapAsyncStatus status, wgpu::StringView message) {
-                        EXPECT_EQ(status, wgpu::MapAsyncStatus::Aborted);
-                        EXPECT_THAT(message, HasSubstr("lost"));
+                        EXPECT_EQ(status, wgpu::MapAsyncStatus::Error);
+                        EXPECT_THAT(message, HasSubstr("destroyed"));
 
                         // Second mapping
                         buffer.MapAsync(wgpu::MapMode::Read, 0, wgpu::kWholeMapSize,
                                         wgpu::CallbackMode::AllowProcessEvents,
                                         [](wgpu::MapAsyncStatus status, wgpu::StringView message) {
-                                            EXPECT_EQ(status, wgpu::MapAsyncStatus::Aborted);
-                                            EXPECT_THAT(message, HasSubstr("lost"));
+                                            EXPECT_EQ(status, wgpu::MapAsyncStatus::Error);
+                                            EXPECT_THAT(message, HasSubstr("destroyed"));
                                         });
                     });
 

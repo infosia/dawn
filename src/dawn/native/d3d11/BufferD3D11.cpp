@@ -544,8 +544,10 @@ MaybeError Buffer::FinalizeMap(ScopedCommandRecordingContext* commandContext,
     return {};
 }
 
-void Buffer::UnmapImpl() {
+void Buffer::UnmapImpl(BufferState fromState) {
     DAWN_ASSERT(IsMappable(GetInternalUsage()));
+    auto deviceGuard = GetDevice()->GetGuard();
+
     mMapReadySerial = kMaxExecutionSerial;
     if (mMappedData) {
         auto commandContext = ToBackend(GetDevice()->GetQueue())
@@ -570,7 +572,7 @@ void Buffer::DestroyImpl() {
     //   other threads using the buffer since there are no other live refs.
     BufferBase::DestroyImpl();
     if (mMappedData) {
-        UnmapImpl();
+        UnmapImpl(BufferState fromState);
     }
 }
 
