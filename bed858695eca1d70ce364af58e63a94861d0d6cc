@@ -141,6 +141,24 @@
       "parentUuid": "15c1ace4_d69f81b2",
       "revId": "bed858695eca1d70ce364af58e63a94861d0d6cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d30bd599_8399eb22",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-22T10:14:39Z",
+      "side": 1,
+      "message": "\u003e Hence we need to make sure we test this.\n\nShall we open an issue in the CTS and resolve this?",
+      "parentUuid": "63dc8481_78b92887",
+      "revId": "bed858695eca1d70ce364af58e63a94861d0d6cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

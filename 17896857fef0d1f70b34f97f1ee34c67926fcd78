@@ -418,6 +418,24 @@
       "parentUuid": "b8295dc7_70ac23ba",
       "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f81660b_13884f47",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-22T10:14:39Z",
+      "side": 1,
+      "message": "To your first question, yes it is valid to create a swizzled view with `TEXTURE_BINDING` only. The following code doesn\u0027t raise any Metal validation error:\n```js\nconst adapter \u003d await navigator.gpu.requestAdapter();\nconst device \u003d await adapter.requestDevice({\n  requiredFeatures: [\"texture-component-swizzle\"],\n});\nconst texture \u003d device.createTexture({\n  format: \"rgba8unorm\",\n  size: [1, 1, 1],\n  usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING,\n});\nconst view \u003d texture.createView({ swizzle: \"0000\", usage: GPUTextureUsage.TEXTURE_BINDING });\ndevice.queue.submit([]);\n```\n\nNow to your second question. It is invalid to use `view` as a render target because `RENDER_ATTACHMENT` is required. See https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/CommandEncoder.cpp;l\u003d604;drc\u003d8faf20e5dbf1e809b5bf4232101127fa3f3afe58 and https://gpuweb.github.io/gpuweb/#ref-for-abstract-opdef-renderable-texture-view\nI may misunderstand you (it\u0027s highly probable 😊) and you\u0027re talking about using the Metal view directly but I don\u0027t know how to do that.",
+      "parentUuid": "4269a878_ec4ee364",
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
