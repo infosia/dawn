@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "96eab26db60f85f22420faaa2043a1a4131ea0b0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d86747f7_9bb7c311",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-22T17:01:54Z",
+      "side": 1,
+      "message": "Would be good to explore the approach the relies on string pooling optimizations first, as discussed in our team meeting.",
+      "revId": "96eab26db60f85f22420faaa2043a1a4131ea0b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
