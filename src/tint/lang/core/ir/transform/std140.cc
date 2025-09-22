@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/core/ir/transform/std140.h"
 
+#include <algorithm>
 #include <cstdint>
 #include <utility>
 
@@ -153,6 +154,7 @@ struct State {
                     bool needs_rewrite = false;
                     uint32_t member_index = 0;
                     Vector<const core::type::StructMember*, 4> new_members;
+                    uint32_t max_member_align = 0;
                     for (auto* member : str->Members()) {
                         if (auto* mat = NeedsDecomposing(member->Type())) {
                             // Decompose these matrices into a separate member for each column.
@@ -167,6 +169,7 @@ struct State {
                                     col->Size(), core::IOAttributes{}));
                                 offset += col->Align();
                                 member_index++;
+                                max_member_align = std::max(max_member_align, col->Align());
                             }
                             needs_rewrite = true;
                         } else {
@@ -177,6 +180,7 @@ struct State {
                                 member->Align(), member->Size(), core::IOAttributes{}));
                             member_index_map.Add(member, member_index);
                             member_index++;
+                            max_member_align = std::max(max_member_align, member->Align());
                             if (new_member_ty != member->Type()) {
                                 needs_rewrite = true;
                             }
