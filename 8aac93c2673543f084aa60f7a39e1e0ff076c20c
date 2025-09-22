@@ -16,6 +16,24 @@
       "message": "We could also remove size_no_padding come to think of it. It\u0027s always implicitly `(last_member_offset + last_member_size)`.",
       "revId": "8aac93c2673543f084aa60f7a39e1e0ff076c20c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3083b46_f84cf374",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4406,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-22T14:59:05Z",
+      "side": 0,
+      "message": "Will do it as a followup given this was hard enough to remove, heh.",
+      "parentUuid": "41ab694c_acce494f",
+      "revId": "8aac93c2673543f084aa60f7a39e1e0ff076c20c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
