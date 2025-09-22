@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51311ea1_a6ea7a1f",
+        "filename": "generator/templates/art/JNIClasses.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-09-22T15:20:26Z",
+      "side": 1,
+      "message": "FYI only the application classes that need to be done this way (because only the original thread JNI Instance can see them). System classes can be seen by all JNI Instances (so don\u0027t need the pre-lookups).",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 108
+      },
+      "revId": "6b2f755478fa91013479e208e821262db89523c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb65f512_9e75d07f",
+        "filename": "generator/templates/art/api_kotlin_function_pointer.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-09-22T15:20:26Z",
+      "side": 1,
+      "message": "Always a space after {%, {{ etc.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 5
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "e2887347_0fb81e0b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/api_kotlin_function_pointer.kt",
+              "range": {
+                "startLine": 45,
+                "startChar": 0,
+                "endLine": 46,
+                "endChar": 0
+              },
+              "replacement": "{% for arg in args_list %}\n"
+            },
+            {
+              "path": "generator/templates/art/api_kotlin_function_pointer.kt",
+              "range": {
+                "startLine": 48,
+                "startChar": 0,
+                "endLine": 49,
+                "endChar": 0
+              },
+              "replacement": "{% endfor %}\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6b2f755478fa91013479e208e821262db89523c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebd8a7b2_8c749df4",
+        "filename": "generator/templates/art/api_kotlin_function_pointer.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-09-22T15:20:26Z",
+      "side": 1,
+      "message": "Always a space after {%, {{ etc.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 11
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "3d66c73d_6e0c9992",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/api_kotlin_function_pointer.kt",
+              "range": {
+                "startLine": 45,
+                "startChar": 0,
+                "endLine": 46,
+                "endChar": 0
+              },
+              "replacement": "{% for arg in args_list %}\n"
+            },
+            {
+              "path": "generator/templates/art/api_kotlin_function_pointer.kt",
+              "range": {
+                "startLine": 48,
+                "startChar": 0,
+                "endLine": 49,
+                "endChar": 0
+              },
+              "replacement": "{% endfor %}\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6b2f755478fa91013479e208e821262db89523c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1188107_ad7d0350",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-09-22T15:20:26Z",
+      "side": 1,
+      "message": "I don\u0027t see this used anywhere.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 27
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "458545e8_649cd9e3",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/kotlin_record_conversion.cpp",
+              "range": {
+                "startLine": 56,
+                "startChar": 0,
+                "endLine": 59,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "6b2f755478fa91013479e208e821262db89523c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b27cfc3d_190a6e74",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-09-22T15:20:26Z",
+      "side": 1,
+      "message": "We don\u0027t need the \u0027no executor\u0027 case at all; since \u0027executor\u0027 isn\u0027t nullable, and we want to ensure the same code path is used to reduce complexity.",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 30
+      },
+      "revId": "6b2f755478fa91013479e208e821262db89523c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
