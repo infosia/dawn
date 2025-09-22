@@ -52,6 +52,24 @@
       "parentUuid": "d6ac948c_2d2ddcab",
       "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba9f6229_c04b4478",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-22T14:13:49Z",
+      "side": 1,
+      "message": "Yes we need to handle this, we need `VK_COMPONENT_SWIZZLE_IDENTITY` for all members in that case. This is for render pass attachments so WebGPU validation should already enforce that, but we need to make sure to generate it if the swizzle is equivalent to the identity swizzle.\n\nAll VVLs errors are important and we should fix them before landing CLs.",
+      "parentUuid": "74326be4_60382698",
+      "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
