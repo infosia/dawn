@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00883a1e_0997f4ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-22T13:54:20Z",
+      "side": 1,
+      "message": "Let me know if you can think of another reviewer for this Vulkan-specific error.",
+      "revId": "27944be17453e8e400ac5006051ae36754a0f10e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
