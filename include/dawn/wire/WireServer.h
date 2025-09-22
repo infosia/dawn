@@ -28,7 +28,9 @@
 #ifndef INCLUDE_DAWN_WIRE_WIRESERVER_H_
 #define INCLUDE_DAWN_WIRE_WIRESERVER_H_
 
+#include <functional>
 #include <memory>
+#include <optional>
 #include <span>
 
 #include "dawn/wire/Wire.h"
@@ -37,9 +39,13 @@ struct DawnProcTable;
 
 namespace dawn::wire {
 
+class WireServer;
+
 namespace server {
 class Server;
 class MemoryTransferService;
+
+using CallbackHandler = std::function<void(std::function<void()>&&)>;
 }  // namespace server
 
 struct DAWN_WIRE_EXPORT WireServerDescriptor {
@@ -47,6 +53,7 @@ struct DAWN_WIRE_EXPORT WireServerDescriptor {
     CommandSerializer* serializer;
     server::MemoryTransferService* memoryTransferService = nullptr;
     bool useSpontaneousCallbacks = false;
+    std::optional<server::CallbackHandler> callbackHandler = std::nullopt;
 };
 
 class DAWN_WIRE_EXPORT WireServer : public CommandHandler {

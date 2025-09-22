@@ -31,10 +31,7 @@
 namespace dawn::wire {
 
 WireServer::WireServer(const WireServerDescriptor& descriptor)
-    : mImpl(server::Server::Create(*descriptor.procs,
-                                   descriptor.serializer,
-                                   descriptor.memoryTransferService,
-                                   descriptor.useSpontaneousCallbacks)) {}
+    : mImpl(server::Server::Create(descriptor)) {}
 
 WireServer::~WireServer() {
     mImpl.reset();

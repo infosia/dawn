@@ -43,7 +43,7 @@ WireResult Server::DoInstanceRequestAdapter(Known<WGPUInstance> instance,
     Reserved<WGPUAdapter> adapter;
     WIRE_TRY(Objects<WGPUAdapter>().Allocate(&adapter, adapterHandle, AllocationState::Reserved));
 
-    auto userdata = MakeUserdata<RequestAdapterUserdata>();
+    auto userdata = std::make_unique<RequestAdapterUserdata>();
     userdata->eventManager = eventManager;
     userdata->future = future;
     userdata->adapterObjectId = adapter.id;

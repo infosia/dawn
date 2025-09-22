@@ -34,7 +34,7 @@ namespace dawn::wire::server {
 WireResult Server::DoShaderModuleGetCompilationInfo(Known<WGPUShaderModule> shaderModule,
                                                     ObjectHandle eventManager,
                                                     WGPUFuture future) {
-    auto userdata = MakeUserdata<ShaderModuleGetCompilationInfoUserdata>();
+    auto userdata = std::make_unique<ShaderModuleGetCompilationInfoUserdata>();
     userdata->eventManager = eventManager;
     userdata->future = future;
 

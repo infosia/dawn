@@ -84,7 +84,7 @@ WireResult Server::DoBufferMapAsync(Known<WGPUBuffer> buffer,
                                     uint64_t size64) {
     // These requests are just forwarded to the buffer, with userdata containing what the
     // client will require in the return command.
-    std::unique_ptr<MapUserdata> userdata = MakeUserdata<MapUserdata>();
+    std::unique_ptr<MapUserdata> userdata = std::make_unique<MapUserdata>();
     userdata->buffer = buffer.AsHandle();
     userdata->eventManager = eventManager;
     userdata->bufferObj = buffer->handle;

@@ -68,7 +68,7 @@ void Server::OnLogging(ObjectHandle device, WGPULoggingType type, WGPUStringView
 WireResult Server::DoDevicePopErrorScope(Known<WGPUDevice> device,
                                          ObjectHandle eventManager,
                                          WGPUFuture future) {
-    auto userdata = MakeUserdata<ErrorScopeUserdata>();
+    auto userdata = std::make_unique<ErrorScopeUserdata>();
     userdata->device = device.AsHandle();
     userdata->eventManager = eventManager;
     userdata->future = future;
@@ -104,7 +104,7 @@ WireResult Server::DoDeviceCreateComputePipelineAsync(
     WIRE_TRY(Objects<WGPUComputePipeline>().Allocate(&pipeline, pipelineObjectHandle,
                                                      AllocationState::Reserved));
 
-    auto userdata = MakeUserdata<CreatePipelineAsyncUserData>();
+    auto userdata = std::make_unique<CreatePipelineAsyncUserData>();
     userdata->device = device.AsHandle();
     userdata->eventManager = eventManager;
     userdata->future = future;
@@ -145,7 +145,7 @@ WireResult Server::DoDeviceCreateRenderPipelineAsync(
     WIRE_TRY(Objects<WGPURenderPipeline>().Allocate(&pipeline, pipelineObjectHandle,
                                                     AllocationState::Reserved));
 
-    auto userdata = MakeUserdata<CreatePipelineAsyncUserData>();
+    auto userdata = std::make_unique<CreatePipelineAsyncUserData>();
     userdata->device = device.AsHandle();
     userdata->eventManager = eventManager;
     userdata->future = future;

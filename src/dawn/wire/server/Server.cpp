@@ -30,27 +30,19 @@
 
 namespace dawn::wire::server {
 
-CallbackUserdata::CallbackUserdata(const std::weak_ptr<Server>& server) : server(server) {}
-
 // static
-std::shared_ptr<Server> Server::Create(const DawnProcTable& procs,
-                                       CommandSerializer* serializer,
-                                       MemoryTransferService* memoryTransferService,
-                                       bool useSpontaneousCallbacks) {
-    auto server = std::shared_ptr<Server>(
-        new Server(procs, serializer, memoryTransferService, useSpontaneousCallbacks));
+std::shared_ptr<Server> Server::Create(const WireServerDescriptor& descriptor) {
+    auto server = std::shared_ptr<Server>(new Server(descriptor));
     server->mSelf = server;
     return server;
 }
 
-Server::Server(const DawnProcTable& procs,
-               CommandSerializer* serializer,
-               MemoryTransferService* memoryTransferService,
-               bool useSpontaneousCallbacks)
-    : mSerializer(serializer),
-      mProcs(procs),
-      mMemoryTransferService(memoryTransferService),
-      mUseSpontaneousCallbacks(useSpontaneousCallbacks) {
+Server::Server(const WireServerDescriptor& descriptor)
+    : mSerializer(descriptor.serializer),
+      mProcs(*descriptor.procs),
+      mMemoryTransferService(descriptor.memoryTransferService),
+      mCallbackHandler(descriptor.callbackHandler),
+      mUseSpontaneousCallbacks(descriptor.useSpontaneousCallbacks) {
     if (mMemoryTransferService == nullptr) {
         // If a MemoryTransferService is not provided, fallback to inline memory.
         mOwnedMemoryTransferService = CreateInlineMemoryTransferService();
@@ -171,6 +163,14 @@ bool Server::IsDeviceKnown(WGPUDevice device) const {
 void Server::Flush() {
     if (mUseSpontaneousCallbacks) {
         mSerializer->Flush();
+    }
+}
+
+void Server::HandleCallback(std::function<void()>&& cb) {
+    if (mCallbackHandler) {
+        (*mCallbackHandler)(std::move(cb));
+    } else {
+        cb();
     }
 }
 

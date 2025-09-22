@@ -45,14 +45,14 @@ WireResult Server::DoAdapterRequestDevice(Known<WGPUAdapter> adapter,
     Reserved<WGPUDevice> device;
     WIRE_TRY(Objects<WGPUDevice>().Allocate(&device, deviceHandle, AllocationState::Reserved));
 
-    auto userdata = MakeUserdata<RequestDeviceUserdata>();
+    auto userdata = std::make_unique<RequestDeviceUserdata>();
     userdata->eventManager = eventManager;
     userdata->future = future;
     userdata->deviceObjectId = device.id;
     userdata->deviceLostFuture = deviceLostFuture;
 
     // Update the descriptor with the device lost callback associated with this request.
-    auto deviceLostUserdata = MakeUserdata<DeviceLostUserdata>();
+    auto deviceLostUserdata = std::make_unique<DeviceLostUserdata>();
     deviceLostUserdata->eventManager = eventManager;
     deviceLostUserdata->future = deviceLostFuture;
 

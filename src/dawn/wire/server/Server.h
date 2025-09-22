@@ -28,7 +28,9 @@
 #ifndef SRC_DAWN_WIRE_SERVER_SERVER_H_
 #define SRC_DAWN_WIRE_SERVER_SERVER_H_
 
+#include <functional>
 #include <memory>
+#include <optional>
 #include <utility>
 
 #include "dawn/common/MutexProtected.h"
@@ -41,72 +43,17 @@ namespace dawn::wire::server {
 class Server;
 class MemoryTransferService;
 
-// CallbackUserdata and its derived classes are intended to be created by
-// Server::MakeUserdata<T> and then passed as the userdata argument for Dawn
-// callbacks.
-// It contains a pointer back to the Server so that the callback can call the
-// Server to perform operations like serialization, and it contains a weak pointer
-// |serverIsAlive|. If the weak pointer has expired, it means the server has
-// been destroyed and the callback must not use the Server pointer.
-// To assist with checking |serverIsAlive| and lifetime management of the userdata,
-// |ForwardToServer| (defined later in this file) can be used to acquire the userdata,
-// return early if |serverIsAlive| has expired, and then forward the arguments
-// to userdata->server->MyCallbackHandler.
-//
-// Example Usage:
-//
-// struct MyUserdata : CallbackUserdata { uint32_t foo; };
-//
-// auto userdata = MakeUserdata<MyUserdata>();
-// userdata->foo = 2;
-//
-// callMyCallbackHandler(
-//      ForwardToServer<&Server::MyCallbackHandler>,
-//      userdata.release());
-//
-// void Server::MyCallbackHandler(MyUserdata* userdata, Other args) { }
-struct CallbackUserdata {
-    const std::weak_ptr<Server> server;
+template <auto F, typename _ = decltype(F)>
+struct ForwardToServerHelper;
 
-    CallbackUserdata() = delete;
-    explicit CallbackUserdata(const std::weak_ptr<Server>& server);
+template <auto F, typename UserdataT, typename... Args>
+struct ForwardToServerHelper<F, void (Server::*)(UserdataT*, Args...)> {
+    using Userdata = UserdataT;
+
+    static void Callback(Args... args, void* userdata, void* serverdata);
 };
 
-template <auto F>
-struct ForwardToServerHelper {
-    template <typename _>
-    struct ExtractedTypes;
-
-    // An internal structure used to unpack the various types that compose the type of F
-    template <typename Return, typename Class, typename UserdataT, typename... Args>
-    struct ExtractedTypes<Return (Class::*)(UserdataT*, Args...)> {
-        using Userdata = UserdataT;
-        using UntypedCallback = Return (*)(Args..., void*, void*);
-
-        static Return Callback(Args... args, void* userdata, void*) {
-            // Acquire the userdata, and cast it to UserdataT.
-            std::unique_ptr<Userdata> data(static_cast<Userdata*>(userdata));
-            auto server = data->server.lock();
-            if (!server) {
-                // Do nothing if the server has already been destroyed.
-                return;
-            }
-            // Forward the arguments and the typed userdata to the Server:: member function.
-            (server.get()->*F)(data.get(), std::forward<decltype(args)>(args)...);
-            server.get()->Flush();
-        }
-    };
-
-    static constexpr typename ExtractedTypes<decltype(F)>::UntypedCallback Create() {
-        return ExtractedTypes<decltype(F)>::Callback;
-    }
-
-    using Userdata = typename ExtractedTypes<decltype(F)>::Userdata;
-};
-
-struct MapUserdata : CallbackUserdata {
-    using CallbackUserdata::CallbackUserdata;
-
+struct MapUserdata {
     ObjectHandle buffer;
     WGPUBuffer bufferObj;
     ObjectHandle eventManager;
@@ -116,68 +63,51 @@ struct MapUserdata : CallbackUserdata {
     WGPUMapMode mode;
 };
 
-struct ErrorScopeUserdata : CallbackUserdata {
-    using CallbackUserdata::CallbackUserdata;
-
+struct ErrorScopeUserdata {
     ObjectHandle device;
     ObjectHandle eventManager;
     WGPUFuture future;
 };
 
-struct ShaderModuleGetCompilationInfoUserdata : CallbackUserdata {
-    using CallbackUserdata::CallbackUserdata;
-
+struct ShaderModuleGetCompilationInfoUserdata {
     ObjectHandle eventManager;
     WGPUFuture future;
 };
 
-struct QueueWorkDoneUserdata : CallbackUserdata {
-    using CallbackUserdata::CallbackUserdata;
-
+struct QueueWorkDoneUserdata {
     ObjectHandle queue;
     ObjectHandle eventManager;
     WGPUFuture future;
 };
 
-struct CreatePipelineAsyncUserData : CallbackUserdata {
-    using CallbackUserdata::CallbackUserdata;
-
+struct CreatePipelineAsyncUserData {
     ObjectHandle device;
     ObjectHandle eventManager;
     WGPUFuture future;
     ObjectId pipelineObjectID;
 };
 
-struct RequestAdapterUserdata : CallbackUserdata {
-    using CallbackUserdata::CallbackUserdata;
-
+struct RequestAdapterUserdata {
     ObjectHandle eventManager;
     WGPUFuture future;
     ObjectId adapterObjectId;
 };
 
-struct RequestDeviceUserdata : CallbackUserdata {
-    using CallbackUserdata::CallbackUserdata;
-
+struct RequestDeviceUserdata {
     ObjectHandle eventManager;
     WGPUFuture future;
     ObjectId deviceObjectId;
     WGPUFuture deviceLostFuture;
 };
 
-struct DeviceLostUserdata : CallbackUserdata {
-    using CallbackUserdata::CallbackUserdata;
-
+struct DeviceLostUserdata {
     ObjectHandle eventManager;
     WGPUFuture future;
 };
 
 class Server : public ServerBase {
   public:
-    static std::shared_ptr<Server> Create(const DawnProcTable& procs,
-                                          CommandSerializer* serializer,
-                                          MemoryTransferService* memoryTransferService,
-                                          bool useSpontaneousCallbacks);
+    static std::shared_ptr<Server> Create(const WireServerDescriptor& descriptor);
     ~Server() override;
 
     // ChunkedCommandHandler implementation
@@ -196,25 +126,19 @@ class Server : public ServerBase {
     // Flushes the command serialized from server->client if spontaneous callbacks are enabled.
     void Flush();
 
-    template <typename T,
-              typename Enable = std::enable_if<std::is_base_of<CallbackUserdata, T>::value>>
-    std::unique_ptr<T> MakeUserdata() {
-        return std::unique_ptr<T>(new T(mSelf));
-    }
-
     template <typename CallbackInfo,
               auto F,
               WGPUCallbackMode DefaultMode = WGPUCallbackMode_AllowProcessEvents>
     CallbackInfo MakeCallbackInfo(ForwardToServerHelper<F>::Userdata* userdata) {
         return {nullptr, mUseSpontaneousCallbacks ? WGPUCallbackMode_AllowSpontaneous : DefaultMode,
-                ForwardToServerHelper<F>::Create(), userdata, nullptr};
+                &ForwardToServerHelper<F>::Callback, userdata,
+                std::make_unique<std::weak_ptr<Server>>(mSelf).release()};
     }
 
+    void HandleCallback(std::function<void()>&& cb);
+
   private:
-    Server(const DawnProcTable& procs,
-           CommandSerializer* serializer,
-           MemoryTransferService* memoryTransferService,
-           bool useSpontaneousCallbacks);
+    Server(const WireServerDescriptor& descriptor);
 
     template <typename Cmd>
     void SerializeCommand(const Cmd& cmd) {
@@ -295,6 +219,8 @@ class Server : public ServerBase {
     DawnProcTable mProcs;
     std::unique_ptr<MemoryTransferService> mOwnedMemoryTransferService = nullptr;
     raw_ptr<MemoryTransferService> mMemoryTransferService = nullptr;
+
+    std::optional<CallbackHandler> mCallbackHandler = std::nullopt;
     bool mUseSpontaneousCallbacks = false;
 
     // Weak pointer to self to facilitate creation of userdata.
@@ -302,6 +228,28 @@ class Server : public ServerBase {
 };
 
 std::unique_ptr<MemoryTransferService> CreateInlineMemoryTransferService();
+
+template <auto F, typename UserdataT, typename... Args>
+void ForwardToServerHelper<F, void (Server::*)(UserdataT*, Args...)>::Callback(Args... args,
+                                                                               void* userdata,
+                                                                               void* serverdata) {
+    // Acquire the server data.
+    std::unique_ptr<std::weak_ptr<Server>> weakServer(
+        static_cast<std::weak_ptr<Server>*>(serverdata));
+    auto server = weakServer->lock();
+    if (!server) {
+        // Do nothing if the server has already been destroyed.
+        return;
+    }
+
+    server.get()->HandleCallback([... args = std::forward<Args>(args), userdata, server]() {
+        // Acquire the userdata, and cast it to UserdataT.
+        std::unique_ptr<UserdataT> data(static_cast<UserdataT*>(userdata));
+        // Forward the arguments and the typed userdata to the Server:: member function.
+        (server.get()->*F)(data.get(), args...);
+        server.get()->Flush();
+    });
+}
 
 }  // namespace dawn::wire::server
 

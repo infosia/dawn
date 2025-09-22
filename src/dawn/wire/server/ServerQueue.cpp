@@ -47,7 +47,7 @@ void Server::OnQueueWorkDone(QueueWorkDoneUserdata* data,
 WireResult Server::DoQueueOnSubmittedWorkDone(Known<WGPUQueue> queue,
                                               ObjectHandle eventManager,
                                               WGPUFuture future) {
-    auto userdata = MakeUserdata<QueueWorkDoneUserdata>();
+    auto userdata = std::make_unique<QueueWorkDoneUserdata>();
     userdata->queue = queue.AsHandle();
     userdata->eventManager = eventManager;
     userdata->future = future;
