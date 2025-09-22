@@ -70,6 +70,24 @@
       "parentUuid": "74326be4_60382698",
       "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64717925_e8ecf840",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-22T15:57:42Z",
+      "side": 1,
+      "message": "I\u0027m surprised we hit this path since WebGPU validation already enforces `rgba` for `RENDER_ATTACHMENT`. Shall I instead go through this path only if `GetInternalUsage() \u0026 wgpu::TextureUsage::RenderAttachment) \u003d\u003d 0` to avoid this? \n\nI don\u0027t understand how specifying `VK_COMPONENT_SWIZZLE_IDENTITY` for all members in that existing case will solve it as the purpose of this CL is to set it to `r001` for depth-stencil.",
+      "parentUuid": "ba9f6229_c04b4478",
+      "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
