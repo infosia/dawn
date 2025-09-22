@@ -106,6 +106,24 @@
       "parentUuid": "64717925_e8ecf840",
       "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82b58d6a_c72fe4e1",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-22T19:18:22Z",
+      "side": 1,
+      "message": "In the [current CL for Metal](https://dawn-review.googlesource.com/c/dawn/+/258594/14/src/dawn/native/metal/TextureMTL.mm), we apply *unconditionally* the composed swizzle for depth-stencil. Are you suggesting something like that? \n```cpp\n    if (GetTexture()-\u003eGetFormat().HasDepthOrStencil()) {\n        static constexpr wgpu::TextureComponentSwizzle kR001Swizzle \u003d {\n            wgpu::ComponentSwizzle::R,\n            wgpu::ComponentSwizzle::Zero,\n            wgpu::ComponentSwizzle::Zero,\n            wgpu::ComponentSwizzle::One,\n        };\n        if (!AreSwizzleEquivalent(GetSwizzle(), kR001Swizzle) {\n            swizzle \u003d ComposeSwizzle(kR001Swizzle, swizzle);\n        } else {\n            swizzle \u003d /* VK_COMPONENT_SWIZZLE_IDENTITY */\n        }\n    }\n```",
+      "parentUuid": "98fbe0a0_216f27c4",
+      "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
