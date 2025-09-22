@@ -622,10 +622,8 @@ MaybeError BindGroupTracker::ApplyBindGroup(BindGroupIndex index) {
                 DAWN_UNREACHABLE();
                 return {};
             },
-            [](const InputAttachmentBindingInfo&) -> MaybeError {
-                DAWN_UNREACHABLE();
-                return {};
-            }));
+            [](const InputAttachmentBindingInfo&) -> MaybeError { DAWN_UNREACHABLE(); },
+            [](const ExternalTextureBindingInfo&) -> MaybeError { DAWN_UNREACHABLE(); }));
     }
     return {};
 }
@@ -701,6 +699,8 @@ void ComputePassBindGroupTracker::UnapplyComputeBindings(BindGroupIndex index) {
                 DAWN_UNREACHABLE();
             },
             [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); });
+            [](const ExternalTextureBindingInfo&) {
+            DAWN_UNREACHABLE(); });
     }
 }
 
@@ -832,10 +832,8 @@ MaybeError RenderPassBindGroupTracker::Apply() {
                     DAWN_UNREACHABLE();
                     return {};
                 },
-                [](const InputAttachmentBindingInfo&) -> MaybeError {
-                    DAWN_UNREACHABLE();
-                    return {};
-                }));
+                [](const InputAttachmentBindingInfo&) -> MaybeError { DAWN_UNREACHABLE(); },
+                [](const ExternalTextureBindingInfo&) -> MaybeError { DAWN_UNREACHABLE(); }));
         }
     }
 
