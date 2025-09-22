@@ -33,6 +33,24 @@
       "message": "Would be good to explore the approach the relies on string pooling optimizations first, as discussed in our team meeting.",
       "revId": "96eab26db60f85f22420faaa2043a1a4131ea0b0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33268c45_9739db5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-22T17:31:04Z",
+      "side": 1,
+      "message": "Are you thinking of the `MACRO(tint::core::ir::Value, \"tint\", \"core\", \"ir\", \"Value\")` version or the `MACRO(tint::coer::ir::Value\", \"tint::core::ir\", \"Value\")` version?",
+      "parentUuid": "d86747f7_9bb7c311",
+      "revId": "96eab26db60f85f22420faaa2043a1a4131ea0b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
