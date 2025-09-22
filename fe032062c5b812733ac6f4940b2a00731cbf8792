@@ -88,6 +88,24 @@
       "parentUuid": "ba9f6229_c04b4478",
       "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98fbe0a0_216f27c4",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-22T17:32:37Z",
+      "side": 1,
+      "message": "What we should do is similar to Metal: if the swizzle applied is the same as the backend default swizzle (which for DS is R 0 0 1 in Vulkan IIRC) then we keep the swizzle with `IDENTITY`",
+      "parentUuid": "64717925_e8ecf840",
+      "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
