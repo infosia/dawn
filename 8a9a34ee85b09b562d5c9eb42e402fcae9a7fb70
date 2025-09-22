@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "919b9629_21d33517",
+        "filename": "src/dawn/native/webgpu/CaptureContext.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-22T18:27:10Z",
+      "side": 1,
+      "message": "Normal overloading doesn\u0027t work with integer types? (IDK, maybe that\u0027s why you used concepts for it?)",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53c8bc09_bf35ddd3",
+        "filename": "src/dawn/native/webgpu/CaptureContext.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-22T18:27:10Z",
+      "side": 1,
+      "message": "That this concatenates one \"create buffer with ID\" and a bunch of parameters is a bit brittle IMHO, but we can have a proper schema later.",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c3d3e45_f7502706",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-22T18:27:10Z",
+      "side": 1,
+      "message": "WDYT of making objects inherit from \"RecordableObject\" that looks something like:\n\n```\nclass RecordableObject {\n    // The only way to get the ID so we\u0027re sure anything that we get an ID from gets captured.\n    CaptureID EnsureCaptured(CaptureContext* context) {\n       if id !\u003d kNotRecorded/*0*/ { return id }\n       id \u003d context-\u003eGetNewID()\n       CaptureCreation(context)\n       return id\n    }\n    \n    virtual void CaptureCreation(context) \u003d 0;\n}\n```\n\nThis way the capturing of a specific kind of object stays in the implementation of the object which would limit the growth of this file and make it more likely we update the capture when we update the logic in the object?",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4901dce_9d200702",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-22T18:27:10Z",
+      "side": 1,
+      "message": "I\u0027m a bit surprised that the capture context is on the queue instead of the device. Won\u0027t we want to capture other things like buffer mapping, resources destroy, bindless bindgroup updates in the future, things like that?",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "839d0993_d3d739ab",
+        "filename": "src/dawn/replay/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-22T18:27:10Z",
+      "side": 1,
+      "message": "We\u0027ll need a CMake equivalent of this as well.",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b145b43_4b704918",
+        "filename": "src/dawn/replay/Serialization.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-22T18:27:10Z",
+      "side": 1,
+      "message": "Note that we\u0027ll want to separate the parts of replay that are used in the WebGPU backend (basically the schema) from the rest of the replayer, to avoid randomly depending on unrelated replay stuff.",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
