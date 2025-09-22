@@ -22,6 +22,47 @@
       },
       "revId": "0808c6842cfdeb0e1116df1347ca9dd0583468a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa8e9104_39e9087b",
+        "filename": "src/dawn/native/DynamicArrayState.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-22T18:55:09Z",
+      "side": 1,
+      "message": "It is a bit fragile, which is why I added the ASSERT at [1]. Like you guessed, creating the resource from the index directly would cause massive switches and IMHO be a lot more complicated. CQing but I can iterate after landing.",
+      "parentUuid": "fecf0ee5_942e9b7c",
+      "range": {
+        "startLine": 153,
+        "startChar": 26,
+        "endLine": 153,
+        "endChar": 49
+      },
+      "revId": "0808c6842cfdeb0e1116df1347ca9dd0583468a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e85ebc8b_12066b5a",
+        "filename": "src/dawn/native/DynamicArrayState.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-22T18:55:09Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "0808c6842cfdeb0e1116df1347ca9dd0583468a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
