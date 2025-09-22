@@ -1,0 +1,69 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9eb07a0c_78029e77",
+        "filename": "src/tint/lang/core/ir/transform/std140.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-22T19:56:43Z",
+      "side": 1,
+      "message": "This is not used any more. algorithm won\u0027t be needed either.",
+      "fixSuggestions": [
+        {
+          "fixId": "47b3555e_7772c09c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/std140.cc",
+              "range": {
+                "startLine": 30,
+                "startChar": 0,
+                "endLine": 31,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/lang/core/ir/transform/std140.cc",
+              "range": {
+                "startLine": 157,
+                "startChar": 0,
+                "endLine": 158,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/lang/core/ir/transform/std140.cc",
+              "range": {
+                "startLine": 172,
+                "startChar": 0,
+                "endLine": 173,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/lang/core/ir/transform/std140.cc",
+              "range": {
+                "startLine": 183,
+                "startChar": 0,
+                "endLine": 184,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "1d0c5ea9e3d5c157457b7cadfe10cfe4b910b512",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
