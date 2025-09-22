@@ -51,6 +51,24 @@
       "parentUuid": "d86747f7_9bb7c311",
       "revId": "96eab26db60f85f22420faaa2043a1a4131ea0b0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "394699a7_e31cd678",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-22T18:50:57Z",
+      "side": 1,
+      "message": "Either TBH, I think they\u0027d both probably yield greater size wins over this current CL while also retaining the fully qualified name. You could probably also avoid the duplication in the invocation since the macro can concatenate the strings to produce the class name, e.g.:\n```\nMACRO(tint::core::ir, Value)\nor\nMACRO(tint, core, ir, Value)\n```",
+      "parentUuid": "33268c45_9739db5b",
+      "revId": "96eab26db60f85f22420faaa2043a1a4131ea0b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
