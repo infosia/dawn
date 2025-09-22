@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f66480d_e0aa8201",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-09-22T08:13:36Z",
+      "side": 1,
+      "message": "The CL bundles quite a bit of source reformatting with the other changes. If the reformatting is intentional could you make that a different CL so we can discuss that. If it\u0027s not intentional could you revert the formatting changes here. That will make it both easier to discuss the formatting changes and to review the test changes.",
+      "revId": "42ae3259c2480ee620f9b2082d53f5906ed8f32a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
