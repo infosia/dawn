@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51c0187f_5adf45cd",
+        "filename": "generator/templates/art/api_kotlin_function_pointer.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-09-22T11:37:37Z",
+      "side": 1,
+      "message": "Revert this line.",
+      "fixSuggestions": [
+        {
+          "fixId": "d19cbd09_cca27660",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/api_kotlin_function_pointer.kt",
+              "range": {
+                "startLine": 28,
+                "startChar": 0,
+                "endLine": 28,
+                "endChar": 0
+              },
+              "replacement": "Re\n"
+            }
+          ]
+        }
+      ],
+      "revId": "93d635d4e3665ab7de4f35f5bc1ea01345cfb46b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c007493_e37a688f",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-09-22T11:37:37Z",
+      "side": 1,
+      "message": "Just one usage. Use inline instead at the place of usage.",
+      "fixSuggestions": [
+        {
+          "fixId": "02828078_9c39da3e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/kotlin_record_conversion.cpp",
+              "range": {
+                "startLine": 55,
+                "startChar": 0,
+                "endLine": 56,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "generator/templates/art/kotlin_record_conversion.cpp",
+              "range": {
+                "startLine": 57,
+                "startChar": 0,
+                "endLine": 58,
+                "endChar": 0
+              },
+              "replacement": "                {% if as_varName(member.name) \u003d\u003d \u0027callback\u0027 %}\n"
+            }
+          ]
+        }
+      ],
+      "revId": "93d635d4e3665ab7de4f35f5bc1ea01345cfb46b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6324f3fa_61444f6e",
+        "filename": "generator/templates/art/structures.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-09-22T11:37:37Z",
+      "side": 1,
+      "message": "Remove this include.",
+      "fixSuggestions": [
+        {
+          "fixId": "7b40a3aa_9a116661",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/structures.cpp",
+              "range": {
+                "startLine": 41,
+                "startChar": 0,
+                "endLine": 42,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "93d635d4e3665ab7de4f35f5bc1ea01345cfb46b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
