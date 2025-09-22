@@ -69,6 +69,24 @@
       "parentUuid": "35d018c5_45f58204",
       "revId": "beccfd7ed4e7851bd58c646b18abeae1ab769ad2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6771a91b_0b5d74fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-22T18:52:31Z",
+      "side": 1,
+      "message": "I\u0027m fairly confident at this point that this is caused by the Broadwell vs. Ice Lake difference. I\u0027m unable to find any significant difference when running locally regardless of test args/xvfb usage/etc.",
+      "parentUuid": "4d02db80_ef82e32b",
+      "revId": "beccfd7ed4e7851bd58c646b18abeae1ab769ad2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
