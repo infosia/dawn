@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "435f27b7_8f1d26ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-22T18:59:36Z",
+      "side": 1,
+      "message": "PTAL again!",
+      "revId": "aa739f404181618388872399e22db77e32c72024",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cafc391c_45aa4ce9",
@@ -35,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba3b15bb_1797e968",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-22T18:59:36Z",
+      "side": 1,
+      "message": "It should be ok, because this is gated under a larger tint option \"disable robustness\" [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/spirv/writer/raise/raise.cc;drc\u003d89f6321d4c72ccc4b16de1d3e700e66b878e624b;l\u003d83).",
+      "parentUuid": "cafc391c_45aa4ce9",
+      "revId": "aa739f404181618388872399e22db77e32c72024",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cef620d5_15d5fcf4",
@@ -48,6 +83,24 @@
       "writtenOn": "2025-09-10T16:38:10Z",
       "side": 1,
       "message": "Same for `spriv::write:Options::disable_runtime_sized_array_index_clamping` here.",
+      "revId": "aa739f404181618388872399e22db77e32c72024",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28fe02ad_0e50af21",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-22T18:59:36Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "cef620d5_15d5fcf4",
       "revId": "aa739f404181618388872399e22db77e32c72024",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
