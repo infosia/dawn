@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c454249_e0f3ea66",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-22T21:31:22Z",
+      "side": 1,
+      "message": "PTAL\n\nIt looks like we have sufficient spare CI capacity to not have this block initial migration, but getting the relevant tests to run on Swarming will be a priority after initial migration is complete.",
+      "revId": "7c130e444ff77028e8567d3cb94032c3a0453d8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
