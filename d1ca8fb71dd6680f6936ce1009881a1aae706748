@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bc60269_094d93d4",
+        "filename": "generator/templates/art/structures.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-09-22T16:39:16Z",
+      "side": 1,
+      "message": "Moved it from JNIClasses.cpp to here.",
+      "fixSuggestions": [
+        {
+          "fixId": "50b87db5_9f27505f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/structures.cpp",
+              "range": {
+                "startLine": 174,
+                "startChar": 0,
+                "endLine": 176,
+                "endChar": 0
+              },
+              "replacement": "            jmethodID getter \u003d env-\u003eGetMethodID(clz, \"getExecutor\", \"()Ljava/util/concurrent/Executor;\");\n            CallGetter(env, getter, obj, \u0026kotlinRecord.executor);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d1ca8fb71dd6680f6936ce1009881a1aae706748",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

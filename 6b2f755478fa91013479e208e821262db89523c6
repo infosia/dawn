@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "88ff7370_18aea7ea",
+        "filename": "generator/templates/art/JNIClasses.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-09-22T16:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51311ea1_a6ea7a1f",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 108
+      },
+      "revId": "6b2f755478fa91013479e208e821262db89523c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb65f512_9e75d07f",
@@ -71,6 +95,30 @@
           ]
         }
       ],
+      "revId": "6b2f755478fa91013479e208e821262db89523c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f7a8eef_f8f6f827",
+        "filename": "generator/templates/art/api_kotlin_function_pointer.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-09-22T16:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb65f512_9e75d07f",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 5
+      },
       "revId": "6b2f755478fa91013479e208e821262db89523c6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -126,6 +174,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c23a6c6b_0aee4490",
+        "filename": "generator/templates/art/api_kotlin_function_pointer.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-09-22T16:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebd8a7b2_8c749df4",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 11
+      },
+      "revId": "6b2f755478fa91013479e208e821262db89523c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1188107_ad7d0350",
@@ -167,6 +239,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9246ceec_d4529e85",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-09-22T16:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1188107_ad7d0350",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 27
+      },
+      "revId": "6b2f755478fa91013479e208e821262db89523c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b27cfc3d_190a6e74",
@@ -180,6 +276,30 @@
       "writtenOn": "2025-09-22T15:20:26Z",
       "side": 1,
       "message": "We don\u0027t need the \u0027no executor\u0027 case at all; since \u0027executor\u0027 isn\u0027t nullable, and we want to ensure the same code path is used to reduce complexity.",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 30
+      },
+      "revId": "6b2f755478fa91013479e208e821262db89523c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b2665e4_973373b3",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-09-22T16:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b27cfc3d_190a6e74",
       "range": {
         "startLine": 179,
         "startChar": 0,
