@@ -83,7 +83,9 @@ ResultOrError<UnpackedPtr<TexelBufferViewDescriptor>> ValidateTexelBufferViewDes
 class BufferBase : public SharedResource {
   public:
     enum class BufferState {
+        UnmapOperation,
         Unmapped,
+        MapOperation,
         PendingMap,
         Mapped,
         MappedAtCreation,
@@ -198,6 +200,8 @@ class BufferBase : public SharedResource {
 
     // Updates internal state to reflect that the buffer is now mapped.
     void FinalizeMap(BufferState newState);
+
+    MaybeError TransitionState(BufferState currentState, BufferState desiredState);
 
     const uint64_t mSize = 0;
     const wgpu::BufferUsage mUsage = wgpu::BufferUsage::None;

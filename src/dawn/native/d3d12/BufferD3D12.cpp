@@ -511,9 +511,11 @@ void Buffer::FinalizeMapImpl() {}
 
 void Buffer::UnmapImpl(BufferState fromState) {
     GetD3D12Resource()->Unmap(0, &mWrittenMappedRange);
+    // TODO: Does this race with explicit APIDestroy() call?
     mMappedData = nullptr;
     mWrittenMappedRange = {0, 0};
 
+    // TODO: Does this need the device lock?
     // When buffers are mapped, they are locked to keep them in resident memory. We must unlock
     // them when they are unmapped.
     if (mResourceAllocation.GetInfo().mMethod != AllocationMethod::kExternal) {
