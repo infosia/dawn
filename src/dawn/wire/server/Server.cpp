@@ -61,6 +61,7 @@ Server::Server(const DawnProcTable& procs,
 Server::~Server() {
     // Un-set the error and lost callbacks since we cannot forward them
     // after the server has been destroyed.
+    auto serverGuard = GetGuard();
     for (WGPUDevice device : Objects<WGPUDevice>().GetAllHandles()) {
         ClearDeviceCallbacks(device);
     }
@@ -70,6 +71,7 @@ Server::~Server() {
 WireResult Server::InjectBuffer(WGPUBuffer buffer,
                                 const Handle& handle,
                                 const Handle& deviceHandle) {
+    auto serverGuard = GetGuard();
     DAWN_ASSERT(buffer != nullptr);
     Known<WGPUDevice> device;
     WIRE_TRY(Objects<WGPUDevice>().Get(deviceHandle.id, &device));
@@ -94,6 +96,7 @@ WireResult Server::InjectBuffer(WGPUBuffer buffer,
 WireResult Server::InjectTexture(WGPUTexture texture,
                                  const Handle& handle,
                                  const Handle& deviceHandle) {
+    auto serverGuard = GetGuard();
     DAWN_ASSERT(texture != nullptr);
     Known<WGPUDevice> device;
     WIRE_TRY(Objects<WGPUDevice>().Get(deviceHandle.id, &device));
@@ -118,6 +121,7 @@ WireResult Server::InjectTexture(WGPUTexture texture,
 WireResult Server::InjectSurface(WGPUSurface surface,
                                  const Handle& handle,
                                  const Handle& instanceHandle) {
+    auto serverGuard = GetGuard();
     DAWN_ASSERT(surface != nullptr);
     Known<WGPUInstance> instance;
     WIRE_TRY(Objects<WGPUInstance>().Get(instanceHandle.id, &instance));
@@ -140,6 +144,7 @@ WireResult Server::InjectSurface(WGPUSurface surface,
 }
 
 WireResult Server::InjectInstance(WGPUInstance instance, const Handle& handle) {
+    auto serverGuard = GetGuard();
     DAWN_ASSERT(instance != nullptr);
     Reserved<WGPUInstance> data;
     WIRE_TRY(Objects<WGPUInstance>().Allocate(&data, handle));
@@ -156,6 +161,7 @@ WireResult Server::InjectInstance(WGPUInstance instance, const Handle& handle) {
 }
 
 WGPUDevice Server::GetDevice(uint32_t id, uint32_t generation) {
+    auto serverGuard = GetGuard();
     Known<WGPUDevice> device;
     if (Objects<WGPUDevice>().Get(id, &device) != WireResult::Success ||
         device->generation != generation) {
@@ -164,7 +170,8 @@ WGPUDevice Server::GetDevice(uint32_t id, uint32_t generation) {
     return device->handle;
 }
 
-bool Server::IsDeviceKnown(WGPUDevice device) const {
+bool Server::IsDeviceKnown(WGPUDevice device) {
+    auto serverGuard = GetGuard();
     return Objects<WGPUDevice>().IsKnown(device);
 }
 
