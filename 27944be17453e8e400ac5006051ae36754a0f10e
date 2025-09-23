@@ -16,6 +16,23 @@
       "message": "Let me know if you can think of another reviewer for this Vulkan-specific error.",
       "revId": "27944be17453e8e400ac5006051ae36754a0f10e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53686d9f_d022aa61",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2131,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-23T11:42:31Z",
+      "side": 1,
+      "message": "By the way, I\u0027m failing to reproduce this issue locally on my macOS machine with this command line. Do you see something wrong or is it not possible to reproduce without Linux or Windows?\n\n```\n$ ./out/Release/dawn_end2end_tests --enable-backend-validation --use-gpu-in-tests --gtest_filter\u003dClipSpaceTest.ClipSpace/Vulkan*\nWarning:  Unused argument: --use-gpu-in-tests\n2025-09-23 13:36:02.606 dawn_end2end_tests[66339:25537510] Metal API Validation Enabled\nInfo: Testing configuration\n---------------------\nUseWire: false\nImplicit device synchronization: disabled\nRun suppressed tests: false\nBackendValidation: partial\nBeginCaptureOnStartup: false\n\nSystem adapters: \n - \"Apple M1 Pro\" - \"Metal driver on macOS Version 15.6.1 (Build 24G90) [Selected]\"\n   type: Integrated GPU, backend: Metal, compatibilityMode: false\n   vendorId: 0x106B, deviceId: 0x0000\n   vendorName: apple, architecture: metal-3\n - \"SwiftShader Device (LLVM 10.0.0)\" - \"SwiftShader driver 5.0.0 [Selected]\"\n   type: CPU, backend: Vulkan, compatibilityMode: false\n   vendorId: 0x1AE0, deviceId: 0xC0DE\n   vendorName: google, architecture: swiftshader\n - \"Null backend\" - \" [Selected]\"\n   type: CPU, backend: Null, compatibilityMode: false\n   vendorId: 0x0000, deviceId: 0x0000\n\nIMPORTANT DEBUGGING NOTE: batches of tests are run inside their\nown process. For debugging a test inside a debugger, use the\n--gtest_filter\u003d\u003cyour_test_name\u003e flag along with\n--single-process-tests.\nUsing sharding settings from environment. This is shard 0/1\nUsing 1 parallel jobs.\nWarning:  Unused argument: --single-process-tests\nWarning:  Unused argument: --test-launcher-output\u003d/var/folders/v7/ws9m3q151hdb_pfby31y1lx0005z_t/T/scoped_dirnC5Bgb/YB98bM/test_results.xml\nWarning:  Unused argument: --test-launcher-retries-left\u003d0\nWarning:  Unused argument: --use-gpu-in-tests\n2025-09-23 13:36:02.852 dawn_end2end_tests[66340:25537522] Metal API Validation Enabled\nInfo: Testing configuration\n---------------------\nUseWire: false\nImplicit device synchronization: disabled\nRun suppressed tests: false\nBackendValidation: partial\nBeginCaptureOnStartup: false\n\nSystem adapters: \n - \"Apple M1 Pro\" - \"Metal driver on macOS Version 15.6.1 (Build 24G90) [Selected]\"\n   type: Integrated GPU, backend: Metal, compatibilityMode: false\n   vendorId: 0x106B, deviceId: 0x0000\n   vendorName: apple, architecture: metal-3\n - \"SwiftShader Device (LLVM 10.0.0)\" - \"SwiftShader driver 5.0.0 [Selected]\"\n   type: CPU, backend: Vulkan, compatibilityMode: false\n   vendorId: 0x1AE0, deviceId: 0xC0DE\n   vendorName: google, architecture: swiftshader\n - \"Null backend\" - \" [Selected]\"\n   type: CPU, backend: Null, compatibilityMode: false\n   vendorId: 0x0000, deviceId: 0x0000\n\nNote: Google Test filter \u003d ClipSpaceTest.ClipSpace/Vulkan_SwiftShader_Device__LLVM_10_0_0\n[\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d] Running 1 test from 1 test suite.\n[----------] Global test environment set-up.\n[----------] 1 test from ClipSpaceTest\n[ RUN      ] ClipSpaceTest.ClipSpace/Vulkan_SwiftShader_Device__LLVM_10_0_0\n[       OK ] ClipSpaceTest.ClipSpace/Vulkan_SwiftShader_Device__LLVM_10_0_0 (39 ms)\n[----------] 1 test from ClipSpaceTest (42 ms total)\n\n[----------] Global test environment tear-down\n[\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d] 1 test from 1 test suite ran. (43 ms total)\n[  PASSED  ] 1 test.\n[1/1] ClipSpaceTest.ClipSpace/Vulkan_SwiftShader_Device__LLVM_10_0_0 (39 ms)\nSUCCESS: all tests passed.\nTests took 0 seconds.\n```",
+      "revId": "27944be17453e8e400ac5006051ae36754a0f10e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
