@@ -35,6 +35,7 @@
 #include <functional>
 #include <map>
 #include <memory>
+#include <mutex>
 #include <utility>
 
 #include "dawn/common/FutureUtils.h"
@@ -87,10 +88,10 @@ class TrackedEvent : public RefCounted {
     enum class EventState {
         Pending,
         Ready,
-        Running,
         Complete,
     };
-    std::atomic<EventState> mEventState = EventState::Pending;
+    EventState mEventState = EventState::Pending;
+    std::once_flag mFlag;
 };
 
 // Subcomponent which tracks callback events for the Future-based callback
