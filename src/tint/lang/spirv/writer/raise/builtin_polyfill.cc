@@ -1317,9 +1317,9 @@ struct State {
 Result<SuccessType> BuiltinPolyfill(core::ir::Module& ir, PolyfillConfig config) {
     auto result = ValidateAndDumpIfNeeded(ir, "spirv.BuiltinPolyfill",
                                           core::ir::Capabilities{
+                                              core::ir::Capability::kAllow8BitIntegers,
                                               core::ir::Capability::kAllowDuplicateBindings,
                                           });
-
     if (result != Success) {
         return result.Failure();
     }
