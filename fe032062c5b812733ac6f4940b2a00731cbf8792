@@ -232,6 +232,24 @@
       "parentUuid": "e729ab30_042ab755",
       "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "048de836_70ff8c4e",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-23T18:08:16Z",
+      "side": 1,
+      "message": "If `depthStencilSwizzleOneSupport` is false, we need to replace ONE with ALPHA to take advantage of the default swizzle of r001 I guess?",
+      "parentUuid": "a42a16eb_6a99d649",
+      "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

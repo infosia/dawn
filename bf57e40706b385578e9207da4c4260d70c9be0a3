@@ -63,6 +63,30 @@
       },
       "revId": "bf57e40706b385578e9207da4c4260d70c9be0a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac4a3c01_a9034172",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2127,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-23T18:08:16Z",
+      "side": 1,
+      "message": "Ok sounds good to keep as is but we need to explain why we do this.",
+      "parentUuid": "bf2eab8e_1edef5a6",
+      "range": {
+        "startLine": 2126,
+        "startChar": 51,
+        "endLine": 2127,
+        "endChar": 97
+      },
+      "revId": "bf57e40706b385578e9207da4c4260d70c9be0a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
