@@ -124,6 +124,24 @@
       "parentUuid": "98fbe0a0_216f27c4",
       "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3030edd_9f5e5aa0",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-23T12:22:29Z",
+      "side": 1,
+      "message": "Yeah something like that, or even better have a kBackendDefaultSwizzle computed (with a condition on color vs DS) then a check that the requested swizzle is equivalent before deciding to do identity or not.",
+      "parentUuid": "82b58d6a_c72fe4e1",
+      "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
