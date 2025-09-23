@@ -160,6 +160,24 @@
       "parentUuid": "d3030edd_9f5e5aa0",
       "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c97cec2a_ff5e9e8e",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-23T13:19:26Z",
+      "side": 1,
+      "message": "https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#textures-component-swizzle\n\nhttps://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#images-component-substitution\n\nAlso \"Table 17. Component Mappings Equivalent To VK_COMPONENT_SWIZZLE_IDENTITY\"\n\nTurns out we need to check VkPhysicalDeviceMaintenance5Properties::depthStencilSwizzleOneSupport on Vulkan for that extension :/ though (or we could use ALPHA instead as that\u0027s supposed to be one)",
+      "parentUuid": "f2628910_0598ad71",
+      "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
