@@ -89,6 +89,8 @@ enum class Capability : uint8_t {
     kAllowResourceBinding,
     /// Allows a pointer to a handle type
     kAllowPointerToHandle,
+    /// Allows usage of blend_src on non-struct members, used by SPIRV and GLSL backends
+    kAllowNonMemberBlendSrc
 };
 
 /// Capabilities is a set of Capability
