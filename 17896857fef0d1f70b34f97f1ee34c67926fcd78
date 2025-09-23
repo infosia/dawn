@@ -472,6 +472,24 @@
       "parentUuid": "01297296_6df78166",
       "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4433174b_868b0c5d",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-23T09:19:48Z",
+      "side": 1,
+      "message": "The CTS covers it yes. See https://github.com/gpuweb/cts/blob/61748062cc7765906cde249cbfc3b37e47b73a64/src/webgpu/api/operation/texture_view/texture_component_swizzle.spec.ts#L298 and the following code: \n```js\n    const descriptor: GPUTextureDescriptor \u003d {\n      label: \u0027swizzle test texture\u0027,\n      format,\n      size,\n      usage:\n        GPUTextureUsage.COPY_DST |\n        GPUTextureUsage.TEXTURE_BINDING |\n        (isTextureFormatUsableAsRenderAttachment(t.device, format)\n          ? GPUTextureUsage.RENDER_ATTACHMENT\n          : 0),\n      sampleCount: isMultisampledInput(input) ? 4 : 1,\n    };\n    const { texels: srcTexelViews, texture } \u003d\n      await createTextureWithRandomDataAndGetTexelsForEachAspect(t, descriptor);\n\n...\n\n      const textureView \u003d texture.createView({\n        label: `swizzle texture view(${swizzle})`,\n        swizzle,\n        aspect,\n        usage: GPUTextureUsage.TEXTURE_BINDING,\n      });\n```",
+      "parentUuid": "30046830_0e364134",
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
