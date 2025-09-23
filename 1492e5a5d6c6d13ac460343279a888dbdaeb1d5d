@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1efbc98_c2e7032f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-23T13:49:23Z",
+      "side": 1,
+      "message": "PTAL.",
+      "revId": "1492e5a5d6c6d13ac460343279a888dbdaeb1d5d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb9b9195_27fb0782",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1959,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-23T13:49:23Z",
+      "side": 1,
+      "message": "This is here because CheckType doesn\u0027t return, so wanted to deal with the bad case regardless of it\u0027s outcome.",
+      "revId": "1492e5a5d6c6d13ac460343279a888dbdaeb1d5d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
