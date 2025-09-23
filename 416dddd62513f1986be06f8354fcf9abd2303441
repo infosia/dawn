@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6cd36b6_ee7658d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-23T15:05:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76731152_e72438a8",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 9
+      },
+      "revId": "416dddd62513f1986be06f8354fcf9abd2303441",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8631c552_b2990044",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-09-22T20:53:40Z",
       "side": 1,
       "message": "Why is this needed? Don\u0027t the specific cases above handle it already?",
+      "revId": "416dddd62513f1986be06f8354fcf9abd2303441",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48e2a474_46b3be8b",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1635,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-23T15:05:21Z",
+      "side": 1,
+      "message": "Only if the variable being passed in is explicitly typed to Block/Function/etc, if you have a CastableBase (the superclass), the compiler cannot select the right specialization, since it requires runtime type inspection. We do something similar below for AddDeclarationNote.\n\nUsing a CastableBase allows for the CheckLocation logic to handle function params, returns and MSVs without a bunch of type swizzling.",
+      "parentUuid": "8631c552_b2990044",
       "revId": "416dddd62513f1986be06f8354fcf9abd2303441",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -64,6 +106,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f7f3869_5f343bde",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2547,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-23T15:05:21Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9124c01b_b5c95b12",
+      "range": {
+        "startLine": 2546,
+        "startChar": 0,
+        "endLine": 2547,
+        "endChar": 60
+      },
+      "revId": "416dddd62513f1986be06f8354fcf9abd2303441",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11a3a6e8_9ea262a4",
@@ -81,6 +147,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fc4fc33_5d553b8c",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2556,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-23T15:05:21Z",
+      "side": 1,
+      "message": "I thought I had unified these, I must have Ctrl+Z\u0027d one too many times when moving things around",
+      "parentUuid": "11a3a6e8_9ea262a4",
+      "revId": "416dddd62513f1986be06f8354fcf9abd2303441",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c514a19_fede3294",
@@ -94,6 +178,30 @@
       "writtenOn": "2025-09-22T20:53:40Z",
       "side": 1,
       "message": "```suggestion\n        auto* mv \u003d var-\u003eResult()-\u003eType()-\u003eAs\u003ccore::type::MemoryView\u003e();\n        if (mv \u0026\u0026 mv-\u003eAddressSpace() \u003d\u003d AddressSpace::kOut) {\n```",
+      "range": {
+        "startLine": 2557,
+        "startChar": 0,
+        "endLine": 2558,
+        "endChar": 61
+      },
+      "revId": "416dddd62513f1986be06f8354fcf9abd2303441",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d57b9e8_2e39346e",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2558,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-23T15:05:21Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8c514a19_fede3294",
       "range": {
         "startLine": 2557,
         "startChar": 0,
