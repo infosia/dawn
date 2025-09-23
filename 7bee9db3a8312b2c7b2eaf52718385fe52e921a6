@@ -3,6 +3,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "15c3fc6e_808cfbad",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-23T05:42:30Z",
+      "side": 1,
+      "message": "nit: use AreSwizzleEquivalent",
+      "range": {
+        "startLine": 284,
+        "startChar": 55,
+        "endLine": 286,
+        "endChar": 49
+      },
+      "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7486c8d_b07644ff",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-23T05:42:30Z",
+      "side": 1,
+      "message": "This should probably be in `Texture.h` after all, I didn\u0027t realize we were going to use it in more places.",
+      "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2ba37c8a_f124a314",
         "filename": "src/dawn/native/opengl/TextureGL.cpp",
         "patchSetId": 20
@@ -14,6 +54,70 @@
       "writtenOn": "2025-09-15T09:35:10Z",
       "side": 1,
       "message": "I would need to access `swizzle` in this static function (instead of textureViewDescriptor.Has\u003cTextureComponentSwizzleDescriptor\u003e()` but since TextureView has not been created in [1], it\u0027s not possible for now. \nDo you know if this requires refactoring or if there is another way I\u0027m not seeing?",
+      "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f03ec6e_8c52cee8",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-23T05:42:30Z",
+      "side": 1,
+      "message": "(Didn\u0027t we delete UsesNonDefaultSwizzle?)\n\nWhat we actually want is to know whether the swizzle we *apply* is different from the swizzle we *would apply* for non-swizzled view.\nThis would require applying the same logic you have above in CommandBufferGL in this CL. But it is also not that trivial to do correctly. We should not try to do it for now, it doesn\u0027t really matter. (Especially not for GL - it only affects Desktop GL, as GLES doesn\u0027t have Texture Views.)",
+      "parentUuid": "2ba37c8a_f124a314",
+      "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09da7537_60e2194b",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-23T05:42:30Z",
+      "side": 1,
+      "message": "... which would mean just deleting this code.",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 9
+      },
+      "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2976ad6b_373f3ae3",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-23T05:42:30Z",
+      "side": 1,
+      "message": "nit: use AreSwizzleEquivalent with kRGBASwizzle",
+      "range": {
+        "startLine": 140,
+        "startChar": 12,
+        "endLine": 141,
+        "endChar": 92
+      },
       "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
