@@ -30,6 +30,7 @@
 
 #include <tuple>
 
+#include "dawn/common/Mutex.h"
 #include "dawn/dawn_proc_table.h"
 #include "dawn/wire/ChunkedCommandHandler.h"
 #include "dawn/wire/Wire.h"
@@ -45,13 +46,17 @@ namespace dawn::wire::server {
         ServerBase() = default;
         ~ServerBase() override = default;
 
+        RecursiveMutex::AutoLock GetGuard() { return RecursiveMutex::AutoLock(&mMutex); }
+
       protected:
         template <typename T>
         const KnownObjects<T>& Objects() const {
+            DAWN_ASSERT(mMutex.IsLockedByCurrentThread());
             return std::get<KnownObjects<T>>(mKnown);
         }
         template <typename T>
         KnownObjects<T>& Objects() {
+            DAWN_ASSERT(mMutex.IsLockedByCurrentThread());
             return std::get<KnownObjects<T>>(mKnown);
         }
 
@@ -98,6 +103,16 @@ namespace dawn::wire::server {
         {% endfor %}
 
         //* The list of known IDs for each object type.
+        // We use an explicit Mutex to protect these lists instead of MutexProtected because:
+        //   1) It allows us to return AutoLock objects to hold the lock across function scopes.
+        //   2) It allows us to leverage the assertion tools to ensure that we are holding the
+        //      lock when we need to be.
+        // Also note that we are currently using a RecursiveMutex because our testing
+        // infrastructure revolving around the wire doesn't actually create different threads
+        // for the client and server, so when a client sends a command that results in an
+        // immediate response from the server, we may end up acquiring the lock more than
+        // once on the same thread.
+        RecursiveMutex mMutex;
         std::tuple<
             {% for type in by_category["object"] %}
                 KnownObjects<{{as_cType(type.name)}}>{{ ", " if not loop.last else "" }}
