@@ -178,6 +178,24 @@
       "parentUuid": "f2628910_0598ad71",
       "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6ef7732_7ffc279d",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-23T16:35:08Z",
+      "side": 1,
+      "message": "I\u0027ve tried something in latest patchset to avoid VK_COMPONENT_SWIZZLE_IDENTITY. WDYT?",
+      "parentUuid": "c97cec2a_ff5e9e8e",
+      "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -69,6 +69,24 @@
       "parentUuid": "b1337a11_e0956a12",
       "revId": "27944be17453e8e400ac5006051ae36754a0f10e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfaf5973_ed2fd44a",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2131,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-23T16:35:08Z",
+      "side": 1,
+      "message": "This only works for `dawn_end2end_tests` sadly. Chrome doesn\u0027t seem to use `libvulkan.dylib`. Any idea where to paste this file so that Chrome picks it up. Note that I use `--enable-dawn-backend-validation` as well when running Chrome.",
+      "parentUuid": "6a689b95_c0d361b7",
+      "revId": "27944be17453e8e400ac5006051ae36754a0f10e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
