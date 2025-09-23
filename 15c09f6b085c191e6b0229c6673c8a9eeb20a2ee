@@ -16,6 +16,23 @@
       "message": "@Antonio and @Corentin, PTAL.",
       "revId": "15c09f6b085c191e6b0229c6673c8a9eeb20a2ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fc065e4_a350a6f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-09-23T17:36:52Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "15c09f6b085c191e6b0229c6673c8a9eeb20a2ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
