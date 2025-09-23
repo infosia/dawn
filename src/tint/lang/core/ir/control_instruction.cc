@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/core/ir/block.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::ControlInstruction);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::ControlInstruction, "ir::ControlInstruction");
 
 namespace tint::core::ir {
 

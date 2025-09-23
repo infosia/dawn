@@ -31,7 +31,7 @@
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/store.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Let);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Let, "ir::Let");
 
 namespace tint::core::ir {
 

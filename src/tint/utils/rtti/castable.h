@@ -73,16 +73,17 @@ namespace tint {
 /// True if all template types that are not Ignore derive from CastableBase
 template <typename... TYPES>
 static constexpr bool IsCastable =
-    ((tint::traits::IsTypeOrDerived<TYPES, CastableBase> || std::is_same_v<TYPES, Ignore>)&&...) &&
+    ((tint::traits::IsTypeOrDerived<TYPES, CastableBase> || std::is_same_v<TYPES, Ignore>) &&
+     ...) &&
     !(std::is_same_v<TYPES, Ignore> && ...);
 
 /// Helper macro to instantiate the TypeInfo<T> template for `CLASS`.
-#define TINT_INSTANTIATE_TYPEINFO(CLASS)                        \
+#define TINT_INSTANTIATE_TYPEINFO(CLASS, NAME)                  \
     TINT_CASTABLE_PUSH_DISABLE_WARNINGS();                      \
     template <>                                                 \
     const tint::TypeInfo tint::detail::TypeInfoOf<CLASS>::info{ \
         &tint::detail::TypeInfoOf<CLASS::TrueBase>::info,       \
-        #CLASS,                                                 \
+        NAME,                                                   \
         tint::TypeCode::Of<CLASS>(),                            \
         tint::TypeCodeSet::OfHierarchy<CLASS>(),                \
     };                                                          \

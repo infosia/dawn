@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/sem/variable.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::Array);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::Array, "sem::Array");
 
 namespace tint::sem {
 

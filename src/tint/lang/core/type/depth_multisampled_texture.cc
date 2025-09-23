@@ -34,7 +34,8 @@
 #include "src/tint/utils/math/hash.h"
 #include "src/tint/utils/text/string_stream.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::DepthMultisampledTexture);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::DepthMultisampledTexture,
+                          "ty::DepthMultisampledTexture");
 
 namespace tint::core::type {
 

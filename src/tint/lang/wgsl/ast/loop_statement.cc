@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::LoopStatement);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::LoopStatement, "ast::LoopStatement");
 
 namespace tint::ast {
 

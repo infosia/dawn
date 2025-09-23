@@ -35,7 +35,7 @@
 #include "src/tint/utils/math/hash.h"
 #include "src/tint/utils/rtti/castable.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::String);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::String, "ty::String");
 
 namespace tint::core::type {
 

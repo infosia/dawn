@@ -29,7 +29,7 @@
 
 #include <utility>
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::Call);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::Call, "sem::Call");
 
 namespace tint::sem {
 

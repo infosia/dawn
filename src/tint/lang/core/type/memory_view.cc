@@ -30,7 +30,7 @@
 #include "src/tint/lang/core/type/manager.h"
 #include "src/tint/utils/diagnostic/diagnostic.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::MemoryView);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::MemoryView, "ty::MemoryView");
 
 namespace tint::core::type {
 

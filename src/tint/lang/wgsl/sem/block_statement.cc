@@ -31,9 +31,9 @@
 #include "src/tint/lang/wgsl/ast/function.h"
 #include "src/tint/lang/wgsl/sem/function.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::BlockStatement);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::FunctionBlockStatement);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::LoopBlockStatement);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::BlockStatement, "sem::BlockStatement");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::FunctionBlockStatement, "sem::FunctionBlockStatement");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::LoopBlockStatement, "sem::LoopBlockStatement");
 
 namespace tint::sem {
 

@@ -33,7 +33,8 @@
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/utils/ice/ice.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::glsl::ir::CombinedTextureSamplerVar);
+TINT_INSTANTIATE_TYPEINFO(tint::glsl::ir::CombinedTextureSamplerVar,
+                          "glsl::CombinedTextureSamplerVar");
 
 namespace tint::glsl::ir {
 

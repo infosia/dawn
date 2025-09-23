@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/wgsl/resolver/incomplete_type.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::resolver::IncompleteType);
+TINT_INSTANTIATE_TYPEINFO(tint::resolver::IncompleteType, "resolver::IncompleteType");
 
 namespace tint::resolver {
 

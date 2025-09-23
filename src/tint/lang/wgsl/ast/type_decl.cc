@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/templated_identifier.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::TypeDecl);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::TypeDecl, "ast::TypeDecl");
 
 namespace tint::ast {
 

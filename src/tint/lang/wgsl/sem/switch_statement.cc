@@ -30,9 +30,9 @@
 #include "src/tint/lang/wgsl/ast/case_statement.h"
 #include "src/tint/lang/wgsl/ast/switch_statement.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::CaseStatement);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::CaseSelector);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::SwitchStatement);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::CaseStatement, "sem::CaseStatment");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::CaseSelector, "sem::CaseSelector");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::SwitchStatement, "sem::SwitchStatement");
 
 namespace tint::sem {
 

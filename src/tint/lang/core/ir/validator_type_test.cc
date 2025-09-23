@@ -62,7 +62,7 @@ class NonCoreType final : public Castable<NonCoreType, core::type::Type> {
 };
 }  // namespace tint::mock
 
-TINT_INSTANTIATE_TYPEINFO(tint::mock::NonCoreType);
+TINT_INSTANTIATE_TYPEINFO(tint::mock::NonCoreType, "ir::NonCoreType");
 
 namespace tint::core::ir {
 

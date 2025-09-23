@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/core/type/manager.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::Function);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::Function, "ty::Function");
 
 namespace tint::core::type {
 

@@ -50,7 +50,7 @@
 #include "src/tint/lang/core/type/vector.h"
 #include "src/tint/utils/rtti/switch.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::Type);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::Type, "ty::Type");
 
 namespace tint::core::type {
 

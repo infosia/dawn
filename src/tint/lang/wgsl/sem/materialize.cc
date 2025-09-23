@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/wgsl/sem/materialize.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::Materialize);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::Materialize, "sem::Materialze");
 
 namespace tint::sem {
 Materialize::Materialize(const ValueExpression* expr,

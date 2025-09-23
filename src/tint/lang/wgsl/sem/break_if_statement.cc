@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/break_if_statement.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::BreakIfStatement);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::BreakIfStatement, "sem::BreakIfStatement");
 
 namespace tint::sem {
 

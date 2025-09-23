@@ -33,7 +33,7 @@
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/utils/ice/ice.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::wgsl::ir::BuiltinCall);
+TINT_INSTANTIATE_TYPEINFO(tint::wgsl::ir::BuiltinCall, "wgsl::BuiltinCall");
 
 namespace tint::wgsl::ir {
 

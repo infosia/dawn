@@ -29,8 +29,8 @@
 
 #include "src/tint/lang/wgsl/ast/identifier.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::NamedOverrideArrayCount);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::UnnamedOverrideArrayCount);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::NamedOverrideArrayCount, "sem::NamedOverrideArrayCount");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::UnnamedOverrideArrayCount, "sem::UnnamedOverrideArrayCount");
 
 namespace tint::sem {
 

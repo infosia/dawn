@@ -33,7 +33,7 @@
 #include "src/tint/lang/wgsl/ast/type_decl.h"
 #include "src/tint/utils/rtti/switch.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::Module);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::Module, "ast::Module");
 
 namespace tint::ast {
 

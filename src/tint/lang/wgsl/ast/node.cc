@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/wgsl/ast/node.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::Node);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::Node, "ast::Node");
 
 namespace tint::ast {
 

@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::IdentifierExpression);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::IdentifierExpression, "ast::IdentifierExpression");
 
 namespace tint::ast {
 

@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/core/type/node.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::Node);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::Node, "ty::Node");
 
 namespace tint::core::type {
 

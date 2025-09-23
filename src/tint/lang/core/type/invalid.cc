@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/core/type/manager.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::Invalid);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::Invalid, "ty::Invalid");
 
 namespace tint::core::type {
 

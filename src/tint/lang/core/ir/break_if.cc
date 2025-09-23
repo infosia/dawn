@@ -36,7 +36,7 @@
 #include "src/tint/lang/core/ir/multi_in_block.h"
 #include "src/tint/utils/ice/ice.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::BreakIf);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::BreakIf, "ir::BreakIf");
 
 namespace tint::core::ir {
 

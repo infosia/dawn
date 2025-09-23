@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::Enable);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::Enable, "ast::Enable");
 
 namespace tint::ast {
 

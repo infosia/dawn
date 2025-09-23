@@ -29,7 +29,7 @@
 
 #include <utility>
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Terminator);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Terminator, "ir::Terminator");
 
 namespace tint::core::ir {
 

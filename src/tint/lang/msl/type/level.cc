@@ -36,7 +36,7 @@
 #include "src/tint/utils/math/hash.h"
 #include "src/tint/utils/rtti/castable.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::msl::type::Level);
+TINT_INSTANTIATE_TYPEINFO(tint::msl::type::Level, "msl::Level");
 
 namespace tint::msl::type {
 

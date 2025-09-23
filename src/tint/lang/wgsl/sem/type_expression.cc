@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/wgsl/sem/type_expression.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::TypeExpression);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::TypeExpression, "sem::TypeExpression");
 
 namespace tint::sem {
 

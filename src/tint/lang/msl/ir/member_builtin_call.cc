@@ -38,7 +38,7 @@
 #include "src/tint/utils/ice/ice.h"
 #include "src/tint/utils/rtti/castable.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::msl::ir::MemberBuiltinCall);
+TINT_INSTANTIATE_TYPEINFO(tint::msl::ir::MemberBuiltinCall, "msl::MemberBuiltinCall");
 
 namespace tint::msl::ir {
 

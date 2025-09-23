@@ -30,8 +30,9 @@
 #include "src/tint/lang/wgsl/ast/block_statement.h"
 #include "src/tint/lang/wgsl/ast/loop_statement.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::LoopStatement);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::LoopContinuingBlockStatement);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::LoopStatement, "sem::LoopStatement");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::LoopContinuingBlockStatement,
+                          "sem::LoopContinuingBlockStatement");
 
 namespace tint::sem {
 

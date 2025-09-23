@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/wgsl/sem/value_conversion.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::ValueConversion);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::ValueConversion, "sem::ValueConversion");
 
 namespace tint::sem {
 

@@ -36,7 +36,7 @@
 #include "src/tint/utils/math/hash.h"
 #include "src/tint/utils/rtti/castable.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::hlsl::type::Uint8T4Packed);
+TINT_INSTANTIATE_TYPEINFO(tint::hlsl::type::Uint8T4Packed, "hlsl::Uint8T4Packed");
 
 namespace tint::hlsl::type {
 

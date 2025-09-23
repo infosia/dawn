@@ -36,7 +36,7 @@
 #include "src/tint/lang/core/ir/multi_in_block.h"
 #include "src/tint/utils/ice/ice.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Continue);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Continue, "ir::Continue");
 
 namespace tint::core::ir {
 

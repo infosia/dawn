@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/core/constant/node.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Node);
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Node, "const::Node");
 
 namespace tint::core::constant {
 

@@ -33,7 +33,7 @@
 #include "src/tint/lang/wgsl/sem/materialize.h"
 #include "src/tint/utils/rtti/switch.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::ValueExpression);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::ValueExpression, "sem::ValueExpression");
 
 namespace tint::sem {
 

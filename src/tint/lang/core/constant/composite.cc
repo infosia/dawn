@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/core/constant/manager.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Composite);
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Composite, "const::Composite");
 
 namespace tint::core::constant {
 

@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/core/constant/manager.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Splat);
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Splat, "const::Splat");
 
 namespace tint::core::constant {
 

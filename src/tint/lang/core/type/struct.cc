@@ -41,8 +41,8 @@
 #include "src/tint/utils/text/styled_text.h"
 #include "src/tint/utils/text/text_style.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::Struct);
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::StructMember);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::Struct, "ty::Struct");
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::StructMember, "ty::StructMember");
 
 namespace tint::core::type {
 namespace {

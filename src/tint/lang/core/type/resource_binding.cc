@@ -32,7 +32,7 @@
 #include "src/tint/lang/core/type/manager.h"
 #include "src/tint/utils/math/hash.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::ResourceBinding);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::ResourceBinding, "ty::ResourceBinding");
 
 namespace tint::core::type {
 

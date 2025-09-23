@@ -32,7 +32,7 @@
 #include "src/tint/lang/core/ir/clone_context.h"
 #include "src/tint/lang/core/ir/module.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Convert);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Convert, "ir::Convert");
 
 namespace tint::core::ir {
 
