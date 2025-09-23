@@ -969,6 +969,10 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         // modifies other components of a vector when one of the components is nan.
         deviceToggles->Default(Toggle::ScalarizeMaxMinClamp, true);
 
+        // chromium:407109052: Qualcomm devices have a bug where the spirv extended op NClamp
+        // modifies other components of a vector when one of the components is nan.
+        deviceToggles->Default(Toggle::VulkanPolyfillSwitchWithIf, true);
+
         // Qualcomm's shader compiler returns an internal error when binding_array<texture*> is
         // passed by argument to functions.
         deviceToggles->Default(Toggle::VulkanDirectVariableAccessTransformHandle, true);
