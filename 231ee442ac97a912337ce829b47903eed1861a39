@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b86d838a_a769b42a",
+        "filename": "generator/templates/art/api_kotlin_constants.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-09-23T16:31:40Z",
+      "side": 1,
+      "message": "This looks neater to me, but sadly isn\u0027t kDoc.\n\nWe need to have, for example:\n\n```\n/**\n * Indicates no array layer count is specified. For more info, see [SentinelValues]...\n */\npublic const val ARRAY_LAYER_COUNT_UNDEFINED: Int \u003d UINT32_MAX\n```",
+      "revId": "231ee442ac97a912337ce829b47903eed1861a39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "31963772_15c2f3bf",
         "filename": "generator/templates/art/api_kotlin_object.kt",
         "patchSetId": 5
