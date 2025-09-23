@@ -69,6 +69,24 @@
       "parentUuid": "33268c45_9739db5b",
       "revId": "96eab26db60f85f22420faaa2043a1a4131ea0b0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6353642_f09492c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-23T03:07:40Z",
+      "side": 1,
+      "message": "Turns out, my macro abilities aren\u0027t up to the task. From a bit of time spent, I don\u0027t know how to concatenate the `tint, core, ir, Value` version back into either `tint::core::ir::Value` or `\"tint\", \"core\u0027, \"ir\", \"value\"` for the two needed paths.\n\nOutside of that, I\u0027m not sure how to write the macro for where we have things like `OperandInstruction\u003c1, 0\u003e` which is going to confuse the preprocessor with the `,`.\n\nSo, I think we could land this as it\u0027s a binary size win for the STATIC case and come back to see if we can make it smaller later if we want, otherwise, this is probably going to get dropped.",
+      "parentUuid": "394699a7_e31cd678",
+      "revId": "96eab26db60f85f22420faaa2043a1a4131ea0b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
