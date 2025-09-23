@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "64ca653a_a436948b",
+        "filename": "unsafe_buffers_paths.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004326
+      },
+      "writtenOn": "2025-09-23T21:23:44Z",
+      "side": 1,
+      "message": "So, I tried to do that but it does cause build errors when building anything in third_party, as they can\u0027t find the txt file and this error is thrown: https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/tools/clang/plugins/UnsafeBuffersPlugin.cpp;l\u003d385;drc\u003df62ff81d380517c65a88391d6c7200fb5513575a\n\nI think if I modify how the path is rebased in the plugin\u0027s build config I should be able to get this to work, but then I\u0027d also need to update the build DEPs so this might not be a super trivial change. \n\nWhat are your thoughts on adding a TODO just to get the plugin operating in Dawn, and then I can work on updating how the plugin is built so that `unsafe_buffers_paths.txt` can be moved into `tools/`?",
+      "parentUuid": "78396e4c_14dd52bc",
+      "revId": "ff3395a18d0991408adc88b6f19ce4fd2ce55c78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4a7bc903_e528db66",
         "filename": "unsafe_buffers_paths.txt",
         "patchSetId": 2
@@ -49,6 +67,30 @@
       "writtenOn": "2025-09-19T18:14:17Z",
       "side": 1,
       "message": "nit. Is this the right license for us? Also 2025?",
+      "range": {
+        "startLine": 2,
+        "startChar": 2,
+        "endLine": 2,
+        "endChar": 43
+      },
+      "revId": "ff3395a18d0991408adc88b6f19ce4fd2ce55c78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a672b96_8c4ab513",
+        "filename": "unsafe_buffers_paths.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1004326
+      },
+      "writtenOn": "2025-09-23T21:23:44Z",
+      "side": 1,
+      "message": "Oops thanks for noticing, that is a bad copy-paste on my part. I think technically the rest of the license is ok since it does point to Dawn\u0027s BSD License but I just directly added it in the file to be safe.",
+      "parentUuid": "4a7bc903_e528db66",
       "range": {
         "startLine": 2,
         "startChar": 2,
@@ -72,6 +114,24 @@
       "writtenOn": "2025-09-19T18:10:46Z",
       "side": 1,
       "message": "update comment",
+      "revId": "ff3395a18d0991408adc88b6f19ce4fd2ce55c78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf1fdaef_557be566",
+        "filename": "unsafe_buffers_paths.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1004326
+      },
+      "writtenOn": "2025-09-23T21:23:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "697a1099_958bc9d5",
       "revId": "ff3395a18d0991408adc88b6f19ce4fd2ce55c78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
