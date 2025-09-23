@@ -30,6 +30,7 @@
 
 #include <shared_mutex>
 
+#include <atomic>
 #include <memory>
 #include <string>
 #include <utility>
@@ -609,7 +610,7 @@ class DeviceBase : public ErrorSink,
 
     absl::flat_hash_set<std::string> mWarnings;
 
-    State mState = State::BeingCreated;
+    std::atomic<State> mState = State::BeingCreated;
 
     PerObjectType<ApiObjectList> mObjectLists;
 
