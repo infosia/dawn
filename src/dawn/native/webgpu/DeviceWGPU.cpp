@@ -60,6 +60,7 @@
 #include "dawn/native/webgpu/SamplerWGPU.h"
 #include "dawn/native/webgpu/ShaderModuleWGPU.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
+#include "dawn/native/webgpu/ToWGPU.h"
 
 #include "tint/tint.h"
 
@@ -229,7 +230,45 @@ MaybeError Device::CopyFromStagingToTextureImpl(const BufferBase* source,
                                                 const TexelCopyBufferLayout& src,
                                                 const TextureCopy& dst,
                                                 const Extent3D& copySizePixels) {
-    return DAWN_UNIMPLEMENTED_ERROR("webgpu::Device implementation is incomplete.");
+    // return DAWN_UNIMPLEMENTED_ERROR("webgpu::Device implementation is incomplete.");
+
+    // Copy buffer to texture
+
+    // DAWN_TRY(const_cast<BufferBase*>(source)->Unmap()); // temp
+
+    // WGPUTexelCopyBufferInfo innerSource = ToWGPU(src, source);
+    // WGPUTexelCopyTextureInfo innerDestination = ToWGPU(dst);
+    // WGPUExtent3D size = ToWGPU(copySizePixels);
+
+    // WGPUCommandEncoder innerEncoder =
+    //     wgpu.deviceCreateCommandEncoder(GetInnerHandle(), nullptr);
+
+    // wgpu.commandEncoderCopyBufferToTexture(
+    //     innerEncoder,
+    //     &innerSource,
+    //     &innerDestination,
+    //     &size
+    // );
+
+    // WGPUCommandBuffer cmd = wgpu.commandEncoderFinish(innerEncoder, nullptr);
+    // wgpu.commandEncoderRelease(innerEncoder);
+    // wgpu.queueSubmit(ToBackend(GetQueue())->GetInnerHandle(), 1, &cmd);
+    // wgpu.commandBufferRelease(cmd);
+
+    // Just call writeTexture
+    // WGPUTexelCopyBufferInfo innerSource = ToWGPU(src, source);
+
+    WGPUTexelCopyBufferLayout innerSource = ToWGPU(src);
+    // DAWN_ASSERT(source->CanGetMappedRange(false, src.offset, src.bytesPerRow *
+    // src.rowsPerImage));
+    WGPUTexelCopyTextureInfo innerDestination = ToWGPU(dst);
+    WGPUExtent3D size = ToWGPU(copySizePixels);
+    wgpu.queueWriteTexture(ToBackend(GetQueue())->GetInnerHandle(), &innerDestination,
+                           // source->GetMappedPointer(),
+                           const_cast<BufferBase*>(source)->GetMappedPointer(),  // temp
+                           source->GetSize(), &innerSource, &size);
+
+    return {};
 }
 
 MaybeError Device::TickImpl() {
