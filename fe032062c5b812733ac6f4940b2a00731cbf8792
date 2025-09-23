@@ -196,6 +196,24 @@
       "parentUuid": "c97cec2a_ff5e9e8e",
       "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e729ab30_042ab755",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-23T16:50:16Z",
+      "side": 1,
+      "message": "Note we still need to handle this:\n\nVkPhysicalDeviceMaintenance5Properties::depthStencilSwizzleOneSupport",
+      "parentUuid": "c6ef7732_7ffc279d",
+      "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
