@@ -82,19 +82,27 @@ namespace dawn::wire::server {
             {% for type in by_category["object"] %}
                 {% set cType = as_cType(type.name) %}
                 case ObjectType::{{type.name.CamelCase()}}: {
-                    Reserved<{{cType}}> obj;
-                    WIRE_TRY(Objects<{{cType}}>().Get(objectId, &obj));
+                    {{cType}} handle = nullptr;
+                    {
+                        //* Scoped reservation lookup since |Free| may result in releasing the data
+                        //* which can cause a dangling pointer.
+                        Reserved<{{cType}}> obj;
+                        WIRE_TRY(Get(objectId, &obj));
+                        if (obj->state == AllocationState::Allocated) {
+                            DAWN_ASSERT(obj->handle != nullptr);
+                            handle = obj->handle;
+                        }
+                    }
+                    Free<{{cType}}>(objectId);
 
-                    if (obj->state == AllocationState::Allocated) {
-                        DAWN_ASSERT(obj->handle != nullptr);
+                    if (handle != nullptr) {
                         {% if type.name.get() == "device" %}
                             //* Deregisters uncaptured error and device lost callbacks since
                             //* they should not be forwarded if the device no longer exists on the wire.
-                            ClearDeviceCallbacks(obj->handle);
+                            ClearDeviceCallbacks(handle);
                         {% endif %}
-                        Release(mProcs, obj->handle);
+                        Release(handle);
                     }
-                    Objects<{{cType}}>().Free(objectId);
                     return WireResult::Success;
                 }
             {% endfor %}
