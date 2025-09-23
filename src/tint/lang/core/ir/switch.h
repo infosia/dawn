@@ -107,6 +107,9 @@ class Switch final : public Castable<Switch, ControlInstruction> {
     Vector<Case, 4>& Cases() { return cases_; }
 
     /// @returns the switch cases
+    Vector<Case, 4> TakeCases() { return std::move(cases_); }
+
+    /// @returns the switch cases
     VectorRef<Case> Cases() const { return cases_; }
 
     /// @returns the condition
