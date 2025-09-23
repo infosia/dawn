@@ -47,6 +47,7 @@ if (tint_build_spv_writer) {
     sources = [
       "builtin_polyfill.cc",
       "builtin_polyfill.h",
+      "case_switch_to_if_else.cc",
       "expand_implicit_splats.cc",
       "expand_implicit_splats.h",
       "fork_explicit_layout_types.cc",
@@ -109,6 +110,7 @@ if (tint_build_unittests) {
     tint_unittests_source_set("unittests") {
       sources = [
         "builtin_polyfill_test.cc",
+        "case_switch_to_if_else_test.cc",
         "expand_implicit_splats_test.cc",
         "fork_explicit_layout_types_test.cc",
         "handle_matrix_arithmetic_test.cc",
