@@ -83,6 +83,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a547a0f6_6b0f9e51",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1635,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-23T16:59:54Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "48e2a474_46b3be8b",
+      "revId": "416dddd62513f1986be06f8354fcf9abd2303441",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9124c01b_b5c95b12",
