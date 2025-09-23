@@ -262,7 +262,8 @@ struct State {
 
     void ReplacePointerToHandle() {
         Vector<core::ir::Value*, 4> usages_to_update;
-        Hashset<core::ir::Function*, 4> called_functions_to_fixup;
+        Hashset<core::ir::Function*, 4> seen_funcs;
+        Vector<core::ir::Function*, 4> called_functions_to_fixup;
         for (auto& func : ir.DependencyOrderedFunctions()) {
             for (auto* param : func->Params()) {
                 auto* ptr = param->Type()->As<core::type::Pointer>();
@@ -272,7 +273,10 @@ struct State {
 
                 param->SetType(ptr->StoreType());
                 usages_to_update.Push(param);
-                called_functions_to_fixup.Add(func);
+
+                if (seen_funcs.Add(func)) {
+                    called_functions_to_fixup.Push(func);
+                }
             }
         }
 
