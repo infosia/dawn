@@ -48,11 +48,17 @@ TEST_F(SpirvWriterTest, Switch_Basic) {
     ASSERT_TRUE(Generate()) << Error() << output_;
     EXPECT_INST(R"(
           %4 = OpLabel
-               OpSelectionMerge %8 None
-               OpSwitch %int_42 %5
+               OpSelectionMerge %5 None
+               OpBranchConditional %true %6 %5
+          %6 = OpLabel
+               OpBranch %5
           %5 = OpLabel
-               OpBranch %8
-          %8 = OpLabel
+               OpReturn
+               OpFunctionEnd
+
+               ; Function unused_entry_point
+%unused_entry_point = OpFunction %void None %3
+         %10 = OpLabel
                OpReturn
                OpFunctionEnd
 )");
@@ -84,15 +90,31 @@ TEST_F(SpirvWriterTest, Switch_MultipleCases) {
     ASSERT_TRUE(Generate()) << Error() << output_;
     EXPECT_INST(R"(
           %4 = OpLabel
+          %5 = OpIEqual %bool %int_42 %int_1
                OpSelectionMerge %10 None
-               OpSwitch %int_42 %5 1 %8 2 %9
-          %5 = OpLabel
-               OpBranch %10
-          %8 = OpLabel
-               OpBranch %10
-          %9 = OpLabel
+               OpBranchConditional %5 %11 %10
+         %11 = OpLabel
                OpBranch %10
          %10 = OpLabel
+         %12 = OpIEqual %bool %int_42 %int_2
+               OpSelectionMerge %14 None
+               OpBranchConditional %12 %15 %14
+         %15 = OpLabel
+               OpBranch %14
+         %14 = OpLabel
+         %16 = OpLogicalOr %bool %5 %12
+         %17 = OpLogicalNot %bool %16
+               OpSelectionMerge %18 None
+               OpBranchConditional %17 %19 %18
+         %19 = OpLabel
+               OpBranch %18
+         %18 = OpLabel
+               OpReturn
+               OpFunctionEnd
+
+               ; Function unused_entry_point
+%unused_entry_point = OpFunction %void None %3
+         %21 = OpLabel
                OpReturn
                OpFunctionEnd
 )");
@@ -124,15 +146,35 @@ TEST_F(SpirvWriterTest, Switch_MultipleSelectorsPerCase) {
     ASSERT_TRUE(Generate()) << Error() << output_;
     EXPECT_INST(R"(
           %4 = OpLabel
-               OpSelectionMerge %10 None
-               OpSwitch %int_42 %5 1 %8 3 %8 2 %9 4 %9 5 %5
-          %8 = OpLabel
-               OpBranch %10
-          %9 = OpLabel
-               OpBranch %10
-          %5 = OpLabel
-               OpBranch %10
-         %10 = OpLabel
+          %5 = OpIEqual %bool %int_42 %int_1
+         %10 = OpIEqual %bool %int_42 %int_3
+         %12 = OpLogicalOr %bool %10 %5
+               OpSelectionMerge %13 None
+               OpBranchConditional %12 %14 %13
+         %14 = OpLabel
+               OpBranch %13
+         %13 = OpLabel
+         %15 = OpIEqual %bool %int_42 %int_2
+         %17 = OpIEqual %bool %int_42 %int_4
+         %19 = OpLogicalOr %bool %17 %15
+               OpSelectionMerge %20 None
+               OpBranchConditional %19 %21 %20
+         %21 = OpLabel
+               OpBranch %20
+         %20 = OpLabel
+         %22 = OpLogicalOr %bool %12 %19
+         %23 = OpLogicalNot %bool %22
+               OpSelectionMerge %24 None
+               OpBranchConditional %23 %25 %24
+         %25 = OpLabel
+               OpBranch %24
+         %24 = OpLabel
+               OpReturn
+               OpFunctionEnd
+
+               ; Function unused_entry_point
+%unused_entry_point = OpFunction %void None %3
+         %27 = OpLabel
                OpReturn
                OpFunctionEnd
 )");
@@ -164,15 +206,31 @@ TEST_F(SpirvWriterTest, Switch_AllCasesReturn) {
     ASSERT_TRUE(Generate()) << Error() << output_;
     EXPECT_INST(R"(
           %4 = OpLabel
+          %5 = OpIEqual %bool %int_42 %int_1
                OpSelectionMerge %10 None
-               OpSwitch %int_42 %5 1 %8 2 %9
-          %5 = OpLabel
-               OpBranch %10
-          %8 = OpLabel
-               OpBranch %10
-          %9 = OpLabel
+               OpBranchConditional %5 %11 %10
+         %11 = OpLabel
                OpBranch %10
          %10 = OpLabel
+         %12 = OpIEqual %bool %int_42 %int_2
+               OpSelectionMerge %14 None
+               OpBranchConditional %12 %15 %14
+         %15 = OpLabel
+               OpBranch %14
+         %14 = OpLabel
+         %16 = OpLogicalOr %bool %5 %12
+         %17 = OpLogicalNot %bool %16
+               OpSelectionMerge %18 None
+               OpBranchConditional %17 %19 %18
+         %19 = OpLabel
+               OpBranch %18
+         %18 = OpLabel
+               OpReturn
+               OpFunctionEnd
+
+               ; Function unused_entry_point
+%unused_entry_point = OpFunction %void None %3
+         %21 = OpLabel
                OpReturn
                OpFunctionEnd
 )");
