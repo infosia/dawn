@@ -268,6 +268,24 @@
       "parentUuid": "048de836_70ff8c4e",
       "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a58defd6_f204911a",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-23T21:36:41Z",
+      "side": 1,
+      "message": "Not exactly, if the user asks for \"r111\" we need to make that \"raaa\" for example. I think we need to postprocess the swizzle after composing it to replace all \"1\" with \"a\" in the DS case.",
+      "parentUuid": "7a274aa1_4ec3c13c",
+      "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
