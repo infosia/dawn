@@ -454,6 +454,24 @@
       "parentUuid": "2f81660b_13884f47",
       "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30046830_0e364134",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-23T04:33:52Z",
+      "side": 1,
+      "message": "\"probable\" is also in English!\n\nFirst question - great, thank you for checking. Does CTS cover that?\n\nSecond question - it\u0027s not important, all that really matters is the spec question that Gregg already raised (#5298) so I\u0027ve commented there.",
+      "parentUuid": "01297296_6df78166",
+      "revId": "17896857fef0d1f70b34f97f1ee34c67926fcd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
