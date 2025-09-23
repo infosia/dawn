@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f622b853_4e8217bc",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-09-23T08:59:28Z",
+      "side": 1,
+      "message": "This wasn\u0027t available on my workstation. You\u0027ll have to work out how to add it as a dependency to the project. I haven\u0027t added a Python dependency to Dawn so don\u0027t know how it would be done.",
+      "revId": "231ee442ac97a912337ce829b47903eed1861a39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
