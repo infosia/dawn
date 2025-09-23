@@ -39,6 +39,30 @@
       },
       "revId": "2c81a21354ee174c84865a7039670b1418dae965",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e22db45_f4a0930b",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-23T19:18:55Z",
+      "side": 1,
+      "message": "This is definitely to improve readability. This is very cold code and part of a function that does a ton, so doing each kind of data gathering individually seems better for folks reading this code in the future. (the GL backend even split them off in different functions)",
+      "parentUuid": "479c2fb5_6fb88a3f",
+      "range": {
+        "startLine": 247,
+        "startChar": 4,
+        "endLine": 318,
+        "endChar": 5
+      },
+      "revId": "2c81a21354ee174c84865a7039670b1418dae965",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
