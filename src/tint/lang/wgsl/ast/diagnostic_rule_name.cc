@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::DiagnosticRuleName);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::DiagnosticRuleName, "ast::DiagnosticRuleName");
 
 namespace tint::ast {
 

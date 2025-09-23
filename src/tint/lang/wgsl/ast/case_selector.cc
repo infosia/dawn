@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::CaseSelector);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::CaseSelector, "ast::CaseSelector");
 
 namespace tint::ast {
 

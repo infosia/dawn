@@ -32,7 +32,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::DiagnosticAttribute);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::DiagnosticAttribute, "ast::DiagnosticAttribute");
 
 namespace tint::ast {
 

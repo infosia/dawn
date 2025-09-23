@@ -30,7 +30,7 @@
 #include "src/tint/lang/core/type/manager.h"
 #include "src/tint/lang/core/type/texture_dimension.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::ExternalTexture);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::ExternalTexture, "ty::ExternalTexture");
 
 namespace tint::core::type {
 

@@ -895,4 +895,4 @@ Result<Overload, StyledText> LookupCtorConv(Context& context,
 }  // namespace tint::core::intrinsic
 
 /// TypeInfo for the Any type declared in the anonymous namespace above
-TINT_INSTANTIATE_TYPEINFO(tint::core::intrinsic::Any);
+TINT_INSTANTIATE_TYPEINFO(tint::core::intrinsic::Any, "intrinsic::Any");

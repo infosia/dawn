@@ -27,17 +27,18 @@
 
 #include "src/tint/lang/core/constant/scalar.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::ScalarBase);
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::AInt>);
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::AFloat>);
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::i32>);
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::i8>);
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::u32>);
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::u64>);
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::u8>);
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::f16>);
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::f32>);
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<bool>);
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::ScalarBase, "const::ScalarBase");
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::AInt>, "const::Scalar<AInt>");
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::AFloat>,
+                          "const::Scalar<AFloat>");
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::i32>, "const::Scalar<I32>");
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::i8>, "const::Scalar<I8>");
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::u32>, "const::Scalar<U32>");
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::u64>, "const::Scalar<U64>");
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::u8>, "const::Scalar<U8>");
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::f16>, "const::Scalar<F16>");
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::f32>, "const::Scalar<F32>");
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<bool>, "const::Scalar<Bool>");
 
 namespace tint::core::constant {
 

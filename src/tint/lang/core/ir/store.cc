@@ -30,7 +30,7 @@
 #include "src/tint/lang/core/ir/clone_context.h"
 #include "src/tint/lang/core/ir/module.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Store);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Store, "ir::Store");
 
 namespace tint::core::ir {
 

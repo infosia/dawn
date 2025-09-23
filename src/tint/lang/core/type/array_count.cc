@@ -29,9 +29,9 @@
 
 #include "src/tint/lang/core/type/manager.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::ArrayCount);
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::ConstantArrayCount);
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::RuntimeArrayCount);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::ArrayCount, "ty::ArrayCount");
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::ConstantArrayCount, "ty::ConstantArrayCount");
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::RuntimeArrayCount, "ty::RuntimeArrayCount");
 
 namespace tint::core::type {
 

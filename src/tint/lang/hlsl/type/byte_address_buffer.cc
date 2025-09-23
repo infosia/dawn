@@ -36,7 +36,7 @@
 #include "src/tint/utils/math/hash.h"
 #include "src/tint/utils/rtti/castable.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::hlsl::type::ByteAddressBuffer);
+TINT_INSTANTIATE_TYPEINFO(tint::hlsl::type::ByteAddressBuffer, "hlsl::ByteAddressBuffer");
 
 namespace tint::hlsl::type {
 

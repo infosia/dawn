@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/core/ir/type/array_count.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::type::ValueArrayCount);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::type::ValueArrayCount, "ir::ValueArrayCount");
 
 namespace tint::core::ir::type {
 

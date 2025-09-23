@@ -33,7 +33,7 @@
 #include "src/tint/lang/core/ir/function.h"
 #include "src/tint/lang/core/ir/module.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Return);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Return, "ir::Return");
 
 namespace tint::core::ir {
 

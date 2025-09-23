@@ -32,7 +32,7 @@
 #include "src/tint/lang/wgsl/ast/type.h"
 #include "src/tint/lang/wgsl/ast/workgroup_attribute.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::Function);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::Function, "ast::Function");
 
 namespace tint::ast {
 

@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::CallExpression);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::CallExpression, "ast::CallExpression");
 
 namespace tint::ast {
 

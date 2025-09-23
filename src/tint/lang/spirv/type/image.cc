@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/core/type/manager.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::spirv::type::Image);
+TINT_INSTANTIATE_TYPEINFO(tint::spirv::type::Image, "spirv::Image");
 
 namespace tint::spirv::type {
 namespace {

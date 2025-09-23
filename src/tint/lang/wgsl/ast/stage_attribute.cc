@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::StageAttribute);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::StageAttribute, "ast::StageAttribute");
 
 namespace tint::ast {
 

@@ -32,7 +32,7 @@
 #include "src/tint/lang/core/ir/clone_context.h"
 #include "src/tint/lang/core/ir/module.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::UserCall);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::UserCall, "ir::UserCall");
 
 namespace tint::core::ir {
 

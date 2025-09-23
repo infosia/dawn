@@ -35,7 +35,7 @@
 #include "src/tint/lang/core/intrinsic/table.h"
 #include "src/tint/lang/core/type/texel_buffer.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinFn);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinFn, "sem::BuiltinFn");
 
 namespace tint::sem {
 

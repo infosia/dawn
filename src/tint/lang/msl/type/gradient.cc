@@ -37,7 +37,7 @@
 #include "src/tint/utils/rtti/castable.h"
 #include "src/tint/utils/text/string_stream.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::msl::type::Gradient);
+TINT_INSTANTIATE_TYPEINFO(tint::msl::type::Gradient, "msl::Gradient");
 
 namespace tint::msl::type {
 

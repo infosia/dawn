@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::TemplatedIdentifier);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::TemplatedIdentifier, "ast::TemplatedIdentifier");
 
 namespace tint::ast {
 

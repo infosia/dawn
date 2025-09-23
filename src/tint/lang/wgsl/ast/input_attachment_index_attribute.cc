@@ -31,7 +31,8 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::InputAttachmentIndexAttribute);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::InputAttachmentIndexAttribute,
+                          "ast::InputAttachmentIndexAttribute");
 
 namespace tint::ast {
 

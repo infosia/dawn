@@ -33,7 +33,7 @@
 #include "src/tint/utils/containers/predicates.h"
 #include "src/tint/utils/ice/ice.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::MultiInBlock);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::MultiInBlock, "ir::MultiInBlock");
 
 namespace tint::core::ir {
 

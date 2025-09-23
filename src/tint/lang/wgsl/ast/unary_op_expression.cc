@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::UnaryOpExpression);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::UnaryOpExpression, "ast::UnaryOpExpression");
 
 namespace tint::ast {
 

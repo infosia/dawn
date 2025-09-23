@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/core/ir/control_instruction.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Exit);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Exit, "ir::Exit");
 
 namespace tint::core::ir {
 

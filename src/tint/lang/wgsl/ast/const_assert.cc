@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::ConstAssert);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::ConstAssert, "ast::ConstAssert");
 
 namespace tint::ast {
 

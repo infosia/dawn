@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/wgsl/ast/attribute.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::Attribute);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::Attribute, "ast::Attribute");
 
 namespace tint::ast {
 

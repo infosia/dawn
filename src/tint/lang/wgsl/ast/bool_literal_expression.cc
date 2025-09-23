@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::BoolLiteralExpression);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::BoolLiteralExpression, "ast::BoolLiteralExpression");
 
 namespace tint::ast {
 

@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/wgsl/sem/node.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::Node);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::Node, "sem::Node");
 
 namespace tint::sem {
 

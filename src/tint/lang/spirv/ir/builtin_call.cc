@@ -31,7 +31,7 @@
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/utils/ice/ice.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::spirv::ir::BuiltinCall);
+TINT_INSTANTIATE_TYPEINFO(tint::spirv::ir::BuiltinCall, "spirv::BuiltinCall");
 
 namespace tint::spirv::ir {
 

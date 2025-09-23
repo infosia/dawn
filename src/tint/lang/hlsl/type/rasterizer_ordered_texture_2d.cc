@@ -39,7 +39,8 @@
 #include "src/tint/utils/math/hash.h"
 #include "src/tint/utils/rtti/castable.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::hlsl::type::RasterizerOrderedTexture2D);
+TINT_INSTANTIATE_TYPEINFO(tint::hlsl::type::RasterizerOrderedTexture2D,
+                          "hlsl::RasterizerOrderedTexture2D");
 
 namespace tint::hlsl::type {
 

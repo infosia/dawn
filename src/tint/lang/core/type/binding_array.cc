@@ -35,7 +35,7 @@
 #include "src/tint/utils/symbol/symbol_table.h"
 #include "src/tint/utils/text/string_stream.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::BindingArray);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::BindingArray, "ty::BindingArray");
 
 namespace tint::core::type {
 

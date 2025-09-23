@@ -36,7 +36,7 @@
 #include "src/tint/utils/math/hash.h"
 #include "src/tint/utils/rtti/castable.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::msl::type::Bias);
+TINT_INSTANTIATE_TYPEINFO(tint::msl::type::Bias, "msl::Bias");
 
 namespace tint::msl::type {
 

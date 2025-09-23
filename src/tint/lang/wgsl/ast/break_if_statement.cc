@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::BreakIfStatement);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::BreakIfStatement, "ast::BreakIfStatement");
 
 namespace tint::ast {
 

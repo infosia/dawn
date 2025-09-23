@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::DiagnosticDirective);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::DiagnosticDirective, "ast::DiagnosticDirective");
 
 namespace tint::ast {
 

@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::DiscardStatement);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::DiscardStatement, "ast::DiscardStatement");
 
 namespace tint::ast {
 

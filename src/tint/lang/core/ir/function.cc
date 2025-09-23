@@ -32,7 +32,7 @@
 #include "src/tint/utils/containers/predicates.h"
 #include "src/tint/utils/ice/ice.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Function);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Function, "ir::Function");
 
 namespace tint::core::ir {
 

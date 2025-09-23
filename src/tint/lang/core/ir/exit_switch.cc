@@ -34,7 +34,7 @@
 #include "src/tint/lang/core/ir/multi_in_block.h"
 #include "src/tint/lang/core/ir/switch.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::ExitSwitch);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::ExitSwitch, "ir::ExitSwitch");
 
 namespace tint::core::ir {
 

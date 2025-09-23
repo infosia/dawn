@@ -30,7 +30,7 @@
 #include "src/tint/lang/core/type/memory_view.h"
 #include "src/tint/utils/ice/ice.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::Load);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::Load, "sem::Load");
 
 namespace tint::sem {
 Load::Load(const ValueExpression* src, const Statement* statement, core::EvaluationStage stage)

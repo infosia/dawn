@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::StructMemberSizeAttribute);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::StructMemberSizeAttribute, "ast::StructMemberSizeAttribute");
 
 namespace tint::ast {
 

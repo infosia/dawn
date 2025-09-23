@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/core/type/manager.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::F16);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::F16, "ty::F16");
 
 namespace tint::core::type {
 

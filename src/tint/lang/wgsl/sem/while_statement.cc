@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/while_statement.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::WhileStatement);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::WhileStatement, "sem::WhileStatement");
 
 namespace tint::sem {
 

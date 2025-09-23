@@ -32,8 +32,8 @@
 #include "src/tint/lang/wgsl/sem/statement.h"
 #include "src/tint/lang/wgsl/sem/variable.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::Statement);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::CompoundStatement);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::Statement, "sem::Statement");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::CompoundStatement, "sem::CompoundStatement");
 
 namespace tint::sem {
 

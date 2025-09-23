@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::ContinueStatement);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::ContinueStatement, "ast::ContinueStatement");
 
 namespace tint::ast {
 

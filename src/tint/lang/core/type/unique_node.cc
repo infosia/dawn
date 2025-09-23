@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/core/type/unique_node.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::UniqueNode);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::UniqueNode, "ty::UniqueNode");
 
 namespace tint::core::type {
 

@@ -31,7 +31,7 @@
 
 #include "src/tint/utils/math/hash.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::CallTarget);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::CallTarget, "sem::CallTarget");
 
 namespace tint::sem {
 

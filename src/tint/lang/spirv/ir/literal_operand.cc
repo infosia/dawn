@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/spirv/ir/literal_operand.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::spirv::ir::LiteralOperand);
+TINT_INSTANTIATE_TYPEINFO(tint::spirv::ir::LiteralOperand, "spirv::LiteralOperand");
 
 namespace tint::spirv::ir {
 

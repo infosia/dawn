@@ -33,7 +33,7 @@
 #include "src/tint/lang/core/ir/instruction.h"
 #include "src/tint/utils/ice/ice.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Value);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Value, "ir::Value");
 
 namespace tint::core::ir {
 

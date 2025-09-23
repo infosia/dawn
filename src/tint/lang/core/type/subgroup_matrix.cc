@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/core/type/manager.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::SubgroupMatrix);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::SubgroupMatrix, "ty::SubgroupMatrix");
 
 namespace tint::core::type {
 
