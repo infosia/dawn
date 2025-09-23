@@ -1931,6 +1931,8 @@ void Validator::CheckType(const core::type::Type* root,
                 }
 
                 for (auto* member : str->Members()) {
+                    CheckType(member->Type(), diag, ignore_caps);
+
                     if (member->RowMajor()) {
                         diag() << "Row major annotation not allowed on structures";
                         return false;
@@ -1952,6 +1954,10 @@ void Validator::CheckType(const core::type::Type* root,
                     }
                     if (member->Align() == 0) {
                         diag() << "struct member must not have an alignment of 0";
+                        return false;
+                    }
+                    if (member->Type()->Align() == 0) {
+                        diag() << "struct member type must not have an alignment of 0";
                         return false;
                     }
                     if (member->Align() % member->Type()->Align() != 0) {
