@@ -60,6 +60,7 @@
 #include "dawn/native/webgpu/SamplerWGPU.h"
 #include "dawn/native/webgpu/ShaderModuleWGPU.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
+#include "dawn/native/webgpu/ToWGPU.h"
 
 #include "tint/tint.h"
 
@@ -222,14 +223,31 @@ MaybeError Device::CopyFromStagingToBuffer(BufferBase* source,
                                            BufferBase* destination,
                                            uint64_t destinationOffset,
                                            uint64_t size) {
-    return DAWN_UNIMPLEMENTED_ERROR("webgpu::Device implementation is incomplete.");
+    wgpu.queueWriteBuffer(
+        ToBackend(GetQueue())->GetInnerHandle(), ToBackend(destination)->GetInnerHandle(),
+        sourceOffset,
+        // The source buffer is a staging buffer and its mapped pointer is always accessible
+        // regardless of the buffer state.
+        wgpu.bufferGetConstMappedRange(ToBackend(source)->GetInnerHandle(), 0, source->GetSize()),
+        size);
+    return {};
 }
 
 MaybeError Device::CopyFromStagingToTextureImpl(const BufferBase* source,
                                                 const TexelCopyBufferLayout& src,
                                                 const TextureCopy& dst,
                                                 const Extent3D& copySizePixels) {
-    return DAWN_UNIMPLEMENTED_ERROR("webgpu::Device implementation is incomplete.");
+    WGPUTexelCopyBufferLayout innerSource = ToWGPU(src);
+    WGPUTexelCopyTextureInfo innerDestination = ToWGPU(dst);
+    size_t bufferSize = source->GetSize();
+    WGPUExtent3D size = ToWGPU(copySizePixels);
+    wgpu.queueWriteTexture(
+        ToBackend(GetQueue())->GetInnerHandle(), &innerDestination,
+        // The source buffer is a staging buffer and its mapped pointer is always accessible
+        // regardless of the buffer state.
+        wgpu.bufferGetConstMappedRange(ToBackend(source)->GetInnerHandle(), 0, bufferSize),
+        bufferSize, &innerSource, &size);
+    return {};
 }
 
 MaybeError Device::TickImpl() {
