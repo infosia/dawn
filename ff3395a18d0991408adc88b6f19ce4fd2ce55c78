@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba52676a_212abf11",
+        "filename": "unsafe_buffers_paths.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-23T22:34:34Z",
+      "side": 1,
+      "message": "If there\u0027s a technical constraint that prevents it moving into `tools/` then this is fine. I just thought it might be easy since the path is set in `.gn`.",
+      "parentUuid": "64ca653a_a436948b",
+      "revId": "ff3395a18d0991408adc88b6f19ce4fd2ce55c78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4a7bc903_e528db66",
