@@ -87,6 +87,24 @@
       "parentUuid": "6a689b95_c0d361b7",
       "revId": "27944be17453e8e400ac5006051ae36754a0f10e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "870701ae_1e3146f2",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2131,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-23T16:42:02Z",
+      "side": 1,
+      "message": "I don\u0027t know how to use VVL with Swiftshader in Chromium even with that patch.",
+      "parentUuid": "cfaf5973_ed2fd44a",
+      "revId": "27944be17453e8e400ac5006051ae36754a0f10e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

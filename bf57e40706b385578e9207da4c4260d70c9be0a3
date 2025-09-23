@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25740295_f5ed734a",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-23T16:42:02Z",
+      "side": 1,
+      "message": "nit: maybe comment that this is usually the swizzle for depth / stencil textures.",
+      "revId": "bf57e40706b385578e9207da4c4260d70c9be0a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91676199_8fe82f1b",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2127,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-23T16:42:02Z",
+      "side": 1,
+      "message": "Maybe use IDENTITY? And explain that there is a VVL that says this is required for render views?",
+      "range": {
+        "startLine": 2126,
+        "startChar": 51,
+        "endLine": 2127,
+        "endChar": 97
+      },
+      "revId": "bf57e40706b385578e9207da4c4260d70c9be0a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
