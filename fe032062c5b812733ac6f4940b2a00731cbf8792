@@ -214,6 +214,24 @@
       "parentUuid": "c6ef7732_7ffc279d",
       "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a42a16eb_6a99d649",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-23T17:57:16Z",
+      "side": 1,
+      "message": "Spec says:\n```\nIf the image view has a depth/stencil format and the VkComponentSwizzle is VK_COMPONENT_SWIZZLE_ONE, and VkPhysicalDeviceMaintenance5Properties::depthStencilSwizzleOneSupport is not VK_TRUE, the value of the texel after swizzle is undefined.\n```\nOur goal here is to apply `VK_COMPONENT_SWIZZLE_ONE` whenever we can. If it\u0027s not supported, what can we do about it? Checking `depthStencilSwizzleOneSupport` won\u0027t help IIUC.",
+      "parentUuid": "e729ab30_042ab755",
+      "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
