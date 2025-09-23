@@ -70,8 +70,7 @@ void TrackedEvent::Complete(FutureID futureID, EventCompletionType type) {
                 DAWN_ASSERT(type == EventCompletionType::Shutdown);
                 [[fallthrough]];
             case EventState::Ready: {
-                if (mEventState.compare_exchange_strong(state, EventState::Running,
-                                                        std::memory_order::acq_rel)) {
+                if (mEventState.compare_exchange_strong(state, EventState::Running)) {
                     // Only one thread is ever be allowed to run |CompleteImpl|.
                     CompleteImpl(futureID, type);
                     mEventState = EventState::Complete;
@@ -89,7 +88,7 @@ void TrackedEvent::Complete(FutureID futureID, EventCompletionType type) {
                     mEventState = EventState::Complete;
                     return true;
                 }
-                mEventState.wait(EventState::Running, std::memory_order::acq_rel);
+                mEventState.wait(EventState::Running);
                 return true;
             }
             case EventState::Complete:

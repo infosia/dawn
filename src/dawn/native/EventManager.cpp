@@ -576,7 +576,7 @@ EventManager::TrackedEvent::TrackedEvent(wgpu::CallbackMode callbackMode, NonPro
 
 EventManager::TrackedEvent::~TrackedEvent() {
     DAWN_ASSERT(mFutureID != kNullFutureID);
-    DAWN_ASSERT(mCompleted.Use([](auto completed) { return *completed; }));
+    DAWN_ASSERT(mState == EventState::Complete);
 }
 
 Future EventManager::TrackedEvent::GetFuture() const {
@@ -614,12 +614,42 @@ void EventManager::TrackedEvent::SetReadyToComplete() {
 }
 
 void EventManager::TrackedEvent::EnsureComplete(EventCompletionType completionType) {
-    mCompleted.Use([&](auto completed) {
-        if (!*completed) {
-            Complete(completionType);
-            *completed = true;
+    EventState state = mState.load(std::memory_order::acquire);
+
+    auto TryComplete = [&]() -> bool {
+        switch (state) {
+            case EventState::Pending: {
+                if (mState.compare_exchange_strong(state, EventState::Running)) {
+                    // Only one thread is ever be allowed to run |CompleteImpl|.
+                    Complete(completionType);
+                    mState = EventState::Complete;
+                    mState.notify_all();
+                    return true;
+                }
+                return false;
+            }
+            case EventState::Running: {
+                // Wait until the event is no longer in the |Running| state.
+                if (completionType == EventCompletionType::Shutdown) {
+                    // If we are running, but we see a completion type of Shutdown, we don't wait
+                    // for the state to transition because the shutdown could have been caused by
+                    // the callback. Instead, just return true.
+                    mState = EventState::Complete;
+                    return true;
+                }
+                mState.wait(EventState::Running);
+                return true;
+            }
+            case EventState::Complete:
+                return true;
         }
-    });
+    };
+
+    bool completed = false;
+    while (!completed) {
+        completed = TryComplete();
+    }
+    DAWN_ASSERT(mState == EventState::Complete);
 }
 
 }  // namespace dawn::native
