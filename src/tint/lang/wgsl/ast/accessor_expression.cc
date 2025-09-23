@@ -29,7 +29,7 @@
 
 #include "src/tint/utils/ice/ice.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::AccessorExpression);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::AccessorExpression, "ast::AccessExpression");
 
 namespace tint::ast {
 

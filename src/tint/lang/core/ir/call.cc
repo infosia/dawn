@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/core/ir/call.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Call);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Call, "ir::Call");
 
 namespace tint::core::ir {
 

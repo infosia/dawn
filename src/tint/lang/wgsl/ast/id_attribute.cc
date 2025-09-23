@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::IdAttribute);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::IdAttribute, "ast::IdAttribute");
 
 namespace tint::ast {
 

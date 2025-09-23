@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/core/type/manager.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::Void);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::Void, "ty::Void");
 
 namespace tint::core::type {
 

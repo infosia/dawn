@@ -30,7 +30,7 @@
 #include "src/tint/lang/core/constant/manager.h"
 #include "src/tint/lang/core/type/invalid.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Invalid);
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Invalid, "const::Invalid");
 
 namespace tint::core::constant {
 

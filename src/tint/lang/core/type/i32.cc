@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/core/type/manager.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::I32);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::I32, "ty::I32");
 
 namespace tint::core::type {
 

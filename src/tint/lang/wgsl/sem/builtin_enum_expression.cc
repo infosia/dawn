@@ -30,16 +30,23 @@
 #include "src/tint/lang/core/enums.h"
 #include "src/tint/lang/wgsl/enums.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinEnumExpressionBase);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinEnumExpressionBase, "sem::BuiltinEnumExpressionBase");
 
 // Specializations
-TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinEnumExpression<tint::core::Access>);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinEnumExpression<tint::core::AddressSpace>);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinEnumExpression<tint::core::BuiltinValue>);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinEnumExpression<tint::core::InterpolationSampling>);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinEnumExpression<tint::core::InterpolationType>);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinEnumExpression<tint::core::TexelFormat>);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinEnumExpression<tint::wgsl::BuiltinFn>);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinEnumExpression<tint::core::Access>,
+                          "sem::BuiltinEnumExpression<Access>");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinEnumExpression<tint::core::AddressSpace>,
+                          "sem::BuiltinEnumExpression<AddressSpace>");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinEnumExpression<tint::core::BuiltinValue>,
+                          "sem::BuiltinEnumExpression<BuiltinValue>");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinEnumExpression<tint::core::InterpolationSampling>,
+                          "sem::BuiltinEnumExpression<InterpolationSampling>");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinEnumExpression<tint::core::InterpolationType>,
+                          "sem::BuiltinEnumExpression<InterpolationType>");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinEnumExpression<tint::core::TexelFormat>,
+                          "sem::BuiltinEnumExpression<TexelFormat>");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::BuiltinEnumExpression<tint::wgsl::BuiltinFn>,
+                          "sem::BuiltinEnumExpression<BuiltinFn>");
 
 namespace tint::sem {
 

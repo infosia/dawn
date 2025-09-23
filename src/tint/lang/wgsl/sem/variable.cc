@@ -34,11 +34,11 @@
 #include "src/tint/lang/wgsl/ast/parameter.h"
 #include "src/tint/lang/wgsl/ast/variable.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::Variable);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::GlobalVariable);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::LocalVariable);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::Parameter);
-TINT_INSTANTIATE_TYPEINFO(tint::sem::VariableUser);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::Variable, "sem::Variable");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::GlobalVariable, "sem::GlobalVariable");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::LocalVariable, "sem::LocalVariable");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::Parameter, "sem::Parameter");
+TINT_INSTANTIATE_TYPEINFO(tint::sem::VariableUser, "sem::VariableUser");
 
 namespace tint::sem {
 Variable::Variable(const ast::Variable* declaration) : declaration_(declaration) {}

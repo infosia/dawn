@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/wgsl/resolver/unresolved_identifier.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::resolver::UnresolvedIdentifier);
+TINT_INSTANTIATE_TYPEINFO(tint::resolver::UnresolvedIdentifier, "resolver::UnresolvedIdentifier");
 
 namespace tint::resolver {
 

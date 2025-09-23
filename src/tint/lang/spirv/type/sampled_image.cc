@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/core/type/manager.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::spirv::type::SampledImage);
+TINT_INSTANTIATE_TYPEINFO(tint::spirv::type::SampledImage, "spirv::SampledImage");
 
 namespace tint::spirv::type {
 

@@ -28,7 +28,7 @@
 #include "src/tint/lang/wgsl/sem/function_expression.h"
 #include "src/tint/lang/wgsl/ast/identifier_expression.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::FunctionExpression);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::FunctionExpression, "sem::FunctionExpression");
 
 namespace tint::sem {
 

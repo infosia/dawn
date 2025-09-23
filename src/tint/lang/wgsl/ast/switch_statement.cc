@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::SwitchStatement);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::SwitchStatement, "ast::SwitchStatement");
 
 namespace tint::ast {
 

@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/core/ir/module.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::hlsl::ir::Ternary);
+TINT_INSTANTIATE_TYPEINFO(tint::hlsl::ir::Ternary, "hlsl::Ternary");
 
 namespace tint::hlsl::ir {
 

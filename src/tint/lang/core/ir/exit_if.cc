@@ -34,7 +34,7 @@
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/multi_in_block.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::ExitIf);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::ExitIf, "ir::ExitIf");
 
 namespace tint::core::ir {
 

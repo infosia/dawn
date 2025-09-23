@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::BindingAttribute);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::BindingAttribute, "ast::BindingAttribute");
 
 namespace tint::ast {
 

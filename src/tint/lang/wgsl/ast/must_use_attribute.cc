@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::MustUseAttribute);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::MustUseAttribute, "ast::MustUseAttribute");
 
 namespace tint::ast {
 

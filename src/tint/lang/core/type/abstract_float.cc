@@ -30,7 +30,7 @@
 #include "src/tint/lang/core/type/manager.h"
 #include "src/tint/utils/math/hash.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::type::AbstractFloat);
+TINT_INSTANTIATE_TYPEINFO(tint::core::type::AbstractFloat, "ty::AFloat");
 
 namespace tint::core::type {
 

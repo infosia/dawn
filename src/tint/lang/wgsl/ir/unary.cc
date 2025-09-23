@@ -31,7 +31,7 @@
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/wgsl/intrinsic/dialect.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::wgsl::ir::Unary);
+TINT_INSTANTIATE_TYPEINFO(tint::wgsl::ir::Unary, "wgsl::Unary");
 
 namespace tint::wgsl::ir {
 

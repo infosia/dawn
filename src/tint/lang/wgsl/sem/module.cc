@@ -29,7 +29,7 @@
 
 #include <utility>
 
-TINT_INSTANTIATE_TYPEINFO(tint::sem::Module);
+TINT_INSTANTIATE_TYPEINFO(tint::sem::Module, "sem::Module");
 
 namespace tint::sem {
 

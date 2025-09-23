@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::Override);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::Override, "ast::Override");
 
 namespace tint::ast {
 

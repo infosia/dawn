@@ -34,7 +34,7 @@
 #include "src/tint/utils/containers/vector.h"
 #include "src/tint/utils/rtti/castable.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::MemberBuiltinCall);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::MemberBuiltinCall, "ir::MemberBuiltinCall");
 
 namespace tint::core::ir {
 

@@ -27,7 +27,7 @@
 
 #include "src/tint/lang/wgsl/ast/expression.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::Expression);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::Expression, "ast::Expression");
 
 namespace tint::ast {
 

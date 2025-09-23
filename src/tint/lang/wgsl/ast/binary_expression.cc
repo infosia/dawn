@@ -29,7 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::BinaryExpression);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::BinaryExpression, "ast::BinaryExpression");
 
 namespace tint::ast {
 

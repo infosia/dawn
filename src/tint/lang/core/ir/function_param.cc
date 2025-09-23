@@ -32,7 +32,7 @@
 #include "src/tint/lang/core/type/type.h"
 #include "src/tint/utils/ice/ice.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::FunctionParam);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::FunctionParam, "ir::FunctionParam");
 
 namespace tint::core::ir {
 

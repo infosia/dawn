@@ -35,12 +35,12 @@ using Op21 = tint::core::ir::OperandInstruction<2, 1>;
 using Op31 = tint::core::ir::OperandInstruction<3, 1>;
 using Op41 = tint::core::ir::OperandInstruction<4, 1>;
 
-TINT_INSTANTIATE_TYPEINFO(Op10);
-TINT_INSTANTIATE_TYPEINFO(Op11);
-TINT_INSTANTIATE_TYPEINFO(Op20);
-TINT_INSTANTIATE_TYPEINFO(Op30);
-TINT_INSTANTIATE_TYPEINFO(Op21);
-TINT_INSTANTIATE_TYPEINFO(Op31);
-TINT_INSTANTIATE_TYPEINFO(Op41);
+TINT_INSTANTIATE_TYPEINFO(Op10, "ir::OperandIndex<1,0>");
+TINT_INSTANTIATE_TYPEINFO(Op11, "ir::OperandIndex<1,1>");
+TINT_INSTANTIATE_TYPEINFO(Op20, "ir::OperandIndex<2,0>");
+TINT_INSTANTIATE_TYPEINFO(Op30, "ir::OperandIndex<3,0>");
+TINT_INSTANTIATE_TYPEINFO(Op21, "ir::OperandIndex<2,1>");
+TINT_INSTANTIATE_TYPEINFO(Op31, "ir::OperandIndex<3,1>");
+TINT_INSTANTIATE_TYPEINFO(Op41, "ir::OperandIndex<4,1>");
 
 namespace tint::core::ir {}  // namespace tint::core::ir

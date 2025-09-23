@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/wgsl/ast/builder.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::FloatLiteralExpression);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::FloatLiteralExpression, "ast::FloatLiteralExpression");
 
 namespace tint::ast {
 

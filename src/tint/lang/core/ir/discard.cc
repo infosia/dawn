@@ -30,7 +30,7 @@
 #include "src/tint/lang/core/ir/clone_context.h"
 #include "src/tint/lang/core/ir/module.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Discard);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Discard, "ir::Discard");
 
 namespace tint::core::ir {
 

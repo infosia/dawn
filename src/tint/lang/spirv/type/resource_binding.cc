@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/core/type/manager.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::spirv::type::ResourceBinding);
+TINT_INSTANTIATE_TYPEINFO(tint::spirv::type::ResourceBinding, "spirv::ResourceBinding");
 
 namespace tint::spirv::type {
 

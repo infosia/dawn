@@ -32,7 +32,7 @@
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/utils/ice/ice.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Block);
+TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Block, "ir::Block");
 
 namespace tint::core::ir {
 
