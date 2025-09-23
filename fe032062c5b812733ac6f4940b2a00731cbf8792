@@ -250,6 +250,24 @@
       "parentUuid": "a42a16eb_6a99d649",
       "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a274aa1_4ec3c13c",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-23T18:44:09Z",
+      "side": 1,
+      "message": "Something like that?\n```\nconst wgpu::TextureComponentSwizzle kDefaultSwizzle \u003d\n    GetTexture()-\u003eGetFormat().HasDepthOrStencil() ? \n  \t\t(isDepthStencilSwizzleOneSupported ? kR001Swizzle : kR00ASwizzle) \n\t\t: kRGBASwizzle;\n```",
+      "parentUuid": "048de836_70ff8c4e",
+      "revId": "fe032062c5b812733ac6f4940b2a00731cbf8792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
