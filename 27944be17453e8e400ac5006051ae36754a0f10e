@@ -51,6 +51,24 @@
       "parentUuid": "53686d9f_d022aa61",
       "revId": "27944be17453e8e400ac5006051ae36754a0f10e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a689b95_c0d361b7",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2131,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-23T13:12:41Z",
+      "side": 1,
+      "message": "Thanks! I can now reproduce the error with your CL and by running `$ cp ~/VulkanSDK/1.4.321.0/macOS/lib/libvulkan.dylib out/Release/`",
+      "parentUuid": "b1337a11_e0956a12",
+      "revId": "27944be17453e8e400ac5006051ae36754a0f10e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
