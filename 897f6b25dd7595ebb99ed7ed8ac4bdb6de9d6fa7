@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0737029e_ce551d51",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-23T18:33:50Z",
+      "side": 1,
+      "message": "This kinda blew up on me. Had to add a bunch of capabilities and add the type checking for all the sub-types as I was getting errors where things that were not checked were placed into structs and would then fail.",
+      "revId": "897f6b25dd7595ebb99ed7ed8ac4bdb6de9d6fa7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
