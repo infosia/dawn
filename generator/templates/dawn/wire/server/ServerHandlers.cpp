@@ -90,6 +90,7 @@ namespace dawn::wire::server {
     const volatile char* Server::HandleCommandsImpl(const volatile char* commands, size_t size) {
         DeserializeBuffer deserializeBuffer(commands, size);
 
+        auto serverGuard = GetGuard();
         while (deserializeBuffer.AvailableSize() >= sizeof(CmdHeader) + sizeof(WireCmd)) {
             // Start by chunked command handling, if it is done, then it means the whole buffer
             // was consumed by it, so we return a pointer to the end of the commands.
