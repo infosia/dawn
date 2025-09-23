@@ -1793,6 +1793,8 @@ void DawnTestBase::MapAsyncAndWait(const wgpu::Buffer& buffer,
 }
 
 void DawnTestBase::WaitABit(wgpu::Instance targetInstance) {
+    dawn::native::InstanceProcessEvents(gTestEnv->GetInstance()->Get());
+
     if (targetInstance == nullptr) {
         targetInstance = instance;
     }
