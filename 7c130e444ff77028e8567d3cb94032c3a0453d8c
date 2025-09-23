@@ -33,6 +33,24 @@
       "message": "Max pending time in our CI Win GCE SSD pool was 6 minutes last week, so I guess this is fine.\n\nHowever, it looks like there are already 40 builders targeting this pool of 39 machines, and this will be the 41st. So I\u0027d prefer if you added 2 GCEs to the HDD pool.",
       "revId": "7c130e444ff77028e8567d3cb94032c3a0453d8c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83439c28_014059e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-23T17:31:09Z",
+      "side": 1,
+      "message": "We\u0027ll have a few more Windows builders added for dbg/x86 coverage, so I\u0027ll add a few more instances for those as well.\n\nLanding now since current capacity should be okay for now and I\u0027d like to start getting CI data sooner rather than later.",
+      "parentUuid": "ed9dba85_cfc69868",
+      "revId": "7c130e444ff77028e8567d3cb94032c3a0453d8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
