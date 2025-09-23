@@ -16,6 +16,23 @@
       "message": "PTAL again!",
       "revId": "9f6671f202703ca260573aad86735412c3c4f0ea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "397cb5cc_38ad719d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-23T21:56:35Z",
+      "side": 1,
+      "message": "Still LGTM",
+      "revId": "9f6671f202703ca260573aad86735412c3c4f0ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
