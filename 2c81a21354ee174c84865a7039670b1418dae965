@@ -16,6 +16,29 @@
       "message": "PTAL!",
       "revId": "2c81a21354ee174c84865a7039670b1418dae965",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "479c2fb5_6fb88a3f",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-23T19:00:28Z",
+      "side": 1,
+      "message": "Is it necessary to move these all out of the outer `layout-\u003eGetBindGroupLayoutsMask()` loop? It feels a bit wasteful to do that outer loop everytime?\n\nIf the issue is readability, maybe we could create helper funcs for each of these special cases and call them?",
+      "range": {
+        "startLine": 247,
+        "startChar": 4,
+        "endLine": 318,
+        "endChar": 5
+      },
+      "revId": "2c81a21354ee174c84865a7039670b1418dae965",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
