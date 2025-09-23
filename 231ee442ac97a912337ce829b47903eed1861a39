@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "294f21fb_e17a55b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-09-23T10:59:43Z",
+      "side": 1,
+      "message": "You\u0027ll need to ensure that `./gradlew publishToMavenLocal` completes correctly. On my workstation it is failing, although unfortunately with no useful error output. It could be because of the new PyYML dependency. You do definitely need to add support in build.gradle under existing generateBindings rule, e.g. the final line below:\n\n```groovy\ntasks.register(\u0027generateBindings\u0027, Exec) {\n    workingDir(\u0027../../..\u0027)\n    commandLine \u0027python3\u0027, \u0027generator/dawn_json_generator.py\u0027,\n    \u0027--template-dir\u0027, \u0027generator/templates\u0027,\n    \u0027--output-dir\u0027, \"$project.projectDir/../../../out/Debug/gen\",\n    \u0027--dawn-json\u0027, \u0027src/dawn/dawn.json\u0027,\n    \u0027--targets\u0027, \u0027kotlin\u0027,\n    \u0027--kotlin-json\u0027, \u0027src/dawn/dawn_kotlin.json\u0027,\n    \u0027--jinja2-path\u0027, \u0027third_party/jinja2\u0027,\n    \u0027--webgpu-yml\u0027, \u0027third_party/webgpu-headers/src/webgpu.yml\u0027\n}\n```",
+      "revId": "231ee442ac97a912337ce829b47903eed1861a39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f622b853_4e8217bc",
         "filename": "generator/dawn_json_generator.py",
         "patchSetId": 5
