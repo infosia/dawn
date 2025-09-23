@@ -82,19 +82,32 @@ namespace dawn::wire::server {
             {% for type in by_category["object"] %}
                 {% set cType = as_cType(type.name) %}
                 case ObjectType::{{type.name.CamelCase()}}: {
-                    Reserved<{{cType}}> obj;
-                    WIRE_TRY(Objects<{{cType}}>().Get(objectId, &obj));
+                    {{cType}} handle = nullptr;
+                    //* For unregistering objects, we take the lock to ensure that we get the
+                    //* handle and remove it from our tracking before calling into the proc table.
+                    //* Note we call into the proc table after releasing the lock because
+                    //* releasing objects, i.e. the device, may cause callbacks to fire which may
+                    //* also need the lock on another thread.
+                    {
+                        auto serverGuard = GetGuard();
+                        Reserved<{{cType}}> obj;
+                        WIRE_TRY(Objects<{{cType}}>().Get(objectId, &obj));
 
-                    if (obj->state == AllocationState::Allocated) {
-                        DAWN_ASSERT(obj->handle != nullptr);
+                        if (obj->state == AllocationState::Allocated) {
+                            DAWN_ASSERT(obj->handle != nullptr);
+                            handle = obj->handle;
+                        }
+                        Objects<{{cType}}>().Free(objectId);
+                    }
+
+                    if (handle != nullptr) {
                         {% if type.name.get() == "device" %}
                             //* Deregisters uncaptured error and device lost callbacks since
                             //* they should not be forwarded if the device no longer exists on the wire.
-                            ClearDeviceCallbacks(obj->handle);
+                            ClearDeviceCallbacks(handle);
                         {% endif %}
-                        Release(mProcs, obj->handle);
+                        Release(mProcs, handle);
                     }
-                    Objects<{{cType}}>().Free(objectId);
                     return WireResult::Success;
                 }
             {% endfor %}

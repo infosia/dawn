@@ -38,6 +38,11 @@ namespace dawn::wire::server {
         //* The generic command handlers
         WireResult Server::Handle{{Suffix}}(DeserializeBuffer* deserializeBuffer) {
             {{Suffix}}Cmd cmd;
+
+            //* If the command may have Dawn objects, we need to take the lock before deserializing.
+            {% if command.may_have_dawn_object %}
+                auto serverGuard = GetGuard();
+            {% endif %}
             WIRE_TRY(cmd.Deserialize(deserializeBuffer, &mAllocator
                 {%- if command.may_have_dawn_object -%}
                     , *this
@@ -90,6 +95,7 @@ namespace dawn::wire::server {
     const volatile char* Server::HandleCommandsImpl(const volatile char* commands, size_t size) {
         DeserializeBuffer deserializeBuffer(commands, size);
 
+        auto serverGuard = GetGuard();
         while (deserializeBuffer.AvailableSize() >= sizeof(CmdHeader) + sizeof(WireCmd)) {
             // Start by chunked command handling, if it is done, then it means the whole buffer
             // was consumed by it, so we return a pointer to the end of the commands.

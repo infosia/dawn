@@ -74,7 +74,7 @@ class DAWN_MUTEX_CAPABILITY MutexBase : public RefCounted, NonCopyable {
     // This method is only enabled when DAWN_ENABLE_ASSERTS is turned on.
     // Thus it should only be wrapped inside DAWN_ASSERT() macro.
     // i.e. DAWN_ASSERT(mutex.IsLockedByCurrentThread())
-    bool IsLockedByCurrentThread() {
+    bool IsLockedByCurrentThread() const {
 #if defined(DAWN_ENABLE_ASSERTS)
         return mOwner.load(std::memory_order_acquire) == std::this_thread::get_id();
 #else
