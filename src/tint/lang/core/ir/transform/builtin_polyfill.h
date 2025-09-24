@@ -40,7 +40,10 @@ class Module;
 namespace tint::core::ir::transform {
 
 /// The capabilities that the transform can support.
-const Capabilities kBuiltinPolyfillCapabilities{Capability::kAllowDuplicateBindings};
+const Capabilities kBuiltinPolyfillCapabilities{
+    Capability::kAllowDuplicateBindings,
+    Capability::kAllowNonCoreTypes,
+};
 
 /// Enumerator of polyfill levels.
 enum class BuiltinPolyfillLevel {
