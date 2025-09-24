@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f3c7a0b_40c10f3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-09-24T05:09:21Z",
+      "side": 1,
+      "message": "PTAL, thanks!",
+      "revId": "b127ccf6b32b0fd8a87086523209499a7bfa8d06",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dde7f6e2_efe71fe6",
+        "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests_win.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-09-24T05:09:21Z",
+      "side": 1,
+      "message": "Without this we will meet below error on the bots (I don\u0027t know why as we can run all `SharedBufferMemoryD3D12ResourceTests` on Windows):\n\n\n[----------] 1 test from GoogleTestVerification\n[ RUN      ] GoogleTestVerification.UninstantiatedParameterizedTestSuite\u003cSharedBufferMemoryD3D12ResourceTests\u003e\n..\\..\\src\\dawn\\tests\\white_box\\SharedBufferMemoryTests_win.cpp(221): error: Parameterized test suite SharedBufferMemoryD3D12ResourceTests is defined via TEST_P, but never instantiated. None of the test cases will run. Either no INSTANTIATE_TEST_SUITE_P is provided or the only ones provided expand to nothing.\n\nIdeally, TEST_P definitions should only ever be included as part of binaries that intend to use them. (As opposed to, for example, being placed in a library that may be linked in to get other utilities.)\n\nTo suppress this error for this test suite, insert the following line (in a non-header) in the namespace it is defined in:\n\nGTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST(SharedBufferMemoryD3D12ResourceTests);\n\n[  FAILED  ] GoogleTestVerification.UninstantiatedParameterizedTestSuite\u003cSharedBufferMemoryD3D12ResourceTests\u003e (0 ms)\n[----------] 1 test from GoogleTestVerification (0 ms total)",
+      "range": {
+        "startLine": 288,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 84
+      },
+      "revId": "b127ccf6b32b0fd8a87086523209499a7bfa8d06",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
