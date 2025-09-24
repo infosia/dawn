@@ -16,6 +16,24 @@
       "message": "Q: Since the buffer is a staging buffer for intermediate storage (from dynamic uploader). Can we assume it\u0027s mapped pointer is always available on the CPU? (to directly use its mappedPointer regardless of the buffer front end state?)",
       "revId": "229b8ba25ce7c4305a0dd7c4ea55f1167fca8a88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eae669e0_96946bba",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-09-24T20:21:36Z",
+      "side": 1,
+      "message": "Done (answered offline: Yes.)",
+      "parentUuid": "1240dcd2_309be0ea",
+      "revId": "229b8ba25ce7c4305a0dd7c4ea55f1167fca8a88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
