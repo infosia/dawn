@@ -93,6 +93,30 @@
       },
       "revId": "3907c3797fe14efb52bec3a60521b0fc971e409d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8603d1d_2178c3d5",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-24T19:43:53Z",
+      "side": 1,
+      "message": "Ack. discussed ways to make this better in the future in chat",
+      "parentUuid": "c9092c07_49cc68bf",
+      "range": {
+        "startLine": 266,
+        "startChar": 23,
+        "endLine": 266,
+        "endChar": 24
+      },
+      "revId": "3907c3797fe14efb52bec3a60521b0fc971e409d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
