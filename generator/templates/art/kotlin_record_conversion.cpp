@@ -53,9 +53,6 @@
         {% for member in kotlin_record_members(members) %}
             {
                 auto& in = inStruct.{{member.name.camelCase()}};
-                {% if as_varName(member.name) == 'callback' %}
-                    auto& in_executor = inStruct.executor;
-                {% endif %}
                 auto& out = outStruct->{{member.name.camelCase()}};
                 {% if member.constant_length == 1 %}
                     {% if member.type.category == 'structure' %}
