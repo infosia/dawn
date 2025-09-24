@@ -16,6 +16,24 @@
       "message": "Have you hand-patched it to Google3 and verified that blaze test //third_party/dawn/tools/android/webgpu/src/androidTest/java/android/dawn:ImageTest still includes test images in the Sponge artifacts?",
       "revId": "a2c85564fae83e25259e6cf641944d9baef65c82",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7326b83_14419dc8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-09-24T08:45:26Z",
+      "side": 1,
+      "message": "Yes, I\u0027ve hand-patched these changes into Google3. I ran the ImageTest and confirmed that the test images are correctly included in the Sponge artifacts(http://sponge2/3cedc388-27de-4121-bd40-a695afc9533a).",
+      "parentUuid": "63a31dd5_3de4cc12",
+      "revId": "a2c85564fae83e25259e6cf641944d9baef65c82",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
