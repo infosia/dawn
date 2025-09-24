@@ -215,8 +215,10 @@ class D3D12ResourceBackend : public SharedBufferMemoryTestBackend {
     D3D12ResourceBackend() {}
 };
 
+class SharedBufferMemoryD3D12ResourceTests : public SharedBufferMemoryTests {};
+
 // Ensure that importing a nullptr ID3D12Resource results in error.
-TEST_P(SharedBufferMemoryTests, nullResourceFailure) {
+TEST_P(SharedBufferMemoryD3D12ResourceTests, nullResourceFailure) {
     native::d3d12::SharedBufferMemoryD3D12ResourceDescriptor sharedD3d12ResourceDesc;
     sharedD3d12ResourceDesc.resource = nullptr;
     wgpu::SharedBufferMemoryDescriptor desc;
@@ -226,7 +228,7 @@ TEST_P(SharedBufferMemoryTests, nullResourceFailure) {
 
 // Validate that importing an ID3D12Resource across devices results in failure. This is tested by
 // creating a resource with a WARP device and attempting to use it on a non-WARP device.
-TEST_P(SharedBufferMemoryTests, CrossDeviceResourceImportFailure) {
+TEST_P(SharedBufferMemoryD3D12ResourceTests, CrossDeviceResourceImportFailure) {
     DAWN_TEST_UNSUPPORTED_IF(IsWARP());
     ComPtr<ID3D12Device> warpDevice =
         static_cast<D3D12ResourceBackend*>(GetParam().mBackend)->CreateD3D12Device(device, true);
@@ -243,7 +245,7 @@ TEST_P(SharedBufferMemoryTests, CrossDeviceResourceImportFailure) {
 
 // Validate that importing an ID3D12Resource allocated on a CUSTOM heap that is equivalent to UPLOAD
 // works correctly.
-TEST_P(SharedBufferMemoryTests, CustomUploadHeapImport) {
+TEST_P(SharedBufferMemoryD3D12ResourceTests, CustomUploadHeapImport) {
     ComPtr<ID3D12Device> d3d12Device =
         static_cast<D3D12ResourceBackend*>(GetParam().mBackend)->CreateD3D12Device(device, false);
     D3D12_HEAP_PROPERTIES heapProperties =
@@ -262,7 +264,7 @@ TEST_P(SharedBufferMemoryTests, CustomUploadHeapImport) {
 
 // Validate that importing an ID3D12Resource allocated on a CUSTOM heap that is equivalent to
 // READBACK works correctly.
-TEST_P(SharedBufferMemoryTests, CustomReadbackHeapImport) {
+TEST_P(SharedBufferMemoryD3D12ResourceTests, CustomReadbackHeapImport) {
     ComPtr<ID3D12Device> d3d12Device =
         static_cast<D3D12ResourceBackend*>(GetParam().mBackend)->CreateD3D12Device(device, false);
     D3D12_HEAP_PROPERTIES heapProperties =
@@ -281,6 +283,12 @@ TEST_P(SharedBufferMemoryTests, CustomReadbackHeapImport) {
 
 DAWN_INSTANTIATE_PREFIXED_TEST_P(D3D12,
                                  SharedBufferMemoryTests,
+                                 {D3D12Backend()},
+                                 {D3D12ResourceBackend::GetInstance()});
+
+GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST(SharedBufferMemoryD3D12ResourceTests);
+DAWN_INSTANTIATE_PREFIXED_TEST_P(D3D12,
+                                 SharedBufferMemoryD3D12ResourceTests,
                                  {D3D12Backend()},
                                  {D3D12ResourceBackend::GetInstance()});
 
