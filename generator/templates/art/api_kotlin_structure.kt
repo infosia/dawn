@@ -27,8 +27,16 @@
 package {{ kotlin_package }}
 {% from 'art/api_kotlin_types.kt' import kotlin_definition with context %}
 
+{% for member in kotlin_record_members(structure.members) %}
+    import java.util.concurrent.Executor
+    {% break %}
+{% endfor %}
+
 public class {{ structure.name.CamelCase() }}(
     {% for member in kotlin_record_members(structure.members) %}
+        {% if member.type.category in ['callback function']%}
+            public var executor: Executor? = Executor(Runnable::run),
+        {% endif %}
         {# We supply a getter that is excluded from name mangling to allow Inline Value Classed
            enums/bitmasks to be accessible as integers from the JVM adapter layer. #}
         {% if member.type.category in ['bitmask', 'enum'] %}
