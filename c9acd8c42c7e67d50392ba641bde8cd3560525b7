@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83626ea9_8bb37561",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-24T21:19:24Z",
+      "side": 1,
+      "message": "LGTM with one question",
+      "revId": "c9acd8c42c7e67d50392ba641bde8cd3560525b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd36a00c_d4de7b2e",
+        "filename": "src/dawn/native/vulkan/VulkanExtensions.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-24T21:19:24Z",
+      "side": 1,
+      "message": "Are all of these extensions related to VK_COMPONENT_SWIZZLE_ONE support, or is it just the Maintenance5? I don\u0027t have any issue with adding them, but it might be nice to do so in a separate patch if they\u0027re not necessary just in case this one gets reverted.",
+      "revId": "c9acd8c42c7e67d50392ba641bde8cd3560525b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
