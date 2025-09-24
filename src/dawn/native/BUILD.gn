@@ -766,7 +766,7 @@ source_set("sources") {
   if (dawn_enable_opengl) {
     public_deps += [
       ":opengl_loader_gen",
-      "${dawn_root}/src/tint/api/common:common",
+      "${dawn_root}/src/tint/api/common",
       "${dawn_root}/third_party/khronos:khronos_platform",
     ]
     sources += get_target_outputs(":opengl_loader_gen")
@@ -867,6 +867,8 @@ source_set("sources") {
       "vulkan/Forward.h",
       "vulkan/FramebufferCache.cpp",
       "vulkan/FramebufferCache.h",
+      "vulkan/MemoryTypeSelector.cpp",
+      "vulkan/MemoryTypeSelector.h",
       "vulkan/PhysicalDeviceVk.cpp",
       "vulkan/PhysicalDeviceVk.h",
       "vulkan/PipelineCacheVk.cpp",
