@@ -51,6 +51,8 @@ include(lang/wgsl/writer/BUILD.cmake)
 ################################################################################
 tint_add_target(tint_lang_wgsl lib
   lang/wgsl/allowed_features.h
+  lang/wgsl/builtin_fn_convert.cc
+  lang/wgsl/builtin_fn_convert.h
   lang/wgsl/enums.cc
   lang/wgsl/enums.h
   lang/wgsl/feature_status.cc

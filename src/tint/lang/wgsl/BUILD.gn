@@ -46,6 +46,8 @@ if (tint_build_unittests || tint_build_benchmarks) {
 libtint_source_set("wgsl") {
   sources = [
     "allowed_features.h",
+    "builtin_fn_convert.cc",
+    "builtin_fn_convert.h",
     "enums.cc",
     "enums.h",
     "feature_status.cc",

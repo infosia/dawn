@@ -91,6 +91,7 @@
 #include "src/tint/lang/core/type/i8.h"
 #include "src/tint/lang/core/type/matrix.h"
 #include "src/tint/lang/core/type/memory_view.h"
+#include "src/tint/lang/core/type/parameter_usage.h"
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/core/type/reference.h"
 #include "src/tint/lang/core/type/sampled_texture.h"
@@ -1225,9 +1226,7 @@ class Validator {
 
     /// Validates a core builtin call
     /// @param call the call to validate
-    /// @param overload the call intrinsic overload
-    void CheckCoreBuiltinCall(const CoreBuiltinCall* call,
-                              const core::intrinsic::Overload& overload);
+    void CheckCoreBuiltinCall(const CoreBuiltinCall* call);
 
     /// Validates the given member builtin call
     /// @param call the member call to validate
@@ -3385,12 +3384,11 @@ void Validator::CheckBuiltinCall(const BuiltinCall* call) {
     }
 
     if (auto* bc = call->As<CoreBuiltinCall>()) {
-        CheckCoreBuiltinCall(bc, builtin.Get());
+        CheckCoreBuiltinCall(bc);
     }
 }
 
-void Validator::CheckCoreBuiltinCall(const CoreBuiltinCall* call,
-                                     const core::intrinsic::Overload& overload) {
+void Validator::CheckCoreBuiltinCall(const CoreBuiltinCall* call) {
     if (call->Func() == core::BuiltinFn::kQuadBroadcast ||
         call->Func() == core::BuiltinFn::kSubgroupBroadcast) {
         TINT_ASSERT(call->Args().Length() == 2);
@@ -3402,18 +3400,7 @@ void Validator::CheckCoreBuiltinCall(const CoreBuiltinCall* call,
         return;
     }
 
-    auto idx_for_usage = [&](core::ParameterUsage usage) -> std::optional<uint32_t> {
-        for (uint32_t i = 0; i < overload.parameters.Length(); ++i) {
-            auto& p = overload.parameters[i];
-            if (p.usage == usage) {
-                return int32_t(i);
-            }
-        }
-        return std::nullopt;
-    };
-
-    auto check_arg_in_range = [&](core::ParameterUsage usage, int32_t min, int32_t max) {
-        auto idx_opt = idx_for_usage(usage);
+    auto check_arg_in_range = [&](std::optional<uint32_t> idx_opt, int32_t min, int32_t max) {
         if (!idx_opt.has_value()) {
             return;
         }
@@ -3447,8 +3434,31 @@ void Validator::CheckCoreBuiltinCall(const CoreBuiltinCall* call,
         }
     };
 
-    check_arg_in_range(core::ParameterUsage::kComponent, 0, 3);
-    check_arg_in_range(core::ParameterUsage::kOffset, -8, 7);
+    auto dim = core::type::TextureDimension::kNone;
+    bool is_depth = false;
+
+    if (call->Args().Length() > 0) {
+        if (auto* tex = call->Args()[0]->Type()->As<core::type::Texture>()) {
+            dim = tex->Dim();
+            is_depth = call->Args()[0]->Type()->Is<core::type::DepthTexture>();
+        }
+    }
+    if (dim == core::type::TextureDimension::kNone && call->Args().Length() > 1) {
+        if (auto* tex = call->Args()[1]->Type()->As<core::type::Texture>()) {
+            dim = tex->Dim();
+            is_depth = call->Args()[1]->Type()->Is<core::type::DepthTexture>();
+        }
+    }
+
+    if (dim == core::type::TextureDimension::kNone) {
+        return;
+    }
+
+    auto indices = core::type::LookupParameterIndices(call->Func(), dim, is_depth,
+                                                      uint32_t(call->Args().Length()));
+
+    check_arg_in_range(indices.component, 0, 3);
+    check_arg_in_range(indices.offset, -8, 7);
 }
 
 void Validator::CheckMemberBuiltinCall(const MemberBuiltinCall* call) {

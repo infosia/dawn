@@ -61,19 +61,10 @@ CallTargetSignature::CallTargetSignature(const core::type::Type* ret_ty,
 CallTargetSignature::CallTargetSignature(const CallTargetSignature&) = default;
 CallTargetSignature::~CallTargetSignature() = default;
 
-int CallTargetSignature::IndexOf(core::ParameterUsage usage) const {
-    for (size_t i = 0; i < parameters.Length(); i++) {
-        if (parameters[i]->Usage() == usage) {
-            return static_cast<int>(i);
-        }
-    }
-    return -1;
-}
-
 tint::HashCode CallTargetSignature::HashCode() const {
     auto hash = tint::Hash(parameters.Length());
     for (auto* p : parameters) {
-        hash = HashCombine(hash, p->Type(), p->Usage());
+        hash = HashCombine(hash, p->Type());
     }
     return Hash(hash, return_type);
 }
@@ -85,7 +76,7 @@ bool CallTargetSignature::operator==(const CallTargetSignature& other) const {
     for (size_t i = 0; i < parameters.Length(); i++) {
         auto* a = parameters[i];
         auto* b = other.parameters[i];
-        if (a->Type() != b->Type() || a->Usage() != b->Usage()) {
+        if (a->Type() != b->Type()) {
             return false;
         }
     }

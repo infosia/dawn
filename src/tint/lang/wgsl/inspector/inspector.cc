@@ -43,6 +43,7 @@
 #include "src/tint/lang/core/type/input_attachment.h"
 #include "src/tint/lang/core/type/matrix.h"
 #include "src/tint/lang/core/type/multisampled_texture.h"
+#include "src/tint/lang/core/type/parameter_usage.h"
 #include "src/tint/lang/core/type/resource_type.h"
 #include "src/tint/lang/core/type/sampled_texture.h"
 #include "src/tint/lang/core/type/storage_texture.h"
@@ -57,6 +58,7 @@
 #include "src/tint/lang/wgsl/ast/module.h"
 #include "src/tint/lang/wgsl/ast/override.h"
 #include "src/tint/lang/wgsl/ast/templated_identifier.h"
+#include "src/tint/lang/wgsl/builtin_fn_convert.h"
 #include "src/tint/lang/wgsl/sem/accessor_expression.h"
 #include "src/tint/lang/wgsl/sem/builtin_enum_expression.h"
 #include "src/tint/lang/wgsl/sem/builtin_fn.h"
@@ -550,7 +552,8 @@ const Inspector::EntryPointTextureMetadata& Inspector::ComputeTextureMetadata(
     // The actual logic to compute the relevant metadata when a builtin call is found. It gets the
     // set of statically determined globals for the texture and sampler arguments.
     auto RecordBuiltinCallMetadata = [&](const sem::Call* call, const sem::BuiltinFn* builtin,
-                                         const GlobalSet& textures, const GlobalSet& samplers) {
+                                         const GlobalSet& textures, const GlobalSet& samplers,
+                                         uint32_t texture_idx) {
         // All builtins with samplers also take a texture.
         TINT_ASSERT(!textures.IsEmpty());
 
@@ -565,10 +568,7 @@ const Inspector::EntryPointTextureMetadata& Inspector::ComputeTextureMetadata(
         }
 
         // Also gather uses of non-storage textures that are used without a sampler
-        const auto* texture_type =
-            call->Arguments()[static_cast<size_t>(
-                                  builtin->Signature().IndexOf(core::ParameterUsage::kTexture))]
-                ->Type();
+        const auto* texture_type = call->Arguments()[static_cast<size_t>(texture_idx)]->Type();
         if (samplers.IsEmpty() && !texture_type->Is<core::type::StorageTexture>()) {
             for (const auto* texture : textures) {
                 auto texture_binding_point = texture->Attributes().binding_point.value();
@@ -658,16 +658,37 @@ const Inspector::EntryPointTextureMetadata& Inspector::ComputeTextureMetadata(
                 [&](const sem::BuiltinFn* builtin) {
                     // Find sampler / texture parameters and skip over builtin calls without any.
                     const auto& signature = builtin->Signature();
-                    int texture_index = signature.IndexOf(core::ParameterUsage::kTexture);
-                    int sampler_index = signature.IndexOf(core::ParameterUsage::kSampler);
 
-                    if (texture_index == -1) {
+                    auto dim = core::type::TextureDimension::kNone;
+                    bool is_depth = false;
+
+                    if (auto* tex = signature.parameters[0]->Type()->As<core::type::Texture>()) {
+                        dim = tex->Dim();
+                        is_depth = tex->Is<core::type::DepthTexture>();
+                    }
+                    if (dim == core::type::TextureDimension::kNone) {
+                        if (auto* tex =
+                                signature.parameters[1]->Type()->As<core::type::Texture>()) {
+                            dim = tex->Dim();
+                            is_depth = tex->Is<core::type::DepthTexture>();
+                        }
+                    }
+
+                    if (dim == core::type::TextureDimension::kNone) {
+                        return;
+                    }
+
+                    auto indices = core::type::LookupParameterIndices(
+                        wgsl::ConvertToCore(builtin->Fn()), dim, is_depth,
+                        uint32_t(signature.parameters.Length()));
+
+                    if (!indices.texture.has_value()) {
                         return;
                     }
 
                     // A texture of `sem::Call` means we're dealing with a `getBinding` or
                     // `hasBinding` call. Skip it.
-                    if (call->Arguments()[size_t(texture_index)]->Is<sem::Call>()) {
+                    if (call->Arguments()[size_t(indices.texture.value())]->Is<sem::Call>()) {
                         return;
                     }
 
@@ -676,16 +697,19 @@ const Inspector::EntryPointTextureMetadata& Inspector::ComputeTextureMetadata(
                     // directly, or to the contents of globals_for_handle_parameters.
                     GlobalSet scratch_sampler_global;
                     const GlobalSet* sampler_globals = &scratch_sampler_global;
-                    if (sampler_index != -1) {
+                    if (indices.sampler.has_value()) {
                         sampler_globals = GetGlobalsForArgument(
-                            fn, call->Arguments()[size_t(sampler_index)], &scratch_sampler_global);
+                            fn, call->Arguments()[size_t(indices.sampler.value())],
+                            &scratch_sampler_global);
                     }
 
                     GlobalSet scratch_texture_global;
                     const GlobalSet* texture_globals = GetGlobalsForArgument(
-                        fn, call->Arguments()[size_t(texture_index)], &scratch_texture_global);
+                        fn, call->Arguments()[size_t(indices.texture.value())],
+                        &scratch_texture_global);
 
-                    RecordBuiltinCallMetadata(call, builtin, *texture_globals, *sampler_globals);
+                    RecordBuiltinCallMetadata(call, builtin, *texture_globals, *sampler_globals,
+                                              indices.texture.value());
                 });
         }
     }

@@ -59,11 +59,6 @@ struct CallTargetSignature {
     /// @returns true if this signature is equal to other
     bool operator==(const CallTargetSignature& other) const;
 
-    /// @param usage the parameter usage to find
-    /// @returns the index of the parameter with the given usage, or -1 if no
-    /// parameter with the given usage exists.
-    int IndexOf(core::ParameterUsage usage) const;
-
     /// The type of the call target return value
     const core::type::Type* return_type = nullptr;
 

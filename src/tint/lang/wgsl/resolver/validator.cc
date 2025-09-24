@@ -40,6 +40,7 @@
 #include "src/tint/lang/core/type/i8.h"
 #include "src/tint/lang/core/type/input_attachment.h"
 #include "src/tint/lang/core/type/multisampled_texture.h"
+#include "src/tint/lang/core/type/parameter_usage.h"
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/core/type/reference.h"
 #include "src/tint/lang/core/type/sampled_texture.h"
@@ -60,6 +61,7 @@
 #include "src/tint/lang/wgsl/ast/traverse_expressions.h"
 #include "src/tint/lang/wgsl/ast/variable_decl_statement.h"
 #include "src/tint/lang/wgsl/ast/workgroup_attribute.h"
+#include "src/tint/lang/wgsl/builtin_fn_convert.h"
 #include "src/tint/lang/wgsl/sem/array.h"
 #include "src/tint/lang/wgsl/sem/break_if_statement.h"
 #include "src/tint/lang/wgsl/sem/builtin_fn.h"
@@ -2014,12 +2016,13 @@ bool Validator::TextureBuiltinFn(const sem::Call* call) const {
     std::string func_name = builtin->str();
     auto& signature = builtin->Signature();
 
-    auto check_arg_is_constexpr = [&](core::ParameterUsage usage, int min, int max) {
-        auto signed_index = signature.IndexOf(usage);
-        if (signed_index < 0) {
+    auto check_arg_is_constexpr = [&](std::optional<uint32_t> idx_opt, std::string_view usage,
+                                      int min, int max) {
+        if (!idx_opt.has_value()) {
             return true;
         }
-        auto index = static_cast<size_t>(signed_index);
+
+        auto index = idx_opt.value();
         auto* arg = call->Arguments()[index];
         if (auto values = arg->ConstantValue()) {
             if (auto* vector = values->Type()->As<core::type::Vector>()) {
@@ -2049,8 +2052,29 @@ bool Validator::TextureBuiltinFn(const sem::Call* call) const {
         return false;
     };
 
-    return check_arg_is_constexpr(core::ParameterUsage::kOffset, -8, 7) &&
-           check_arg_is_constexpr(core::ParameterUsage::kComponent, 0, 3);
+    auto dim = core::type::TextureDimension::kNone;
+    bool is_depth = false;
+
+    if (auto* tex = signature.parameters[0]->Type()->As<core::type::Texture>()) {
+        dim = tex->Dim();
+        is_depth = tex->Is<core::type::DepthTexture>();
+    }
+    if (dim == core::type::TextureDimension::kNone) {
+        if (auto* tex = signature.parameters[1]->Type()->As<core::type::Texture>()) {
+            dim = tex->Dim();
+            is_depth = tex->Is<core::type::DepthTexture>();
+        }
+    }
+
+    if (dim == core::type::TextureDimension::kNone) {
+        return true;
+    }
+
+    auto indices = core::type::LookupParameterIndices(ConvertToCore(builtin->Fn()), dim, is_depth,
+                                                      uint32_t(signature.parameters.Length()));
+
+    return check_arg_is_constexpr(indices.offset, "offset", -8, 7) &&
+           check_arg_is_constexpr(indices.component, "component", 0, 3);
 }
 
 bool Validator::SubgroupBroadcast(const sem::Call* call) const {

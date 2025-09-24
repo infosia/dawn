@@ -39,12 +39,14 @@ load("@bazel_skylib//lib:selects.bzl", "selects")
 cc_library(
   name = "wgsl",
   srcs = [
+    "builtin_fn_convert.cc",
     "enums.cc",
     "feature_status.cc",
     "reserved_words.cc",
   ],
   hdrs = [
     "allowed_features.h",
+    "builtin_fn_convert.h",
     "enums.h",
     "feature_status.h",
     "reserved_words.h",

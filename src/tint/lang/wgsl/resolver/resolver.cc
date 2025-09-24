@@ -1950,8 +1950,7 @@ sem::Call* Resolver::Call(const ast::CallExpression* expr) {
             // Type constructor
             target_sem = constructors_.GetOrAdd(match.Get(), [&] {
                 auto params = Transform(match->parameters, [&](auto& p, size_t i) {
-                    return b.create<sem::Parameter>(nullptr, static_cast<uint32_t>(i), p.type,
-                                                    p.usage);
+                    return b.create<sem::Parameter>(nullptr, static_cast<uint32_t>(i), p.type);
                 });
                 return b.create<sem::ValueConstructor>(match->return_type, std::move(params),
                                                        overload_stage);
@@ -1959,8 +1958,7 @@ sem::Call* Resolver::Call(const ast::CallExpression* expr) {
         } else {
             // Type conversion
             target_sem = converters_.GetOrAdd(match.Get(), [&] {
-                auto* param = b.create<sem::Parameter>(nullptr, 0u, match->parameters[0].type,
-                                                       match->parameters[0].usage);
+                auto* param = b.create<sem::Parameter>(nullptr, 0u, match->parameters[0].type);
                 return b.create<sem::ValueConversion>(match->return_type, param, overload_stage);
             });
         }
@@ -2254,7 +2252,7 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
     // De-duplicate builtins that are identical.
     auto* target = builtins_.GetOrAdd(std::make_pair(overload.Get(), fn), [&] {
         auto params = Transform(overload->parameters, [&](auto& p, size_t i) {
-            return b.create<sem::Parameter>(nullptr, static_cast<uint32_t>(i), p.type, p.usage);
+            return b.create<sem::Parameter>(nullptr, static_cast<uint32_t>(i), p.type);
         });
         sem::PipelineStageSet supported_stages;
         auto flags = overload->info->flags;

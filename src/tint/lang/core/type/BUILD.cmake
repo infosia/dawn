@@ -90,6 +90,8 @@ tint_add_target(tint_lang_core_type lib
   lang/core/type/node.h
   lang/core/type/numeric_scalar.cc
   lang/core/type/numeric_scalar.h
+  lang/core/type/parameter_usage.cc
+  lang/core/type/parameter_usage.h
   lang/core/type/pointer.cc
   lang/core/type/pointer.h
   lang/core/type/reference.cc
@@ -178,6 +180,7 @@ tint_add_target(tint_lang_core_type_test test
   lang/core/type/manager_test.cc
   lang/core/type/matrix_test.cc
   lang/core/type/multisampled_texture_test.cc
+  lang/core/type/parameter_usage_test.cc
   lang/core/type/pointer_test.cc
   lang/core/type/reference_test.cc
   lang/core/type/resource_binding_test.cc
