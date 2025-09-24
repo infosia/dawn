@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fe5e556_e53569c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-24T13:57:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81bb188f_42f8ee7d",
+      "revId": "20152b85a999803bb177f9b9cd1d159115719768",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "45b9fd4b_f94ea726",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-09-24T13:49:34Z",
       "side": 1,
       "message": "Could we do that for GLSL in the future as well?",
+      "revId": "20152b85a999803bb177f9b9cd1d159115719768",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce2146ec_50db5987",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-24T13:57:52Z",
+      "side": 1,
+      "message": "Yes, but I have to change GLSL to use BindingPoint instead of BindingInfo first and split out some extra stuff for combined samplers.",
+      "parentUuid": "45b9fd4b_f94ea726",
       "revId": "20152b85a999803bb177f9b9cd1d159115719768",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
