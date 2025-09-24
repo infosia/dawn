@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad34d688_771a9673",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-24T20:03:07Z",
+      "side": 1,
+      "message": "FWIW I don\u0027t think we actually use the access controls for remapping any more, so this could just be removed. Could be done as a follow up.",
+      "revId": "7b0ca5cf1c1bd26c18b4db2e907f4259dded3598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
