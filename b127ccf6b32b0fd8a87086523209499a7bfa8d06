@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8f1b4aba_d186c727",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-24T17:57:57Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand why this change is needed. The renaming results in the tests having redundant names since they are already prefixed with `D3D12` right?\n\nMaybe if you have the follow up change it would be more clear what this change is trying to achieve?",
+      "revId": "b127ccf6b32b0fd8a87086523209499a7bfa8d06",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dde7f6e2_efe71fe6",
         "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests_win.cpp",
         "patchSetId": 2
