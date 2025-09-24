@@ -1102,6 +1102,22 @@ def has_callbackInfoStruct(method):
                for arg in method.arguments)
 
 
+def find_callback_from_callbackInfo(member):
+    # Finds and returns 'callback function' in 'callback info'.
+    # Returns None if no match is found.
+    return next((m for m in member.type.members if m.type.category == 'callback function'), None)
+
+
+def find_callbackInfo_and_callback_from_method(method):
+    # Finds the 'callback info' argument and the 'callback function'
+    # within it. Returns both as a tuple, or (None, None) if not found.
+    callback_info_arg = next((arg for arg in method.arguments if arg.type.category == 'callback info'), None)
+    if not callback_info_arg:
+        return None, None
+    callback_function = find_callback_from_callbackInfo(callback_info_arg)
+    return callback_info_arg, callback_function
+
+
 def is_wire_serializable(type):
     # Function pointers, callback functions, and "void *" types (i.e. userdata) cannot
     # be serialized.
@@ -1178,6 +1194,8 @@ def make_base_render_params(metadata):
             'decorate': lambda typ, arg: decorate(typ, arg, with_nullability=False),
             'as_ktName': as_ktName,
             'has_callbackInfoStruct': has_callbackInfoStruct,
+            'find_callback_from_callbackInfo' : find_callback_from_callbackInfo,
+            'find_callbackInfo_and_callback_from_method' : find_callbackInfo_and_callback_from_method,
             'find_by_name': find_by_name,
             'print': print,
             'unreachable_code': unreachable_code,

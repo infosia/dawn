@@ -92,14 +92,35 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
 
     //* Make the signature for each argument in turn.
     {% for arg in kotlin_record_members(method.arguments) %},
+        {% if as_varName(arg.name) == 'callbackInfo' %}
+            {% set arg = find_callback_from_callbackInfo(arg) %}
+            jobject _executor
+            ,
+        {% endif %}
         {{ arg_to_jni_type(arg) }} _{{ as_varName(arg.name) }}
     {% endfor %}) {
 
     // * Helper context for the duration of this method call.
     JNIClasses* classes = JNIClasses::getInstance(env);
     JNIContext c(env);
+    {% if has_callbackInfoStruct(method) %}
+        {% set callback_info, callback = find_callbackInfo_and_callback_from_method(method) %}
+        jint modeValue = 0x00000003; //AllowSpontaneous
+        jclass callbackInfoClass = classes->{{callback_info.type.name.camelCase()}};
+        jmethodID constructorId = env->GetMethodID(
+            callbackInfoClass,
+            "<init>",
+            "(ILjava/util/concurrent/Executor;Landroidx/webgpu/{{callback.type.name.CamelCase()}};)V");
+        jobject _callbackInfo = env->NewObject(
+            callbackInfoClass,
+            constructorId,
+            modeValue,
+            _executor,
+            _callback
+        );
+    {% endif %}
 
-    //* Perform the conversion of arguments.
+//* Perform the conversion of arguments.
     {{KotlinRecord}} kotlinRecord;
     {% for arg in kotlin_record_members(method.arguments) %}
         kotlinRecord.{{ as_varName(arg.name) }} = _{{ as_varName(arg.name) }};
