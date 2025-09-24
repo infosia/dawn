@@ -54,6 +54,8 @@ tint_add_target(tint_lang_core lib
   lang/core/io_attributes.h
   lang/core/number.cc
   lang/core/number.h
+  lang/core/parameter_usage.cc
+  lang/core/parameter_usage.h
   lang/core/unary_op.cc
   lang/core/unary_op.h
 )
@@ -81,6 +83,7 @@ tint_target_add_external_dependencies(tint_lang_core lib
 tint_add_target(tint_lang_core_test test
   lang/core/enums_test.cc
   lang/core/number_test.cc
+  lang/core/parameter_usage_test.cc
 )
 
 tint_target_add_dependencies(tint_lang_core_test test

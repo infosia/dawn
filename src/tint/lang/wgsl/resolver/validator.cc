@@ -2014,12 +2014,13 @@ bool Validator::TextureBuiltinFn(const sem::Call* call) const {
     std::string func_name = builtin->str();
     auto& signature = builtin->Signature();
 
-    auto check_arg_is_constexpr = [&](core::ParameterUsage usage, int min, int max) {
-        auto signed_index = signature.IndexOf(usage);
-        if (signed_index < 0) {
+    auto check_arg_is_constexpr = [&](std::optional<uint32_t> idx_opt, std::string_view usage,
+                                      int min, int max) {
+        if (!idx_opt.has_value()) {
             return true;
         }
-        auto index = static_cast<size_t>(signed_index);
+
+        auto index = idx_opt.value();
         auto* arg = call->Arguments()[index];
         if (auto values = arg->ConstantValue()) {
             if (auto* vector = values->Type()->As<core::type::Vector>()) {
@@ -2049,8 +2050,29 @@ bool Validator::TextureBuiltinFn(const sem::Call* call) const {
         return false;
     };
 
-    return check_arg_is_constexpr(core::ParameterUsage::kOffset, -8, 7) &&
-           check_arg_is_constexpr(core::ParameterUsage::kComponent, 0, 3);
+    auto dim = core::type::TextureDimension::kNone;
+    bool is_depth = false;
+
+    if (auto* tex = signature.parameters[0]->Type()->As<core::type::Texture>()) {
+        dim = tex->Dim();
+        is_depth = tex->Is<core::type::DepthTexture>();
+    }
+    if (dim == core::type::TextureDimension::kNone) {
+        if (auto* tex = signature.parameters[1]->Type()->As<core::type::Texture>()) {
+            dim = tex->Dim();
+            is_depth = tex->Is<core::type::DepthTexture>();
+        }
+    }
+
+    if (dim == core::type::TextureDimension::kNone) {
+        return;
+    }
+
+    auto indices = LookupParameterUsages(ConvertToCore(builtin->Fn()), dim, is_depth,
+                                         signature.parameters.Length());
+
+    return check_arg_is_constexpr(indices.offset, "offset", -8, 7) &&
+           check_arg_is_constexpr(indices.component, "component", 0, 3);
 }
 
 bool Validator::SubgroupBroadcast(const sem::Call* call) const {

@@ -208,8 +208,7 @@ class Parameter final : public Castable<Parameter, Variable> {
     /// @param usage the parameter usage
     Parameter(const ast::Parameter* declaration,
               uint32_t index,
-              const core::type::Type* type = nullptr,
-              core::ParameterUsage usage = core::ParameterUsage::kNone);
+              const core::type::Type* type = nullptr);
 
     /// Destructor
     ~Parameter() override;
@@ -221,9 +220,6 @@ class Parameter final : public Castable<Parameter, Variable> {
 
     /// @return the index of the parameter in the function
     uint32_t Index() const { return index_; }
-
-    /// @returns the semantic usage for the parameter
-    core::ParameterUsage Usage() const { return usage_; }
 
     /// @param owner the CallTarget owner of this parameter
     void SetOwner(const CallTarget* owner) { owner_ = owner; }
@@ -246,7 +242,6 @@ class Parameter final : public Castable<Parameter, Variable> {
 
   private:
     const uint32_t index_ = 0;
-    core::ParameterUsage usage_ = core::ParameterUsage::kNone;
     CallTarget const* owner_ = nullptr;
     const CastableBase* shadows_ = nullptr;
     ParameterAttributes attributes_;

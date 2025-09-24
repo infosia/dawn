@@ -42,6 +42,7 @@ cc_library(
     "binary_op.cc",
     "enums.cc",
     "number.cc",
+    "parameter_usage.cc",
     "unary_op.cc",
   ],
   hdrs = [
@@ -52,6 +53,7 @@ cc_library(
     "interpolation.h",
     "io_attributes.h",
     "number.h",
+    "parameter_usage.h",
     "unary_op.h",
   ],
   deps = [
@@ -75,6 +77,7 @@ cc_library(
   srcs = [
     "enums_test.cc",
     "number_test.cc",
+    "parameter_usage_test.cc",
   ],
   deps = [
     "//src/tint/lang/core",

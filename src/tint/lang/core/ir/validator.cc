@@ -81,6 +81,7 @@
 #include "src/tint/lang/core/ir/unused.h"
 #include "src/tint/lang/core/ir/user_call.h"
 #include "src/tint/lang/core/ir/var.h"
+#include "src/tint/lang/core/parameter_usage.h"
 #include "src/tint/lang/core/type/array.h"
 #include "src/tint/lang/core/type/binding_array.h"
 #include "src/tint/lang/core/type/bool.h"
@@ -3402,18 +3403,7 @@ void Validator::CheckCoreBuiltinCall(const CoreBuiltinCall* call,
         return;
     }
 
-    auto idx_for_usage = [&](core::ParameterUsage usage) -> std::optional<uint32_t> {
-        for (uint32_t i = 0; i < overload.parameters.Length(); ++i) {
-            auto& p = overload.parameters[i];
-            if (p.usage == usage) {
-                return int32_t(i);
-            }
-        }
-        return std::nullopt;
-    };
-
-    auto check_arg_in_range = [&](core::ParameterUsage usage, int32_t min, int32_t max) {
-        auto idx_opt = idx_for_usage(usage);
+    auto check_arg_in_range = [&](std::optional<uint32_t> idx_opt, int32_t min, int32_t max) {
         if (!idx_opt.has_value()) {
             return;
         }
@@ -3447,8 +3437,28 @@ void Validator::CheckCoreBuiltinCall(const CoreBuiltinCall* call,
         }
     };
 
-    check_arg_in_range(core::ParameterUsage::kComponent, 0, 3);
-    check_arg_in_range(core::ParameterUsage::kOffset, -8, 7);
+    auto dim = core::type::TextureDimension::kUnknown;
+    bool is_depth = false;
+
+    if (auto* tex = call->Args()[0]->As<core::type::Texture>()) {
+        dim = tex->Dim();
+        is_depth = call->Args()[0]->Is<core::type::DepthTexture>();
+    }
+    if (dim == core::type::TextureDimension::kUnknown) {
+        if (auto* tex = call->Args()[1]->As<core::type::Texture>()) {
+            dim = tex->Dim();
+            is_depth = call->Args()[1]->Is<core::type::DepthTexture>();
+        }
+    }
+
+    if (dim == core::type::TextureDimension::kUnknown) {
+        return;
+    }
+
+    auto indices = LookupParameterUsages(call->Func(), dim, is_depth, call->Args().Size());
+
+    check_arg_in_range(indices.component, 0, 3);
+    check_arg_in_range(indices.offset, -8, 7);
 }
 
 void Validator::CheckMemberBuiltinCall(const MemberBuiltinCall* call) {
