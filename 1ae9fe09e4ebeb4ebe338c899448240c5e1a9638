@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dd0e9bd_36c30c58",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-24T11:43:25Z",
+      "side": 1,
+      "message": "LGTM overall",
+      "revId": "1ae9fe09e4ebeb4ebe338c899448240c5e1a9638",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6a3e31c_caed2bad",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-24T11:43:25Z",
+      "side": 1,
+      "message": "```suggestion\n                                               wgpu::TextureComponentSwizzle* swizzle) {\n```",
+      "revId": "1ae9fe09e4ebeb4ebe338c899448240c5e1a9638",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d3476fe_b4e060fd",
+        "filename": "src/dawn/native/vulkan/VulkanExtensions.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-24T11:43:25Z",
+      "side": 1,
+      "message": "This should replicate the dependency section of this document https://registry.khronos.org/vulkan/specs/latest/man/html/VK_KHR_maintenance5.html which means adding detection of like 4 other extensions, sry :(",
+      "revId": "1ae9fe09e4ebeb4ebe338c899448240c5e1a9638",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
