@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63a31dd5_3de4cc12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-09-24T07:22:00Z",
+      "side": 1,
+      "message": "Have you hand-patched it to Google3 and verified that blaze test //third_party/dawn/tools/android/webgpu/src/androidTest/java/android/dawn:ImageTest still includes test images in the Sponge artifacts?",
+      "revId": "a2c85564fae83e25259e6cf641944d9baef65c82",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
