@@ -29,7 +29,9 @@
 
 #include <utility>
 
+#include "dawn/common/Log.h"
 #include "dawn/common/Math.h"
+#include "dawn/common/Numeric.h"
 #include "dawn/native/Buffer.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/Queue.h"
@@ -122,6 +124,28 @@ ResultOrError<UploadReservation> DynamicUploader::Reserve(uint64_t allocationSiz
         static_cast<uint8_t*>(reservation.buffer->GetMappedPointer()) + startOffset;
     reservation.offsetInBuffer = startOffset;
 
+    for (const auto& c : mCollisions) {
+        if (c.ring != targetRingBuffer) {
+            continue;
+        }
+        if (c.serial <= mDevice->GetQueue()->GetCompletedCommandSerial()) {
+            continue;
+        }
+        if (!RangesOverlap(c.offset, c.offset + c.size - 1, startOffset, startOffset + allocationSize - 1)) {
+            continue;
+        }
+        DAWN_DEBUG() << "Collision between " << c.ring << " at serial " << c.serial << " range " << c.offset << " and " << c.size;
+        DAWN_DEBUG() << "and " << targetRingBuffer << " at serial " << serial << " range " << startOffset << " and " << allocationSize;
+        DAWN_CHECK(false);
+    }
+
+    mCollisions.push_back(Collision{
+        .ring = targetRingBuffer,
+        .offset = startOffset,
+        .size = allocationSize,
+        .serial = serial,
+    });
+
     return reservation;
 }
 
@@ -154,15 +178,16 @@ void DynamicUploader::Deallocate(ExecutionSerial lastCompletedSerial, bool freeA
     size_t i = 0;
     while (i < mRingBuffers.size()) {
         mRingBuffers[i]->mAllocator.Deallocate(lastCompletedSerial);
+            i++;
 
         // Never erase the last buffer as to prevent re-creating smaller buffers
         // again unless explicitly asked to do so. The last buffer is the largest.
-        const bool shouldFree = (i < mRingBuffers.size() - 1) || freeAll;
-        if (mRingBuffers[i]->mAllocator.Empty() && shouldFree) {
-            mRingBuffers.erase(mRingBuffers.begin() + i);
-        } else {
-            i++;
-        }
+        //const bool shouldFree = (i < mRingBuffers.size() - 1) || freeAll;
+        //if (mRingBuffers[i]->mAllocator.Empty() && shouldFree) {
+        //    mRingBuffers.erase(mRingBuffers.begin() + i);
+        //} else {
+        //    i++;
+        //}
     }
 }
 

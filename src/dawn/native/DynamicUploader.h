@@ -85,6 +85,14 @@ class DynamicUploader : NonMovable {
     ExecutionSerial mLastPendingSerialSeen = kBeginningOfGPUTime;
     uint64_t mMemoryPendingSubmit = 0;
     raw_ptr<DeviceBase> mDevice;
+
+    struct Collision {
+        RingBuffer* ring;
+        uint64_t offset;
+        uint64_t size;
+        ExecutionSerial serial;
+    };
+    std::vector<Collision> mCollisions;
 };
 }  // namespace dawn::native
 
