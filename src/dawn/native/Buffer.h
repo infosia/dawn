@@ -183,7 +183,7 @@ class BufferBase : public SharedResource {
     virtual MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) = 0;
     virtual void FinalizeMapImpl() = 0;
     virtual void* GetMappedPointerImpl() = 0;
-    virtual void UnmapImpl() = 0;
+    virtual void UnmapImpl(BufferState fromState) = 0;
 
     virtual bool IsCPUWritableAtCreation() const = 0;
     MaybeError CopyFromStagingBuffer();
