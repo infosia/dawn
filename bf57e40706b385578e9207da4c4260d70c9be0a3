@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "783db107_ffeed87d",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-24T07:28:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25740295_f5ed734a",
+      "revId": "bf57e40706b385578e9207da4c4260d70c9be0a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91676199_8fe82f1b",
@@ -79,6 +97,30 @@
       "side": 1,
       "message": "Ok sounds good to keep as is but we need to explain why we do this.",
       "parentUuid": "bf2eab8e_1edef5a6",
+      "range": {
+        "startLine": 2126,
+        "startChar": 51,
+        "endLine": 2127,
+        "endChar": 97
+      },
+      "revId": "bf57e40706b385578e9207da4c4260d70c9be0a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0439534_ab833d6f",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2127,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-24T07:28:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac4a3c01_a9034172",
       "range": {
         "startLine": 2126,
         "startChar": 51,
