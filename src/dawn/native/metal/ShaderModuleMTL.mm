@@ -133,7 +133,7 @@ tint::msl::writer::Bindings GenerateBindingInfo(
     const BindingInfoArray& moduleBindingInfo,
     tint::msl::writer::ArrayLengthOptions& arrayLengthFromConstants,
     bool useArgumentBuffers) {
-    tint::msl::writer::Bindings bindings;
+    tint::Bindings bindings;
 
     for (BindGroupIndex group : layout->GetBindGroupLayoutsMask()) {
         const BindGroupLayout* bgl = ToBackend(layout->GetBindGroupLayout(group));
@@ -217,8 +217,7 @@ tint::msl::writer::Bindings GenerateBindingInfo(
                     };
 
                     bindings.external_texture.emplace(
-                        srcBindingPoint,
-                        tint::msl::writer::ExternalTexture{metadata, plane0, plane1});
+                        srcBindingPoint, tint::ExternalTexture{metadata, plane0, plane1});
                 },
                 [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); });
         }
