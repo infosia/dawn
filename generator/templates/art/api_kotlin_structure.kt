@@ -27,6 +27,14 @@
 package {{ kotlin_package }}
 {% from 'art/api_kotlin_types.kt' import kotlin_definition with context %}
 
+{% for member in kotlin_record_members(structure.members) %}
+    {% if member.type.category in ['callback function']%}
+        import java.util.concurrent.Executor
+        import java.util.concurrent.ForkJoinPool
+        {% break %}
+    {% endif %}
+{% endfor %}
+
 public class {{ structure.name.CamelCase() }}(
     {% for member in kotlin_record_members(structure.members) %}
         {# We supply a getter that is excluded from name mangling to allow Inline Value Classed
