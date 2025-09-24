@@ -69,6 +69,30 @@
       },
       "revId": "3907c3797fe14efb52bec3a60521b0fc971e409d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9092c07_49cc68bf",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-24T17:33:36Z",
+      "side": 1,
+      "message": "In this case it really wont work as a grid because the enum numbers are very large.\nThe 666 was in there as a test and i should remove it.",
+      "parentUuid": "5ae852f5_0921f9b1",
+      "range": {
+        "startLine": 266,
+        "startChar": 23,
+        "endLine": 266,
+        "endChar": 24
+      },
+      "revId": "3907c3797fe14efb52bec3a60521b0fc971e409d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
