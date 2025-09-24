@@ -90,16 +90,47 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
     Java_{{ kotlin_package.replace('.', '_') }}_{{ FunctionSuffix }}
             (JNIEnv *env{{ ', jobject obj' if object else ', jclass clazz' -}}
 
+    {% set ns = namespace(
+        callbackInfoClass_name=None,
+        callbackClass_name=None,
+        callbackVar_name=None
+    ) %}
+
     //* Make the signature for each argument in turn.
     {% for arg in kotlin_record_members(method.arguments) %},
-        {{ arg_to_jni_type(arg) }} _{{ as_varName(arg.name) }}
+        {% if as_varName(arg.name) == 'callbackInfo' %}
+            {% set ns.callbackInfoClass_name = arg.type.name.CamelCase() %}
+            {% set ns.callbackClass_name = ns.callbackInfoClass_name.removesuffix("Info") %}
+            {% set ns.callbackInfoClass_name = ns.callbackInfoClass_name[0] | lower ~ ns.callbackInfoClass_name[1:] %}
+            jobject _executor
+            ,
+            jobject _callback
+        {% else %}
+            {{ arg_to_jni_type(arg) }} _{{ as_varName(arg.name) }}
+        {% endif %}
     {% endfor %}) {
 
     // * Helper context for the duration of this method call.
     JNIClasses* classes = JNIClasses::getInstance(env);
     JNIContext c(env);
+    {% if has_callbackInfoStruct(method) %}
+        jint modeValue = 0x00000003; //AllowSpontaneous
+        jclass callbackModeClass = classes->callbackMode;
+        jclass callbackInfoClass = classes->{{ns.callbackInfoClass_name}};
+        jmethodID constructorId = env->GetMethodID(
+            callbackInfoClass,
+            "<init>",
+            "(ILjava/util/concurrent/Executor;Landroidx/webgpu/{{ns.callbackClass_name}};)V");
+        jobject _callbackInfo = env->NewObject(
+            callbackInfoClass,
+            constructorId,
+            modeValue,
+            _executor,
+            _callback
+        );
+    {% endif %}
 
-    //* Perform the conversion of arguments.
+//* Perform the conversion of arguments.
     {{KotlinRecord}} kotlinRecord;
     {% for arg in kotlin_record_members(method.arguments) %}
         kotlinRecord.{{ as_varName(arg.name) }} = _{{ as_varName(arg.name) }};
