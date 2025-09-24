@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d14b005f_a1638423",
+        "filename": "src/dawn/native/vulkan/VulkanExtensions.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-24T14:03:29Z",
+      "side": 1,
+      "message": "```suggestion\n\n            case DeviceExt::DriverProperties:\n            case DeviceExt::ShaderFloat16Int8:\n            case DeviceExt::DepthClipEnable:\n            case DeviceExt::ShaderIntegerDotProduct:\n            case DeviceExt::ZeroInitializeWorkgroupMemory:\n            case DeviceExt::DemoteToHelperInvocation:\n            case DeviceExt::Maintenance4:\n            case DeviceExt::PipelineRobustness:\n            case DeviceExt::Robustness2:\n            case DeviceExt::SubgroupSizeControl:\n            case DeviceExt::ShaderSubgroupExtendedTypes:\n            case DeviceExt::VulkanMemoryModel:\n            case DeviceExt::CooperativeMatrix:\n            case DeviceExt::ShaderFloatControls:\n            case DeviceExt::Multiview:\n                hasDependencies \u003d HasDep(DeviceExt::GetPhysicalDeviceProperties2);\n                break;\n```",
+      "range": {
+        "startLine": 296,
+        "startChar": 1,
+        "endLine": 315,
+        "endChar": 22
+      },
+      "revId": "8f363041b147dac957f2d789c93e67f27063cd99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
