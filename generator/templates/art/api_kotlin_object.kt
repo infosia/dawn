@@ -28,6 +28,11 @@ package {{ kotlin_package }}
 
 import dalvik.annotation.optimization.FastNative
 import java.nio.ByteBuffer
+{% for method in obj.methods if has_callbackInfoStruct(method) %}
+    import java.util.concurrent.Executor
+    import java.util.concurrent.ForkJoinPool
+    {% break %}
+{% endfor %}
 
 {% from 'art/api_kotlin_types.kt' import kotlin_declaration, kotlin_definition with context %}
 
@@ -38,7 +43,12 @@ public class {{ obj.name.CamelCase() }}(public val handle: Long): AutoCloseable 
         public external fun {{ method.name.camelCase() }}(
         //* TODO(b/341923892): rework async methods to use futures.
         {%- for arg in kotlin_record_members(method.arguments) %}
-            {{- as_varName(arg.name) }}: {{ kotlin_definition(arg) }},{{ ' ' }}
+            {%- if as_varName(arg.name) == 'callbackInfo' %}
+                executor: Executor? = ForkJoinPool.commonPool(),{{' '}}
+                {{- as_varName(arg.name).removesuffix("Info") }}: {{ kotlin_definition(arg).removesuffix("Info") }},{{ ' ' }}
+            {%- else %}
+                {{- as_varName(arg.name) }}: {{ kotlin_definition(arg) }},
+            {%- endif %}
         {%- endfor -%}): {{ kotlin_declaration(kotlin_return(method)) }}
 
         {% if method.name.chunks[0] == 'get' and not method.arguments %}
