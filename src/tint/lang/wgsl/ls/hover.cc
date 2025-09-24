@@ -159,8 +159,6 @@ void Call(std::string_view name, const sem::Call* c, std::vector<lsp::MarkedStri
         first = false;
         if (auto* decl = param->Declaration()) {
             ss << decl->name->symbol.NameView() << " : ";
-        } else if (auto usage = param->Usage(); usage != core::ParameterUsage::kNone) {
-            ss << param->Usage() << " : ";
         }
         ss << param->Type()->FriendlyName();
     }

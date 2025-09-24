@@ -50,14 +50,9 @@ std::vector<lsp::ParameterInformation> Params(const core::intrinsic::OverloadInf
 
     std::vector<lsp::ParameterInformation> params;
     for (size_t i = 0; i < overload.num_parameters; i++) {
-        lsp::ParameterInformation param_out;
-        auto& param_in = data[overload.parameters + i];
-        if (param_in.usage != core::ParameterUsage::kNone) {
-            param_out.label = std::string(core::ToString(param_in.usage));
-        } else {
-            param_out.label = "param-" + std::to_string(i);
-        }
-        params.push_back(std::move(param_out));
+        params.push_back(lsp::ParameterInformation{
+            .label = "param-" + std::to_string(i),
+        });
     }
     return params;
 }
@@ -134,9 +129,6 @@ void PrintOverload(std::string& name,
             name_st << ", ";
         }
 
-        if (parameter.usage != core::ParameterUsage::kNone) {
-            name_st << style::Variable(parameter.usage, ": ");
-        }
         context.Match(templates, overload, matcher_indices, earliest_eval_stage).PrintType(name_st);
     }
     name_st << ")";
