@@ -86,7 +86,7 @@ TEST_P(AllocatorMemoryInstrumentationTest, GetAllocatorMemoryInfoVulkan) {
     EXPECT_LE(memInfo.totalAllocatedMemory, prevAllocatedMemory);
 }
 
-DAWN_INSTANTIATE_TEST(AllocatorMemoryInstrumentationTest, VulkanBackend());
+DAWN_INSTANTIATE_TEST(AllocatorMemoryInstrumentationTest, VulkanBackend(), WebGPUBackend());
 
 }  // anonymous namespace
 }  // namespace dawn

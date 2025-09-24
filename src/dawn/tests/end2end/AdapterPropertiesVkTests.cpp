@@ -60,7 +60,7 @@ TEST_P(AdapterPropertiesVkTest, GetVkProperties) {
     }
 }
 
-DAWN_INSTANTIATE_TEST(AdapterPropertiesVkTest, VulkanBackend());
+DAWN_INSTANTIATE_TEST(AdapterPropertiesVkTest, VulkanBackend(), WebGPUBackend());
 
 }  // anonymous namespace
 }  // namespace dawn
