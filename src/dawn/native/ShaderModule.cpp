@@ -1807,10 +1807,10 @@ ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
                                    ObjectBase::ErrorTag tag,
                                    StringView label,
                                    ParsedCompilationMessages&& compilationMessages)
-    : Base(device, tag, label),
-      mType(Type::Undefined),
-      mCompilationMessages(
-          std::make_unique<OwnedCompilationMessages>(std::move(compilationMessages))) {}
+    : Base(device, tag, label), mType(Type::Undefined) {
+    mCompiledState.compilationMessages =
+        std::make_unique<OwnedCompilationMessages>(std::move(compilationMessages));
+}
 
 ShaderModuleBase::~ShaderModuleBase() = default;
 
@@ -1830,25 +1830,28 @@ void ShaderModuleBase::Initialize() {
     auto task = [&, shaderModuleRef = Ref<ShaderModuleBase>(this)]() {
         SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(GetDevice()->GetPlatform(), "CreateShaderModuleUS");
 
-        auto taskMaybeError = [&]() -> MaybeError {
+        CompiledState resultState;
+        auto taskMaybeError = [&resultState, shaderModule = static_cast<const ShaderModuleBase*>(
+                                                 this)]() -> MaybeError {
             // Check blob cache first before calling ParseShaderModule. ShaderModuleParseResult
             // returned from blob cache or ParseShaderModule will hold compilation messages and
             // validation errors if any. ShaderModuleParseResult from ParseShaderModule also
             // holds tint program.
             CacheResult<ShaderModuleParseResult> cacheResult;
-            DAWN_TRY_LOAD_OR_RUN(cacheResult, GetDevice(), GenerateShaderModuleParseRequest(true),
+            DAWN_TRY_LOAD_OR_RUN(cacheResult, shaderModule->GetDevice(),
+                                 shaderModule->GenerateShaderModuleParseRequest(true),
                                  ShaderModuleParseResult::FromBlob, ParseShaderModule,
                                  "ShaderModuleParsing");
-            GetDevice()->GetBlobCache()->EnsureStored(cacheResult);
+            shaderModule->GetDevice()->GetBlobCache()->EnsureStored(cacheResult);
 
             ShaderModuleParseResult parseResult = cacheResult.Acquire();
 
             // Move the compilation messages regardless of compilation success. Compilation messages
             // should be inject only once for each shader module.
-            DAWN_ASSERT(mCompilationMessages == nullptr);
+            DAWN_ASSERT(resultState.compilationMessages == nullptr);
             // Move the compilationMessages into the shader module and emit the tint errors and
             // warnings
-            mCompilationMessages = std::make_unique<OwnedCompilationMessages>(
+            resultState.compilationMessages = std::make_unique<OwnedCompilationMessages>(
                 std::move(parseResult.compilationMessages));
 
             // If ShaderModuleParseResult has validation error, notify the caller that compilation
@@ -1859,27 +1862,31 @@ void ShaderModuleBase::Initialize() {
 
             DAWN_ASSERT(!parseResult.HasError());
             DAWN_ASSERT(parseResult.HasTintProgram());
-            mTintData.Use([&](auto tintData) {
+            resultState.tintData.Use([&](auto tintData) {
                 tintData->tintProgram = std::move(parseResult.tintProgram.UnsafeGetValue().value());
             });
 
             // Gather the metadata and default entry point names
             DAWN_ASSERT(parseResult.metadataTable.has_value());
-            mEntryPoints = std::move(parseResult.metadataTable.value());
+            resultState.entryPoints = std::move(parseResult.metadataTable.value());
 
             for (auto stage : IterateStages(kAllStages)) {
-                mEntryPointCounts[stage] = 0;
+                resultState.entryPointCounts[stage] = 0;
             }
-            for (auto& [name, metadata] : mEntryPoints) {
+            for (auto& [name, metadata] : resultState.entryPoints) {
                 SingleShaderStage stage = metadata->stage;
-                if (mEntryPointCounts[stage] == 0) {
-                    mDefaultEntryPointNames[stage] = name;
+                if (resultState.entryPointCounts[stage] == 0) {
+                    resultState.defaultEntryPointNames[stage] = name;
                 }
-                mEntryPointCounts[stage]++;
+                resultState.entryPointCounts[stage]++;
             }
 
             return {};
         }();
+
+        // Always set mCompiledState, even if the compilation failed. It contains error messages
+        // that are used regardless of success.
+        mCompiledState = std::move(resultState);
 
         DAWN_HISTOGRAM_BOOLEAN(GetDevice()->GetPlatform(), "CreateShaderModuleSuccess",
                                taskMaybeError.IsSuccess());
@@ -1908,7 +1915,7 @@ ObjectType ShaderModuleBase::GetType() const {
 }
 
 bool ShaderModuleBase::HasEntryPoint(absl::string_view entryPoint) const {
-    return mEntryPoints.contains(entryPoint);
+    return mCompiledState.entryPoints.contains(entryPoint);
 }
 
 ShaderModuleEntryPoint ShaderModuleBase::ReifyEntryPointName(StringView entryPointName,
@@ -1916,7 +1923,7 @@ ShaderModuleEntryPoint ShaderModuleBase::ReifyEntryPointName(StringView entryPoi
     ShaderModuleEntryPoint entryPoint;
     if (entryPointName.IsUndefined()) {
         entryPoint.defaulted = true;
-        entryPoint.name = mDefaultEntryPointNames[stage];
+        entryPoint.name = mCompiledState.defaultEntryPointNames[stage];
     } else {
         entryPoint.defaulted = false;
         entryPoint.name = entryPointName;
@@ -1930,7 +1937,7 @@ std::optional<bool> ShaderModuleBase::GetStrictMath() const {
 
 const EntryPointMetadata& ShaderModuleBase::GetEntryPoint(absl::string_view entryPoint) const {
     DAWN_ASSERT(HasEntryPoint(entryPoint));
-    return *mEntryPoints.at(entryPoint);
+    return *mCompiledState.entryPoints.at(entryPoint);
 }
 
 size_t ShaderModuleBase::ComputeContentHash() {
@@ -1961,7 +1968,7 @@ ShaderModuleBase::ScopedUseTintProgram ShaderModuleBase::UseTintProgram() {
 }
 
 Ref<TintProgram> ShaderModuleBase::GetTintProgram() {
-    return mTintData.Use([&](auto tintData) {
+    return mCompiledState.tintData.Use([&](auto tintData) {
         // If the tintProgram is valid, just return it.
         if (tintData->tintProgram) {
             return tintData->tintProgram;
@@ -1988,11 +1995,12 @@ Ref<TintProgram> ShaderModuleBase::GetTintProgram() {
 }
 
 Ref<TintProgram> ShaderModuleBase::GetNullableTintProgramForTesting() const {
-    return mTintData.Use([&](auto tintData) { return tintData->tintProgram; });
+    return mCompiledState.tintData.Use([&](auto tintData) { return tintData->tintProgram; });
 }
 
 int ShaderModuleBase::GetTintProgramRecreateCountForTesting() const {
-    return mTintData.Use([&](auto tintData) { return tintData->tintProgramRecreateCount; });
+    return mCompiledState.tintData.Use(
+        [&](auto tintData) { return tintData->tintProgramRecreateCount; });
 }
 
 Future ShaderModuleBase::APIGetCompilationInfo(
@@ -2022,7 +2030,7 @@ Future ShaderModuleBase::APIGetCompilationInfo(
             const CompilationInfo* compilationInfo = nullptr;
             if (completionType == EventCompletionType::Ready) {
                 status = WGPUCompilationInfoRequestStatus_Success;
-                compilationInfo = mShaderModule->mCompilationMessages->GetCompilationInfo();
+                compilationInfo = mShaderModule->GetCompilationMessages()->GetCompilationInfo();
             }
 
             mCallback(status, ToAPI(compilationInfo), mUserdata1.ExtractAsDangling(),
@@ -2035,19 +2043,19 @@ Future ShaderModuleBase::APIGetCompilationInfo(
 }
 
 const OwnedCompilationMessages* ShaderModuleBase::GetCompilationMessages() const {
-    return mCompilationMessages.get();
+    return mCompiledState.compilationMessages.get();
 }
 
 std::string ShaderModuleBase::GetCompilationLog() const {
-    DAWN_ASSERT(mCompilationMessages);
-    if (!mCompilationMessages->HasWarningsOrErrors()) {
+    DAWN_ASSERT(mCompiledState.compilationMessages);
+    if (!mCompiledState.compilationMessages->HasWarningsOrErrors()) {
         return "";
     }
 
     // Emit the formatted Tint errors and warnings.
     std::ostringstream t;
     t << absl::StrFormat("Compilation log for %s:\n", this);
-    for (const auto& pMessage : mCompilationMessages->GetFormattedTintMessages()) {
+    for (const auto& pMessage : mCompiledState.compilationMessages->GetFormattedTintMessages()) {
         t << "\n" << pMessage;
     }
 
@@ -2056,14 +2064,14 @@ std::string ShaderModuleBase::GetCompilationLog() const {
 
 void ShaderModuleBase::SetCompilationMessagesForTesting(
     std::unique_ptr<OwnedCompilationMessages>* compilationMessages) {
-    mCompilationMessages = std::move(*compilationMessages);
+    mCompiledState.compilationMessages = std::move(*compilationMessages);
 }
 
 void ShaderModuleBase::WillDropLastExternalRef() {
     // The last external ref being dropped indicates that the application is not currently using,
     // and no pending task will use the shader module. In this case we can free the memory for the
     // parsed module.
-    mTintData.Use([&](auto tintData) { tintData->tintProgram = nullptr; });
+    mCompiledState.tintData.Use([&](auto tintData) { tintData->tintProgram = nullptr; });
 }
 
 ShaderModuleParseRequest ShaderModuleBase::GenerateShaderModuleParseRequest(
@@ -2094,4 +2102,20 @@ ShaderModuleParseRequest ShaderModuleBase::GenerateShaderModuleParseRequest(
                                          mInternalExtensions, needReflection);
 }
 
+ShaderModuleBase::CompiledState& ShaderModuleBase::CompiledState::operator=(
+    ShaderModuleBase::CompiledState&& source) {
+    entryPoints = std::move(source.entryPoints);
+    defaultEntryPointNames = std::move(source.defaultEntryPointNames);
+    entryPointCounts = std::move(source.entryPointCounts);
+
+    TintData sourceTintData;
+    source.tintData.Use(
+        [&sourceTintData](auto tintData) { sourceTintData = std::move(*tintData); });
+    tintData.Use(
+        [&sourceTintData](auto destTintData) { *destTintData = std::move(sourceTintData); });
+
+    compilationMessages = std::move(source.compilationMessages);
+
+    return *this;
+}
 }  // namespace dawn::native
