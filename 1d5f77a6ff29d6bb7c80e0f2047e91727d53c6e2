@@ -61,6 +61,23 @@
       ],
       "revId": "1d5f77a6ff29d6bb7c80e0f2047e91727d53c6e2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10b27aea_ff0e6292",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-24T17:26:00Z",
+      "side": 1,
+      "message": "nit: Can do something like\n`return std::set\u003cwgpu::FeatureName\u003e{supportedFeatures.features,\n    supportedFeatures.features + supportedFeatures.featureCount};`",
+      "revId": "1d5f77a6ff29d6bb7c80e0f2047e91727d53c6e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
