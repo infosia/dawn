@@ -97,7 +97,7 @@ TEST_F(DeviceInitializationTest, DeviceOutlivesInstance) {
                 continue;
             }
 
-            // TODO(crbug.com/413053623): remove after webgpu backend device is implemented.
+            // TODO(crbug.com/440123094): remove after webgpu backend device is implemented.
             if (info.backendType == wgpu::BackendType::WebGPU) {
                 continue;
             }
@@ -150,7 +150,7 @@ TEST_F(DeviceInitializationTest, AdapterOutlivesInstance) {
                 continue;
             }
 
-            // TODO(crbug.com/413053623): remove after webgpu backend device is implemented.
+            // TODO(crbug.com/440123094): remove after webgpu backend device is implemented.
             if (info.backendType == wgpu::BackendType::WebGPU) {
                 continue;
             }
