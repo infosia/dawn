@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9b9445e0_ddf37b6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-09-25T08:06:17Z",
+      "side": 1,
+      "message": "I need to add another backend that returns a shared memory file handle, where I don\u0027t need to create a D3D12 buffer and the tests about SharedBufferMemoryD3D12Resource are all irrelevant, so I need to separate all the tests about SharedBufferMemoryD3D12Resource to another test.",
+      "parentUuid": "8f1b4aba_d186c727",
+      "revId": "b127ccf6b32b0fd8a87086523209499a7bfa8d06",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dde7f6e2_efe71fe6",
         "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests_win.cpp",
         "patchSetId": 2
