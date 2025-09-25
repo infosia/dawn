@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f959337e_40d4708f",
+        "filename": "generator/templates/art/api_kotlin_constants.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-09-25T06:45:26Z",
+      "side": 1,
+      "message": "Added fix for this",
+      "parentUuid": "b86d838a_a769b42a",
+      "revId": "231ee442ac97a912337ce829b47903eed1861a39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "31963772_15c2f3bf",
@@ -65,6 +83,24 @@
       "writtenOn": "2025-09-23T16:28:04Z",
       "side": 1,
       "message": "It looks like this needs indenting one character to the right. We\u0027re getting\n\n```\n/**\n* If @ref WGPUBufferDescriptor::mappedAtCreation is `true` and the mapping\n* allocation fails, returns `NULL`.\n*/\n``` \n\nbut the correct formatting is \n\n\n```\n/**\n * If @ref WGPUBufferDescriptor::mappedAtCreation is `true` and the mapping\n * allocation fails, returns `NULL`.\n */\n```",
+      "revId": "231ee442ac97a912337ce829b47903eed1861a39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4337604_631f91e4",
+        "filename": "generator/templates/art/api_kotlin_object.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-09-25T06:45:26Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "31963772_15c2f3bf",
       "revId": "231ee442ac97a912337ce829b47903eed1861a39",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
