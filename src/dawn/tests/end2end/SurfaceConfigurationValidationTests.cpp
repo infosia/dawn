@@ -339,7 +339,8 @@ DAWN_INSTANTIATE_TEST(SurfaceConfigurationValidationTests,
                       NullBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 }  // anonymous namespace
 }  // namespace dawn

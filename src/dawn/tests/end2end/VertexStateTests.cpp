@@ -668,7 +668,8 @@ DAWN_INSTANTIATE_TEST(VertexStateTest,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 class OptionalVertexStateTest : public DawnTest {};
 
@@ -715,7 +716,8 @@ DAWN_INSTANTIATE_TEST(OptionalVertexStateTest,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 }  // anonymous namespace
 }  // namespace dawn

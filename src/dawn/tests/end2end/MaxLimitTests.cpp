@@ -863,7 +863,8 @@ DAWN_INSTANTIATE_TEST(MaxLimitTests,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 // Verifies the limits maxInterStageShaderVariables work correctly
 class MaxInterStageShaderVariablesLimitTests : public MaxLimitTests {
@@ -1191,7 +1192,8 @@ DAWN_INSTANTIATE_TEST(MaxInterStageShaderVariablesLimitTests,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 // Verifies the limit maxVertexAttributes work correctly on the creation of render pipelines.
 class MaxVertexAttributesPipelineCreationTests : public MaxLimitTests {
@@ -1339,7 +1341,8 @@ DAWN_INSTANTIATE_TEST(MaxVertexAttributesPipelineCreationTests,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 }  // anonymous namespace
 }  // namespace dawn

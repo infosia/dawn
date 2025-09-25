@@ -140,7 +140,8 @@ DAWN_INSTANTIATE_TEST(DrawIndirectTest,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 class DrawIndirectUsingFirstVertexTest : public DawnTest {
   protected:
@@ -275,7 +276,8 @@ DAWN_INSTANTIATE_TEST(DrawIndirectUsingFirstVertexTest,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 class DrawIndirectUsingInstanceIndexTest : public DrawIndirectUsingFirstVertexTest {
   protected:
@@ -331,7 +333,8 @@ DAWN_INSTANTIATE_TEST(DrawIndirectUsingInstanceIndexTest,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 }  // anonymous namespace
 }  // namespace dawn

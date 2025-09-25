@@ -405,7 +405,7 @@ TEST_P(CopyExternalTextureForBrowserTests_Basic, Copy) {
 DAWN_INSTANTIATE_TEST_P(
     CopyExternalTextureForBrowserTests_Basic,
     {D3D11Backend(), D3D12Backend(), MetalBackend(), OpenGLBackend(), OpenGLESBackend(),
-     VulkanBackend()},
+     VulkanBackend(), WebGPUBackend()},
     std::vector<CopyRect>({CopyRect::TopLeft, CopyRect::TopRight, CopyRect::BottomLeft,
                            CopyRect::BottomRight, CopyRect::FullSize}),
     std::vector<CopyRect>({CopyRect::TopLeft, CopyRect::TopRight, CopyRect::BottomLeft,
@@ -437,7 +437,8 @@ DAWN_INSTANTIATE_TEST(CopyExternalTextureForBrowserTests_Aspect,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 }  // anonymous namespace
 }  // namespace dawn

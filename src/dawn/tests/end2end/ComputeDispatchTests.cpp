@@ -321,7 +321,8 @@ DAWN_INSTANTIATE_TEST(ComputeDispatchTests,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 namespace {
 using UseNumWorkgoups = bool;
@@ -578,7 +579,7 @@ TEST_P(ComputeMultipleDispatchesTests, ExceedsMaxWorkgroupsWithOffsetNoop) {
 
 DAWN_INSTANTIATE_TEST_P(ComputeMultipleDispatchesTests,
                         {D3D11Backend(), D3D12Backend(), MetalBackend(), OpenGLBackend(),
-                         OpenGLESBackend(), VulkanBackend()},
+                         OpenGLESBackend(), VulkanBackend(), WebGPUBackend()},
                         {true, false}  // useNumWorkgroups
 );
 

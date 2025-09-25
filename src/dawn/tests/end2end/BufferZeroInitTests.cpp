@@ -1370,7 +1370,8 @@ DAWN_INSTANTIATE_TEST(BufferZeroInitTest,
                       MetalBackend({"nonzero_clear_resources_on_creation_for_testing"}),
                       OpenGLBackend({"nonzero_clear_resources_on_creation_for_testing"}),
                       OpenGLESBackend({"nonzero_clear_resources_on_creation_for_testing"}),
-                      VulkanBackend({"nonzero_clear_resources_on_creation_for_testing"}));
+                      VulkanBackend({"nonzero_clear_resources_on_creation_for_testing"}),
+                      WebGPUBackend({"nonzero_clear_resources_on_creation_for_testing"}));
 
 }  // anonymous namespace
 }  // namespace dawn

@@ -489,7 +489,8 @@ DAWN_INSTANTIATE_TEST(ImmediateDataTests,
                       D3D11Backend(),
                       D3D12Backend(),
                       MetalBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 }  // anonymous namespace
 }  // namespace dawn

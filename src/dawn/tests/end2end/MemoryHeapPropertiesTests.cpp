@@ -84,7 +84,8 @@ DAWN_INSTANTIATE_TEST(MemoryHeapPropertiesTest,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 }  // anonymous namespace
 }  // namespace dawn
