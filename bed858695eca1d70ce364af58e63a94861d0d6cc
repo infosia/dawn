@@ -177,6 +177,24 @@
       "parentUuid": "d30bd599_8399eb22",
       "revId": "bed858695eca1d70ce364af58e63a94861d0d6cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a021569_6e1bf34a",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-25T06:40:12Z",
+      "side": 1,
+      "message": "Gotcha! I\u0027ve just created https://g-issues.chromium.org/issues/447273770 for this.",
+      "parentUuid": "1d070f28_c8216820",
+      "revId": "bed858695eca1d70ce364af58e63a94861d0d6cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
