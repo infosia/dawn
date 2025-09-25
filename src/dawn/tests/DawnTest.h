@@ -263,6 +263,7 @@ class DawnTestBase {
     bool IsMetal() const;
     bool IsNull() const;
     bool IsWebGPUOnWebGPU() const;
+    bool IsWebGPUOn(std::string_view backend) const;
     bool IsWebGPUOnSwiftshader() const;
     bool IsOpenGL() const;
     bool IsOpenGLES() const;
