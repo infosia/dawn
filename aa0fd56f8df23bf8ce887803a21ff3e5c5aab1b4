@@ -16,6 +16,23 @@
       "message": "PTAL\n\nNot enabling autosubmit since I want to ensure that each of the CQ builders gets at least one full successful build before submitting.",
       "revId": "aa0fd56f8df23bf8ce887803a21ff3e5c5aab1b4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dd4c644_a17995da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-25T22:30:14Z",
+      "side": 1,
+      "message": "All builders look to be handling traffic properly, enabling autosubmit.",
+      "revId": "aa0fd56f8df23bf8ce887803a21ff3e5c5aab1b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
