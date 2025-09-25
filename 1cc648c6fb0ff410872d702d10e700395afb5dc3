@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d510d05_d407c53a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 26
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-25T15:50:01Z",
+      "side": 1,
+      "message": "LGTM overall",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1766a3e8_bedd0e3f",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-25T15:50:01Z",
+      "side": 1,
+      "message": "Can we assign this to a bug instead? (once the code lands this is our collective TODO)",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc98d1a7_5f92e956",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-25T15:50:01Z",
+      "side": 1,
+      "message": "I see that we have to do the dance with errorData because this API method doesn\u0027t get the lock and we require it is held for `ConsumeError`. Could we have an issue to make ConsumedError threadsafe? We\u0027d only need to hold the lock in HandeError so the success case wouldn\u0027t need to get the lock. (no need to handle it in this CL stack, this is more to track improvements for multithreading)",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b272e29_d6aea5ad",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1833,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-25T15:50:01Z",
+      "side": 1,
+      "message": "Any reason this is a separate lambda? It seems that it could be inlined in the parent lambda.",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fdde81c_1e844a67",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1847,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-25T15:50:01Z",
+      "side": 1,
+      "message": "And this would disappear since DAWN_TRY* propagates the error.",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e88c556_555429e5",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1861,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-25T15:50:01Z",
+      "side": 1,
+      "message": "That comment is stale.",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f83646ae_36d7dcd7",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1869,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-25T15:50:01Z",
+      "side": 1,
+      "message": "Isn\u0027t this always true at this point since we are in the success case?",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7fe4dba_f355669c",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1875,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-25T15:50:01Z",
+      "side": 1,
+      "message": "```suggestion\n            // Gather the metadata and default entry point names\n            DAWN_ASSERT(parseResult.metadataTable.has_value());\n```",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cda8b9c_ff99d4da",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-25T15:50:01Z",
+      "side": 1,
+      "message": "nit: this could be removed.",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
