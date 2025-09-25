@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "79150b4b_679ce5e0",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3106,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-25T20:58:33Z",
+      "side": 1,
+      "message": "There\u0027s no existing capability for `in`/`out`, we just always accept them. So we can either create a new capability for shader IO in module-scope variables which guards the use of `in`/`out`, or we just leave things as they are where they are just always allowed, and therefore blend_src on a MSV is also always allowed.\n\nThe former is probably better, although it is beyond the scope of this CL.",
+      "parentUuid": "d4f1c749_b96b5009",
+      "revId": "fba2fd1d6d96b12ac20e5b2f41d8ff8691958d60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0f666db8_aaa1a7b4",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 1

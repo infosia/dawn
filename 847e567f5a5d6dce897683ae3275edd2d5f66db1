@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a55e55ef_3485e4f9",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3128,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-25T20:58:33Z",
+      "side": 1,
+      "message": "This looks like it\u0027d only count @location for members also decorated with @blend_src. So, it would catch an issue with this:\n```\n@location(0) @blend_src(0) a: f32,\n@location(0) @blend_src(1) b: f32,\n@location(1)               c: f32,\n```\nbecause it won\u0027t count the third member?",
+      "range": {
+        "startLine": 3127,
+        "startChar": 0,
+        "endLine": 3128,
+        "endChar": 44
+      },
+      "revId": "847e567f5a5d6dce897683ae3275edd2d5f66db1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
