@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d94c188e_0e51b144",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2649,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-25T18:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4eb6d64_e2ef7c36",
+      "revId": "fba2fd1d6d96b12ac20e5b2f41d8ff8691958d60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2df7e50f_9a02ce37",
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "I originally was going to disagree with you about this, and site the spec, but re-reading the actual text again, I see the problem for me.\n\nThe spec in that paragraph literally redefines the meaning of `members` to be the set of struct members with `location` defined on them, not all of the struct members, which I hadn\u0027t caught befoe.\n\nI will fix this.",
       "parentUuid": "0f666db8_aaa1a7b4",
+      "revId": "fba2fd1d6d96b12ac20e5b2f41d8ff8691958d60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73a1efc2_7dc549e2",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3126,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-25T18:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05c87f40_ccdcb959",
       "revId": "fba2fd1d6d96b12ac20e5b2f41d8ff8691958d60",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
