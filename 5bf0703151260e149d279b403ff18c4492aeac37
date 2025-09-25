@@ -33,6 +33,41 @@
       "message": "Ah.. I\u0027m not sure if this is easier or harder to read since we effectively expanded 1 line into it\u0027s own loop ~30 lines 😕. Maybe it makes more sense with the follow up changes?",
       "revId": "5bf0703151260e149d279b403ff18c4492aeac37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd3d08e3_f5175736",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-25T19:16:32Z",
+      "side": 1,
+      "message": "Yeah in a follow up change and even more with Dan\u0027s future CLs around GenerateBindings, all of the ShaderModules should end up using the same helper function to do the remapping.",
+      "parentUuid": "5d3833b8_0276cd1d",
+      "revId": "5bf0703151260e149d279b403ff18c4492aeac37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73f7169b_4a9551d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-25T19:16:32Z",
+      "side": 1,
+      "message": "Ty!",
+      "revId": "5bf0703151260e149d279b403ff18c4492aeac37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
