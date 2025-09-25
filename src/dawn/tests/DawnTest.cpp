@@ -359,10 +359,12 @@ void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
                 mBackendTypeFilter = wgpu::BackendType::OpenGLES;
             } else if (strcmp("vulkan", param) == 0) {
                 mBackendTypeFilter = wgpu::BackendType::Vulkan;
+            } else if (strcmp("webgpu", param) == 0) {
+                mBackendTypeFilter = wgpu::BackendType::WebGPU;
             } else {
-                ErrorLog()
-                    << "Invalid backend \"" << param
-                    << "\". Valid backends are: d3d12, metal, null, opengl, opengles, vulkan.";
+                ErrorLog() << "Invalid backend \"" << param
+                           << "\". Valid backends are: d3d12, metal, null, opengl, opengles, "
+                              "vulkan, webgpu.";
                 DAWN_UNREACHABLE();
             }
             mHasBackendTypeFilter = true;
@@ -503,6 +505,7 @@ void DawnTestEnvironment::SelectPreferredAdapterProperties(const native::Instanc
         wgpu::RequestAdapterWebGPUBackendOptions webgpuBackendOptions = {};
         adapterOptions.nextInChain = &webgpuBackendOptions;
 
+        size_t firstWebGPUAdapterIdx = adapters.size();
         {
             auto webgpuBackendAdapters = instance->EnumerateAdapters(&adapterOptions);
             adapters.insert(adapters.end(), std::make_move_iterator(webgpuBackendAdapters.begin()),
@@ -510,9 +513,15 @@ void DawnTestEnvironment::SelectPreferredAdapterProperties(const native::Instanc
         }
 
         // TODO(347047627): Use a webgpu.h version of enumerateAdapters
-        for (const native::Adapter& nativeAdapter : adapters) {
+        for (size_t i = 0; i < adapters.size(); ++i) {
+            const native::Adapter& nativeAdapter = adapters[i];
             wgpu::Adapter adapter = wgpu::Adapter(nativeAdapter.Get());
             wgpu::AdapterInfo info;
+            wgpu::AdapterPropertiesWGPU wgpuProperties;
+            if (i >= firstWebGPUAdapterIdx) {
+                // Chain in the extension to get the inner backend type of the WebGPU adatper.
+                info.nextInChain = &wgpuProperties;
+            }
             adapter.GetInfo(&info);
 
             // Skip non-OpenGLES/D3D11 compat adapters. Metal/Vulkan/D3D12 support
@@ -567,7 +576,13 @@ void DawnTestEnvironment::SelectPreferredAdapterProperties(const native::Instanc
                                                        isDefaultingCompatibilityMode);
             if (adapterNameSet.find(adapterTypeAndName) == adapterNameSet.end()) {
                 adapterNameSet.insert(adapterTypeAndName);
-                mAdapterProperties.emplace_back(info, selected, isDefaultingCompatibilityMode);
+                if (i >= firstWebGPUAdapterIdx) {
+                    // Initialize with the inner backend type info for WebGPU adapter.
+                    mAdapterProperties.emplace_back(info, wgpuProperties.backendType, selected,
+                                                    isDefaultingCompatibilityMode);
+                } else {
+                    mAdapterProperties.emplace_back(info, selected, isDefaultingCompatibilityMode);
+                }
             }
         }
     }
@@ -888,6 +903,10 @@ bool DawnTestBase::IsNull() const {
 
 bool DawnTestBase::IsWebGPUOnWebGPU() const {
     return mParam.adapterProperties.backendType == wgpu::BackendType::WebGPU;
+}
+
+bool DawnTestBase::IsWebGPUOn(wgpu::BackendType backend) const {
+    return IsWebGPUOnWebGPU() && mParam.adapterProperties.innerBackendType == backend;
 }
 
 bool DawnTestBase::IsWebGPUOnSwiftshader() const {
