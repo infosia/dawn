@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d4f1c749_b96b5009",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3106,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-25T15:08:30Z",
+      "side": 1,
+      "message": "I am fine with it being a wider scope capability, i.e. `kAllowShaderIOExceptions`, since we don\u0027t want to end up with a bunch of capabilities that are enabled/disabled in the same situation.\n\nI am just unsure of what existing capability this should be associated/renamed for this purpose. The only one I can see that is obviously about MSV + I/O,  `kAllowUnannotatedModuleIOVariables`, is actually doing the opposite, allowings MSVs without `in`/`out`.",
+      "parentUuid": "2df7e50f_9a02ce37",
+      "revId": "fba2fd1d6d96b12ac20e5b2f41d8ff8691958d60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0f666db8_aaa1a7b4",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2025-09-25T14:08:01Z",
       "side": 1,
       "message": "This isn\u0027t quite right. The number of members *that have location attributes* must be `2`, but you can other members with `@builtin` attributes, e.g.:\n```\nstruct S {\n  @location(0) @blend_src(0) a: f32,\n  @location(0) @blend_src(1) b: f32,\n  @builtin(sample_mask) c : u32,\n}\n```",
+      "revId": "fba2fd1d6d96b12ac20e5b2f41d8ff8691958d60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05c87f40_ccdcb959",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3126,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-25T15:08:30Z",
+      "side": 1,
+      "message": "I originally was going to disagree with you about this, and site the spec, but re-reading the actual text again, I see the problem for me.\n\nThe spec in that paragraph literally redefines the meaning of `members` to be the set of struct members with `location` defined on them, not all of the struct members, which I hadn\u0027t caught befoe.\n\nI will fix this.",
+      "parentUuid": "0f666db8_aaa1a7b4",
       "revId": "fba2fd1d6d96b12ac20e5b2f41d8ff8691958d60",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
