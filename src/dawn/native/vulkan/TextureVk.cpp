@@ -1161,12 +1161,31 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* recordingContext,
                 beginCmd.width = mipSize.width;
                 beginCmd.height = mipSize.height;
 
+                RenderPassColorAttachment colorAttachment{};
+
                 TextureViewDescriptor viewDesc = {};
+                viewDesc.label = "Dawn_ClearTexture_View";
                 viewDesc.format = GetFormat().format;
-                viewDesc.dimension = wgpu::TextureViewDimension::e2D;
+
+                switch (GetDimension()) {
+                    case wgpu::TextureDimension::e2D:
+                        viewDesc.dimension = wgpu::TextureViewDimension::e2D;
+                        viewDesc.baseArrayLayer = layer;
+                        colorAttachment.depthSlice = 0;
+                        break;
+                    case wgpu::TextureDimension::e3D:
+                        viewDesc.dimension = wgpu::TextureViewDimension::e3D;
+                        viewDesc.baseArrayLayer = 0;
+                        colorAttachment.depthSlice = layer;
+                        break;
+                    case wgpu::TextureDimension::e1D:
+                    case wgpu::TextureDimension::Undefined:
+                        DAWN_UNREACHABLE();
+                        break;
+                }
+
                 viewDesc.baseMipLevel = level;
                 viewDesc.mipLevelCount = 1u;
-                viewDesc.baseArrayLayer = layer;
                 viewDesc.arrayLayerCount = 1u;
                 // Inherit wgpu::TextureUsage::RenderAttachment, which may be an internal usage.
                 viewDesc.usage = wgpu::TextureUsage::None;
@@ -1175,8 +1194,8 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* recordingContext,
                 DAWN_TRY_ASSIGN(beginCmd.colorAttachments[ca0].view,
                                 device->CreateTextureView(this, &viewDesc));
 
-                RenderPassColorAttachment colorAttachment{};
                 colorAttachment.view = beginCmd.colorAttachments[ca0].view.Get();
+                beginCmd.colorAttachments[ca0].depthSlice = colorAttachment.depthSlice;
                 beginCmd.colorAttachments[ca0].clearColor = colorAttachment.clearValue = {
                     fClearColor, fClearColor, fClearColor, fClearColor};
                 beginCmd.colorAttachments[ca0].loadOp = colorAttachment.loadOp =
