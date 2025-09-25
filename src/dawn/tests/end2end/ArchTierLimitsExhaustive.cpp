@@ -347,6 +347,7 @@ TEST_P(TierArchInfoTest_TieredMaxLimits, ExhaustiveTestAllFeatures) {
     DawnDeviceAllocatorControl,
     TextureComponentSwizzle,
     ChromiumExperimentalBindless,
+    AdapterPropertiesWGPU,
     };
 
 
