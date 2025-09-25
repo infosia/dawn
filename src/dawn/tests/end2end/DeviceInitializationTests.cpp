@@ -97,6 +97,20 @@ TEST_F(DeviceInitializationTest, DeviceOutlivesInstance) {
                 continue;
             }
 
+<<<<<<< PATCH SET (8c24b8e1e8997593c4507ca515355b71f107be4a [WebGPU backend] Turn on as many passed end2end tests as pos)
+            // TODO(crbug.com/440123094): remove after webgpu backend device is implemented.
+            if (info.backendType == wgpu::BackendType::WebGPU) {
+                continue;
+            }
+
+||||||| BASE      (f0f2005b125f32b85e2c1f4f74a4e17a8aadfc18 [WebGPU Backend] Implement CopyFromStagingTo*)
+            // TODO(crbug.com/413053623): remove after webgpu backend device is implemented.
+            if (info.backendType == wgpu::BackendType::WebGPU) {
+                continue;
+            }
+
+=======
+>>>>>>> BASE      (6cdc70879799151e488f01ec56844ba886c413ee [github] Test that webgpu_cpp.h compiles under CMake)
             availableAdapterInfo.push_back(std::move(info));
         }
     }
@@ -145,6 +159,20 @@ TEST_F(DeviceInitializationTest, AdapterOutlivesInstance) {
                 continue;
             }
 
+<<<<<<< PATCH SET (8c24b8e1e8997593c4507ca515355b71f107be4a [WebGPU backend] Turn on as many passed end2end tests as pos)
+            // TODO(crbug.com/440123094): remove after webgpu backend device is implemented.
+            if (info.backendType == wgpu::BackendType::WebGPU) {
+                continue;
+            }
+
+||||||| BASE      (f0f2005b125f32b85e2c1f4f74a4e17a8aadfc18 [WebGPU Backend] Implement CopyFromStagingTo*)
+            // TODO(crbug.com/413053623): remove after webgpu backend device is implemented.
+            if (info.backendType == wgpu::BackendType::WebGPU) {
+                continue;
+            }
+
+=======
+>>>>>>> BASE      (6cdc70879799151e488f01ec56844ba886c413ee [github] Test that webgpu_cpp.h compiles under CMake)
             availableAdapterInfo.push_back(std::move(info));
         }
     }
