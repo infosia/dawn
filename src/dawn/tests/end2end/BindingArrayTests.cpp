@@ -632,7 +632,8 @@ DAWN_INSTANTIATE_TEST(SizedBindingArrayTests,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 class DynamicBindingArrayTests : public DawnTest {
   public:
