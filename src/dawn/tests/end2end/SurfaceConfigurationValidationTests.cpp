@@ -332,6 +332,7 @@ TEST_P(SurfaceConfigurationValidationTests, StorageRequiresCapableFormat) {
     }
 }
 
+// TODO(crbug.com/413053623): Implement swap chain for WebGPUBackend.
 DAWN_INSTANTIATE_TEST(SurfaceConfigurationValidationTests,
                       D3D11Backend(),
                       D3D12Backend(),
