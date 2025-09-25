@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72411b3c_c2f8c2ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-25T15:25:24Z",
+      "side": 1,
+      "message": "Any other people you\u0027d like to nominate as OWNER for the android directory? I don\u0027t feel that I have expertise to really help when reviewing changes to the kt tests.",
+      "revId": "c2f03da2b6f5cbe939eaa29e1b5bc7269e4c8199",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
