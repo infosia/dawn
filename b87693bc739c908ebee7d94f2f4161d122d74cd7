@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1ab49c0_afeaec32",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-25T18:16:06Z",
+      "side": 1,
+      "message": "nit. Maybe we could just name this `CompiledState` also? It feels a bit weird to have it named `AsyncInitializedState`, but then call it `mCompiledState` below.",
+      "range": {
+        "startLine": 464,
+        "startChar": 11,
+        "endLine": 464,
+        "endChar": 32
+      },
+      "revId": "b87693bc739c908ebee7d94f2f4161d122d74cd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
