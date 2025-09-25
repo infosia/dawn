@@ -102,8 +102,27 @@ TestAdapterProperties::TestAdapterProperties(const wgpu::AdapterInfo& info,
       driverDescription(info.description),
       adapterType(info.adapterType),
       backendType(info.backendType),
+      innerBackendType(wgpu::BackendType::Undefined),
       compatibilityMode(compatibilityMode),
       selected(selected) {}
+
+TestAdapterProperties::TestAdapterProperties(const wgpu::AdapterInfo& info,
+                                             const wgpu::BackendType innerBackendType,
+                                             bool selected,
+                                             bool compatibilityMode)
+    : vendorID(info.vendorID),
+      vendorName(info.vendor),
+      architecture(info.architecture),
+      deviceID(info.deviceID),
+      name(info.device),
+      driverDescription(info.description),
+      adapterType(info.adapterType),
+      backendType(info.backendType),
+      innerBackendType(innerBackendType),
+      compatibilityMode(compatibilityMode),
+      selected(selected) {
+    DAWN_ASSERT(backendType == wgpu::BackendType::WebGPU);
+}
 
 std::string TestAdapterProperties::ParamName() const {
     switch (backendType) {
