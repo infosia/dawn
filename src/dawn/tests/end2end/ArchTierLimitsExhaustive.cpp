@@ -132,6 +132,7 @@ static_assert(
 TEST_P(TierArchInfoTest_TieredMaxLimits, ExhaustiveTestAllFields) {
     // SwiftShader will return a lower limit than any modern device on CQ.
     DAWN_TEST_UNSUPPORTED_IF(IsSwiftshader());
+    DAWN_TEST_UNSUPPORTED_IF(IsWebGPUOnSwiftshader());
 
     std::map<std::string, std::array<uint64_t, kNumElements>> device_map;
 device_map["D3D12_NVIDIA_GeForce_GTX_1660"]                 = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 32, 10, 8, 10, 8,};
@@ -248,7 +249,8 @@ DAWN_INSTANTIATE_TEST(TierArchInfoTest_TieredMaxLimits,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 }  // anonymous namespace
 }  // namespace dawn

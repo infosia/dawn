@@ -359,10 +359,12 @@ void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
                 mBackendTypeFilter = wgpu::BackendType::OpenGLES;
             } else if (strcmp("vulkan", param) == 0) {
                 mBackendTypeFilter = wgpu::BackendType::Vulkan;
+            } else if (strcmp("webgpu", param) == 0) {
+                mBackendTypeFilter = wgpu::BackendType::WebGPU;
             } else {
-                ErrorLog()
-                    << "Invalid backend \"" << param
-                    << "\". Valid backends are: d3d12, metal, null, opengl, opengles, vulkan.";
+                ErrorLog() << "Invalid backend \"" << param
+                           << "\". Valid backends are: d3d12, metal, null, opengl, opengles, "
+                              "vulkan, webgpu.";
                 DAWN_UNREACHABLE();
             }
             mHasBackendTypeFilter = true;
@@ -888,6 +890,11 @@ bool DawnTestBase::IsNull() const {
 
 bool DawnTestBase::IsWebGPUOnWebGPU() const {
     return mParam.adapterProperties.backendType == wgpu::BackendType::WebGPU;
+}
+
+bool DawnTestBase::IsWebGPUOn(std::string_view backend) const {
+    return mParam.adapterProperties.backendType == wgpu::BackendType::WebGPU &&
+           mParam.adapterProperties.name.find(backend) != std::string::npos;
 }
 
 bool DawnTestBase::IsWebGPUOnSwiftshader() const {
