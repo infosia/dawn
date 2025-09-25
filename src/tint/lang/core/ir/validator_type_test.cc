@@ -314,6 +314,47 @@ TEST_F(IR_ValidatorTest, StructMember_AlignNotDivisibleByTypeAlignment) {
 )")) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, AddressSpaceImmediate_ModuleScope) {
+    auto* type = ty.ptr(AddressSpace::kImmediate, ty.u32());
+    auto* v = b.Var(type);
+    mod.root_block->Append(v);
+
+    auto* fn = b.Function("my_func", ty.void_());
+    b.Append(fn->Block(), [&] {  //
+        b.Return(fn);
+    });
+
+    auto res = ir::Validate(mod);
+    EXPECT_EQ(res, Success);
+}
+
+TEST_F(IR_ValidatorTest, AddressSpaceImmediate_FunctionParam) {
+    auto* type = ty.ptr(AddressSpace::kImmediate, ty.u32());
+
+    auto* fn = b.Function("my_func", ty.void_());
+    fn->SetParams(Vector{b.FunctionParam(type)});
+    b.Append(fn->Block(), [&] {  //
+        b.Return(fn);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason, testing::HasSubstr("immediate")) << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, AddressSpaceImmediate_FunctionScope) {
+    auto* fn = b.Function("my_func", ty.void_());
+    b.Append(fn->Block(), [&] {  //
+        auto* type = ty.ptr(AddressSpace::kImmediate, ty.u32());
+        b.Var(type);
+        b.Return(fn);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason, testing::HasSubstr("immediate")) << res.Failure();
+}
+
 TEST_F(IR_ValidatorTest, FunctionParam_InvalidAddressSpaceForHandleType) {
     auto* type = ty.ptr(AddressSpace::kFunction, ty.sampler());
     auto* fn = b.Function("my_func", ty.void_());

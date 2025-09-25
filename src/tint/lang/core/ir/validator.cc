@@ -769,6 +769,11 @@ Result<SuccessType, IOAnnotation> AddIOAnnotationsFromIOAttributes(
     return Success;
 }
 
+enum class Scope : uint8_t {
+    kAny,
+    kModule,
+};
+
 /// The kind of shader IO being validated.
 enum class ShaderIOKind : uint8_t {
     kInputParam,
@@ -1021,7 +1026,8 @@ class Validator {
     /// @param ignore_caps a set of capabilities to ignore for this check
     void CheckType(const core::type::Type* type,
                    std::function<diag::Diagnostic&()> diag,
-                   Capabilities ignore_caps = {});
+                   Capabilities ignore_caps = {},
+                   Scope scope_restriction = Scope::kAny);
 
     /// Validates the root block
     /// @param blk the block
@@ -1156,7 +1162,8 @@ class Validator {
 
     /// Validates the given instruction
     /// @param inst the instruction to validate
-    void CheckInstruction(const Instruction* inst);
+    /// @param scope_restriction any scope restrictions on the check
+    void CheckInstruction(const Instruction* inst, Scope scope_restriction = Scope::kAny);
 
     /// Validates the given override
     /// @param o the override to validate
@@ -1938,7 +1945,8 @@ bool Validator::CheckResultsAndOperands(const ir::Instruction* inst,
 
 void Validator::CheckType(const core::type::Type* root,
                           std::function<diag::Diagnostic&()> diag,
-                          Capabilities ignore_caps) {
+                          Capabilities ignore_caps,
+                          Scope scope_restriction) {
     if (root == nullptr) {
         return;
     }
@@ -2041,6 +2049,11 @@ void Validator::CheckType(const core::type::Type* root,
                         diag() << "uniform and handle pointers must be read access";
                         return false;
                     }
+                }
+                if (ptr->AddressSpace() == AddressSpace::kImmediate &&
+                    scope_restriction != Scope::kModule) {
+                    diag() << "immediate address space may only appear at module scope ";
+                    return false;
                 }
 
                 if (ptr->AddressSpace() == AddressSpace::kWorkgroup) {
@@ -2269,7 +2282,7 @@ void Validator::CheckRootBlock(const Block* blk) {
                     AddError(inst) << "root block: invalid instruction: " << inst->TypeInfo().name;
                 }
             },
-            [&](const core::ir::Var* var) { CheckInstruction(var); },
+            [&](const core::ir::Var* var) { CheckInstruction(var, Scope::kModule); },
             [&](const core::ir::Let* let) {
                 if (capabilities_.Contains(Capability::kAllowModuleScopeLets)) {
                     CheckInstruction(let);
@@ -2797,7 +2810,7 @@ void Validator::QueueInstructions(const Instruction* inst) {
     });
 }
 
-void Validator::CheckInstruction(const Instruction* inst) {
+void Validator::CheckInstruction(const Instruction* inst, Scope scope_restriction) {
     visited_instructions_.Add(inst);
     if (!inst->Alive()) {
         AddError(inst) << "destroyed instruction found in instruction list";
@@ -2810,7 +2823,9 @@ void Validator::CheckInstruction(const Instruction* inst) {
         if (!res) {
             continue;
         }
-        CheckType(res->Type(), [&]() -> diag::Diagnostic& { return AddResultError(inst, i); });
+        CheckType(
+            res->Type(), [&]() -> diag::Diagnostic& { return AddResultError(inst, i); }, {},
+            scope_restriction);
     }
 
     auto ops = inst->Operands();
