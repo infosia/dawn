@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37cd7839_0f08635d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-09-25T17:56:42Z",
+      "side": 1,
+      "message": "Hi @cwallez@chromium.org ans @jimblackler@google.com, I rebased this CL to fix a submission error per CQ suggestion, which reset the approvals. Could you please take another look? Thanks!",
+      "revId": "15e90c01be4ef7834f509e39be8325e5f77fff1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
