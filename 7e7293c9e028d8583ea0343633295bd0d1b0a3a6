@@ -33,6 +33,24 @@
       "message": "Ah, this is too broad. Need to deal with more things. (Or it\u0027s just wrong, not sure yet, heh)",
       "revId": "7e7293c9e028d8583ea0343633295bd0d1b0a3a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe823665_59175249",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-25T20:51:38Z",
+      "side": 1,
+      "message": "Yeah, you can certainly take a pointer to an immediate, and pass it to a function, so we can\u0027t just reject this in `CheckType`.\n\nThis specific fuzzer case could probably be solved by just rejecting `ptr` as a result type from a control-flow instruction (I don\u0027t /think/ we rely on that anywhere as it implies variable pointers).",
+      "parentUuid": "5c1e60e3_0fdcf9c1",
+      "revId": "7e7293c9e028d8583ea0343633295bd0d1b0a3a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
