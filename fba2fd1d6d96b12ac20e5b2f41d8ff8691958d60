@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1e8750ea_362e413d",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3106,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-25T21:16:32Z",
+      "side": 1,
+      "message": "k, I have filed https://issues.chromium.org/issues/447433149 for tracking this. I  will remove the capability, and switch the logic to allowing blend_src on MSVs for now, with a TODO point to this issue.",
+      "parentUuid": "79150b4b_679ce5e0",
+      "revId": "fba2fd1d6d96b12ac20e5b2f41d8ff8691958d60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0f666db8_aaa1a7b4",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 1

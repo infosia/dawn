@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af095dc3_3a887218",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-25T21:16:32Z",
+      "side": 1,
+      "message": "Just responding to your comments while the context is fresh in my mind.\n\nSince it is EoW for me, I will address these on Monday.",
+      "revId": "847e567f5a5d6dce897683ae3275edd2d5f66db1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a55e55ef_3485e4f9",
@@ -14,6 +31,30 @@
       "writtenOn": "2025-09-25T20:58:33Z",
       "side": 1,
       "message": "This looks like it\u0027d only count @location for members also decorated with @blend_src. So, it would catch an issue with this:\n```\n@location(0) @blend_src(0) a: f32,\n@location(0) @blend_src(1) b: f32,\n@location(1)               c: f32,\n```\nbecause it won\u0027t count the third member?",
+      "range": {
+        "startLine": 3127,
+        "startChar": 0,
+        "endLine": 3128,
+        "endChar": 44
+      },
+      "revId": "847e567f5a5d6dce897683ae3275edd2d5f66db1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91752a92_6c623755",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3128,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-09-25T21:16:32Z",
+      "side": 1,
+      "message": "I agree that it shouldn\u0027t be guarded on blend_src",
+      "parentUuid": "a55e55ef_3485e4f9",
       "range": {
         "startLine": 3127,
         "startChar": 0,
