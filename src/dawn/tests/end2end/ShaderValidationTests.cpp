@@ -382,6 +382,7 @@ TEST_P(WorkgroupSizeValidationTest, ValidationAfterOverrideStorageSize) {
     CheckPipelineWithWorkgroupStorage(false, 0, maxMat4Count + 1);
 }
 
+// TODO(crbug.com/440123094): Fix pipeline error catch for WebGPUBackend.
 DAWN_INSTANTIATE_TEST(WorkgroupSizeValidationTest,
                       D3D11Backend(),
                       D3D12Backend(),
