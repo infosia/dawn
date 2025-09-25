@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a5185f7_63f32fca",
+        "filename": "src/dawn/native/WaitListEvent.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-25T17:36:24Z",
+      "side": 1,
+      "message": "nit. I\u0027m a bit confused about this assert w.r.t the part in the description that says we allow the counter to go negative. Doesn\u0027t this assert prevent that from being possible?",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 38
+      },
+      "revId": "eb1bd670853be76741e407e964ad094518b5c9f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
