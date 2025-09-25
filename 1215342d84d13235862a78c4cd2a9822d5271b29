@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "568d943e_8ab88687",
+        "filename": "src/dawn/wire/client/EventManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-25T04:49:42Z",
+      "side": 1,
+      "message": "Existing code, but I\u0027d like to make it really clear what\u0027s going on here (especially now that the rest of the code is much simpler to understand). Comment something like:\n\n\u003e If the callback is already in the Running state, that means it\u0027s inside the call_once below\n\u003e on some thread. If this was triggered re-entrantly by the callback, calling call_once again\n\u003e would cause a self-deadlock. Normally, calling Complete() re-entrantly is prevented by\n\u003e (????), but during shutdown it is possible, so we do this to avoid self-deadlocking.\n\u003e (During shutdown it\u0027s not important that Complete() waits until callback completion.)\n\n... assuming that\u0027s correct.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 92
+      },
+      "revId": "1215342d84d13235862a78c4cd2a9822d5271b29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

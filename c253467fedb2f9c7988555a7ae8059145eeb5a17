@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ceba0149_fbd60098",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-25T04:49:42Z",
+      "side": 0,
+      "message": "I think this could be something like\n`std::call_once(mFlag, []() { DAWN_ASSERT(false); });`\n\nthough this wouldn\u0027t be a no-op in release; it also would prevent the TrackedEvent from being destroyed while its callback is running. Presumably we already guarantee that. So it could be wrapped in an #ifdef to avoid the cost.",
+      "revId": "c253467fedb2f9c7988555a7ae8059145eeb5a17",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
