@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4eb6d64_e2ef7c36",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2649,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-25T14:08:01Z",
+      "side": 1,
+      "message": "Nit: You\u0027ve already validated that the value you add to `blend_srcs` must be either `0` or `1` (in `CheckBlendSrcAnnotation)`, so I think checking that the `Count() \u003d\u003d 2` here is enough?",
+      "revId": "fba2fd1d6d96b12ac20e5b2f41d8ff8691958d60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2df7e50f_9a02ce37",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3106,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-25T14:08:01Z",
+      "side": 1,
+      "message": "I\u0027m not sure we actually need a new capability for this specific thing. Essentially, if we are accepting module-scope variables with `in`/`out` address spaces, then `blend_src` on those things will always be allowed.\n\nRight now we just always accept in/out module-scope variables AFAICT (the fuzzer will never produce them because they are not in the protobuf). Maybe we should have a capability for that whole mode of shader IO instead of creating more fine-grained checks?",
+      "revId": "fba2fd1d6d96b12ac20e5b2f41d8ff8691958d60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f666db8_aaa1a7b4",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3126,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-25T14:08:01Z",
+      "side": 1,
+      "message": "This isn\u0027t quite right. The number of members *that have location attributes* must be `2`, but you can other members with `@builtin` attributes, e.g.:\n```\nstruct S {\n  @location(0) @blend_src(0) a: f32,\n  @location(0) @blend_src(1) b: f32,\n  @builtin(sample_mask) c : u32,\n}\n```",
+      "revId": "fba2fd1d6d96b12ac20e5b2f41d8ff8691958d60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
