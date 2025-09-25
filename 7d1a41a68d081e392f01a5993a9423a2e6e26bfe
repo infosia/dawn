@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "42c97fdd_f9e5c963",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-25T14:55:36Z",
+      "side": 1,
+      "message": "Done, fixed in the CLs rebased before this.",
+      "parentUuid": "c3c7b7e9_8b4deb6d",
+      "revId": "7d1a41a68d081e392f01a5993a9423a2e6e26bfe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "185b8035_4f0cb69c",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 6
