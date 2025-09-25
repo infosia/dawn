@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74313f06_432c584c",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-25T19:47:34Z",
+      "side": 1,
+      "message": "More precisely, the staging buffers in the DynamicUploader are assumed in Dawn to be persistently mapped buffers that always have the mapped pointer accessible. In the WebGPU backend, to use the buffers in a copyB2B we would need to unmap them but the DynamicUploader doesn\u0027t support that. Instead keep the buffers mapped and use WriteTexture to read directly from the mapped staging memory. (in does occur an extra copy though).",
+      "revId": "cdec35ca7e3b82ad3f0aea765a7021f09a5d214f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36ee60be_f18d2e47",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-25T19:47:34Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "cdec35ca7e3b82ad3f0aea765a7021f09a5d214f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
