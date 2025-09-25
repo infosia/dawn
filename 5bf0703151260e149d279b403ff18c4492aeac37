@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "5bf0703151260e149d279b403ff18c4492aeac37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d3833b8_0276cd1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-25T18:22:37Z",
+      "side": 1,
+      "message": "Ah.. I\u0027m not sure if this is easier or harder to read since we effectively expanded 1 line into it\u0027s own loop ~30 lines 😕. Maybe it makes more sense with the follow up changes?",
+      "revId": "5bf0703151260e149d279b403ff18c4492aeac37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
