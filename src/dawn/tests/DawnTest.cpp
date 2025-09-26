@@ -1812,6 +1812,12 @@ void DawnTestBase::FlushWire() {
     if (gTestEnv->UsesWire()) {
         bool C2SFlushed = mWireHelper->FlushClient();
         DAWN_ASSERT(C2SFlushed);
+
+        // TODO(crbug.com/412761228): Once spontaneous events are supported in the other
+        // backends, we should be able to remove this additional ProcessEvents call.
+        if (!IsMetal()) {
+            dawn::native::InstanceProcessEvents(gTestEnv->GetInstance()->Get());
+        }
     }
 }
 
