@@ -85,12 +85,9 @@ class AsyncTask : public RefCounted {
     // to Completed.
     // mState is atomic for a lockless getter and Pending -> Running transition.
     std::mutex mMutex;
+    std::condition_variable mCompletionConditionVariable;
     std::atomic<AsyncTaskState> mState = AsyncTaskState::Pending;
     std::vector<AsyncTaskCompletionCallback> mCompletionCallbacks;
-
-    // Hold onto the waitable platform event until the task has completed. Released before the
-    // destruction of the AsyncTask to be as light weight as possible.
-    std::unique_ptr<dawn::platform::WaitableEvent> mWaitableEvent;
 };
 
 class ErrorGeneratingAsyncTask : public AsyncTask {
@@ -113,8 +110,14 @@ class AsyncTaskManager {
 
     template <typename TaskType, class... Args>
     Ref<TaskType> PostTask(Args&&... args) {
+        return PostTaskWithDependencies<TaskType, Args...>({}, std::forward<Args>(args)...);
+    }
+
+    template <typename TaskType, class... Args>
+    Ref<TaskType> PostTaskWithDependencies(const std::vector<Ref<AsyncTask>>& dependencies,
+                                           Args&&... args) {
         Ref<TaskType> asyncTask = AcquireRef(new TaskType(std::forward<Args>(args)...));
-        PostConstructedTask(asyncTask);
+        PostConstructedTask(dependencies, asyncTask);
         return asyncTask;
     }
 
@@ -124,16 +127,21 @@ class AsyncTaskManager {
   private:
     struct WaitableTask : NonCopyable {
         Ref<AsyncTask> asyncTask;
+        std::atomic<uint64_t> pendingDependencyCount;
         raw_ptr<AsyncTaskManager> taskManager;
+        std::unique_ptr<dawn::platform::WaitableEvent> waitableEvent;
     };
 
-    void PostConstructedTask(Ref<AsyncTask> asyncTask);
+    void PostConstructedTask(const std::vector<Ref<AsyncTask>>& dependencies,
+                             Ref<AsyncTask> asyncTask);
 
     static void RunTask(void* task);
     void HandleTaskCompletion(WaitableTask* task);
+    void HandleTaskDependencyCompletion(WaitableTask* task);
 
-    using PendingTasksSet = absl::flat_hash_set<std::unique_ptr<WaitableTask>>;
-    MutexProtected<PendingTasksSet> mPendingTasks;
+    using TaskSet = absl::flat_hash_set<std::unique_ptr<WaitableTask>>;
+    MutexProtected<TaskSet> mPendingTasks;
+    MutexProtected<TaskSet> mRunningTasks;
 
     raw_ptr<dawn::platform::WorkerTaskPool> mWorkerTaskPool;
 };

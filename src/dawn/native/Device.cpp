@@ -888,7 +888,7 @@ Future DeviceBase::APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbac
             if (mScope) {
                 mPendingAsyncTasks = mScope->AcquirePendingAsyncTasks();
                 for (auto task : mPendingAsyncTasks) {
-                    task.Task->AddCompletionCallback([this] { GetIfWaitListEvent()->Signal(); });
+                    task.Task->AddCompletionCallback([this]() { GetIfWaitListEvent()->Signal(); });
                 }
             }
         }
@@ -1521,12 +1521,7 @@ ShaderModuleBase* DeviceBase::APICreateShaderModule(const ShaderModuleDescriptor
     auto creationResult = CreateShaderModule(descriptor, /*internalExtensions=*/{});
     if (creationResult.IsSuccess()) {
         // CreateShaderModule can succeed but still return a shader module which failed compilation.
-        // TODO(crbug.com/406522796): Remove this once ShaderModuleBase writes directly to the error
-        // scope.
         shaderModule = creationResult.AcquireSuccess();
-        if (shaderModule->IsError()) {
-            errorData = shaderModule->GetInitializationError();
-        }
     } else {
         // If CreateShaderModule failed, it was due to internal errors that should not surface as
         // compilation errors.

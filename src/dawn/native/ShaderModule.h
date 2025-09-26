@@ -40,12 +40,14 @@
 #include "absl/container/flat_hash_map.h"
 #include "absl/container/flat_hash_set.h"
 #include "absl/strings/string_view.h"
+#include "dawn/common/AssertProtected.h"
 #include "dawn/common/Constants.h"
 #include "dawn/common/ContentLessObjectCacheable.h"
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/RefCountedWithExternalCount.h"
 #include "dawn/common/Sha3.h"
 #include "dawn/common/ityp_array.h"
+#include "dawn/native/AsyncTask.h"
 #include "dawn/native/BindingInfo.h"
 #include "dawn/native/CachedObject.h"
 #include "dawn/native/CompilationMessages.h"
@@ -374,7 +376,6 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
                                            ParsedCompilationMessages&& compilationMessages);
 
     void Initialize();
-    std::unique_ptr<ErrorData> GetInitializationError();
 
     ObjectType GetType() const override;
 
@@ -383,7 +384,7 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
 
     // Return the number of entry points for a stage.
     size_t GetEntryPointCount(SingleShaderStage stage) const {
-        return mCompiledState.entryPointCounts[stage];
+        return mCompiledState->entryPointCounts[stage];
     }
 
     // Return the entry point for a stage. If no entry point name, returns the default one.
@@ -438,6 +439,8 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
 
     ShaderModuleParseRequest GenerateShaderModuleParseRequest(bool needReflection) const;
 
+    void AddAsyncInitializationCompletionCallback(AsyncTaskCompletionCallback completionCallback);
+
     // The original data in the descriptor for caching.
     enum class Type : uint8_t { Undefined, Spirv, Wgsl };
     Type mType;
@@ -474,12 +477,10 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
         // Explicit move operator to copy the mutex protected tintData instead of moving it.
         CompiledState& operator=(CompiledState&& source);
     };
-    CompiledState mCompiledState;
+    AssertProtected<CompiledState> mCompiledState;
 
-    // Storage of any error generated during initialization. When initialization is fully
-    // asynchronous, this will be removed and inserted into a stored error scope during
-    // initialization.
-    std::optional<CachedValidationError> mInitializationError;
+    std::atomic_bool mInitializeTaskExplicitlyWaitedOn = true;
+    Ref<AsyncTask> mInitializeTask;
 };
 
 }  // namespace dawn::native
