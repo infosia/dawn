@@ -542,12 +542,7 @@ TEST_P(WaitAnyTests, UnsupportedTimeout) {
 }
 
 TEST_P(WaitAnyTests, UnsupportedCount) {
-    for (uint64_t timeout : {uint64_t(0), uint64_t(1)}) {
-        // TODO(crbug.com/443308345): D3D11's delay flush queue doesn't seem to work if we are only
-        // using a small timeout. It works if we increase the timeout to 0.2-0.3ms, but it should
-        // really be immediate.
-        DAWN_TEST_UNSUPPORTED_IF(timeout > 0 && HasToggleEnabled("d3d11_delay_flush_to_gpu"));
-
+    for (uint64_t timeout : {uint64_t(0), UINT64_MAX}) {
         // We don't support values higher than the default (64), and if you ask for lower than 64
         // you still get 64. DawnTest doesn't request anything (so requests 0) so gets 64.
         for (size_t count : {kTimedWaitAnyMaxCountDefault, kTimedWaitAnyMaxCountDefault + 1}) {
