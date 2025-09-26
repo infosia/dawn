@@ -154,10 +154,23 @@ jobject ToKotlin(JNIEnv* env, const WGPUStringView* s) {
         return converted;
     }
 
+    {% set ns = namespace(callback_callbackInfo_map={}) %}
+    {% for struct in structure.members %}
+        {% if struct.type.category == 'callback info' %}
+            {% for i in struct.type.members %}
+                {% if as_varName(i.name) == 'callback' %}
+                    {% set key = i %}
+                    {% set value = struct %}
+                    {% set _ = ns.callback_callbackInfo_map.update({key: value}) %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+
     {% set Struct = as_cType(structure.name) %}
     {% set KotlinRecord = "KotlinRecord" + structure.name.CamelCase() %}
     {{ define_kotlin_record_structure(KotlinRecord, structure.members)}}
-    {{ define_kotlin_to_struct_conversion("ConvertInternal", KotlinRecord, Struct, structure.members)}}
+    {{ define_kotlin_to_struct_conversion("ConvertInternal", KotlinRecord, Struct, structure.members, ns.callback_callbackInfo_map )}}
     void ToNative(JNIContext* c, JNIEnv* env, jobject obj, {{ as_cType(structure.name) }}* converted) {
         JNIClasses* classes = JNIClasses::getInstance(env);
         jclass clz = classes->{{ structure.name.camelCase() }};
@@ -171,8 +184,10 @@ jobject ToKotlin(JNIEnv* env, const WGPUStringView* s) {
             }
         {% endfor %}
         {% if structure.category == 'callback info' %}
-                jmethodID getter = env->GetMethodID(clz, "getExecutor", "()Ljava/util/concurrent/Executor;");
-                CallGetter(env, getter, obj, &kotlinRecord.executor);
+            {
+                jmethodID getter = env->GetMethodID(clz, "getCallbackExecutor", "()Ljava/util/concurrent/Executor;");
+                CallGetter(env, getter, obj, &kotlinRecord.callbackExecutor);
+            }
         {% endif %}
 
         //* Fill all struct members from the Kotlin record.

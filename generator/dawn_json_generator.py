@@ -801,6 +801,15 @@ def compute_kotlin_params(loaded_json, kotlin_json):
 
     def kotlin_record_members(members):
         for member in members:
+            # Partially inline away 'callback info'
+            if member.type.category == 'callback info':
+                for callback_info_member in member.type.members:
+                    if callback_info_member.type.category == 'callback function':
+                        function_member = deepcopy(callback_info_member)
+                        function_member.name = Name(member.name.get().removesuffix(' info'))
+                        yield function_member
+                continue
+
             # length parameters are omitted because Kotlin containers have 'length'.
             if member in [m.length for m in members]:
                 continue
@@ -1102,6 +1111,12 @@ def has_callbackInfoStruct(method):
                for arg in method.arguments)
 
 
+def find_callback_from_callbackInfo(member):
+    # Finds and returns 'callback function' in 'callback info'.
+    # Returns None if no match is found.
+    return next((m for m in member.type.members if m.type.category == 'callback function'), None)
+
+
 def is_wire_serializable(type):
     # Function pointers, callback functions, and "void *" types (i.e. userdata) cannot
     # be serialized.
@@ -1178,6 +1193,7 @@ def make_base_render_params(metadata):
             'decorate': lambda typ, arg: decorate(typ, arg, with_nullability=False),
             'as_ktName': as_ktName,
             'has_callbackInfoStruct': has_callbackInfoStruct,
+            'find_callback_from_callbackInfo': find_callback_from_callbackInfo,
             'find_by_name': find_by_name,
             'print': print,
             'unreachable_code': unreachable_code,
