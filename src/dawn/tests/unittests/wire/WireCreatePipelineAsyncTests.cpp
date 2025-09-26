@@ -382,6 +382,7 @@ TEST(WireCreatePipelineAsyncTestNullBackend, ServerDeletedBeforeCallback) {
     dawn::wire::WireServerDescriptor serverDesc = {};
     serverDesc.procs = &dawn::native::GetProcs();
     serverDesc.serializer = s2cBuf.get();
+    serverDesc.useSpontaneousCallbacks = true;
 
     auto wireServer = std::make_unique<dawn::wire::WireServer>(serverDesc);
     c2sBuf->SetHandler(wireServer.get());
