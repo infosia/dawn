@@ -25,7 +25,7 @@
 //* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 //* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package {{ kotlin_package }}
-{% from 'art/api_kotlin_types.kt' import kotlin_definition with context %}
+{% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_definition with context %}
 
 {% for member in kotlin_record_members(structure.members) %}
     import java.util.concurrent.Executor
@@ -38,12 +38,7 @@ public class {{ structure.name.CamelCase() }}(
         {% if member.type.category in ['callback function']%}
             public var executor: Executor? = ForkJoinPool.commonPool(),
         {% endif %}
-        {# We supply a getter that is excluded from name mangling to allow Inline Value Classed
-           enums/bitmasks to be accessible as integers from the JVM adapter layer. #}
-        {% if member.type.category in ['bitmask', 'enum'] %}
-        {{'    '}}@get:JvmName("get{{ member.name.CamelCase() }}")
-        {% endif %}
-        public var {{ member.name.camelCase() }}: {{ kotlin_definition(member) }},
+        {{ kotlin_annotation(member) }} public var {{ member.name.camelCase() }}: {{ kotlin_definition(member) }},
     {% endfor %}
     {% for structure in chain_children[structure.name.get()] %}
         public var {{ structure.name.camelCase() }}: {{ structure.name.CamelCase() }}? = null,

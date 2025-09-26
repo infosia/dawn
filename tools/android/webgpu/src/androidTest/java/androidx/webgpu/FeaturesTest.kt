@@ -13,7 +13,7 @@ class FeaturesTest {
      */
     @Test
     fun featuresTest() {
-        val requiredFeatures = arrayOf(FeatureName.TextureCompressionASTC)
+        val requiredFeatures = intArrayOf(FeatureName.TextureCompressionASTC)
         runBlocking {
             val webGpu = createWebGpu(requiredFeatures = requiredFeatures)
             val device = webGpu.device
