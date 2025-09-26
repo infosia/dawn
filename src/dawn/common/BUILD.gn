@@ -279,6 +279,7 @@ if (is_win || is_linux || is_chromeos || is_mac || is_fuchsia || is_android ||
       "Alloc.h",
       "Assert.cpp",
       "Assert.h",
+      "AssertProtected.h",
       "Atomic.h",
       "BitSetRangeIterator.h",
       "Compiler.h",

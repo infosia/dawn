@@ -1747,7 +1747,8 @@ ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
                                    ApiObjectBase::UntrackedByDeviceTag tag)
     : Base(device, ObjectBase::kDelayedInitialization, descriptor->label),
       mType(Type::Undefined),
-      mInternalExtensions(std::move(internalExtensions)) {
+      mInternalExtensions(std::move(internalExtensions)),
+      mCompiledState([this]() { DAWN_ASSERT(mInitializeTaskExplicitlyWaitedOn); }) {
     size_t shaderCodeByteSize = 0;
     uint8_t* shaderCode = nullptr;
 
@@ -1806,8 +1807,8 @@ ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
                                    ObjectBase::ErrorTag tag,
                                    StringView label,
                                    ParsedCompilationMessages&& compilationMessages)
-    : Base(device, tag, label), mType(Type::Undefined) {
-    mCompiledState.compilationMessages =
+    : Base(device, tag, label), mType(Type::Undefined), mCompiledState(nullptr) {
+    mCompiledState->compilationMessages =
         std::make_unique<OwnedCompilationMessages>(std::move(compilationMessages));
 }
 
@@ -1901,7 +1902,6 @@ void ShaderModuleBase::Initialize() {
                                taskMaybeError.IsSuccess());
         if (taskMaybeError.IsError()) {
             SetInitializedError();
-            mInitializationError = CachedValidationError(taskMaybeError.AcquireError());
         } else {
             SetInitializedNoError();
 
@@ -1914,17 +1914,12 @@ void ShaderModuleBase::Initialize() {
     DAWN_ASSERT(IsInitialized());
 }
 
-std::unique_ptr<ErrorData> ShaderModuleBase::GetInitializationError() {
-    DAWN_ASSERT(mInitializationError.has_value());
-    return mInitializationError->ToErrorData();
-}
-
 ObjectType ShaderModuleBase::GetType() const {
     return ObjectType::ShaderModule;
 }
 
 bool ShaderModuleBase::HasEntryPoint(absl::string_view entryPoint) const {
-    return mCompiledState.entryPoints.contains(entryPoint);
+    return mCompiledState->entryPoints.contains(entryPoint);
 }
 
 ShaderModuleEntryPoint ShaderModuleBase::ReifyEntryPointName(StringView entryPointName,
@@ -1932,7 +1927,7 @@ ShaderModuleEntryPoint ShaderModuleBase::ReifyEntryPointName(StringView entryPoi
     ShaderModuleEntryPoint entryPoint;
     if (entryPointName.IsUndefined()) {
         entryPoint.defaulted = true;
-        entryPoint.name = mCompiledState.defaultEntryPointNames[stage];
+        entryPoint.name = mCompiledState->defaultEntryPointNames[stage];
     } else {
         entryPoint.defaulted = false;
         entryPoint.name = entryPointName;
@@ -1946,7 +1941,7 @@ std::optional<bool> ShaderModuleBase::GetStrictMath() const {
 
 const EntryPointMetadata& ShaderModuleBase::GetEntryPoint(absl::string_view entryPoint) const {
     DAWN_ASSERT(HasEntryPoint(entryPoint));
-    return *mCompiledState.entryPoints.at(entryPoint);
+    return *mCompiledState->entryPoints.at(entryPoint);
 }
 
 size_t ShaderModuleBase::ComputeContentHash() {
@@ -1977,7 +1972,7 @@ ShaderModuleBase::ScopedUseTintProgram ShaderModuleBase::UseTintProgram() {
 }
 
 Ref<TintProgram> ShaderModuleBase::GetTintProgram() {
-    return mCompiledState.tintData.Use([&](auto tintData) {
+    return mCompiledState->tintData.Use([&](auto tintData) {
         // If the tintProgram is valid, just return it.
         if (tintData->tintProgram) {
             return tintData->tintProgram;
@@ -2004,11 +1999,11 @@ Ref<TintProgram> ShaderModuleBase::GetTintProgram() {
 }
 
 Ref<TintProgram> ShaderModuleBase::GetNullableTintProgramForTesting() const {
-    return mCompiledState.tintData.Use([&](auto tintData) { return tintData->tintProgram; });
+    return mCompiledState->tintData.Use([&](auto tintData) { return tintData->tintProgram; });
 }
 
 int ShaderModuleBase::GetTintProgramRecreateCountForTesting() const {
-    return mCompiledState.tintData.Use(
+    return mCompiledState->tintData.Use(
         [&](auto tintData) { return tintData->tintProgramRecreateCount; });
 }
 
@@ -2052,19 +2047,19 @@ Future ShaderModuleBase::APIGetCompilationInfo(
 }
 
 const OwnedCompilationMessages* ShaderModuleBase::GetCompilationMessages() const {
-    return mCompiledState.compilationMessages.get();
+    return mCompiledState->compilationMessages.get();
 }
 
 std::string ShaderModuleBase::GetCompilationLog() const {
-    DAWN_ASSERT(mCompiledState.compilationMessages);
-    if (!mCompiledState.compilationMessages->HasWarningsOrErrors()) {
+    DAWN_ASSERT(mCompiledState->compilationMessages);
+    if (!mCompiledState->compilationMessages->HasWarningsOrErrors()) {
         return "";
     }
 
     // Emit the formatted Tint errors and warnings.
     std::ostringstream t;
     t << absl::StrFormat("Compilation log for %s:\n", this);
-    for (const auto& pMessage : mCompiledState.compilationMessages->GetFormattedTintMessages()) {
+    for (const auto& pMessage : mCompiledState->compilationMessages->GetFormattedTintMessages()) {
         t << "\n" << pMessage;
     }
 
@@ -2073,14 +2068,14 @@ std::string ShaderModuleBase::GetCompilationLog() const {
 
 void ShaderModuleBase::SetCompilationMessagesForTesting(
     std::unique_ptr<OwnedCompilationMessages>* compilationMessages) {
-    mCompiledState.compilationMessages = std::move(*compilationMessages);
+    mCompiledState->compilationMessages = std::move(*compilationMessages);
 }
 
 void ShaderModuleBase::WillDropLastExternalRef() {
     // The last external ref being dropped indicates that the application is not currently using,
     // and no pending task will use the shader module. In this case we can free the memory for the
     // parsed module.
-    mCompiledState.tintData.Use([&](auto tintData) { tintData->tintProgram = nullptr; });
+    mCompiledState->tintData.Use([&](auto tintData) { tintData->tintProgram = nullptr; });
 }
 
 ShaderModuleParseRequest ShaderModuleBase::GenerateShaderModuleParseRequest(
