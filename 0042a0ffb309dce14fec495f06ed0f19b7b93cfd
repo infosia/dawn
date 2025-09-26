@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05620d75_54cd96d5",
+        "filename": "src/dawn/native/DynamicUploader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-09-26T18:30:05Z",
+      "side": 1,
+      "message": "Note that from patchset 2 to 3, I removed the `DAWN_CHECK` that the pending serial is the same by the end of `WithUploadReservation`. This is because on Mac, `CopyFromStagingToTexture` calls `BlitStagingBufferToDepth`, which calls `device-\u003eGetQueue()-\u003eAPISubmit`. In this specific case, the submit happens _after_ all other commands, so we\u0027re technically okay. But I had to remove the check here. Please see my investigation doc for more details, and for some ideas of how we can fix this in the future and add back the check.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 84
+      },
+      "revId": "0042a0ffb309dce14fec495f06ed0f19b7b93cfd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
