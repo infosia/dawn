@@ -110,15 +110,6 @@ namespace dawn::wire::server {
             mAllocator.Reset();
         }
 
-        // After the server handles all the commands from the stream, we additionally run
-        // ProcessEvents on all known Instances so that any work done on the server side can be
-        // forwarded through to the client.
-        for (auto instance : GetAllInstanceHandles()) {
-            if (DoInstanceProcessEvents(instance) != WireResult::Success) {
-                return nullptr;
-            }
-        }
-
         if (deserializeBuffer.AvailableSize() != 0) {
             return nullptr;
         }
