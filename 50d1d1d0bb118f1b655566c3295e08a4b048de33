@@ -1,0 +1,91 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "788bd710_d5900180",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-09-26T16:15:36Z",
+      "side": 1,
+      "message": "Let\u0027s ask some of the Dawn engineers whether we should break out this functionality into another Python file. This one is becoming monolithic.",
+      "revId": "50d1d1d0bb118f1b655566c3295e08a4b048de33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09bb8c95_17e816a0",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-09-26T16:15:36Z",
+      "side": 1,
+      "message": "I think we should put all these strings in https://source.corp.google.com/piper///depot/google3/third_party/dawn/src/dawn/dawn_kotlin.json",
+      "fixSuggestions": [
+        {
+          "fixId": "7d321e09_289f6225",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/dawn_json_generator.py",
+              "range": {
+                "startLine": 806,
+                "startChar": 0,
+                "endLine": 807,
+                "endChar": 0
+              },
+              "replacement": "    \"See @ref CallbackStatuses\",\n    \"SomeNewBlockedString\",\n"
+            }
+          ]
+        }
+      ],
+      "revId": "50d1d1d0bb118f1b655566c3295e08a4b048de33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94a828cd_7aa5f2cf",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-09-26T16:15:36Z",
+      "side": 1,
+      "message": "and these",
+      "fixSuggestions": [
+        {
+          "fixId": "157fd47f_526448ac",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/dawn_json_generator.py",
+              "range": {
+                "startLine": 806,
+                "startChar": 0,
+                "endLine": 807,
+                "endChar": 0
+              },
+              "replacement": "    \"See @ref CallbackStatuses\",\n    \"and these\"\n"
+            }
+          ]
+        }
+      ],
+      "revId": "50d1d1d0bb118f1b655566c3295e08a4b048de33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
