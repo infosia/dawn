@@ -59,12 +59,15 @@ import kotlin.coroutines.suspendCoroutine
             {%- endfor %}): {{ return_name }} = suspendCoroutine {
                 {{ method.name.camelCase() }}(
                     {%- for arg in method.arguments %}
-                        {{- as_varName(arg.name) }}
+                        {%- if as_varName(arg.name) == 'callbackInfo' %}
+                            {{- as_varName(arg.name).removesuffix("Info")}}
+                        {%- else %}
+                            {{- as_varName(arg.name) }}
+                        {%- endif %}
                         {%- if loop.last %}
                             //* The final parameter of a callback method is always callback info.
                             //* We make this and include our generated callback.
                             {{- ' = ' }}
-                            {{- callback_info.name.CamelCase() }}(CallbackMode.AllowSpontaneous)
                         {%- else %}
                             //* Non-final parameters are whatever the client supplied.
                             {{- ', ' }}

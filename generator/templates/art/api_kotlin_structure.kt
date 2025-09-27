@@ -27,25 +27,41 @@
 package {{ kotlin_package }}
 {% from 'art/api_kotlin_types.kt' import kotlin_definition with context %}
 
-{% for member in kotlin_record_members(structure.members) %}
+{% set ns = namespace(has_callbackMode = false) %}
+{# Add executor related imports if structure contains a callback function #}
+{% if 'callback function' in (kotlin_record_members(structure.members) | map(attribute='type.category')) %}
     import java.util.concurrent.Executor
-    import java.util.concurrent.ForkJoinPool
-    {% break %}
-{% endfor %}
+{% endif %}
 
 public class {{ structure.name.CamelCase() }}(
-    {% for member in kotlin_record_members(structure.members) %}
-        {% if member.type.category in ['callback function']%}
-            public var executor: Executor? = ForkJoinPool.commonPool(),
-        {% endif %}
-        {# We supply a getter that is excluded from name mangling to allow Inline Value Classed
-           enums/bitmasks to be accessible as integers from the JVM adapter layer. #}
-        {% if member.type.category in ['bitmask', 'enum'] %}
+{% for member in kotlin_record_members(structure.members) %}
+    {% if member.type.category in ['callback function']%}
+        {{'    '}}@get:JvmName("get{{member.name.CamelCase()}}Executor")
+        {{'    '}}public var {{member.name.camelCase()}}Executor: Executor = Executor(Runnable::run),
+    {% endif %}
+    {# We supply a getter that is excluded from name mangling to allow Inline Value Classed
+        enums/bitmasks to be accessible as integers from the JVM adapter layer. #}
+    {% if member.type.category in ['bitmask', 'enum'] %}
         {{'    '}}@get:JvmName("get{{ member.name.CamelCase() }}")
-        {% endif %}
-        public var {{ member.name.camelCase() }}: {{ kotlin_definition(member) }},
-    {% endfor %}
-    {% for structure in chain_children[structure.name.get()] %}
-        public var {{ structure.name.camelCase() }}: {{ structure.name.CamelCase() }}? = null,
-    {% endfor %}
+    {% endif %}
+    {% if kotlin_definition(member) == 'CallbackMode'%}
+        {% set ns.has_callbackMode = true %}
+    {% endif %}
+    {{'    '}}public var {{ member.name.camelCase() }}: {{ kotlin_definition(member) }},
+{% endfor %}
+{% for structure in chain_children[structure.name.get()] %}
+    public var {{ structure.name.camelCase() }}: {{ structure.name.CamelCase() }}? = null,
+{% endfor %}
 )
+{% set members = kotlin_record_members(structure.members) %}
+{# Check if structure contains a callback function #}
+{% set callback_member = (members | selectattr("type.category", "equalto", "callback function") | first) %}
+{# Add a secondary constructor that accepts an executor and a callback function as parameters #}
+{% if callback_member and ns.has_callbackMode %}
+    {
+        public constructor(
+            {{callback_member.name.camelCase()}}Executor: Executor,
+            {{callback_member.name.camelCase()}}: {{callback_member.type.name.CamelCase()}}
+        ) : this(CallbackMode.AllowSpontaneous, {{callback_member.name.camelCase()}}Executor, {{callback_member.name.camelCase()}})
+    }
+{% endif %}
