@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "396225a8_1d0b9178",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 30
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-27T01:35:08Z",
+      "side": 1,
+      "message": "LGTM but I think the mutex part should have a second review. Most of this CL is a refactor (well, two refactors), I\u0027d suggest making this 2 or maybe even 3 CLs if you can.",
+      "revId": "897c19bc5c689c941c526ded60ba29ea6d39ee2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0014167_b8ed6dc4",
+        "filename": "generator/templates/dawn/wire/server/ServerDoers.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-27T01:35:08Z",
+      "side": 1,
+      "message": "nit: this is hard to follow, could it be something like:\n```\nObjectData\u003c{{cType}}\u003e data;\n{\n    Reserved\u003c{{cType}}\u003e obj;\n    WIRE_TRY(Get(objectId, \u0026obj));\n    data \u003d *obj.data;\n}\n\nif (data.state \u003d\u003d Allocation::Allocated) {\n    // ...\n}\n```",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 44
+      },
+      "revId": "897c19bc5c689c941c526ded60ba29ea6d39ee2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
