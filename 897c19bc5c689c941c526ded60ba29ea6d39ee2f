@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "be61b951_95884859",
+        "filename": "generator/templates/dawn/wire/server/ServerBase.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-27T01:39:35Z",
+      "side": 1,
+      "message": "This does sound like an RWLock as I mentioned before. Do you think we could factor it into one? Or not because there are multiple mutexes involved?\n\nI know we would take the R lock more often, but I think it\u0027s worth it for structural correctness.",
+      "revId": "897c19bc5c689c941c526ded60ba29ea6d39ee2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d0014167_b8ed6dc4",
         "filename": "generator/templates/dawn/wire/server/ServerDoers.cpp",
         "patchSetId": 30
