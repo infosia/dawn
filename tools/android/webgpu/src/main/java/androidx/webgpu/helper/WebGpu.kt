@@ -5,11 +5,9 @@ import android.os.Looper
 import android.view.Surface
 import androidx.webgpu.Adapter
 import androidx.webgpu.BackendType
-import androidx.webgpu.CallbackMode.Companion.AllowSpontaneous
 import androidx.webgpu.Device
 import androidx.webgpu.DeviceDescriptor
 import androidx.webgpu.DeviceLostCallback
-import androidx.webgpu.DeviceLostCallbackInfo
 import androidx.webgpu.DeviceLostReason
 import androidx.webgpu.ErrorType
 import androidx.webgpu.FeatureName
@@ -20,11 +18,12 @@ import androidx.webgpu.RequestAdapterStatus
 import androidx.webgpu.RequestDeviceStatus
 import androidx.webgpu.SurfaceDescriptor
 import androidx.webgpu.SurfaceSourceAndroidNativeWindow
-import androidx.webgpu.UncapturedErrorCallbackInfo
+import androidx.webgpu.UncapturedErrorCallback
 import androidx.webgpu.createInstance
 import androidx.webgpu.helper.Util.windowFromSurface
 import androidx.webgpu.requestAdapter
 import androidx.webgpu.requestDevice
+import java.util.concurrent.Executor
 
 public class DeviceLostException(
     public val device: Device, public val reason: DeviceLostReason, message: String
@@ -46,7 +45,15 @@ public suspend fun createWebGpu(
     surface: Surface? = null,
     instanceDescriptor: InstanceDescriptor = InstanceDescriptor(),
     requestAdapterOptions: RequestAdapterOptions = RequestAdapterOptions(),
-    requiredFeatures: Array<FeatureName> = arrayOf()
+    requiredFeatures: Array<FeatureName> = arrayOf(),
+    deviceLostCallbackExecutor: Executor = Executor(Runnable::run),
+    deviceLostCallback: DeviceLostCallback = DeviceLostCallback { device, reason, message ->
+        throw DeviceLostException(device, reason, message)
+    },
+    uncapturedErrorCallbackExecutor: Executor = Executor(Runnable::run),
+    uncapturedErrorCallback: UncapturedErrorCallback = UncapturedErrorCallback { device, type, message ->
+        throw UncapturedErrorException(device, type, message)
+    },
 ): WebGpu {
     initLibrary()
 
@@ -62,7 +69,14 @@ public suspend fun createWebGpu(
         }
 
     val adapter = requestAdapter(instance, requestAdapterOptions)
-    val device = requestDevice(adapter, requiredFeatures)
+    val device = requestDevice(
+        adapter,
+        requiredFeatures,
+        deviceLostCallbackExecutor,
+        deviceLostCallback,
+        uncapturedErrorCallbackExecutor,
+        uncapturedErrorCallback
+    )
 
     var isClosing = false
     // Long-running event poller for async methods. Can be removed when
@@ -106,23 +120,22 @@ private suspend fun requestAdapter(
     return adapter
 }
 
-private suspend fun requestDevice(adapter: Adapter, requiredFeatures: Array<FeatureName>): Device {
+private suspend fun requestDevice(
+    adapter: Adapter,
+    requiredFeatures: Array<FeatureName>,
+    deviceLostCallbackExecutor: Executor,
+    onDeviceLost: DeviceLostCallback,
+    uncapturedErrorCallbackExecutor: Executor,
+    onUncapturedError: UncapturedErrorCallback,
+): Device {
     val (status, device, message) =
         adapter.requestDevice(
             DeviceDescriptor(
                 requiredFeatures = requiredFeatures,
-                deviceLostCallbackInfo =
-                    DeviceLostCallbackInfo(
-                        callback =
-                            DeviceLostCallback { device, reason, message ->
-                                throw DeviceLostException(device, reason, message)
-                            },
-                        mode = AllowSpontaneous,
-                    ),
-                uncapturedErrorCallbackInfo =
-                    UncapturedErrorCallbackInfo { device, type, message ->
-                        throw UncapturedErrorException(device, type, message)
-                    },
+                deviceLostCallbackExecutor = deviceLostCallbackExecutor,
+                deviceLostCallback = onDeviceLost,
+                uncapturedErrorCallbackExecutor = uncapturedErrorCallbackExecutor,
+                uncapturedErrorCallback = onUncapturedError,
             )
         )
     check(status == RequestDeviceStatus.Success && device != null) {
