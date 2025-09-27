@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "23f4264b_525d1495",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-09-27T04:06:05Z",
+      "side": 1,
+      "message": "ptal",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "919b9629_21d33517",
@@ -14,6 +31,24 @@
       "writtenOn": "2025-09-22T18:27:10Z",
       "side": 1,
       "message": "Normal overloading doesn\u0027t work with integer types? (IDK, maybe that\u0027s why you used concepts for it?)",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2c92c17_80f63d3f",
+        "filename": "src/dawn/native/webgpu/CaptureContext.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-09-27T04:06:05Z",
+      "side": 1,
+      "message": "A bunch of this was removed in the latest",
+      "parentUuid": "919b9629_21d33517",
       "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -35,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e38f7160_d79534eb",
+        "filename": "src/dawn/native/webgpu/CaptureContext.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-09-27T04:06:05Z",
+      "side": 1,
+      "message": "I added some stuff similar to DAWN_SERIALIZE. Unfortunately it\u0027s still a little brittle. On the capture side you can capture a full command which is (cmd id, params), but on the replay side, there\u0027s no compile time connection between a cmd id and its params. You need to read out the cmd id first, then pick the params. I feel like we shouldn\u0027t obsess over this for now. I literally spent the entire week futsing with serialization and yet AFAICT it\u0027s all temp anyway so I\u0027m not sure how much more to spend on it. I hope it\u0027s okay for now.",
+      "parentUuid": "53c8bc09_bf35ddd3",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c3d3e45_f7502706",
@@ -48,6 +101,24 @@
       "writtenOn": "2025-09-22T18:27:10Z",
       "side": 1,
       "message": "WDYT of making objects inherit from \"RecordableObject\" that looks something like:\n\n```\nclass RecordableObject {\n    // The only way to get the ID so we\u0027re sure anything that we get an ID from gets captured.\n    CaptureID EnsureCaptured(CaptureContext* context) {\n       if id !\u003d kNotRecorded/*0*/ { return id }\n       id \u003d context-\u003eGetNewID()\n       CaptureCreation(context)\n       return id\n    }\n    \n    virtual void CaptureCreation(context) \u003d 0;\n}\n```\n\nThis way the capturing of a specific kind of object stays in the implementation of the object which would limit the growth of this file and make it more likely we update the capture when we update the logic in the object?",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fcd65d7_9e92820f",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-09-27T04:06:05Z",
+      "side": 1,
+      "message": "I made `BufferWGPU` to inherit from `RecordableObject`?  That\u0027s fine for moving `CaptureCreation` to BufferWGPU::CaptrueCreation but I\u0027m not sure moving the ID makes sense. If you captured twice then the code above would fail because on the 2nd capture the objects would be marked as already captured.\n\nThat said, in order to coordinate both capture and replay the command format for Buffer (and Texture, etc) have to be shared, either by some external .proto file or, as for now dawn/replay/Seralization.h.",
+      "parentUuid": "6c3d3e45_f7502706",
       "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -71,6 +142,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "18c016b5_10127e69",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-09-27T04:06:05Z",
+      "side": 1,
+      "message": "We discussed this on Tuesda I think? My plan was that only the queue matters. So if you call buffer map/unmap the buffer gets marked as dirty. Next time you call queue.xxx, if the buffer is referenced and is marked as dirty then it will grab the latest content. I am still pretty confused on your proposal for bindless. Maybe if I understood it I\u0027d see why it\u0027s important this be on device. Maybe destroy is enough to say it belongs on device? What happens if/when we support mult-threaded? I think I assumed there would be one \"real\" queue that\u0027s associated with some per worker GPUQueue object. They all share one actual Queue object and just has to coordinate calling submit shared queue. It\u0027s that shared queue that needs capturing.",
+      "parentUuid": "c4901dce_9d200702",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "839d0993_d3d739ab",
         "filename": "src/dawn/replay/BUILD.gn",
         "patchSetId": 3
@@ -82,6 +171,24 @@
       "writtenOn": "2025-09-22T18:27:10Z",
       "side": 1,
       "message": "We\u0027ll need a CMake equivalent of this as well.",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45c46352_f285a686",
+        "filename": "src/dawn/replay/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-09-27T04:06:05Z",
+      "side": 1,
+      "message": "I am not sure how to do that. This is currently only used by tests and it looks like the tests have no CMake file.",
+      "parentUuid": "839d0993_d3d739ab",
       "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
