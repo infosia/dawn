@@ -16,6 +16,24 @@
       "message": "Modifying the name like this might work but feels like a last resort. I think we should try changing the type from the Info type to the callback type by making a new argument inside kotlin_record_members in dawn_json_generator.py. That is where we are already omitting types (although not changing them; that will be new).",
       "revId": "80dcb44dd47206e46a27e2dd11f333010a973df4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2a674db_fec26791",
+        "filename": "generator/templates/art/api_kotlin_object.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-09-28T16:49:30Z",
+      "side": 1,
+      "message": "Doing this here- https://dawn-review.googlesource.com/c/dawn/+/263554\n(will abandon this CL)",
+      "parentUuid": "f19f98f7_022fb80e",
+      "revId": "80dcb44dd47206e46a27e2dd11f333010a973df4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
