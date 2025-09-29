@@ -1751,7 +1751,7 @@ void CommandEncoder::APICopyBufferToTexture(const TexelCopyBufferInfo* source,
             copy->destination = dst;
             copy->copySize = *copySize;
 
-            return {};
+            return {}; 
         },
         "encoding %s.CopyBufferToTexture(%s, %s, %s).", this, source->buffer, destination.texture,
         copySize);
