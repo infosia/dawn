@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "327de5ae_dfa3009a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-09-29T18:41:53Z",
+      "side": 1,
+      "message": "Hi @sainitarun@google.com and @mridulgoyal@google.com,\n\nI\u0027ve addressed the comments, so this CL should be good to go.\nI\u0027ll be out of the office until Monday. If any other minor comments come up, please feel free to address them. Otherwise, I\u0027ll take care of them when I\u0027m back.",
+      "revId": "58494a4ee9c55db65fa29cb6da8a8d1b6d3e492e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
