@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "902ccf3d_0a9ca1ed",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T12:07:54Z",
+      "side": 1,
+      "message": "unused",
+      "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ca7fb73a_982db9e0",
         "filename": "src/dawn/native/vulkan/TextureVk.cpp",
         "patchSetId": 3
@@ -48,6 +65,24 @@
       "writtenOn": "2025-09-27T05:14:23Z",
       "side": 1,
       "message": "Is `ClearTexture` called using `range.baseArrayLayer`/`range.layerCount` referring to slices of a 3D texture? If so that\u0027s very strange, it\u0027s inconsistent with the spec which only uses those to refer to 2D array layers, and we need to them.",
+      "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1671165_de3cae9f",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T12:07:54Z",
+      "side": 1,
+      "message": "Yeah that\u0027s a bit inconsistent given that webgpu uses `.depthSlice` for that. WDYT of special casing 3D textures to not take this code path. We can figure out later how to support them (and factor the clearing code between backends when there is some `CommandRecordingContextBase`).",
+      "parentUuid": "8ec0f72e_e1b11de4",
       "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -94,6 +129,23 @@
         "endLine": 161,
         "endChar": 90
       },
+      "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acca4692_1812caef",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T12:07:54Z",
+      "side": 1,
+      "message": "```suggestion\n    void DoRenderableSampledTextureClearTest(wgpu::TextureDimension dimension) {\n```",
       "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
