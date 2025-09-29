@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "87fdb09349510d1f45838d68782cc0b63cb659f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86ddd340_89efcec0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-09-29T18:09:13Z",
+      "side": 1,
+      "message": "Gardener FYI.",
+      "revId": "87fdb09349510d1f45838d68782cc0b63cb659f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
