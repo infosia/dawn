@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0ba3aa6_c09c74d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T12:04:03Z",
+      "side": 1,
+      "message": "What\u0027s your current goal / timeline for this CL? I don\u0027t want to block things too much, but I\u0027m worried about the relatively lack of structure between modules. While it is workable for a prototype, we are landing in the real repo and as code grows we\u0027ll really need boundaries between modules.\n\nWhat that look like is:\n\n - dawn::native is not used outside of dawn::native (only the webgpu.h and DawnNative.h + backend headers are the public API) (some white box tests use it directly but they are clearly tests of the internals of dawn::native).\n - Capture / replay should probably two separate libs that use the same de/serialization lib. This is both to ensure their interface with each other is the serialization format, and to avoid a `dawn::native` -(for capture)-\u003e `dawn::replay` -(for replay)-\u003e `dawn::native` cyclic dependency.\n - Replay should have its own public API in `include/dawn/replay` (this is less immediately important because it doesn\u0027t cause issues with the rest of the codebase).",
+      "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d964f50e_59cf5701",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T12:04:03Z",
+      "side": 1,
+      "message": "`::detail::` usually means that code outside of the namespace (in this case `replay` shouldn\u0027t reach into it) so it\u0027s a bit weird to see it here.",
+      "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08576698_5877b773",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T12:04:03Z",
+      "side": 1,
+      "message": "This no longer needs to be a template.",
+      "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa116804_e796f1b0",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T12:04:03Z",
+      "side": 1,
+      "message": "```suggestion\n    std::unordered_map\u003cconst RecordableObject*, replay::ObjectId\u003e mObjectIds;\n```\n\nAlso should this store a Ref\u003c\u003e? Otherwise if an object happens to be destroyed and a new one recreated at the same pointer, we\u0027ll confuse them in the capture.",
+      "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4492206b_ea05cde4",
+        "filename": "src/dawn/native/webgpu/RecordableObject.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T12:04:03Z",
+      "side": 1,
+      "message": "```suggestion\n  private:\n```",
+      "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8ebaab0_72f96cae",
+        "filename": "src/dawn/replay/Error.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T12:04:03Z",
+      "side": 1,
+      "message": "`dawn::native::Error` stuff is an implementation detail and not designed to be used outside of dawn::native. We can keep it for now for forward progress, but we really need to replace that sooner than later.",
+      "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a1fc64c_959e44be",
+        "filename": "src/dawn/replay/Replay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T12:04:03Z",
+      "side": 1,
+      "message": "Why is this one needed? Don\u0027t we want to use webgpu.h or webgpu_cpp.h?",
+      "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce623d5b_4c428903",
+        "filename": "src/dawn/tests/end2end/CaptureAndReplayTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T12:04:03Z",
+      "side": 1,
+      "message": "Eventually we need a proper API surface for the replay instead of making users reach into the internals directly.",
+      "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

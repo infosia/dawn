@@ -88,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "afcec401_054e20ad",
+        "filename": "src/dawn/native/webgpu/CaptureContext.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T12:04:03Z",
+      "side": 1,
+      "message": "Yeah that\u0027s why having a format like proto or something like that would help. Ok to figure out later.",
+      "parentUuid": "e38f7160_d79534eb",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c3d3e45_f7502706",
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "I made `BufferWGPU` to inherit from `RecordableObject`?  That\u0027s fine for moving `CaptureCreation` to BufferWGPU::CaptrueCreation but I\u0027m not sure moving the ID makes sense. If you captured twice then the code above would fail because on the 2nd capture the objects would be marked as already captured.\n\nThat said, in order to coordinate both capture and replay the command format for Buffer (and Texture, etc) have to be shared, either by some external .proto file or, as for now dawn/replay/Seralization.h.",
       "parentUuid": "6c3d3e45_f7502706",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e21e01e2_170fb2cd",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T12:04:03Z",
+      "side": 1,
+      "message": "Makes sense to not store the ID if we want to support multiple captures (or we\u0027d also need a last capture ID, ew).",
+      "parentUuid": "9fcd65d7_9e92820f",
       "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -160,6 +196,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c3252212_a1cdee95",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T12:04:03Z",
+      "side": 1,
+      "message": "Yeah that comment was written before the discussion on Tuesday. Let\u0027s keep on the queue and figure out later. It\u0027s not hard to move.\n\nFor bindless we\u0027d have to know what updates have happened but that\u0027s somethings the backends would see anyway so we can record it somewhat easily.",
+      "parentUuid": "18c016b5_10127e69",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "839d0993_d3d739ab",
         "filename": "src/dawn/replay/BUILD.gn",
         "patchSetId": 3
@@ -193,6 +247,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "52d59db2_c2149507",
+        "filename": "src/dawn/replay/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T12:04:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "45c46352_f285a686",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b145b43_4b704918",
@@ -206,6 +278,24 @@
       "writtenOn": "2025-09-22T18:27:10Z",
       "side": 1,
       "message": "Note that we\u0027ll want to separate the parts of replay that are used in the WebGPU backend (basically the schema) from the rest of the replayer, to avoid randomly depending on unrelated replay stuff.",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cca73fb_354301bf",
+        "filename": "src/dawn/replay/Serialization.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T12:04:03Z",
+      "side": 1,
+      "message": "The wire does it like: `dawn::wire` has `WireCmd.h/.cpp` and both `dawn::wire::client` and `dawn::wire::server` use it.",
+      "parentUuid": "1b145b43_4b704918",
       "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
