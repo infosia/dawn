@@ -16,6 +16,24 @@
       "message": "I can do more cleanup now that we have this in.",
       "revId": "093bc8c04092dcf95aec816712ffaecec3eee26b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5f30491_e73782ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-29T21:18:12Z",
+      "side": 1,
+      "message": "LGTM!",
+      "parentUuid": "0549de8e_da6df024",
+      "revId": "093bc8c04092dcf95aec816712ffaecec3eee26b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
