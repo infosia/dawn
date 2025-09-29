@@ -22,6 +22,30 @@
       },
       "revId": "eb1bd670853be76741e407e964ad094518b5c9f3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01246a1b_274fb99c",
+        "filename": "src/dawn/native/WaitListEvent.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-29T17:28:41Z",
+      "side": 1,
+      "message": "Updated the commit message. I fixed all the places that signal too many times.",
+      "parentUuid": "4a5185f7_63f32fca",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 38
+      },
+      "revId": "eb1bd670853be76741e407e964ad094518b5c9f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
