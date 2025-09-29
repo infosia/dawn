@@ -89,6 +89,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4cbf25d9_1406d026",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-29T21:16:21Z",
+      "side": 1,
+      "message": "+1 fallback for 3d would be fine\n\n\u003e we need to them\n\nwe [would] need to rename* them [if we don\u0027t just do fallback instead].",
+      "parentUuid": "c1671165_de3cae9f",
+      "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b71b426f_68540dc5",
         "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
         "patchSetId": 3
