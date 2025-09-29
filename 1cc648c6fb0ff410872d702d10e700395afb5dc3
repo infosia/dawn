@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8fbddb7_4f714617",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-29T19:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1766a3e8_bedd0e3f",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc98d1a7_5f92e956",
@@ -70,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba4b6c0e_9263f87f",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-29T19:04:43Z",
+      "side": 1,
+      "message": "Most of the dance here is to handle a couple separate things: \n * We now have this tri-state of A ShaderModule object that is valid/not valid (+error) and no ShaderModule (creationResult.IsError()). The old early-exit on success isn\u0027t as clean anymore.\n * Can\u0027t call the various Device error handling from a thread because error scope stacks are per-thread, the error would go to a worker thread\u0027s error scope and not be handled properly.\n \nBoth of these get much cleaner in future patches.",
+      "parentUuid": "af196bdd_c0ef79d2",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b272e29_d6aea5ad",
@@ -83,6 +119,24 @@
       "writtenOn": "2025-09-25T15:50:01Z",
       "side": 1,
       "message": "Any reason this is a separate lambda? It seems that it could be inlined in the parent lambda.",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db383c6b_1f38ecee",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1833,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-29T19:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b272e29_d6aea5ad",
       "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -104,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0dd517bc_a78b0fde",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1847,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-29T19:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fdde81c_1e844a67",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8e88c556_555429e5",
@@ -117,6 +189,24 @@
       "writtenOn": "2025-09-25T15:50:01Z",
       "side": 1,
       "message": "That comment is stale.",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f3dd940_4fc125d9",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1861,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-29T19:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e88c556_555429e5",
       "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -138,6 +228,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0d2210d_11d03de6",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1869,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-29T19:04:43Z",
+      "side": 1,
+      "message": "It was a carry-over from the old `ShaderModuleBase::InitializeBase`. I\u0027ll try asserting it instead.",
+      "parentUuid": "f83646ae_36d7dcd7",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c7fe4dba_f355669c",
@@ -151,6 +259,24 @@
       "writtenOn": "2025-09-25T15:50:01Z",
       "side": 1,
       "message": "```suggestion\n            // Gather the metadata and default entry point names\n            DAWN_ASSERT(parseResult.metadataTable.has_value());\n```",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c5a5e76_c49f72e3",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1875,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-29T19:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7fe4dba_f355669c",
       "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -178,6 +304,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9760746_dbafa6d7",
+        "filename": "src/dawn/native/d3d11/ShaderModuleD3D11.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-29T19:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3278f1b_ad91f4da",
+      "range": {
+        "startLine": 61,
+        "startChar": 22,
+        "endLine": 61,
+        "endChar": 28
+      },
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2cda8b9c_ff99d4da",
@@ -191,6 +341,24 @@
       "writtenOn": "2025-09-25T15:50:01Z",
       "side": 1,
       "message": "nit: this could be removed.",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08f67b97_82299124",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-29T19:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cda8b9c_ff99d4da",
       "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
