@@ -142,6 +142,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0abba9b_a3b36d8a",
+        "filename": "src/dawn/native/vulkan/PipelineCacheVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-29T19:43:14Z",
+      "side": 1,
+      "message": "This sounds sketchy but at least with your change we will improve the situation.",
+      "parentUuid": "bbddd27a_7fb44a6b",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 22
+      },
+      "revId": "8b2af466b41cbfc469c0c73ed8fa172f60017266",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c232a484_65b24aee",
