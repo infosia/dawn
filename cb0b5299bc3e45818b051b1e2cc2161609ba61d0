@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "cb0b5299bc3e45818b051b1e2cc2161609ba61d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5209fac1_d8e6e147",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-29T20:32:53Z",
+      "side": 1,
+      "message": "I\u0027m concerned about doing this for just the size of a member, as opposed to the amount of padding that a structure contains.\n\nI don\u0027t think it\u0027s that unreasonable to have a large fixed-size array in a storage buffer, and this is going to trigger for those cases if we start using the protobuf for caching IR modules.\n\nI was imagining that this would be an IR validation rule that checks the amount of padding bytes instead.",
+      "revId": "cb0b5299bc3e45818b051b1e2cc2161609ba61d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
