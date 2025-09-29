@@ -120,7 +120,7 @@ class DynamicBufferOffsetTests : public DawnTest {
         // Bind group for inheriting test
         mBindGroups[1] = utils::MakeBindGroup(device, mBindGroupLayouts[1],
                                               {{0, mUniformBuffers[2], 0, kBindingSize}});
-    }
+    } 
     // Create objects to use as resources inside test bind groups.
 
     uint32_t mMinUniformBufferOffsetAlignment;
