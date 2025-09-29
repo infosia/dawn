@@ -51,6 +51,24 @@
       "parentUuid": "5209fac1_d8e6e147",
       "revId": "cb0b5299bc3e45818b051b1e2cc2161609ba61d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6196326_54c1fc16",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-29T20:38:53Z",
+      "side": 1,
+      "message": "Could do, but you can also create excessive padding with large alignment (hence https://github.com/gpuweb/gpuweb/issues/5150).",
+      "parentUuid": "9da73805_77c63bfb",
+      "revId": "cb0b5299bc3e45818b051b1e2cc2161609ba61d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
