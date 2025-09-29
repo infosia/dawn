@@ -851,10 +851,6 @@ const BindGroupLayoutInternalBase::BindingMap& BindGroupLayoutInternalBase::GetB
     return mBindingMap;
 }
 
-BindingIndex BindGroupLayoutInternalBase::GetBindingIndex(BindingNumber bindingNumber) const {
-    return AsBindingIndex(GetAPIBindingIndex(bindingNumber));
-}
-
 APIBindingIndex BindGroupLayoutInternalBase::GetAPIBindingIndex(BindingNumber bindingNumber) const {
     DAWN_ASSERT(!IsError());
     const auto& it = mBindingMap.find(bindingNumber);
