@@ -49,6 +49,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dadeb4ab_3b93f16a",
+        "filename": "src/dawn/native/vulkan/PipelineCacheVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-29T19:28:19Z",
+      "side": 1,
+      "message": "Is this extra state really required? How often will this trigger?",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 22
+      },
+      "revId": "8b2af466b41cbfc469c0c73ed8fa172f60017266",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c232a484_65b24aee",
         "filename": "src/dawn/native/vulkan/PipelineCacheVk.h",
         "patchSetId": 1
