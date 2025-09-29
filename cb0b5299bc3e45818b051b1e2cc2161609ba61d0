@@ -69,6 +69,24 @@
       "parentUuid": "9da73805_77c63bfb",
       "revId": "cb0b5299bc3e45818b051b1e2cc2161609ba61d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec2b1ad7_42f799b5",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-29T20:40:30Z",
+      "side": 1,
+      "message": "Sure, but I got the impression folks didn\u0027t want to do anything for the align case in committee. But, I can do a similar check here for `align` and error in the IR decoder at least.",
+      "parentUuid": "b6196326_54c1fc16",
+      "revId": "cb0b5299bc3e45818b051b1e2cc2161609ba61d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
