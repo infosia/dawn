@@ -22,6 +22,30 @@
       },
       "revId": "0042a0ffb309dce14fec495f06ed0f19b7b93cfd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "038c7d16_b4f13db5",
+        "filename": "src/dawn/native/DynamicUploader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T13:33:28Z",
+      "side": 1,
+      "message": "That\u0027s annoying :/ Can we have a TODO somwhere to fix this? It wouldn\u0027t be trivial so I\u0027d rather put it off until `CommandRecordingContextBase` but still have a reminder somewhere.",
+      "parentUuid": "05620d75_54cd96d5",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 84
+      },
+      "revId": "0042a0ffb309dce14fec495f06ed0f19b7b93cfd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
