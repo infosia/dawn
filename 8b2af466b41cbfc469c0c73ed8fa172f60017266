@@ -118,6 +118,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbddd27a_7fb44a6b",
+        "filename": "src/dawn/native/vulkan/PipelineCacheVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-09-29T19:41:30Z",
+      "side": 1,
+      "message": "There is a risk that some future vkGetPipelineCacheData() doesn\u0027t return VK_INCOMPLETE, we save bad data to disk and then driver crashes loading it from disk next time. We really want to avoid that situation so I think the extra state is worth it.",
+      "parentUuid": "dadeb4ab_3b93f16a",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 22
+      },
+      "revId": "8b2af466b41cbfc469c0c73ed8fa172f60017266",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c232a484_65b24aee",
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "I simply always set it. If it is not set then it will be a random value.",
       "parentUuid": "c7c0763d_0990c77b",
+      "range": {
+        "startLine": 59,
+        "startChar": 15,
+        "endLine": 59,
+        "endChar": 39
+      },
+      "revId": "8b2af466b41cbfc469c0c73ed8fa172f60017266",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6374f39a_b9024c10",
+        "filename": "src/dawn/native/vulkan/PipelineCacheVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-09-29T19:41:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2788b96d_4cad7142",
       "range": {
         "startLine": 59,
         "startChar": 15,
