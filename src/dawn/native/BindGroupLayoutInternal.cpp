@@ -566,7 +566,6 @@ bool SortBindingsCompare(const BindingInfo& a, const BindingInfo& b) {
 struct ExpandedBindingInfo {
     BindGroupLayoutInternalBase::BindingMap APIBindingMap;
     ityp::vector<BindingIndex, BindingInfo> entries;
-    ExternalTextureBindingExpansionMap externalTextureBindingExpansions;
     std::optional<BindingIndex> dynamicArrayMetadata;
 };
 ExpandedBindingInfo ConvertAndExpandBGLEntries(
@@ -595,7 +594,12 @@ ExpandedBindingInfo ConvertAndExpandBGLEntries(
 
     // Keep track of the BindingNumbers for additional bindings for external textures, it is used
     // below to link the ExternalTextureBindingInfo to the BindingIndex of the additional bindings.
-    ExternalTextureBindingExpansionMap externalTextureExpansions;
+    struct ExternalTextureExpansion {
+        BindingNumber plane0;
+        BindingNumber plane1;
+        BindingNumber params;
+    };
+    absl::flat_hash_map<BindingNumber, ExternalTextureExpansion> externalTextureExpansions;
 
     for (uint32_t i = 0; i < descriptor->entryCount; i++) {
         UnpackedPtr<BindGroupLayoutEntry> entry = Unpack(&descriptor->entries[i]);
@@ -697,7 +701,6 @@ ExpandedBindingInfo ConvertAndExpandBGLEntries(
     }
 
     result.entries = std::move(entries);
-    result.externalTextureBindingExpansions = std::move(externalTextureExpansions);
     return result;
 }
 
@@ -729,8 +732,6 @@ BindGroupLayoutInternalBase::BindGroupLayoutInternalBase(
     ApiObjectBase::UntrackedByDeviceTag tag)
     : ApiObjectBase(device, descriptor->label) {
     ExpandedBindingInfo unpackedBindings = ConvertAndExpandBGLEntries(descriptor);
-    mExternalTextureBindingExpansionMap =
-        std::move(unpackedBindings.externalTextureBindingExpansions);
     mBindingInfo = std::move(unpackedBindings.entries);
     mBindingMap = std::move(unpackedBindings.APIBindingMap);
 
@@ -1063,12 +1064,6 @@ BeginEndRange<BindingIndex> BindGroupLayoutInternalBase::GetNonStaticSamplerIndi
 BeginEndRange<BindingIndex> BindGroupLayoutInternalBase::GetInputAttachmentIndices() const {
     return Range(GetBindingTypeStart(BindingTypeOrder_InputAttachment),
                  GetBindingTypeEnd(BindingTypeOrder_InputAttachment));
-}
-
-const ExternalTextureBindingExpansionMap&
-BindGroupLayoutInternalBase::GetExternalTextureBindingExpansionMap() const {
-    DAWN_ASSERT(!IsError());
-    return mExternalTextureBindingExpansionMap;
 }
 
 bool BindGroupLayoutInternalBase::NeedsCrossBindingValidation() const {
