@@ -71,10 +71,6 @@
           'SwiftShader',
           'webgpu:api,operation,adapter,requestDevice:default:*',
         ],
-        'mixins': [
-          # TODO(crbug.com/441328362): Support running these tests on Swarming.
-          'no_swarming',
-        ],
         'test': 'dawn_node_cts',
       },
     },
