@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97db5a2d_4b1c0e1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-29T17:31:59Z",
+      "side": 1,
+      "message": "PTAL\n\nTests were able to build properly, so the CI compile failure looks to either be due to a cache issue like you suggested or due to some other target.",
+      "revId": "667a2ad70800ba27b62cc20f358dc6170f0a4c04",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
