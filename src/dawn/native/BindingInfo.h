@@ -143,9 +143,9 @@ struct StaticSamplerBindingInfo {
 
     // Holds a ref instead of an unowned pointer.
     Ref<SamplerBase> sampler;
-    // Holds the BindingNumber of the single texture with which this sampler is
-    // statically paired, if any.
-    BindingNumber sampledTextureBinding;
+    // Holds the BindingIndex of the single texture with which this sampler is statically paired, if
+    // any.
+    BindingIndex sampledTextureBinding;
     // Whether this instance is statically paired with a single texture.
     bool isUsedForSingleTextureBinding = false;
 
