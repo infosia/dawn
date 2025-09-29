@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f693dbce_a57972b7",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-09-29T08:51:41Z",
+      "side": 1,
+      "message": "Added to dawn_kotlin as per suggestion",
+      "parentUuid": "09bb8c95_17e816a0",
+      "revId": "50d1d1d0bb118f1b655566c3295e08a4b048de33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "94a828cd_7aa5f2cf",
@@ -84,6 +102,24 @@
           ]
         }
       ],
+      "revId": "50d1d1d0bb118f1b655566c3295e08a4b048de33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29db3a0a_fc4c7fa7",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-09-29T08:51:41Z",
+      "side": 1,
+      "message": "Added to dawn_kotlin as per suggestion",
+      "parentUuid": "94a828cd_7aa5f2cf",
       "revId": "50d1d1d0bb118f1b655566c3295e08a4b048de33",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
