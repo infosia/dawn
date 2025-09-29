@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2a807a8_6d4d20b9",
+        "filename": "src/tint/lang/core/ir/switch.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-29T18:10:50Z",
+      "side": 1,
+      "message": "Review this",
+      "range": {
+        "startLine": 110,
+        "startChar": 20,
+        "endLine": 110,
+        "endChar": 29
+      },
+      "revId": "e5fe85aaae5e047ea4bb08b308442478822a1cbc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b63c5a5e_003c7c89",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1360,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-29T18:10:50Z",
+      "side": 1,
+      "message": "I added this because the error confused me because it printed \"||\" on a line.",
+      "range": {
+        "startLine": 1359,
+        "startChar": 0,
+        "endLine": 1360,
+        "endChar": 100
+      },
+      "revId": "e5fe85aaae5e047ea4bb08b308442478822a1cbc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c67a3e5_38f6d28b",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-29T18:10:50Z",
+      "side": 1,
+      "message": "These are the same?",
+      "range": {
+        "startLine": 961,
+        "startChar": 10,
+        "endLine": 961,
+        "endChar": 16
+      },
+      "revId": "e5fe85aaae5e047ea4bb08b308442478822a1cbc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
