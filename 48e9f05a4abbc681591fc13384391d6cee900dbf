@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "855b0923_9c08acfb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2025-09-29T21:55:12Z",
+      "side": 1,
+      "message": "lgtm - correct that dawn is forbidding copyEI2T for formats that should be supported",
+      "revId": "48e9f05a4abbc681591fc13384391d6cee900dbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
