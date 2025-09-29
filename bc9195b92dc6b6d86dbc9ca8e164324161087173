@@ -63,6 +63,30 @@
       },
       "revId": "bc9195b92dc6b6d86dbc9ca8e164324161087173",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc7f7642_a2e0fc44",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T10:32:18Z",
+      "side": 1,
+      "message": "Done https://dawn-review.googlesource.com/c/dawn/+/263994",
+      "parentUuid": "8e2abe2a_f5e96538",
+      "range": {
+        "startLine": 234,
+        "startChar": 60,
+        "endLine": 234,
+        "endChar": 66
+      },
+      "revId": "bc9195b92dc6b6d86dbc9ca8e164324161087173",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
