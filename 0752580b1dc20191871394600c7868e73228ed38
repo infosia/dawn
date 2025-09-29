@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "caf5c9db_5c417779",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T10:46:23Z",
+      "side": 1,
+      "message": "String matching instead of actual functions is not ideal. Can we somehow keep using the methods instead of this?\n\nSince this is used to match backends, IMHO it could be `IsWebGPUOn(wgpu::BackendType)` and we can have an extension struct (to the adapter info?) to get the inner backend type (in `PopulateBackendProperties`).",
+      "revId": "0752580b1dc20191871394600c7868e73228ed38",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3278f04c_3c9ea90c",
+        "filename": "src/dawn/tests/end2end/ShaderBuiltinPartialConstArgsErrorTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T10:46:23Z",
+      "side": 1,
+      "message": "Can the comment be slightly more clear? \"pipeline error catch\" isn\u0027t a WebGPU concept. ditto below",
+      "revId": "0752580b1dc20191871394600c7868e73228ed38",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f03135eb_8c70e392",
+        "filename": "src/dawn/tests/end2end/ShaderValidationTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-29T10:46:23Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "0752580b1dc20191871394600c7868e73228ed38",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
