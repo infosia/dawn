@@ -89,8 +89,7 @@ VulkanStaticBindings ComputeVulkanStaticBindings(const BindGroupLayoutInternalBa
             continue;
         }
 
-        res.textureToStaticSamplerIndex[layout->GetBindingIndex(
-            samplerLayout.sampledTextureBinding)] = bindingIndex;
+        res.textureToStaticSamplerIndex[samplerLayout.sampledTextureBinding] = bindingIndex;
     }
 
     // Compute the bindings that will be chained in the DescriptorSetLayout create info. We add
