@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c47b507b_7c94c7f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-29T20:39:18Z",
+      "side": 1,
+      "message": "PTAL\n\ngn_v2 CQ builders look happy.",
+      "revId": "0fe97faa1d9c37bd5a2a33d766e8e119033ccde2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
