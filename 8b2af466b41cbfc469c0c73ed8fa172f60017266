@@ -163,6 +163,30 @@
       },
       "revId": "8b2af466b41cbfc469c0c73ed8fa172f60017266",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2788b96d_4cad7142",
+        "filename": "src/dawn/native/vulkan/PipelineCacheVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-29T19:35:23Z",
+      "side": 1,
+      "message": "I simply always set it. If it is not set then it will be a random value.",
+      "parentUuid": "c7c0763d_0990c77b",
+      "range": {
+        "startLine": 59,
+        "startChar": 15,
+        "endLine": 59,
+        "endChar": 39
+      },
+      "revId": "8b2af466b41cbfc469c0c73ed8fa172f60017266",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
