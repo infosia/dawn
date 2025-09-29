@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "015e3208_7aedcc91",
+        "filename": "tools/setup-build",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-09-29T17:46:49Z",
+      "side": 1,
+      "message": "For consistency\n\n```suggestion\n        GN_ARGS+\u003d\" use_remoteexec\u003dtrue\"\n```",
+      "revId": "18af5cee3d3afb53318f7194518251cb53ea5f17",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
