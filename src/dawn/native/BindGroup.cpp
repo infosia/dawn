@@ -418,7 +418,7 @@ void ForEachUnverifiedBufferBindingIndexImpl(const BindGroupLayoutInternalBase* 
 MaybeError ValidateStaticSamplersWithSampledTextures(
     const UnpackedPtr<BindGroupDescriptor>& descriptor,
     const BindGroupLayoutInternalBase* layout) {
-    absl::flat_hash_map<BindingNumber, uint32_t> bindingNumberToEntryIndexMap;
+    absl::flat_hash_map<BindingIndex, uint32_t> bindingNumberToEntryIndexMap;
     for (uint32_t i = 0; i < descriptor->entryCount; ++i) {
         bindingNumberToEntryIndexMap[BindingNumber(descriptor->entries[i].binding)] = i;
     }
@@ -432,8 +432,7 @@ MaybeError ValidateStaticSamplersWithSampledTextures(
         if (staticSamplerLayout && staticSamplerLayout->isUsedForSingleTextureBinding) {
             const SamplerBase* sampler = staticSamplerLayout->sampler.Get();
 
-            uint32_t textureEntryIndex = bindingNumberToEntryIndexMap.at(
-                BindingNumber(staticSamplerLayout->sampledTextureBinding));
+            uint32_t textureEntryIndex = bindingNumberToEntryIndexMap.at(staticSamplerLayout->sampledTextureBinding);
             const TextureViewBase* textureView = descriptor->entries[textureEntryIndex].textureView;
 
             // Compare static sampler and sampled textures to make sure they are compatible.
