@@ -948,6 +948,11 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // Vulkan SPEC and drivers.
     deviceToggles->Default(Toggle::UseTemporaryBufferInCompressedTextureToTextureCopy, true);
 
+    if (IsAndroidImgTech()) {
+        // chromium:443906252: Polyfill for case switch with large ranges.
+        deviceToggles->Default(Toggle::VulkanPolyfillSwitchWithIf, true);
+    }
+
     if (IsAndroidQualcomm()) {
         // dawn:1564, dawn:1897: Recording a compute pass after a render pass in the same command
         // buffer frequently causes a crash on Qualcomm GPUs. To work around that bug, split the
@@ -1205,6 +1210,14 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
 bool PhysicalDevice::IsAndroidQualcomm() const {
 #if DAWN_PLATFORM_IS(ANDROID)
     return gpu_info::IsQualcommPCI(GetVendorId());
+#else
+    return false;
+#endif
+}
+
+bool PhysicalDevice::IsAndroidImgTech() const {
+#if DAWN_PLATFORM_IS(ANDROID)
+    return gpu_info:: IsImgTec((GetVendorId());
 #else
     return false;
 #endif
