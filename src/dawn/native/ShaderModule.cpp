@@ -738,7 +738,8 @@ MaybeError ValidateCompatibilityOfSingleBindingWithLayout(const DeviceBase* devi
         [&](const SamplerBindingInfo& bindingInfo) -> MaybeError {
             bool comparisonInShader = bindingInfo.type == wgpu::SamplerBindingType::Comparison;
             bool comparisonInLayout;
-            if (auto* staticBindingLayout = std::get_if<StaticSamplerBindingInfo>(&layoutInfo.bindingLayout)) {
+            if (auto* staticBindingLayout =
+                    std::get_if<StaticSamplerBindingInfo>(&layoutInfo.bindingLayout)) {
                 comparisonInLayout = staticBindingLayout->sampler->IsComparison();
             } else {
                 const SamplerBindingInfo& bindingLayout =
@@ -746,9 +747,11 @@ MaybeError ValidateCompatibilityOfSingleBindingWithLayout(const DeviceBase* devi
                 comparisonInLayout = bindingLayout.type == wgpu::SamplerBindingType::Comparison;
             }
 
-            DAWN_INVALID_IF(comparisonInShader != comparisonInLayout,
+            DAWN_INVALID_IF(
+                comparisonInShader != comparisonInLayout,
                 "The sampler type in the shader (comparison: %u) doesn't match the type in "
-                "the layout (comparison: %u).", comparisonInShader, comparisonInLayout);
+                "the layout (comparison: %u).",
+                comparisonInShader, comparisonInLayout);
             return {};
         },
         [](const ExternalTextureBindingInfo&) -> MaybeError {
