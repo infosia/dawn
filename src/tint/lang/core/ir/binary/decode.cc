@@ -847,7 +847,21 @@ struct Decoder {
 
             auto index = static_cast<uint32_t>(members_out.Length());
             auto align = member_in.align();
+
             auto size = member_in.size();
+            if ((size - type->Size()) >= internal_limits::kMaxStructMemberPadding) {
+                err_ << "struct member '" << member_name << "' 'size' (" << size
+                     << ") is larger then the max (" << internal_limits::kMaxStructMemberPadding
+                     << ")\n";
+                return mod_out_.Types().invalid();
+            }
+            if ((align - type->Size()) >= internal_limits::kMaxStructMemberPadding) {
+                err_ << "struct member '" << member_name << "' 'align' (" << align
+                     << ") is larger then the max (" << internal_limits::kMaxStructMemberPadding
+                     << ")\n";
+                return mod_out_.Types().invalid();
+            }
+
             core::IOAttributes attributes_out{};
             if (member_in.has_attributes()) {
                 auto& attributes_in = member_in.attributes();
