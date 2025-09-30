@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af994c72_0778f127",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-30T20:28:19Z",
+      "side": 1,
+      "message": "LGTM, thanks!",
+      "revId": "841c156e73dd0afae9cefe008421e32ca3538863",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "76e25e4f_2f4b6383",
@@ -14,6 +31,24 @@
       "writtenOn": "2025-09-30T20:16:51Z",
       "side": 1,
       "message": "When all tests pass, we end up with an empty file. This was resulting in `failed to read expectations file: EOF` without this check.",
+      "revId": "841c156e73dd0afae9cefe008421e32ca3538863",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a49a5cb9_a743019d",
+        "filename": "tools/src/cmd/run-cts/common/expectations.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-30T20:28:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "76e25e4f_2f4b6383",
       "revId": "841c156e73dd0afae9cefe008421e32ca3538863",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -35,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "484f7241_41d34155",
+        "filename": "tools/src/cmd/run-cts/common/flags.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-30T20:28:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0252272b_48e9dba1",
+      "revId": "841c156e73dd0afae9cefe008421e32ca3538863",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "228f9ff9_2160b901",
@@ -48,6 +101,24 @@
       "writtenOn": "2025-09-30T20:16:51Z",
       "side": 1,
       "message": "This stops non-failures from being written to the `-log` file.",
+      "revId": "841c156e73dd0afae9cefe008421e32ca3538863",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2458927e_32f33a5b",
+        "filename": "tools/src/cmd/run-cts/common/logger.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-30T20:28:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "228f9ff9_2160b901",
       "revId": "841c156e73dd0afae9cefe008421e32ca3538863",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
