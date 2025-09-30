@@ -16,6 +16,24 @@
       "message": "Before we do that, could you try instead making minSdkVersion in Google3 match Gerrit? In Google3 try adding:\n\n\n```\nandroid_library(\n    ...\n    manifest_values \u003d {\n        \"minSdkVersion\": \"26\",\n```\n\nto https://source.corp.google.com/piper///depot/google3/third_party/dawn/BUILD;l\u003d1730",
       "revId": "755cb958da6c6eb5437335bf692bd16797501daa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7da5a77d_504a0ded",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4374400
+      },
+      "writtenOn": "2025-09-30T17:08:49Z",
+      "side": 1,
+      "message": "I tried this approach first, but there is no attribute matching to \u0027manifest_value\u0027 or \u0027minSdkVersion\u0027 available for android_library rule.",
+      "parentUuid": "eccd03a0_62ea2461",
+      "revId": "755cb958da6c6eb5437335bf692bd16797501daa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
