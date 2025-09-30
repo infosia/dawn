@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b777491_9b85f45f",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-30T22:45:49Z",
+      "side": 1,
+      "message": "nit. Isn\u0027t supporting this right now a bit misleading since (from what I can tell), we probably can\u0027t do this conversion easily atm and this `ExternalTextureBindingInfo::From` just returns an empty struct? My point being, why not just leave this as `DAWN_UNREACHABLE()` for now?",
+      "range": {
+        "startLine": 519,
+        "startChar": 8,
+        "endLine": 519,
+        "endChar": 100
+      },
+      "revId": "2571cfeb9d8ed45d4d08217d7f172b22b8503888",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22180d91_61a2bcde",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-30T22:45:49Z",
+      "side": 1,
+      "message": "nit. `apiBindingMap`?",
+      "range": {
+        "startLine": 567,
+        "startChar": 44,
+        "endLine": 567,
+        "endChar": 57
+      },
+      "revId": "2571cfeb9d8ed45d4d08217d7f172b22b8503888",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "073341a7_70bbd25d",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-30T22:45:49Z",
+      "side": 1,
+      "message": "nit. Why do we need the prefix in the enum value? Since it\u0027s a C++ enum type, couldn\u0027t we just do `BindingTypeOrder::DynamicBuffer` or something like that? (In which case the `BindingTypeOrder` part would be redundant?) I realize that the equivalent enum had this redundancy too, so maybe it\u0027s an enum to int/index thing that I\u0027m missing?",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 21
+      },
+      "revId": "2571cfeb9d8ed45d4d08217d7f172b22b8503888",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d26ba1bd_65aedf8d",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-30T22:45:49Z",
+      "side": 1,
+      "message": "nit. Indexing",
+      "range": {
+        "startLine": 99,
+        "startChar": 65,
+        "endLine": 99,
+        "endChar": 73
+      },
+      "revId": "2571cfeb9d8ed45d4d08217d7f172b22b8503888",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aedb73f1_60a35312",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-30T22:45:49Z",
+      "side": 1,
+      "message": "nit. some*?",
+      "range": {
+        "startLine": 102,
+        "startChar": 6,
+        "endLine": 102,
+        "endChar": 11
+      },
+      "revId": "2571cfeb9d8ed45d4d08217d7f172b22b8503888",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24d54fb8_982a1952",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-30T22:45:49Z",
+      "side": 1,
+      "message": "Could maybe do in a follow up, but maybe we could use `absl::btree_map` instead? It\u0027s *supposed* to be more efficient so could be worth it for us?",
+      "range": {
+        "startLine": 135,
+        "startChar": 23,
+        "endLine": 135,
+        "endChar": 63
+      },
+      "revId": "2571cfeb9d8ed45d4d08217d7f172b22b8503888",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e03aa155_da515cd7",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-30T22:45:49Z",
+      "side": 1,
+      "message": "nit. See comment in BGLInternal.cpp regarding this.",
+      "range": {
+        "startLine": 379,
+        "startChar": 0,
+        "endLine": 385,
+        "endChar": 1
+      },
+      "revId": "2571cfeb9d8ed45d4d08217d7f172b22b8503888",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b95f8851_ae5dc6b2",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-09-30T22:45:49Z",
+      "side": 1,
+      "message": "nit. why have newlines at all here? (Or if it\u0027s like public vs private types, maybe we can have a leading comment?)",
+      "range": {
+        "startLine": 209,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 91
+      },
+      "revId": "2571cfeb9d8ed45d4d08217d7f172b22b8503888",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
