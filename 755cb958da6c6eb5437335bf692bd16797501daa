@@ -34,6 +34,24 @@
       "parentUuid": "eccd03a0_62ea2461",
       "revId": "755cb958da6c6eb5437335bf692bd16797501daa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb949c65_c4a006d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-09-30T19:59:14Z",
+      "side": 1,
+      "message": "There  android_library Blaze macro has a `manifest` field which is the name of a *file* containing the manifest.\nSee https://g3doc.corp.google.com/tools/build_defs/android/g3doc/android-rules.md?cl\u003dhead#android_library-manifest",
+      "parentUuid": "7da5a77d_504a0ded",
+      "revId": "755cb958da6c6eb5437335bf692bd16797501daa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
