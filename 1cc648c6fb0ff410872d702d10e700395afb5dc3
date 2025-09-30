@@ -248,6 +248,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "37b65fa1_5c9a3c57",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1869,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-09-30T08:50:56Z",
+      "side": 1,
+      "message": "Have you had a chance to try this? Unresolving to make sure you see it, but feel free to immediately resolve and handle in a follow up if this can be done at all.",
+      "parentUuid": "c0d2210d_11d03de6",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c7fe4dba_f355669c",
         "filename": "src/dawn/native/ShaderModule.cpp",
         "patchSetId": 26
