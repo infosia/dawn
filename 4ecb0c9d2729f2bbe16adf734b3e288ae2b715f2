@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c18ba95a_96569a83",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-30T20:35:29Z",
+      "side": 1,
+      "message": "Thanks for the reviews! Updated based on feedback.",
+      "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "902ccf3d_0a9ca1ed",
@@ -35,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3f97737_bd813a9f",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-30T20:35:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "902ccf3d_0a9ca1ed",
+      "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca7fb73a_982db9e0",
@@ -48,6 +83,24 @@
       "writtenOn": "2025-09-27T05:14:23Z",
       "side": 1,
       "message": "1D textures can\u0027t be used as render targets, so this branch should never be hit (the outer `if` would prevent it).",
+      "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef8a77df_e0d4a0f2",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-30T20:35:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca7fb73a_982db9e0",
       "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -107,6 +160,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "42a522fe_f6e60794",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-30T20:35:29Z",
+      "side": 1,
+      "message": "I think I just misunderstood how the range was being passed. I\u0027ve refactored this so that 3D textures assert that the range layer is zero and then loop through each depth slice, clearing them.",
+      "parentUuid": "4cbf25d9_1406d026",
+      "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b71b426f_68540dc5",
         "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
         "patchSetId": 3
@@ -118,6 +189,30 @@
       "writtenOn": "2025-09-27T05:14:23Z",
       "side": 1,
       "message": "nit: rename to `depthOrArrayLayers`",
+      "range": {
+        "startLine": 60,
+        "startChar": 17,
+        "endLine": 60,
+        "endChar": 32
+      },
+      "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f90e0f9_c886923e",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-30T20:35:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b71b426f_68540dc5",
       "range": {
         "startLine": 60,
         "startChar": 17,
@@ -151,6 +246,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b9827f8_fb7c8814",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-30T20:35:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fed1457e_6ddb3240",
+      "range": {
+        "startLine": 161,
+        "startChar": 61,
+        "endLine": 161,
+        "endChar": 90
+      },
+      "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "acca4692_1812caef",
@@ -168,6 +287,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "54334f8a_135c912b",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-30T20:35:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acca4692_1812caef",
+      "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59ca564a_3106176b",
@@ -181,6 +318,30 @@
       "writtenOn": "2025-09-27T05:14:23Z",
       "side": 1,
       "message": "These sizes seem wrong for 1D",
+      "range": {
+        "startLine": 239,
+        "startChar": 52,
+        "endLine": 240,
+        "endChar": 89
+      },
+      "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e39fe896_c48ab114",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-09-30T20:35:29Z",
+      "side": 1,
+      "message": "Since this is checking the render target, which is always 2D, it\u0027s correct. The 1D version of the shader just repeats the texture content to every row of the render target.",
+      "parentUuid": "59ca564a_3106176b",
       "range": {
         "startLine": 239,
         "startChar": 52,
