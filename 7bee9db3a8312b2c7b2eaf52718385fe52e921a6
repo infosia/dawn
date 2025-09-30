@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80becc98_73a95f52",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-30T13:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15c3fc6e_808cfbad",
+      "range": {
+        "startLine": 284,
+        "startChar": 55,
+        "endLine": 286,
+        "endChar": 49
+      },
+      "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f7486c8d_b07644ff",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-09-23T05:42:30Z",
       "side": 1,
       "message": "This should probably be in `Texture.h` after all, I didn\u0027t realize we were going to use it in more places.",
+      "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ce07773_617200a4",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-30T13:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7486c8d_b07644ff",
       "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -76,6 +118,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b49d720_b20f3fc3",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-30T13:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f03ec6e_8c52cee8",
+      "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "09da7537_60e2194b",
@@ -89,6 +149,30 @@
       "writtenOn": "2025-09-23T05:42:30Z",
       "side": 1,
       "message": "... which would mean just deleting this code.",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 9
+      },
+      "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a15bc932_f08c49ec",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-30T13:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09da7537_60e2194b",
       "range": {
         "startLine": 132,
         "startChar": 0,
@@ -122,6 +206,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0d0cf37_27907935",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-30T13:29:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2976ad6b_373f3ae3",
+      "range": {
+        "startLine": 140,
+        "startChar": 12,
+        "endLine": 141,
+        "endChar": 92
+      },
+      "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a14057c7_6514e03b",
@@ -135,6 +243,24 @@
       "writtenOn": "2025-09-15T09:35:10Z",
       "side": 1,
       "message": "[1]",
+      "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0093db90_d1dc295f",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-09-30T13:29:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a14057c7_6514e03b",
       "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
