@@ -33,6 +33,24 @@
       "message": "This is very cool!\n\nBut, in all the CQ runs I saw there was just:\nTesting 1 test cases...\nand then the output.json is just the default:\n{\"failures\": [], \"valid\": true}\n\nWould it be possible to introduce an intentional failure and confirm it is reported properly?\n\nGardener FYI, this will affect CQ.",
       "revId": "76ef1817d9d69108038dec739da8b29f5bd692df",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e56713ac_93510f5a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-09-30T19:44:50Z",
+      "side": 1,
+      "message": "\u003e Would it be possible to introduce an intentional failure and confirm it is reported properly?\n\nI actually did this in PS5 https://ci.chromium.org/ui/p/dawn/builders/try/dawn-cq-linux-x64-rel/1105/infra - the build ended up being unhappy because I didn\u0027t make the task fail, so it complained about having failing test results from a passing shard. However, I believe that\u0027s sufficient to show that failures are being reported properly. You can also see the failed test listed under test results.",
+      "parentUuid": "4ae24ef0_d1f71732",
+      "revId": "76ef1817d9d69108038dec739da8b29f5bd692df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
