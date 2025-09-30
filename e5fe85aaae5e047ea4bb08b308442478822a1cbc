@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28153a27_473d16f0",
+        "filename": "src/tint/lang/core/ir/switch.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-30T14:19:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2a807a8_6d4d20b9",
+      "range": {
+        "startLine": 110,
+        "startChar": 20,
+        "endLine": 110,
+        "endChar": 29
+      },
+      "revId": "e5fe85aaae5e047ea4bb08b308442478822a1cbc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b63c5a5e_003c7c89",
@@ -60,6 +84,30 @@
       "writtenOn": "2025-09-29T18:10:50Z",
       "side": 1,
       "message": "These are the same?",
+      "range": {
+        "startLine": 961,
+        "startChar": 10,
+        "endLine": 961,
+        "endChar": 16
+      },
+      "revId": "e5fe85aaae5e047ea4bb08b308442478822a1cbc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f2c68b4_b54db024",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-30T14:19:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c67a3e5_38f6d28b",
       "range": {
         "startLine": 961,
         "startChar": 10,
