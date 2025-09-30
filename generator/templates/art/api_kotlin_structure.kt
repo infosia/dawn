@@ -29,14 +29,20 @@ package {{ kotlin_package }}
 
 {% for member in kotlin_record_members(structure.members) %}
     import java.util.concurrent.Executor
+    import java.util.concurrent.Executors
     import java.util.concurrent.ForkJoinPool
+    import android.os.Build
     {% break %}
 {% endfor %}
 
 public class {{ structure.name.CamelCase() }}(
     {% for member in kotlin_record_members(structure.members) %}
         {% if member.type.category in ['callback function']%}
-            public var executor: Executor? = ForkJoinPool.commonPool(),
+            public var executor: Executor? = if (Build.VERSION.SDK_INT >= 24) {
+                ForkJoinPool.commonPool()
+            } else {
+                Executors.newCachedThreadPool()
+            },
         {% endif %}
         {# We supply a getter that is excluded from name mangling to allow Inline Value Classed
            enums/bitmasks to be accessible as integers from the JVM adapter layer. #}
