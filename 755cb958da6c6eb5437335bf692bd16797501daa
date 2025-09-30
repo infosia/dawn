@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eccd03a0_62ea2461",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-09-30T10:35:04Z",
+      "side": 1,
+      "message": "Before we do that, could you try instead making minSdkVersion in Google3 match Gerrit? In Google3 try adding:\n\n\n```\nandroid_library(\n    ...\n    manifest_values \u003d {\n        \"minSdkVersion\": \"26\",\n```\n\nto https://source.corp.google.com/piper///depot/google3/third_party/dawn/BUILD;l\u003d1730",
+      "revId": "755cb958da6c6eb5437335bf692bd16797501daa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
