@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6c87a71_10ae25e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-30T15:39:36Z",
+      "side": 1,
+      "message": "PTAL, I think we discussed this before briefly and I don\u0027t think there were concerns.",
+      "revId": "2bf0aa8a643577252631255c966baf692a904355",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
