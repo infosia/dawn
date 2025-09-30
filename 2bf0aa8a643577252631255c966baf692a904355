@@ -80,6 +80,30 @@
       },
       "revId": "2bf0aa8a643577252631255c966baf692a904355",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aab5a961_0fab849f",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-30T19:28:18Z",
+      "side": 1,
+      "message": "There is a risk that a newer Apple GPU might have a different size, and yes things would break if we hardcode the subgroup size to 32 here. CTS would fail if that happened, but maybe we don\u0027t want to rely on that.\n\nThe counter-risk is that if we fallback to `[4, 64]` for GPUs that we haven\u0027t tested ourselves, then we are going to be delivering poor performance (or shaders that just fail to run at all due to authors assuming apple\u003d\u003d32) until we are able to confirm that the value is still 32.",
+      "parentUuid": "92b49bc0_fac35851",
+      "range": {
+        "startLine": 312,
+        "startChar": 8,
+        "endLine": 312,
+        "endChar": 30
+      },
+      "revId": "2bf0aa8a643577252631255c966baf692a904355",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
