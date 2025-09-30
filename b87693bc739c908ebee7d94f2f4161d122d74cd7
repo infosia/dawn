@@ -22,6 +22,30 @@
       },
       "revId": "b87693bc739c908ebee7d94f2f4161d122d74cd7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "047d6540_82968d34",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-30T14:14:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1ab49c0_afeaec32",
+      "range": {
+        "startLine": 464,
+        "startChar": 11,
+        "endLine": 464,
+        "endChar": 32
+      },
+      "revId": "b87693bc739c908ebee7d94f2f4161d122d74cd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
