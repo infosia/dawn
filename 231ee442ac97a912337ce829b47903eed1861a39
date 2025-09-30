@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "42b5946e_225f8d16",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-09-30T06:55:24Z",
+      "side": 1,
+      "message": "I have included yaml in the .vpython3 file for the dawn repository. This is already being done by Chromium (see https://source.chromium.org/chromium/chromium/src/+/main:.vpython3;l\u003d159;bpv\u003d1;bpt\u003d0). Adding the dependency to the .vpython3 file should ensure that building via depot_tools will include the necessary dependencies. (https://chromium.googlesource.com/infra/infra/+/master/doc/users/vpython.md)\n\nFor google3 this dependency is present in third_party and can be imported in the BUILD file.",
+      "parentUuid": "f622b853_4e8217bc",
+      "revId": "231ee442ac97a912337ce829b47903eed1861a39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b86d838a_a769b42a",
         "filename": "generator/templates/art/api_kotlin_constants.kt",
         "patchSetId": 5
