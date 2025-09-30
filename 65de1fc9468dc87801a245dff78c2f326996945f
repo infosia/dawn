@@ -16,6 +16,24 @@
       "message": "What is this \u0027q\u0027 file?",
       "revId": "65de1fc9468dc87801a245dff78c2f326996945f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d2e6af7_cdd6813f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-09-30T20:03:49Z",
+      "side": 1,
+      "message": "removed.  :-)\n(it was my jj status text)",
+      "parentUuid": "f0b19913_8729d468",
+      "revId": "65de1fc9468dc87801a245dff78c2f326996945f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
