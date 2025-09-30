@@ -16,6 +16,29 @@
       "message": "PTAL, I think we discussed this before briefly and I don\u0027t think there were concerns.",
       "revId": "2bf0aa8a643577252631255c966baf692a904355",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41e2680a_c69f4a76",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-09-30T17:20:09Z",
+      "side": 1,
+      "message": "Maybe comment how we know (aka it is not documented)",
+      "range": {
+        "startLine": 312,
+        "startChar": 8,
+        "endLine": 312,
+        "endChar": 30
+      },
+      "revId": "2bf0aa8a643577252631255c966baf692a904355",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
