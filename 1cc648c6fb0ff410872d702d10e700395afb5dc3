@@ -264,6 +264,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db32e138_4bf11960",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1869,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-30T13:32:41Z",
+      "side": 1,
+      "message": "PS27 changed it to an ASSERT and it failed tons of tests. I haven\u0027t investigated.\n\nShaderModuleBase has logic for releasing the tint program to save memory. That\u0027s possibly what\u0027s happening here.\n\nGoing to land as is and look into it later.",
+      "parentUuid": "37b65fa1_5c9a3c57",
+      "revId": "1cc648c6fb0ff410872d702d10e700395afb5dc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c7fe4dba_f355669c",
