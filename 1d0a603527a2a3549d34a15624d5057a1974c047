@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a897978_0db47a62",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-09-30T14:30:17Z",
+      "side": 1,
+      "message": "Ahhhh the indices (especially in GL) are tough to think about",
+      "revId": "1d0a603527a2a3549d34a15624d5057a1974c047",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
