@@ -56,6 +56,30 @@
       },
       "revId": "2bf0aa8a643577252631255c966baf692a904355",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92b49bc0_fac35851",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-09-30T18:17:23Z",
+      "side": 1,
+      "message": "I guess this raises the possibility that we\u0027ll report a wrong subgroup size on some new apple hardware someday. Would exposing 32 in that case cause problems? Should we expose a fixed 32 only for known hardware?",
+      "parentUuid": "41e2680a_c69f4a76",
+      "range": {
+        "startLine": 312,
+        "startChar": 8,
+        "endLine": 312,
+        "endChar": 30
+      },
+      "revId": "2bf0aa8a643577252631255c966baf692a904355",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
