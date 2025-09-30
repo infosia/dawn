@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "76ef1817d9d69108038dec739da8b29f5bd692df",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ae24ef0_d1f71732",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-09-30T18:31:46Z",
+      "side": 1,
+      "message": "This is very cool!\n\nBut, in all the CQ runs I saw there was just:\nTesting 1 test cases...\nand then the output.json is just the default:\n{\"failures\": [], \"valid\": true}\n\nWould it be possible to introduce an intentional failure and confirm it is reported properly?\n\nGardener FYI, this will affect CQ.",
+      "revId": "76ef1817d9d69108038dec739da8b29f5bd692df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
