@@ -87,6 +87,24 @@
       "parentUuid": "b6196326_54c1fc16",
       "revId": "cb0b5299bc3e45818b051b1e2cc2161609ba61d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f48d30a7_b9143bc1",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-09-30T19:36:53Z",
+      "side": 1,
+      "message": "SGTM.\n\nYes, committee doesn\u0027t want to make any changes to WGSL and I agree with that.",
+      "parentUuid": "ec2b1ad7_42f799b5",
+      "revId": "cb0b5299bc3e45818b051b1e2cc2161609ba61d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
