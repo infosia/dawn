@@ -16,6 +16,46 @@
       "message": "ok, ptal again. thanks",
       "revId": "fff72cc59bf6eb74abf9c04ab977e5d280da06a9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7f3dd5d_97d6b1c9",
+        "filename": "src/dawn/native/CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-01T12:21:45Z",
+      "side": 1,
+      "message": "For a follow up, we\u0027ll need to have this in its own library and CMake file.",
+      "revId": "fff72cc59bf6eb74abf9c04ab977e5d280da06a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11a2c49f_aad4687b",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-01T12:21:45Z",
+      "side": 1,
+      "message": "```suggestion\n        DAWN_ASSERT(mObjectIds.contains(Ref\u003cApiObjectBase\u003e(object)););\n```",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 44
+      },
+      "revId": "fff72cc59bf6eb74abf9c04ab977e5d280da06a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -193,6 +193,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6cad991_71c935b6",
+        "filename": "src/dawn/replay/Error.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-01T12:21:45Z",
+      "side": 1,
+      "message": "dawn::wire also has its own version that\u0027s MUCH simpler and could be enough here? https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/wire/WireResult.h",
+      "parentUuid": "015d8d8a_26994ecf",
+      "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a1fc64c_959e44be",
@@ -259,6 +277,24 @@
       "side": 1,
       "message": "I\u0027m not sure what you\u0027re suggesting here. I originally put this stuff in dawn.json but you told me to put it in WebGPUBackend.h so I moved it there. Where should it go?",
       "parentUuid": "ce623d5b_4c428903",
+      "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39ba32cb_034a4890",
+        "filename": "src/dawn/tests/end2end/CaptureAndReplayTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-01T12:21:45Z",
+      "side": 1,
+      "message": "The capture API in WebGPUBackend.h looks great, but for the replayer part will also need a proper API eventually.",
+      "parentUuid": "b275cf88_1c33287b",
       "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
