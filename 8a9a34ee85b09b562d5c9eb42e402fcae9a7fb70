@@ -212,6 +212,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d83cc16b_f62782ef",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-01T01:17:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3252212_a1cdee95",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "839d0993_d3d739ab",
@@ -296,6 +314,24 @@
       "side": 1,
       "message": "The wire does it like: `dawn::wire` has `WireCmd.h/.cpp` and both `dawn::wire::client` and `dawn::wire::server` use it.",
       "parentUuid": "1b145b43_4b704918",
+      "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f9d50a2_5f6b70be",
+        "filename": "src/dawn/replay/Serialization.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-01T01:17:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cca73fb_354301bf",
       "revId": "8a9a34ee85b09b562d5c9eb42e402fcae9a7fb70",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

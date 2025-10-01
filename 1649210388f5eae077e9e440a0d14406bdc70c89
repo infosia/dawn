@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ca42bcc_0d7ee83e",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-01T01:17:44Z",
+      "side": 1,
+      "message": "changed to schema",
+      "parentUuid": "d964f50e_59cf5701",
+      "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08576698_5877b773",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-09-29T12:04:03Z",
       "side": 1,
       "message": "This no longer needs to be a template.",
+      "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9824599_edb9ef8c",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-01T01:17:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08576698_5877b773",
       "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "724ea90b_f6a87310",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-01T01:17:44Z",
+      "side": 1,
+      "message": "Marked as resolved.",
+      "parentUuid": "aa116804_e796f1b0",
+      "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4492206b_ea05cde4",
@@ -86,6 +140,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "983771a5_e73473e8",
+        "filename": "src/dawn/native/webgpu/RecordableObject.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-01T01:17:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4492206b_ea05cde4",
+      "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a8ebaab0_72f96cae",
@@ -99,6 +171,24 @@
       "writtenOn": "2025-09-29T12:04:03Z",
       "side": 1,
       "message": "`dawn::native::Error` stuff is an implementation detail and not designed to be used outside of dawn::native. We can keep it for now for forward progress, but we really need to replace that sooner than later.",
+      "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "015d8d8a_26994ecf",
+        "filename": "src/dawn/replay/Error.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-01T01:17:44Z",
+      "side": 1,
+      "message": "I\u0027m going to mark this as resolved for now and fix it in the next CL if that\u0027s okay. How much should I copy? dawn/native/Error.h is pretty deep (Error.h/cpp 287/133 lines, Result.h 535 lines, ErrorData.h/cpp 111/142 lines.) I don\u0027t need all of it but it looks like I need most of it. Seems like a lot to copy.",
+      "parentUuid": "a8ebaab0_72f96cae",
       "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -122,6 +212,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "19ad2570_df5ccf80",
+        "filename": "src/dawn/replay/Replay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-01T01:17:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a1fc64c_959e44be",
+      "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "ce623d5b_4c428903",
         "filename": "src/dawn/tests/end2end/CaptureAndReplayTests.cpp",
         "patchSetId": 4
@@ -133,6 +241,24 @@
       "writtenOn": "2025-09-29T12:04:03Z",
       "side": 1,
       "message": "Eventually we need a proper API surface for the replay instead of making users reach into the internals directly.",
+      "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b275cf88_1c33287b",
+        "filename": "src/dawn/tests/end2end/CaptureAndReplayTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-01T01:17:44Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you\u0027re suggesting here. I originally put this stuff in dawn.json but you told me to put it in WebGPUBackend.h so I moved it there. Where should it go?",
+      "parentUuid": "ce623d5b_4c428903",
       "revId": "1649210388f5eae077e9e440a0d14406bdc70c89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
