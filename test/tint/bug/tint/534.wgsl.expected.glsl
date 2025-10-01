@@ -1,20 +1,12 @@
 #version 310 es
 
-
-struct Uniforms {
-  uint dstTextureFlipY;
-  uint isFloat16;
-  uint isRGB10A2Unorm;
-  uint channelCount;
-};
-
 layout(binding = 2, std430)
 buffer OutputBuf_1_ssbo {
   uint result[];
 } v;
 layout(binding = 3, std140)
 uniform uniforms_block_1_ubo {
-  Uniforms inner;
+  uvec4 inner[1];
 } v_1;
 layout(binding = 0, std140)
 uniform TintTextureUniformData_1_ubo {
@@ -32,7 +24,7 @@ void main_inner(uvec3 GlobalInvocationID) {
   uvec2 size = uvec2(textureSize(src, 0));
   uvec2 dstTexCoord = GlobalInvocationID.xy;
   uvec2 srcTexCoord = dstTexCoord;
-  if ((v_1.inner.dstTextureFlipY == 1u)) {
+  if ((v_1.inner[0u].x == 1u)) {
     srcTexCoord.y = ((size.y - dstTexCoord.y) - 1u);
   }
   uvec2 v_3 = srcTexCoord;
@@ -55,7 +47,7 @@ void main_inner(uvec3 GlobalInvocationID) {
       if (all(equal(tint_loop_idx, uvec2(0u)))) {
         break;
       }
-      if ((i < v_1.inner.channelCount)) {
+      if ((i < v_1.inner[0u].w)) {
       } else {
         break;
       }
