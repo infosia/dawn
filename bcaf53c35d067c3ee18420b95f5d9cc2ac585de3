@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "336531a6_f33f97f9",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-01T14:13:30Z",
+      "side": 1,
+      "message": "```suggestion\n\t\t// We take the cases here because we\u0027re going to attach the case block to an `if` statement and we don\u0027t want the block destroyed when the selector is destroyed.\n                auto cases \u003d s-\u003eTakeCases();\n```",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 44
+      },
+      "revId": "bcaf53c35d067c3ee18420b95f5d9cc2ac585de3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6d21178_601c1b22",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-01T14:13:30Z",
+      "side": 1,
+      "message": "This isn\u0027t going to work correctly. If you have WGSL like:\n\n```\nfn a() {\n  switch(4) {\n    case 2: {\n      if (true) {\n        break;\n      }\n    }\n    default: {\n      break;\n    }\n  }\n}\n```\n\nThe IR ends up with:\n\n```\n%a \u003d func():void {\n  $B1: {\n    switch 4i [c: (2i, $B2), c: (default, $B3)] {  # switch_1\n      $B2: {  # case\n        if true [t: $B4] {  # if_1\n          $B4: {  # true\n            exit_switch  # switch_1\n          }\n        }\n        exit_switch  # switch_1\n      }\n      $B3: {  # case\n        exit_switch  # switch_1\n      }\n    }\n    ret\n  }\n}\n```\n\nThe `ExitSwitch` is inside the inner `if` statement. So, replacing the `ExitSwitch` with an `ExitIf` for the outer if will fail validation.",
+      "revId": "bcaf53c35d067c3ee18420b95f5d9cc2ac585de3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bde7f120_e8f6d8df",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-01T14:13:30Z",
+      "side": 1,
+      "message": "This is going to generate a series of disconnected `if` statements. Could we instead, generate a series if `if` and `else` statement? Would mean we don\u0027t have to generate the condition for the `default` so we don\u0027t need the `conditions` list.\n\nYou\u0027d basically need to store the block to insert into and each time change the block to the false block.",
+      "revId": "bcaf53c35d067c3ee18420b95f5d9cc2ac585de3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
