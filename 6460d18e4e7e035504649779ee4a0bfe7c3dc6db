@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49536194_f66d3c20",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-01T17:47:25Z",
+      "side": 0,
+      "message": "I actually think we could probably use the other helper that we use for shader modules, i.e. here: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Device.cpp;l\u003d2209;drc\u003d746b6b8836d1f832ade517ba09d5149cbb58ec3f;bpv\u003d1;bpt\u003d1 instead since I suspect we will never really want to allow multiple entry types. \n\nExample:\n```\nif (!unpacked.Empty()) {\n    [[maybe_unused]] wgpu::SType type;\n    DAWN_TRY_ASSIGN(\n      type,\n      (unpacked.ValidateBranches\u003c\n          Branch\u003cTexelBufferBindingEntry\u003e,\n          Branch\u003cExternalTextureBindingEntry\u003e\u003e()));\n}\n```\n\nIt\u0027s a bit unfortunate that we need the not-empty clause atm because I don\u0027t think that helper allows no extensions atm. But this will be useful in the sense that it catches that there\u0027s is at most 1 valid extension in case we add more types in the future.",
+      "range": {
+        "startLine": 592,
+        "startChar": 8,
+        "endLine": 596,
+        "endChar": 44
+      },
+      "revId": "6460d18e4e7e035504649779ee4a0bfe7c3dc6db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
