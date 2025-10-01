@@ -52,6 +52,23 @@
       "parentUuid": "7da5a77d_504a0ded",
       "revId": "755cb958da6c6eb5437335bf692bd16797501daa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "276d001a_937b68db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-10-01T03:48:25Z",
+      "side": 1,
+      "message": "The original code patch that caused the problem was reverted via https://dawn-review.googlesource.com/c/dawn/+/264374",
+      "revId": "755cb958da6c6eb5437335bf692bd16797501daa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
