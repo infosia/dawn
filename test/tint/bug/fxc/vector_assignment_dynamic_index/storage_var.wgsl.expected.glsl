@@ -2,7 +2,7 @@
 
 layout(binding = 0, std140)
 uniform i_block_1_ubo {
-  uint inner;
+  uvec4 inner[1];
 } v;
 layout(binding = 1, std430)
 buffer v1_block_1_ssbo {
@@ -10,5 +10,5 @@ buffer v1_block_1_ssbo {
 } v_1;
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v_1.inner[min(v.inner, 2u)] = 1.0f;
+  v_1.inner[min(v.inner[0u].x, 2u)] = 1.0f;
 }

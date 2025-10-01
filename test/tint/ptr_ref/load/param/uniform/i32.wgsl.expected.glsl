@@ -2,10 +2,10 @@
 
 layout(binding = 0, std140)
 uniform S_block_1_ubo {
-  int inner;
+  uvec4 inner[1];
 } v;
 int func() {
-  return v.inner;
+  return int(v.inner[0u].x);
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
