@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b331cc2f_c460c25f",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-01T11:32:35Z",
+      "side": 1,
+      "message": "We need to convert it in [1] to have it sorted in the binding list but fill its data only at [2] after the sort. I\u0027ll remove ::From as it is very misleading though. Let me know if you need follow-up fixes for this.",
+      "parentUuid": "0b777491_9b85f45f",
+      "range": {
+        "startLine": 519,
+        "startChar": 8,
+        "endLine": 519,
+        "endChar": 100
+      },
+      "revId": "2571cfeb9d8ed45d4d08217d7f172b22b8503888",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "22180d91_61a2bcde",
@@ -47,6 +71,64 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c10ae101_7d3e9a26",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-01T11:32:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22180d91_61a2bcde",
+      "range": {
+        "startLine": 567,
+        "startChar": 44,
+        "endLine": 567,
+        "endChar": 57
+      },
+      "revId": "2571cfeb9d8ed45d4d08217d7f172b22b8503888",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c12217dd_d12388e6",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-01T11:32:35Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "2571cfeb9d8ed45d4d08217d7f172b22b8503888",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee293709_78a6f20f",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-01T11:32:35Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "2571cfeb9d8ed45d4d08217d7f172b22b8503888",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "073341a7_70bbd25d",
@@ -60,6 +142,30 @@
       "writtenOn": "2025-09-30T22:45:49Z",
       "side": 1,
       "message": "nit. Why do we need the prefix in the enum value? Since it\u0027s a C++ enum type, couldn\u0027t we just do `BindingTypeOrder::DynamicBuffer` or something like that? (In which case the `BindingTypeOrder` part would be redundant?) I realize that the equivalent enum had this redundancy too, so maybe it\u0027s an enum to int/index thing that I\u0027m missing?",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 21
+      },
+      "revId": "2571cfeb9d8ed45d4d08217d7f172b22b8503888",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5cbbb96c_0c3c23e0",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-01T11:32:35Z",
+      "side": 1,
+      "message": "We need the prefix because it is a C-style enum that directly adds all of its enumerants to the enclosing namespace. Basically this is to avoid `SampledTexture` referring to the enum value instead of something else. The reason why it is a C enum instead of a C++ enum is because we want to do arithmetic on it [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BindGroupLayoutInternal.cpp;drc\u003dc07546451dd0b43c8d871dd9d3a69092dd8198f3;l\u003d1072) and [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BindGroupLayoutInternal.cpp;drc\u003dc07546451dd0b43c8d871dd9d3a69092dd8198f3;l\u003d701) in the enumerate. (I actually tried going to enum class before hitting this issue again)\n\nThe reason why there wasn\u0027t prefixed previously was because the enum was in the BindGroupLayoutInternalBase class and kinda namespaced thanks to that.",
+      "parentUuid": "073341a7_70bbd25d",
       "range": {
         "startLine": 76,
         "startChar": 4,
@@ -93,6 +199,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "577667d8_c7385a20",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-01T11:32:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d26ba1bd_65aedf8d",
+      "range": {
+        "startLine": 99,
+        "startChar": 65,
+        "endLine": 99,
+        "endChar": 73
+      },
+      "revId": "2571cfeb9d8ed45d4d08217d7f172b22b8503888",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aedb73f1_60a35312",
@@ -116,6 +246,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c768ece_527bbf25",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-01T11:32:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aedb73f1_60a35312",
+      "range": {
+        "startLine": 102,
+        "startChar": 6,
+        "endLine": 102,
+        "endChar": 11
+      },
+      "revId": "2571cfeb9d8ed45d4d08217d7f172b22b8503888",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "24d54fb8_982a1952",
@@ -129,6 +283,30 @@
       "writtenOn": "2025-09-30T22:45:49Z",
       "side": 1,
       "message": "Could maybe do in a follow up, but maybe we could use `absl::btree_map` instead? It\u0027s *supposed* to be more efficient so could be worth it for us?",
+      "range": {
+        "startLine": 135,
+        "startChar": 23,
+        "endLine": 135,
+        "endChar": 63
+      },
+      "revId": "2571cfeb9d8ed45d4d08217d7f172b22b8503888",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "981b6876_0b033373",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-01T11:32:35Z",
+      "side": 1,
+      "message": "Most values would be small (like \u003c 64) so I think we can even have a linear array + a map. Added a TODO",
+      "parentUuid": "24d54fb8_982a1952",
       "range": {
         "startLine": 135,
         "startChar": 23,
@@ -175,6 +353,30 @@
       "writtenOn": "2025-09-30T22:45:49Z",
       "side": 1,
       "message": "nit. why have newlines at all here? (Or if it\u0027s like public vs private types, maybe we can have a leading comment?)",
+      "range": {
+        "startLine": 209,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 91
+      },
+      "revId": "2571cfeb9d8ed45d4d08217d7f172b22b8503888",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8316bd5_6b12a74d",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-01T11:32:35Z",
+      "side": 1,
+      "message": "Done, that was a leftover that shouldn\u0027t have been in the CL.",
+      "parentUuid": "b95f8851_ae5dc6b2",
       "range": {
         "startLine": 209,
         "startChar": 8,
