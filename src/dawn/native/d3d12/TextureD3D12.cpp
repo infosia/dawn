@@ -56,6 +56,8 @@
 #include "dawn/native/d3d12/TextureCopySplitter.h"
 #include "dawn/native/d3d12/UtilsD3D12.h"
 
+#include "renderdoc_app.h"
+
 namespace dawn::native::d3d12 {
 
 namespace {
@@ -428,8 +430,27 @@ void Texture::NotifySwapChainPresentToPIX() {
     if (mSwapChainTexture) {
         ID3D12SharingContract* d3dSharingContract =
             ToBackend(GetDevice()->GetQueue())->GetSharingContract();
+
         if (d3dSharingContract != nullptr) {
             d3dSharingContract->Present(mResourceAllocation.GetD3D12Resource(), 0, 0);
+        }
+
+        static RENDERDOC_API_1_1_2* rdoc_api = nullptr;
+        bool firstTime = rdoc_api == nullptr;
+        if (rdoc_api == nullptr) {
+            // At init, on windows
+            if (HMODULE mod = GetModuleHandleA("renderdoc.dll")) {
+                pRENDERDOC_GetAPI RENDERDOC_GetAPI =
+                    (pRENDERDOC_GetAPI)GetProcAddress(mod, "RENDERDOC_GetAPI");
+                int ret = RENDERDOC_GetAPI(eRENDERDOC_API_Version_1_1_2, (void**)&rdoc_api);
+                assert(ret == 1);
+            }
+        }
+        if (!firstTime && rdoc_api) {
+            rdoc_api->EndFrameCapture(ToBackend(GetDevice())->GetD3D12Device(), NULL);
+        }
+        if (rdoc_api) {
+            rdoc_api->StartFrameCapture(ToBackend(GetDevice())->GetD3D12Device(), NULL);
         }
     }
 }
