@@ -1,10 +1,8 @@
 #version 310 es
 
 layout(binding = 0, std140)
-uniform u_block_std140_1_ubo {
-  vec3 inner_col0;
-  uint tint_pad_0;
-  vec3 inner_col1;
+uniform u_block_1_ubo {
+  uvec4 inner[2];
 } v_1;
 void a(mat2x3 m) {
 }
@@ -12,11 +10,14 @@ void b(vec3 v) {
 }
 void c(float f_1) {
 }
+mat2x3 v_2(uint start_byte_offset) {
+  return mat2x3(uintBitsToFloat(v_1.inner[(start_byte_offset / 16u)].xyz), uintBitsToFloat(v_1.inner[((16u + start_byte_offset) / 16u)].xyz));
+}
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  a(mat2x3(v_1.inner_col0, v_1.inner_col1));
-  b(mat2x3(v_1.inner_col0, v_1.inner_col1)[1u]);
-  b(mat2x3(v_1.inner_col0, v_1.inner_col1)[1u].zxy);
-  c(mat2x3(v_1.inner_col0, v_1.inner_col1)[1u].x);
-  c(mat2x3(v_1.inner_col0, v_1.inner_col1)[1u].zxy.x);
+  a(v_2(0u));
+  b(uintBitsToFloat(v_1.inner[1u].xyz));
+  b(uintBitsToFloat(v_1.inner[1u].xyz).zxy);
+  c(uintBitsToFloat(v_1.inner[1u].x));
+  c(uintBitsToFloat(v_1.inner[1u].xyz).zxy.x);
 }
