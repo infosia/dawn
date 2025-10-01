@@ -16,6 +16,24 @@
       "message": "Can this be removed now?",
       "revId": "603a5155599af6b335e4e22454cb973e229ca24c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b17acdb6_ff00def2",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2137,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-01T20:13:06Z",
+      "side": 0,
+      "message": "I think not, because this also catches pointer-to-pointer.",
+      "parentUuid": "972bb4aa_ba8adf04",
+      "revId": "603a5155599af6b335e4e22454cb973e229ca24c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
