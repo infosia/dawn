@@ -176,6 +176,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bff20c7_165ba5d0",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-01T01:08:53Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "42a522fe_f6e60794",
+      "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b71b426f_68540dc5",
@@ -272,6 +290,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a7f2ad1b_ea366c55",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-01T01:08:53Z",
+      "side": 1,
+      "message": "Texture still needs to be a cube (or at least depth\u003e1) for this to actually test other z values. If I\u0027m reading correctly it has depth\u003d1 right now",
+      "parentUuid": "7b9827f8_fb7c8814",
+      "range": {
+        "startLine": 161,
+        "startChar": 61,
+        "endLine": 161,
+        "endChar": 90
+      },
+      "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "acca4692_1812caef",
         "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
         "patchSetId": 3
@@ -342,6 +384,30 @@
       "side": 1,
       "message": "Since this is checking the render target, which is always 2D, it\u0027s correct. The 1D version of the shader just repeats the texture content to every row of the render target.",
       "parentUuid": "59ca564a_3106176b",
+      "range": {
+        "startLine": 239,
+        "startChar": 52,
+        "endLine": 240,
+        "endChar": 89
+      },
+      "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f67410a_caada166",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-01T01:08:53Z",
+      "side": 1,
+      "message": "Ohh I see. Missed that. Can you add a brief comment on how this test works for different dimensions just as a high level intro\n```\n- 1D duplicates the texture on every row of the output.\n- 2D copies the texture verbatim.\n- 3D takes a diagonal slice to make sure it checks some texels in every slice.\n```",
+      "parentUuid": "e39fe896_c48ab114",
       "range": {
         "startLine": 239,
         "startChar": 52,
