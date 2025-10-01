@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "805a98e6_9690db9f",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-01T14:21:51Z",
+      "side": 1,
+      "message": "Check to see if we can simply clear out the references to the blocks for each of the cases ... (with null) maybe simpler",
+      "parentUuid": "336531a6_f33f97f9",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 44
+      },
+      "revId": "bcaf53c35d067c3ee18420b95f5d9cc2ac585de3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d6d21178_601c1b22",
         "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
         "patchSetId": 15
