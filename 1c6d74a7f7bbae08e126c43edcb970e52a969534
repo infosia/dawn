@@ -16,6 +16,29 @@
       "message": "PTAL\n\nPS4 has a trybot run that confirms that failures are properly surfaced.",
       "revId": "1c6d74a7f7bbae08e126c43edcb970e52a969534",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24b38991_0ab7ca1f",
+        "filename": "scripts/run_tint_fuzzer_corpus_tests.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-01T17:05:42Z",
+      "side": 1,
+      "message": "The other way around?",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 0
+      },
+      "revId": "1c6d74a7f7bbae08e126c43edcb970e52a969534",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
