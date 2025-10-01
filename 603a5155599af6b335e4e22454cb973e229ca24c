@@ -34,6 +34,24 @@
       "parentUuid": "972bb4aa_ba8adf04",
       "revId": "603a5155599af6b335e4e22454cb973e229ca24c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48fd798f_913169ca",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2137,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-10-01T20:37:27Z",
+      "side": 0,
+      "message": "correct, it is still needed for that case.",
+      "parentUuid": "b17acdb6_ff00def2",
+      "revId": "603a5155599af6b335e4e22454cb973e229ca24c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
