@@ -46,6 +46,30 @@
       },
       "revId": "baf2f60695ca150d1f74334c2343024b5df7f795",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c21136b_23679fbd",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ImageTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-01T04:38:06Z",
+      "side": 1,
+      "message": "The build is failing in g3 because this requires corresponding updates to the BUILD files that are specific to the g3.\n\nI already have a CL with the necessary fixes prepared. My plan is to wait for the next Copybara CL that imports these changes, and then amend it with my g3-specific BUILD modifications. \n\nDoes that sound like the correct workflow to you?",
+      "parentUuid": "86a30c5f_8312c61b",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "baf2f60695ca150d1f74334c2343024b5df7f795",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
