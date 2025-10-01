@@ -376,6 +376,12 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                             DAWN_UNREACHABLE();
                     }
 
+                    // Round uniform buffer binding sizes up to a multiple of 16 bytes since Tint
+                    // will polyfill them as array<vec4u, ...>.
+                    if (binding.buffer->GetUsage() & wgpu::BufferUsage::Uniform) {
+                        binding.size = Align(binding.size, 16u);
+                    }
+
                     DAWN_GL_TRY(
                         gl, BindBufferRange(target, GLuint(index), buffer, offset, binding.size));
                     return {};

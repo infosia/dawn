@@ -1,23 +1,13 @@
 #version 310 es
 
-
-struct Params {
-  uint filterDim;
-  uint blockDim;
-};
-
-struct Flip {
-  uint value;
-};
-
 layout(binding = 1, std140)
 uniform params_block_1_ubo {
-  Params inner;
+  uvec4 inner[1];
 } v;
 layout(binding = 3, rgba8) uniform highp writeonly image2D outputTex;
 layout(binding = 4, std140)
 uniform flip_block_1_ubo {
-  Flip inner;
+  uvec4 inner[1];
 } v_1;
 shared vec3 tile[4][256];
 layout(binding = 0, std140)
@@ -45,10 +35,10 @@ void main_inner(uvec3 WorkGroupID, uvec3 LocalInvocationID, uint tint_local_inde
     }
   }
   barrier();
-  uint filterOffset = tint_div_u32((v.inner.filterDim - 1u), 2u);
+  uint filterOffset = tint_div_u32((v.inner[0u].x - 1u), 2u);
   uint v_5 = (v_2.metadata[(0u / 4u)][(0u % 4u)] - 1u);
   uvec2 dims = uvec2(textureSize(inputTex_samp, int(min(uint(0), v_5))));
-  uvec2 v_6 = ((WorkGroupID.xy * uvec2(v.inner.blockDim, 4u)) + (LocalInvocationID.xy * uvec2(4u, 1u)));
+  uvec2 v_6 = ((WorkGroupID.xy * uvec2(v.inner[0u].y, 4u)) + (LocalInvocationID.xy * uvec2(4u, 1u)));
   uvec2 baseIndex = (v_6 - uvec2(filterOffset, 0u));
   {
     uint r = 0u;
@@ -65,7 +55,7 @@ void main_inner(uvec3 WorkGroupID, uvec3 LocalInvocationID, uint tint_local_inde
             break;
           }
           uvec2 loadIndex = (baseIndex + uvec2(c, r));
-          if ((v_1.inner.value != 0u)) {
+          if ((v_1.inner[0u].x != 0u)) {
             loadIndex = loadIndex.yx;
           }
           uint v_7 = min(r, 3u);
@@ -100,7 +90,7 @@ void main_inner(uvec3 WorkGroupID, uvec3 LocalInvocationID, uint tint_local_inde
             break;
           }
           uvec2 writeIndex = (baseIndex + uvec2(c, r));
-          if ((v_1.inner.value != 0u)) {
+          if ((v_1.inner[0u].x != 0u)) {
             writeIndex = writeIndex.yx;
           }
           uint center = ((4u * LocalInvocationID.x) + c);
@@ -125,13 +115,13 @@ void main_inner(uvec3 WorkGroupID, uvec3 LocalInvocationID, uint tint_local_inde
                 if (all(equal(tint_loop_idx, uvec2(0u)))) {
                   break;
                 }
-                if ((f < v.inner.filterDim)) {
+                if ((f < v.inner[0u].x)) {
                 } else {
                   break;
                 }
                 uint i = ((center + f) - filterOffset);
                 vec3 v_12 = acc;
-                float v_13 = (1.0f / float(v.inner.filterDim));
+                float v_13 = (1.0f / float(v.inner[0u].x));
                 uint v_14 = min(r, 3u);
                 uint v_15 = min(i, 255u);
                 acc = (v_12 + (v_13 * tile[v_14][v_15]));
