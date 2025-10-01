@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32b61367_7edb29b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-01T01:23:42Z",
+      "side": 1,
+      "message": "PTAL\n\nPS4 has a trybot run that confirms that failures are properly surfaced.",
+      "revId": "1c6d74a7f7bbae08e126c43edcb970e52a969534",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
