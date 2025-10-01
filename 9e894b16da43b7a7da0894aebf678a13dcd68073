@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1cba9e0_26d37530",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-10-01T03:50:47Z",
+      "side": 1,
+      "message": "The problem with the original patch is documented in b/447652657",
+      "revId": "9e894b16da43b7a7da0894aebf678a13dcd68073",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
