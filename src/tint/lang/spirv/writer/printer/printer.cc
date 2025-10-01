@@ -1356,7 +1356,8 @@ class Printer {
                 break;
             }
             default:
-                TINT_UNIMPLEMENTED() << binary->Op();
+                TINT_UNIMPLEMENTED() << "\"" << binary->Op()
+                                     << "\"  (enum value=" << static_cast<int>(binary->Op()) << ")";
         }
 
         // Emit the instruction.
