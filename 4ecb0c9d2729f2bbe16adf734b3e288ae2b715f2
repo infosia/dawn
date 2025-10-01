@@ -336,6 +336,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e1687cd_7429b966",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-10-01T20:07:56Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "03d09f30_ede17478",
+      "range": {
+        "startLine": 161,
+        "startChar": 61,
+        "endLine": 161,
+        "endChar": 90
+      },
+      "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "acca4692_1812caef",
@@ -432,6 +456,30 @@
       "side": 1,
       "message": "Ohh I see. Missed that. Can you add a brief comment on how this test works for different dimensions just as a high level intro\n```\n- 1D duplicates the texture on every row of the output.\n- 2D copies the texture verbatim.\n- 3D takes a diagonal slice to make sure it checks some texels in every slice.\n```",
       "parentUuid": "e39fe896_c48ab114",
+      "range": {
+        "startLine": 239,
+        "startChar": 52,
+        "endLine": 240,
+        "endChar": 89
+      },
+      "revId": "4ecb0c9d2729f2bbe16adf734b3e288ae2b715f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35cfdeff_fb3a19b8",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-10-01T20:07:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f67410a_caada166",
       "range": {
         "startLine": 239,
         "startChar": 52,
