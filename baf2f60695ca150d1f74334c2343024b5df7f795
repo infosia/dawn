@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c51c647d_ad533ddf",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ImageTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-10-01T03:55:46Z",
+      "side": 1,
+      "message": "Where does StorageFactory come from?\nThis seems to break the build in g3.\nSee https://fusion2.corp.google.com/invocations/569797fb-0dcd-4d21-b2dd-ce27d5ed7e63/targets/%2F%2Fthird_party%2Fdawn%2Ftools%2Fandroid%2Fwebgpu%2Fsrc%2FandroidTest%2Fjava%2Fandroidx%2Fwebgpu:ImageTest_lib;config\u003d2aac3090ad7c8638766e84138110d3d186e8a362d711cd4ccdc79d8b13142b2e/log",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "baf2f60695ca150d1f74334c2343024b5df7f795",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
