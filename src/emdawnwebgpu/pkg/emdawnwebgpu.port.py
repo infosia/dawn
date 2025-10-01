@@ -35,6 +35,8 @@ import sys
 import zlib
 from typing import Dict, Optional
 
+from tools import diagnostics
+
 if __name__ == '__main__':
     print('Please see README.md for details on how to use this port.')
     sys.exit(1)
@@ -181,6 +183,14 @@ def linker_setup(ports, settings):
     if settings.USE_WEBGPU:
         raise Exception('emdawnwebgpu may not be used with -sUSE_WEBGPU=1')
 
+    # webgpu.cpp is C++, so even if linking a C program, make sure we link C++.
+    if not settings.LINK_AS_CXX:
+        diagnostics.warning(
+            'emcc',
+            'emdawnwebgpu is disabling LINK_AS_CXX (-sNO_DEFAULT_TO_CXX) because it uses C++ internally'
+        )
+        settings.LINK_AS_CXX = True
+
     # These will be processed in order; library_webgpu.js must come after
     # the generated files, because it depends on them.
     settings.JS_LIBRARIES += [
@@ -189,6 +199,7 @@ def linker_setup(ports, settings):
         os.path.join(_src_dir, 'library_webgpu_generated_sig_info.js'),
         os.path.join(_src_dir, 'library_webgpu.js'),
     ]
+
     if 'CLOSURE_ARGS' in settings.keys():
         # This works in Emscripten >4.0.7. In <=4.0.7, the user has to pass it.
         settings.CLOSURE_ARGS += [
