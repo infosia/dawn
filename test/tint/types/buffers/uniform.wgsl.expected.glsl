@@ -4,8 +4,8 @@ precision highp int;
 
 layout(binding = 0, std140)
 uniform f_weights_block_ubo {
-  vec2 inner;
+  uvec4 inner[1];
 } v;
 void main() {
-  float a = v.inner.x;
+  float a = uintBitsToFloat(v.inner[0u].x);
 }

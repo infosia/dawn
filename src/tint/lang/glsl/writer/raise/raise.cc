@@ -36,6 +36,7 @@
 #include "src/tint/lang/core/ir/transform/block_decorated_structs.h"
 #include "src/tint/lang/core/ir/transform/builtin_polyfill.h"
 #include "src/tint/lang/core/ir/transform/conversion_polyfill.h"
+#include "src/tint/lang/core/ir/transform/decompose_uniform_access.h"
 #include "src/tint/lang/core/ir/transform/demote_to_helper.h"
 #include "src/tint/lang/core/ir/transform/direct_variable_access.h"
 #include "src/tint/lang/core/ir/transform/multiplanar_external_texture.h"
@@ -47,7 +48,6 @@
 #include "src/tint/lang/core/ir/transform/rename_conflicts.h"
 #include "src/tint/lang/core/ir/transform/robustness.h"
 #include "src/tint/lang/core/ir/transform/signed_integer_polyfill.h"
-#include "src/tint/lang/core/ir/transform/std140.h"
 #include "src/tint/lang/core/ir/transform/value_to_let.h"
 #include "src/tint/lang/core/ir/transform/vectorize_scalar_matrix_constructors.h"
 #include "src/tint/lang/core/ir/transform/zero_init_workgroup_memory.h"
@@ -158,8 +158,6 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
 
     RUN_TRANSFORM(core::ir::transform::MultiplanarExternalTexture, module, multiplanar_map);
 
-    RUN_TRANSFORM(core::ir::transform::BlockDecoratedStructs, module);
-
     // `PreservePadding` must run before `DirectVariableAccess`.
     RUN_TRANSFORM(core::ir::transform::PreservePadding, module);
 
@@ -171,6 +169,12 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
         dva_config.transform_handle = true;
         RUN_TRANSFORM(core::ir::transform::DirectVariableAccess, module, dva_config);
     }
+
+    // DecomposeUniformAccess must come before BlockDecoratedStructs, which will wrap the uniform
+    // variable in a structure. It must come after DirectVariableAccess which removes uniform
+    // buffers passed as function parameters.
+    RUN_TRANSFORM(core::ir::transform::DecomposeUniformAccess, module);
+    RUN_TRANSFORM(core::ir::transform::BlockDecoratedStructs, module);
 
     // Note, this must come after remapping as it uses post-remapping indices for its options.
     // Note, this must come after DirectVariableAccess as it doesn't handle tracing through function
@@ -217,8 +221,6 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
         raise::OffsetFirstIndex, module,
         raise::OffsetFirstIndexConfig{immediate_data_layout.Get(), options.first_vertex_offset,
                                       options.first_instance_offset});
-
-    RUN_TRANSFORM(core::ir::transform::Std140, module);
 
     // These transforms need to be run last as various transforms introduce terminator arguments,
     // naming conflicts, and expressions that need to be explicitly not inlined.
