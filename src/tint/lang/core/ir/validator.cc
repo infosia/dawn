@@ -2026,6 +2026,26 @@ void Validator::CheckType(const core::type::Type* root,
                         return false;
                     }
 
+                    if (!capabilities_.Contains(Capability::kAllowPointersAndHandlesInStructures)) {
+                        if (member->Type()->Is<core::type::Pointer>()) {
+                            diag() << "struct member " << member->Index()
+                                   << " cannot be a pointer type";
+                            return false;
+                        }
+
+                        if (member->Type()->UnwrapPtrOrRef()->Is<core::type::Texture>()) {
+                            diag() << "struct member " << member->Index()
+                                   << " cannot be a texture type";
+                            return false;
+                        }
+
+                        if (member->Type()->UnwrapPtrOrRef()->Is<core::type::Sampler>()) {
+                            diag() << "struct member " << member->Index()
+                                   << " cannot be a sampler type";
+                            return false;
+                        }
+                    }
+
                     if (auto* arr = member->Type()->As<core::type::Array>();
                         arr && arr->Count()->Is<core::type::RuntimeArrayCount>()) {
                         if (member != str->Members().Back()) {
