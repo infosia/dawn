@@ -707,8 +707,13 @@ void DeviceBase::APIDestroy() {
 }
 
 void DeviceBase::HandleDeviceLost(wgpu::DeviceLostReason reason, std::string_view message) {
-    if (mLostEvent != nullptr) {
-        mLostEvent->SetLost(GetInstance()->GetEventManager(), reason, message);
+    if (mLostEvent) {
+        mLostEvent->SetLost(reason, message);
+        mLostFuture = mLostEvent->GetFuture();
+        DeferIfLocked(
+            [eventManager = GetInstance()->GetEventManager(), lostEvent = std::move(mLostEvent)]() {
+                eventManager->SetFutureReady(lostEvent.Get());
+            });
     }
 }
 
