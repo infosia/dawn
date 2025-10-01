@@ -1,12 +1,5 @@
 #version 310 es
 
-
-struct Uniforms {
-  uvec2 aShape;
-  uvec2 bShape;
-  uvec2 outShape;
-};
-
 layout(binding = 0, std430)
 buffer Matrix_1_ssbo {
   uint numbers[];
@@ -21,12 +14,12 @@ buffer Matrix_3_ssbo {
 } resultMatrix;
 layout(binding = 3, std140)
 uniform uniforms_block_1_ubo {
-  Uniforms inner;
+  uvec4 inner[2];
 } v;
 void main_inner(uvec3 global_id) {
   uvec2 resultCell = uvec2(global_id.y, global_id.x);
-  uint dimInner = v.inner.aShape.y;
-  uint dimOutter = v.inner.outShape.y;
+  uint dimInner = v.inner[0u].y;
+  uint dimOutter = v.inner[1u].y;
   uint result = 0u;
   {
     uint i = 0u;

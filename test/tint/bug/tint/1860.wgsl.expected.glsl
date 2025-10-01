@@ -1,16 +1,11 @@
 #version 310 es
 
-
-struct DeclaredAfterUsage {
-  float f;
-};
-
 layout(binding = 0, std140)
 uniform v_declared_after_usage_block_ubo {
-  DeclaredAfterUsage inner;
+  uvec4 inner[1];
 } v;
 vec4 main_inner() {
-  return vec4(v.inner.f);
+  return vec4(uintBitsToFloat(v.inner[0u].x));
 }
 void main() {
   vec4 v_1 = main_inner();
