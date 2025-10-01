@@ -22,6 +22,30 @@
       },
       "revId": "baf2f60695ca150d1f74334c2343024b5df7f795",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86a30c5f_8312c61b",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ImageTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-10-01T04:01:17Z",
+      "side": 1,
+      "message": "Hm. It\u0027s in the same package, so I guess it\u0027s okay.  \nBut then I\u0027m confused about the build break in g3 cl/813557028",
+      "parentUuid": "c51c647d_ad533ddf",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "baf2f60695ca150d1f74334c2343024b5df7f795",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
