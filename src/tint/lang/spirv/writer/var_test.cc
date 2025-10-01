@@ -406,14 +406,18 @@ TEST_F(SpirvWriterTest, UniformVar) {
 
     ASSERT_TRUE(Generate()) << Error() << output_;
     EXPECT_INST(R"(
-               OpDecorate %v_block Block
+               OpDecorate %_arr_v4uint_uint_1 ArrayStride 16
+               OpMemberDecorate %v_block_tint_explicit_layout 0 Offset 0
+               OpDecorate %v_block_tint_explicit_layout Block
                OpDecorate %1 DescriptorSet 0
                OpDecorate %1 Binding 0
+               OpDecorate %1 NonWritable
 )");
     EXPECT_INST(R"(
-    %v_block = OpTypeStruct %int                    ; Block
-%_ptr_Uniform_v_block = OpTypePointer Uniform %v_block
-          %1 = OpVariable %_ptr_Uniform_v_block Uniform     ; DescriptorSet 0, Binding 0, NonWritable
+%_arr_v4uint_uint_1 = OpTypeArray %v4uint %uint_1   ; ArrayStride 16
+%v_block_tint_explicit_layout = OpTypeStruct %_arr_v4uint_uint_1    ; Block
+%_ptr_Uniform_v_block_tint_explicit_layout = OpTypePointer Uniform %v_block_tint_explicit_layout
+          %1 = OpVariable %_ptr_Uniform_v_block_tint_explicit_layout Uniform    ; DescriptorSet 0, Binding 0, NonWritable
 )");
 }
 
@@ -431,8 +435,10 @@ TEST_F(SpirvWriterTest, UniformVar_Load) {
 
     ASSERT_TRUE(Generate()) << Error() << output_;
     EXPECT_INST(R"(
-          %9 = OpAccessChain %_ptr_Uniform_int %1 %uint_0
-       %load = OpLoad %int %9 None
+         %12 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %uint_0
+         %15 = OpAccessChain %_ptr_Uniform_uint %12 %uint_0
+         %17 = OpLoad %uint %15 None
+         %19 = OpBitcast %int %17
 )");
 }
 
