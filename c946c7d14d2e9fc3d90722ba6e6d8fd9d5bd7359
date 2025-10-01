@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1066b633_52e8ffd5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-01T03:10:37Z",
+      "side": 1,
+      "message": "I\u0027m actually somewhat partial to this option. Feels better than overriding what the user asked for.",
+      "revId": "c946c7d14d2e9fc3d90722ba6e6d8fd9d5bd7359",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2194e4ff_85ba34a8",
+        "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-01T03:10:37Z",
+      "side": 1,
+      "message": "Is this an appropriate warning category?",
+      "range": {
+        "startLine": 189,
+        "startChar": 13,
+        "endLine": 189,
+        "endChar": 17
+      },
+      "revId": "c946c7d14d2e9fc3d90722ba6e6d8fd9d5bd7359",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
