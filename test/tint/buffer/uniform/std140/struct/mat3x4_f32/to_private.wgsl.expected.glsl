@@ -3,37 +3,46 @@
 
 struct S {
   int before;
-  uint tint_pad_0;
-  uint tint_pad_1;
-  uint tint_pad_2;
   mat3x4 m;
   int after;
-  uint tint_pad_3;
-  uint tint_pad_4;
-  uint tint_pad_5;
-  uint tint_pad_6;
-  uint tint_pad_7;
-  uint tint_pad_8;
-  uint tint_pad_9;
-  uint tint_pad_10;
-  uint tint_pad_11;
-  uint tint_pad_12;
-  uint tint_pad_13;
-  uint tint_pad_14;
-  uint tint_pad_15;
-  uint tint_pad_16;
-  uint tint_pad_17;
 };
 
 layout(binding = 0, std140)
 uniform u_block_1_ubo {
-  S inner[4];
+  uvec4 inner[32];
 } v;
-S p[4] = S[4](S(0, 0u, 0u, 0u, mat3x4(vec4(0.0f), vec4(0.0f), vec4(0.0f)), 0, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u), S(0, 0u, 0u, 0u, mat3x4(vec4(0.0f), vec4(0.0f), vec4(0.0f)), 0, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u), S(0, 0u, 0u, 0u, mat3x4(vec4(0.0f), vec4(0.0f), vec4(0.0f)), 0, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u), S(0, 0u, 0u, 0u, mat3x4(vec4(0.0f), vec4(0.0f), vec4(0.0f)), 0, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u));
+S p[4] = S[4](S(0, mat3x4(vec4(0.0f), vec4(0.0f), vec4(0.0f)), 0), S(0, mat3x4(vec4(0.0f), vec4(0.0f), vec4(0.0f)), 0), S(0, mat3x4(vec4(0.0f), vec4(0.0f), vec4(0.0f)), 0), S(0, mat3x4(vec4(0.0f), vec4(0.0f), vec4(0.0f)), 0));
+mat3x4 v_1(uint start_byte_offset) {
+  return mat3x4(uintBitsToFloat(v.inner[(start_byte_offset / 16u)]), uintBitsToFloat(v.inner[((16u + start_byte_offset) / 16u)]), uintBitsToFloat(v.inner[((32u + start_byte_offset) / 16u)]));
+}
+S v_2(uint start_byte_offset) {
+  int v_3 = int(v.inner[(start_byte_offset / 16u)][((start_byte_offset % 16u) / 4u)]);
+  mat3x4 v_4 = v_1((16u + start_byte_offset));
+  return S(v_3, v_4, int(v.inner[((64u + start_byte_offset) / 16u)][(((64u + start_byte_offset) % 16u) / 4u)]));
+}
+S[4] v_5(uint start_byte_offset) {
+  S a[4] = S[4](S(0, mat3x4(vec4(0.0f), vec4(0.0f), vec4(0.0f)), 0), S(0, mat3x4(vec4(0.0f), vec4(0.0f), vec4(0.0f)), 0), S(0, mat3x4(vec4(0.0f), vec4(0.0f), vec4(0.0f)), 0), S(0, mat3x4(vec4(0.0f), vec4(0.0f), vec4(0.0f)), 0));
+  {
+    uint v_6 = 0u;
+    v_6 = 0u;
+    while(true) {
+      uint v_7 = v_6;
+      if ((v_7 >= 4u)) {
+        break;
+      }
+      a[v_7] = v_2((start_byte_offset + (v_7 * 128u)));
+      {
+        v_6 = (v_7 + 1u);
+      }
+      continue;
+    }
+  }
+  return a;
+}
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  p = v.inner;
-  p[1u] = v.inner[2u];
-  p[3u].m = v.inner[2u].m;
-  p[1u].m[0u] = v.inner[0u].m[1u].ywxz;
+  p = v_5(0u);
+  p[1u] = v_2(256u);
+  p[3u].m = v_1(272u);
+  p[1u].m[0u] = uintBitsToFloat(v.inner[2u]).ywxz;
 }
