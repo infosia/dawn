@@ -170,6 +170,9 @@ struct Options {
     /// Set to `true` to run ArrayLengthFromTransform workaround
     bool use_array_length_from_uniform = false;
 
+    /// Set to `true` to decompose uniform buffers into array<vec4u, ...>.
+    bool decompose_uniform_buffers = true;
+
     /// The GLSL version to emit
     Version version;
 
