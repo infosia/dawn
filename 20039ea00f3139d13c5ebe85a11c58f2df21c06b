@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "994542d3_655d1036",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-01T18:38:52Z",
+      "side": 1,
+      "message": "So I bisected Dawn-\u003eg3 roll failures and it seems like this change, specifically the changes in `DeviceVk.cpp` are causing timeouts in some of the TAP tests in g3. Would it be fine to revert this change in the meantime to get the roll working?",
+      "revId": "20039ea00f3139d13c5ebe85a11c58f2df21c06b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
