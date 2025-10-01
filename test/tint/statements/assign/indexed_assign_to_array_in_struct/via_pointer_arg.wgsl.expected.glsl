@@ -1,10 +1,6 @@
 #version 310 es
 
 
-struct Uniforms {
-  uint i;
-};
-
 struct InnerS {
   int v;
 };
@@ -15,11 +11,11 @@ struct OuterS {
 
 layout(binding = 0, std140)
 uniform uniforms_block_1_ubo {
-  Uniforms inner;
+  uvec4 inner[1];
 } v_1;
 void f(inout OuterS p) {
   InnerS v = InnerS(0);
-  uint v_2 = min(v_1.inner.i, 7u);
+  uint v_2 = min(v_1.inner[0u].x, 7u);
   p.a1[v_2] = v;
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
