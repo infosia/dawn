@@ -3149,7 +3149,7 @@ void Validator::CheckBlendSrc(BlendSrcContext& ctx,
 
     tint::Switch(
         ty, [&](const core::type::Struct* s) { CheckBlendSrcStructMembers(ctx, target, s); },
-        [&](const core::type::Array* a) { CheckBlendSrc(ctx, a, a->ElemType(), attr); },
+        [&](const core::type::Array* a) { CheckBlendSrc(ctx, target, a->ElemType(), attr); },
         [&](Default) {});
 }
 
