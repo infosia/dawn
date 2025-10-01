@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f3e8577d_a75ecb76",
+        "filename": "generator/templates/dawn/wire/server/ServerBase.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-01T12:52:54Z",
+      "side": 1,
+      "message": "It sounds that both of these issues could be solved by taking temporary refs on the objects before calling things that could cause callbacks on them. We know it will be only device/instance destroy and ProcessEvents since we only use AllowProcessEvents for futures in the wire.\n\n+1 to the RWLock tbh and we could have it per-KnownObjects as well as returning a ref to objects when getting them to remove the issues with Free\n\nCan we at least have a TODO to do some locking that\u0027s less special case just for how Chromium is using the wire right now?",
+      "parentUuid": "af8b1590_b0bb4bfc",
+      "revId": "897c19bc5c689c941c526ded60ba29ea6d39ee2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d0014167_b8ed6dc4",
         "filename": "generator/templates/dawn/wire/server/ServerDoers.cpp",
         "patchSetId": 30
