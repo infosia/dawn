@@ -69,6 +69,24 @@
       "message": "The original code patch that caused the problem was reverted via https://dawn-review.googlesource.com/c/dawn/+/264374",
       "revId": "755cb958da6c6eb5437335bf692bd16797501daa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01e6d074_c5e7e4ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-01T12:30:52Z",
+      "side": 1,
+      "message": "Thank David. Ria please try to use that approach to make the Google3 min sdk match the Dawn min sdk before we add fallbacks in the code (which create different paths that would all need testing),",
+      "parentUuid": "cb949c65_c4a006d8",
+      "revId": "755cb958da6c6eb5437335bf692bd16797501daa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
