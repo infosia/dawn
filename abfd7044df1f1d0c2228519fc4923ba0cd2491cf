@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a15aef8_393fc347",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-01T20:52:14Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"accidentaly\" is a possible misspelling of \"accidentally\".\n\nTo bypass Spellcheck...\n\n\"accidentaly\" is a possible misspelling of \"accidentally\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 24
+      },
+      "revId": "abfd7044df1f1d0c2228519fc4923ba0cd2491cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "211a4d63_da16fae1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-01T20:52:14Z",
+      "side": 1,
+      "message": "Is it possible to write a test for this?",
+      "revId": "abfd7044df1f1d0c2228519fc4923ba0cd2491cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
