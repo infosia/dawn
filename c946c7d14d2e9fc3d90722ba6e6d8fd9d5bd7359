@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "77b78301_b10fa759",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3993625
+      },
+      "writtenOn": "2025-10-01T15:40:07Z",
+      "side": 1,
+      "message": "Note that I\u0027m hoping to make NO_DEFAULT_TO_CXX the default when the linker is run via `emcc` rather than `em++`.\n\nIts already the default in `STRICT` mode.\n\nThis matches the behaviour of gcc and clang.\n\nSo if you just error here then anyone trying to link a program with emcc would see a failure... which is maybe what you want.  You could just say \"please link with em++ to use the emdawn port\"",
+      "parentUuid": "1066b633_52e8ffd5",
+      "revId": "c946c7d14d2e9fc3d90722ba6e6d8fd9d5bd7359",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2194e4ff_85ba34a8",
         "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
         "patchSetId": 1
