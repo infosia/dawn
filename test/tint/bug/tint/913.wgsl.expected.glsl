@@ -1,21 +1,12 @@
 #version 310 es
 
-
-struct Uniforms {
-  uint dstTextureFlipY;
-  uint channelCount;
-  uvec2 srcCopyOrigin;
-  uvec2 dstCopyOrigin;
-  uvec2 copySize;
-};
-
 layout(binding = 2, std430)
 buffer OutputBuf_1_ssbo {
   uint result[];
 } v;
 layout(binding = 3, std140)
 uniform uniforms_block_1_ubo {
-  Uniforms inner;
+  uvec4 inner[2];
 } v_1;
 layout(binding = 0, std140)
 uniform TintTextureUniformData_1_ubo {
@@ -33,22 +24,22 @@ void main_inner(uvec3 GlobalInvocationID) {
   vec4 nonCoveredColor = vec4(0.0f, 1.0f, 0.0f, 1.0f);
   bool success = true;
   bool v_3 = false;
-  if ((dstTexCoord.x < v_1.inner.dstCopyOrigin.x)) {
+  if ((dstTexCoord.x < v_1.inner[1u].x)) {
     v_3 = true;
   } else {
-    v_3 = (dstTexCoord.y < v_1.inner.dstCopyOrigin.y);
+    v_3 = (dstTexCoord.y < v_1.inner[1u].y);
   }
   bool v_4 = false;
   if (v_3) {
     v_4 = true;
   } else {
-    v_4 = (dstTexCoord.x >= (v_1.inner.dstCopyOrigin.x + v_1.inner.copySize.x));
+    v_4 = (dstTexCoord.x >= (v_1.inner[1u].x + v_1.inner[1u].z));
   }
   bool v_5 = false;
   if (v_4) {
     v_5 = true;
   } else {
-    v_5 = (dstTexCoord.y >= (v_1.inner.dstCopyOrigin.y + v_1.inner.copySize.y));
+    v_5 = (dstTexCoord.y >= (v_1.inner[1u].y + v_1.inner[1u].w));
   }
   if (v_5) {
     bool v_6 = false;
@@ -64,8 +55,8 @@ void main_inner(uvec3 GlobalInvocationID) {
     }
     success = v_6;
   } else {
-    uvec2 srcTexCoord = ((dstTexCoord - v_1.inner.dstCopyOrigin) + v_1.inner.srcCopyOrigin);
-    if ((v_1.inner.dstTextureFlipY == 1u)) {
+    uvec2 srcTexCoord = ((dstTexCoord - v_1.inner[1u].xy) + v_1.inner[0u].zw);
+    if ((v_1.inner[0u].x == 1u)) {
       srcTexCoord.y = ((srcSize.y - srcTexCoord.y) - 1u);
     }
     ivec2 v_12 = ivec2(srcTexCoord);
@@ -80,7 +71,7 @@ void main_inner(uvec3 GlobalInvocationID) {
     uvec2 v_20 = (uvec2(textureSize(dst, int(v_19))) - uvec2(1u));
     ivec2 v_21 = ivec2(min(uvec2(v_17), v_20));
     vec4 dstColor = texelFetch(dst, v_21, int(v_19));
-    if ((v_1.inner.channelCount == 2u)) {
+    if ((v_1.inner[0u].y == 2u)) {
       bool v_22 = false;
       if (success) {
         v_22 = aboutEqual(dstColor.x, srcColor.x);
