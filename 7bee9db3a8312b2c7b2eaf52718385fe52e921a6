@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "02483238_0003267b",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-01T08:37:56Z",
+      "side": 1,
+      "message": "Using `AreSwizzleEquivalent` might impact validation of compat later, so after discussing it offline with Corentin, I\u0027ve decided to checking values individually for now instead of changing the compat spec with a TODO in `AreSwizzleEquivalent`. Let me know if that still works for you.\"",
+      "parentUuid": "80becc98_73a95f52",
+      "range": {
+        "startLine": 284,
+        "startChar": 55,
+        "endLine": 286,
+        "endChar": 49
+      },
+      "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f7486c8d_b07644ff",
         "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
         "patchSetId": 20
