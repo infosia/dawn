@@ -85,6 +85,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fa9ab226_c8b5d41b",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-01T16:30:03Z",
+      "side": 1,
+      "message": "In discussion with dan it might be better to convert everything case switch with only one default\n\nDiscussed at lunch. James also suggested putting all the ifs in one big switch/default and then the breaks would work as expected.",
+      "parentUuid": "4376071a_fbb5e142",
+      "revId": "bcaf53c35d067c3ee18420b95f5d9cc2ac585de3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bde7f120_e8f6d8df",
         "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
         "patchSetId": 15
