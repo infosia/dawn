@@ -99,6 +99,7 @@ if (NOT EMSCRIPTEN)
   add_subdirectory(native)
 endif()
 
+add_subdirectory(tests/end2end)
 if (DAWN_BUILD_BENCHMARKS)
   add_subdirectory(tests/benchmarks)
 endif()
