@@ -51,6 +51,24 @@
       "parentUuid": "4ae24ef0_d1f71732",
       "revId": "76ef1817d9d69108038dec739da8b29f5bd692df",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f608a6d8_4d0ff1d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-01T16:47:46Z",
+      "side": 1,
+      "message": "Thanks, I see it reported here https://logs.chromium.org/logs/dawn/buildbucket/cr-buildbucket/8702349271750648689/+/u/dawn_node_sws_cts_on_SwiftShader_GPU_on_Linux__with_patch__on_Ubuntu-22.04/json.output as:\n```\n{\n  \"failures\": [\n    \"webgpu:api,operation,adapter,requestDevice:default:\"\n  ],\n  \"valid\": true\n}\n```",
+      "parentUuid": "e56713ac_93510f5a",
+      "revId": "76ef1817d9d69108038dec739da8b29f5bd692df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
