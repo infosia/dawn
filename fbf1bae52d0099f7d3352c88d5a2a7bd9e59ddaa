@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af5b18a4_1b7b28ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-01T23:12:21Z",
+      "side": 1,
+      "message": "PTAL\n\n`node_helpers.py` and `paths.go` were the only places affected the last time I messed with the Node DEPS entry, so I don\u0027t anticipate any delayed issues on the builders caused by the old cached files disappearing in the future.",
+      "revId": "fbf1bae52d0099f7d3352c88d5a2a7bd9e59ddaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
