@@ -101,21 +101,33 @@ func NodePath(fsReader oswrapper.FilesystemReader) string {
 		if info, err := fsReader.Stat(node); err == nil && info.IsDir() {
 			path := ""
 			switch runtime.GOOS { // See `go tool dist list`
-			case "windows":
-				path = filepath.Join(node, "node.exe")
-			default:
-				path = filepath.Join(node, "bin", "node")
+			case "darwin/amd64":
+				path = filepath.Join(node, "mac-amd64", "bin", "node")
+			case "darwin/arm64":
+				path = filepath.Join(node, "mac-arm64", "bin", "node")
+			case "linux/amd64":
+				path = filepath.Join(node, "linux-amd64", "bin", "node")
+			case "linux/arm64":
+				path = filepath.Join(node, "linux-arm64", "bin", "node")
+			case "windows/amd64":
+				path = filepath.Join(node, "windows-amd64", "node.exe")
+			case "windows/arm64":
+				path = filepath.Join(node, "windows-arm64", "node.exe")
 			}
+			fmt.Printf("ASDF Chose CIPD path %v\n", path)
 			if _, err := fsReader.Stat(path); err == nil {
+				fmt.Printf("ASDF 1 using path %v\n", path)
 				return path
 			}
 		}
 	}
 
 	if path, err := exec.LookPath("node"); err == nil {
+		fmt.Printf("ASDF 2 using path %v\n", path)
 		return path
 	}
 
+	fmt.Printf("ASDF No path found\n")
 	return ""
 }
 
