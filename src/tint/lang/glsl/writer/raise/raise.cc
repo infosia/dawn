@@ -49,7 +49,6 @@
 #include "src/tint/lang/core/ir/transform/robustness.h"
 #include "src/tint/lang/core/ir/transform/signed_integer_polyfill.h"
 #include "src/tint/lang/core/ir/transform/single_entry_point.h"
-#include "src/tint/lang/core/ir/transform/std140.h"
 #include "src/tint/lang/core/ir/transform/substitute_overrides.h"
 #include "src/tint/lang/core/ir/transform/value_to_let.h"
 #include "src/tint/lang/core/ir/transform/vectorize_scalar_matrix_constructors.h"
