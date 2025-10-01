@@ -52,6 +52,47 @@
       "parentUuid": "b17acdb6_ff00def2",
       "revId": "603a5155599af6b335e4e22454cb973e229ca24c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56e610cd_939daa17",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2137,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-01T20:40:53Z",
+      "side": 0,
+      "message": "Then up here this whole `type !\u003d root` changes to `ptr-\u003eStoreType()-\u003eIs\u003ccore::type::Pointer\u003e()` so you can never have ptr-to-ptr. The array change below should stop array of pointer which is also disallowed.\n\nYou check struct above so it\u0027s fine now.",
+      "parentUuid": "b17acdb6_ff00def2",
+      "revId": "603a5155599af6b335e4e22454cb973e229ca24c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "024b147a_580053bd",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2170,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-01T20:40:53Z",
+      "side": 0,
+      "message": "Remove this",
+      "range": {
+        "startLine": 2170,
+        "startChar": 38,
+        "endLine": 2170,
+        "endChar": 52
+      },
+      "revId": "603a5155599af6b335e4e22454cb973e229ca24c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
