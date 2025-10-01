@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "972bb4aa_ba8adf04",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2137,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-01T20:09:11Z",
+      "side": 0,
+      "message": "Can this be removed now?",
+      "revId": "603a5155599af6b335e4e22454cb973e229ca24c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
