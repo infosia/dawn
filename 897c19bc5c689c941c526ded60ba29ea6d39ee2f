@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "af8b1590_b0bb4bfc",
+        "filename": "generator/templates/dawn/wire/server/ServerBase.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-01T06:37:30Z",
+      "side": 1,
+      "message": "I briefly tried this just now and I think it\u0027s a bit hard to do atm because of a couple issues:\n\n1) In order for the read lock to really make sense, we should be holding it whenever we use any of the object handles. This is problematic because right now, we call `ProcessEvents` on all `WGPUInstance`s at the end of command handling. If we were to do this while holding a read lock, any callbacks that get triggered would then try to acquire the write lock which would deadlock. This could potentially be solved if we had a per-`WGPU`Object lock, however...\n\n2) Similar to the above, something like calling `device.Destroy()` results in the same issue because we would need to be holding the read lock to access the `WGPUDevice`, but calling `Destroy()` could trigger the device lost callback which would then try to acquire the write lock. This wouldn\u0027t work w.r.t the per `WGPU`Object lock because it would require acquiring the device lock both times.\n\nI think in order to solve those issues, we would need something like a recursive rw-lock where a read lock could be promoted to a write lock if/when needed. I briefly searched for something like this but wasn\u0027t able to find anything convincing. That said, I am inclined to leave this like this for now, and once I update more of the server-side code, I think it might be possible to simplify the locking strategy.",
+      "parentUuid": "be61b951_95884859",
+      "revId": "897c19bc5c689c941c526ded60ba29ea6d39ee2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d0014167_b8ed6dc4",
         "filename": "generator/templates/dawn/wire/server/ServerDoers.cpp",
         "patchSetId": 30
@@ -48,6 +66,30 @@
       "writtenOn": "2025-09-27T01:35:08Z",
       "side": 1,
       "message": "nit: this is hard to follow, could it be something like:\n```\nObjectData\u003c{{cType}}\u003e data;\n{\n    Reserved\u003c{{cType}}\u003e obj;\n    WIRE_TRY(Get(objectId, \u0026obj));\n    data \u003d *obj.data;\n}\n\nif (data.state \u003d\u003d Allocation::Allocated) {\n    // ...\n}\n```",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 44
+      },
+      "revId": "897c19bc5c689c941c526ded60ba29ea6d39ee2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60acf37a_1c099f5e",
+        "filename": "generator/templates/dawn/wire/server/ServerDoers.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-01T06:37:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0014167_b8ed6dc4",
       "range": {
         "startLine": 85,
         "startChar": 0,
