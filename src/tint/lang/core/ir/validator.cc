@@ -2026,6 +2026,26 @@ void Validator::CheckType(const core::type::Type* root,
                         return false;
                     }
 
+                    if (!capabilities_.Contains(Capability::kAllowPointersAndHandlesInStructures)) {
+                        if (member->Type()->Is<core::type::Pointer>()) {
+                            diag() << "struct member " << member->Index()
+                                   << " cannot be a pointer type";
+                            return false;
+                        }
+
+                        if (member->Type()->UnwrapPtrOrRef()->Is<core::type::Texture>()) {
+                            diag() << "struct member " << member->Index()
+                                   << " cannot be a texture type";
+                            return false;
+                        }
+
+                        if (member->Type()->UnwrapPtrOrRef()->Is<core::type::Sampler>()) {
+                            diag() << "struct member " << member->Index()
+                                   << " cannot be a sampler type";
+                            return false;
+                        }
+                    }
+
                     if (auto* arr = member->Type()->As<core::type::Array>();
                         arr && arr->Count()->Is<core::type::RuntimeArrayCount>()) {
                         if (member != str->Members().Back()) {
@@ -2130,7 +2150,7 @@ void Validator::CheckType(const core::type::Type* root,
                     }
                 }
 
-                if (type != root) {
+                if (ptr->StoreType()->Is<core::type::Pointer>()) {
                     // Nesting pointer types inside structures is guarded by a capability.
                     if (!(capabilities_.Contains(
                             Capability::kAllowPointersAndHandlesInStructures))) {
@@ -2167,7 +2187,7 @@ void Validator::CheckType(const core::type::Type* root,
             [&](const core::type::Array* arr) {
                 CheckType(arr->ElemType(), diag, ignore_caps);
 
-                if (!arr->ElemType()->UnwrapPtrOrRef()->HasCreationFixedFootprint()) {
+                if (!arr->ElemType()->HasCreationFixedFootprint()) {
                     diag() << "array elements, " << NameOf(type)
                            << ", must have creation-fixed footprint";
                     return false;
