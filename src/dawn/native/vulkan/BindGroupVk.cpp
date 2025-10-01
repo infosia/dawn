@@ -127,6 +127,12 @@ MaybeError BindGroup::InitializeStaticBindings() {
             continue;
         }
 
+        // Round uniform buffer binding sizes up to a multiple of 16 bytes since Tint will polyfill
+        // them as array<vec4u, ...>.
+        if (binding.buffer->GetUsage() & wgpu::BufferUsage::Uniform) {
+            binding.size = Align(binding.size, 16u);
+        }
+
         auto [writeIndex, write] = AddWrite(i);
         writeBufferInfo[writeIndex].buffer = handle;
         writeBufferInfo[writeIndex].offset = binding.offset;
