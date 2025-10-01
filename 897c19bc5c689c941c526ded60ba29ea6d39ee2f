@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c267081e_e959dd0e",
+        "filename": "generator/templates/dawn/wire/server/ServerBase.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-01T17:20:34Z",
+      "side": 1,
+      "message": "Ok, added a TODO and will revisit this in a follow up CL.",
+      "parentUuid": "f3e8577d_a75ecb76",
+      "revId": "897c19bc5c689c941c526ded60ba29ea6d39ee2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0014167_b8ed6dc4",
