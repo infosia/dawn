@@ -1,16 +1,6 @@
 #version 310 es
 
 
-struct SimParams {
-  float deltaT;
-  float rule1Distance;
-  float rule2Distance;
-  float rule3Distance;
-  float rule1Scale;
-  float rule2Scale;
-  float rule3Scale;
-};
-
 struct Particle {
   vec2 pos;
   vec2 vel;
@@ -22,7 +12,7 @@ struct Particles {
 
 layout(binding = 0, std140)
 uniform params_block_1_ubo {
-  SimParams inner;
+  uvec4 inner[2];
 } v;
 layout(binding = 1, std430)
 buffer particlesA_block_1_ssbo {
@@ -65,15 +55,15 @@ void comp_main_inner(uvec3 v_3) {
       pos = v_1.inner.particles[v_6].pos.xy;
       uint v_7 = min(i, 4u);
       vel = v_1.inner.particles[v_7].vel.xy;
-      if ((distance(pos, vPos) < v.inner.rule1Distance)) {
+      if ((distance(pos, vPos) < uintBitsToFloat(v.inner[0u].y))) {
         cMass = (cMass + pos);
         uint v_8 = uint(cMassCount);
         cMassCount = int((v_8 + uint(1)));
       }
-      if ((distance(pos, vPos) < v.inner.rule2Distance)) {
+      if ((distance(pos, vPos) < uintBitsToFloat(v.inner[0u].z))) {
         colVel = (colVel - (pos - vPos));
       }
-      if ((distance(pos, vPos) < v.inner.rule3Distance)) {
+      if ((distance(pos, vPos) < uintBitsToFloat(v.inner[0u].w))) {
         cVel = (cVel + vel);
         uint v_9 = uint(cVelCount);
         cVelCount = int((v_9 + uint(1)));
@@ -95,9 +85,9 @@ void comp_main_inner(uvec3 v_3) {
     float v_14 = float(cVelCount);
     cVel = (v_13 / vec2(v_14, float(cVelCount)));
   }
-  vVel = (((vVel + (cMass * v.inner.rule1Scale)) + (colVel * v.inner.rule2Scale)) + (cVel * v.inner.rule3Scale));
+  vVel = (((vVel + (cMass * uintBitsToFloat(v.inner[1u].x))) + (colVel * uintBitsToFloat(v.inner[1u].y))) + (cVel * uintBitsToFloat(v.inner[1u].z)));
   vVel = (normalize(vVel) * clamp(length(vVel), 0.0f, 0.10000000149011611938f));
-  vPos = (vPos + (vVel * v.inner.deltaT));
+  vPos = (vPos + (vVel * uintBitsToFloat(v.inner[0u].x)));
   if ((vPos.x < -1.0f)) {
     vPos.x = 1.0f;
   }
