@@ -98,6 +98,24 @@
       "message": "This is going to generate a series of disconnected `if` statements. Could we instead, generate a series if `if` and `else` statement? Would mean we don\u0027t have to generate the condition for the `default` so we don\u0027t need the `conditions` list.\n\nYou\u0027d basically need to store the block to insert into and each time change the block to the false block.",
       "revId": "bcaf53c35d067c3ee18420b95f5d9cc2ac585de3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29691a68_b5fb02a3",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-01T14:25:43Z",
+      "side": 1,
+      "message": "Discussed. This is probably the best option to avoid excessive nesting. Yes it might end up producing less optimal code.",
+      "parentUuid": "bde7f120_e8f6d8df",
+      "revId": "bcaf53c35d067c3ee18420b95f5d9cc2ac585de3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
