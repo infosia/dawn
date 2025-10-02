@@ -62,6 +62,24 @@
       "message": "Why did all of these change?",
       "revId": "db8c27c58218f11f7ba52059f3f16fd94048d95f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eee01954_e4f67d2e",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else_test.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-02T17:10:56Z",
+      "side": 1,
+      "message": "I found it more readable in the string that it was labeled as a param",
+      "parentUuid": "66c0e8e3_1539490d",
+      "revId": "db8c27c58218f11f7ba52059f3f16fd94048d95f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
