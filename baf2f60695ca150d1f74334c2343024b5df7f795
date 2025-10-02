@@ -94,6 +94,30 @@
       },
       "revId": "baf2f60695ca150d1f74334c2343024b5df7f795",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63a9728d_6ec6bbc6",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ImageTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-10-02T21:29:20Z",
+      "side": 1,
+      "message": "Thanks for the explanation!",
+      "parentUuid": "7ed89e4d_5d1937f7",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "baf2f60695ca150d1f74334c2343024b5df7f795",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
