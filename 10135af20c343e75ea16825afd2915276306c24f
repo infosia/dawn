@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd4ca232_21e0cc8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002816
+      },
+      "writtenOn": "2025-10-02T18:44:43Z",
+      "side": 1,
+      "message": "Please bug bot b/444276823",
+      "revId": "10135af20c343e75ea16825afd2915276306c24f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
