@@ -44,6 +44,7 @@
 
 namespace dawn::native {
 
+
 class CommandAllocator;
 
 // Definition of the commands that are present in the CommandIterator given by the

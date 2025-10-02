@@ -336,9 +336,9 @@ ci.builder(
     ),
     gn_args = gn_args.config(
         configs = [
-            "component",
+            "dawn_no_swiftshader",
             "dawn_node_bindings",
-            "dawn_swiftshader",
+            "non_component",
             "release",
             "win_msvc",
             "x64",
