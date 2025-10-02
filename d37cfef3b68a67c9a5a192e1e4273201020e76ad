@@ -16,6 +16,75 @@
       "message": "PTAL!",
       "revId": "d37cfef3b68a67c9a5a192e1e4273201020e76ad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a62565d_eb3fadc3",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-02T20:10:29Z",
+      "side": 1,
+      "message": "nit. `samplerBindingInfo`",
+      "range": {
+        "startLine": 689,
+        "startChar": 14,
+        "endLine": 689,
+        "endChar": 27
+      },
+      "revId": "d37cfef3b68a67c9a5a192e1e4273201020e76ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d63125e9_565f7739",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-02T20:10:29Z",
+      "side": 1,
+      "message": "nit. This looks like it could be something like `BGL::GetStaticSamplerIndices()`?",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 72
+      },
+      "revId": "d37cfef3b68a67c9a5a192e1e4273201020e76ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f22a360_20cf22ab",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-02T20:10:29Z",
+      "side": 1,
+      "message": "nit. existing but maybe `samplerBindingInfo` instead?",
+      "range": {
+        "startLine": 85,
+        "startChar": 13,
+        "endLine": 85,
+        "endChar": 26
+      },
+      "revId": "d37cfef3b68a67c9a5a192e1e4273201020e76ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
