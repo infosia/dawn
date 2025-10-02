@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56aebeba_aac9f023",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-02T15:43:42Z",
+      "side": 1,
+      "message": "Eventually we\u0027ll want to make the ANGLE dependency optional I think. But we can add a condition here when that happens.",
+      "revId": "6b0890ec40976179f4feeeb100ac2c678ad0449d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
