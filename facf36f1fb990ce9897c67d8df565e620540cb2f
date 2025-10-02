@@ -33,6 +33,24 @@
       "message": "Actually that should be a tiny fix to SupportTextureComponentSwizzle so I don\u0027t need to remove my CR+2.",
       "revId": "facf36f1fb990ce9897c67d8df565e620540cb2f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aeb71e05_73eb104d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 27
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-02T09:27:08Z",
+      "side": 1,
+      "message": "I\u0027ve decided to move SupportTextureComponentSwizzle under PhysicalDevice instead of Utils in this case since I\u0027m now using renderer string and I wanted to be next to other ANGLE checks. Let me know if that works for you as I\u0027ve lost your CR+2.",
+      "parentUuid": "9e6361ed_4542c2c3",
+      "revId": "facf36f1fb990ce9897c67d8df565e620540cb2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -120,6 +120,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b13de746_f29d3d93",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-02T09:27:08Z",
+      "side": 1,
+      "message": "FYI @cwallez@chromium.org",
+      "parentUuid": "6280eb95_f7fba20c",
+      "range": {
+        "startLine": 284,
+        "startChar": 55,
+        "endLine": 286,
+        "endChar": 49
+      },
+      "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f7486c8d_b07644ff",
