@@ -16,6 +16,23 @@
       "message": "sorry brandon, reuploading means I need a different reviewer now because of ownership. PTAL dan",
       "revId": "1e070ff42fd3f3c6e176df2fc11de064f7191cf7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0df892c0_b3916dbf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-10-02T17:06:59Z",
+      "side": 1,
+      "message": "the fix appears to be confirmed by a third-party user: https://github.com/google/dawn/pull/39#issuecomment-3361640950",
+      "revId": "1e070ff42fd3f3c6e176df2fc11de064f7191cf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
