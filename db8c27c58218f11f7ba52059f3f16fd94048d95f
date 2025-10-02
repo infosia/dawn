@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4785ca8_992cb9b1",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-02T18:09:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b59aeb0a_2cc41a30",
+      "range": {
+        "startLine": 169,
+        "startChar": 69,
+        "endLine": 169,
+        "endChar": 79
+      },
+      "revId": "db8c27c58218f11f7ba52059f3f16fd94048d95f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c62de8d2_600a59da",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-10-02T16:25:30Z",
       "side": 1,
       "message": "```suggestion\n\n\t\tauto* def \u003d b.DefaultCase(s);\n\t\tb.Append(def, [\u0026]{\n\n                for (auto\u0026 c : cases) {\n                    // Default block is required by spec. It will need to be treated special.\n                    // It is possible that default case will also have non default selectors.\n                    // These additional selectors are superfluous as they will just form one\n                    // default.\n                    bool found_default \u003d false;\n                    for (auto\u0026 sel : c.selectors) {\n                        if (sel.IsDefault()) {\n                            default_case \u003d \u0026c;\n                            found_default \u003d true;\n                            break;\n                        }\n                    }\n                    if (found_default) {\n                        continue;\n                    }\n\n                    core::ir::Value* case_cond \u003d nullptr;\n                    for (auto\u0026 sel : c.selectors) {\n                        auto* curr_selector \u003d\n                            b.Equal(ty.bool_(), switch_cond, sel.val-\u003eAs\u003ccore::ir::Value\u003e());\n                        if (case_cond) {\n                            case_cond \u003d\n                                b.Or(ty.bool_(), curr_selector-\u003eResult(), case_cond)-\u003eResult();\n                        } else {\n                            case_cond \u003d curr_selector-\u003eResult();\n                        }\n                    }\n                    conditions.Push(case_cond);\n                    auto* if_cond \u003d b.If(case_cond);\n                    if_cond-\u003eSetTrue(c.block);\n                }\n\n                TINT_ASSERT(default_case);\n                // Special handling required for default case\n                core::ir::Value* full_default_cond \u003d nullptr;\n                for (auto* non_default_cond : conditions) {\n                    if (!full_default_cond) {\n                        full_default_cond \u003d non_default_cond;\n                        continue;\n                    }\n                    full_default_cond \u003d\n                        b.Or(ty.bool_(), full_default_cond, non_default_cond)-\u003eResult();\n                }\n\n                if (full_default_cond) {\n                    full_default_cond \u003d\n                        b.Unary(core::UnaryOp::kNot, ty.bool_(), full_default_cond)-\u003eResult();\n                } else {\n                    // This will only happen if we have the default only case.\n                    full_default_cond \u003d b.Constant(true);\n                }\n\n                auto* if_cond \u003d b.If(full_default_cond);\n                if_cond-\u003eSetTrue(default_case-\u003eblock);\n            });\n            });\n```\n\nI think you can do something like this instead since you already took the cases. The `DefaultCase` helper does all the stuff for setting up the case and returns the block. You then just insert into the block.",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 68
+      },
+      "revId": "db8c27c58218f11f7ba52059f3f16fd94048d95f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee241cf7_4502ecac",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-02T18:09:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c62de8d2_600a59da",
       "range": {
         "startLine": 111,
         "startChar": 0,

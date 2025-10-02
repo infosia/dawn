@@ -22,6 +22,30 @@
       },
       "revId": "c91e4713032737d943199bb26242cc4be58c8e85",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2c82389_b2d5b9cc",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-02T18:09:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51cb626d_3f78746f",
+      "range": {
+        "startLine": 169,
+        "startChar": 14,
+        "endLine": 169,
+        "endChar": 18
+      },
+      "revId": "c91e4713032737d943199bb26242cc4be58c8e85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
