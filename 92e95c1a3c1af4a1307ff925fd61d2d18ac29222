@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3177afee_75994f7c",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-02T12:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a452f14_518e6f35",
+      "revId": "92e95c1a3c1af4a1307ff925fd61d2d18ac29222",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c30aec9_623f40c9",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-10-02T09:30:52Z",
       "side": 1,
       "message": "Add a comment explaining why !AngleD3D11 otherwise future readers won\u0027t be able to know why that check is here.",
+      "revId": "92e95c1a3c1af4a1307ff925fd61d2d18ac29222",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19e00823_636942ff",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-02T12:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c30aec9_623f40c9",
       "revId": "92e95c1a3c1af4a1307ff925fd61d2d18ac29222",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
