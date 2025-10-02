@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d3541e4_3136f0b9",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-10-02T21:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3e776bb_e6361bc3",
+      "range": {
+        "startLine": 2036,
+        "startChar": 44,
+        "endLine": 2036,
+        "endChar": 58
+      },
+      "revId": "56798429548ec2c594be105db2de9e2e49937fb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d712482_d3a8dafa",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3252e871_99778bf2",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2042,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-10-02T21:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d712482_d3a8dafa",
+      "range": {
+        "startLine": 2042,
+        "startChar": 44,
+        "endLine": 2042,
+        "endChar": 58
+      },
+      "revId": "56798429548ec2c594be105db2de9e2e49937fb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c42c2c6_dfca71e2",
@@ -60,6 +108,24 @@
       "writtenOn": "2025-10-02T20:28:09Z",
       "side": 1,
       "message": "This extra check isn\u0027t necessary now that we\u0027ve changed the condition, yea?",
+      "revId": "56798429548ec2c594be105db2de9e2e49937fb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fda37f1_df032053",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2155,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-10-02T21:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c42c2c6_dfca71e2",
       "revId": "56798429548ec2c594be105db2de9e2e49937fb9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
