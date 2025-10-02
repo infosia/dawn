@@ -34,6 +34,24 @@
       "parentUuid": "af5b18a4_1b7b28ff",
       "revId": "fbf1bae52d0099f7d3352c88d5a2a7bd9e59ddaa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dfb461c_a01d4173",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-02T03:32:16Z",
+      "side": 1,
+      "message": "Okay, I *think* what might be happening is:\n\n1. These tests don\u0027t actually run properly with the version of Node pulled in by the old recipe\n2. Prior to me making any changes to the Node dependency, the tests were finding the version under third_party due to the switch/case working properly. This is also the case before this CL since it\u0027s only looking at the OS\n3. I actually messed up the switch/case in this CL - it\u0027s still only looking at `GOOS` when it should be looking at both `GOOS` and `GOARCH`.\n4. The gn_v2 builders are okay with this because the fallback of looking up the path for `node` finds the correct binary. However, with the older recipe, the version of Node pulled in by the recipe is found first, so it\u0027s used instead.\n\nFixed the switch/case, hopefully this resolves the issue.",
+      "parentUuid": "3e872d81_30f14fb5",
+      "revId": "fbf1bae52d0099f7d3352c88d5a2a7bd9e59ddaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
