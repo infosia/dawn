@@ -125,6 +125,7 @@ group("all") {
 group("default") {
   testonly = true
   deps = [ ":all" ]
+  data = [ "scripts/" ]
 }
 
 # GN evaluates each .gn file once per toolchain, so restricting to default
