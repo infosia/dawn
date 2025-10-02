@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01f9712b_a16fafe2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-02T01:06:08Z",
+      "side": 1,
+      "message": "@sbc@google.com any concern with us depending on `diagnostics.error`?",
+      "revId": "8d72bd14a24c35a37f9abcbfbbf717405426dc77",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
