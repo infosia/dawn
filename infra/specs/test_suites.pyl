@@ -11,13 +11,12 @@
           'result_adapter_gtest_json',
         ],
         'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_gtest_merge does not work properly with the
-          # results output by --gtest_output. However, noop_merge locks us to
-          # a single shard, and we should not have any need for the outputs of
-          # merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
+          # We set empty args so that we have a non-empty "merge" dict. This
+          # prevents the default merge script from being added.
+          # TODO(crbug.com/38531708S3): Remove this hack in favor of whatever
+          # mechanism is added to //testing/buildbot/generate_buildbot_json.py
+          # to natively omit merge scripts.
+          'args': [],
         },
         'test': 'dawn_end2end_tests',
       },
@@ -31,13 +30,12 @@
           'result_adapter_gtest_json',
         ],
         'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_gtest_merge does not work properly with the
-          # results output by --gtest_output. However, noop_merge locks us to
-          # a single shard, and we should not have any need for the outputs of
-          # merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
+          # We set empty args so that we have a non-empty "merge" dict. This
+          # prevents the default merge script from being added.
+          # TODO(crbug.com/38531708S3): Remove this hack in favor of whatever
+          # mechanism is added to //testing/buildbot/generate_buildbot_json.py
+          # to natively omit merge scripts.
+          'args': [],
         },
         'test': 'dawn_end2end_tests',
       },
@@ -51,13 +49,12 @@
           'result_adapter_gtest_json',
         ],
         'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_gtest_merge does not work properly with the
-          # results output by --gtest_output. However, noop_merge locks us to
-          # a single shard, and we should not have any need for the outputs of
-          # merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
+          # We set empty args so that we have a non-empty "merge" dict. This
+          # prevents the default merge script from being added.
+          # TODO(crbug.com/38531708S3): Remove this hack in favor of whatever
+          # mechanism is added to //testing/buildbot/generate_buildbot_json.py
+          # to natively omit merge scripts.
+          'args': [],
         },
         'test': 'dawn_end2end_tests',
       },
@@ -75,13 +72,12 @@
           'result_adapter_single',
         ],
         'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_isolated_script_merge does not work properly
-          # without some additional Python dependencies. However, noop_merge
-          # locks us to a single shard, and we should not have any need for the
-          # outputs of merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
+          # We set empty args so that we have a non-empty "merge" dict. This
+          # prevents the default merge script from being added.
+          # TODO(crbug.com/38531708S3): Remove this hack in favor of whatever
+          # mechanism is added to //testing/buildbot/generate_buildbot_json.py
+          # to natively omit merge scripts.
+          'args': [],
         },
         'test': 'dawn_node_cts',
       },
@@ -99,13 +95,12 @@
           'result_adapter_single',
         ],
         'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_isolated_script_merge does not work properly
-          # without some additional Python dependencies. However, noop_merge
-          # locks us to a single shard, and we should not have any need for the
-          # outputs of merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
+          # We set empty args so that we have a non-empty "merge" dict. This
+          # prevents the default merge script from being added.
+          # TODO(crbug.com/38531708S3): Remove this hack in favor of whatever
+          # mechanism is added to //testing/buildbot/generate_buildbot_json.py
+          # to natively omit merge scripts.
+          'args': [],
         },
         'test': 'dawn_node_cts',
       },
@@ -116,13 +111,12 @@
           'result_adapter_gtest_json',
         ],
         'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_gtest_merge does not work properly with the
-          # results output by --gtest_output. However, noop_merge locks us to
-          # a single shard, and we should not have any need for the outputs of
-          # merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
+          # We set empty args so that we have a non-empty "merge" dict. This
+          # prevents the default merge script from being added.
+          # TODO(crbug.com/38531708S3): Remove this hack in favor of whatever
+          # mechanism is added to //testing/buildbot/generate_buildbot_json.py
+          # to natively omit merge scripts.
+          'args': [],
         },
       },
     },
@@ -135,13 +129,12 @@
           'result_adapter_gtest_json',
         ],
         'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_gtest_merge does not work properly with the
-          # results output by --gtest_output. However, noop_merge locks us to
-          # a single shard, and we should not have any need for the outputs of
-          # merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
+          # We set empty args so that we have a non-empty "merge" dict. This
+          # prevents the default merge script from being added.
+          # TODO(crbug.com/38531708S3): Remove this hack in favor of whatever
+          # mechanism is added to //testing/buildbot/generate_buildbot_json.py
+          # to natively omit merge scripts.
+          'args': [],
         },
         'test': 'dawn_unittests',
       },
@@ -156,13 +149,12 @@
           'result_adapter_single',
         ],
         'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_isolated_script_merge does not work properly
-          # without some additional Python dependencies. However, noop_merge
-          # locks us to a single shard, and we should not have any need for the
-          # outputs of merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
+          # We set empty args so that we have a non-empty "merge" dict. This
+          # prevents the default merge script from being added.
+          # TODO(crbug.com/38531708S3): Remove this hack in favor of whatever
+          # mechanism is added to //testing/buildbot/generate_buildbot_json.py
+          # to natively omit merge scripts.
+          'args': [],
         },
         'test': 'fuzzer_corpus_tests',
       },
@@ -176,13 +168,12 @@
           'result_adapter_single',
         ],
         'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_isolated_script_merge does not work properly
-          # without some additional Python dependencies. However, noop_merge
-          # locks us to a single shard, and we should not have any need for the
-          # outputs of merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
+          # We set empty args so that we have a non-empty "merge" dict. This
+          # prevents the default merge script from being added.
+          # TODO(crbug.com/38531708S3): Remove this hack in favor of whatever
+          # mechanism is added to //testing/buildbot/generate_buildbot_json.py
+          # to natively omit merge scripts.
+          'args': [],
         },
         'test': 'fuzzer_corpus_tests',
       },
@@ -193,13 +184,12 @@
           'result_adapter_gtest_json',
         ],
         'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_gtest_merge does not work properly with the
-          # results output by --gtest_output. However, noop_merge locks us to
-          # a single shard, and we should not have any need for the outputs of
-          # merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
+          # We set empty args so that we have a non-empty "merge" dict. This
+          # prevents the default merge script from being added.
+          # TODO(crbug.com/38531708S3): Remove this hack in favor of whatever
+          # mechanism is added to //testing/buildbot/generate_buildbot_json.py
+          # to natively omit merge scripts.
+          'args': [],
         },
       },
     },
