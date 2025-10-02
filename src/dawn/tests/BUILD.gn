@@ -709,10 +709,6 @@ source_set("end2end_tests_sources") {
     "end2end/ViewportTests.cpp",
   ]
 
-  if (dawn_enable_webgpu_on_webgpu) {
-    sources += [ "end2end/CaptureAndReplayTests.cpp" ]
-  }
-
   if (!is_debug) {
     sources += [ "end2end/RuntimeTimeoutCompute.cpp" ]
   }
@@ -816,6 +812,10 @@ source_set("white_box_tests_sources") {
     "white_box/WaitListEventTests.cpp",
   ]
   libs = []
+
+  if (dawn_enable_webgpu_on_webgpu) {
+    sources += [ "white_box/CaptureAndReplayTests.cpp" ]
+  }
 
   if (is_mac || is_ios) {
     sources += [ "white_box/SharedTextureMemoryTests_apple.mm" ]
