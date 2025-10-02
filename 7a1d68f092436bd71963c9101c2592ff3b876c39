@@ -16,6 +16,41 @@
       "message": "This seems wrong? The matrix stride is the stride between columns. So the size of the member should be `matrix stride * num columns`.\n\nYou\u0027d also need to take row-majorness into account if this needs to be accurate.",
       "revId": "7a1d68f092436bd71963c9101c2592ff3b876c39",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e771012a_bb9a0dc6",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2088,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-02T15:46:06Z",
+      "side": 1,
+      "message": "Row major shouldn\u0027t change it should it? Either you have the size set which is the size of the matrix, or you have matrix stride set and we do the stride* cols",
+      "parentUuid": "b025d065_8bd7eb5f",
+      "revId": "7a1d68f092436bd71963c9101c2592ff3b876c39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11f626f3_f389ffbb",
+        "filename": "src/tint/lang/core/type/manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-02T15:46:06Z",
+      "side": 1,
+      "message": "Which also means this is wrong, so it should be stride * columns",
+      "revId": "7a1d68f092436bd71963c9101c2592ff3b876c39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
