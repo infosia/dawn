@@ -337,7 +337,7 @@ ci.builder(
         configs = [
             "component",
             "dawn_node_bindings",
-            "dawn_swiftshader",
+            # "dawn_swiftshader",
             "release",
             "win_msvc",
             "x64",
