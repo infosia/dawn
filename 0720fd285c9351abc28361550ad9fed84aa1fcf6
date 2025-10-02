@@ -1,6 +1,46 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf70e083_d481b282",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-02T20:24:41Z",
+      "side": 1,
+      "message": "```suggestion\nmembers on top-level structs. Nested structs and structs in arrays\n```",
+      "revId": "0720fd285c9351abc28361550ad9fed84aa1fcf6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab77dc88_de2bc6e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-02T20:24:41Z",
+      "side": 1,
+      "message": "```suggestion\nused to allow blend_src on non-struct module scope vars.\n```\n\nTook me a minute to decypher MSV, heh",
+      "range": {
+        "startLine": 12,
+        "startChar": 38,
+        "endLine": 12,
+        "endChar": 42
+      },
+      "revId": "0720fd285c9351abc28361550ad9fed84aa1fcf6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "b10899d3_75748a59",
@@ -14,6 +54,23 @@
       "writtenOn": "2025-10-02T19:08:19Z",
       "side": 1,
       "message": "PTAL, rewrote this entire CL",
+      "revId": "0720fd285c9351abc28361550ad9fed84aa1fcf6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfa0ebca_22ad362b",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3173,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-02T20:24:41Z",
+      "side": 1,
+      "message": "Just to make sure I understand this correctly, the `blend_src` members don\u0027t have to be the same as the `location` members? We don\u0027t correlate them here, so that seems to be the case?",
       "revId": "0720fd285c9351abc28361550ad9fed84aa1fcf6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
