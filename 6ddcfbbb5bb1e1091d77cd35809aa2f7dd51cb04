@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0a76c51_cf3f7cf1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-10-02T17:47:30Z",
+      "side": 1,
+      "message": "dawn-try-mac-intel-exp has been red for a week.  And each time I run jobs on it, it fails in a different way. I think the bot is unhealthy.",
+      "revId": "6ddcfbbb5bb1e1091d77cd35809aa2f7dd51cb04",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
