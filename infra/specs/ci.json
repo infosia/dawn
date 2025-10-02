@@ -279,9 +279,6 @@
           "--use-angle=swiftshader",
           "--enable-toggles=gl_force_es_31_and_no_extensions"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_swangle_tests",
         "resultdb": {
           "result_format": "gtest_json"
