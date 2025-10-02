@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2ba9532_500a6130",
+        "filename": "src/dawn/native/CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-02T02:12:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f7f3dd5d_97d6b1c9",
+      "revId": "fff72cc59bf6eb74abf9c04ab977e5d280da06a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11a2c49f_aad4687b",
@@ -48,6 +66,30 @@
       "writtenOn": "2025-10-01T12:21:45Z",
       "side": 1,
       "message": "```suggestion\n        DAWN_ASSERT(mObjectIds.contains(Ref\u003cApiObjectBase\u003e(object)););\n```",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 44
+      },
+      "revId": "fff72cc59bf6eb74abf9c04ab977e5d280da06a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e1bd79c_1ce95e10",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-02T02:12:31Z",
+      "side": 1,
+      "message": "I\u0027m going to leave this as is for now and fix it in the next CL if appropriate but ... contains checks for membership right? So with the suggested change the code would search the container twice (yea, it\u0027s flat_hash_map so you\u0027re supposed to consider it O(1) but still...). With the existing code it only searches once, right?",
+      "parentUuid": "11a2c49f_aad4687b",
       "range": {
         "startLine": 87,
         "startChar": 0,
