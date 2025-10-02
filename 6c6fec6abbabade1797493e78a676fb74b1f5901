@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dffe57fc_d5eb365d",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2096,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-02T20:17:17Z",
+      "side": 1,
+      "message": "Sigh, i\u0027m going to need to make a helper somewhere as doing this in two places given how compilcated it\u0027s getting seems like a bad idea.",
+      "parentUuid": "ece2316e_06e8175b",
+      "revId": "6c6fec6abbabade1797493e78a676fb74b1f5901",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7c4f88d2_46e50987",
         "filename": "src/tint/lang/core/type/manager.cc",
         "patchSetId": 9
