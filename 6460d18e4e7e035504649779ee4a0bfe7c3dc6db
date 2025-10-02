@@ -22,6 +22,30 @@
       },
       "revId": "6460d18e4e7e035504649779ee4a0bfe7c3dc6db",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c04f5cbc_5d7405c3",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-02T10:30:36Z",
+      "side": 0,
+      "message": "Unfortunately, contrary to `ShaderModule`, this wouldn\u0027t perform all the necessary validation for `BindGroupLayoutEntry` because we also need to match the chain (or lack of) with the type of binding in the `BindGroupLayout`, so for example the checks at [1], [2] (could be simplified to just check for `.Has/Get\u003cTexelBuffer\u003e`) or [3] would still be needed.",
+      "parentUuid": "49536194_f66d3c20",
+      "range": {
+        "startLine": 592,
+        "startChar": 8,
+        "endLine": 596,
+        "endChar": 44
+      },
+      "revId": "6460d18e4e7e035504649779ee4a0bfe7c3dc6db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

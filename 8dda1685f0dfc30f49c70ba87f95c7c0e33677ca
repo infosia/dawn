@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b84b7a02_b31bc1c9",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-02T10:30:36Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "8dda1685f0dfc30f49c70ba87f95c7c0e33677ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71e472d9_18ecdd38",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-02T10:30:36Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "8dda1685f0dfc30f49c70ba87f95c7c0e33677ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6f7f57d_7ba6c430",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-02T10:30:36Z",
+      "side": 1,
+      "message": "[3]",
+      "revId": "8dda1685f0dfc30f49c70ba87f95c7c0e33677ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
