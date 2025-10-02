@@ -33,6 +33,24 @@
       "message": "I guess this kind of thing increases the surface area of our \"public\" port API.\n\nSeems unlikely to change, but worth keeping track of somehow maybe.\n\nlgtm for now.",
       "revId": "8d72bd14a24c35a37f9abcbfbbf717405426dc77",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6916d86d_79dc4afa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-02T17:21:56Z",
+      "side": 1,
+      "message": "I never did put together a list of stuff we depended on but I may as well start.",
+      "parentUuid": "67f5a66f_d970806b",
+      "revId": "8d72bd14a24c35a37f9abcbfbbf717405426dc77",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
