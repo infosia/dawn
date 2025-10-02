@@ -29,9 +29,11 @@
 // AsyncTaskTests:
 //     Simple tests for native::AsyncTask and native::AsnycTaskManager.
 
+#include <chrono>
 #include <memory>
 #include <mutex>
 #include <set>
+#include <thread>
 #include <utility>
 #include <vector>
 
@@ -162,5 +164,106 @@ TEST_F(AsyncTaskTest, Callbacks) {
     task->AddCompletionCallback(completionCallback);
     EXPECT_EQ(completionCallbackCounter, 2u);
 }
+
+// Test that async task dependencies are resolved in the correct order
+TEST_F(AsyncTaskTest, Dependencies) {
+    platform::Platform platform;
+    std::unique_ptr<platform::WorkerTaskPool> pool = platform.CreateWorkerTaskPool();
+
+    AsyncTaskManager taskManager(pool.get());
+
+    struct taskBlocker {
+        std::mutex mutex;
+        std::unique_lock<std::mutex> lock;
+
+        taskBlocker() : mutex(), lock(mutex) {}
+
+        void allowToRun() { lock.unlock(); }
+    };
+
+    auto makeTask = [](taskBlocker* blocker) {
+        return [blocker]() { std::scoped_lock<std::mutex> taskLock(blocker->mutex); };
+    };
+
+    // Set up a chain of tasks that depend on each other and block them from completing using
+    // mutexes. Verify that when the tasks are allowed to complete, dependent tasks run in order. t0
+    // t1
+    //   \ /
+    //    v
+    //    t2
+    //    |
+    //    v
+    //    t3
+    taskBlocker b0, b1, b2, b3;
+    auto t0 = taskManager.PostTask<AsyncTask>(makeTask(&b0));
+    auto t1 = taskManager.PostTask<AsyncTask>(makeTask(&b1));
+    auto t2 = taskManager.PostTaskWithDependencies<AsyncTask>({t0, t1}, makeTask(&b2));
+    auto t3 = taskManager.PostTaskWithDependencies<AsyncTask>({t2}, makeTask(&b3));
+
+    // Initial state: t0 and t1 are potentially running but not completed. t2 and t3 are pending
+    // because t0 and t1 have not completed.
+    ASSERT_NE(t0->GetState(), AsyncTaskState::Completed);
+    ASSERT_NE(t1->GetState(), AsyncTaskState::Completed);
+    EXPECT_EQ(t2->GetState(), AsyncTaskState::Pending);
+    EXPECT_EQ(t3->GetState(), AsyncTaskState::Pending);
+
+    // Allow t2 to run. Let t0 complete and verify that t2 does not run because t1 is still not
+    // complete.
+    b2.allowToRun();
+    EXPECT_EQ(t2->GetState(), AsyncTaskState::Pending);
+    b0.allowToRun();
+    t0->Wait();
+    ASSERT_EQ(t0->GetState(), AsyncTaskState::Completed);
+    ASSERT_NE(t1->GetState(), AsyncTaskState::Completed);
+    EXPECT_EQ(t2->GetState(), AsyncTaskState::Pending);
+    EXPECT_EQ(t3->GetState(), AsyncTaskState::Pending);
+
+    // Allow t1 to run. Verify that this unblocks t2 and it completes without having to wait on t1.
+    b1.allowToRun();
+    t2->Wait();
+    ASSERT_EQ(t0->GetState(), AsyncTaskState::Completed);
+    ASSERT_EQ(t1->GetState(), AsyncTaskState::Completed);
+    EXPECT_EQ(t2->GetState(), AsyncTaskState::Completed);
+    EXPECT_NE(t3->GetState(), AsyncTaskState::Completed);
+
+    // Wait for t3 to finish.
+    b3.allowToRun();
+    t3->Wait();
+    EXPECT_EQ(t3->GetState(), AsyncTaskState::Completed);
+}
+
+// Test that async task dependencies can be from other managers
+TEST_F(AsyncTaskTest, CrossManagerDependencies) {
+    platform::Platform platform;
+
+    constexpr size_t kPoolCount = 3;
+    std::unique_ptr<platform::WorkerTaskPool> pools[kPoolCount];
+    std::unique_ptr<AsyncTaskManager> taskManagers[kPoolCount];
+
+    for (size_t i = 0; i < kPoolCount; i++) {
+        pools[i] = platform.CreateWorkerTaskPool();
+        taskManagers[i] = std::make_unique<AsyncTaskManager>(pools[i].get());
+    }
+
+    std::atomic<size_t> completedTaskCount = 0;
+    Ref<AsyncTask> prevTask = nullptr;
+
+    constexpr size_t kTaskCount = 100;
+    for (size_t i = 0; i < kTaskCount; i++) {
+        std::vector<Ref<AsyncTask>> deps;
+        if (prevTask) {
+            deps.push_back(prevTask);
+        }
+        prevTask = taskManagers[i % kPoolCount]->PostTaskWithDependencies<AsyncTask>(
+            deps, [&completedTaskCount, i]() {
+                EXPECT_EQ(completedTaskCount, i);
+                std::this_thread::sleep_for(std::chrono::microseconds(10));
+                completedTaskCount++;
+            });
+    }
+    prevTask->Wait();
+    EXPECT_EQ(completedTaskCount, kTaskCount);
+}
+
 }  // anonymous namespace
 }  // namespace dawn::native
