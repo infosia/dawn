@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbea14d3_071b2451",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-02T21:52:46Z",
+      "side": 1,
+      "message": "nit. I think we could remove this line as well for this fix.",
+      "range": {
+        "startLine": 586,
+        "startChar": 4,
+        "endLine": 586,
+        "endChar": 35
+      },
+      "revId": "4df061aaa4ddbd94bf28ac71737787b870b96423",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
