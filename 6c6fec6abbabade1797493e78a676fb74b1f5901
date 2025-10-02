@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ece2316e_06e8175b",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2096,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-02T20:07:42Z",
+      "side": 1,
+      "message": "If it\u0027s an array you\u0027d need to multiply all of this by the number of array elements too.",
+      "revId": "6c6fec6abbabade1797493e78a676fb74b1f5901",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c4f88d2_46e50987",
+        "filename": "src/tint/lang/core/type/manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-02T20:07:42Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "6c6fec6abbabade1797493e78a676fb74b1f5901",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7901e6f3_38570961",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-02T20:07:42Z",
+      "side": 1,
+      "message": "48 should be fine here since it\u0027s row-major. Looks like you don\u0027t take that into account if there\u0027s no matrix stride.",
+      "revId": "6c6fec6abbabade1797493e78a676fb74b1f5901",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
