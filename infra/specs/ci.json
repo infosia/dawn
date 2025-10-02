@@ -19,9 +19,6 @@
           "-ir",
           "--append-cwd-as-build"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_ir_fuzzer_corpus_tests",
         "resultdb": {
           "result_format": "single"
@@ -44,9 +41,6 @@
           "-check",
           "--append-cwd-as-build"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_wgsl_fuzzer_corpus_tests",
         "resultdb": {
           "result_format": "single"
@@ -74,9 +68,6 @@
           "-ir",
           "--append-cwd-as-build"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_ir_fuzzer_corpus_tests",
         "resultdb": {
           "result_format": "single"
@@ -99,9 +90,6 @@
           "-check",
           "--append-cwd-as-build"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_wgsl_fuzzer_corpus_tests",
         "resultdb": {
           "result_format": "single"
@@ -129,9 +117,6 @@
           "--use-angle=swiftshader",
           "--enable-toggles=gl_force_es_31_and_no_extensions"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_swangle_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -144,7 +129,8 @@
             "os": "Ubuntu-22.04",
             "pool": "chromium.tests.gpu"
           },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
+          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
+          "shards": 2
         },
         "test": "dawn_end2end_tests",
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
@@ -153,9 +139,6 @@
         "args": [
           "--adapter-vendor-id=0x1AE0"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_sws_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -168,15 +151,13 @@
             "os": "Ubuntu-22.04",
             "pool": "chromium.tests.gpu"
           },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
+          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
+          "shards": 2
         },
         "test": "dawn_end2end_tests",
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -198,9 +179,6 @@
         "args": [
           "--use-wire"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_wire_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -219,9 +197,6 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_unittests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -249,9 +224,6 @@
           "SwiftShader",
           "webgpu:api,operation,adapter,requestDevice:default:*"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_node_sws_cts",
         "resultdb": {
           "result_format": "single"
@@ -279,9 +251,6 @@
           "--use-angle=swiftshader",
           "--enable-toggles=gl_force_es_31_and_no_extensions"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_swangle_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -303,9 +272,6 @@
         "args": [
           "--adapter-vendor-id=0x1AE0"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_sws_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -324,9 +290,6 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -348,9 +311,6 @@
         "args": [
           "--use-wire"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_wire_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -369,9 +329,6 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_unittests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -399,9 +356,6 @@
           "SwiftShader",
           "webgpu:api,operation,adapter,requestDevice:default:*"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_node_sws_cts",
         "resultdb": {
           "result_format": "single"
@@ -439,9 +393,6 @@
           "-ir",
           "--append-cwd-as-build"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_ir_fuzzer_corpus_tests",
         "resultdb": {
           "result_format": "single"
@@ -464,9 +415,6 @@
           "-check",
           "--append-cwd-as-build"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_wgsl_fuzzer_corpus_tests",
         "resultdb": {
           "result_format": "single"
@@ -494,9 +442,6 @@
           "-ir",
           "--append-cwd-as-build"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_ir_fuzzer_corpus_tests",
         "resultdb": {
           "result_format": "single"
@@ -519,9 +464,6 @@
           "-check",
           "--append-cwd-as-build"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_wgsl_fuzzer_corpus_tests",
         "resultdb": {
           "result_format": "single"
@@ -549,9 +491,6 @@
           "--use-angle=swiftshader",
           "--enable-toggles=gl_force_es_31_and_no_extensions"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_swangle_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -564,7 +503,8 @@
             "os": "Ubuntu-22.04",
             "pool": "chromium.tests.gpu"
           },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
+          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
+          "shards": 2
         },
         "test": "dawn_end2end_tests",
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
@@ -573,9 +513,6 @@
         "args": [
           "--adapter-vendor-id=0x1AE0"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_sws_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -588,15 +525,13 @@
             "os": "Ubuntu-22.04",
             "pool": "chromium.tests.gpu"
           },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
+          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
+          "shards": 2
         },
         "test": "dawn_end2end_tests",
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -618,9 +553,6 @@
         "args": [
           "--use-wire"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_wire_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -639,9 +571,6 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_unittests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -669,9 +598,6 @@
           "--use-angle=swiftshader",
           "--enable-toggles=gl_force_es_31_and_no_extensions"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_swangle_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -693,9 +619,6 @@
         "args": [
           "--adapter-vendor-id=0x1AE0"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_sws_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -714,9 +637,6 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -738,9 +658,6 @@
         "args": [
           "--use-wire"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_wire_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -759,9 +676,6 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_unittests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -799,9 +713,6 @@
           "--use-angle=swiftshader",
           "--enable-toggles=gl_force_es_31_and_no_extensions"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_swangle_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -823,9 +734,6 @@
         "args": [
           "--adapter-vendor-id=0x1AE0"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_sws_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -838,15 +746,13 @@
             "gpu": "8086:3e9b",
             "os": "Mac-14.5"
           },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
+          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
+          "shards": 2
         },
         "test": "dawn_end2end_tests",
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -868,9 +774,6 @@
         "args": [
           "--use-wire"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_wire_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -889,9 +792,6 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_unittests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -919,9 +819,6 @@
           "SwiftShader",
           "webgpu:api,operation,adapter,requestDevice:default:*"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_node_sws_cts",
         "resultdb": {
           "result_format": "single"
@@ -949,9 +846,6 @@
           "--use-angle=swiftshader",
           "--enable-toggles=gl_force_es_31_and_no_extensions"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_swangle_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -973,9 +867,6 @@
         "args": [
           "--adapter-vendor-id=0x1AE0"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_sws_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -994,9 +885,6 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1018,9 +906,6 @@
         "args": [
           "--use-wire"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_wire_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1039,9 +924,6 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_unittests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1069,9 +951,6 @@
           "SwiftShader",
           "webgpu:api,operation,adapter,requestDevice:default:*"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_node_sws_cts",
         "resultdb": {
           "result_format": "single"
@@ -1114,9 +993,6 @@
           "--use-angle=swiftshader",
           "--enable-toggles=gl_force_es_31_and_no_extensions"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_swangle_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1129,7 +1005,8 @@
             "os": "Windows-10-19045",
             "pool": "chromium.tests.gpu"
           },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
+          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
+          "shards": 2
         },
         "test": "dawn_end2end_tests",
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
@@ -1138,9 +1015,6 @@
         "args": [
           "--adapter-vendor-id=0x1AE0"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_sws_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1153,15 +1027,13 @@
             "os": "Windows-10-19045",
             "pool": "chromium.tests.gpu"
           },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
+          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
+          "shards": 3
         },
         "test": "dawn_end2end_tests",
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1183,9 +1055,6 @@
         "args": [
           "--use-wire"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_wire_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1204,9 +1073,6 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_unittests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1234,9 +1100,6 @@
           "Microsoft Basic Render Driver",
           "webgpu:api,operation,adapter,requestDevice:default:*"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_node_software_d3d12_cts",
         "resultdb": {
           "result_format": "single"
@@ -1264,9 +1127,6 @@
           "--use-angle=swiftshader",
           "--enable-toggles=gl_force_es_31_and_no_extensions"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_swangle_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1288,9 +1148,6 @@
         "args": [
           "--adapter-vendor-id=0x1AE0"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_sws_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1312,9 +1169,6 @@
         "args": [
           "--adapter-vendor-id=0x1414"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_warp_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1333,9 +1187,6 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1357,9 +1208,6 @@
         "args": [
           "--use-wire"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_wire_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1378,9 +1226,6 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_unittests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1408,9 +1253,6 @@
           "Microsoft Basic Render Driver",
           "webgpu:api,operation,adapter,requestDevice:default:*"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_node_software_d3d12_cts",
         "resultdb": {
           "result_format": "single"
@@ -1438,9 +1280,6 @@
           "--use-angle=swiftshader",
           "--enable-toggles=gl_force_es_31_and_no_extensions"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_swangle_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1462,9 +1301,6 @@
         "args": [
           "--adapter-vendor-id=0x1AE0"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_sws_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1486,9 +1322,6 @@
         "args": [
           "--adapter-vendor-id=0x1414"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_warp_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1507,9 +1340,6 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1531,9 +1361,6 @@
         "args": [
           "--use-wire"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_wire_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1552,9 +1379,6 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_unittests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1582,9 +1406,6 @@
           "Microsoft Basic Render Driver",
           "webgpu:api,operation,adapter,requestDevice:default:*"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_node_software_d3d12_cts",
         "resultdb": {
           "result_format": "single"
@@ -1622,9 +1443,6 @@
           "--use-angle=swiftshader",
           "--enable-toggles=gl_force_es_31_and_no_extensions"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_swangle_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1637,7 +1455,8 @@
             "os": "Windows-10-19045",
             "pool": "chromium.tests.gpu"
           },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
+          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
+          "shards": 2
         },
         "test": "dawn_end2end_tests",
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
@@ -1646,9 +1465,6 @@
         "args": [
           "--adapter-vendor-id=0x1AE0"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_sws_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1661,15 +1477,13 @@
             "os": "Windows-10-19045",
             "pool": "chromium.tests.gpu"
           },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
+          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
+          "shards": 3
         },
         "test": "dawn_end2end_tests",
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1691,9 +1505,6 @@
         "args": [
           "--use-wire"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_wire_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1712,9 +1523,6 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_unittests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1742,9 +1550,6 @@
           "--use-angle=swiftshader",
           "--enable-toggles=gl_force_es_31_and_no_extensions"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_swangle_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1766,9 +1571,6 @@
         "args": [
           "--adapter-vendor-id=0x1AE0"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_sws_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1790,9 +1592,6 @@
         "args": [
           "--adapter-vendor-id=0x1414"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_end2end_warp_tests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1811,9 +1610,6 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1835,9 +1631,6 @@
         "args": [
           "--use-wire"
         ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "dawn_wire_unittests",
         "resultdb": {
           "result_format": "gtest_json"
@@ -1856,9 +1649,6 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_unittests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
         "name": "tint_unittests",
         "resultdb": {
           "result_format": "gtest_json"
