@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "acb3dee5_779c0893",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 27
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-02T02:08:27Z",
+      "side": 1,
+      "message": "CR+1 because still needs ANGLE D3D11 fix as Geoff pointed out in chat.",
+      "revId": "facf36f1fb990ce9897c67d8df565e620540cb2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

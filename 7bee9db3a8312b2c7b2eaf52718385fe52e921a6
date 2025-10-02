@@ -72,6 +72,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7365d04b_7fbf35e9",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-02T02:08:27Z",
+      "side": 1,
+      "message": "Sure. (I don\u0027t know what you mean about compat, but this nit isn\u0027t important enough that I need to figure it out right now.)",
+      "parentUuid": "02483238_0003267b",
+      "range": {
+        "startLine": 284,
+        "startChar": 55,
+        "endLine": 286,
+        "endChar": 49
+      },
+      "revId": "7bee9db3a8312b2c7b2eaf52718385fe52e921a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f7486c8d_b07644ff",
