@@ -125,6 +125,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e41667a8_aa43d961",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-02T00:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa9ab226_c8b5d41b",
+      "revId": "bcaf53c35d067c3ee18420b95f5d9cc2ac585de3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bde7f120_e8f6d8df",
