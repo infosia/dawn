@@ -16,6 +16,24 @@
       "message": "PTAL\n\n`node_helpers.py` and `paths.go` were the only places affected the last time I messed with the Node DEPS entry, so I don\u0027t anticipate any delayed issues on the builders caused by the old cached files disappearing in the future.",
       "revId": "fbf1bae52d0099f7d3352c88d5a2a7bd9e59ddaa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e872d81_30f14fb5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-02T00:25:55Z",
+      "side": 1,
+      "message": "Hm, the old MSVC builders aren\u0027t happy with this, which is weird since they should be using the version of Node provided by the recipe. Even if they are using the version under third_party, all this CL does is change the path, not the binary.",
+      "parentUuid": "af5b18a4_1b7b28ff",
+      "revId": "fbf1bae52d0099f7d3352c88d5a2a7bd9e59ddaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
