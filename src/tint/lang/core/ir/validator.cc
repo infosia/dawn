@@ -2062,6 +2062,13 @@ void Validator::CheckType(const core::type::Type* root,
                     }
                 }
 
+                if (ptr->AddressSpace() == core::AddressSpace::kImmediate) {
+                    if (ptr->Access() != core::Access::kRead) {
+                        diag() << "immediate pointers must be read access";
+                        return false;
+                    }
+                }
+
                 if (type != root) {
                     // Nesting pointer types inside structures is guarded by a capability.
                     if (!(capabilities_.Contains(
