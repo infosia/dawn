@@ -888,7 +888,7 @@ Future DeviceBase::APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbac
             if (mScope) {
                 mPendingAsyncTasks = mScope->AcquirePendingAsyncTasks();
                 for (auto task : mPendingAsyncTasks) {
-                    task.Task->AddCompletionCallback([this] { GetIfWaitListEvent()->Signal(); });
+                    task.Task->AddCompletionCallback([this]() { GetIfWaitListEvent()->Signal(); });
                 }
             }
         }
