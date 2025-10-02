@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bbe2564_fa3316cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-10-02T19:08:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1a15aef8_393fc347",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 24
+      },
+      "revId": "abfd7044df1f1d0c2228519fc4923ba0cd2491cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "211a4d63_da16fae1",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-10-01T20:52:14Z",
       "side": 1,
       "message": "Is it possible to write a test for this?",
+      "revId": "abfd7044df1f1d0c2228519fc4923ba0cd2491cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94a5af9e_00900a54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-10-02T19:08:19Z",
+      "side": 1,
+      "message": "Not really, because the check was fundamentally flawed...\n\nI have rewritten the check to be more logically correct, which as a side effect has fixed the fuzz issue.",
+      "parentUuid": "211a4d63_da16fae1",
       "revId": "abfd7044df1f1d0c2228519fc4923ba0cd2491cf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
