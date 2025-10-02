@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3180212a_1114a788",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2088,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-02T17:58:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1e51400_be8f94dc",
+      "revId": "7a1d68f092436bd71963c9101c2592ff3b876c39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11f626f3_f389ffbb",
@@ -67,6 +85,24 @@
       "writtenOn": "2025-10-02T15:46:06Z",
       "side": 1,
       "message": "Which also means this is wrong, so it should be stride * columns",
+      "revId": "7a1d68f092436bd71963c9101c2592ff3b876c39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5481ef1c_21be5e09",
+        "filename": "src/tint/lang/core/type/manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-02T17:58:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11f626f3_f389ffbb",
       "revId": "7a1d68f092436bd71963c9101c2592ff3b876c39",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
