@@ -72,6 +72,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "40b854c1_dcaa3dd0",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2137,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-10-02T19:22:28Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "56e610cd_939daa17",
+      "revId": "603a5155599af6b335e4e22454cb973e229ca24c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "024b147a_580053bd",
@@ -85,6 +103,30 @@
       "writtenOn": "2025-10-01T20:40:53Z",
       "side": 0,
       "message": "Remove this",
+      "range": {
+        "startLine": 2170,
+        "startChar": 38,
+        "endLine": 2170,
+        "endChar": 52
+      },
+      "revId": "603a5155599af6b335e4e22454cb973e229ca24c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98f246d9_5ead2413",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2170,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-10-02T19:22:28Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "024b147a_580053bd",
       "range": {
         "startLine": 2170,
         "startChar": 38,
