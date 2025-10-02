@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a452f14_518e6f35",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-02T09:30:52Z",
+      "side": 1,
+      "message": "We\u0027re recreating a medium size struct in each call to GetSwizzle, can we put in on the stack (in a local variable above) instead of creating it 4 times?",
+      "revId": "92e95c1a3c1af4a1307ff925fd61d2d18ac29222",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c30aec9_623f40c9",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-02T09:30:52Z",
+      "side": 1,
+      "message": "Add a comment explaining why !AngleD3D11 otherwise future readers won\u0027t be able to know why that check is here.",
+      "revId": "92e95c1a3c1af4a1307ff925fd61d2d18ac29222",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
