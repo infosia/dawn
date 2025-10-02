@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e1e51400_be8f94dc",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2088,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-02T16:04:35Z",
+      "side": 1,
+      "message": "If the layout is row-major, then the stride is the stride between rows.",
+      "parentUuid": "e771012a_bb9a0dc6",
+      "revId": "7a1d68f092436bd71963c9101c2592ff3b876c39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "11f626f3_f389ffbb",
         "filename": "src/tint/lang/core/type/manager.cc",
         "patchSetId": 8
