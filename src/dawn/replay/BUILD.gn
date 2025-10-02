@@ -35,6 +35,7 @@ static_library("replay") {
     "Capture.h",
     "Deserialization.cpp",
     "Deserialization.h",
+    "Error.cpp",
     "Error.h",
     "ReadHead.cpp",
     "ReadHead.h",
@@ -47,8 +48,5 @@ static_library("replay") {
     "${dawn_root}/src/dawn:proc",
     "${dawn_root}/src/dawn:serialization",
     "${dawn_root}/src/dawn/common",
-
-    # TODO(413053623): remove this ASAP
-    "${dawn_root}/src/dawn/native:sources",
   ]
 }
