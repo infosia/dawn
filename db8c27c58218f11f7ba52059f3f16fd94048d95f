@@ -80,6 +80,24 @@
       "parentUuid": "66c0e8e3_1539490d",
       "revId": "db8c27c58218f11f7ba52059f3f16fd94048d95f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30a6dae7_459862df",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else_test.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-02T17:21:38Z",
+      "side": 1,
+      "message": "Hah, I was reading the patchset diff, so I thought you\u0027d edited a bunch of old tests with this change but I see you\u0027ve just edited the new ones.",
+      "parentUuid": "eee01954_e4f67d2e",
+      "revId": "db8c27c58218f11f7ba52059f3f16fd94048d95f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
