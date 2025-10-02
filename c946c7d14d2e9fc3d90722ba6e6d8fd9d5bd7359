@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed14da2f_57bb0406",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-02T01:05:25Z",
+      "side": 1,
+      "message": "I\u0027ve done this.",
+      "parentUuid": "77b78301_b10fa759",
+      "revId": "c946c7d14d2e9fc3d90722ba6e6d8fd9d5bd7359",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2194e4ff_85ba34a8",
@@ -49,6 +67,30 @@
       "writtenOn": "2025-10-01T03:10:37Z",
       "side": 1,
       "message": "Is this an appropriate warning category?",
+      "range": {
+        "startLine": 189,
+        "startChar": 13,
+        "endLine": 189,
+        "endChar": 17
+      },
+      "revId": "c946c7d14d2e9fc3d90722ba6e6d8fd9d5bd7359",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb6fc4e9_2f68400a",
+        "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-02T01:05:25Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "parentUuid": "2194e4ff_85ba34a8",
       "range": {
         "startLine": 189,
         "startChar": 13,
