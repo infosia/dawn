@@ -16,6 +16,24 @@
       "message": "Handle static samplers here.",
       "revId": "860002a9b7c4ff32dfa92669781b121d017ede5e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33f478fd_ddfec4a0",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-02T11:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36ae5a83_84fd055b",
+      "revId": "860002a9b7c4ff32dfa92669781b121d017ede5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
