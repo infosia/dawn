@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0942b76d_d02f8100",
+        "filename": "src/emdawnwebgpu/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-02T19:57:48Z",
+      "side": 1,
+      "message": "nit. maybe the `CAN_ADDRESS_2GB` could be indented line so it looks like the rest of the list?",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 54
+      },
+      "revId": "ac960f4e8f634aee23cbdfa9a5806399bce3081c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
