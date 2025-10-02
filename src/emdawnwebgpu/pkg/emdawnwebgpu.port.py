@@ -35,6 +35,9 @@ import sys
 import zlib
 from typing import Dict, Optional
 
+# Imports from Emscripten
+from tools import diagnostics
+
 if __name__ == '__main__':
     print('Please see README.md for details on how to use this port.')
     sys.exit(1)
@@ -85,7 +88,7 @@ _srcs = [
 
 # Check for a generated file that would only be there in the built package
 if not os.path.isfile(os.path.join(_c_include_dir, 'webgpu', 'webgpu.h')):
-    raise Exception(
+    diagnostics.error(
         "emdawnwebgpu.port.py must sit in a built emdawnwebgpu_pkg, not be used standalone or "
         "from Dawn's source tree. Download a pre-built package from "
         "https://github.com/google/dawn/releases or build it locally.")
@@ -179,11 +182,11 @@ def _get_lib_name(settings):
 
 def linker_setup(ports, settings):
     if settings.USE_WEBGPU:
-        raise Exception('emdawnwebgpu may not be used with -sUSE_WEBGPU=1')
+        diagnostics.error('emdawnwebgpu may not be used with -sUSE_WEBGPU=1')
 
     # webgpu.cpp is C++, so even if linking a C program, make sure we link C++.
     if not settings.LINK_AS_CXX:
-        raise Exception(
+        diagnostics.error(
             'emdawnwebgpu requires C++. Link using em++ (or emcc -sDEFAULT_TO_CXX), instead of emcc.'
         )
 
