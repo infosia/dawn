@@ -337,6 +337,7 @@ ci.builder(
     gn_args = gn_args.config(
         configs = [
             "component",
+            "dawn_complete_static_libs",
             "dawn_node_bindings",
             "dawn_swiftshader",
             "release",

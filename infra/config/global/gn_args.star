@@ -44,9 +44,23 @@ gn_args.config(
 )
 
 gn_args.config(
+    name = "dawn_complete_static_libs",
+    args = {
+        "dawn_complete_static_libs": True,
+    },
+)
+
+gn_args.config(
     name = "dawn_no_d3d12",
     args = {
         "dawn_enable_d3d12": False,
+    },
+)
+
+gn_args.config(
+    name = "dawn_no_swiftshader",
+    args = {
+        "dawn_use_swiftshader": False,
     },
 )
 
