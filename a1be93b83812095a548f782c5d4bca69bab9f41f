@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78d9c370_889124bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-02T09:23:10Z",
+      "side": 1,
+      "message": "This is a compliance script bug, this CL is compliant since we are both trusted humans.",
+      "parentUuid": "f824484b_6ce4a4b1",
+      "revId": "a1be93b83812095a548f782c5d4bca69bab9f41f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "754dafd0_700f2bf4",
