@@ -50,6 +50,7 @@
   'no_gpu': { 'fail_if_unused': False,
               'swarming': {'dimensions': {'gpu': 'none'}}},
   'no_swarming': {'swarming': {'can_use_on_swarming_builders': False}},
+  'omit_merge_script': {'merge': {'omit_merge_script': True}},
   'result_adapter_gtest_json': {'resultdb': {'result_format': 'gtest_json'}},
   'result_adapter_single': {'resultdb': {'result_format': 'single'}},
   'swarming_containment_auto': { 'fail_if_unused': False,

@@ -8,17 +8,9 @@
           '--enable-toggles=gl_force_es_31_and_no_extensions',
         ],
         'mixins': [
+          'omit_merge_script',
           'result_adapter_gtest_json',
         ],
-        'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_gtest_merge does not work properly with the
-          # results output by --gtest_output. However, noop_merge locks us to
-          # a single shard, and we should not have any need for the outputs of
-          # merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
-        },
         'test': 'dawn_end2end_tests',
       },
     },
@@ -28,17 +20,9 @@
           '--adapter-vendor-id=0x1AE0',
         ],
         'mixins': [
+          'omit_merge_script',
           'result_adapter_gtest_json',
         ],
-        'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_gtest_merge does not work properly with the
-          # results output by --gtest_output. However, noop_merge locks us to
-          # a single shard, and we should not have any need for the outputs of
-          # merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
-        },
         'test': 'dawn_end2end_tests',
       },
     },
@@ -48,17 +32,9 @@
           '--adapter-vendor-id=0x1414',
         ],
         'mixins': [
+          'omit_merge_script',
           'result_adapter_gtest_json',
         ],
-        'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_gtest_merge does not work properly with the
-          # results output by --gtest_output. However, noop_merge locks us to
-          # a single shard, and we should not have any need for the outputs of
-          # merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
-        },
         'test': 'dawn_end2end_tests',
       },
     },
@@ -72,17 +48,9 @@
           'webgpu:api,operation,adapter,requestDevice:default:*',
         ],
         'mixins': [
+          'omit_merge_script',
           'result_adapter_single',
         ],
-        'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_isolated_script_merge does not work properly
-          # without some additional Python dependencies. However, noop_merge
-          # locks us to a single shard, and we should not have any need for the
-          # outputs of merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
-        },
         'test': 'dawn_node_cts',
       },
     },
@@ -96,34 +64,18 @@
           'webgpu:api,operation,adapter,requestDevice:default:*',
         ],
         'mixins': [
+          'omit_merge_script',
           'result_adapter_single',
         ],
-        'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_isolated_script_merge does not work properly
-          # without some additional Python dependencies. However, noop_merge
-          # locks us to a single shard, and we should not have any need for the
-          # outputs of merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
-        },
         'test': 'dawn_node_cts',
       },
     },
     'dawn_unit_gtests': {
       'dawn_unittests': {
         'mixins': [
+          'omit_merge_script',
           'result_adapter_gtest_json',
         ],
-        'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_gtest_merge does not work properly with the
-          # results output by --gtest_output. However, noop_merge locks us to
-          # a single shard, and we should not have any need for the outputs of
-          # merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
-        },
       },
     },
     'dawn_wire_unit_gtests': {
@@ -132,17 +84,9 @@
           '--use-wire',
         ],
         'mixins': [
+          'omit_merge_script',
           'result_adapter_gtest_json',
         ],
-        'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_gtest_merge does not work properly with the
-          # results output by --gtest_output. However, noop_merge locks us to
-          # a single shard, and we should not have any need for the outputs of
-          # merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
-        },
         'test': 'dawn_unittests',
       },
     },
@@ -153,17 +97,9 @@
           '--append-cwd-as-build',
         ],
         'mixins': [
+          'omit_merge_script',
           'result_adapter_single',
         ],
-        'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_isolated_script_merge does not work properly
-          # without some additional Python dependencies. However, noop_merge
-          # locks us to a single shard, and we should not have any need for the
-          # outputs of merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
-        },
         'test': 'fuzzer_corpus_tests',
       },
       'tint_ir_fuzzer_corpus_tests': {
@@ -173,34 +109,18 @@
           '--append-cwd-as-build',
         ],
         'mixins': [
+          'omit_merge_script',
           'result_adapter_single',
         ],
-        'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_isolated_script_merge does not work properly
-          # without some additional Python dependencies. However, noop_merge
-          # locks us to a single shard, and we should not have any need for the
-          # outputs of merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
-        },
         'test': 'fuzzer_corpus_tests',
       },
     },
     'tint_unit_gtests': {
       'tint_unittests': {
         'mixins': [
+          'omit_merge_script',
           'result_adapter_gtest_json',
         ],
-        'merge': {
-          # This should be removed in favor of updating the recipe code to allow
-          # the merge script to be skipped entirely. noop is needed currently
-          # because standard_gtest_merge does not work properly with the
-          # results output by --gtest_output. However, noop_merge locks us to
-          # a single shard, and we should not have any need for the outputs of
-          # merge scripts for Dawn.
-          'script': '//testing/merge_scripts/noop_merge.py',
-        },
       },
     },
   },

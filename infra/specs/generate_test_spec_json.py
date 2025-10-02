@@ -56,6 +56,11 @@ ADDITIONAL_MIXINS = {
             'can_use_on_swarming_builders': False,
         },
     },
+    'omit_merge_script': {
+        'merge': {
+            'omit_merge_script': True,
+        },
+    },
     'result_adapter_gtest_json': {
         'resultdb': {
             'result_format': 'gtest_json',
