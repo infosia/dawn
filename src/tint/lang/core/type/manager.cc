@@ -347,7 +347,22 @@ core::type::Struct* Manager::Struct(Symbol name, VectorRef<const StructMember*> 
     for (const auto& m : members) {
         max_align = std::max(max_align, m->Align());
     }
-    uint32_t size = members.Back()->Offset() + members.Back()->Size();
+
+    auto& mem = members.Back();
+    uint32_t size = mem->Offset();
+    if (mem->HasMatrixStride()) {
+        auto* ty = mem->Type();
+        while (ty->Is<core::type::Array>()) {
+            ty = ty->As<core::type::Array>()->ElemType();
+        }
+        auto* mat = ty->As<core::type::Matrix>();
+        TINT_ASSERT(mat);
+
+        size += (mem->MatrixStride() * (mem->RowMajor() ? mat->Rows() : mat->Columns()));
+    } else {
+        size += mem->Size();
+    }
+
     return Get<core::type::Struct>(name, std::move(members), tint::RoundUp(max_align, size));
 }
 
