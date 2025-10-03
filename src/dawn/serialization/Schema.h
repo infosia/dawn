@@ -46,6 +46,59 @@ enum class ObjectType : uint32_t {
     TextureView,
 };
 
+enum class ComputePassCommand : uint32_t {
+    Invalid = 0,  // 0 is invalid at it's more likely to catch bugs.
+    Dispatch,
+    DispatchIndirect,
+    SetComputePipeline,
+    SetBindGroup,
+    WriteTimestamp,
+    InsertDebugMarker,
+    PopDebugGroup,
+    PushDebugGroup,
+    SetImmediateData,
+};
+
+enum class RenderPassCommand : uint32_t {
+    Invalid = 0,  // 0 is invalid at it's more likely to catch bugs.
+    Draw,
+    DrawIndexed,
+    DrawIndirect,
+    DrawIndexedIndirect,
+    SetPipeline,
+    SetBindGroup,
+    SetIndexBuffer,
+    SetVertexBuffer,
+    SetViewport,
+    SetScissorRect,
+    SetBlendConstant,
+    SetStencilReference,
+    EndRenderPass,
+    ExecuteBundles,
+    WriteTimestamp,
+    InsertDebugMarker,
+    PopDebugGroup,
+    PushDebugGroup,
+    SetImmediateData,
+};
+
+enum class EncoderCommand : uint32_t {
+    Invalid = 0,  // 0 is invalid at it's more likely to catch bugs.
+    BeginComputePass,
+    BeginRenderPass,
+    CopyBufferToBuffer,
+    CopyBufferToTexture,
+    CopyTextureToBuffer,
+    CopyTextureToTexture,
+    ClearBuffer,
+    ResolveQuerySet,
+    WriteTimestamp,
+    InsertDebugMarker,
+    PopDebugGroup,
+    PushDebugGroup,
+    WriteBuffer,
+};
+
 enum class RootCommand : uint32_t {
     Invalid = 0,  // 0 is invalid at it's more likely to catch bugs.
     CreateResource,
@@ -56,6 +109,20 @@ enum class RootCommand : uint32_t {
 
     End,
 };
+
+#define ORIGIN3D_MEMBER(X) \
+    X(uint32_t, x)         \
+    X(uint32_t, y)         \
+    X(uint32_t, z)
+
+DAWN_REPLAY_SERIALIZABLE(struct, Origin3D, ORIGIN3D_MEMBER){};
+
+#define EXTENT3D_MEMBER(X) \
+    X(uint32_t, width)     \
+    X(uint32_t, height)    \
+    X(uint32_t, depth)
+
+DAWN_REPLAY_SERIALIZABLE(struct, Extent3D, EXTENT3D_MEMBER){};
 
 #define BUFFER_CREATION_MEMBER(X) \
     X(uint64_t, size)             \
@@ -70,6 +137,27 @@ DAWN_REPLAY_SERIALIZABLE(struct, Buffer, BUFFER_CREATION_MEMBER){};
 
 DAWN_REPLAY_SERIALIZABLE(struct, LabeledResource, LABELED_RESOURCE_MEMBER){};
 
+#define TEXEL_COPY_BUFFER_LAYOUT_MEMBER(X) \
+    X(uint64_t, offset)                    \
+    X(uint32_t, bytesPerRow)               \
+    X(uint32_t, rowsPerImage)
+
+DAWN_REPLAY_SERIALIZABLE(struct, TexelCopyBufferLayout, TEXEL_COPY_BUFFER_LAYOUT_MEMBER){};
+
+#define TEXEL_COPY_BUFFER_INFO_MEMBER(X) \
+    X(ObjectId, bufferId)                \
+    X(TexelCopyBufferLayout, layout)
+
+DAWN_REPLAY_SERIALIZABLE(struct, TexelCopyBufferInfo, TEXEL_COPY_BUFFER_INFO_MEMBER){};
+
+#define TEXEL_COPY_TEXTURE_INFO_MEMBER(X) \
+    X(ObjectId, textureId)                \
+    X(uint32_t, mipLevel)                 \
+    X(Origin3D, origin)                   \
+    X(wgpu::TextureAspect, aspect)
+
+DAWN_REPLAY_SERIALIZABLE(struct, TexelCopyTextureInfo, TEXEL_COPY_TEXTURE_INFO_MEMBER){};
+
 #define CREATE_RESOURCE_CMD_DATA_MEMBER(X) X(LabeledResource, resource)
 
 DAWN_REPLAY_MAKE_ROOT_CMD_AND_CMD_DATA(CreateResource, CREATE_RESOURCE_CMD_DATA_MEMBER){};
@@ -80,6 +168,40 @@ DAWN_REPLAY_MAKE_ROOT_CMD_AND_CMD_DATA(CreateResource, CREATE_RESOURCE_CMD_DATA_
     X(size_t, size)
 
 DAWN_REPLAY_MAKE_ROOT_CMD_AND_CMD_DATA(WriteBuffer, WRITE_BUFFER_CMD_DATA_MEMBER){};
+
+#define COPY_BUFFER_TO_BUFFER_CMD_DATA_MEMBER(X) \
+    X(ObjectId, srcBufferId)                     \
+    X(uint64_t, srcOffset)                       \
+    X(ObjectId, dstBufferId)                     \
+    X(uint64_t, dstOffset)                       \
+    X(size_t, size)
+
+DAWN_REPLAY_MAKE_ENCODER_CMD_AND_CMD_DATA(CopyBufferToBuffer,
+                                          COPY_BUFFER_TO_BUFFER_CMD_DATA_MEMBER){};
+
+#define COPY_BUFFER_TO_TEXTURE_CMD_DATA_MEMBER(X) \
+    X(TexelCopyBufferLayout, source)              \
+    X(TexelCopyTextureInfo, destination)          \
+    X(Extent3D, copySize)
+
+DAWN_REPLAY_MAKE_ENCODER_CMD_AND_CMD_DATA(CopyBufferToTexture,
+                                          COPY_BUFFER_TO_TEXTURE_CMD_DATA_MEMBER){};
+
+#define COPY_TEXTURE_TO_BUFFER_CMD_DATA_MEMBER(X) \
+    X(TexelCopyTextureInfo, source)               \
+    X(TexelCopyBufferLayout, destination)         \
+    X(Extent3D, copySize)
+
+DAWN_REPLAY_MAKE_ENCODER_CMD_AND_CMD_DATA(CopyTextureToBuffer,
+                                          COPY_TEXTURE_TO_BUFFER_CMD_DATA_MEMBER){};
+
+#define COPY_TEXTURE_TO_TEXTURE_CMD_DATA_MEMBER(X) \
+    X(TexelCopyTextureInfo, source)                \
+    X(TexelCopyTextureInfo, destination)           \
+    X(Extent3D, copySize)
+
+DAWN_REPLAY_MAKE_ENCODER_CMD_AND_CMD_DATA(CopyTextureToTexture,
+                                          COPY_TEXTURE_TO_TEXTURE_CMD_DATA_MEMBER){};
 
 }  // namespace schema
 
