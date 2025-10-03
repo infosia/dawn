@@ -149,6 +149,30 @@ void Queue::WaitForCommandsToBeScheduled() {
     [*lastSubmittedCommands waitUntilScheduled];
 }
 
+CommandBufferScheduledWaiter Queue::GetCommandBufferScheduledWaiter() {
+    if (!IsAlive()) {
+        return nullptr;
+    }
+    if (GetDevice()->ConsumedError(SubmitPendingCommandBuffer())) {
+        return nullptr;
+    }
+
+    NSPRef<id<MTLCommandBuffer>> lastSubmittedCommands;
+    {
+        std::lock_guard<std::mutex> lock(mLastSubmittedCommandsMutex);
+        lastSubmittedCommands = mLastSubmittedCommands;
+    }
+
+    CommandBufferScheduledWaiter block = ^{
+        // If `lastSubmittedCommands` is null, it means pending commands were completed on the GPU,
+        // so they are already scheduled by definition and the waiter doesn't need to do anything.
+        if (lastSubmittedCommands) {
+            [*lastSubmittedCommands waitUntilScheduled];
+        }
+    };
+    return Block_copy(block);
+}
+
 CommandRecordingContext* Queue::GetPendingCommandContext(SubmitMode submitMode) {
     if (submitMode == SubmitMode::Normal) {
         mCommandContext.SetNeedsSubmit();

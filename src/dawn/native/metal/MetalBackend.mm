@@ -47,4 +47,10 @@ id<MTLDevice> GetMTLDevice(WGPUDevice device) {
     return backendDevice->GetMTLDevice();
 }
 
+CommandBufferScheduledWaiter GetCommandBufferScheduledWaiter(WGPUDevice device) {
+    Device* backendDevice = ToBackend(FromAPI(device));
+    auto deviceGuard = backendDevice->GetGuard();
+    return ToBackend(backendDevice->GetQueue())->GetCommandBufferScheduledWaiter();
+}
+
 }  // namespace dawn::native::metal

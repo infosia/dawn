@@ -25,6 +25,8 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <thread>
+
 #include "dawn/tests/DawnTest.h"
 
 #include "dawn/native/MetalBackend.h"
@@ -50,6 +52,75 @@ TEST_P(MetalBackendTests, WaitForCommandsToBeScheduledOnDestroyedDevice) {
     auto device2 = CreateDevice();
     device2.Destroy();
     metal::WaitForCommandsToBeScheduled(device2.Get());
+}
+
+// Test GetCommandBufferScheduledWaiter() call without any crash.
+TEST_P(MetalBackendTests, GetCommandBufferScheduledWaiter) {
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    encoder.Finish();
+
+    queue.Submit(0, nullptr);
+
+    auto waiter = metal::GetCommandBufferScheduledWaiter(device.Get());
+    ASSERT_NE(waiter, nullptr);
+    waiter();
+}
+
+// Test GetCommandBufferScheduledWaiter() can be called on another thread.
+TEST_P(MetalBackendTests, GetCommandBufferScheduledWaiterThreadSafe) {
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    encoder.Finish();
+
+    queue.Submit(0, nullptr);
+
+    auto waiter = metal::GetCommandBufferScheduledWaiter(device.Get());
+    ASSERT_NE(waiter, nullptr);
+
+    std::thread thread([waiter]() { waiter(); });
+    thread.join();
+}
+
+// Test GetCommandBufferScheduledWaiter() can be called after the work is done.
+TEST_P(MetalBackendTests, GetCommandBufferScheduledWaiterAfterWorkDone) {
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    encoder.Finish();
+
+    queue.Submit(0, nullptr);
+
+    WaitForAllOperations();
+
+    auto waiter = metal::GetCommandBufferScheduledWaiter(device.Get());
+    ASSERT_NE(waiter, nullptr);
+
+    std::thread thread([waiter]() { waiter(); });
+    thread.join();
+}
+
+// Test GetCommandBufferScheduledWaiter() implicitly submits pending commands.
+TEST_P(MetalBackendTests, GetCommandBufferScheduledWaiterImplicitSubmit) {
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    encoder.Finish();
+
+    auto waiter = metal::GetCommandBufferScheduledWaiter(device.Get());
+    ASSERT_NE(waiter, nullptr);
+
+    std::thread thread([waiter]() { waiter(); });
+    thread.join();
+}
+
+// Test GetCommandBufferScheduledWaiter() implicitly submits and can be called after the work is
+// done.
+TEST_P(MetalBackendTests, GetCommandBufferScheduledWaiterImplicitSubmitAfterWorkDone) {
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    encoder.Finish();
+
+    auto waiter = metal::GetCommandBufferScheduledWaiter(device.Get());
+    ASSERT_NE(waiter, nullptr);
+
+    WaitForAllOperations();
+
+    std::thread thread([waiter]() { waiter(); });
+    thread.join();
 }
 
 DAWN_INSTANTIATE_TEST(MetalBackendTests, MetalBackend());

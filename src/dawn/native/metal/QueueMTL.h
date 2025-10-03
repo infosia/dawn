@@ -34,6 +34,7 @@
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
 #include "dawn/native/EventManager.h"
+#include "dawn/native/MetalBackend.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/WaitListEvent.h"
 #include "dawn/native/metal/CommandRecordingContext.h"
@@ -50,6 +51,7 @@ class Queue final : public QueueBase {
     CommandRecordingContext* GetPendingCommandContext(SubmitMode submitMode = SubmitMode::Normal);
     MaybeError SubmitPendingCommandBuffer();
     void WaitForCommandsToBeScheduled();
+    CommandBufferScheduledWaiter GetCommandBufferScheduledWaiter();
     id<MTLSharedEvent> GetMTLSharedEvent() const;
     ResultOrError<Ref<SharedFence>> GetOrCreateSharedFence();
 

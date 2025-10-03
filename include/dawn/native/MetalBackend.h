@@ -48,6 +48,10 @@ DAWN_NATIVE_EXPORT void WaitForCommandsToBeScheduled(WGPUDevice device);
 #if defined(__OBJC__)
 // Return the MTLDevice corresponding to the WGPUDevice.
 DAWN_NATIVE_EXPORT id<MTLDevice> GetMTLDevice(WGPUDevice device);
+
+// Get a callable block that waits until the last submitted or pending command buffer is scheduled.
+using CommandBufferScheduledWaiter = void (^)(void);
+DAWN_NATIVE_EXPORT CommandBufferScheduledWaiter GetCommandBufferScheduledWaiter(WGPUDevice device);
 #endif
 
 }  // namespace dawn::native::metal
