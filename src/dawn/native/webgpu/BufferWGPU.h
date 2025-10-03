@@ -45,7 +45,10 @@ class Buffer final : public BufferBase, public RecordableObject, public ObjectWG
     Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor, WGPUBuffer innerBuffer);
 
     void AddReferenced(CaptureContext& captureContext) const override;
-    void CaptureCreationParameters(CaptureContext& context) const override;
+    MaybeError CaptureCreationParameters(CaptureContext& context) override;
+    MaybeError CaptureContentIfNeeded(CaptureContext& context,
+                                      schema::ObjectId id,
+                                      bool newResource) override;
 
   private:
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override;
@@ -56,7 +59,12 @@ class Buffer final : public BufferBase, public RecordableObject, public ObjectWG
     void* GetMappedPointerImpl() override;
     void DestroyImpl() override;
 
+    MaybeError AddContentToCapture(CaptureContext& captureContext);
+
     raw_ptr<void> mMappedData = nullptr;
+    // This is set if the buffer has been mapped during capture.
+    // It is cleared when the buffer is captured.
+    bool mWasMappedSinceLastCapture = false;
 };
 
 }  // namespace dawn::native::webgpu

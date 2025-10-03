@@ -77,7 +77,7 @@ DAWN_REPLAY_MAKE_ROOT_CMD_AND_CMD_DATA(CreateResource, CREATE_RESOURCE_CMD_DATA_
 #define WRITE_BUFFER_CMD_DATA_MEMBER(X) \
     X(ObjectId, bufferId)               \
     X(uint64_t, bufferOffset)           \
-    X(size_t, size)
+    X(uint64_t, size)
 
 DAWN_REPLAY_MAKE_ROOT_CMD_AND_CMD_DATA(WriteBuffer, WRITE_BUFFER_CMD_DATA_MEMBER){};
 
