@@ -27,11 +27,13 @@
 
 #include "dawn/native/webgpu/BufferWGPU.h"
 
+#include <algorithm>
 #include <string>
 #include <utility>
 
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/native/Buffer.h"
+#include "dawn/native/webgpu/CaptureContext.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/QueueWGPU.h"
 #include "dawn/native/webgpu/Serialization.h"
@@ -66,6 +68,9 @@ Buffer::Buffer(Device* device,
       ObjectWGPU(device->wgpu.bufferRelease) {
     mInnerHandle = innerBuffer;
     mAllocatedSize = GetSize();
+    if (descriptor->mappedAtCreation) {
+        MarkAsNeedsCapture();
+    }
 }
 
 bool Buffer::IsCPUWritableAtCreation() const {
@@ -113,6 +118,7 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
     if (bool{mode & wgpu::MapMode::Write}) {
         mMappedData =
             static_cast<uint8_t*>(wgpu.bufferGetMappedRange(mInnerHandle, offset, size)) - offset;
+        MarkAsNeedsCapture();
     } else if (bool{mode & wgpu::MapMode::Read}) {
         mMappedData = static_cast<uint8_t*>(const_cast<void*>(
                           wgpu.bufferGetConstMappedRange(mInnerHandle, offset, size))) -
@@ -147,12 +153,93 @@ void Buffer::AddReferenced(CaptureContext& captureContext) const {
     // Buffers do not reference other objects.
 }
 
-void Buffer::CaptureCreationParameters(CaptureContext& captureContext) const {
+MaybeError Buffer::CaptureCreationParameters(CaptureContext& captureContext) {
     schema::Buffer buf{{
         .size = GetSize(),
         .usage = GetUsage(),
     }};
     Serialize(captureContext, buf);
+    return {};
+}
+
+MaybeError Buffer::CaptureContentImpl(CaptureContext& captureContext, schema::ObjectId id) {
+    schema::RootCommandWriteBufferCmd cmd{{
+        .data = {{
+            .bufferId = id,
+            .bufferOffset = 0,
+            .size = GetSize(),
+        }},
+    }};
+    Serialize(captureContext, cmd);
+    return CaptureContentData(captureContext);
+}
+
+// Note: We currently get at most 1mb at a time to keep memory usage down. We
+// could add other options. For example, we could have multiple copy buffers and
+// only do the copy here, not the map/read/unmap and then if we run out of
+// buffers we'd have to pause the world and serialize the copies. You'd probably
+// want this configurable by the user so they could decide how much memory to
+// reserve for copies. This would allow faster capture if they don't hit the
+// limit. As another option we could allocate a copy buffer of the max size
+// needed and keep re-allocating if the size gets larger. This would make each
+// buffer copied by a single copy instead of a copy per meg. Both of these
+// approaches would use a lot of memory. Especially if you capture LLM work
+// where buffers are as big as possible. ATM we don't know that this current
+// implementation is too slow.
+MaybeError Buffer::CaptureContentData(CaptureContext& captureContext) {
+    struct MapAsyncResult {
+        WGPUMapAsyncStatus status;
+        std::string message;
+    } mapAsyncResult = {};
+
+    WGPUBuffer srcBuffer = GetInnerHandle();
+    WGPUBuffer copyBuffer = captureContext.GetCopyBuffer();
+    WGPUQueue queue = ToBackend(GetDevice()->GetQueue())->GetInnerHandle();
+
+    Device* device = ToBackend(GetDevice());
+    WGPUDevice innerDevice = device->GetInnerHandle();
+    auto& wgpu = device->wgpu;
+
+    for (uint64_t offset = 0; offset < GetSize(); offset += CaptureContext::kCopyBufferSize) {
+        uint64_t copySize = std::min(CaptureContext::kCopyBufferSize, GetSize() - offset);
+
+        WGPUCommandEncoder encoder = wgpu.deviceCreateCommandEncoder(innerDevice, nullptr);
+        wgpu.commandEncoderCopyBufferToBuffer(encoder, srcBuffer, offset, copyBuffer, 0, copySize);
+        WGPUCommandBuffer commandBuffer = wgpu.commandEncoderFinish(encoder, nullptr);
+        wgpu.queueSubmit(queue, 1, &commandBuffer);
+        wgpu.commandBufferRelease(commandBuffer);
+        wgpu.commandEncoderRelease(encoder);
+
+        // Map the buffer to read back the content.
+        WGPUBufferMapCallbackInfo innerCallbackInfo = {};
+        innerCallbackInfo.mode = WGPUCallbackMode_WaitAnyOnly;
+        innerCallbackInfo.callback = [](WGPUMapAsyncStatus status, WGPUStringView message,
+                                        void* result_param, void* userdata_param) {
+            MapAsyncResult* result = reinterpret_cast<MapAsyncResult*>(result_param);
+            result->status = status;
+            result->message = ToString(message);
+        };
+        innerCallbackInfo.userdata1 = &mapAsyncResult;
+        innerCallbackInfo.userdata2 = this;
+
+        // We read this back synchronously. I'm not sure we could do much more.
+        WGPUFutureWaitInfo waitInfo = {};
+        waitInfo.future = wgpu.bufferMapAsync(copyBuffer, WGPUMapMode_Read, offset,
+                                              CaptureContext::kCopyBufferSize, innerCallbackInfo);
+        wgpu.instanceWaitAny(device->GetInnerInstance(), 1, &waitInfo, UINT64_MAX);
+
+        DAWN_ASSERT(mapAsyncResult.status == WGPUMapAsyncStatus_Success);
+
+        if (mapAsyncResult.status != WGPUMapAsyncStatus_Success) {
+            return DAWN_INTERNAL_ERROR(mapAsyncResult.message);
+        }
+
+        const void* data = wgpu.bufferGetConstMappedRange(copyBuffer, 0, copySize);
+        captureContext.WriteContentBytes(data, copySize);
+        wgpu.bufferUnmap(copyBuffer);
+    }
+
+    return {};
 }
 
 }  // namespace dawn::native::webgpu

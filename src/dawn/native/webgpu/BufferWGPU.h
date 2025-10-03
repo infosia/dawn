@@ -45,9 +45,10 @@ class Buffer final : public BufferBase, public RecordableObject, public ObjectWG
     Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor, WGPUBuffer innerBuffer);
 
     void AddReferenced(CaptureContext& captureContext) const override;
-    void CaptureCreationParameters(CaptureContext& context) const override;
+    MaybeError CaptureCreationParameters(CaptureContext& context) override;
 
   private:
+    MaybeError CaptureContentImpl(CaptureContext& context, schema::ObjectId id) override;
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override;
     void UnmapImpl() override;
     void FinalizeMapImpl() override;
@@ -55,6 +56,8 @@ class Buffer final : public BufferBase, public RecordableObject, public ObjectWG
     MaybeError MapAtCreationImpl() override;
     void* GetMappedPointerImpl() override;
     void DestroyImpl() override;
+
+    MaybeError CaptureContentData(CaptureContext& captureContext);
 
     raw_ptr<void> mMappedData = nullptr;
 };

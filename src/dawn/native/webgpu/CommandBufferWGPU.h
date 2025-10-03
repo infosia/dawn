@@ -34,12 +34,14 @@
 
 namespace dawn::native::webgpu {
 
+class CaptureContext;
 class CommandBuffer final : public CommandBufferBase {
   public:
     static Ref<CommandBuffer> Create(CommandEncoder* encoder,
                                      const CommandBufferDescriptor* descriptor);
 
-    WGPUCommandBuffer Encode();
+    WGPUCommandBuffer Encode(bool isCapturing);
+    MaybeError Capture(CaptureContext& captureContext);
 
   private:
     CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor);
