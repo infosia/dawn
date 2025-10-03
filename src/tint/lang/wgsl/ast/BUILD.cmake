@@ -83,6 +83,8 @@ tint_add_target(tint_lang_wgsl_ast lib
   lang/wgsl/ast/const_assert.h
   lang/wgsl/ast/continue_statement.cc
   lang/wgsl/ast/continue_statement.h
+  lang/wgsl/ast/depth_greater_attribute.cc
+  lang/wgsl/ast/depth_greater_attribute.h
   lang/wgsl/ast/diagnostic_attribute.cc
   lang/wgsl/ast/diagnostic_attribute.h
   lang/wgsl/ast/diagnostic_control.cc

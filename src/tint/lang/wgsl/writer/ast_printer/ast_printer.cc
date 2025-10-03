@@ -44,6 +44,7 @@
 #include "src/tint/lang/wgsl/ast/compound_assignment_statement.h"
 #include "src/tint/lang/wgsl/ast/const.h"
 #include "src/tint/lang/wgsl/ast/continue_statement.h"
+#include "src/tint/lang/wgsl/ast/depth_greater_attribute.h"
 #include "src/tint/lang/wgsl/ast/diagnostic_attribute.h"
 #include "src/tint/lang/wgsl/ast/diagnostic_rule_name.h"
 #include "src/tint/lang/wgsl/ast/discard_statement.h"
@@ -517,6 +518,7 @@ void ASTPrinter::EmitAttributes(StringStream& out, VectorRef<const ast::Attribut
                 out << core::ToString(builtin->builtin);
                 out << ")";
             },
+            [&](const ast::DepthGreaterAttribute*) { out << "depth_greater"; },
             [&](const ast::DiagnosticAttribute* diagnostic) {
                 EmitDiagnosticControl(out, diagnostic->control);
             },
