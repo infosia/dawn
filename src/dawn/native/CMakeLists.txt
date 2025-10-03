@@ -592,7 +592,7 @@ if (DAWN_ENABLE_WEBGPU_ON_WEBGPU)
         "webgpu/BindGroupWGPU.h"
         "webgpu/BindGroupLayoutWGPU.h"
         "webgpu/BufferWGPU.h"
-        "webgpu/CaptureContext.h",
+        "webgpu/CaptureContext.h"
         "webgpu/CommandBufferWGPU.h"
         "webgpu/ComputePipelineWGPU.h"
         "webgpu/DeviceWGPU.h"
@@ -601,7 +601,7 @@ if (DAWN_ENABLE_WEBGPU_ON_WEBGPU)
         "webgpu/PhysicalDeviceWGPU.h"
         "webgpu/PipelineLayoutWGPU.h"
         "webgpu/QueueWGPU.h"
-        "webgpu/RecordableObject.h",
+        "webgpu/RecordableObject.h"
         "webgpu/RenderPipelineWGPU.h"
         "webgpu/SamplerWGPU.h"
         "webgpu/Serialization.h"
@@ -615,16 +615,17 @@ if (DAWN_ENABLE_WEBGPU_ON_WEBGPU)
         "webgpu/BindGroupWGPU.cpp"
         "webgpu/BindGroupLayoutWGPU.cpp"
         "webgpu/BufferWGPU.cpp"
-        "webgpu/CaptureContext.cpp",
+        "webgpu/CaptureContext.cpp"
         "webgpu/CommandBufferWGPU.cpp"
         "webgpu/ComputePipelineWGPU.cpp"
         "webgpu/DeviceWGPU.cpp"
         "webgpu/PhysicalDeviceWGPU.cpp"
         "webgpu/PipelineLayoutWGPU.cpp"
         "webgpu/QueueWGPU.cpp"
+        "webgpu/RecordableObject.cpp"
         "webgpu/RenderPipelineWGPU.cpp"
         "webgpu/SamplerWGPU.cpp"
-        "webgpu/Serialization.cpp",
+        "webgpu/Serialization.cpp"
         "webgpu/ShaderModuleWGPU.cpp"
         "webgpu/ToWGPU.cpp"
         "webgpu/TextureWGPU.cpp"

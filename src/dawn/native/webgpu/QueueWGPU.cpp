@@ -59,7 +59,10 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
 
     std::vector<WGPUCommandBuffer> innerCommandBuffers(commandCount);
     for (uint32_t i = 0; i < commandCount; ++i) {
-        innerCommandBuffers[i] = ToBackend(commands[i])->Encode();
+        if (IsCapturing()) {
+            DAWN_TRY(ToBackend(commands[i])->Capture(*mCaptureContext));
+        }
+        innerCommandBuffers[i] = ToBackend(commands[i])->Encode(IsCapturing());
     }
 
     wgpu.queueSubmit(mInnerHandle, commandCount, innerCommandBuffers.data());
@@ -77,7 +80,10 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   const void* data,
                                   size_t size) {
     if (IsCapturing()) {
-        mCaptureContext->CaptureQueueWriteBuffer(buffer, bufferOffset, data, size);
+        DAWN_TRY(mCaptureContext->CaptureQueueWriteBuffer(buffer, bufferOffset, data, size));
+        ToBackend(buffer)->MarkAsHasData();
+    } else {
+        ToBackend(buffer)->MarkAsNeedsCapture();
     }
 
     auto innerBuffer = ToBackend(buffer)->GetInnerHandle();
