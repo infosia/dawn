@@ -46,6 +46,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b1a9e05_843dc03f",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-03T20:09:06Z",
+      "side": 1,
+      "message": "The AI suggested this to me as well.\nI also got rid of \"The capabilities that the transform can support.\" as this feels redundant.",
+      "parentUuid": "4426e179_046645b1",
+      "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c04e70c_25842403",
@@ -59,6 +77,24 @@
       "writtenOn": "2025-10-03T02:03:15Z",
       "side": 1,
       "message": "Nit: Cast shouldn\u0027t be needed - `sel.val` is a subclass of ir::Value.",
+      "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cde4c59_d7d7000b",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-03T20:09:06Z",
+      "side": 1,
+      "message": "In file included from ../../src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc:35:\n../../src/tint/lang/core/ir/builder.h:534:23: error: static assertion failed due to requirement \u0027is_null || is_ptr || is_numeric\u0027: invalid argument type for Value()\n  534 |         static_assert(is_null || is_ptr || is_numeric, \"invalid argument type for Value()\");\n      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n../../src/tint/lang/core/ir/builder.h:617:25: note: in instantiation of function template specialization \u0027tint::core::ir::Builder::Value\u003ctint::ConstPropagatingPtr\u003ctint::core::ir::Constant\u003e \u0026\u003e\u0027 requested here\n  617 |         auto* rhs_val \u003d Value(std::forward\u003cRHS\u003e(rhs));\n      |                         ^\n../../src/tint/lang/core/ir/builder.h:600:16: note: in instantiation of function template specialization \u0027tint::core::ir::Builder::BinaryWithResult\u003ctint::core::ir::Value *\u0026, tint::ConstPropagatingPtr\u003ctint::core::ir::Constant\u003e \u0026\u003e\u0027 requested here\n  600 |         return BinaryWithResult(InstructionResult(type), op, std::forward\u003cLHS\u003e(lhs),\n      |                ^\n../../src/tint/lang/core/ir/builder.h:706:16: note: in instantiation of function template specialization \u0027tint::core::ir::Builder::Binary\u003ctint::core::ir::Value *\u0026, tint::ConstPropagatingPtr\u003ctint::core::ir::Constant\u003e \u0026\u003e\u0027 requested here\n  706 |         return Binary(BinaryOp::kEqual, type, std::forward\u003cLHS\u003e(lhs), std::forward\u003cRHS\u003e(rhs));\n      |                ^\n../../src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc:130:31: note: in instantiation of function template specialization \u0027tint::core::ir::Builder::Equal\u003ctint::core::ir::Value *\u0026, tint::ConstPropagatingPtr\u003ctint::core::ir::Constant\u003e \u0026\u003e\u0027 requested here\n  130 |                             b.Equal(ty.bool_(), switch_cond, sel.val);\n      |                               ^\n1 error generated.",
+      "parentUuid": "7c04e70c_25842403",
       "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -80,6 +116,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c805cf1_a1e3d66e",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-03T20:09:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0358d75f_0a6f043b",
+      "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "350c28f3_2cb62965",
@@ -93,6 +147,24 @@
       "writtenOn": "2025-10-03T02:03:15Z",
       "side": 1,
       "message": "Can\u0027t we always do this, instead of doing the big `!(all the other conditions)` thing? All of the other cases will have exited from the switch, so we can just always execute the default block if none of the preceding cases matched.",
+      "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e44d71f_d2141c73",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-03T20:09:06Z",
+      "side": 1,
+      "message": "Correct. In discussion we ended up with a if(true) as the simplest impl.",
+      "parentUuid": "350c28f3_2cb62965",
       "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -128,6 +200,24 @@
           ]
         }
       ],
+      "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd8b97c4_9dbf9433",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-03T20:09:06Z",
+      "side": 1,
+      "message": "This is because a default also has an exit switch? Which was also related to the previous comment about not needing the conditions for the default.",
+      "parentUuid": "55954ba6_c188023c",
       "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
