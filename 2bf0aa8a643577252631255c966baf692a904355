@@ -128,6 +128,30 @@
       },
       "revId": "2bf0aa8a643577252631255c966baf692a904355",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5db410e_ada95660",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-03T18:58:06Z",
+      "side": 1,
+      "message": "I added a comment linking to the WWDC presentation that says it\u0027s 32 for M1 (and \"all Apple GPUs\", although this was a few years ago).\n\nI think we should continue with assuming it\u0027ll always be 32 until they release a GPU that changes that, and rely on testing and \"the community\" to catch any such changes.",
+      "parentUuid": "9f740328_a3008e48",
+      "range": {
+        "startLine": 312,
+        "startChar": 8,
+        "endLine": 312,
+        "endChar": 30
+      },
+      "revId": "2bf0aa8a643577252631255c966baf692a904355",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
