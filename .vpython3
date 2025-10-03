@@ -43,3 +43,9 @@ wheel: <
   name: "infra/python/wheels/psutil/${vpython_platform}"
   version: "version:5.8.0.chromium.3"
 >
+
+# Needed by generator/dawn_yaml_utility.py
+wheel: <
+  name: "infra/python/wheels/pyyaml/${vpython_platform}"
+  version: "version:5.4.1.chromium.2"
+>
