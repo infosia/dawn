@@ -191,7 +191,7 @@
           'x86-64',
         ],
         'test_suites': {
-          'gtest_tests': 'win_software_renderer_gtests',
+          'gtest_tests': 'win_warp_gtests',
           'isolated_scripts': 'dawn_node_cts_win_software_tests',
         },
       },

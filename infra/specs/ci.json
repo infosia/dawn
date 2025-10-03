@@ -1260,56 +1260,6 @@
     "gtest_tests": [
       {
         "args": [
-          "--backend=opengles",
-          "--use-angle=swiftshader",
-          "--enable-toggles=gl_force_es_31_and_no_extensions"
-        ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
-        "name": "dawn_end2end_swangle_tests",
-        "resultdb": {
-          "result_format": "gtest_json"
-        },
-        "swarming": {
-          "containment_type": "AUTO",
-          "dimensions": {
-            "cpu": "x86-64",
-            "gpu": "none",
-            "os": "Windows-10-19045",
-            "pool": "chromium.tests.gpu"
-          },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
-        },
-        "test": "dawn_end2end_tests",
-        "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
-      },
-      {
-        "args": [
-          "--adapter-vendor-id=0x1AE0"
-        ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
-        "name": "dawn_end2end_sws_tests",
-        "resultdb": {
-          "result_format": "gtest_json"
-        },
-        "swarming": {
-          "containment_type": "AUTO",
-          "dimensions": {
-            "cpu": "x86-64",
-            "gpu": "none",
-            "os": "Windows-10-19045",
-            "pool": "chromium.tests.gpu"
-          },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
-        },
-        "test": "dawn_end2end_tests",
-        "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
-      },
-      {
-        "args": [
           "--adapter-vendor-id=0x1414"
         ],
         "merge": {

@@ -1,9 +1,9 @@
 {
   "gn_args": {
     "dawn_build_node_bindings": true,
-    "dawn_use_swiftshader": true,
+    "dawn_use_swiftshader": false,
     "is_clang": false,
-    "is_component_build": true,
+    "is_component_build": false,
     "is_debug": false,
     "target_cpu": "x64",
     "target_os": "win",

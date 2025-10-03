@@ -336,9 +336,13 @@ ci.builder(
     ),
     gn_args = gn_args.config(
         configs = [
-            "component",
+            # Component builds cause compile failures for the `default` target
+            # with MSVC, so use non_component. Since running tests with
+            # SwiftShader requires component builds, also build without
+            # SwiftShader support, instead relying on WARP.
+            "dawn_no_swiftshader",
             "dawn_node_bindings",
-            "dawn_swiftshader",
+            "non_component",
             "release",
             "win_msvc",
             "x64",
