@@ -37,6 +37,7 @@
 #include "dawn/native/webgpu/ComputePipelineWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/RenderPipelineWGPU.h"
+#include "dawn/native/webgpu/Serialization.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
 
@@ -428,12 +429,57 @@ void Capture(CaptureContext& captureContext, const CopyBufferToBufferCmd& cmd) {
     Serialize(captureContext, data);
 }
 
+void Capture(CaptureContext& captureContext, const CopyBufferToTextureCmd& cmd) {
+    schema::EncoderCommandCopyBufferToTextureCmd data{{
+        .data = {{
+            .source = ToSchema(captureContext, cmd.source),
+            .destination = ToSchema(captureContext, cmd.destination),
+            .copySize = ToSchema(cmd.copySize),
+        }},
+    }};
+    Serialize(captureContext, data);
+}
+
+void Capture(CaptureContext& captureContext, const CopyTextureToBufferCmd& cmd) {
+    schema::EncoderCommandCopyTextureToBufferCmd data{{
+        .data = {{
+            .source = ToSchema(captureContext, cmd.source),
+            .destination = ToSchema(captureContext, cmd.destination),
+            .copySize = ToSchema(cmd.copySize),
+        }},
+    }};
+    Serialize(captureContext, data);
+}
+
+void Capture(CaptureContext& captureContext, const CopyTextureToTextureCmd& cmd) {
+    schema::EncoderCommandCopyTextureToTextureCmd data{{
+        .data = {{
+            .source = ToSchema(captureContext, cmd.source),
+            .destination = ToSchema(captureContext, cmd.destination),
+            .copySize = ToSchema(cmd.copySize),
+        }},
+    }};
+    Serialize(captureContext, data);
+}
+
 MaybeError CaptureEncoderCommands(CaptureContext& captureContext, CommandIterator& commands) {
     Command type;
     while (commands.NextCommandId(&type)) {
         switch (type) {
             case Command::CopyBufferToBuffer: {
                 Capture(captureContext, *commands.NextCommand<CopyBufferToBufferCmd>());
+                break;
+            }
+            case Command::CopyBufferToTexture: {
+                Capture(captureContext, *commands.NextCommand<CopyBufferToTextureCmd>());
+                break;
+            }
+            case Command::CopyTextureToBuffer: {
+                Capture(captureContext, *commands.NextCommand<CopyTextureToBufferCmd>());
+                break;
+            }
+            case Command::CopyTextureToTexture: {
+                Capture(captureContext, *commands.NextCommand<CopyTextureToTextureCmd>());
                 break;
             }
             default:
@@ -450,6 +496,9 @@ MaybeError CommandBuffer::CaptureResources(CaptureContext& captureContext) {
     const auto& resourceUsages = GetResourceUsages();
     for (auto buffer : resourceUsages.topLevelBuffers) {
         DAWN_TRY(captureContext.AddResource(buffer));
+    }
+    for (auto texture : resourceUsages.topLevelTextures) {
+        DAWN_TRY(captureContext.AddResource(texture));
     }
     for (const auto& pass : resourceUsages.renderPasses) {
         for (auto buffer : pass.buffers) {
@@ -512,6 +561,9 @@ WGPUCommandBuffer CommandBuffer::Encode(bool isCapturing) {
                 WGPUTexelCopyTextureInfo destination = ToWGPU(cmd->destination);
                 WGPUExtent3D size = ToWGPU(cmd->copySize);
                 wgpu.commandEncoderCopyBufferToTexture(innerEncoder, &source, &destination, &size);
+                if (!isCapturing) {
+                    ToBackend(cmd->destination.texture)->MarkAsNeedsCapture();
+                }
                 break;
             }
             case Command::CopyTextureToBuffer: {
@@ -531,6 +583,9 @@ WGPUCommandBuffer CommandBuffer::Encode(bool isCapturing) {
                 WGPUTexelCopyTextureInfo destination = ToWGPU(cmd->destination);
                 WGPUExtent3D size = ToWGPU(cmd->copySize);
                 wgpu.commandEncoderCopyTextureToTexture(innerEncoder, &source, &destination, &size);
+                if (!isCapturing) {
+                    ToBackend(cmd->destination.texture)->MarkAsNeedsCapture();
+                }
                 break;
             }
             case Command::ClearBuffer: {
