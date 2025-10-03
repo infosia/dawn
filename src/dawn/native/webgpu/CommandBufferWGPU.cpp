@@ -37,6 +37,7 @@
 #include "dawn/native/webgpu/ComputePipelineWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/RenderPipelineWGPU.h"
+#include "dawn/native/webgpu/Serialization.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
 
@@ -404,6 +405,9 @@ MaybeError CommandBuffer::AddReferenced(CaptureContext& captureContext) const {
     for (auto buffer : resourceUsages.topLevelBuffers) {
         DAWN_TRY(captureContext.AddResource(buffer));
     }
+    for (auto texture : resourceUsages.topLevelTextures) {
+        DAWN_TRY(captureContext.AddResource(texture));
+    }
     for (const auto& pass : resourceUsages.renderPasses) {
         for (auto buffer : pass.buffers) {
             DAWN_TRY(captureContext.AddResource(buffer));
@@ -432,6 +436,42 @@ MaybeError CommandBuffer::CaptureCreationParameters(CaptureContext& captureConte
                         .dstBufferId = captureContext.GetId(cmd.destination.Get()),
                         .dstOffset = cmd.destinationOffset,
                         .size = cmd.size,
+                    }},
+                }};
+                Serialize(captureContext, data);
+                break;
+            }
+            case Command::CopyBufferToTexture: {
+                const auto& cmd = *commands.NextCommand<CopyBufferToTextureCmd>();
+                schema::EncoderCommandCopyBufferToTextureCmd data{{
+                    .data = {{
+                        .source = ToSchema(captureContext, cmd.source),
+                        .destination = ToSchema(captureContext, cmd.destination),
+                        .copySize = ToSchema(cmd.copySize),
+                    }},
+                }};
+                Serialize(captureContext, data);
+                break;
+            }
+            case Command::CopyTextureToBuffer: {
+                const auto& cmd = *commands.NextCommand<CopyTextureToBufferCmd>();
+                schema::EncoderCommandCopyTextureToBufferCmd data{{
+                    .data = {{
+                        .source = ToSchema(captureContext, cmd.source),
+                        .destination = ToSchema(captureContext, cmd.destination),
+                        .copySize = ToSchema(cmd.copySize),
+                    }},
+                }};
+                Serialize(captureContext, data);
+                break;
+            }
+            case Command::CopyTextureToTexture: {
+                const auto& cmd = *commands.NextCommand<CopyTextureToTextureCmd>();
+                schema::EncoderCommandCopyTextureToTextureCmd data{{
+                    .data = {{
+                        .source = ToSchema(captureContext, cmd.source),
+                        .destination = ToSchema(captureContext, cmd.destination),
+                        .copySize = ToSchema(cmd.copySize),
                     }},
                 }};
                 Serialize(captureContext, data);
