@@ -445,6 +445,10 @@ class Resolver {
     /// @returns true on success, false on failure
     bool DiagnosticAttribute(const ast::DiagnosticAttribute* attr);
 
+    /// Resolves the `@depth_greater` attribute @p attr
+    /// @returns true on success, false on failure
+    bool DepthGreaterAttribute(const ast::DepthGreaterAttribute* attr);
+
     /// Resolves the stage attribute @p attr
     /// @returns true on success, false on failure
     bool StageAttribute(const ast::StageAttribute* attr);

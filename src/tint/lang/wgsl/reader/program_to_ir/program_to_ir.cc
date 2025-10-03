@@ -59,6 +59,7 @@
 #include "src/tint/lang/wgsl/ast/const.h"
 #include "src/tint/lang/wgsl/ast/const_assert.h"
 #include "src/tint/lang/wgsl/ast/continue_statement.h"
+#include "src/tint/lang/wgsl/ast/depth_greater_attribute.h"
 #include "src/tint/lang/wgsl/ast/diagnostic_directive.h"
 #include "src/tint/lang/wgsl/ast/discard_statement.h"
 #include "src/tint/lang/wgsl/ast/enable.h"
@@ -320,6 +321,10 @@ class Impl {
                     [&](const ast::BuiltinAttribute* b) { ir_func->SetReturnBuiltin(b->builtin); });
             }
             ir_func->SetReturnLocation(sem->ReturnLocation());
+        }
+
+        if (ast::HasAttribute<ast::DepthGreaterAttribute>(ast_func->attributes)) {
+            ir_func->SetDepthGreater(true);
         }
 
         scopes_.Push();
