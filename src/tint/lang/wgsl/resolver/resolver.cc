@@ -60,6 +60,7 @@
 #include "src/tint/lang/wgsl/ast/break_statement.h"
 #include "src/tint/lang/wgsl/ast/call_statement.h"
 #include "src/tint/lang/wgsl/ast/continue_statement.h"
+#include "src/tint/lang/wgsl/ast/depth_greater_attribute.h"
 #include "src/tint/lang/wgsl/ast/discard_statement.h"
 #include "src/tint/lang/wgsl/ast/for_loop_statement.h"
 #include "src/tint/lang/wgsl/ast/id_attribute.h"
@@ -876,6 +877,7 @@ sem::Function* Resolver::Function(const ast::Function* decl) {
         Mark(attribute);
         bool ok = Switch(
             attribute,
+            [&](const ast::DepthGreaterAttribute* attr) { return DepthGreaterAttribute(attr); },
             [&](const ast::DiagnosticAttribute* attr) { return DiagnosticAttribute(attr); },
             [&](const ast::StageAttribute* attr) { return StageAttribute(attr); },
             [&](const ast::MustUseAttribute* attr) { return MustUseAttribute(attr); },
@@ -3974,6 +3976,10 @@ tint::Result<sem::WorkgroupSize> Resolver::WorkgroupAttribute(const ast::Workgro
     }
 
     return ws;
+}
+
+bool Resolver::DepthGreaterAttribute(const ast::DepthGreaterAttribute* attr) {
+    return true;
 }
 
 bool Resolver::DiagnosticAttribute(const ast::DiagnosticAttribute* attr) {

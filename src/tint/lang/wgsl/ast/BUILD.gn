@@ -89,6 +89,8 @@ libtint_source_set("ast") {
     "const_assert.h",
     "continue_statement.cc",
     "continue_statement.h",
+    "depth_greater_attribute.cc",
+    "depth_greater_attribute.h",
     "diagnostic_attribute.cc",
     "diagnostic_attribute.h",
     "diagnostic_control.cc",

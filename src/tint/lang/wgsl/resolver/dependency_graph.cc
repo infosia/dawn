@@ -44,6 +44,7 @@
 #include "src/tint/lang/wgsl/ast/compound_assignment_statement.h"
 #include "src/tint/lang/wgsl/ast/const.h"
 #include "src/tint/lang/wgsl/ast/continue_statement.h"
+#include "src/tint/lang/wgsl/ast/depth_greater_attribute.h"
 #include "src/tint/lang/wgsl/ast/diagnostic_attribute.h"
 #include "src/tint/lang/wgsl/ast/discard_statement.h"
 #include "src/tint/lang/wgsl/ast/for_loop_statement.h"
@@ -387,8 +388,9 @@ class DependencyScanner {
             },
             [&](Default) {
                 if (!attr->IsAnyOf<ast::BuiltinAttribute, ast::DiagnosticAttribute,
-                                   ast::InterpolateAttribute, ast::InvariantAttribute,
-                                   ast::MustUseAttribute, ast::StageAttribute>()) {
+                                   ast::DepthGreaterAttribute, ast::InterpolateAttribute,
+                                   ast::InvariantAttribute, ast::MustUseAttribute,
+                                   ast::StageAttribute>()) {
                     TINT_ICE() << "unhandled attribute type: " << attr->TypeInfo().name;
                 }
             });

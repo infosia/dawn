@@ -644,6 +644,7 @@ enum class Attribute : uint8_t {
     kColor,
     kCompute,
     kDiagnostic,
+    kDepthGreater,
     kFragment,
     kGroup,
     kId,
