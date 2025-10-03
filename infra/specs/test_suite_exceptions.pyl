@@ -1,5 +1,61 @@
 {
-  'dawn_end2end_warp_tests': {
+  'dawn_end2end_swangle_tests': {
+    # This suite is slow when run on debug builds, so increase sharding there.
+    'modifications': {
+      'dawn-linux-x64-sws-dbg': {
+        'swarming': {
+          'shards': 2,
+        },
+      },
+      'dawn-linux-x86-sws-dbg': {
+        'swarming': {
+          'shards': 2,
+        },
+      },
+      # No increase for Mac because it runs far fewer tests in the suite.
+      'dawn-win-x64-sws-dbg': {
+        'swarming': {
+          'shards': 2,
+        },
+      },
+      'dawn-win-x86-sws-dbg': {
+        'swarming': {
+          'shards': 2,
+        },
+      },
+    },
+  },
+  'dawn_end2end_sws_tests': {
+    # This suite is slow when run on debug builds, so increase sharding there.
+    'modifications': {
+      'dawn-linux-x64-sws-dbg': {
+        'swarming': {
+          'shards': 2,
+        },
+      },
+      'dawn-linux-x86-sws-dbg': {
+        'swarming': {
+          'shards': 2,
+        },
+      },
+      'dawn-mac-x64-sws-dbg': {
+        'swarming': {
+          'shards': 2,
+        },
+      },
+      'dawn-win-x64-sws-dbg': {
+        'swarming': {
+          'shards': 3,
+        },
+      },
+      'dawn-win-x86-sws-dbg': {
+        'swarming': {
+          'shards': 3,
+        },
+      },
+    },
+  },
+   'dawn_end2end_warp_tests': {
     'remove_from': [
       # Running with WARP in debug builds is quite slow. These can be enabled
       # once sharding works properly and this can be more heavily sharded on
