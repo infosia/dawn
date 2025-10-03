@@ -31,19 +31,23 @@
 #include "dawn/native/CommandBuffer.h"
 
 #include "dawn/native/webgpu/Forward.h"
+#include "dawn/native/webgpu/RecordableObject.h"
 
 namespace dawn::native::webgpu {
 
 class CaptureContext;
-class CommandBuffer final : public CommandBufferBase {
+class CommandBuffer final : public CommandBufferBase, public ImmutableRecordableObject {
   public:
     static Ref<CommandBuffer> Create(CommandEncoder* encoder,
                                      const CommandBufferDescriptor* descriptor);
 
     WGPUCommandBuffer Encode(bool isCapturing);
-    MaybeError Capture(CaptureContext& captureContext);
+
+    MaybeError AddReferenced(CaptureContext& captureContext) const override;
+    MaybeError CaptureCreationParameters(CaptureContext& context) override;
 
   private:
+    MaybeError CaptureContentImpl(CaptureContext& context, schema::ObjectId id) override;
     CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor);
 };
 

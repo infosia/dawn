@@ -49,7 +49,8 @@ Ref<CommandBuffer> CommandBuffer::Create(CommandEncoder* encoder,
 }
 
 CommandBuffer::CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor)
-    : CommandBufferBase(encoder, descriptor) {}
+    : CommandBufferBase(encoder, descriptor),
+      ImmutableRecordableObject(schema::ObjectType::CommandBuffer) {}
 
 namespace {
 
@@ -415,9 +416,22 @@ void EncodeRenderPass(const DawnProcTable& wgpu,
     DAWN_UNREACHABLE();
 }
 
+void Capture(CaptureContext& captureContext, const CopyBufferToBufferCmd& cmd) {
+    schema::EncoderCommandCopyBufferToBufferCmd data{{
+        .data = {{
+            .srcBufferId = captureContext.GetId(cmd.source.Get()),
+            .srcOffset = cmd.sourceOffset,
+            .dstBufferId = captureContext.GetId(cmd.destination.Get()),
+            .dstOffset = cmd.destinationOffset,
+            .size = cmd.size,
+        }},
+    }};
+    Serialize(captureContext, data);
+}
+
 }  // anonymous namespace
 
-MaybeError CommandBuffer::Capture(CaptureContext& captureContext) {
+MaybeError CommandBuffer::AddReferenced(CaptureContext& captureContext) const {
     const auto& resourceUsages = GetResourceUsages();
     for (auto buffer : resourceUsages.topLevelBuffers) {
         DAWN_TRY(captureContext.AddResource(buffer));
@@ -432,6 +446,28 @@ MaybeError CommandBuffer::Capture(CaptureContext& captureContext) {
             DAWN_TRY(captureContext.AddResource(buffer));
         }
     }
+    return {};
+}
+
+MaybeError CommandBuffer::CaptureCreationParameters(CaptureContext& captureContext) {
+    CommandIterator& commands = *GetCommandIteratorForTesting();
+
+    Command type;
+    while (commands.NextCommandId(&type)) {
+        switch (type) {
+            case Command::CopyBufferToBuffer: {
+                Capture(captureContext, *commands.NextCommand<CopyBufferToBufferCmd>());
+                break;
+            }
+            default:
+                DAWN_UNREACHABLE();
+        }
+    }
+    Serialize(captureContext, schema::EncoderCommand::End);
+    return {};
+}
+
+MaybeError CommandBuffer::CaptureContentImpl(CaptureContext& captureContext, schema::ObjectId id) {
     return {};
 }
 
