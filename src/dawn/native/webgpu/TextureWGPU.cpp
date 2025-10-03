@@ -37,6 +37,7 @@
 #include "dawn/native/webgpu/CaptureContext.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/QueueWGPU.h"
+#include "dawn/native/webgpu/Serialization.h"
 
 namespace dawn::native::webgpu {
 
