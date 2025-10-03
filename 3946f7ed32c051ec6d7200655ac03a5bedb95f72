@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a2faf85_ba650e37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-03T22:38:20Z",
+      "side": 1,
+      "message": "I don\u0027t really know anything about the change itself but looks like it\u0027ll only affect Kotlin so LGTM",
+      "revId": "3946f7ed32c051ec6d7200655ac03a5bedb95f72",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
