@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4426e179_046645b1",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-03T02:03:15Z",
+      "side": 1,
+      "message": "Nit: kCaseSwitchToIfElseCapabilities",
+      "fixSuggestions": [
+        {
+          "fixId": "b30f42ad_203d187c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+              "range": {
+                "startLine": 56,
+                "startChar": 0,
+                "endLine": 57,
+                "endChar": 0
+              },
+              "replacement": "const core::ir::Capabilities kCaseSwitchToIfElseCapabilities{\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+              "range": {
+                "startLine": 176,
+                "startChar": 0,
+                "endLine": 177,
+                "endChar": 0
+              },
+              "replacement": "    auto result \u003d\n        ValidateAndDumpIfNeeded(ir, \"spirv.CaseSwitchToIfElse\", kCaseSwitchToIfElseCapabilities);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c04e70c_25842403",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-03T02:03:15Z",
+      "side": 1,
+      "message": "Nit: Cast shouldn\u0027t be needed - `sel.val` is a subclass of ir::Value.",
+      "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0358d75f_0a6f043b",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-03T02:03:15Z",
+      "side": 1,
+      "message": "Nit: Just FYI you should be able to drop the `-\u003eResult()` from `curr_selector`, since you can pass instructions to the builder helpers.\n\nNot at all important, but if like me you like to avoid spilling to multiple lines then these things help.",
+      "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "350c28f3_2cb62965",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-03T02:03:15Z",
+      "side": 1,
+      "message": "Can\u0027t we always do this, instead of doing the big `!(all the other conditions)` thing? All of the other cases will have exited from the switch, so we can just always execute the default block if none of the preceding cases matched.",
+      "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55954ba6_c188023c",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-03T02:03:15Z",
+      "side": 1,
+      "message": "Nit: I think this should technically be an `unreachable`, since it shouldn\u0027t be possible to get here.",
+      "fixSuggestions": [
+        {
+          "fixId": "fed75394_02b078e9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+              "range": {
+                "startLine": 168,
+                "startChar": 0,
+                "endLine": 169,
+                "endChar": 0
+              },
+              "replacement": "            b.Append(s-\u003eCases()[0].block, [\u0026] { b.Unreachable(); });\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
