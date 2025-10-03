@@ -119,6 +119,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "609aeb75_447201cb",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-03T20:20:33Z",
+      "side": 1,
+      "message": "Do you think we should add code to the builder to make this work automagically?\n(maybe not in this CL)",
+      "parentUuid": "c6a497a2_3c3a61a9",
+      "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0358d75f_0a6f043b",
         "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
         "patchSetId": 19
