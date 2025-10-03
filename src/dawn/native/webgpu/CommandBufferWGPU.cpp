@@ -33,6 +33,7 @@
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/native/webgpu/BindGroupWGPU.h"
 #include "dawn/native/webgpu/BufferWGPU.h"
+#include "dawn/native/webgpu/CaptureContext.h"
 #include "dawn/native/webgpu/ComputePipelineWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/RenderPipelineWGPU.h"
@@ -55,7 +56,9 @@ namespace {
 void EncodeComputePass(const DawnProcTable& wgpu,
                        WGPUCommandEncoder innerEncoder,
                        CommandIterator& commands,
-                       BeginComputePassCmd* computePassCmd) {
+                       BeginComputePassCmd* computePassCmd,
+                       const ComputePassResourceUsage& resourceUsages,
+                       bool isCapturing) {
     WGPUComputePassDescriptor passDescriptor{
         .nextInChain = nullptr,
         .label = ToOutputStringView(computePassCmd->label),
@@ -69,6 +72,7 @@ void EncodeComputePass(const DawnProcTable& wgpu,
 
     WGPUComputePassEncoder passEncoder =
         wgpu.commandEncoderBeginComputePass(innerEncoder, &passDescriptor);
+    uint64_t currentDispatch = 0;
 
     Command type;
     while (commands.NextCommandId(&type)) {
@@ -82,6 +86,21 @@ void EncodeComputePass(const DawnProcTable& wgpu,
             case Command::Dispatch: {
                 auto cmd = commands.NextCommand<DispatchCmd>();
                 wgpu.computePassEncoderDispatchWorkgroups(passEncoder, cmd->x, cmd->y, cmd->z);
+                if (!isCapturing) {
+                    // any buffers or textures that could be written to need to be marked as needs
+                    // capture
+                    const auto& usage = resourceUsages.dispatchUsages[currentDispatch];
+                    for (size_t i = 0; i < usage.buffers.size(); ++i) {
+                        const auto& syncInfo = usage.bufferSyncInfos[i];
+                        // TODO(413053623): This needs to be WRITE storage. If we're
+                        // only reading then we don't need to mark it as needs capture.
+                        if (syncInfo.usage & wgpu::BufferUsage::Storage &&
+                            syncInfo.shaderStages & wgpu::ShaderStage::Compute) {
+                            ToBackend(usage.buffers[i])->MarkAsNeedsCapture();
+                        }
+                    }
+                }
+                currentDispatch++;
                 break;
             }
 
@@ -90,6 +109,7 @@ void EncodeComputePass(const DawnProcTable& wgpu,
                 wgpu.computePassEncoderDispatchWorkgroupsIndirect(
                     passEncoder, ToBackend(cmd->indirectBuffer)->GetInnerHandle(),
                     cmd->indirectOffset);
+                currentDispatch++;
                 break;
             }
 
@@ -397,19 +417,42 @@ void EncodeRenderPass(const DawnProcTable& wgpu,
 
 }  // anonymous namespace
 
-WGPUCommandBuffer CommandBuffer::Encode() {
+MaybeError CommandBuffer::Capture(CaptureContext& captureContext) {
+    const auto& resourceUsages = GetResourceUsages();
+    for (auto buffer : resourceUsages.topLevelBuffers) {
+        DAWN_TRY(captureContext.AddResource(buffer));
+    }
+    for (const auto& pass : resourceUsages.renderPasses) {
+        for (auto buffer : pass.buffers) {
+            DAWN_TRY(captureContext.AddResource(buffer));
+        }
+    }
+    for (const auto& pass : resourceUsages.computePasses) {
+        for (auto buffer : pass.referencedBuffers) {
+            DAWN_TRY(captureContext.AddResource(buffer));
+        }
+    }
+    return {};
+}
+
+WGPUCommandBuffer CommandBuffer::Encode(bool isCapturing) {
     auto& wgpu = ToBackend(GetDevice())->wgpu;
 
     // TODO(crbug.com/413053623): Use stored command encoder descriptor
     WGPUCommandEncoder innerEncoder =
         wgpu.deviceCreateCommandEncoder(ToBackend(GetDevice())->GetInnerHandle(), nullptr);
 
+    size_t nextComputePassNumber = 0;
+
     Command type;
     while (mCommands.NextCommandId(&type)) {
         switch (type) {
             case Command::BeginComputePass: {
                 BeginComputePassCmd* cmd = mCommands.NextCommand<BeginComputePassCmd>();
-                EncodeComputePass(wgpu, innerEncoder, mCommands, cmd);
+                EncodeComputePass(wgpu, innerEncoder, mCommands, cmd,
+                                  GetResourceUsages().computePasses[nextComputePassNumber],
+                                  isCapturing);
+                ++nextComputePassNumber;
                 break;
             }
             case Command::BeginRenderPass: {
@@ -423,6 +466,9 @@ WGPUCommandBuffer CommandBuffer::Encode() {
                     innerEncoder, ToBackend(copy->source)->GetInnerHandle(), copy->sourceOffset,
                     ToBackend(copy->destination)->GetInnerHandle(), copy->destinationOffset,
                     copy->size);
+                if (!isCapturing) {
+                    ToBackend(copy->destination)->MarkAsNeedsCapture();
+                }
                 break;
             }
             case Command::CopyBufferToTexture: {
@@ -439,6 +485,9 @@ WGPUCommandBuffer CommandBuffer::Encode() {
                 WGPUTexelCopyBufferInfo destination = ToWGPU(cmd->destination);
                 WGPUExtent3D size = ToWGPU(cmd->copySize);
                 wgpu.commandEncoderCopyTextureToBuffer(innerEncoder, &source, &destination, &size);
+                if (!isCapturing) {
+                    ToBackend(cmd->destination.buffer)->MarkAsNeedsCapture();
+                }
                 break;
             }
             case Command::CopyTextureToTexture: {
