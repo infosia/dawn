@@ -367,6 +367,43 @@ TEST_P(CaptureAndReplayTests, TwoCaptures) {
     }
 }
 
+TEST_P(CaptureAndReplayTests, CaptureCopyBufferToBuffer) {
+    const uint8_t myData[] = {0x11, 0x22, 0x33, 0x44};
+
+    wgpu::BufferDescriptor descriptor;
+    descriptor.label = "srcBuffer";
+    descriptor.size = 4;
+    descriptor.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::CopySrc;
+    wgpu::Buffer srcBuffer = device.CreateBuffer(&descriptor);
+
+    queue.WriteBuffer(srcBuffer, 0, &myData, sizeof(myData));
+
+    descriptor.label = "dstBuffer";
+    descriptor.usage = wgpu::BufferUsage::CopyDst;
+    wgpu::Buffer dstBuffer = device.CreateBuffer(&descriptor);
+
+    wgpu::CommandBuffer commands;
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        encoder.CopyBufferToBuffer(srcBuffer, 0, dstBuffer, 0, 4);
+        commands = encoder.Finish();
+    }
+
+    auto recorder = Recorder::CreateAndStart(device);
+
+    queue.Submit(1, &commands);
+
+    auto capture = recorder.Finish();
+    auto replay = capture.Replay(device);
+
+    {
+        wgpu::Buffer buffer = replay->GetObjectByLabel<wgpu::Buffer>("dstBuffer");
+        ASSERT_NE(buffer, nullptr);
+
+        EXPECT_BUFFER_U8_RANGE_EQ(myData, buffer, 0, sizeof(myData));
+    }
+}
+
 DAWN_INSTANTIATE_TEST(CaptureAndReplayTests, WebGPUBackend());
 
 }  // anonymous namespace

@@ -146,8 +146,9 @@ void Buffer::DestroyImpl() {
     wgpu.bufferDestroy(mInnerHandle);
 }
 
-void Buffer::AddReferenced(CaptureContext& captureContext) const {
+MaybeError Buffer::AddReferenced(CaptureContext& captureContext) const {
     // Buffers do not reference other objects.
+    return {};
 }
 
 MaybeError Buffer::CaptureCreationParameters(CaptureContext& captureContext) {
