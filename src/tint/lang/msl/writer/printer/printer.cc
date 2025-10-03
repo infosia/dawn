@@ -376,7 +376,9 @@ class Printer : public tint::TextGenerator {
                 out << NameOf(param);
 
                 if (auto builtin = param->Builtin()) {
-                    auto name = BuiltinToAttribute(builtin.value());
+                    // TODO: Replace isExecutionModeDepthGreater value with hint.
+                    auto name =
+                        BuiltinToAttribute(builtin.value(), /*isExecutionModeDepthGreater=*/true);
                     TINT_IR_ASSERT(ir_, !name.empty());
                     out << " [[" << name << "]]";
                 }
@@ -1610,7 +1612,9 @@ class Printer : public tint::TextGenerator {
             auto& attributes = mem->Attributes();
 
             if (auto builtin = attributes.builtin) {
-                auto name = BuiltinToAttribute(builtin.value());
+                // TODO: Replace isExecutionModeDepthGreater value with hint.
+                auto name =
+                    BuiltinToAttribute(builtin.value(), /*isExecutionModeDepthGreater=*/true);
                 if (name.empty()) {
                     TINT_IR_ICE(ir_) << "unknown builtin";
                 }
