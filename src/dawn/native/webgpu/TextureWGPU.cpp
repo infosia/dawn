@@ -27,9 +27,16 @@
 
 #include "dawn/native/webgpu/TextureWGPU.h"
 
+#include <algorithm>
+#include <string>
 #include <utility>
+#include <vector>
 
+#include "dawn/common/StringViewUtils.h"
+#include "dawn/native/BlockInfo.h"
+#include "dawn/native/webgpu/CaptureContext.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
+#include "dawn/native/webgpu/QueueWGPU.h"
 
 namespace dawn::native::webgpu {
 
@@ -47,7 +54,9 @@ ResultOrError<Ref<Texture>> Texture::Create(Device* device,
 Texture::Texture(Device* device,
                  const UnpackedPtr<TextureDescriptor>& descriptor,
                  WGPUTexture innerTexture)
-    : TextureBase(device, descriptor), ObjectWGPU(device->wgpu.textureRelease) {
+    : TextureBase(device, descriptor),
+      RecordableObject(schema::ObjectType::Texture),
+      ObjectWGPU(device->wgpu.textureRelease) {
     mInnerHandle = innerTexture;
 }
 
@@ -79,6 +88,156 @@ TextureView::TextureView(TextureBase* texture,
     : TextureViewBase(texture, descriptor),
       ObjectWGPU(ToBackend(texture->GetDevice())->wgpu.textureViewRelease) {
     mInnerHandle = innerView;
+}
+
+void Texture::AddReferenced(CaptureContext& captureContext) const {
+    // Textures do not reference other objects.
+}
+
+MaybeError Texture::CaptureCreationParameters(CaptureContext& captureContext) {
+    Device* device = ToBackend(GetDevice());
+    std::vector<wgpu::TextureFormat> viewFormats;
+    for (FormatIndex i : GetViewFormats()) {
+        const Format& viewFormat = device->GetValidInternalFormat(i);
+        viewFormats.emplace_back(viewFormat.baseFormat);
+    }
+    schema::Texture tex{{
+        .usage = GetUsage(),
+        .dimension = GetDimension(),
+        .size = ToSchema(GetBaseSize()),
+        .format = GetFormat().baseFormat,
+        .mipLevelCount = GetNumMipLevels(),
+        .sampleCount = GetSampleCount(),
+        .viewFormats = viewFormats,
+    }};
+    Serialize(captureContext, tex);
+    return {};
+}
+
+MaybeError Texture::CaptureContentImpl(CaptureContext& captureContext, schema::ObjectId id) {
+    struct MapAsyncResult {
+        WGPUMapAsyncStatus status;
+        std::string message;
+    } mapAsyncResult = {};
+
+    // TODO(413053623): Support depth/stencil and multi-planar textures.
+    // Also, this can't handle compressed textures on compat as they are not readable (no copyT2B)
+    const TypedTexelBlockInfo& blockInfo = GetFormat().GetAspectInfo(Aspect::Color).block;
+    WGPUBuffer copyBuffer = captureContext.GetCopyBuffer();
+
+    Device* device = ToBackend(GetDevice());
+    WGPUDevice innerDevice = device->GetInnerHandle();
+    WGPUQueue queue = ToBackend(device->GetQueue())->GetInnerHandle();
+    auto& wgpu = device->wgpu;
+
+    // For each mip level, emit a WriteTexture command, for the entire level.
+    // Then, copy the texture to a buffer, map it, and write the buffer data for that level.
+    for (uint32_t mipLevel = 0; mipLevel < GetNumMipLevels(); ++mipLevel) {
+        auto size =
+            TexelExtent3D(GetMipLevelSingleSubresourcePhysicalSize(mipLevel, Aspect::Color));
+        BlockCount widthBlocks = blockInfo.ToBlockWidth(
+            (size.width + blockInfo.width - TexelCount(1)) / blockInfo.width * blockInfo.width);
+        BlockCount heightBlocks = blockInfo.ToBlockHeight(
+            (size.height + blockInfo.height - TexelCount(1)) / blockInfo.height * blockInfo.height);
+        BlockCount depthBlocks = blockInfo.ToBlockDepth(size.depthOrArrayLayers);
+        uint32_t usedBytesPerRow = static_cast<uint32_t>(blockInfo.ToBytes(widthBlocks));
+        uint32_t bytesPerRow = Align(usedBytesPerRow, 256);
+
+        schema::RootCommandWriteTextureCmd cmd{{
+            .data = {{
+                .destination = {{
+                    .textureId = id,
+                    .mipLevel = mipLevel,
+                    .origin = {{.x = 0, .y = 0, .z = 0}},
+                    .aspect = wgpu::TextureAspect::All,
+                }},
+                .layout = {{
+                    .offset = 0,
+                    .bytesPerRow = usedBytesPerRow,
+                    .rowsPerImage = static_cast<uint32_t>(heightBlocks),
+                }},
+                .size = {{
+                    .width = static_cast<uint32_t>(blockInfo.ToTexelWidth(widthBlocks)),
+                    .height = static_cast<uint32_t>(blockInfo.ToTexelHeight(heightBlocks)),
+                    .depthOrArrayLayers = static_cast<uint32_t>(size.depthOrArrayLayers),
+                }},
+                .dataSize = blockInfo.ToBytes(widthBlocks * heightBlocks * depthBlocks),
+            }},
+        }};
+        Serialize(captureContext, cmd);
+
+        BlockCount maxBlockRowsPerRead{CaptureContext::kCopyBufferSize / bytesPerRow};
+        DAWN_ASSERT(maxBlockRowsPerRead > BlockCount{0});
+
+        for (TexelCount z{0}; z < size.depthOrArrayLayers; ++z) {
+            for (BlockCount y{0}; y < heightBlocks; y += maxBlockRowsPerRead) {
+                BlockCount blockRows = std::min(maxBlockRowsPerRead, heightBlocks - y);
+                // Copy Data from Texture to Buffer. Then map and write buffer.
+                WGPUTexelCopyTextureInfo srcTexture{
+                    .texture = GetInnerHandle(),
+                    .mipLevel = mipLevel,
+                    .origin = {0, static_cast<uint32_t>(blockInfo.ToTexelHeight(y)),
+                               static_cast<uint32_t>(z)},
+                    .aspect = WGPUTextureAspect_All,
+                };
+                WGPUTexelCopyBufferInfo dstBuffer{
+                    .layout =
+                        {
+                            .offset = 0,
+                            .bytesPerRow = bytesPerRow,
+                            .rowsPerImage = static_cast<uint32_t>(blockRows),
+                        },
+                    .buffer = copyBuffer,
+                };
+                WGPUExtent3D copySize{
+                    .width = static_cast<uint32_t>(blockInfo.ToTexelWidth(widthBlocks)),
+                    .height = static_cast<uint32_t>(blockInfo.ToTexelHeight(blockRows)),
+                    .depthOrArrayLayers = 1,
+                };
+                WGPUCommandEncoder encoder = wgpu.deviceCreateCommandEncoder(innerDevice, nullptr);
+                wgpu.commandEncoderCopyTextureToBuffer(encoder, &srcTexture, &dstBuffer, &copySize);
+                WGPUCommandBuffer commandBuffer = wgpu.commandEncoderFinish(encoder, nullptr);
+                wgpu.queueSubmit(queue, 1, &commandBuffer);
+                wgpu.commandBufferRelease(commandBuffer);
+                wgpu.commandEncoderRelease(encoder);
+
+                // Map the buffer to read back the content.
+                WGPUBufferMapCallbackInfo innerCallbackInfo = {};
+                innerCallbackInfo.mode = WGPUCallbackMode_WaitAnyOnly;
+                innerCallbackInfo.callback = [](WGPUMapAsyncStatus status, WGPUStringView message,
+                                                void* result_param, void* userdata_param) {
+                    MapAsyncResult* result = reinterpret_cast<MapAsyncResult*>(result_param);
+                    result->status = status;
+                    result->message = ToString(message);
+                };
+                innerCallbackInfo.userdata1 = &mapAsyncResult;
+                innerCallbackInfo.userdata2 = this;
+
+                // We read this back synchronously. I'm not sure we could do much more.
+                WGPUFutureWaitInfo waitInfo = {};
+                uint64_t offset = 0;
+                waitInfo.future =
+                    wgpu.bufferMapAsync(copyBuffer, WGPUMapMode_Read, offset,
+                                        CaptureContext::kCopyBufferSize, innerCallbackInfo);
+                wgpu.instanceWaitAny(device->GetInnerInstance(), 1, &waitInfo, UINT64_MAX);
+
+                DAWN_ASSERT(mapAsyncResult.status == WGPUMapAsyncStatus_Success);
+
+                if (mapAsyncResult.status != WGPUMapAsyncStatus_Success) {
+                    return DAWN_INTERNAL_ERROR(mapAsyncResult.message);
+                }
+
+                // We only write out the beginning of each row, the rest is padding.
+                for (BlockCount blockRow{0}; blockRow < blockRows; ++blockRow) {
+                    const void* data = wgpu.bufferGetConstMappedRange(
+                        copyBuffer, static_cast<uint32_t>(blockRow) * bytesPerRow, usedBytesPerRow);
+                    captureContext.WriteContentBytes(data, usedBytesPerRow);
+                }
+                wgpu.bufferUnmap(copyBuffer);
+            }
+        }
+    }
+    return {};
 }
 
 }  // namespace dawn::native::webgpu

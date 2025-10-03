@@ -58,4 +58,15 @@ MaybeError Deserialize(ReadHead& s, std::string* v) {
     return ReadBytes(s, v->data(), size);
 }
 
+template <>
+MaybeError Deserialize(ReadHead& s, std::vector<wgpu::TextureFormat>* v) {
+    size_t size = 0;
+    DAWN_TRY(Deserialize(s, &size));
+    v->resize(size);
+    for (size_t i = 0; i < size; ++i) {
+        DAWN_TRY(Deserialize(s, &(*v)[i]));
+    }
+    return {};
+}
+
 }  // namespace dawn::replay

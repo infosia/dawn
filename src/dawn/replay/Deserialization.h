@@ -20,6 +20,7 @@
 #include <cstdint>
 #include <string>
 #include <type_traits>
+#include <vector>
 
 #include "dawn/replay/Error.h"
 
@@ -34,6 +35,8 @@ MaybeError Deserialize(ReadHead& s, int32_t* v);
 MaybeError Deserialize(ReadHead& s, uint32_t* v);
 MaybeError Deserialize(ReadHead& s, uint64_t* v);
 MaybeError Deserialize(ReadHead& s, std::string* v);
+template <typename T>
+MaybeError Deserialize(ReadHead& s, std::vector<T>* v);
 
 template <typename T>
 MaybeError Deserialize(ReadHead& s, T* v)
