@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e20c38a0_244f2064",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-03T23:47:40Z",
+      "side": 1,
+      "message": "PTAL\n\nI did make a few attempts to support omitting merge scripts in the recipe code, but it always resulted in a default merge script being added anyways. Maybe can be revisited in the future, but this is functionally identical from Dawn\u0027s perspective and is less invasive.\n\nThe two builds from PS2 confirm that this does not unexpectedly affect the build\u0027s ability to detect failures.",
+      "revId": "612d1bacd5cd155f634157407e9a61d7002781c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
