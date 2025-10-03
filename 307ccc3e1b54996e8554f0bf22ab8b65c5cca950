@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "122312ac_07593ba7",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-03T12:19:14Z",
+      "side": 1,
+      "message": "Please wrap to multiple lines (I don\u0027t see any other parts of this file going over the default margin).",
+      "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "942879cd_3e4a4dea",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-03T12:19:14Z",
+      "side": 1,
+      "message": "A comment to say what each regular expression does is probably a good idea.",
+      "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fbd0b65_3f8a6117",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-03T12:19:14Z",
+      "side": 1,
+      "message": "Please break to multiple lines if possible.",
+      "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9835850_059b9b3c",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-03T12:19:14Z",
+      "side": 1,
+      "message": "Again please don\u0027t exceed the 100 character limit.",
+      "fixSuggestions": [
+        {
+          "fixId": "1f66e638_9a4d80ac",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/dawn_utility.py",
+              "range": {
+                "startLine": 143,
+                "startChar": 0,
+                "endLine": 144,
+                "endChar": 0
+              },
+              "replacement": "    yaml_lookups \u003d {}\n    for yaml_cat, items in yml_data.items():\n        if isinstance(items, list):\n            inner_map \u003d {item[\"name\"]: item for item in items if item and \"name\" in item}\n            yaml_lookups[yaml_cat] \u003d inner_map\n"
+            }
+          ]
+        }
+      ],
+      "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "112b6f03_86d03654",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-03T12:19:14Z",
+      "side": 1,
+      "message": "Please add a comment as to why we\u0027re trying suffixes.",
+      "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "832214a1_ce3d8c1a",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-03T12:19:14Z",
+      "side": 1,
+      "message": "Line length.",
+      "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c3b1104_ecd60d00",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-03T12:19:14Z",
+      "side": 1,
+      "message": "Looks odd that there\u0027s the same handler with two different names.",
+      "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0943bbfd_82f6bd49",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-03T12:19:14Z",
+      "side": 1,
+      "message": "Please don\u0027t exceed 100 characters on a single line.",
+      "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84e4a511_76650bc4",
+        "filename": "generator/templates/art/api_kotlin_enum.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-03T12:19:14Z",
+      "side": 1,
+      "message": "FYI it\u0027s OK to exceed the line limit in the templates (a. it\u0027s much messier otherwise to generate the text we want, and b. there\u0027s lots of precedents)",
+      "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
