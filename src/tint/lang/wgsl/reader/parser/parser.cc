@@ -41,6 +41,7 @@
 #include "src/tint/lang/wgsl/ast/break_statement.h"
 #include "src/tint/lang/wgsl/ast/call_statement.h"
 #include "src/tint/lang/wgsl/ast/continue_statement.h"
+#include "src/tint/lang/wgsl/ast/depth_greater_attribute.h"
 #include "src/tint/lang/wgsl/ast/discard_statement.h"
 #include "src/tint/lang/wgsl/ast/id_attribute.h"
 #include "src/tint/lang/wgsl/ast/if_statement.h"
@@ -3003,6 +3004,7 @@ Maybe<const ast::Attribute*> Parser::attribute() {
     uint32_t max = 1;
     switch (attr.value) {
         case core::Attribute::kCompute:
+        case core::Attribute::kDepthGreater:
         case core::Attribute::kFragment:
         case core::Attribute::kInvariant:
         case core::Attribute::kMustUse:
@@ -3119,6 +3121,8 @@ Maybe<const ast::Attribute*> Parser::attribute() {
             return create<ast::ColorAttribute>(t.source(), args[0]);
         case core::Attribute::kCompute:
             return create<ast::StageAttribute>(t.source(), ast::PipelineStage::kCompute);
+        case core::Attribute::kDepthGreater:
+            return create<ast::DepthGreaterAttribute>(t.source());
         case core::Attribute::kFragment:
             return create<ast::StageAttribute>(t.source(), ast::PipelineStage::kFragment);
         case core::Attribute::kGroup:
