@@ -45,6 +45,8 @@ class BufferBase;
 class CommandBufferBase;
 struct Origin3D;
 struct Extent3D;
+struct BufferCopy;
+struct TextureCopy;
 
 }  // namespace dawn::native
 
@@ -156,6 +158,10 @@ class CaptureContext {
 
 schema::Origin3D ToSchema(const Origin3D& origin);
 schema::Extent3D ToSchema(const Extent3D& extent);
+schema::TexelCopyBufferLayout ToSchema(const BufferCopy& bufferCopy);
+schema::TexelCopyBufferInfo ToSchema(CaptureContext& captureContext, const BufferCopy& bufferCopy);
+schema::TexelCopyTextureInfo ToSchema(CaptureContext& captureContext,
+                                      const TextureCopy& textureCopy);
 schema::TexelCopyBufferLayout ToSchema(const TexelCopyBufferLayout& layout);
 schema::TexelCopyTextureInfo ToSchema(CaptureContext& captureContext,
                                       const TexelCopyTextureInfo& info);
