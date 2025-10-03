@@ -101,6 +101,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c6a497a2_3c3a61a9",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-03T20:19:41Z",
+      "side": 1,
+      "message": "Ah I see. You could do `sel.val.Get()` then, but no big deal.",
+      "parentUuid": "6cde4c59_d7d7000b",
+      "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0358d75f_0a6f043b",
         "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
         "patchSetId": 19
@@ -218,6 +236,24 @@
       "side": 1,
       "message": "This is because a default also has an exit switch? Which was also related to the previous comment about not needing the conditions for the default.",
       "parentUuid": "55954ba6_c188023c",
+      "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63cdcfd4_34016783",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-03T20:19:41Z",
+      "side": 1,
+      "message": "Right, every case including the default will have to exit the switch.",
+      "parentUuid": "dd8b97c4_9dbf9433",
       "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
