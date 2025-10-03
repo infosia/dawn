@@ -153,6 +153,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1304a8dc_d1b9aa4f",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-03T20:47:10Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "609aeb75_447201cb",
+      "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0358d75f_0a6f043b",
