@@ -43,3 +43,9 @@ wheel: <
   name: "infra/python/wheels/psutil/${vpython_platform}"
   version: "version:5.8.0.chromium.3"
 >
+
+# `pyyaml` is shared between `//third_party/wpt_tools/wpt/wpt` and `pytype`.
+wheel: <
+  name: "infra/python/wheels/pyyaml/${vpython_platform}"
+  version: "version:5.4.1.chromium.1"
+>
