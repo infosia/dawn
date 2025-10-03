@@ -225,6 +225,7 @@ enum attribute {
   builtin
   compute
   diagnostic
+  depth_greater
   fragment
   group
   id

@@ -145,6 +145,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             case core::ir::Function::PipelineStage::kUndefined:
                 TINT_IR_UNREACHABLE(ir);
         }
+        output_struct->SetDepthGreater(func->DepthGreater());
         output_values.Resize(outputs.Length());
         return output_struct;
     }

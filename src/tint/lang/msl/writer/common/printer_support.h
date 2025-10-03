@@ -51,8 +51,9 @@ SizeAndAlign MslPackedTypeSizeAndAlign(const core::type::Type* ty);
 
 /// Converts a builtin to an attribute name
 /// @param builtin the builtin to convert
+/// @param depth_greater true if depth greater should be applied
 /// @returns the string name of the builtin or blank on error
-std::string BuiltinToAttribute(core::BuiltinValue builtin);
+std::string BuiltinToAttribute(core::BuiltinValue builtin, bool depth_greater = false);
 
 /// Converts interpolation attributes to an MSL attribute
 /// @param type the interpolation type

@@ -154,6 +154,13 @@ class Struct : public Castable<Struct, Type> {
     /// @returns the set of entry point uses of this structure
     const Hashset<PipelineStageUsage, 1>& PipelineStageUses() const { return pipeline_stage_uses_; }
 
+    /// Sets depth greater to the structure.
+    /// @param depth_greater whether depth_greater is applied
+    void SetDepthGreater(bool depth_greater) { depth_greater_ = depth_greater; }
+
+    /// @returns whether depth_greater is applied
+    bool DepthGreater() const { return depth_greater_; }
+
     /// @returns the name for this type that closely resembles how it would be
     /// declared in WGSL.
     std::string FriendlyName() const override;
@@ -193,6 +200,7 @@ class Struct : public Castable<Struct, Type> {
     Hashset<core::AddressSpace, 1> address_space_usage_;
     Hashset<PipelineStageUsage, 1> pipeline_stage_uses_;
     tint::Vector<const Struct*, 2> concrete_types_;
+    bool depth_greater_ = false;
 };
 
 /// StructMember holds the type information for structure members.

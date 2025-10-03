@@ -196,6 +196,7 @@
 "default"
 "degrees"
 "depth"
+"depth_greater"
 "derivative_uniformity"
 "determinant"
 "diagnostic"

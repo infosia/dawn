@@ -138,6 +138,13 @@ class Function : public Castable<Function, Value> {
         }};
     }
 
+    /// Sets depth greater
+    /// @param depth_greater whether depth greater applies
+    void SetDepthGreater(bool depth_greater) { depth_greater_ = depth_greater; }
+
+    /// @returns the depth greater value
+    bool DepthGreater() const { return depth_greater_; }
+
     /// @param type the type to return via ->Type()
     void SetType(const core::type::Type* type) { type_ = type; }
 
@@ -224,6 +231,7 @@ class Function : public Castable<Function, Value> {
   private:
     PipelineStage pipeline_stage_ = PipelineStage::kUndefined;
     std::optional<std::array<Value*, 3>> workgroup_size_;
+    bool depth_greater_ = false;
 
     const core::type::Type* type_ = nullptr;
 

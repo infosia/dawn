@@ -1099,6 +1099,9 @@ Attribute ParseAttribute(std::string_view str) {
     if (str == "compute") {
         return Attribute::kCompute;
     }
+    if (str == "depth_greater") {
+        return Attribute::kDepthGreater;
+    }
     if (str == "diagnostic") {
         return Attribute::kDiagnostic;
     }
@@ -1153,6 +1156,8 @@ std::string_view ToString(Attribute value) {
             return "color";
         case Attribute::kCompute:
             return "compute";
+        case Attribute::kDepthGreater:
+            return "depth_greater";
         case Attribute::kDiagnostic:
             return "diagnostic";
         case Attribute::kFragment:
