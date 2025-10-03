@@ -137,6 +137,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "79a50f23_6b97bd73",
+        "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-03T20:27:36Z",
+      "side": 1,
+      "message": "Maybe, but I don\u0027t think it\u0027s a particularly common case.",
+      "parentUuid": "609aeb75_447201cb",
+      "revId": "0edc71c893077bc8422f30cd93fdf30a0096d3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0358d75f_0a6f043b",
         "filename": "src/tint/lang/spirv/writer/raise/case_switch_to_if_else.cc",
         "patchSetId": 19
