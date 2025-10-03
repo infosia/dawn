@@ -269,6 +269,9 @@ struct Decoder {
             fn_out->SetWorkgroupSize(Value(wg_size_in.x()), Value(wg_size_in.y()),
                                      Value(wg_size_in.z()));
         }
+        if (fn_in.has_depth_greater()) {
+            fn_out->SetDepthGreater(Value(fn_in.depth_greater()));
+        }
 
         Vector<FunctionParam*, 8> params_out;
         for (auto param_in : fn_in.parameters()) {
