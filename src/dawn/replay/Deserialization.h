@@ -147,6 +147,11 @@ constexpr int kInternalVisitableUnusedForComma = 0;
                                    public ::dawn::replay::Deserializable<CmdType##CmdName##Cmd>
 
 // Makes both a CmdData and a Cmd struct for a given root command name.
+// Makes both a CmdData and a Cmd struct for a given encoder command name.
+#define DAWN_REPLAY_MAKE_ENCODER_CMD_AND_CMD_DATA(CmdName, CMD_MEMBERS) \
+    DAWN_REPLAY_MAKE_CMD_AND_CMD_DATA(EncoderCommand, CmdName, CMD_MEMBERS)
+
+// Makes both a CmdData and a Cmd struct for a given root command name.
 #define DAWN_REPLAY_MAKE_ROOT_CMD_AND_CMD_DATA(CmdName, CMD_MEMBERS) \
     DAWN_REPLAY_MAKE_CMD_AND_CMD_DATA(RootCommand, CmdName, CMD_MEMBERS)
 

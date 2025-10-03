@@ -61,6 +61,35 @@ ResultOrError<wgpu::Buffer> CreateBuffer(wgpu::Device device,
     return {buffer};
 }
 
+MaybeError ProcessEncoderCommands(const Replay& replay,
+                                  ReadHead& readHead,
+                                  wgpu::Device device,
+                                  wgpu::CommandEncoder encoder) {
+    schema::EncoderCommand cmd;
+
+    while (!readHead.IsDone()) {
+        DAWN_TRY(Deserialize(readHead, &cmd));
+        switch (cmd) {
+            case schema::EncoderCommand::CopyBufferToBuffer: {
+                schema::EncoderCommandCopyBufferToBufferCmdData data;
+                DAWN_TRY(Deserialize(readHead, &data));
+                encoder.CopyBufferToBuffer(replay.GetObjectById<wgpu::Buffer>(data.srcBufferId),
+                                           data.srcOffset,
+                                           replay.GetObjectById<wgpu::Buffer>(data.dstBufferId),
+                                           data.dstOffset, data.size);
+                break;
+            }
+            case schema::EncoderCommand::End: {
+                return {};
+            }
+            default:
+                // UNIMPLEMENTED();
+                break;
+        }
+    }
+    return DAWN_INTERNAL_ERROR("Missing End command");
+}
+
 }  // anonymous namespace
 
 std::unique_ptr<Replay> Replay::Create(wgpu::Device device, const Capture* capture) {
@@ -106,6 +135,25 @@ MaybeError Replay::Play() {
                 wgpu::Buffer buffer = GetObjectById<wgpu::Buffer>(data.bufferId);
                 DAWN_TRY(ReadContentIntoBuffer(contentReadHead, mDevice, buffer, data.bufferOffset,
                                                data.size));
+                break;
+            }
+            case schema::RootCommand::QueueSubmit: {
+                schema::RootCommandQueueSubmitCmdData data;
+                DAWN_TRY(Deserialize(readHead, &data));
+
+                std::vector<wgpu::CommandBuffer> commandBuffers;
+                commandBuffers.reserve(data.commandBufferCount);
+                for (uint32_t i = 0; i < data.commandBufferCount; ++i) {
+                    std::string label;
+                    DAWN_TRY(Deserialize(readHead, &label));
+                    wgpu::CommandEncoderDescriptor desc{
+                        .label = wgpu::StringView(label),
+                    };
+                    wgpu::CommandEncoder encoder = mDevice.CreateCommandEncoder(&desc);
+                    DAWN_TRY(ProcessEncoderCommands(*this, readHead, mDevice, encoder));
+                    commandBuffers.emplace_back(encoder.Finish());
+                }
+                mDevice.GetQueue().Submit(commandBuffers.size(), commandBuffers.data());
                 break;
             }
             default: {

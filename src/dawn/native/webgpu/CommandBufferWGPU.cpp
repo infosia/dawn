@@ -415,9 +415,38 @@ void EncodeRenderPass(const DawnProcTable& wgpu,
     DAWN_UNREACHABLE();
 }
 
+void Capture(CaptureContext& captureContext, const CopyBufferToBufferCmd& cmd) {
+    schema::EncoderCommandCopyBufferToBufferCmd data{{
+        .data = {{
+            .srcBufferId = captureContext.GetId(cmd.source.Get()),
+            .srcOffset = cmd.sourceOffset,
+            .dstBufferId = captureContext.GetId(cmd.destination.Get()),
+            .dstOffset = cmd.destinationOffset,
+            .size = cmd.size,
+        }},
+    }};
+    Serialize(captureContext, data);
+}
+
+MaybeError CaptureEncoderCommands(CaptureContext& captureContext, CommandIterator& commands) {
+    Command type;
+    while (commands.NextCommandId(&type)) {
+        switch (type) {
+            case Command::CopyBufferToBuffer: {
+                Capture(captureContext, *commands.NextCommand<CopyBufferToBufferCmd>());
+                break;
+            }
+            default:
+                DAWN_UNREACHABLE();
+        }
+    }
+    Serialize(captureContext, schema::EncoderCommand::End);
+    return {};
+}
+
 }  // anonymous namespace
 
-MaybeError CommandBuffer::Capture(CaptureContext& captureContext) {
+MaybeError CommandBuffer::CaptureResources(CaptureContext& captureContext) {
     const auto& resourceUsages = GetResourceUsages();
     for (auto buffer : resourceUsages.topLevelBuffers) {
         DAWN_TRY(captureContext.AddResource(buffer));
@@ -432,6 +461,12 @@ MaybeError CommandBuffer::Capture(CaptureContext& captureContext) {
             DAWN_TRY(captureContext.AddResource(buffer));
         }
     }
+    return {};
+}
+
+MaybeError CommandBuffer::Capture(CaptureContext& captureContext) {
+    Serialize(captureContext, GetLabel());
+    DAWN_TRY(CaptureEncoderCommands(captureContext, *GetCommandIteratorForTesting()));
     return {};
 }
 
