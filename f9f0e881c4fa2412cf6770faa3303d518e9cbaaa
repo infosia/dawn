@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99359821_ca77a779",
+        "filename": "src/dawn/native/AsyncTask.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-03T22:18:24Z",
+      "side": 1,
+      "message": "nit. Should these assert that `GetState() \u003d\u003d Completed`?",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 79
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33e88a87_8ebf2352",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-03T22:18:24Z",
+      "side": 1,
+      "message": "nit. `ErrorType`",
+      "range": {
+        "startLine": 822,
+        "startChar": 34,
+        "endLine": 822,
+        "endChar": 43
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97b0e4ad_2d2f3cd4",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-03T22:18:24Z",
+      "side": 1,
+      "message": "nit. remove additional `//`.",
+      "range": {
+        "startLine": 142,
+        "startChar": 7,
+        "endLine": 142,
+        "endChar": 9
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0eb3c3ea_a334ca90",
+        "filename": "src/dawn/native/ErrorScope.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-03T22:18:24Z",
+      "side": 1,
+      "message": "nit. `captureErrorType`?",
+      "range": {
+        "startLine": 47,
+        "startChar": 20,
+        "endLine": 47,
+        "endChar": 36
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ab009f7_79c294eb",
+        "filename": "src/dawn/tests/unittests/native/DeviceAsyncTaskTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-03T22:18:24Z",
+      "side": 1,
+      "message": "nit. I think we should use the api device here, i.e. `device.PushErrorScope(wgpu::ErrorFilter::Validation)` instead of the explicit mock device. We probably only need to use the explicit mock device when accessing native details, i.e. getting the `AsyncTaskManager` below.",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 66
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f41a4ef9_9e877805",
+        "filename": "src/dawn/tests/unittests/native/DeviceAsyncTaskTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-03T22:18:24Z",
+      "side": 1,
+      "message": "nit. I think this can actually just use the C++ API device, i.e.:\n```\nstd::atomic_bool callbackTriggered \u003d false;\ndevice.PopErrorScope(\n    [\u0026callbackTriggered](wgpu::PopErrorScopeStatus status,\n                         wgpu::ErrorType type,\n                         wgpu::StringView message) {\n        callbackTriggered \u003d true;\n    }\n```",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 44
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
