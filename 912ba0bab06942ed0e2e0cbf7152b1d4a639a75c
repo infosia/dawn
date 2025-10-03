@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3aaffc8_c9681a82",
+        "filename": "generator/templates/art/api_kotlin_structure.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-03T14:21:17Z",
+      "side": 1,
+      "message": "Are you trying to keep the output file neat by correcting the indent here?",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 18
+      },
+      "revId": "912ba0bab06942ed0e2e0cbf7152b1d4a639a75c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0afe9205_2088c1b1",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-03T14:21:17Z",
+      "side": 1,
+      "message": "I feel like this method now does so little (doesn\u0027t supply its own callbacks) that we should just inline it above.",
+      "revId": "912ba0bab06942ed0e2e0cbf7152b1d4a639a75c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
