@@ -101,7 +101,7 @@ MaybeError Replay::Play() {
                 break;
             }
             case schema::RootCommand::WriteBuffer: {
-                schema::WriteBufferCmdData data;
+                schema::RootCommandWriteBufferCmdData data;
                 DAWN_TRY(Deserialize(readHead, &data));
                 wgpu::Buffer buffer = GetObjectById<wgpu::Buffer>(data.bufferId);
                 DAWN_TRY(ReadContentIntoBuffer(contentReadHead, mDevice, buffer, data.bufferOffset,

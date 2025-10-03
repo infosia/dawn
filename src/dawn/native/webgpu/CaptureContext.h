@@ -33,6 +33,7 @@
 #include <string>
 
 #include "absl/container/flat_hash_set.h"
+#include "dawn/native/Error.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/Serialization.h"
@@ -55,26 +56,30 @@ class CaptureContext {
                             std::ostream& contentStream);
     ~CaptureContext();
 
+    static constexpr uint64_t kCopyBufferSize = 1024 * 1024;
+
     // Add resources both, creates an id for the resource AND captures its
     // description if it has not already been captured which is effectively
     // capturing an implicit call to createXXX.
     template <typename T>
-    schema::ObjectId AddResource(T* object) {
+    ResultOrError<schema::ObjectId> AddResource(T* object) {
         assert(object != nullptr);
+        const auto backendObject = ToBackend(object);
+        schema::ObjectId id;
         Ref<ApiObjectBase> ref(object);
         auto it = mObjectIds.find(ref);
-        if (it != mObjectIds.end()) {
-            return it->second;
+        bool newResource = it == mObjectIds.end();
+        if (newResource) {
+            backendObject->AddReferenced(*this);
+
+            id = mNextObjectId++;
+            mObjectIds[ref] = id;
+            DAWN_TRY(CaptureCreation(id, object->GetLabel(), backendObject));
+        } else {
+            id = it->second;
         }
-
-        const auto backendObject = ToBackend(object);
-        backendObject->AddReferenced(*this);
-
-        schema::ObjectId newId = mNextObjectId++;
-        mObjectIds[ref] = newId;
-        CaptureCreation(newId, object->GetLabel(), backendObject);
-
-        return newId;
+        DAWN_TRY(CaptureContentIfNeeded(id, newResource, backendObject));
+        return {id};
     }
 
     // You must have called AddResource at some point before calling GetId.
@@ -90,18 +95,22 @@ class CaptureContext {
     }
 
     void WriteCommandBytes(const void* data, size_t size);
+    void WriteContentBytes(const void* data, size_t size);
 
-    void CaptureQueueWriteBuffer(BufferBase* buffer,
-                                 uint64_t bufferOffset,
-                                 const void* data,
-                                 size_t size);
+    MaybeError CaptureQueueWriteBuffer(BufferBase* buffer,
+                                       uint64_t bufferOffset,
+                                       const void* data,
+                                       size_t size);
+
+    WGPUBuffer GetCopyBuffer();
 
   private:
-    WGPUBuffer GetCopyBuffer();
-    void WriteContentBytes(const void* data, size_t size);
-    void CaptureCreation(schema::ObjectId id,
-                         const std::string& label,
-                         const RecordableObject* object);
+    MaybeError CaptureCreation(schema::ObjectId id,
+                               const std::string& label,
+                               RecordableObject* object);
+    MaybeError CaptureContentIfNeeded(schema::ObjectId id,
+                                      bool newResource,
+                                      RecordableObject* object);
 
     // This is here for debugging. So that at debug time you can see what how many command bytes
     // have been written. and compare that to how many have been read when replaying.
