@@ -77,7 +77,7 @@ void GenerateGLSL(benchmark::State& state, std::string input_name) {
             // Run single entry point to strip the program down to a single entry point.
             auto single_result = core::ir::transform::SingleEntryPoint(ir.Get(), names[i]);
             if (single_result != Success) {
-                state.SkipWithError(ir.Failure().reason);
+                state.SkipWithError(single_result.Failure().reason);
                 return;
             }
 

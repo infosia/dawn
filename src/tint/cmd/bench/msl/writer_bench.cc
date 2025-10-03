@@ -28,6 +28,7 @@
 #include <string>
 
 #include "src/tint/cmd/bench/bench.h"
+#include "src/tint/lang/core/ir/transform/single_entry_point.h"
 #include "src/tint/lang/msl/ir/transform/flatten_bindings.h"
 #include "src/tint/lang/msl/writer/helpers/generate_bindings.h"
 #include "src/tint/lang/msl/writer/writer.h"
@@ -64,6 +65,8 @@ void GenerateMSL(benchmark::State& state, std::string input_name) {
         tint::BindingPoint{0, 6}, 6);
     gen_options.array_length_from_constants.bindpoint_to_size_index.emplace(
         tint::BindingPoint{0, 7}, 7);
+
+    std::vector<std::string> names;
     {
         // Convert the AST program to an IR module, so that we can generating bindings data.
         auto ir = tint::wgsl::reader::ProgramToLoweredIR(res->program);
@@ -72,34 +75,43 @@ void GenerateMSL(benchmark::State& state, std::string input_name) {
             return;
         }
 
-        // Remap resource numbers to a flat namespace.
-        auto fb_res = tint::msl::ir::transform::FlattenBindings(ir.Get());
-        if (fb_res != tint::Success) {
-            state.SkipWithError(fb_res.Failure().reason);
-            return;
+        // Get the list of entry point names.
+        for (auto func : ir->functions) {
+            if (func->IsEntryPoint()) {
+                names.push_back(ir->NameOf(func).Name());
+            }
         }
-
-        gen_options.bindings = tint::msl::writer::GenerateBindings(ir.Get(), false);
     }
 
     for (auto _ : state) {
-        // Convert the AST program to an IR module.
-        auto ir = tint::wgsl::reader::ProgramToLoweredIR(res->program);
-        if (ir != Success) {
-            state.SkipWithError(ir.Failure().reason);
-            return;
-        }
+        for (uint32_t i = 0; i < names.size(); i++) {
+            // Convert the AST program to an IR module.
+            auto ir = tint::wgsl::reader::ProgramToLoweredIR(res->program);
+            if (ir != Success) {
+                state.SkipWithError(ir.Failure().reason);
+                return;
+            }
 
-        // Remap resource numbers to a flat namespace.
-        auto fb_res = tint::msl::ir::transform::FlattenBindings(ir.Get());
-        if (fb_res != tint::Success) {
-            state.SkipWithError(fb_res.Failure().reason);
-            return;
-        }
+            // Run single entry point to strip the program down to a single entry point.
+            auto single_result = core::ir::transform::SingleEntryPoint(ir.Get(), names[i]);
+            if (single_result != Success) {
+                state.SkipWithError(single_result.Failure().reason);
+                return;
+            }
 
-        auto gen_res = Generate(ir.Get(), gen_options);
-        if (gen_res != Success) {
-            state.SkipWithError(gen_res.Failure().reason);
+            // Remap resource numbers to a flat namespace.
+            auto fb_res = tint::msl::ir::transform::FlattenBindings(ir.Get());
+            if (fb_res != tint::Success) {
+                state.SkipWithError(fb_res.Failure().reason);
+                return;
+            }
+
+            gen_options.bindings = tint::msl::writer::GenerateBindings(ir.Get(), false);
+
+            auto gen_res = Generate(ir.Get(), gen_options);
+            if (gen_res != Success) {
+                state.SkipWithError(gen_res.Failure().reason);
+            }
         }
     }
 }
