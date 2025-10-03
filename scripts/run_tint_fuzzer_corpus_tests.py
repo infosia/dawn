@@ -49,6 +49,7 @@ def run_fuzzer_corpus_tests(
         sys.executable,
         os.path.join(TOOLS_DIR, 'run.py'),
         'fuzz',
+        'asdf',
     ]
     cmd.extend(args_to_forward)
     if append_cwd_as_build:

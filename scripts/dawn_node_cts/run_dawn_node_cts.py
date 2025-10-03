@@ -100,8 +100,8 @@ def convert_results_for_resultdb_ingestion(
     }
 
     for r in test_results:
-        if r['Status'] != 'pass':
-            converted_test_results['failures'].append(r['TestCase'])
+        # if r['Status'] != 'pass':
+        converted_test_results['failures'].append(r['TestCase'])
 
     with open(isolated_output_filepath, 'w', encoding='utf-8') as outfile:
         json.dump(converted_test_results, outfile)
