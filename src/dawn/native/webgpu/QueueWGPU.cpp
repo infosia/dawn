@@ -55,16 +55,31 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
         return {};
     }
 
-    auto& wgpu = ToBackend(GetDevice())->wgpu;
+    if (IsCapturing()) {
+        // Need to capture all resources used by all command buffers before
+        // capturing the commands themselves
+        for (uint32_t i = 0; i < commandCount; ++i) {
+            DAWN_TRY(ToBackend(commands[i])->CaptureResources(*mCaptureContext));
+        }
+
+        schema::RootCommandQueueSubmitCmd cmd{{
+            .data = {{
+                .commandBufferCount = commandCount,
+            }},
+        }};
+        Serialize(*mCaptureContext, cmd);
+
+        for (uint32_t i = 0; i < commandCount; ++i) {
+            DAWN_TRY(ToBackend(commands[i])->Capture(*mCaptureContext));
+        }
+    }
 
     std::vector<WGPUCommandBuffer> innerCommandBuffers(commandCount);
     for (uint32_t i = 0; i < commandCount; ++i) {
-        if (IsCapturing()) {
-            DAWN_TRY(ToBackend(commands[i])->Capture(*mCaptureContext));
-        }
         innerCommandBuffers[i] = ToBackend(commands[i])->Encode(IsCapturing());
     }
 
+    auto& wgpu = ToBackend(GetDevice())->wgpu;
     wgpu.queueSubmit(mInnerHandle, commandCount, innerCommandBuffers.data());
 
     for (uint32_t i = 0; i < commandCount; ++i) {

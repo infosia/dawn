@@ -104,7 +104,7 @@ MaybeError CaptureContext::CaptureQueueWriteBuffer(BufferBase* buffer,
                                                    const void* data,
                                                    size_t size) {
     schema::ObjectId id;
-    DAWN_TRY_ASSIGN(id, AddResource(buffer));
+    DAWN_TRY_ASSIGN(id, AddResourceAndGetId(buffer));
     schema::RootCommandWriteBufferCmd cmd{{
         .data = {{
             .bufferId = id,
