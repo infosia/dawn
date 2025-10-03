@@ -28,6 +28,7 @@
 #include "dawn/native/webgpu/Serialization.h"
 
 #include <string>
+#include <vector>
 
 #include "dawn/native/webgpu/CaptureContext.h"
 
@@ -52,6 +53,14 @@ void Serialize(CaptureContext& context, uint64_t v) {
 void Serialize(CaptureContext& context, const std::string& v) {
     Serialize(context, v.size());
     WriteBytes(context, v.data(), v.size());
+}
+
+template <>
+void Serialize(CaptureContext& context, const std::vector<wgpu::TextureFormat>& v) {
+    Serialize(context, v.size());
+    for (const auto& elem : v) {
+        Serialize(context, elem);
+    }
 }
 
 }  // namespace dawn::native::webgpu
