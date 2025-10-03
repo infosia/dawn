@@ -42,6 +42,7 @@ class CommandBuffer final : public CommandBufferBase {
 
     WGPUCommandBuffer Encode(bool isCapturing);
     MaybeError Capture(CaptureContext& captureContext);
+    MaybeError CaptureResources(CaptureContext& captureContext);
 
   private:
     CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor);

@@ -40,6 +40,7 @@
 
 namespace dawn::native {
 
+class BufferBase;
 class CommandBufferBase;
 
 }  // namespace dawn::native
@@ -62,7 +63,7 @@ class CaptureContext {
     // description if it has not already been captured which is effectively
     // capturing an implicit call to createXXX.
     template <typename T>
-    ResultOrError<schema::ObjectId> AddResource(T* object) {
+    ResultOrError<schema::ObjectId> AddResourceAndGetId(T* object) {
         assert(object != nullptr);
         const auto backendObject = ToBackend(object);
         schema::ObjectId id;
@@ -73,7 +74,7 @@ class CaptureContext {
             backendObject->AddReferenced(*this);
 
             id = mNextObjectId++;
-            mObjectIds[ref] = id;
+            mObjectIds[std::move(ref)] = id;
             DAWN_TRY(CaptureCreation(id, object->GetLabel(), backendObject));
         } else {
             id = it->second;
@@ -82,7 +83,27 @@ class CaptureContext {
         return {id};
     }
 
+    template <typename T>
+    MaybeError AddResource(T* object) {
+        [[maybe_unused]] schema::ObjectId id;
+        DAWN_TRY_ASSIGN(id, AddResourceAndGetId(object));
+        return {};
+    }
+
     // You must have called AddResource at some point before calling GetId.
+    template <typename T>
+        requires(std::is_base_of_v<dawn::Ref<BufferBase>, T> ||
+                 std::is_base_of_v<dawn::Ref<TextureBase>, T>)
+    schema::ObjectId GetId(T ref) {
+        if (ref == nullptr) {
+            return 0;
+        }
+
+        auto it = mObjectIds.find(ref);
+        DAWN_ASSERT(it != mObjectIds.end());
+        return it->second;
+    }
+
     template <typename T>
     schema::ObjectId GetId(T* object) {
         if (object == nullptr) {
