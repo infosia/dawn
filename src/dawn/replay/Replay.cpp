@@ -27,6 +27,8 @@
 
 #include "dawn/replay/Replay.h"
 
+#include <algorithm>
+
 #include "dawn/replay/Deserialization.h"
 
 namespace dawn::replay {
@@ -61,6 +63,47 @@ ResultOrError<wgpu::Buffer> CreateBuffer(wgpu::Device device,
     return {buffer};
 }
 
+MaybeError ProcessEncoderCommands(const Replay& replay,
+                                  ReadHead& readHead,
+                                  wgpu::Device device,
+                                  wgpu::CommandEncoder encoder) {
+    schema::EncoderCommand cmd;
+
+    while (!readHead.IsDone()) {
+        DAWN_TRY(Deserialize(readHead, &cmd));
+        switch (cmd) {
+            case schema::EncoderCommand::CopyBufferToBuffer: {
+                schema::EncoderCommandCopyBufferToBufferCmdData data;
+                DAWN_TRY(Deserialize(readHead, &data));
+                encoder.CopyBufferToBuffer(replay.GetObjectById<wgpu::Buffer>(data.srcBufferId),
+                                           data.srcOffset,
+                                           replay.GetObjectById<wgpu::Buffer>(data.dstBufferId),
+                                           data.dstOffset, data.size);
+                break;
+            }
+            case schema::EncoderCommand::End: {
+                return {};
+            }
+            default:
+                // UNIMPLEMENTED();
+                break;
+        }
+    }
+    return DAWN_INTERNAL_ERROR("Missing End command");
+}
+
+ResultOrError<wgpu::CommandBuffer> CreateCommandBuffer(const Replay& replay,
+                                                       wgpu::Device device,
+                                                       ReadHead& readHead,
+                                                       const std::string& label) {
+    wgpu::CommandEncoderDescriptor desc{
+        .label = wgpu::StringView(label),
+    };
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder(&desc);
+    DAWN_TRY(ProcessEncoderCommands(replay, readHead, device, encoder));
+    return {encoder.Finish()};
+}
+
 }  // anonymous namespace
 
 std::unique_ptr<Replay> Replay::Create(wgpu::Device device, const Capture* capture) {
@@ -80,7 +123,15 @@ MaybeError Replay::CreateResource(wgpu::Device device, ReadHead& readHead) {
             mResources.insert({resource.id, {resource.label, buffer}});
             return {};
         }
-
+        case schema::ObjectType::CommandBuffer: {
+            // Command buffers are special and don't have any resources to create.
+            // They are just a sequence of commands.
+            wgpu::CommandBuffer commandBuffer;
+            DAWN_TRY_ASSIGN(commandBuffer,
+                            CreateCommandBuffer(*this, device, readHead, resource.label));
+            mResources.insert({resource.id, {resource.label, commandBuffer}});
+            return {};
+        }
         default:
             // UNIMPLEMENTED();
             break;
@@ -106,6 +157,19 @@ MaybeError Replay::Play() {
                 wgpu::Buffer buffer = GetObjectById<wgpu::Buffer>(data.bufferId);
                 DAWN_TRY(ReadContentIntoBuffer(contentReadHead, mDevice, buffer, data.bufferOffset,
                                                data.size));
+                break;
+            }
+            case schema::RootCommand::QueueSubmit: {
+                schema::RootCommandQueueSubmitCmdData data;
+                DAWN_TRY(Deserialize(readHead, &data));
+
+                std::vector<wgpu::CommandBuffer> commandBuffers;
+                std::transform(data.commandBuffers.begin(), data.commandBuffers.end(),
+                               std::back_inserter(commandBuffers), [&](const auto id) {
+                                   return GetObjectById<wgpu::CommandBuffer>(id);
+                               });
+
+                mDevice.GetQueue().Submit(commandBuffers.size(), commandBuffers.data());
                 break;
             }
             default: {

@@ -31,6 +31,7 @@
 #include <cstdint>
 #include <ostream>
 #include <string>
+#include <utility>
 
 #include "absl/container/flat_hash_set.h"
 #include "dawn/native/Error.h"
@@ -40,7 +41,7 @@
 
 namespace dawn::native {
 
-class CommandBufferBase;
+class BufferBase;
 
 }  // namespace dawn::native
 
@@ -62,7 +63,7 @@ class CaptureContext {
     // description if it has not already been captured which is effectively
     // capturing an implicit call to createXXX.
     template <typename T>
-    ResultOrError<schema::ObjectId> AddResource(T* object) {
+    ResultOrError<schema::ObjectId> AddResourceAndGetId(T* object) {
         assert(object != nullptr);
         const auto backendObject = ToBackend(object);
         schema::ObjectId id;
@@ -70,10 +71,10 @@ class CaptureContext {
         auto it = mObjectIds.find(ref);
         bool newResource = it == mObjectIds.end();
         if (newResource) {
-            backendObject->AddReferenced(*this);
+            DAWN_TRY(backendObject->AddReferenced(*this));
 
             id = mNextObjectId++;
-            mObjectIds[ref] = id;
+            mObjectIds[std::move(ref)] = id;
             DAWN_TRY(CaptureCreation(id, object->GetLabel(), backendObject));
         } else {
             id = it->second;
@@ -82,7 +83,25 @@ class CaptureContext {
         return {id};
     }
 
+    template <typename T>
+    MaybeError AddResource(T* object) {
+        [[maybe_unused]] schema::ObjectId id;
+        DAWN_TRY_ASSIGN(id, AddResourceAndGetId(object));
+        return {};
+    }
+
     // You must have called AddResource at some point before calling GetId.
+    template <typename T>
+    schema::ObjectId GetId(T ref) {
+        if (ref == nullptr) {
+            return 0;
+        }
+
+        auto it = mObjectIds.find(ref);
+        DAWN_ASSERT(it != mObjectIds.end());
+        return it->second;
+    }
+
     template <typename T>
     schema::ObjectId GetId(T* object) {
         if (object == nullptr) {
