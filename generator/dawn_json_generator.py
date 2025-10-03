@@ -31,6 +31,7 @@ from collections import namedtuple, defaultdict
 from copy import deepcopy
 
 from generator_lib import Generator, run_generator, FileRender, GeneratorOutput
+from dawn_yaml_utility import build_doc_map, load_yaml_data
 
 ############################################################
 # OBJECT MODEL
@@ -791,8 +792,7 @@ def compute_wire_params(api_params, wire_json):
 # KOTLIN STUFF
 ############################################################
 
-
-def compute_kotlin_params(loaded_json, kotlin_json):
+def compute_kotlin_params(loaded_json, kotlin_json, yml_data=None):
     params_kotlin = parse_json(loaded_json, enabled_tags=['art'])
     params_kotlin['kotlin_package'] = kotlin_json['kotlin_package']
     params_kotlin['jni_primitives'] = kotlin_json['jni_primitives']
@@ -873,6 +873,15 @@ def compute_kotlin_params(loaded_json, kotlin_json):
     for structure in by_category['structure']:
         for chain_root in structure.chain_roots:
             chain_children[chain_root.name.get()].append(structure)
+
+    kdocs_params = {
+        'language': 'kotlin',
+        'kdocs_blocklist': kotlin_json['kdocs_blocklist'],
+        'kdocs_replacements': kotlin_json['kdocs_replacements'],
+    }
+    params_kotlin['kdocs'] = build_doc_map(
+        by_category=by_category, yml_data=yml_data, params=kdocs_params
+    )
     params_kotlin['chain_children'] = chain_children
     params_kotlin['kotlin_return'] = kotlin_return
     params_kotlin['include_method'] = include_method
@@ -1217,6 +1226,10 @@ class MultiGeneratorFromDawnJSON(Generator):
                             default=None,
                             type=str,
                             help='The KOTLIN JSON definition to use.')
+        parser.add_argument('--webgpu-yml',
+                            default=None,
+                            type=str,
+                            help='The WebGPU API documentation to use.')
         parser.add_argument(
             '--targets',
             required=True,
@@ -1240,6 +1253,10 @@ class MultiGeneratorFromDawnJSON(Generator):
         if args.kotlin_json:
             with open(args.kotlin_json) as f:
                 kotlin_json = json.loads(f.read())
+
+        yml_data = None
+        if args.webgpu_yml:
+            yml_data = load_yaml_data(args.webgpu_yml)
 
         renders = []
         imported_templates = []
@@ -1583,7 +1600,7 @@ class MultiGeneratorFromDawnJSON(Generator):
                            wire_params))
 
         if 'kotlin' in targets:
-            params_kotlin = compute_kotlin_params(loaded_json, kotlin_json)
+            params_kotlin = compute_kotlin_params(loaded_json, kotlin_json, yml_data)
             kt_file_path = params_kotlin['kotlin_package'].replace('.', '/')
             jni_name = params_kotlin['jni_name']
 
@@ -1644,7 +1661,7 @@ class MultiGeneratorFromDawnJSON(Generator):
                            [RENDER_PARAMS_BASE, params_kotlin]))
 
         if "jni" in targets:
-            params_kotlin = compute_kotlin_params(loaded_json, kotlin_json)
+            params_kotlin = compute_kotlin_params(loaded_json, kotlin_json, yml_data)
 
             imported_templates += [
                 "art/api_jni_types.cpp",
