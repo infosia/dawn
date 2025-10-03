@@ -1049,48 +1049,42 @@ class ComponentSwizzleTextureViewValidationTests : public ValidationTest {
     }
 };
 
-// Test different swizzle values when creating a texture view.
-TEST_F(ComponentSwizzleTextureViewValidationTests, InvalidSwizzle) {
+// Test storage binding requires identity swizzle.
+TEST_F(ComponentSwizzleTextureViewValidationTests, StorageBindingRequiresIdentitySwizzle) {
     wgpu::TextureDescriptor textureDesc = {};
-    textureDesc.size = {kWidth, kHeight, kDepth};
-    textureDesc.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment;
+    textureDesc.size = {kWidth, kHeight, 1};
+    textureDesc.usage = wgpu::TextureUsage::StorageBinding;
     textureDesc.format = kDefaultTextureFormat;
+    wgpu::Texture texture = device.CreateTexture(&textureDesc);
 
     wgpu::TextureViewDescriptor viewDesc = {};
     wgpu::TextureComponentSwizzleDescriptor swizzleDesc = {};
     viewDesc.nextInChain = &swizzleDesc;
+    wgpu::TextureView view = texture.CreateView(&viewDesc);
 
-    std::vector<wgpu::TextureUsage> usages = {
-        wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment,
-        wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::StorageBinding,
-        wgpu::TextureUsage::TextureBinding};
+    wgpu::ComputePipelineDescriptor cpDesc;
+    cpDesc.compute.module = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var texture : texture_storage_2d<rgba8unorm, read>;
 
-    for (auto textureUsage : usages) {
-        textureDesc.usage = textureUsage;
-        wgpu::Texture texture = device.CreateTexture(&textureDesc);
+        @compute @workgroup_size(1) fn main() {
+          var res : vec4f = textureLoad(texture, vec2i(0, 0));
+        })");
+    wgpu::ComputePipeline cp = device.CreateComputePipeline(&cpDesc);
 
-        // Control case for identical swizzle, always success.
-        {
-            swizzleDesc = wgpu::TextureComponentSwizzleDescriptor{};
-            texture.CreateView(&viewDesc);
-        }
+    // Control case: identity swizzle
+    utils::MakeBindGroup(device, cp.GetBindGroupLayout(0), {{0, view}});
 
-        // Non-identical swizzle cases
-        for (auto changedChannel :
-             {SwizzleChannel::R, SwizzleChannel::G, SwizzleChannel::B, SwizzleChannel::A}) {
-            swizzleDesc = GetIdenticalButOneSwizzleDesc(changedChannel);
-            // CreateView would succeed iif usage doesn't include RENDER_ATTACHMENT
-            // or STORAGE_BINDING.
-            bool expectSuccess = !(textureUsage & (wgpu::TextureUsage::RenderAttachment |
-                                                   wgpu::TextureUsage::StorageBinding));
-            if (expectSuccess) {
-                texture.CreateView(&viewDesc);
-            } else {
-                ASSERT_DEVICE_ERROR(texture.CreateView(&viewDesc));
-            }
-        }
+    // Non-identical swizzle cases
+    for (auto changedChannel :
+         {SwizzleChannel::R, SwizzleChannel::G, SwizzleChannel::B, SwizzleChannel::A}) {
+        swizzleDesc = GetIdenticalButOneSwizzleDesc(changedChannel);
+        ASSERT_DEVICE_ERROR(utils::MakeBindGroup(device, cp.GetBindGroupLayout(0),
+                                                 {{0, texture.CreateView(&viewDesc)}}),
+                            testing::HasSubstr("must be identity"));
     }
 }
+
+// TODO: Test render attachment requires identity swizzle.
 
 class D32S8TextureViewValidationTests : public ValidationTest {
   protected:
