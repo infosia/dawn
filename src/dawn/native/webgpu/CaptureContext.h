@@ -31,6 +31,7 @@
 #include <cstdint>
 #include <ostream>
 #include <string>
+#include <utility>
 
 #include "absl/container/flat_hash_set.h"
 #include "dawn/native/Error.h"
@@ -42,6 +43,8 @@ namespace dawn::native {
 
 class BufferBase;
 class CommandBufferBase;
+struct Origin3D;
+struct Extent3D;
 
 }  // namespace dawn::native
 
@@ -122,6 +125,11 @@ class CaptureContext {
                                        uint64_t bufferOffset,
                                        const void* data,
                                        size_t size);
+    MaybeError CaptureQueueWriteTexture(const TexelCopyTextureInfo& destination,
+                                        const void* data,
+                                        size_t dataSize,
+                                        const TexelCopyBufferLayout& dataLayout,
+                                        const Extent3D& writeSizePixel);
 
     WGPUBuffer GetCopyBuffer();
 
@@ -145,6 +153,12 @@ class CaptureContext {
 
     WGPUBuffer mCopyBuffer = nullptr;
 };
+
+schema::Origin3D ToSchema(const Origin3D& origin);
+schema::Extent3D ToSchema(const Extent3D& extent);
+schema::TexelCopyBufferLayout ToSchema(const TexelCopyBufferLayout& layout);
+schema::TexelCopyTextureInfo ToSchema(CaptureContext& captureContext,
+                                      const TexelCopyTextureInfo& info);
 
 }  // namespace dawn::native::webgpu
 

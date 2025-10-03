@@ -20,6 +20,7 @@
 #include <cstdint>
 #include <string>
 #include <type_traits>
+#include <vector>
 
 #include "dawn/native/Error.h"
 
@@ -33,6 +34,8 @@ void Serialize(CaptureContext& context, int32_t v);
 void Serialize(CaptureContext& context, uint32_t v);
 void Serialize(CaptureContext& context, uint64_t v);
 void Serialize(CaptureContext& context, const std::string& v);
+template <typename T>
+void Serialize(CaptureContext& context, const std::vector<T>& v);
 
 template <typename T>
 void Serialize(CaptureContext& context, T v)
