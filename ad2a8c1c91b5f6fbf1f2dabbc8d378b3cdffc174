@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fa11827_73cb9c7e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-04T12:43:31Z",
+      "side": 1,
+      "message": "But, I would prefer to avoid specifying shards for each suite and bot combination in the exceptions file, even if the cost is extra sharding where it\u0027s not needed.\n\nAlso, it looks like the previously removed suites have some failures.",
+      "revId": "ad2a8c1c91b5f6fbf1f2dabbc8d378b3cdffc174",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
