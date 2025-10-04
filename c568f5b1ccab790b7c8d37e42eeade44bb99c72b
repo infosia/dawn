@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d12ad31_51732290",
+        "filename": "src/dawn/native/AsyncTask.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-04T00:11:10Z",
+      "side": 1,
+      "message": "[1] Is it important that these callbacks happen before we notify? I think that `condition_variables` could get spuriously awaken and see race with these being completed?",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 5
+      },
+      "revId": "c568f5b1ccab790b7c8d37e42eeade44bb99c72b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d7d2d4e_be4fe063",
+        "filename": "src/dawn/native/AsyncTask.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-04T00:11:10Z",
+      "side": 1,
+      "message": "nit. No longer true.",
+      "range": {
+        "startLine": 111,
+        "startChar": 61,
+        "endLine": 112,
+        "endChar": 12
+      },
+      "revId": "c568f5b1ccab790b7c8d37e42eeade44bb99c72b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "649c3864_3da14108",
+        "filename": "src/dawn/native/AsyncTask.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-04T00:11:10Z",
+      "side": 1,
+      "message": "I think that `GetState()` itself might not be too useful, and instead we should probably have something like `AssertStateIs` or something (could probably be protected also?)? I think that way we might be able to make `mState` non-atomic also if we do decide to wrap all of that in a struct protected via a `MutexCondVarProtected`.",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 54
+      },
+      "revId": "c568f5b1ccab790b7c8d37e42eeade44bb99c72b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8385a17_dde1843a",
+        "filename": "src/dawn/native/AsyncTask.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-04T00:11:10Z",
+      "side": 1,
+      "message": "nit. Outdated comment.",
+      "range": {
+        "startLine": 84,
+        "startChar": 61,
+        "endLine": 84,
+        "endChar": 75
+      },
+      "revId": "c568f5b1ccab790b7c8d37e42eeade44bb99c72b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc647b22_b4ab9670",
+        "filename": "src/dawn/native/AsyncTask.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-04T00:11:10Z",
+      "side": 1,
+      "message": "Hmm, the more I look at this, the more it looks like we should be able to use `MutexCondVarProtected` to wrap everything nicely. (Maybe aside from my comment at [1] which might be a race anyways?) Also, see https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/wire/client/EventManager.cpp for examples of the usage of it which look very similar to this actually.\n\nIt also seems like the `Running` state isn\u0027t really needed since we never allow more than one place to run the same task anyways? (You put in asserts to ensure that I believe).",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 66
+      },
+      "revId": "c568f5b1ccab790b7c8d37e42eeade44bb99c72b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4704dfa_f7a5d987",
+        "filename": "src/dawn/tests/unittests/AsyncTaskTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-04T00:11:10Z",
+      "side": 1,
+      "message": "nit. `TaskBlocker`?",
+      "range": {
+        "startLine": 175,
+        "startChar": 11,
+        "endLine": 175,
+        "endChar": 22
+      },
+      "revId": "c568f5b1ccab790b7c8d37e42eeade44bb99c72b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9af4405_4fe8a8a5",
+        "filename": "src/dawn/tests/unittests/AsyncTaskTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-04T00:11:10Z",
+      "side": 1,
+      "message": "nit. misformatting?",
+      "range": {
+        "startLine": 189,
+        "startChar": 98,
+        "endLine": 189,
+        "endChar": 100
+      },
+      "revId": "c568f5b1ccab790b7c8d37e42eeade44bb99c72b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be29d0b9_3957eb47",
+        "filename": "src/dawn/tests/unittests/AsyncTaskTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-04T00:11:10Z",
+      "side": 1,
+      "message": "nit. Probably can use https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/utils/SystemUtils.h;l\u003d33",
+      "range": {
+        "startLine": 260,
+        "startChar": 16,
+        "endLine": 260,
+        "endChar": 75
+      },
+      "revId": "c568f5b1ccab790b7c8d37e42eeade44bb99c72b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
