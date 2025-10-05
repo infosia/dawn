@@ -62,12 +62,11 @@
     "allow_list": {
         "methods": {
             "adapter": [
+                "get info",
                 "request device"
             ],
-            "bind group": [
-            ],
-            "bind group layout": [
-            ],
+            "bind group": [],
+            "bind group layout": [],
             "buffer": [
                 "get const mapped range",
                 "get mapped range",
@@ -75,8 +74,7 @@
                 "map async",
                 "unmap"
             ],
-            "command buffer": [
-            ],
+            "command buffer": [],
             "command encoder": [
                 "begin compute pass",
                 "begin render pass",
@@ -102,9 +100,11 @@
                 "create compute pipeline",
                 "create pipeline layout",
                 "create render pipeline",
+                "create render pipeline async",
                 "create sampler",
                 "create shader module",
                 "create texture",
+                "get features",
                 "get queue"
             ],
             "global": [
@@ -115,10 +115,8 @@
                 "process events",
                 "request adapter"
             ],
-            "pipeline layout": [
-            ],
-            "query set": [
-            ],
+            "pipeline layout": [],
+            "query set": [],
             "queue": [
                 "submit",
                 "write buffer",
@@ -149,8 +147,7 @@
                 "get height",
                 "get width"
             ],
-            "texture view": [
-            ]
+            "texture view": []
         }
     }
 }
