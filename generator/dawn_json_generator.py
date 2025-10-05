@@ -798,6 +798,10 @@ def compute_kotlin_params(loaded_json, kotlin_json):
     params_kotlin['jni_primitives'] = kotlin_json['jni_primitives']
     params_kotlin['jni_signatures'] = kotlin_json['jni_signatures']
     kt_file_path = params_kotlin['kotlin_package'].replace('.', '/')
+    allowlist = kotlin_json["allowlist"]
+    allowlist_methods = allowlist["methods"]
+    allowlist_structures = allowlist["structures"]
+    allowlist_enums = allowlist["enums"]
 
     def kotlin_record_members(members):
         for member in members:
@@ -812,6 +816,11 @@ def compute_kotlin_params(loaded_json, kotlin_json):
             # Dawn sometimes uses 'annotation = *' for output parameters, for example to return
             # arrays. We convert the return type and strip out the parameters.
             if member.annotation == '*' and member.length == 'constant':
+                continue
+
+            if (member.type.category == 'structure'
+                    and member.type.name.get() != 'string view'
+                    and not allowlist_structures.get(member.type.name.get())):
                 continue
 
             yield member
@@ -840,18 +849,20 @@ def compute_kotlin_params(loaded_json, kotlin_json):
             method.returns.type, method.returns.annotation, False,
             method.json_data) if method.returns else None
 
-    # TODO(b/352047733): Replace methods that require special handling with an exceptions list.
-    def include_method(method):
-        if method.returns and method.returns.type.category == 'function pointer':
-            # Kotlin doesn't support returning functions.
-            return False
-        return True
+    def include_object(obj):
+        methods = allowlist_methods.get(obj.name.get())
+        return methods is not None
 
-    # Whether to create structure converters (or use handwritten converters).
+    # TODO(b/352047733): Replace methods that require special handling with an exceptions list.
+    def include_method(obj, method):
+        methods = allowlist_methods.get(obj.name.get() if obj else "global")
+        return method.name.get() in methods
+
     def include_structure(structure):
-        if structure.name.canonical_case() == "string view":
-            return False
-        return True
+        return allowlist_structures.get(structure.name.get())
+
+    def include_enum(enum):
+        return allowlist_enums.get(enum.name.get())
 
     def jni_name(type):
         return kt_file_path + '/' + type.name.CamelCase()
@@ -861,18 +872,27 @@ def compute_kotlin_params(loaded_json, kotlin_json):
     chain_children = defaultdict(list)
     by_category = params_kotlin['by_category']
     for structure in by_category['structure']:
-        for chain_root in structure.chain_roots:
-            chain_children[chain_root.name.get()].append(structure)
+        if include_structure(structure):
+            for chain_root in structure.chain_roots:
+                chain_children[chain_root.name.get()].append(structure)
     params_kotlin['chain_children'] = chain_children
     params_kotlin['kotlin_return'] = kotlin_return
     params_kotlin['include_method'] = include_method
+    params_kotlin['include_object'] = include_object
+    params_kotlin['include_enum'] = include_enum
     params_kotlin['include_structure'] = include_structure
     params_kotlin['kotlin_record_members'] = kotlin_record_members
     params_kotlin['jni_name'] = jni_name
     params_kotlin['has_kotlin_classes'] = (
-        by_category['callback function'] + by_category['callback info'] +
-        by_category['enum'] + by_category['function pointer'] +
-        by_category['object'] + [
+        by_category['callback function'] + [
+            callback_info for callback_info in by_category['callback info']
+            if include_structure(callback_info)
+        ] + [enum for enum in by_category['enum']
+            if include_enum(enum)
+        ] + by_category['function pointer'] + [
+            obj for obj in by_category['object']
+            if include_object(obj)
+        ] + [
             structure for structure in by_category['structure']
             if include_structure(structure)
         ])
@@ -1581,10 +1601,13 @@ class MultiGeneratorFromDawnJSON(Generator):
                 "art/api_kotlin_types.kt",
             ]
 
+            allowlist = kotlin_json["allowlist"]
+            allowlist_structures = allowlist["structures"]
+
             by_category = params_kotlin['by_category']
             for structure in by_category['structure'] + by_category[
                     'callback info']:
-                if structure.name.get() != "string view":
+                if params_kotlin['include_structure'](structure):
                     renders.append(
                         FileRender('art/api_kotlin_structure.kt',
                                    'java/' + jni_name(structure) + '.kt', [
@@ -1592,14 +1615,16 @@ class MultiGeneratorFromDawnJSON(Generator):
                                            'structure': structure
                                        }
                                    ]))
+            allowlist_methods = allowlist["methods"]
             for obj in by_category['object']:
-                renders.append(
-                    FileRender(
-                        'art/api_kotlin_object.kt',
-                        'java/' + jni_name(obj) + '.kt',
-                        [RENDER_PARAMS_BASE, params_kotlin, {
-                            'obj': obj
-                        }]))
+                if params_kotlin['include_object'](obj):
+                    renders.append(
+                        FileRender(
+                            'art/api_kotlin_object.kt',
+                            'java/' + jni_name(obj) + '.kt',
+                            [RENDER_PARAMS_BASE, params_kotlin, {
+                                'obj': obj
+                            }]))
             for function_pointer in (by_category['function pointer'] +
                                      by_category['callback function']):
                 renders.append(
@@ -1620,13 +1645,14 @@ class MultiGeneratorFromDawnJSON(Generator):
 
             for enum in (params_kotlin['by_category']['bitmask'] +
                          params_kotlin['by_category']['enum']):
-                renders.append(
-                    FileRender(
-                        'art/api_kotlin_enum.kt',
-                        'java/' + jni_name(enum) + '.kt',
-                        [RENDER_PARAMS_BASE, params_kotlin, {
-                            'enum': enum
-                        }]))
+                if params_kotlin['include_enum'](enum):
+                    renders.append(
+                        FileRender(
+                            'art/api_kotlin_enum.kt',
+                            'java/' + jni_name(enum) + '.kt',
+                            [RENDER_PARAMS_BASE, params_kotlin, {
+                                'enum': enum
+                            }]))
 
             renders.append(
                 FileRender('art/api_kotlin_constants.kt',
