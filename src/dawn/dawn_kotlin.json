@@ -58,5 +58,99 @@
         "uint32_t": "I",
         "uint64_t": "J",
         "void *": "J"
+    },
+    "allow_list": {
+        "methods": {
+            "adapter": [
+                "request device"
+            ],
+            "bind group": [
+            ],
+            "bind group layout": [
+            ],
+            "buffer": [
+                "get const mapped range",
+                "get mapped range",
+                "get size",
+                "map async",
+                "unmap"
+            ],
+            "command buffer": [
+            ],
+            "command encoder": [
+                "begin compute pass",
+                "begin render pass",
+                "copy buffer to buffer",
+                "copy texture to buffer",
+                "copy texture to texture",
+                "finish"
+            ],
+            "compute pass encoder": [
+                "dispatch workgroups",
+                "end",
+                "set bind group",
+                "set pipeline"
+            ],
+            "compute pipeline": [
+                "get bind group layout"
+            ],
+            "device": [
+                "create bind group",
+                "create bind group layout",
+                "create buffer",
+                "create command encoder",
+                "create compute pipeline",
+                "create pipeline layout",
+                "create render pipeline",
+                "create sampler",
+                "create shader module",
+                "create texture",
+                "get queue"
+            ],
+            "global": [
+                "create instance"
+            ],
+            "instance": [
+                "create surface",
+                "process events",
+                "request adapter"
+            ],
+            "pipeline layout": [
+            ],
+            "query set": [
+            ],
+            "queue": [
+                "submit",
+                "write buffer",
+                "write texture"
+            ],
+            "render pass encoder": [
+                "draw",
+                "draw indexed",
+                "end",
+                "set bind group",
+                "set index buffer",
+                "set pipeline",
+                "set vertex buffer"
+            ],
+            "render pipeline": [
+                "get bind group layout"
+            ],
+            "sampler": [],
+            "shader module": [],
+            "surface": [
+                "configure",
+                "get current texture",
+                "present"
+            ],
+            "texture": [
+                "create view",
+                "get format",
+                "get height",
+                "get width"
+            ],
+            "texture view": [
+            ]
+        }
     }
 }

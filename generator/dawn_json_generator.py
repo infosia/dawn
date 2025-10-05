@@ -798,6 +798,8 @@ def compute_kotlin_params(loaded_json, kotlin_json):
     params_kotlin['jni_primitives'] = kotlin_json['jni_primitives']
     params_kotlin['jni_signatures'] = kotlin_json['jni_signatures']
     kt_file_path = params_kotlin['kotlin_package'].replace('.', '/')
+    allow_list = kotlin_json["allow_list"]
+    allow_list_methods = allow_list["methods"]
 
     def kotlin_record_members(members):
         for member in members:
@@ -841,11 +843,11 @@ def compute_kotlin_params(loaded_json, kotlin_json):
             method.json_data) if method.returns else None
 
     # TODO(b/352047733): Replace methods that require special handling with an exceptions list.
-    def include_method(method):
-        if method.returns and method.returns.type.category == 'function pointer':
-            # Kotlin doesn't support returning functions.
+    def include_method(obj, method):
+        methods = allow_list_methods.get(obj.name.get() if obj else "global")
+        if methods is None:
             return False
-        return True
+        return method.name.get() in methods
 
     # Whether to create structure converters (or use handwritten converters).
     def include_structure(structure):
@@ -1592,14 +1594,17 @@ class MultiGeneratorFromDawnJSON(Generator):
                                            'structure': structure
                                        }
                                    ]))
+            allow_list = kotlin_json["allow_list"]
+            allow_list_methods = allow_list["methods"]
             for obj in by_category['object']:
-                renders.append(
-                    FileRender(
-                        'art/api_kotlin_object.kt',
-                        'java/' + jni_name(obj) + '.kt',
-                        [RENDER_PARAMS_BASE, params_kotlin, {
-                            'obj': obj
-                        }]))
+                if obj.name.get() in allow_list_methods:
+                    renders.append(
+                        FileRender(
+                            'art/api_kotlin_object.kt',
+                            'java/' + jni_name(obj) + '.kt',
+                            [RENDER_PARAMS_BASE, params_kotlin, {
+                                'obj': obj
+                            }]))
             for function_pointer in (by_category['function pointer'] +
                                      by_category['callback function']):
                 renders.append(

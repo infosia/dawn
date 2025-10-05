@@ -30,7 +30,7 @@ import dalvik.annotation.optimization.FastNative
 
 {% from 'art/api_kotlin_types.kt' import kotlin_declaration, kotlin_definition with context %}
 
-{% for function in by_category['function'] if include_method(function) %}
+{% for function in by_category['function'] if include_method(None, function) %}
     @FastNative
     public external fun {{ function.name.camelCase() }}(
         {%- for arg in function.arguments -%}
