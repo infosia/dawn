@@ -65,6 +65,29 @@ enum class ComputePassCommand : uint32_t {
     SetImmediateData,
 };
 
+enum class RenderPassCommand : uint32_t {
+    Invalid = 0,  // 0 is invalid at it's more likely to catch bugs.
+    Draw,
+    DrawIndexed,
+    DrawIndirect,
+    DrawIndexedIndirect,
+    SetPipeline,
+    SetBindGroup,
+    SetIndexBuffer,
+    SetVertexBuffer,
+    SetViewport,
+    SetScissorRect,
+    SetBlendConstant,
+    SetStencilReference,
+    EndRenderPass,
+    ExecuteBundles,
+    WriteTimestamp,
+    InsertDebugMarker,
+    PopDebugGroup,
+    PushDebugGroup,
+    SetImmediateData,
+};
+
 enum class EncoderCommand : uint32_t {
     Invalid = 0,  // 0 is invalid at it's more likely to catch bugs.
     BeginComputePass,
