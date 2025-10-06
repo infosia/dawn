@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6698eb7a_ee05dfcd",
+        "filename": "src/dawn/native/AsyncTask.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-06T20:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99359821_ca77a779",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 79
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f15cb330_0bf28337",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-10-06T09:46:52Z",
       "side": 1,
       "message": "optional nit WDYT of `skipErrorScopes`? Also the boolean is hard to make sense of in the callsites, maybe it could be an enum? (and moved to the end of the argument list so that most of the call sites don\u0027t need to specify it?)",
+      "range": {
+        "startLine": 716,
+        "startChar": 34,
+        "endLine": 716,
+        "endChar": 51
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05a63bdc_c57e8abd",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-06T20:44:27Z",
+      "side": 1,
+      "message": "It\u0027s almost a double negative to use \u0027skip\u0027 so I want to avoid it. Changed to `ForwardToErrorScope` instead, made it an enum and put it at the end.",
+      "parentUuid": "f15cb330_0bf28337",
       "range": {
         "startLine": 716,
         "startChar": 34,
@@ -70,6 +118,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fd2b109_a22bd7c1",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-06T20:44:27Z",
+      "side": 1,
+      "message": "If there was an internal error from the task, it would convert to wgpu::ErrorType::Unknown. It wouldn\u0027t be in the list of unhandled wgpu::ErrorTypes so this makes sure it\u0027s forwarded to HandleError.\n\nI could alternatively have `ErrorScopeStack::HandleErrorGeneratingAsyncTask` always add `wgpu::ErrorType::Unknown` to the set.",
+      "parentUuid": "b09a982b_22722e19",
+      "range": {
+        "startLine": 817,
+        "startChar": 12,
+        "endLine": 817,
+        "endChar": 54
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33e88a87_8ebf2352",
@@ -93,6 +165,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb707818_1e7cb5e7",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-06T20:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33e88a87_8ebf2352",
+      "range": {
+        "startLine": 822,
+        "startChar": 34,
+        "endLine": 822,
+        "endChar": 43
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "90b60737_f8e91da4",
@@ -106,6 +202,24 @@
       "writtenOn": "2025-10-06T09:46:52Z",
       "side": 1,
       "message": "nit: in a follow-up it might be worth moving this to be `private` and add a `HandleEncoderValidationError(std::unique_ptr\u003cErrorData\u003e error)` for the cases outside the device? This way we don\u0027t risk having code outside the device start doing weird stuff with `writeToErrorScope` and friends.",
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05d96a23_ca51263d",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-06T20:44:27Z",
+      "side": 1,
+      "message": "Done, I went ahead and did it in this CL.",
+      "parentUuid": "90b60737_f8e91da4",
       "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -146,6 +260,54 @@
       "writtenOn": "2025-10-06T09:46:52Z",
       "side": 1,
       "message": "```suggestion\n    // Must be called by the thread that created the task so that the correct error scopes are\n```",
+      "range": {
+        "startLine": 142,
+        "startChar": 10,
+        "endLine": 142,
+        "endChar": 16
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b68a6341_668f614b",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-06T20:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97b0e4ad_2d2f3cd4",
+      "range": {
+        "startLine": 142,
+        "startChar": 7,
+        "endLine": 142,
+        "endChar": 9
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d64c1c6_d74f3770",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-06T20:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83f790ce_5d43d9c4",
       "range": {
         "startLine": 142,
         "startChar": 10,
@@ -220,6 +382,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c5f542d_44b63c52",
+        "filename": "src/dawn/native/ErrorScope.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-06T20:44:27Z",
+      "side": 1,
+      "message": "This one isn\u0027t explicitly checked for Unknown.\n\nIn `DeviceBase::APIPopErrorScope` we only proceed if the task generated an error so it can only match if it\u0027s not unknown. Updated the comment to be explicit about it, erring on the side of not making it optional but I don\u0027t feel strongly.",
+      "parentUuid": "01cb4a22_0b4398f0",
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd1bfa85_f9bf95e4",
@@ -233,6 +413,24 @@
       "writtenOn": "2025-10-06T09:46:52Z",
       "side": 1,
       "message": "I believe the friend declaration is no longer needed.",
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "979c8f2b_47aa4fcc",
+        "filename": "src/dawn/native/ErrorScope.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-06T20:44:27Z",
+      "side": 1,
+      "message": "It still accesses `mMatchedErrorType` which is meant to be an implementation detail.",
+      "parentUuid": "bd1bfa85_f9bf95e4",
       "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -283,6 +481,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f1e0dcc_9f6b6c4a",
+        "filename": "src/dawn/tests/unittests/native/DeviceAsyncTaskTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-06T20:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ab009f7_79c294eb",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 66
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f41a4ef9_9e877805",
@@ -296,6 +518,30 @@
       "writtenOn": "2025-10-03T22:18:24Z",
       "side": 1,
       "message": "nit. I think this can actually just use the C++ API device, i.e.:\n```\nstd::atomic_bool callbackTriggered \u003d false;\ndevice.PopErrorScope(\n    [\u0026callbackTriggered](wgpu::PopErrorScopeStatus status,\n                         wgpu::ErrorType type,\n                         wgpu::StringView message) {\n        callbackTriggered \u003d true;\n    }\n```",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 44
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9be1f8f5_1268ff00",
+        "filename": "src/dawn/tests/unittests/native/DeviceAsyncTaskTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-06T20:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f41a4ef9_9e877805",
       "range": {
         "startLine": 81,
         "startChar": 4,
