@@ -26,6 +26,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f15cb330_0bf28337",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-06T09:46:52Z",
+      "side": 1,
+      "message": "optional nit WDYT of `skipErrorScopes`? Also the boolean is hard to make sense of in the callsites, maybe it could be an enum? (and moved to the end of the argument list so that most of the call sites don\u0027t need to specify it?)",
+      "range": {
+        "startLine": 716,
+        "startChar": 34,
+        "endLine": 716,
+        "endChar": 51
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b09a982b_22722e19",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-06T09:46:52Z",
+      "side": 1,
+      "message": "Why do we need to special case Unknown here?",
+      "range": {
+        "startLine": 817,
+        "startChar": 12,
+        "endLine": 817,
+        "endChar": 54
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "33e88a87_8ebf2352",
         "filename": "src/dawn/native/Device.cpp",
         "patchSetId": 10
@@ -43,6 +89,23 @@
         "endLine": 822,
         "endChar": 43
       },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90b60737_f8e91da4",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-06T09:46:52Z",
+      "side": 1,
+      "message": "nit: in a follow-up it might be worth moving this to be `private` and add a `HandleEncoderValidationError(std::unique_ptr\u003cErrorData\u003e error)` for the cases outside the device? This way we don\u0027t risk having code outside the device start doing weird stuff with `writeToErrorScope` and friends.",
       "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -72,6 +135,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "83f790ce_5d43d9c4",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-06T09:46:52Z",
+      "side": 1,
+      "message": "```suggestion\n    // Must be called by the thread that created the task so that the correct error scopes are\n```",
+      "range": {
+        "startLine": 142,
+        "startChar": 10,
+        "endLine": 142,
+        "endChar": 16
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0eb3c3ea_a334ca90",
         "filename": "src/dawn/native/ErrorScope.h",
         "patchSetId": 10
@@ -88,6 +174,87 @@
         "startChar": 20,
         "endLine": 47,
         "endChar": 36
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01cb4a22_0b4398f0",
+        "filename": "src/dawn/native/ErrorScope.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-06T09:46:52Z",
+      "side": 1,
+      "message": "Maybe mention that NoError means that we just need to wait but don\u0027t expect to have an error captured here? Maybe this could be an std::optional so that it\u0027s clear, and it would remove the special case for wgpu::ErrorType::Unknown in Device.cpp?",
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36aedf24_971d9dd5",
+        "filename": "src/dawn/native/ErrorScope.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-06T09:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0eb3c3ea_a334ca90",
+      "range": {
+        "startLine": 47,
+        "startChar": 20,
+        "endLine": 47,
+        "endChar": 36
+      },
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd1bfa85_f9bf95e4",
+        "filename": "src/dawn/native/ErrorScope.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-06T09:46:52Z",
+      "side": 1,
+      "message": "I believe the friend declaration is no longer needed.",
+      "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36395b01_f5f13340",
+        "filename": "src/dawn/native/ErrorScope.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-06T09:46:52Z",
+      "side": 1,
+      "message": "It seems that this could return an InternalErrorType, though it makes ErrorScope start to have a dependency on Error.h :/ So maybe not.",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 29
       },
       "revId": "f9f0e881c4fa2412cf6770faa3303d518e9cbaaa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
