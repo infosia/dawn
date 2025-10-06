@@ -36,6 +36,16 @@ void Serialize(CaptureContext& context, uint64_t v);
 void Serialize(CaptureContext& context, const std::string& v);
 
 template <typename T>
+void Serialize(CaptureContext& context, const T* v) {
+    static_assert(false, "can not serialize pointer");
+}
+
+template <typename T>
+void Serialize(CaptureContext& context, T* v) {
+    static_assert(false, "can not serialize pointer");
+}
+
+template <typename T>
 void Serialize(CaptureContext& context, T v)
     requires(std::is_same_v<T, size_t> && !std::is_same_v<T, uint64_t> &&
              !std::is_same_v<T, uint32_t>)
@@ -148,6 +158,10 @@ constexpr int kInternalVisitableUnusedForComma = 0;
     };                                                                                 \
     struct CmdType##CmdName##Cmd : CmdType##CmdName##Cmd##__Contents,                  \
                                    public Serializable<CmdType##CmdName##Cmd>
+
+// Makes both a CmdData and a Cmd struct for a given compute pass command name.
+#define DAWN_REPLAY_MAKE_COMPUTE_PASS_CMD_AND_CMD_DATA(CmdName, CMD_MEMBERS) \
+    DAWN_REPLAY_MAKE_CMD_AND_CMD_DATA(ComputePassCommand, CmdName, CMD_MEMBERS)
 
 // Makes both a CmdData and a Cmd struct for a given encoder command name.
 #define DAWN_REPLAY_MAKE_ENCODER_CMD_AND_CMD_DATA(CmdName, CMD_MEMBERS) \
