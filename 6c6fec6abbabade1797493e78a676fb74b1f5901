@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "18ba3f9e_624d8ff8",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2096,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-06T19:31:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dffe57fc_d5eb365d",
+      "revId": "6c6fec6abbabade1797493e78a676fb74b1f5901",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c4f88d2_46e50987",
@@ -53,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e759d48_61921110",
+        "filename": "src/tint/lang/core/type/manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-06T19:31:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c4f88d2_46e50987",
+      "revId": "6c6fec6abbabade1797493e78a676fb74b1f5901",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7901e6f3_38570961",
@@ -66,6 +102,24 @@
       "writtenOn": "2025-10-02T20:07:42Z",
       "side": 1,
       "message": "48 should be fine here since it\u0027s row-major. Looks like you don\u0027t take that into account if there\u0027s no matrix stride.",
+      "revId": "6c6fec6abbabade1797493e78a676fb74b1f5901",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f61d96b1_727a079d",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-06T19:31:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7901e6f3_38570961",
       "revId": "6c6fec6abbabade1797493e78a676fb74b1f5901",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
