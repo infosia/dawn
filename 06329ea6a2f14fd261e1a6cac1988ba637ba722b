@@ -22,6 +22,30 @@
       },
       "revId": "06329ea6a2f14fd261e1a6cac1988ba637ba722b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da9d2730_0bf1c1c4",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-06T23:51:24Z",
+      "side": 1,
+      "message": "It doesn\u0027t really matter because the values we use are in the \"u31\" range. I think it\u0027s good to think of them as signed though because C prior to C23 only requires enums to support the range of `int`, not `unsigned int`. (hence why Force32 is 0x7fff_ffff and not 0xffff_ffff)\n\nMaybe I should have a helper for loading enum values so that the magic \"i32\" is not scattered in every spot.",
+      "parentUuid": "22c3010c_fd9f2ae2",
+      "range": {
+        "startLine": 66,
+        "startChar": 66,
+        "endLine": 66,
+        "endChar": 69
+      },
+      "revId": "06329ea6a2f14fd261e1a6cac1988ba637ba722b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
