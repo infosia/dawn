@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fab33fef_f63ac2e9",
+        "filename": "src/dawn/tests/ParamGenerator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 3443809
+      },
+      "writtenOn": "2025-10-06T20:54:31Z",
+      "side": 0,
+      "message": "Ahhhhhhhhhhhh!",
+      "range": {
+        "startLine": 197,
+        "startChar": 32,
+        "endLine": 197,
+        "endChar": 38
+      },
+      "revId": "d8f0feef7c174a380963558abbbcfb6092afe2f4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
