@@ -4115,6 +4115,12 @@ void Validator::CheckLoop(const Loop* l) {
     CheckResults(l);
     CheckOperands(l, 0);
 
+    for (size_t i = 0; i < l->Results().Length(); ++i) {
+        if (l->Result(i) && l->Result(i)->Type()->Is<core::type::Void>()) {
+            AddResultError(l, i) << "loop result type cannot be void";
+        }
+    }
+
     if (!l->Initializer()->IsEmpty()) {
         if (!l->Initializer()->Terminator() ||
             !l->Initializer()->Terminator()->Is<core::ir::NextIteration>()) {

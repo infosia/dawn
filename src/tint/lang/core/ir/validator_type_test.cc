@@ -1509,6 +1509,24 @@ TEST_F(IR_ValidatorTest, Int64Type_InstructionOperand_Allowed) {
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, Loop_VoidResult) {
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* loop = b.Loop();
+        loop->SetResults(b.InstructionResult(ty.void_()));
+        b.Append(loop->Body(), [&] { b.ExitLoop(loop); });
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr(R"(:3:5 error: loop: loop result type cannot be void
+    %2:void = loop [b: $B2] {  # loop_1
+    ^^^^^^^
+)")) << res.Failure();
+}
+
 using AddressSpace_AccessMode = IRTestParamHelper<std::tuple<
     /* address */ AddressSpace,
     /* access mode */ core::Access>>;
