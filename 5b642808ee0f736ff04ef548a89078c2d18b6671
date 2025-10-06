@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9db7e85_35ce39fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-06T18:23:29Z",
+      "side": 1,
+      "message": "Is there some more context on why we wanted to remove the U32/U64 (in child CL) helpers?",
+      "revId": "5b642808ee0f736ff04ef548a89078c2d18b6671",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
