@@ -51,6 +51,18 @@ MaybeError Deserialize(ReadHead& s, uint64_t* v) {
     return ReadBytes(s, reinterpret_cast<char*>(v), sizeof(*v));
 }
 
+MaybeError Deserialize(ReadHead& s, float* v) {
+    return ReadBytes(s, reinterpret_cast<char*>(v), sizeof(*v));
+}
+
+MaybeError Deserialize(ReadHead& s, double* v) {
+    return ReadBytes(s, reinterpret_cast<char*>(v), sizeof(*v));
+}
+
+MaybeError Deserialize(ReadHead& s, bool* v) {
+    return ReadBytes(s, reinterpret_cast<char*>(v), sizeof(*v));
+}
+
 MaybeError Deserialize(ReadHead& s, std::string* v) {
     size_t size = 0;
     DAWN_TRY(Deserialize(s, &size));
