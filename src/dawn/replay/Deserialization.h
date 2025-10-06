@@ -158,6 +158,10 @@ constexpr int kInternalVisitableUnusedForComma = 0;
     struct CmdType##CmdName##Cmd : CmdType##CmdName##Cmd##__Contents,                  \
                                    public ::dawn::replay::Deserializable<CmdType##CmdName##Cmd>
 
+// Makes both a CmdData and a Cmd struct for a given render pass command name.
+#define DAWN_REPLAY_MAKE_RENDER_PASS_CMD_AND_CMD_DATA(CmdName, CMD_MEMBERS) \
+    DAWN_REPLAY_MAKE_CMD_AND_CMD_DATA(RenderPassCommand, CmdName, CMD_MEMBERS)
+
 // Makes both a CmdData and a Cmd struct for a given compute pass command name.
 #define DAWN_REPLAY_MAKE_COMPUTE_PASS_CMD_AND_CMD_DATA(CmdName, CMD_MEMBERS) \
     DAWN_REPLAY_MAKE_CMD_AND_CMD_DATA(ComputeCommand, CmdName, CMD_MEMBERS)
