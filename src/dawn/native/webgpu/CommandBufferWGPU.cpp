@@ -408,6 +408,404 @@ void EncodeRenderPass(const DawnProcTable& wgpu,
     DAWN_UNREACHABLE();
 }
 
+/*
+void Capture(CaptureContext& captureContext, const DrawIndexedCmd& cmd) {
+    // Write DrawIndexed command parameters
+    Capture(captureContext, cmd.indexCount);
+    Capture(captureContext, cmd.instanceCount);
+    Capture(captureContext, cmd.firstIndex);
+    Capture(captureContext, cmd.baseVertex);
+    Capture(captureContext, cmd.firstInstance);
+}
+
+void Capture(CaptureContext& captureContext, const DrawIndirectCmd& cmd) {
+    // Write DrawIndirect command parameters
+    CaptureRef(captureContext, cmd.indirectBuffer);
+    Capture(captureContext, cmd.indirectOffset);
+}
+
+void Capture(CaptureContext& captureContext, const DrawIndexedIndirectCmd& cmd) {
+    // Write DrawIndexedIndirect command parameters
+    CaptureRef(captureContext, cmd.indirectBuffer);
+    Capture(captureContext, cmd.indirectOffset);
+}
+
+void Capture(CaptureContext& captureContext, const MultiDrawIndirectCmd& cmd) {
+    // Write MultiDrawIndirect command parameters
+    CaptureRef(captureContext, cmd.indirectBuffer);
+    Capture(captureContext, cmd.indirectOffset);
+    Capture(captureContext, cmd.maxDrawCount);
+    CaptureRef(captureContext, cmd.drawCountBuffer);
+    Capture(captureContext, cmd.drawCountOffset);
+}
+
+void Capture(CaptureContext& captureContext, const MultiDrawIndexedIndirectCmd& cmd) {
+    // Write MultiDrawIndexedIndirect command parameters
+    CaptureRef(captureContext, cmd.indirectBuffer);
+    Capture(captureContext, cmd.indirectOffset);
+    Capture(captureContext, cmd.maxDrawCount);
+    CaptureRef(captureContext, cmd.drawCountBuffer);
+    Capture(captureContext, cmd.drawCountOffset);
+}
+
+void Capture(CaptureContext& captureContext, const SetRenderPipelineCmd& cmd) {
+    // Write SetRenderPipeline command parameters
+    CaptureRef(captureContext, cmd.pipeline);
+}
+
+void Capture(CaptureContext& captureContext, const SetIndexBufferCmd& cmd) {
+    // Write SetIndexBuffer command parameters
+    CaptureRef(captureContext, cmd.buffer);
+    Capture(captureContext, cmd.format);
+    Capture(captureContext, cmd.offset);
+    Capture(captureContext, cmd.size);
+}
+
+void Capture(CaptureContext& captureContext, const SetVertexBufferCmd& cmd) {
+    // Write SetVertexBuffer command parameters
+    Capture(captureContext, cmd.slot);
+    CaptureRef(captureContext, cmd.buffer);
+    Capture(captureContext, cmd.offset);
+    Capture(captureContext, cmd.size);
+}
+
+void Capture(CaptureContext& captureContext, const SetBindGroupCmd& cmd) {
+    // Write SetBindGroup command parameters
+    Capture(captureContext, cmd.index);
+    CaptureRef(captureContext, cmd.group);
+    Capture(captureContext, cmd.dynamicOffsetCount);
+}
+
+void Capture(CaptureContext& captureContext,
+             const InsertDebugMarkerCmd& cmd,
+             CommandIterator& commands) {
+    const char* label = commands.NextData<char>(cmd.length + 1);
+    Capture(captureContext, std::string(label, cmd.length));
+}
+
+void Capture(CaptureContext& captureContext,
+             const PushDebugGroupCmd& cmd,
+             CommandIterator& commands) {
+    // Write PushDebugGroup command parameters
+    const char* label = commands.NextData<char>(cmd.length + 1);
+    Capture(captureContext, std::string(label, cmd.length));
+}
+
+void Capture(CaptureContext& captureContext, const PopDebugGroupCmd& cmd) {
+    // Write PopDebugGroup command parameters
+}
+
+void Capture(CaptureContext& captureContext, const WriteTimestampCmd& cmd) {
+    // Write WriteTimestamp command parameters
+    CaptureRef(captureContext, cmd.querySet);
+    Capture(captureContext, cmd.queryIndex);
+}
+
+void Capture(CaptureContext& captureContext,
+             const SetImmediateDataCmd& cmd,
+             CommandIterator& commands) {
+    // Write SetImmediateData command parameters
+    DAWN_ASSERT(cmd.size > 0);
+    uint8_t* value = nullptr;
+    value = commands.NextData<uint8_t>(cmd.size);
+    Capture(captureContext, cmd.offset);
+    CaptureData(captureContext, value, cmd.size);
+}
+
+void Capture(CaptureContext& captureContext, const DispatchCmd& cmd) {
+    // Write Dispatch command parameters
+    Capture(captureContext, cmd.x);
+    Capture(captureContext, cmd.y);
+    Capture(captureContext, cmd.z);
+}
+
+void Capture(CaptureContext& captureContext, const DispatchIndirectCmd& cmd) {
+    // Write DispatchIndirect command parameters
+    CaptureRef(captureContext, cmd.indirectBuffer);
+    Capture(captureContext, cmd.indirectOffset);
+}
+
+void Capture(CaptureContext& captureContext, const SetComputePipelineCmd& cmd) {
+    // Write SetComputePipeline command parameters
+    CaptureRef(captureContext, cmd.pipeline);
+}
+
+void Capture(CaptureContext& captureContext, const CopyBufferToBufferCmd& cmd) {
+    // Write CopyBufferToBuffer command parameters
+    CaptureRef(captureContext, cmd.source);
+    Capture(captureContext, cmd.sourceOffset);
+    CaptureRef(captureContext, cmd.destination);
+    Capture(captureContext, cmd.destinationOffset);
+    Capture(captureContext, cmd.size);
+}
+
+void Capture(CaptureContext& captureContext, const CopyBufferToTextureCmd& cmd) {
+    // Write CopyBufferToTexture command parameters
+    Capture(captureContext, cmd.source);
+    Capture(captureContext, cmd.destination);
+    Capture(captureContext, cmd.copySize);
+}
+
+void Capture(CaptureContext& captureContext, const CopyTextureToBufferCmd& cmd) {
+    // Write CopyTextureToBuffer command parameters
+    Capture(captureContext, cmd.source);
+    Capture(captureContext, cmd.destination);
+    Capture(captureContext, cmd.copySize);
+}
+
+void Capture(CaptureContext& captureContext, const CopyTextureToTextureCmd& cmd) {
+    // Write CopyTextureToTexture command parameters
+    Capture(captureContext, cmd.source);
+    Capture(captureContext, cmd.destination);
+    Capture(captureContext, cmd.copySize);
+}
+
+void Capture(CaptureContext& captureContext, const ClearBufferCmd& cmd) {
+    // Write ClearBuffer command parameters
+    CaptureRef(captureContext, cmd.buffer);
+    Capture(captureContext, cmd.offset);
+    Capture(captureContext, cmd.size);
+}
+
+void Capture(CaptureContext& captureContext, const ResolveQuerySetCmd& cmd) {
+    // Write ResolveQuerySet command parameters
+    CaptureRef(captureContext, cmd.querySet);
+    Capture(captureContext, cmd.firstQuery);
+    Capture(captureContext, cmd.queryCount);
+    CaptureRef(captureContext, cmd.destination);
+    Capture(captureContext, cmd.destinationOffset);
+}
+
+void Capture(CaptureContext& captureContext, const WriteBufferCmd& cmd) {
+    // Write WriteBuffer command parameters
+    // TBD!
+}
+
+void Capture(CaptureContext& captureContext, const TimestampWrites& timestampWrites) {
+    CaptureRef(captureContext, timestampWrites.querySet);
+    Capture(captureContext, timestampWrites.beginningOfPassWriteIndex);
+    Capture(captureContext, timestampWrites.endOfPassWriteIndex);
+}
+
+void Capture(CaptureContext& captureContext, const dawn::native::Color& color) {
+    Capture(captureContext, color.r);
+    Capture(captureContext, color.g);
+    Capture(captureContext, color.b);
+    Capture(captureContext, color.a);
+}
+
+void Capture(CaptureContext& captureContext, const RenderPassColorAttachmentInfo& attachment) {
+    CaptureRef(captureContext, attachment.view);
+    Capture(captureContext, attachment.depthSlice);
+    CaptureRef(captureContext, attachment.resolveTarget);
+    Capture(captureContext, attachment.loadOp);
+    Capture(captureContext, attachment.storeOp);
+    Capture(captureContext, attachment.clearColor);
+}
+
+void Capture(CaptureContext& captureContext,
+             const RenderPassDepthStencilAttachmentInfo& attachment) {
+    CaptureRef(captureContext, attachment.view);
+    Capture(captureContext, attachment.depthLoadOp);
+    Capture(captureContext, attachment.depthStoreOp);
+    Capture(captureContext, attachment.stencilLoadOp);
+    Capture(captureContext, attachment.stencilStoreOp);
+    Capture(captureContext, attachment.clearDepth);
+    Capture(captureContext, attachment.clearStencil);
+    Capture(captureContext, attachment.depthReadOnly);
+    Capture(captureContext, attachment.stencilReadOnly);
+}
+
+void Capture(CaptureContext& captureContext, const RenderPassStorageAttachmentInfo& attachment) {
+    CaptureRef(captureContext, attachment.storage);
+    Capture(captureContext, attachment.loadOp);
+    Capture(captureContext, attachment.storeOp);
+    Capture(captureContext, attachment.clearColor);
+}
+
+void Capture(CaptureContext& captureContext,
+             const std::array<RenderPassStorageAttachmentInfo, kMaxPLSSlots>& attachments) {
+    Capture(captureContext, attachments.size());
+    for (const auto& attachment : attachments) {
+        Capture(captureContext, attachment);
+    }
+}
+
+void Capture(CaptureContext& captureContext,
+             const BeginComputePassCmd& cmd,
+             CommandIterator& commands) {
+    Capture(captureContext, cmd.label);
+    Capture(captureContext, cmd.timestampWrites);
+
+    Command type;
+    while (commands.NextCommandId(&type)) {
+        Capture(captureContext, type);
+        switch (type) {
+            case Command::EndComputePass: {
+                commands.NextCommand<EndComputePassCmd>();
+                return;
+            }
+
+            case Command::Dispatch: {
+                Capture(captureContext, *commands.NextCommand<DispatchCmd>());
+                break;
+            }
+
+            case Command::DispatchIndirect: {
+                Capture(captureContext, *commands.NextCommand<DispatchIndirectCmd>());
+                break;
+            }
+
+            case Command::SetComputePipeline: {
+                Capture(captureContext, *commands.NextCommand<SetComputePipelineCmd>());
+                break;
+            }
+
+            case Command::SetBindGroup: {
+                Capture(captureContext, *commands.NextCommand<SetBindGroupCmd>());
+                break;
+            }
+
+            case Command::InsertDebugMarker: {
+                Capture(captureContext, *commands.NextCommand<InsertDebugMarkerCmd>(), commands);
+                break;
+            }
+
+            case Command::PopDebugGroup: {
+                Capture(captureContext, *commands.NextCommand<PopDebugGroupCmd>());
+                break;
+            }
+
+            case Command::PushDebugGroup: {
+                Capture(captureContext, *commands.NextCommand<PushDebugGroupCmd>(), commands);
+                break;
+            }
+
+            case Command::WriteTimestamp: {
+                Capture(captureContext, *commands.NextCommand<WriteTimestampCmd>());
+                break;
+            }
+
+            case Command::SetImmediateData: {
+                Capture(captureContext, *commands.NextCommand<SetImmediateDataCmd>(), commands);
+                break;
+            }
+
+            default: {
+                DAWN_UNREACHABLE();
+                break;
+            }
+        }
+    }
+}
+
+void Capture(CaptureContext& captureContext,
+             const BeginRenderPassCmd& cmd,
+             CommandIterator& commands) {
+    Capture(captureContext, cmd.label);
+    Capture(captureContext, cmd.timestampWrites);
+    //CaptureRef(captureContext, cmd.occlusionQuerySet);
+    //Capture(captureContext, cmd.storageAttachments);
+    //Capture(captureContext, cmd.depthStencilAttachment);
+
+    // TBD: write number of attachments or mask
+    for (auto i : cmd.attachmentState->GetColorAttachmentsMask()) {
+        const auto& attachmentInfo = cmd.colorAttachments[i];
+        Capture(captureContext, attachmentInfo);
+    }
+
+    Command type;
+    while (commands.NextCommandId(&type)) {
+        Capture(captureContext, type);
+        switch (type) {
+            case Command::EndRenderPass: {
+                return;
+            }
+
+            case Command::Draw: {
+                Capture(captureContext, *commands.NextCommand<DrawCmd>());
+                break;
+            }
+
+            case Command::DrawIndexed: {
+                Capture(captureContext, *commands.NextCommand<DrawIndexedCmd>());
+                break;
+            }
+
+            case Command::DrawIndirect: {
+                Capture(captureContext, *commands.NextCommand<DrawIndirectCmd>());
+                break;
+            }
+
+            case Command::DrawIndexedIndirect: {
+                Capture(captureContext, *commands.NextCommand<DrawIndexedIndirectCmd>());
+                break;
+            }
+
+            case Command::MultiDrawIndirect: {
+                Capture(captureContext, *commands.NextCommand<MultiDrawIndirectCmd>());
+                break;
+            }
+
+            case Command::MultiDrawIndexedIndirect: {
+                Capture(captureContext, *commands.NextCommand<MultiDrawIndexedIndirectCmd>());
+                break;
+            }
+
+            case Command::SetRenderPipeline: {
+                Capture(captureContext, *commands.NextCommand<SetRenderPipelineCmd>());
+                break;
+            }
+
+            case Command::SetIndexBuffer: {
+                Capture(captureContext, *commands.NextCommand<SetIndexBufferCmd>());
+                break;
+            }
+
+            case Command::SetVertexBuffer: {
+                Capture(captureContext, *commands.NextCommand<SetVertexBufferCmd>());
+                break;
+            }
+
+            case Command::SetBindGroup: {
+                Capture(captureContext, *commands.NextCommand<SetBindGroupCmd>());
+                break;
+            }
+
+            case Command::InsertDebugMarker: {
+                Capture(captureContext, *commands.NextCommand<InsertDebugMarkerCmd>(), commands);
+                break;
+            }
+
+            case Command::PopDebugGroup: {
+                Capture(captureContext, *commands.NextCommand<PopDebugGroupCmd>());
+                break;
+            }
+
+            case Command::PushDebugGroup: {
+                Capture(captureContext, *commands.NextCommand<PushDebugGroupCmd>(), commands);
+                break;
+            }
+
+            case Command::WriteTimestamp: {
+                Capture(captureContext, *commands.NextCommand<WriteTimestampCmd>());
+                break;
+            }
+
+            case Command::SetImmediateData: {
+                Capture(captureContext, *commands.NextCommand<SetImmediateDataCmd>(), commands);
+                break;
+            }
+
+            default: {
+                DAWN_UNREACHABLE();
+                break;
+            }
+        }
+    }
+}
+    */
+
 }  // anonymous namespace
 
 MaybeError CommandBuffer::AddReferenced(CaptureContext& captureContext) const {
