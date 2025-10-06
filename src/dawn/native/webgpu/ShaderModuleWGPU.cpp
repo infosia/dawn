@@ -55,8 +55,17 @@ ShaderModule::ShaderModule(Device* device,
                            std::vector<tint::wgsl::Extension> internalExtensions,
                            WGPUShaderModule innerShaderModule)
     : ShaderModuleBase(device, descriptor, std::move(internalExtensions)),
+      RecordableObject(schema::ObjectType::ShaderModule),
       ObjectWGPU(device->wgpu.shaderModuleRelease) {
     mInnerHandle = innerShaderModule;
+}
+
+MaybeError ShaderModule::AddReferenced(CaptureContext& captureContext) const {
+    return {};
+}
+
+MaybeError ShaderModule::CaptureCreationParameters(CaptureContext& context) {
+    return {};
 }
 
 }  // namespace dawn::native::webgpu

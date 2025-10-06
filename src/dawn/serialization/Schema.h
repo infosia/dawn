@@ -47,6 +47,24 @@ enum class ObjectType : uint32_t {
     TextureView,
 };
 
+enum class SType : uint32_t {
+    Invalid = 0,  // 0 is invalid at it's more likely to catch bugs.
+    ShaderModuleWGSLDescriptor,
+};
+
+enum class ComputePassCommand : uint32_t {
+    Invalid = 0,  // 0 is invalid at it's more likely to catch bugs.
+    Dispatch,
+    DispatchIndirect,
+    SetComputePipeline,
+    SetBindGroup,
+    WriteTimestamp,
+    InsertDebugMarker,
+    PopDebugGroup,
+    PushDebugGroup,
+    SetImmediateData,
+};
+
 enum class EncoderCommand : uint32_t {
     Invalid = 0,  // 0 is invalid at it's more likely to catch bugs.
     BeginComputePass,
@@ -107,6 +125,29 @@ DAWN_REPLAY_SERIALIZABLE(struct, Buffer, BUFFER_CREATION_MEMBER){};
 
 DAWN_REPLAY_SERIALIZABLE(struct, Texture, TEXTURE_CREATION_MEMBER){};
 
+#define QUERYSET_CREATION_MEMBER(X) \
+    X(wgpu::QueryType, type)        \
+    X(uint32_t, count)
+
+DAWN_REPLAY_SERIALIZABLE(struct, QuerySet, QUERYSET_CREATION_MEMBER){};
+
+#define SHADER_MODULE_CREATION_MEMBER(X) X(SType, nextInChain)
+
+DAWN_REPLAY_SERIALIZABLE(struct, ShaderModule, SHADER_MODULE_CREATION_MEMBER){};
+
+#define COMPUTE_PIPELINE_CREATION_MEMBER(X) \
+    X(ObjectId, layoutId)                   \
+    X(ObjectId, moduleId)                   \
+    X(std::string, entryPoint)
+
+DAWN_REPLAY_SERIALIZABLE(struct, ComputePipeline, COMPUTE_PIPELINE_CREATION_MEMBER){};
+
+#define BIND_GROUP_CREATION_MEMBER(X) \
+    X(ObjectId, layoutId)             \
+    X(std::vector<wgpu::BindGroupEntry>, entries)
+
+DAWN_REPLAY_SERIALIZABLE(struct, BindGroup, BIND_GROUP_CREATION_MEMBER){};
+
 #define LABELED_RESOURCE_MEMBER(X) \
     X(ObjectType, type)            \
     X(ObjectId, id)                \
@@ -134,6 +175,13 @@ DAWN_REPLAY_SERIALIZABLE(struct, TexelCopyBufferInfo, TEXEL_COPY_BUFFER_INFO_MEM
     X(wgpu::TextureAspect, aspect)
 
 DAWN_REPLAY_SERIALIZABLE(struct, TexelCopyTextureInfo, TEXEL_COPY_TEXTURE_INFO_MEMBER){};
+
+#define TIMESTAMP_WRITES_MEMBER(X)         \
+    X(ObjectId, querySetId)                \
+    X(uint32_t, beginningOfPassWriteIndex) \
+    X(uint32_t, endOfPassWriteIndex)
+
+DAWN_REPLAY_SERIALIZABLE(struct, TimestampWrites, TIMESTAMP_WRITES_MEMBER){};
 
 #define CREATE_RESOURCE_CMD_DATA_MEMBER(X) X(LabeledResource, resource)
 
@@ -198,6 +246,29 @@ DAWN_REPLAY_MAKE_ENCODER_CMD_AND_CMD_DATA(CopyTextureToBuffer,
 
 DAWN_REPLAY_MAKE_ENCODER_CMD_AND_CMD_DATA(CopyTextureToTexture,
                                           COPY_TEXTURE_TO_TEXTURE_CMD_DATA_MEMBER){};
+
+#define BEGIN_COMPUTE_PASS_CMD_DATA_MEMBER(X) X(TimestampWrites, timestampWrites)
+
+DAWN_REPLAY_MAKE_ENCODER_CMD_AND_CMD_DATA(BeginComputePass, BEGIN_COMPUTE_PASS_CMD_DATA_MEMBER){};
+
+#define SET_COMPUTE_PIPELINE_CMD_DATA_MEMBER(X) X(ObjectId, pipelineId)
+
+DAWN_REPLAY_MAKE_COMPUTE_PASS_CMD_AND_CMD_DATA(SetComputePipeline,
+                                               SET_COMPUTE_PIPELINE_CMD_DATA_MEMBER){};
+
+#define SET_BIND_GROUP_CMD_DATA_MEMBER(X) \
+    X(uint32_t, index)                    \
+    X(ObjectId, bindGroupId)              \
+    X(std::vector<uint32_t>, dynamicOffsets)
+
+DAWN_REPLAY_MAKE_COMPUTE_PASS_CMD_AND_CMD_DATA(SetBindGroup, SET_BIND_GROUP_CMD_DATA_MEMBER){};
+
+#define DISPATCH_CMD_DATA_MEMBER(X) \
+    X(uint32_t, x)                  \
+    X(uint32_t, y)                  \
+    X(uint32_t, z)
+
+DAWN_REPLAY_MAKE_COMPUTE_PASS_CMD_AND_CMD_DATA(Dispatch, DISPATCH_CMD_DATA_MEMBER){};
 
 }  // namespace schema
 
