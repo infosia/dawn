@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66affcda_c31c8cdc",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-06T04:47:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "122312ac_07593ba7",
+      "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "942879cd_3e4a4dea",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cf10d37_5b02c770",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-06T04:47:26Z",
+      "side": 1,
+      "message": "Added comments",
+      "parentUuid": "942879cd_3e4a4dea",
+      "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6fbd0b65_3f8a6117",
@@ -48,6 +84,24 @@
       "writtenOn": "2025-10-03T12:19:14Z",
       "side": 1,
       "message": "Please break to multiple lines if possible.",
+      "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57a90b74_c28741b4",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-06T04:47:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fbd0b65_3f8a6117",
       "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -87,6 +141,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a932eb8_d25503cb",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-06T04:47:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9835850_059b9b3c",
+      "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "112b6f03_86d03654",
@@ -100,6 +172,24 @@
       "writtenOn": "2025-10-03T12:19:14Z",
       "side": 1,
       "message": "Please add a comment as to why we\u0027re trying suffixes.",
+      "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aeb85aa3_2def8a1d",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-06T04:47:26Z",
+      "side": 1,
+      "message": "Added",
+      "parentUuid": "112b6f03_86d03654",
       "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -121,6 +211,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe9c6ee5_b3b3f8c0",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-06T04:47:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "832214a1_ce3d8c1a",
+      "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c3b1104_ecd60d00",
@@ -138,6 +246,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c399a73_0108da99",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-06T04:47:26Z",
+      "side": 1,
+      "message": "The handler_map defines the handler to be used for specific categories. As Bitflags and Enums have the same structure within yaml hence they are assigned the same Handler.",
+      "parentUuid": "7c3b1104_ecd60d00",
+      "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0943bbfd_82f6bd49",
@@ -151,6 +277,24 @@
       "writtenOn": "2025-10-03T12:19:14Z",
       "side": 1,
       "message": "Please don\u0027t exceed 100 characters on a single line.",
+      "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8464c77_d2e1b0d2",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-06T04:47:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0943bbfd_82f6bd49",
       "revId": "307ccc3e1b54996e8554f0bf22ab8b65c5cca950",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
