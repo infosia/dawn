@@ -16,6 +16,41 @@
       "message": "Deferring to James for full approval",
       "revId": "458070fec2781c874e4d60026f0c082dd78f07d4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1da76a6b_19f93554",
+        "filename": "src/tint/lang/core/type/struct.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-06T19:44:57Z",
+      "side": 1,
+      "message": "`mat-\u003eType()-\u003eSize()` is the size of the matrix element type. I think this should just be `mat-\u003eSize()` for the non-strided case.",
+      "fixSuggestions": [
+        {
+          "fixId": "d16dc258_cbbdc120",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/type/struct.cc",
+              "range": {
+                "startLine": 273,
+                "startChar": 0,
+                "endLine": 274,
+                "endChar": 0
+              },
+              "replacement": "    auto s \u003d HasMatrixStride() ? matrix_stride_ * dim : mat-\u003eSize();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "458070fec2781c874e4d60026f0c082dd78f07d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
