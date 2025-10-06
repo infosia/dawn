@@ -51,6 +51,24 @@
       ],
       "revId": "458070fec2781c874e4d60026f0c082dd78f07d4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "090bfca4_a6731196",
+        "filename": "src/tint/lang/core/type/struct.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-06T19:55:01Z",
+      "side": 1,
+      "message": "Fix applied. Yea, the dim multiplication was originally outside the conditional. Missed this when I moved it in.",
+      "parentUuid": "1da76a6b_19f93554",
+      "revId": "458070fec2781c874e4d60026f0c082dd78f07d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
