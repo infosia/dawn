@@ -255,6 +255,7 @@ MTLPixelFormat MetalPixelFormat(const DeviceBase* device, wgpu::TextureFormat fo
             return MTLPixelFormatDepth32Float;
         case wgpu::TextureFormat::Depth24PlusStencil8:
         case wgpu::TextureFormat::Depth32FloatStencil8:
+            // Note we never use MTLPixelFormatDepth24Unorm_Stencil8 (doesn't exist on Apple GPUs).
             return MTLPixelFormatDepth32Float_Stencil8;
         case wgpu::TextureFormat::Depth16Unorm:
             return MTLPixelFormatDepth16Unorm;
@@ -308,6 +309,7 @@ MTLPixelFormat MetalPixelFormat(const DeviceBase* device, wgpu::TextureFormat fo
         case wgpu::TextureFormat::BC6HRGBUfloat:
         case wgpu::TextureFormat::BC7RGBAUnorm:
         case wgpu::TextureFormat::BC7RGBAUnormSrgb:
+            DAWN_UNREACHABLE();
 #endif
 
         case wgpu::TextureFormat::ETC2RGB8Unorm:
