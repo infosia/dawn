@@ -16,6 +16,24 @@
       "message": "Is there some more context on why we wanted to remove the U32/U64 (in child CL) helpers?",
       "revId": "5b642808ee0f736ff04ef548a89078c2d18b6671",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7733f38f_979709c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-06T18:59:33Z",
+      "side": 1,
+      "message": "Looked at the other CLs in the stack and now I\u0027m wondering if it would make more sense to have a `makeGetSize` or something instead of removing the other two? My understanding for the change is that right now `size_t` types are getting confused with other types, so if we have an explicit helper maybe that would be better than specifying the different ones at the callsites?",
+      "parentUuid": "c9db7e85_35ce39fc",
+      "revId": "5b642808ee0f736ff04ef548a89078c2d18b6671",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
