@@ -666,6 +666,8 @@ TEST_P(CaptureAndReplayTests, CaptureCopyTextureToTexture) {
     }
 }
 
+<<<<<<< Conflict 1 of 1
++++++++ Contents of side #1
 // We make 3 textures. Put data in the first one. Copy to the 2nd one.
 // Copy tha the 3rd. Check the results. The reason for this test is that
 // the first texture is marked as initialized by WriteTexture. The 2nd is
@@ -884,6 +886,63 @@ TEST_P(CaptureAndReplayTests, CaptureCopyTextureToTextureFromRenderTexture) {
 
         uint8_t expected[] = {0x11, 0x22, 0x33, 0x44};
         EXPECT_TEXTURE_EQ(&expected[0], texture, {0, 0}, {1, 1}, 0, wgpu::TextureAspect::All);
+    }
+}
+
+TEST_P(CaptureAndReplayTests, CaptureComputeShaderBasic) {
+    const char* label = "MyBuffer";
+
+    wgpu::BufferDescriptor descriptor;
+    descriptor.label = label;
+    descriptor.size = 4;
+    descriptor.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopyDst;
+    wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
+
+    const char* shader = R"(
+        @group(0) @binding(0) var<storage, read_write> result : u32;
+
+        @compute @workgroup_size(1) fn main() {
+            result = 0x44332211;
+        }
+    )";
+    auto module = utils::CreateShaderModule(device, shader);
+
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = module;
+    wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&csDesc);
+
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {
+                                                         {0, buffer},
+                                                     });
+
+    wgpu::CommandBuffer commands;
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bindGroup);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+
+        commands = encoder.Finish();
+    }
+
+    // --- capture ---
+    auto recorder = Recorder::CreateAndStart(device);
+
+    queue.Submit(1, &commands);
+
+    // --- replay ---
+    auto capture = recorder.Finish();
+    auto replay = capture.Replay(device);
+
+    {
+        wgpu::Buffer buffer = replay->GetObjectByLabel<wgpu::Buffer>(label);
+        ASSERT_NE(buffer, nullptr);
+
+        uint8_t expected[] = {0x11, 0x22, 0x33, 0x44};
+        EXPECT_BUFFER_U8_RANGE_EQ(expected, buffer, 0, sizeof(expected));
     }
 }
 
