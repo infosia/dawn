@@ -116,26 +116,48 @@ void BindGroup::DeleteThis() {
 }
 
 MaybeError BindGroup::AddReferenced(CaptureContext& captureContext) {
-    // We shouldn't need to include any referenced bound objects as we only serialize from
-    // setBindGroup in a command buffer and the command buffer itself should already reference all.
-    // We do need to reference the layout though.
+    // We have to include any referenced bound textures as the front end does
+    // not track texture views.
     //
-    // Unfortunately we can't just call `AddResource(layout)` because that would add a call to
-    // createBindGroupLayout which we only want if the bindGroupLayout was not implicit
+    // We also need to add the bindGroupLayout Unfortunately we can't just call
+    // `AddResource(layout)` because that would add a call to
+    // createBindGroupLayout which we only want if the bindGroupLayout was not
+    // implicit
     //
-    // We need to figure out if this is bindgroup uses an explicit layout or an auto layout.
-    // If it's an auto layout then we need to find the pipeline then generated it and reference that
-    // first so that on replay, we create the pipeline before the bind group. Otherwise, just we
-    // reference the layout directly which will cause an explicit bindgroup layout to be created on
-    // replay.
-    BindGroupLayoutBase* layout = GetFrontendLayout();
-    if (layout->GetPipelineCompatibilityToken() == kExplicitPCT) {
+    // We need to figure out if this is bindgroup uses an explicit layout or an
+    // auto layout. If it's an auto layout then we need to find the pipeline
+    // then generated it and reference that first so that on replay, we create
+    // the pipeline before the bind group. Otherwise, just we reference the
+    // layout directly which will cause an explicit bindgroup layout to be
+    // created on replay.
+    BindGroupLayoutBase* frontendLayout = GetFrontendLayout();
+    BindGroupLayout* layout = ToBackend(frontendLayout->GetInternalBindGroupLayout());
+    if (frontendLayout->GetPipelineCompatibilityToken() == kExplicitPCT) {
         // TODO(452983510): Handle explicit bind group layouts.
         // DAWN_TRY(captureContext.AddResource(layout));
         DAWN_UNREACHABLE();
     } else {
-        DAWN_TRY(ToBackend(layout->GetInternalBindGroupLayout())
-                     ->CapturePipelineForImplicitLayout(captureContext));
+        DAWN_TRY(layout->CapturePipelineForImplicitLayout(captureContext));
+    }
+
+    const auto& bindingMap = layout->GetBindingMap();
+    for (const auto& [bindingNumbers, apiBindingIndex] : bindingMap) {
+        BindingIndex bindingIndex = layout->AsBindingIndex(apiBindingIndex);
+        const auto& bindingInfo = layout->GetAPIBindingInfo(apiBindingIndex);
+
+        DAWN_TRY(MatchVariant(
+            bindingInfo.bindingLayout,
+            [&](const BufferBindingInfo& info) -> MaybeError { return {}; },
+            [&](const SamplerBindingInfo& info) -> MaybeError { return {}; },
+            [&](const TextureBindingInfo& info) -> MaybeError {
+                return captureContext.AddResource(GetBindingAsTextureView(bindingIndex));
+            },
+            [&](const TexelBufferBindingInfo& info) -> MaybeError { return {}; },
+            [&](const StorageTextureBindingInfo& info) -> MaybeError { return {}; },
+            [&](const ExternalTextureBindingInfo& info) -> MaybeError { return {}; },
+            [&](const StaticSamplerBindingInfo& info) -> MaybeError { return {}; },
+            [&](const InputAttachmentBindingInfo& info) -> MaybeError { return {}; },
+            [&](const auto& info) -> MaybeError { return {}; }));
     }
 
     return {};
