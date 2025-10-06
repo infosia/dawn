@@ -133,6 +133,24 @@
       "parentUuid": "dfa0ebca_22ad362b",
       "revId": "0720fd285c9351abc28361550ad9fed84aa1fcf6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a27beedd_0f001a09",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3173,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-06T17:57:48Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "17cfd98b_76b5e1ab",
+      "revId": "0720fd285c9351abc28361550ad9fed84aa1fcf6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
