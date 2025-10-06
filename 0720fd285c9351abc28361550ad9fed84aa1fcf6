@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8013b94_1aa8c4b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-10-06T17:08:06Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "bf70e083_d481b282",
+      "revId": "0720fd285c9351abc28361550ad9fed84aa1fcf6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ab77dc88_de2bc6e5",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-10-02T20:24:41Z",
       "side": 1,
       "message": "```suggestion\nused to allow blend_src on non-struct module scope vars.\n```\n\nTook me a minute to decypher MSV, heh",
+      "range": {
+        "startLine": 12,
+        "startChar": 38,
+        "endLine": 12,
+        "endChar": 42
+      },
+      "revId": "0720fd285c9351abc28361550ad9fed84aa1fcf6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e79404d_efbfbeb1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-10-06T17:08:06Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "ab77dc88_de2bc6e5",
       "range": {
         "startLine": 12,
         "startChar": 38,
@@ -71,6 +113,24 @@
       "writtenOn": "2025-10-02T20:24:41Z",
       "side": 1,
       "message": "Just to make sure I understand this correctly, the `blend_src` members don\u0027t have to be the same as the `location` members? We don\u0027t correlate them here, so that seems to be the case?",
+      "revId": "0720fd285c9351abc28361550ad9fed84aa1fcf6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17cfd98b_76b5e1ab",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3173,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-10-06T17:08:06Z",
+      "side": 1,
+      "message": "If there is any blend_src there must be two members with annotations @location(0) @blend_src(0) and @location(0) @blend_src(1). There maybe other struct members, but they cannot have location annotations explicitly (and implicility blend_src annotations).\n\nCheckBlendSrcAnnotation is responsible for checking location\u003d1 and blend_src\u003d0|1, location_count is just making sure that there are no other location members.\n\nThe language about this is in https://www.w3.org/TR/WGSL/#input-output-locations. It is slightly tricky, because the rule defines \u0027members\u0027 as struct members with location annotations, not just struct members. I had this wrong the first few times I wrote this code...",
+      "parentUuid": "dfa0ebca_22ad362b",
       "revId": "0720fd285c9351abc28361550ad9fed84aa1fcf6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
