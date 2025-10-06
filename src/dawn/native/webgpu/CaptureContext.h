@@ -46,6 +46,7 @@ struct Origin3D;
 struct Extent3D;
 struct BufferCopy;
 struct TextureCopy;
+struct TimestampWrites;
 
 }  // namespace dawn::native
 
@@ -92,6 +93,25 @@ class CaptureContext {
         [[maybe_unused]] schema::ObjectId id;
         DAWN_TRY_ASSIGN(id, AddResourceAndGetId(object));
         return {};
+    }
+
+    // This is for resources that are not explicitly created on Replay.
+    // For example, bindGroupLayouts created by a pipeline using auto layout.
+    // We need to give them an id but not generate any creation commands.
+    template <typename T>
+    schema::ObjectId AddAndGetIdForImplicitResource(T* object) {
+        assert(object != nullptr);
+        schema::ObjectId id;
+        Ref<ApiObjectBase> ref(object);
+        auto it = mObjectIds.find(ref);
+        bool newResource = it == mObjectIds.end();
+        if (newResource) {
+            id = mNextObjectId++;
+            mObjectIds[std::move(ref)] = id;
+        } else {
+            id = it->second;
+        }
+        return id;
     }
 
     // You must have called AddResource at some point before calling GetId.
@@ -157,6 +177,7 @@ class CaptureContext {
     WGPUBuffer mCopyBuffer = nullptr;
 };
 
+wgpu::TextureAspect ToDawn(const Aspect aspect);
 schema::Origin3D ToSchema(const Origin3D& origin);
 schema::Extent3D ToSchema(const Extent3D& extent);
 schema::TexelCopyBufferLayout ToSchema(const BufferCopy& bufferCopy);
@@ -166,6 +187,8 @@ schema::TexelCopyTextureInfo ToSchema(CaptureContext& captureContext,
 schema::TexelCopyBufferLayout ToSchema(const TexelCopyBufferLayout& layout);
 schema::TexelCopyTextureInfo ToSchema(CaptureContext& captureContext,
                                       const TexelCopyTextureInfo& info);
+schema::TimestampWrites ToSchema(CaptureContext& captureContext,
+                                 const TimestampWrites& timestampWrites);
 
 }  // namespace dawn::native::webgpu
 

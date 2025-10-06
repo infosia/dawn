@@ -30,6 +30,8 @@
 #include <string>
 #include <vector>
 #include "dawn/common/StringViewUtils.h"
+#include "dawn/native/webgpu/BindGroupLayoutWGPU.h"
+#include "dawn/native/webgpu/CaptureContext.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/PipelineLayoutWGPU.h"
 #include "dawn/native/webgpu/ShaderModuleWGPU.h"
@@ -46,7 +48,9 @@ Ref<ComputePipeline> ComputePipeline::CreateUninitialized(
 
 ComputePipeline::ComputePipeline(Device* device,
                                  const UnpackedPtr<ComputePipelineDescriptor>& descriptor)
-    : ComputePipelineBase(device, descriptor), ObjectWGPU(device->wgpu.computePipelineRelease) {}
+    : ComputePipelineBase(device, descriptor),
+      RecordableObject(schema::ObjectType::ComputePipeline),
+      ObjectWGPU(device->wgpu.computePipelineRelease) {}
 
 MaybeError ComputePipeline::InitializeImpl() {
     WGPUComputePipelineDescriptor desc;
@@ -73,6 +77,66 @@ MaybeError ComputePipeline::InitializeImpl() {
     auto device = ToBackend(GetDevice());
     mInnerHandle = device->wgpu.deviceCreateComputePipeline(device->GetInnerHandle(), &desc);
     DAWN_ASSERT(mInnerHandle);
+    return {};
+}
+
+namespace {
+
+// PipelineLayouts are not marked as implicit so the only way to check ATM is to see
+// if any of their BindGroupLayouts are implicit. Note that if one is implicit they
+// are all implicit as you can not add an implicit BindGroupLayout to a PipelineLayout.
+bool LayoutIsImplicit(const PipelineLayoutBase* pipelineLayout) {
+    for (BindGroupIndex groupIndex : pipelineLayout->GetBindGroupLayoutsMask()) {
+        const BindGroupLayoutBase* bgl = pipelineLayout->GetFrontendBindGroupLayout(groupIndex);
+        if (bgl->GetPipelineCompatibilityToken() != kExplicitPCT) {
+            return true;
+        }
+    }
+    return false;
+}
+
+}  // anonymous namespace
+
+MaybeError ComputePipeline::AddReferenced(CaptureContext& captureContext) {
+    DAWN_TRY(captureContext.AddResource(GetStage(SingleShaderStage::Compute).module.Get()));
+    PipelineLayoutBase* pipelineLayout = GetLayout();
+    if (!LayoutIsImplicit(pipelineLayout)) {
+        // TODO(452983510): add support for explicit pipeline layout
+        // DAWN_TRY(captureContext.AddResource(pipelineLayout));
+        return DAWN_INTERNAL_ERROR("explicit pipeline layout unsupported");
+    }
+    return {};
+}
+
+MaybeError ComputePipeline::CaptureCreationParameters(CaptureContext& captureContext) {
+    schema::ObjectId layoutId = 0;
+    std::vector<schema::BindGroupLayoutIndexIdPair> groupIndexIds;
+
+    PipelineLayoutBase* pipelineLayout = GetLayout();
+    if (LayoutIsImplicit(pipelineLayout)) {
+        // If it's an implicit layout then, on playback, we need to add the bind group layouts
+        // to the id to resource map as there is no other connection.
+        for (BindGroupIndex groupIndex : pipelineLayout->GetBindGroupLayoutsMask()) {
+            BindGroupLayoutBase* bgl = pipelineLayout->GetFrontendBindGroupLayout(groupIndex);
+
+            groupIndexIds.push_back(schema::BindGroupLayoutIndexIdPair{{
+                .groupIndex = uint32_t(groupIndex),
+                .bindGroupLayoutId = captureContext.AddAndGetIdForImplicitResource(
+                    bgl->GetInternalBindGroupLayout()),
+            }});
+        }
+    } else {
+        layoutId = captureContext.GetId(pipelineLayout);
+    }
+
+    auto& stage = GetStage(SingleShaderStage::Compute);
+    schema::ComputePipeline data{{
+        .layoutId = layoutId,
+        .moduleId = captureContext.GetId(stage.module.Get()),
+        .entryPoint = stage.entryPoint,
+        .groupIndexIds = groupIndexIds,
+    }};
+    Serialize(captureContext, data);
     return {};
 }
 
