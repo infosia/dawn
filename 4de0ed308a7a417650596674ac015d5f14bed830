@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f1f4741_022c9842",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4118,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-06T20:24:29Z",
+      "side": 1,
+      "message": "This is actually more general. None of the control instructions should return `void` results",
+      "revId": "4de0ed308a7a417650596674ac015d5f14bed830",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
