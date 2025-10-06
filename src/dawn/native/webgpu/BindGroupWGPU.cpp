@@ -37,6 +37,7 @@
 #include "dawn/native/webgpu/CaptureContext.h"
 #include "dawn/native/webgpu/ComputePipelineWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
+#include "dawn/native/webgpu/RenderPipelineWGPU.h"
 #include "dawn/native/webgpu/SamplerWGPU.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
 
@@ -116,35 +117,54 @@ void BindGroup::DeleteThis() {
 }
 
 MaybeError BindGroup::AddReferenced(CaptureContext& captureContext) {
-    // We shouldn't need to include any referenced bound objects as we only serialize from
-    // setBindGroup in a command buffer and the command buffer itself should already reference all.
-    // We do need to reference the layout though.
+    // We have to include any referenced bound textures views as the front end does
+    // not track texture views.
     //
-    // Unfortunately we can't just call `AddResource(layout)` because that would add a call to
-    // createBindGroupLayout which we only want if the bindGroupLayout was not implicit
+    // We also need to add the bindGroupLayout Unfortunately we can't just call
+    // `AddResource(layout)` because that would add a call to
+    // createBindGroupLayout which we only want if the bindGroupLayout was not
+    // implicit
     //
-    // We need to figure out if this is bindgroup uses an explicit layout or an auto layout.
-    // If it's an auto layout then we need to find the pipeline then generated it and reference that
-    // first so that on replay, we create the pipeline before the bind group. Otherwise, just we
-    // reference the layout directly which will cause an explicit bindgroup layout to be created on
-    // replay.
-    BindGroupLayoutBase* layout = GetFrontendLayout();
-    if (layout->GetPipelineCompatibilityToken() == kExplicitPCT) {
-        // TODO(452983510): Handle explicit bind group layouts.
-        // DAWN_TRY(captureContext.AddResource(layout));
-        DAWN_CHECK(false);
-    } else {
-        PipelineBase* pipeline = layout->GetPipelineForImplicitLayout();
-        DAWN_ASSERT(pipeline != nullptr);
-        ComputePipelineBase* computePipeline = pipeline->AsComputePipeline();
-        if (computePipeline) {
-            return captureContext.AddResource(computePipeline);
+    // We need to figure out if this is bindgroup uses an explicit layout or an
+    // auto layout. If it's an auto layout then we need to find the pipeline
+    // then generated it and reference that first so that on replay, we create
+    // the pipeline before the bind group. Otherwise, just we reference the
+    // layout directly which will cause an explicit bindgroup layout to be
+    // created on replay.
+    {
+        BindGroupLayoutBase* layout = GetFrontendLayout();
+        if (layout->GetPipelineCompatibilityToken() == kExplicitPCT) {
+            // TODO(452983510): Handle explicit bind group layouts.
+            // DAWN_TRY(captureContext.AddResource(layout));
+            DAWN_CHECK(false);
+        } else {
+            PipelineBase* pipeline = layout->GetPipelineForImplicitLayout();
+            DAWN_ASSERT(pipeline != nullptr);
+            ComputePipelineBase* computePipeline = pipeline->AsComputePipeline();
+            if (computePipeline) {
+                DAWN_TRY(captureContext.AddResource(computePipeline));
+            } else {
+                RenderPipelineBase* renderPipeline = pipeline->AsRenderPipeline();
+                DAWN_ASSERT(renderPipeline);
+                DAWN_TRY(captureContext.AddResource(renderPipeline));
+            }
         }
-        // TODO(451389801): Capture render pass pipelines.
-        // RenderPipelineBase* renderPipeline = pipeline->AsRenderPipeline();
-        // DAWN_ASSERT(renderPipeline);
-        // return captureContext.AddResource(renderPipeline);
-        DAWN_CHECK(false);
+    }
+
+    {
+        BindGroupLayoutInternalBase* layout = GetLayout();
+        const auto& bindingMap = layout->GetBindingMap();
+        for (const auto& [bindingNumbers, apiBindingIndex] : bindingMap) {
+            BindingIndex bindingIndex = layout->AsBindingIndex(apiBindingIndex);
+            const auto& bindingInfo = layout->GetAPIBindingInfo(apiBindingIndex);
+
+            DAWN_TRY(MatchVariant(
+                bindingInfo.bindingLayout,
+                [&](const TextureBindingInfo& info) -> MaybeError {
+                    return captureContext.AddResource(GetBindingAsTextureView(bindingIndex));
+                },
+                [&](const auto& info) -> MaybeError { return {}; }));
+        }
     }
 
     return {};
