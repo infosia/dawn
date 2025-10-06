@@ -16,6 +16,24 @@
       "message": "While this works and LGTM, it seems that an std::function could do the trick as well (to avoid block stuff that basically noone understand in Chromium). But also this will wait for all previously submitted commands to be scheduled, when we need to wait only for the commands before the EndAccess, WDYT of having one std::function returned per EndAccess call on IOSurface (if an option is passed to say that we\u0027ll do the EndAccess ourselves)? This would be more precise and could avoid some bubbles.",
       "revId": "c4a7c2c58c6126941862cb00ac940b97b9e1a427",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdc8ed65_d3c7fc1b",
+        "filename": "include/dawn/native/MetalBackend.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-10-06T19:56:16Z",
+      "side": 1,
+      "message": "I don\u0027t have a particularly strong opinion re: std::function vs Objective-C block, but if we make the change here, we should consider what to do about the ANGLE case. ANGLE can\u0027t return a std::function* cast to a void* and then cast back to a std::function* since that\u0027s technically undefined behavior, but it\u0027s defined behavior for an Objective-C block. We can make the change in Dawn native since the public API is C++ and compiled together with the calling code**, unlike ANGLE where it\u0027s a C API that\u0027s almost always dynamically linked (and is designed to allow compiling separately?).\n\nRe: returning the callable in EndAccess - that\u0027s a great idea - I\u0027ll look into the details.\n\n\n** Do we have any intention of making the Dawn native public interface be ABI safe? I.e. allow compiling with a different toolchain, compiler, flags, etc. and be dynamically linkable? Or is always meant to be compiled together with the calling code?",
+      "parentUuid": "40c5e408_f4d7803a",
+      "revId": "c4a7c2c58c6126941862cb00ac940b97b9e1a427",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
