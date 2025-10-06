@@ -47,6 +47,19 @@ enum class ObjectType : uint32_t {
     TextureView,
 };
 
+enum class ComputePassCommand : uint32_t {
+    Invalid = 0,  // 0 is invalid at it's more likely to catch bugs.
+    Dispatch,
+    DispatchIndirect,
+    SetComputePipeline,
+    SetBindGroup,
+    WriteTimestamp,
+    InsertDebugMarker,
+    PopDebugGroup,
+    PushDebugGroup,
+    SetImmediateData,
+};
+
 enum class EncoderCommand : uint32_t {
     Invalid = 0,  // 0 is invalid at it's more likely to catch bugs.
     BeginComputePass,
