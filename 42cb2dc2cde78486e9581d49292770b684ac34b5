@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cb2a3ba_6d0c248c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-06T19:52:40Z",
+      "side": 1,
+      "message": "PTAL\n\nRecipes should be using the updated paths since crrev.com/c/7007105 has landed.",
+      "revId": "42cb2dc2cde78486e9581d49292770b684ac34b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
