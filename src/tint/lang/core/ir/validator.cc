@@ -1862,6 +1862,14 @@ bool Validator::CheckResults(const ir::Instruction* inst, std::optional<size_t> 
     bool passed = true;
     Hashset<const InstructionResult*, 4> seen_instruction_results;
     for (size_t i = 0; i < inst->Results().Length(); i++) {
+        if (inst->Is<core::ir::ControlInstruction>()) {
+            auto& r = inst->Results()[i];
+            if (r && r->Type() && r->Type()->Is<core::type::Pointer>()) {
+                passed = false;
+                AddResultError(inst, i) << "result type cannot be a pointer";
+            }
+        }
+
         if (DAWN_UNLIKELY(!CheckResult(inst, i))) {
             passed = false;
         }
