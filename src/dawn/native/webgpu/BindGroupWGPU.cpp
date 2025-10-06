@@ -87,7 +87,9 @@ ResultOrError<Ref<BindGroup>> BindGroup::Create(
 }
 
 BindGroup::BindGroup(Device* device, const UnpackedPtr<BindGroupDescriptor>& descriptor)
-    : BindGroupBase(this, device, descriptor), ObjectWGPU(device->wgpu.bindGroupRelease) {
+    : BindGroupBase(this, device, descriptor),
+      RecordableObject(schema::ObjectType::BindGroup),
+      ObjectWGPU(device->wgpu.bindGroupRelease) {
     ComboBindGroupDescriptor desc(*descriptor);
     mInnerHandle =
         ToBackend(GetDevice())
@@ -106,6 +108,14 @@ void BindGroup::DeleteThis() {
     Ref<BindGroupLayout> layout = ToBackend(GetLayout());
     BindGroupBase::DeleteThis();
     layout->DeallocateBindGroup(this);
+}
+
+MaybeError BindGroup::AddReferenced(CaptureContext& captureContext) const {
+    return {};
+}
+
+MaybeError BindGroup::CaptureCreationParameters(CaptureContext& context) {
+    return {};
 }
 
 }  // namespace dawn::native::webgpu
