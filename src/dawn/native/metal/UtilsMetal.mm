@@ -308,6 +308,7 @@ MTLPixelFormat MetalPixelFormat(const DeviceBase* device, wgpu::TextureFormat fo
         case wgpu::TextureFormat::BC6HRGBUfloat:
         case wgpu::TextureFormat::BC7RGBAUnorm:
         case wgpu::TextureFormat::BC7RGBAUnormSrgb:
+            DAWN_UNREACHABLE();
 #endif
 
         case wgpu::TextureFormat::ETC2RGB8Unorm:
