@@ -46,7 +46,9 @@ Ref<ComputePipeline> ComputePipeline::CreateUninitialized(
 
 ComputePipeline::ComputePipeline(Device* device,
                                  const UnpackedPtr<ComputePipelineDescriptor>& descriptor)
-    : ComputePipelineBase(device, descriptor), ObjectWGPU(device->wgpu.computePipelineRelease) {}
+    : ComputePipelineBase(device, descriptor),
+      RecordableObject(schema::ObjectType::ComputePipeline),
+      ObjectWGPU(device->wgpu.computePipelineRelease) {}
 
 MaybeError ComputePipeline::InitializeImpl() {
     WGPUComputePipelineDescriptor desc;
@@ -73,6 +75,14 @@ MaybeError ComputePipeline::InitializeImpl() {
     auto device = ToBackend(GetDevice());
     mInnerHandle = device->wgpu.deviceCreateComputePipeline(device->GetInnerHandle(), &desc);
     DAWN_ASSERT(mInnerHandle);
+    return {};
+}
+
+MaybeError ComputePipeline::AddReferenced(CaptureContext& captureContext) const {
+    return {};
+}
+
+MaybeError ComputePipeline::CaptureCreationParameters(CaptureContext& context) {
     return {};
 }
 
