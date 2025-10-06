@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40c5e408_f4d7803a",
+        "filename": "include/dawn/native/MetalBackend.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-06T09:05:12Z",
+      "side": 1,
+      "message": "While this works and LGTM, it seems that an std::function could do the trick as well (to avoid block stuff that basically noone understand in Chromium). But also this will wait for all previously submitted commands to be scheduled, when we need to wait only for the commands before the EndAccess, WDYT of having one std::function returned per EndAccess call on IOSurface (if an option is passed to say that we\u0027ll do the EndAccess ourselves)? This would be more precise and could avoid some bubbles.",
+      "revId": "c4a7c2c58c6126941862cb00ac940b97b9e1a427",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
