@@ -76,62 +76,59 @@ GLenum TargetForTextureViewDimension(wgpu::TextureViewDimension dimension, uint3
     }
 }
 
-// Note this only applies to Desktop OpenGL (texture views don't exist in GLES).
-// In compatibility mode, validation should mean we never need texture views.
+// Note this is only relevant in Desktop OpenGL (texture views don't exist in GLES).
+// In Compat, there is validation that checks each texture only needs one set of parameters
+// at a time, so we can set it on the texture without a texture view.
+// TODO(crbug.com/447271110): This function duplicates logic from several other places in order to
+// figure out whether a texture view is needed. This logic should be based mostly on GL
+// parameter types, and/or integrated better with the code that it's trying to match.
 bool RequiresCreatingNewTextureView(
     const TextureBase* texture,
     const UnpackedPtr<TextureViewDescriptor>& textureViewDescriptor) {
-    if (ToBackend(texture->GetDevice())->IsCompatibilityMode()) {
-        return false;
-    }
-
-    constexpr wgpu::TextureUsage kShaderUsageNeedsView =
-        wgpu::TextureUsage::StorageBinding | wgpu::TextureUsage::TextureBinding;
-    constexpr wgpu::TextureUsage kUsageNeedsView =
-        kShaderUsageNeedsView | wgpu::TextureUsage::RenderAttachment;
-    if (!(texture->GetInternalUsage() & kUsageNeedsView)) {
-        return false;
-    }
-
-    if (texture->GetFormat().format != textureViewDescriptor->format &&
-        !texture->GetFormat().HasDepthOrStencil()) {
-        // Color format reinterpretation required. Note: Depth/stencil formats don't support
-        // reinterpretation.
-        return true;
-    }
-
-    // Reinterpretation not required. Now, we only need a new view if the view dimension or
-    // set of subresources for the shader is different from the base texture.
-    if (!(texture->GetInternalUsage() & kShaderUsageNeedsView)) {
-        return false;
-    }
-
-    if (texture->GetArrayLayers() != textureViewDescriptor->arrayLayerCount ||
-        (texture->GetArrayLayers() == 1 && texture->GetDimension() == wgpu::TextureDimension::e2D &&
-         textureViewDescriptor->dimension == wgpu::TextureViewDimension::e2DArray)) {
-        // If the view has a different number of array layers, we need a new view.
-        // And, if the original texture is a 2D texture with one array layer, we need a new
-        // view to view it as a 2D array texture.
-        return true;
-    }
-
-    if (ToBackend(texture)->GetGLFormat().format == GL_DEPTH_STENCIL &&
-        (texture->GetUsage() & wgpu::TextureUsage::TextureBinding) &&
-        textureViewDescriptor->aspect == wgpu::TextureAspect::StencilOnly) {
-        // We need a separate view for one of the depth or stencil planes
-        // because each glTextureView needs it's own handle to set
-        // GL_DEPTH_STENCIL_TEXTURE_MODE. Choose the stencil aspect for the
-        // extra handle since it is likely sampled less often.
-        return true;
-    }
-
-    // Note: For formats with <4 channels, this could be refined to consider that some channels are
-    // nonexistent. We don't bother to optimize that, because such swizzles are not actually useful.
-    // (Also, this code is only reached on Desktop GL anyway.)
-    if (auto* swizzleDesc = textureViewDescriptor.Get<TextureComponentSwizzleDescriptor>()) {
-        auto swizzle = swizzleDesc->swizzle.WithTrivialFrontendDefaults();
-        if (*ToCppAPI(&swizzle) != kRGBASwizzle) {
+    bool hasNonCopyUsages = !IsSubset(textureViewDescriptor->usage,
+                                      wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst);
+    if (hasNonCopyUsages) {
+        // Color format reinterpretation always requires a view except for copy usages.
+        // (Depth/stencil views don't allow reinterpretation, but the format will differ when
+        // the view subsets the aspects. This is only valid for shader usages, handled below.)
+        if (texture->GetFormat().format != textureViewDescriptor->format &&
+            !texture->GetFormat().HasDepthOrStencil()) {
             return true;
+        }
+    }
+
+    // A view is only needed for any other parameters if used from a shader. (For attachments,
+    // subresource indices are passed elsewhere in the backend, not as part of the view.)
+    constexpr wgpu::TextureUsage kShaderUsages =
+        wgpu::TextureUsage::StorageBinding | wgpu::TextureUsage::TextureBinding;
+    bool hasShaderUsages = textureViewDescriptor->usage & kShaderUsages;
+    if (hasShaderUsages) {
+        if (texture->GetNumMipLevels() != textureViewDescriptor->mipLevelCount) {
+            return true;
+        }
+        if (texture->GetArrayLayers() != textureViewDescriptor->arrayLayerCount) {
+            return true;
+        }
+        if (ToBackend(texture)->GetGLTarget() !=
+            TargetForTextureViewDimension(textureViewDescriptor->dimension,
+                                          texture->GetSampleCount())) {
+            return true;
+        }
+        // For combined depth-stencil formats, the main texture has DEPTH_STENCIL_TEXTURE_MODE
+        // set to DEPTH_COMPONENT. For stencil, we need another view with it set to STENCIL_INDEX.
+        if (ToBackend(texture)->GetGLFormat().format == GL_DEPTH_STENCIL &&
+            (texture->GetUsage() & wgpu::TextureUsage::TextureBinding) &&
+            textureViewDescriptor->aspect == wgpu::TextureAspect::StencilOnly) {
+            return true;
+        }
+        // Note: For formats with <4 channels, this could be refined to consider that some channels
+        // are nonexistent. We don't bother to optimize that, because such swizzles are not actually
+        // useful. (Also, this code is only reached on Desktop GL anyway.)
+        if (auto* swizzleDesc = textureViewDescriptor.Get<TextureComponentSwizzleDescriptor>()) {
+            auto swizzle = swizzleDesc->swizzle.WithTrivialFrontendDefaults();
+            if (*ToCppAPI(&swizzle) != kRGBASwizzle) {
+                return true;
+            }
         }
     }
 
@@ -632,14 +629,19 @@ ResultOrError<Ref<TextureView>> TextureView::Create(
     // Texture could be destroyed by the time we make a view.
     if (texture->IsDestroyed()) {
         handle = 0;
-    } else if (!RequiresCreatingNewTextureView(texture, descriptor)) {
+    } else if (ToBackend(texture->GetDevice())->IsCompatibilityMode()) {
         handle = ToBackend(texture)->GetHandle();
     } else {
-        if (gl.IsAtLeastGL(4, 3)) {
-            DAWN_GL_TRY(gl, GenTextures(1, &handle));
-            ownsHandle = OwnsHandle::Yes;
+        // Desktop GL
+        if (!RequiresCreatingNewTextureView(texture, descriptor)) {
+            handle = ToBackend(texture)->GetHandle();
         } else {
-            handle = 0;
+            if (gl.IsAtLeastGL(4, 3)) {
+                DAWN_GL_TRY(gl, GenTextures(1, &handle));
+                ownsHandle = OwnsHandle::Yes;
+            } else {
+                handle = 0;
+            }
         }
     }
 
