@@ -130,63 +130,48 @@ MTLTextureSwizzleChannels ToMetalTextureSwizzleChannels(wgpu::TextureComponentSw
     return mtlSwizzle;
 }
 
-bool ShouldCreateNewTextureView(const TextureBase* texture,
-                                wgpu::TextureUsage internalViewUsage,
-                                const UnpackedPtr<TextureViewDescriptor>& textureViewDescriptor,
-                                bool needsSwizzle) {
-    constexpr wgpu::TextureUsage kShaderUsageNeedsView =
-        wgpu::TextureUsage::StorageBinding | wgpu::TextureUsage::TextureBinding;
-    constexpr wgpu::TextureUsage kUsageNeedsView = kShaderUsageNeedsView |
-                                                   wgpu::TextureUsage::RenderAttachment |
-                                                   wgpu::TextureUsage::StorageAttachment;
-    if ((internalViewUsage & kUsageNeedsView) == 0) {
-        return false;
-    }
-
-    if (texture->GetFormat().format != textureViewDescriptor->format &&
-        !texture->GetFormat().HasDepthOrStencil()) {
-        // Color format reinterpretation required.
-        // Note: Depth/stencil formats don't support reinterpretation.
-        // See also TextureView::GetAttachmentInfo when modifying this condition.
-        return true;
-    }
-
-    // Reinterpretation not required. Now, we only need a new view if the view dimension or
-    // set of subresources for the shader is different from the base texture.
-    if ((texture->GetInternalUsage() & kShaderUsageNeedsView) == 0) {
-        return false;
-    }
-
-    if (texture->GetArrayLayers() != textureViewDescriptor->arrayLayerCount ||
-        (texture->GetArrayLayers() == 1 && texture->GetDimension() == wgpu::TextureDimension::e2D &&
-         textureViewDescriptor->dimension == wgpu::TextureViewDimension::e2DArray)) {
-        // If the view has a different number of array layers, we need a new view.
-        // And, if the original texture is a 2D texture with one array layer, we need a new
-        // view to view it as a 2D array texture.
-        return true;
-    }
-
-    if (texture->GetNumMipLevels() != textureViewDescriptor->mipLevelCount) {
-        return true;
-    }
-
-    // If the texture is created with MTLTextureUsagePixelFormatView, we need
-    // a new view to perform format reinterpretation.
-    if ((MetalTextureUsage(texture->GetFormat(), texture->GetInternalUsage()) &
-         MTLTextureUsagePixelFormatView) != 0) {
-        return true;
-    }
-
-    switch (textureViewDescriptor->dimension) {
-        case wgpu::TextureViewDimension::Cube:
-        case wgpu::TextureViewDimension::CubeArray:
+// TODO(crbug.com/447271110): This function duplicates logic from several other places in order to
+// figure out whether a texture view is needed. This logic should be based mostly on Metal
+// parameter types, and/or integrated better with the code that it's trying to match.
+bool RequiresCreatingNewTextureView(const Texture* texture,
+                                    wgpu::TextureUsage internalViewUsage,
+                                    const UnpackedPtr<TextureViewDescriptor>& textureViewDescriptor,
+                                    MTLTextureType textureViewType,
+                                    const std::optional<MTLTextureSwizzleChannels>& swizzle) {
+    bool hasNonCopyUsages =
+        !IsSubset(internalViewUsage, wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst);
+    if (hasNonCopyUsages) {
+        // Color format reinterpretation always requires a view except for copy usages.
+        // (Depth/stencil views don't allow reinterpretation, but the format will differ when
+        // the view subsets the aspects. This is only valid for shader usages, handled below.)
+        if (texture->GetFormat().format != textureViewDescriptor->format &&
+            !texture->GetFormat().HasDepthOrStencil()) {
             return true;
-        default:
-            break;
+        }
     }
 
-    if (needsSwizzle) {
-        return true;
+    // A view is only needed for any other parameters if used from a shader. (For attachments,
+    // subresource indices are passed elsewhere in the backend, not as part of the view.)
+    constexpr wgpu::TextureUsage kShaderUsages =
+        wgpu::TextureUsage::StorageBinding | wgpu::TextureUsage::TextureBinding;
+    if (internalViewUsage & kShaderUsages) {
+        if (texture->GetNumMipLevels() != textureViewDescriptor->mipLevelCount) {
+            return true;
+        }
+        if (texture->GetArrayLayers() != textureViewDescriptor->arrayLayerCount) {
+            return true;
+        }
+        if (texture->GetMTLTextureType() != textureViewType) {
+            return true;
+        }
+        // For sampling stencil aspect of combined depth/stencil.
+        if (textureViewDescriptor->aspect == wgpu::TextureAspect::StencilOnly &&
+            IsSubset(Aspect::Depth | Aspect::Stencil, texture->GetFormat().aspects)) {
+            return true;
+        }
+        if (swizzle.has_value()) {
+            return true;
+        }
     }
 
     return false;
@@ -370,6 +355,7 @@ MaybeError Texture::InitializeAsInternalTexture(const UnpackedPtr<TextureDescrip
 
     if (!GetFormat().IsMultiPlanar()) {
         NSRef<MTLTextureDescriptor> mtlDesc = CreateMetalTextureDescriptor();
+        mMtlTextureType = [*mtlDesc textureType];
         mMtlUsage = [*mtlDesc usage];
         mMtlFormat = [*mtlDesc pixelFormat];
         mMtlPlaneTextures.resize(1);
@@ -395,6 +381,7 @@ MaybeError Texture::InitializeAsInternalTexture(const UnpackedPtr<TextureDescrip
             "Usage flags (%s) include %s, which is not compatible with creation from IOSurface.",
             GetInternalUsage(), wgpu::TextureUsage::TransientAttachment);
 
+        mMtlTextureType = MTLTextureType2D;
         mMtlUsage = MetalTextureUsage(GetFormat(), GetInternalUsage());
         // Multiplanar format doesn't have equivalent MTLPixelFormat so just set it to invalid.
         mMtlFormat = MTLPixelFormatInvalid;
@@ -417,6 +404,7 @@ MaybeError Texture::InitializeAsInternalTexture(const UnpackedPtr<TextureDescrip
 void Texture::InitializeAsWrapping(const UnpackedPtr<TextureDescriptor>& descriptor,
                                    NSPRef<id<MTLTexture>> wrapped) {
     NSRef<MTLTextureDescriptor> mtlDesc = CreateMetalTextureDescriptor();
+    mMtlTextureType = [*mtlDesc textureType];
     mMtlUsage = [*mtlDesc usage];
     mMtlFormat = [*mtlDesc pixelFormat];
     mMtlPlaneTextures.resize(1);
@@ -433,6 +421,7 @@ MaybeError Texture::InitializeFromSharedTextureMemory(
         GetInternalUsage(), wgpu::TextureUsage::TransientAttachment);
 
     mIOSurface = memory->GetIOSurface();
+    mMtlTextureType = MTLTextureType2D;
     mMtlUsage = memory->GetMtlTextureUsage();
     mMtlFormat = memory->GetMtlPixelFormat();
     mMtlPlaneTextures = memory->GetMtlPlaneTextures();
@@ -484,6 +473,13 @@ void Texture::SetLabelImpl() {
                          absl::StrFormat("Dawn_Plane_Texture[%zu]", i).c_str(), GetLabel());
         }
     }
+}
+
+MTLTextureType Texture::GetMTLTextureType() const {
+    return mMtlTextureType;
+}
+MTLTextureUsage Texture::GetMTLTextureUsage() const {
+    return mMtlUsage;
 }
 
 id<MTLTexture> Texture::GetMTLTexture(Aspect aspect) const {
@@ -807,9 +803,11 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
     Aspect aspect = SelectFormatAspects(texture->GetFormat(), descriptor->aspect);
     id<MTLTexture> mtlTexture = texture->GetMTLTexture(aspect);
 
+    MTLTextureType textureViewType =
+        MetalTextureViewType(descriptor->dimension, texture->GetSampleCount());
     std::optional<MTLTextureSwizzleChannels> mtlSwizzle = ComputeMetalSwizzle();
-    bool needsNewView =
-        ShouldCreateNewTextureView(texture, GetInternalUsage(), descriptor, mtlSwizzle.has_value());
+    bool needsNewView = RequiresCreatingNewTextureView(texture, GetInternalUsage(), descriptor,
+                                                       textureViewType, mtlSwizzle);
     if (device->IsToggleEnabled(Toggle::MetalUseCombinedDepthStencilFormatForStencil8) &&
         GetTexture()->GetFormat().format == wgpu::TextureFormat::Stencil8) {
         // If MetalUseCombinedDepthStencilFormatForStencil8 is true and the format is Stencil8,
@@ -838,8 +836,6 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
             viewFormat = textureFormat;
         }
 
-        MTLTextureType textureViewType =
-            MetalTextureViewType(descriptor->dimension, texture->GetSampleCount());
         auto mipLevelRange = NSMakeRange(descriptor->baseMipLevel, descriptor->mipLevelCount);
         auto arrayLayerRange = NSMakeRange(descriptor->baseArrayLayer, descriptor->arrayLayerCount);
 
