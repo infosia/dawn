@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69683cc2_4ee690c2",
+        "filename": "src/dawn/native/ErrorScope.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-07T18:06:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b0521a7_8c72b580",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 49
+      },
+      "revId": "afa5ce63cd53080453f8572fd5b7a97991d82293",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2deed975_770c098c",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-10-07T14:24:49Z",
       "side": 1,
       "message": "```suggestion\n    wgpu::ErrorType captureErrorType;\n```",
+      "revId": "afa5ce63cd53080453f8572fd5b7a97991d82293",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "789b511a_79e6c3ed",
+        "filename": "src/dawn/native/ErrorScope.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-07T18:06:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2deed975_770c098c",
       "revId": "afa5ce63cd53080453f8572fd5b7a97991d82293",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
