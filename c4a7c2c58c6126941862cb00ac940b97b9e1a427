@@ -52,6 +52,24 @@
       "parentUuid": "bdc8ed65_d3c7fc1b",
       "revId": "c4a7c2c58c6126941862cb00ac940b97b9e1a427",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d22b851e_7d3fa5bf",
+        "filename": "include/dawn/native/MetalBackend.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-07T12:24:28Z",
+      "side": 1,
+      "message": "Nice use of ** for the side note ^^\n\nThe intention is that `webgpu.h` is ABI compatible and like you said, it cannot contain std::function etc. The backdoor headers `DawnNative.h` and `*Backend.h` don\u0027t have this constraint though and can be used to define some of the extension structs (like [this one](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/include/dawn/native/D3D12Backend.h;drc\u003da50d9ba592fb030943387f315b74ed6250be9835;l\u003d56)).\n\nYour idea of returning a `wgpu::Future` is pretty great IMHO and since it can be waited on and queried with `WaitAny` it seems that it could work well for Chromium\u0027s usecase! +CC Loko to see if he\u0027s got any concerns adding a future for \"WaitUntilScheduled\".",
+      "parentUuid": "04ed308d_86fa240d",
+      "revId": "c4a7c2c58c6126941862cb00ac940b97b9e1a427",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
