@@ -67,11 +67,15 @@ TEST(MemoryTypeSelectorTests, Quatro_P100) {
     EXPECT_EQ(
         selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::ReadMappable), 2);
 
-    // BufferMapExtendedUsages mappable GPU buffers.
+    // BufferMapExtendedUsages mappable only have one memory type to choose from.
     EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::DeviceLocal |
                                                           MemoryKind::ReadMappable),
               3);
     EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::DeviceLocal |
+                                                          MemoryKind::WriteMappable),
+              3);
+    EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::DeviceLocal |
+                                                          MemoryKind::ReadMappable |
                                                           MemoryKind::WriteMappable),
               3);
 }
@@ -110,13 +114,125 @@ TEST(MemoryTypeSelectorTests, Mali_G715) {
     // Lazily allocated is a separate type.
     EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::LazilyAllocated), 2);
 
-    // BufferMapExtendedUsages mappable GPU buffers.
-    EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::DeviceLocal |
-                                                          MemoryKind::ReadMappable),
-              0);
+    // BufferMapExtendedUsages write mappable should prefer HOST_COHERENT.
     EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::DeviceLocal |
                                                           MemoryKind::WriteMappable),
               0);
+
+    // BufferMapExtendedUsages read mappable should prefer HOST_CACHED.
+    EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::DeviceLocal |
+                                                          MemoryKind::ReadMappable),
+              1);
+
+    // BufferMapExtendedUsages read+write mappable should prefer HOST_COHERENT since no
+    // HOST_CACHED+HOST_COHERENT exists.
+    EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::DeviceLocal |
+                                                          MemoryKind::ReadMappable |
+                                                          MemoryKind::WriteMappable),
+              0);
+}
+
+TEST(MemoryTypeSelectorTests, Mali_G72) {
+    // Memory info from Mali G72 GPU.
+    std::vector<VkMemoryType> memoryTypes = {
+        {VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+             VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+         /*heap=*/0},
+        {VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+             VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_CACHED_BIT,
+         /*heap=*/0},
+        {VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT,
+         /*heap=*/0}};
+    std::vector<VkMemoryHeap> memoryHeaps = {{5931765760, VK_MEMORY_HEAP_DEVICE_LOCAL_BIT}};
+    MemoryTypeSelector selector(memoryTypes, memoryHeaps);
+
+    // Allows any memory type to be selected.
+    VkMemoryRequirements requirement = {64, 64, 0b1111};
+
+    EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::Linear), 0);
+    EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::DeviceLocal), 0);
+    EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::DeviceLocal),
+              0);
+
+    // Write mappable buffers will select HOST_COHERENT.
+    EXPECT_EQ(
+        selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::WriteMappable), 0);
+
+    // Read mappable memory should prefer HOST_CACHED over HOST_COHERENT.
+    EXPECT_EQ(
+        selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::ReadMappable), 1);
+
+    // Lazily allocated is a separate type.
+    EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::LazilyAllocated), 2);
+
+    // BufferMapExtendedUsages write mappable should prefer HOST_COHERENT.
+    EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::DeviceLocal |
+                                                          MemoryKind::WriteMappable),
+              0);
+
+    // BufferMapExtendedUsages read mappable should prefer HOST_CACHED.
+    EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::DeviceLocal |
+                                                          MemoryKind::ReadMappable),
+              1);
+
+    // BufferMapExtendedUsages read+write mappable should prefer HOST_CACHED+HOST_COHERENT.
+    EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::DeviceLocal |
+                                                          MemoryKind::ReadMappable |
+                                                          MemoryKind::WriteMappable),
+              1);
+}
+
+TEST(MemoryTypeSelectorTests, Adreno_620) {
+    // Memory info from Adreno 620 GPU.
+    std::vector<VkMemoryType> memoryTypes = {
+        {VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+         /*heap=*/0},
+        {VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+             VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+         /*heap=*/0},
+        {VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+             VK_MEMORY_PROPERTY_HOST_CACHED_BIT,
+         /*heap=*/0},
+        {VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+             VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_CACHED_BIT,
+         /*heap=*/0},
+        {VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_PROTECTED_BIT,
+         /*heap=*/1}};
+    std::vector<VkMemoryHeap> memoryHeaps = {{5727592448, VK_MEMORY_HEAP_DEVICE_LOCAL_BIT},
+                                             {268435456, VK_MEMORY_HEAP_DEVICE_LOCAL_BIT}};
+    MemoryTypeSelector selector(memoryTypes, memoryHeaps);
+
+    // Allows any memory type to be selected.
+    VkMemoryRequirements requirement = {64, 64, 0b1111};
+
+    EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::Linear), 0);
+    EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::DeviceLocal), 0);
+    EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::DeviceLocal),
+              0);
+
+    // Write mappable buffers will select HOST_COHERENT.
+    EXPECT_EQ(
+        selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::WriteMappable), 1);
+
+    // Read mappable memory should prefer HOST_CACHED over HOST_COHERENT.
+    EXPECT_EQ(
+        selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::ReadMappable), 2);
+
+    // BufferMapExtendedUsages write mappable should prefer HOST_COHERENT.
+    EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::DeviceLocal |
+                                                          MemoryKind::WriteMappable),
+              1);
+
+    // BufferMapExtendedUsages read mappable should prefer HOST_CACHED.
+    EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::DeviceLocal |
+                                                          MemoryKind::ReadMappable),
+              2);
+
+    // BufferMapExtendedUsages read+write mappable should prefer HOST_CACHED+HOST_COHERENT.
+    EXPECT_EQ(selector.FindBestTypeIndex(requirement, MemoryKind::Linear | MemoryKind::DeviceLocal |
+                                                          MemoryKind::ReadMappable |
+                                                          MemoryKind::WriteMappable),
+              3);
 }
 
 }  // namespace dawn::native::vulkan
