@@ -33,6 +33,24 @@
       "message": "Nit: Could we just do this after the `CheckResult()` call so that we know it\u0027s not nullptr?\n\nOr actually, just do it inside `CheckResult`, since that has the instruction so would know that it\u0027s a control instruction?",
       "revId": "766e8ad6bcef79b9c48569a13a19624d45879334",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b4cfc76_c27768a2",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1867,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-07T04:07:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "188e2b68_3b112559",
+      "revId": "766e8ad6bcef79b9c48569a13a19624d45879334",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
