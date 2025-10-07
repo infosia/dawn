@@ -46,6 +46,30 @@
       },
       "revId": "06329ea6a2f14fd261e1a6cac1988ba637ba722b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc1f7077_b35bdf70",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-07T00:24:47Z",
+      "side": 1,
+      "message": "Oh actually I already have that helper planned in bug 448993920. Think I\u0027ll not worry about it for now.",
+      "parentUuid": "da9d2730_0bf1c1c4",
+      "range": {
+        "startLine": 66,
+        "startChar": 66,
+        "endLine": 66,
+        "endChar": 69
+      },
+      "revId": "06329ea6a2f14fd261e1a6cac1988ba637ba722b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
