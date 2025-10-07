@@ -34,6 +34,24 @@
       "parentUuid": "c9db7e85_35ce39fc",
       "revId": "5b642808ee0f736ff04ef548a89078c2d18b6671",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e7c24e7_52f3d451",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-07T00:22:06Z",
+      "side": 1,
+      "message": "Sorry, should have explained. It\u0027s mostly just because they\u0027re trivial helpers and it seemed to make sense to be closer to the builtin Emscripten APIs. The confusion with size_t is a separate thing.",
+      "parentUuid": "7733f38f_979709c7",
+      "revId": "5b642808ee0f736ff04ef548a89078c2d18b6671",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
