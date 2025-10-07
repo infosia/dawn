@@ -16,6 +16,92 @@
       "message": "PTAL",
       "revId": "1b5742e6c0242c1a5bc6286399ede7bb79878a84",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94e28d38_b904b623",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-07T17:30:54Z",
+      "side": 1,
+      "message": "Is this feasible to do with merge scripts?\nIt looks like \"Hash testcases\" step here https://ci.chromium.org/ui/p/dawn/builders/ci/cron-linux-clang-rel-x64/b8701714697855667057/overview merges unittests and end2end tests, I don\u0027t think merge scripts have access to another step\u0027s results.",
+      "revId": "1b5742e6c0242c1a5bc6286399ede7bb79878a84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7392dbd2_5211e0af",
+        "filename": "infra/specs/test_suites.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-07T17:30:54Z",
+      "side": 1,
+      "message": "dawn_wire_trace_end2end_sws_gtests?",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 39
+      },
+      "revId": "1b5742e6c0242c1a5bc6286399ede7bb79878a84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cb5e7ab_364f7e96",
+        "filename": "infra/specs/test_suites.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-07T17:30:54Z",
+      "side": 1,
+      "message": "dawn_wire_trace_end2end_sws_tests?",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "1b5742e6c0242c1a5bc6286399ede7bb79878a84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d44b7a33_fe26d798",
+        "filename": "infra/specs/test_suites.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-07T17:30:54Z",
+      "side": 1,
+      "message": "I think dawn_wire_trace_unit_gtests is more consistent with other names.",
+      "range": {
+        "startLine": 101,
+        "startChar": 5,
+        "endLine": 101,
+        "endChar": 32
+      },
+      "revId": "1b5742e6c0242c1a5bc6286399ede7bb79878a84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
