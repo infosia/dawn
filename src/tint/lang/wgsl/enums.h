@@ -199,6 +199,7 @@ enum class LanguageFeature : uint8_t {
     kSizedBindingArray,
     kTexelBuffers,
     kUnrestrictedPointerParameters,
+    kFragmentDepth,
 };
 
 /// @param value the enum value
@@ -223,6 +224,7 @@ constexpr std::string_view kLanguageFeatureStrings[] = {
     "sized_binding_array",
     "texel_buffers",
     "unrestricted_pointer_parameters",
+    "fragment_depth",
 };
 
 /// All features
@@ -239,6 +241,7 @@ static constexpr LanguageFeature kAllLanguageFeatures[] = {
     LanguageFeature::kSizedBindingArray,
     LanguageFeature::kTexelBuffers,
     LanguageFeature::kUnrestrictedPointerParameters,
+    LanguageFeature::kFragmentDepth,
 };
 
 /// A unique vector of extensions

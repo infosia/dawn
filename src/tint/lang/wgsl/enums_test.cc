@@ -323,6 +323,7 @@ static constexpr LanguageFeatureCase kValidLanguageFeatureCases[] = {
     {"readonly_and_readwrite_storage_textures", LanguageFeature::kReadonlyAndReadwriteStorageTextures},
     {"sized_binding_array", LanguageFeature::kSizedBindingArray},
     {"texel_buffers", LanguageFeature::kTexelBuffers},
+    {"fragment_depth", LanguageFeature::kFragmentDepth},
     {"unrestricted_pointer_parameters", LanguageFeature::kUnrestrictedPointerParameters},
 };
 
