@@ -88,6 +88,24 @@
       "parentUuid": "d22b851e_7d3fa5bf",
       "revId": "c4a7c2c58c6126941862cb00ac940b97b9e1a427",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea982428_0e8d0228",
+        "filename": "include/dawn/native/MetalBackend.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-10-07T21:05:41Z",
+      "side": 1,
+      "message": "Ok, using futures sounds good. There are two basic approaches we could take:\n\n1) Add a new method on the `Queue` - something like `GetWorkScheduledFuture` (or `GetCommandsScheduledFuture` or \u0027GetSubmittedWorkScheduledFuture`) - but note that we don\u0027t really want to support a callback here, just the future.\n\n2) Add a new extension struct for `SharedTextureMemoryEndAcccessState` - something like `SharedTextureMemoryMetalEndAccessState` which has a `workScheduledFuture` (or `commandsScheduledFuture` or `submittedWorkScheduledFuture`) field.\n\nDo you have strong opinions on which approach to pursue?",
+      "parentUuid": "2ff8f4a5_3c68b298",
+      "revId": "c4a7c2c58c6126941862cb00ac940b97b9e1a427",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
