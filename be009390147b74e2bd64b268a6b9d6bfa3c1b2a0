@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e669e7ed_b4c30b49",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-07T00:21:05Z",
+      "side": 1,
+      "message": "correct, makeGetEnum is for translating to string enums.",
+      "parentUuid": "cd3900ea_83c24e39",
+      "range": {
+        "startLine": 1192,
+        "startChar": 8,
+        "endLine": 1192,
+        "endChar": 100
+      },
+      "revId": "be009390147b74e2bd64b268a6b9d6bfa3c1b2a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c7ad32ce_1086ade8",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-10-06T18:57:12Z",
       "side": 1,
       "message": "Would it make sense to have a helper like `makeGetObject` which does the `WebGPU.getJsObject` and checks for null/zero pointers?",
+      "range": {
+        "startLine": 1393,
+        "startChar": 6,
+        "endLine": 1393,
+        "endChar": 97
+      },
+      "revId": "be009390147b74e2bd64b268a6b9d6bfa3c1b2a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f721c50_cad34b77",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-07T00:21:05Z",
+      "side": 1,
+      "message": "yes, but I left that for later in bug 448993920. Added a note about checking for null in non-nullable contexts.",
+      "parentUuid": "c7ad32ce_1086ade8",
       "range": {
         "startLine": 1393,
         "startChar": 6,
