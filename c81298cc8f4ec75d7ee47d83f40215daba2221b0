@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66dd6cc8_eca81ca1",
+        "filename": ".vpython3",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-07T19:03:43Z",
+      "side": 1,
+      "message": "nit. I think this comment was copied from Chromium\u0027s `.vpython` file and I don\u0027t think it applies for Dawn, so probably removable.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 76
+      },
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d78b994_941f586f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-07T19:03:43Z",
+      "side": 1,
+      "message": "IIUC, this change only updates the docs for enums and their values, so this is a bit misleading.",
+      "range": {
+        "startLine": 15,
+        "startChar": 99,
+        "endLine": 15,
+        "endChar": 132
+      },
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56a45236_7505d3ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-07T19:03:43Z",
+      "side": 1,
+      "message": "Sorry for the delay, took a first pass look over this. As some of the comments suggest, from what I can tell, this change only adds docs for enums and bitmasks. Would it be possible to isolate out some of the changes especially in the parsing utility to reflect that we are iteratively adding doc support for each category type at a time? The parsing code has a lot of stuff that seems to relate to parsing for other stuff as well and it makes it harder to verify which pieces of code actually causes diffs in the generated output atm.",
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9f15b99_0fafd818",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-07T19:03:43Z",
+      "side": 1,
+      "message": "nit. Could we move this dependency entirely into the other utility file? We can just pass the file path to the helper over there instead of doing the `safe_load` in this file.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 11
+      },
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c733e7ce_b22b3a61",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-07T19:03:43Z",
+      "side": 1,
+      "message": "nit. Maybe rename to `dawn_yaml_utility.py` or `dawn_yaml_doc_utils.py`?",
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc229e19_a6b866b6",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-07T19:03:43Z",
+      "side": 1,
+      "message": "nit. 2025",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 16
+      },
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7065efda_849ad0f8",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-07T19:03:43Z",
+      "side": 1,
+      "message": "Could we omit this for now and make this change clearly handle only enums for now? I think it would be easier to review if we separate the changes out for each class of structures.",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 191,
+        "endChar": 47
+      },
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c400472e_b074aee1",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-07T19:03:43Z",
+      "side": 1,
+      "message": "Same here, can we omit everything aside from enums and bitmask for this change, then add each one as we iteratively add support for each category?",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 223,
+        "endChar": 5
+      },
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38922a73_97debb0c",
+        "filename": "generator/templates/art/api_kotlin_enum.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-07T19:03:43Z",
+      "side": 1,
+      "message": "nit. Why not move this outside the inner per-value for loop?",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 67
+      },
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
