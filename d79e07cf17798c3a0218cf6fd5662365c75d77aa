@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6de8de01_48d92ca0",
+        "filename": "src/dawn/tests/white_box/CaptureAndReplayTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-07T12:55:34Z",
+      "side": 1,
+      "message": "```suggestion\n// It uses on label with 5 characters which may skew alignment.\n```",
+      "revId": "d79e07cf17798c3a0218cf6fd5662365c75d77aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
