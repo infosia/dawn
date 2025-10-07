@@ -34,6 +34,24 @@
       "parentUuid": "40c5e408_f4d7803a",
       "revId": "c4a7c2c58c6126941862cb00ac940b97b9e1a427",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04ed308d_86fa240d",
+        "filename": "include/dawn/native/MetalBackend.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-10-07T05:53:02Z",
+      "side": 1,
+      "message": "Actually it\u0027s not straightforward for Dawn either if you add this to the shared fence descriptors / end access or anything that\u0027s generated from dawn.json. The reason is that we will generate both C and C++ headers and for the C headers, we\u0027ll run into the same problems as ANGLE.\n\nIf we want to go down this route, we can expose a \"callable\" type that allows implicit conversion to a `std::function` for an idiomatic C++ API while still providing a stable C-compatible ABI. We would likely patch the generator to either add a new \"callable\" category or extend the existing \"callback function\" category to support `std::function` in both directions (it only supports passing in a std::function today). Concretely, we would have a `Callable` struct with two function pointers, `invoke` and `release`, and a `void* userdata`. For the waitUntilScheduled case, the `userdata` will contain a `NSPRef\u003cid\u003cMTLCommandBuffer\u003e\u003e`.\n\nThis got me thinking that maybe we should use `wgpu::Future` instead of returning a callable - FWIU futures already support thread-safety* even if the originating device isn\u0027t thread-safe. Similarly, on ANGLE we could return an `EGLSync` instead of a callable and that has similar semantics as futures with clientWait.\n\n* except the `QueueAndSerial` futures, but we won\u0027t be returning that here",
+      "parentUuid": "bdc8ed65_d3c7fc1b",
+      "revId": "c4a7c2c58c6126941862cb00ac940b97b9e1a427",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
