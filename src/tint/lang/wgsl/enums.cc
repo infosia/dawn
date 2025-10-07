@@ -216,6 +216,9 @@ LanguageFeature ParseLanguageFeature(std::string_view str) {
     if (str == "unrestricted_pointer_parameters") {
         return LanguageFeature::kUnrestrictedPointerParameters;
     }
+    if (str == "fragment_depth") {
+        return LanguageFeature::kFragmentDepth;
+    }
     return LanguageFeature::kUndefined;
 }
 std::string_view ToString(LanguageFeature value) {
@@ -246,6 +249,8 @@ std::string_view ToString(LanguageFeature value) {
             return "texel_buffers";
         case LanguageFeature::kUnrestrictedPointerParameters:
             return "unrestricted_pointer_parameters";
+        case LanguageFeature::kFragmentDepth:
+            return "fragment_depth";
     }
     return "<unknown>";
 }
