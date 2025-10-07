@@ -70,6 +70,24 @@
       "parentUuid": "04ed308d_86fa240d",
       "revId": "c4a7c2c58c6126941862cb00ac940b97b9e1a427",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ff8f4a5_3c68b298",
+        "filename": "include/dawn/native/MetalBackend.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-07T18:14:34Z",
+      "side": 1,
+      "message": "+1 to adding it as a future. Would be great to unify this kind of stuff and it definitely sounds like a future would work for this since Graphite is using native directly.",
+      "parentUuid": "d22b851e_7d3fa5bf",
+      "revId": "c4a7c2c58c6126941862cb00ac940b97b9e1a427",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
