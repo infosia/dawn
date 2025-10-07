@@ -66,6 +66,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "789c0992_d0114bf3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-07T20:09:24Z",
+      "side": 1,
+      "message": "\u003e this change only adds docs for enums and bitmasks.\n\nThat was my request to Mridul, that he lands the CL in stages, partly to reduce reviewer toil. I agree there shhouldn\u0027t be functionality that is only needed for future CLs in the series.",
+      "parentUuid": "56a45236_7505d3ed",
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f9f15b99_0fafd818",
         "filename": "generator/dawn_json_generator.py",
         "patchSetId": 6
