@@ -37,6 +37,8 @@ FeatureStatus GetLanguageFeatureStatus(LanguageFeature f) {
             // Experimental features
             ///////////////////////////////////////////////////////////////////
         case LanguageFeature::kSubgroupId:
+        case LanguageFeature::kUniformBufferStandardLayout:
+        case LanguageFeature::kFragmentDepth:
         case LanguageFeature::kSizedBindingArray:
         case LanguageFeature::kTexelBuffers:
             return FeatureStatus::kUnsafeExperimental;
