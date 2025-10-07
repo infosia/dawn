@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43a4a460_36a755b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-07T22:38:16Z",
+      "side": 1,
+      "message": "```suggestion\nWe have special-case handling for this when emitting variable\n```",
+      "revId": "750f751a2925dfaf0d905420afe857028a550396",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b91e318e_d2ac4a3e",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/ir_program_test.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-07T22:38:16Z",
+      "side": 1,
+      "message": "```suggestion\n        wgsl::reader::Options options{\n            .allowed_features \u003d wgsl::AllowedFeatures::Everything(),\n        };\n```",
+      "range": {
+        "startLine": 82,
+        "startChar": 1,
+        "endLine": 83,
+        "endChar": 71
+      },
+      "revId": "750f751a2925dfaf0d905420afe857028a550396",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
