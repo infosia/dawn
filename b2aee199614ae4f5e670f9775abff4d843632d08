@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "917598fc_deaf4774",
+        "filename": "src/dawn/tests/unittests/vulkan/MemoryTypeSelectorTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-08T13:24:44Z",
+      "side": 1,
+      "message": "nit: Large constants can be broken up in C++ to help make it easier to know what order of magnitude they are.\n\n```suggestion\n    std::vector\u003cVkMemoryHeap\u003e memoryHeaps \u003d {{4\u0027294\u0027967\u0027296, VK_MEMORY_HEAP_DEVICE_LOCAL_BIT},\n                                             {151\u0027015\u0027474\u0027176, 0},\n                                             {257\u0027949\u0027696, VK_MEMORY_HEAP_DEVICE_LOCAL_BIT}};\n    MemoryTypeSelector selector(memoryTypes, memoryHeaps);\n```",
+      "range": {
+        "startLine": 49,
+        "startChar": 1,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "b2aee199614ae4f5e670f9775abff4d843632d08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4960d6b0_6b6bc93b",
+        "filename": "src/dawn/tests/unittests/vulkan/MemoryTypeSelectorTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-08T13:24:44Z",
+      "side": 1,
+      "message": "nit: can we have a designated initializer for this one to make it more clear what these are? Also is the 0b1111 flags? Can we spell them out?",
+      "revId": "b2aee199614ae4f5e670f9775abff4d843632d08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50130b09_4cfe0c43",
+        "filename": "src/dawn/tests/unittests/vulkan/MemoryTypeSelectorTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-08T13:24:44Z",
+      "side": 1,
+      "message": "This is logic that I think we might want to change, to only use the heap is it is larger than the usual BAR of 256MB (meaning that we have ReBAR/Smart Access Memory) It could be in a follow-up though",
+      "revId": "b2aee199614ae4f5e670f9775abff4d843632d08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
