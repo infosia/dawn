@@ -18,6 +18,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "65398f59_2b41609d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-08T00:37:20Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "43a4a460_36a755b7",
+      "revId": "750f751a2925dfaf0d905420afe857028a550396",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "556a92ff_68da34e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-08T00:37:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43a4a460_36a755b7",
+      "revId": "750f751a2925dfaf0d905420afe857028a550396",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b91e318e_d2ac4a3e",
@@ -31,6 +67,30 @@
       "writtenOn": "2025-10-07T22:38:16Z",
       "side": 1,
       "message": "```suggestion\n        wgsl::reader::Options options{\n            .allowed_features \u003d wgsl::AllowedFeatures::Everything(),\n        };\n```",
+      "range": {
+        "startLine": 82,
+        "startChar": 1,
+        "endLine": 83,
+        "endChar": 71
+      },
+      "revId": "750f751a2925dfaf0d905420afe857028a550396",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a061588_c162f105",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/ir_program_test.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-08T00:37:20Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "b91e318e_d2ac4a3e",
       "range": {
         "startLine": 82,
         "startChar": 1,
