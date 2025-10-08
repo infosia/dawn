@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "82918550_19e5346f",
+        "filename": ".vpython3",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-08T06:52:46Z",
+      "side": 1,
+      "message": "Agreed. Updated the comment",
+      "parentUuid": "66dd6cc8_eca81ca1",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 76
+      },
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9d78b994_941f586f",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-10-07T19:03:43Z",
       "side": 1,
       "message": "IIUC, this change only updates the docs for enums and their values, so this is a bit misleading.",
+      "range": {
+        "startLine": 15,
+        "startChar": 99,
+        "endLine": 15,
+        "endChar": 132
+      },
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d775bb9_a1869852",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-08T06:52:46Z",
+      "side": 1,
+      "message": "Updated the commit message to make it more generic",
+      "parentUuid": "9d78b994_941f586f",
       "range": {
         "startLine": 15,
         "startChar": 99,
@@ -105,6 +153,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f267223_4e19c795",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-08T06:52:46Z",
+      "side": 1,
+      "message": "Agreed. Moved the yaml load to `dawn_yaml_utility`",
+      "parentUuid": "f9f15b99_0fafd818",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 11
+      },
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c733e7ce_b22b3a61",
@@ -122,6 +194,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bb12e6f_9aa73631",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-08T06:52:46Z",
+      "side": 1,
+      "message": "Agreed, renamed it to `dawn_yaml_utility.py`",
+      "parentUuid": "c733e7ce_b22b3a61",
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc229e19_a6b866b6",
@@ -135,6 +225,30 @@
       "writtenOn": "2025-10-07T19:03:43Z",
       "side": 1,
       "message": "nit. 2025",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 16
+      },
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d997e3c_edf06405",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-08T06:52:46Z",
+      "side": 1,
+      "message": "Fixed. Thanks for pointing out",
+      "parentUuid": "fc229e19_a6b866b6",
       "range": {
         "startLine": 2,
         "startChar": 12,
@@ -168,6 +282,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aae899af_600b0a0a",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-08T06:52:46Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "7065efda_849ad0f8",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 191,
+        "endChar": 47
+      },
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c400472e_b074aee1",
@@ -191,6 +329,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "401963f0_088bac9d",
+        "filename": "generator/dawn_utility.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-08T06:52:46Z",
+      "side": 1,
+      "message": "Updated",
+      "parentUuid": "c400472e_b074aee1",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 223,
+        "endChar": 5
+      },
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "38922a73_97debb0c",
@@ -204,6 +366,30 @@
       "writtenOn": "2025-10-07T19:03:43Z",
       "side": 1,
       "message": "nit. Why not move this outside the inner per-value for loop?",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 67
+      },
+      "revId": "c81298cc8f4ec75d7ee47d83f40215daba2221b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63b93e3d_3ace3dc7",
+        "filename": "generator/templates/art/api_kotlin_enum.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-08T06:52:46Z",
+      "side": 1,
+      "message": "Fixed. Thanks for pointing out",
+      "parentUuid": "38922a73_97debb0c",
       "range": {
         "startLine": 59,
         "startChar": 12,
