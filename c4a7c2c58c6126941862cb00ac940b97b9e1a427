@@ -106,6 +106,24 @@
       "parentUuid": "2ff8f4a5_3c68b298",
       "revId": "c4a7c2c58c6126941862cb00ac940b97b9e1a427",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d6ce69d_287b4fdd",
+        "filename": "include/dawn/native/MetalBackend.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-08T11:36:10Z",
+      "side": 1,
+      "message": "IMHO 2) makes more sense as the \"commands scheduled\" being separate from the submit is a Metal only concept.",
+      "parentUuid": "ea982428_0e8d0228",
+      "revId": "c4a7c2c58c6126941862cb00ac940b97b9e1a427",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
