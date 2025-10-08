@@ -16,6 +16,58 @@
       "message": "Omicron fix is required as the api signatures are changed:\n\nhttps://critique.corp.google.com/cl/816606032 java/com/google/android/apps/internal/gpuinsights/webgpu/omicron/app/RectangleRenderer.kt\n\nPlan is to land this CL in dawn and submit our own copybara CL with the fix in google3.",
       "revId": "06ef76574624509aa971b0747f8d2ce1a6ebfe51",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39b89fac_25c5d9d3",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-08T10:57:43Z",
+      "side": 1,
+      "message": "Nit, please end comments with a period/full stop.",
+      "fixSuggestions": [
+        {
+          "fixId": "acd8f5b1_f6cc7fbd",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/dawn_json_generator.py",
+              "range": {
+                "startLine": 804,
+                "startChar": 0,
+                "endLine": 805,
+                "endChar": 0
+              },
+              "replacement": "            # Partially inline away \u0027callback info\u0027.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "06ef76574624509aa971b0747f8d2ce1a6ebfe51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56a1fe30_13709944",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-08T10:57:43Z",
+      "side": 1,
+      "message": "Please add a comment about what it is we\u0027re ignoring and why.",
+      "revId": "06ef76574624509aa971b0747f8d2ce1a6ebfe51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
