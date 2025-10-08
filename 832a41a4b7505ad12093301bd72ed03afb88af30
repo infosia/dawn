@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3565f947_55c65ebe",
+        "filename": "src/tint/utils/bytes/buffer_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-08T18:05:29Z",
+      "side": 1,
+      "message": "What does this mean, we assert we have a data pointer or that it\u0027s empty? Should this be `\u0026\u0026 !empty`?",
+      "revId": "832a41a4b7505ad12093301bd72ed03afb88af30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
