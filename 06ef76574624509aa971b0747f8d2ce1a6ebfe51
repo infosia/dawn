@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7817391_09a8920f",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-08T11:37:45Z",
+      "side": 1,
+      "message": "Marked as resolved.",
+      "parentUuid": "39b89fac_25c5d9d3",
+      "revId": "06ef76574624509aa971b0747f8d2ce1a6ebfe51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56a1fe30_13709944",
@@ -66,6 +84,24 @@
       "writtenOn": "2025-10-08T10:57:43Z",
       "side": 1,
       "message": "Please add a comment about what it is we\u0027re ignoring and why.",
+      "revId": "06ef76574624509aa971b0747f8d2ce1a6ebfe51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5db46d70_b85c2319",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-08T11:37:45Z",
+      "side": 1,
+      "message": "Marked as resolved.",
+      "parentUuid": "56a1fe30_13709944",
       "revId": "06ef76574624509aa971b0747f8d2ce1a6ebfe51",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
