@@ -1337,6 +1337,23 @@ class Parser {
             return val;
         }
 
+        // If we didn't have a value already, and this instruction is a constructed constant, then
+        // do the construction.
+        const spvtools::opt::Instruction* inst = spirv_context_->get_def_use_mgr()->GetDef(id);
+        if (inst->opcode() == spv::Op::OpConstantComposite) {
+            Vector<core::ir::Value*, 4> args;
+            args.Reserve(inst->NumInOperands());
+
+            for (uint32_t i = 0; i < inst->NumInOperands(); ++i) {
+                args.Push(Value(inst->GetSingleWordInOperand(i)));
+            }
+
+            auto* construct = b_.Construct(Type(inst->type_id()), args);
+            current_block_->Append(construct);
+            AddValue(id, construct->Result());
+            return construct->Result();
+        }
+
         // If this was a spec composite, then it currently isn't in scope, so we construct
         // a new copy and assign the constant ID to the new construct in this scope.
         auto iter = spec_composites_.find(id);
