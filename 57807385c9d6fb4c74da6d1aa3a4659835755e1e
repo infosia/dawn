@@ -39,6 +39,30 @@
       },
       "revId": "57807385c9d6fb4c74da6d1aa3a4659835755e1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85b6923a_e315d08c",
+        "filename": "infra/config/global/gn_standalone_ci.star",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-08T17:33:09Z",
+      "side": 1,
+      "message": "I think we have two options for this, then:\n\n1. Set up a separate builder that builds the test targets but not `default` using debug/component. If we feel that running tests with debug/non-component doesn\u0027t make much sense, we can turn this existing one into compile-only and use the debug/component one to actually run tests.\n2. Fix the issue that\u0027s preventing MSVC from compiling the `default` target in component builds\n\n#2 is definitely the better long-term solution, but since I\u0027m rather unfamiliar with what\u0027s going on under the hood and I\u0027m running into different issues locally when compiling with MSVC, I don\u0027t know how likely I am to be able to get a fix ready in the near-ish future.",
+      "parentUuid": "ac94695a_3f4b078c",
+      "range": {
+        "startLine": 343,
+        "startChar": 0,
+        "endLine": 345,
+        "endChar": 0
+      },
+      "revId": "57807385c9d6fb4c74da6d1aa3a4659835755e1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
