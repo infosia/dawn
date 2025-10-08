@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29af56ac_1744f331",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-08T07:46:24Z",
+      "side": 1,
+      "message": "Nit: try to avoid formatting changes on existing code.",
+      "revId": "2facea6b1042ce27c83892ac242bd9c214263918",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5891094_927bf0c2",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-08T07:46:24Z",
+      "side": 1,
+      "message": "Add a blank line after the last import line.",
+      "fixSuggestions": [
+        {
+          "fixId": "b5507615_1030f378",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/dawn_json_generator.py",
+              "range": {
+                "startLine": 35,
+                "startChar": 0,
+                "endLine": 35,
+                "endChar": 0
+              },
+              "replacement": "\n"
+            }
+          ]
+        }
+      ],
+      "revId": "2facea6b1042ce27c83892ac242bd9c214263918",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
