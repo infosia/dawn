@@ -1126,7 +1126,8 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         GetDeviceInfo().robustness2Features.robustImageAccess2 == VK_FALSE) {
         deviceToggles->ForceSet(Toggle::VulkanUseImageRobustAccess2, false);
     } else {
-        deviceToggles->Default(Toggle::VulkanUseImageRobustAccess2, true);
+        deviceToggles->Default(Toggle::VulkanUseImageRobustAccess2,
+                               !deviceToggles->IsSet(Toggle::DisableRobustness));
     }
 
     // By default try to skip injecting robustness checks on buffers using VK_EXT_robustness2. But
@@ -1141,7 +1142,8 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         // extension is actually requested.
         deviceToggles->ForceSet(Toggle::VulkanUseBufferRobustAccess2, false);
     } else {
-        deviceToggles->Default(Toggle::VulkanUseBufferRobustAccess2, true);
+        deviceToggles->Default(Toggle::VulkanUseBufferRobustAccess2,
+                               !deviceToggles->IsSet(Toggle::DisableRobustness));
     }
 
     // Enable the polyfill versions of dot4I8Packed() and dot4U8Packed() when the SPIR-V capability
