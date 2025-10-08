@@ -22,6 +22,30 @@
       },
       "revId": "9b1e44cf3a19961d0276fe6a139596810cd20204",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2528d783_efa27cc2",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-08T17:59:27Z",
+      "side": 1,
+      "message": "I\u0027ve used {# comment #} for explaining complex jinja logic within the template. IMO, {# #} makes sense for the rest of the files. About this one, I agree // * is more reasonable than the {# #} style.\n\nI would prefer to address this in my upcoming CL, since I will need to get all the approvals again, and due to the different time zones, that will take another day.",
+      "parentUuid": "69496778_cde2b76d",
+      "range": {
+        "startLine": 60,
+        "startChar": 16,
+        "endLine": 60,
+        "endChar": 106
+      },
+      "revId": "9b1e44cf3a19961d0276fe6a139596810cd20204",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
