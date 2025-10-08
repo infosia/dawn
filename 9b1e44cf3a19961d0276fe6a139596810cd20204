@@ -46,6 +46,30 @@
       },
       "revId": "9b1e44cf3a19961d0276fe6a139596810cd20204",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15b67643_c59b5570",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-08T21:23:35Z",
+      "side": 1,
+      "message": "`//*` is used to explain jinja logic. It does not appear in the generated result. Fine to do in a follow up change, but for what it is worth, if you only modify the files in this change, I believe I can +2 and it should still be fine.",
+      "parentUuid": "2528d783_efa27cc2",
+      "range": {
+        "startLine": 60,
+        "startChar": 16,
+        "endLine": 60,
+        "endChar": 106
+      },
+      "revId": "9b1e44cf3a19961d0276fe6a139596810cd20204",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
