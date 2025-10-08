@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c28064c_f91d5002",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-08T08:00:16Z",
+      "side": 1,
+      "message": "Understood.",
+      "parentUuid": "29af56ac_1744f331",
+      "revId": "2facea6b1042ce27c83892ac242bd9c214263918",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5891094_927bf0c2",
@@ -49,6 +67,24 @@
           ]
         }
       ],
+      "revId": "2facea6b1042ce27c83892ac242bd9c214263918",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a3ac40a_0b5d00bb",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-08T08:00:16Z",
+      "side": 1,
+      "message": "Added",
+      "parentUuid": "e5891094_927bf0c2",
       "revId": "2facea6b1042ce27c83892ac242bd9c214263918",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
