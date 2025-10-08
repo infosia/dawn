@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "6019ca958dede8d547625b2eba61286ef6baece2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "784d7197_831e088c",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1351,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-08T18:56:01Z",
+      "side": 1,
+      "message": "We should use b.Composite instead of creating an instruction.",
+      "revId": "6019ca958dede8d547625b2eba61286ef6baece2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
