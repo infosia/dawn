@@ -67,6 +67,24 @@
       "message": "Uuuuh that\u0027s not very scalable, I\u0027ll start a discussion about that.",
       "revId": "b2b1fa7abec603a89cdc2e34bad13773cbbe1f4a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0163cabc_2848c6b8",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-08T15:17:41Z",
+      "side": 1,
+      "message": "The change required for the CL was relatively clean but I agree in general that this method of recording and testing for features/limits is obtuse. We are looking for better alternatives. I have been asked to document some of the decisions and alternatives for this.",
+      "parentUuid": "fd31e6b5_3f15fad6",
+      "revId": "b2b1fa7abec603a89cdc2e34bad13773cbbe1f4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
