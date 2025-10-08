@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb1ae2aa_3cadc603",
+        "filename": "src/dawn/tests/unittests/vulkan/MemoryTypeSelectorTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-08T17:13:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "917598fc_deaf4774",
+      "range": {
+        "startLine": 49,
+        "startChar": 1,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "b2aee199614ae4f5e670f9775abff4d843632d08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4960d6b0_6b6bc93b",
@@ -41,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ecf60d0_e782451b",
+        "filename": "src/dawn/tests/unittests/vulkan/MemoryTypeSelectorTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-08T17:13:38Z",
+      "side": 1,
+      "message": "Done. I used designated initializers, made it a constant and added some explanation.",
+      "parentUuid": "4960d6b0_6b6bc93b",
+      "revId": "b2aee199614ae4f5e670f9775abff4d843632d08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "50130b09_4cfe0c43",
@@ -54,6 +96,24 @@
       "writtenOn": "2025-10-08T13:24:44Z",
       "side": 1,
       "message": "This is logic that I think we might want to change, to only use the heap is it is larger than the usual BAR of 256MB (meaning that we have ReBAR/Smart Access Memory) It could be in a follow-up though",
+      "revId": "b2aee199614ae4f5e670f9775abff4d843632d08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f71e80c_7aefab68",
+        "filename": "src/dawn/tests/unittests/vulkan/MemoryTypeSelectorTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-08T17:13:38Z",
+      "side": 1,
+      "message": "That is a good point. BufferMapExtendedUsages in just disabled on Nvidia GPUs right now so testing this is kinda strange. Validation would prevent allocating any wgpu::Buffers with usages that translate to these MemoryKinds on Quatro P100. I just removed these checks for now if that makes sense? I can add them back since they still work even if this combination shouldn\u0027t be requested.\n\nFWIW there is a TODO for that change in BufferMapExtendedUsages() and I agree we should make it. I\u0027ll try to make that follow up. I have one other follow up change for cached vs coherent that I\u0027m more confident to make now too.",
+      "parentUuid": "50130b09_4cfe0c43",
       "revId": "b2aee199614ae4f5e670f9775abff4d843632d08",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

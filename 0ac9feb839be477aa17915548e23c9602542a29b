@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2309cd2_78733948",
+        "filename": "src/dawn/tests/unittests/vulkan/MemoryTypeSelectorTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-08T17:13:38Z",
+      "side": 1,
+      "message": "FYI I added two more GPUs to cover the various combinations of DEVICE_LOCAL+HOST_VISIBLE memory that are possible.",
+      "revId": "0ac9feb839be477aa17915548e23c9602542a29b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
