@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78f019fd_35007b99",
+        "filename": "generator/dawn_yaml_utility.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-08T17:38:59Z",
+      "side": 1,
+      "message": "I think aside from `convert_c_style_enum_ref` in this block, we could remove the rest of these for now since they are not related to enums/bitmasks. Then we can add them as we add support for each other type.",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "c39e7d312b9817c7f4dc2d9229a9b0df6339f0f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
