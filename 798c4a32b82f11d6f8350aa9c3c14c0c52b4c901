@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b899913_a474fb99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-08T00:46:32Z",
+      "side": 1,
+      "message": "PTAL\n\nhttps://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-mac-x64-builder-rel/1/infra + https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-mac-x64-sws-rel/2/infra indicates that there aren\u0027t any remaining cross-compilation issues (the builder ran on an arm64 machine, tests ran on x64 machines)",
+      "revId": "798c4a32b82f11d6f8350aa9c3c14c0c52b4c901",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
