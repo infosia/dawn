@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27f9af82_a69fcf33",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-08T11:11:20Z",
+      "side": 1,
+      "message": "LGTM with one main comment. Gregg PTAL as well.",
+      "revId": "b2b1fa7abec603a89cdc2e34bad13773cbbe1f4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88ddd511_f7daf716",
+        "filename": "src/dawn/tests/AdapterTestConfig.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-08T11:11:20Z",
+      "side": 1,
+      "message": "nit: We can alternatively add it at the end of the argument list with a default of Undefined.",
+      "revId": "b2b1fa7abec603a89cdc2e34bad13773cbbe1f4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2cdca62_db117673",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-08T11:11:20Z",
+      "side": 1,
+      "message": "Relying on WebGPU adapters being at the end of the list works for the current way things are done be couples together the logic to enumerate adapters with the adapter selection logic. WDYT instead of doing a first `GetInfo` and if the adapter is a WebGPU adapter, then `GetInfo` again with the extension struct? (is it an error to unconditionally chain that struct? I don\u0027t remember). Alternatively we could check on the adapter if it supports the AdapterPropertiesWGPU extension and chain the struct only then.",
+      "revId": "b2b1fa7abec603a89cdc2e34bad13773cbbe1f4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd31e6b5_3f15fad6",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-08T11:11:20Z",
+      "side": 1,
+      "message": "Uuuuh that\u0027s not very scalable, I\u0027ll start a discussion about that.",
+      "revId": "b2b1fa7abec603a89cdc2e34bad13773cbbe1f4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
