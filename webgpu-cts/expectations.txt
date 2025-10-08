@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-10-01 03:33:09AM
+# Last rolled: 2025-10-08 05:06:21AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -1187,9 +1187,9 @@ crbug.com/448716479 [ android-pixel-4 ] webgpu:shader,validation,expression,call
 crbug.com/448727574 [ webgpu-dxc-disabled ] webgpu:shader,validation,expression,binary,add_sub_mul:scalar_vector:* [ Failure ]
 
 # textureLoad failures on mac AMD for depth2plus-stencil8 format
-crbug.com/448397616 [ mac amd ] webgpu:shader,execution,expression,call,builtin,textureLoad:arrayed:stage="f";format="depth24plus-stencil8";texture_type="texture_2d_array" [ Failure ]
-crbug.com/448397616 [ mac amd ] webgpu:shader,execution,expression,call,builtin,textureLoad:arrayed:stage="v";format="depth24plus-stencil8";texture_type="texture_2d_array" [ Failure ]
-crbug.com/448397616 [ mac amd ] webgpu:shader,execution,expression,call,builtin,textureLoad:depth:stage="c";format="depth32float-stencil8" [ Failure ]
+crbug.com/448397616 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureLoad:arrayed:stage="f";format="depth24plus-stencil8";texture_type="texture_2d_array" [ Failure ]
+crbug.com/448397616 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureLoad:arrayed:stage="v";format="depth24plus-stencil8";texture_type="texture_2d_array" [ Failure ]
+crbug.com/448397616 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureLoad:depth:stage="c";format="depth32float-stencil8" [ Failure ]
 
 # The spec doesn't precisely require a behavior and the CTS tests only one of them. Remove suppressions once the spec / CTS is fixed.
 crbug.com/449980070 webgpu:api,validation,encoding,encoder_open_state:* [ Failure ]

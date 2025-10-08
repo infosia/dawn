@@ -232612,6 +232612,9 @@ webgpu:shader,execution,memory_model,weak:store_buffer:memType="atomic_workgroup
 webgpu:shader,execution,memory_model,weak:store_buffer:memType="atomic_storage"
 webgpu:shader,execution,memory_model,weak:2_plus_2_write:memType="atomic_workgroup"
 webgpu:shader,execution,memory_model,weak:2_plus_2_write:memType="atomic_storage"
+webgpu:shader,execution,override:logical:case="logical_lhs_override"
+webgpu:shader,execution,override:logical:case="logical_rhs_override"
+webgpu:shader,execution,override:logical:case="logical_both_override"
 webgpu:shader,execution,padding:struct_implicit:
 webgpu:shader,execution,padding:struct_explicit:
 webgpu:shader,execution,padding:struct_nested:
@@ -235097,6 +235100,9 @@ webgpu:shader,validation,decl,override:initializer:case="init_runtime_expr"
 webgpu:shader,validation,decl,override:initializer:case="const_func_init"
 webgpu:shader,validation,decl,override:initializer:case="non_const_func_init"
 webgpu:shader,validation,decl,override:initializer:case="mix_order_init"
+webgpu:shader,validation,decl,override:initializer:case="logical_lhs_override"
+webgpu:shader,validation,decl,override:initializer:case="logical_rhs_override"
+webgpu:shader,validation,decl,override:initializer:case="logical_both_override"
 webgpu:shader,validation,decl,override:function_scope:
 webgpu:shader,validation,decl,var:module_scope_types:type="bool";kind="comment";via_alias=false
 webgpu:shader,validation,decl,var:module_scope_types:type="bool";kind="comment";via_alias=true
