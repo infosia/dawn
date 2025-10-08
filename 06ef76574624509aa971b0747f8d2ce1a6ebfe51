@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6fa783a_10182bbb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-08T10:24:50Z",
+      "side": 1,
+      "message": "Omicron fix is required as the api signatures are changed:\n\nhttps://critique.corp.google.com/cl/816606032 java/com/google/android/apps/internal/gpuinsights/webgpu/omicron/app/RectangleRenderer.kt\n\nPlan is to land this CL in dawn and submit our own copybara CL with the fix in google3.",
+      "revId": "06ef76574624509aa971b0747f8d2ce1a6ebfe51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
