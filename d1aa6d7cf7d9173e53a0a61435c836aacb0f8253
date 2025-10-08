@@ -86,6 +86,24 @@
       "message": "Patchset 7 only removes the whitespace formatting error. I will try debug the Microsoft Driver issue when I have time for it.",
       "revId": "d1aa6d7cf7d9173e53a0a61435c836aacb0f8253",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8cc53a82_0b874228",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-08T19:41:58Z",
+      "side": 1,
+      "message": "The failure on the MSVC bots was a transient issue that should go away if you rebase this CL onto HEAD. Looks like there\u0027s still a formatting issue as well.",
+      "parentUuid": "d5331307_7350e664",
+      "revId": "d1aa6d7cf7d9173e53a0a61435c836aacb0f8253",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
