@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e507b696_64f09616",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-08T15:42:17Z",
+      "side": 1,
+      "message": "Not sure that debug non_component makes sense to test.",
+      "revId": "57807385c9d6fb4c74da6d1aa3a4659835755e1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac94695a_3f4b078c",
+        "filename": "infra/config/global/gn_standalone_ci.star",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-08T15:42:17Z",
+      "side": 1,
+      "message": "Hmm, as far as I know, debug information + non_component results in binaries larger than file system supports. Maybe that\u0027s more of an issue for Chromium than Dawn, but in any case, debug builds are component by default, so I believe it\u0027s important to test this combination.",
+      "range": {
+        "startLine": 343,
+        "startChar": 0,
+        "endLine": 345,
+        "endChar": 0
+      },
+      "revId": "57807385c9d6fb4c74da6d1aa3a4659835755e1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
