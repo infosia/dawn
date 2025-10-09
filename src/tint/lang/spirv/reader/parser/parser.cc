@@ -2372,7 +2372,8 @@ class Parser {
                     break;
                 default:
                     TINT_UNIMPLEMENTED()
-                        << "unhandled SPIR-V instruction: " << static_cast<uint32_t>(inst.opcode());
+                        << "unhandled SPIR-V instruction: " << spv::OpToString(inst.opcode())
+                        << " (val = " << static_cast<uint32_t>(inst.opcode()) << ")";
             }
         }
     }
