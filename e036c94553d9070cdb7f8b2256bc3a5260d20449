@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "978625ae_e89cdfac",
+        "filename": "src/dawn/native/metal/QueueMTL.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-10-09T18:46:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06f74359_fffbacd9",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 5
+      },
+      "revId": "e036c94553d9070cdb7f8b2256bc3a5260d20449",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "456b9534_e23d22cb",
@@ -71,6 +95,30 @@
       "writtenOn": "2025-10-09T12:28:42Z",
       "side": 1,
       "message": "Isn\u0027t there a small chance of a race between these two locks since the last submitted commands could be cleared but `mCommandsScheduledEvents` not updated yet?\n\nWDYT of:\n\n```\nmCommandsScheduledEvents-\u003eEnqueue(commandsScheduledEvent, GetLastSubmittedCommandSerial());\n\nif (!mLastSubmittedCommands-\u003eGet()) {\n    process mCommandsScheduledEvents right now to make sure our event becomes ready.\n}\n```",
+      "range": {
+        "startLine": 190,
+        "startChar": 1,
+        "endLine": 193,
+        "endChar": 55
+      },
+      "revId": "e036c94553d9070cdb7f8b2256bc3a5260d20449",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e149cdb_42e97edd",
+        "filename": "src/dawn/native/metal/QueueMTL.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-10-09T18:46:11Z",
+      "side": 1,
+      "message": "I considered doing you\u0027re suggesting since it does seem easier to reason about, but it does mean we acquire the `mCommandsScheduledEvents` lock twice unnecessarily and I don\u0027t think there\u0027s a race here either. I\u0027ve added a comment to clarify.\n\nIf `mLastSubmittedCommands` is cleared at this point, we won\u0027t even enqueue our new event and instead just mark it as ready immediately. If `mLastSubmittedCommands` is valid, we would enqueue the event while holding the lock on `mCommandsScheduledEvents` and those can only get processed after `mLastSubmittedCommands` is cleared in the scheduled handler.\n\nIn any case, this code won\u0027t be called on multiple threads - it\u0027s only called via `SharedTextureMemory::EndAccess` *after* the pending command buffer is submitted. Also, we would probably get rid of `mLastSubmittedCommands` entirely once `WaitForCommandsToBeScheduled` is removed and replace it with a scheduled serial atomic.",
+      "parentUuid": "456b9534_e23d22cb",
       "range": {
         "startLine": 190,
         "startChar": 1,
@@ -98,6 +146,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "093aa3f8_2e3734ba",
+        "filename": "src/dawn/native/metal/QueueMTL.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-10-09T18:46:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92caacf3_dc54e72d",
+      "revId": "e036c94553d9070cdb7f8b2256bc3a5260d20449",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "943eb405_54c51636",
@@ -111,6 +177,24 @@
       "writtenOn": "2025-10-09T12:28:42Z",
       "side": 1,
       "message": "There is a shorthand WaitAny for a single future wait ^^ https://source.chromium.org/chromium/chromium/src/+/main:out/win-Debug/gen/third_party/dawn/include/dawn/webgpu_cpp.h;drc\u003d5a59edf9673942fe913a918753dd0931cd8d74f2;l\u003d1858",
+      "revId": "e036c94553d9070cdb7f8b2256bc3a5260d20449",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2333e40_c0c2bc93",
+        "filename": "src/dawn/tests/white_box/SharedTextureMemoryTests_apple.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-10-09T18:46:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "943eb405_54c51636",
       "revId": "e036c94553d9070cdb7f8b2256bc3a5260d20449",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

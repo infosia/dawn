@@ -124,6 +124,24 @@
       "parentUuid": "ea982428_0e8d0228",
       "revId": "c4a7c2c58c6126941862cb00ac940b97b9e1a427",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99809b06_737fee59",
+        "filename": "include/dawn/native/MetalBackend.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-10-09T18:46:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d6ce69d_287b4fdd",
+      "revId": "c4a7c2c58c6126941862cb00ac940b97b9e1a427",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
