@@ -68,6 +68,23 @@
       "parentUuid": "a55504af_b21788bc",
       "revId": "88ce3f18770be1b5ffa01e27fffe5b63bf479122",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a0717bb_9ebdbeba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-09T17:54:37Z",
+      "side": 1,
+      "message": "This isn\u0027t my area of expertise, but overall it looks fine.",
+      "revId": "88ce3f18770be1b5ffa01e27fffe5b63bf479122",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
