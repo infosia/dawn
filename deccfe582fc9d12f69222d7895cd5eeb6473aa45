@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1328ffa3_c824fd20",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-09T10:03:38Z",
+      "side": 1,
+      "message": "Here and especially at [1], [2], [3] can we add a TODO on a new issue that says that we should precompute the allowed usages of texture views instead of recomputing them every time?",
+      "revId": "deccfe582fc9d12f69222d7895cd5eeb6473aa45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3d32d06_85458805",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-09T10:03:38Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "deccfe582fc9d12f69222d7895cd5eeb6473aa45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdd44b8c_1efe96ea",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-09T10:03:38Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "deccfe582fc9d12f69222d7895cd5eeb6473aa45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0060eaf_d8b386e0",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-09T10:03:38Z",
+      "side": 1,
+      "message": "Let\u0027s validate before `AddAttachment`? It\u0027s probably fine right now but it makes more sense to fully validate before adding.",
+      "revId": "deccfe582fc9d12f69222d7895cd5eeb6473aa45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c6f56d4_2ff1eb9f",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-09T10:03:38Z",
+      "side": 1,
+      "message": "[3]",
+      "revId": "deccfe582fc9d12f69222d7895cd5eeb6473aa45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46342427_1fc1f563",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-09T10:03:38Z",
+      "side": 1,
+      "message": "Where do we validate the individual enum values in that structure are valid enums?",
+      "revId": "deccfe582fc9d12f69222d7895cd5eeb6473aa45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
