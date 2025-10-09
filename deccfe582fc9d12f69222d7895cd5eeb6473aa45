@@ -209,6 +209,24 @@
       "parentUuid": "46342427_1fc1f563",
       "revId": "deccfe582fc9d12f69222d7895cd5eeb6473aa45",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fced7b8_28e3cbd7",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-09T12:34:13Z",
+      "side": 1,
+      "message": "Can we have a test for it?",
+      "parentUuid": "4590a934_99cc8df2",
+      "revId": "deccfe582fc9d12f69222d7895cd5eeb6473aa45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
