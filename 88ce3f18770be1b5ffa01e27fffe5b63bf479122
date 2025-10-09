@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "232d11be_ec567f1a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-09T00:20:03Z",
+      "side": 1,
+      "message": "+rharrison and amaiorano since the originally added the corresponding code in [the gn recipe](https://source.chromium.org/chromium/infra/infra_superproject/+/main:build/recipes/recipes/dawn/gn.py;l\u003d131)\n\nI believe this is functionally equivalent to what that recipe is doing, but would be good to get confirmation from people who are more familiar with what is supposed to happen.\n\nOn a related note, is there a way to confirm that the data being produced is being ingested by ClusterFuzz properly? I don\u0027t appear to have permission to view the bucket.\n\nhttps://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-linux-x64-sws-clusterfuzz/5/infra ran with this CL. All the merge scripts get to the point of trying to upload, but then fail as expected due to using try service account.",
+      "revId": "88ce3f18770be1b5ffa01e27fffe5b63bf479122",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
