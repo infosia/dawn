@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "196815fe_de480230",
+        "filename": "include/dawn/native/MetalBackend.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-10-09T23:16:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54489698_cede1fff",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 72
+      },
+      "revId": "c7678c76f63e859603fd3bc79a3fff08cf8f5d1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e50955f2_c8a92b8e",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-10-09T20:42:22Z",
       "side": 1,
       "message": "nit. In most places, we keep each member in a single line atm, could we do that for this as well?",
+      "range": {
+        "startLine": 2149,
+        "startChar": 12,
+        "endLine": 2152,
+        "endChar": 13
+      },
+      "revId": "c7678c76f63e859603fd3bc79a3fff08cf8f5d1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55bd119b_90ba5bdc",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 2152,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-10-09T23:16:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e50955f2_c8a92b8e",
       "range": {
         "startLine": 2149,
         "startChar": 12,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "87934b4a_41074869",
+        "filename": "src/dawn/native/metal/QueueMTL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-10-09T23:16:06Z",
+      "side": 1,
+      "message": "Yes, I\u0027ll do that in a follow-up in addition to changing `WaitForCommandsToBeScheduled` to use `WaitAny`.",
+      "parentUuid": "d19897ca_ed4aca5c",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 72
+      },
+      "revId": "c7678c76f63e859603fd3bc79a3fff08cf8f5d1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3a428c1_88c2539f",
@@ -110,6 +182,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b66deb1_c272136d",
+        "filename": "src/dawn/native/metal/QueueMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-10-09T23:16:06Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a3a428c1_88c2539f",
+      "range": {
+        "startLine": 168,
+        "startChar": 4,
+        "endLine": 179,
+        "endChar": 48
+      },
+      "revId": "c7678c76f63e859603fd3bc79a3fff08cf8f5d1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "277f364c_b495d0d8",
@@ -123,6 +219,30 @@
       "writtenOn": "2025-10-09T20:42:22Z",
       "side": 1,
       "message": "Once we use the atomic serial instead, this can probably just be:\n`if (mLastScheduledSerial \u003d\u003d GetLastSubmittedCommandSerial())`",
+      "range": {
+        "startLine": 195,
+        "startChar": 8,
+        "endLine": 196,
+        "endChar": 36
+      },
+      "revId": "c7678c76f63e859603fd3bc79a3fff08cf8f5d1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5594cd13_367a9e85",
+        "filename": "src/dawn/native/metal/QueueMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-10-09T23:16:06Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "277f364c_b495d0d8",
       "range": {
         "startLine": 195,
         "startChar": 8,
