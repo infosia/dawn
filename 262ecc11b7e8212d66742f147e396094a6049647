@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f8fefa6_85f988fd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-09T12:36:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "4bc484c6_aed71c1c",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "262ecc11b7e8212d66742f147e396094a6049647",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c4f9340_627788f7",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-10-08T19:16:29Z",
       "side": 1,
       "message": "Again for graphite I don\u0027t think this matters since graphite never requests MapRead+MapWrite when allocating a buffer (for transfer buffers or BufferMapExtendedUsage buffers).\n\nThis change does impact WebGPU for transfer buffers since they could request both read and write. From my limited local testing it did seem that CPU reads from non-cached memory were a bigger performance problem than explicit invalidate/free calls. I can easily switch this to prefer HOST_COHERENT though if someone disagrees.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "262ecc11b7e8212d66742f147e396094a6049647",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81b3baf5_2ddaef3c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-09T12:36:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8c4f9340_627788f7",
       "range": {
         "startLine": 18,
         "startChar": 0,
