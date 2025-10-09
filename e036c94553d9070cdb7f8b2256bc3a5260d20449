@@ -16,6 +16,103 @@
       "message": "PTAL again - thanks!",
       "revId": "e036c94553d9070cdb7f8b2256bc3a5260d20449",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "550d5f89_b5a52cf8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-09T12:28:42Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "e036c94553d9070cdb7f8b2256bc3a5260d20449",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06f74359_fffbacd9",
+        "filename": "src/dawn/native/metal/QueueMTL.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-09T12:28:42Z",
+      "side": 1,
+      "message": "```suggestion\n    mCommandsScheduledEvents.Use([\u0026](auto events) {\n        for (auto\u0026 event : events-\u003eIterateUpTo(scheduledSerial)) {\n            readyEvents.emplace_back(std::move(event));\n        }\n        events-\u003eClearUpTo(scheduledSerial);\n    });\n    for (auto\u0026 event : readyEvents) {\n        GetDevice()-\u003eGetInstance()-\u003eGetEventManager()-\u003eSetFutureReady(event.Get());\n    }\n```",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 5
+      },
+      "revId": "e036c94553d9070cdb7f8b2256bc3a5260d20449",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "456b9534_e23d22cb",
+        "filename": "src/dawn/native/metal/QueueMTL.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-09T12:28:42Z",
+      "side": 1,
+      "message": "Isn\u0027t there a small chance of a race between these two locks since the last submitted commands could be cleared but `mCommandsScheduledEvents` not updated yet?\n\nWDYT of:\n\n```\nmCommandsScheduledEvents-\u003eEnqueue(commandsScheduledEvent, GetLastSubmittedCommandSerial());\n\nif (!mLastSubmittedCommands-\u003eGet()) {\n    process mCommandsScheduledEvents right now to make sure our event becomes ready.\n}\n```",
+      "range": {
+        "startLine": 190,
+        "startChar": 1,
+        "endLine": 193,
+        "endChar": 55
+      },
+      "revId": "e036c94553d9070cdb7f8b2256bc3a5260d20449",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92caacf3_dc54e72d",
+        "filename": "src/dawn/native/metal/QueueMTL.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-09T12:28:42Z",
+      "side": 1,
+      "message": "```suggestion\n        // after mCommandsCompletedEvents has been flushed for device loss, and it\u0027ll never get\n```",
+      "revId": "e036c94553d9070cdb7f8b2256bc3a5260d20449",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "943eb405_54c51636",
+        "filename": "src/dawn/tests/white_box/SharedTextureMemoryTests_apple.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-09T12:28:42Z",
+      "side": 1,
+      "message": "There is a shorthand WaitAny for a single future wait ^^ https://source.chromium.org/chromium/chromium/src/+/main:out/win-Debug/gen/third_party/dawn/include/dawn/webgpu_cpp.h;drc\u003d5a59edf9673942fe913a918753dd0931cd8d74f2;l\u003d1858",
+      "revId": "e036c94553d9070cdb7f8b2256bc3a5260d20449",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
