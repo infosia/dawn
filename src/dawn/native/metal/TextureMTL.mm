@@ -906,7 +906,7 @@ std::optional<MTLTextureSwizzleChannels> TextureView::ComputeMetalSwizzle() {
     if (!SupportTextureComponentSwizzle(ToBackend(GetDevice())->GetMTLDevice())) {
         // If the device doesn't support texture component swizzling,
         // we should have caught this during validation.
-        DAWN_ASSERT(GetSwizzle() == kRGBASwizzle);
+        DAWN_ASSERT(AreSwizzleEquivalent(GetSwizzle(), kRGBASwizzle));
         return {};
     }
 
@@ -916,9 +916,7 @@ std::optional<MTLTextureSwizzleChannels> TextureView::ComputeMetalSwizzle() {
         return ToMetalTextureSwizzleChannels(ComposeSwizzle(kR001Swizzle, GetSwizzle()));
     }
 
-    // Note: For formats with <4 channels, this could be refined to consider that some channels are
-    // nonexistent. We don't bother to optimize that, because such swizzles are not actually useful.
-    if (GetSwizzle() != kRGBASwizzle) {
+    if (!AreSwizzleEquivalent(GetSwizzle(), kRGBASwizzle)) {
         return ToMetalTextureSwizzleChannels(GetSwizzle());
     }
 
