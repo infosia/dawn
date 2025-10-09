@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <algorithm>
 #include <numeric>
 #include <string>
 #include <vector>
@@ -2732,6 +2733,318 @@ fn main(@builtin(local_invocation_id) lid : vec3<u32>) {
   }
 }
 )");
+}
+
+TEST_P(ShaderTests, VertexAttributes) {
+    wgpu::ShaderModule vsModule = utils::CreateShaderModule(device, R"(
+struct Inputs {
+  @location(0) attrib0 : vec4<u32>,
+  @location(1) attrib1 : vec4<u32>,
+  @location(2) attrib2 : vec4<u32>,
+  @location(3) attrib3 : vec4<u32>,
+  @location(4) attrib4 : vec4<u32>,
+  @location(5) attrib5 : vec4<u32>,
+  @location(6) attrib6 : vec4<u32>,
+  @location(7) attrib7 : vec4<u32>,
+  @location(8) attrib8 : vec4<u32>,
+  @location(9) attrib9 : vec4<u32>,
+  @location(10) attrib10 : vec4<u32>,
+  @location(11) attrib11 : vec4<u32>,
+  @location(12) attrib12 : vec4<u32>,
+  @location(13) attrib13 : vec4<u32>,
+  @location(14) attrib14 : vec4<u32>,
+  @location(15) attrib15 : vec4<u32>,
+  @location(16) attrib16 : vec4<u32>,
+  @location(17) attrib17 : vec4<u32>,
+  @location(18) attrib18 : vec4<u32>,
+  @location(19) attrib19 : vec4<u32>,
+  @location(20) attrib20 : vec4<u32>,
+  @location(21) attrib21 : vec4<u32>,
+  @location(22) attrib22 : vec4<u32>,
+  @location(23) attrib23 : vec4<u32>,
+  @location(24) attrib24 : vec4<u32>,
+  @location(25) attrib25 : vec4<u32>,
+  @location(26) attrib26 : vec4<u32>,
+  @location(27) attrib27 : vec4<u32>,
+  @location(28) attrib28 : vec4<u32>,
+  @location(29) attrib29 : vec4<u32>,
+
+  @builtin(vertex_index) vertexIndex: u32,
+  @builtin(instance_index) instanceIndex: u32,
+};
+
+struct ProvidedData {
+  data0: array<vec4<u32>, 20>,
+  data1: array<vec4<u32>, 20>,
+  data2: array<vec4<u32>, 20>,
+  data3: array<vec4<u32>, 20>,
+  data4: array<vec4<u32>, 20>,
+  data5: array<vec4<u32>, 20>,
+  data6: array<vec4<u32>, 20>,
+  data7: array<vec4<u32>, 20>,
+  data8: array<vec4<u32>, 20>,
+  data9: array<vec4<u32>, 20>,
+  data10: array<vec4<u32>, 20>,
+  data11: array<vec4<u32>, 20>,
+  data12: array<vec4<u32>, 20>,
+  data13: array<vec4<u32>, 20>,
+  data14: array<vec4<u32>, 20>,
+  data15: array<vec4<u32>, 20>,
+  data16: array<vec4<u32>, 20>,
+  data17: array<vec4<u32>, 20>,
+  data18: array<vec4<u32>, 20>,
+  data19: array<vec4<u32>, 20>,
+  data20: array<vec4<u32>, 20>,
+  data21: array<vec4<u32>, 20>,
+  data22: array<vec4<u32>, 20>,
+  data23: array<vec4<u32>, 20>,
+  data24: array<vec4<u32>, 20>,
+  data25: array<vec4<u32>, 20>,
+  data26: array<vec4<u32>, 20>,
+  data27: array<vec4<u32>, 20>,
+  data28: array<vec4<u32>, 20>,
+  data29: array<vec4<u32>, 20>,
+
+};
+
+@group(0) @binding(0) var<uniform> providedData: ProvidedData;
+
+var<private> vsResult : i32 = 1;
+var<private> checkIndex : i32 = 0;
+fn check(success : bool) {
+  if (!success) {
+    vsResult = -checkIndex;
+  }
+  checkIndex = checkIndex + 1;
+}
+
+fn floatsSimilar(a : f32, b : f32, tolerance : f32) -> bool {
+  // Note: -0.0 and 0.0 have different bit patterns, but compare as equal.
+  return abs(a - b) < tolerance;
+}
+
+fn doTest(input : Inputs) {
+  check(input.attrib0[0] == providedData.data0[input.vertexIndex][0]);
+  check(input.attrib0[1] == providedData.data0[input.vertexIndex][1]);
+  check(input.attrib0[2] == providedData.data0[input.vertexIndex][2]);
+  check(input.attrib0[3] == providedData.data0[input.vertexIndex][3]);
+  check(input.attrib1[0] == providedData.data1[input.vertexIndex][0]);
+  check(input.attrib1[1] == providedData.data1[input.vertexIndex][1]);
+  check(input.attrib1[2] == providedData.data1[input.vertexIndex][2]);
+  check(input.attrib1[3] == providedData.data1[input.vertexIndex][3]);
+  check(input.attrib2[0] == providedData.data2[input.vertexIndex][0]);
+  check(input.attrib2[1] == providedData.data2[input.vertexIndex][1]);
+  check(input.attrib2[2] == providedData.data2[input.vertexIndex][2]);
+  check(input.attrib2[3] == providedData.data2[input.vertexIndex][3]);
+  check(input.attrib3[0] == providedData.data3[input.vertexIndex][0]);
+  check(input.attrib3[1] == providedData.data3[input.vertexIndex][1]);
+  check(input.attrib3[2] == providedData.data3[input.vertexIndex][2]);
+  check(input.attrib3[3] == providedData.data3[input.vertexIndex][3]);
+  check(input.attrib4[0] == providedData.data4[input.vertexIndex][0]);
+  check(input.attrib4[1] == providedData.data4[input.vertexIndex][1]);
+  check(input.attrib4[2] == providedData.data4[input.vertexIndex][2]);
+  check(input.attrib4[3] == providedData.data4[input.vertexIndex][3]);
+  check(input.attrib5[0] == providedData.data5[input.vertexIndex][0]);
+  check(input.attrib5[1] == providedData.data5[input.vertexIndex][1]);
+  check(input.attrib5[2] == providedData.data5[input.vertexIndex][2]);
+  check(input.attrib5[3] == providedData.data5[input.vertexIndex][3]);
+  check(input.attrib6[0] == providedData.data6[input.vertexIndex][0]);
+  check(input.attrib6[1] == providedData.data6[input.vertexIndex][1]);
+  check(input.attrib6[2] == providedData.data6[input.vertexIndex][2]);
+  check(input.attrib6[3] == providedData.data6[input.vertexIndex][3]);
+  check(input.attrib7[0] == providedData.data7[input.vertexIndex][0]);
+  check(input.attrib7[1] == providedData.data7[input.vertexIndex][1]);
+  check(input.attrib7[2] == providedData.data7[input.vertexIndex][2]);
+  check(input.attrib7[3] == providedData.data7[input.vertexIndex][3]);
+  check(input.attrib8[0] == providedData.data8[input.vertexIndex][0]);
+  check(input.attrib8[1] == providedData.data8[input.vertexIndex][1]);
+  check(input.attrib8[2] == providedData.data8[input.vertexIndex][2]);
+  check(input.attrib8[3] == providedData.data8[input.vertexIndex][3]);
+  check(input.attrib9[0] == providedData.data9[input.vertexIndex][0]);
+  check(input.attrib9[1] == providedData.data9[input.vertexIndex][1]);
+  check(input.attrib9[2] == providedData.data9[input.vertexIndex][2]);
+  check(input.attrib9[3] == providedData.data9[input.vertexIndex][3]);
+  check(input.attrib10[0] == providedData.data10[input.vertexIndex][0]);
+  check(input.attrib10[1] == providedData.data10[input.vertexIndex][1]);
+  check(input.attrib10[2] == providedData.data10[input.vertexIndex][2]);
+  check(input.attrib10[3] == providedData.data10[input.vertexIndex][3]);
+  check(input.attrib11[0] == providedData.data11[input.vertexIndex][0]);
+  check(input.attrib11[1] == providedData.data11[input.vertexIndex][1]);
+  check(input.attrib11[2] == providedData.data11[input.vertexIndex][2]);
+  check(input.attrib11[3] == providedData.data11[input.vertexIndex][3]);
+  check(input.attrib12[0] == providedData.data12[input.vertexIndex][0]);
+  check(input.attrib12[1] == providedData.data12[input.vertexIndex][1]);
+  check(input.attrib12[2] == providedData.data12[input.vertexIndex][2]);
+  check(input.attrib12[3] == providedData.data12[input.vertexIndex][3]);
+  check(input.attrib13[0] == providedData.data13[input.vertexIndex][0]);
+  check(input.attrib13[1] == providedData.data13[input.vertexIndex][1]);
+  check(input.attrib13[2] == providedData.data13[input.vertexIndex][2]);
+  check(input.attrib13[3] == providedData.data13[input.vertexIndex][3]);
+  check(input.attrib14[0] == providedData.data14[input.vertexIndex][0]);
+  check(input.attrib14[1] == providedData.data14[input.vertexIndex][1]);
+  check(input.attrib14[2] == providedData.data14[input.vertexIndex][2]);
+  check(input.attrib14[3] == providedData.data14[input.vertexIndex][3]);
+  check(input.attrib15[0] == providedData.data15[input.vertexIndex][0]);
+  check(input.attrib15[1] == providedData.data15[input.vertexIndex][1]);
+  check(input.attrib15[2] == providedData.data15[input.vertexIndex][2]);
+  check(input.attrib15[3] == providedData.data15[input.vertexIndex][3]);
+  check(input.attrib16[0] == providedData.data16[input.vertexIndex][0]);
+  check(input.attrib16[1] == providedData.data16[input.vertexIndex][1]);
+  check(input.attrib16[2] == providedData.data16[input.vertexIndex][2]);
+  check(input.attrib16[3] == providedData.data16[input.vertexIndex][3]);
+  check(input.attrib17[0] == providedData.data17[input.vertexIndex][0]);
+  check(input.attrib17[1] == providedData.data17[input.vertexIndex][1]);
+  check(input.attrib17[2] == providedData.data17[input.vertexIndex][2]);
+  check(input.attrib17[3] == providedData.data17[input.vertexIndex][3]);
+  check(input.attrib18[0] == providedData.data18[input.vertexIndex][0]);
+  check(input.attrib18[1] == providedData.data18[input.vertexIndex][1]);
+  check(input.attrib18[2] == providedData.data18[input.vertexIndex][2]);
+  check(input.attrib18[3] == providedData.data18[input.vertexIndex][3]);
+  check(input.attrib19[0] == providedData.data19[input.vertexIndex][0]);
+  check(input.attrib19[1] == providedData.data19[input.vertexIndex][1]);
+  check(input.attrib19[2] == providedData.data19[input.vertexIndex][2]);
+  check(input.attrib19[3] == providedData.data19[input.vertexIndex][3]);
+  check(input.attrib20[0] == providedData.data20[input.vertexIndex][0]);
+  check(input.attrib20[1] == providedData.data20[input.vertexIndex][1]);
+  check(input.attrib20[2] == providedData.data20[input.vertexIndex][2]);
+  check(input.attrib20[3] == providedData.data20[input.vertexIndex][3]);
+  check(input.attrib21[0] == providedData.data21[input.vertexIndex][0]);
+  check(input.attrib21[1] == providedData.data21[input.vertexIndex][1]);
+  check(input.attrib21[2] == providedData.data21[input.vertexIndex][2]);
+  check(input.attrib21[3] == providedData.data21[input.vertexIndex][3]);
+  check(input.attrib22[0] == providedData.data22[input.vertexIndex][0]);
+  check(input.attrib22[1] == providedData.data22[input.vertexIndex][1]);
+  check(input.attrib22[2] == providedData.data22[input.vertexIndex][2]);
+  check(input.attrib22[3] == providedData.data22[input.vertexIndex][3]);
+  check(input.attrib23[0] == providedData.data23[input.vertexIndex][0]);
+  check(input.attrib23[1] == providedData.data23[input.vertexIndex][1]);
+  check(input.attrib23[2] == providedData.data23[input.vertexIndex][2]);
+  check(input.attrib23[3] == providedData.data23[input.vertexIndex][3]);
+  check(input.attrib24[0] == providedData.data24[input.vertexIndex][0]);
+  check(input.attrib24[1] == providedData.data24[input.vertexIndex][1]);
+  check(input.attrib24[2] == providedData.data24[input.vertexIndex][2]);
+  check(input.attrib24[3] == providedData.data24[input.vertexIndex][3]);
+  check(input.attrib25[0] == providedData.data25[input.vertexIndex][0]);
+  check(input.attrib25[1] == providedData.data25[input.vertexIndex][1]);
+  check(input.attrib25[2] == providedData.data25[input.vertexIndex][2]);
+  check(input.attrib25[3] == providedData.data25[input.vertexIndex][3]);
+  check(input.attrib26[0] == providedData.data26[input.vertexIndex][0]);
+  check(input.attrib26[1] == providedData.data26[input.vertexIndex][1]);
+  check(input.attrib26[2] == providedData.data26[input.vertexIndex][2]);
+  check(input.attrib26[3] == providedData.data26[input.vertexIndex][3]);
+  check(input.attrib27[0] == providedData.data27[input.vertexIndex][0]);
+  check(input.attrib27[1] == providedData.data27[input.vertexIndex][1]);
+  check(input.attrib27[2] == providedData.data27[input.vertexIndex][2]);
+  check(input.attrib27[3] == providedData.data27[input.vertexIndex][3]);
+  check(input.attrib28[0] == providedData.data28[input.vertexIndex][0]);
+  check(input.attrib28[1] == providedData.data28[input.vertexIndex][1]);
+  check(input.attrib28[2] == providedData.data28[input.vertexIndex][2]);
+  check(input.attrib28[3] == providedData.data28[input.vertexIndex][3]);
+  check(input.attrib29[0] == providedData.data29[input.vertexIndex][0]);
+  check(input.attrib29[1] == providedData.data29[input.vertexIndex][1]);
+  check(input.attrib29[2] == providedData.data29[input.vertexIndex][2]);
+  check(input.attrib29[3] == providedData.data29[input.vertexIndex][3]);
+
+}
+
+struct VSOutputs {
+  @location(0) @interpolate(flat, either) result : i32,
+  @builtin(position) position : vec4<f32>,
+};
+
+@vertex fn vsMain(input : Inputs) -> VSOutputs {
+  doTest(input);
+
+  // Place that point at pixel (vertexIndex, instanceIndex) in a framebuffer of size
+  // (vertexCount , instanceCount).
+  var output : VSOutputs;
+  output.position = vec4<f32>(
+    ((f32(input.vertexIndex) + 0.5) / 20.0 * 2.0) - 1.0,
+    ((f32(input.instanceIndex) + 0.5) / 20.0 * 2.0) - 1.0,
+    0.0, 1.0
+  );
+  output.result = vsResult;
+  return output;
+})");
+
+    wgpu::ShaderModule fsModule = utils::CreateShaderModule(device, R"(
+@fragment fn fsMain(@location(0) @interpolate(flat, either) result : i32)
+  -> @location(0) i32 {
+  return result;
+}
+)");
+
+    utils::BasicRenderPass renderPass =
+        utils::CreateBasicRenderPass(device, 1, 1, wgpu::TextureFormat::R32Sint);
+
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.primitive.topology = wgpu::PrimitiveTopology::PointList;
+    descriptor.vertex.module = vsModule;
+    descriptor.vertex.buffers = descriptor.cBuffers.data();
+    descriptor.vertex.bufferCount = kMaxVertexBuffers;
+
+    uint32_t attributesPerBuffer =
+        std::ceil(kMaxVertexAttributes / static_cast<double>(kMaxVertexBuffers));
+
+    uint32_t attributesEmitted = 0;
+    for (uint32_t i = 0; i < kMaxVertexBuffers; i++) {
+        descriptor.cBuffers[i].stepMode = wgpu::VertexStepMode::Vertex;
+        descriptor.cBuffers[i].arrayStride = 32;
+        descriptor.cBuffers[i].attributes = descriptor.cAttributes.data() + attributesEmitted;
+        descriptor.cBuffers[i].attributeCount =
+            std::min(attributesPerBuffer, kMaxVertexAttributes - attributesEmitted);
+
+        for (uint32_t j = 0; j < attributesPerBuffer && attributesEmitted < kMaxVertexAttributes;
+             j++) {
+            descriptor.cAttributes[attributesEmitted].format = wgpu::VertexFormat::Uint32x4;
+            descriptor.cAttributes[attributesEmitted].shaderLocation = attributesEmitted;
+            descriptor.cAttributes[attributesEmitted].offset = 0;
+            attributesEmitted++;
+        }
+    }
+
+    descriptor.cFragment.module = fsModule;
+    descriptor.cTargets[0].format = wgpu::TextureFormat::R32Sint;
+
+    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&descriptor);
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
+
+    constexpr uint32_t kValues[] = {42, 0, 1, 2, 3, 4, 5, 0x80000000, 0xffffffff};
+    std::vector<uint32_t> bufferData;
+    for (uint32_t i = 0; i < 20 * 4; i++) {
+        uint32_t idx = bufferData.size() % std::size(kValues);
+        bufferData.push_back(kValues[idx]);
+    }
+
+    for (uint32_t i = 0; i < kMaxVertexBuffers; i++) {
+        wgpu::Buffer vertexBuffer = utils::CreateBufferFromData(
+            device, bufferData.data(), bufferData.size() * sizeof(uint32_t),
+            wgpu::BufferUsage::Vertex);
+        pass.SetVertexBuffer(i, vertexBuffer);
+    }
+
+    std::vector<uint32_t> expectedData;
+    for (uint32_t i = 0; i < kMaxVertexAttributes; i++) {
+        for (auto v : bufferData) {
+            expectedData.push_back(v);
+        }
+    }
+    wgpu::Buffer expectedDataBuffer = utils::CreateBufferFromData(
+        device, expectedData.data(), expectedData.size() * sizeof(uint32_t),
+        wgpu::BufferUsage::Uniform);
+    wgpu::BindGroup bindGroup =
+        utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0), {{0, expectedDataBuffer}});
+
+    pass.SetBindGroup(0, bindGroup);
+    pass.SetPipeline(pipeline);
+    pass.Draw(1);
+    pass.End();
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(255, 255, 255, 255), renderPass.color, 0, 0);
 }
 
 DAWN_INSTANTIATE_TEST(ShaderTests,
