@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dae2dacb_81d13e14",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-09T23:30:30Z",
+      "side": 1,
+      "message": "Since the point of this change is to make it easier to understand, please specifically review for readability.",
+      "revId": "d39e95ff0200b66c688f35e5a18404c5867d7c7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
