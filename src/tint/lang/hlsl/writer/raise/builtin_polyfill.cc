@@ -863,7 +863,7 @@ struct State {
     void TextureDimensions(core::ir::CoreBuiltinCall* call) {
         auto* tex = call->Args()[0];
         auto* tex_type = tex->Type()->As<core::type::Texture>();
-        bool has_level = call->Args().Length() > 1;
+        bool has_level = call->Args().size() > 1;
         bool is_ms =
             tex_type
                 ->IsAnyOf<core::type::MultisampledTexture, core::type::DepthMultisampledTexture>();
@@ -1166,7 +1166,7 @@ struct State {
                 default:
                     TINT_IR_UNREACHABLE(ir);
             }
-            if (offset_idx > 0 && args.Length() > offset_idx) {
+            if (offset_idx > 0 && args.size() > offset_idx) {
                 params.Push(args[offset_idx]);
             }
 
@@ -1194,7 +1194,7 @@ struct State {
                     params.Push(coords);
                     params.Push(args[3]);
 
-                    if (args.Length() > 4) {
+                    if (args.size() > 4) {
                         params.Push(args[4]);
                     }
                     break;
@@ -1202,7 +1202,7 @@ struct State {
                     params.Push(
                         b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[3]))->Result());
                     params.Push(args[4]);
-                    if (args.Length() > 5) {
+                    if (args.size() > 5) {
                         params.Push(args[5]);
                     }
                     break;
@@ -1243,21 +1243,21 @@ struct State {
                 case core::type::TextureDimension::k2d:
                     params.Push(coords);
 
-                    if (args.Length() > 3) {
+                    if (args.size() > 3) {
                         params.Push(args[3]);
                     }
                     break;
                 case core::type::TextureDimension::k2dArray:
                     params.Push(
                         b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[3]))->Result());
-                    if (args.Length() > 4) {
+                    if (args.size() > 4) {
                         params.Push(args[4]);
                     }
                     break;
                 case core::type::TextureDimension::k3d:
                 case core::type::TextureDimension::kCube:
                     params.Push(coords);
-                    if (args.Length() > 3) {
+                    if (args.size() > 3) {
                         params.Push(args[3]);
                     }
                     break;
@@ -1299,7 +1299,7 @@ struct State {
                     params.Push(coords);
                     params.Push(args[3]);  // bias
 
-                    if (args.Length() > 4) {
+                    if (args.size() > 4) {
                         params.Push(args[4]);
                     }
                     break;
@@ -1308,7 +1308,7 @@ struct State {
                         b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[3]))->Result());
                     params.Push(args[4]);
 
-                    if (args.Length() > 5) {
+                    if (args.size() > 5) {
                         params.Push(args[5]);
                     }
                     break;
@@ -1317,7 +1317,7 @@ struct State {
                     params.Push(coords);
                     params.Push(args[3]);
 
-                    if (args.Length() > 4) {
+                    if (args.size() > 4) {
                         params.Push(args[4]);
                     }
                     break;
@@ -1358,7 +1358,7 @@ struct State {
                     params.Push(coords);
                     params.Push(args[3]);  // depth ref
 
-                    if (args.Length() > 4) {
+                    if (args.size() > 4) {
                         params.Push(args[4]);
                     }
                     break;
@@ -1367,7 +1367,7 @@ struct State {
                         b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[3]))->Result());
                     params.Push(args[4]);
 
-                    if (args.Length() > 5) {
+                    if (args.size() > 5) {
                         params.Push(args[5]);
                     }
                     break;
@@ -1375,7 +1375,7 @@ struct State {
                     params.Push(coords);
                     params.Push(args[3]);
 
-                    if (args.Length() > 4) {
+                    if (args.size() > 4) {
                         params.Push(args[4]);
                     }
                     break;
@@ -1413,7 +1413,7 @@ struct State {
                     params.Push(args[3]);  // ddx
                     params.Push(args[4]);  // ddy
 
-                    if (args.Length() > 5) {
+                    if (args.size() > 5) {
                         params.Push(args[5]);
                     }
                     break;
@@ -1423,7 +1423,7 @@ struct State {
                     params.Push(args[4]);
                     params.Push(args[5]);
 
-                    if (args.Length() > 6) {
+                    if (args.size() > 6) {
                         params.Push(args[6]);
                     }
                     break;
@@ -1433,7 +1433,7 @@ struct State {
                     params.Push(args[3]);
                     params.Push(args[4]);
 
-                    if (args.Length() > 5) {
+                    if (args.size() > 5) {
                         params.Push(args[5]);
                     }
                     break;
@@ -1472,7 +1472,7 @@ struct State {
                     params.Push(coords);
                     params.Push(b.InsertConvertIfNeeded(ty.f32(), args[3]));  // Level
 
-                    if (args.Length() > 4) {
+                    if (args.size() > 4) {
                         params.Push(args[4]);
                     }
                     break;
@@ -1480,7 +1480,7 @@ struct State {
                     params.Push(
                         b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[3]))->Result());
                     params.Push(b.InsertConvertIfNeeded(ty.f32(), args[4]));  // Level
-                    if (args.Length() > 5) {
+                    if (args.size() > 5) {
                         params.Push(args[5]);
                     }
                     break;
@@ -1489,7 +1489,7 @@ struct State {
                     params.Push(coords);
                     params.Push(b.InsertConvertIfNeeded(ty.f32(), args[3]));  // Level
 
-                    if (args.Length() > 4) {
+                    if (args.size() > 4) {
                         params.Push(args[4]);
                     }
                     break;
@@ -1829,7 +1829,7 @@ struct State {
     // This helper function wraps the argument in `asuint` and the result in `asint` to use the
     // unsigned int overload. It currently supports only single argument function signatures.
     void BitcastToIntOverloadCall(core::ir::CoreBuiltinCall* call) {
-        TINT_IR_ASSERT(ir, call->Args().Length() == 1);
+        TINT_IR_ASSERT(ir, call->Args().size() == 1);
         auto* arg = call->Args()[0];
         auto* arg_type = arg->Type()->UnwrapRef();
         if (arg_type->IsSignedIntegerScalarOrVector()) {
@@ -1861,7 +1861,7 @@ struct State {
     // | subgroupShuffleDown | WaveReadLaneAt with index equal subgroup_invocation_id + delta |
     // +---------------------+----------------------------------------------------------------+
     void SubgroupShuffle(core::ir::CoreBuiltinCall* call) {
-        TINT_IR_ASSERT(ir, call->Args().Length() == 2);
+        TINT_IR_ASSERT(ir, call->Args().size() == 2);
 
         b.InsertBefore(call, [&] {
             auto* id = b.Call<hlsl::ir::BuiltinCall>(ty.u32(), hlsl::BuiltinFn::kWaveGetLaneIndex);
@@ -1895,7 +1895,7 @@ struct State {
     // | subgroupInclusiveMul  | WavePrefixMul(x) * x |
     // +-----------------------+----------------------+
     void SubgroupInclusive(core::ir::CoreBuiltinCall* call) {
-        TINT_IR_ASSERT(ir, call->Args().Length() == 1);
+        TINT_IR_ASSERT(ir, call->Args().size() == 1);
         b.InsertBefore(call, [&] {
             auto builtin_sel = core::BuiltinFn::kNone;
 

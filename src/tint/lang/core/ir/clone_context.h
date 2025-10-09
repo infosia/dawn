@@ -92,6 +92,22 @@ class CloneContext {
     /// @param what the elements to clone
     /// @return the cloned elements
     template <size_t N, typename T>
+    Vector<T*, N> Clone(std::span<T* const> what) {
+        return Transform<N>(what, [&](T* const p) { return Clone(p); });
+    }
+
+    /// Performs a clone of all the elements in @p what.
+    /// @param what the elements to clone
+    /// @return the cloned elements
+    template <size_t N, typename T>
+    Vector<T*, N> Clone(std::span<T*> what) {
+        return Transform<N>(what, [&](T* p) { return Clone(p); });
+    }
+
+    /// Performs a clone of all the elements in @p what.
+    /// @param what the elements to clone
+    /// @return the cloned elements
+    template <size_t N, typename T>
     Vector<T*, N> Clone(Vector<T*, N> what) {
         return Transform(what, [&](T* p) { return Clone(p); });
     }
@@ -128,6 +144,22 @@ class CloneContext {
     /// @return the remapped elements
     template <size_t N, typename T>
     Vector<T*, N> Remap(Slice<T*> what) {
+        return Transform<N>(what, [&](T* p) { return Remap(p); });
+    }
+
+    /// Obtains the (potentially) remapped pointer of all the elements in @p what.
+    /// @param what the item
+    /// @return the remapped elements
+    template <size_t N, typename T>
+    Vector<T*, N> Remap(std::span<T* const> what) {
+        return Transform<N>(what, [&](T* const p) { return Remap(p); });
+    }
+
+    /// Obtains the (potentially) remapped pointer of all the elements in @p what.
+    /// @param what the item
+    /// @return the remapped elements
+    template <size_t N, typename T>
+    Vector<T*, N> Remap(std::span<T*> what) {
         return Transform<N>(what, [&](T* p) { return Remap(p); });
     }
 

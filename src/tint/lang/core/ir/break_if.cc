@@ -72,8 +72,9 @@ void BreakIf::Destroy() {
 BreakIf* BreakIf::Clone(CloneContext& ctx) {
     auto* loop = ctx.Remap(loop_);
     auto* cond = ctx.Remap(Condition());
-    auto args = ctx.Remap<BreakIf::kDefaultNumOperands>(Args());
-    return ctx.ir.CreateInstruction<BreakIf>(cond, loop, args);
+    auto next_iter = ctx.Remap<BreakIf::kDefaultNumOperands>(NextIterValues());
+    auto exit = ctx.Remap<BreakIf::kDefaultNumOperands>(ExitValues());
+    return ctx.ir.CreateInstruction<BreakIf>(cond, loop, next_iter, exit);
 }
 
 void BreakIf::SetLoop(ir::Loop* loop) {

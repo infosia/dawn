@@ -130,6 +130,37 @@ auto Transform(Slice<IN> in, TRANSFORMER&& transform) -> Vector<decltype(transfo
     return result;
 }
 
+/// Transform performs an element-wise transformation of a span.
+/// @param in the input span.
+/// @param transform the transformation function with signature: `OUT(IN)`
+/// @tparam N the small-array size of the returned Vector
+/// @returns a new vector with each element of the source span transformed by `transform`.
+template <size_t N, typename IN, typename TRANSFORMER>
+auto Transform(std::span<IN> in, TRANSFORMER&& transform) -> Vector<decltype(transform(in[0])), N> {
+    Vector<decltype(transform(in[0])), N> result;
+    result.Reserve(in.size());
+    for (size_t i = 0; i < in.size(); ++i) {
+        result.Push(transform(in[i]));
+    }
+    return result;
+}
+
+/// Transform performs an element-wise transformation of a span.
+/// @param in the input span.
+/// @param transform the transformation function with signature: `OUT(IN, size_t)`
+/// @tparam N the small-array size of the returned Vector
+/// @returns a new vector with each element of the source span transformed by `transform`.
+template <size_t N, typename IN, typename TRANSFORMER>
+auto Transform(std::span<IN> in, TRANSFORMER&& transform)
+    -> Vector<decltype(transform(in[0], 1u)), N> {
+    Vector<decltype(transform(in[0], 1u)), N> result;
+    result.Reserve(in.size());
+    for (size_t i = 0; i < in.size(); ++i) {
+        result.Push(transform(in[i], i));
+    }
+    return result;
+}
+
 /// Transform performs an element-wise transformation of a vector reference.
 /// @param in the input vector.
 /// @param transform the transformation function with signature: `OUT(IN)`

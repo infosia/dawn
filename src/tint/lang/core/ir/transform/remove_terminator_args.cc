@@ -74,6 +74,7 @@ struct State {
             for (auto* terminator : terminators_to_clear) {
                 if (auto* breakif = terminator->As<BreakIf>()) {
                     // We retain the condition operand on break_if instructions.
+                    breakif->SetNumNextIterValues(0);
                     breakif->SetOperands(Vector{breakif->Condition()});
                 } else {
                     terminator->ClearOperands();
