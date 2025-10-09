@@ -36,14 +36,132 @@
 namespace dawn {
 namespace {
 
-void EncodeConvertTimestampsToNanoseconds(wgpu::CommandEncoder encoder,
+static const char sConvertTimestampsToNanoseconds[] = R"(
+            struct Timestamp {
+                low  : u32,
+                high : u32,
+            }
+
+            struct TimestampArr {
+                t : array<Timestamp>
+            }
+
+            struct AvailabilityArr {
+                v : array<u32>
+            }
+
+            struct TimestampParams {
+                first  : u32,
+                count  : u32,
+                offset : u32,
+                quantization_mask : u32,
+                multiplier : u32,
+                right_shift  : u32,
+            }
+
+            @group(0) @binding(0) var<storage, read_write> timestamps : TimestampArr;
+            @group(0) @binding(1) var<storage, read> availability : AvailabilityArr;
+            @group(0) @binding(2) var<uniform> params : TimestampParams;
+
+            const sizeofTimestamp : u32 = 8u;
+
+            @compute @workgroup_size(8, 1, 1)
+            fn main(@builtin(global_invocation_id) GlobalInvocationID : vec3u) {
+                if (GlobalInvocationID.x >= params.count) { return; }
+
+                var index = GlobalInvocationID.x + params.offset / sizeofTimestamp;
+
+                // Return 0 for the unavailable value.
+                if (availability.v[GlobalInvocationID.x + params.first] == 0u) {
+                    timestamps.t[index].low = 0u;
+                    timestamps.t[index].high = 0u;
+                    return;
+                }
+
+                var timestamp = timestamps.t[index];
+
+                // TODO(dawn:1250): Consider using the umulExtended and uaddCarry intrinsics once
+                // available.
+                var chunks : array<u32, 5>;
+                chunks[0] = timestamp.low & 0xFFFFu;
+                chunks[1] = timestamp.low >> 16u;
+                chunks[2] = timestamp.high & 0xFFFFu;
+                chunks[3] = timestamp.high >> 16u;
+                chunks[4] = 0u;
+
+                // Multiply all the chunks with the integer period.
+                for (var i = 0u; i < 4u; i = i + 1u) {
+                    chunks[i] = chunks[i] * params.multiplier;
+                }
+
+                // Propagate the carry
+                var carry = 0u;
+                for (var i = 0u; i < 4u; i = i + 1u) {
+                    var chunk_with_carry = chunks[i] + carry;
+                    carry = chunk_with_carry >> 16u;
+                    chunks[i] = chunk_with_carry & 0xFFFFu;
+                }
+                chunks[4] = carry;
+
+                // Apply the right shift.
+                for (var i = 0u; i < 4u; i = i + 1u) {
+                    var low = chunks[i] >> params.right_shift;
+                    var high = (chunks[i + 1u] << (16u - params.right_shift)) & 0xFFFFu;
+                    chunks[i] = low | high;
+                }
+
+                // Apply quantization mask.
+                var low = chunks[0] | (chunks[1] << 16u);
+                timestamps.t[index].low = low & params.quantization_mask;
+                timestamps.t[index].high = chunks[2] | (chunks[3] << 16u);
+            }
+        )";
+
+wgpu::ComputePipeline GetOrCreateTimestampComputePipeline(wgpu::Device device) {
+    wgpu::ShaderModule module = utils::CreateShaderModule(device, sConvertTimestampsToNanoseconds);
+
+    // Create binding group layout
+    wgpu::BindGroupLayout bgl = utils::MakeBindGroupLayout(
+        device, {
+                    {0, wgpu::ShaderStage::Compute, wgpu::BufferBindingType::Storage},
+                    {1, wgpu::ShaderStage::Compute, wgpu::BufferBindingType::ReadOnlyStorage},
+                    {2, wgpu::ShaderStage::Compute, wgpu::BufferBindingType::Uniform},
+                });
+
+    // Create pipeline layout
+    wgpu::PipelineLayout layout = utils::MakePipelineLayout(device, {bgl});
+
+    // Create ComputePipeline.
+    wgpu::ComputePipelineDescriptor computePipelineDesc = {};
+    // Generate the layout based on shader module.
+    computePipelineDesc.layout = layout;
+    computePipelineDesc.compute.module = module;
+    computePipelineDesc.compute.entryPoint = "main";
+
+    return device.CreateComputePipeline(&computePipelineDesc);
+}
+
+void EncodeConvertTimestampsToNanoseconds(wgpu::Device device,
+                                          wgpu::CommandEncoder encoder,
                                           wgpu::Buffer timestamps,
                                           wgpu::Buffer availability,
                                           wgpu::Buffer params) {
-    ASSERT_TRUE(native::EncodeConvertTimestampsToNanoseconds(
-                    native::FromAPI(encoder.Get()), native::FromAPI(timestamps.Get()),
-                    native::FromAPI(availability.Get()), native::FromAPI(params.Get()))
-                    .IsSuccess());
+    wgpu::ComputePipeline pipeline = GetOrCreateTimestampComputePipeline(device);
+
+    // Prepare bind group layout.
+    wgpu::BindGroupLayout layout = pipeline.GetBindGroupLayout(0);
+
+    // Create bind group after all binding entries are set.
+    wgpu::BindGroup bindGroup =
+        utils::MakeBindGroup(device, layout, {{0, timestamps}, {1, availability}, {2, params}});
+
+    // Create compute encoder and issue dispatch.
+    wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+    pass.SetPipeline(pipeline);
+    pass.SetBindGroup(0, bindGroup);
+    pass.DispatchWorkgroups(
+        static_cast<uint32_t>((timestamps.GetSize() / sizeof(uint64_t) + 7) / 8));
+    pass.End();
 }
 
 class InternalShaderExpectation : public ::dawn::detail::Expectation {
@@ -181,8 +299,8 @@ class QueryInternalShaderTests : public DawnTest {
         // The resolve buffer storing original timestamps and the converted values
         wgpu::BufferDescriptor timestampsDesc;
         timestampsDesc.size = size;
-        timestampsDesc.usage = wgpu::BufferUsage::QueryResolve | wgpu::BufferUsage::CopySrc |
-                               wgpu::BufferUsage::CopyDst;
+        timestampsDesc.usage =
+            wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
         wgpu::Buffer timestampsBuffer = device.CreateBuffer(&timestampsDesc);
 
         // Set sentinel values to check the slots before the destination offset should not be
@@ -207,7 +325,7 @@ class QueryInternalShaderTests : public DawnTest {
                                                                 wgpu::BufferUsage::Uniform);
 
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-        EncodeConvertTimestampsToNanoseconds(encoder, timestampsBuffer, availabilityBuffer,
+        EncodeConvertTimestampsToNanoseconds(device, encoder, timestampsBuffer, availabilityBuffer,
                                              paramsBuffer);
         wgpu::CommandBuffer commands = encoder.Finish();
         queue.Submit(1, &commands);
