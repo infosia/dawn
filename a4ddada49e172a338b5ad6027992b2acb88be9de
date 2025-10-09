@@ -33,6 +33,24 @@
       "message": "Can we remove it from DEPS now too or it it needed for ANGLE?",
       "revId": "a4ddada49e172a338b5ad6027992b2acb88be9de",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ba44ec1_5dd9e51c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-09T20:14:42Z",
+      "side": 1,
+      "message": "See https://dawn-review.googlesource.com/c/dawn/+/265717",
+      "parentUuid": "f4b360b8_7a275186",
+      "revId": "a4ddada49e172a338b5ad6027992b2acb88be9de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
