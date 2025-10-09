@@ -22,6 +22,30 @@
       },
       "revId": "c39e7d312b9817c7f4dc2d9229a9b0df6339f0f7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9ff70b1_91adbde2",
+        "filename": "generator/dawn_yaml_utility.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-09T06:10:44Z",
+      "side": 1,
+      "message": "I\u0027ve removed those to simplify the code review. Initially, I kept them since they weren\u0027t specific to just enums or bitmasks, but I\u0027ve updated it for clarity",
+      "parentUuid": "78f019fd_35007b99",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "c39e7d312b9817c7f4dc2d9229a9b0df6339f0f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
