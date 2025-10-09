@@ -85,6 +85,24 @@
       "message": "This isn\u0027t my area of expertise, but overall it looks fine.",
       "revId": "88ce3f18770be1b5ffa01e27fffe5b63bf479122",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efc5c280_84de8d02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-10-09T17:59:08Z",
+      "side": 1,
+      "message": "When I was last working on this, I would generate the corpus locally, so I knew what files I would expect to be updated and looked at the content in the bucket directly to see that the timestamps were getting updated after the nightly run.\n\nI know I have permissions for this, because I am the one that initially seeded the IR fuzzer corpus, before it was automated. I will look up if I can find instructions on getting those permissions and DM you.\n\nI kinda take it on faith that updating the files in the bucket means that ClusterFuzz is using them, since I can see the other entries in the bucket that written by CF, so I assume our files will get used also during minimization/etc. I don\u0027t know if there is another mechanism available to ensure the new files are being picked up.",
+      "parentUuid": "232d11be_ec567f1a",
+      "revId": "88ce3f18770be1b5ffa01e27fffe5b63bf479122",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
