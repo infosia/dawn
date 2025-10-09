@@ -16,6 +16,91 @@
       "message": "This broadly looks good to me. James or dan can you do a second pass on this, since it is a pretty widesweeping change?",
       "revId": "0d1bc23b355deb154e04a3a8d8fab22811a5d079",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb57e00e_641831f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-09T15:14:04Z",
+      "side": 1,
+      "message": "This change is pretty big and seems to clump a bunch of things together. Would it be possible to break it into a series of smaller CLs?\n\n0. Fix bugs with the break-if clone use set the next iter value correctly\n1. Change the Slice method names to match the span method names\n2. Update the intrinsic table generation code and run `./tools/run gen` to regenerate all the generated files\n3. Add span support to the needed utility libraries\n4. Fixup the issues with out-of-bounds accesses\n5. Update ir to use `span`\n6. Update remaining code to use span",
+      "revId": "0d1bc23b355deb154e04a3a8d8fab22811a5d079",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dadeaeb6_abba5b81",
+        "filename": "src/tint/lang/core/ir/break_if.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-09T15:14:04Z",
+      "side": 1,
+      "message": "Why did this one change?",
+      "revId": "0d1bc23b355deb154e04a3a8d8fab22811a5d079",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bf808c2_efd91d47",
+        "filename": "src/tint/lang/core/ir/clone_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-09T15:14:04Z",
+      "side": 1,
+      "message": "Are these still necessary?",
+      "revId": "0d1bc23b355deb154e04a3a8d8fab22811a5d079",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be21352b_3a0696b5",
+        "filename": "src/tint/lang/core/ir/clone_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-09T15:14:04Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "0d1bc23b355deb154e04a3a8d8fab22811a5d079",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8cf9dbdf_cca23cc9",
+        "filename": "src/tint/lang/core/ir/transform/remove_terminator_args.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-09T15:14:04Z",
+      "side": 1,
+      "message": "Why was this added?",
+      "revId": "0d1bc23b355deb154e04a3a8d8fab22811a5d079",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
