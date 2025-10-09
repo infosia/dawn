@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "688e67f4_edfe2d0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-09T12:42:27Z",
+      "side": 1,
+      "message": "If that test LGTY, I\u0027ll submit.",
+      "revId": "160acd4bf008fa28dd20b46b991febb25af409c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
