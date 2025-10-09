@@ -16,6 +16,121 @@
       "message": "+lokokung to get a +2",
       "revId": "c7678c76f63e859603fd3bc79a3fff08cf8f5d1f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54489698_cede1fff",
+        "filename": "include/dawn/native/MetalBackend.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-09T20:42:22Z",
+      "side": 1,
+      "message": "Is this currently only used in Graphite? Could we add a TODO here the bug to just remove it entirely once the other path is ready and tested?",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 72
+      },
+      "revId": "c7678c76f63e859603fd3bc79a3fff08cf8f5d1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e50955f2_c8a92b8e",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 2152,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-09T20:42:22Z",
+      "side": 1,
+      "message": "nit. In most places, we keep each member in a single line atm, could we do that for this as well?",
+      "range": {
+        "startLine": 2149,
+        "startChar": 12,
+        "endLine": 2152,
+        "endChar": 13
+      },
+      "revId": "c7678c76f63e859603fd3bc79a3fff08cf8f5d1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d19897ca_ed4aca5c",
+        "filename": "src/dawn/native/metal/QueueMTL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-09T20:42:22Z",
+      "side": 1,
+      "message": "As per our offline discussion, this can probably become a `std::atomic\u003cExecutionSerial\u003e mLastScheduledSerial` once we migrate off of the deprecated API.",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 72
+      },
+      "revId": "c7678c76f63e859603fd3bc79a3fff08cf8f5d1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3a428c1_88c2539f",
+        "filename": "src/dawn/native/metal/QueueMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-09T20:42:22Z",
+      "side": 1,
+      "message": "Could this be re-implemented to use `WaitAny` now? I assume we will eventually remove this, but that would give us a good idea that the future is working correctly, and potentially allows to do more cleanups as per some of the comments in [1].",
+      "range": {
+        "startLine": 168,
+        "startChar": 4,
+        "endLine": 179,
+        "endChar": 48
+      },
+      "revId": "c7678c76f63e859603fd3bc79a3fff08cf8f5d1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "277f364c_b495d0d8",
+        "filename": "src/dawn/native/metal/QueueMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-09T20:42:22Z",
+      "side": 1,
+      "message": "Once we use the atomic serial instead, this can probably just be:\n`if (mLastScheduledSerial \u003d\u003d GetLastSubmittedCommandSerial())`",
+      "range": {
+        "startLine": 195,
+        "startChar": 8,
+        "endLine": 196,
+        "endChar": 36
+      },
+      "revId": "c7678c76f63e859603fd3bc79a3fff08cf8f5d1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
