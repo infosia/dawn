@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe5669f7_82dca9cb",
+        "filename": "src/dawn/dawn_kotlin.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-09T20:47:51Z",
+      "side": 1,
+      "message": "nit. Please remove irrelevant replacements/blocklists as well w.r.t this CL.",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 3
+      },
+      "revId": "ccf1305aa5764a6cd418adb21493f3b4c3750d4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
