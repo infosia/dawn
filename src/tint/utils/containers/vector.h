@@ -421,6 +421,24 @@ class Vector {
         Copy(other);
     }
 
+    /// Copy constructor from a std::span
+    /// @param other the span to copy
+    Vector(std::span<T> other) {  // NOLINT(runtime/explicit)
+        Reserve(other.size());
+        for (auto& el : other) {
+            impl_.slice.data[impl_.slice.len++] = el;
+        }
+    }
+
+    /// Copy constructor from an immutable std::span
+    /// @param other the span to copy
+    Vector(std::span<const T> other) {  // NOLINT(runtime/explicit)
+        Reserve(other.size());
+        for (const auto& el : other) {
+            impl_.slice.data[impl_.slice.len++] = el;
+        }
+    }
+
     /// Destructor
     ~Vector() { ClearAndFree(); }
 
@@ -1233,6 +1251,22 @@ auto ToVector(const tint::Slice<T>& slice) {
     using U = std::conditional_t<std::is_pointer_v<T> || std::is_reference_v<T>,
                                  std::remove_const_t<T>, T>;
     return Vector<U, N>{slice};
+}
+
+/// Helper for converting a std::span to a Vector.
+/// @param span the input span
+/// @return the converted vector
+/// @note The caller must always explicitly specify the size N. If not explicit, the compiler will
+/// be unable to infer the size N from the template argument of Span, because Span is effectively
+/// of const pointer/reference type, again requiring the caller to be explicit. This helper makes it
+/// possible to only specify the size.
+template <size_t N, typename T>
+auto ToVector(std::span<T> span) {
+    // If span is of type 'T* const', make it 'T*' (or 'T& const', make it 'T&') as Vectors cannot
+    // be of const pointer/reference type.
+    using U = std::conditional_t<std::is_pointer_v<T> || std::is_reference_v<T>,
+                                 std::remove_const_t<T>, T>;
+    return Vector<U, N>{span};
 }
 
 /// Helper for converting a std::vector to a Vector.

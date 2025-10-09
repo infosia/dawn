@@ -3675,7 +3675,7 @@ void Validator::CheckCoreBuiltinCall(const CoreBuiltinCall* call,
                                      const core::intrinsic::Overload& overload) {
     if (call->Func() == core::BuiltinFn::kQuadBroadcast ||
         call->Func() == core::BuiltinFn::kSubgroupBroadcast) {
-        TINT_ASSERT(call->Args().Length() == 2);
+        TINT_ASSERT(call->Args().size() == 2);
         constexpr uint32_t kIdArg = 1;
         auto* id = call->Args()[kIdArg];
         if (!id->Is<core::ir::Constant>()) {
@@ -3700,7 +3700,7 @@ void Validator::CheckCoreBuiltinCall(const CoreBuiltinCall* call,
             return;
         }
         uint32_t idx = idx_opt.value();
-        TINT_ASSERT(idx < call->Args().Length());
+        TINT_ASSERT(idx < call->Args().size());
 
         auto* val = call->Args()[idx];
         if (auto* const_val = val->As<ir::Constant>()) {
@@ -3783,14 +3783,14 @@ void Validator::CheckConstruct(const Construct* construct) {
     }
 
     auto args = construct->Args();
-    if (args.IsEmpty()) {
+    if (args.empty()) {
         // Zero-value constructors are valid for all constructible types.
         return;
     }
 
     auto check_args_match_elements = [&] {
         // Check that type type of each argument matches the expected element type of the composite.
-        for (size_t i = 0; i < args.Length(); i++) {
+        for (size_t i = 0; i < args.size(); i++) {
             if (args[i]->Is<ir::Unused>()) {
                 continue;
             }
@@ -3805,7 +3805,7 @@ void Validator::CheckConstruct(const Construct* construct) {
 
     if (result_type->Is<core::type::Scalar>()) {
         // The only valid non-zero scalar constructor is the identity operation.
-        if (args.Length() > 1) {
+        if (args.size() > 1) {
             AddError(construct) << "scalar construct must not have more than one argument";
         }
         if (args[0]->Type() != result_type) {
@@ -3813,7 +3813,7 @@ void Validator::CheckConstruct(const Construct* construct) {
                                     << " does not match result type " << NameOf(result_type);
         }
     } else if (auto* sg_mat = result_type->As<core::type::SubgroupMatrix>()) {
-        if (args.Length() > 1) {
+        if (args.size() > 1) {
             AddError(construct) << "subgroup matrix construct must not have more than 1 argument";
         } else {
             if (args[0]->Type() != sg_mat->Type()) {
@@ -3846,9 +3846,9 @@ void Validator::CheckConstruct(const Construct* construct) {
         check_args_match_elements();
     } else if (auto* str = As<core::type::Struct>(result_type)) {
         auto members = str->Members();
-        if (args.Length() != str->Members().Length()) {
+        if (args.size() != str->Members().Length()) {
             AddError(construct) << "structure has " << members.Length()
-                                << " members, but construct provides " << args.Length()
+                                << " members, but construct provides " << args.size()
                                 << " arguments";
             return;
         }
@@ -3924,14 +3924,14 @@ void Validator::CheckUserCall(const UserCall* call) {
 
     auto args = call->Args();
     auto params = call->Target()->Params();
-    if (args.Length() != params.Length()) {
+    if (args.size() != params.Length()) {
         AddError(call, UserCall::kFunctionOperandOffset)
             << "function has " << params.Length() << " parameters, but call provides "
-            << args.Length() << " arguments";
+            << args.size() << " arguments";
         return;
     }
 
-    for (size_t i = 0; i < args.Length(); i++) {
+    for (size_t i = 0; i < args.size(); i++) {
         if (args[i]->Type() != params[i]->Type()) {
             AddError(call, UserCall::kArgsOperandOffset + i)
                 << "type " << NameOf(params[i]->Type()) << " of function parameter " << i
@@ -3974,7 +3974,7 @@ void Validator::CheckAccess(const Access* a) {
         }
     };
 
-    for (size_t i = 0; i < a->Indices().Length(); i++) {
+    for (size_t i = 0; i < a->Indices().size(); i++) {
         auto err = [&]() -> diag::Diagnostic& {
             return AddError(a, i + Access::kIndicesOperandOffset);
         };
@@ -4353,13 +4353,13 @@ void Validator::CheckBreakIf(const BreakIf* b) {
 
     auto next_iter_values = b->NextIterValues();
     if (auto* body = loop->Body()) {
-        CheckOperandsMatchTarget(b, b->ArgsOperandOffset(), next_iter_values.Length(), body,
+        CheckOperandsMatchTarget(b, b->ArgsOperandOffset(), next_iter_values.size(), body,
                                  body->Params());
     }
 
     auto exit_values = b->ExitValues();
-    CheckOperandsMatchTarget(b, b->ArgsOperandOffset() + next_iter_values.Length(),
-                             exit_values.Length(), loop, loop->Results());
+    CheckOperandsMatchTarget(b, b->ArgsOperandOffset() + next_iter_values.size(),
+                             exit_values.size(), loop, loop->Results());
 }
 
 void Validator::CheckContinue(const Continue* c) {
@@ -4377,7 +4377,7 @@ void Validator::CheckContinue(const Continue* c) {
     }
 
     if (auto* cont = loop->Continuing()) {
-        CheckOperandsMatchTarget(c, Continue::kArgsOperandOffset, c->Args().Length(), cont,
+        CheckOperandsMatchTarget(c, Continue::kArgsOperandOffset, c->Args().size(), cont,
                                  cont->Params());
     }
 
@@ -4396,7 +4396,7 @@ void Validator::CheckExit(const Exit* e) {
     }
 
     auto args = e->Args();
-    CheckOperandsMatchTarget(e, e->ArgsOperandOffset(), args.Length(), e->ControlInstruction(),
+    CheckOperandsMatchTarget(e, e->ArgsOperandOffset(), args.size(), e->ControlInstruction(),
                              e->ControlInstruction()->Results());
 
     tint::Switch(
@@ -4422,7 +4422,7 @@ void Validator::CheckNextIteration(const NextIteration* n) {
     }
 
     if (auto* body = loop->Body()) {
-        CheckOperandsMatchTarget(n, NextIteration::kArgsOperandOffset, n->Args().Length(), body,
+        CheckOperandsMatchTarget(n, NextIteration::kArgsOperandOffset, n->Args().size(), body,
                                  body->Params());
     }
 }

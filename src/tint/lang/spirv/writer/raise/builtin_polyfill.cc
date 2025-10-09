@@ -369,7 +369,7 @@ struct State {
 
         auto* access = ptr->Instruction()->As<core::ir::Access>();
         TINT_IR_ASSERT(ir, access);
-        TINT_IR_ASSERT(ir, access->Indices().Length() == 1u);
+        TINT_IR_ASSERT(ir, access->Indices().size() == 1u);
         TINT_IR_ASSERT(ir, access->Object()->Type()->UnwrapPtr()->Is<core::type::Struct>());
         auto* const_idx = access->Indices()[0]->As<core::ir::Constant>();
 
@@ -678,7 +678,7 @@ struct State {
         // Helper to get the next argument from the call, or nullptr if there are no more arguments.
         uint32_t arg_idx = 0;
         auto next_arg = [&]() {
-            return arg_idx < builtin->Args().Length() ? builtin->Args()[arg_idx++] : nullptr;
+            return arg_idx < builtin->Args().size() ? builtin->Args()[arg_idx++] : nullptr;
         };
 
         auto* texture = next_arg();
@@ -776,7 +776,7 @@ struct State {
         // Helper to get the next argument from the call, or nullptr if there are no more arguments.
         uint32_t arg_idx = 0;
         auto next_arg = [&]() {
-            return arg_idx < builtin->Args().Length() ? builtin->Args()[arg_idx++] : nullptr;
+            return arg_idx < builtin->Args().size() ? builtin->Args()[arg_idx++] : nullptr;
         };
 
         auto* component = next_arg();
@@ -850,7 +850,7 @@ struct State {
         // Helper to get the next argument from the call, or nullptr if there are no more arguments.
         uint32_t arg_idx = 0;
         auto next_arg = [&]() {
-            return arg_idx < builtin->Args().Length() ? builtin->Args()[arg_idx++] : nullptr;
+            return arg_idx < builtin->Args().size() ? builtin->Args()[arg_idx++] : nullptr;
         };
 
         auto* texture = next_arg();
@@ -909,7 +909,7 @@ struct State {
         // Helper to get the next argument from the call, or nullptr if there are no more arguments.
         uint32_t arg_idx = 0;
         auto next_arg = [&]() {
-            return arg_idx < builtin->Args().Length() ? builtin->Args()[arg_idx++] : nullptr;
+            return arg_idx < builtin->Args().size() ? builtin->Args()[arg_idx++] : nullptr;
         };
 
         auto* texture = next_arg();
@@ -948,7 +948,7 @@ struct State {
         // Helper to get the next argument from the call, or nullptr if there are no more arguments.
         uint32_t arg_idx = 0;
         auto next_arg = [&]() {
-            return arg_idx < builtin->Args().Length() ? builtin->Args()[arg_idx++] : nullptr;
+            return arg_idx < builtin->Args().size() ? builtin->Args()[arg_idx++] : nullptr;
         };
 
         auto* texture = next_arg();
@@ -1080,7 +1080,7 @@ struct State {
     /// Handle an inputAttachmentLoad() builtin.
     /// @param builtin the builtin call instruction
     void InputAttachmentLoad(core::ir::CoreBuiltinCall* builtin) {
-        TINT_IR_ASSERT(ir, builtin->Args().Length() == 1);
+        TINT_IR_ASSERT(ir, builtin->Args().size() == 1);
 
         auto* texture = builtin->Args()[0];
         // coords for input_attachment are always (0, 0)
@@ -1109,7 +1109,7 @@ struct State {
     /// builtins.
     /// @param builtin the builtin call instruction
     void SubgroupShuffle(core::ir::CoreBuiltinCall* builtin, bool clamp_subgroup_shuffle) {
-        TINT_IR_ASSERT(ir, builtin->Args().Length() == 2);
+        TINT_IR_ASSERT(ir, builtin->Args().size() == 2);
         // The second argument is either 'id' , 'delta', or 'mask'.
         // All must be bound by [0, 128)
         auto* arg2 = builtin->Args()[1];
@@ -1135,7 +1135,7 @@ struct State {
     /// Handle a SubgroupBroadcast() builtin.
     /// @param builtin the builtin call instruction
     void SubgroupBroadcast(core::ir::CoreBuiltinCall* builtin) {
-        TINT_IR_ASSERT(ir, builtin->Args().Length() == 2);
+        TINT_IR_ASSERT(ir, builtin->Args().size() == 2);
         auto* id = builtin->Args()[1];
         TINT_IR_ASSERT(ir, id->Is<core::ir::Constant>());
 
@@ -1148,7 +1148,7 @@ struct State {
     /// Handle a QuadBroadcast() builtin.
     /// @param builtin the builtin call instruction
     void QuadBroadcast(core::ir::CoreBuiltinCall* builtin) {
-        TINT_IR_ASSERT(ir, builtin->Args().Length() == 2);
+        TINT_IR_ASSERT(ir, builtin->Args().size() == 2);
         auto* id = builtin->Args()[1];
         TINT_IR_ASSERT(ir, id->Is<core::ir::Constant>());
 

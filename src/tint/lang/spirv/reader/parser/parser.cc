@@ -1767,7 +1767,7 @@ class Parser {
             for (auto incoming : loop->Continuing()->InboundSiblingBranches()) {
                 TINT_ASSERT(incoming->Is<core::ir::Continue>());
 
-                if (incoming->Args().Length() == loop->Continuing()->Params().Length()) {
+                if (incoming->Args().size() == loop->Continuing()->Params().Length()) {
                     continue;
                 }
 
@@ -1855,9 +1855,9 @@ class Parser {
                         // TODO(dsinclair): Need to change the break-if insertion if there happens
                         // to be exit values, but those are rare, so leave this for when we have
                         // test case.
-                        TINT_ASSERT(bi->ExitValues().IsEmpty());
+                        TINT_ASSERT(bi->ExitValues().empty());
 
-                        auto len = bi->NextIterValues().Length();
+                        auto len = bi->NextIterValues().size();
                         bi->PushOperand(value);
                         bi->SetNumNextIterValues(len + 1);
                     },
