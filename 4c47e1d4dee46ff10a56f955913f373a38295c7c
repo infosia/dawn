@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "570fae6b_29f66221",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 2609,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-10T10:39:22Z",
+      "side": 1,
+      "message": "The following code doesn\u0027t work for me locally. it always returns `undefined` despite passing values in C++.\n \n```\n{{{ gpu.makeGetEnum(\u0027swizzlePtr\u0027, \n      C_STRUCTS.WGPUTextureComponentSwizzle.r, \u0027ComponentSwizzle\u0027) }}}`\n```\n\n```cpp\n  wgpu::TextureViewDescriptor viewDesc \u003d {};\n  wgpu::TextureComponentSwizzleDescriptor swizzleDesc \u003d {};\n  swizzleDesc.swizzle.r \u003d wgpu::ComponentSwizzle::One;\n  swizzleDesc.swizzle.g \u003d wgpu::ComponentSwizzle::One;\n  swizzleDesc.swizzle.b \u003d wgpu::ComponentSwizzle::One;\n  swizzleDesc.swizzle.a \u003d wgpu::ComponentSwizzle::One;\n  viewDesc.nextInChain \u003d \u0026swizzleDesc;\n\n  wgpu::RenderPassColorAttachment attachment{\n      .view \u003d surfaceTexture.texture.CreateView(\u0026viewDesc),\n      .loadOp \u003d wgpu::LoadOp::Clear,\n      .storeOp \u003d wgpu::StoreOp::Store};\n```\n\nFWIW here are my local pointer values:\n```\n    \"texturePtr\": 92232,\n    \"descriptor\": 65472,\n    \"nextInChainPtr\": 65448,\n    \"sType\": 327751,\n    \"swizzleDescriptor\": 65448,\n    \"swizzlePtr\": 2 \u003c--- is this suspect?\n```",
+      "range": {
+        "startLine": 2609,
+        "startChar": 16,
+        "endLine": 2609,
+        "endChar": 115
+      },
+      "revId": "4c47e1d4dee46ff10a56f955913f373a38295c7c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
