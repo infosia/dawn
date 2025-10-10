@@ -16,6 +16,23 @@
       "message": "Triggering a CI led job to ensure that everything still works",
       "revId": "7b05551adcbbe142899b3b8935ddd9b70248ebb7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29d5dda8_311bdf60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-10T18:03:07Z",
+      "side": 1,
+      "message": "Both debug and release look happy\n\n* https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-mac-x64-builder-rel/2/infra\n* https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-mac-x64-sws-rel/3/infra\n* https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-mac-x64-builder-dbg/1/infra\n* https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-mac-x64-sws-dbg/1/infra",
+      "revId": "7b05551adcbbe142899b3b8935ddd9b70248ebb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
