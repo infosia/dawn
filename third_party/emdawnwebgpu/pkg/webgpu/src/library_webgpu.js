@@ -2590,8 +2590,46 @@ var LibraryWebGPU = {
   wgpuTextureCreateView__deps: ['emwgpuCreateTextureView'],
   wgpuTextureCreateView: (texturePtr, descriptor) => {
     var desc;
+
+    function makeComponentSwizzle(swizzlePtr, offset, defaultValue) {
+      const swizzleEnum = {{{ gpu.makeGetEnum('swizzlePtr', 'offset', 'ComponentSwizzle') }}};
+      switch (swizzleEnum) {
+        case "one":
+          return "1";
+        case "zero":
+          return "0";
+        case "r":
+          return "r";
+        case "g":
+          return "g";
+        case "b":
+          return "b";
+        case "a":
+          return "a";
+        default:
+          return defaultValue;
+      }
+    }
+
     if (descriptor) {
-      {{{ gpu.makeCheckDescriptor('descriptor') }}}
+      var swizzle;
+      var nextInChainPtr = {{{ makeGetValue('descriptor', C_STRUCTS.WGPUTextureViewDescriptor.nextInChain, '*') }}};
+      if (nextInChainPtr !== 0) {
+        var sType = {{{ makeGetValue('nextInChainPtr', C_STRUCTS.WGPUChainedStruct.sType, 'i32') }}};
+#if ASSERTIONS
+        assert(sType === {{{ gpu.SType.TextureComponentSwizzleDescriptor }}});
+        assert(0 === {{{ makeGetValue('nextInChainPtr', gpu.kOffsetOfNextInChainMember, '*') }}});
+#endif
+        var swizzleDescriptor = nextInChainPtr;
+        {{{ gpu.makeCheckDescriptor('swizzleDescriptor') }}}
+        var swizzlePtr = swizzleDescriptor + {{{ C_STRUCTS.WGPUTextureComponentSwizzleDescriptor.swizzle }}};
+        var r = makeComponentSwizzle(swizzlePtr, {{{ C_STRUCTS.WGPUTextureComponentSwizzle.r }}}, 'r');
+        var g = makeComponentSwizzle(swizzlePtr, {{{ C_STRUCTS.WGPUTextureComponentSwizzle.g }}}, 'g');
+        var b = makeComponentSwizzle(swizzlePtr, {{{ C_STRUCTS.WGPUTextureComponentSwizzle.b }}}, 'b');
+        var a = makeComponentSwizzle(swizzlePtr, {{{ C_STRUCTS.WGPUTextureComponentSwizzle.a }}}, 'a');
+        swizzle = `${r}${g}${b}${a}`;
+      }
+
       var mipLevelCount = {{{ makeGetValue('descriptor', C_STRUCTS.WGPUTextureViewDescriptor.mipLevelCount, 'u32') }}};
       var arrayLayerCount = {{{ makeGetValue('descriptor', C_STRUCTS.WGPUTextureViewDescriptor.arrayLayerCount, 'u32') }}};
       desc = {
@@ -2604,6 +2642,7 @@ var LibraryWebGPU = {
         "baseArrayLayer": {{{ makeGetValue('descriptor', C_STRUCTS.WGPUTextureViewDescriptor.baseArrayLayer, 'u32') }}},
         "arrayLayerCount": arrayLayerCount === {{{ gpu.ARRAY_LAYER_COUNT_UNDEFINED }}} ? undefined : arrayLayerCount,
         "aspect": {{{ gpu.makeGetEnum('descriptor', C_STRUCTS.WGPUTextureViewDescriptor.aspect, 'TextureAspect') }}},
+        "swizzle": swizzle,
       };
     }
 
