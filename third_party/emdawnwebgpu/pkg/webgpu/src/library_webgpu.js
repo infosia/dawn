@@ -2633,11 +2633,6 @@ var LibraryWebGPU = {
     return WebGPU.TextureFormat.indexOf(texture.format);
   },
 
-  wgpuTextureGetHeight: (texturePtr) => {
-    var texture = WebGPU.getJsObject(texturePtr);
-    return texture.height;
-  },
-
   wgpuTextureGetMipLevelCount: (texturePtr) => {
     var texture = WebGPU.getJsObject(texturePtr);
     return texture.mipLevelCount;
