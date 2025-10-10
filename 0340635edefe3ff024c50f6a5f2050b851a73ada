@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cd9fd56_04af3f53",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-10T20:11:10Z",
+      "side": 1,
+      "message": "Hey Loko, as a owner will you do a +2? Corentin already did a +1 but it\u0027s lost after some non-substantial modification. Thanks!",
+      "revId": "0340635edefe3ff024c50f6a5f2050b851a73ada",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
