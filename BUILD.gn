@@ -68,6 +68,9 @@ group("tests") {
     "src/dawn/tests",
     "src/tint:tests",
   ]
+  if (dawn_wasm) {
+    deps += [ "src/emdawnwebgpu:tests(//build/toolchain/wasm:wasm)" ]
+  }
   if (dawn_build_node_bindings) {
     deps += [ "scripts/dawn_node_cts" ]
   }
@@ -77,7 +80,7 @@ group("cmds") {
   deps = [ "src/tint:cmds" ]
   if ((target_cpu == "x64" && (is_win || is_linux || is_mac)) ||
       (target_cpu == "arm64" && is_win)) {
-    deps += [ "third_party/gn/dxc:dxc" ]
+    deps += [ "third_party/gn/dxc" ]
   }
 }
 
@@ -88,7 +91,7 @@ group("samples") {
   }
   if ((target_cpu == "x64" && (is_win || is_linux || is_mac)) ||
       (target_cpu == "arm64" && is_win)) {
-    deps += [ "third_party/gn/dxc:dxc" ]
+    deps += [ "third_party/gn/dxc" ]
   }
 }
 
@@ -97,13 +100,9 @@ group("android") {
 }
 
 group("emdawnwebgpu") {
-  # Without a copy of Emscripten, we can only generate a few files.
-  deps = [
-    "src/emdawnwebgpu:emdawnwebgpu_headers_gen",
-    "src/emdawnwebgpu:emdawnwebgpu_js_gen",
-  ]
-  if (is_wasm) {
-    deps += [ "src/emdawnwebgpu:emdawnwebgpu" ]
+  deps = []
+  if (dawn_wasm) {
+    deps += [ "src/emdawnwebgpu(//build/toolchain/wasm:wasm)" ]
   }
 }
 
