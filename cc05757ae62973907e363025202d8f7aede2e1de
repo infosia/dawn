@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53b32bcd_e8865c0b",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 2604,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-10T22:13:00Z",
+      "side": 1,
+      "message": "`WGPUTextureComponentSwizzleDescriptor::swizzle` is not a pointer, it\u0027s an inline struct. To get the pointer to the inline struct looks something like this:\n\n```suggestion\n        var swizzlePtr \u003d swizzleDescriptor + {{{ C_STRUCTS.WGPUTextureComponentSwizzleDescriptor.swizzle }}};\n```",
+      "revId": "cc05757ae62973907e363025202d8f7aede2e1de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a7caaf1_ff6dde3f",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 2606,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-10T22:13:00Z",
+      "side": 1,
+      "message": "Needs to do whatever Dawn does. Which I think is defaulting?",
+      "revId": "cc05757ae62973907e363025202d8f7aede2e1de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
