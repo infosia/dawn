@@ -33,6 +33,23 @@
       "message": "Both debug and release look happy\n\n* https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-mac-x64-builder-rel/2/infra\n* https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-mac-x64-sws-rel/3/infra\n* https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-mac-x64-builder-dbg/1/infra\n* https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-mac-x64-sws-dbg/1/infra",
       "revId": "7b05551adcbbe142899b3b8935ddd9b70248ebb7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f96b116f_f1dbacca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-10T18:32:39Z",
+      "side": 1,
+      "message": "You\u0027ve meant CQ+2",
+      "revId": "7b05551adcbbe142899b3b8935ddd9b70248ebb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
