@@ -343,6 +343,7 @@ if (is_win || is_linux || is_chromeos || is_mac || is_fuchsia || is_android ||
       "WeakRef.h",
       "WeakRefSupport.cpp",
       "WeakRefSupport.h",
+      "dawn_version.cpp",
       "egl_platform.h",
       "ityp_array.h",
       "ityp_bitset.h",
@@ -359,7 +360,7 @@ if (is_win || is_linux || is_chromeos || is_mac || is_fuchsia || is_android ||
       ":dawn_gpu_info_gen",
       ":dawn_version_gen",
       "${dawn_root}/src/dawn/partition_alloc:raw_ptr",
-      "${dawn_root}/src/utils:utils",
+      "${dawn_root}/src/utils",
     ]
 
     if (is_apple) {
