@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7714f915_07e9f6bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3418012
+      },
+      "writtenOn": "2025-10-10T03:40:46Z",
+      "side": 1,
+      "message": "Thanks for your review, I\u0027ve reduced the size of this CL and will make the remaining changes in subsequent CLs.",
+      "parentUuid": "cb57e00e_641831f8",
+      "revId": "0d1bc23b355deb154e04a3a8d8fab22811a5d079",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dadeaeb6_abba5b81",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-10-09T15:14:04Z",
       "side": 1,
       "message": "Why did this one change?",
+      "revId": "0d1bc23b355deb154e04a3a8d8fab22811a5d079",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7e3f079_fa935715",
+        "filename": "src/tint/lang/core/ir/break_if.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 3418012
+      },
+      "writtenOn": "2025-10-10T03:40:46Z",
+      "side": 1,
+      "message": "Already reverted",
+      "parentUuid": "dadeaeb6_abba5b81",
       "revId": "0d1bc23b355deb154e04a3a8d8fab22811a5d079",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddbc5702_71139a3b",
+        "filename": "src/tint/lang/core/ir/clone_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3418012
+      },
+      "writtenOn": "2025-10-10T03:40:46Z",
+      "side": 1,
+      "message": "This change no longer exists in the new PS.",
+      "parentUuid": "3bf808c2_efd91d47",
+      "revId": "0d1bc23b355deb154e04a3a8d8fab22811a5d079",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be21352b_3a0696b5",
@@ -86,6 +140,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "70871bf8_a5af45a9",
+        "filename": "src/tint/lang/core/ir/clone_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 3418012
+      },
+      "writtenOn": "2025-10-10T03:40:46Z",
+      "side": 1,
+      "message": "This change no longer exists in the new PS.",
+      "parentUuid": "be21352b_3a0696b5",
+      "revId": "0d1bc23b355deb154e04a3a8d8fab22811a5d079",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8cf9dbdf_cca23cc9",
@@ -99,6 +171,24 @@
       "writtenOn": "2025-10-09T15:14:04Z",
       "side": 1,
       "message": "Why was this added?",
+      "revId": "0d1bc23b355deb154e04a3a8d8fab22811a5d079",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "533eda4c_ba62e853",
+        "filename": "src/tint/lang/core/ir/transform/remove_terminator_args.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3418012
+      },
+      "writtenOn": "2025-10-10T03:40:46Z",
+      "side": 1,
+      "message": "This is to fix the following failed:\n\n```\n[----------] 11 tests from IR_RemoveTerminatorArgsTest\n[ RUN      ] IR_RemoveTerminatorArgsTest.NoModify_If\n[       OK ] IR_RemoveTerminatorArgsTest.NoModify_If (0 ms)\n[ RUN      ] IR_RemoveTerminatorArgsTest.NoModify_Switch\n[       OK ] IR_RemoveTerminatorArgsTest.NoModify_Switch (0 ms)\n[ RUN      ] IR_RemoveTerminatorArgsTest.NoModify_Loop\n[       OK ] IR_RemoveTerminatorArgsTest.NoModify_Loop (0 ms)\n[ RUN      ] IR_RemoveTerminatorArgsTest.IfResults\n[       OK ] IR_RemoveTerminatorArgsTest.IfResults (0 ms)\n[ RUN      ] IR_RemoveTerminatorArgsTest.SwitchResults\n[       OK ] IR_RemoveTerminatorArgsTest.SwitchResults (0 ms)\n[ RUN      ] IR_RemoveTerminatorArgsTest.Loop_Results\n[       OK ] IR_RemoveTerminatorArgsTest.Loop_Results (0 ms)\n[ RUN      ] IR_RemoveTerminatorArgsTest.Loop_BodyParams\ngen/third_party/libc++/src/include/span:516: libc++ Hardening assertion __count \u003c\u003d size() - __offset failed: span\u003cT\u003e::subspan(offset, count): offset + count out of range\nAborted                    (core dumped) out/test/tint_unittests\n```",
+      "parentUuid": "8cf9dbdf_cca23cc9",
       "revId": "0d1bc23b355deb154e04a3a8d8fab22811a5d079",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
