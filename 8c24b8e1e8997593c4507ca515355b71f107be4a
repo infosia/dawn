@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5d54dc7_a176992a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-10T17:46:05Z",
+      "side": 1,
+      "message": "uh-oh. Looks like we lost corentine\u0027s owner+1 during one modification.",
+      "revId": "8c24b8e1e8997593c4507ca515355b71f107be4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
