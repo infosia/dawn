@@ -189,4 +189,27 @@ if (is_wasm) {
       "../../third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
     ]
   }
+
+  # Tests
+
+  source_set("emdawnwebgpu_tests") {
+    deps = [ ":emdawnwebgpu" ]
+    sources = [
+      "tests/FuturesTests.cpp",
+      "tests/SpotTests.cpp",
+    ]
+  }
+
+  executable("emdawnwebgpu_tests_asyncify") {
+    deps = [ ":emdawnwebgpu_tests" ]
+    ldflags = [
+      "-sASYNCIFY=1",
+      "-sASYNCIFY_STACK_SIZE=10000",  # Needed when building with ASAN.
+    ]
+  }
+
+  executable("emdawnwebgpu_tests_jspi") {
+    deps = [ ":emdawnwebgpu_tests" ]
+    ldflags = [ "-sJSPI=1" ]
+  }
 }
