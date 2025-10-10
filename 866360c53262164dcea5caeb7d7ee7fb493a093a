@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "591b0ec9_5f91552b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-10T19:53:03Z",
+      "side": 1,
+      "message": "PTAL\n\nled runs look happy:\n\n* https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-linux-x64-builder-rel/3/infra\n* https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-linux-x64-sws-rel/6/infra\n* https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-linux-x86-builder-rel/1/infra\n* https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-linux-x86-sws-rel/1/infra\n* https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-linux-x64-builder-dbg/1/infra\n* https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-linux-x64-sws-dbg/1/infra",
+      "revId": "866360c53262164dcea5caeb7d7ee7fb493a093a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
