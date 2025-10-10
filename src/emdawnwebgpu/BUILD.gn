@@ -206,8 +206,10 @@ if (is_wasm) {
     cflags = []
     ldflags = [
       "-Wno-limited-postlink-optimizations",
-      # TODO(crbug.com/450959456): We should enable Closure, but it is missing
-      # from the CQ builders. Fix this.
+
+      # Always build with Closure, even in debug, for its static analysis checks
+      # and to test the externs.
+      "--closure=1",
     ]
 
     # is_asan and is_ubsan are never true when using the Emscripten toolchain,
