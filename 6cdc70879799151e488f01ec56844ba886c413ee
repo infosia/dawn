@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0d9bf2d_a197f0cd",
+        "filename": "BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-10T21:24:46Z",
+      "side": 0,
+      "message": "AFAICT this was doing nothing because is_wasm is always false at the toplevel (see commit message - it only becomes true when the default toolchain is wasm, which happens with loading a file with the `(//build/toolchain/wasm:wasm)` suffix). Let me know if this seems wrong to you.",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 105,
+        "endChar": 13
+      },
+      "revId": "6cdc70879799151e488f01ec56844ba886c413ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
