@@ -1,5 +1,7 @@
 #include <cstring>
 #include <webgpu/webgpu.h>
+// Also test that webgpu_cpp.h compiles, even though we don't use it below.
+#include <webgpu/webgpu_cpp.h>
 
 namespace {
 
