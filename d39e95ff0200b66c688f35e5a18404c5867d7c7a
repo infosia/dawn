@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e36b512f_fb2c0bdf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-10T12:23:32Z",
+      "side": 1,
+      "message": "LGTM with nits.\n\nThanks for doing this!",
+      "revId": "d39e95ff0200b66c688f35e5a18404c5867d7c7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dae2dacb_81d13e14",
@@ -14,6 +31,91 @@
       "writtenOn": "2025-10-09T23:30:30Z",
       "side": 1,
       "message": "Since the point of this change is to make it easier to understand, please specifically review for readability.",
+      "revId": "d39e95ff0200b66c688f35e5a18404c5867d7c7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20fab8cb_957124ad",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-10T12:23:32Z",
+      "side": 1,
+      "message": "We could save this",
+      "revId": "d39e95ff0200b66c688f35e5a18404c5867d7c7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c0fa68d_2fc42882",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-10T12:23:32Z",
+      "side": 1,
+      "message": "How about moving this at the top and set `hasShaderUsages` after only when it\u0027s needed? And maybe move `viewMtlFormatDiffers` as the first parameter as it\u0027s most the important one.",
+      "revId": "d39e95ff0200b66c688f35e5a18404c5867d7c7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b95ede1_d7d8c145",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-10T12:23:32Z",
+      "side": 1,
+      "message": "Why not pass `swizzle.has_value()` instead of `swizzle` since it\u0027s only what we use?",
+      "revId": "d39e95ff0200b66c688f35e5a18404c5867d7c7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "caf3ff02_9ea623dd",
+        "filename": "src/dawn/native/metal/UtilsMetal.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-10T12:23:32Z",
+      "side": 1,
+      "message": "I\u0027ve noticed it\u0027s used in `[1]`, maybe by Graphite.",
+      "revId": "d39e95ff0200b66c688f35e5a18404c5867d7c7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b36c1cb_470bb749",
+        "filename": "src/dawn/native/metal/UtilsMetal.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-10T12:23:32Z",
+      "side": 1,
+      "message": "[1]",
       "revId": "d39e95ff0200b66c688f35e5a18404c5867d7c7a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
