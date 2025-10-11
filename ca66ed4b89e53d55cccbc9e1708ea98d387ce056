@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fabaae8_75757b2b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-11T06:47:47Z",
+      "side": 1,
+      "message": "Note here how you\u0027ve tested this (even if it was just a local test)\n\nOr, add a very simple test to SpotTests.cpp (something that will make sure it doesn\u0027t crash and doesn\u0027t produce totally invalid swizzle strings)",
+      "revId": "ca66ed4b89e53d55cccbc9e1708ea98d387ce056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "019c1491_2247875f",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 2600,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-11T06:47:47Z",
+      "side": 1,
+      "message": "This mapping could be done in makeGetEnum by setting the representation in\n`dawn.json` using `\"jsrepr\": \"\u00271\u0027\"`\n\nand then the simple `|| \u0027r\u0027` you had before should work.",
+      "range": {
+        "startLine": 2597,
+        "startChar": 0,
+        "endLine": 2600,
+        "endChar": 21
+      },
+      "revId": "ca66ed4b89e53d55cccbc9e1708ea98d387ce056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
