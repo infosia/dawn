@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "654cbf95_6bbed1c8",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-11T05:39:50Z",
+      "side": 1,
+      "message": "I was indeed the start of a comment that I thought I\u0027ve discarded. Sorry for that.",
+      "parentUuid": "40809154_287fba22",
+      "revId": "d39e95ff0200b66c688f35e5a18404c5867d7c7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c0fa68d_2fc42882",
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "I prefer this for type safety. If there are multiple arguments of the same type (since I added another `bool`), then it becomes too easy to mix them up when calling the function.",
       "parentUuid": "9b95ede1_d7d8c145",
+      "revId": "d39e95ff0200b66c688f35e5a18404c5867d7c7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "843a8d18_2b0605fe",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-11T05:39:50Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5b9829f2_1fd25155",
       "revId": "d39e95ff0200b66c688f35e5a18404c5867d7c7a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
