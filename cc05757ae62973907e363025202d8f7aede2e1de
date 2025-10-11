@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "92ebeb04_3b7101c3",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 2604,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-11T05:40:29Z",
+      "side": 1,
+      "message": "Thank you!",
+      "parentUuid": "53b32bcd_e8865c0b",
+      "revId": "cc05757ae62973907e363025202d8f7aede2e1de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5a7caaf1_ff6dde3f",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-10-10T22:13:00Z",
       "side": 1,
       "message": "Needs to do whatever Dawn does. Which I think is defaulting?",
+      "revId": "cc05757ae62973907e363025202d8f7aede2e1de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fab4ab1_bfbdbac9",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 2606,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-11T05:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7caaf1_ff6dde3f",
       "revId": "cc05757ae62973907e363025202d8f7aede2e1de",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
