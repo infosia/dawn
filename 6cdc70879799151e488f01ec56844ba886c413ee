@@ -22,6 +22,30 @@
       },
       "revId": "6cdc70879799151e488f01ec56844ba886c413ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b610e17_f3e52d3e",
+        "filename": "BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-13T17:36:25Z",
+      "side": 0,
+      "message": "My understanding is that `is_wasm` will also be true when we specifically tell a target to be built via the wasm toolchain, i.e. via `(//build/toolchain/wasm:wasm)`. Previously, in the `samples` target, because we additionally specify to build the samples with the wasm, any dependencies that the samples need are rebuilt in a subdir where `is_wasm` is effectively true throughout the BUILD files used to generate the targets.\n\nThat said, I agree that this `is_wasm` probably wasn\u0027t doing much since this target was never built with the wasm toolchain anywhere. I think in particular it makes sense to use `dawn_wasm` in this `BUILD` file because we are essentially just trying to decide what defaults should be built when building all of Dawn. All that is to say that this LGTM!",
+      "parentUuid": "a0d9bf2d_a197f0cd",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 105,
+        "endChar": 13
+      },
+      "revId": "6cdc70879799151e488f01ec56844ba886c413ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

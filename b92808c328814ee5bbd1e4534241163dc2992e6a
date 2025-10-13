@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e101d20_729db315",
+        "filename": "BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-13T17:36:25Z",
+      "side": 1,
+      "message": "Do you feel strongly that we need emscripten specific targets on top of how the default Dawn targets already conditionally build the wasm toolchain targets conditionally?\n\nI guess for development it could be useful to build only the wasm targets to iterate, but in general, it feels like it would be good to build both the native and wasm targets in almost all cases to ensure compatibility?",
+      "range": {
+        "startLine": 119,
+        "startChar": 7,
+        "endLine": 119,
+        "endChar": 23
+      },
+      "revId": "b92808c328814ee5bbd1e4534241163dc2992e6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
