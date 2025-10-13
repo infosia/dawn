@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0fdee76_d91fad26",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-13T19:14:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32d0f5c7_cc96b256",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c1e3e0f9_66a41d86",
@@ -79,6 +97,30 @@
       "side": 1,
       "message": "This is only specific to object with contents, so buffers, textures, and querysets. But also it more explicitly explains that all it does is put the buffer\u0027s bytes in the trace, but doesn\u0027t handle the descriptor or putting the WriteBuffer in the trace.",
       "parentUuid": "8cd4e42a_a9f060cf",
+      "range": {
+        "startLine": 189,
+        "startChar": 19,
+        "endLine": 189,
+        "endChar": 37
+      },
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84f71188_01b750c2",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-13T19:14:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6834fe1_84215940",
       "range": {
         "startLine": 189,
         "startChar": 19,
@@ -261,6 +303,24 @@
       "side": 1,
       "message": "[2]\n\nI did look at the tests (and I actually spent an hour reviewing this to try to understand why state was added). None of them do a map between two submits and as far as I can tell the current tests would pass with the suggested simplifications.\n\nIt makes sense that if we only track queue operations, then mapping wouldn\u0027t be visible in the trace. AFAIK it is the only non-queue operation that updates the contents of a resources, so WDYT of adding the data updates to the trace as a WriteBuffer in UnmapImpl instead? This way users will see the data uploads that they do and we avoid the need to track multiple additional booleans per recordable objects (that we have to statefully update in all the places in the backend that touch buffer/texture).",
       "parentUuid": "3f0b4a7c_d23aa9b6",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec36f420_a895ad3d",
+        "filename": "src/dawn/native/webgpu/RecordableObject.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-13T19:14:45Z",
+      "side": 1,
+      "message": "I think doing it unmapimpl is a distraction to the user. The buffer might not be used again even if they did update it. The current impl is \"on submit, upload all resources needed for the submit\".  The user can do map/unmap/map/unmap many times before submitting but we only need to capture once and only if the buffer is actually used.",
+      "parentUuid": "0b4d1b48_dba7ffd6",
       "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
