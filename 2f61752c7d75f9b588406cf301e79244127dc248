@@ -345,6 +345,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "64b45c57_69d00898",
+        "filename": "src/dawn/native/webgpu/RecordableObject.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-13T21:42:55Z",
+      "side": 1,
+      "message": "capturing at unmap really doesn\u0027t make sense given the design. We only capture buffers used on the `queue`. A buffer never used on the queue, from the POV of capture, doesn\u0027t exist, but the user can still map and unmap it.",
+      "parentUuid": "f20afd4e_12065f79",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cc84ac31_d5187a69",
         "filename": "src/dawn/native/webgpu/RecordableObject.h",
         "patchSetId": 5
