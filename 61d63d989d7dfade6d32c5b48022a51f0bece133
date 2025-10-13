@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c6157ea_2dd38b8f",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-13T19:14:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e78f749b_75408639",
+      "revId": "61d63d989d7dfade6d32c5b48022a51f0bece133",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd186b4e_ca75a67c",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d4070fa_37eb396c",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-13T19:14:59Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "bd186b4e_ca75a67c",
+      "revId": "61d63d989d7dfade6d32c5b48022a51f0bece133",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b0a5637f_26ce5237",
@@ -48,6 +84,24 @@
       "writtenOn": "2025-10-13T10:59:05Z",
       "side": 1,
       "message": "[continuation of the comment above] Uuuuh wait, we have a `QueueSubmitCommand` that is directly followed by a list of encoder commands that are \"inlined\" in the submit? This makes the trace format differ quite a lot from the structure of the API for not much gain. Can we instead capture command buffers like an immutable object with IDs and pass these IDs to the `RootCommandQueueSubmitCmd`?",
+      "revId": "61d63d989d7dfade6d32c5b48022a51f0bece133",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f72a0fc2_27412550",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-13T19:14:59Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "b0a5637f_26ce5237",
       "revId": "61d63d989d7dfade6d32c5b48022a51f0bece133",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
