@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "ad338a6b_7fe78953",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T09:52:31Z",
+      "side": 1,
+      "message": "LGTM, thanks for the fix and cleanups / reordering, it will be useful!\n\nPlease try to add only a few reviewers so it\u0027s clear who needs to take a detailed look and who is just in CC.",
+      "revId": "d9081a5e760dd835ecc4d041560d1d8bfe230dcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "d2beb47a_481652c4",
         "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
         "patchSetId": 1
