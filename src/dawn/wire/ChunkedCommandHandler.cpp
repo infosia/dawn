@@ -46,54 +46,40 @@ ChunkedCommandHandler::~ChunkedCommandHandler() = default;
 
 const volatile char* ChunkedCommandHandler::HandleCommands(const volatile char* commands,
                                                            size_t size) {
-    if (mChunkedCommandRemainingSize > 0) {
-        // If there is a chunked command in flight, append the command data.
-        // We append at most |mChunkedCommandRemainingSize| which is enough to finish the
-        // in-flight chunked command, and then pass the rest along to a second call to
-        // |HandleCommandsImpl|.
-        size_t chunkSize = std::min(size, mChunkedCommandRemainingSize);
-
-        memcpy(mChunkedCommandData.get() + mChunkedCommandPutOffset,
-               const_cast<const char*>(commands), chunkSize);
-        mChunkedCommandPutOffset += chunkSize;
-        mChunkedCommandRemainingSize -= chunkSize;
-
-        commands += chunkSize;
-        size -= chunkSize;
-
-        if (mChunkedCommandRemainingSize == 0) {
-            // Once the chunked command is complete, pass the data to the command handler
-            // implemenation.
-            auto chunkedCommandData = std::move(mChunkedCommandData);
-            if (HandleCommandsImpl(chunkedCommandData.get(), mChunkedCommandPutOffset) == nullptr) {
-                // |HandleCommandsImpl| returns nullptr on error. Forward any errors
-                // out.
-                return nullptr;
-            }
-        }
-    }
-
     return HandleCommandsImpl(commands, size);
 }
 
-ChunkedCommandHandler::ChunkedCommandsResult ChunkedCommandHandler::BeginChunkedCommandData(
-    const volatile char* commands,
-    size_t commandSize,
-    size_t initialSize) {
-    DAWN_ASSERT(!mChunkedCommandData);
+WireResult ChunkedCommandHandler::HandleChunkedCommand(DeserializeBuffer* deserializeBuffer) {
+    ChunkedCommandCmd cmd;
+    WIRE_TRY(cmd.Deserialize(deserializeBuffer, &mAllocator));
 
-    // Reserve space for all the command data we're expecting, and copy the initial data
-    // to the start of the memory.
-    mChunkedCommandData.reset(AllocNoThrow<char>(commandSize));
-    if (!mChunkedCommandData) {
-        return ChunkedCommandsResult::Error;
+    ChunkedCommand* chunkedCommand = nullptr;
+    if (auto it = mChunkedCommands.find(cmd.id); it != mChunkedCommands.end()) {
+        chunkedCommand = &(it->second);
+    } else {
+        ChunkedCommand newChunkedCommand;
+        newChunkedCommand.data.reset(AllocNoThrow<char>(cmd.size));
+        newChunkedCommand.remainingSize = cmd.size;
+        mChunkedCommands.insert({cmd.id, std::move(newChunkedCommand)});
+        chunkedCommand = &mChunkedCommands[cmd.id];
+    }
+    DAWN_ASSERT(chunkedCommand);
+
+    DAWN_ASSERT(cmd.chunkSize <= chunkedCommand->remainingSize);
+    memcpy(chunkedCommand->data.get() + chunkedCommand->putOffset,
+           const_cast<const char*>(cmd.chunkData), cmd.chunkSize);
+    chunkedCommand->putOffset += cmd.chunkSize;
+    chunkedCommand->remainingSize -= cmd.chunkSize;
+
+    if (chunkedCommand->remainingSize == 0) {
+        ChunkedCommand fullCommand = std::move(*chunkedCommand);
+        mChunkedCommands.erase(cmd.id);
+        if (HandleCommandsImpl(fullCommand.data.get(), fullCommand.putOffset) == nullptr) {
+            return WireResult::FatalError;
+        }
     }
 
-    memcpy(mChunkedCommandData.get(), const_cast<const char*>(commands), initialSize);
-    mChunkedCommandPutOffset = initialSize;
-    mChunkedCommandRemainingSize = commandSize - initialSize;
-
-    return ChunkedCommandsResult::Consumed;
+    return WireResult::Success;
 }
 
 }  // namespace dawn::wire

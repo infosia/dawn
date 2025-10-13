@@ -283,7 +283,6 @@ class Server : public ServerBase {
 
 #include "dawn/wire/server/ServerPrototypes_autogen.inc"
 
-    WireDeserializeAllocator mAllocator;
     MutexProtected<ChunkedCommandSerializer> mSerializer;
     std::unique_ptr<MemoryTransferService> mOwnedMemoryTransferService = nullptr;
     raw_ptr<MemoryTransferService> mMemoryTransferService = nullptr;

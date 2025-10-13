@@ -29,6 +29,7 @@
 #define SRC_DAWN_WIRE_CHUNKEDCOMMANDSERIALIZER_H_
 
 #include <algorithm>
+#include <atomic>
 #include <cstring>
 #include <functional>
 #include <memory>
@@ -148,6 +149,7 @@ class ChunkedCommandSerializer {
 
     raw_ptr<CommandSerializer> mSerializer;
     size_t mMaxAllocationSize;
+    std::atomic<uint64_t> mNextChunkedCommandId = 0;
 };
 
 }  // namespace dawn::wire

@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <cstring>
 #include <memory>
 
 #include "dawn/common/StringViewUtils.h"
@@ -44,6 +45,38 @@ using testing::Ne;
 using testing::NonEmptySizedString;
 using testing::Return;
 using testing::SizedString;
+
+class WireWriteBufferTests : public WireTest {};
+
+// Tests that commands are serialized properly when they are too large and need to be chunked.
+TEST_F(WireWriteBufferTests, WriteBufferChunkedCommands) {
+    WGPUBuffer apiBuffer = api.GetNewBuffer();
+
+    // This is the maximum that is allowed to be serialized at a time for a single command before it
+    // starts to get chunked.
+    static size_t kMaxWireAllocationSize = GetC2SMaxAllocationSize();
+
+    wgpu::BufferDescriptor desc = {};
+    desc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::MapRead;
+    desc.size = kMaxWireAllocationSize;
+    wgpu::Buffer buffer = device.CreateBuffer(&desc);
+    EXPECT_CALL(api, DeviceCreateBuffer(apiDevice, _))
+        .WillOnce(Return(apiBuffer))
+        .RetiresOnSaturation();
+    FlushClient();
+
+    auto expected = std::make_unique<uint8_t[]>(kMaxWireAllocationSize);
+    std::memset(expected.get(), 0b10101010, kMaxWireAllocationSize);
+    queue.WriteBuffer(buffer, 0, expected.get(), kMaxWireAllocationSize);
+
+    EXPECT_CALL(api, QueueWriteBuffer(
+                         apiQueue, apiBuffer, 0, MatchesLambda([&](void const* actual) {
+                             return !std::memcmp(expected.get(), actual, kMaxWireAllocationSize);
+                         }),
+                         kMaxWireAllocationSize))
+        .Times(1);
+    FlushClient();
+}
 
 using WireQueueTestBase = WireFutureTest<wgpu::QueueWorkDoneCallback<void>*>;
 class WireQueueTests : public WireQueueTestBase {
