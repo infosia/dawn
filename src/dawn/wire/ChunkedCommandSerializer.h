@@ -29,6 +29,7 @@
 #define SRC_DAWN_WIRE_CHUNKEDCOMMANDSERIALIZER_H_
 
 #include <algorithm>
+#include <atomic>
 #include <cstring>
 #include <functional>
 #include <memory>
@@ -74,6 +75,10 @@ WireResult SerializeCommandExtension(SerializeBuffer* serializeBuffer,
 class ChunkedCommandSerializer {
   public:
     explicit ChunkedCommandSerializer(CommandSerializer* serializer);
+
+    // This utility function is intended only for disconnect situations where we want the serializer
+    // to appear to keep working even though we are no longer serializing and flushing commands.
+    void SetCommandSerializer(CommandSerializer* serializer);
 
     template <typename Cmd>
     void SerializeCommand(const Cmd& cmd) {
@@ -148,6 +153,7 @@ class ChunkedCommandSerializer {
 
     raw_ptr<CommandSerializer> mSerializer;
     size_t mMaxAllocationSize;
+    std::atomic<uint64_t> mNextChunkedCommandId = 0;
 };
 
 }  // namespace dawn::wire
