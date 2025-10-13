@@ -57,7 +57,9 @@ class NoopCommandSerializer final : public CommandSerializer {
 }  // anonymous namespace
 
 Client::Client(CommandSerializer* serializer, MemoryTransferService* memoryTransferService)
-    : ClientBase(), mSerializer(serializer), mMemoryTransferService(memoryTransferService) {
+    : ClientBase(),
+      mSerializer(std::make_unique<ChunkedCommandSerializer>(serializer)),
+      mMemoryTransferService(memoryTransferService) {
     if (mMemoryTransferService == nullptr) {
         // If a MemoryTransferService is not provided, fall back to inline memory.
         mOwnedMemoryTransferService = CreateInlineMemoryTransferService();
@@ -174,7 +176,7 @@ EventManager& Client::GetEventManager(const ObjectHandle& instance) {
 
 void Client::Disconnect() {
     mDisconnected = true;
-    mSerializer = ChunkedCommandSerializer(NoopCommandSerializer::GetInstance());
+    mSerializer = std::make_unique<ChunkedCommandSerializer>(NoopCommandSerializer::GetInstance());
 
     // Transition all event managers to ClientDropped state.
     for (auto& [_, eventManager] : mEventManagers) {

@@ -99,12 +99,12 @@ class Client : public ClientBase {
 
     template <typename Cmd>
     void SerializeCommand(const Cmd& cmd) {
-        mSerializer.SerializeCommand(cmd, *this);
+        mSerializer->SerializeCommand(cmd, *this);
     }
 
     template <typename Cmd, typename... Extensions>
     void SerializeCommand(const Cmd& cmd, Extensions&&... es) {
-        mSerializer.SerializeCommand(cmd, *this, std::forward<Extensions>(es)...);
+        mSerializer->SerializeCommand(cmd, *this, std::forward<Extensions>(es)...);
     }
 
     EventManager& GetEventManager(const ObjectHandle& instance);
@@ -142,8 +142,7 @@ class Client : public ClientBase {
 
 #include "dawn/wire/client/ClientPrototypes_autogen.inc"
 
-    ChunkedCommandSerializer mSerializer;
-    WireDeserializeAllocator mWireCommandAllocator;
+    std::unique_ptr<ChunkedCommandSerializer> mSerializer = nullptr;
     PerObjectType<ObjectStore> mObjects;
     std::unique_ptr<MemoryTransferService> mOwnedMemoryTransferService = nullptr;
     raw_ptr<MemoryTransferService> mMemoryTransferService = nullptr;
