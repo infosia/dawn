@@ -1,0 +1,49 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6551347_7c4af6de",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-13T13:35:54Z",
+      "side": 1,
+      "message": "Moved the \u0027ToNative(c, env, in, \u0026out);\u0027 to Line 71 for callback case. Because the complete thing need to be in a \"if (callback)\" block Line #57.\nWe can\u0027t leave not capturing the case because the callback case will fall through to Line #212.",
+      "fixSuggestions": [
+        {
+          "fixId": "89be372b_74ebfe9b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/kotlin_record_conversion.cpp",
+              "range": {
+                "startLine": 71,
+                "startChar": 0,
+                "endLine": 72,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "generator/templates/art/kotlin_record_conversion.cpp",
+              "range": {
+                "startLine": 134,
+                "startChar": 0,
+                "endLine": 135,
+                "endChar": 0
+              },
+              "replacement": "                    ToNative(c, env, in, \u0026out);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "cd84b018fda562a8135aaba1f217c30ab3016d64",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

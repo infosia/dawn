@@ -87,6 +87,24 @@
       "parentUuid": "323a1c37_656e9c77",
       "revId": "e87e96cc8a867f77b82c8971b9a9e8b3586666e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "296356b4_d73916f3",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-13T13:35:54Z",
+      "side": 1,
+      "message": "{% elif (has_callbackInfoStruct \u003d\u003d true and member.type.category \u003d\u003d \u0027callback function\u0027) or (member.type.category \u003d\u003d \u0027structure\u0027) %}\n\nCallback case was already there. I moved the \u0027ToNative(c, env, in, \u0026out);\u0027 to Line #71 because this should part of the if(callback).. which is Line #57\n\nWill discuss offline with you if it still doesn\u0027t make sense.",
+      "parentUuid": "376872b9_742dc556",
+      "revId": "e87e96cc8a867f77b82c8971b9a9e8b3586666e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
