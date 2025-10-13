@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e78f749b_75408639",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T10:59:05Z",
+      "side": 1,
+      "message": "Why is it required to be only one of these objects?",
+      "revId": "61d63d989d7dfade6d32c5b48022a51f0bece133",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd186b4e_ca75a67c",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T10:59:05Z",
+      "side": 1,
+      "message": "Is there any reason for this? Given that we capture the submit before capturing the command buffers, it seems that capturing unordered should be fine?\n\nIf capturing unordered is fine, then we can capture the resources directly in `CommandBuffer::Capture` for better encapsulation.",
+      "revId": "61d63d989d7dfade6d32c5b48022a51f0bece133",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0a5637f_26ce5237",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T10:59:05Z",
+      "side": 1,
+      "message": "[continuation of the comment above] Uuuuh wait, we have a `QueueSubmitCommand` that is directly followed by a list of encoder commands that are \"inlined\" in the submit? This makes the trace format differ quite a lot from the structure of the API for not much gain. Can we instead capture command buffers like an immutable object with IDs and pass these IDs to the `RootCommandQueueSubmitCmd`?",
+      "revId": "61d63d989d7dfade6d32c5b48022a51f0bece133",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
