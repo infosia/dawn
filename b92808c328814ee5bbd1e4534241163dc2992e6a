@@ -46,6 +46,30 @@
       },
       "revId": "b92808c328814ee5bbd1e4534241163dc2992e6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef465b04_af6da683",
+        "filename": "BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-13T23:32:23Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m a bit confused by that? Without these targets, wouldn\u0027t just doing `autoninja -C out/Debug` build everything by default (including the wasm targets assuming you have it setup)? Especially since you added the \n\n```\nif (dawn_wasm) {\n    deps +\u003d [ \":emdawnwebgpu_tests\" ]\n}\n```\n\nclause in the `test` target here?",
+      "parentUuid": "a3680e67_5819443c",
+      "range": {
+        "startLine": 119,
+        "startChar": 7,
+        "endLine": 119,
+        "endChar": 23
+      },
+      "revId": "b92808c328814ee5bbd1e4534241163dc2992e6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
