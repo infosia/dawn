@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32d0f5c7_cc96b256",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T10:49:52Z",
+      "side": 1,
+      "message": "Sounds like there should be TODO to revisit this scheme once we have more data on capture speed and workloads.",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1e3e0f9_66a41d86",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T10:49:52Z",
+      "side": 1,
+      "message": "Since this is a private method, it can have a more explicit name. For example:\n\n```suggestion\nMaybeError Buffer::AppendContentsToTrace(CaptureContext\u0026 captureContext) {\n```",
+      "range": {
+        "startLine": 189,
+        "startChar": 19,
+        "endLine": 189,
+        "endChar": 37
+      },
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1527cf1_a21658d4",
+        "filename": "src/dawn/native/webgpu/CaptureContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T10:49:52Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70f1eab4_8b60b503",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T10:49:52Z",
+      "side": 1,
+      "message": "Why would we need to recapture the object when `!newResource`?",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5311e39_32452b7d",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T10:49:52Z",
+      "side": 1,
+      "message": "Based on other comments, `isCapturing` might not be needed here.",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98f81b30_25df1831",
+        "filename": "src/dawn/native/webgpu/RecordableObject.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T10:49:52Z",
+      "side": 1,
+      "message": "I\u0027m not sure that I understand why we need all these pieces of state to know what to do with objects that have contents (buffers, textures, querysets). Won\u0027t we capture all the operations that may modify them, such that capturing their contents the first time that the `CaptureContext` sees them would be sufficient? This would handle the complexity mentioned here about the 2nd capture, as the CaptureContext should be reset for the second capture, and when `AddResource` is called, the object would be considered \"new\" for the capture and its contents captured.",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc84ac31_d5187a69",
+        "filename": "src/dawn/native/webgpu/RecordableObject.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T10:49:52Z",
+      "side": 1,
+      "message": "Why do we need to special case the buffers being initialized or not? Is it an optimization used to not readback a bunch of zeroes? As a first step we could just readback the zeroes IMHO. But also in `Buffer::CaptureContentImpl` we can look at [`IsInitialized`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Buffer.h;drc\u003d44d2b5fba87c4b77729b3b52c9352f1e629ed114;l\u003d125) to know if the buffer is uninitialized (hence as-if filled with zeroes) or initialized in which case it has already been used and should contain non-zeroes (unless the only use was to read it, but then the application is doing useless work, so it\u0027s fine for the capture to do useless work).\n\nThis might remove the need for the calls to `MarkAsNeedCapture` when resources are written to.",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1191c75_50a90bb7",
+        "filename": "src/dawn/tests/white_box/CaptureAndReplayTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T10:49:52Z",
+      "side": 1,
+      "message": "```suggestion\n// Before capture, creates a buffer and sets half of it with mappedAtCreation.\n```",
+      "range": {
+        "startLine": 184,
+        "startChar": 61,
+        "endLine": 184,
+        "endChar": 72
+      },
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
