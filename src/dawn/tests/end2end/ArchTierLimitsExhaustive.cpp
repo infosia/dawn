@@ -288,6 +288,7 @@ TEST_P(TierArchInfoTest_TieredMaxLimits, ExhaustiveTestAllFeatures) {
     TextureFormatsTier1,
     TextureFormatsTier2,
     PrimitiveIndex,
+    TextureComponentSwizzle,
     DawnInternalUsages,
     DawnMultiPlanarFormats,
     DawnNative,
@@ -345,7 +346,6 @@ TEST_P(TierArchInfoTest_TieredMaxLimits, ExhaustiveTestAllFeatures) {
     ChromiumExperimentalSubgroupMatrix,
     SharedFenceEGLSync,
     DawnDeviceAllocatorControl,
-    TextureComponentSwizzle,
     ChromiumExperimentalBindless,
     AdapterPropertiesWGPU,
     };
