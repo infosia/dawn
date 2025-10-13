@@ -327,6 +327,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f20afd4e_12065f79",
+        "filename": "src/dawn/native/webgpu/RecordableObject.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-13T21:04:02Z",
+      "side": 1,
+      "message": "I see the 2 approaches as:\n1. Record `buffer.unmap` as `queue.writeBuffer` inside `Buffer::UnmapImpl`. Capture gpu resource initial states once as first seen in capture context.\n2. Add states tracking to optimize recording of data updates by `buffer.unmap` (non-queue operation) and `clearBuffer` (initializing content)\n\n\n1 is the base line, basic and easy implementation.\n2 is the one-step further optimization implementation taking into account things like avoiding reading of unused unmapped buffer, and uninteresting initial 0s. But more error-prone with states managing.\n\n2.1 specializing initializing recording:\n 2.1.1 `clearBuffer` as Corentin pointed out it can set only a subset range so we should view them as unspecialized write operation.\n 2.1.2 empty render target texture: How can we tell if it\u0027s empty, if there\u0027s copy*ToTexture outside of capture context? Or render pass scissor rects + clear value. It seems there are many ways to make this dirty and it\u0027d be hard to track if we need to set `mHasData` to every places. I agree we can check [`Texture::IsInitialized`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Texture.h;bpv\u003d1;bpt\u003d1?q\u003dTextureBase%20f:dawn\u0026ss\u003dchromium). If it\u0027s false, we don\u0027t readback. Otherwise we just read back the initial value of the texture.\n\n\n2.2 avoid buffer with many unmap calls but unused.\n(I never forsee this far.) Great we think about this and make the optimization that only 1 readback at most, with one state.",
+      "parentUuid": "ec36f420_a895ad3d",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cc84ac31_d5187a69",
         "filename": "src/dawn/native/webgpu/RecordableObject.h",
         "patchSetId": 5
