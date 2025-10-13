@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c6834fe1_84215940",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T16:16:24Z",
+      "side": 1,
+      "message": "This is only specific to object with contents, so buffers, textures, and querysets. But also it more explicitly explains that all it does is put the buffer\u0027s bytes in the trace, but doesn\u0027t handle the descriptor or putting the WriteBuffer in the trace.",
+      "parentUuid": "8cd4e42a_a9f060cf",
+      "range": {
+        "startLine": 189,
+        "startChar": 19,
+        "endLine": 189,
+        "endChar": 37
+      },
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d1527cf1_a21658d4",
         "filename": "src/dawn/native/webgpu/CaptureContext.cpp",
         "patchSetId": 5
@@ -78,6 +102,24 @@
       "writtenOn": "2025-10-13T10:49:52Z",
       "side": 1,
       "message": "[1]",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "213db3fb_fb797b19",
+        "filename": "src/dawn/native/webgpu/CaptureContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T16:16:24Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d1527cf1_a21658d4",
       "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -113,6 +155,24 @@
       "side": 1,
       "message": "Start capture\nuse buffer in command (buffers are only captured if used in submit)\nsubmit calls AddResource for every used buffer\nuser calls mapAsync(write) / unmap\nuse buffer in command (buffers are only captured if used in submit)\nsubmit calls AddResource for every used buffer\n\nThe 2nd call to submit needs to recapture the buffer because the user modified it.",
       "parentUuid": "70f1eab4_8b60b503",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9ae7f34_687fdd66",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T16:16:24Z",
+      "side": 1,
+      "message": "Seems to be the same as the other comment thread at [2].",
+      "parentUuid": "e19cd66b_b3f072fd",
       "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -189,6 +249,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0b4d1b48_dba7ffd6",
+        "filename": "src/dawn/native/webgpu/RecordableObject.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T16:16:24Z",
+      "side": 1,
+      "message": "[2]\n\nI did look at the tests (and I actually spent an hour reviewing this to try to understand why state was added). None of them do a map between two submits and as far as I can tell the current tests would pass with the suggested simplifications.\n\nIt makes sense that if we only track queue operations, then mapping wouldn\u0027t be visible in the trace. AFAIK it is the only non-queue operation that updates the contents of a resources, so WDYT of adding the data updates to the trace as a WriteBuffer in UnmapImpl instead? This way users will see the data uploads that they do and we avoid the need to track multiple additional booleans per recordable objects (that we have to statefully update in all the places in the backend that touch buffer/texture).",
+      "parentUuid": "3f0b4a7c_d23aa9b6",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cc84ac31_d5187a69",
         "filename": "src/dawn/native/webgpu/RecordableObject.h",
         "patchSetId": 5
@@ -218,6 +296,24 @@
       "side": 1,
       "message": "\u003e Why do we need to special case the buffers being initialized or not? Is it an optimization used to not readback a bunch of zeroes? \n\nIt\u0027s generic for RecordableObject. We don\u0027t want to read back empty render targets do we? They are large. Further, there\u0027s `clearBuffer` (as in fill with data, call clearBuffer, then capture. No need to capture the buffer\u0027s contents even though it\u0027s been initialized).",
       "parentUuid": "cc84ac31_d5187a69",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a27f7ff2_bee4a800",
+        "filename": "src/dawn/native/webgpu/RecordableObject.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T16:16:24Z",
+      "side": 1,
+      "message": "For buffers, `clearBuffer` takes a range and a clear value so it\u0027s not the same as filling it with zeroes. For textures we can also query if they are initialized before doing a readback. A texture that\u0027s not initialized while used as a render target should be detectable in the WebGPU backend as backends are supposed to call [`LazyClearRenderPassAttachments`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/CommandBuffer.h;drc\u003d62a9a00176f862e688fa47919ed6f19b59f77b5f;l\u003d94) themselves (so they need to know the initialized status).",
+      "parentUuid": "1f686aa3_b8cb9aa3",
       "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
