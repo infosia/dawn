@@ -16,6 +16,40 @@
       "message": "I grouped and ordered device_map and AddDevice() with vendor names.",
       "revId": "d9081a5e760dd835ecc4d041560d1d8bfe230dcc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38e0878b_6e439c3e",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-10-13T07:13:50Z",
+      "side": 1,
+      "message": "Quallcomm Adreno X1 ones are newly added.",
+      "revId": "d9081a5e760dd835ecc4d041560d1d8bfe230dcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dafc4e2c_e18742ab",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-10-13T07:13:50Z",
+      "side": 1,
+      "message": "Quallcomm Adreno X1 ones are newly added.",
+      "revId": "d9081a5e760dd835ecc4d041560d1d8bfe230dcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
