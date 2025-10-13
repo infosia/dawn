@@ -22,6 +22,30 @@
       },
       "revId": "b92808c328814ee5bbd1e4534241163dc2992e6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3680e67_5819443c",
+        "filename": "BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-13T19:09:08Z",
+      "side": 1,
+      "message": "Initially I thought the same thing, but I did end up adding these for iteration because I was changing things* that affected the native targets too, because there isn\u0027t otherwise a way to build all the wasm targets.\n\n\\* specifically in trying to get the gmock_main changes working - we never used gmock_main before; incidentally realized that if we used our own main for those tests and then we might not have had the problem with `-fno-exceptions`, but seems fine now that it\u0027s solved",
+      "parentUuid": "8e101d20_729db315",
+      "range": {
+        "startLine": 119,
+        "startChar": 7,
+        "endLine": 119,
+        "endChar": 23
+      },
+      "revId": "b92808c328814ee5bbd1e4534241163dc2992e6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
