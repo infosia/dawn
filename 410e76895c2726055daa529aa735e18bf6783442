@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb9e2f99_5f86f1d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-13T11:00:23Z",
+      "side": 1,
+      "message": "No additional comments apart from comments in earlier CLs in the stack that will end up influencing this one.",
+      "revId": "410e76895c2726055daa529aa735e18bf6783442",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
