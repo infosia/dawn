@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcf689cd_96c4a053",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-13T07:22:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fabaae8_75757b2b",
+      "revId": "ca66ed4b89e53d55cccbc9e1708ea98d387ce056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "019c1491_2247875f",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-10-11T06:47:47Z",
       "side": 1,
       "message": "This mapping could be done in makeGetEnum by setting the representation in\n`dawn.json` using `\"jsrepr\": \"\u00271\u0027\"`\n\nand then the simple `|| \u0027r\u0027` you had before should work.",
+      "range": {
+        "startLine": 2597,
+        "startChar": 0,
+        "endLine": 2600,
+        "endChar": 21
+      },
+      "revId": "ca66ed4b89e53d55cccbc9e1708ea98d387ce056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3f47725_8f495fa8",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 2600,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-13T07:22:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "019c1491_2247875f",
       "range": {
         "startLine": 2597,
         "startChar": 0,
