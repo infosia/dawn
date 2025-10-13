@@ -33,6 +33,24 @@
       "message": "Is this section definitely an intended part of this CL?",
       "revId": "e87e96cc8a867f77b82c8971b9a9e8b3586666e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "323a1c37_656e9c77",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-13T07:37:53Z",
+      "side": 1,
+      "message": "Yes, if we don\u0027t do this, none of the if block\u0027s conditions will be met for this case, and it will fall through to this last else block (unreachable code), breaking the build.",
+      "parentUuid": "c7b4aac9_62efb220",
+      "revId": "e87e96cc8a867f77b82c8971b9a9e8b3586666e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
