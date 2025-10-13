@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "239e8bfc_45e5e52b",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-10-13T07:12:15Z",
+      "side": 0,
+      "message": "This is a duplicate of line 168.",
+      "revId": "3f79f3aefe0b0a498002564fcfb13eb21ab6c047",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92e13918_ed65c7ca",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-10-13T07:12:15Z",
+      "side": 0,
+      "message": "This is a duplicate of line 181.",
+      "revId": "3f79f3aefe0b0a498002564fcfb13eb21ab6c047",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a852088_14b0d8f8",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-10-13T07:12:15Z",
+      "side": 0,
+      "message": "The device_str is messed with both SwiftShader and Intel 😂",
+      "revId": "3f79f3aefe0b0a498002564fcfb13eb21ab6c047",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
