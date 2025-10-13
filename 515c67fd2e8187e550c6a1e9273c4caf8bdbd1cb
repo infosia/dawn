@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41c4ed42_cd27ff7f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-13T20:14:26Z",
+      "side": 1,
+      "message": "Causing [failures](https://ci.chromium.org/ui/p/dawn/builders/ci/cmake-linux-clang-dbg-x64-ubsan/b8701383175859680465/overview) on ubsan bots, just missing forwarding the flag to glslang I think. I\u0027ll fix forward.",
+      "revId": "515c67fd2e8187e550c6a1e9273c4caf8bdbd1cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
