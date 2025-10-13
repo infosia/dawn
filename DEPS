@@ -63,7 +63,7 @@ vars = {
 
 deps = {
   'buildtools': {
-    'url': '{chromium_git}/chromium/src/buildtools@958004daacdd90070d44b236a1581c81d71740ca',
+    'url': '{chromium_git}/chromium/src/buildtools@0e7d35148beeb23122a72c2a0cba21e77b83f36f',
     'condition': 'dawn_standalone',
   },
   'third_party/clang-format/script': {
