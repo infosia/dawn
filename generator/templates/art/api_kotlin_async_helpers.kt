@@ -53,12 +53,13 @@ import kotlin.coroutines.suspendCoroutine
 
         //* Every method that is identified as using callbacks is given a helper method that wraps
         //* call with a suspend function.
+        @SuppressWarnings("CheckReturnValue")
         public suspend fun {{ obj.name.CamelCase() }}.{{ method.name.camelCase() }}(
             {%- for arg in method.arguments[:-1] %}
                 {{ kotlin_annotation(arg) }}  {{ as_varName(arg.name) }}: {{ kotlin_definition(arg) }},
             {%- endfor %}): {{ return_name }} = suspendCoroutine {
                 //* Result is handled by the async callback; this assignment satisfies @CheckReturnValue.
-                val unused = {{ method.name.camelCase() }}(
+                {{ method.name.camelCase() }}(
                     {%- for arg in method.arguments %}
                         {%- if as_varName(arg.name) == 'callbackInfo' %}
                             {{- as_varName(arg.name).removesuffix("Info")}}
