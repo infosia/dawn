@@ -16,6 +16,29 @@
       "message": "PTAL!",
       "revId": "c3eaf36a8ea363fdce8476aa13f9891d568da72f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85736912_cb616fa5",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-14T20:20:10Z",
+      "side": 1,
+      "message": "Hmm, I understand the logic behind these, but it feels like what we really want to test is default, pinned, and unpinned, whereas this is in reality testing unpinned, pinned, and unpinned again because the if clause below will cause us to explicitly call `Unpin` for the first case.\n\nSince we do it in multiple places, what do you think about using a 3-value enum, default, pinned, pinnedThenUnpinned, and then move the texture creation into the loop and actually do each set of ops explicitly via switch/case?\n\nWe could also move the texture creation logic with the additional enum out to a helper if that would help with dedup code?",
+      "range": {
+        "startLine": 1426,
+        "startChar": 24,
+        "endLine": 1426,
+        "endChar": 42
+      },
+      "revId": "c3eaf36a8ea363fdce8476aa13f9891d568da72f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
