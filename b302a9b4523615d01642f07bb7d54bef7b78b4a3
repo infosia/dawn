@@ -16,6 +16,24 @@
       "message": "Example of other places this is done? I see `info-\u003eserver-\u003eOnLogging` but it\u0027s not locked.",
       "revId": "b302a9b4523615d01642f07bb7d54bef7b78b4a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "229d7fa3_96159fd8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-14T21:00:52Z",
+      "side": 1,
+      "message": "Other usages are here: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/wire/server/Server.h;l\u003d93\n\nThe logging one is special in that it should never reads or writes to the internal object storages so it doesn\u0027t actually need the lock. It\u0027s also special right now in that it doesn\u0027t immediately force a flush, though we could consider adding that in the future.",
+      "parentUuid": "3263b82a_791b6b9e",
+      "revId": "b302a9b4523615d01642f07bb7d54bef7b78b4a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
