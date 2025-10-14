@@ -9,7 +9,6 @@ import androidx.webgpu.CallbackMode.Companion.AllowSpontaneous
 import androidx.webgpu.Device
 import androidx.webgpu.DeviceDescriptor
 import androidx.webgpu.DeviceLostCallback
-import androidx.webgpu.DeviceLostCallbackInfo
 import androidx.webgpu.DeviceLostReason
 import androidx.webgpu.ErrorType
 import androidx.webgpu.FeatureName
@@ -20,7 +19,6 @@ import androidx.webgpu.RequestAdapterStatus
 import androidx.webgpu.RequestDeviceStatus
 import androidx.webgpu.SurfaceDescriptor
 import androidx.webgpu.SurfaceSourceAndroidNativeWindow
-import androidx.webgpu.UncapturedErrorCallbackInfo
 import androidx.webgpu.createInstance
 import androidx.webgpu.helper.Util.windowFromSurface
 import androidx.webgpu.requestAdapter
