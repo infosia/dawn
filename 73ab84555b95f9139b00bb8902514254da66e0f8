@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e83d6601_8fa1709d",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-14T10:49:27Z",
+      "side": 1,
+      "message": "Formatting looks weird (two }s in the same column). I could be mistaken but make sure you\u0027ve run the formatter.",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 22
+      },
+      "revId": "73ab84555b95f9139b00bb8902514254da66e0f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
