@@ -178,7 +178,7 @@ class Buffer : public BufferBase {
     MaybeError ClearInitialResource(const ScopedCommandRecordingContext* commandContext);
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override;
     void FinalizeMapImpl() override;
-    void UnmapImpl() override;
+    void UnmapImpl(BufferState fromState) override;
     bool IsCPUWritableAtCreation() const override;
     MaybeError MapAtCreationImpl() override;
     void* GetMappedPointerImpl() override;
