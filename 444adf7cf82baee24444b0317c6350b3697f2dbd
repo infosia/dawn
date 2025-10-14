@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64960d18_c1af510f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-14T20:26:23Z",
+      "side": 1,
+      "message": "PTAL\n\nI believe this should resolve the issue you reported.",
+      "revId": "444adf7cf82baee24444b0317c6350b3697f2dbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
