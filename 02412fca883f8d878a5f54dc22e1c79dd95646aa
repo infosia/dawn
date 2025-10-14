@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58057a64_a0ac3c50",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002886
+      },
+      "writtenOn": "2025-10-14T13:08:56Z",
+      "side": 1,
+      "message": "nit: UBSAN",
+      "range": {
+        "startLine": 142,
+        "startChar": 60,
+        "endLine": 142,
+        "endChar": 64
+      },
+      "revId": "02412fca883f8d878a5f54dc22e1c79dd95646aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
