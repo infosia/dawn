@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "baff8d40_c0df78a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-14T23:42:44Z",
+      "side": 1,
+      "message": "+ynovikov for general review/Dawn OWNER\n+gbeaty to confirm that there isn\u0027t a better way to do this using the code from `chromium-luci`\n\nFor reference, the relevant code for the legacy builders is [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/infra/config/global/legacy_builders.star;l\u003d338)",
+      "revId": "de589555c06e91e85d05907d043693dfcdef1139",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
