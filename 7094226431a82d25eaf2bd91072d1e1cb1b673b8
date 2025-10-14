@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04482973_2b6f2755",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/BufferTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-14T12:24:49Z",
+      "side": 1,
+      "message": "I note there\u0027s a mix of the junit.framework.TestCase assertions and the org.junit.Assert ones. Is there a reason for that?",
+      "revId": "7094226431a82d25eaf2bd91072d1e1cb1b673b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "347a5e1f_0d7df82a",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/BufferTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-14T12:24:49Z",
+      "side": 1,
+      "message": "Please be consistent with the annotations, e.g.\n\n@SmallTest (for example)\n@Test\n\nor\n\n@Test\n@SmallTest\n\nthroughout.",
+      "revId": "7094226431a82d25eaf2bd91072d1e1cb1b673b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4a0d64c_b3cc5649",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/BufferTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-14T12:24:49Z",
+      "side": 1,
+      "message": "Can you use imports so that we have just assertEquals... not TestCase.assertEquals?",
+      "revId": "7094226431a82d25eaf2bd91072d1e1cb1b673b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fd801a4_128f1d3d",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/BufferTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-14T12:24:49Z",
+      "side": 1,
+      "message": "Any reason you do that for this test but not the other one?",
+      "revId": "7094226431a82d25eaf2bd91072d1e1cb1b673b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b54a860_4db05708",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/BufferTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-14T12:24:49Z",
+      "side": 1,
+      "message": "Any reason the other tests are prefixed with \u0027test\u0027 but these aren\u0027t?",
+      "revId": "7094226431a82d25eaf2bd91072d1e1cb1b673b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
