@@ -36,19 +36,27 @@ namespace dawn::native::webgpu {
 // static
 ResultOrError<Ref<Texture>> Texture::Create(Device* device,
                                             const UnpackedPtr<TextureDescriptor>& descriptor) {
-    auto desc = ToAPI(*descriptor);
-
-    WGPUTexture innerTexture = device->wgpu.deviceCreateTexture(device->GetInnerHandle(), desc);
-    DAWN_ASSERT(innerTexture);
-
-    return AcquireRef(new Texture(device, descriptor, innerTexture));
+    return AcquireRef(new Texture(device, descriptor));
 }
 
-Texture::Texture(Device* device,
-                 const UnpackedPtr<TextureDescriptor>& descriptor,
-                 WGPUTexture innerTexture)
+Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor)
     : TextureBase(device, descriptor), ObjectWGPU(device->wgpu.textureRelease) {
-    mInnerHandle = innerTexture;
+    WGPUTextureDescriptor desc = *ToAPI(*descriptor);
+
+    wgpu::TextureUsage actualUsage = GetInternalUsage();
+    // Resolve internal usages to regular ones
+    if (actualUsage | kReadOnlyStorageTexture) {
+        actualUsage ^= kReadOnlyStorageTexture;
+        actualUsage |= wgpu::TextureUsage::StorageBinding;
+    }
+    if (actualUsage | kWriteOnlyStorageTexture) {
+        actualUsage ^= kWriteOnlyStorageTexture;
+        actualUsage |= wgpu::TextureUsage::StorageBinding;
+    }
+    desc.usage = ToAPI(actualUsage);
+
+    mInnerHandle = device->wgpu.deviceCreateTexture(device->GetInnerHandle(), &desc);
+    DAWN_ASSERT(mInnerHandle);
 }
 
 void Texture::DestroyImpl() {
