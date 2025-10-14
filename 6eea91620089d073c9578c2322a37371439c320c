@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "623b2332_34485719",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-14T18:32:33Z",
+      "side": 1,
+      "message": "nit. Can do `kotlin_default(arg) is not None` here instead to make it a bit easier to read? (I\u0027m not sure off the top of my head if it works here)",
+      "range": {
+        "startLine": 798,
+        "startChar": 45,
+        "endLine": 798,
+        "endChar": 76
+      },
+      "revId": "6eea91620089d073c9578c2322a37371439c320c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01557aa4_b1f71389",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-14T18:32:33Z",
+      "side": 1,
+      "message": "Synced with team offline, I think we would strongly prefer this logic to be kept in the templates since it is very Kotlin specific and the Kotlin expertise should live in the directories that you guys can maintain directly. From what I can tell, you could implement this as a macro just like `kotlin_declaration`. It also helps us keep this file from adding an additional layer of generation code which can make it even harder to understand the templates.",
+      "range": {
+        "startLine": 828,
+        "startChar": 4,
+        "endLine": 904,
+        "endChar": 19
+      },
+      "revId": "6eea91620089d073c9578c2322a37371439c320c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee255266_30f29432",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-14T18:32:33Z",
+      "side": 1,
+      "message": "This can probably be simplified once we move `kotlin_default` into this template to something like:\n\n```\n{{- kotlin_declaration(arg) }} {{ kotlin_default(arg) }}\n```\n\nAnd you just have `kotlin_default(arg)` return the `\u003d` sign if needed, otherwise return an empty value.",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 85
+      },
+      "revId": "6eea91620089d073c9578c2322a37371439c320c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
