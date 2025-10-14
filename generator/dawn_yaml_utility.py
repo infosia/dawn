@@ -53,12 +53,16 @@ def clean_doc_for_kotlin(doc, valid_names_normalized, enum_names, params=None):
   if any(sub in doc for sub in kdocs_blocklist):
     return ""
 
+  doc = re.sub(r"WGPU_([A-Z][A-Z_]*)", r"Constants.\1", doc)
+
   # Example: See @ref WGPUTextureView -> @see WGPUTextureView
   # Normalizes Doxygen-style @ref tags to standard @see tags for KDoc.
   doc = re.sub(r"(?:[Ss]ee\s+)?@ref\s+(\S+)", r"@see \1", doc)
-
   doc = doc.replace("TODO", "").replace("\n", " ").strip()
 
+  # Example: `true` -> {@code true}
+  # Wraps boolean/null literals in @code blocks, stripping optional backticks.
+  doc = re.sub(r"`?\b(true|false|null|NULL)\b`?", lambda m: '{@code ' + m.group(1).lower() + '}', doc)
   # Example: @see WGPUAdapter -> finds "WGPUAdapter"
   # Extracts all referenced names from @see tags to validate them.
   references = re.findall(r"@see (\S+)", doc)
@@ -67,8 +71,6 @@ def clean_doc_for_kotlin(doc, valid_names_normalized, enum_names, params=None):
     # Convert C++ scope resolution (::) to Kotlin (.).
     if "::" in ref:
       new_ref = ref.replace("::", ".")
-      if new_ref.endswith("."):
-        new_ref = new_ref.removesuffix(".") + " ."
       doc = doc.replace(ref, new_ref)
       continue
 
@@ -92,27 +94,33 @@ def clean_doc_for_kotlin(doc, valid_names_normalized, enum_names, params=None):
     # Discard docstring if any reference is invalid to avoid incorrect KDoc.
     if not is_valid:
       return ""
+    
+  doc = re.sub(r"::(wgpu|WGPU)", r"\1", doc)
 
   # Example: @see WGPUAdapter -> @see Adapter
   # Strips the standard 'WGPU' or 'wgpu' prefix from type names for cleaner,
   # more idiomatic Kotlin references.
-  doc = re.sub(r"@see (?:WGPU|wgpu)(\S+)", r"@see \1", doc)
+  doc = re.sub(r"(?:WGPU|wgpu)(\S+)", r"\1", doc)
 
   # Example: @see WGPUBufferUsage_CopySrc -> @see WGPUBufferUsage.CopySrc
   # Converts C-style enum member references (e.g., EnumName_MemberName) to
   # Kotlin-style qualified references (e.g., EnumName.MemberName).
   def convert_c_style_enum_ref(match):
-    enum_name, member_name, trailing_dot = match.groups()
+    enum_name, member_name = match.groups()
     if enum_name not in enum_names:
-      return match.group(0)  # Not a known enum, return original string
-
+      return match.group(0)
     replacement = f"@see {enum_name}.{member_name}"
-    if trailing_dot:
-      replacement += " ."
     return replacement
 
-  doc = re.sub(r"@see (\w+)_(\w+)\s*(\.?)", convert_c_style_enum_ref, doc)
+  doc = re.sub(r"@see (\w+)_(\d\w*)", r"@see \1._\2", doc)
 
+  doc = re.sub(r"@see (\w+)_(\w+)", convert_c_style_enum_ref, doc)
+
+  doc = re.sub(
+      r"@see (\S+-\S+)", lambda m: f"@see {m.group(1).replace('-', '')}", doc
+  )
+
+  doc = re.sub(r"(@see\s+)(\w+\.\w+)", r"\1[\2]", doc)
 
   return doc
 
@@ -179,7 +187,15 @@ def build_doc_map(by_category, yml_data, params=None):
     lookup = yaml_lookups.get(yaml_cat, {})
     if name in lookup:
       return lookup[name]
-
+    # Handle cases where the YAML doc key doesn't include the full suffix.
+    # For example, a function `device lost` in the JSON
+    # corresponds to `device_lost_callback_info` in the YAML.
+    suffixes_to_try = ["_callback_info", "_callback"]
+    for suffix in suffixes_to_try:
+      if name.endswith(suffix):
+        trimmed_name = name[: -len(suffix)]
+        if trimmed_name in lookup:
+          return lookup[trimmed_name]
     return None
 
   def extract_named_docs(dict_list):
@@ -193,6 +209,17 @@ def build_doc_map(by_category, yml_data, params=None):
     if "doc" in yaml_item:
       doc_map[yaml_cat][item_name]["doc"] = clean_raw_doc(yaml_item["doc"])
 
+  def process_constant(yaml_cat, item_name, yaml_item):
+    if "doc" in yaml_item:
+      doc_map[yaml_cat][item_name] = clean_raw_doc(yaml_item["doc"])
+
+  def process_struct(yaml_cat, item_name, yaml_item):
+    process_common_doc(yaml_cat, item_name, yaml_item)
+    if "members" in yaml_item:
+      doc_map[yaml_cat][item_name]["members"] = extract_named_docs(
+          yaml_item["members"]
+      )
+
   def process_collection(yaml_cat, item_name, yaml_item):
     process_common_doc(yaml_cat, item_name, yaml_item)
     if "entries" in yaml_item:
@@ -200,10 +227,48 @@ def build_doc_map(by_category, yml_data, params=None):
           yaml_item["entries"]
       )
 
-  category_map = {"enum": "enums", "bitmask": "bitflags"}
+  def process_function(yaml_cat, item_name, yaml_item):
+    process_common_doc(yaml_cat, item_name, yaml_item)
+    item_docs = doc_map[yaml_cat][item_name]
+    if "args" in yaml_item:
+      item_docs["args"] = extract_named_docs(yaml_item["args"])
+    if yaml_item.get("returns", {}).get("doc"):
+      item_docs["returns_doc"] = clean_raw_doc(yaml_item["returns"]["doc"])
+
+  def process_object(yaml_cat, item_name, yaml_item):
+    process_common_doc(yaml_cat, item_name, yaml_item)
+    method_docs = defaultdict(dict)
+    for method in yaml_item.get("methods", []):
+      if not (method and "name" in method):
+        continue
+      m_docs = method_docs[method["name"]]
+      if "doc" in method:
+        m_docs["doc"] = clean_raw_doc(method["doc"])
+      if method.get("returns", {}).get("doc"):
+        m_docs["returns_doc"] = clean_raw_doc(method["returns"]["doc"])
+      if "args" in method:
+        m_docs["args"] = extract_named_docs(method["args"])
+    if method_docs:
+      doc_map[yaml_cat][item_name]["methods"] = method_docs
+
+  category_map = {
+      "structure": "structs",
+      "enum": "enums",
+      "bitmask": "bitflags",
+      "callback function": "callbacks",
+      "function": "functions",
+      "object": "objects",
+      "constant": "constants",
+      "callback info": "callbacks",
+  }
   handler_map = {
+      "structs": process_struct,
       "enums": process_collection,
       "bitflags": process_collection,
+      "callbacks": process_function,
+      "functions": process_function,
+      "objects": process_object,
+      "constants": process_constant,
   }
 
   for category, items in by_category.items():
