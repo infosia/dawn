@@ -16,6 +16,188 @@
       "message": "PTAL, thanks!",
       "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29374365_5fdb0749",
+        "filename": "include/dawn/native/D3D12Backend.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T13:09:43Z",
+      "side": 1,
+      "message": "Who is supposed to free the handle? It seems that in tests they would be leaking at the moment.",
+      "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e114992_34d4ffc6",
+        "filename": "include/dawn/native/D3D12Backend.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T13:09:43Z",
+      "side": 1,
+      "message": "It\u0027s a bit unfortunate that we have to pass the size explicitly. Isn\u0027t there a way to query it from the OS?",
+      "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf0b83dc_441ac146",
+        "filename": "src/dawn/native/d3d12/BufferD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T13:09:43Z",
+      "side": 1,
+      "message": "Would it make sense to create the buffer when the SBM is created so we don\u0027t have to do semi-expensive D3D12 operation in each `SBM.CreateBuffer` call? This way the buffer also wouldn\u0027t need to do any specific logic and the complexity would stay in the SBM. (I\u0027m not actually sure if this is feasible).",
+      "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "427efefd_3470b6b8",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T13:09:43Z",
+      "side": 1,
+      "message": "Can we gate this feature on the presence of `OpenExistingHeapFromFileMapping` (so a check that we have the `ID3D12Device3`) (maybe somewhere in the `D3D12DeviceInfo`?)",
+      "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "285fd4e9_3d0841c0",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T13:09:43Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "150ad45b_b4b55c41",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T13:09:43Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b383e1bd_805a764a",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T13:09:43Z",
+      "side": 1,
+      "message": "This is the same logic as [2], can we factor it in a helper function?",
+      "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "097ddfbc_93c9d0b7",
+        "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T13:09:43Z",
+      "side": 1,
+      "message": "These can be checked directly in `SetUp` to avoid doing it in every test!",
+      "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e372a268_884d09b3",
+        "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests_win.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T13:09:43Z",
+      "side": 1,
+      "message": "why this specific constant? Don\u0027t we only need to be page aligned?",
+      "range": {
+        "startLine": 301,
+        "startChar": 53,
+        "endLine": 301,
+        "endChar": 58
+      },
+      "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42ec8b75_e8cdeeea",
+        "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests_win.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T13:09:43Z",
+      "side": 1,
+      "message": "We should check the limit alignment, so 65536 / 2 in this case.",
+      "range": {
+        "startLine": 353,
+        "startChar": 40,
+        "endLine": 353,
+        "endChar": 45
+      },
+      "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
