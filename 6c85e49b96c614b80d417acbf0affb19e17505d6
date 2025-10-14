@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "6c85e49b96c614b80d417acbf0affb19e17505d6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77bedde6_f444bc18",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T11:50:59Z",
+      "side": 1,
+      "message": "Let\u0027s wait to see if https://github.com/webgpu-native/webgpu-headers/pull/560 lands, but then it\u0027s fine to have the diff if it eventually goes back to being empty.",
+      "revId": "6c85e49b96c614b80d417acbf0affb19e17505d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
