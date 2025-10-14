@@ -206,7 +206,7 @@ void* Buffer::GetMappedPointerImpl() {
     return [*mMtlBuffer contents];
 }
 
-void Buffer::UnmapImpl() {
+void Buffer::UnmapImpl(BufferState fromState, wgpu::MapMode mode) {
     // Nothing to do, Metal StorageModeShared buffers are always mapped.
 }
 

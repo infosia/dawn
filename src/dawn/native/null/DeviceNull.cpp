@@ -406,7 +406,7 @@ void* Buffer::GetMappedPointerImpl() {
     return mBackingData.get();
 }
 
-void Buffer::UnmapImpl() {}
+void Buffer::UnmapImpl(BufferState fromState, wgpu::MapMode mode) {}
 
 void Buffer::DestroyImpl() {
     // TODO(crbug.com/dawn/831): DestroyImpl is called from two places.

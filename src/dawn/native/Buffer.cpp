@@ -100,7 +100,7 @@ class ErrorBuffer final : public BufferBase {
 
     void* GetMappedPointerImpl() override { return mFakeMappedData.get(); }
 
-    void UnmapImpl() override { mFakeMappedData.reset(); }
+    void UnmapImpl(BufferState fromState, wgpu::MapMode mode) override { mFakeMappedData.reset(); }
 
     std::unique_ptr<uint8_t[]> mFakeMappedData;
 };
@@ -430,28 +430,29 @@ BufferBase::~BufferBase() {
 }
 
 void BufferBase::DestroyImpl() {
+    bool needsUnmap = false;
     switch (mState.load(std::memory_order::acquire)) {
         case BufferState::Mapped:
         case BufferState::PendingMap: {
-            [[maybe_unused]] bool hadError = GetDevice()->ConsumedError(
-                UnmapInternal(WGPUMapAsyncStatus_Aborted,
-                              "Buffer was destroyed before mapping was resolved."),
-                "calling %s.Destroy().", this);
+            needsUnmap = true;
             break;
         }
         case BufferState::MappedAtCreation: {
             if (mStagingBuffer != nullptr) {
                 mStagingBuffer = nullptr;
             } else if (mSize != 0) {
-                [[maybe_unused]] bool hadError = GetDevice()->ConsumedError(
-                    UnmapInternal(WGPUMapAsyncStatus_Aborted,
-                                  "Buffer was destroyed before mapping was resolved."),
-                    "calling %s.Destroy().", this);
+                needsUnmap = true;
             }
             break;
         }
         default:
             break;
+    }
+    if (needsUnmap) {
+        [[maybe_unused]] bool hadError = GetDevice()->ConsumedError(
+            UnmapInternal(WGPUMapAsyncStatus_Aborted,
+                          "Buffer was destroyed before mapping was resolved."),
+            "calling %s.Destroy().", this);
     }
     mState.store(BufferState::Destroyed, std::memory_order::release);
 
@@ -767,14 +768,14 @@ void BufferBase::APIUnmap() {
 MaybeError BufferBase::Unmap() {
     switch (mState.load(std::memory_order::acquire)) {
         case BufferState::Mapped:
-            UnmapImpl();
+            UnmapImpl(BufferState::Mapped, mMapMode);
             break;
         case BufferState::MappedAtCreation:
             if (mStagingBuffer != nullptr) {
                 DAWN_TRY(CopyFromStagingBuffer());
             }
             if (mSize != 0 && IsCPUWritableAtCreation()) {
-                UnmapImpl();
+                UnmapImpl(BufferState::MappedAtCreation, mMapMode);
             }
             break;
         case BufferState::Unmapped:
@@ -806,7 +807,7 @@ MaybeError BufferBase::UnmapInternal(WGPUMapAsyncStatus status, std::string_view
             std::get<Ref<MapAsyncEvent>>(std::exchange(mMapData, static_cast<void*>(nullptr)));
 
         event->UnmapEarly(status, message);
-        UnmapImpl();
+        UnmapImpl(BufferState::PendingMap, mMapMode);
         mState.store(BufferState::Unmapped, std::memory_order::release);
 
         GetDevice()->DeferIfLocked(

@@ -130,7 +130,7 @@ void* Buffer::GetMappedPointerImpl() {
     return mMappedData;
 }
 
-void Buffer::UnmapImpl() {
+void Buffer::UnmapImpl(BufferState fromState, wgpu::MapMode mode) {
     if (mInnerHandle) {
         ToBackend(GetDevice())->wgpu.bufferUnmap(mInnerHandle);
     }
