@@ -22,6 +22,30 @@
       },
       "revId": "73ab84555b95f9139b00bb8902514254da66e0f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "787adf2f_2f2f2bac",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-14T10:58:07Z",
+      "side": 1,
+      "message": "@Ria could you please try- git cl format I think this should take care of the formatting.",
+      "parentUuid": "e83d6601_8fa1709d",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 22
+      },
+      "revId": "73ab84555b95f9139b00bb8902514254da66e0f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
