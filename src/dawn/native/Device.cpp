@@ -1067,6 +1067,11 @@ bool DeviceBase::IsDeviceIdle() {
     return !mQueue->HasScheduledCommands();
 }
 
+UsageValidationMode DeviceBase::GetUsageValidationMode() const {
+    return mAlwaysAllowInternalBinding ? UsageValidationMode::Internal
+                                       : UsageValidationMode::Default;
+}
+
 ResultOrError<const Format*> DeviceBase::GetInternalFormat(wgpu::TextureFormat format) const {
     FormatIndex index = ComputeFormatIndex(format);
     DAWN_INVALID_IF(index >= mFormatTable.size(), "Unknown texture format %s.", format);
@@ -1267,8 +1272,8 @@ Ref<PipelineCacheBase> DeviceBase::GetOrCreatePipelineCache(const CacheKey& key)
 
 BindGroupBase* DeviceBase::APICreateBindGroup(const BindGroupDescriptor* descriptor) {
     Ref<BindGroupBase> result;
-    if (ConsumedError(CreateBindGroup(descriptor), &result, "calling %s.CreateBindGroup(%s).", this,
-                      descriptor)) {
+    if (ConsumedError(CreateBindGroup(descriptor, GetUsageValidationMode()), &result,
+                      "calling %s.CreateBindGroup(%s).", this, descriptor)) {
         return ReturnToAPI(
             BindGroupBase::MakeError(this, descriptor ? descriptor->label : nullptr));
     }
