@@ -880,9 +880,8 @@ def compute_kotlin_params(loaded_json, kotlin_json):
     params_kotlin['kotlin_record_members'] = kotlin_record_members
     params_kotlin['jni_name'] = jni_name
     params_kotlin['has_kotlin_classes'] = (
-        by_category['callback function'] + by_category['callback info'] +
-        by_category['enum'] + by_category['function pointer'] +
-        by_category['object'] + [
+        by_category['callback function'] + by_category['enum'] +
+        by_category['function pointer'] + by_category['object'] + [
             structure for structure in by_category['structure']
             if include_structure(structure)
         ])
