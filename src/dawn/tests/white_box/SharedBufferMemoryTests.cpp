@@ -49,6 +49,10 @@ std::vector<wgpu::FeatureName> SharedBufferMemoryTests::GetRequiredFeatures() {
     return features;
 }
 
+bool SharedBufferMemoryTests::SupportsBackend() {
+    return !GetRequiredFeatures().empty();
+}
+
 wgpu::Texture Create2DTexture(wgpu::Device device,
                               uint32_t width,
                               uint32_t height,
@@ -104,6 +108,8 @@ using ::testing::HasSubstr;
 
 // Test that it is an error to import shared buffer memory without a chained struct.
 TEST_P(SharedBufferMemoryTests, ImportSharedBufferMemoryNoChain) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemoryDescriptor desc;
     ASSERT_DEVICE_ERROR_MSG(
         wgpu::SharedBufferMemory memory = device.ImportSharedBufferMemory(&desc),
@@ -112,6 +118,8 @@ TEST_P(SharedBufferMemoryTests, ImportSharedBufferMemoryNoChain) {
 
 // Test that it is an error to import shared buffer memory when the device is destroyed.
 TEST_P(SharedBufferMemoryTests, ImportSharedBufferMemoryDeviceDestroy) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     device.Destroy();
 
     wgpu::SharedBufferMemoryDescriptor desc;
@@ -121,6 +129,8 @@ TEST_P(SharedBufferMemoryTests, ImportSharedBufferMemoryDeviceDestroy) {
 // Test that SharedBufferMemory::IsDeviceLost() returns the expected value before and
 // after destroying the device.
 TEST_P(SharedBufferMemoryTests, CheckIsDeviceLostBeforeAndAfterDestroyingDevice) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kMapWriteUsages, kBufferSize);
 
@@ -131,6 +141,8 @@ TEST_P(SharedBufferMemoryTests, CheckIsDeviceLostBeforeAndAfterDestroyingDevice)
 
 // Test that SharedBufferMemory correctly handles EndAccess on a buffer that was destroyed.
 TEST_P(SharedBufferMemoryTests, CheckEndAccessOnDestroyedBuffer) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kMapWriteUsages, kBufferSize);
 
@@ -155,6 +167,8 @@ TEST_P(SharedBufferMemoryTests, CheckEndAccessOnDestroyedBuffer) {
 // Test that SharedBufferMemory::IsDeviceLost() returns the expected value before and
 // after losing the device.
 TEST_P(SharedBufferMemoryTests, CheckIsDeviceLostBeforeAndAfterLosingDevice) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kMapWriteUsages, kBufferSize);
 
@@ -165,6 +179,8 @@ TEST_P(SharedBufferMemoryTests, CheckIsDeviceLostBeforeAndAfterLosingDevice) {
 
 // Test calling GetProperties on SharedBufferMemory after an error.
 TEST_P(SharedBufferMemoryTests, GetPropertiesErrorMemory) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemoryDescriptor desc;
     ASSERT_DEVICE_ERROR(wgpu::SharedBufferMemory memory = device.ImportSharedBufferMemory(&desc));
 
@@ -177,6 +193,8 @@ TEST_P(SharedBufferMemoryTests, GetPropertiesErrorMemory) {
 
 // Tests that creating SharedBufferMemory validates buffer size.
 TEST_P(SharedBufferMemoryTests, SizeValidation) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kMapWriteUsages, kBufferSize);
     wgpu::SharedBufferMemoryProperties properties;
@@ -191,6 +209,8 @@ TEST_P(SharedBufferMemoryTests, SizeValidation) {
 
 // Tests that creating SharedBufferMemory validates buffer usages.
 TEST_P(SharedBufferMemoryTests, UsageValidation) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kMapWriteUsages, kBufferSize);
     wgpu::SharedBufferMemoryProperties properties;
@@ -216,6 +236,8 @@ TEST_P(SharedBufferMemoryTests, UsageValidation) {
 
 // Tests that creating SharedBufferMemory emits a specific error message if Uniform usage specified.
 TEST_P(SharedBufferMemoryTests, UniformUsageValidation) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kMapWriteUsages, kBufferSize);
     wgpu::SharedBufferMemoryProperties properties;
@@ -230,6 +252,8 @@ TEST_P(SharedBufferMemoryTests, UniformUsageValidation) {
 
 // Ensure that EndAccess cannot be called on a mapped or pending mapped buffer.
 TEST_P(SharedBufferMemoryTests, CallEndAccessOnMappedBuffer) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kMapWriteUsages, kBufferSize);
     wgpu::Buffer buffer = memory.CreateBuffer();
@@ -258,6 +282,8 @@ TEST_P(SharedBufferMemoryTests, CallEndAccessOnMappedBuffer) {
 
 // Ensure no queue usage can occur before calling BeginAccess.
 TEST_P(SharedBufferMemoryTests, EnsureNoQueueUsageBeforeBeginAccess) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     // We can't test this invalid scenario without validation.
     DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("skip_validation"));
 
@@ -279,6 +305,8 @@ TEST_P(SharedBufferMemoryTests, EnsureNoQueueUsageBeforeBeginAccess) {
 
 // Ensure mapping cannot occur before calling BeginAccess.
 TEST_P(SharedBufferMemoryTests, EnsureNoMapUsageBeforeBeginAccess) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kMapWriteUsages, kBufferSize);
     wgpu::Buffer sharedBuffer = memory.CreateBuffer();
@@ -293,6 +321,8 @@ TEST_P(SharedBufferMemoryTests, EnsureNoMapUsageBeforeBeginAccess) {
 
 // Ensure multiple buffers created from a SharedBufferMemory cannot be accessed simultaneously.
 TEST_P(SharedBufferMemoryTests, EnsureNoSimultaneousAccess) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kMapWriteUsages, kBufferSize);
     wgpu::Buffer sharedBuffer = memory.CreateBuffer();
@@ -306,6 +336,8 @@ TEST_P(SharedBufferMemoryTests, EnsureNoSimultaneousAccess) {
 
 // Validate that calling EndAccess before BeginAccess produces an error.
 TEST_P(SharedBufferMemoryTests, EnsureNoEndAccessBeforeBeginAccess) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kMapWriteUsages, kBufferSize);
     wgpu::Buffer buffer = memory.CreateBuffer();
@@ -316,6 +348,8 @@ TEST_P(SharedBufferMemoryTests, EnsureNoEndAccessBeforeBeginAccess) {
 
 // Validate that calling EndAccess on a different buffer created from the same Shared is invalid.
 TEST_P(SharedBufferMemoryTests, EndAccessOnDifferentBuffer) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kMapWriteUsages, kBufferSize);
     wgpu::Buffer buffer = memory.CreateBuffer();
@@ -346,6 +380,8 @@ TEST_P(SharedBufferMemoryTests, EndAccessOnDifferentBuffer) {
 
 // Validate that calling BeginAccess twice produces an error.
 TEST_P(SharedBufferMemoryTests, EnsureNoDuplicateBeginAccessCalls) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kMapWriteUsages, kBufferSize);
     wgpu::Buffer buffer = memory.CreateBuffer();
@@ -358,6 +394,8 @@ TEST_P(SharedBufferMemoryTests, EnsureNoDuplicateBeginAccessCalls) {
 // Ensure the BeginAccessDescriptor initialized parameter preserves or clears the buffer as
 // necessary.
 TEST_P(SharedBufferMemoryTests, BeginAccessInitialization) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     DAWN_SUPPRESS_TEST_IF(IsWARP());  // TODO(crbug.com/407748576): Remove once bug is fixed
 
     // Create a buffer with initialized data.
@@ -427,6 +465,8 @@ TEST_P(SharedBufferMemoryTests, BeginAccessInitialization) {
 
 // Tests that an unininitialized buffer that is not read or writt
 TEST_P(SharedBufferMemoryTests, UninitializedBufferRemainsUninitialized) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     // Create a buffer with initialized data.
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kMapWriteUsages, kBufferSize);
@@ -442,6 +482,8 @@ TEST_P(SharedBufferMemoryTests, UninitializedBufferRemainsUninitialized) {
 
 // Read and write a buffer with MapWrite and CopySrc usages.
 TEST_P(SharedBufferMemoryTests, ReadWriteSharedMapWriteBuffer) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     // Create buffer buffer with initialized data.
     wgpu::SharedBufferMemory memory = GetParam().mBackend->CreateSharedBufferMemory(
         device, kMapWriteUsages, kBufferSize, kBufferData);
@@ -464,6 +506,8 @@ TEST_P(SharedBufferMemoryTests, ReadWriteSharedMapWriteBuffer) {
 
 // Read and write a buffer with MapRead and CopyDst usages.
 TEST_P(SharedBufferMemoryTests, ReadWriteSharedMapReadBuffer) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     // Create buffer buffer with initialized data.
     wgpu::SharedBufferMemory memory = GetParam().mBackend->CreateSharedBufferMemory(
         device, kMapReadUsages, kBufferSize, kBufferData);
@@ -498,6 +542,8 @@ TEST_P(SharedBufferMemoryTests, ReadWriteSharedMapReadBuffer) {
 
 // Test ensures that a shader can read and write from a shared storage buffer.
 TEST_P(SharedBufferMemoryTests, ReadWriteSharedStorageBuffer) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemory memory = GetParam().mBackend->CreateSharedBufferMemory(
         device, kStorageUsages, kBufferSize, kBufferData);
     wgpu::Buffer buffer = memory.CreateBuffer();
@@ -540,6 +586,8 @@ TEST_P(SharedBufferMemoryTests, ReadWriteSharedStorageBuffer) {
 }
 
 TEST_P(SharedBufferMemoryTests, ImportExportSharedFences) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemory memory = GetParam().mBackend->CreateSharedBufferMemory(
         device, kStorageUsages, kBufferSize, kBufferData);
     wgpu::Buffer buffer = memory.CreateBuffer();
@@ -600,6 +648,8 @@ TEST_P(SharedBufferMemoryTests, ImportExportSharedFences) {
 // Test to ensure that using a shared buffer in a bind group will trigger a wait for the fence
 // provided to BeginAccess.
 TEST_P(SharedBufferMemoryTests, UseInPassEnsureSynchronization) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kStorageUsages, kBufferSize);
     wgpu::Buffer buffer = memory.CreateBuffer();
@@ -664,6 +714,8 @@ TEST_P(SharedBufferMemoryTests, UseInPassEnsureSynchronization) {
 
 // Test to ensure WriteBuffer waits on a fence provided to BeginAccess.
 TEST_P(SharedBufferMemoryTests, WriteBufferEnsureSynchronization) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kMapReadUsages, kBufferSize * 2);
     wgpu::Buffer buffer = memory.CreateBuffer();
@@ -711,6 +763,8 @@ TEST_P(SharedBufferMemoryTests, WriteBufferEnsureSynchronization) {
 
 // Test to ensure MapAsync waits on a fence provided to BeginAccess.
 TEST_P(SharedBufferMemoryTests, MapAsyncEnsureSynchronization) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsBackend());
+
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kMapReadUsages, kBufferSize);
     wgpu::Buffer buffer = memory.CreateBuffer();

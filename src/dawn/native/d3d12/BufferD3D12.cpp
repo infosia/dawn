@@ -155,18 +155,81 @@ ResultOrError<Ref<Buffer>> Buffer::CreateFromSharedBufferMemory(
     const UnpackedPtr<BufferDescriptor>& descriptor) {
     Device* device = ToBackend(memory->GetDevice());
     Ref<Buffer> buffer = AcquireRef(new Buffer(device, descriptor));
-    DAWN_TRY(buffer->InitializeAsExternalBuffer(memory->GetD3DResource(), descriptor));
+    DAWN_TRY(buffer->InitializeAsExternalBuffer(memory, descriptor));
+
     buffer->mSharedResourceMemoryContents = memory->GetContents();
     return buffer;
 }
 
-MaybeError Buffer::InitializeAsExternalBuffer(ComPtr<ID3D12Resource> d3d12Buffer,
+MaybeError Buffer::InitializeAsExternalBuffer(SharedBufferMemory* memory,
                                               const UnpackedPtr<BufferDescriptor>& descriptor) {
     mAllocatedSize = descriptor->size;
     AllocationInfo info;
     info.mMethod = AllocationMethod::kExternal;
     info.mRequestedSize = mAllocatedSize;
-    mResourceAllocation = {info, 0, std::move(d3d12Buffer), nullptr, ResourceHeapKind::InvalidEnum};
+
+    if (memory->GetD3DResource() != nullptr) {
+        ComPtr<ID3D12Resource> d3d12Buffer = memory->GetD3DResource();
+        mResourceAllocation = {info, 0, std::move(d3d12Buffer), nullptr,
+                               ResourceHeapKind::InvalidEnum};
+    } else {
+        ComPtr<ID3D12Heap> d3d12Heap = memory->GetD3DHeap();
+        Device* device = ToBackend(GetDevice());
+
+        uint64_t heapSize = d3d12Heap->GetDesc().SizeInBytes;
+
+        D3D12_RESOURCE_DESC resourceDescriptor;
+        resourceDescriptor.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+        resourceDescriptor.Alignment = 0;
+        resourceDescriptor.Width = GetSize();
+        resourceDescriptor.Height = 1;
+        resourceDescriptor.DepthOrArraySize = 1;
+        resourceDescriptor.MipLevels = 1;
+        resourceDescriptor.Format = DXGI_FORMAT_UNKNOWN;
+        resourceDescriptor.SampleDesc.Count = 1;
+        resourceDescriptor.SampleDesc.Quality = 0;
+        resourceDescriptor.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+        resourceDescriptor.Flags =
+            D3D12ResourceFlags(GetInternalUsage()) | D3D12_RESOURCE_FLAG_ALLOW_CROSS_ADAPTER;
+
+        D3D12_RESOURCE_ALLOCATION_INFO resourceInfo =
+            device->GetD3D12Device()->GetResourceAllocationInfo(0, 1, &resourceDescriptor);
+        DAWN_INVALID_IF(resourceInfo.SizeInBytes > heapSize,
+                        "Resource required %u bytes, but heap is %u bytes.",
+                        resourceInfo.SizeInBytes, heapSize);
+
+        mAllocatedSize = resourceInfo.SizeInBytes;
+        mLastState = D3D12_RESOURCE_STATE_COMMON;
+
+        auto heap = std::make_unique<Heap>(
+            std::move(d3d12Heap),
+            device->GetDeviceInfo().isUMA ? MemorySegment::Local : MemorySegment::NonLocal,
+            GetSize());
+
+        // Consider the imported heap as already resident. Lock it because it is externally
+        // allocated.
+        device->GetResidencyManager()->TrackResidentAllocation(heap.get());
+        DAWN_TRY(device->GetResidencyManager()->LockAllocation(heap.get()));
+
+        ComPtr<ID3D12Resource> placedResource;
+        DAWN_TRY(CheckOutOfMemoryHRESULT(
+            device->GetD3D12Device()->CreatePlacedResource(
+                heap->GetD3D12Heap(), 0, &resourceDescriptor, D3D12_RESOURCE_STATE_COMMON, nullptr,
+                IID_PPV_ARGS(&placedResource)),
+            "ID3D12Device::CreatePlacedResource"));
+
+        mResourceAllocation = {AllocationInfo{0, AllocationMethod::kExternal, mAllocatedSize}, 0,
+                               std::move(placedResource),
+                               /* heap is external, and not tracked for residency */ nullptr,
+                               ResourceHeapKind::InvalidEnum};
+        mHostMappedHeap = std::move(heap);
+
+        SetLabelImpl();
+
+        // Assume the data is initialized since an external pointer was provided.
+        SetInitialized(true);
+    }
+
     return {};
 }
 
