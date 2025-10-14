@@ -30,12 +30,9 @@
 # Checks to enforce
 .buffers,libc
 
--src/dawn/common
 -src/dawn/native/
 -src/dawn/node
--src/dawn/samples
 -src/dawn/tests
--src/dawn/utils
 -src/tint
 -src/utils
 
