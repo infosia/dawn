@@ -36,19 +36,29 @@ struct BeginRenderPassCmd;
 
 namespace dawn::native::opengl {
 
+class Buffer;
 class Device;
+class Queue;
 struct OpenGLFunctions;
 
 class CommandBuffer final : public CommandBufferBase {
   public:
     CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor);
 
-    MaybeError Execute();
+    MaybeError Execute(Queue* queue, const OpenGLFunctions& gl);
 
   private:
-    MaybeError ExecuteComputePass();
-    MaybeError ExecuteRenderPass(BeginRenderPassCmd* renderPass);
+    MaybeError ExecuteComputePass(const OpenGLFunctions& gl);
+    MaybeError ExecuteRenderPass(BeginRenderPassCmd* renderPass, const OpenGLFunctions& gl);
 };
+
+MaybeError DoCopyBufferToBuffer(const OpenGLFunctions& gl,
+                                Queue* queue,
+                                Buffer* source,
+                                uint64_t sourceOffset,
+                                Buffer* destination,
+                                uint64_t destinationOffset,
+                                uint64_t size);
 
 // Like glTexSubImage*, the "data" argument is either a pointer to image data or
 // an offset if a PBO is bound.
@@ -57,6 +67,12 @@ MaybeError DoTexSubImage(const OpenGLFunctions& gl,
                          const void* data,
                          const TexelCopyBufferLayout& dataLayout,
                          const Extent3D& copySize);
+
+MaybeError DoCopyBufferToTexture(const OpenGLFunctions& gl,
+                                 Buffer* source,
+                                 const TexelCopyBufferLayout& src,
+                                 const TextureCopy& dst,
+                                 const Extent3D& copySize);
 }  // namespace dawn::native::opengl
 
 #endif  // SRC_DAWN_NATIVE_OPENGL_COMMANDBUFFERGL_H_
