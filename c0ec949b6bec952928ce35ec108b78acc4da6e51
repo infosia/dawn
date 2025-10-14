@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e7ff31b_73570321",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ShaderModuleTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-14T18:53:48Z",
+      "side": 1,
+      "message": "This shader is reused throughout, could we pull it into a constant or something?",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "c0ec949b6bec952928ce35ec108b78acc4da6e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0d0a767_a7f282cb",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ShaderModuleTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-14T18:53:48Z",
+      "side": 1,
+      "message": "I think this test can be folded into the one above, and we should just test both the `lineNum`/`lineOffset` pairs along with the `offset`/`length` pairs. You could probably do it by ensuring that they point to the same locations in the shader code, i.e. adding up the length of each line up to `lineNum` plus `lineOffset` should equal `offset`.",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 47
+      },
+      "revId": "c0ec949b6bec952928ce35ec108b78acc4da6e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
