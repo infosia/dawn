@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3263b82a_791b6b9e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-14T18:24:03Z",
+      "side": 1,
+      "message": "Example of other places this is done? I see `info-\u003eserver-\u003eOnLogging` but it\u0027s not locked.",
+      "revId": "b302a9b4523615d01642f07bb7d54bef7b78b4a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
