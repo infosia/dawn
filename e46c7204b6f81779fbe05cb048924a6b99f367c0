@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dfaa847_fa49dbef",
+        "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests_win.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-14T20:33:02Z",
+      "side": 1,
+      "message": "nit. existing, but why isn\u0027t this `NullResourceFailure`?",
+      "range": {
+        "startLine": 221,
+        "startChar": 45,
+        "endLine": 221,
+        "endChar": 46
+      },
+      "revId": "e46c7204b6f81779fbe05cb048924a6b99f367c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "d13e42d7_dce201a2",

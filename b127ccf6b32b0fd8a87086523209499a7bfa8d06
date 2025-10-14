@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ce1afaf6_0cd5555a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-14T20:33:02Z",
+      "side": 1,
+      "message": "Right, I understand that, but if you compare this, say, the `SharedTextureMemory` tests, it feels like we shouldn\u0027t need to rename anything here, rather, we just need to make sure the prefixes match up correctly? From what I can tell, it seems like in the `SharedTextureMemory` tests, we are able to just reuse the base fixture name even though the backend specific files implement their own specific tests also.\n\nI could be mistaken about the difference here, but wanted to make sure you had a chance to reference those tests to ensure that this isn\u0027t effectively the same case.",
+      "parentUuid": "9b9445e0_ddf37b6a",
+      "revId": "b127ccf6b32b0fd8a87086523209499a7bfa8d06",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dde7f6e2_efe71fe6",
         "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests_win.cpp",
         "patchSetId": 2
