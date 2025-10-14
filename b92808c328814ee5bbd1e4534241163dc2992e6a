@@ -70,6 +70,30 @@
       },
       "revId": "b92808c328814ee5bbd1e4534241163dc2992e6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a3e3d56_1332dd57",
+        "filename": "BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-14T02:16:01Z",
+      "side": 1,
+      "message": "Yes sorry, I mean, *only* all the wasm targets. Originally I was building just `tests`, but then I needed to ~clean rebuild a bunch of times times (because of changing gn args like is_wasm and is_ubsan) so I added these so I could build only what I wanted. Was helpful for iterating on wasm-specific changes.",
+      "parentUuid": "ef465b04_af6da683",
+      "range": {
+        "startLine": 119,
+        "startChar": 7,
+        "endLine": 119,
+        "endChar": 23
+      },
+      "revId": "b92808c328814ee5bbd1e4534241163dc2992e6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
