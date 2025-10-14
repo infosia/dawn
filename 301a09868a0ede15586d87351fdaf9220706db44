@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5c73b40_a123e7f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3810252
+      },
+      "writtenOn": "2025-10-14T08:51:04Z",
+      "side": 1,
+      "message": "+blundell@ for a second dawn committer stamp",
+      "revId": "301a09868a0ede15586d87351fdaf9220706db44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
