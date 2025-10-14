@@ -156,6 +156,7 @@ ResultOrError<Ref<Buffer>> Buffer::CreateFromSharedBufferMemory(
     Device* device = ToBackend(memory->GetDevice());
     Ref<Buffer> buffer = AcquireRef(new Buffer(device, descriptor));
     DAWN_TRY(buffer->InitializeAsExternalBuffer(memory->GetD3DResource(), descriptor));
+
     buffer->mSharedResourceMemoryContents = memory->GetContents();
     return buffer;
 }
