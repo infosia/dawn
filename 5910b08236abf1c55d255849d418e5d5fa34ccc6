@@ -16,6 +16,52 @@
       "message": "These are great!",
       "revId": "5910b08236abf1c55d255849d418e5d5fa34ccc6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a7f140f_2e6f5400",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/CommandEncoderTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-14T18:43:35Z",
+      "side": 1,
+      "message": "nit. Should we have an equivalent test for `BeginComputePass`?",
+      "range": {
+        "startLine": 110,
+        "startChar": 6,
+        "endLine": 110,
+        "endChar": 25
+      },
+      "revId": "5910b08236abf1c55d255849d418e5d5fa34ccc6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c5ef2d4_1b074983",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/CommandEncoderTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-14T18:43:35Z",
+      "side": 1,
+      "message": "Thoughts on moving this to another test file, i.e. `RenderPassEncoder.kt` instead? That would reflect the actual entry points being tested. We could also have an equivalent `ComputePassEncoder.kt` test file for those APIs later on. Also fine to address this particular comment in a follow-up since I think it would require a re-review with the file changes.",
+      "range": {
+        "startLine": 142,
+        "startChar": 6,
+        "endLine": 142,
+        "endChar": 48
+      },
+      "revId": "5910b08236abf1c55d255849d418e5d5fa34ccc6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
