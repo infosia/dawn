@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "70a055af_5e8b0b69",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T13:18:26Z",
+      "side": 1,
+      "message": "I mistakenly thought that `WriteTexture` didn\u0027t work in the WebGPU backend previously and was suggesting separating the addition of this support to a separate CL that also enables tests. I forgot that it previously went down through the [default implementation](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Queue.cpp;drc\u003dcede29f31bd9922c8ee621658ba59f8e1c299245;l\u003d377) and   `CopyFromStagingToTexture`.\n\nSince there are no new tests to enable then there the need to separate to its own CL is less pressing.",
+      "parentUuid": "4575571f_911da95f",
+      "revId": "b2eb95fdbe8643c3c420cfa0681bafb2a40759a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84c77a35_417662a1",
@@ -248,6 +266,24 @@
       "side": 1,
       "message": "? I can\u0027t compute `bytesPerRow` outside of the mipmap loop. It changes at each mipmap size. Am I misunderstanding?",
       "parentUuid": "abcbfe25_58c3d956",
+      "revId": "b2eb95fdbe8643c3c420cfa0681bafb2a40759a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3aa32570_37c8aea4",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T13:18:26Z",
+      "side": 1,
+      "message": "I meant that the declaration of this variable could be moved to be just before the loop, to make it clear that we don\u0027t use it for the WriteTexture but only the CopyT2B.",
+      "parentUuid": "e9d1ada5_a776b89f",
       "revId": "b2eb95fdbe8643c3c420cfa0681bafb2a40759a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
