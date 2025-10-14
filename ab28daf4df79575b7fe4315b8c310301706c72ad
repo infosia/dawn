@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83e6d293_79573842",
+        "filename": "src/dawn/wire/ChunkedCommandHandler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-14T01:49:15Z",
+      "side": 1,
+      "message": "Ah.. was thinking about this over dinner, and thought this might need to be `MutexProtected`, but upon further thought, I think it might be fine because right now there is an assumption in Chromium that only one thread will ever be calling `HandleCommands` so this map is never raced on in terms of insertion and deletion. I will add additional comments to clarify this in the next PS along with any other comments.",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 67
+      },
+      "revId": "ab28daf4df79575b7fe4315b8c310301706c72ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
