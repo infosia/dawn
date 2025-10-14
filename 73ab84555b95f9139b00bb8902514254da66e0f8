@@ -46,6 +46,30 @@
       },
       "revId": "73ab84555b95f9139b00bb8902514254da66e0f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efa57fdd_443b2a41",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 4374400
+      },
+      "writtenOn": "2025-10-14T15:16:23Z",
+      "side": 1,
+      "message": "Fixed the formatting.",
+      "parentUuid": "787adf2f_2f2f2bac",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 22
+      },
+      "revId": "73ab84555b95f9139b00bb8902514254da66e0f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
