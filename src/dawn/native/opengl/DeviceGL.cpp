@@ -471,20 +471,62 @@ MaybeError Device::TickImpl() {
     return {};
 }
 
+MaybeError Device::AddGLWork(GLWorkFunc work) {
+    // Some times a pending tasks might indirectly create temporary buffers or textures, etc,
+    // when the pending tasks are executed in ExecuteGLWorks(), any indirect AddGLWork() calls
+    // should result in the task executed immeditely.
+    if (mContext->IsInScopedMakeCurrent()) {
+        return work(GetGL(/*makeCurrent=*/false));
+    }
+
+    mPendingGLWorks.Use([&](auto works) { works->push_back(work); });
+    return {};
+}
+
+MaybeError Device::ExecuteGLWorks() {
+    std::vector<GLWorkFunc> works;
+    mPendingGLWorks.Use([&](auto pendingWorks) { std::swap(works, *pendingWorks); });
+
+    if (works.empty()) {
+        return {};
+    }
+
+    ContextEGL::ScopedMakeCurrent scope(mContext.get());
+    const OpenGLFunctions& gl = GetGL(/*makeCurrent=*/false);
+    for (auto& work : works) {
+        DAWN_TRY(work(gl));
+    }
+    return {};
+}
+
 MaybeError Device::CopyFromStagingToBuffer(BufferBase* source,
                                            uint64_t sourceOffset,
                                            BufferBase* destination,
                                            uint64_t destinationOffset,
                                            uint64_t size) {
-    return DAWN_UNIMPLEMENTED_ERROR("Device unable to copy from staging buffer.");
+    // Call Unmap to flush the shadow copy
+    DAWN_TRY(source->Unmap());
+
+    return AddGLWork([this, source = Ref<BufferBase>(source), sourceOffset,
+                      destination = Ref<BufferBase>(destination), destinationOffset,
+                      size](const OpenGLFunctions& gl) -> MaybeError {
+        return DoCopyBufferToBuffer(gl, ToBackend(GetQueue()), ToBackend(source.Get()),
+                                    sourceOffset, ToBackend(destination.Get()), destinationOffset,
+                                    size);
+    });
 }
 
-MaybeError Device::CopyFromStagingToTextureImpl(const BufferBase* source,
+MaybeError Device::CopyFromStagingToTextureImpl(BufferBase* source,
                                                 const TexelCopyBufferLayout& src,
                                                 const TextureCopy& dst,
                                                 const Extent3D& copySizePixels) {
-    // If implemented, be sure to call SynchronizeTextureBeforeUse on the destination texture.
-    return DAWN_UNIMPLEMENTED_ERROR("Device unable to copy from staging buffer to texture.");
+    // Call Unmap to flush the shadow copy
+    DAWN_TRY(source->Unmap());
+
+    return AddGLWork([source = Ref<BufferBase>(source), src, dst,
+                      copySizePixels](const OpenGLFunctions& gl) -> MaybeError {
+        return DoCopyBufferToTexture(gl, ToBackend(source.Get()), src, dst, copySizePixels);
+    });
 }
 
 void Device::DestroyImpl() {
@@ -525,8 +567,10 @@ const AHBFunctions* Device::GetOrLoadAHBFunctions() {
 #endif  // DAWN_PLATFORM_IS(ANDROID)
 }
 
-const OpenGLFunctions& Device::GetGL() const {
-    mContext->MakeCurrent();
+const OpenGLFunctions& Device::GetGL(bool makeCurrent) const {
+    if (makeCurrent) {
+        mContext->MakeCurrent();
+    }
     ToBackend(GetQueue())->OnGLUsed();
     return mGL;
 }

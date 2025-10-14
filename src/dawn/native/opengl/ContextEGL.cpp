@@ -63,7 +63,8 @@ ResultOrError<std::unique_ptr<ContextEGL>> ContextEGL::Create(Ref<DisplayEGL> di
     return std::move(context);
 }
 
-ContextEGL::ContextEGL(Ref<DisplayEGL> display) : mDisplay(std::move(display)) {}
+ContextEGL::ContextEGL(Ref<DisplayEGL> display)
+    : mMutex(AcquireRef(new Mutex())), mDisplay(std::move(display)) {}
 
 ContextEGL::~ContextEGL() {
     if (mOffscreenSurface != EGL_NO_SURFACE) {
@@ -212,28 +213,63 @@ void ContextEGL::RequestRequiredExtensionsExplicitly() {
     glRequestExtension("GL_EXT_color_buffer_half_float");
 }
 
+bool ContextEGL::IsInScopedMakeCurrent() const {
+    return mInScopedCurrent.load(std::memory_order_acquire);
+}
+
 void ContextEGL::MakeCurrent() {
-    EGLBoolean success = mDisplay->egl.MakeCurrent(mDisplay->GetDisplay(), mCurrentSurface,
-                                                   mCurrentSurface, mContext);
+    MakeCurrent(mContext, mCurrentSurface, mCurrentSurface);
+}
+
+void ContextEGL::MakeCurrent(EGLContext context, EGLSurface drawSurface, EGLSurface readSurface) {
+    EGLBoolean success =
+        mDisplay->egl.MakeCurrent(mDisplay->GetDisplay(), drawSurface, readSurface, context);
     IgnoreErrors(
         CheckEGL(mDisplay->egl, static_cast<EGLBoolean>(success == EGL_TRUE), "eglMakeCurrent"));
 }
 
-// ScopedMakeSurfaceCurrent
+// ScopedSetCurrentSurface
 
-[[nodiscard]] ContextEGL::ScopedMakeSurfaceCurrent ContextEGL::MakeSurfaceCurrentScope(
+[[nodiscard]] ContextEGL::ScopedSetCurrentSurface ContextEGL::SetCurrentSurfaceScope(
     EGLSurface surface) {
     return {this, surface};
 }
 
-ContextEGL::ScopedMakeSurfaceCurrent::ScopedMakeSurfaceCurrent(ContextEGL* context,
-                                                               EGLSurface surface)
+ContextEGL::ScopedSetCurrentSurface::ScopedSetCurrentSurface(ContextEGL* context,
+                                                             EGLSurface surface)
     : mContext(context) {
     mContext->mCurrentSurface = surface;
 }
 
-ContextEGL::ScopedMakeSurfaceCurrent::~ScopedMakeSurfaceCurrent() {
+ContextEGL::ScopedSetCurrentSurface::~ScopedSetCurrentSurface() {
     mContext->mCurrentSurface = mContext->mOffscreenSurface;
+}
+
+ContextEGL::ScopedMakeCurrent::ScopedMakeCurrent(ContextEGL* context)
+    : mContext(context), mLock(mContext->mMutex.Get()) {
+    mPrevContext = mContext->mDisplay->egl.GetCurrentContext();
+    mPrevDrawSurface = mContext->mDisplay->egl.GetCurrentSurface(EGL_DRAW);
+    mPrevReadSurface = mContext->mDisplay->egl.GetCurrentSurface(EGL_READ);
+
+    if (mPrevContext == mContext->mContext && mPrevDrawSurface == mContext->mCurrentSurface &&
+        mPrevReadSurface == mContext->mCurrentSurface) {
+        return;
+    }
+
+    mContext->MakeCurrent(mContext->mContext, mContext->mCurrentSurface, mContext->mCurrentSurface);
+    mContext->mInScopedCurrent.store(true, std::memory_order_release);
+}
+
+ContextEGL::ScopedMakeCurrent::~ScopedMakeCurrent() {
+    if (mPrevContext != mContext->mContext || mPrevDrawSurface != mContext->mCurrentSurface ||
+        mPrevReadSurface != mContext->mCurrentSurface) {
+        mContext->MakeCurrent(mPrevContext, mPrevDrawSurface, mPrevReadSurface);
+    }
+    mContext->mInScopedCurrent.store(false, std::memory_order_release);
+}
+
+[[nodiscard]] ContextEGL::ScopedMakeCurrent ContextEGL::MakeCurrentScope() {
+    return ScopedMakeCurrent(this);
 }
 
 }  // namespace dawn::native::opengl
