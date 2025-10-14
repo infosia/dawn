@@ -42,10 +42,27 @@ namespace dawn::native::webgpu {
 ResultOrError<Ref<Buffer>> Buffer::Create(Device* device,
                                           const UnpackedPtr<BufferDescriptor>& descriptor) {
     WGPUBufferDescriptor desc = *ToAPI(*descriptor);
+    const auto actualUsage =
+        ComputeInternalBufferUsages(device, descriptor->usage, descriptor->size);
+    desc.usage = ToAPI(actualUsage);
     // Make the inner buffer copyable for readback if possible.
     if (!(desc.usage & WGPUBufferUsage_MapRead)) {
         desc.usage |= WGPUBufferUsage_CopySrc;
     }
+
+    if (desc.usage & ToAPI(kInternalStorageBuffer)) {
+        desc.usage ^= ToAPI(kInternalStorageBuffer);
+        desc.usage |= WGPUBufferUsage_Storage;
+    }
+    if (desc.usage & ToAPI(kReadOnlyStorageBuffer)) {
+        desc.usage ^= ToAPI(kReadOnlyStorageBuffer);
+        desc.usage |= WGPUBufferUsage_Storage;
+    }
+    if (desc.usage & ToAPI(kInternalCopySrcBuffer)) {
+        desc.usage ^= ToAPI(kInternalCopySrcBuffer);
+        desc.usage |= WGPUBufferUsage_CopySrc;
+    }
+
     WGPUBuffer innerBuffer = device->wgpu.deviceCreateBuffer(device->GetInnerHandle(), &desc);
     if (innerBuffer == nullptr) {
         // innerBuffer can be nullptr when mappedAtCreation == true and fails.
