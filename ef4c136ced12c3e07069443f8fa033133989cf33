@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73d8a5b8_1780405f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T12:26:52Z",
+      "side": 1,
+      "message": "PTAL!",
+      "revId": "ef4c136ced12c3e07069443f8fa033133989cf33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc5e30cb_f3fdb963",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T12:26:52Z",
+      "side": 1,
+      "message": "Note: we could move this logic inside the lambda above, but it seems more clear to me as a separate loop that does a fixup specifically static samplers. It separates the niche use cases from the logic common in all backends better imho.",
+      "revId": "ef4c136ced12c3e07069443f8fa033133989cf33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
