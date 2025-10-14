@@ -28,9 +28,11 @@
 #ifndef SRC_DAWN_NATIVE_OPENGL_CONTEXTEGL_H_
 #define SRC_DAWN_NATIVE_OPENGL_CONTEXTEGL_H_
 
+#include <atomic>
 #include <memory>
 #include <utility>
 
+#include "dawn/common/Mutex.h"
 #include "dawn/common/NonMovable.h"
 #include "dawn/common/egl_platform.h"
 #include "dawn/native/opengl/DeviceGL.h"
@@ -57,26 +59,47 @@ class ContextEGL : NonMovable {
                           bool useANGLETextureSharing,
                           bool forceES31AndMinExtensions);
     void RequestRequiredExtensionsExplicitly();
+    bool IsInScopedMakeCurrent() const;
 
     // Make the surface used by all MakeCurrent until the scoper gets out of scope.
-    class ScopedMakeSurfaceCurrent : NonMovable {
+    class ScopedSetCurrentSurface : NonMovable {
       public:
-        ScopedMakeSurfaceCurrent(ContextEGL* context, EGLSurface surface);
-        ~ScopedMakeSurfaceCurrent();
+        ScopedSetCurrentSurface(ContextEGL* context, EGLSurface surface);
+        ~ScopedSetCurrentSurface();
 
       private:
         raw_ptr<ContextEGL> mContext;
     };
-    [[nodiscard]] ScopedMakeSurfaceCurrent MakeSurfaceCurrentScope(EGLSurface surface);
+    [[nodiscard]] ScopedSetCurrentSurface SetCurrentSurfaceScope(EGLSurface surface);
 
+    // TODO(451928481): remove this once all call sites use ScopedMakeCurrent
     void MakeCurrent();
 
+    class ScopedMakeCurrent : NonMovable {
+      public:
+        explicit ScopedMakeCurrent(ContextEGL* context);
+        ~ScopedMakeCurrent();
+
+      private:
+        raw_ptr<ContextEGL> mContext;
+        EGLContext mPrevContext = EGL_NO_CONTEXT;
+        EGLSurface mPrevDrawSurface = EGL_NO_SURFACE;
+        EGLSurface mPrevReadSurface = EGL_NO_SURFACE;
+        Mutex::AutoLock mLock;
+    };
+    [[nodiscard]] ScopedMakeCurrent MakeCurrentScope();
+
   private:
+    void MakeCurrent(EGLContext context, EGLSurface drawSurface, EGLSurface readSurface);
+
+    Ref<Mutex> mMutex;
+
     Ref<DisplayEGL> mDisplay;
     EGLContext mContext = EGL_NO_CONTEXT;
     EGLSurface mCurrentSurface = EGL_NO_SURFACE;
     EGLSurface mOffscreenSurface = EGL_NO_SURFACE;
     bool mForceES31AndMinExtensions = false;
+    std::atomic<bool> mInScopedCurrent{false};
 };
 
 }  // namespace dawn::native::opengl

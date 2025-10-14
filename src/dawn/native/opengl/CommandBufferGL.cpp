@@ -48,6 +48,7 @@
 #include "dawn/native/opengl/PhysicalDeviceGL.h"
 #include "dawn/native/opengl/PipelineLayoutGL.h"
 #include "dawn/native/opengl/QuerySetGL.h"
+#include "dawn/native/opengl/QueueGL.h"
 #include "dawn/native/opengl/RenderPipelineGL.h"
 #include "dawn/native/opengl/SamplerGL.h"
 #include "dawn/native/opengl/TextureGL.h"
@@ -727,9 +728,7 @@ Extent3D ComputeTextureCopyExtent(const TextureCopy& textureCopy, const Extent3D
 CommandBuffer::CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor)
     : CommandBufferBase(encoder, descriptor) {}
 
-MaybeError CommandBuffer::Execute() {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-
+MaybeError CommandBuffer::Execute(Queue* queue, const OpenGLFunctions& gl) {
     auto LazyClearSyncScope = [](const SyncScopeResourceUsage& scope) -> MaybeError {
         for (size_t i = 0; i < scope.textures.size(); i++) {
             Texture* texture = ToBackend(scope.textures[i]);
@@ -768,7 +767,7 @@ MaybeError CommandBuffer::Execute() {
                      GetResourceUsages().computePasses[nextComputePassNumber].dispatchUsages) {
                     DAWN_TRY(LazyClearSyncScope(scope));
                 }
-                DAWN_TRY(ExecuteComputePass());
+                DAWN_TRY(ExecuteComputePass(gl));
 
                 nextComputePassNumber++;
                 break;
@@ -783,7 +782,7 @@ MaybeError CommandBuffer::Execute() {
                 DAWN_TRY(
                     LazyClearSyncScope(GetResourceUsages().renderPasses[nextRenderPassNumber]));
                 LazyClearRenderPassAttachments(cmd);
-                DAWN_TRY(ExecuteRenderPass(cmd));
+                DAWN_TRY(ExecuteRenderPass(cmd, gl));
 
                 nextRenderPassNumber++;
                 break;
@@ -791,29 +790,9 @@ MaybeError CommandBuffer::Execute() {
 
             case Command::CopyBufferToBuffer: {
                 CopyBufferToBufferCmd* copy = mCommands.NextCommand<CopyBufferToBufferCmd>();
-                if (copy->size == 0) {
-                    // Skip no-op copies.
-                    break;
-                }
-
-                DAWN_TRY(ToBackend(copy->source)->EnsureDataInitialized());
-                DAWN_TRY(
-                    ToBackend(copy->destination)
-                        ->EnsureDataInitializedAsDestination(copy->destinationOffset, copy->size));
-
-                DAWN_GL_TRY(gl,
-                            BindBuffer(GL_PIXEL_PACK_BUFFER, ToBackend(copy->source)->GetHandle()));
-                DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER,
-                                           ToBackend(copy->destination)->GetHandle()));
-                DAWN_GL_TRY(
-                    gl, CopyBufferSubData(GL_PIXEL_PACK_BUFFER, GL_PIXEL_UNPACK_BUFFER,
-                                          copy->sourceOffset, copy->destinationOffset, copy->size));
-
-                DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_PACK_BUFFER, 0));
-                DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, 0));
-
-                ToBackend(copy->source)->TrackUsage();
-                ToBackend(copy->destination)->TrackUsage();
+                DAWN_TRY(DoCopyBufferToBuffer(
+                    gl, queue, ToBackend(copy->source.Get()), copy->sourceOffset,
+                    ToBackend(copy->destination.Get()), copy->destinationOffset, copy->size));
                 break;
             }
 
@@ -824,34 +803,12 @@ MaybeError CommandBuffer::Execute() {
                     // Skip no-op copies.
                     continue;
                 }
-                auto& src = copy->source;
-                auto& dst = copy->destination;
-                Buffer* buffer = ToBackend(src.buffer.Get());
-                Texture* texture = ToBackend(dst.texture.Get());
-
-                DAWN_TRY(texture->SynchronizeTextureBeforeUse());
-
-                DAWN_TRY(buffer->EnsureDataInitialized());
-                SubresourceRange range = GetSubresourcesAffectedByCopy(dst, copy->copySize);
-                if (IsCompleteSubresourceCopiedTo(texture, copy->copySize, dst.mipLevel,
-                                                  dst.aspect)) {
-                    texture->SetIsSubresourceContentInitialized(true, range);
-                } else {
-                    DAWN_TRY(texture->EnsureSubresourceContentInitialized(range));
-                }
-
-                DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, buffer->GetHandle()));
-
-                TexelCopyBufferLayout dataLayout;
-                dataLayout.offset = 0;
-                dataLayout.bytesPerRow = src.bytesPerRow;
-                dataLayout.rowsPerImage = src.rowsPerImage;
-
-                DAWN_TRY(DoTexSubImage(gl, dst, reinterpret_cast<void*>(src.offset), dataLayout,
-                                       copy->copySize));
-                DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, 0));
-
-                buffer->TrackUsage();
+                TexelCopyBufferLayout sourceLayout;
+                sourceLayout.offset = copy->source.offset;
+                sourceLayout.bytesPerRow = copy->source.bytesPerRow;
+                sourceLayout.rowsPerImage = copy->source.rowsPerImage;
+                DAWN_TRY(DoCopyBufferToTexture(gl, ToBackend(copy->source.buffer.Get()),
+                                               sourceLayout, copy->destination, copy->copySize));
                 break;
             }
 
@@ -979,6 +936,7 @@ MaybeError CommandBuffer::Execute() {
                 DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_PACK_BUFFER, 0));
                 DAWN_GL_TRY(gl, DeleteFramebuffers(1, &readFBO));
 
+                queue->TrackCopyDstBuffer(buffer);
                 buffer->TrackUsage();
                 break;
             }
@@ -1034,9 +992,7 @@ MaybeError CommandBuffer::Execute() {
 
                 if (!clearedToZero) {
                     const std::vector<uint8_t> clearValues(cmd->size, 0u);
-                    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, dstBuffer->GetHandle()));
-                    DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, cmd->offset, cmd->size,
-                                                  clearValues.data()));
+                    DAWN_TRY(dstBuffer->Write(cmd->offset, clearValues.data(), clearValues.size()));
                 }
 
                 dstBuffer->TrackUsage();
@@ -1098,8 +1054,7 @@ MaybeError CommandBuffer::Execute() {
                 uint8_t* data = mCommands.NextData<uint8_t>(size);
                 DAWN_TRY(dstBuffer->EnsureDataInitializedAsDestination(offset, size));
 
-                DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, dstBuffer->GetHandle()));
-                DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, offset, size, data));
+                DAWN_TRY(dstBuffer->Write(offset, data, size));
 
                 dstBuffer->TrackUsage();
                 break;
@@ -1113,8 +1068,7 @@ MaybeError CommandBuffer::Execute() {
     return {};
 }
 
-MaybeError CommandBuffer::ExecuteComputePass() {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+MaybeError CommandBuffer::ExecuteComputePass(const OpenGLFunctions& gl) {
     ComputePipeline* lastPipeline = nullptr;
     BindGroupTracker bindGroupTracker = {};
 
@@ -1197,8 +1151,8 @@ MaybeError CommandBuffer::ExecuteComputePass() {
     DAWN_UNREACHABLE();
 }
 
-MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
+                                            const OpenGLFunctions& gl) {
     GLuint fbo = 0;
 
     // Create the framebuffer used for this render pass and calls the correct glDrawBuffers
@@ -1601,6 +1555,69 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass) {
 
     // EndRenderPass should have been called
     DAWN_UNREACHABLE();
+}
+
+MaybeError DoCopyBufferToBuffer(const OpenGLFunctions& gl,
+                                Queue* queue,
+                                Buffer* source,
+                                uint64_t sourceOffset,
+                                Buffer* destination,
+                                uint64_t destinationOffset,
+                                uint64_t size) {
+    if (size == 0) {
+        return {};
+    }
+
+    DAWN_TRY(source->EnsureDataInitialized());
+    DAWN_TRY(destination->EnsureDataInitializedAsDestination(destinationOffset, size));
+
+    DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_PACK_BUFFER, source->GetHandle()));
+    DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, destination->GetHandle()));
+    DAWN_GL_TRY(gl, CopyBufferSubData(GL_PIXEL_PACK_BUFFER, GL_PIXEL_UNPACK_BUFFER, sourceOffset,
+                                      destinationOffset, size));
+
+    DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_PACK_BUFFER, 0));
+    DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, 0));
+
+    source->TrackUsage();
+    destination->TrackUsage();
+    queue->TrackCopyDstBuffer(destination);
+    return {};
+}
+
+MaybeError DoCopyBufferToTexture(const OpenGLFunctions& gl,
+                                 Buffer* source,
+                                 const TexelCopyBufferLayout& src,
+                                 const TextureCopy& dst,
+                                 const Extent3D& copySize) {
+    if (copySize.width == 0 || copySize.height == 0 || copySize.depthOrArrayLayers == 0) {
+        // Skip no-op copies.
+        return {};
+    }
+    Texture* texture = ToBackend(dst.texture.Get());
+
+    DAWN_TRY(texture->SynchronizeTextureBeforeUse());
+
+    DAWN_TRY(source->EnsureDataInitialized());
+    SubresourceRange range = GetSubresourcesAffectedByCopy(dst, copySize);
+    if (IsCompleteSubresourceCopiedTo(texture, copySize, dst.mipLevel, dst.aspect)) {
+        texture->SetIsSubresourceContentInitialized(true, range);
+    } else {
+        DAWN_TRY(texture->EnsureSubresourceContentInitialized(range));
+    }
+
+    DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, source->GetHandle()));
+
+    TexelCopyBufferLayout dataLayout;
+    dataLayout.offset = 0;
+    dataLayout.bytesPerRow = src.bytesPerRow;
+    dataLayout.rowsPerImage = src.rowsPerImage;
+
+    DAWN_TRY(DoTexSubImage(gl, dst, reinterpret_cast<void*>(src.offset), dataLayout, copySize));
+    DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, 0));
+
+    source->TrackUsage();
+    return {};
 }
 
 MaybeError DoTexSubImage(const OpenGLFunctions& gl,
