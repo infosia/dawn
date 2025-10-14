@@ -57,6 +57,30 @@
       ],
       "revId": "de589555c06e91e85d05907d043693dfcdef1139",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f7fa9ea_f832dfbb",
+        "filename": "infra/config/global/generated/luci/commit-queue.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-14T23:48:10Z",
+      "side": 1,
+      "message": "Yeah, I noticed that as I was working on this and made a note to do so in a follow-up CL.",
+      "parentUuid": "21398029_2e8c7f33",
+      "range": {
+        "startLine": 1107,
+        "startChar": 0,
+        "endLine": 1107,
+        "endChar": 22
+      },
+      "revId": "de589555c06e91e85d05907d043693dfcdef1139",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
