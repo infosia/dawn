@@ -90,6 +90,14 @@ Device::Device(AdapterBase* adapter,
     DAWN_ASSERT(adapter->GetPhysicalDevice()->GetBackendType() == wgpu::BackendType::WebGPU);
 
     WGPUDeviceDescriptor apiDesc = *(ToAPI(*descriptor));
+    // All validations should already happen with the frontend of this WebGPUBackend.
+    // Turning on allow internal binding for all validations happen in the inner layer frontend.
+    // Alternatively we can enable Toggle::SkipValidation for the inner device once we are done with
+    // all implementations.
+    WGPUDawnDeviceAllowInternalBindingDescriptor allowInternalBinding =
+        WGPU_DAWN_DEVICE_ALLOW_INTERNAL_BINDING_DESCRIPTOR_INIT;
+    allowInternalBinding.chain.next = apiDesc.nextInChain;
+    apiDesc.nextInChain = &(allowInternalBinding.chain);
     std::string label = "Inner Device on " + adapter->GetPhysicalDevice()->GetName();
     apiDesc.label = ToOutputStringView(label);
     // Acquire a Ref to the outer webgpu::Device to avoid possible dangling pointer in the callback.
