@@ -363,6 +363,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cff1a4d4_baaf75c8",
+        "filename": "src/dawn/native/webgpu/RecordableObject.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T13:34:54Z",
+      "side": 1,
+      "message": "Yeah that\u0027s all very confusing. When I read \"buffers used on a queue\" my expectation was that the trace wouldn\u0027t record unused resources, but would record all the mutating operations that happen so as to be able to replay it (everything is on the queue except the mapping, and maybe in the future the bindgroup updates). If we think it is confusing to the user, we can hide it in a future UI. For the tracing, I would imagine that it would make the recording simpler (in the way this thread is about), and would likely avoid recording redundant data in the trace.\n\nWDYT of discussing this in the weekly meeting tomorrow if we don\u0027t find a resolution by then?",
+      "parentUuid": "64b45c57_69d00898",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cc84ac31_d5187a69",
         "filename": "src/dawn/native/webgpu/RecordableObject.h",
         "patchSetId": 5
