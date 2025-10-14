@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8da16808_4340ab0f",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-14T12:17:49Z",
+      "side": 1,
+      "message": "Please make two assertEquals statements.",
+      "fixSuggestions": [
+        {
+          "fixId": "ad6fa88f_30429cd5",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+              "range": {
+                "startLine": 58,
+                "startChar": 0,
+                "endLine": 61,
+                "endChar": 0
+              },
+              "replacement": "    TestCase.assertEquals(ErrorType.Validation, error.type)\n    TestCase.assertEquals(PopErrorScopeStatus.Success, error.status)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f9a785e_1b3103a1",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-14T12:17:49Z",
+      "side": 1,
+      "message": "Please use imports so we just have assertEquals... not TestCase.assertEquals.",
+      "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b6d6f4e_b3194305",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-14T12:17:49Z",
+      "side": 1,
+      "message": "We\u0027re shadowing a top-level webGpu variable here. Rethink the design to avoid the shadowing?",
+      "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e550cbf_c4b63279",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-14T12:17:49Z",
+      "side": 1,
+      "message": "This needs a comment because I think we are testing here that the incorrect behavior (throwing exception during device.destroy) is happening. https://buganizer.corp.google.com/issues/381416258\nI\u0027m not actually sure we want to test that in fact.",
+      "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1947d533_71721214",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-14T12:17:49Z",
+      "side": 1,
+      "message": "Please test the more specific Exception that is firing if possible.",
+      "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "026ca252_e62250d9",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-14T12:17:49Z",
+      "side": 1,
+      "message": "Again, please use multiple assertEquals statements.",
+      "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a071362c_112f29fe",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-14T12:17:49Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2c5ecb3_db5ab77b",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-14T12:17:49Z",
+      "side": 1,
+      "message": "Same here. Please use assertEquals.",
+      "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
