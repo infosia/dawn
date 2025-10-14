@@ -44,9 +44,7 @@ class Texture final : public TextureBase, public ObjectWGPU<WGPUTexture> {
                                               const UnpackedPtr<TextureDescriptor>& descriptor);
 
   private:
-    Texture(Device* device,
-            const UnpackedPtr<TextureDescriptor>& descriptor,
-            WGPUTexture innerTexture);
+    Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor);
     void DestroyImpl() override;
 };
 
