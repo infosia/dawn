@@ -12,6 +12,7 @@ class BufferTest {
     /**
      * Test that calling getMappedRange() on a mapped buffer does not raise an exception.
      */
+    @SuppressWarnings("CheckReturnValue")
     fun bufferMapTest() {
         runBlocking {
             val webGpu = createWebGpu()
@@ -32,6 +33,7 @@ class BufferTest {
     /**
      * Test that calling getMappedRange() on a non-mapped buffer raises an exception.
      */
+    @SuppressWarnings("CheckReturnValue")
     fun bufferMapFailureTest() {
         runBlocking {
             val webGpu = createWebGpu()
