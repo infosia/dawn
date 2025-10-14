@@ -3971,7 +3971,8 @@
             {"value": 77, "name": "texel buffer binding entry", "tags": ["dawn"]},
             {"value": 78, "name": "texel buffer binding layout", "tags": ["dawn"]},
             {"value": 79, "name": "shared texture memory metal end access state", "tags": ["dawn", "native"]},
-            {"value": 80, "name": "adapter properties WGPU", "tags": ["dawn"]}
+            {"value": 80, "name": "adapter properties WGPU", "tags": ["dawn"]},
+            {"value": 81, "name": "dawn device allow internal binding descriptor", "tags": ["dawn"]}
         ]
     },
     "texture": {
@@ -4557,6 +4558,13 @@
         "members": [
             {"name": "use internal usages", "type": "bool", "default": "false"}
         ]
+    },
+    "dawn device allow internal binding descriptor": {
+        "category": "structure",
+        "chained": "in",
+        "chain roots": ["device descriptor"],
+        "tags": ["dawn"],
+        "members": []
     },
     "dawn adapter properties power preference": {
         "category": "structure",

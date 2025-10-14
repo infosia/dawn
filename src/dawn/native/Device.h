@@ -664,6 +664,8 @@ class DeviceBase : public ErrorSink,
     // We cache this toggle so that we can check it without locking the device.
     bool mIsImmediateErrorHandlingEnabled = false;
 
+    bool mAlwaysAllowInternalBinding = false;
+
     // This pointer is non-null if Feature::ImplicitDeviceSynchronization is turned on. Note that
     // this is a currently a recursive lock, but should only really be used recursively for error
     // handling.
