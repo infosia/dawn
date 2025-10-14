@@ -83,7 +83,7 @@ class Buffer final : public BufferBase {
 
     MaybeError Initialize(bool mappedAtCreation);
     MaybeError InitializeHostMapped(const BufferHostMappedPointer* hostMappedDesc);
-    MaybeError InitializeAsExternalBuffer(ComPtr<ID3D12Resource> d3dBuffer,
+    MaybeError InitializeAsExternalBuffer(SharedBufferMemory* memory,
                                           const UnpackedPtr<BufferDescriptor>& descriptor);
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override;
     void FinalizeMapImpl() override;
