@@ -281,16 +281,106 @@ TEST_P(SharedBufferMemoryD3D12ResourceTests, CustomReadbackHeapImport) {
     ASSERT_TRUE(sharedBufferMemory.CreateBuffer().Get());
 }
 
+class D3D12SharedMemoryFileHandleBackend : public SharedBufferMemoryTestBackend {
+  public:
+    static Backend GetInstance() {
+        static D3D12SharedMemoryFileHandleBackend b;
+        return &b;
+    }
+
+    std::vector<wgpu::FeatureName> RequiredFeatures(const wgpu::Adapter& adapter) const override {
+        return {wgpu::FeatureName::SharedBufferMemoryD3D12SharedMemoryFileMappingHandle,
+                wgpu::FeatureName::SharedFenceDXGISharedHandle,
+                wgpu::FeatureName::BufferMapExtendedUsages};
+    }
+
+    wgpu::SharedBufferMemory CreateSharedBufferMemory(const wgpu::Device& device,
+                                                      wgpu::BufferUsage usages,
+                                                      uint32_t bufferSize,
+                                                      uint32_t initializationData = 0) override {
+        uint64_t alignedHeapSize = Align(bufferSize, 65536);
+
+        LARGE_INTEGER largeSize = {};
+        largeSize.QuadPart = alignedHeapSize;
+        // Create a named shared memory object by using INVALID_HANDLE_VALUE as input file handle.
+        // See https://learn.microsoft.com/en-us/windows/win32/memory/creating-named-shared-memory.
+        HANDLE sharedMemoryHandle =
+            CreateFileMapping(INVALID_HANDLE_VALUE, nullptr, PAGE_READWRITE, largeSize.HighPart,
+                              largeSize.LowPart, nullptr);
+        EXPECT_NE(sharedMemoryHandle, nullptr);
+
+        if (initializationData) {
+            // Get mapped pointer to the file mapping object for test
+            void* ptr = MapViewOfFile(sharedMemoryHandle, FILE_MAP_ALL_ACCESS, 0, 0, 0);
+            EXPECT_NE(ptr, nullptr);
+
+            memcpy(ptr, &initializationData, sizeof(initializationData));
+
+            UnmapViewOfFile(ptr);
+        }
+
+        wgpu::SharedBufferMemoryDescriptor desc;
+        native::d3d12::SharedBufferMemoryD3D12SharedMemoryFileHandleDescriptor sharedFileHandleDesc;
+        sharedFileHandleDesc.handle = sharedMemoryHandle;
+        sharedFileHandleDesc.heapSize = alignedHeapSize;
+        desc.nextInChain = &sharedFileHandleDesc;
+
+        return device.ImportSharedBufferMemory(&desc);
+    }
+
+  private:
+    D3D12SharedMemoryFileHandleBackend() {}
+};
+
+class SharedBufferMemoryD3D12SharedFileHandleTests : public SharedBufferMemoryTests {};
+
+// Ensure that importing a nullptr handle results in error.
+TEST_P(SharedBufferMemoryD3D12SharedFileHandleTests, nullResourceFailure) {
+    native::d3d12::SharedBufferMemoryD3D12SharedMemoryFileHandleDescriptor sharedFileHandleDesc;
+    sharedFileHandleDesc.handle = nullptr;
+    sharedFileHandleDesc.heapSize = 65536;
+    wgpu::SharedBufferMemoryDescriptor desc;
+    desc.nextInChain = &sharedFileHandleDesc;
+    ASSERT_DEVICE_ERROR(device.ImportSharedBufferMemory(&desc));
+}
+
+// Ensure that heap size not being a multiple of 65536 results in error.
+TEST_P(SharedBufferMemoryD3D12SharedFileHandleTests, MemorySizeNotAlignFailure) {
+    constexpr uint32_t kUnAlignedSize = 65537;
+
+    LARGE_INTEGER largeSize = {};
+    largeSize.QuadPart = kUnAlignedSize;
+    // Create a named shared memory object by using INVALID_HANDLE_VALUE as input file handle.
+    // See https://learn.microsoft.com/en-us/windows/win32/memory/creating-named-shared-memory.
+    HANDLE sharedMemoryHandle = CreateFileMapping(INVALID_HANDLE_VALUE, nullptr, PAGE_READWRITE,
+                                                  largeSize.HighPart, largeSize.LowPart, nullptr);
+    EXPECT_NE(sharedMemoryHandle, nullptr);
+
+    native::d3d12::SharedBufferMemoryD3D12SharedMemoryFileHandleDescriptor sharedFileHandleDesc;
+    sharedFileHandleDesc.handle = nullptr;
+    sharedFileHandleDesc.heapSize = kUnAlignedSize;
+    wgpu::SharedBufferMemoryDescriptor desc;
+    desc.nextInChain = &sharedFileHandleDesc;
+    ASSERT_DEVICE_ERROR(device.ImportSharedBufferMemory(&desc));
+}
+
 DAWN_INSTANTIATE_PREFIXED_TEST_P(D3D12,
                                  SharedBufferMemoryTests,
                                  {D3D12Backend()},
-                                 {D3D12ResourceBackend::GetInstance()});
+                                 {D3D12ResourceBackend::GetInstance(),
+                                  D3D12SharedMemoryFileHandleBackend::GetInstance()});
 
 GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST(SharedBufferMemoryD3D12ResourceTests);
 DAWN_INSTANTIATE_PREFIXED_TEST_P(D3D12,
                                  SharedBufferMemoryD3D12ResourceTests,
                                  {D3D12Backend()},
                                  {D3D12ResourceBackend::GetInstance()});
+
+GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST(SharedBufferMemoryD3D12SharedFileHandleTests);
+DAWN_INSTANTIATE_PREFIXED_TEST_P(D3D12,
+                                 SharedBufferMemoryD3D12SharedFileHandleTests,
+                                 {D3D12Backend()},
+                                 {D3D12SharedMemoryFileHandleBackend::GetInstance()});
 
 }  // anonymous namespace
 }  // namespace dawn
