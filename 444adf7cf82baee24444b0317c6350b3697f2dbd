@@ -16,6 +16,23 @@
       "message": "PTAL\n\nI believe this should resolve the issue you reported.",
       "revId": "444adf7cf82baee24444b0317c6350b3697f2dbd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e0991a4_b5e95728",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-14T21:08:44Z",
+      "side": 1,
+      "message": "Nice, thank you!",
+      "revId": "444adf7cf82baee24444b0317c6350b3697f2dbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
