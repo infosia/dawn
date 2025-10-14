@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f6be9401_4a1f6103",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-14T20:55:13Z",
+      "side": 1,
+      "message": "But it needs to be called from kotlin_record_members, the Python method above (whether it\u0027s not a default will affect the order in the kotlin_record_members  list). It\u0027s not practical to port kotlin_record_members to Jinja2. Is there any precedent for calling a Jinja2 macro from Python code?",
+      "parentUuid": "01557aa4_b1f71389",
+      "range": {
+        "startLine": 828,
+        "startChar": 4,
+        "endLine": 904,
+        "endChar": 19
+      },
+      "revId": "6eea91620089d073c9578c2322a37371439c320c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ee255266_30f29432",
         "filename": "generator/templates/art/api_kotlin_types.kt",
         "patchSetId": 1
