@@ -416,6 +416,10 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
         mIsolatedEntryPointName = "dawn_entry_point";
     }
 
+    if (descriptor.Get<DawnDeviceAllowInternalBindingDescriptor>()) {
+        mAlwaysAllowInternalBinding = true;
+    }
+
     // Record the cache key from the adapter info. Note that currently, if a new extension
     // descriptor is added (and probably handled here), the cache key recording needs to be
     // updated.
@@ -1273,7 +1277,7 @@ BindGroupBase* DeviceBase::APICreateBindGroup(const BindGroupDescriptor* descrip
 BindGroupLayoutBase* DeviceBase::APICreateBindGroupLayout(
     const BindGroupLayoutDescriptor* descriptor) {
     Ref<BindGroupLayoutBase> result;
-    if (ConsumedError(CreateBindGroupLayout(descriptor), &result,
+    if (ConsumedError(CreateBindGroupLayout(descriptor, mAlwaysAllowInternalBinding), &result,
                       "calling %s.CreateBindGroupLayout(%s).", this, descriptor)) {
         return ReturnToAPI(
             BindGroupLayoutBase::MakeError(this, descriptor ? descriptor->label : nullptr));
