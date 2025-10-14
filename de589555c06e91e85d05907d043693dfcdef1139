@@ -16,6 +16,47 @@
       "message": "+ynovikov for general review/Dawn OWNER\n+gbeaty to confirm that there isn\u0027t a better way to do this using the code from `chromium-luci`\n\nFor reference, the relevant code for the legacy builders is [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/infra/config/global/legacy_builders.star;l\u003d338)",
       "revId": "de589555c06e91e85d05907d043693dfcdef1139",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21398029_2e8c7f33",
+        "filename": "infra/config/global/generated/luci/commit-queue.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1003631
+      },
+      "writtenOn": "2025-10-14T23:47:14Z",
+      "side": 1,
+      "message": "You should really trim the milestones.json, these branch CQ groups are referencing chromium builders that no longer exist because we only have linux/mac/windows builders for M140+",
+      "range": {
+        "startLine": 1107,
+        "startChar": 0,
+        "endLine": 1107,
+        "endChar": 22
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "abc83349_16631e7c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "infra/config/global/generated/luci/commit-queue.cfg",
+              "range": {
+                "startLine": 1088,
+                "startChar": 0,
+                "endLine": 1224,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "de589555c06e91e85d05907d043693dfcdef1139",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
