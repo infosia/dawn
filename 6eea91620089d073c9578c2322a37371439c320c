@@ -71,6 +71,53 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2391e404_ac565dec",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-14T23:52:01Z",
+      "side": 1,
+      "message": "Ah... as per our offline conversation, it didn\u0027t register that this was being used in `kotlin_record_members` to me for some reason... That said, I think for now it\u0027s fine to have this in Python then. Maybe we can add a comment to justify it a bit further for future readers. Honestly I don\u0027t think I mind that it\u0027s in Python since I definitely agree that we might be towing the edges of Jinja2\u0027s capabilities with all the case handling. I mostly mind that it\u0027s in the generator file used by everything else instead of a Kotlin specific file that you guys could own and update. We can address that later on though, and in that world, I would argue it would potentially be better to move the existing `kotlin_declaration` Jinja macro into Python as well.\n\nAnyways, added other comments w.r.t keeping this here.",
+      "parentUuid": "f6be9401_4a1f6103",
+      "range": {
+        "startLine": 828,
+        "startChar": 4,
+        "endLine": 904,
+        "endChar": 19
+      },
+      "revId": "6eea91620089d073c9578c2322a37371439c320c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0f5b6ab_185b15f7",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-14T23:52:01Z",
+      "side": 1,
+      "message": "I think the defaulting logic can be removed here now that we have the Python helper.",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "6eea91620089d073c9578c2322a37371439c320c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee255266_30f29432",
