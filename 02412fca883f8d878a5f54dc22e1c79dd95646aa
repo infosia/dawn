@@ -22,6 +22,23 @@
       },
       "revId": "02412fca883f8d878a5f54dc22e1c79dd95646aa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec88ce47_a23a17a8",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T13:24:22Z",
+      "side": 1,
+      "message": "Whoops there is a small merge conflict with https://dawn-review.googlesource.com/c/dawn/+/266374 the logic here LGTM too",
+      "revId": "02412fca883f8d878a5f54dc22e1c79dd95646aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
