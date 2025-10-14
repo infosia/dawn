@@ -74,6 +74,30 @@
       },
       "revId": "b127ccf6b32b0fd8a87086523209499a7bfa8d06",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9816079e_39dac2b9",
+        "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests_win.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-14T12:48:44Z",
+      "side": 1,
+      "message": "That\u0027s because D3D12 is blocklisted on Windows x86, which results in the `{D3D12Backend()}` list to be filtered to be empty and GTest to complain. Maybe note this next to this line? [1] was fine likely because other `SharedBufferMemoryTests` were running in other files?",
+      "parentUuid": "dde7f6e2_efe71fe6",
+      "range": {
+        "startLine": 288,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 84
+      },
+      "revId": "b127ccf6b32b0fd8a87086523209499a7bfa8d06",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
