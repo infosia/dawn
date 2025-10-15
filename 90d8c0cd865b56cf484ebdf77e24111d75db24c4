@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2754721c_2fdb13d3",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/AdapterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T12:35:26Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "941a70ec_28602aba",
+      "revId": "90d8c0cd865b56cf484ebdf77e24111d75db24c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ed97928_fff03ce0",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-10-15T10:02:25Z",
       "side": 1,
       "message": "Nit: I would name this \u0027requestDevice\u0027 or \u0027requestTestDevice\u0027 for clarity, as you\u0027re not calling a getter internally",
+      "revId": "90d8c0cd865b56cf484ebdf77e24111d75db24c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "daffa6d0_173a4beb",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/AdapterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T12:35:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ed97928_fff03ce0",
       "revId": "90d8c0cd865b56cf484ebdf77e24111d75db24c4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c801c08b_0fb84020",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/AdapterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T12:35:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5bfc03a_39e19bb2",
+      "revId": "90d8c0cd865b56cf484ebdf77e24111d75db24c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "910c55ed_426ea789",
@@ -65,6 +119,24 @@
       "writtenOn": "2025-10-15T10:02:25Z",
       "side": 1,
       "message": "Please see my comment on your other CL -- rather than having the test logic be flexible across multiple use cases, let\u0027s try to write short concrete tests that focus on a single behavior rather than using local logic to support multiple cases.  We should expect precisely 0, or 1, or whichever, but not the other options as well.\n\nAt issue here would be that if there were a bug that reported 0 when it should be 1 or vice-versa, we risk masking the bug by having our test logic not recognize it as erroneous in the scenario tested.",
+      "revId": "90d8c0cd865b56cf484ebdf77e24111d75db24c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be6a6edd_419770e8",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/AdapterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T12:35:26Z",
+      "side": 1,
+      "message": "Agreed, thank you for the detailed feedback. \nI will make the required changes.",
+      "parentUuid": "910c55ed_426ea789",
       "revId": "90d8c0cd865b56cf484ebdf77e24111d75db24c4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
