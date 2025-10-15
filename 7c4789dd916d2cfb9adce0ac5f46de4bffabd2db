@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08ac15c8_c882745b",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-15T07:57:54Z",
+      "side": 0,
+      "message": "@Jim I\u0027ve moved this functionality for callback on Line#84.\nAnd I\u0027ve removed the \u0027function pointer\u0027 block. Could you please confirm if this is the correct? It doesn\u0027t break the build or the dawn-demo, and while it seems right, I want to be sure.",
+      "revId": "7c4789dd916d2cfb9adce0ac5f46de4bffabd2db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
