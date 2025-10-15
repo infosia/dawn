@@ -431,8 +431,15 @@ TEST_F(SpirvWriterTest, UniformVar_Load) {
 
     ASSERT_TRUE(Generate()) << Error() << output_;
     EXPECT_INST(R"(
+<<<<<<< HEAD
           %9 = OpAccessChain %_ptr_Uniform_int %1 %uint_0
        %load = OpLoad %int %9 None
+=======
+         %12 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %uint_0
+         %15 = OpLoad %v4uint %12 None
+         %16 = OpCompositeExtract %uint %15 0
+         %18 = OpBitcast %int %16
+>>>>>>> 02d1987ddb (fixup)
 )");
 }
 
