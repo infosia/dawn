@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11d9442f_600e48f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-15T16:05:23Z",
+      "side": 1,
+      "message": "LGTM. Note that I tested setting `clang_use_unsafe_buffers_plugin \u003d true` at ToT and `use_remoteexec \u003d true` and we no longer get the `[unsafe-buffers] Error reading file: \u0027No such file or directory\u0027` spam during build.",
+      "revId": "62f74de664b25be3fdf0bb69998d361e3cbc41b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
