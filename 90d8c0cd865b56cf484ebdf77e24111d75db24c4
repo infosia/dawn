@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bb88cd4b_777da7dd",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/AdapterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2025-10-15T14:33:08Z",
+      "side": 1,
+      "message": "(You should still change it though.  Text search won\u0027t account for US vs RoW English spellings.)",
+      "parentUuid": "2754721c_2fdb13d3",
+      "revId": "90d8c0cd865b56cf484ebdf77e24111d75db24c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1ed97928_fff03ce0",
         "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/AdapterTest.kt",
         "patchSetId": 2
