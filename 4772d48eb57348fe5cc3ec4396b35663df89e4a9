@@ -158,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "018aba33_2e299257",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/SurfaceTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T07:30:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "98dd4168_18313316",
+      "revId": "4772d48eb57348fe5cc3ec4396b35663df89e4a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eed52769_d2ea4751",
@@ -171,6 +189,24 @@
       "writtenOn": "2025-10-14T11:59:58Z",
       "side": 1,
       "message": "Nit, if this is a constant it should look something like `private const val TEST_WIDTH \u003d 600`",
+      "revId": "4772d48eb57348fe5cc3ec4396b35663df89e4a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22efb18d_3c1e5773",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/SurfaceTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T07:30:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "eed52769_d2ea4751",
       "revId": "4772d48eb57348fe5cc3ec4396b35663df89e4a9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -192,6 +228,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "321782bf_91e7c4ef",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/SurfaceTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T07:30:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "676e6340_627f36cb",
+      "revId": "4772d48eb57348fe5cc3ec4396b35663df89e4a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "935cc295_feee39a2",
@@ -209,6 +263,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5dae3e4_1efbebf1",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/SurfaceTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T07:30:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "935cc295_feee39a2",
+      "revId": "4772d48eb57348fe5cc3ec4396b35663df89e4a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c72fd2de_b53bf1c3",
@@ -222,6 +294,24 @@
       "writtenOn": "2025-10-14T11:59:58Z",
       "side": 1,
       "message": "Can we add a test for some different formats, e.g. unsupported formats?",
+      "revId": "4772d48eb57348fe5cc3ec4396b35663df89e4a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da4886e5_2197982f",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/TextureTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T07:30:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c72fd2de_b53bf1c3",
       "revId": "4772d48eb57348fe5cc3ec4396b35663df89e4a9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
