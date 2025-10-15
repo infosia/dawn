@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aad1f60a_83a371f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-15T00:28:38Z",
+      "side": 1,
+      "message": "So I actually tried this first, and ran into issues. Specifically, with the backing `uint32_t` being the same for different enums. I would need to reserve the special ids so that they would be distinct with wire/return wire ids, which meant I needed to start the wire/return ids after the last value of the special commands. While doable, it felt like at that point, it just made more sense to combine the ids.\n\nIMHO, in this case it\u0027s actually better to use a unified enum space because the type safety that we theoretically gain from them by having them disjoint is really a lie because we are actually just using a `static_cast` to convert the `uint32_t` into the typed enum value anyways, so in reality they are just an `uint32_t`. Even if we separated them, the cast could still easily be wrong and when separated, they could share the same value and lead to undefined behavior.\n\nBy moving them all under one enum space, we actually guarantee that even if we use the wrong type, because the values are distinct, our switch/case won\u0027t accidentally handle the command as another command, and instead correctly handle it as an unknown command.",
+      "parentUuid": "69cc106f_71f5c803",
+      "revId": "ab28daf4df79575b7fe4315b8c310301706c72ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7074e40a_3c6bddd3",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-10-14T15:03:23Z",
       "side": 1,
       "message": "Is this still needed now if it\u0027s passthrough?",
+      "revId": "ab28daf4df79575b7fe4315b8c310301706c72ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "765ce71d_f513733c",
+        "filename": "src/dawn/wire/ChunkedCommandHandler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-15T00:28:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7074e40a_3c6bddd3",
       "revId": "ab28daf4df79575b7fe4315b8c310301706c72ad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc705c66_afc7b17f",
+        "filename": "src/dawn/wire/ChunkedCommandHandler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-15T00:28:38Z",
+      "side": 1,
+      "message": "Yes! Good catch.",
+      "parentUuid": "424f7aa0_e43fe8c7",
+      "revId": "ab28daf4df79575b7fe4315b8c310301706c72ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d50656df_f13c13fe",
@@ -65,6 +119,24 @@
       "writtenOn": "2025-10-14T15:03:23Z",
       "side": 1,
       "message": "nit: We could use the iterator returned by the insert operation (and ASSERT that the insert created a new entry, since we\u0027ll have to destructure the returned pair)",
+      "revId": "ab28daf4df79575b7fe4315b8c310301706c72ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "292485fb_68646884",
+        "filename": "src/dawn/wire/ChunkedCommandHandler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-15T00:28:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d50656df_f13c13fe",
       "revId": "ab28daf4df79575b7fe4315b8c310301706c72ad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d765a47c_d2c94a27",
+        "filename": "src/dawn/wire/ChunkedCommandHandler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-15T00:28:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ed796b1_04179630",
+      "revId": "ab28daf4df79575b7fe4315b8c310301706c72ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "542f755b_48beac79",
@@ -99,6 +189,24 @@
       "writtenOn": "2025-10-14T15:03:23Z",
       "side": 1,
       "message": "Just to make sure, this is called from the autogenerated Client/ServerHandlers automatically when a \"chunked command\" command is received? Nice ^^",
+      "revId": "ab28daf4df79575b7fe4315b8c310301706c72ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d2ffdf8_217dbce6",
+        "filename": "src/dawn/wire/ChunkedCommandHandler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-15T00:28:38Z",
+      "side": 1,
+      "message": "Yup!",
+      "parentUuid": "542f755b_48beac79",
       "revId": "ab28daf4df79575b7fe4315b8c310301706c72ad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -150,6 +258,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06eb91eb_4f4b313b",
+        "filename": "src/dawn/wire/ChunkedCommandHandler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-15T00:28:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9655d01e_a356401d",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 67
+      },
+      "revId": "ab28daf4df79575b7fe4315b8c310301706c72ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fdd31fdf_2b6a5568",
@@ -163,6 +295,24 @@
       "writtenOn": "2025-10-14T15:03:23Z",
       "side": 1,
       "message": "Is there any chance we can keep this as a member to avoid adding a pointer indirection to every WebGPU command on the client side?",
+      "revId": "ab28daf4df79575b7fe4315b8c310301706c72ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1883f0d6_c3351068",
+        "filename": "src/dawn/wire/client/Client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-15T00:28:38Z",
+      "side": 1,
+      "message": "Done. Had to add a way to overwrite the underlying `CommandSerializer`.",
+      "parentUuid": "fdd31fdf_2b6a5568",
       "revId": "ab28daf4df79575b7fe4315b8c310301706c72ad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
