@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97af35d1_cfb9355a",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/BufferTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2025-10-15T14:15:33Z",
+      "side": 1,
+      "message": "Can these be more specific?",
+      "revId": "3a3263ba55782fba06fc891af8ef5f0c3daa4810",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
