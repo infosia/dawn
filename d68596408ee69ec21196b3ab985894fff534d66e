@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c7ae464_812bb8d8",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T08:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8da16808_4340ab0f",
+      "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f9a785e_1b3103a1",
@@ -49,6 +67,24 @@
       "writtenOn": "2025-10-14T12:17:49Z",
       "side": 1,
       "message": "Please use imports so we just have assertEquals... not TestCase.assertEquals.",
+      "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b9dd972_4117a311",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T08:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f9a785e_1b3103a1",
       "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -104,6 +140,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0b62308_4433fd1b",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T08:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1947d533_71721214",
+      "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "026ca252_e62250d9",
@@ -117,6 +171,24 @@
       "writtenOn": "2025-10-14T12:17:49Z",
       "side": 1,
       "message": "Again, please use multiple assertEquals statements.",
+      "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c228d2b_a5c09776",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T08:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "026ca252_e62250d9",
       "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -138,6 +210,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2bf3791_eefc0d41",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T08:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a071362c_112f29fe",
+      "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a2c5ecb3_db5ab77b",
@@ -151,6 +241,24 @@
       "writtenOn": "2025-10-14T12:17:49Z",
       "side": 1,
       "message": "Same here. Please use assertEquals.",
+      "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca51ac95_5a285c9f",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T08:13:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2c5ecb3_db5ab77b",
       "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
