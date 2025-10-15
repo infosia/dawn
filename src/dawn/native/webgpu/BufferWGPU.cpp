@@ -55,6 +55,21 @@ ResultOrError<Ref<Buffer>> Buffer::Create(Device* device,
     }
 
     Ref<Buffer> buffer = AcquireRef(new Buffer(device, descriptor, innerBuffer));
+
+    // // The buffers with mappedAtCreation == true will be initialized in
+    // // BufferBase::MapAtCreation().
+    // if (device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting) &&
+    // !descriptor->mappedAtCreation) {
+    //     std::vector<uint8_t> clearValues(buffer->mAllocatedSize, 1u);
+    //     device->wgpu.queueWriteBuffer(
+    //         ToBackend(device->GetQueue())->GetInnerHandle(),
+    //         innerBuffer,
+    //         0,
+    //         clearValues.data(),
+    //         clearValues.size()
+    //     );
+    // }
+
     return std::move(buffer);
 }
 
