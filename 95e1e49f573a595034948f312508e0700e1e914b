@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ab0e195_0873ef44",
+        "filename": "generator/templates/art/api_kotlin_structure.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-15T13:15:46Z",
+      "side": 1,
+      "message": "Nit, this adds an extra blank line which is showing up in the templates.",
+      "revId": "95e1e49f573a595034948f312508e0700e1e914b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "647ede40_e678bee7",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-15T13:15:46Z",
+      "side": 1,
+      "message": "One-liner `{% for member in members if member.type.category \u003d\u003d \u0027callback info\u0027 %}`, which removes an indent level (more readable).",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 56
+      },
+      "revId": "95e1e49f573a595034948f312508e0700e1e914b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "daf20f7c_d5e7b771",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-15T13:15:46Z",
+      "side": 1,
+      "message": "I was able to write a terser version that doesn\u0027t use namespaces. PTAL.\n\n```\n{% macro find_callback_details(members, callback_ns) %}\n    {% for member in members if member.type.category \u003d\u003d \u0027callback info\u0027 and\n                \u0027callbackMode\u0027 in member.type.members | map(attribute\u003d\u0027type.name.camelCase\u0027) | list %}\n        {% for m in member.type.members if \"callback\" in as_varName(m.name) | lower %}\n            {% do callback_ns.callbacks_with_mode.append(m.type.name.camelCase()) %}\n            {% break %}\n        {% endfor %}\n    {% endfor %}\n{% endmacro %}\n```",
+      "revId": "95e1e49f573a595034948f312508e0700e1e914b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d95f8227_bbbddaf7",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-15T13:15:46Z",
+      "side": 1,
+      "message": "Please add a comment explaining why we are renaming the member.",
+      "revId": "95e1e49f573a595034948f312508e0700e1e914b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
