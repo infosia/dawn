@@ -521,7 +521,14 @@ MaybeError Texture::ClearTexture(const SubresourceRange& range,
     } else {
         DAWN_ASSERT(range.aspects == Aspect::Color);
 
-        // create temp buffer with clear color to copy to the texture image
+        // We should ideally use a zero-initialized temporary buffer to clear the texture. However,
+        // the current Buffer implementation uses an internal std::vector as a shadow copy, making
+        // it inefficient for this purpose. More importantly, buffer operations are deferred. This
+        // means there's no guarantee the buffer's memory would be zeroed before the copy to the
+        // texture is executed, creating a race condition. Using a std::vector directly is simpler
+        // and avoids these issues.
+        // TODO(451928481): Once the Texture class is updated to use deferred execution, we can
+        // revert to using a temporary buffer.
         const TexelBlockInfo& blockInfo = GetFormat().GetAspectInfo(Aspect::Color).block;
         DAWN_ASSERT(kTextureBytesPerRowAlignment % blockInfo.byteSize == 0);
 
@@ -538,25 +545,10 @@ MaybeError Texture::ClearTexture(const SubresourceRange& range,
                                 (largestMipSize.height / blockInfo.height) *
                                 largestMipSize.depthOrArrayLayers;
         if (bufferSize64 > std::numeric_limits<size_t>::max()) {
-            return DAWN_OUT_OF_MEMORY_ERROR("Unable to allocate buffer.");
+            return DAWN_OUT_OF_MEMORY_ERROR("Unable to allocate data for texture clear.");
         }
-        size_t bufferSize = static_cast<size_t>(bufferSize64);
+        std::vector<uint8_t> clearData(bufferSize64, clearColor);
 
-        dawn::native::BufferDescriptor descriptor = {};
-        descriptor.mappedAtCreation = true;
-        descriptor.usage = wgpu::BufferUsage::CopySrc;
-        descriptor.size = bufferSize;
-
-        // We don't count the lazy clear of srcBuffer because it is an internal buffer.
-        // TODO(natlee@microsoft.com): use Dynamic Uploader here for temp buffer
-        Ref<Buffer> srcBuffer;
-        DAWN_TRY_ASSIGN(srcBuffer, Buffer::CreateInternalBuffer(device, &descriptor, false));
-
-        // Fill the buffer with clear color
-        memset(srcBuffer->GetMappedRange(0, bufferSize), clearColor, bufferSize);
-        DAWN_TRY(srcBuffer->Unmap());
-
-        DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, srcBuffer->GetHandle()));
         for (uint32_t level = range.baseMipLevel; level < range.baseMipLevel + range.levelCount;
              ++level) {
             TextureCopy textureCopy;
@@ -582,10 +574,9 @@ MaybeError Texture::ClearTexture(const SubresourceRange& range,
                 }
 
                 textureCopy.origin.z = layer;
-                DAWN_TRY(DoTexSubImage(gl, textureCopy, 0, dataLayout, mipSize));
+                DAWN_TRY(DoTexSubImage(gl, textureCopy, clearData.data(), dataLayout, mipSize));
             }
         }
-        DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, 0));
     }
     if (clearValue == TextureBase::ClearValue::Zero) {
         SetIsSubresourceContentInitialized(true, range);
