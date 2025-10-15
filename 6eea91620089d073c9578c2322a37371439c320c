@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d318b0b9_56f3562a",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-15T14:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "623b2332_34485719",
+      "range": {
+        "startLine": 798,
+        "startChar": 45,
+        "endLine": 798,
+        "endChar": 76
+      },
+      "revId": "6eea91620089d073c9578c2322a37371439c320c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "01557aa4_b1f71389",
@@ -118,6 +142,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d8ac724_2fa9d4a8",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-15T14:15:13Z",
+      "side": 1,
+      "message": "Done, good spot.",
+      "parentUuid": "b0f5b6ab_185b15f7",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "6eea91620089d073c9578c2322a37371439c320c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee255266_30f29432",
@@ -131,6 +179,30 @@
       "writtenOn": "2025-10-14T18:32:33Z",
       "side": 1,
       "message": "This can probably be simplified once we move `kotlin_default` into this template to something like:\n\n```\n{{- kotlin_declaration(arg) }} {{ kotlin_default(arg) }}\n```\n\nAnd you just have `kotlin_default(arg)` return the `\u003d` sign if needed, otherwise return an empty value.",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 85
+      },
+      "revId": "6eea91620089d073c9578c2322a37371439c320c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f1125bc_45070307",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-15T14:15:13Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ee255266_30f29432",
       "range": {
         "startLine": 100,
         "startChar": 4,
