@@ -569,6 +569,7 @@ void Buffer::FinalizeMapImpl() {
         // Map reads always require invalidation. Map writes only require invalidation if the buffer
         // contents could have been modified by the GPU previously, eg. it's not being mapped on
         // creation and the buffer is GPU writable.
+        // TODO(kylechar): MapMode() isn't safe w.r.t threading.
         if (MapMode() == wgpu::MapMode::Read ||
             (GetState() != BufferState::MappedAtCreation &&
              !IsSubset(GetInternalUsage(), kReadOnlyBufferUsages | wgpu::BufferUsage::MapWrite))) {
