@@ -27,6 +27,7 @@
 
 #include "dawn/native/opengl/QueueGL.h"
 
+#include "absl/container/flat_hash_set.h"
 #include "dawn/native/BlitBufferToDepthStencil.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/CommandEncoder.h"
@@ -74,13 +75,19 @@ Queue::Queue(Device* device, const QueueDescriptor* descriptor) : QueueBase(devi
     }
 }
 
+void Queue::TrackCopyDstBuffer(Ref<Buffer> buffer) {
+    if (buffer->NeedsCopyDstTracking()) {
+        mPendingCopyDstBuffers.Enqueue(std::move(buffer), GetPendingCommandSerial());
+    }
+}
+
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
     Device* device = ToBackend(GetDevice());
     return device->ExecuteGLWork(
         [this, commandCount, commands](const OpenGLFunctions& gl) -> MaybeError {
             TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), Recording, "CommandBufferGL::Execute");
             for (uint32_t i = 0; i < commandCount; ++i) {
-                DAWN_TRY(ToBackend(commands[i])->Execute(gl));
+                DAWN_TRY(ToBackend(commands[i])->Execute(this, gl));
             }
             TRACE_EVENT_END0(GetDevice()->GetPlatform(), Recording, "CommandBufferGL::Execute");
             return {};
@@ -91,12 +98,10 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   uint64_t bufferOffset,
                                   const void* data,
                                   size_t size) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    auto glBuffer = ToBackend(buffer);
 
-    DAWN_TRY(ToBackend(buffer)->EnsureDataInitializedAsDestination(bufferOffset, size));
+    DAWN_TRY(glBuffer->Write(bufferOffset, data, size));
 
-    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, ToBackend(buffer)->GetHandle()));
-    DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, size, data));
     buffer->MarkUsedInPendingCommands();
     return {};
 }
@@ -291,25 +296,38 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
     // TODO(crbug.com/40643114): Revisit whether this lock is needed for this backend.
     auto deviceGuard = GetDevice()->GetGuard();
 
-    return mFencesInFlight.Use([&](auto fencesInFlight) -> ResultOrError<ExecutionSerial> {
-        ExecutionSerial fenceSerial{0};
-        while (!fencesInFlight->empty()) {
-            auto [sync, tentativeSerial] = fencesInFlight->front();
+    std::deque<std::pair<Ref<WrappedEGLSync>, ExecutionSerial>> fences;
+    mFencesInFlight.Use([&](auto fencesInFlight) { std::swap(fences, *fencesInFlight); });
+    if (fences.empty()) {
+        return GetCompletedCommandSerial();
+    }
 
-            // Fence are added in order, so we can stop searching as soon
-            // as we see one that's not ready.
-            GLenum result;
-            DAWN_TRY_ASSIGN(result, sync->ClientWait(EGL_SYNC_FLUSH_COMMANDS_BIT, Nanoseconds(0)));
-            if (result == EGL_TIMEOUT_EXPIRED) {
-                return fenceSerial;
-            }
-            // Update fenceSerial since fence is ready.
-            fenceSerial = tentativeSerial;
-
-            fencesInFlight->pop_front();
+    ExecutionSerial fenceSerial = GetCompletedCommandSerial();
+    for (auto [sync, tentativeSerial] : fences) {
+        // Fence are added in order, so we can stop searching as soon
+        // as we see one that's not ready.
+        GLenum result;
+        DAWN_TRY_ASSIGN(result, sync->ClientWait(EGL_SYNC_FLUSH_COMMANDS_BIT, Nanoseconds(0)));
+        if (result == EGL_TIMEOUT_EXPIRED) {
+            return fenceSerial;
         }
-        return fenceSerial;
-    });
+        // Update fenceSerial since fence is ready.
+        fenceSerial = tentativeSerial;
+
+        DAWN_ASSERT(fenceSerial >= GetCompletedCommandSerial());
+    }
+
+    absl::flat_hash_set<Buffer*> uniqueBuffers;
+    for (const auto& buffer : mPendingCopyDstBuffers.IterateUpTo(fenceSerial)) {
+        uniqueBuffers.insert(buffer.Get());
+    }
+
+    for (auto buffer : uniqueBuffers) {
+        DAWN_TRY(buffer->OnCopiedTo());
+    }
+    mPendingCopyDstBuffers.ClearUpTo(fenceSerial);
+
+    return fenceSerial;
 }
 
 void Queue::ForceEventualFlushOfCommands() {
