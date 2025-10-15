@@ -75,12 +75,16 @@ Queue::Queue(Device* device, const QueueDescriptor* descriptor) : QueueBase(devi
 }
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
-    TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), Recording, "CommandBufferGL::Execute");
-    for (uint32_t i = 0; i < commandCount; ++i) {
-        DAWN_TRY(ToBackend(commands[i])->Execute());
-    }
-    TRACE_EVENT_END0(GetDevice()->GetPlatform(), Recording, "CommandBufferGL::Execute");
-    return {};
+    Device* device = ToBackend(GetDevice());
+    return device->ExecuteGLWork(
+        [this, commandCount, commands](const OpenGLFunctions& gl) -> MaybeError {
+            TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), Recording, "CommandBufferGL::Execute");
+            for (uint32_t i = 0; i < commandCount; ++i) {
+                DAWN_TRY(ToBackend(commands[i])->Execute(gl));
+            }
+            TRACE_EVENT_END0(GetDevice()->GetPlatform(), Recording, "CommandBufferGL::Execute");
+            return {};
+        });
 }
 
 MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
@@ -313,12 +317,14 @@ void Queue::ForceEventualFlushOfCommands() {
 }
 
 MaybeError Queue::WaitForIdleForDestructionImpl() {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-    DAWN_GL_TRY(gl, Finish());
-    DAWN_TRY(CheckPassedSerials());
-    DAWN_ASSERT(mFencesInFlight->empty());
-    mHasPendingCommands = false;
-    return {};
+    Device* device = ToBackend(GetDevice());
+    return device->ExecuteGLWork([this](const OpenGLFunctions& gl) -> MaybeError {
+        DAWN_GL_TRY(gl, Finish());
+        DAWN_TRY(CheckPassedSerials());
+        DAWN_ASSERT(mFencesInFlight->empty());
+        mHasPendingCommands = false;
+        return {};
+    });
 }
 
 }  // namespace dawn::native::opengl
