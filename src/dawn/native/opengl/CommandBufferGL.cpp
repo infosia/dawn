@@ -727,9 +727,7 @@ Extent3D ComputeTextureCopyExtent(const TextureCopy& textureCopy, const Extent3D
 CommandBuffer::CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor)
     : CommandBufferBase(encoder, descriptor) {}
 
-MaybeError CommandBuffer::Execute() {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-
+MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
     auto LazyClearSyncScope = [](const SyncScopeResourceUsage& scope) -> MaybeError {
         for (size_t i = 0; i < scope.textures.size(); i++) {
             Texture* texture = ToBackend(scope.textures[i]);
@@ -768,7 +766,7 @@ MaybeError CommandBuffer::Execute() {
                      GetResourceUsages().computePasses[nextComputePassNumber].dispatchUsages) {
                     DAWN_TRY(LazyClearSyncScope(scope));
                 }
-                DAWN_TRY(ExecuteComputePass());
+                DAWN_TRY(ExecuteComputePass(gl));
 
                 nextComputePassNumber++;
                 break;
@@ -783,7 +781,7 @@ MaybeError CommandBuffer::Execute() {
                 DAWN_TRY(
                     LazyClearSyncScope(GetResourceUsages().renderPasses[nextRenderPassNumber]));
                 LazyClearRenderPassAttachments(cmd);
-                DAWN_TRY(ExecuteRenderPass(cmd));
+                DAWN_TRY(ExecuteRenderPass(cmd, gl));
 
                 nextRenderPassNumber++;
                 break;
@@ -1113,8 +1111,7 @@ MaybeError CommandBuffer::Execute() {
     return {};
 }
 
-MaybeError CommandBuffer::ExecuteComputePass() {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+MaybeError CommandBuffer::ExecuteComputePass(const OpenGLFunctions& gl) {
     ComputePipeline* lastPipeline = nullptr;
     BindGroupTracker bindGroupTracker = {};
 
@@ -1197,8 +1194,8 @@ MaybeError CommandBuffer::ExecuteComputePass() {
     DAWN_UNREACHABLE();
 }
 
-MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
+                                            const OpenGLFunctions& gl) {
     GLuint fbo = 0;
 
     // Create the framebuffer used for this render pass and calls the correct glDrawBuffers
