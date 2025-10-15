@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6bec81f_f4e4ee22",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T13:02:22Z",
+      "side": 1,
+      "message": "That is not needed, We can use the top level variables.",
+      "parentUuid": "2b6d6f4e_b3194305",
+      "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e550cbf_c4b63279",
@@ -119,6 +137,42 @@
       "writtenOn": "2025-10-14T12:17:49Z",
       "side": 1,
       "message": "This needs a comment because I think we are testing here that the incorrect behavior (throwing exception during device.destroy) is happening. https://buganizer.corp.google.com/issues/381416258\nI\u0027m not actually sure we want to test that in fact.",
+      "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "142ace26_bc759138",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T13:02:22Z",
+      "side": 1,
+      "message": "Thank you for clarifying, I wasn\u0027t aware of this bug. I created the test case because this behavior occurred every time the device was destroyed while I was writing the Device tests. \n\nI will remove it.",
+      "parentUuid": "2e550cbf_c4b63279",
+      "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fabfcaa_d48ad76c",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T13:02:22Z",
+      "side": 1,
+      "message": "I was not aware of this bug. When I am writing Device test cases, this happens every time device is destroyed that why I crated this test cases.\n\nSure I will remove this.",
+      "parentUuid": "2e550cbf_c4b63279",
       "revId": "d68596408ee69ec21196b3ab985894fff534d66e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
