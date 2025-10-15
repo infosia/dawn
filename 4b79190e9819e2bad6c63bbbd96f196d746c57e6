@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1eccfe5a_81db9ca7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-15T01:31:05Z",
+      "side": 1,
+      "message": "Doc for reference: https://docs.google.com/document/d/1xSBDQR8yB9D3k8aSPiZcri-Zbmij9JuAScjeDWfzcZI/edit?tab\u003dt.0",
+      "revId": "4b79190e9819e2bad6c63bbbd96f196d746c57e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9faf531_6287ed7a",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-15T01:31:05Z",
+      "side": 1,
+      "message": "Remove the comment",
+      "fixSuggestions": [
+        {
+          "fixId": "38ea2bd2_0a15cd49",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/kotlin_record_conversion.cpp",
+              "range": {
+                "startLine": 79,
+                "startChar": 0,
+                "endLine": 80,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "4b79190e9819e2bad6c63bbbd96f196d746c57e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
