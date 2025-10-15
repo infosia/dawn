@@ -288,6 +288,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1fabca5_7891b032",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-15T23:41:35Z",
+      "side": 1,
+      "message": "I renamed `bytesPerRow` to `alignedBytesPerRow` and moved its calculation closer to where it\u0027s used.",
+      "parentUuid": "3aa32570_37c8aea4",
+      "revId": "b2eb95fdbe8643c3c420cfa0681bafb2a40759a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43baddac_810a7e0d",
