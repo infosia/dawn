@@ -108,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "859830ab_1c7c40f5",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ShaderModuleTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2025-10-15T09:52:30Z",
+      "side": 1,
+      "message": "Please add a test that tests that too...",
+      "parentUuid": "988f79ef_24d33f98",
+      "revId": "4772d48eb57348fe5cc3ec4396b35663df89e4a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4147e036_563e951e",
         "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ShaderModuleTest.kt",
         "patchSetId": 3
