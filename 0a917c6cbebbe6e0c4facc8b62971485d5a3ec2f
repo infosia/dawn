@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92120f2d_3211c8ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-15T10:01:51Z",
+      "side": 1,
+      "message": "Please check if you haven\u0027t already that this will fix the equivalent (but different) warnings when run by tests in Google3.",
+      "revId": "0a917c6cbebbe6e0c4facc8b62971485d5a3ec2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
