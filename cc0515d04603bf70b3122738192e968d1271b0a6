@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64f1dd54_3726662e",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-15T18:43:18Z",
+      "side": 1,
+      "message": "IIUC, this will result in the `deviceLostCallback` and `uncapturedErrorCallback` to not be initialized unless the descriptor provided sets them up also. Should we do a copy and update these to ensure it works? I\u0027m not entirely sure why just passing `requiredFeatures` wasn\u0027t enough though since this CL doesn\u0027t really show any meaningful new usages with this change.",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 6
+      },
+      "revId": "cc0515d04603bf70b3122738192e968d1271b0a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
