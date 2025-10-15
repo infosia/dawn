@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90027e95_06572c9f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-15T15:23:29Z",
+      "side": 1,
+      "message": "I won\u0027t be able to take a look today. Geoff, Stephen PTAL instead!",
+      "revId": "ff7bddf7354f4aca2bc3abaf73c79e21442122b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
