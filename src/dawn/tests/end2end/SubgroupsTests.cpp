@@ -27,9 +27,11 @@
 
 #include <cmath>
 #include <cstdint>
+#include <iomanip>
 #include <string>
 #include <vector>
 
+#include "dawn/common/Assert.h"
 #include "dawn/common/GPUInfo.h"
 #include "dawn/common/Math.h"
 #include "dawn/tests/DawnTest.h"
@@ -922,5 +924,285 @@ DAWN_INSTANTIATE_TEST_P(SubgroupsShaderInclusiveTest,
                             SubgroupOpDataType::I32,
                         });
 
+using SubgroupIdShardingIndex = int;
+
+DAWN_TEST_PARAM_STRUCT(SubgroupsShaderSubgroupIdParams, SubgroupIdShardingIndex);
+
+class SubgroupsShaderSubgroupIdTest : public SubgroupsTestsBase<SubgroupsShaderSubgroupIdParams> {
+  protected:
+    struct OutData {
+        uint32_t invx;
+        uint32_t invy;
+        uint32_t invz;
+        uint32_t sgsize;
+        uint32_t sgidx;
+        uint32_t numsg;
+    };
+
+    void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
+                           dawn::utils::ComboLimits& required) override {
+        mMaxWgX = supported.maxComputeWorkgroupSizeX;
+        mMaxWgY = supported.maxComputeWorkgroupSizeY;
+        mMaxWgZ = supported.maxComputeWorkgroupSizeZ;
+        mMaxWgProduct = supported.maxComputeInvocationsPerWorkgroup;
+        supported.UnlinkedCopyTo(&required);
+    }
+
+    void TestReadSubgroupSize(uint32_t workgroupSizeX,
+                              uint32_t workgroupSizeY,
+                              uint32_t workgroupSizeZ) {
+        auto workgroupSize = workgroupSizeX * workgroupSizeY * workgroupSizeZ;
+        auto shaderModule =
+            CreateShaderModuleForReadSubgroupSize(workgroupSizeX, workgroupSizeY, workgroupSizeZ);
+
+        wgpu::ComputePipelineDescriptor csDesc;
+        csDesc.compute.module = shaderModule;
+        auto pipeline = device.CreateComputePipeline(&csDesc);
+
+        uint32_t maxSubgroupSize = 128;
+        uint32_t outputBufferSizeInBytes =
+            ((workgroupSize + maxSubgroupSize) * 2) * sizeof(OutData);
+        wgpu::BufferDescriptor outputBufferDesc;
+        outputBufferDesc.size = outputBufferSizeInBytes;
+        outputBufferDesc.usage =
+            wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::CopySrc;
+        wgpu::Buffer outputBuffer = device.CreateBuffer(&outputBufferDesc);
+
+        wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                         {
+                                                             {0, outputBuffer},
+                                                         });
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        encoder.ClearBuffer(outputBuffer);
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bindGroup);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+
+        EXPECT_BUFFER(
+            outputBuffer, 0, outputBufferSizeInBytes,
+            new ExpectReadSubgroupSizeOutput(workgroupSizeX, workgroupSizeY, workgroupSizeZ));
+    }
+
+    uint32_t mMaxWgX = 256;
+    uint32_t mMaxWgY = 256;
+    uint32_t mMaxWgZ = 64;
+    uint32_t mMaxWgProduct = 256;
+
+  private:
+    wgpu::ShaderModule CreateShaderModuleForReadSubgroupSize(uint32_t workgroupSizeX,
+                                                             uint32_t workgroupSizeY,
+                                                             uint32_t workgroupSizeZ) {
+        std::stringstream code;
+        EnableExtensions(code) << R"(
+const workgroupSizeX = )" << workgroupSizeX
+                               << R"(;
+const workgroupSizeY = )" << workgroupSizeY
+                               << R"(;
+const workgroupSizeZ= )" << workgroupSizeZ
+                               << R"(;
+struct OutData {
+    invx:u32,
+    invy:u32,
+    invz:u32,
+    sgsize:u32,
+    sgidx:u32,
+    numsg:u32,
+}
+
+
+@group(0) @binding(0) var<storage, read_write> output : array<OutData>;
+
+var<workgroup> counter:atomic<u32>;
+
+
+@compute @workgroup_size(workgroupSizeX, workgroupSizeY, workgroupSizeZ)
+fn main(@builtin(local_invocation_id) local_id : vec3u,
+     @builtin(subgroup_size) subgroup_size : u32,
+      @builtin(subgroup_invocation_id) subgroup_inv_id : u32
+) {
+    var subgroup_id_created = 0xFFFFu;
+    if(subgroupElect()){
+        subgroup_id_created = atomicAdd(&counter,1);
+    }
+    subgroup_id_created = subgroupBroadcastFirst(subgroup_id_created);
+
+    workgroupBarrier();
+
+    output[subgroup_id_created*subgroup_size + subgroup_inv_id].invx = local_id.x;
+    output[subgroup_id_created*subgroup_size + subgroup_inv_id].invy = local_id.y;
+    output[subgroup_id_created*subgroup_size + subgroup_inv_id].invz = local_id.z;
+    output[subgroup_id_created*subgroup_size + subgroup_inv_id].sgsize = subgroup_size;
+    output[subgroup_id_created*subgroup_size + subgroup_inv_id].sgidx = subgroup_inv_id;
+    output[subgroup_id_created*subgroup_size + subgroup_inv_id].numsg = atomicLoad(&counter);
+}
+)";
+        return utils::CreateShaderModule(device, code.str().c_str());
+    }
+
+    class ExpectReadSubgroupSizeOutput : public dawn::detail::Expectation {
+      public:
+        explicit ExpectReadSubgroupSizeOutput(uint32_t workgroupSizeX,
+                                              uint32_t workgroupSizeY,
+                                              uint32_t workgroupSizeZ)
+            : mWorkgroupSizeX(workgroupSizeX),
+              mWorkgroupSizeY(workgroupSizeY),
+              mWorkgroupSizeZ(workgroupSizeZ) {}
+        testing::AssertionResult Check(const void* data, size_t size) override {
+            const OutData* shader_buff = static_cast<const OutData*>(data);
+
+            std::stringstream streamString;
+            auto subgroupSizeFromShader = shader_buff[0].sgsize;
+            auto numSubgroupsFromShader = shader_buff[0].numsg;
+            streamString << mWorkgroupSizeX << " " << mWorkgroupSizeY << " " << mWorkgroupSizeZ
+                         << " sg size= " << subgroupSizeFromShader
+                         << " num sg = " << numSubgroupsFromShader << "\n";
+
+            auto totalWgSize = mWorkgroupSizeX * mWorkgroupSizeY * mWorkgroupSizeZ;
+            uint32_t numActive = 0;
+            uint32_t fail_code = 0u;
+            bool failed_linear = false;
+            bool failed_y_4 = false;
+            for (uint32_t sg_index = 0; sg_index < numSubgroupsFromShader; sg_index++) {
+                bool found_inactive = false;
+                bool was_last_subgroup = false;
+                streamString << "\n";
+
+                auto& sgZeroNode = shader_buff[sg_index * subgroupSizeFromShader];
+
+                for (uint32_t i = 0; i < subgroupSizeFromShader; i++) {
+                    auto& currBufObj = shader_buff[i + sg_index * subgroupSizeFromShader];
+                    bool is_active = currBufObj.sgsize != 0;
+                    streamString << "{" << std::setw(3) << currBufObj.invx << "," << std::setw(3)
+                                 << currBufObj.invy << "," << std::setw(3) << currBufObj.invz << ","
+                                 << std::setw(3) << currBufObj.sgsize << "}";
+
+                    if (currBufObj.invx == mWorkgroupSizeX - 1 &&
+                        currBufObj.invy == mWorkgroupSizeY - 1 &&
+                        currBufObj.invz == mWorkgroupSizeZ - 1) {
+                        was_last_subgroup = true;
+                    }
+
+                    if (is_active) {
+                        numActive++;
+
+                        // Linear arrangement
+                        {
+                            auto ivx = (sgZeroNode.invx + i);
+                            auto carry_y = ivx / mWorkgroupSizeX;
+                            ivx = ivx % mWorkgroupSizeX;
+                            auto ivy = (sgZeroNode.invy + carry_y);
+                            auto carry_z = ivy / mWorkgroupSizeY;
+                            ivy = ivy % mWorkgroupSizeY;
+                            auto ivz = sgZeroNode.invz + carry_z;
+                            if (currBufObj.invx != ivx || currBufObj.invy != ivy ||
+                                currBufObj.invz != ivz) {
+                                failed_linear = true;
+                            }
+                        }
+
+                        // y 4 arrangement on some intel devices
+                        // Single subgroup looks like:
+                        // {  0,  0,  4, 16}{  0,  1,  4, 16}{  0,  2,  4, 16}{  0,  3,  4, 16}
+                        // {  1,  0,  4, 16}{  1,  1,  4, 16}{  1,  2,  4, 16}{  1,  3,  4, 16}
+                        // {  0,  0,  5, 16}{  0,  1,  5, 16}{  0,  2,  5, 16}{  0,  3,  5, 16}
+                        // {  1,  0,  5, 16}{  1,  1,  5, 16}{  1,  2,  5, 16}{  1,  3,  5, 16}
+                        {
+                            auto ivx = (sgZeroNode.invx + i / 4);
+                            auto carry_y = ivx / mWorkgroupSizeX;
+                            ivx = ivx % mWorkgroupSizeX;
+                            auto ivy = (sgZeroNode.invy + carry_y * 4 + i % 4);
+                            auto carry_z = ivy / mWorkgroupSizeY;
+                            ivy = ivy % mWorkgroupSizeY;
+                            auto ivz = sgZeroNode.invz + carry_z;
+                            if (currBufObj.invx != ivx || currBufObj.invy != ivy ||
+                                currBufObj.invz != ivz) {
+                                failed_y_4 = true;
+                            }
+                        }
+
+                    } else {
+                        found_inactive = true;
+                    }
+                }
+
+                if (failed_linear && failed_y_4) {
+                    fail_code = __LINE__;
+                }
+                if (found_inactive && !was_last_subgroup) {
+                    fail_code = __LINE__;
+                }
+            }
+
+            SCOPED_TRACE(streamString.str());
+            EXPECT_EQ(fail_code, 0u);
+            EXPECT_EQ(numActive, totalWgSize);
+#if 0
+            float expected_value = init_value;
+            for (uint32_t i = 0; i < mWorkgroupSize; i++) {
+                if (!approximate_f(actual[i], expected_value)) {
+                    // This could be the next subgroup so retest with the initial value.
+                    float old_expected_value = expected_value;
+                    expected_value = init_value;
+                    if (!approximate_f(actual[i], expected_value)) {
+                        testing::AssertionResult result =
+                            testing::AssertionFailure()
+                            << "Unexpected result for " << GetParam().mSubgroupIntrinsicOp
+                            << " for type " << GetParam().mSubgroupOpDataType << " for element "
+                            << i << " of a workgroup size of " << mWorkgroupSize
+                            << ". The actual value was " << actual[i] << " and the expected was "
+                            << expected_value << " or " << old_expected_value;
+
+                        return result;
+                    }
+                }
+
+                if (GetParam().mSubgroupIntrinsicOp == SubgroupIntrinsicOp::Add) {
+                    expected_value += kValueInShader;
+                } else if (GetParam().mSubgroupIntrinsicOp == SubgroupIntrinsicOp::Mul) {
+                    expected_value *= kValueInShader;
+                }
+            }
+#endif
+
+            return testing::AssertionSuccess();
+        }
+
+      private:
+        uint32_t mWorkgroupSizeX;
+        uint32_t mWorkgroupSizeY;
+        uint32_t mWorkgroupSizeZ;
+    };
+};
+
+TEST_P(SubgroupsShaderSubgroupIdTest, SubgroupIdInspect) {
+    DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsEnabledInWGSL());
+    int sharding_counter = 0u;
+    for (uint32_t workgroupSizeX = 1; workgroupSizeX <= mMaxWgX; workgroupSizeX++) {
+        for (uint32_t workgroupSizeY = 1; workgroupSizeY <= mMaxWgY; workgroupSizeY++) {
+            for (uint32_t workgroupSizeZ = 1; workgroupSizeZ <= mMaxWgZ; workgroupSizeZ++) {
+                if (workgroupSizeX * workgroupSizeY * workgroupSizeZ > mMaxWgProduct) {
+                    continue;
+                }
+                sharding_counter++;
+                if (sharding_counter % 23 != GetParam().mSubgroupIdShardingIndex) {
+                    continue;
+                }
+                TestReadSubgroupSize(workgroupSizeX, workgroupSizeY, workgroupSizeZ);
+            }
+        }
+    }
+}
+
+DAWN_INSTANTIATE_TEST_P(SubgroupsShaderSubgroupIdTest,
+                        {D3D12Backend(), D3D12Backend({}, {"use_dxc"}), MetalBackend(),
+                         VulkanBackend()},
+                        {
+                            17,
+                        });
 }  // anonymous namespace
 }  // namespace dawn
