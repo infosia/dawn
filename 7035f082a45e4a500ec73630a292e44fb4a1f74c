@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9fe34be_fd510a86",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-15T20:01:31Z",
+      "side": 1,
+      "message": "Sadly reverting doesn\u0027t fix b/452389218",
+      "revId": "7035f082a45e4a500ec73630a292e44fb4a1f74c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
