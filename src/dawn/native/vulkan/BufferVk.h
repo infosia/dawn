@@ -115,6 +115,7 @@ class Buffer final : public BufferBase {
     bool mHostVisible : 1;
     bool mHostCoherent : 1;
     bool mHasWriteTransitioned : 1;
+    bool mNeedsFlush : 1 = false;
 };
 
 }  // namespace dawn::native::vulkan

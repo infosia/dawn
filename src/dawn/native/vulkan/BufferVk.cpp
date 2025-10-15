@@ -551,9 +551,6 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
     CommandRecordingContext* recordingContext =
         ToBackend(GetDevice()->GetQueue())->GetPendingRecordingContext();
 
-    // TODO(crbug.com/dawn/852): initialize mapped buffer in CPU side.
-    EnsureDataInitialized(recordingContext);
-
     if (mode & wgpu::MapMode::Read) {
         TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapRead);
     } else {
@@ -565,6 +562,14 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
 }
 
 void Buffer::FinalizeMapImpl() {
+    if (NeedsInitialization()) {
+        memset(GetMappedPointer(), 0, GetAllocatedSize());
+        GetDevice()->IncrementLazyClearCountForTesting();
+        SetInitialized(true);
+        // Even if this was only mapped for read the initialized bytes need to be flushed.
+        mNeedsFlush = true;
+    }
+
     if (!mHostCoherent) {
         // Map reads always require invalidation. Map writes only require invalidation if the buffer
         // contents could have been modified by the GPU previously, eg. it's not being mapped on
@@ -586,15 +591,18 @@ void Buffer::FinalizeMapImpl() {
 
 void Buffer::UnmapImpl() {
     // We keep CPU-visible memory mapped at all times but need to flush writes to GPU memory here.
-    if (!mHostCoherent && IsMappedState(GetState()) && MapMode() == wgpu::MapMode::Write) {
-        Device* device = ToBackend(GetDevice());
-        VkDeviceSize nonCoherentAtomSize =
-            device->GetDeviceInfo().properties.limits.nonCoherentAtomSize;
+    if (!mHostCoherent) {
+        if (mNeedsFlush || (IsMappedState(GetState()) && MapMode() == wgpu::MapMode::Write)) {
+            mNeedsFlush = false;
+            Device* device = ToBackend(GetDevice());
+            VkDeviceSize nonCoherentAtomSize =
+                device->GetDeviceInfo().properties.limits.nonCoherentAtomSize;
 
-        VkMappedMemoryRange range =
-            GetMappedMemoryRange(mMemoryAllocation, MapOffset(), MapSize(), nonCoherentAtomSize);
+            VkMappedMemoryRange range = GetMappedMemoryRange(mMemoryAllocation, MapOffset(),
+                                                             MapSize(), nonCoherentAtomSize);
 
-        device->fn.FlushMappedMemoryRanges(device->GetVkDevice(), 1, &range);
+            device->fn.FlushMappedMemoryRanges(device->GetVkDevice(), 1, &range);
+        }
     }
 }
 

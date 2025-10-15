@@ -523,9 +523,9 @@ void BufferBase::FinalizeMap(BufferState newState) {
         mMapData = GetMappedPointerImpl();
     }
 
-    mState.store(newState, std::memory_order::release);
-
     FinalizeMapImpl();
+
+    mState.store(newState, std::memory_order::release);
 }
 
 MaybeError BufferBase::MapAtCreation() {
