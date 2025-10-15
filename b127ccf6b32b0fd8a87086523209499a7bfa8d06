@@ -89,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "daae6f06_b61a956a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-15T18:37:12Z",
+      "side": 1,
+      "message": "Ah, ok sorry for the noise then. LGTM.",
+      "parentUuid": "fc6bb4d1_d115ee06",
+      "revId": "b127ccf6b32b0fd8a87086523209499a7bfa8d06",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dde7f6e2_efe71fe6",
