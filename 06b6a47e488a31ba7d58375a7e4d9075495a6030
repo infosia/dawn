@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a265259c_2c131fe0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-15T22:12:35Z",
+      "side": 1,
+      "message": "PTAL, not ready to land yet but there\u0027s a question about the feature guard that ties into the earlier CL.",
+      "revId": "06b6a47e488a31ba7d58375a7e4d9075495a6030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
