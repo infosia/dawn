@@ -34,6 +34,24 @@
       "parentUuid": "08ac15c8_c882745b",
       "revId": "7c4789dd916d2cfb9adce0ac5f46de4bffabd2db",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12dd492b_677def79",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-15T11:28:59Z",
+      "side": 0,
+      "message": "Yes, I believe this is the cleanest approach I\u0027ve tried, as it works without significantly modifying any existing if-else statements.\n\nI understand that reviewing this block might be challenging, so I\u0027m attaching a diff link to hopefully make the reviewing easier:https://diff.googleplex.com/#key\u003dBZg2kIoYhtG9",
+      "parentUuid": "5f472ad9_76b06777",
+      "revId": "7c4789dd916d2cfb9adce0ac5f46de4bffabd2db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
