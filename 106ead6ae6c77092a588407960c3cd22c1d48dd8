@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9e9fc49_92e1f089",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2025-10-15T14:18:08Z",
+      "side": 1,
+      "message": "Is it possible to be more specific than \u0027UncapturedErrorException\u0027?",
+      "revId": "106ead6ae6c77092a588407960c3cd22c1d48dd8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
