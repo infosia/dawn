@@ -584,9 +584,9 @@ void Buffer::FinalizeMapImpl() {
     }
 }
 
-void Buffer::UnmapImpl() {
+void Buffer::UnmapImpl(BufferState fromState) {
     // We keep CPU-visible memory mapped at all times but need to flush writes to GPU memory here.
-    if (!mHostCoherent && IsMappedState(GetState()) && MapMode() == wgpu::MapMode::Write) {
+    if (!mHostCoherent && IsMappedState(fromState) && MapMode() == wgpu::MapMode::Write) {
         Device* device = ToBackend(GetDevice());
         VkDeviceSize nonCoherentAtomSize =
             device->GetDeviceInfo().properties.limits.nonCoherentAtomSize;
