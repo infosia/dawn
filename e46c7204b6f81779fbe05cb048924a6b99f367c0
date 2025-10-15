@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "4842810a_0c84a365",
+        "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests_win.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-10-15T12:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dfaa847_fa49dbef",
+      "range": {
+        "startLine": 221,
+        "startChar": 45,
+        "endLine": 221,
+        "endChar": 46
+      },
+      "revId": "e46c7204b6f81779fbe05cb048924a6b99f367c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "d13e42d7_dce201a2",
         "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests_win.cpp",
         "patchSetId": 4
@@ -54,6 +78,24 @@
       "writtenOn": "2025-10-14T12:48:44Z",
       "side": 1,
       "message": "also nit: unused?",
+      "revId": "e46c7204b6f81779fbe05cb048924a6b99f367c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c39fd8f_bf5e0d89",
+        "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests_win.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-10-15T12:37:03Z",
+      "side": 1,
+      "message": "We need this to run tests in SharedBufferMemoryTests.cpp with ExistingD3D12ResourceBackend.",
+      "parentUuid": "1428a5c4_52760512",
       "revId": "e46c7204b6f81779fbe05cb048924a6b99f367c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
