@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8310a160_3e44ec1f",
+        "filename": "include/dawn/native/D3D12Backend.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-15T12:46:10Z",
+      "side": 1,
+      "message": "Can we comment that here so it\u0027s documented somewhere?",
+      "parentUuid": "79f4429b_814b38b2",
+      "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7e114992_34d4ffc6",
         "filename": "include/dawn/native/D3D12Backend.h",
         "patchSetId": 7
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "No it seems not.",
       "parentUuid": "7e114992_34d4ffc6",
+      "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c191533_3ae52979",
+        "filename": "include/dawn/native/D3D12Backend.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-15T12:46:10Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "10b1b8cb_cb2d0ffc",
       "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -299,6 +335,30 @@
       "side": 1,
       "message": "Calling `device-\u003eGetResourceAllocationInfo` on a buffer descriptor will always return 65536 on `SizeInBytes` when the buffer size is less than 65536, so the imported shared memory object must be at least 65536 and aligned to 65536.",
       "parentUuid": "e372a268_884d09b3",
+      "range": {
+        "startLine": 301,
+        "startChar": 53,
+        "endLine": 301,
+        "endChar": 58
+      },
+      "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "302aca50_69074f9e",
+        "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests_win.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-15T12:46:10Z",
+      "side": 1,
+      "message": "Can we have the constant declared somewhere and that explanation written down? (that\u0027s `D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT` which is the alignment for buffers it seems)",
+      "parentUuid": "3e40a697_a4b9ef89",
       "range": {
         "startLine": 301,
         "startChar": 53,
