@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60971700_e2d40608",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/FeaturesTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-15T08:45:20Z",
+      "side": 1,
+      "message": "Goes over the column limit.",
+      "revId": "34bb74b07bd2728f4e4364c01e3d4d282d90c778",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fec32667_d37a46a7",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-15T08:45:20Z",
+      "side": 1,
+      "message": "I think we\u0027ll want factor out requestDevice if it does so little.",
+      "revId": "34bb74b07bd2728f4e4364c01e3d4d282d90c778",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
