@@ -104,6 +104,30 @@
       },
       "revId": "de589555c06e91e85d05907d043693dfcdef1139",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22a0022a_3bb2944d",
+        "filename": "infra/config/global/gn_standalone_try.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003631
+      },
+      "writtenOn": "2025-10-15T17:01:29Z",
+      "side": 1,
+      "message": "It works because unless you use a gclient config that overrides the revision for a repo, when bot_update applies a patch then depending on the entry for the repo in the repo_path_map it will either check out the specific revision the CL is based on or it will check out the HEAD of the target ref of the change.\n\nWe use branched builders on chromium because having builds switch between the branches essentially destroys the cache because roughly all of the binaries will change between the branches. I brought this up in the past and it was decided that it\u0027s not a big enough concern for dawn.",
+      "parentUuid": "94a333b6_b6faf885",
+      "range": {
+        "startLine": 101,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 67
+      },
+      "revId": "de589555c06e91e85d05907d043693dfcdef1139",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
