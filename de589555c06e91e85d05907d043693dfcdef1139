@@ -81,6 +81,29 @@
       },
       "revId": "de589555c06e91e85d05907d043693dfcdef1139",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94a333b6_b6faf885",
+        "filename": "infra/config/global/gn_standalone_try.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-15T11:34:05Z",
+      "side": 1,
+      "message": "How does this work?\nI.e. how do the builders know they need to apply a CL on top of a branch instead of the ToT?\nWhy do we have branched builders for Chromium if for Dawn this works as is?",
+      "range": {
+        "startLine": 101,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 67
+      },
+      "revId": "de589555c06e91e85d05907d043693dfcdef1139",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
