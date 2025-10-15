@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fed3d187_253072b7",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/BufferTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T07:46:21Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "04482973_2b6f2755",
+      "revId": "7094226431a82d25eaf2bd91072d1e1cb1b673b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "347a5e1f_0d7df82a",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-10-14T12:24:49Z",
       "side": 1,
       "message": "Please be consistent with the annotations, e.g.\n\n@SmallTest (for example)\n@Test\n\nor\n\n@Test\n@SmallTest\n\nthroughout.",
+      "revId": "7094226431a82d25eaf2bd91072d1e1cb1b673b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff04d1a6_fba15380",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/BufferTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T07:46:21Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "347a5e1f_0d7df82a",
       "revId": "7094226431a82d25eaf2bd91072d1e1cb1b673b8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9f436be_3a6cf844",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/BufferTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T07:46:21Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a4a0d64c_b3cc5649",
+      "revId": "7094226431a82d25eaf2bd91072d1e1cb1b673b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8fd801a4_128f1d3d",
@@ -69,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a40f08d3_1e7c03ef",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/BufferTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T07:46:21Z",
+      "side": 1,
+      "message": "Not needed, As Buffer is already extending AutoCloseable.",
+      "parentUuid": "8fd801a4_128f1d3d",
+      "revId": "7094226431a82d25eaf2bd91072d1e1cb1b673b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b54a860_4db05708",
@@ -82,6 +154,24 @@
       "writtenOn": "2025-10-14T12:24:49Z",
       "side": 1,
       "message": "Any reason the other tests are prefixed with \u0027test\u0027 but these aren\u0027t?",
+      "revId": "7094226431a82d25eaf2bd91072d1e1cb1b673b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecaa4e77_7820630b",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/BufferTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T07:46:21Z",
+      "side": 1,
+      "message": "Names should be consistent, I will fix that.",
+      "parentUuid": "2b54a860_4db05708",
       "revId": "7094226431a82d25eaf2bd91072d1e1cb1b673b8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
