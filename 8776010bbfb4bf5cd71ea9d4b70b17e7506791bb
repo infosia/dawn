@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6babccd_ecef8ffc",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-10-15T12:09:47Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8f221cb6_ce744ed4",
+      "revId": "8776010bbfb4bf5cd71ea9d4b70b17e7506791bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84b3db56_b019ca08",
@@ -119,6 +137,30 @@
       "writtenOn": "2025-09-04T20:12:38Z",
       "side": 1,
       "message": "Ah, I\u0027ve been meaning to change the existing `\"buffer host mapped pointer\"` struct that has this dispose callback thing to be more like all the other callbacks and make it a future also. If possible, I think it would be best if we could try to do that for this one or even update the other one while we do it as to not create more tech-debt.",
+      "range": {
+        "startLine": 769,
+        "startChar": 12,
+        "endLine": 769,
+        "endChar": 61
+      },
+      "revId": "8776010bbfb4bf5cd71ea9d4b70b17e7506791bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c14df544_91f0adb2",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-10-15T12:09:47Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "84b3db56_b019ca08",
       "range": {
         "startLine": 769,
         "startChar": 12,
