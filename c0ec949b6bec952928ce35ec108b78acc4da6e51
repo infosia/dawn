@@ -93,6 +93,30 @@
       },
       "revId": "c0ec949b6bec952928ce35ec108b78acc4da6e51",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9465565_b232143d",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ShaderModuleTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T07:29:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "65440504_621093a1",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 47
+      },
+      "revId": "c0ec949b6bec952928ce35ec108b78acc4da6e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

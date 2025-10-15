@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea318c68_6920340b",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ShaderModuleTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T07:29:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c9b2b0b8_64ee29cd",
+      "revId": "4772d48eb57348fe5cc3ec4396b35663df89e4a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8fdf09f_0b482748",
@@ -101,6 +119,24 @@
       "writtenOn": "2025-10-14T11:59:58Z",
       "side": 1,
       "message": "Would we ever expect more than one error? Would assertEquals(1, errorCount) be more appropriate?",
+      "revId": "4772d48eb57348fe5cc3ec4396b35663df89e4a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32f9fd7f_74fe6bb6",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ShaderModuleTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T07:29:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "4147e036_563e951e",
       "revId": "4772d48eb57348fe5cc3ec4396b35663df89e4a9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
