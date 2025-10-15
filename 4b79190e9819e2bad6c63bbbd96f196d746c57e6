@@ -51,6 +51,41 @@
       ],
       "revId": "4b79190e9819e2bad6c63bbbd96f196d746c57e6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "364bd07d_6fb57c2b",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-15T06:31:10Z",
+      "side": 1,
+      "message": "Do we need this else if block? This block is not getting executed anymore.",
+      "fixSuggestions": [
+        {
+          "fixId": "c103dede_7451d407",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/kotlin_record_conversion.cpp",
+              "range": {
+                "startLine": 228,
+                "startChar": 0,
+                "endLine": 295,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "4b79190e9819e2bad6c63bbbd96f196d746c57e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
