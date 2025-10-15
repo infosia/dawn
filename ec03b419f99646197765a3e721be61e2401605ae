@@ -16,6 +16,23 @@
       "message": "Geoff: PTAL. Thanks!",
       "revId": "ec03b419f99646197765a3e721be61e2401605ae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "950e2ad6_cc0d6e46",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-10-15T13:53:19Z",
+      "side": 1,
+      "message": "(Geoff || Corentin) PTAL 😊",
+      "revId": "ec03b419f99646197765a3e721be61e2401605ae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
