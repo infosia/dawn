@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2811eb08_f1e53e5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-15T22:10:46Z",
+      "side": 1,
+      "message": "PTAL.\n\nAdded Corentin for the Dawn changes. Do I need to add a toggle for the feature as well or is the feature flag enough here since we are just using it as a kill switch? One downside is that we are not longer testing the old path, which I guess we\u0027d need the toggle to do. Also has some interaction with a later change (will comment on there).",
+      "revId": "77a95faea7041db1a9070944ff74dd19ee8d3d23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
