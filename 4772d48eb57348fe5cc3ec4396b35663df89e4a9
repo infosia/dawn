@@ -124,6 +124,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6264c264_2f932a82",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ShaderModuleTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T12:12:22Z",
+      "side": 1,
+      "message": "Sure. That\u0027s the intended WebGPU behavior for uncaptured errors. I\u0027ll add a new test to DeviceTest.kt to verify that an UncapturedErrorException is thrown when no error scope is active.",
+      "parentUuid": "859830ab_1c7c40f5",
+      "revId": "4772d48eb57348fe5cc3ec4396b35663df89e4a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e94481ea_1dc81eac",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ShaderModuleTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T12:12:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "859830ab_1c7c40f5",
+      "revId": "4772d48eb57348fe5cc3ec4396b35663df89e4a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4147e036_563e951e",

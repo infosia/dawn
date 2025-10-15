@@ -16,6 +16,42 @@
       "message": "There\u0027s a lot of conditional logic in this test, which is against best practice for unit tests.  You should aim for tests to be short, tight, and clear; for example, rather than looping over the error messages here and dynamically handling them separately, this test should know precisely what it expects to break.  When I read this code I wondered to myself \"what\u0027s wrong with the shader he\u0027s testing?\" and then when I looked at the shader code, the error doesn\u0027t leap out at me.\n\nSo rather than loops and if() branches to cover multiple behaviors in a single test, try to write multiple shorter tests where each test tests a specfic behavior and only that behavior.",
       "revId": "4b9b50b4e8ec19f55044909050868220cdac20ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc5f852d_ef1ed402",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ShaderModuleTest.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T12:12:22Z",
+      "side": 1,
+      "message": "Agreed, I will break this into multiple tests.",
+      "parentUuid": "ed423adf_6b6c0b1d",
+      "revId": "4b9b50b4e8ec19f55044909050868220cdac20ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bc3a717_359104ab",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ShaderModuleTest.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T12:12:22Z",
+      "side": 1,
+      "message": "Agreed, I will break this test into multiple.",
+      "parentUuid": "ed423adf_6b6c0b1d",
+      "revId": "4b9b50b4e8ec19f55044909050868220cdac20ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
