@@ -500,15 +500,29 @@ MaybeError Device::CopyFromStagingToBuffer(BufferBase* source,
                                            BufferBase* destination,
                                            uint64_t destinationOffset,
                                            uint64_t size) {
-    return DAWN_UNIMPLEMENTED_ERROR("Device unable to copy from staging buffer.");
+    // Call Unmap to flush the shadow copy
+    DAWN_TRY(source->Unmap());
+
+    return AddGLWork([this, source = Ref<BufferBase>(source), sourceOffset,
+                      destination = Ref<BufferBase>(destination), destinationOffset,
+                      size](const OpenGLFunctions& gl) -> MaybeError {
+        return DoCopyBufferToBuffer(gl, ToBackend(GetQueue()), ToBackend(source.Get()),
+                                    sourceOffset, ToBackend(destination.Get()), destinationOffset,
+                                    size);
+    });
 }
 
 MaybeError Device::CopyFromStagingToTextureImpl(BufferBase* source,
                                                 const TexelCopyBufferLayout& src,
                                                 const TextureCopy& dst,
                                                 const Extent3D& copySizePixels) {
-    // If implemented, be sure to call SynchronizeTextureBeforeUse on the destination texture.
-    return DAWN_UNIMPLEMENTED_ERROR("Device unable to copy from staging buffer to texture.");
+    // Call Unmap to flush the shadow copy
+    DAWN_TRY(source->Unmap());
+
+    return AddGLWork([source = Ref<BufferBase>(source), src, dst,
+                      copySizePixels](const OpenGLFunctions& gl) -> MaybeError {
+        return DoCopyBufferToTexture(gl, ToBackend(source.Get()), src, dst, copySizePixels);
+    });
 }
 
 void Device::DestroyImpl() {
@@ -591,6 +605,13 @@ const Buffer* Device::GetInternalTextureBuiltinsUniformBuffer() const {
 
 const Buffer* Device::GetInternalArrayLengthUniformBuffer() const {
     return mArrayLengthBuffer.Get();
+}
+
+bool Device::CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage storageUsage,
+                                                          wgpu::BufferUsage originalUsage,
+                                                          size_t bufferSize) const {
+    // Cannot add storage usage to mappable buffers because they use shadow copies.
+    return !(originalUsage & kMappableBufferUsages);
 }
 
 }  // namespace dawn::native::opengl
