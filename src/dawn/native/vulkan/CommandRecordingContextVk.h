@@ -93,7 +93,7 @@ struct CommandRecordingContext {
                           VkAccessFlags dstAccessMask,
                           VkPipelineStageFlags srcStages,
                           VkPipelineStageFlags dstStages);
-    void EmitBufferBarriers(Device* device);
+    bool EmitBufferBarriers(Device* device);
 
   private:
     struct BufferBarrier {

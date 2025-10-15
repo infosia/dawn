@@ -60,7 +60,7 @@ void CommandRecordingContext::AddBufferBarrier(VkAccessFlags srcAccessMask,
     barrier->bufferDstStages |= dstStages;
 }
 
-void CommandRecordingContext::EmitBufferBarriers(Device* device) {
+bool CommandRecordingContext::EmitBufferBarriers(Device* device) {
     std::array<VkMemoryBarrier, 2> barriers;
     size_t idx = 0;
 
@@ -92,6 +92,8 @@ void CommandRecordingContext::EmitBufferBarriers(Device* device) {
 
     mVertexBufferBarrier = {};
     mNonVertexBufferBarrier = {};
+
+    return idx > 0;
 }
 
 }  // namespace dawn::native::vulkan

@@ -52,7 +52,7 @@ class Buffer final : public BufferBase {
     // Transitions the buffer to be used as `usage`, recording any necessary barrier in
     // `commands`.
     // TODO(crbug.com/dawn/851): coalesce barriers and do them early when possible.
-    void TransitionUsageNow(CommandRecordingContext* recordingContext,
+    bool TransitionUsageNow(CommandRecordingContext* recordingContext,
                             wgpu::BufferUsage usage,
                             wgpu::ShaderStage shaderStage = wgpu::ShaderStage::None);
     void TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingContext,

@@ -36,6 +36,7 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/GPUInfo.h"
+#include "dawn/common/Log.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/PhysicalDevice.h"
@@ -426,11 +427,11 @@ VkBuffer Buffer::GetHandle() const {
     return mHandle;
 }
 
-void Buffer::TransitionUsageNow(CommandRecordingContext* recordingContext,
+bool Buffer::TransitionUsageNow(CommandRecordingContext* recordingContext,
                                 wgpu::BufferUsage usage,
                                 wgpu::ShaderStage shaderStage) {
     TrackUsageAndGetResourceBarrier(recordingContext, usage, shaderStage);
-    recordingContext->EmitBufferBarriers(ToBackend(GetDevice()));
+    return recordingContext->EmitBufferBarriers(ToBackend(GetDevice()));
 }
 
 void Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingContext,
@@ -555,10 +556,10 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
     EnsureDataInitialized(recordingContext);
 
     if (mode & wgpu::MapMode::Read) {
-        TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapRead);
+        DAWN_CHECK(!TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapRead));
     } else {
         DAWN_ASSERT(mode & wgpu::MapMode::Write);
-        TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapWrite);
+        DAWN_CHECK(!TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapWrite));
     }
 
     return {};
