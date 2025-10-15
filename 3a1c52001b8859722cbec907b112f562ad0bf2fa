@@ -16,6 +16,23 @@
       "message": "testing team cc",
       "revId": "3a1c52001b8859722cbec907b112f562ad0bf2fa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7da4ee03_72663563",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-15T20:43:51Z",
+      "side": 1,
+      "message": "webgpu-headers with `webgpu.json` is rolling into Dawn here: https://dawn-review.googlesource.com/c/dawn/+/266975. Once that lands you can rebase on it and start using `webgpu.json` instead of `webgpu.yml`.",
+      "revId": "3a1c52001b8859722cbec907b112f562ad0bf2fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
