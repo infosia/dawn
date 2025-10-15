@@ -46,7 +46,14 @@ public suspend fun createWebGpu(
     surface: Surface? = null,
     instanceDescriptor: InstanceDescriptor = InstanceDescriptor(),
     requestAdapterOptions: RequestAdapterOptions = RequestAdapterOptions(),
-    @FeatureName requiredFeatures: IntArray = intArrayOf()
+    deviceDescriptor: DeviceDescriptor = DeviceDescriptor(
+        deviceLostCallback = { device, reason, message ->
+            throw DeviceLostException(device, reason, message)
+        },
+        uncapturedErrorCallback = { device, type, message ->
+            throw UncapturedErrorException(device, type, message)
+        },
+    ),
 ): WebGpu {
     initLibrary()
 
@@ -62,7 +69,7 @@ public suspend fun createWebGpu(
         }
 
     val adapter = requestAdapter(instance, requestAdapterOptions)
-    val device = requestDevice(adapter, requiredFeatures)
+    val device = requestDevice(adapter, deviceDescriptor)
 
     var isClosing = false
     // Long-running event poller for async methods. Can be removed when
@@ -106,19 +113,11 @@ private suspend fun requestAdapter(
     return result.adapter
 }
 
-private suspend fun requestDevice(adapter: Adapter, @FeatureName requiredFeatures: IntArray): Device {
-    val result =
-        adapter.requestDevice(
-            DeviceDescriptor(
-                requiredFeatures = requiredFeatures,
-                deviceLostCallback = { device, reason, message ->
-                                throw DeviceLostException(device, reason, message)
-                            },
-                uncapturedErrorCallback = { device, type, message ->
-                        throw UncapturedErrorException(device, type, message)
-                    },
-            )
-        )
+private suspend inline fun requestDevice(
+    adapter: Adapter,
+    deviceDescriptor: DeviceDescriptor,
+): Device {
+    val result = adapter.requestDevice(deviceDescriptor)
     check(result.status == RequestDeviceStatus.Success && result.device != null) {
         result.message.ifEmpty { "Error requesting the device: $result.status" }
     }
