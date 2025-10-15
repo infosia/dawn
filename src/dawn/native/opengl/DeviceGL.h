@@ -133,6 +133,10 @@ class Device final : public DeviceBase {
     bool MayRequireDuplicationOfIndirectParameters() const override;
     bool ShouldApplyIndexBufferOffsetToFirstIndex() const override;
 
+    bool CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage storageUsage,
+                                                      wgpu::BufferUsage originalUsage,
+                                                      size_t bufferSize) const override;
+
     const AHBFunctions* GetOrLoadAHBFunctions();
 
     const Buffer* GetInternalTextureBuiltinsUniformBuffer() const;
