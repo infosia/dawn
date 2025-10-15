@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "50dc2757_8b7f9d9b",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ShaderModuleTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T06:59:58Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6e7ff31b_73570321",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "c0ec949b6bec952928ce35ec108b78acc4da6e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a0d0a767_a7f282cb",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-10-14T18:53:48Z",
       "side": 1,
       "message": "I think this test can be folded into the one above, and we should just test both the `lineNum`/`lineOffset` pairs along with the `offset`/`length` pairs. You could probably do it by ensuring that they point to the same locations in the shader code, i.e. adding up the length of each line up to `lineNum` plus `lineOffset` should equal `offset`.",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 47
+      },
+      "revId": "c0ec949b6bec952928ce35ec108b78acc4da6e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65440504_621093a1",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ShaderModuleTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-15T06:59:58Z",
+      "side": 1,
+      "message": "Agreed.",
+      "parentUuid": "a0d0a767_a7f282cb",
       "range": {
         "startLine": 90,
         "startChar": 2,
