@@ -2315,11 +2315,16 @@ void Validator::CheckType(const core::type::Type* root,
                 return true;
             },
             [&](const core::type::SubgroupMatrix* m) {
+                // `i8` and `u8` are both valid subgroup matrix element type.
+                if (m->Type()->IsAnyOf<core::type::I8, core::type::U8>()) {
+                    return true;
+                }
+
                 CheckType(m->Type(), diag, ignore_caps);
 
                 if (!m->Type()
-                         ->IsAnyOf<core::type::F16, core::type::F32, core::type::I8,
-                                   core::type::I32, core::type::U8, core::type::U32>()) {
+                         ->IsAnyOf<core::type::F16, core::type::F32, core::type::I32,
+                                   core::type::U32>()) {
                     diag() << "invalid subgroup matrix component type: " << NameOf(m->Type());
                     return false;
                 }
