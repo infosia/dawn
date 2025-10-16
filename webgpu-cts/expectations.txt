@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-10-09 08:49:21AM
+# Last rolled: 2025-10-16 05:19:47AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -778,7 +778,6 @@ crbug.com/407109059 [ amd-0x67ef mac ] webgpu:shader,execution,expression,call,b
 # All textureSampleBias tests marked failing on Mac M2
 crbug.com/407076135 [ apple-angle-metal-renderer:-apple-m2 mac ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:* [ Failure ]
 
-
 # All textureSampleBias tests marked failing on Linux NVIDIA
 crbug.com/407109061 [ clang-coverage dawn-no-backend-validation linux nvidia-0x2184 nvidia_lt_535.183.01 ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:* [ Failure ]
 
@@ -1075,7 +1074,6 @@ crbug.com/421941589 [ angle-metal arch-x86_64 dawn-no-backend-validation desktop
 crbug.com/421941589 [ angle-opengl arch-x86_64 desktop display-server-x graphite-disabled intel-0x9bc5 memory_ge_16gb mesa_ge_23.2 no-asan no-clang-coverage release renderer-skia-vulkan target-cpu-64 ubuntu ] webgpu:api,operation,storage_texture,read_only:basic:* [ Failure ]
 crbug.com/421941589 [ angle-metal arch-x86_64 dawn-no-backend-validation desktop graphite-enabled intel-0x3e9b memory_ge_16gb no-asan no-clang-coverage release renderer-skia-gl sequoia target-cpu-64 ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:* [ Failure ]
 crbug.com/421941589 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:format="rgb10a2unorm";* [ Failure ]
-
 
 # CTS needs to support new read-write accessible formats from texture-feature-tier2,
 # will be removed after the latest CTS rolling into Dawn
