@@ -28,6 +28,7 @@
 #ifndef SRC_TINT_LANG_CORE_IR_BREAK_IF_H_
 #define SRC_TINT_LANG_CORE_IR_BREAK_IF_H_
 
+#include <algorithm>
 #include <span>
 #include <string>
 
@@ -102,23 +103,45 @@ class BreakIf final : public Castable<BreakIf, Exit> {
     /// @returns the arguments passed to the loop body MultiInBlock, if the break condition
     /// evaluates to `false`.
     std::span<Value* const> NextIterValues() {
-        return operands_.AsSpan().subspan(kArgsOperandOffset, num_next_iter_values_);
+        auto span = operands_.AsSpan();
+        if (kArgsOperandOffset > span.size()) {
+            return std::span<Value* const>();
+        }
+        size_t available = span.size() - kArgsOperandOffset;
+        size_t count = std::min(num_next_iter_values_, available);
+        return span.subspan(kArgsOperandOffset, count);
     }
 
     /// @returns the arguments passed to the loop body MultiInBlock, if the break condition
     /// evaluates to `false`.
     std::span<const Value* const> NextIterValues() const {
-        return operands_.AsSpan().subspan(kArgsOperandOffset, num_next_iter_values_);
+        auto span = operands_.AsSpan();
+        if (kArgsOperandOffset > span.size()) {
+            return std::span<const Value* const>();
+        }
+        size_t available = span.size() - kArgsOperandOffset;
+        size_t count = std::min(num_next_iter_values_, available);
+        return span.subspan(kArgsOperandOffset, count);
     }
 
     /// @returns the values returned by the loop, if the break condition evaluates to `true`.
     std::span<Value* const> ExitValues() {
-        return operands_.AsSpan().subspan(kArgsOperandOffset + num_next_iter_values_);
+        auto span = operands_.AsSpan();
+        size_t start = kArgsOperandOffset + num_next_iter_values_;
+        if (start > span.size()) {
+            return std::span<Value* const>();
+        }
+        return span.subspan(start);
     }
 
     /// @returns the values returned by the loop, if the break condition evaluates to `true`.
     std::span<const Value* const> ExitValues() const {
-        return operands_.AsSpan().subspan(kArgsOperandOffset + num_next_iter_values_);
+        auto span = operands_.AsSpan();
+        size_t start = kArgsOperandOffset + num_next_iter_values_;
+        if (start > span.size()) {
+            return std::span<const Value* const>();
+        }
+        return span.subspan(start);
     }
 
     /// Sets the number of operands used as the next iterator values.

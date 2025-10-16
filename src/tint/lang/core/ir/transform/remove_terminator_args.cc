@@ -73,9 +73,17 @@ struct State {
             // Remove arguments from all terminators that we found.
             for (auto* terminator : terminators_to_clear) {
                 if (auto* breakif = terminator->As<BreakIf>()) {
+                    Value* condition = nullptr;
+                    if (breakif->Operands().Length() > BreakIf::kConditionOperandOffset) {
+                        condition = breakif->Condition();
+                    }
+                    breakif->ClearOperands();
+                    if (condition) {
+                        breakif->SetOperands(Vector{condition});
+                    } else {
+                        breakif->SetOperands({});
+                    }
                     breakif->SetNumNextIterValues(0);
-                    // We retain the condition operand on break_if instructions.
-                    breakif->SetOperands(Vector{breakif->Condition()});
                 } else {
                     terminator->ClearOperands();
                 }
@@ -99,9 +107,15 @@ struct State {
             for (auto exit : ci->Exits()) {
                 Value* value = nullptr;
                 if (auto* breakif = exit.Value()->As<BreakIf>()) {
-                    value = breakif->ExitValues()[i];
+                    auto exit_values = breakif->ExitValues();
+                    if (i < exit_values.size()) {
+                        value = exit_values[i];
+                    }
                 } else {
-                    value = exit.Value()->Args()[i];
+                    auto args = exit.Value()->Args();
+                    if (i < args.Length()) {
+                        value = args[i];
+                    }
                 }
                 if (value) {
                     auto* store = b.Store(var, value);
@@ -136,9 +150,15 @@ struct State {
             for (auto* branch : block->InboundSiblingBranches()) {
                 Value* value = nullptr;
                 if (auto* breakif = branch->As<BreakIf>()) {
-                    value = breakif->NextIterValues()[i];
+                    auto next_iter_values = breakif->NextIterValues();
+                    if (i < next_iter_values.size()) {
+                        value = next_iter_values[i];
+                    }
                 } else {
-                    value = branch->Args()[i];
+                    auto args = branch->Args();
+                    if (i < args.Length()) {
+                        value = args[i];
+                    }
                 }
                 if (value) {
                     auto* store = b.Store(var, value);
