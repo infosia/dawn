@@ -34,6 +34,24 @@
       "parentUuid": "e0d031c1_0d72d71c",
       "revId": "bc8777f3d28f40d68e0b63760f7f8978bc8941c8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41277623_619c0866",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-16T18:53:19Z",
+      "side": 0,
+      "message": "OK, I added the toggle in the earlier CL and the f16 check is now in `ValidateFeatureSupportedWithTogglesImpl`, which I think is the right place (since it has the toggle state).\n\nPTAL!",
+      "parentUuid": "ba22c964_6230d85d",
+      "revId": "bc8777f3d28f40d68e0b63760f7f8978bc8941c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
