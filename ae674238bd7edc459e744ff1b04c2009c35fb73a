@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45826dc3_d97ceb26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-16T09:45:03Z",
+      "side": 1,
+      "message": "Please don\u0027t land this without further discussion.\n\nFirstly I\u0027m missing the discussion that the best fix for the linked bug is not to default one specific parameter. I\u0027d like to be a part of the discussion because there may be other solutions.\n\nSecondly I\u0027d also like to be part of the design for how we override default API patterns for the Kotlin version. I can think of a more general way of doing this that may have other applications (having a shadow-version of dawn.json for Kotlin that can modify values in dawn.json)\n\nAlso given that we landed a big CL yesterday changing how default values are set this might not merge anyway.",
+      "revId": "ae674238bd7edc459e744ff1b04c2009c35fb73a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
