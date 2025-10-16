@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c18da949_7fa1f799",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/RenderPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-16T15:27:09Z",
+      "side": 1,
+      "message": "If this is the color-only pipeline perhaps the name should reflect that.",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 12
+      },
+      "revId": "93ee09df8dd448d8e73f38edf9bc56854461a135",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "605166f2_f0b8bd41",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/RenderPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-16T15:27:09Z",
+      "side": 1,
+      "message": "Is there no other success check we could make (other than it not crashing)?",
+      "revId": "93ee09df8dd448d8e73f38edf9bc56854461a135",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "810114b8_6149a85b",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/RenderPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-16T15:27:09Z",
+      "side": 1,
+      "message": "Doesn\u0027t setup add a shader module? If this one is different perhaps it should live in its own test class.",
+      "revId": "93ee09df8dd448d8e73f38edf9bc56854461a135",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03f43ff1_2973a8ac",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/RenderPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-16T15:27:09Z",
+      "side": 1,
+      "message": "Is there a reason you don\u0027t use pushErrorScope... popErrorScope around the first call?",
+      "revId": "93ee09df8dd448d8e73f38edf9bc56854461a135",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84d33aeb_afce5550",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/RenderPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-16T15:27:09Z",
+      "side": 1,
+      "message": "Nit; all comments to have two spaces before the // (not one) and end in a full stop/period.",
+      "revId": "93ee09df8dd448d8e73f38edf9bc56854461a135",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
