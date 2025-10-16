@@ -2792,6 +2792,46 @@ fn csMain() {
     EXPECT_BUFFER_U32_EQ(42u, outputBuffer, 0);
 }
 
+TEST_P(ShaderTests, CopyStructCompute) {
+    std::string shader = R"(
+        struct Item {
+          vec: vec3u,
+          num: u32,
+        }
+
+        @group(0) @binding(0) var<storage, read> sourceBuffer: Item;
+        @group(0) @binding(1) var<storage, read_write> targetBuffer: Item;
+
+        @compute @workgroup_size(1) fn main() {
+          var item = sourceBuffer;
+          targetBuffer = item;
+        }
+    )";
+
+    wgpu::ComputePipeline pipeline = CreateComputePipeline(shader, "main");
+
+    std::vector<uint32_t> inputData = {1, 3, 5, 7};
+
+    wgpu::Buffer inputBuffer = utils::CreateBufferFromData(
+        device, inputData.data(), inputData.size() * sizeof(uint32_t), wgpu::BufferUsage::Storage);
+    wgpu::Buffer outputBuffer = CreateBuffer(sizeof(uint32_t));
+
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {{0, inputBuffer}, {1, outputBuffer}});
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+    pass.SetPipeline(pipeline);
+    pass.SetBindGroup(0, bindGroup);
+    pass.DispatchWorkgroups(1);
+    pass.End();
+
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    EXPECT_BUFFER_U32_RANGE_EQ(inputData.data(), outputBuffer, 0, inputData.size());
+}
+
 DAWN_INSTANTIATE_TEST(ShaderTests,
                       D3D11Backend(),
                       D3D12Backend(),
