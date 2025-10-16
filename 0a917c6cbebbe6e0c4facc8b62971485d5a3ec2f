@@ -33,6 +33,24 @@
       "message": "Definitely dry run copybara and `blaze test` because you might get https://buganizer.corp.google.com/issues/452400680. Sadly there are contradictory failure conditions when ignoring function return values in tests run with Gradle tools vs Blaze test. This issue will go away when get rid of Future (https://buganizer.corp.google.com/issues/446603126).",
       "revId": "0a917c6cbebbe6e0c4facc8b62971485d5a3ec2f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a50b5a6a_987d030b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4374400
+      },
+      "writtenOn": "2025-10-16T02:30:28Z",
+      "side": 1,
+      "message": "The same thing can be implemented for the bufferTest.kt error. We can suppress the warning there also.",
+      "parentUuid": "c80e5bfd_805bf9ac",
+      "revId": "0a917c6cbebbe6e0c4facc8b62971485d5a3ec2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
