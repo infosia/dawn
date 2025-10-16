@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c84fdf4b_9358d256",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3418012
+      },
+      "writtenOn": "2025-10-16T09:36:00Z",
+      "side": 1,
+      "message": "Hello, could you please take a look at this CL? Thank you!\n\nAlso, I can\u0027t reproduce the issue in the fuzzer on my local machine.",
+      "revId": "dd9c151c4bf3c2601d9dfb4f719b269cbf0c752b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
