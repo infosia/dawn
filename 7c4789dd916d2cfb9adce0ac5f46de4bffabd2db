@@ -52,6 +52,24 @@
       "parentUuid": "5f472ad9_76b06777",
       "revId": "7c4789dd916d2cfb9adce0ac5f46de4bffabd2db",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51701307_0d4655d3",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-16T05:24:09Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "12dd492b_677def79",
+      "revId": "7c4789dd916d2cfb9adce0ac5f46de4bffabd2db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

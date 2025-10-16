@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "00b67a59_cd9621eb",
+        "filename": "generator/templates/art/api_kotlin_structure.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-16T05:24:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab0e195_0873ef44",
+      "revId": "95e1e49f573a595034948f312508e0700e1e914b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "647ede40_e678bee7",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-10-15T13:15:46Z",
       "side": 1,
       "message": "One-liner `{% for member in members if member.type.category \u003d\u003d \u0027callback info\u0027 %}`, which removes an indent level (more readable).",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 56
+      },
+      "revId": "95e1e49f573a595034948f312508e0700e1e914b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc27f149_46ee357a",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-16T05:24:09Z",
+      "side": 1,
+      "message": "Got addressed with the other comment",
+      "parentUuid": "647ede40_e678bee7",
       "range": {
         "startLine": 49,
         "startChar": 0,
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fc75bfc_224ce0a8",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-16T05:24:09Z",
+      "side": 1,
+      "message": "Wow, thanks.",
+      "parentUuid": "daf20f7c_d5e7b771",
+      "revId": "95e1e49f573a595034948f312508e0700e1e914b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d95f8227_bbbddaf7",
@@ -71,6 +131,24 @@
       "writtenOn": "2025-10-15T13:15:46Z",
       "side": 1,
       "message": "Please add a comment explaining why we are renaming the member.",
+      "revId": "95e1e49f573a595034948f312508e0700e1e914b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19fb4fd5_7668948f",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-16T05:24:09Z",
+      "side": 1,
+      "message": "We aren\u0027t renaming the member here. Doing that in dawn_json_generator.py which has acomment",
+      "parentUuid": "d95f8227_bbbddaf7",
       "revId": "95e1e49f573a595034948f312508e0700e1e914b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
