@@ -63,6 +63,30 @@
       },
       "revId": "6a1c105c5d9641db033bea2ea9da8a0ca2b69458",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b323694_b9137b66",
+        "filename": "infra/config/global/generated/luci/cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 3162,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-16T20:34:28Z",
+      "side": 1,
+      "message": "For posterity, https://ci.chromium.org/ui/p/dawn/builders/ci/dawn-mac-arm64-builder-rel/1/infra ran on an x64 machine without issue.",
+      "parentUuid": "1b97d1ef_866b5354",
+      "range": {
+        "startLine": 3159,
+        "startChar": 0,
+        "endLine": 3162,
+        "endChar": 0
+      },
+      "revId": "6a1c105c5d9641db033bea2ea9da8a0ca2b69458",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
