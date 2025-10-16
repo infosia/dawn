@@ -22,6 +22,30 @@
       },
       "revId": "cc0515d04603bf70b3122738192e968d1271b0a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3db8224a_232e9618",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-16T07:06:42Z",
+      "side": 1,
+      "message": "You\u0027re right, If a dev only passes requiredFeatures, it will accidentally clear the default error callbacks.\n\nMy reason for passing the whole DeviceDescriptor was to allow developers to also provide their own custom callbacks and executors, which wasn\u0027t possible before.",
+      "parentUuid": "64f1dd54_3726662e",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 6
+      },
+      "revId": "cc0515d04603bf70b3122738192e968d1271b0a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
