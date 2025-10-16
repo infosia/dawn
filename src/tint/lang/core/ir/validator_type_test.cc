@@ -809,7 +809,7 @@ TEST_P(Type_SubgroupMatrixComponentType, Test) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllow8BitIntegers});
+    auto res = ir::Validate(mod);
     if (allowed) {
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
