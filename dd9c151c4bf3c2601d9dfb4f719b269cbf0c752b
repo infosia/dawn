@@ -16,6 +16,41 @@
       "message": "Hello, could you please take a look at this CL? Thank you!\n\nAlso, I can\u0027t reproduce the issue in the fuzzer on my local machine.",
       "revId": "dd9c151c4bf3c2601d9dfb4f719b269cbf0c752b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1963c2e_be619cd9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-16T17:45:38Z",
+      "side": 1,
+      "message": "I can\u0027t reproduce locally either (commented on the bug). I don\u0027t think we need to add checks to the transform since it should be able to assume that the module is well-formed.",
+      "parentUuid": "c84fdf4b_9358d256",
+      "revId": "dd9c151c4bf3c2601d9dfb4f719b269cbf0c752b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8388a4d_86893872",
+        "filename": "src/tint/lang/core/ir/transform/remove_terminator_args.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-16T17:45:38Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to change the transform since it should be able to assume the module is well-formed. The IR validator should be responsible for checking these things if needed.",
+      "revId": "dd9c151c4bf3c2601d9dfb4f719b269cbf0c752b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
