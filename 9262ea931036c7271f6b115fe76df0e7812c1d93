@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efea77c0_313c2e17",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-16T06:04:33Z",
+      "side": 1,
+      "message": "I think this can be greatly simplified if you use the `find_by_name` helper we have. See some examples here: \n\n- For callback: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/generator/templates/api_cpp.h;l\u003d363;bpv\u003d0;bpt\u003d0\n- For mode: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/generator/templates/api_cpp.h;l\u003d393;bpv\u003d0;bpt\u003d0",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 14
+      },
+      "revId": "9262ea931036c7271f6b115fe76df0e7812c1d93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43c6c865_93743235",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-16T06:04:33Z",
+      "side": 1,
+      "message": "nit. Do we currently have any such member that is generating Kotlin code? From what I can tell, this should only exist right now for some Dawn native stuff that I don\u0027t think needs to be exposed to Kotlin atm.",
+      "range": {
+        "startLine": 84,
+        "startChar": 28,
+        "endLine": 88,
+        "endChar": 39
+      },
+      "revId": "9262ea931036c7271f6b115fe76df0e7812c1d93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "caaec8dd_b475e0d5",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-16T06:04:33Z",
+      "side": 1,
+      "message": "Why not just free the data at the end of the callback here?",
+      "range": {
+        "startLine": 140,
+        "startChar": 24,
+        "endLine": 140,
+        "endChar": 73
+      },
+      "revId": "9262ea931036c7271f6b115fe76df0e7812c1d93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
