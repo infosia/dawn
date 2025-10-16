@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee02d2b7_27eb71b9",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-16T11:46:18Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "1b1475d570756fafd76b3a5c8b1c5e5ab68c1091",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

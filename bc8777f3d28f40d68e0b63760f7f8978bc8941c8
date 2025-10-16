@@ -16,6 +16,24 @@
       "message": "This change needs to be gated on the decompose uniform buffers feature being enabled, but I don\u0027t have the platform here to do this.\n\nDo we need to add a toggle so that we can check here, or can we just pass the Platform down into this function?",
       "revId": "bc8777f3d28f40d68e0b63760f7f8978bc8941c8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba22c964_6230d85d",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-16T11:46:18Z",
+      "side": 0,
+      "message": "This is quite awkward because to avoid ref-cycle with the adapter and the physicalDevice, the instance is not available here. We can add a Toggle that we ForceSet at [1] based on `platform::Features::kWebGPUDecomposeUniformBuffers`",
+      "parentUuid": "e0d031c1_0d72d71c",
+      "revId": "bc8777f3d28f40d68e0b63760f7f8978bc8941c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
