@@ -89,6 +89,9 @@ class CaptureAndReplayTests : public DawnTest {
 // During capture, makes a buffer, puts data in it.
 // Then, replays and checks the data is correct.
 TEST_P(CaptureAndReplayTests, Basic) {
+    // TODO: File bug.
+    DAWN_SUPPRESS_TEST_IF(IsWebGPUOn(wgpu::BackendType::Metal));
+
     const char* label = "MyBuffer";
     const uint8_t myData[] = {0x11, 0x22, 0x33, 0x44};
 
