@@ -25,7 +25,7 @@
 //* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 //* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {% from 'art/kotlin_record_conversion.cpp' import define_kotlin_record_structure, define_kotlin_to_struct_conversion with context %}
-{% from 'art/api_jni_types.cpp' import arg_to_jni_type, convert_to_kotlin, jni_signature, to_jni_type with context %}
+{% from 'art/api_jni_types.cpp' import arg_to_jni_type, convert_to_kotlin, jni_signature, to_jni_type, jni_prefixed_name with context %}
 #include <jni.h>
 #include <stdlib.h>
 #include <webgpu/webgpu.h>
@@ -65,7 +65,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
 }
 
 {% macro render_method(method, object) %}
-    {% set ObjectName = object.name.CamelCase() if object else "FunctionsKt" %}
+    {% set ObjectName = jni_prefixed_name(object.name.CamelCase(), 'object') if object else "FunctionsKt" %}
     {% set FunctionSuffix = ObjectName + "_" +  method.name.camelCase() %}
     {% set KotlinRecord = FunctionSuffix + "KotlinRecord" %}
     {% set ArgsStruct = FunctionSuffix + "ArgsStruct" %}
@@ -196,7 +196,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
     //* Every object gets a Release method, to supply a Kotlin AutoCloseable.
     extern "C"
     JNIEXPORT void JNICALL
-    Java_{{ kotlin_package.replace('.', '_') }}_{{ obj.name.CamelCase() }}_close(
+    Java_{{ kotlin_package.replace('.', '_') }}_{{ jni_prefixed_name(obj.name.CamelCase(), 'object') }}_close(
             JNIEnv *env, jobject obj) {
         JNIClasses* classes = JNIClasses::getInstance(env);
         jclass clz = classes->{{ obj.name.camelCase() }};

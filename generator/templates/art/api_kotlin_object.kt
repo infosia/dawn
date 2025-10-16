@@ -32,9 +32,9 @@ import java.nio.ByteBuffer
     import java.util.concurrent.Executor
     {% break %}
 {% endfor %}
-{% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition with context %}
+{% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition, kotlin_prefixed_name with context %}
 
-public class {{ obj.name.CamelCase() }}(public val handle: Long): AutoCloseable {
+public class {{ kotlin_prefixed_name(obj.name.CamelCase(), 'object') }}(public val handle: Long): AutoCloseable {
     {% for method in obj.methods if include_method(method) %}
         @FastNative
         @JvmName("{{ method.name.camelCase() }}")
@@ -63,6 +63,6 @@ public class {{ obj.name.CamelCase() }}(public val handle: Long): AutoCloseable 
     //* A structural comparison of the wrapper object is equivalent to a referential comparison of
     //* the wrapped object.
     override fun equals(other: Any?): Boolean =
-        other is {{ obj.name.CamelCase() }} && other.handle == handle
+        other is {{ kotlin_prefixed_name(obj.name.CamelCase(), 'object') }} && other.handle == handle
     override fun hashCode(): Int = handle.hashCode()
 }
