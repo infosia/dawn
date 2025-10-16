@@ -1673,6 +1673,7 @@ class MultiGeneratorFromDawnJSON(Generator):
 
             imported_templates += [
                 "art/api_kotlin_types.kt",
+                "art/kotlin_argument_rules.jinja",
             ]
 
             by_category = params_kotlin['by_category']

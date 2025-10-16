@@ -1,0 +1,14 @@
+{#
+  ==============================================================================
+  KOTLIN CODEGEN CONFIGURATION
+  ==============================================================================
+  This file defines exceptions for the code generator.
+
+  ARGUMENT_DEFAULT_EXCEPTIONS:
+  - Key: The exact camelCase name of a method.
+  - Value: A list of argument names that should NOT have a default value.
+#}
+{% set ARGUMENT_DEFAULT_EXCEPTIONS = {
+    'getMappedRange': ['size'],
+    'getConstMappedRange': ['size']
+} %}

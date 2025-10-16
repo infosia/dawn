@@ -98,3 +98,17 @@
         {% endif -%}
     {% endif -%}
 {% endmacro %}
+
+{% macro kotlin_definition_with_exceptions(arg, exceptions=[]) -%}
+    {% set ns = namespace(with_defaults=true) %}
+    {# Start by assuming we will include default values #}
+    {% set with_defaults = true %}
+    {% for name in exceptions %}
+        {% if as_varName(arg.name) == name %}
+            {% set ns.with_defaults = false %}
+            {% break %}
+        {% endif %}
+    {% endfor %}
+    {{ kotlin_declaration(arg) }}
+    {%- if ns.with_defaults and kotlin_default(arg) is not none %} = {{ kotlin_default(arg) }}{% endif -%}
+{%- endmacro %}

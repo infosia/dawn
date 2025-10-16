@@ -32,7 +32,8 @@ import java.nio.ByteBuffer
     import java.util.concurrent.Executor
     {% break %}
 {% endfor %}
-{% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition with context %}
+{% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition_with_exceptions, kotlin_definition with context %}
+{% import 'art/kotlin_argument_rules.jinja' as config %}
 
 public class {{ obj.name.CamelCase() }}(public val handle: Long): AutoCloseable {
     {% for method in obj.methods if include_method(method) %}
@@ -44,7 +45,8 @@ public class {{ obj.name.CamelCase() }}(public val handle: Long): AutoCloseable 
             {%- if as_varName(arg.name) == 'callback' %}
                 {{arg.name.camelCase()}}Executor: Executor? = Executor(Runnable::run),{{' '}}
             {%- endif %}
-            {{- kotlin_annotation(arg) }} {{ as_varName(arg.name) }}: {{ kotlin_definition(arg) }},{{ ' ' }}
+            {% set arg_exceptions = config.ARGUMENT_DEFAULT_EXCEPTIONS.get(method.name.camelCase(), []) %}
+            {{- kotlin_annotation(arg) }} {{ as_varName(arg.name) }}: {{ kotlin_definition_with_exceptions(arg, exceptions=arg_exceptions) }},{{ ' ' }}
         {%- endfor -%}): {{ kotlin_declaration(kotlin_return(method)) }}
 
         {% if method.name.chunks[0] == 'get' and not method.arguments %}
