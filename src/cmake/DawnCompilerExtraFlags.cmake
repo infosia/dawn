@@ -99,7 +99,14 @@ function(common_compile_options target)
     if (${DAWN_ENABLE_UBSAN})
       list(APPEND SANITIZER_OPTIONS
         "-fsanitize=undefined"
-        "-fsanitize=float-divide-by-zero")
+        # Extra non-default sanitizers. See //build/config/sanitizers/BUILD.gn for GN config.
+        # - vptr is enabled in GN by default and was enabled by default in earlier Clang.
+        "-fsanitize=vptr"
+        # - float-divide-by-zero (see https://dawn-review.googlesource.com/125380) is not used in
+        #   GN, as //build assumes IEEE754. We could replace this with static_asserts on is_iec559,
+        #   but it still might be useful. This should eventually removed in CMake or added in GN.
+        "-fsanitize=float-divide-by-zero"
+      )
     endif ()
     if (SANITIZER_OPTIONS)
       target_compile_options(${target}
