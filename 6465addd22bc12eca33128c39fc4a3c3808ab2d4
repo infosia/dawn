@@ -34,6 +34,24 @@
       "parentUuid": "78f36bc4_9e02cce8",
       "revId": "6465addd22bc12eca33128c39fc4a3c3808ab2d4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff64179b_edca305c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-16T20:14:48Z",
+      "side": 1,
+      "message": "IMO let\u0027s just land this now to make sure it gets landed. Just in case something trips up and delays it further.\n\nBTW Mridul, you can set the \"Auto-Submit\" flag to signal if you want the reviewer to land the CL rather than wait for you to do it.",
+      "parentUuid": "e1326846_ddbc39c5",
+      "revId": "6465addd22bc12eca33128c39fc4a3c3808ab2d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
