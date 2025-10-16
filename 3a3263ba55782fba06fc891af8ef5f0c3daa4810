@@ -16,6 +16,24 @@
       "message": "Can these be more specific?",
       "revId": "3a3263ba55782fba06fc891af8ef5f0c3daa4810",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c2ef833_d51a4b15",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/BufferTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-16T06:57:45Z",
+      "side": 1,
+      "message": "Errors at the JNI layer are currently thrown as java.lang.Error. I\u0027ve filed a bug ticket for this and will fix it.",
+      "parentUuid": "97af35d1_cfb9355a",
+      "revId": "3a3263ba55782fba06fc891af8ef5f0c3daa4810",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
