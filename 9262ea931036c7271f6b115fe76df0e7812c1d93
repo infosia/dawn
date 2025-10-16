@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ca4bf6e_e93dde9e",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-16T10:05:43Z",
+      "side": 1,
+      "message": "Thank you. Now it looks much much better",
+      "parentUuid": "efea77c0_313c2e17",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 14
+      },
+      "revId": "9262ea931036c7271f6b115fe76df0e7812c1d93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43c6c865_93743235",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-10-16T06:04:33Z",
       "side": 1,
       "message": "nit. Do we currently have any such member that is generating Kotlin code? From what I can tell, this should only exist right now for some Dawn native stuff that I don\u0027t think needs to be exposed to Kotlin atm.",
+      "range": {
+        "startLine": 84,
+        "startChar": 28,
+        "endLine": 88,
+        "endChar": 39
+      },
+      "revId": "9262ea931036c7271f6b115fe76df0e7812c1d93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b02e104_b1b80ec7",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-16T10:05:43Z",
+      "side": 1,
+      "message": "For cases where the member.type.category value is \u0027callback function\u0027.\nexample: ConvertInternal function in methods.cpp\ninline void ConvertInternal(JNIContext* c, const Adapter_requestDeviceKotlinRecord\u0026 inStruct, Adapter_requestDeviceArgsStruct* outStruct)",
+      "parentUuid": "43c6c865_93743235",
       "range": {
         "startLine": 84,
         "startChar": 28,
