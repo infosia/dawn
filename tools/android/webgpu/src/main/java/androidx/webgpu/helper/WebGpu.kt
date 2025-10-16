@@ -3,20 +3,21 @@ package androidx.webgpu.helper
 import android.os.Handler
 import android.os.Looper
 import android.view.Surface
-import androidx.webgpu.Adapter
+import androidx.webgpu.GPUAdapter
 import androidx.webgpu.BackendType
 import androidx.webgpu.CallbackMode.Companion.AllowSpontaneous
-import androidx.webgpu.Device
+import androidx.webgpu.GPUDevice
 import androidx.webgpu.DeviceDescriptor
 import androidx.webgpu.DeviceLostCallback
 import androidx.webgpu.DeviceLostCallbackInfo
 import androidx.webgpu.DeviceLostReason
 import androidx.webgpu.ErrorType
 import androidx.webgpu.FeatureName
-import androidx.webgpu.Instance
+import androidx.webgpu.GPUInstance
 import androidx.webgpu.InstanceDescriptor
 import androidx.webgpu.RequestAdapterOptions
 import androidx.webgpu.RequestAdapterStatus
+import androidx.webgpu.GPUSurface
 import androidx.webgpu.RequestDeviceStatus
 import androidx.webgpu.SurfaceDescriptor
 import androidx.webgpu.SurfaceSourceAndroidNativeWindow
@@ -27,19 +28,19 @@ import androidx.webgpu.requestAdapter
 import androidx.webgpu.requestDevice
 
 public class DeviceLostException(
-    public val device: Device, @DeviceLostReason public val reason: Int, message: String
+    public val device: GPUDevice, @DeviceLostReason public val reason: Int, message: String
 ) : Exception(message)
 
 public class UncapturedErrorException(
-    public val device: Device, @ErrorType public val type: Int, message: String
+    public val device: GPUDevice, @ErrorType public val type: Int, message: String
 ) : Exception(message)
 
 private const val POLLING_DELAY_MS = 100L
 
 public abstract class WebGpu : AutoCloseable {
-    public abstract val instance: Instance
-    public abstract val webgpuSurface: androidx.webgpu.Surface
-    public abstract val device: Device
+    public abstract val instance: GPUInstance
+    public abstract val webgpuSurface: GPUSurface
+    public abstract val device: GPUDevice
 }
 
 public suspend fun createWebGpu(
@@ -96,9 +97,9 @@ public suspend fun createWebGpu(
 }
 
 private suspend fun requestAdapter(
-    instance: Instance,
+    instance: GPUInstance,
     options: RequestAdapterOptions = RequestAdapterOptions(backendType = BackendType.Vulkan),
-): Adapter {
+): GPUAdapter {
     val result = instance.requestAdapter(options)
     check(result.status == RequestAdapterStatus.Success && result.adapter != null) {
         result. message.ifEmpty { "Error requesting the adapter: $result.status" }
@@ -106,7 +107,7 @@ private suspend fun requestAdapter(
     return result.adapter
 }
 
-private suspend fun requestDevice(adapter: Adapter, @FeatureName requiredFeatures: IntArray): Device {
+private suspend fun requestDevice(adapter: GPUAdapter, @FeatureName requiredFeatures: IntArray): GPUDevice {
     val result =
         adapter.requestDevice(
             DeviceDescriptor(

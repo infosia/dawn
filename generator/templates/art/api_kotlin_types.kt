@@ -39,14 +39,14 @@
     {%- elif arg.length and arg.length != 'constant' %}
         {# * annotation can mean an array, e.g. an output argument #}
         {%- if type.category in ['callback function', 'callback info', 'function pointer', 'object', 'structure'] -%}
-            Array<{{ type.name.CamelCase() }}>
+            Array<{{ kotlin_prefixed_name(type.name.CamelCase(), type.category) }}>
         {%- elif type.category in ['bitmask', 'enum'] or type.name.get() in ['int', 'int32_t', 'uint32_t'] -%}
             IntArray
         {%- else -%}
             {{ unreachable_code() }}
         {% endif %}
     {%- elif type.category in ['callback function', 'function pointer', 'object'] %}
-        {{- type.name.CamelCase() }}
+        {{- kotlin_prefixed_name(type.name.CamelCase(), type.category) }}
         {%- if optional or default_value %}?{% endif %}
     {%- elif type.category == 'structure' or type.category == 'callback info' %}
         {{- type.name.CamelCase() }}{{ '?' if optional }}
@@ -98,3 +98,11 @@
         {% endif -%}
     {% endif -%}
 {% endmacro %}
+
+{%- macro kotlin_prefixed_name(name, category) -%}
+    {%- if category == 'object' -%}
+        GPU{{ name }}
+    {%- else -%}
+        {{ name }}
+    {%- endif -%}
+{%- endmacro -%}
