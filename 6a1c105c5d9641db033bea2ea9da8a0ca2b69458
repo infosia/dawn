@@ -39,6 +39,30 @@
       },
       "revId": "6a1c105c5d9641db033bea2ea9da8a0ca2b69458",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b97d1ef_866b5354",
+        "filename": "infra/config/global/generated/luci/cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 3162,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-16T19:49:13Z",
+      "side": 1,
+      "message": "IIRC x64 -\u003e arm64 compilation works. At least, it did back when we were initially starting to support arm64 Macs. I\u0027ll keep an eye out for issues, though. Dawn will be switched to explicitly target arm64 soon enough anyways.",
+      "parentUuid": "eb7da81a_ecb587a0",
+      "range": {
+        "startLine": 3159,
+        "startChar": 0,
+        "endLine": 3162,
+        "endChar": 0
+      },
+      "revId": "6a1c105c5d9641db033bea2ea9da8a0ca2b69458",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
