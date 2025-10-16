@@ -29,7 +29,7 @@ package {{ kotlin_package }}
 import java.util.concurrent.Executor
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
-{% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition with context %}
+{% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition, kotlin_prefixed_name with context %}
 
 {% macro async_wrapper(obj, method, callback_arg) %}
     {% set return_name = callback_arg.type.name.chunks[:-1] | map('title') | join + 'Return' %}
@@ -50,7 +50,7 @@ import kotlin.coroutines.suspendCoroutine
 
     //* The wrapped method has executor and callback function stripped out (the wrapper supplies
     //* those so the client doesn't have to).
-    public suspend fun {{ obj.name.CamelCase() }}.{{ method.name.camelCase() }}(
+    public suspend fun {{ kotlin_prefixed_name(obj.name.CamelCase(), 'object') }}.{{ method.name.camelCase() }}(
         {%- for arg in kotlin_record_members(method.arguments) if not (
             arg.type.category == 'callback function' or
             (arg.type.category == 'kotlin type' and arg.type.name.get() == 'java.util.concurrent.Executor')
