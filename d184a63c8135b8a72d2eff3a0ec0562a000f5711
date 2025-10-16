@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e782128b_07fd03fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-16T15:13:41Z",
+      "side": 1,
+      "message": "This was not the cause of b/452389218. The fix was https://dawn-review.googlesource.com/c/dawn/+/267195",
+      "revId": "d184a63c8135b8a72d2eff3a0ec0562a000f5711",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
