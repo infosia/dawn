@@ -56,6 +56,30 @@
       },
       "revId": "ec03b419f99646197765a3e721be61e2401605ae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ee2d379_377abe68",
+        "filename": "src/dawn/native/opengl/ContextEGL.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-10-16T14:54:37Z",
+      "side": 1,
+      "message": "I was thinking the same thing. Will do in a follow up.",
+      "parentUuid": "a70c3607_3e7e7c3f",
+      "range": {
+        "startLine": 48,
+        "startChar": 61,
+        "endLine": 51,
+        "endChar": 91
+      },
+      "revId": "ec03b419f99646197765a3e721be61e2401605ae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
