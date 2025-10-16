@@ -121,6 +121,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f86f0cc0_dcf20af2",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-16T19:56:15Z",
+      "side": 1,
+      "message": "Yea, I was referring specifically to the `function pointer` block. I\u0027m pretty sure you can remove it. Since I expect another round of reviews anyways I think you could try removing it and checking as to whether it would work.",
+      "parentUuid": "4dd15f9c_cf6e50f1",
+      "range": {
+        "startLine": 84,
+        "startChar": 28,
+        "endLine": 88,
+        "endChar": 39
+      },
+      "revId": "9262ea931036c7271f6b115fe76df0e7812c1d93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "caaec8dd_b475e0d5",
         "filename": "generator/templates/art/kotlin_record_conversion.cpp",
         "patchSetId": 5
@@ -156,6 +180,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "caaec8dd_b475e0d5",
+      "range": {
+        "startLine": 140,
+        "startChar": 24,
+        "endLine": 140,
+        "endChar": 73
+      },
+      "revId": "9262ea931036c7271f6b115fe76df0e7812c1d93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bebfed4d_9f5722e3",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-16T19:56:15Z",
+      "side": 1,
+      "message": "I don\u0027t think you are freeing the entire `UserData` struct that you are allocating. Usually, the way that we handle these would be something like:\n\n```\ncallbackInfo.{{ userdata }} \u003d std::make_unique\u003cUserData\u003e(...).release();\n```\n\nAnd at [1]:\n```\nstd::unique_ptr\u003cUserData\u003e userData1(static_cast\u003cUserData*\u003e({{ userdata }}));\n```\n\nOtherwise, I\u0027m pretty sure that we would be leaking.",
+      "parentUuid": "76d28c1c_ae915933",
       "range": {
         "startLine": 140,
         "startChar": 24,

@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "196dff19_635f5d21",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-16T19:56:15Z",
+      "side": 1,
+      "message": "Sorry, when I commented about `find_by_name` I imagined that you could use it in the code below directly instead of needing this helper at all. The comment below outlines what I think could be done to make this a lot cleaner.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "cc9e3bcc87d560ac936b6b9f203fd0131c3c62ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09adcc83_11465271",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-16T19:56:15Z",
+      "side": 1,
+      "message": "```\n{% for member in kotlin_record_members(members) %}\n    {\n        {% if member.type.category \u003d\u003d \"callback info\" %}\n            if (inStruct.{{ as_varName(member.name) }})\n                    {\n                        auto\u0026 callbackInfo \u003d outStruct-\u003e{{as_varName(member.name)}}Info;\n                        callbackInfo \u003d {};\n                        //* Check if the member\u0027s corresponding callback info has a callbackMode.\n                        {% if find_by_name(member.type.arguments, \"mode\") %}\n                            callbackInfo.mode \u003d WGPUCallbackMode_AllowSpontaneous;\n                        {% endif %}\n```",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "cc9e3bcc87d560ac936b6b9f203fd0131c3c62ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b738dc11_7709204e",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-16T19:56:15Z",
+      "side": 1,
+      "message": "[1]",
+      "range": {
+        "startLine": 93,
+        "startChar": 28,
+        "endLine": 93,
+        "endChar": 90
+      },
+      "revId": "cc9e3bcc87d560ac936b6b9f203fd0131c3c62ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
