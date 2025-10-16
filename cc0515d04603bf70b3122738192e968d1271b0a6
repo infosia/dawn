@@ -46,6 +46,30 @@
       },
       "revId": "cc0515d04603bf70b3122738192e968d1271b0a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21d24d09_98ed136c",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-16T20:03:20Z",
+      "side": 1,
+      "message": "Could you check if the callbacks are set and then default them to throwing? Otherwise if they are set, then just leave them as is?",
+      "parentUuid": "3db8224a_232e9618",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 6
+      },
+      "revId": "cc0515d04603bf70b3122738192e968d1271b0a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
