@@ -22,6 +22,30 @@
       },
       "revId": "142768b302e2e1031f832b94b722ac9c4b00440e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8e575eb_9c0411cf",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/AdapterTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-16T07:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1622af4_df468198",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 72
+      },
+      "revId": "142768b302e2e1031f832b94b722ac9c4b00440e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
