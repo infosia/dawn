@@ -16,6 +16,24 @@
       "message": "Is it possible to be more specific than \u0027UncapturedErrorException\u0027?",
       "revId": "106ead6ae6c77092a588407960c3cd22c1d48dd8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72227948_f283fa3b",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/DeviceTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-16T07:31:18Z",
+      "side": 1,
+      "message": "Not at the moment. Ria is working on splitting `UncapturedErrorException` into more specific error types. (b/450233687)",
+      "parentUuid": "d9e9fc49_92e1f089",
+      "revId": "106ead6ae6c77092a588407960c3cd22c1d48dd8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
