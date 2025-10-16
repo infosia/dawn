@@ -983,11 +983,14 @@ def compute_kotlin_params(loaded_json, kotlin_json, webgpu_json_data=None):
         return customize_enums.get(enum.name.get(),
                                    {}).get('omitted') is not True
 
-    def jni_name(type):
+    def jni_name(type, category=None):
         if type.category == 'kotlin type':
             # Standard library Kotlin class (with namespace) just needs converting.
             return type.name.get().replace('.', '/')
-        return kt_file_path + '/' + type.name.CamelCase()
+        type_name = type.name.CamelCase()
+        if category == "object":
+            type_name = "GPU" + type_name
+        return kt_file_path + "/" + type_name
 
     # A structure may need to know which other structures listed it as a chain root, e.g.
     # to know whether to mark the generated class 'open'.
@@ -1737,29 +1740,33 @@ class MultiGeneratorFromDawnJSON(Generator):
             for structure in by_category['structure']:
                 if params_kotlin['include_structure'](structure):
                     renders.append(
-                        FileRender('art/api_kotlin_structure.kt',
-                                   'java/' + jni_name(structure) + '.kt', [
-                                       RENDER_PARAMS_BASE, params_kotlin, {
-                                           'structure': structure
-                                       }
-                                   ]))
+                        FileRender(
+                            'art/api_kotlin_structure.kt', 'java/' +
+                            jni_name(structure, category='structure') + '.kt',
+                            [
+                                RENDER_PARAMS_BASE, params_kotlin, {
+                                    'structure': structure
+                                }
+                            ]))
             for obj in by_category['object']:
                 renders.append(
                     FileRender(
                         'art/api_kotlin_object.kt',
-                        'java/' + jni_name(obj) + '.kt',
+                        'java/' + jni_name(obj, category='object') + '.kt',
                         [RENDER_PARAMS_BASE, params_kotlin, {
                             'obj': obj
                         }]))
             for function_pointer in (by_category['function pointer'] +
                                      by_category['callback function']):
                 renders.append(
-                    FileRender('art/api_kotlin_function_pointer.kt',
-                               'java/' + jni_name(function_pointer) + '.kt', [
-                                   RENDER_PARAMS_BASE, params_kotlin, {
-                                       'function_pointer': function_pointer
-                                   }
-                               ]))
+                    FileRender(
+                        'art/api_kotlin_function_pointer.kt', 'java/' +
+                        jni_name(function_pointer,
+                                 category='function pointer') + '.kt', [
+                                     RENDER_PARAMS_BASE, params_kotlin, {
+                                         'function_pointer': function_pointer
+                                     }
+                                 ]))
             renders.append(
                 FileRender('art/api_kotlin_functions.kt',
                            'java/' + kt_file_path + '/Functions.kt',
@@ -1774,7 +1781,7 @@ class MultiGeneratorFromDawnJSON(Generator):
                 if params_kotlin['include_enum'](enum):
                     renders.append(
                         FileRender('art/api_kotlin_enum.kt',
-                                   'java/' + jni_name(enum) + '.kt', [
+                                   'java/' + jni_name(enum, category='enum') + '.kt', [
                                        RENDER_PARAMS_BASE, params_kotlin, {
                                            'enum': enum
                                        }
