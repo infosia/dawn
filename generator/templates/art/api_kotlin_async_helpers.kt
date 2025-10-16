@@ -28,7 +28,7 @@ package {{ kotlin_package }}
 
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
-{% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition with context %}
+{% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition, kotlin_prefixed_name with context %}
 
 //* Provide an async wrapper for the 'callback info' type of async methods.
 {% for obj in by_category['object'] %}
@@ -53,7 +53,7 @@ import kotlin.coroutines.suspendCoroutine
 
         //* Every method that is identified as using callbacks is given a helper method that wraps
         //* call with a suspend function.
-        public suspend fun {{ obj.name.CamelCase() }}.{{ method.name.camelCase() }}(
+        public suspend fun {{ kotlin_prefixed_name(obj.name.CamelCase(), 'object') }}.{{ method.name.camelCase() }}(
             {%- for arg in method.arguments[:-1] %}
                 {{ kotlin_annotation(arg) }}  {{ as_varName(arg.name) }}: {{ kotlin_definition(arg) }},
             {%- endfor %}): {{ return_name }} = suspendCoroutine {
