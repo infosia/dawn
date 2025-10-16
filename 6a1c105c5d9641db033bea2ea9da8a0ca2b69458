@@ -16,6 +16,29 @@
       "message": "PTAL",
       "revId": "6a1c105c5d9641db033bea2ea9da8a0ca2b69458",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb7da81a_ecb587a0",
+        "filename": "infra/config/global/generated/luci/cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 3162,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-16T19:22:28Z",
+      "side": 1,
+      "message": "I think we have x64 machines in this pool?\nThey could have trouble with cross-compile to arm64.",
+      "range": {
+        "startLine": 3159,
+        "startChar": 0,
+        "endLine": 3162,
+        "endChar": 0
+      },
+      "revId": "6a1c105c5d9641db033bea2ea9da8a0ca2b69458",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
