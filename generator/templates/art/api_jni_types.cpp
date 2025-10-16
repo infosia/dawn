@@ -67,7 +67,7 @@
 
 {% macro jni_signature_single_value(type) %}
     {%- if type.category in ['function pointer', 'object', 'callback function', 'callback info', 'structure'] -%}
-        L{{ jni_name(type) }};
+        L{{ jni_name(type, type.category) }};
     {%- elif type.category in ['bitmask', 'enum'] -%}
         {{ jni_signatures['int32_t'] }}
     {%- elif type.category == 'native' -%}
@@ -128,3 +128,11 @@
         {{ unreachable_code() }}
     {% endif %}
 {% endmacro %}
+
+{%- macro jni_prefixed_name(name, category) -%}
+    {%- if category == 'object' -%}
+        GPU{{ name }}
+    {%- else -%}
+        {{ name }}
+    {%- endif -%}
+{%- endmacro -%}
