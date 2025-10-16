@@ -66,8 +66,9 @@ WireResult ChunkedCommandHandler::HandleChunkedCommand(DeserializeBuffer* deseri
     }
     DAWN_ASSERT(chunkedCommand);
 
-    DAWN_ASSERT(cmd.chunkSize <= chunkedCommand->remainingSize);
     if (cmd.chunkSize > chunkedCommand->remainingSize) {
+        // If the chunk size is greater than the remaining size, something is wrong and we can no
+        // longer handle it, so just return a FatalError.
         return WireResult::FatalError;
     }
     memcpy(chunkedCommand->data.get() + chunkedCommand->putOffset,
