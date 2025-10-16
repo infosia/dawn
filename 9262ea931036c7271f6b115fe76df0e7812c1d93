@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4dd15f9c_cf6e50f1",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-16T13:13:31Z",
+      "side": 1,
+      "message": "Oh.. were you asking about- {%- if member.type.category \u003d\u003d \u0027function pointer\u0027 -%} block?\nNo, it\u0027s not generating Kotlin code.\nb/452555486: I\u0027ll work on this and clear this after investigation",
+      "parentUuid": "0b02e104_b1b80ec7",
+      "range": {
+        "startLine": 84,
+        "startChar": 28,
+        "endLine": 88,
+        "endChar": 39
+      },
+      "revId": "9262ea931036c7271f6b115fe76df0e7812c1d93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "caaec8dd_b475e0d5",
         "filename": "generator/templates/art/kotlin_record_conversion.cpp",
         "patchSetId": 5
