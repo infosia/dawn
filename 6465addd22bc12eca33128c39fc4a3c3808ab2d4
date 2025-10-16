@@ -16,6 +16,24 @@
       "message": "LGTM. I think in a follow up, would it be possible to rename `dawn_json_utility.py` to `webgpu_json_utility.py` instead? Otherwise it\u0027s a bit confusing which json file is being referred to.",
       "revId": "6465addd22bc12eca33128c39fc4a3c3808ab2d4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1326846_ddbc39c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-16T20:07:35Z",
+      "side": 1,
+      "message": "To be clear, feel free to just Ack this comment and then land.",
+      "parentUuid": "78f36bc4_9e02cce8",
+      "revId": "6465addd22bc12eca33128c39fc4a3c3808ab2d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
