@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c415951_254b7465",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-16T12:05:03Z",
+      "side": 1,
+      "message": "I don\u0027t understand why we have to enable internal bindings in the inner implementation. In all the backends, the internal usages are aggregated together before computing the usages to pass to the backend API, such that the backend API never needs to know the concept of internal usages.\n\nHow about we do that in the WebGPU backend as well? It would require that in [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/webgpu/TextureWGPU.cpp;drc\u003de56b173ae73fe1f5b72630225bce8f75e4766ddc;l\u003d41) we remove the internal desc and OR its usages in the main texture descriptor.\n\nAlternatively we could move the creation of the texture inside `webgpu::Texture::Texture` and use the getters from TextureBase to create the descriptor, like we do in other backends.",
+      "revId": "f28b77d4cbe44cd62e37266b1e96217db359e07f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
