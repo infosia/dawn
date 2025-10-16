@@ -116,6 +116,30 @@
       },
       "revId": "9262ea931036c7271f6b115fe76df0e7812c1d93",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76d28c1c_ae915933",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-16T10:06:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caaec8dd_b475e0d5",
+      "range": {
+        "startLine": 140,
+        "startChar": 24,
+        "endLine": 140,
+        "endChar": 73
+      },
+      "revId": "9262ea931036c7271f6b115fe76df0e7812c1d93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
