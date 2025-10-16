@@ -219,6 +219,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd1834cf_27068081",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-16T17:03:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9ae7f34_687fdd66",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f5311e39_32452b7d",
@@ -250,6 +268,24 @@
       "side": 1,
       "message": "It\u0027s needed, see tests and other comments.",
       "parentUuid": "f5311e39_32452b7d",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e21eb81c_3ec40e4c",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-16T17:03:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "237d9fe9_18445c69",
       "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -379,6 +415,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb647d19_c5e9b75b",
+        "filename": "src/dawn/native/webgpu/RecordableObject.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-16T17:03:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cff1a4d4_baaf75c8",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc84ac31_d5187a69",
@@ -428,6 +482,24 @@
       "side": 1,
       "message": "For buffers, `clearBuffer` takes a range and a clear value so it\u0027s not the same as filling it with zeroes. For textures we can also query if they are initialized before doing a readback. A texture that\u0027s not initialized while used as a render target should be detectable in the WebGPU backend as backends are supposed to call [`LazyClearRenderPassAttachments`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/CommandBuffer.h;drc\u003d62a9a00176f862e688fa47919ed6f19b59f77b5f;l\u003d94) themselves (so they need to know the initialized status).",
       "parentUuid": "1f686aa3_b8cb9aa3",
+      "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f3472a7_2d219eb4",
+        "filename": "src/dawn/native/webgpu/RecordableObject.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-16T17:03:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a27f7ff2_bee4a800",
       "revId": "2f61752c7d75f9b588406cf301e79244127dc248",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
