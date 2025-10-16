@@ -71,6 +71,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ea01fc6_57d1946c",
+        "filename": "include/dawn/native/D3D12Backend.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-10-16T06:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8310a160_3e44ec1f",
+      "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "864cc006_5e84ac50",
+        "filename": "include/dawn/native/D3D12Backend.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-10-16T06:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8310a160_3e44ec1f",
+      "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e114992_34d4ffc6",
@@ -359,6 +395,30 @@
       "side": 1,
       "message": "Can we have the constant declared somewhere and that explanation written down? (that\u0027s `D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT` which is the alignment for buffers it seems)",
       "parentUuid": "3e40a697_a4b9ef89",
+      "range": {
+        "startLine": 301,
+        "startChar": 53,
+        "endLine": 301,
+        "endChar": 58
+      },
+      "revId": "d36b5c7ef8812da10a457b52e1a44932f9e1b6ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecf45fe7_ee232667",
+        "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests_win.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-10-16T06:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "302aca50_69074f9e",
       "range": {
         "startLine": 301,
         "startChar": 53,
