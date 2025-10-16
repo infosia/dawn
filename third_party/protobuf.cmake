@@ -39,8 +39,11 @@ add_subdirectory("${DAWN_PROTOBUF_DIR}")
 target_compile_definitions(libprotobuf PUBLIC "-DPROTOBUF_ENABLE_DEBUG_LOGGING_MAY_LEAK_PII=0")
 
 target_compile_options(libprotobuf PUBLIC
-        -fno-exceptions
-        -fno-rtti)
+        -fno-exceptions)
+if (NOT DAWN_ENABLE_RTTI)
+	target_compile_options(libprotobuf PUBLIC
+		-fno-rtti)
+endif()
 
 # Allowing usage of enable_if() and nullability extensions in abseil and avoid shadowing errors
 if (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") OR

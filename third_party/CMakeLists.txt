@@ -102,7 +102,6 @@ if ((DAWN_BUILD_TESTS OR TINT_BUILD_TESTS) AND NOT TARGET gmock)
     target_compile_options(gmock_main_wasmsafe
         PUBLIC
             "-fno-exceptions"
-            "-fno-rtti"
     )
     target_include_directories(gmock_main_wasmsafe SYSTEM
         PRIVATE
