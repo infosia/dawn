@@ -33,6 +33,29 @@
       "message": "(Geoff || Corentin) PTAL 😊",
       "revId": "ec03b419f99646197765a3e721be61e2401605ae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a70c3607_3e7e7c3f",
+        "filename": "src/dawn/native/opengl/ContextEGL.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-16T14:31:02Z",
+      "side": 1,
+      "message": "We should consider putting these in a struct going forward, the long list of bools is getting a bit dangerous.",
+      "range": {
+        "startLine": 48,
+        "startChar": 61,
+        "endLine": 51,
+        "endChar": 91
+      },
+      "revId": "ec03b419f99646197765a3e721be61e2401605ae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
