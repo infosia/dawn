@@ -31,6 +31,7 @@ load("@chromium-luci//builders.star", "os")
 load("@chromium-luci//try.star", "try_")
 load("//constants.star", "siso")
 load("//location_filters.star", "exclusion_filters")
+load("//project.star", "ACTIVE_MILESTONES")
 
 try_.defaults.set(
     executable = "recipe:dawn/gn_v2_trybot",
@@ -96,35 +97,44 @@ def apply_fuzz_builder_defaults(kwargs):
     ))
     return kwargs
 
+def add_builder_to_main_and_milestone_cq_groups(kwargs):
+    # Dawn standalone builders run fine unbranched on branched CLs.
+    try_.builder(**kwargs)
+    for milestone in ACTIVE_MILESTONES.keys():
+        luci.cq_tryjob_verifier(
+            cq_group = "Dawn-CQ-" + milestone,
+            builder = "dawn:try/" + kwargs["name"],
+        )
+
 def dawn_linux_functional_cq_tester(**kwargs):
     kwargs = apply_linux_cq_builder_defaults(kwargs)
     kwargs = apply_functional_builder_with_node_defaults(kwargs)
-    try_.builder(**kwargs)
+    add_builder_to_main_and_milestone_cq_groups(kwargs)
 
 def dawn_mac_functional_cq_tester(**kwargs):
     kwargs = apply_mac_cq_builder_defaults(kwargs)
     kwargs = apply_functional_builder_with_node_defaults(kwargs)
-    try_.builder(**kwargs)
+    add_builder_to_main_and_milestone_cq_groups(kwargs)
 
 def dawn_win_functional_cq_tester(**kwargs):
     kwargs = apply_win_cq_builder_defaults(kwargs)
     kwargs = apply_functional_builder_with_node_defaults(kwargs)
-    try_.builder(**kwargs)
+    add_builder_to_main_and_milestone_cq_groups(kwargs)
 
 def dawn_linux_functional_cq_tester_without_node(**kwargs):
     kwargs = apply_linux_cq_builder_defaults(kwargs)
     kwargs = apply_functional_builder_without_node_defaults(kwargs)
-    try_.builder(**kwargs)
+    add_builder_to_main_and_milestone_cq_groups(kwargs)
 
 def dawn_win_functional_cq_tester_without_node(**kwargs):
     kwargs = apply_win_cq_builder_defaults(kwargs)
     kwargs = apply_functional_builder_without_node_defaults(kwargs)
-    try_.builder(**kwargs)
+    add_builder_to_main_and_milestone_cq_groups(kwargs)
 
 def dawn_linux_fuzz_cq_tester(**kwargs):
     kwargs = apply_linux_cq_builder_defaults(kwargs)
     kwargs = apply_fuzz_builder_defaults(kwargs)
-    try_.builder(**kwargs)
+    add_builder_to_main_and_milestone_cq_groups(kwargs)
 
 ## Functional testers
 
@@ -196,6 +206,26 @@ dawn_win_functional_cq_tester(
         "ci/dawn-win-x64-sws-dbg",
     ],
     gn_args = "ci/dawn-win-x64-builder-dbg",
+)
+
+dawn_win_functional_cq_tester(
+    name = "dawn-cq-win-x64-msvc-dbg",
+    description_html = "Tests debug Dawn built with MSVC on Win/x64 on multiple hardware configs. Blocks CL submission",
+    mirrors = [
+        "ci/dawn-win-x64-builder-msvc-dbg",
+        "ci/dawn-win-x64-sws-msvc-dbg",
+    ],
+    gn_args = "ci/dawn-win-x64-builder-msvc-dbg",
+)
+
+dawn_win_functional_cq_tester(
+    name = "dawn-cq-win-x64-msvc-rel",
+    description_html = "Tests release Dawn built with MSVC on Win/x64 on multiple hardware configs. Blocks CL submission",
+    mirrors = [
+        "ci/dawn-win-x64-builder-msvc-rel",
+        "ci/dawn-win-x64-sws-msvc-rel",
+    ],
+    gn_args = "ci/dawn-win-x64-builder-msvc-rel",
 )
 
 dawn_win_functional_cq_tester(
@@ -341,6 +371,16 @@ dawn_linux_manual_builder(
         "ci/dawn-linux-x86-sws-rel",
     ],
     gn_args = "ci/dawn-linux-x86-builder-rel",
+)
+
+dawn_mac_manual_builder(
+    name = "dawn-try-mac-arm64-apple-m2-rel",
+    description_html = "Tests release Dawn on Mac/arm64 on Apple M2 devices. Manual only.",
+    mirrors = [
+        "ci/dawn-mac-arm64-builder-rel",
+        "ci/dawn-mac-arm64-apple-m2-rel",
+    ],
+    gn_args = "ci/dawn-mac-arm64-builder-rel",
 )
 
 dawn_mac_manual_builder(

@@ -901,6 +901,12 @@
       }
     ]
   },
+  "dawn-mac-arm64-apple-m2-rel": {},
+  "dawn-mac-arm64-builder-rel": {
+    "additional_compile_targets": [
+      "default"
+    ]
+  },
   "dawn-mac-x64-builder-dbg": {
     "additional_compile_targets": [
       "default"
@@ -1290,6 +1296,31 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
       },
       {
+        "args": [
+          "--adapter-vendor-id=0x1414"
+        ],
+        "merge": {
+          "script": "//scripts/merge_scripts/true_noop_merge.py"
+        },
+        "name": "dawn_end2end_warp_tests",
+        "resultdb": {
+          "result_format": "gtest_json"
+        },
+        "swarming": {
+          "containment_type": "AUTO",
+          "dimensions": {
+            "cpu": "x86-64",
+            "gpu": "none",
+            "os": "Windows-10-19045",
+            "pool": "chromium.tests.gpu"
+          },
+          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
+          "shards": 6
+        },
+        "test": "dawn_end2end_tests",
+        "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
+      },
+      {
         "merge": {
           "script": "//scripts/merge_scripts/true_noop_merge.py"
         },
@@ -1460,7 +1491,8 @@
             "os": "Windows-10-19045",
             "pool": "chromium.tests.gpu"
           },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
+          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
+          "shards": 6
         },
         "test": "dawn_end2end_tests",
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
@@ -1636,7 +1668,8 @@
             "os": "Windows-10-19045",
             "pool": "chromium.tests.gpu"
           },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
+          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
+          "shards": 6
         },
         "test": "dawn_end2end_tests",
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
@@ -1812,7 +1845,8 @@
             "os": "Windows-10-19045",
             "pool": "chromium.tests.gpu"
           },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
+          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
+          "shards": 6
         },
         "test": "dawn_end2end_tests",
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
@@ -1980,6 +2014,31 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
       },
       {
+        "args": [
+          "--adapter-vendor-id=0x1414"
+        ],
+        "merge": {
+          "script": "//scripts/merge_scripts/true_noop_merge.py"
+        },
+        "name": "dawn_end2end_warp_tests",
+        "resultdb": {
+          "result_format": "gtest_json"
+        },
+        "swarming": {
+          "containment_type": "AUTO",
+          "dimensions": {
+            "cpu": "x86-64",
+            "gpu": "none",
+            "os": "Windows-10-19045",
+            "pool": "chromium.tests.gpu"
+          },
+          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
+          "shards": 6
+        },
+        "test": "dawn_end2end_tests",
+        "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
+      },
+      {
         "merge": {
           "script": "//scripts/merge_scripts/true_noop_merge.py"
         },
@@ -2120,7 +2179,8 @@
             "os": "Windows-10-19045",
             "pool": "chromium.tests.gpu"
           },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
+          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
+          "shards": 6
         },
         "test": "dawn_end2end_tests",
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"

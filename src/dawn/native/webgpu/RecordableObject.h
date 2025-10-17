@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_WEBGPU_RECORDABLE_OBJECT_H_
 #define SRC_DAWN_NATIVE_WEBGPU_RECORDABLE_OBJECT_H_
 
+#include "dawn/native/Error.h"
 #include "dawn/native/webgpu/Serialization.h"
 
 namespace dawn::native::webgpu {
@@ -35,11 +36,21 @@ namespace dawn::native::webgpu {
 class CaptureContext;
 class RecordableObject {
   public:
-    explicit RecordableObject(schema::ObjectType objectType) : mObjectType(objectType) {}
-    schema::ObjectType GetObjectType() const { return mObjectType; }
+    explicit RecordableObject(schema::ObjectType objectType);
+    schema::ObjectType GetObjectType() const;
 
-    virtual void AddReferenced(CaptureContext& captureContext) const = 0;
-    virtual void CaptureCreationParameters(CaptureContext& context) const = 0;
+    virtual MaybeError AddReferenced(CaptureContext& captureContext) const = 0;
+    virtual MaybeError CaptureCreationParameters(CaptureContext& context) = 0;
+
+    // This is called anytime a resource is used in the queue.
+    // If newResource is true this is the first time a resource has been seen
+    // during capture. The object should capture the contents unless it happens
+    // to know it's all zeros. Otherwise, it's up to that object to decide.
+    // For example a buffer will capture content if it's been mapped and written to
+    // since the last time this function was called. The default implementation does nothing.
+    virtual MaybeError CaptureContentIfNeeded(CaptureContext& context,
+                                              schema::ObjectId id,
+                                              bool newResource);
 
   private:
     schema::ObjectType mObjectType;

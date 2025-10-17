@@ -36,6 +36,8 @@
 #include "dawn/native/webgpu/CaptureContext.h"
 #include "dawn/native/webgpu/CommandBufferWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
+#include "dawn/native/webgpu/TextureWGPU.h"
+#include "dawn/native/webgpu/ToWGPU.h"
 #include "dawn/native/webgpu/WebGPUError.h"
 
 namespace dawn::native::webgpu {
@@ -55,13 +57,30 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
         return {};
     }
 
-    auto& wgpu = ToBackend(GetDevice())->wgpu;
+    if (IsCapturing()) {
+        std::vector<schema::ObjectId> commandBufferIds;
+        commandBufferIds.reserve(commandCount);
+
+        for (uint32_t i = 0; i < commandCount; ++i) {
+            schema::ObjectId id;
+            DAWN_TRY_ASSIGN(id, mCaptureContext->AddResourceAndGetId(commands[i]));
+            commandBufferIds.emplace_back(id);
+        }
+
+        schema::RootCommandQueueSubmitCmd cmd{{
+            .data = {{
+                .commandBuffers = commandBufferIds,
+            }},
+        }};
+        Serialize(*mCaptureContext, cmd);
+    }
 
     std::vector<WGPUCommandBuffer> innerCommandBuffers(commandCount);
     for (uint32_t i = 0; i < commandCount; ++i) {
         innerCommandBuffers[i] = ToBackend(commands[i])->Encode();
     }
 
+    auto& wgpu = ToBackend(GetDevice())->wgpu;
     wgpu.queueSubmit(mInnerHandle, commandCount, innerCommandBuffers.data());
 
     for (uint32_t i = 0; i < commandCount; ++i) {
@@ -72,18 +91,51 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
     return {};
 }
 
+CaptureContext* Queue::GetCaptureContext() const {
+    return mCaptureContext.get();
+}
+
 MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   uint64_t bufferOffset,
                                   const void* data,
                                   size_t size) {
     if (IsCapturing()) {
-        mCaptureContext->CaptureQueueWriteBuffer(buffer, bufferOffset, data, size);
+        DAWN_TRY(mCaptureContext->CaptureQueueWriteBuffer(buffer, bufferOffset, data, size));
     }
 
     auto innerBuffer = ToBackend(buffer)->GetInnerHandle();
     ToBackend(GetDevice())
         ->wgpu.queueWriteBuffer(mInnerHandle, innerBuffer, bufferOffset, data, size);
     buffer->MarkUsedInPendingCommands();
+
+    return {};
+}
+
+MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
+                                   const void* data,
+                                   size_t dataSize,
+                                   const TexelCopyBufferLayout& dataLayout,
+                                   const Extent3D& writeSizePixel) {
+    if (IsCapturing()) {
+        DAWN_TRY(mCaptureContext->CaptureQueueWriteTexture(destination, data, dataSize, dataLayout,
+                                                           writeSizePixel));
+    }
+
+    auto innerTexture = ToBackend(destination.texture)->GetInnerHandle();
+    WGPUTexelCopyTextureInfo dest = {
+        .texture = innerTexture,
+        .mipLevel = destination.mipLevel,
+        .origin = ToWGPU(destination.origin),
+        .aspect = ToAPI(destination.aspect),
+    };
+    WGPUTexelCopyBufferLayout layout = {
+        .offset = dataLayout.offset,
+        .bytesPerRow = dataLayout.bytesPerRow,
+        .rowsPerImage = dataLayout.rowsPerImage,
+    };
+    WGPUExtent3D writeSize = ToWGPU(writeSizePixel);
+    ToBackend(GetDevice())
+        ->wgpu.queueWriteTexture(mInnerHandle, &dest, data, dataSize, &layout, &writeSize);
 
     return {};
 }

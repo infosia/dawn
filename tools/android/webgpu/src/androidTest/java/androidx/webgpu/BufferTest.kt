@@ -24,7 +24,7 @@ class BufferTest {
                     mappedAtCreation = true
                 )
             ).apply {
-                getMappedRange(size = size)
+                val unused = getMappedRange(size = size)
             }
         }
     }
@@ -46,7 +46,7 @@ class BufferTest {
                         mappedAtCreation = false
                     )
                 ).apply {
-                    getMappedRange(size = size)
+                    val unused = getMappedRange(size = size)
                 }
             }
         }

@@ -30,9 +30,13 @@ public class DeviceLostException(
     public val device: Device, @DeviceLostReason public val reason: Int, message: String
 ) : Exception(message)
 
-public class UncapturedErrorException(
-    public val device: Device, @ErrorType public val type: Int, message: String
-) : Exception(message)
+public class ValidationException(public val device: Device, message: String) : Exception(message)
+
+public class OutOfMemoryException(public val device: Device, message: String) : Exception(message)
+
+public class InternalException(public val device: Device, message: String) : Exception(message)
+
+public class UnknownException(public val device: Device, message: String) : Exception(message)
 
 private const val POLLING_DELAY_MS = 100L
 
@@ -99,15 +103,16 @@ private suspend fun requestAdapter(
     instance: Instance,
     options: RequestAdapterOptions = RequestAdapterOptions(backendType = BackendType.Vulkan),
 ): Adapter {
-    val (status, adapter, message) = instance.requestAdapter(options)
-    check(status == RequestAdapterStatus.Success && adapter != null) {
-        message.ifEmpty { "Error requesting the adapter: $status" }
+    val result = instance.requestAdapter(options)
+    val adapter = result.adapter
+    check(result.status == RequestAdapterStatus.Success && adapter != null) {
+        result. message.ifEmpty { "Error requesting the adapter: $result.status" }
     }
     return adapter
 }
 
 private suspend fun requestDevice(adapter: Adapter, @FeatureName requiredFeatures: IntArray): Device {
-    val (status, device, message) =
+    val result =
         adapter.requestDevice(
             DeviceDescriptor(
                 requiredFeatures = requiredFeatures,
@@ -115,12 +120,20 @@ private suspend fun requestDevice(adapter: Adapter, @FeatureName requiredFeature
                                 throw DeviceLostException(device, reason, message)
                             },
                 uncapturedErrorCallback = { device, type, message ->
-                        throw UncapturedErrorException(device, type, message)
-                    },
+                    when (type) {
+                        ErrorType.NoError -> {} // NoError
+                        ErrorType.Validation -> throw ValidationException(device, message)
+                        ErrorType.OutOfMemory -> throw OutOfMemoryException(device, message)
+                        ErrorType.Internal -> throw InternalException(device, message)
+                        ErrorType.Unknown -> throw UnknownException(device, message)
+                        else -> throw UnknownException(device, message)
+                    }
+                },
             )
         )
-    check(status == RequestDeviceStatus.Success && device != null) {
-        message.ifEmpty { "Error requesting the device: $status" }
+    val device = result.device
+    check(result.status == RequestDeviceStatus.Success && device != null) {
+        result.message.ifEmpty { "Error requesting the device: $result.status" }
     }
     return device
 }

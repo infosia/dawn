@@ -33,6 +33,7 @@
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/native/webgpu/BindGroupWGPU.h"
 #include "dawn/native/webgpu/BufferWGPU.h"
+#include "dawn/native/webgpu/CaptureContext.h"
 #include "dawn/native/webgpu/ComputePipelineWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/RenderPipelineWGPU.h"
@@ -48,14 +49,15 @@ Ref<CommandBuffer> CommandBuffer::Create(CommandEncoder* encoder,
 }
 
 CommandBuffer::CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor)
-    : CommandBufferBase(encoder, descriptor) {}
+    : CommandBufferBase(encoder, descriptor), RecordableObject(schema::ObjectType::CommandBuffer) {}
 
 namespace {
 
 void EncodeComputePass(const DawnProcTable& wgpu,
                        WGPUCommandEncoder innerEncoder,
                        CommandIterator& commands,
-                       BeginComputePassCmd* computePassCmd) {
+                       BeginComputePassCmd* computePassCmd,
+                       const ComputePassResourceUsage& resourceUsages) {
     WGPUComputePassDescriptor passDescriptor{
         .nextInChain = nullptr,
         .label = ToOutputStringView(computePassCmd->label),
@@ -397,6 +399,52 @@ void EncodeRenderPass(const DawnProcTable& wgpu,
 
 }  // anonymous namespace
 
+MaybeError CommandBuffer::AddReferenced(CaptureContext& captureContext) const {
+    const auto& resourceUsages = GetResourceUsages();
+    for (auto buffer : resourceUsages.topLevelBuffers) {
+        DAWN_TRY(captureContext.AddResource(buffer));
+    }
+    for (const auto& pass : resourceUsages.renderPasses) {
+        for (auto buffer : pass.buffers) {
+            DAWN_TRY(captureContext.AddResource(buffer));
+        }
+    }
+    for (const auto& pass : resourceUsages.computePasses) {
+        for (auto buffer : pass.referencedBuffers) {
+            DAWN_TRY(captureContext.AddResource(buffer));
+        }
+    }
+    return {};
+}
+
+MaybeError CommandBuffer::CaptureCreationParameters(CaptureContext& captureContext) {
+    CommandIterator& commands = *GetCommandIteratorForTesting();
+
+    Command type;
+    while (commands.NextCommandId(&type)) {
+        switch (type) {
+            case Command::CopyBufferToBuffer: {
+                const auto& cmd = *commands.NextCommand<CopyBufferToBufferCmd>();
+                schema::EncoderCommandCopyBufferToBufferCmd data{{
+                    .data = {{
+                        .srcBufferId = captureContext.GetId(cmd.source.Get()),
+                        .srcOffset = cmd.sourceOffset,
+                        .dstBufferId = captureContext.GetId(cmd.destination.Get()),
+                        .dstOffset = cmd.destinationOffset,
+                        .size = cmd.size,
+                    }},
+                }};
+                Serialize(captureContext, data);
+                break;
+            }
+            default:
+                DAWN_UNREACHABLE();
+        }
+    }
+    Serialize(captureContext, schema::EncoderCommand::End);
+    return {};
+}
+
 WGPUCommandBuffer CommandBuffer::Encode() {
     auto& wgpu = ToBackend(GetDevice())->wgpu;
 
@@ -404,12 +452,16 @@ WGPUCommandBuffer CommandBuffer::Encode() {
     WGPUCommandEncoder innerEncoder =
         wgpu.deviceCreateCommandEncoder(ToBackend(GetDevice())->GetInnerHandle(), nullptr);
 
+    size_t nextComputePassNumber = 0;
+
     Command type;
     while (mCommands.NextCommandId(&type)) {
         switch (type) {
             case Command::BeginComputePass: {
                 BeginComputePassCmd* cmd = mCommands.NextCommand<BeginComputePassCmd>();
-                EncodeComputePass(wgpu, innerEncoder, mCommands, cmd);
+                EncodeComputePass(wgpu, innerEncoder, mCommands, cmd,
+                                  GetResourceUsages().computePasses[nextComputePassNumber]);
+                ++nextComputePassNumber;
                 break;
             }
             case Command::BeginRenderPass: {

@@ -59,8 +59,16 @@ import kotlin.coroutines.suspendCoroutine
                 {{ kotlin_annotation(arg) }}  {{ as_varName(arg.name) }}: {{ kotlin_definition(arg) }},
             {%- endfor %}): {{ return_name }} = suspendCoroutine {
                 //* Result is handled by the async callback; this assignment satisfies @CheckReturnValue.
+<<<<<<< HEAD   (5d3c1f10aeefc758128eff5684143f780102dba4 Fixed build warnings)
                 {{ method.name.camelCase() }}(
                     {%- for arg in method.arguments %}
+||||||| BASE   (49b39c02c939dfffd9efdac1630e358bc006d702 [dawn] Remove typedefs for renames of structures.)
+                val unused = {{ method.name.camelCase() }}(
+                    {%- for arg in method.arguments %}
+=======
+                val unused = {{ method.name.camelCase() }}(
+                    {%- for arg in kotlin_record_members(method.arguments) %}
+>>>>>>> BRANCH (870574208ecd04e4a8953411401397c7378f73a5 [dawn][d3d11] Remove STMD3D11Texture2DDescriptor::requiresEn)
                         {%- if as_varName(arg.name) == 'callbackInfo' %}
                             {{- as_varName(arg.name).removesuffix("Info")}}
                         {%- else %}

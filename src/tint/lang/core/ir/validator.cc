@@ -2126,9 +2126,8 @@ void Validator::CheckType(const core::type::Type* root,
                     cur_offset += padding + member->MinimumRequiredSize();
                 }
 
-                int32_t padding = int32_t(str->Size() - cur_offset);
-                TINT_ASSERT(padding >= 0);
-
+                TINT_ASSERT(str->Size() >= cur_offset);
+                auto padding = str->Size() - cur_offset;
                 if (padding >= internal_limits::kMaxStructMemberPadding) {
                     diag() << "struct padding (" << padding << ") is larger then the max ("
                            << internal_limits::kMaxStructMemberPadding << ")";
@@ -4253,6 +4252,9 @@ void Validator::CheckSwitch(const Switch* s) {
 
         for (const auto& sel : cse.selectors) {
             if (sel.IsDefault()) {
+                if (found_default) {
+                    AddError(s) << "multiple default selectors in switch";
+                }
                 found_default = true;
             }
         }
@@ -4356,13 +4358,13 @@ void Validator::CheckBreakIf(const BreakIf* b) {
 
     auto next_iter_values = b->NextIterValues();
     if (auto* body = loop->Body()) {
-        CheckOperandsMatchTarget(b, b->ArgsOperandOffset(), next_iter_values.Length(), body,
+        CheckOperandsMatchTarget(b, b->ArgsOperandOffset(), next_iter_values.size(), body,
                                  body->Params());
     }
 
     auto exit_values = b->ExitValues();
-    CheckOperandsMatchTarget(b, b->ArgsOperandOffset() + next_iter_values.Length(),
-                             exit_values.Length(), loop, loop->Results());
+    CheckOperandsMatchTarget(b, b->ArgsOperandOffset() + next_iter_values.size(),
+                             exit_values.size(), loop, loop->Results());
 }
 
 void Validator::CheckContinue(const Continue* c) {
