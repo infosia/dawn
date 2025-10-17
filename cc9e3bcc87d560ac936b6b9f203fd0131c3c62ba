@@ -143,6 +143,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d127dc02_2fe7f56f",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-17T20:15:28Z",
+      "side": 1,
+      "message": "\u0027memebers\u0027 argument in define_kotlin_to_struct_conversion which has 2 callbackinfo s. If this wasn\u0027t the case find_by_name(by_category[\"callback info\"], ...) would have worked.",
+      "parentUuid": "a18854fa_d92f9b71",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "cc9e3bcc87d560ac936b6b9f203fd0131c3c62ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b738dc11_7709204e",
