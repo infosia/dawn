@@ -33,6 +33,24 @@
       "message": "I think we should actually just delete the `CheckType()` call here instead. The check below covers all of the valid subgroup matrix element types, so we don\u0027t need to do anything else to validate the type here.",
       "revId": "69b9c47920454959bb6a2acc952811e8c4d4e0fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac569caf_a0f51207",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2323,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-10-17T01:57:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b31faff5_18b8b4a9",
+      "revId": "69b9c47920454959bb6a2acc952811e8c4d4e0fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
