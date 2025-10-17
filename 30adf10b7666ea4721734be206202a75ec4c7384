@@ -16,6 +16,23 @@
       "message": "Note: There\u0027s an interesting difference between the for loops that have a condition clause vs. those that don\u0027t.\n\nA for loop without a condition should desugar to a loop that doesn\u0027t have an initial if-not-condition-break clause. I filed https://github.com/gpuweb/gpuweb/issues/5397 to clarify this in the spec.",
       "revId": "30adf10b7666ea4721734be206202a75ec4c7384",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15990f7b_15526c2e",
+        "filename": "src/tint/lang/wgsl/resolver/uniformity_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1566,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-10-17T22:05:56Z",
+      "side": 1,
+      "message": "this part needs the desugaring clarification in https://github.com/gpuweb/gpuweb/pull/5398",
+      "revId": "30adf10b7666ea4721734be206202a75ec4c7384",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
