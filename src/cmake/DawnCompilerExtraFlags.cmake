@@ -45,6 +45,7 @@ function(common_compile_options target)
     target_compile_options(${target}
       PRIVATE
         "-fno-exceptions"
+        "-fno-rtti"
 
         "-Wno-assume"
         "-Wno-deprecated-builtins"
@@ -52,9 +53,6 @@ function(common_compile_options target)
         "-Wno-switch-default"
         "-Wno-nrvo"
     )
-    if (NOT DAWN_ENABLE_RTTI)
-      target_compile_options(${target} PRIVATE "-fno-rtti")
-    endif()
     if (${DAWN_WERROR})
       target_compile_options(${target}
         PRIVATE "-Werror")
@@ -99,7 +97,16 @@ function(common_compile_options target)
     if (${DAWN_ENABLE_UBSAN})
       list(APPEND SANITIZER_OPTIONS
         "-fsanitize=undefined"
-        "-fsanitize=float-divide-by-zero")
+        # Tweaks to the default UB sanitizers. See //build/config/sanitizers/BUILD.gn for GN config.
+        # - Make sure the vptr sanitizer is disabled - older Clang versions enable it by default.
+        #   GN enables it by default, but it fails on our CMake bots (probably buggy Clang version).
+        #   See https://dawn-review.googlesource.com/q/I505c99ba1c0a8a06c0bdaad0d877992dbd2cff72
+        "-fno-sanitize=vptr"
+        # - float-divide-by-zero (see https://dawn-review.googlesource.com/125380) is not used in
+        #   GN, as //build assumes IEEE754. We could replace this with static_asserts on is_iec559,
+        #   but it still might be useful. This should eventually removed in CMake or added in GN.
+        "-fsanitize=float-divide-by-zero"
+      )
     endif ()
     if (SANITIZER_OPTIONS)
       target_compile_options(${target}
