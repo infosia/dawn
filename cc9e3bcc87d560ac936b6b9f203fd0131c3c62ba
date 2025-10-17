@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b341fe87_136c2367",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-17T08:09:16Z",
+      "side": 1,
+      "message": "Removed the helper. Discussing on the next comment on the clean implementation.\nResolving this.",
+      "parentUuid": "196dff19_635f5d21",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "cc9e3bcc87d560ac936b6b9f203fd0131c3c62ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "09adcc83_11465271",
@@ -73,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "94d03f47_78f61df0",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-17T08:09:16Z",
+      "side": 1,
+      "message": "The goal is to find the \u0027callback info\u0027 member that corresponds to the \u0027callback\u0027 member, and then check if that \u0027callback info\u0027 member has a \u0027mode\u0027 member.\n\nWe can use find_by_name to determine if a member has \u0027mode\u0027 or \u0027callback\u0027, but I don\u0027t think we have any utility function to find the corresponding \u0027callback info\u0027 from a \u0027callback\u0027 member.",
+      "parentUuid": "85365151_eb7b3bad",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "cc9e3bcc87d560ac936b6b9f203fd0131c3c62ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b738dc11_7709204e",
         "filename": "generator/templates/art/kotlin_record_conversion.cpp",
         "patchSetId": 6
@@ -84,6 +132,30 @@
       "writtenOn": "2025-10-16T19:56:15Z",
       "side": 1,
       "message": "[1]",
+      "range": {
+        "startLine": 93,
+        "startChar": 28,
+        "endLine": 93,
+        "endChar": 90
+      },
+      "revId": "cc9e3bcc87d560ac936b6b9f203fd0131c3c62ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e44a8e3a_515054fb",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-17T08:09:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b738dc11_7709204e",
       "range": {
         "startLine": 93,
         "startChar": 28,
