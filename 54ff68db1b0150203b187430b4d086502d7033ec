@@ -16,6 +16,23 @@
       "message": "Corentin for the Dawn changes again, pretty much the same as the Vulkan CL.",
       "revId": "54ff68db1b0150203b187430b4d086502d7033ec",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8121086a_42e0e9a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-17T09:24:51Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "54ff68db1b0150203b187430b4d086502d7033ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
