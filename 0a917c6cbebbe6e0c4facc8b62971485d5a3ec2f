@@ -51,6 +51,24 @@
       "parentUuid": "c80e5bfd_805bf9ac",
       "revId": "0a917c6cbebbe6e0c4facc8b62971485d5a3ec2f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d81e108_dbd25654",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4374400
+      },
+      "writtenOn": "2025-10-17T06:08:02Z",
+      "side": 1,
+      "message": "Added the fix for the google3 test as well.",
+      "parentUuid": "92120f2d_3211c8ce",
+      "revId": "0a917c6cbebbe6e0c4facc8b62971485d5a3ec2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
