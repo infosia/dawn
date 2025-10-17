@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <algorithm>
 #include <numeric>
 #include <string>
 #include <vector>
@@ -2732,6 +2733,111 @@ fn main(@builtin(local_invocation_id) lid : vec3<u32>) {
   }
 }
 )");
+}
+
+// Test coverage for a uniform buffer indexing bug on Qualcomm devices.
+// See crbug.com/452350626.
+TEST_P(ShaderTests, LargeUBOVectorIndexing) {
+    wgpu::ShaderModule csModule = utils::CreateShaderModule(device, R"(
+struct Input {
+  vector_index: u32,
+  component_index: u32,
+  // The buffer declared in the shader has to be large to trigger the bug.
+  data: array<vec4u, 500>,
+}
+@group(0) @binding(0) var<uniform>              input: Input;
+@group(0) @binding(1) var<storage, read_write> output: u32;
+
+@compute @workgroup_size(1)
+fn csMain() {
+  // The indexes have to be non-constant to trigger the bug.
+  output = input.data[input.vector_index][input.component_index];
+}
+)");
+
+    wgpu::ComputePipelineDescriptor pipelineDescriptor;
+    pipelineDescriptor.compute.module = csModule;
+    wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&pipelineDescriptor);
+
+    std::vector<uint32_t> bufferData(4096);
+    bufferData[0] = 0;  // vector_index
+    bufferData[1] = 1;  // component_index
+    // Data starts here. data[0][1] should produce `42`.
+    bufferData[4] = 100;
+    bufferData[5] = 42;
+    bufferData[6] = 102;
+    bufferData[7] = 103;
+
+    wgpu::Buffer inputBuffer =
+        utils::CreateBufferFromData(device, bufferData.data(), bufferData.size() * sizeof(uint32_t),
+                                    wgpu::BufferUsage::Uniform);
+    wgpu::Buffer outputBuffer = CreateBuffer(sizeof(uint32_t));
+
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {
+                                                         {0, inputBuffer},
+                                                         {1, outputBuffer},
+                                                     });
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+    pass.SetBindGroup(0, bindGroup);
+    pass.SetPipeline(pipeline);
+    pass.DispatchWorkgroups(1);
+    pass.End();
+
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    EXPECT_BUFFER_U32_EQ(42u, outputBuffer, 0);
+}
+
+TEST_P(ShaderTests, CopyStructCompute) {
+    // Qualcom devices appear to have an issue with these type of offset access loads and stores.
+    // This was not reproduced on any device on the farm.
+    // See crbug.com/422939265
+
+    // Fails for Compat on HLSL deep in Angle.
+    // See crbug.com/452661482
+    DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode() && IsWindows());
+
+    std::string shader = R"(
+        struct Item {
+          vec: vec3u,
+          num: u32,
+        }
+
+        @group(0) @binding(0) var<storage, read> sourceBuffer: Item;
+        @group(0) @binding(1) var<storage, read_write> targetBuffer: Item;
+
+        @compute @workgroup_size(1) fn main() {
+          var item = sourceBuffer;
+          targetBuffer = item;
+        }
+    )";
+
+    wgpu::ComputePipeline pipeline = CreateComputePipeline(shader, "main");
+
+    std::vector<uint32_t> inputData = {1, 3, 5, 7};
+
+    wgpu::Buffer inputBuffer = utils::CreateBufferFromData(
+        device, inputData.data(), inputData.size() * sizeof(uint32_t), wgpu::BufferUsage::Storage);
+    wgpu::Buffer outputBuffer = CreateBuffer(sizeof(uint32_t));
+
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {{0, inputBuffer}, {1, outputBuffer}});
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+    pass.SetPipeline(pipeline);
+    pass.SetBindGroup(0, bindGroup);
+    pass.DispatchWorkgroups(1);
+    pass.End();
+
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    EXPECT_BUFFER_U32_RANGE_EQ(inputData.data(), outputBuffer, 0, inputData.size());
 }
 
 DAWN_INSTANTIATE_TEST(ShaderTests,

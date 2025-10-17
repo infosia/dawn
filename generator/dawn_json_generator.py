@@ -31,6 +31,7 @@ from collections import namedtuple, defaultdict
 from copy import deepcopy
 
 from generator_lib import Generator, run_generator, FileRender, GeneratorOutput
+from dawn_json_utility import build_doc_map, load_json_data
 
 ############################################################
 # OBJECT MODEL
@@ -419,13 +420,6 @@ class StructureType(Record, Type):
         return any(member.requires_struct_defaulting
                    for member in self.members)
 
-    @property
-    # Returns True if the structure can be created with no parameters, e.g. all of its members have
-    # defaults or are optional,
-    def has_basic_constructor(self):
-        return all((member.optional or member.default_value
-                    or member.type.hasUndefined) for member in self.members)
-
 
 class CallbackInfoType(StructureType):
     def __init__(self, is_enabled, name, json_data):
@@ -707,6 +701,7 @@ def compute_wire_params(api_params, wire_json):
 
     commands = []
     return_commands = []
+    special_commands = []
 
     wire_json['special items']['client_handwritten_commands'] += wire_json[
         'special items']['client_side_commands']
@@ -772,9 +767,14 @@ def compute_wire_params(api_params, wire_json):
         return_commands.append(
             Command(name, linked_record_members(json_data, types)))
 
+    for (name, json_data) in wire_json['special commands'].items():
+        special_commands.append(
+            Command(name, linked_record_members(json_data, types)))
+
     wire_params['cmd_records'] = {
         'command': commands,
-        'return command': return_commands
+        'return command': return_commands,
+        'special command': special_commands
     }
 
     for commands in wire_params['cmd_records'].values():
@@ -792,7 +792,7 @@ def compute_wire_params(api_params, wire_json):
 ############################################################
 
 
-def compute_kotlin_params(loaded_json, kotlin_json):
+def compute_kotlin_params(loaded_json, kotlin_json, webgpu_json_data=None):
     params_kotlin = parse_json(loaded_json, enabled_tags=['art'])
     params_kotlin['kotlin_package'] = kotlin_json['kotlin_package']
     params_kotlin['jni_primitives'] = kotlin_json['jni_primitives']
@@ -800,15 +800,10 @@ def compute_kotlin_params(loaded_json, kotlin_json):
     kt_file_path = params_kotlin['kotlin_package'].replace('.', '/')
 
     def kotlin_record_members(members):
-        for member in members:
-            # Partially inline away 'callback info'.
+        # Members are sorted so that those with default parameters appear after those without.
+        for member in sorted(members,
+                             key=lambda arg: kotlin_default(arg) is not None):
             if member.type.category == 'callback info':
-                for callback_info_member in member.type.members:
-                    if callback_info_member.type.category == 'callback function':
-                        function_member = deepcopy(callback_info_member)
-                        function_member.name = Name(
-                            member.name.get().removesuffix(' info'))
-                        yield function_member
                 continue
 
             # length parameters are omitted because Kotlin containers have 'length'.
@@ -825,6 +820,95 @@ def compute_kotlin_params(loaded_json, kotlin_json):
                 continue
 
             yield member
+
+        # Callbacks appear at the end of the list.
+        for member in members:
+            # Partially inline away 'callback info'.
+            if member.type.category == 'callback info':
+                for callback_info_member in member.type.members:
+                    if callback_info_member.type.category == 'callback function':
+                        function_member = deepcopy(callback_info_member)
+                        function_member.name = Name(
+                            member.name.get().removesuffix(' info'))
+                        yield function_member
+
+    # Calculate if we should, and can, provide a Kotlin default value for a given argument.
+    # This will affect its order in the method parameter and structure field lists.
+    def kotlin_default(arg):
+        # Optional and non-optional container parameters are defaulted to empty containers to match
+        # the behavior of the JavaScript API.
+        if arg.length and arg.length != 'constant' and arg.type.name.get(
+        ) != 'void':
+            if arg.type.category in [
+                    'callback function', 'callback info', 'function pointer',
+                    'object', 'structure'
+            ]:
+                return 'arrayOf()'
+            return 'intArrayOf()'
+
+        # All other optional types default to 'null'.
+        if arg.optional:
+            return 'null'
+
+        # Non-optional structures are defaulted to a defaulted structure if we can construct one.
+        # This is to match the behavior of the JavaScript API which lets clients pass undefined
+        # structure values even for non-optional fields.
+        if arg.type.category in [
+                'structure', 'callback info'
+        ] and arg.type.name.get() != 'string view' and all(
+                kotlin_default(member) is not None
+                for member in arg.type.members):
+            constructor_args = []
+            # default_value = zero is a special defaulting variation from C we have to emulate.
+            if arg.default_value == 'zero':
+                constructor_args = [
+                    f"{member.name.camelCase()} = {member.type.name.CamelCase()}.{as_ktName(value.name.CamelCase())}"
+                    for member in kotlin_record_members(arg.type.members)
+                    if member.type.category in ['bitmask', 'enum']
+                    for value in member.type.values if value.value == 0
+                ]
+            return f"{arg.type.name.CamelCase()}({', '.join(constructor_args)})"
+
+        # For bitmasks/enums we insert the full type of the default. No default value doesn't mean
+        # no default in the bindings, because it should match the bitmask/enum labeled 'undefined'.
+        if arg.type.category in ['bitmask', 'enum']:
+            for value in arg.type.values:
+                if value.name.name == (arg.default_value or 'undefined'):
+                    return f"{arg.type.name.CamelCase()}.{as_ktName(value.name.CamelCase())}"
+            return arg.default_value
+
+        # Everything remaining requires a default value in the dawn.json.
+        if arg.default_value in [None, 'nullptr']:
+            return None
+
+        if arg.type.category == 'native':
+            # Is this a Dawn named constant that can be matched with the global definition?
+            constant = find_by_name(by_category["constant"], arg.default_value)
+            if constant:
+                return 'Constants.' + as_ktName(constant.name.SNAKE_CASE())
+
+            # Convert double/floats to the Kotlin format.
+            if arg.type.name.get() in ['double', 'float']:
+                return "%.1ff" % float(arg.default_value.rstrip('fF'))
+
+            # Java doesn't have unsigned 32 bit / 64 bit variables so the cleanest workaround is
+            # to insert the bitwise equivalent of a signed number.
+            if arg.type.name.get() in ['int', 'int32_t', 'uint32_t'
+                                       ] and arg.default_value == '0xFFFFFFFF':
+                return '-0x7FFFFFFF'
+            if arg.type.name.get() in [
+                    'int64_t', 'uint64_t', 'size_t'
+            ] and arg.default_value == '0xFFFFFFFFFFFFFFFF':
+                return '-0x7FFFFFFFFFFFFFFF'
+
+            # In all remaining cases the default as specified in dawn.json will work verbatim in
+            # Kotlin.
+            return arg.default_value
+
+        unreachable_code(
+            f"no logic to default '{arg.type.name.get()}' in category '{arg.type.category}'"
+        )
+        return None
 
     def kotlin_return(method):
         for argument in method.arguments:
@@ -873,7 +957,17 @@ def compute_kotlin_params(loaded_json, kotlin_json):
     for structure in by_category['structure']:
         for chain_root in structure.chain_roots:
             chain_children[chain_root.name.get()].append(structure)
+
+    kdocs_params = {
+        'language': 'kotlin',
+        'kdocs_blocklist': kotlin_json['kdocs_blocklist'],
+        'kdocs_replacements': kotlin_json['kdocs_replacements'],
+    }
+    params_kotlin['kdocs'] = build_doc_map(by_category=by_category,
+                                           json_data=webgpu_json_data,
+                                           params=kdocs_params)
     params_kotlin['chain_children'] = chain_children
+    params_kotlin['kotlin_default'] = kotlin_default
     params_kotlin['kotlin_return'] = kotlin_return
     params_kotlin['include_method'] = include_method
     params_kotlin['include_structure'] = include_structure
@@ -1217,6 +1311,10 @@ class MultiGeneratorFromDawnJSON(Generator):
                             default=None,
                             type=str,
                             help='The KOTLIN JSON definition to use.')
+        parser.add_argument('--webgpu-json',
+                            default=None,
+                            type=str,
+                            help='The WebGPU API documentation to use.')
         parser.add_argument(
             '--targets',
             required=True,
@@ -1240,6 +1338,10 @@ class MultiGeneratorFromDawnJSON(Generator):
         if args.kotlin_json:
             with open(args.kotlin_json) as f:
                 kotlin_json = json.loads(f.read())
+
+        webgpu_json_data = None
+        if args.webgpu_json:
+            webgpu_json_data = load_json_data(args.webgpu_json)
 
         renders = []
         imported_templates = []
@@ -1583,7 +1685,8 @@ class MultiGeneratorFromDawnJSON(Generator):
                            wire_params))
 
         if 'kotlin' in targets:
-            params_kotlin = compute_kotlin_params(loaded_json, kotlin_json)
+            params_kotlin = compute_kotlin_params(loaded_json, kotlin_json,
+                                                  webgpu_json_data)
             kt_file_path = params_kotlin['kotlin_package'].replace('.', '/')
             jni_name = params_kotlin['jni_name']
 
@@ -1644,7 +1747,8 @@ class MultiGeneratorFromDawnJSON(Generator):
                            [RENDER_PARAMS_BASE, params_kotlin]))
 
         if "jni" in targets:
-            params_kotlin = compute_kotlin_params(loaded_json, kotlin_json)
+            params_kotlin = compute_kotlin_params(loaded_json, kotlin_json,
+                                                  webgpu_json_data)
 
             imported_templates += [
                 "art/api_jni_types.cpp",

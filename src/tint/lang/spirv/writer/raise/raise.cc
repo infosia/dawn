@@ -43,6 +43,7 @@
 #include "src/tint/lang/core/ir/transform/prepare_immediate_data.h"
 #include "src/tint/lang/core/ir/transform/preserve_padding.h"
 #include "src/tint/lang/core/ir/transform/prevent_infinite_loops.h"
+#include "src/tint/lang/core/ir/transform/remove_uniform_vector_component_loads.h"
 #include "src/tint/lang/core/ir/transform/resource_binding.h"
 #include "src/tint/lang/core/ir/transform/robustness.h"
 #include "src/tint/lang/core/ir/transform/signed_integer_polyfill.h"
@@ -180,6 +181,10 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     // We run this transform as some Qualcomm drivers struggle with partial access chains that
     // produce pointers to matrices.
     RUN_TRANSFORM(core::ir::transform::CombineAccessInstructions, module);
+
+    // RemoveUniformVectorComponentLoads is used to work around a Qualcomm driver bug.
+    // See crbug.com/452350626.
+    RUN_TRANSFORM(core::ir::transform::RemoveUniformVectorComponentLoads, module);
 
     if (!options.use_demote_to_helper_invocation_extensions) {
         // DemoteToHelper must come before any transform that introduces non-core instructions.

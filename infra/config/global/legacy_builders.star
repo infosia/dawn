@@ -397,13 +397,21 @@ def dawn_cmake_standalone_builder(name, clang, debug, cpu, asan, ubsan, experime
         builder = "try/" + name,
     )
 
-    # Only add CQ verifiers for non-ASAN and non-UBSAN bots to minimize CQ load.
+    # Only automatically add CQ verifiers for non-ASAN and non-UBSAN bots to
+    # minimize CQ load.
     if not asan and not ubsan:
         luci.cq_tryjob_verifier(
             experiment_percentage = 100 if experimental else None,
             cq_group = "Dawn-CQ",
             builder = "dawn:try/" + name,
             location_filters = exclusion_filters.cmake_cq_file_exclusions,
+        )
+    else:
+        luci.cq_tryjob_verifier(
+            experiment_percentage = 100 if experimental else None,
+            cq_group = "Dawn-CQ",
+            builder = "dawn:try/" + name,
+            includable_only = True,
         )
 
     # These builders run fine unbranched on branch CLs, so add them to the
@@ -601,9 +609,11 @@ luci.console_view_entry(
 #   * dawn-cq-win-x64-rel
 # * win-clang-rel-x86
 #   * dawn-cq-win-x86-rel
+# * win-msvc-dbg-x64
+#   * dawn-cq-win-x64-msvc-dbg
+# * win-msvc-rel-x64
+#   * dawn-cq-win-x64-msvc-rel
 
-dawn_standalone_builder("win-msvc-dbg-x64", clang = False, debug = True, cpu = "x64", fuzzer = False)
-dawn_standalone_builder("win-msvc-rel-x64", clang = False, debug = False, cpu = "x64", fuzzer = False)
 dawn_standalone_builder("cron-linux-clang-rel-x64", clang = True, debug = False, cpu = "x64", fuzzer = True)
 
 dawn_cmake_standalone_builder("cmake-linux-clang-dbg-x64", clang = True, debug = True, cpu = "x64", asan = False, ubsan = False)

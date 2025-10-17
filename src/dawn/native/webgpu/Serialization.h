@@ -20,6 +20,7 @@
 #include <cstdint>
 #include <string>
 #include <type_traits>
+#include <vector>
 
 #include "dawn/native/Error.h"
 
@@ -40,6 +41,14 @@ void Serialize(CaptureContext& context, T v)
              !std::is_same_v<T, uint32_t>)
 {
     WriteBytes(context, reinterpret_cast<const char*>(&v), sizeof(v));
+}
+
+template <typename T>
+void Serialize(CaptureContext& context, const std::vector<T>& v) {
+    Serialize(context, v.size());
+    for (const auto& elem : v) {
+        Serialize(context, elem);
+    }
 }
 
 // Serialize for enum types with uint32_t or uint64_t underlying type.
@@ -123,21 +132,30 @@ constexpr int kInternalVisitableUnusedForComma = 0;
     };                                                     \
     qualifier Name : Name##__Contents, public Serializable<Name>
 
+// Makes both a CmdData and a Cmd struct for a given command name.
+#define DAWN_REPLAY_MAKE_CMD_AND_CMD_DATA(CmdType, CmdName, CMD_MEMBERS)               \
+    DAWN_REPLAY_SERIALIZABLE(struct, CmdType##CmdName##CmdData, CMD_MEMBERS){};        \
+                                                                                       \
+    struct CmdType##CmdName##Cmd##__Contents {                                         \
+        DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL(CmdType, command, CmdType::CmdName) \
+        DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL(CmdType##CmdName##CmdData, data)    \
+                                                                                       \
+        template <typename V>                                                          \
+        constexpr auto VisitAll(V&& visit) const {                                     \
+            return [&](int, const auto&... ms) { return visit(ms...); }(               \
+                       kInternalVisitableUnusedForComma, command, data);               \
+        }                                                                              \
+    };                                                                                 \
+    struct CmdType##CmdName##Cmd : CmdType##CmdName##Cmd##__Contents,                  \
+                                   public Serializable<CmdType##CmdName##Cmd>
+
+// Makes both a CmdData and a Cmd struct for a given encoder command name.
+#define DAWN_REPLAY_MAKE_ENCODER_CMD_AND_CMD_DATA(CmdName, CMD_MEMBERS) \
+    DAWN_REPLAY_MAKE_CMD_AND_CMD_DATA(EncoderCommand, CmdName, CMD_MEMBERS)
+
 // Makes both a CmdData and a Cmd struct for a given root command name.
-#define DAWN_REPLAY_MAKE_ROOT_CMD_AND_CMD_DATA(CmdName, CMD_MEMBERS)                           \
-    DAWN_REPLAY_SERIALIZABLE(struct, CmdName##CmdData, CMD_MEMBERS){};                         \
-                                                                                               \
-    struct CmdName##Cmd##__Contents {                                                          \
-        DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL(RootCommand, command, RootCommand::CmdName) \
-        DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL(CmdName##CmdData, data)                     \
-                                                                                               \
-        template <typename V>                                                                  \
-        constexpr auto VisitAll(V&& visit) const {                                             \
-            return [&](int, const auto&... ms) { return visit(ms...); }(                       \
-                       kInternalVisitableUnusedForComma, command, data);                       \
-        }                                                                                      \
-    };                                                                                         \
-    struct CmdName##Cmd : CmdName##Cmd##__Contents, public Serializable<CmdName##Cmd>
+#define DAWN_REPLAY_MAKE_ROOT_CMD_AND_CMD_DATA(CmdName, CMD_MEMBERS) \
+    DAWN_REPLAY_MAKE_CMD_AND_CMD_DATA(RootCommand, CmdName, CMD_MEMBERS)
 
 #include "dawn/serialization/Schema.h"
 
