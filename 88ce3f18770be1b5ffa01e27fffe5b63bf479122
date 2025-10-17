@@ -137,6 +137,24 @@
       "message": "I\u0027ve been discussing how to verify that things don\u0027t break in ClusterFuzz as a result of this in b/450879928, I think we have a reasonable enough solution now.\n\nSo, I\u0027ve paused the old builder and will be landing this. Hopefully everything looks good over the weekend.",
       "revId": "88ce3f18770be1b5ffa01e27fffe5b63bf479122",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e19c3a08_7eacca1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-17T17:27:39Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0709a1c8_117a20e1",
+      "revId": "88ce3f18770be1b5ffa01e27fffe5b63bf479122",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
