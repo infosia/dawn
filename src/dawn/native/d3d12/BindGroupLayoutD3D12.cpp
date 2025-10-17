@@ -143,13 +143,18 @@ BindGroupLayout::BindGroupLayout(Device* device,
             continue;
         }
 
+        const bool isDynamic = bindingIndex < GetDynamicBufferCount();
+        const bool isStorageBuffer = std::holds_alternative<BufferBindingInfo>(bindingInfo.bindingLayout) && std::get<BufferBindingInfo>(bindingInfo.bindingLayout).type == wgpu::BufferBindingType::Storage;
+
         // For dynamic resources, Dawn uses root descriptor in D3D12 backend. So there is no
         // need to allocate the descriptor from descriptor heap or create descriptor ranges.
-        if (bindingIndex < GetDynamicBufferCount()) {
+        if (isDynamic 
+        // AMAIORANO: Maybe we should split BindingTypeOrder_DynamicBuffer into BindingTypeOrder_DynamicUniformBuffer and BindingTypeOrder_DynamicStorageBuffer
+        && !isStorageBuffer) {
             continue;
         }
-        DAWN_ASSERT(!std::holds_alternative<BufferBindingInfo>(bindingInfo.bindingLayout) ||
-                    !std::get<BufferBindingInfo>(bindingInfo.bindingLayout).hasDynamicOffset);
+        // DAWN_ASSERT(!std::holds_alternative<BufferBindingInfo>(bindingInfo.bindingLayout) ||
+        //             !std::get<BufferBindingInfo>(bindingInfo.bindingLayout).hasDynamicOffset);
 
         mDescriptorHeapOffsets[bindingIndex] =
             descriptorRangeType == D3D12_DESCRIPTOR_RANGE_TYPE_SAMPLER
@@ -181,6 +186,11 @@ BindGroupLayout::BindGroupLayout(Device* device,
                 return D3D12_DESCRIPTOR_RANGE_FLAG_NONE;
             },
             [&](const BufferBindingInfo&) -> D3D12_DESCRIPTOR_RANGE_FLAGS {
+                // For dynamic storage buffers, the descriptor will be dynamically updated via setBindGroup, so we must mark the descriptor as DESCRIPTORS_VOLATILE.
+                // if (isDynamic) {
+                //     return /*D3D12_DESCRIPTOR_RANGE_FLAG_DESCRIPTORS_VOLATILE |*/ D3D12_DESCRIPTOR_RANGE_FLAG_DATA_VOLATILE;
+                // }
+
                 // In Dawn it's allowed to do state transitions on the buffers or textures after
                 // binding them on the current command list, which indicates a change to its data
                 // (or possibly resource metadata), so we cannot bind them as DATA_STATIC. We cannot

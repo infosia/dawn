@@ -65,6 +65,10 @@ class PipelineLayout final : public PipelineLayoutBase {
     uint32_t GetDynamicStorageBufferLengthsShaderRegister() const;
     uint32_t GetDynamicStorageBufferLengthsParameterIndex() const;
 
+    uint32_t GetDynamicStorageBufferOffsetsRegisterSpace() const;
+    uint32_t GetDynamicStorageBufferOffsetsShaderRegister() const;
+    uint32_t GetDynamicStorageBufferOffsetsParameterIndex() const;
+
     uint32_t GetImmediatesRegisterSpace() const;
     uint32_t GetImmediatesShaderRegister() const;
     uint32_t GetImmediatesParameterIndex() const;
@@ -79,10 +83,10 @@ class PipelineLayout final : public PipelineLayoutBase {
 
     ID3D12CommandSignature* GetDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets();
 
-    struct BindGroupDynamicStorageBufferLengthInfo {
-        // First register offset for a bind group's dynamic storage buffer lengths.
+    struct BindGroupDynamicStorageBufferInfo {
+        // First register offset for a bind group's dynamic storage buffer lengths or offsets.
         // This is the index into the array of root constants where this bind group's
-        // lengths start.
+        // lengths or offsets start.
         uint32_t firstRegisterOffset;
 
         struct BindingAndRegisterOffset {
@@ -91,15 +95,21 @@ class PipelineLayout final : public PipelineLayoutBase {
         };
         // Associative list of (BindingNumber,registerOffset) pairs, which is passed into
         // the shader to map the BindingPoint(thisGroup, BindingNumber) to the registerOffset
-        // into the root constant array which holds the dynamic storage buffer lengths.
+        // into the root constant array which holds the dynamic storage buffer lengths/offsets.
         std::vector<BindingAndRegisterOffset> bindingAndRegisterOffsets;
     };
 
     // Flat map from bind group index to the list of (BindingNumber,Register) pairs.
-    // Each pair is used in shader translation to
-    using DynamicStorageBufferLengthInfo = PerBindGroup<BindGroupDynamicStorageBufferLengthInfo>;
+    // using DynamicStorageBufferLengthInfo = PerBindGroup<BindGroupDynamicStorageBufferInfo>;
+    // using DynamicStorageBufferOffsetInfo = PerBindGroup<BindGroupDynamicStorageBufferInfo>;
 
-    const DynamicStorageBufferLengthInfo& GetDynamicStorageBufferLengthInfo() const;
+    // const DynamicStorageBufferLengthInfo& GetDynamicStorageBufferLengthInfo() const;
+    // const DynamicStorageBufferOffsetInfo& GetDynamicStorageBufferOffsetInfo() const;
+
+    // Flat map from bind group index to the list of (BindingNumber,Register) pairs.
+    using DynamicStorageBufferInfo = PerBindGroup<BindGroupDynamicStorageBufferInfo>;
+
+    const DynamicStorageBufferInfo& GetDynamicStorageBufferInfo() const;
 
   private:
     ~PipelineLayout() override = default;
@@ -109,11 +119,14 @@ class PipelineLayout final : public PipelineLayoutBase {
 
     PerBindGroup<uint32_t> mCbvUavSrvRootParameterInfo;
     PerBindGroup<uint32_t> mSamplerRootParameterInfo;
-    PerBindGroup<ityp::vector<BindingIndex, uint32_t>> mDynamicRootParameterIndices;
-    DynamicStorageBufferLengthInfo mDynamicStorageBufferLengthInfo;
+    PerBindGroup<ityp::vector<BindingIndex, uint32_t>> mDynamicRootParameterIndices; // AMAIROANO: rename to mDynamicUniformRootParamterIndices?
+    // DynamicStorageBufferLengthInfo mDynamicStorageBufferLengthInfo;
+    // DynamicStorageBufferOffsetsInfo mDynamicStorageBufferOffsetInfo;
+    DynamicStorageBufferInfo mDynamicStorageBufferInfo;
     uint32_t mFirstIndexOffsetParameterIndex;
     uint32_t mNumWorkgroupsParameterIndex;
     uint32_t mDynamicStorageBufferLengthsParameterIndex;
+    uint32_t mDynamicStorageBufferOffsetsParameterIndex;
     uint32_t mImmediatesParameterIndex;
     ComPtr<ID3D12RootSignature> mRootSignature;
     // Store the root signature blob to put in pipeline cachekey
