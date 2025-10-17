@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "012ae014_4ae0d9fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-17T00:19:37Z",
+      "side": 1,
+      "message": "PTAL. I have it only capture a texture\u0027s content if `IsInitialized` is true. The hope was that would not capture fresh render targets. Unfortunately, various situations that\u0027s not set. I don\u0027t know if that\u0027s a bug in the front end or expected but I had to go add `texture-\u003eSetInitialized(true)` in several places. Is this solution ok? Is there some other fix? Should I just remove the check and always capture texture content? That sounds bad given every frame, every canvas is a new texture.",
+      "revId": "bea0c72b06fe7e5df10a037adec5c38a186964e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
