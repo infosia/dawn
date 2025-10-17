@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "028d35f4_f4301bc2",
+        "filename": "src/dawn/tests/end2end/BufferZeroInitTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-17T00:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0b6f0fe_fab329f4",
+      "revId": "6fcaef608f91caa6535aba534df1bdcc319f1563",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0e2941a_807655ce",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-10-16T11:53:12Z",
       "side": 1,
       "message": "```suggestion\n            if (!IsWebGPUOnWebGPU()) {                                                   \\\n                EXPECT_EQ(N, lazyClearsAfter - lazyClearsBefore);                        \\\n            }                                                                                \\\n        }                                                                                \\\n    } while (0)\n```",
+      "range": {
+        "startLine": 49,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 15
+      },
+      "revId": "6fcaef608f91caa6535aba534df1bdcc319f1563",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6d5c347_7b3ff13d",
+        "filename": "src/dawn/tests/end2end/BufferZeroInitTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-17T00:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0e2941a_807655ce",
       "range": {
         "startLine": 49,
         "startChar": 17,
