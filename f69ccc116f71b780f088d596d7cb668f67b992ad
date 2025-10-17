@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dce2ab6_900b6967",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-17T09:37:46Z",
+      "side": 1,
+      "message": "Nit: remove trailing comma.",
+      "range": {
+        "startLine": 52,
+        "startChar": 64,
+        "endLine": 52,
+        "endChar": 65
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "e1a2c9b9_d4853253",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+              "range": {
+                "startLine": 52,
+                "startChar": 0,
+                "endLine": 53,
+                "endChar": 0
+              },
+              "replacement": "        uncapturedErrorCallback \u003d defaultUncapturedErrorCallback\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f69ccc116f71b780f088d596d7cb668f67b992ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
