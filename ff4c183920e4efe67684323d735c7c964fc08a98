@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67a6e637_c50cd8e2",
+        "filename": "src/dawn/native/webgpu/RenderPipelineWGPU.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-17T08:41:58Z",
+      "side": 1,
+      "message": "nit: Maybe e.chain.nextInChain \u003d wgpuTarget-\u003enextInChain before that? Just in case we add more extensions in the future.",
+      "revId": "ff4c183920e4efe67684323d735c7c964fc08a98",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f111858c_8a93a2a5",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-17T08:41:58Z",
+      "side": 1,
+      "message": "Same comment as for the buffer, the chain with internal usages is likely still linked here. We can use the getters on TextureBase to know what to put in the descriptor.",
+      "revId": "ff4c183920e4efe67684323d735c7c964fc08a98",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
