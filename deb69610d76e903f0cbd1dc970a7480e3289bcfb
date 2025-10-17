@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b97ec31_74fd0d98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-17T20:17:07Z",
+      "side": 1,
+      "message": "Thanks for your comments Loko :) I really appreciate it.",
+      "parentUuid": "38c8d009_8f160dc2",
+      "revId": "deb69610d76e903f0cbd1dc970a7480e3289bcfb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "86f06c73_53f66c31",
