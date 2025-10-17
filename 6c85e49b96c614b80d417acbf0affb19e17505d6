@@ -33,6 +33,24 @@
       "message": "Let\u0027s wait to see if https://github.com/webgpu-native/webgpu-headers/pull/560 lands, but then it\u0027s fine to have the diff if it eventually goes back to being empty.",
       "revId": "6c85e49b96c614b80d417acbf0affb19e17505d6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bfada60_6585cc14",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-10-17T06:29:16Z",
+      "side": 1,
+      "message": "Instead of waiting for doc approval for https://github.com/webgpu-native/webgpu-headers/pull/560, I\u0027ll merge this CL and will upload a new CL that sync webgpu-headers and eventually remove third_party/webgpu-headers/webgpu.h.diff. WDYT?",
+      "parentUuid": "77bedde6_f444bc18",
+      "revId": "6c85e49b96c614b80d417acbf0affb19e17505d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
