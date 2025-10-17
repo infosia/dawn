@@ -215,6 +215,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8daf33a8_f68493a4",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-17T21:35:31Z",
+      "side": 1,
+      "message": "I tried this inside the loop like suggested:\n\n{% set callbackInfo_member \u003d find_by_name(by_category[\"callback info\"], member.name.get() ~ \" info\") %}\n{% if callbackInfo_member and find_by_name(callbackInfo_member.members, \u0027mode\u0027) %}\n       callbackInfo.mode \u003d WGPUCallbackMode_AllowSpontaneous;\n{% endif %}\n\n\nThe problem is that by_category[\"callback info\"] contains full names (e.g., \u0027request device callback info\u0027, \u0027device lost callback info\u0027..), but member.name.get() sometimes only provides a partial name (e.g., \u0027callback\u0027, \u0027device lost callback\u0027 respectively).\n\nFor callbacks with similar patterns, like \u0027device lost callback\u0027, the logic find_by_name(by_category[\"callback info\"], member.name.get() ~ \" info\") works because it correctly finds \u0027device lost callback info\u0027 member.\n\nHowever, for a \u0027request device callback\u0027, the member name is just \u0027callback\u0027, so my code is looking for \u0027callback info\u0027, which isn\u0027t able to find the corresponding \u0027request device callback info\u0027 member.\n\nTLDR: The member.name is not consistent with the callback info names. I see this CL has been merged. I can try to address this later if I\u0027m able to find a way of doing this.",
+      "parentUuid": "3e681ebc_8f0955a4",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "cc9e3bcc87d560ac936b6b9f203fd0131c3c62ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b738dc11_7709204e",
