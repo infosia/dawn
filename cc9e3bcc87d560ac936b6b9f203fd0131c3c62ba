@@ -167,6 +167,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b59586f_9679c745",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-17T20:21:21Z",
+      "side": 1,
+      "message": "edit: \u0027memebers\u0027 argument in define_kotlin_to_struct_conversion for \"device descriptor\" has 2 callbackinfo s. If this wasn\u0027t the case and every structure had only one \u0027callback info\u0027 then find_by_name(by_category[\"callback info\"], ...) would have worked. Right?",
+      "parentUuid": "d127dc02_2fe7f56f",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "cc9e3bcc87d560ac936b6b9f203fd0131c3c62ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b738dc11_7709204e",
