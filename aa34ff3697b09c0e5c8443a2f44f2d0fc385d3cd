@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23fb1b25_56d2bc76",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/RenderBundleEncoderTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2025-10-17T12:53:30Z",
+      "side": 1,
+      "message": "Smallest of smallest of nits, I think you\u0027re missing +2 spaces on this line",
+      "revId": "aa34ff3697b09c0e5c8443a2f44f2d0fc385d3cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1107c2c4_97065166",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/RenderBundleEncoderTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2025-10-17T12:53:30Z",
+      "side": 1,
+      "message": "It\u0027s pretty unclear what\u0027s happening here.  What does it mean that we push an error scope at the last line, but closing or destroying any resources?  Additional inline documentation/comments would be helpful.",
+      "revId": "aa34ff3697b09c0e5c8443a2f44f2d0fc385d3cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
