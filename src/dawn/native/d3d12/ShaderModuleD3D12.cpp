@@ -164,6 +164,10 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     arrayLengthFromUniform.ubo_binding = {layout->GetDynamicStorageBufferLengthsRegisterSpace(),
                                           layout->GetDynamicStorageBufferLengthsShaderRegister()};
 
+    tint::hlsl::writer::ArrayOffsetFromUniformOptions arrayOffsetFromUniform;
+    arrayOffsetFromUniform.ubo_binding = {layout->GetDynamicStorageBufferOffsetsRegisterSpace(),
+                                          layout->GetDynamicStorageBufferOffsetsShaderRegister()};
+
     tint::Bindings bindings;
     std::vector<BindingPoint> ignored_by_robustness;
 
@@ -280,14 +284,15 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
             }
         }
 
-        // Add arrayLengthFromUniform options
+        // Add per-group arrayLengthFromUniform and arrayOffsetFromUniform options
         for (const auto& bindingAndRegisterOffset :
-             layout->GetDynamicStorageBufferLengthInfo()[group].bindingAndRegisterOffsets) {
+             layout->GetDynamicStorageBufferInfo()[group].bindingAndRegisterOffsets) {
             BindingNumber bindingNum = bindingAndRegisterOffset.binding;
             uint32_t registerOffset = bindingAndRegisterOffset.registerOffset;
             BindingPoint bindingPoint{static_cast<uint32_t>(group),
                                       static_cast<uint32_t>(bindingNum)};
             arrayLengthFromUniform.bindpoint_to_size_index.emplace(bindingPoint, registerOffset);
+            arrayOffsetFromUniform.bindpoint_to_offset_index.emplace(bindingPoint, registerOffset);
         }
     }
 

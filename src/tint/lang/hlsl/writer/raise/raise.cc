@@ -106,8 +106,9 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     tint::transform::multiplanar::BindingsMap multiplanar_map{};
     RemapperData remapper_data{};
     ArrayLengthFromUniformOptions array_length_from_uniform_options{};
+    ArrayOffsetFromUniformOptions array_offset_from_uniform_options{};
     PopulateBindingRelatedOptions(options, remapper_data, multiplanar_map,
-                                  array_length_from_uniform_options);
+                                  array_length_from_uniform_options, array_offset_from_uniform_options);
 
     RUN_TRANSFORM(core::ir::transform::BindingRemapper, module, remapper_data);
     RUN_TRANSFORM(core::ir::transform::MultiplanarExternalTexture, module, multiplanar_map);

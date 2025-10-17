@@ -70,8 +70,17 @@ MaybeError BindGroup::InitializeImpl() {
     // This is because they are created as root descriptors which are never heap allocated.
     // Since dynamic buffers are packed in the front, we can skip over these bindings by
     // starting from the dynamic buffer count.
-    for (BindingIndex bindingIndex : Range(bgl->GetDynamicBufferCount(), bgl->GetBindingCount())) {
+    // AMAIORANO: TODO - Add GetDynamicUniformBufferCount and use that to skip that range here
+    // for (BindingIndex bindingIndex : Range(bgl->GetDynamicBufferCount(), bgl->GetBindingCount())) {
+    for (BindingIndex bindingIndex : Range(bgl->GetBindingCount())) {
         const BindingInfo& bindingInfo = bgl->GetBindingInfo(bindingIndex);
+
+        // Skip dynamic uniform buffers
+        const bool isDynamic = bindingIndex < bgl->GetDynamicBufferCount();
+        const bool isStorageBuffer = std::holds_alternative<BufferBindingInfo>(bindingInfo.bindingLayout) && std::get<BufferBindingInfo>(bindingInfo.bindingLayout).type == wgpu::BufferBindingType::Storage;
+        if (isDynamic && !isStorageBuffer) {
+            continue;
+        }
 
         // Increment size does not need to be stored and is only used to get a handle
         // local to the allocation with OffsetFrom().
@@ -102,6 +111,8 @@ MaybeError BindGroup::InitializeImpl() {
                     }
                     case wgpu::BufferBindingType::Storage:
                     case kInternalStorageBufferBinding: {
+                        // AMAIORANO: We need to ignore the 'size' and bind the whole _rest_ of the buffer (after the offset)
+
                         // Since Tint outputs HLSL shaders with RWByteAddressBuffer,
                         // we must use D3D12_BUFFER_UAV_FLAG_RAW when making the
                         // UNORDERED_ACCESS_VIEW_DESC. Using D3D12_BUFFER_UAV_FLAG_RAW requires
@@ -226,6 +237,15 @@ MaybeError BindGroup::InitializeImpl() {
                 static_cast<uint32_t>(GetBindingAsBufferBinding(bindingIndex).size);
         }
     }
+    // Do the same with the offsets
+    mDynamicStorageBufferOffsets.resize(bgl->GetDynamicStorageBufferCount());
+    dynamicStorageBufferIndex = 0;
+    for (BindingIndex bindingIndex : bgl->GetDynamicBufferIndices()) {
+        if (bgl->IsStorageBufferBinding(bindingIndex)) {
+            mDynamicStorageBufferOffsets[dynamicStorageBufferIndex++] =
+                static_cast<uint32_t>(GetBindingAsBufferBinding(bindingIndex).offset);
+        }
+    }
 
     return {};
 }
@@ -297,6 +317,10 @@ void BindGroup::SetSamplerAllocationEntry(Ref<SamplerHeapCacheEntry> entry) {
 
 const BindGroup::DynamicStorageBufferLengths& BindGroup::GetDynamicStorageBufferLengths() const {
     return mDynamicStorageBufferLengths;
+}
+
+const BindGroup::DynamicStorageBufferOffsets& BindGroup::GetDynamicStorageBufferOffsets() const {
+    return mDynamicStorageBufferOffsets;
 }
 
 }  // namespace dawn::native::d3d12
