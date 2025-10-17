@@ -33,6 +33,7 @@
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/transform/add_empty_entry_point.h"
 #include "src/tint/lang/core/ir/transform/array_length_from_uniform.h"
+#include "src/tint/lang/hlsl/writer/raise/array_offset_from_uniform.h"
 #include "src/tint/lang/core/ir/transform/binary_polyfill.h"
 #include "src/tint/lang/core/ir/transform/binding_remapper.h"
 #include "src/tint/lang/core/ir/transform/builtin_polyfill.h"
@@ -106,8 +107,9 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     tint::transform::multiplanar::BindingsMap multiplanar_map{};
     RemapperData remapper_data{};
     ArrayLengthFromUniformOptions array_length_from_uniform_options{};
+    ArrayOffsetFromUniformOptions array_offset_from_uniform_options{};
     PopulateBindingRelatedOptions(options, remapper_data, multiplanar_map,
-                                  array_length_from_uniform_options);
+                                  array_length_from_uniform_options, array_offset_from_uniform_options);
 
     RUN_TRANSFORM(core::ir::transform::BindingRemapper, module, remapper_data);
     RUN_TRANSFORM(core::ir::transform::MultiplanarExternalTexture, module, multiplanar_map);
@@ -187,16 +189,11 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     }
 
     // ArrayLengthFromUniform must run after Robustness, which introduces arrayLength calls.
-    {
-        auto result = core::ir::transform::ArrayLengthFromUniform(
-            module,
-            BindingPoint{array_length_from_uniform_options.ubo_binding.group,
-                         array_length_from_uniform_options.ubo_binding.binding},
-            array_length_from_uniform_options.bindpoint_to_size_index);
-        if (result != Success) {
-            return result.Failure();
-        }
-    }
+    RUN_TRANSFORM(core::ir::transform::ArrayLengthFromUniform,
+        module,
+        BindingPoint{array_length_from_uniform_options.ubo_binding.group,
+                        array_length_from_uniform_options.ubo_binding.binding},
+        array_length_from_uniform_options.bindpoint_to_size_index);
 
     if (!options.disable_workgroup_init) {
         // Must run before ShaderIO as it may introduce a builtin parameter (local_invocation_index)
@@ -246,6 +243,15 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     }
     // Comes after DecomposeStorageAccess and ChangeImmediateToUniform.
     RUN_TRANSFORM(core::ir::transform::DecomposeUniformAccess, module);
+
+    // TODO: ArrayOffsetFromUniform must run after both DirectVariableAccess and DecomposeStorageAccess
+    // to avoid chasing pointers.
+    RUN_TRANSFORM(raise::ArrayOffsetFromUniform,
+        module,
+        BindingPoint{array_offset_from_uniform_options.ubo_binding.group,
+                        array_offset_from_uniform_options.ubo_binding.binding},
+        array_offset_from_uniform_options.bindpoint_to_offset_index);
+
 
     // PixelLocal must run after DirectVariableAccess to avoid chasing pointer parameters.
     if (pixel_local_enabled) {

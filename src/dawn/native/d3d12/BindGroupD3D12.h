@@ -63,6 +63,9 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
     using DynamicStorageBufferLengths = ityp::stack_vec<uint32_t, uint32_t, 4u>;
     const DynamicStorageBufferLengths& GetDynamicStorageBufferLengths() const;
 
+    // using DynamicStorageBufferOffsets = ityp::stack_vec<uint32_t, uint32_t, 4u>;
+    // const DynamicStorageBufferOffsets& GetDynamicStorageBufferOffsets() const;
+
   private:
     ~BindGroup() override;
 
@@ -76,6 +79,7 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
     CPUDescriptorHeapAllocation mCPUViewAllocation;
 
     DynamicStorageBufferLengths mDynamicStorageBufferLengths;
+    // DynamicStorageBufferOffsets mDynamicStorageBufferOffsets;
 };
 }  // namespace dawn::native::d3d12
 

@@ -43,6 +43,22 @@ constexpr uint32_t kBindingSize = 8;
 
 class DynamicBufferOffsetTests : public DawnTest {
   protected:
+    uint32_t mMinUniformBufferOffsetAlignment;
+    uint32_t mMinStorageBufferOffsetAlignment;
+    wgpu::BindGroup mBindGroups[2];
+    wgpu::BindGroupLayout mBindGroupLayouts[2];
+    
+    // All buffers are usually 256 bytes / 4 + 2 = 66 u32 elements
+    // mUniformBuffers[0] is not dynamic, @group(0) @binding(0), [1, 2, 0 ... 0]
+    // mUniformBuffers[1] is dynamic, @group(0) @binding(3), [1, 2, 0, ..., 0, 5, 6]
+    // mUniformBuffers[2] is not dynamic, @group(1) @binding(0), [1, 2, 0 ... 0] (used for inheritance tests)
+    wgpu::Buffer mUniformBuffers[3];
+    // mStorageBuffers[0] is not dynamic, @group(0) @binding(1), shader sets this.xy to mUniformBuffers[0].xy, so [1, 2]
+    // mStorageBuffers[1] is dynamic, @group(0) @binding(4), shader sets this.xy to (mUniformBuffers[0].xy + mUniformBuffers[1]) * multipleNumber
+    wgpu::Buffer mStorageBuffers[2];
+
+    wgpu::Texture mColorAttachment;
+
     void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
                            dawn::utils::ComboLimits& required) override {
         // TODO(crbug.com/383593270): Enable all the limits.
@@ -121,15 +137,6 @@ class DynamicBufferOffsetTests : public DawnTest {
         mBindGroups[1] = utils::MakeBindGroup(device, mBindGroupLayouts[1],
                                               {{0, mUniformBuffers[2], 0, kBindingSize}});
     }
-    // Create objects to use as resources inside test bind groups.
-
-    uint32_t mMinUniformBufferOffsetAlignment;
-    uint32_t mMinStorageBufferOffsetAlignment;
-    wgpu::BindGroup mBindGroups[2];
-    wgpu::BindGroupLayout mBindGroupLayouts[2];
-    wgpu::Buffer mUniformBuffers[3];
-    wgpu::Buffer mStorageBuffers[2];
-    wgpu::Texture mColorAttachment;
 
     wgpu::RenderPipeline CreateRenderPipeline(bool isInheritedPipeline = false) {
         wgpu::ShaderModule vsModule = utils::CreateShaderModule(device, R"(
@@ -156,7 +163,7 @@ class DynamicBufferOffsetTests : public DawnTest {
             @group(0) @binding(4) var<storage, read_write> sBuffer : Buf;
         )";
 
-        if (isInheritedPipeline) {
+    if (isInheritedPipeline) {
             fs << R"(
                 @group(1) @binding(0) var<uniform> paddingBlock : Buf;
             )";
@@ -281,8 +288,9 @@ TEST_P(DynamicBufferOffsetTests, SetDynamicOffsetsRenderPipeline) {
 
     std::vector<uint32_t> expectedData = {6, 8};
     EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(5, 6, 255, 255), renderPass.color, 0, 0);
+    // AMAIORANO: Until I implement offsets as root constants, the result will be written to the start of the storage buffer (because no offset is being applied)
     EXPECT_BUFFER_U32_RANGE_EQ(expectedData.data(), mStorageBuffers[1],
-                               mMinStorageBufferOffsetAlignment, expectedData.size());
+                               mMinStorageBufferOffsetAlignment/*0*/, expectedData.size());
 }
 
 // Dynamic offsets are all zero and no effect to result.

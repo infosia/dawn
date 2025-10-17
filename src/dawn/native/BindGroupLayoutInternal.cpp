@@ -978,10 +978,16 @@ BindingIndex BindGroupLayoutInternalBase::GetDynamicBufferCount() const {
            GetBindingTypeStart(BindingTypeOrder_DynamicBuffer);
 }
 
+BindingIndex BindGroupLayoutInternalBase::GetDynamicUniformBufferCount() const {
+    DAWN_ASSERT(!IsError());
+    // AMAIORANO: this returns BindingIndex because we currently use this type to index into vectors (ityp::vector<BindingIndex, uint32_t>), and I think I'll split the range of bindings into uniform and storage.
+    return BindingIndex(static_cast<uint32_t>(GetDynamicBufferCount()) - GetDynamicStorageBufferCount());
+}
+
 uint32_t BindGroupLayoutInternalBase::GetDynamicStorageBufferCount() const {
     DAWN_ASSERT(!IsError());
     return mDynamicStorageBufferCount;
-}
+}    
 
 uint32_t BindGroupLayoutInternalBase::GetUnverifiedBufferCount() const {
     DAWN_ASSERT(!IsError());
