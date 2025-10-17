@@ -634,8 +634,11 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
         // Usually, the application won't set the same offsets many times,
         // so always try to apply dynamic offsets even if the offsets stay the same
         if (dynamicOffsets.size() != BindingIndex(0)) {
-            // Update dynamic offsets.
+            // Update uniform buffer dynamic offsets
             // Dynamic buffer bindings are packed at the beginning of the layout.
+
+            std::vector<uint32_t> storageBufferDynamicOffsets;
+
             for (BindingIndex bindingIndex{0}; bindingIndex < dynamicOffsets.size();
                  ++bindingIndex) {
                 const BindingInfo& bindingInfo = group->GetLayout()->GetBindingInfo(bindingIndex);
@@ -644,6 +647,22 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
                     // visibility.
                     continue;
                 }
+
+                // Skip storage buffers as they are already bound to the root descriptor table, and only need the dynamic offsets updated in root constants.
+                const bool isStorageBuffer = std::holds_alternative<BufferBindingInfo>(bindingInfo.bindingLayout) && std::get<BufferBindingInfo>(bindingInfo.bindingLayout).type == wgpu::BufferBindingType::Storage;
+                if (isStorageBuffer) {
+                    // Set the offset root constant (AMAIORANO: should we collect these and call SetRootConstant once?)
+                    // uint32_t firstRegisterOffset = pipelineLayout->GetDynamicStorageBufferInfo()[index].firstRegisterOffset;
+                    // uint32_t offsetsParameterIndex = pipelineLayout->GetDynamicStorageBufferOffsetsParameterIndex();
+                    // uint64_t dynamicOffset = dynamicOffsets[bindingIndex];
+                    // SetRootConstant(commandList, offsetsParameterIndex, 1u, &dynamicOffset, firstRegisterOffset + static_cast<uint32_t>(bindingIndex));
+
+                    storageBufferDynamicOffsets.push_back(dynamicOffsets[bindingIndex]);
+
+                    continue;
+                }
+
+                // Set dynamic uniform buffer root descriptor
 
                 uint32_t parameterIndex =
                     pipelineLayout->GetDynamicRootParameterIndex(index, bindingIndex);
@@ -657,8 +676,14 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
                     ToBackend(binding.buffer)->GetVA() + offset;
 
                 SetRootBufferView(commandList,
-                                  std::get<BufferBindingInfo>(bindingInfo.bindingLayout).type,
-                                  parameterIndex, bufferLocation);
+                                std::get<BufferBindingInfo>(bindingInfo.bindingLayout).type,
+                                parameterIndex, bufferLocation);
+            }
+
+            if (!storageBufferDynamicOffsets.empty()) {
+                uint32_t firstRegisterOffset = pipelineLayout->GetDynamicStorageBufferInfo()[index].firstRegisterOffset;
+                uint32_t offsetsParameterIndex = pipelineLayout->GetDynamicStorageBufferOffsetsParameterIndex();
+                SetRootConstant(commandList, offsetsParameterIndex, storageBufferDynamicOffsets.size(), storageBufferDynamicOffsets.data(), firstRegisterOffset);
             }
         }
 
@@ -688,15 +713,26 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
             }
         }
 
+        // Update dynamic storage buffer root constants: lengths and offsets
         const auto& dynamicStorageBufferLengths = group->GetDynamicStorageBufferLengths();
-        if (dynamicStorageBufferLengths.size() != 0) {
-            uint32_t parameterIndex =
-                pipelineLayout->GetDynamicStorageBufferLengthsParameterIndex();
+        // const auto& dynamicStorageBufferOffsets = group->GetDynamicStorageBufferOffsets(); // AMAIORANO: Do I need this? We have dynamicOffsets param here.
+        // DAWN_ASSERT(dynamicStorageBufferLengths.size() == dynamicStorageBufferOffsets.size());
+        if (!dynamicStorageBufferLengths.empty()) {
+            // Both lengths and offsets use the same register offsets
             uint32_t firstRegisterOffset =
-                pipelineLayout->GetDynamicStorageBufferLengthInfo()[index].firstRegisterOffset;
+                pipelineLayout->GetDynamicStorageBufferInfo()[index].firstRegisterOffset;
 
-            SetRootConstant(commandList, parameterIndex, dynamicStorageBufferLengths.size(),
-                            dynamicStorageBufferLengths.data(), firstRegisterOffset);
+            uint32_t lengthsParameterIndex =
+                pipelineLayout->GetDynamicStorageBufferLengthsParameterIndex();
+            SetRootConstant(commandList, lengthsParameterIndex, dynamicStorageBufferLengths.size(),
+                dynamicStorageBufferLengths.data(), firstRegisterOffset);
+                
+            // uint32_t offsetsParameterIndex =
+            //         pipelineLayout->GetDynamicStorageBufferOffsetsParameterIndex();
+            // SetRootConstant(commandList, offsetsParameterIndex, dynamicStorageBufferOffsets.size(),
+            //                 dynamicStorageBufferOffsets.data(), firstRegisterOffset);
+            // SetRootConstant(commandList, offsetsParameterIndex, static_cast<uint32_t>(dynamicOffsets.size()),
+            //                 dynamicOffsets.data(), firstRegisterOffset);
         }
     }
 
