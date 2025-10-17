@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eff4a64d_ff2d1c1b",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ComputePassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-17T09:49:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb7c3a11_9b859c38",
+      "range": {
+        "startLine": 54,
+        "startChar": 22,
+        "endLine": 54,
+        "endChar": 31
+      },
+      "revId": "7272c6694e70202cea2ed23dfda93e5935b6744c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "29c6cddb_faf9574a",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-10-17T09:22:45Z",
       "side": 1,
       "message": "Nit, and throughout. All comments should have two (not one) spaces before the // and end with a full stop/period.",
+      "range": {
+        "startLine": 205,
+        "startChar": 37,
+        "endLine": 205,
+        "endChar": 63
+      },
+      "revId": "7272c6694e70202cea2ed23dfda93e5935b6744c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "199b5947_4f936c39",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ComputePassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-17T09:49:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29c6cddb_faf9574a",
       "range": {
         "startLine": 205,
         "startChar": 37,
