@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30f4b770_bc37a8c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-17T21:56:29Z",
+      "side": 1,
+      "message": "Cleaned up as per discussion: https://dawn-review.googlesource.com/c/dawn/+/266734/comment/09adcc83_11465271/",
+      "revId": "adfb9a35720c77741c648fbf48bf501d19fe9742",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
