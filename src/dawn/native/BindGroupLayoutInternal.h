@@ -135,6 +135,7 @@ class BindGroupLayoutInternalBase : public ApiObjectBase,
     BindingIndex GetBindingCount() const;
     // Returns |BindingIndex| because dynamic buffers are packed at the front.
     BindingIndex GetDynamicBufferCount() const;
+    BindingIndex GetDynamicUniformBufferCount() const;
     uint32_t GetDynamicStorageBufferCount() const;
     uint32_t GetUnverifiedBufferCount() const;
     uint32_t GetStaticSamplerCount() const;
