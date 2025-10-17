@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb7c3a11_9b859c38",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ComputePassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-17T09:22:45Z",
+      "side": 1,
+      "message": "What\u0027s an IntBuffer :-)\n\nHow about \"Converts an IntArray into a direct ByteBuffer\"",
+      "range": {
+        "startLine": 54,
+        "startChar": 22,
+        "endLine": 54,
+        "endChar": 31
+      },
+      "revId": "7272c6694e70202cea2ed23dfda93e5935b6744c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29c6cddb_faf9574a",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ComputePassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-17T09:22:45Z",
+      "side": 1,
+      "message": "Nit, and throughout. All comments should have two (not one) spaces before the // and end with a full stop/period.",
+      "range": {
+        "startLine": 205,
+        "startChar": 37,
+        "endLine": 205,
+        "endChar": 63
+      },
+      "revId": "7272c6694e70202cea2ed23dfda93e5935b6744c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
