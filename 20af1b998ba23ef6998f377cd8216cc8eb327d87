@@ -34,6 +34,24 @@
       "parentUuid": "f51e7eee_60c471ac",
       "revId": "20af1b998ba23ef6998f377cd8216cc8eb327d87",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cc811bc_6a7b8d69",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/SurfaceTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-17T08:01:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0408b114_c3ca748b",
+      "revId": "20af1b998ba23ef6998f377cd8216cc8eb327d87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
