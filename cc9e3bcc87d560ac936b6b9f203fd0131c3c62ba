@@ -191,6 +191,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e681ebc_8f0955a4",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-17T20:25:00Z",
+      "side": 1,
+      "message": "It should still work (I think). You already iterate through all the members, so anytime you see a `callback function` type, you would search for the corresponding `callback info` type by searching for `name + \" info\"` or something like that.\n\nThen you could do it inline without having to do the pass above to figure out which members have a mode type ahead of time.",
+      "parentUuid": "1b59586f_9679c745",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "cc9e3bcc87d560ac936b6b9f203fd0131c3c62ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b738dc11_7709204e",
