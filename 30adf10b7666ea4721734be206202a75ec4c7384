@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb6a6f2a_43e5df7a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-10-17T20:55:08Z",
+      "side": 1,
+      "message": "Note: There\u0027s an interesting difference between the for loops that have a condition clause vs. those that don\u0027t.\n\nA for loop without a condition should desugar to a loop that doesn\u0027t have an initial if-not-condition-break clause. I filed https://github.com/gpuweb/gpuweb/issues/5397 to clarify this in the spec.",
+      "revId": "30adf10b7666ea4721734be206202a75ec4c7384",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
