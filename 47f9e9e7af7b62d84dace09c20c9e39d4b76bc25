@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "638ac638_348608c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-17T20:10:37Z",
+      "side": 1,
+      "message": "I don\u0027t know anything about these files and won\u0027t provide OWNERS review (even if technically I am a toplevel owner). Needs review from an actual owner before I can give a committer review.\n\nThat said I think Corentin has made your team committers now so I shouldn\u0027t need to review at all.",
+      "revId": "47f9e9e7af7b62d84dace09c20c9e39d4b76bc25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
