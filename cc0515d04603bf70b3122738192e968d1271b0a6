@@ -70,6 +70,30 @@
       },
       "revId": "cc0515d04603bf70b3122738192e968d1271b0a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "767ac76b_acf5df23",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-17T07:54:49Z",
+      "side": 1,
+      "message": "Sure, Thanks",
+      "parentUuid": "21d24d09_98ed136c",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 6
+      },
+      "revId": "cc0515d04603bf70b3122738192e968d1271b0a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
