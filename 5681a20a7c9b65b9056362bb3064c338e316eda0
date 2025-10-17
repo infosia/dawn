@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a2777f3_c40ac787",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-17T08:39:42Z",
+      "side": 1,
+      "message": "Is this a merge issue with the CL?",
+      "revId": "5681a20a7c9b65b9056362bb3064c338e316eda0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
