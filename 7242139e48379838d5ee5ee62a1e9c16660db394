@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "891b1991_76c25891",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-17T08:05:34Z",
+      "side": 1,
+      "message": "Since we agreed on the header changes, LGTM while they get rolled in.",
+      "revId": "7242139e48379838d5ee5ee62a1e9c16660db394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
