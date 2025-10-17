@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d7ce518_53b9cb20",
+        "filename": "src/dawn/native/webgpu/BindGroupLayoutWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-17T08:39:15Z",
+      "side": 1,
+      "message": "u-nit: Maybe make the structure more apparent with empty newlines and first computing the entries, and then creating the BGLDesc?",
+      "revId": "89aa6b5a573f8f42a48e973dad90571b6c15f3a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1199b2d9_9691eabd",
+        "filename": "src/dawn/native/webgpu/BindGroupLayoutWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-17T08:39:15Z",
+      "side": 1,
+      "message": "This looks like it should be a switch.",
+      "revId": "89aa6b5a573f8f42a48e973dad90571b6c15f3a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5da4bb0b_44b1a52d",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-10-17T08:39:15Z",
+      "side": 1,
+      "message": "As far as I can tell, this will copy the `nextInChain` and keep the internal usage linked. Since we have to do a lot of modifications, can we create a fresh descriptor and set the members directly?",
+      "revId": "89aa6b5a573f8f42a48e973dad90571b6c15f3a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
