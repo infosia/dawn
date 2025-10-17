@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38c8d009_8f160dc2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-17T19:27:38Z",
+      "side": 1,
+      "message": "Thanks for the iterations! Sorry about the back and forth and nits. I\u0027m just trying to make sure that the code generation doesn\u0027t get too complicated to maintain in the future.",
+      "revId": "deb69610d76e903f0cbd1dc970a7480e3289bcfb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86f06c73_53f66c31",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-17T19:27:38Z",
+      "side": 1,
+      "message": "I think here you could do:\n```\n{% if member.category \u003d\u003d \"callback function\u0027 %}\n```",
+      "range": {
+        "startLine": 61,
+        "startChar": 16,
+        "endLine": 61,
+        "endChar": 70
+      },
+      "revId": "deb69610d76e903f0cbd1dc970a7480e3289bcfb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

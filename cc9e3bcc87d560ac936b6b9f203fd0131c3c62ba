@@ -119,6 +119,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a18854fa_d92f9b71",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-17T19:27:38Z",
+      "side": 1,
+      "message": "Right. Ok, I guess this is better already. In theory I think you could potentially use `find_by_name(by_category[\"callback info\"], ...)` to get the callback info type and check inside the loop, but this is fine for now then.",
+      "parentUuid": "94d03f47_78f61df0",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "cc9e3bcc87d560ac936b6b9f203fd0131c3c62ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b738dc11_7709204e",
