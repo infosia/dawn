@@ -263,6 +263,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b1780f2_3ddfbd25",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-17T21:57:18Z",
+      "side": 1,
+      "message": "Addressed it here: https://dawn-review.googlesource.com/c/dawn/+/267534",
+      "parentUuid": "0fd1a18b_27fe92dc",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "cc9e3bcc87d560ac936b6b9f203fd0131c3c62ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b738dc11_7709204e",
