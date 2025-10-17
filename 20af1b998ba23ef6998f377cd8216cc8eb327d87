@@ -16,6 +16,24 @@
       "message": "How about using common setup and teardown blocks, now this is getting more complex?\n\nIt might look something like ...\n\n```\nimport org.junit.After\nimport org.junit.Before\n\n\n@RunWith(AndroidJUnit4::class)\n@SmallTest\nclass SurfaceTest {\n\n  companion object {\n    private const val WIDTH \u003d 600\n    private const val HEIGHT \u003d 800\n  }\n\n  private lateinit var surfaceTexture: SurfaceTexture\n  private lateinit var validSurface: Surface\n  private lateinit var webGpu: WebGpu\n\n  @Before\n  fun setup() {\n    surfaceTexture \u003d SurfaceTexture(false)\n    surfaceTexture.setDefaultBufferSize(WIDTH, HEIGHT)\n    validSurface \u003d Surface(surfaceTexture)\n\n    webGpu \u003d runBlocking { createWebGpu(validSurface) }\n  }\n\n  @After\n  fun teardown() {\n    validSurface.release()\n    surfaceTexture.release()\n    webGpu.close()\n  }\n\n  /**\n   * Tests the basic surface lifecycle.\n   * This test verifies that a surface can be successfully:\n   * 1. Created from an Android Surface.\n   * 2. Configured with valid parameters (dimensions, format).\n   * 3. Used to acquire a texture that matches the configuration.\n   * 4. Presented successfully to the underlying system.\n   */\n  @Test\n  fun surfaceLifecycle_configureAndPresent_succeeds() {\n    val surface \u003d webGpu.webgpuSurface\n    val config \u003d SurfaceConfiguration(\n      device \u003d webGpu.device,\n      format \u003d TextureFormat.RGBA8Unorm,\n      height \u003d HEIGHT,\n      width \u003d WIDTH\n    )\n    surface.configure(config)\n    // ensure no errors are thrown\n    val currentTexture \u003d surface.getCurrentTexture().texture\n    assertEquals(currentTexture.format, TextureFormat.RGBA8Unorm)\n    assertEquals(currentTexture.height, HEIGHT)\n    assertEquals(currentTexture.width, WIDTH)\n\n    val status \u003d surface.present()\n    assertEquals(\"Present should be successful\", Status.Success, status)\n  }\n\n  /**\n   * Verifies that configuring a surface with invalid parameters (e.g., negative width)\n   * results in a validation error.\n   */\n  @Test\n  fun configure_withInvalidParameters_fails() {\n    val surface \u003d webGpu.webgpuSurface\n    val invalidConfig \u003d SurfaceConfiguration(\n      device \u003d webGpu.device,\n      format \u003d TextureFormat.RGBA8Unorm,\n      height \u003d HEIGHT,\n      width \u003d -1 // Invalid parameter\n    )\n\n    // Assert that calling configure with this invalid descriptor throws an error.\n    assertThrows(UncapturedErrorException::class.java) {\n      surface.configure(invalidConfig)\n    }\n  }\n}\n```",
       "revId": "20af1b998ba23ef6998f377cd8216cc8eb327d87",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0408b114_c3ca748b",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/SurfaceTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-17T08:01:36Z",
+      "side": 1,
+      "message": "Thanks. It matches the patters of other tests.",
+      "parentUuid": "f51e7eee_60c471ac",
+      "revId": "20af1b998ba23ef6998f377cd8216cc8eb327d87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
