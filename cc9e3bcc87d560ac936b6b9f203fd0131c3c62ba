@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "85365151_eb7b3bad",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-17T06:36:35Z",
+      "side": 1,
+      "message": "kotlin_record_members(members) has been changed recently [https://dawn.googlesource.com/dawn/+/refs/heads/main/generator/dawn_json_generator.py#827], where we modifying the member in case of \"callback info\" to \"callback\". So, this- {% if member.type.category \u003d\u003d \"callback info\" %} - won\u0027t be met for any members.",
+      "parentUuid": "09adcc83_11465271",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "cc9e3bcc87d560ac936b6b9f203fd0131c3c62ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b738dc11_7709204e",
         "filename": "generator/templates/art/kotlin_record_conversion.cpp",
         "patchSetId": 6
