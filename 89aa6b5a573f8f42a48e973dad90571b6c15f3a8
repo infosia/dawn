@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b18f0ad_68209771",
+        "filename": "src/dawn/native/webgpu/BindGroupLayoutWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-17T18:59:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d7ce518_53b9cb20",
+      "revId": "89aa6b5a573f8f42a48e973dad90571b6c15f3a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1199b2d9_9691eabd",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfd9d6d6_43360c79",
+        "filename": "src/dawn/native/webgpu/BindGroupLayoutWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-17T18:59:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1199b2d9_9691eabd",
+      "revId": "89aa6b5a573f8f42a48e973dad90571b6c15f3a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5da4bb0b_44b1a52d",
@@ -48,6 +84,24 @@
       "writtenOn": "2025-10-17T08:39:15Z",
       "side": 1,
       "message": "As far as I can tell, this will copy the `nextInChain` and keep the internal usage linked. Since we have to do a lot of modifications, can we create a fresh descriptor and set the members directly?",
+      "revId": "89aa6b5a573f8f42a48e973dad90571b6c15f3a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4927591d_4674521e",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-17T18:59:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5da4bb0b_44b1a52d",
       "revId": "89aa6b5a573f8f42a48e973dad90571b6c15f3a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6da947e0_07698fd7",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-17T18:59:26Z",
+      "side": 1,
+      "message": "Fixed bit operator.",
+      "revId": "2e6a79e981a27d2a875a43a5ec48d78c9c9edb31",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
