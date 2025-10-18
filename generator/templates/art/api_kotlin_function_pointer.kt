@@ -25,10 +25,35 @@
 //* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 //* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package {{ kotlin_package }}
-{% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration with context %}
+{% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition, has_doc, has_any_arg_doc with context %}
 
 {% set callbackName = 'on' + function_pointer.name.chunks[:-1] | map('title') | join %}
+{% set all_docs = kdocs.callbacks %}
+{% set curr_callback = all_docs.get(function_pointer.name.get()) %}
+{% set doc_str = curr_callback.doc if curr_callback else "" %}
+{% set all_args =  curr_callback.args if curr_callback else [] %}
 
+{% if has_doc(doc_str, "", all_args, kotlin_record_members(function_pointer.arguments)) == 'True' %}
+    {% set has_arg_doc = has_any_arg_doc(all_args, kotlin_record_members(function_pointer.arguments)) %}
+    /**
+    {%- if doc_str | trim %}
+
+         * {{ doc_str | trim | wordwrap(80, break_long_words=False, break_on_hyphens=False, wrapstring = "\n * ") }}
+    {%- endif %}
+
+    {%- for arg in kotlin_record_members(function_pointer.arguments) %}
+        {% set camel_name = as_varName(arg.name) %}
+        {% set snake_name = arg.name.snake_case() %}
+        {% set arg_name = camel_name if camel_name in all_args else (snake_name if snake_name in all_args else None) %}
+        {% set arg_doc = all_args.get(arg_name) | trim if arg_name else "" %}
+        {%- if has_arg_doc == 'True' and arg_doc %}
+
+             * @param {{ as_varName(arg.name) + " " +  arg_doc | wordwrap(90, break_long_words=False, break_on_hyphens=False, wrapstring = "\n * ") }}
+        {%- endif %}
+    {%- endfor %}
+
+     */
+{% endif %}
 public fun interface {{ function_pointer.name.CamelCase() }} {
     @Suppress("INAPPLICABLE_JVM_NAME")  //* Required for @JvmName on global function.
     @JvmName("{{ callbackName }}")  //* Required to access Inline Value Class parameters via JNI.

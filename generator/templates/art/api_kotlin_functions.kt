@@ -28,9 +28,39 @@ package {{ kotlin_package }}
 
 import dalvik.annotation.optimization.FastNative
 
-{% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition with context %}
-
+{% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition, has_doc, has_any_arg_doc with context %}
+{% set all_functions = kdocs.functions %}
 {% for function in by_category['function'] if include_method(function) %}
+    {% set curr_function = all_functions.get(function.name.get()) %}
+    {% set doc_str = curr_function.doc if curr_function else "" %}
+    {% set return_str = curr_function.returns_doc if curr_function else "" %}
+    {% set all_args = curr_function.args if curr_function else {} %}
+    {% if has_doc(doc_str, return_str, all_args, function.arguments) == 'True' %}
+        {% set has_arg_doc = has_any_arg_doc(all_args, function.arguments) %}
+        /**
+        {%- if doc_str | trim %}
+
+             * {{ doc_str | trim | wordwrap(80, break_long_words=False, break_on_hyphens=False, wrapstring = "\n * ") }}
+        {%- endif %}
+
+        {%- for arg in function.arguments %}
+            {% set camel_name = as_varName(arg.name) %}
+            {% set snake_name = arg.name.snake_case() %}
+            {% set arg_name = camel_name if camel_name in all_args else (snake_name if snake_name in all_args else None) %}
+            {% set arg_doc = all_args.get(arg_name) | trim if arg_name else "" %}
+            {%- if has_arg_doc == 'True' and arg_doc %}
+
+                 * @param {{ as_varName(arg.name) + " " +  arg_doc | wordwrap(90, break_long_words=False, break_on_hyphens=False, wrapstring = "\n * ") }}
+            {%- endif %}
+        {%- endfor %}
+
+        {%- if return_str | trim %}
+
+             * @return {{ return_str | trim | wordwrap(80, break_long_words=False, break_on_hyphens=False, wrapstring = "\n* ") }}
+        {%- endif %}
+
+         */
+    {% endif %}
     @FastNative
     {{ kotlin_annotation(kotlin_return(function)) }} public external fun {{ function.name.camelCase() }}(
         {%- for arg in function.arguments -%}

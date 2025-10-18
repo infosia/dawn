@@ -98,3 +98,33 @@
         {% endif -%}
     {% endif -%}
 {% endmacro %}
+
+{% macro has_any_arg_doc(all_arg_docs, code_args) %}
+    {% set all_arg_docs = all_arg_docs if all_arg_docs else {} %}
+    {% set code_args = code_args if code_args else [] %}
+    {% set found = namespace(value=false) %}
+    {% for arg in code_args %}
+        {% set camel_name = as_varName(arg.name) %}
+        {% set snake_name = arg.name.snake_case() %}
+        {% set arg_name = camel_name if camel_name in all_arg_docs else (snake_name if snake_name in all_arg_docs else None) %}
+        {# Also trim the arg_doc itself before checking, to avoid matching whitespace-only strings #}
+        {% set arg_doc = all_arg_docs.get(arg_name) | trim if arg_name else "" %}
+        {% if arg_doc %}
+            {% set found.value = true %}
+            {% break %}
+        {% endif %}
+    {% endfor %}
+    {{- found.value -}}
+{% endmacro %}
+
+{% macro has_doc(doc_str, return_str, all_arg_docs, code_args) %}
+    {% set all_arg_docs = all_arg_docs if all_arg_docs else {} %}
+    {% set code_args = code_args if code_args else [] %}
+    {# Use trim to prevent matching whitespace-only strings, which fixes the empty comment bug. #}
+    {% if (doc_str | trim) or (return_str | trim) %}
+        {{- true -}}
+    {% else %}
+        {# Call the generalized helper for arg docs #}
+        {{- has_any_arg_doc(all_arg_docs, code_args) -}}
+    {% endif %}
+{% endmacro %}
