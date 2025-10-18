@@ -29,8 +29,10 @@ package {{ kotlin_package }}
 import java.util.concurrent.Executor
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
-{% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition with context %}
+{% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition, check_if_doc_present, generate_kdoc with context %}
 
+{% set all_callback_info = kdocs.callbacks %}
+{% set all_objects = kdocs.objects %}
 //* Provide an async wrapper for the 'callback info' type of async methods.
 {% for obj in by_category['object'] %}
     {% for method in obj.methods if has_callbackInfoStruct(method) and include_method(obj, method) %}
@@ -38,6 +40,15 @@ import kotlin.coroutines.suspendCoroutine
         {% set callback_function = callback_info.members[-1].type %}
         {% set return_name = callback_function.name.chunks[:-1] | map('title') | join + 'Return' %}
 
+        {# Generating KDocs #}
+        {% set curr_callback_info = all_callback_info.get(callback_info.name.get()) %}
+        {% set callback_doc = curr_callback_info.doc if curr_callback_info else "" %}
+        {% set callback_args_doc = curr_callback_info.args if curr_callback_info else {} %}
+        {% set callback_args = kotlin_record_members(callback_function.arguments) | list %}
+        {% if check_if_doc_present(callback_doc, "", callback_args_doc, callback_args) == 'True' %}
+            {{ generate_kdoc(callback_doc, "", callback_args_doc, callback_args, line_wrap_prefix = "\n * ") }}
+
+        {%- endif %}
         //* We make a return class for every callback method so that it can be used inline
         //* (without callbacks) in a suspend (async) function.
         public class {{ return_name }}(
@@ -52,6 +63,20 @@ import kotlin.coroutines.suspendCoroutine
             {% endfor %}
         }
 
+        {# Generating KDocs #}
+        {% set cur_object_info = all_objects.get(obj.name.get()) %}
+        {% set method_info = cur_object_info.methods.get(method.name.snake_case()) if cur_object_info else None %}
+        {% if not method_info %}
+            {% set method_info = cur_object_info.methods.get(method.name.camelCase()) if cur_object_info else None %}
+        {% endif %}
+        {% set method_doc = method_info.doc if method_info and method_info.doc else "" %}
+        {% set return_doc = method_info.returns_doc if method_info and method_info.returns_doc else "" %}
+        {% set args_doc = method_info.args if method_info else {} %}
+        {% set method_args = method.arguments[:-1] | list %}
+        {% if check_if_doc_present(method_doc, return_doc, args_doc, method_args) != 'False' %}
+            {{ generate_kdoc(method_doc, return_doc, args_doc, method_args, line_wrap_prefix = "\n * ") }}
+
+        {%- endif %}
         //* Every method that is identified as using callbacks is given a helper method that wraps
         //* call with a suspend function.
         public suspend fun {{ obj.name.CamelCase() }}.{{ method.name.camelCase() }}(
