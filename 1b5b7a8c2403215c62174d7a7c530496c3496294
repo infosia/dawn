@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44f111f9_99429669",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-18T02:08:52Z",
+      "side": 1,
+      "message": "PTAL (since you\u0027re next gardener anyway)",
+      "revId": "1b5b7a8c2403215c62174d7a7c530496c3496294",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
