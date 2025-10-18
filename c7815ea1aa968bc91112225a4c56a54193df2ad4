@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c480f4b_d19e0a97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-18T21:16:04Z",
+      "side": 1,
+      "message": "PTAL",
+      "revId": "c7815ea1aa968bc91112225a4c56a54193df2ad4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af9503ad_69c6fda4",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-18T21:16:04Z",
+      "side": 1,
+      "message": "I don\u0027t believe we have any coverage of this on the bots, but I tested locally and there wasn\u0027t any issue when syncing with this CL applied with the Github version already present on disk.",
+      "range": {
+        "startLine": 574,
+        "startChar": 18,
+        "endLine": 574,
+        "endChar": 28
+      },
+      "revId": "c7815ea1aa968bc91112225a4c56a54193df2ad4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
