@@ -32,10 +32,28 @@ import java.nio.ByteBuffer
     import java.util.concurrent.Executor
     {% break %}
 {% endfor %}
-{% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition with context %}
+{% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition, has_doc, has_any_arg_doc, generate_kotlin_doc with context %}
 
+{% set all_objects_info = kdocs.objects%}
+{% set object_info = all_objects_info.get(obj.name.get()) %}
+{% set doc_str = object_info.doc if object_info else "" %}
+{% if doc_str | trim %}
+    /**
+     * {{ doc_str | trim | wordwrap(80, break_long_words=False, break_on_hyphens=False, wrapstring = '\n * ') }}
+     */
+{% endif %}
 public class {{ obj.name.CamelCase() }}(public val handle: Long): AutoCloseable {
+    {% set all_method_info = object_info.methods if object_info else {} %}
     {% for method in obj.methods if include_method(method) %}
+        {% set method_info = all_method_info.get(method.name.snake_case()) %}
+        {% set main_doc = method_info.doc if method_info else "" %}
+        {% set return_doc = method_info.returns_doc if method_info else "" %}
+        {% set arg_docs_map = method_info.args if method_info else {} %}
+        {% set method_args = kotlin_record_members(method.arguments) | list %}
+        {% if has_doc(main_doc, return_doc, arg_docs_map, method_args) == 'True' %}
+        {{ generate_kotlin_doc(main_doc, return_doc, arg_docs_map, method_args, "\n     * ", indent_prefix = "    ") }}
+
+        {%- endif %}
         @FastNative
         @JvmName("{{ method.name.camelCase() }}")
         {{ kotlin_annotation(kotlin_return(method)) }} public external fun {{ method.name.camelCase() }}(
