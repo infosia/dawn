@@ -32,11 +32,25 @@ package {{ kotlin_package }}
     import java.util.concurrent.Executor
 {% endif %}
 
+{% set all_docs = kdocs.structs %}
+{% set curr_struct = all_docs.get(structure.name.get()) %}
+{% set doc_str = curr_struct.doc if curr_struct else "" %}
+{% if doc_str %}
+    /**
+     * {{ doc_str | trim | wordwrap(80, break_long_words=False, break_on_hyphens=False, wrapstring = '\n * ') }}
+     */
+{% endif %}
 public class {{ structure.name.CamelCase() }}
     {%- for member in kotlin_record_members(structure.members) %}
         {% if kotlin_default(member) is not none %} @JvmOverloads constructor{% break %}{% endif %}
     {%- endfor %}(
     {% for member in kotlin_record_members(structure.members) %}
+        {% set member_doc_str = curr_struct.members.get(member.name.get(), "") if curr_struct and curr_struct.members else "" %}
+        {% if member_doc_str %}
+            /**
+             * {{ member_doc_str | trim | wordwrap(80, break_long_words=False, break_on_hyphens=False, wrapstring = '\n     * ')}}
+             */
+        {% endif %}
         {% if member.type.category in ['callback function']%}
         {{'     '}}@get:JvmName("get{{member.name.CamelCase()}}Executor")
         {{'     '}}public var {{member.name.camelCase()}}Executor: Executor = Executor(Runnable::run),
@@ -44,6 +58,12 @@ public class {{ structure.name.CamelCase() }}
         {{ kotlin_annotation(member) }} public var {{ member.name.camelCase() }}: {{ kotlin_definition(member) }},
     {% endfor %}
     {% for structure in chain_children[structure.name.get()] %}
+        {% set chain_struct_doc_str = all_docs.get(structure.name.get()).doc if all_docs.get(structure.name.get()) else "" %}
+        {% if chain_struct_doc_str %}
+            /**
+             * {{ chain_struct_doc_str | trim | wordwrap(80, break_long_words=False, break_on_hyphens=False, wrapstring = '\n     * ') }}
+             */
+        {% endif %}
         public var {{ structure.name.camelCase() }}: {{ structure.name.CamelCase() }}? = null,
     {% endfor %}
 )

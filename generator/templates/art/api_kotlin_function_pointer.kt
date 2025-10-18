@@ -28,7 +28,40 @@ package {{ kotlin_package }}
 {% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration with context %}
 
 {% set callbackName = 'on' + function_pointer.name.chunks[:-1] | map('title') | join %}
+{% set all_docs = kdocs.callbacks %}
+{% set curr_callback = all_docs.get(function_pointer.name.get()) %}
+{% set doc_str = curr_callback.doc if curr_callback else "" %}
+{% set all_args =  curr_callback.args if curr_callback else [] %}
 
+{% set has_any_arg_doc = namespace(found=false) %}
+{%- for arg in kotlin_record_members(function_pointer.arguments) %}
+    {% set camel_name = as_varName(arg.name) %}
+    {% set snake_name = arg.name.snake_case() %}
+    {% set arg_name = camel_name if camel_name in all_args else (snake_name if snake_name in all_args else None) %}
+    {%- if arg_name and all_args.get(arg_name) %}
+        {% set has_any_arg_doc.found = true %}
+        {% break %}
+    {%- endif %}
+{%- endfor %}
+{% if doc_str or has_any_arg_doc.found %}
+    /**
+    {%- if doc_str %}
+
+         * {{ doc_str | wordwrap(80, break_long_words=False, break_on_hyphens=False, wrapstring = "\n * ") }}
+    {%- endif %}
+
+    {%- for arg in kotlin_record_members(function_pointer.arguments) %}
+        {% set camel_name = as_varName(arg.name) %}
+        {% set snake_name = arg.name.snake_case() %}
+        {% set arg_name = camel_name if camel_name in all_args else (snake_name if snake_name in all_args else None) %}
+        {%- if has_any_arg_doc.found and all_args.get(arg_name) %}
+
+             * @param {{ as_varName(arg.name) + " " +  all_args.get(arg_name) | trim | wordwrap(90, break_long_words=False, break_on_hyphens=False, wrapstring = "\n * ") }}
+        {%- endif %}
+    {%- endfor %}
+
+     */
+{% endif %}
 public fun interface {{ function_pointer.name.CamelCase() }} {
     @Suppress("INAPPLICABLE_JVM_NAME")  //* Required for @JvmName on global function.
     @JvmName("{{ callbackName }}")  //* Required to access Inline Value Class parameters via JNI.
