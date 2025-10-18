@@ -20,6 +20,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "35018ded_55668afb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-18T21:17:19Z",
+      "side": 1,
+      "message": "Swapping out Antonio for Dan since the former isn\u0027t an owner of the build overrides.",
+      "revId": "c7815ea1aa968bc91112225a4c56a54193df2ad4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "af9503ad_69c6fda4",
         "filename": "DEPS",
         "patchSetId": 2
