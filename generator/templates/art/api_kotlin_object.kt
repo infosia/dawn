@@ -34,8 +34,53 @@ import java.nio.ByteBuffer
 {% endfor %}
 {% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition with context %}
 
+{% set all_objects = kdocs.objects%}
+{% set object_docs = all_objects.get(obj.name.get()) %}
+{% set doc_str = object_docs.doc if object_docs else "" %}
+{% if doc_str %}
+    /**
+     * {{ doc_str | trim | wordwrap(80, break_long_words=False, break_on_hyphens=False, wrapstring = '\n * ') }}
+     */
+{% endif %}
 public class {{ obj.name.CamelCase() }}(public val handle: Long): AutoCloseable {
+    {% set all_method_docs = object_docs.methods%}
     {% for method in obj.methods if include_method(method) %}
+        {% set method_docs = all_method_docs.get(method.name.snake_case()) %}
+        {% set method_doc_str = method_docs.doc if method_docs else "" %}
+        {% set return_str = method_docs.returns_doc if method_docs else "" %}
+        {% set all_args = method_docs.args if method_docs else [] %}
+        {% set has_any_arg_doc = namespace(found=false) %}
+        {%- for arg in kotlin_record_members(method.arguments) %}
+            {% set camel_name = as_varName(arg.name) %}
+            {% set snake_name = arg.name.snake_case() %}
+            {% set arg_name = camel_name if camel_name in all_args else (snake_name if snake_name in all_args else None) %}
+            {%- if arg_name and all_args.get(arg_name) %}
+                {% set has_any_arg_doc.found = true %}
+                {% break %}
+            {%- endif %}
+        {%- endfor %}
+        {% if method_doc_str or return_str or has_any_arg_doc.found %}
+            /**
+            {%- if method_doc_str %}
+
+                 * {{ method_doc_str | wordwrap(80, break_long_words=False, break_on_hyphens=False, wrapstring = "\n     * ") }}
+            {%- endif %}
+            {%- for arg in kotlin_record_members(method.arguments) %}
+                {% set camel_name = as_varName(arg.name) %}
+                {% set snake_name = arg.name.snake_case() %}
+                {% set arg_name = camel_name if camel_name in all_args else (snake_name if snake_name in all_args else None) %}
+                {%- if has_any_arg_doc.found and all_args.get(arg_name) %}
+
+                     * @param {{ as_varName(arg.name) + " " +  all_args.get(arg_name) | trim | wordwrap(90, break_long_words=False, break_on_hyphens=False, wrapstring = "\n     * ") }}
+                {%- endif %}
+            {%- endfor %}
+            {%- if return_str %}
+
+                 * @return {{ return_str | trim | wordwrap(80, break_long_words=False, break_on_hyphens=False, wrapstring = "\n     * ") }}
+            {%- endif %}
+
+             */
+        {% endif %}
         @FastNative
         @JvmName("{{ method.name.camelCase() }}")
         {{ kotlin_annotation(kotlin_return(method)) }} public external fun {{ method.name.camelCase() }}(
