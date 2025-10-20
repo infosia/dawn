@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6da3b5f6_a77faf5a",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-20T19:44:02Z",
+      "side": 1,
+      "message": "nit. WebGPU backend will pass down cmd-\u003eresolveRect to the inner layer backend to handle it anyways, so return true and do not apply any workarounds here.",
+      "range": {
+        "startLine": 278,
+        "startChar": 7,
+        "endLine": 279,
+        "endChar": 74
+      },
+      "revId": "a27eba95706507c028e7225a5d78e3b4e29a039f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
