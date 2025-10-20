@@ -88,7 +88,7 @@ class DynamicUploader : NonMovable {
     // Serial used to track when a serial has been scheduled and the corresponding pending memory
     // will be freed in finite time.
     ExecutionSerial mLastPendingSerialSeen = kBeginningOfGPUTime;
-    uint64_t mMemoryPendingSubmit = 0;
+    std::atomic<uint64_t> mMemoryPendingSubmit = 0;
     raw_ptr<DeviceBase> mDevice;
 };
 }  // namespace dawn::native

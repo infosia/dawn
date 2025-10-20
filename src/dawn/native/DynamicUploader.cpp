@@ -126,6 +126,8 @@ ResultOrError<UploadReservation> DynamicUploader::Reserve(uint64_t allocationSiz
 }
 
 MaybeError DynamicUploader::OnStagingMemoryFreePendingOnSubmit(uint64_t size) {
+    DAWN_ASSERT(mDevice->IsLockedByCurrentThreadIfNeeded());
+
     // Take into account that submits make the pending memory freed in finite time so we no longer
     // need to track that memory.
     ExecutionSerial pendingSerial = mDevice->GetQueue()->GetPendingCommandSerial();
@@ -142,6 +144,9 @@ MaybeError DynamicUploader::MaybeSubmitPendingCommands() {
     if (mMemoryPendingSubmit < kPendingMemorySubmitThreshold) {
         return {};
     }
+
+    // Lock device mutex if a submit is required.
+    auto deviceGuard = mDevice->GetGuard();
 
     // TODO(crbug.com/42240396): Consider blocking when there is too much memory in flight for
     // freeing, which could cause OOM even if we eagerly flush when too much memory is pending.
