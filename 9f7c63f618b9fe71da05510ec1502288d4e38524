@@ -16,6 +16,24 @@
       "message": "How does the killswitch work? Is this method overridden in chromium or something?",
       "revId": "9f7c63f618b9fe71da05510ec1502288d4e38524",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f374421_cb641bd6",
+        "filename": "src/dawn/platform/DawnPlatform.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-20T13:45:24Z",
+      "side": 1,
+      "message": "Yes, here:\nhttps://source.chromium.org/chromium/chromium/src/+/main:gpu/command_buffer/service/dawn_platform.cc;l\u003d274?q\u003ddawn_platform.cc\u0026ss\u003dchromium\n\nDefaults to off. When this lands I\u0027ll add the Blink side feature that will default it to on, which gives us the killswitch.",
+      "parentUuid": "906a829e_1127ab86",
+      "revId": "9f7c63f618b9fe71da05510ec1502288d4e38524",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
