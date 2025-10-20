@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "31fa6217717b6282988f904d3cc1c389516ac932",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d249c9e3_fea568a4",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-20T20:27:29Z",
+      "side": 1,
+      "message": "Nit: Remove the `Transform` (just make a copy of the vector).",
+      "revId": "31fa6217717b6282988f904d3cc1c389516ac932",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
