@@ -308,6 +308,7 @@ MaybeError PrepareResourcesForSyncScope(Device* device,
     Barriers vertexBarriers;
     Barriers nonVertexBarriers;
 
+    BarrierTracker barrierTracker;
     for (size_t i = 0; i < scope.buffers.size(); ++i) {
         Buffer* buffer = ToBackend(scope.buffers[i]);
         buffer->EnsureDataInitialized(recordingContext);
@@ -324,7 +325,7 @@ MaybeError PrepareResourcesForSyncScope(Device* device,
         wgpu::BufferUsage usage =
             scope.bufferSyncInfos[i].usage & (~kIndirectBufferForFrontendValidation);
 
-        buffer->TrackUsageAndGetResourceBarrier(recordingContext, usage,
+        buffer->TrackUsageAndGetResourceBarrier(recordingContext, barrierTracker, usage,
                                                 scope.bufferSyncInfos[i].shaderStages);
     }
 
@@ -372,7 +373,7 @@ MaybeError PrepareResourcesForSyncScope(Device* device,
                 nullptr, 0, nullptr, barriers.imageBarriers.size(), barriers.imageBarriers.data());
         }
     }
-    recordingContext->EmitBufferBarriers(device);
+    barrierTracker.EmitBufferBarriers(device, recordingContext);
 
     return {};
 }

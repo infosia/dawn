@@ -88,15 +88,23 @@ struct CommandRecordingContext {
     // Need to track if a render pass has already been recorded for the
     // VulkanSplitCommandBufferOnComputePassAfterRenderPass workaround.
     bool hasRecordedRenderPass = false;
+};
+
+class BarrierTracker {
+  public:
+    BarrierTracker() = default;
+    ~BarrierTracker();
 
     void AddBufferBarrier(VkAccessFlags srcAccessMask,
                           VkAccessFlags dstAccessMask,
                           VkPipelineStageFlags srcStages,
                           VkPipelineStageFlags dstStages);
-    void EmitBufferBarriers(Device* device);
+    void EmitBufferBarriers(Device* device, CommandRecordingContext* recordingContext);
 
   private:
     struct BufferBarrier {
+        bool IsEmpty() const { return bufferSrcStages == 0 && bufferDstStages == 0; }
+
         VkAccessFlags bufferSrcAccessMask = 0;
         VkAccessFlags bufferDstAccessMask = 0;
         VkPipelineStageFlags bufferSrcStages = 0;

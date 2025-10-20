@@ -40,6 +40,7 @@
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/PhysicalDevice.h"
 #include "dawn/native/Queue.h"
+#include "dawn/native/vulkan/CommandRecordingContextVk.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
 #include "dawn/native/vulkan/QueueVk.h"
@@ -429,11 +430,13 @@ VkBuffer Buffer::GetHandle() const {
 void Buffer::TransitionUsageNow(CommandRecordingContext* recordingContext,
                                 wgpu::BufferUsage usage,
                                 wgpu::ShaderStage shaderStage) {
-    TrackUsageAndGetResourceBarrier(recordingContext, usage, shaderStage);
-    recordingContext->EmitBufferBarriers(ToBackend(GetDevice()));
+    BarrierTracker barrierTracker;
+    TrackUsageAndGetResourceBarrier(recordingContext, barrierTracker, usage, shaderStage);
+    barrierTracker.EmitBufferBarriers(ToBackend(GetDevice()), recordingContext);
 }
 
 void Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingContext,
+                                             BarrierTracker& barrierTracker,
                                              wgpu::BufferUsage usage,
                                              wgpu::ShaderStage shaderStage) {
     if (shaderStage == wgpu::ShaderStage::None) {
@@ -533,9 +536,8 @@ void Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingC
         MarkUsedInPendingCommands();
     }
 
-    recordingContext->AddBufferBarrier(srcAccess, /* dstAccess */ VulkanAccessFlags(usage),
-                                       srcStage,
-                                       /* dstStage */ VulkanPipelineStage(usage, shaderStage));
+    barrierTracker.AddBufferBarrier(srcAccess, /* dstAccess */ VulkanAccessFlags(usage), srcStage,
+                                    /* dstStage */ VulkanPipelineStage(usage, shaderStage));
 }
 
 bool Buffer::IsCPUWritableAtCreation() const {
@@ -788,16 +790,17 @@ void Buffer::TransitionMappableBuffersEagerly(Device* device,
                                               const absl::flat_hash_set<Ref<Buffer>>& buffers) {
     DAWN_ASSERT(!buffers.empty());
 
+    BarrierTracker barrierTracker;
     size_t originalBufferCount = buffers.size();
     for (const Ref<Buffer>& buffer : buffers) {
         wgpu::BufferUsage mapUsage = buffer->GetInternalUsage() & kMappableBufferUsages;
-        buffer->TrackUsageAndGetResourceBarrier(recordingContext, mapUsage,
+        buffer->TrackUsageAndGetResourceBarrier(recordingContext, barrierTracker, mapUsage,
                                                 wgpu::ShaderStage::None);
     }
     // TrackUsageAndGetResourceBarrier() should not modify recordingContext for map usages.
     DAWN_ASSERT(buffers.size() == originalBufferCount);
 
-    recordingContext->EmitBufferBarriers(device);
+    barrierTracker.EmitBufferBarriers(device, recordingContext);
 }
 
 void Buffer::SetLabelImpl() {

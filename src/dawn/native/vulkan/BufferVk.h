@@ -38,6 +38,7 @@
 
 namespace dawn::native::vulkan {
 
+class BarrierTracker;
 struct CommandRecordingContext;
 class Device;
 struct VulkanFunctions;
@@ -56,6 +57,7 @@ class Buffer final : public BufferBase {
                             wgpu::BufferUsage usage,
                             wgpu::ShaderStage shaderStage = wgpu::ShaderStage::None);
     void TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingContext,
+                                         BarrierTracker& barrierTracker,
                                          wgpu::BufferUsage usage,
                                          wgpu::ShaderStage shaderStage);
 

@@ -27,6 +27,7 @@
 
 #include "src/dawn/native/vulkan/CommandRecordingContextVk.h"
 
+#include "dawn/native/vulkan/BufferVk.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "vulkan/vulkan_core.h"
 
@@ -43,10 +44,15 @@ constexpr VkPipelineStageFlags vertexStages = VK_PIPELINE_STAGE_VERTEX_INPUT_BIT
 
 }  // namespace
 
-void CommandRecordingContext::AddBufferBarrier(VkAccessFlags srcAccessMask,
-                                               VkAccessFlags dstAccessMask,
-                                               VkPipelineStageFlags srcStages,
-                                               VkPipelineStageFlags dstStages) {
+BarrierTracker::~BarrierTracker() {
+    DAWN_ASSERT(mVertexBufferBarrier.IsEmpty());
+    DAWN_ASSERT(mNonVertexBufferBarrier.IsEmpty());
+}
+
+void BarrierTracker::AddBufferBarrier(VkAccessFlags srcAccessMask,
+                                      VkAccessFlags dstAccessMask,
+                                      VkPipelineStageFlags srcStages,
+                                      VkPipelineStageFlags dstStages) {
     BufferBarrier* barrier = nullptr;
     if (dstStages & vertexStages) {
         barrier = &mVertexBufferBarrier;
@@ -60,7 +66,7 @@ void CommandRecordingContext::AddBufferBarrier(VkAccessFlags srcAccessMask,
     barrier->bufferDstStages |= dstStages;
 }
 
-void CommandRecordingContext::EmitBufferBarriers(Device* device) {
+void BarrierTracker::EmitBufferBarriers(Device* device, CommandRecordingContext* recordingContext) {
     std::array<VkMemoryBarrier, 2> barriers;
     size_t idx = 0;
 
@@ -68,7 +74,7 @@ void CommandRecordingContext::EmitBufferBarriers(Device* device) {
     VkPipelineStageFlags dstStages = 0;
 
     auto CreateBarrierIfNeeded = [&](const BufferBarrier& barrier) {
-        if (barrier.bufferSrcStages == 0 || barrier.bufferDstStages == 0) {
+        if (barrier.IsEmpty()) {
             return;
         }
 
@@ -86,8 +92,8 @@ void CommandRecordingContext::EmitBufferBarriers(Device* device) {
     CreateBarrierIfNeeded(mNonVertexBufferBarrier);
 
     if (idx > 0) {
-        device->fn.CmdPipelineBarrier(commandBuffer, srcStages, dstStages, 0, idx, barriers.data(),
-                                      0, nullptr, 0, nullptr);
+        device->fn.CmdPipelineBarrier(recordingContext->commandBuffer, srcStages, dstStages, 0, idx,
+                                      barriers.data(), 0, nullptr, 0, nullptr);
     }
 
     mVertexBufferBarrier = {};
