@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "002142fd_aeef2d2e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-20T21:59:27Z",
+      "side": 1,
+      "message": "PTAL. I know you added these recently, but none of them should be necessary. Tested the original fuzzer bug and it passes without these, as do all of the unit tests.",
+      "revId": "33ece20f4eafe3d762d363ba4f6221c1c9b458f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
