@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca4dd25d_9d726daf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-20T15:08:53Z",
+      "side": 1,
+      "message": "PTAL. This is my take on customizing API behavior. Happy to hear your views.",
+      "revId": "d2fc424baeb962823f3ef9afd9229b7aa82f993b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
