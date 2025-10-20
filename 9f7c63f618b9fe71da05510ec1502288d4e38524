@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "906a829e_1127ab86",
+        "filename": "src/dawn/platform/DawnPlatform.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-20T13:40:57Z",
+      "side": 1,
+      "message": "How does the killswitch work? Is this method overridden in chromium or something?",
+      "revId": "9f7c63f618b9fe71da05510ec1502288d4e38524",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
