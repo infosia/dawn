@@ -33,6 +33,24 @@
       "message": "Nit: Remove the `Transform` (just make a copy of the vector).",
       "revId": "31fa6217717b6282988f904d3cc1c389516ac932",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3eaa2af7_ff83ffc0",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-20T20:33:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d249c9e3_fea568a4",
+      "revId": "31fa6217717b6282988f904d3cc1c389516ac932",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
