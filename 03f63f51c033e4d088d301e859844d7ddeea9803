@@ -1,0 +1,336 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c199c38_008b85a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-20T21:19:46Z",
+      "side": 1,
+      "message": "Why?",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 57
+      },
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12f2a4dc_757bd8bf",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-20T21:19:46Z",
+      "side": 1,
+      "message": "I believe you could add the block below here and omit the intermediate variable. The more intermediate variables we add to the templates the less template-like it looks and the more it looks like Python might be the better location.",
+      "range": {
+        "startLine": 51,
+        "startChar": 13,
+        "endLine": 51,
+        "endChar": 54
+      },
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6a69524_7bac4920",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-20T21:19:46Z",
+      "side": 1,
+      "message": "Because at first glance these will look like comments in the templates (not templates to generate comments) we should always start with an actual Jinja2 comment\n\n```\n{# KDoc generation #}\n```",
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "327dec88_b0e57e59",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-20T21:19:46Z",
+      "side": 1,
+      "message": "This needs a comment as I\u0027ve no idea what this logic is doing.",
+      "range": {
+        "startLine": 66,
+        "startChar": 15,
+        "endLine": 66,
+        "endChar": 127
+      },
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51693543_69697b05",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-20T21:19:46Z",
+      "side": 1,
+      "message": "Why cur_ prefix?",
+      "range": {
+        "startLine": 89,
+        "startChar": 15,
+        "endLine": 89,
+        "endChar": 19
+      },
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fca9fd84_2a5091e1",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-20T21:19:46Z",
+      "side": 1,
+      "message": "Add a comment explaining why we\u0027re leaving off the final argument.",
+      "range": {
+        "startLine": 98,
+        "startChar": 22,
+        "endLine": 98,
+        "endChar": 46
+      },
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3c6b690_e00cd7f9",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-20T21:19:46Z",
+      "side": 1,
+      "message": "I believe you could put the comment generation from below, here, and do away with the .found intermediate.",
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6354be21_7239ff5e",
+        "filename": "generator/templates/art/api_kotlin_function_pointer.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-20T21:19:46Z",
+      "side": 1,
+      "message": "Add a commment explaining what \u0027all args\u0027 is, because it\u0027s not obvious to me.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 65
+      },
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0395671b_bdd6ac8d",
+        "filename": "generator/templates/art/api_kotlin_object.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-20T21:19:46Z",
+      "side": 1,
+      "message": "We seem to have the same or very similar logic repeated in a few places. Would a macro or more preparation on the Python side help reduce this duplication?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 56
+      },
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14b471ea_d73c736b",
+        "filename": "generator/templates/art/api_kotlin_structure.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-20T21:19:46Z",
+      "side": 1,
+      "message": "For this and similar other KDoc comment blocks maybe we could have a macro that generates such blocks from a parameter, or early-outs if the parameter is empty/missing. That way we wouldn\u0027t need the intermediate variable and it would avoid the danger of comment-generating template code being mistaken for comments in the template itself.",
+      "range": {
+        "startLine": 64,
+        "startChar": 14,
+        "endLine": 64,
+        "endChar": 120
+      },
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00368146_4a4395b8",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-20T21:19:46Z",
+      "side": 1,
+      "message": "Looks odd to see a Python variable starting with lower caase.",
+      "range": {
+        "startLine": 116,
+        "startChar": 15,
+        "endLine": 116,
+        "endChar": 17
+      },
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef583410_77be9314",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-20T21:19:46Z",
+      "side": 1,
+      "message": "Please add examples to all of these transforms.",
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f5d99b2_67645188",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-20T21:19:46Z",
+      "side": 1,
+      "message": "Is `data_cat` a better name than `category`? It\u0027s preferable to avoid abbreviation in names.",
+      "range": {
+        "startLine": 194,
+        "startChar": 8,
+        "endLine": 194,
+        "endChar": 16
+      },
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b27286a_63e829d9",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-20T21:19:46Z",
+      "side": 1,
+      "message": "A comment about what\u0027s being done here please.",
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "822b3bd4_216bb139",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-20T21:19:46Z",
+      "side": 1,
+      "message": "A comment about what\u0027s being done here please.",
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4acd21d_474d88cf",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-20T21:19:46Z",
+      "side": 1,
+      "message": "A comment about what\u0027s being done here please.",
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
