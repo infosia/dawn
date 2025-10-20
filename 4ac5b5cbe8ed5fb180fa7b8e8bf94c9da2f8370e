@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "711ee206_0a8ebf13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-10-20T18:36:22Z",
+      "side": 1,
+      "message": "This is an exciting first step, but I\u0027d like to understand the lifetime issues a bit. I\u0027d like Geoff to take a look at this too.",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d549327_b48c2fb9",
+        "filename": "src/dawn/native/opengl/ContextEGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-10-20T18:36:22Z",
+      "side": 1,
+      "message": "I find it kind of weird that ContextEGL can now make contexts other than its own current. That defeats its purpose.\n\nI suggest instead we move context setting to a DisplayEGL::MakeCurrent() helper that takes an EGLContext and two EGLSurfaces and does the error checking. We can then call that from all the places we\u0027d like to set contexts.",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1cbf852_fb98d4c1",
+        "filename": "src/dawn/native/opengl/ContextEGL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-10-20T18:36:22Z",
+      "side": 1,
+      "message": "Nit: if this is going to be removed, suggest renaming it \"DeprecatedMakeCurrent()\"  now, and naming the new \"MakeCurrentScope()\" function below into \"MakeCurrent()\". That\u0027ll make the remaining work clearer, and leave things in a cleaner end state.",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddc3e759_b4eefe06",
+        "filename": "src/dawn/native/opengl/ContextEGL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-10-20T18:36:22Z",
+      "side": 1,
+      "message": "Finally, let\u0027s rename this MakeCurrentInternal().",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0a324d3_6378e7f2",
+        "filename": "src/dawn/native/opengl/DeviceGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-10-20T18:36:22Z",
+      "side": 1,
+      "message": "Is there a case where Chrome might have an EGL context current that Dawn might not know about? If I\u0027m understanding the purpose, it seems like eglGetCurrentContext() might be safer than attempting to track it ourselves.",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9da69f0b_23b63be3",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-10-20T18:36:22Z",
+      "side": 1,
+      "message": "Nit: \"Works\" is grammatically awkward. Ideas: use \"Work\" everywhere (for both singular and plural; will cause some overloads but should work), or \"WorkItem/WorkItems\".",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87cc0696_065490cf",
+        "filename": "src/dawn/native/opengl/QueueGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-10-20T18:36:22Z",
+      "side": 1,
+      "message": "Are we certain there are no lifetime issues when stashing a raw Queue and CommandBufferBase pointer? Is there a chance the Device might outlive the CommandBuffer?",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
