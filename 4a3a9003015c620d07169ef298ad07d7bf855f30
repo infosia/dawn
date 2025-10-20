@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b483ee6e_c9917097",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-20T21:21:48Z",
+      "side": 1,
+      "message": "PTAL\n\nCI tester is looking happy.",
+      "revId": "4a3a9003015c620d07169ef298ad07d7bf855f30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
