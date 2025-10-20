@@ -22,6 +22,30 @@
       },
       "revId": "a27eba95706507c028e7225a5d78e3b4e29a039f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4009283d_f1a388d3",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-20T20:01:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6da3b5f6_a77faf5a",
+      "range": {
+        "startLine": 278,
+        "startChar": 7,
+        "endLine": 279,
+        "endChar": 74
+      },
+      "revId": "a27eba95706507c028e7225a5d78e3b4e29a039f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
