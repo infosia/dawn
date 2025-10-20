@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-10-09 08:49:21AM
+# Last rolled: 2025-10-20 05:04:08AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -497,7 +497,6 @@ crbug.com/407076121 [ android-t ] webgpu:shader,execution,limits:const_array_ele
 crbug.com/42241269 [ intel-0x3e9b mac ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ Failure ]
 crbug.com/42241269 [ amd mac ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ Failure ]
 
-
 crbug.com/373670513 [ android-pixel-6 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ RetryOnFailure ]
 crbug.com/373485785 [ intel win10 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ RetryOnFailure ]
 crbug.com/373485785 [ android-chromium android-pixel-4 android-r angle-opengles graphite-disabled mobile qualcomm target-cpu-32 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ RetryOnFailure ]
@@ -760,7 +759,6 @@ crbug.com/407109059 [ amd-0x67ef mac ] webgpu:shader,execution,expression,call,b
 
 # All textureSampleBias tests marked failing on Mac M2
 crbug.com/407076135 [ apple-angle-metal-renderer:-apple-m2 mac ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:* [ Failure ]
-
 
 # All textureSampleBias tests marked failing on Linux NVIDIA
 crbug.com/407109061 [ clang-coverage dawn-no-backend-validation linux nvidia-0x2184 nvidia_lt_535.183.01 ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:* [ Failure ]
@@ -1058,7 +1056,6 @@ crbug.com/421941589 [ angle-opengl arch-x86_64 desktop display-server-x graphite
 crbug.com/421941589 [ angle-metal arch-x86_64 dawn-no-backend-validation desktop graphite-enabled intel-0x3e9b memory_ge_16gb no-asan no-clang-coverage release renderer-skia-gl sequoia target-cpu-64 ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:* [ Failure ]
 crbug.com/421941589 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:format="rgb10a2unorm";* [ Failure ]
 
-
 # CTS needs to support new read-write accessible formats from texture-feature-tier2,
 # will be removed after the latest CTS rolling into Dawn
 crbug.com/6898548 [ android-14 android-chromium android-pixel-6 angle-vulkan arm dawn-backend-validation graphite-enabled mobile no-asan no-clang-coverage renderer-skia-gl target-cpu-64 ] webgpu:api,operation,storage_texture,read_write:basic:format="rgba32uint";* [ Failure ]
@@ -1098,26 +1095,14 @@ crbug.com/448129221 webgpu:api,validation,queue,copyToTexture,CopyExternalImageT
 crbug.com/448129221 webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:destination_texture,format:format="rgba16snorm" [ Failure ]
 crbug.com/448129221 webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:destination_texture,format:format="rgba16unorm" [ Failure ]
 crbug.com/448129221 webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:destination_texture,format:format="rgba8snorm" [ Failure ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstFormat="r16snorm"* [ Skip ]
 crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstFormat="r16unorm"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstFormat="r8snorm"* [ Skip ]
 crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstFormat="rg11b10ufloat"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstFormat="rg16snorm"* [ Skip ]
 crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstFormat="rg16unorm"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstFormat="rg8snorm"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstFormat="rgba16snorm"* [ Skip ]
 crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstFormat="rgba16unorm"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstFormat="rgba8snorm"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstColorFormat="r16snorm"* [ Skip ]
 crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstColorFormat="r16unorm"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstColorFormat="r8snorm"* [ Skip ]
 crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstColorFormat="rg11b10ufloat"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstColorFormat="rg16snorm"* [ Skip ]
 crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstColorFormat="rg16unorm"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstColorFormat="rg8snorm"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstColorFormat="rgba16snorm"* [ Skip ]
 crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstColorFormat="rgba16unorm"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstColorFormat="rgba8snorm"* [ Skip ]
 
 # Failures on brya devices running Android Desktop.
 crbug.com/445230380 [ android android-brya ] webgpu:api,operation,rendering,basic:large_draw:* [ Failure ]
