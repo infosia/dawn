@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2bb48dd_0b24eef5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-20T18:34:47Z",
+      "side": 1,
+      "message": "PTAL Dan, had to change some Tint stuff in the end.",
+      "revId": "968a528d11efc47e051f5d2b80e5c7538db60419",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
