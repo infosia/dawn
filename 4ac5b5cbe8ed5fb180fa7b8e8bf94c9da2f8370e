@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2f8dce69_7ec05b20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-21T17:31:37Z",
+      "side": 1,
+      "message": "I\u0027d like to see a proof of concept of this working by creating multiple contexts, even if it only does very simple operations like buffer or texture uploads. Then we can add tests that do those operations from many threads.",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3d549327_b48c2fb9",
         "filename": "src/dawn/native/opengl/ContextEGL.cpp",
         "patchSetId": 7
@@ -31,6 +48,24 @@
       "writtenOn": "2025-10-20T18:36:22Z",
       "side": 1,
       "message": "I find it kind of weird that ContextEGL can now make contexts other than its own current. That defeats its purpose.\n\nI suggest instead we move context setting to a DisplayEGL::MakeCurrent() helper that takes an EGLContext and two EGLSurfaces and does the error checking. We can then call that from all the places we\u0027d like to set contexts.",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcf6545e_310149b5",
+        "filename": "src/dawn/native/opengl/ContextEGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-21T17:31:37Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "3d549327_b48c2fb9",
       "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -54,6 +89,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c33ccc82_a5ad6e48",
+        "filename": "src/dawn/native/opengl/ContextEGL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-21T17:31:37Z",
+      "side": 1,
+      "message": "Can you factor this into a small struct, maybe `CurrentStateEGL` with compactors since there are a bunch of comparisons done in the cpp file.",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 53
+      },
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ddc3e759_b4eefe06",
         "filename": "src/dawn/native/opengl/ContextEGL.h",
         "patchSetId": 7
@@ -65,6 +123,29 @@
       "writtenOn": "2025-10-20T18:36:22Z",
       "side": 1,
       "message": "Finally, let\u0027s rename this MakeCurrentInternal().",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fec480e6_2af405da",
+        "filename": "src/dawn/native/opengl/ContextEGL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-21T17:31:37Z",
+      "side": 1,
+      "message": "Can you add a comment explaining what this mutex is protecting? Possibly rename it to reflect that.",
+      "range": {
+        "startLine": 94,
+        "startChar": 4,
+        "endLine": 94,
+        "endChar": 22
+      },
       "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -88,6 +169,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7131cb24_c19ab3de",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-21T17:31:37Z",
+      "side": 1,
+      "message": "Does this have to be templated? Can you use `GLWorkFunc` instead?",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 26
+      },
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9da69f0b_23b63be3",
         "filename": "src/dawn/native/opengl/DeviceGL.h",
         "patchSetId": 7
@@ -99,6 +203,24 @@
       "writtenOn": "2025-10-20T18:36:22Z",
       "side": 1,
       "message": "Nit: \"Works\" is grammatically awkward. Ideas: use \"Work\" everywhere (for both singular and plural; will cause some overloads but should work), or \"WorkItem/WorkItems\".",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "252f9e45_939242f9",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-21T17:31:37Z",
+      "side": 1,
+      "message": "Suggest: `ExecutePendingGLWork`",
+      "parentUuid": "9da69f0b_23b63be3",
       "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
