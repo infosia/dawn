@@ -34,6 +34,24 @@
       "parentUuid": "002142fd_aeef2d2e",
       "revId": "33ece20f4eafe3d762d363ba4f6221c1c9b458f9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9f3ed54_2b1c2935",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-21T15:27:34Z",
+      "side": 1,
+      "message": "Discussed offline. Looks like the original fuzzer case was fixed by some other validation change around the same time. We can\u0027t remember why the recursion was needed but in theory it shouldn\u0027t be necessary, so we\u0027ll land this and see if any fuzzer issues crop up again and then figure out how to fix them without the recursion.",
+      "parentUuid": "0f237ded_dfe453c1",
+      "revId": "33ece20f4eafe3d762d363ba4f6221c1c9b458f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
