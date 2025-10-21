@@ -1174,7 +1174,8 @@ struct State {
             auto* layout = b.Constant(u32(col_major->Value()->ValueAs<bool>()
                                               ? SpvCooperativeMatrixLayoutColumnMajorKHR
                                               : SpvCooperativeMatrixLayoutRowMajorKHR));
-            auto* memory_operand = Literal(u32(SpvMemoryAccessNonPrivatePointerMask));
+            auto* memory_operand = Literal(
+                u32(SpvMemoryAccessNonPrivatePointerMask | SpvMemoryAccessMakePointerVisibleMask));
 
             // In SPIR-V `stride` and `offset` are related to the type of the input pointer, while
             // in WGSL they both mean the number of elements. When the subgroup matrix element type

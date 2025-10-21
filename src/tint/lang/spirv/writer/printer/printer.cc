@@ -1141,9 +1141,19 @@ class Printer {
             true_label = Label(true_block);
         }
 
+        bool translate_as_for_loop_condition = false;
+        if (false_block->Length() == 1 && false_block->Terminator() != nullptr &&
+            false_block->Terminator()->Is<core::ir::ExitLoop>()) {
+            false_label =
+                GetMergeLabel(false_block->Terminator()->As<core::ir::ExitLoop>()->Loop());
+            translate_as_for_loop_condition = true;
+        }
+
         // Emit the OpSelectionMerge and OpBranchConditional instructions.
-        current_function_.PushInst(spv::Op::OpSelectionMerge,
-                                   {merge_label, U32Operand(SpvSelectionControlMaskNone)});
+        if (!translate_as_for_loop_condition) {
+            current_function_.PushInst(spv::Op::OpSelectionMerge,
+                                       {merge_label, U32Operand(SpvSelectionControlMaskNone)});
+        }
         current_function_.PushInst(spv::Op::OpBranchConditional,
                                    {Value(i->Condition()), true_label, false_label});
 
@@ -1151,7 +1161,7 @@ class Printer {
         if (true_label != merge_label) {
             QueueBlock(true_block);
         }
-        if (false_label != merge_label) {
+        if (!translate_as_for_loop_condition && false_label != merge_label) {
             QueueBlock(false_block);
         }
 
@@ -1738,6 +1748,9 @@ class Printer {
         for (auto* arg : builtin->Args()) {
             operands.push_back(Value(arg));
         }
+        if (op == spv::Op::OpCooperativeMatrixLoadKHR) {
+            operands.push_back(Constant(b_.ConstantValue(u32(spv::Scope::Workgroup))));
+        }
         current_function_.PushInst(op, operands);
     }
 
@@ -2249,10 +2262,16 @@ class Printer {
             case core::BuiltinFn::kWorkgroupBarrier: {
                 spv::MemorySemanticsMask memory_mask = spv::MemorySemanticsMask::WorkgroupMemory |
                                                        spv::MemorySemanticsMask::AcquireRelease;
-                if (options_.use_vulkan_memory_model) {
+                /*if (options_.use_vulkan_memory_model) {
                     memory_mask = memory_mask | spv::MemorySemanticsMask::MakeAvailable |
                                   spv::MemorySemanticsMask::MakeVisible;
-                }
+                }*/
+
+                op = spv::Op::OpMemoryBarrier;
+                operands.clear();
+                operands.push_back(Constant(b_.ConstantValue(u32(spv::Scope::QueueFamily))));
+                operands.push_back(Constant(b_.ConstantValue(u32(memory_mask))));
+                current_function_.PushInst(op, operands);
 
                 op = spv::Op::OpControlBarrier;
                 operands.clear();
@@ -2400,10 +2419,18 @@ class Printer {
     /// Emit a load instruction.
     /// @param load the load instruction to emit
     void EmitLoad(core::ir::Load* load) {
-        current_function_.PushInst(spv::Op::OpLoad,
-                                   {Type(load->Result()->Type()), Value(load), Value(load->From()),
-                                    U32Operand(MemoryAccessMaskForPointer(
-                                        load->From()->Type()->As<core::type::Pointer>()))});
+        SpvMemoryAccessMask accessMask =
+            MemoryAccessMaskForPointer(load->From()->Type()->As<core::type::Pointer>());
+        if (accessMask == SpvMemoryAccessNonPrivatePointerMask) {
+            current_function_.PushInst(
+                spv::Op::OpLoad, {Type(load->Result()->Type()), Value(load), Value(load->From()),
+                                  U32Operand(accessMask | SpvMemoryAccessMakePointerVisibleMask),
+                                  Constant(b_.ConstantValue(u32(spv::Scope::Workgroup)))});
+        } else {
+            current_function_.PushInst(
+                spv::Op::OpLoad, {Type(load->Result()->Type()), Value(load), Value(load->From()),
+                                  U32Operand(accessMask)});
+        }
     }
 
     /// Emit a load vector element instruction.
@@ -2416,9 +2443,17 @@ class Printer {
         current_function_.PushInst(
             spv::Op::OpAccessChain,
             {Type(el_ptr_ty), el_ptr_id, Value(load->From()), Value(load->Index())});
-        current_function_.PushInst(spv::Op::OpLoad,
-                                   {Type(load->Result()->Type()), Value(load), el_ptr_id,
-                                    U32Operand(MemoryAccessMaskForPointer(vec_ptr_ty))});
+
+        SpvMemoryAccessMask accessMask = MemoryAccessMaskForPointer(vec_ptr_ty);
+        if (accessMask == SpvMemoryAccessNonPrivatePointerMask) {
+            current_function_.PushInst(
+                spv::Op::OpLoad, {Type(load->Result()->Type()), Value(load), el_ptr_id,
+                                  U32Operand(accessMask | SpvMemoryAccessMakePointerVisibleMask),
+                                  Constant(b_.ConstantValue(u32(spv::Scope::Workgroup)))});
+        } else {
+            current_function_.PushInst(spv::Op::OpLoad, {Type(load->Result()->Type()), Value(load),
+                                                         el_ptr_id, U32Operand(accessMask)});
+        }
     }
 
     /// Emit a loop instruction.
