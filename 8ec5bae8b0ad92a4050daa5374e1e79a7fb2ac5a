@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63c6dfa5_a08bd69a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-21T21:02:05Z",
+      "side": 1,
+      "message": "Sorry this is so big but the test was to write the smallest compute pass and capture and replay it. To do a compute pass requires capturing bindGroups and compute pipelines and to capture a pipeline requires capturing a shader module so it all adds up.\n\nThe most questionable issue in the code is the fact that test uses `layout: auto` for the pipeline. When I serialize the bindGroup, a bindGroup references a bindGroupLayout but on replay there would be no corresponding call to `CreateBindGropupLayout` since they are implicitly created. So, if the bindGroup\u0027s bindGroupLayout(BGL) is implicit then I have two problems. \n\n1. I need an ID that will reference this implicit BGL for the bindGroup\n\n2. I need a call to `CreateComputePipeline` to generate those implicit bindgrouplayouts and associate them with ids.\n\nSo I added code to to do that. But, AFAICT, there was no way to find out if a pipeline/pipelinelayout was implicit. That info is lost after creation. The hack I put in is to check on a pipeline layout, if any of its bindgroup layouts are implicit then it\u0027s an implicit pipeline. Note that the front end does not pass anything to the backend end (webgpu-on-webgpu) at create pipeline time to tell this. The descriptor passed to the backend has the layout: auto removed and replaced with an auto-generated layout. We could add some method but the solution implemented doesn\u0027t add that.\n\nThere was also no way from a bindgroup back to a pipeline. That makes sense since bind groups are not pipeline specific but for the case of implicit bindGroupLayouts I needed a way back so I added one. \n\nOther things:\n\n* There\u0027s a TODO to support descriptor chains. For this CL it was able to put in a solution without them but they\u0027ll be needed eventually.\n\n* I have to scan the command buffers twice because before I serialize the command buffer itself I need to serialize all its resources. For buffers and textures that info is recorded in ResourceUsages but for which pipelines and bindgroups are used, it\u0027s not. I assumed that adding them was a no-go since it would add overhead to the native backends, so, I walk the command buffers to find them. This only happens during capture so maybe ok? Or we could add some hooks to CommandBuffer to let it optionally record this stuff?\n\nAnyway, PTAL. Thanks!",
+      "revId": "8ec5bae8b0ad92a4050daa5374e1e79a7fb2ac5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
