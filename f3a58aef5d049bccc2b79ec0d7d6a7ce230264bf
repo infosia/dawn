@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b14ddf0_3b61500b",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-21T23:43:51Z",
+      "side": 1,
+      "message": "Is this named wrong? This looks like it should be `EncodeRenderPassCommand` maybe?",
+      "range": {
+        "startLine": 172,
+        "startChar": 5,
+        "endLine": 172,
+        "endChar": 30
+      },
+      "revId": "f3a58aef5d049bccc2b79ec0d7d6a7ce230264bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
