@@ -16,6 +16,52 @@
       "message": "Rafael, can you PTAL?",
       "revId": "d7c6f35454aae2ebd4ed5f7ed1a1d4d5e650a539",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de777dd4_b8888c0b",
+        "filename": "include/dawn/native/D3D12Backend.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-10-21T22:01:18Z",
+      "side": 1,
+      "message": "How much code can we reuse if we renamed `SharedBufferMemoryD3D12ResourceDescriptor` to SharedResourceD3D12ResourceDescriptor and use that for textures as well?",
+      "range": {
+        "startLine": 62,
+        "startChar": 26,
+        "endLine": 62,
+        "endChar": 67
+      },
+      "revId": "d7c6f35454aae2ebd4ed5f7ed1a1d4d5e650a539",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4c482ef_bac8e3b4",
+        "filename": "include/dawn/native/D3D12Backend.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-10-21T22:01:18Z",
+      "side": 1,
+      "message": "The equivalent D3D11 structure in D3D11Backend.h has the following comment:  \n\n```\n    // TODO(chromium:335003893): This flag is deprecated. Remove it once clients are updated to use\n    // SharedTextureMemoryD3D11BeginState\u0027s requiresEndAccessFence.\n    std::optional\u003cbool\u003e requiresEndAccessFence;\n```\n\nCan we avoid introducing the same thing D3D12 from the start?",
+      "range": {
+        "startLine": 100,
+        "startChar": 9,
+        "endLine": 100,
+        "endChar": 38
+      },
+      "revId": "d7c6f35454aae2ebd4ed5f7ed1a1d4d5e650a539",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
