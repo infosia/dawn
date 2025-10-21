@@ -1141,9 +1141,19 @@ class Printer {
             true_label = Label(true_block);
         }
 
+        bool translate_as_for_loop_condition = false;
+        if (false_block->Length() == 1 && false_block->Terminator() != nullptr &&
+            false_block->Terminator()->Is<core::ir::ExitLoop>()) {
+            false_label =
+                GetMergeLabel(false_block->Terminator()->As<core::ir::ExitLoop>()->Loop());
+            translate_as_for_loop_condition = true;
+        }
+
         // Emit the OpSelectionMerge and OpBranchConditional instructions.
-        current_function_.PushInst(spv::Op::OpSelectionMerge,
-                                   {merge_label, U32Operand(SpvSelectionControlMaskNone)});
+        if (!translate_as_for_loop_condition) {
+            current_function_.PushInst(spv::Op::OpSelectionMerge,
+                                       {merge_label, U32Operand(SpvSelectionControlMaskNone)});
+        }
         current_function_.PushInst(spv::Op::OpBranchConditional,
                                    {Value(i->Condition()), true_label, false_label});
 
@@ -1151,7 +1161,7 @@ class Printer {
         if (true_label != merge_label) {
             QueueBlock(true_block);
         }
-        if (false_label != merge_label) {
+        if (!translate_as_for_loop_condition && false_label != merge_label) {
             QueueBlock(false_block);
         }
 
