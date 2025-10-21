@@ -85,6 +85,21 @@ struct DAWN_NATIVE_EXPORT SharedBufferMemoryD3D12SharedMemoryFileHandleDescripto
     constexpr static uint32_t kRequiredAlignment = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT;
 };
 
+struct DAWN_NATIVE_EXPORT SharedTextureMemoryD3D12ResourceDescriptor : wgpu::ChainedStruct {
+    SharedTextureMemoryD3D12ResourceDescriptor() {
+        sType = static_cast<wgpu::SType>(WGPUSType_SharedTextureMemoryD3D12ResourceDescriptor);
+    }
+
+    Microsoft::WRL::ComPtr<ID3D12Resource> texture;
+
+    // If this flag is true, Dawn is required to signal a fence before EndAccess() and return it in
+    // SharedTextureMemoryEndAccessState's fences list.
+    // If it's false, no fence signaling is needed and EndAccess() might return empty fence list.
+    // Note: this flag is not relevant if the feature SharedFenceDXGISharedHandle is disabled/not
+    // supported.
+    bool requiresEndAccessFence = true;
+};
+
 }  // namespace dawn::native::d3d12
 
 #endif  // INCLUDE_DAWN_NATIVE_D3D12BACKEND_H_

@@ -367,6 +367,7 @@ TEST_P(TierArchInfoTest_TieredMaxLimits, ExhaustiveTestAllFeatures) {
     ChromiumExperimentalBindless,
     AdapterPropertiesWGPU,
     SharedBufferMemoryD3D12SharedMemoryFileMappingHandle,
+    SharedTextureMemoryD3D12Resource,
     };
 
 
