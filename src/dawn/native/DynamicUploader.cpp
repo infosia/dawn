@@ -130,10 +130,11 @@ MaybeError DynamicUploader::OnStagingMemoryFreePendingOnSubmit(uint64_t size) {
     // need to track that memory.
     ExecutionSerial pendingSerial = mDevice->GetQueue()->GetPendingCommandSerial();
     if (pendingSerial > mLastPendingSerialSeen) {
-        mMemoryPendingSubmit = 0;
+        mMemoryPendingSubmit = size;
         mLastPendingSerialSeen = pendingSerial;
+    } else {
+        mMemoryPendingSubmit += size;
     }
-    mMemoryPendingSubmit += size;
     return {};
 }
 
@@ -142,6 +143,9 @@ MaybeError DynamicUploader::MaybeSubmitPendingCommands() {
     if (mMemoryPendingSubmit < kPendingMemorySubmitThreshold) {
         return {};
     }
+
+    // A queue submit is going to happen so the device mutex must be locked.
+    auto deviceGuard = mDevice->GetGuard();
 
     // TODO(crbug.com/42240396): Consider blocking when there is too much memory in flight for
     // freeing, which could cause OOM even if we eagerly flush when too much memory is pending.
