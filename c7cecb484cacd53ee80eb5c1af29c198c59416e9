@@ -16,6 +16,29 @@
       "message": "PTAL",
       "revId": "c7cecb484cacd53ee80eb5c1af29c198c59416e9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0f06e90_5b4b2df8",
+        "filename": "infra/config/global/gn_standalone_ci.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-21T17:27:27Z",
+      "side": 1,
+      "message": "It would be nice to have `dawn-mac-x64-amd-555x-rel` as well.\nBut probably CI-only.",
+      "range": {
+        "startLine": 831,
+        "startChar": 12,
+        "endLine": 831,
+        "endChar": 38
+      },
+      "revId": "c7cecb484cacd53ee80eb5c1af29c198c59416e9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
