@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d637d25c_1eb5be74",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/BufferTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-21T09:55:21Z",
+      "side": 1,
+      "message": "Any reason it\u0027s so generic? Can we catch a more specific exception type?",
+      "range": {
+        "startLine": 58,
+        "startChar": 17,
+        "endLine": 58,
+        "endChar": 34
+      },
+      "revId": "b247f8ee09ae318c390c03fe017fa31f6bbea413",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d59bced8_5d658e64",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/BufferTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-21T09:55:21Z",
+      "side": 1,
+      "message": "Can we catch a more specific exception type?",
+      "range": {
+        "startLine": 199,
+        "startChar": 17,
+        "endLine": 199,
+        "endChar": 34
+      },
+      "revId": "b247f8ee09ae318c390c03fe017fa31f6bbea413",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b9d4f62_8e800137",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/BufferTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-21T09:55:21Z",
+      "side": 1,
+      "message": "Can we catch a more specific exception type?",
+      "range": {
+        "startLine": 257,
+        "startChar": 17,
+        "endLine": 257,
+        "endChar": 34
+      },
+      "revId": "b247f8ee09ae318c390c03fe017fa31f6bbea413",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
