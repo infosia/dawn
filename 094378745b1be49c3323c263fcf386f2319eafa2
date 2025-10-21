@@ -39,6 +39,30 @@
       },
       "revId": "094378745b1be49c3323c263fcf386f2319eafa2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67000d21_45f26c74",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-21T15:13:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c24cc749_1b06b171",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 23
+      },
+      "revId": "094378745b1be49c3323c263fcf386f2319eafa2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
