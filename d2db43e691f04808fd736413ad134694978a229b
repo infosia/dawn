@@ -33,6 +33,24 @@
       "message": "Please add a test that uses more than one semicolon.\nThat justifies the while loop in the parser.",
       "revId": "d2db43e691f04808fd736413ad134694978a229b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "acf54211_6039d544",
+        "filename": "src/tint/lang/wgsl/reader/parser/loop_stmt_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-21T20:37:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9a05970_4fef6554",
+      "revId": "d2db43e691f04808fd736413ad134694978a229b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
