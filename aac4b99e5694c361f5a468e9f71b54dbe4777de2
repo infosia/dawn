@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c18941a_90ad8989",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-21T10:00:22Z",
+      "side": 1,
+      "message": "What happened at Patchset 7? It seems many of the proposed new tests in AdapterTest.kt (requestDeviceWithBetterThanSupportedLimitFails etc.) were removed, and file DeviceTest.kt was added, despite the title referring to Adapter.kt.",
+      "revId": "aac4b99e5694c361f5a468e9f71b54dbe4777de2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
