@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a7f8ce19_b6927fef",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-21T14:48:35Z",
+      "side": 1,
+      "message": "Does https://dawn-review.googlesource.com/c/dawn/+/268014 work as a fix?",
+      "parentUuid": "c43cf51a_f97f89b6",
+      "revId": "bff8f9a4d5e18785d45d736d73afa74fe92ae8f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5e1409e8_06b4b1d8",
         "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.h",
         "patchSetId": 17
