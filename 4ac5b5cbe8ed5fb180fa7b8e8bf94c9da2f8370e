@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2f453df_e62ecf64",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-21T18:39:13Z",
+      "side": 1,
+      "message": "Yea, exactly. Nice :)\n\nUnderstood that it\u0027s not ready yet, just a suggestion that we prioritize getting the end-to-end working for a small subset of functions and we can start turning on the tests early instead of all at once at the end.",
+      "parentUuid": "e55a3b3c_def84ddf",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3d549327_b48c2fb9",
