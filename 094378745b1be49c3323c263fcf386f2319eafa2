@@ -16,6 +16,29 @@
       "message": "Yes ablin said he was going to fix this.",
       "revId": "094378745b1be49c3323c263fcf386f2319eafa2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c24cc749_1b06b171",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-21T15:09:54Z",
+      "side": 1,
+      "message": "You can add a single line comment here just explaining the rational.",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 23
+      },
+      "revId": "094378745b1be49c3323c263fcf386f2319eafa2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
