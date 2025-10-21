@@ -39,6 +39,30 @@
       },
       "revId": "c7cecb484cacd53ee80eb5c1af29c198c59416e9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b94c87fa_a538a8b0",
+        "filename": "infra/config/global/gn_standalone_ci.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-21T20:40:16Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d0f06e90_5b4b2df8",
+      "range": {
+        "startLine": 831,
+        "startChar": 12,
+        "endLine": 831,
+        "endChar": 38
+      },
+      "revId": "c7cecb484cacd53ee80eb5c1af29c198c59416e9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
