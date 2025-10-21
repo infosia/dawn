@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "581be3dc_aed5e6cb",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1003586
+      },
+      "writtenOn": "2025-10-21T15:00:18Z",
+      "side": 1,
+      "message": "Yes. That should get more optimal barriers in some circumstances.",
+      "parentUuid": "a7f8ce19_b6927fef",
+      "revId": "bff8f9a4d5e18785d45d736d73afa74fe92ae8f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e1409e8_06b4b1d8",
