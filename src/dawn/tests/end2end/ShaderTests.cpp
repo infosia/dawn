@@ -2840,6 +2840,61 @@ TEST_P(ShaderTests, CopyStructCompute) {
     EXPECT_BUFFER_U32_RANGE_EQ(inputData.data(), outputBuffer, 0, inputData.size());
 }
 
+// Test coverage for a uniform buffer indexing bug with FXC.
+TEST_P(ShaderTests, UBOIndexFXC) {
+    wgpu::ShaderModule csModule = utils::CreateShaderModule(device, R"(
+struct Input {
+  @size(4) param0 : i32,
+  @size(4) param1 : i32,
+}
+
+struct Output {
+  @size(4) value : u32
+};
+@group(0) @binding(0) var<storage, read_write> outputs : array<Output, 22>;
+
+@group(0) @binding(1) var<uniform> inputs : array<Input, 22>;
+
+@compute @workgroup_size(1)
+fn main() {
+  for (var i = 0; i < 22; i++) {
+    outputs[i].value = select(0u, 1u, ((inputs[i].param0)==(inputs[i].param1)));
+  }
+}
+)");
+
+    wgpu::ComputePipelineDescriptor pipelineDescriptor;
+    pipelineDescriptor.compute.module = csModule;
+    wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&pipelineDescriptor);
+
+    std::vector<uint32_t> bufferData(256, 0xffffffffu);
+    wgpu::Buffer inputBuffer =
+        utils::CreateBufferFromData(device, bufferData.data(), bufferData.size() * sizeof(uint32_t),
+                                    wgpu::BufferUsage::Uniform);
+    wgpu::Buffer outputBuffer = CreateBuffer(22 * sizeof(uint32_t));
+
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {
+                                                         {0, outputBuffer},
+                                                         {1, inputBuffer},
+                                                     });
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+    pass.SetBindGroup(0, bindGroup);
+    pass.SetPipeline(pipeline);
+    pass.DispatchWorkgroups(1);
+    pass.End();
+
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    EXPECT_BUFFER_U32_EQ(1u, outputBuffer, 0);
+    EXPECT_BUFFER_U32_EQ(1u, outputBuffer, 4);
+    EXPECT_BUFFER_U32_EQ(1u, outputBuffer, 8);
+    EXPECT_BUFFER_U32_EQ(1u, outputBuffer, 12);
+}
+
 DAWN_INSTANTIATE_TEST(ShaderTests,
                       D3D11Backend(),
                       D3D12Backend(),
