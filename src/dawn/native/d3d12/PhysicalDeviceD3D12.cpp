@@ -213,6 +213,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 
     EnableFeature(Feature::SharedTextureMemoryDXGISharedHandle);
     EnableFeature(Feature::SharedFenceDXGISharedHandle);
+    EnableFeature(Feature::SharedTextureMemoryD3D12Resource);
 
     if (SupportsBufferMapExtendedUsages()) {
         EnableFeature(Feature::BufferMapExtendedUsages);
