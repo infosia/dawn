@@ -35,6 +35,7 @@
 #include "src/tint/api/common/binding_point.h"
 #include "src/tint/api/common/bindings.h"
 #include "src/tint/api/common/resource_binding_config.h"
+#include "src/tint/api/common/substitute_overrides_config.h"
 #include "src/tint/utils/reflection.h"
 
 namespace tint::spirv::writer {
@@ -75,6 +76,9 @@ struct Options {
     // duplicate spir-v bindings, since they must map to the spir-v bindings of
     // the samplers with which they are paired.
     std::unordered_set<BindingPoint> statically_paired_texture_binding_points = {};
+
+    // Configuration for substitute overrides
+    SubstituteOverridesConfig substitute_overrides_config = {};
 
     /// Set to `true` to strip all user-declared identifiers from the module.
     bool strip_all_names = false;
