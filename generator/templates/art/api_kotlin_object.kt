@@ -28,13 +28,14 @@ package {{ kotlin_package }}
 
 import dalvik.annotation.optimization.FastNative
 import java.nio.ByteBuffer
+import androidx.annotation.VisibleForTesting
 {% for method in obj.methods if has_callbackInfoStruct(method) %}
     import java.util.concurrent.Executor
     {% break %}
 {% endfor %}
 {% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition with context %}
 
-public class {{ obj.name.CamelCase() }}(public val handle: Long): AutoCloseable {
+public class {{ obj.name.CamelCase() }} @VisibleForTesting internal constructor(public val handle: Long): AutoCloseable {
     {% for method in obj.methods if include_method(method) %}
         @FastNative
         @JvmName("{{ method.name.camelCase() }}")
