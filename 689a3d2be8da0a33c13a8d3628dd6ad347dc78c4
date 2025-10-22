@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "882e02ad_c61293ec",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-22T14:40:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0762ab4_42b01497",
+      "revId": "689a3d2be8da0a33c13a8d3628dd6ad347dc78c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "730e137d_bbdf6e1e",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-10-22T12:32:32Z",
       "side": 1,
       "message": "We should use \u0027assume\u0027 to check if a test is relevant instead of print and early out. `Assume.assumeTrue` \n\nhttps://source.corp.google.com/search?q\u003dlang:kt%20assumetrue\u0026ct\u003dos",
+      "revId": "689a3d2be8da0a33c13a8d3628dd6ad347dc78c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8ca1cdf_5903758c",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-22T14:40:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "730e137d_bbdf6e1e",
       "revId": "689a3d2be8da0a33c13a8d3628dd6ad347dc78c4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0493fef_30524389",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-22T14:40:46Z",
+      "side": 1,
+      "message": "I double-checked this, and the org.junit.Assert library we\u0027re using has the signature assertEquals(expected, actual). I\u0027ll make sure the other calls in the file also follow this pattern.",
+      "parentUuid": "0bfc0f92_7385fca9",
+      "revId": "689a3d2be8da0a33c13a8d3628dd6ad347dc78c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9971ad60_0d062b3e",
@@ -65,6 +119,24 @@
       "writtenOn": "2025-10-22T11:19:07Z",
       "side": 1,
       "message": "I liked how you did this with an explicit early-exit on line 66, maybe do that again here?",
+      "revId": "689a3d2be8da0a33c13a8d3628dd6ad347dc78c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dca411fd_925eeda2",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-22T14:40:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9971ad60_0d062b3e",
       "revId": "689a3d2be8da0a33c13a8d3628dd6ad347dc78c4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +164,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "01e8011f_77a66250",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-22T14:40:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9e0a5cb_b9e25e8d",
+      "range": {
+        "startLine": 125,
+        "startChar": 61,
+        "endLine": 125,
+        "endChar": 63
+      },
+      "revId": "689a3d2be8da0a33c13a8d3628dd6ad347dc78c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "49ba787b_5933cab9",
@@ -109,6 +205,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef43acea_96d0da7a",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-22T14:40:46Z",
+      "side": 1,
+      "message": "This test verifies that the resolveQuerySet command is formed correctly and passes the validation layer.\n\nAdding buffer readback/verification significantly complicates this test(100\u0027s of new line). I\u0027ll address that validation in a separate CL(b/454301879)",
+      "parentUuid": "49ba787b_5933cab9",
+      "revId": "689a3d2be8da0a33c13a8d3628dd6ad347dc78c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0aec8e6_7700671f",
@@ -122,6 +236,30 @@
       "writtenOn": "2025-10-22T12:32:32Z",
       "side": 1,
       "message": "As this is a complete sentence please end in a full stop/period.",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 62
+      },
+      "revId": "689a3d2be8da0a33c13a8d3628dd6ad347dc78c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9caca9ae_45974a4f",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-22T14:40:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0aec8e6_7700671f",
       "range": {
         "startLine": 207,
         "startChar": 0,
