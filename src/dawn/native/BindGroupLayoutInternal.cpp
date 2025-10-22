@@ -978,6 +978,12 @@ BindingIndex BindGroupLayoutInternalBase::GetDynamicBufferCount() const {
            GetBindingTypeStart(BindingTypeOrder_DynamicBuffer);
 }
 
+BindingIndex BindGroupLayoutInternalBase::GetDynamicUniformBufferCount() const {
+    DAWN_ASSERT(!IsError());
+    return BindingIndex(static_cast<uint32_t>(GetDynamicBufferCount()) -
+                        GetDynamicStorageBufferCount());
+}
+
 uint32_t BindGroupLayoutInternalBase::GetDynamicStorageBufferCount() const {
     DAWN_ASSERT(!IsError());
     return mDynamicStorageBufferCount;
