@@ -722,6 +722,7 @@ source_set("sources") {
       "null/DeviceNull.cpp",
       "null/DeviceNull.h",
     ]
+    deps += [ "${dawn_root}/src/tint/lang/core/ir/transform" ]
   }
 
   if (dawn_enable_webgpu_on_webgpu) {
