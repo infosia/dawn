@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e62c0a05_903538e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-22T19:57:53Z",
+      "side": 1,
+      "message": "PTAL, but I won\u0027t land this until CTS is confirmed to pass everywhere on the testing CL.",
+      "revId": "fa7f0312577a5592b13327d84901b540877a9467",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
