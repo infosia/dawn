@@ -27,6 +27,7 @@
 
 #include "src/dawn/native/webgpu/RenderPipelineWGPU.h"
 
+#include <limits>
 #include <string>
 #include <vector>
 #include "dawn/common/StringViewUtils.h"
@@ -180,7 +181,41 @@ MaybeError RenderPipeline::InitializeImpl() {
         desc.fragment = nullptr;
     }
 
-    mInnerHandle = device->wgpu.deviceCreateRenderPipeline(device->GetInnerHandle(), &desc);
+    // Call async version of create render pipeline so that we know the status and will return an
+    // internal error to surface up if the inner pipeline is an error.
+
+    struct CreateRenderPipelineAsyncUserData : public RefCounted {
+        WGPURenderPipeline pipeline = nullptr;
+        WGPUCreatePipelineAsyncStatus status = WGPUCreatePipelineAsyncStatus_Success;
+        std::string message;
+    };
+    // on dawn-cq-linux-x86 webgpu on swiftshader, stack allocating seems to cause failure.
+    Ref<CreateRenderPipelineAsyncUserData> userdata =
+        AcquireRef(new CreateRenderPipelineAsyncUserData);
+
+    WGPUCreateRenderPipelineAsyncCallbackInfo callbackInfo =
+        WGPU_CREATE_RENDER_PIPELINE_ASYNC_CALLBACK_INFO_INIT;
+    callbackInfo.mode = WGPUCallbackMode_WaitAnyOnly;
+    callbackInfo.callback = [](WGPUCreatePipelineAsyncStatus status, WGPURenderPipeline pipeline,
+                               WGPUStringView message, void* userdata1, void* userdata2) {
+        auto* data = static_cast<CreateRenderPipelineAsyncUserData*>(userdata1);
+        data->pipeline = pipeline;
+        data->status = status;
+        data->message = ToString(message);
+    };
+    callbackInfo.userdata1 = userdata.Get();
+
+    WGPUFutureWaitInfo waitInfo = WGPU_FUTURE_WAIT_INFO_INIT;
+    waitInfo.future =
+        device->wgpu.deviceCreateRenderPipelineAsync(device->GetInnerHandle(), &desc, callbackInfo);
+    device->wgpu.instanceWaitAny(device->GetInnerInstance(), 1, &waitInfo,
+                                 std::numeric_limits<uint64_t>::max());
+
+    if (userdata->status != WGPUCreatePipelineAsyncStatus_Success) {
+        return DAWN_INTERNAL_ERROR(userdata->message);
+    }
+
+    mInnerHandle = userdata->pipeline;
     DAWN_ASSERT(mInnerHandle);
     return {};
 }
