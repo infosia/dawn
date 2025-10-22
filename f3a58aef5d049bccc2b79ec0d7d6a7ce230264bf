@@ -72,6 +72,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fe95500_42a0bef3",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-22T19:36:21Z",
+      "side": 1,
+      "message": "It\u0027s not shared.\n\nYou can pass in renderPassEncoder or renderBundleEncoder as arguments, but we are using C, we still need to selectively call `renderPassEncoderDraw` or `renderBundleEncoderDraw`, etc. I don\u0027t think the function part can be easily setup to dedup shared code. Do you know any c++ mechanism can do that?\n\nIf not, WDYT if just remove `EncodeRenderBundleCommand(... WGPURenderPassEncoder encoder...)` and simply move the function body to where it\u0027s called?",
+      "parentUuid": "a8ce2229_6208d9c7",
+      "range": {
+        "startLine": 172,
+        "startChar": 5,
+        "endLine": 172,
+        "endChar": 30
+      },
+      "revId": "f3a58aef5d049bccc2b79ec0d7d6a7ce230264bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "a2f31bcd_51526287",
