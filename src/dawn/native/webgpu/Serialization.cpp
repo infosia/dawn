@@ -37,18 +37,6 @@ void WriteBytes(CaptureContext& context, const void* data, size_t size) {
     context.WriteCommandBytes(data, size);
 }
 
-void Serialize(CaptureContext& context, int32_t v) {
-    WriteBytes(context, reinterpret_cast<const char*>(&v), sizeof(v));
-}
-
-void Serialize(CaptureContext& context, uint32_t v) {
-    WriteBytes(context, reinterpret_cast<const char*>(&v), sizeof(v));
-}
-
-void Serialize(CaptureContext& context, uint64_t v) {
-    WriteBytes(context, reinterpret_cast<const char*>(&v), sizeof(v));
-}
-
 void Serialize(CaptureContext& context, const std::string& v) {
     Serialize(context, v.size());
     WriteBytes(context, v.data(), v.size());
