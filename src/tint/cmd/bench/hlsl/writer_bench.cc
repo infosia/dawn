@@ -50,7 +50,7 @@ void GenerateHLSL(benchmark::State& state, std::string input_name) {
         }
 
         Options gen_options;
-        gen_options.bindings = GenerateBindings(ir.Get(), false);
+        gen_options.bindings = GenerateBindings(ir.Get(), false, false);
         auto gen_res = Generate(ir.Get(), gen_options);
         if (gen_res != Success) {
             state.SkipWithError(gen_res.Failure().reason);
