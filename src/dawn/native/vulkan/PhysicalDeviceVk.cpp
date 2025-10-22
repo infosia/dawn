@@ -343,8 +343,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     if (mDeviceInfo.HasExt(DeviceExt::ShaderFloat16Int8) &&
         mDeviceInfo.HasExt(DeviceExt::_16BitStorage) &&
         mDeviceInfo.shaderFloat16Int8Features.shaderFloat16 == VK_TRUE &&
-        mDeviceInfo._16BitStorageFeatures.storageBuffer16BitAccess == VK_TRUE &&
-        mDeviceInfo._16BitStorageFeatures.uniformAndStorageBuffer16BitAccess == VK_TRUE) {
+        mDeviceInfo._16BitStorageFeatures.storageBuffer16BitAccess == VK_TRUE) {
         // TODO(crbug.com/tint/2164): Investigate crashes in f16 CTS tests to enable on NVIDIA.
         if (!gpu_info::IsNvidia(GetVendorId())) {
             EnableFeature(Feature::ShaderF16);
@@ -753,9 +752,17 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
                                maxStorageTexturesPerShaderStage);
     CHECK_AND_SET_V1_MAX_LIMIT(maxPerStageDescriptorUniformBuffers,
                                maxUniformBuffersPerShaderStage);
-    CHECK_AND_SET_V1_MAX_LIMIT(maxUniformBufferRange, maxUniformBufferBindingSize);
     CHECK_AND_SET_V1_MAX_LIMIT(maxStorageBufferRange, maxStorageBufferBindingSize);
     CHECK_AND_SET_V1_MAX_LIMIT(maxColorAttachments, maxColorAttachments);
+
+    // Round max uniform buffer size down to a multiple of 16 bytes since Tint will polyfill them as
+    // array<vec4u, ...>.
+    uint32_t maxUniformBufferSize = vkLimits.maxUniformBufferRange;
+    maxUniformBufferSize = maxUniformBufferSize - (maxUniformBufferSize % 16);
+    if (maxUniformBufferSize < baseLimits.v1.maxUniformBufferBindingSize) {
+        return DAWN_INTERNAL_ERROR("Insufficient Vulkan limits for maxUniformBufferBindingSize");
+    }
+    limits->v1.maxUniformBufferBindingSize = maxUniformBufferSize;
 
     // Validate against maxFragmentCombinedOutputResources, tightening the limits when necessary.
     const uint32_t minFragmentCombinedOutputResources =
@@ -940,6 +947,10 @@ void PhysicalDevice::SetupBackendAdapterToggles(dawn::platform::Platform* platfo
     adapterToggles->Default(
         Toggle::UseVulkanMemoryModel,
         platform->IsFeatureEnabled(platform::Features::kWebGPUUseVulkanMemoryModel));
+
+    adapterToggles->Default(
+        Toggle::DecomposeUniformBuffers,
+        platform->IsFeatureEnabled(platform::Features::kWebGPUDecomposeUniformBuffers));
 }
 
 void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platform,
@@ -1191,6 +1202,16 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
                 return FeatureValidationResult(
                     absl::StrFormat("Intel Gen-9 devices require `enable_subgroups_intel_gen9`"
                                     " to enable %s.",
+                                    feature));
+            }
+            break;
+
+        case wgpu::FeatureName::ShaderF16:
+            if (!toggles.IsEnabled(Toggle::DecomposeUniformBuffers) &&
+                mDeviceInfo._16BitStorageFeatures.uniformAndStorageBuffer16BitAccess == VK_FALSE) {
+                return FeatureValidationResult(
+                    absl::StrFormat("uniformAndStorageBuffer16BitAccess is required to enable %s "
+                                    "if `decompose_uniform_buffers` is not used",
                                     feature));
             }
             break;

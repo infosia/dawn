@@ -590,8 +590,10 @@ class Printer {
                 [&](const core::type::F32*) { module_.PushType(spv::Op::OpTypeFloat, {id, 32u}); },
                 [&](const core::type::F16*) {
                     module_.PushCapability(SpvCapabilityFloat16);
-                    module_.PushCapability(SpvCapabilityUniformAndStorageBuffer16BitAccess);
                     module_.PushCapability(SpvCapabilityStorageBuffer16BitAccess);
+                    if (!options_.decompose_uniform_buffers) {
+                        module_.PushCapability(SpvCapabilityUniformAndStorageBuffer16BitAccess);
+                    }
                     module_.PushType(spv::Op::OpTypeFloat, {id, 16u});
                 },
                 [&](const core::type::Vector* vec) {
@@ -2521,6 +2523,15 @@ class Printer {
     void EmitSwizzle(core::ir::Swizzle* swizzle) {
         auto id = Value(swizzle);
         auto obj = Value(swizzle->Object());
+
+        // If there is only one swizzle index use OpCompositeExtract as we are producing a scalar.
+        if (swizzle->Indices().Length() == 1) {
+            OperandList operands = {Type(swizzle->Result()->Type()), id, obj,
+                                    swizzle->Indices()[0]};
+            current_function_.PushInst(spv::Op::OpCompositeExtract, operands);
+            return;
+        }
+
         OperandList operands = {Type(swizzle->Result()->Type()), id, obj, obj};
         for (auto idx : swizzle->Indices()) {
             operands.push_back(idx);
@@ -2843,9 +2854,9 @@ class Printer {
     /// @returns the label ID
     uint32_t GetTerminatorBlockLabel(core::ir::Terminator* t) {
         // Walk backwards from `t` until we find a control instruction.
-        auto* inst = t->prev.Get();
+        auto* inst = t->prev;
         while (inst) {
-            auto* prev = inst->prev.Get();
+            auto* prev = inst->prev;
             if (auto* ci = inst->As<core::ir::ControlInstruction>()) {
                 // This is the last control instruction before `t`, so use its merge block label.
                 return GetMergeLabel(ci);

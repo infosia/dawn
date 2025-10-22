@@ -1,4 +1,4 @@
-// Copyright 2022 The Dawn & Tint Authors
+// Copyright 2025 The Dawn & Tint Authors
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -25,24 +25,27 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_TINT_LANG_MSL_IR_TRANSFORM_FLATTEN_BINDINGS_H_
-#define SRC_TINT_LANG_MSL_IR_TRANSFORM_FLATTEN_BINDINGS_H_
+#ifndef SRC_TINT_API_COMMON_SUBSTITUTE_OVERRIDES_CONFIG_H_
+#define SRC_TINT_API_COMMON_SUBSTITUTE_OVERRIDES_CONFIG_H_
 
-#include "src/tint/utils/result.h"
+#include <unordered_map>
 
-// Forward declaration
-namespace tint::core::ir {
-class Module;
-}
+#include "src/tint/api/common/override_id.h"
+#include "src/tint/utils/reflection.h"
 
-namespace tint::msl::ir::transform {
+namespace tint {
 
-/// If needed, remaps resource numbers of `ir` to a flat namespace: all in group 0 within
-/// unique binding numbers.
-///
-/// @param ir The IR to mutate
-Result<SuccessType> FlattenBindings(core::ir::Module& ir);
+/// Configuration options for the transform
+struct SubstituteOverridesConfig {
+    /// The map of override identifier to the override value.
+    /// The value is always a double coming into the transform and will be
+    /// converted to the correct type through and initializer.
+    std::unordered_map<OverrideId, double> map;
 
-}  // namespace tint::msl::ir::transform
+    /// Reflect the fields of this class so that it can be used by tint::ForeachField()
+    TINT_REFLECT(SubstituteOverridesConfig, map);
+};
 
-#endif  // SRC_TINT_LANG_MSL_IR_TRANSFORM_FLATTEN_BINDINGS_H_
+}  // namespace tint
+
+#endif  // SRC_TINT_API_COMMON_SUBSTITUTE_OVERRIDES_CONFIG_H_

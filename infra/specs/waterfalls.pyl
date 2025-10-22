@@ -40,6 +40,13 @@
           'isolated_scripts': 'tint_fuzzer_corpus_check_tests',
         },
       },
+      'dawn-linux-x64-intel-uhd630-rel': {
+        'os_type': 'linux',
+        'mixins': [
+          'linux_intel_uhd_630_stable',
+        ],
+        'test_suites': {},
+      },
       'dawn-linux-x64-sws-clusterfuzz': {
         'os_type': 'linux',
         'mixins': [
@@ -157,7 +164,9 @@
         'mixins': [
           'mac_arm64_apple_m2_retina_gpu_stable',
         ],
-        'test_suites': {},
+        'test_suites': {
+          'gtest_tests': 'real_hardware_gtests',
+        },
       },
       'dawn-mac-x64-sws-dbg': {
         'os_type': 'mac',

@@ -28,6 +28,7 @@
 #include "src/tint/api/helpers/generate_bindings.h"
 
 #include <algorithm>
+#include <iostream>
 
 #include "src/tint/api/common/binding_point.h"
 #include "src/tint/lang/core/ir/module.h"
@@ -39,8 +40,14 @@
 
 namespace tint {
 
-Bindings GenerateBindings(const core::ir::Module& module, bool set_group_to_zero) {
+Bindings GenerateBindings(const core::ir::Module& module,
+                          bool set_group_to_zero,
+                          bool flatten_bindings) {
     Bindings bindings{};
+
+    uint32_t next_buffer_idx = 0;
+    uint32_t next_sampler_idx = 0;
+    uint32_t next_texture_idx = 0;
 
     // Collect next valid binding number per group
     Hashmap<uint32_t, uint32_t, 4> group_to_next_binding_number;
@@ -51,63 +58,98 @@ Bindings GenerateBindings(const core::ir::Module& module, bool set_group_to_zero
             continue;
         }
 
-        if (auto bp = var->BindingPoint()) {
-            if (auto val = group_to_next_binding_number.Get(bp->group)) {
-                *val = std::max(*val, bp->binding + 1);
-            } else {
-                group_to_next_binding_number.Add(bp->group, bp->binding + 1);
+        auto bp = var->BindingPoint();
+        if (!bp.has_value()) {
+            continue;
+        }
+
+        if (auto val = group_to_next_binding_number.Get(bp->group)) {
+            *val = std::max(*val, bp->binding + 1);
+        } else {
+            group_to_next_binding_number.Add(bp->group, bp->binding + 1);
+        }
+
+        auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
+
+        // Store up the external textures, we'll add them in the next step
+        if (ptr->StoreType()->Is<core::type::ExternalTexture>()) {
+            ext_tex_bps.Push(*bp);
+            continue;
+        }
+
+        switch (ptr->AddressSpace()) {
+            case core::AddressSpace::kHandle:
+                Switch(
+                    ptr->StoreType(),  //
+                    [&](const core::type::Sampler*) {
+                        tint::BindingPoint info{
+                            .group = set_group_to_zero ? 0 : bp->group,
+                            .binding = flatten_bindings ? next_sampler_idx++ : bp->binding,
+                        };
+                        bindings.sampler.emplace(*bp, info);
+                    },
+                    [&](const core::type::StorageTexture*) {
+                        tint::BindingPoint info{
+                            .group = set_group_to_zero ? 0 : bp->group,
+                            .binding = flatten_bindings ? next_texture_idx++ : bp->binding,
+                        };
+                        bindings.storage_texture.emplace(*bp, info);
+                    },
+                    [&](const core::type::Texture*) {
+                        tint::BindingPoint info{
+                            .group = set_group_to_zero ? 0 : bp->group,
+                            .binding = flatten_bindings ? next_texture_idx++ : bp->binding,
+                        };
+                        bindings.texture.emplace(*bp, info);
+                    });
+                break;
+            case core::AddressSpace::kStorage: {
+                tint::BindingPoint info{
+                    .group = set_group_to_zero ? 0 : bp->group,
+                    .binding = flatten_bindings ? next_buffer_idx++ : bp->binding,
+                };
+                bindings.storage.emplace(*bp, info);
+                break;
             }
-
-            auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
-
-            // Store up the external textures, we'll add them in the next step
-            if (ptr->StoreType()->Is<core::type::ExternalTexture>()) {
-                ext_tex_bps.Push(*bp);
-                continue;
+            case core::AddressSpace::kUniform: {
+                tint::BindingPoint info{
+                    .group = set_group_to_zero ? 0 : bp->group,
+                    .binding = flatten_bindings ? next_buffer_idx++ : bp->binding,
+                };
+                bindings.uniform.emplace(*bp, info);
+                break;
             }
-
-            tint::BindingPoint info{
-                .group = set_group_to_zero ? 0 : bp->group,
-                .binding = bp->binding,
-            };
-            switch (ptr->AddressSpace()) {
-                case core::AddressSpace::kHandle:
-                    Switch(
-                        ptr->StoreType(),  //
-                        [&](const core::type::Sampler*) { bindings.sampler.emplace(*bp, info); },
-                        [&](const core::type::StorageTexture*) {
-                            bindings.storage_texture.emplace(*bp, info);
-                        },
-                        [&](const core::type::Texture*) { bindings.texture.emplace(*bp, info); });
-                    break;
-                case core::AddressSpace::kStorage:
-                    bindings.storage.emplace(*bp, info);
-                    break;
-                case core::AddressSpace::kUniform:
-                    bindings.uniform.emplace(*bp, info);
-                    break;
-
-                case core::AddressSpace::kUndefined:
-                case core::AddressSpace::kPixelLocal:
-                case core::AddressSpace::kPrivate:
-                case core::AddressSpace::kImmediate:
-                case core::AddressSpace::kIn:
-                case core::AddressSpace::kOut:
-                case core::AddressSpace::kFunction:
-                case core::AddressSpace::kWorkgroup:
-                    break;
-            }
+            case core::AddressSpace::kUndefined:
+            case core::AddressSpace::kPixelLocal:
+            case core::AddressSpace::kPrivate:
+            case core::AddressSpace::kImmediate:
+            case core::AddressSpace::kIn:
+            case core::AddressSpace::kOut:
+            case core::AddressSpace::kFunction:
+            case core::AddressSpace::kWorkgroup:
+                break;
         }
     }
 
-    for (auto bp : ext_tex_bps) {
-        uint32_t& next_num = group_to_next_binding_number.GetOrAddZero(bp.group);
-        uint32_t g = set_group_to_zero ? 0 : bp.group;
+    if (flatten_bindings) {
+        for (auto bp : ext_tex_bps) {
+            uint32_t g = set_group_to_zero ? 0 : bp.group;
 
-        tint::BindingPoint plane0{.group = g, .binding = bp.binding};
-        tint::BindingPoint plane1{.group = g, .binding = next_num++};
-        tint::BindingPoint metadata{.group = g, .binding = next_num++};
-        bindings.external_texture.emplace(bp, ExternalTexture{metadata, plane0, plane1});
+            tint::BindingPoint plane0{.group = g, .binding = next_texture_idx++};
+            tint::BindingPoint plane1{.group = g, .binding = next_texture_idx++};
+            tint::BindingPoint metadata{.group = g, .binding = next_buffer_idx++};
+            bindings.external_texture.emplace(bp, ExternalTexture{metadata, plane0, plane1});
+        }
+    } else {
+        for (auto bp : ext_tex_bps) {
+            uint32_t& next_num = group_to_next_binding_number.GetOrAddZero(bp.group);
+            uint32_t g = set_group_to_zero ? 0 : bp.group;
+
+            tint::BindingPoint plane0{.group = g, .binding = bp.binding};
+            tint::BindingPoint plane1{.group = g, .binding = next_num++};
+            tint::BindingPoint metadata{.group = g, .binding = next_num++};
+            bindings.external_texture.emplace(bp, ExternalTexture{metadata, plane0, plane1});
+        }
     }
 
     return bindings;

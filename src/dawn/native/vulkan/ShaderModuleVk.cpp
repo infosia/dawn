@@ -251,6 +251,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     req.tintOptions.spirv_version = GetDevice()->IsToggleEnabled(Toggle::UseSpirv14)
                                         ? tint::spirv::writer::SpvVersion::kSpv14
                                         : tint::spirv::writer::SpvVersion::kSpv13;
+    req.tintOptions.decompose_uniform_buffers =
+        GetDevice()->IsToggleEnabled(Toggle::DecomposeUniformBuffers);
     req.tintOptions.dva_transform_handle =
         GetDevice()->IsToggleEnabled(Toggle::VulkanDirectVariableAccessTransformHandle);
     // Pass matrices to user functions by pointer on Qualcomm devices to workaround a known bug.
@@ -311,7 +313,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
                                                    "ShaderModuleSubstituteOverrides");
                 // this needs to run after SingleEntryPoint transform which removes unused
                 // overrides for the current entry point.
-                tint::core::ir::transform::SubstituteOverridesConfig cfg;
+                tint::SubstituteOverridesConfig cfg;
                 cfg.map = std::move(r.substituteOverrideConfig);
                 auto substituteOverridesResult =
                     tint::core::ir::transform::SubstituteOverrides(ir.Get(), cfg);

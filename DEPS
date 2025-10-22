@@ -3,6 +3,7 @@ use_relative_paths = True
 gclient_gn_args_file = 'build/config/gclient_args.gni'
 
 gclient_gn_args = [
+  'build_with_chromium',
   'dawn_wasm',
   'generate_location_tags',
 ]
@@ -59,6 +60,9 @@ vars = {
   # to be compatible we can get rid of this allowlisting mecahnism and remove
   # this condition. Tracking bug for removing this condition: b/349365433
   'non_git_source': 'True',
+
+  # Set to True by Chromium if syncing from a Chromium checkout.
+  'build_with_chromium': False,
 }
 
 deps = {
@@ -72,7 +76,7 @@ deps = {
   },
   'buildtools/linux64': {
     'packages': [{
-      'package': 'gn/gn/linux-amd64',
+      'package': 'gn/gn/linux-${{arch}}',
       'version': Var('dawn_gn_version'),
     }],
     'dep_type': 'cipd',
@@ -96,7 +100,7 @@ deps = {
   },
 
   'third_party/depot_tools': {
-    'url': '{chromium_git}/chromium/tools/depot_tools.git@8c6304befd2205384c73e73d214848e57d9a0239',
+    'url': '{chromium_git}/chromium/tools/depot_tools.git@16dfe4717b0ef0214c66dc2e575a7c0feebfea3c',
     'condition': 'dawn_standalone',
   },
 
@@ -275,7 +279,7 @@ deps = {
   },
 
   'third_party/angle': {
-    'url': '{chromium_git}/angle/angle@8f17ce49e049e8750db6d4683ce13e235037fc58',
+    'url': '{chromium_git}/angle/angle@d582860bfb541feb141f05c6f4892053acf1e905',
     'condition': 'dawn_standalone',
   },
 
@@ -285,12 +289,12 @@ deps = {
   },
 
   'third_party/vulkan-deps': {
-    'url': '{chromium_git}/vulkan-deps@d0ff1a29a9b37019f314107edce67a8dd23b56ab',
+    'url': '{chromium_git}/vulkan-deps@dd90c9921fd2a482cf0116508776ffe39f128d83',
     'condition': 'dawn_standalone',
   },
 
   'third_party/glslang/src': {
-    'url': '{chromium_git}/external/github.com/KhronosGroup/glslang@7c2a4d0392f828b617054ba3d219cba6ae01f75b',
+    'url': '{chromium_git}/external/github.com/KhronosGroup/glslang@5f6c7176c5483da9af6432afb3dd962e4f8873a1',
     'condition': 'dawn_standalone',
   },
 
@@ -310,7 +314,7 @@ deps = {
   },
 
   'third_party/vulkan-loader/src': {
-    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-Loader@4a40e3cf16b35a5bc807e5f9b63913d6265bc08f',
+    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-Loader@66f2ce1f4683231d13e7e0566a83fc65beddaf08',
     'condition': 'dawn_standalone',
   },
 
@@ -320,12 +324,12 @@ deps = {
   },
 
   'third_party/vulkan-utility-libraries/src': {
-    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-Utility-Libraries@84947d15251ee05b6a9588afdbc463b5f6b4641c',
+    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-Utility-Libraries@3c712270aab7e571bb97c53432a8dc7d0babbea1',
     'condition': 'dawn_standalone',
   },
 
   'third_party/vulkan-validation-layers/src': {
-    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-ValidationLayers@290c1a7a2875f343af2053befe4edd03b37086a3',
+    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-ValidationLayers@3bb94b6edf7c465695d8478e00a0cee9904c0b8a',
     'condition': 'dawn_standalone',
   },
 
@@ -340,7 +344,7 @@ deps = {
   },
 
   'third_party/dxc': {
-    'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@8f21027f2ad5dcfa63a275cbd278691f2c8fad33',
+    'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@77c25790d529348b7c4a9be3849dc323cd99f2f1',
   },
 
   'third_party/dxheaders': {
@@ -357,10 +361,10 @@ deps = {
     'url': '{chromium_git}/external/github.com/KhronosGroup/EGL-Registry@7dea2ed79187cd13f76183c4b9100159b9e3e071',
   },
 
-  # WebGPU CTS - not used directly by Dawn, only transitively by Chromium.
+  # WebGPU CTS - Used both by the dawn_node tests and transitively by Chromium.
   'third_party/webgpu-cts': {
     'url': '{chromium_git}/external/github.com/gpuweb/cts@4adb750084943d08f521f18cb36d85c792ff20ba',
-    'condition': 'build_with_chromium',
+    'condition': 'build_with_chromium or dawn_standalone',
   },
 
   # Dependencies required to build / run WebAssembly bindings
@@ -566,7 +570,7 @@ deps = {
 
   # Dependencies for tintd.
   'third_party/jsoncpp': {
-    'url': '{github_git}/open-source-parsers/jsoncpp.git@69098a18b9af0c47549d9a271c054d13ca92b006',
+    'url': '{chromium_git}/external/github.com/open-source-parsers/jsoncpp.git@69098a18b9af0c47549d9a271c054d13ca92b006',
     'condition': 'dawn_tintd',
   },
 

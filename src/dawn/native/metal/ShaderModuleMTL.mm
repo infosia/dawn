@@ -224,7 +224,6 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     std::ostringstream errorStream;
     errorStream << "Tint MSL failure:\n";
 
-
     bool useArgumentBuffers = device->IsToggleEnabled(Toggle::MetalUseArgumentBuffers);
 
     tint::Bindings bindings =
@@ -260,10 +259,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
                 .binding = metalIndex,
             };
             if (srcBindingPoint != dstBindingPoint) {
-                bindings.storage.emplace(srcBindingPoint, tint::BindingPoint{
-                                                              .group = 0,
-                                                              .binding = dstBindingPoint.binding,
-                                                          });
+                bindings.storage.emplace(srcBindingPoint, dstBindingPoint);
             }
 
             // Use the ShaderIndex as the indices for the buffer size lookups in the array
@@ -376,7 +372,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
             {
                 SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(r.platform.UnsafeGetValue(),
                                                    "ShaderModuleSubstituteOverrides");
-                tint::core::ir::transform::SubstituteOverridesConfig cfg;
+                tint::SubstituteOverridesConfig cfg;
                 cfg.map = std::move(r.substituteOverrideConfig);
                 auto substituteOverridesResult =
                     tint::core::ir::transform::SubstituteOverrides(ir.Get(), cfg);

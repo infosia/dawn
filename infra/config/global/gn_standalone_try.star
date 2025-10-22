@@ -179,6 +179,16 @@ dawn_linux_functional_cq_tester_without_node(
 )
 
 dawn_mac_functional_cq_tester(
+    name = "dawn-cq-mac-arm64-rel",
+    description_html = "Tests release Dawn on Mac/arm64 on multiple hardware configs. Blocks CL submission",
+    mirrors = [
+        "ci/dawn-mac-arm64-builder-rel",
+        "ci/dawn-mac-arm64-apple-m2-rel",
+    ],
+    gn_args = "ci/dawn-mac-arm64-builder-rel",
+)
+
+dawn_mac_functional_cq_tester(
     name = "dawn-cq-mac-x64-dbg",
     description_html = "Tests debug Dawn on Mac/x64 on multiple hardware configs. Blocks CL submission",
     mirrors = [
@@ -332,6 +342,16 @@ def dawn_win_manual_builder(*, name, **kwargs):
     )
 
 ## Functional testers
+
+dawn_linux_manual_builder(
+    name = "dawn-try-linux-x64-intel-uhd630-rel",
+    description_html = "Tests release Dawn on Linux/x64 on Intel CPUs w/ UHD 630 GPUs. Manual only.",
+    mirrors = [
+        "ci/dawn-linux-x64-builder-rel",
+        "ci/dawn-linux-x64-intel-uhd630-rel",
+    ],
+    gn_args = "ci/dawn-linux-x64-builder-rel",
+)
 
 dawn_linux_manual_builder(
     name = "dawn-try-linux-x64-sws-dbg",
