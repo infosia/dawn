@@ -17,6 +17,7 @@
 
 #include <webgpu/webgpu_cpp.h>
 
+#include <concepts>
 #include <cstdint>
 #include <string>
 #include <type_traits>
@@ -30,9 +31,16 @@ class CaptureContext;
 
 void WriteBytes(CaptureContext& context, const void* data, size_t size);
 
-void Serialize(CaptureContext& context, int32_t v);
-void Serialize(CaptureContext& context, uint32_t v);
-void Serialize(CaptureContext& context, uint64_t v);
+template <typename T>
+concept BuiltinButNotAggregate = std::is_fundamental_v<T>;
+
+template <BuiltinButNotAggregate T>
+void Serialize(CaptureContext& context, T v)
+    requires(!std::is_same_v<T, size_t>)
+{
+    WriteBytes(context, reinterpret_cast<const char*>(&v), sizeof(v));
+}
+
 void Serialize(CaptureContext& context, const std::string& v);
 
 template <typename T>
