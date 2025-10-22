@@ -34,6 +34,24 @@
       "parentUuid": "6832a1b0_bcd9d8e2",
       "revId": "8d717eec7561515e15320ea8ef467a02e1345e9d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "516d6708_4c899e47",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-22T22:39:26Z",
+      "side": 1,
+      "message": "I think Kai is the next person that knows the big picture of the webgpu backend and capture/replay well.",
+      "parentUuid": "90b2f820_29717ad0",
+      "revId": "8d717eec7561515e15320ea8ef467a02e1345e9d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
