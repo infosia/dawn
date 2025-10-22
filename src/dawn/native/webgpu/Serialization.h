@@ -44,14 +44,6 @@ void Serialize(CaptureContext& context, T v)
 void Serialize(CaptureContext& context, const std::string& v);
 
 template <typename T>
-void Serialize(CaptureContext& context, T v)
-    requires(std::is_same_v<T, size_t> && !std::is_same_v<T, uint64_t> &&
-             !std::is_same_v<T, uint32_t>)
-{
-    WriteBytes(context, reinterpret_cast<const char*>(&v), sizeof(v));
-}
-
-template <typename T>
 void Serialize(CaptureContext& context, const std::vector<T>& v) {
     Serialize(context, v.size());
     for (const auto& elem : v) {
