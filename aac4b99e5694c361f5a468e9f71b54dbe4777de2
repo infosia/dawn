@@ -34,6 +34,24 @@
       "parentUuid": "5c18941a_90ad8989",
       "revId": "aac4b99e5694c361f5a468e9f71b54dbe4777de2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1fc3368_c51a0e95",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-22T09:07:46Z",
+      "side": 1,
+      "message": "I understand. Some tips; apologies if you know these already.\n\nTake care to give each CL a unique Change-Id. If you want to re-assign a Change-Id you can edit the description, delete the Change-Id and re-run git hooks. I keep my changes in different branches unless I\u0027m deliberately creating a relation chain.\n\nI also tend to keep the main branch without any of my local CLs; to sync with work in progress outstanding, I switch to the main branch, sync, then make new branches and re-patch the outstanding CLs. I find this much easier to handle merges than doing it in gclient sync.",
+      "parentUuid": "302be034_8730bc2b",
+      "revId": "aac4b99e5694c361f5a468e9f71b54dbe4777de2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
