@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6832a1b0_bcd9d8e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-22T20:59:43Z",
+      "side": 1,
+      "message": "LGTM\n(Do you plan to wait for Corentin\u0027s review when he\u0027s back?)",
+      "revId": "8d717eec7561515e15320ea8ef467a02e1345e9d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
