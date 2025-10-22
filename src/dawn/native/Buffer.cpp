@@ -92,7 +92,7 @@ class ErrorBuffer final : public BufferBase {
         return {};
     }
 
-    void FinalizeMapImpl() override {}
+    void FinalizeMapImpl(BufferState newState) override {}
 
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override {
         DAWN_UNREACHABLE();
@@ -100,7 +100,7 @@ class ErrorBuffer final : public BufferBase {
 
     void* GetMappedPointerImpl() override { return mFakeMappedData.get(); }
 
-    void UnmapImpl() override { mFakeMappedData.reset(); }
+    void UnmapImpl(BufferState fromState) override { mFakeMappedData.reset(); }
 
     std::unique_ptr<uint8_t[]> mFakeMappedData;
 };
@@ -430,28 +430,28 @@ BufferBase::~BufferBase() {
 }
 
 void BufferBase::DestroyImpl() {
+    bool needsUnmap = false;
     switch (mState.load(std::memory_order::acquire)) {
         case BufferState::Mapped:
         case BufferState::PendingMap: {
-            [[maybe_unused]] bool hadError = GetDevice()->ConsumedError(
-                UnmapInternal(WGPUMapAsyncStatus_Aborted,
-                              "Buffer was destroyed before mapping was resolved."),
-                "calling %s.Destroy().", this);
+            needsUnmap = true;
             break;
         }
         case BufferState::MappedAtCreation: {
             if (mStagingBuffer != nullptr) {
                 mStagingBuffer = nullptr;
             } else if (mSize != 0) {
-                [[maybe_unused]] bool hadError = GetDevice()->ConsumedError(
-                    UnmapInternal(WGPUMapAsyncStatus_Aborted,
-                                  "Buffer was destroyed before mapping was resolved."),
-                    "calling %s.Destroy().", this);
+                needsUnmap = true;
             }
             break;
         }
         default:
             break;
+    }
+    if (needsUnmap) {
+        [[maybe_unused]] bool hadError = GetDevice()->ConsumedError(
+            UnmapInternal("Buffer was destroyed before mapping was resolved."),
+            "calling %s.Destroy().", this);
     }
     mState.store(BufferState::Destroyed, std::memory_order::release);
 
@@ -523,9 +523,9 @@ void BufferBase::FinalizeMap(BufferState newState) {
         mMapData = GetMappedPointerImpl();
     }
 
-    mState.store(newState, std::memory_order::release);
+    FinalizeMapImpl(newState);
 
-    FinalizeMapImpl();
+    mState.store(newState, std::memory_order::release);
 }
 
 MaybeError BufferBase::MapAtCreation() {
@@ -756,8 +756,7 @@ void BufferBase::APIUnmap() {
         return;
     }
     auto unmap = [&]() -> MaybeError {
-        DAWN_TRY(UnmapInternal(WGPUMapAsyncStatus_Aborted,
-                               "Buffer was unmapped before mapping was resolved."));
+        DAWN_TRY(UnmapInternal("Buffer was unmapped before mapping was resolved."));
         return GetDevice()->GetDynamicUploader()->MaybeSubmitPendingCommands();
     };
     [[maybe_unused]] bool hadError =
@@ -767,14 +766,14 @@ void BufferBase::APIUnmap() {
 MaybeError BufferBase::Unmap() {
     switch (mState.load(std::memory_order::acquire)) {
         case BufferState::Mapped:
-            UnmapImpl();
+            UnmapImpl(BufferState::Mapped);
             break;
         case BufferState::MappedAtCreation:
             if (mStagingBuffer != nullptr) {
                 DAWN_TRY(CopyFromStagingBuffer());
             }
             if (mSize != 0 && IsCPUWritableAtCreation()) {
-                UnmapImpl();
+                UnmapImpl(BufferState::MappedAtCreation);
             }
             break;
         case BufferState::Unmapped:
@@ -791,7 +790,7 @@ MaybeError BufferBase::Unmap() {
     return {};
 }
 
-MaybeError BufferBase::UnmapInternal(WGPUMapAsyncStatus status, std::string_view message) {
+MaybeError BufferBase::UnmapInternal(std::string_view message) {
     BufferState state = mState.load(std::memory_order::acquire);
 
     // If the buffer is already destroyed, we don't need to do anything.
@@ -805,8 +804,8 @@ MaybeError BufferBase::UnmapInternal(WGPUMapAsyncStatus status, std::string_view
         Ref<MapAsyncEvent> event =
             std::get<Ref<MapAsyncEvent>>(std::exchange(mMapData, static_cast<void*>(nullptr)));
 
-        event->UnmapEarly(status, message);
-        UnmapImpl();
+        event->UnmapEarly(WGPUMapAsyncStatus_Aborted, message);
+        UnmapImpl(BufferState::PendingMap);
         mState.store(BufferState::Unmapped, std::memory_order::release);
 
         GetDevice()->DeferIfLocked(
