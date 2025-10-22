@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "564fe301_b465e430",
+        "filename": "src/dawn/native/opengl/ContextEGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-10-22T13:54:08Z",
+      "side": 1,
+      "message": "I have added an internal helper function in this file instead. I would prefer not to add a public method in `DisplayEGL`. We should reduce the chance someone accidentally call `MakeCurrent` without `ScopedMakeCurrent` in future. In order to do that, we should only expose `ScopedMakeCurrent`.",
+      "parentUuid": "fcf6545e_310149b5",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1cbf852_fb98d4c1",
@@ -119,6 +137,24 @@
       "writtenOn": "2025-10-20T18:36:22Z",
       "side": 1,
       "message": "Nit: if this is going to be removed, suggest renaming it \"DeprecatedMakeCurrent()\"  now, and naming the new \"MakeCurrentScope()\" function below into \"MakeCurrent()\". That\u0027ll make the remaining work clearer, and leave things in a cleaner end state.",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06f3275d_b614f15f",
+        "filename": "src/dawn/native/opengl/ContextEGL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-10-22T13:54:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1cbf852_fb98d4c1",
       "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -146,6 +182,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cd9869a_957bfb39",
+        "filename": "src/dawn/native/opengl/ContextEGL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-10-22T13:54:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c33ccc82_a5ad6e48",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 53
+      },
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ddc3e759_b4eefe06",
@@ -159,6 +219,24 @@
       "writtenOn": "2025-10-20T18:36:22Z",
       "side": 1,
       "message": "Finally, let\u0027s rename this MakeCurrentInternal().",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b118820_42af37a8",
+        "filename": "src/dawn/native/opengl/ContextEGL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-10-22T13:54:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddc3e759_b4eefe06",
       "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -186,6 +264,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6926372e_0b028826",
+        "filename": "src/dawn/native/opengl/ContextEGL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-10-22T13:54:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fec480e6_2af405da",
+      "range": {
+        "startLine": 94,
+        "startChar": 4,
+        "endLine": 94,
+        "endChar": 22
+      },
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0a324d3_6378e7f2",
@@ -203,6 +305,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0ef0df2_b5b5a017",
+        "filename": "src/dawn/native/opengl/DeviceGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-10-22T13:54:08Z",
+      "side": 1,
+      "message": "We could use `eglGetCurrentContext` in future, I have added a TODO for that. It\u0027s unsafe to use it currently because there are two ways the context would be made current: `DeprecatedMakeCurrent` and `ScopedMakeCurrent`. Ideally we should use `ScopedMakeCurrent` everywhere. But it\u0027s a iterative effort.\n\nLet\u0027s say we used `eglGetCurrentContext` and this call sequence happened:\n- No current context.\n- Buffer.Map().\n- Buffer.Unmap().\n  - Use `AddGLWork()` to schedule a buffer upload.\n- Some legacy code uses `DeprecatedMakeCurrent`.\n- Buffer.Destroy()\n  - Use `AddGLWork()` to schedule a buffer destroy.\n  - Because the condition `eglGetCurrentContext() \u003d\u003d context` is true. The buffer is destroyed immediately.\n- `Queue.Submit()`\n  - `ExecutePendingGLWork()`:\n    - buffer upload is executed. But the buffer is already destroyed -\u003e error.\n    \nThe current thread local tracking ensures that the order of deferred tasks are guaranteed within `ExecutePendingGLWork()` only.",
+      "parentUuid": "d0a324d3_6378e7f2",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7131cb24_c19ab3de",
@@ -216,6 +336,30 @@
       "writtenOn": "2025-10-21T17:31:37Z",
       "side": 1,
       "message": "Does this have to be templated? Can you use `GLWorkFunc` instead?",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 26
+      },
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "270dbd83_2a785f37",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-10-22T13:54:08Z",
+      "side": 1,
+      "message": "I always think that template could make it easier for the compiler to inline the lambda, esp when calling it immediately at line 77 below. It could also avoid any `std::function`\u0027s heap allocation if we don\u0027t need to enqueue the work.",
+      "parentUuid": "7131cb24_c19ab3de",
       "range": {
         "startLine": 73,
         "startChar": 4,
@@ -257,6 +401,24 @@
       "side": 1,
       "message": "Suggest: `ExecutePendingGLWork`",
       "parentUuid": "9da69f0b_23b63be3",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd316ce6_5fed6a0b",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-10-22T13:54:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "252f9e45_939242f9",
       "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
