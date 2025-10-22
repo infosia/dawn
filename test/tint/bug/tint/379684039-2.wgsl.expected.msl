@@ -2,7 +2,7 @@
 using namespace metal;
 
 struct tint_array_lengths_struct {
-  uint tint_array_length_0_0;
+  uint tint_array_length_0_2;
 };
 
 template<typename T, size_t N>
@@ -39,7 +39,7 @@ void v(tint_array_lengths_struct tint_array_lengths, tint_module_vars_struct tin
       if (all((tint_loop_idx == uint2(0u)))) {
         break;
       }
-      if ((v_1.y >= (*tint_module_vars._storage).fsUniformData[min((*tint_module_vars.idx), (tint_array_lengths.tint_array_length_0_0 - 1u))].size.y)) {
+      if ((v_1.y >= (*tint_module_vars._storage).fsUniformData[min((*tint_module_vars.idx), (tint_array_lengths.tint_array_length_0_2 - 1u))].size.y)) {
         break;
       }
       {
