@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd049faa_d1ef0a32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-10-22T20:56:13Z",
+      "side": 1,
+      "message": "I need to update this, becasue gn + Fuzzers doesn\u0027t actually workd. It builds, if you have a component build, but doesn\u0027t run successfully, because it cannot find fuzzer libs.",
+      "revId": "175ee920192802b57f50ac1d93613ad41e1aa012",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
