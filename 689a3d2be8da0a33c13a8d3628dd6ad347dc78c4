@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bfc0f92_7385fca9",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2025-10-22T11:19:07Z",
+      "side": 1,
+      "message": "assertEquals takes parameters in the order (actual, expected).  queryCount is the expected value here, so you should swap these.\n\n(A quick glance up the file I see this error in a few other places.  It\u0027s worth fixing, because the console logs from the test harness assume ordering if there\u0027s a failure.)\n\nAlso, just as a style thing, does Kotlin let you declare queryCount const?  Since it\u0027s a constant.",
+      "revId": "689a3d2be8da0a33c13a8d3628dd6ad347dc78c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9971ad60_0d062b3e",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2025-10-22T11:19:07Z",
+      "side": 1,
+      "message": "I liked how you did this with an explicit early-exit on line 66, maybe do that again here?",
+      "revId": "689a3d2be8da0a33c13a8d3628dd6ad347dc78c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
