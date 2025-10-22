@@ -49,6 +49,12 @@ struct CreatePipelineAsyncTask {
 
 class CreatePipelineAsyncTest : public DawnTest {
   protected:
+    void SetUp() override {
+        DawnTest::SetUp();
+        // TODO(crbug.com/413053623): Failure on dawn-cq-linux-x86 swiftshader.
+        DAWN_SUPPRESS_TEST_IF(IsWebGPUOnSwiftshader() && IsLinux());
+    }
+
     void ValidateCreateComputePipelineAsync(CreatePipelineAsyncTask* currentTask) {
         wgpu::BufferDescriptor bufferDesc;
         bufferDesc.size = sizeof(uint32_t);
