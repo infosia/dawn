@@ -3,6 +3,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a0762ab4_42b01497",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-22T12:32:32Z",
+      "side": 1,
+      "message": "You can make this lateinit just like in the other test.",
+      "revId": "689a3d2be8da0a33c13a8d3628dd6ad347dc78c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "730e137d_bbdf6e1e",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-22T12:32:32Z",
+      "side": 1,
+      "message": "We should use \u0027assume\u0027 to check if a test is relevant instead of print and early out. `Assume.assumeTrue` \n\nhttps://source.corp.google.com/search?q\u003dlang:kt%20assumetrue\u0026ct\u003dos",
+      "revId": "689a3d2be8da0a33c13a8d3628dd6ad347dc78c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0bfc0f92_7385fca9",
         "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
         "patchSetId": 1
@@ -31,6 +65,69 @@
       "writtenOn": "2025-10-22T11:19:07Z",
       "side": 1,
       "message": "I liked how you did this with an explicit early-exit on line 66, maybe do that again here?",
+      "revId": "689a3d2be8da0a33c13a8d3628dd6ad347dc78c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9e0a5cb_b9e25e8d",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-22T12:32:32Z",
+      "side": 1,
+      "message": "Please make clear why 8L (e.g. comment, constant, constant from elsewhere such as Long.SIZE_BYTES if that\u0027s what it is).",
+      "range": {
+        "startLine": 125,
+        "startChar": 61,
+        "endLine": 125,
+        "endChar": 63
+      },
+      "revId": "689a3d2be8da0a33c13a8d3628dd6ad347dc78c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49ba787b_5933cab9",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-22T12:32:32Z",
+      "side": 1,
+      "message": "This tests just verifies there\u0027s no error during the operation. Would it be possible to read back the destinationBuffer to see if it contains what we expect?",
+      "revId": "689a3d2be8da0a33c13a8d3628dd6ad347dc78c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0aec8e6_7700671f",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-22T12:32:32Z",
+      "side": 1,
+      "message": "As this is a complete sentence please end in a full stop/period.",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 62
+      },
       "revId": "689a3d2be8da0a33c13a8d3628dd6ad347dc78c4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
