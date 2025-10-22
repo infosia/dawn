@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15f76125_c4b0dadd",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/RenderBundleEncoderTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-22T10:43:40Z",
+      "side": 1,
+      "message": "Nit: if you make webgpu \u0027lateinit\u0027 you can remove the nullable check on the close statement.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 36
+      },
+      "revId": "d2964b0a6df1f3a46f7613c84ecad42ab3ca0bfa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b080048_9a796070",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/RenderBundleEncoderTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-22T10:43:40Z",
+      "side": 1,
+      "message": "Since this is in the teardown it\u0027s OK to not clear this variable after close.",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 17
+      },
+      "revId": "d2964b0a6df1f3a46f7613c84ecad42ab3ca0bfa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38b20adf_4acb6ad9",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/RenderBundleEncoderTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-22T10:43:40Z",
+      "side": 1,
+      "message": "Nit. Wrap to 100 columns.",
+      "revId": "d2964b0a6df1f3a46f7613c84ecad42ab3ca0bfa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
