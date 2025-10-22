@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8ce2229_6208d9c7",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-22T19:08:35Z",
+      "side": 1,
+      "message": "If it\u0027s actually shared then you could name it something that suggests that. (EncodeSharedRenderPassAndRenderBundleCommand)\n\nAFAICT, the moment, it\u0027s not shared, right? You\u0027d need to pass in some API object that either calls renderPassEncoder or renderBundleEncoder, or template it.",
+      "parentUuid": "2670626f_9a96151a",
+      "range": {
+        "startLine": 172,
+        "startChar": 5,
+        "endLine": 172,
+        "endChar": 30
+      },
+      "revId": "f3a58aef5d049bccc2b79ec0d7d6a7ce230264bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "a2f31bcd_51526287",
