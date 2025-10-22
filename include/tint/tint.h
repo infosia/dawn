@@ -34,10 +34,14 @@
 // TODO(tint:88): When implementing support for an install target, all of these
 //                headers will need to be moved to include/tint/.
 
+///////////////
+// NOTE if adding a new guard thing here, it must also appear in src/tint/api/tint.cc for the build
+// to work correctly.
+///////////////
+
 #include "src/tint/api/common/substitute_overrides_config.h"
 #include "src/tint/api/common/vertex_pulling_config.h"
 #include "src/tint/api/tint.h"
-#include "src/tint/lang/core/ir/reflection.h"
 #include "src/tint/lang/core/type/manager.h"
 #include "src/tint/lang/wgsl/inspector/inspector.h"
 #include "src/tint/utils/diagnostic/formatter.h"
@@ -70,6 +74,10 @@
 #if TINT_BUILD_GLSL_WRITER
 #include "src/tint/lang/glsl/writer/writer.h"
 #endif  // TINT_BUILD_GLSL_WRITER
+
+#if TINT_BUILD_NULL_WRITER
+#include "src/tint/lang/null/writer/writer.h"
+#endif  // TINT_BUILD_NULL_WRITER
 
 #undef CURRENTLY_IN_TINT_PUBLIC_HEADER
 
