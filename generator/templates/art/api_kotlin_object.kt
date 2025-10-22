@@ -34,7 +34,7 @@ import java.nio.ByteBuffer
 {% endfor %}
 {% from 'art/api_kotlin_types.kt' import kotlin_annotation, kotlin_declaration, kotlin_definition with context %}
 
-public class {{ obj.name.CamelCase() }}(public val handle: Long): AutoCloseable {
+public class {{ obj.name.CamelCase() }} internal constructor(public val handle: Long): AutoCloseable {
     {% for method in obj.methods if include_method(obj, method) %}
         @FastNative
         @JvmName("{{ method.name.camelCase() }}")
