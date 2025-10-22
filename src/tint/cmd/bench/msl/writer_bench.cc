@@ -29,7 +29,6 @@
 
 #include "src/tint/api/helpers/generate_bindings.h"
 #include "src/tint/cmd/bench/bench.h"
-#include "src/tint/lang/msl/ir/transform/flatten_bindings.h"
 #include "src/tint/lang/msl/writer/writer.h"
 #include "src/tint/lang/wgsl/ast/module.h"
 #include "src/tint/lang/wgsl/reader/reader.h"
@@ -72,14 +71,7 @@ void GenerateMSL(benchmark::State& state, std::string input_name) {
             return;
         }
 
-        // Remap resource numbers to a flat namespace.
-        auto fb_res = tint::msl::ir::transform::FlattenBindings(ir.Get());
-        if (fb_res != tint::Success) {
-            state.SkipWithError(fb_res.Failure().reason);
-            return;
-        }
-
-        gen_options.bindings = tint::GenerateBindings(ir.Get(), true);
+        gen_options.bindings = tint::GenerateBindings(ir.Get(), true, true);
     }
 
     for (auto _ : state) {
@@ -87,13 +79,6 @@ void GenerateMSL(benchmark::State& state, std::string input_name) {
         auto ir = tint::wgsl::reader::ProgramToLoweredIR(res->program);
         if (ir != Success) {
             state.SkipWithError(ir.Failure().reason);
-            return;
-        }
-
-        // Remap resource numbers to a flat namespace.
-        auto fb_res = tint::msl::ir::transform::FlattenBindings(ir.Get());
-        if (fb_res != tint::Success) {
-            state.SkipWithError(fb_res.Failure().reason);
             return;
         }
 

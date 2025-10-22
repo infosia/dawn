@@ -192,19 +192,7 @@ void PopulateBindingRelatedOptions(const Options& options,
         remapper_data.emplace(src_binding_point, plane0);
     }
 
-    // ArrayLengthOptions bindpoints may need to be remapped
     {
-        std::unordered_map<BindingPoint, uint32_t> bindpoint_to_size_index;
-        for (auto& [bindpoint, index] :
-             options.array_length_from_constants.bindpoint_to_size_index) {
-            auto it = remapper_data.find(bindpoint);
-            if (it != remapper_data.end()) {
-                bindpoint_to_size_index.emplace(it->second, index);
-            } else {
-                bindpoint_to_size_index.emplace(bindpoint, index);
-            }
-        }
-
         if (options.array_length_from_constants.buffer_sizes_offset) {
             array_length_options.buffer_sizes_offset =
                 options.array_length_from_constants.buffer_sizes_offset;
@@ -212,7 +200,8 @@ void PopulateBindingRelatedOptions(const Options& options,
             array_length_options.ubo_binding = options.array_length_from_constants.ubo_binding;
         }
 
-        array_length_options.bindpoint_to_size_index = std::move(bindpoint_to_size_index);
+        array_length_options.bindpoint_to_size_index =
+            options.array_length_from_constants.bindpoint_to_size_index;
     }
 }
 
