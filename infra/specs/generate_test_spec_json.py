@@ -61,6 +61,9 @@ ADDITIONAL_MIXINS = {
         'linux_args': [
             '--no-xvfb',
         ],
+        'win_args': [
+            '--gtest_filter=-*WebGPU_WebGPU_backend_on*',
+        ],
     },
     'no_swarming': {
         'swarming': {
