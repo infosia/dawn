@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76edbf22_8386ac96",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-22T19:44:19Z",
+      "side": 1,
+      "message": "PTAL\n\nCI builder looks happy so far but I\u0027ll wait until tomorrow to submit this.",
+      "revId": "c0dd8df54061a07287602f00edaa2c652392b2d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
