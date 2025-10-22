@@ -22,6 +22,47 @@
       },
       "revId": "f3a58aef5d049bccc2b79ec0d7d6a7ce230264bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2670626f_9a96151a",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-22T02:13:33Z",
+      "side": 1,
+      "message": "(Maybe gregg can double confirm). I think this is because at first we want to put commands shared by render pass and render bundle to this function. But since we are using C header and cannot easily use template, they cannot share the same function body. What about unwrap this called at [1]?",
+      "parentUuid": "5b14ddf0_3b61500b",
+      "range": {
+        "startLine": 172,
+        "startChar": 5,
+        "endLine": 172,
+        "endChar": 30
+      },
+      "revId": "f3a58aef5d049bccc2b79ec0d7d6a7ce230264bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2f31bcd_51526287",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-22T02:13:33Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "f3a58aef5d049bccc2b79ec0d7d6a7ce230264bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
