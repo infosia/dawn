@@ -40,11 +40,6 @@
 #include "dawn/native/TintUtils.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
-// DeviceNull is a bit of a special case in that it does call any Raise routine, so include the
-// needed transforms directly.
-#include "src/tint/lang/core/ir/transform/single_entry_point.h"
-#include "src/tint/lang/core/ir/transform/substitute_overrides.h"
-
 #include "tint/tint.h"
 
 namespace dawn::native::null {
@@ -486,6 +481,12 @@ MaybeError Queue::WaitForIdleForDestructionImpl() {
 MaybeError ComputePipeline::InitializeImpl() {
     const ProgrammableStage& computeStage = GetStage(SingleShaderStage::Compute);
 
+    tint::null::writer::Options tintOptions;
+    tintOptions.entry_point_name = computeStage.entryPoint;
+    tintOptions.substitute_overrides_config = {
+        .map = BuildSubstituteOverridesTransformConfig(computeStage),
+    };
+
     // There is no Tint backend called by DeviceNull. We access the SingleEntryPoint and
     // SubstituteOverrides transforms directly in order to create the needed WorkgroupSize
     // information.
@@ -495,30 +496,11 @@ MaybeError ComputePipeline::InitializeImpl() {
     DAWN_INVALID_IF(ir != tint::Success, "An error occurred while generating Tint IR\n%s",
                     ir.Failure().reason);
 
-    {
-        auto singleEntryPointResult =
-            tint::core::ir::transform::SingleEntryPoint(ir.Get(), computeStage.entryPoint.c_str());
-        DAWN_INVALID_IF(singleEntryPointResult != tint::Success,
-                        "Pipeline single entry point (IR) failed:\n%s",
-                        singleEntryPointResult.Failure().reason);
+    tint::Result<tint::null::writer::Output> tintResult =
+        tint::null::writer::Generate(ir.Get(), tintOptions);
 
-        // this needs to run after SingleEntryPoint transform which removes unused
-        // overrides for the current entry point.
-        tint::SubstituteOverridesConfig cfg;
-        cfg.map = BuildSubstituteOverridesTransformConfig(computeStage);
-
-        auto substituteOverridesResult =
-            tint::core::ir::transform::SubstituteOverrides(ir.Get(), cfg);
-        DAWN_INVALID_IF(substituteOverridesResult != tint::Success,
-                        "Pipeline override substitution (IR) failed:\n%s",
-                        substituteOverridesResult.Failure().reason);
-    }
-
-    //  Workgroup validation has to come after overrides to have been substituted.
-    auto wgInfo = tint::core::ir::GetWorkgroupInfo(ir.Get());
-
-    DAWN_INVALID_IF(wgInfo != tint::Success, "Getting workgroup info has failed (IR):\n%s",
-                    wgInfo.Failure().reason);
+    DAWN_INVALID_IF(tintResult != tint::Success, "An error occurred while running Null writer\n%s",
+                    tintResult.Failure().reason);
 
     auto limits = LimitsForCompilationRequest::Create(GetDevice()->GetLimits().v1);
     auto adapterSupportedLimits =
@@ -527,9 +509,10 @@ MaybeError ComputePipeline::InitializeImpl() {
 
     Extent3D _;
     DAWN_TRY_ASSIGN(_, ValidateComputeStageWorkgroupSize(
-                           wgInfo.Get().x, wgInfo.Get().y, wgInfo.Get().z,
-                           wgInfo.Get().storage_size, computeStage.metadata->usesSubgroupMatrix,
-                           maxSubgroupSize, limits, adapterSupportedLimits));
+                           tintResult->workgroup_info.x, tintResult->workgroup_info.y,
+                           tintResult->workgroup_info.z, tintResult->workgroup_info.storage_size,
+                           computeStage.metadata->usesSubgroupMatrix, maxSubgroupSize, limits,
+                           adapterSupportedLimits));
 
     return {};
 }
