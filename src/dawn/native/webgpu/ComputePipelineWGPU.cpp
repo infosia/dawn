@@ -27,6 +27,7 @@
 
 #include "dawn/native/webgpu/ComputePipelineWGPU.h"
 
+#include <limits>
 #include <string>
 #include <vector>
 #include "dawn/common/StringViewUtils.h"
@@ -71,7 +72,39 @@ MaybeError ComputePipeline::InitializeImpl() {
     desc.compute.constantCount = constants.size();
 
     auto device = ToBackend(GetDevice());
-    mInnerHandle = device->wgpu.deviceCreateComputePipeline(device->GetInnerHandle(), &desc);
+
+    // Call async version of create compute pipeline so that we know the status and will return an
+    // internal error to surface up if the inner pipeline is an error.
+    struct CreateComputePipelineAsyncUserData {
+        WGPUComputePipeline pipeline = nullptr;
+        WGPUCreatePipelineAsyncStatus status = WGPUCreatePipelineAsyncStatus_Success;
+        std::string message;
+    };
+    CreateComputePipelineAsyncUserData userdata;
+
+    WGPUCreateComputePipelineAsyncCallbackInfo callbackInfo =
+        WGPU_CREATE_COMPUTE_PIPELINE_ASYNC_CALLBACK_INFO_INIT;
+    callbackInfo.mode = WGPUCallbackMode_WaitAnyOnly;
+    callbackInfo.callback = [](WGPUCreatePipelineAsyncStatus status, WGPUComputePipeline pipeline,
+                               WGPUStringView message, void* userdata1, void* userdata2) {
+        auto* data = static_cast<CreateComputePipelineAsyncUserData*>(userdata1);
+        data->pipeline = pipeline;
+        data->status = status;
+        data->message = ToString(message);
+    };
+    callbackInfo.userdata1 = &userdata;
+
+    WGPUFutureWaitInfo waitInfo = WGPU_FUTURE_WAIT_INFO_INIT;
+    waitInfo.future = device->wgpu.deviceCreateComputePipelineAsync(device->GetInnerHandle(), &desc,
+                                                                    callbackInfo);
+    device->wgpu.instanceWaitAny(device->GetInnerInstance(), 1, &waitInfo,
+                                 std::numeric_limits<uint64_t>::max());
+
+    if (userdata.status != WGPUCreatePipelineAsyncStatus_Success) {
+        return DAWN_INTERNAL_ERROR(userdata.message);
+    }
+
+    mInnerHandle = userdata.pipeline;
     DAWN_ASSERT(mInnerHandle);
     return {};
 }
