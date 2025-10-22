@@ -151,8 +151,18 @@ the `dawn::webgpu_dawn` target. Please see [Quickstart with CMake](./quickstart-
 for step-by-step instructions.
 
 ### Fuzzers on MacOS
-If you are attempting fuzz, using `TINT_BUILD_FUZZERS=ON`, the version of llvm
-in the XCode SDK does not have the needed libfuzzer functionality included.
+#### Using gn
+Adding `optimize_for_fuzzing = true`, `symbol_level = 1` and `use_libfuzzer =
+true` to your `args.gn` like any other platform should just work.
+
+#### Using CMake
+**tl;dr**: It is recommended to use the `gn` build for Fuzzers on MacOS, since
+CMake is not well-supported. If absolutely necessary there is a workaround for
+getting them to build with CMake below.
+
+If you are attempting to build the fuzzers using CMake, via
+`TINT_BUILD_FUZZERS=ON`, the version of llvm provided by the XCode SDK does not
+have the needed libfuzzer functionality included.
 
 The build error that you will see from using the XCode SDK will look something
 like this:
@@ -160,9 +170,30 @@ like this:
 ld: file not found:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/lib/darwin/libclang_rt.fuzzer_osx.a
 ```
 
-The solution to this problem is to use a full version llvm, like what you would
-get via homebrew, `brew install llvm`, and use something like `CC=<path to full
-clang> cmake ..` to setup a build using that toolchain.
+Previously the solution to this had been to install fully featured version llvm,
+like what you would get via Homebrew, `brew install llvm`, and then using
+environment variables `CC=<path to Homebrew clang> cmake ..` to set up the build
+including that toolchain to get the missing libraries onto the search path.
+
+This doesn't appear to work anymore, since the standard libraries provided by
+the XCode SDK do not play nicely with Homebrew's llvm. There currently are no
+known instructions for the CMake build to replace all the needed
+tooling/libraries with custom versions to work around this issue.
+
+If such custom toolchain instructions existed, instead of using Homebrew's llvm,
+the hermetic build environment used by `gn` could be potentially used instead,
+since the fuzzers build fine with `gn`.
+
+There is a low-road workaround of installing `llvm@17` (since AppleClang is
+version 17) from Homebrew, and then copying over the missing library files from
+the Homebrew directory to the XCode SDK directory.
+
+This does appear to work for building and debugging the fuzzers, but the impact
+of this on other builds and/or system stability is unknown. It shouldn't have a
+significant impact, since the standard SDK doesn't ship with these libraries, so
+nothing else should be using them, but the Homebrew version of llvm will not
+have all of Apple's patches, so may be incompatible in subtle ways if it does
+get used.
 
 ### Reproducing bot specific environments on Windows + CMake
 When investigating build issues being seen by CI/CQ it is sometimes necessary
