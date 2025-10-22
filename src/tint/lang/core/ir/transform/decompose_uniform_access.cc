@@ -176,7 +176,9 @@ struct State {
         if (auto* byte_cnst = byte_idx->As<core::ir::Constant>()) {
             return b.Value(u32((byte_cnst->Value()->ValueAs<uint32_t>() % 16u) / 4u));
         }
-        return b.Divide(ty.u32(), b.Modulo(ty.u32(), byte_idx, 16_u), 4_u)->Result();
+        // Note: Using bitwise-and instead of modulo here was necessary to avoid an FXC miscompile.
+        // See https://crbug.com/454366353.
+        return b.Divide(ty.u32(), b.And(ty.u32(), byte_idx, 15_u), 4_u)->Result();
     }
 
     void Access(core::ir::Access* a,
