@@ -1,7 +1,7 @@
 ; SPIR-V
 ; Version: 1.3
 ; Generator: Google Tint Compiler; 1
-; Bound: 91
+; Bound: 92
 ; Schema: 0
                OpCapability Shader
                OpCapability Float16
@@ -46,6 +46,7 @@
      %v2half = OpTypeVector %half 2
          %59 = OpTypeFunction %mat2v4half %uint
     %uint_16 = OpConstant %uint 16
+    %uint_15 = OpConstant %uint 15
      %uint_4 = OpConstant %uint 4
      %uint_2 = OpConstant %uint 2
        %bool = OpTypeBool
@@ -101,27 +102,27 @@
          %60 = OpLabel
          %61 = OpUDiv %uint %start_byte_offset %uint_16
          %63 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %61
-         %64 = OpUMod %uint %start_byte_offset %uint_16
-         %65 = OpUDiv %uint %64 %uint_4
-         %67 = OpLoad %v4uint %63 None
-         %68 = OpVectorShuffle %v2uint %67 %67 2 3
-         %69 = OpVectorShuffle %v2uint %67 %67 0 1
-         %70 = OpIEqual %bool %65 %uint_2
-         %74 = OpCompositeConstruct %v2bool %70 %70
-         %75 = OpSelect %v2uint %74 %68 %69
-         %76 = OpBitcast %v4half %75
-         %77 = OpIAdd %uint %uint_8 %start_byte_offset
-         %79 = OpUDiv %uint %77 %uint_16
-         %80 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %79
-         %81 = OpUMod %uint %77 %uint_16
-         %82 = OpUDiv %uint %81 %uint_4
-         %83 = OpLoad %v4uint %80 None
-         %84 = OpVectorShuffle %v2uint %83 %83 2 3
-         %85 = OpVectorShuffle %v2uint %83 %83 0 1
-         %86 = OpIEqual %bool %82 %uint_2
-         %87 = OpCompositeConstruct %v2bool %86 %86
-         %88 = OpSelect %v2uint %87 %84 %85
-         %89 = OpBitcast %v4half %88
-         %90 = OpCompositeConstruct %mat2v4half %76 %89
-               OpReturnValue %90
+         %64 = OpBitwiseAnd %uint %start_byte_offset %uint_15
+         %66 = OpUDiv %uint %64 %uint_4
+         %68 = OpLoad %v4uint %63 None
+         %69 = OpVectorShuffle %v2uint %68 %68 2 3
+         %70 = OpVectorShuffle %v2uint %68 %68 0 1
+         %71 = OpIEqual %bool %66 %uint_2
+         %75 = OpCompositeConstruct %v2bool %71 %71
+         %76 = OpSelect %v2uint %75 %69 %70
+         %77 = OpBitcast %v4half %76
+         %78 = OpIAdd %uint %uint_8 %start_byte_offset
+         %80 = OpUDiv %uint %78 %uint_16
+         %81 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %80
+         %82 = OpBitwiseAnd %uint %78 %uint_15
+         %83 = OpUDiv %uint %82 %uint_4
+         %84 = OpLoad %v4uint %81 None
+         %85 = OpVectorShuffle %v2uint %84 %84 2 3
+         %86 = OpVectorShuffle %v2uint %84 %84 0 1
+         %87 = OpIEqual %bool %83 %uint_2
+         %88 = OpCompositeConstruct %v2bool %87 %87
+         %89 = OpSelect %v2uint %88 %85 %86
+         %90 = OpBitcast %v4half %89
+         %91 = OpCompositeConstruct %mat2v4half %77 %90
+               OpReturnValue %91
                OpFunctionEnd
