@@ -122,6 +122,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "d9e8bb9c_7f26e71f",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-22T21:38:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df4cda03_a0af9934",
+      "range": {
+        "startLine": 172,
+        "startChar": 5,
+        "endLine": 172,
+        "endChar": 30
+      },
+      "revId": "f3a58aef5d049bccc2b79ec0d7d6a7ce230264bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "a2f31bcd_51526287",
         "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
         "patchSetId": 2
