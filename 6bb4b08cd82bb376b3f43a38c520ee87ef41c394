@@ -51,6 +51,24 @@
       "parentUuid": "389bb2c0_17e59203",
       "revId": "6bb4b08cd82bb376b3f43a38c520ee87ef41c394",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93a49a3d_f09319d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-22T21:35:37Z",
+      "side": 1,
+      "message": "`--test-launcher-bot-mode` appears to be a Chromium-specific flag, so I don\u0027t think there\u0027s much we can do on Dawn\u0027s end without reimplementing what Chromium does https://source.chromium.org/chromium/chromium/src/+/main:base/test/test_switches.cc;l\u003d28",
+      "parentUuid": "2b02addb_90f624ea",
+      "revId": "6bb4b08cd82bb376b3f43a38c520ee87ef41c394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
