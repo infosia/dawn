@@ -162,6 +162,10 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     arrayLengthFromUniform.ubo_binding = {layout->GetDynamicStorageBufferLengthsRegisterSpace(),
                                           layout->GetDynamicStorageBufferLengthsShaderRegister()};
 
+    tint::hlsl::writer::ArrayOffsetFromUniformOptions arrayOffsetFromUniform;
+    arrayOffsetFromUniform.ubo_binding = {layout->GetDynamicStorageBufferOffsetsRegisterSpace(),
+                                          layout->GetDynamicStorageBufferOffsetsShaderRegister()};
+
     tint::Bindings bindings =
         GenerateBindingRemapping(layout, stage, [&](BindGroupIndex group, BindingIndex index) {
             const BindGroupLayout* bgl = ToBackend(layout->GetBindGroupLayout(group));
@@ -212,14 +216,15 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
             }
         }
 
-        // Add arrayLengthFromUniform options
+        // Add per-group arrayLengthFromUniform and arrayOffsetFromUniform options
         for (const auto& bindingAndRegisterOffset :
-             layout->GetDynamicStorageBufferLengthInfo()[group].bindingAndRegisterOffsets) {
+             layout->GetDynamicStorageBufferInfo()[group].bindingAndRegisterOffsets) {
             BindingNumber bindingNum = bindingAndRegisterOffset.binding;
             uint32_t registerOffset = bindingAndRegisterOffset.registerOffset;
             tint::BindingPoint bindingPoint{static_cast<uint32_t>(group),
                                             static_cast<uint32_t>(bindingNum)};
             arrayLengthFromUniform.bindpoint_to_size_index.emplace(bindingPoint, registerOffset);
+            arrayOffsetFromUniform.bindpoint_to_offset_index.emplace(bindingPoint, registerOffset);
         }
     }
 
@@ -255,6 +260,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     // them as well. This would allow us to only upload root constants that are actually
     // read by the shader.
     req.hlsl.tintOptions.array_length_from_uniform = std::move(arrayLengthFromUniform);
+    req.hlsl.tintOptions.array_offset_from_uniform = std::move(arrayOffsetFromUniform);
 
     req.hlsl.tintOptions.immediate_binding_point = tint::BindingPoint{
         layout->GetImmediatesRegisterSpace(), layout->GetImmediatesShaderRegister()};

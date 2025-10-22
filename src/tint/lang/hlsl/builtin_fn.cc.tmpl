@@ -103,6 +103,40 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
     return core::ir::Instruction::Accesses{};
 }
 
+bool IsLoad(BuiltinFn fn) {
+    switch (fn) {
+    case BuiltinFn::kLoad:
+    case BuiltinFn::kLoad2:
+    case BuiltinFn::kLoad3:
+    case BuiltinFn::kLoad4:
+    case BuiltinFn::kLoadF16:
+    case BuiltinFn::kLoad2F16:
+    case BuiltinFn::kLoad3F16:
+    case BuiltinFn::kLoad4F16:
+        return true;
+    default:
+        break;
+    }
+    return false;
+}
+
+bool IsStore(BuiltinFn fn) {
+    switch (fn) {
+    case BuiltinFn::kStore:
+    case BuiltinFn::kStore2:
+    case BuiltinFn::kStore3:
+    case BuiltinFn::kStore4:
+    case BuiltinFn::kStoreF16:
+    case BuiltinFn::kStore2F16:
+    case BuiltinFn::kStore3F16:
+    case BuiltinFn::kStore4F16:
+        return true;
+    default:
+        break;
+    }
+    return false;
+}
+
 }  // namespace tint::hlsl
 
 // clang-format on

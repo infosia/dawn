@@ -61,6 +61,20 @@ struct ArrayLengthFromUniformOptions {
     TINT_REFLECT(ArrayLengthFromUniformOptions, ubo_binding, bindpoint_to_size_index);
 };
 
+struct ArrayOffsetFromUniformOptions {
+    /// The HLSL binding point to use to generate a uniform buffer from which to read buffer
+    /// offsets.
+    BindingPoint ubo_binding;
+    /// The mapping from the storage buffer binding points in WGSL binding-point space to the index
+    /// into the uniform buffer where the offset into the buffer is stored.
+    std::unordered_map<BindingPoint, uint32_t> bindpoint_to_offset_index;
+
+    bool operator==(const ArrayOffsetFromUniformOptions& other) const = default;
+
+    /// Reflect the fields of this class so that it can be used by tint::ForeachField()
+    TINT_REFLECT(ArrayOffsetFromUniformOptions, ubo_binding, bindpoint_to_offset_index);
+};
+
 /// Data for a single pixel local attachment
 struct PixelLocalAttachment {
     /// The supported pixel local storage attachment formats
@@ -156,6 +170,10 @@ struct Options {
     /// Options used to specify a mapping of binding points to indices into a UBO
     /// from which to load buffer sizes.
     ArrayLengthFromUniformOptions array_length_from_uniform = {};
+
+    /// Options used to specify a mapping of binding points to indices into a UBO
+    /// from which to load buffer offsets.
+    ArrayOffsetFromUniformOptions array_offset_from_uniform = {};
 
     /// Interstage locations actually used as inputs in the next stage of the pipeline.
     /// This is potentially used for truncating unused interstage outputs at current shader stage.
