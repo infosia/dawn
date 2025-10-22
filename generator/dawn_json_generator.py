@@ -930,7 +930,7 @@ def compute_kotlin_params(loaded_json, kotlin_json, webgpu_json_data=None):
         # Methods are expected to return an object if declared. If they can't, dawn may raise an
         # error (converted to a Kotlin exception); otherwise JNI will throw NullPointerException.
         # In either case the optional type is redundant.
-        return AnnotatedTypedMember(
+        return AnnotatedTypedMember (
             method.returns.type, method.returns.annotation, False,
             method.json_data) if method.returns else None
 
