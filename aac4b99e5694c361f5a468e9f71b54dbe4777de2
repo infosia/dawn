@@ -52,6 +52,24 @@
       "parentUuid": "302be034_8730bc2b",
       "revId": "aac4b99e5694c361f5a468e9f71b54dbe4777de2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cdd0f5c_65be7037",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-22T10:03:50Z",
+      "side": 1,
+      "message": "Thanks for the thorough tips, I definitely prefer that second approach as well. It\u0027s the one I typically use.",
+      "parentUuid": "d1fc3368_c51a0e95",
+      "revId": "aac4b99e5694c361f5a468e9f71b54dbe4777de2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
