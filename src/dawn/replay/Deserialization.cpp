@@ -39,18 +39,6 @@ MaybeError ReadBytes(ReadHead& s, void* data, size_t size) {
     return s.ReadBytes(std::span<uint8_t>(static_cast<uint8_t*>(data), size));
 }
 
-MaybeError Deserialize(ReadHead& s, int32_t* v) {
-    return ReadBytes(s, reinterpret_cast<char*>(v), sizeof(*v));
-}
-
-MaybeError Deserialize(ReadHead& s, uint32_t* v) {
-    return ReadBytes(s, reinterpret_cast<char*>(v), sizeof(*v));
-}
-
-MaybeError Deserialize(ReadHead& s, uint64_t* v) {
-    return ReadBytes(s, reinterpret_cast<char*>(v), sizeof(*v));
-}
-
 MaybeError Deserialize(ReadHead& s, std::string* v) {
     size_t size = 0;
     DAWN_TRY(Deserialize(s, &size));

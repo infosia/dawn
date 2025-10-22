@@ -17,6 +17,7 @@
 
 #include <webgpu/webgpu_cpp.h>
 
+#include <concepts>
 #include <cstdint>
 #include <string>
 #include <type_traits>
@@ -28,12 +29,18 @@ namespace dawn::replay {
 
 class ReadHead;
 
-// ----- Deserialization -----
+template <typename T>
+concept BuiltinButNotAggregate = std::is_fundamental_v<T>;
 
 MaybeError ReadBytes(ReadHead& s, void* data, size_t size);
-MaybeError Deserialize(ReadHead& s, int32_t* v);
-MaybeError Deserialize(ReadHead& s, uint32_t* v);
-MaybeError Deserialize(ReadHead& s, uint64_t* v);
+
+template <BuiltinButNotAggregate T>
+MaybeError Deserialize(ReadHead& s, T* v)
+    requires(!std::is_same_v<T, size_t>)
+{
+    return ReadBytes(s, reinterpret_cast<char*>(v), sizeof(*v));
+}
+
 MaybeError Deserialize(ReadHead& s, std::string* v);
 
 template <typename T>
