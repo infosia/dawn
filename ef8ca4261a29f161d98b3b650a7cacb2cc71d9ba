@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3c254ff_3678e79b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-22T21:17:39Z",
+      "side": 1,
+      "message": "The failure\n```\n[ RUN      ] CreatePipelineAsyncTest.CreateComputePipelineAsyncStressManyThreads/WebGPU_WebGPU_backend_on_BackendType__Vulkan\n(II) Server terminated successfully (0). Closing log file.\n```\ndoes seem related to the change of using async version creation function. But the Patchset 1 already using it for compute pipeline passed?\nI\u0027m unsure if it\u0027s issue of the bot. https://ci.chromium.org/ui/p/dawn/builders/try/dawn-cq-linux-x86-rel/858/overview",
+      "revId": "ef8ca4261a29f161d98b3b650a7cacb2cc71d9ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
