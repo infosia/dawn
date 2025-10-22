@@ -37,7 +37,14 @@
 #include "src/tint/api/common/substitute_overrides_config.h"
 #include "src/tint/api/common/vertex_pulling_config.h"
 #include "src/tint/api/tint.h"
+<<<<<<< PATCH SET (b7e047870e1a1e2f5212b0cb99e3eac38577b2bd Remove SingleEntryPoint from public header.)
+#include "src/tint/lang/core/ir/reflection.h"
+||||||| BASE      (4aba7c12c5a93893399ce2f29d81ed4964972242 [d3d] Move SingleEntryPoint to raise)
+#include "src/tint/lang/core/ir/reflection.h"
 #include "src/tint/lang/core/ir/transform/single_entry_point.h"
+=======
+#include "src/tint/lang/core/ir/transform/single_entry_point.h"
+>>>>>>> BASE      (019b82d3ddf474eb6848049b3c43babe7354f82e [d3d] Move SingleEntryPoint to raise)
 #include "src/tint/lang/core/type/manager.h"
 #include "src/tint/lang/wgsl/inspector/inspector.h"
 #include "src/tint/utils/diagnostic/formatter.h"
