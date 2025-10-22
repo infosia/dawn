@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "6bb4b08cd82bb376b3f43a38c520ee87ef41c394",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "389bb2c0_17e59203",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-22T16:00:43Z",
+      "side": 1,
+      "message": "I\u0027ve compared old and new shards\nhttps://chromium-swarm.appspot.com/task?id\u003d7424bb364a9e7210\nhttps://chromium-swarm.appspot.com/task?id\u003d742169b9ca67b310\nAnd it seems like the standalone bot doesn\u0027t use `--test-launcher-bot-mode`.\nI do like to see the output without bot mode, but OTOH it misses some test numbers and is a bit longer (2.3MB instead of 2MB).",
+      "revId": "6bb4b08cd82bb376b3f43a38c520ee87ef41c394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
