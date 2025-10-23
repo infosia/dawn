@@ -16,6 +16,23 @@
       "message": "@jimblackler@google.com\nThanks, I\u0027ve pushed the changes we discussed offline. Ready for another look.",
       "revId": "386d1675a738065812f4d1d2f785665c39f5f98f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c16e0167_63bcf1c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-23T08:19:51Z",
+      "side": 1,
+      "message": "Great work!",
+      "revId": "386d1675a738065812f4d1d2f785665c39f5f98f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
