@@ -34,6 +34,24 @@
       "parentUuid": "ef7db257_31c36873",
       "revId": "6a904a138a087a9aef4984664c51969ed15f4b31",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a2e73b2_3d5d2ad9",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-23T18:01:19Z",
+      "side": 1,
+      "message": "https://dawn-review.googlesource.com/c/dawn/+/268434",
+      "parentUuid": "8eb11356_8ed8c63f",
+      "revId": "6a904a138a087a9aef4984664c51969ed15f4b31",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
