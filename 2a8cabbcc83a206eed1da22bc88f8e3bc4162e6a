@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aee1d074_c94cccf1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-23T20:24:26Z",
+      "side": 1,
+      "message": "I cannot get the CL to pass `dawn-cq-linux-x86-*` bots. Wrote down some details and questions for discussion. Thanks!",
+      "revId": "2a8cabbcc83a206eed1da22bc88f8e3bc4162e6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c9fe077_247c2c3f",
+        "filename": "src/dawn/native/webgpu/RenderPipelineWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-23T20:24:26Z",
+      "side": 1,
+      "message": "Some details and questions:\n\nIs `instanceWaitAny` guaranteed to hang until the future is fullfilled? (I think so)\n\ndawn-cq-linux-x86-* bots (only swiftshader is available) fail looks like due to some internal racing (?) after pipeline::InitImpl uses async version of create pipelines.\n\nIf we keep using sync version for webgpu::RenderPipeline, they seem to pass.\n\nTried to use 5s instead of UINT64_MAX for wait time in case it\u0027s a problem for 32bit (although not likely based on internet search on 32bit impl of uint64_t). The same bots still fail.\n\nDoes this indicate there might be some internal bug for the async event implementation?\n\nOn the other hand, in terms to land things, do you think it appropriate if we only change webgpu::ComputePipeline::InitImpl to use async version and keep webgpu::RenderPipeline::InitImpl to use sync version with a comment and bug ticket? (The tests for pipeline creation error only tests for compute pipeline so that will pass the test)",
+      "revId": "2a8cabbcc83a206eed1da22bc88f8e3bc4162e6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
