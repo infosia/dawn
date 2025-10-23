@@ -113,11 +113,9 @@ MaybeError BindGroupLayout::CapturePipelineForImplicitLayout(CaptureContext& con
     if (computePipeline) {
         return context.AddResource(computePipeline);
     }
-    // TODO(451389801): Capture render pass pipelines.
-    // RenderPipelineBase* renderPipeline = pipeline->AsRenderPipeline();
-    // DAWN_ASSERT(renderPipeline);
-    // return context.AddResource(renderPipeline);
-    DAWN_CHECK(false);
+    RenderPipelineBase* renderPipeline = pipeline->AsRenderPipeline();
+    DAWN_ASSERT(renderPipeline);  // there must be a render pipeline if there's no compute pipeline.
+    return context.AddResource(renderPipeline);
 }
 
 }  // namespace dawn::native::webgpu
