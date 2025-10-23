@@ -234,8 +234,7 @@ MaybeError RenderPipeline::CaptureCreationParameters(CaptureContext& captureCont
 
             groupIndexIds.push_back(schema::BindGroupLayoutIndexIdPair{{
                 .groupIndex = uint32_t(groupIndex),
-                .bindGroupLayoutId = captureContext.AddAndGetIdForImplicitResource(
-                    bgl->GetInternalBindGroupLayout()),
+                .bindGroupLayoutId = captureContext.AddAndGetIdForImplicitResource(bgl),
             }});
         }
     } else {
