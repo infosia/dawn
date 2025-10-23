@@ -66,7 +66,7 @@ Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descripto
     if (actualUsage | kResolveAttachmentLoadingUsage) {
         actualUsage &= ~kResolveAttachmentLoadingUsage;
     }
-    if (!(actualUsage | wgpu::TextureUsage::TransientAttachment)) {
+    if (!(actualUsage & wgpu::TextureUsage::TransientAttachment)) {
         actualUsage |= wgpu::TextureUsage::CopySrc;
     }
     std::vector<WGPUTextureFormat> viewFormats;
