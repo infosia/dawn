@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "728d469e_a6de53e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-23T19:08:26Z",
+      "side": 1,
+      "message": "LGTM! First look at this code, the structure is easy to follow!",
+      "revId": "7dce74f8b1631805a31ab8ad63f71dfdb887cd8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "baf803c0_68b6849c",
+        "filename": "src/dawn/native/CommandBuffer.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-23T19:08:26Z",
+      "side": 1,
+      "message": "nit: I think you can just do this:\n```suggestion\n    auto UseCommands(F func) -\u003e auto {\n        auto result \u003d func(mCommands);\n```",
+      "range": {
+        "startLine": 73,
+        "startChar": 32,
+        "endLine": 75,
+        "endChar": 9
+      },
+      "revId": "7dce74f8b1631805a31ab8ad63f71dfdb887cd8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5629fe97_3a8622de",
+        "filename": "src/dawn/native/webgpu/BindGroupLayoutWGPU.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-23T19:08:26Z",
+      "side": 1,
+      "message": "nit: use DAWN_CHECK(false) for unimplemented code. (DAWN_UNREACHABLE tells the compiler it\u0027s unreachable so it will do weird things in release like elide conditional checks)\n\nSame for several other instances of DAWN_UNREACHABLE in this CL",
+      "revId": "7dce74f8b1631805a31ab8ad63f71dfdb887cd8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
