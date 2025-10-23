@@ -79,7 +79,7 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     options.compiler =
         fuzzed_options.compiler_is_dxc ? Options::Compiler::kDXC : Options::Compiler::kFXC;
 
-    options.bindings = GenerateBindings(module, false);
+    options.bindings = GenerateBindings(module, false, false);
     options.array_length_from_uniform.ubo_binding = {30, 0};
     // Add array_length_from_uniform entries for all storage buffers with runtime sized arrays.
     std::unordered_set<tint::BindingPoint> storage_bindings;
