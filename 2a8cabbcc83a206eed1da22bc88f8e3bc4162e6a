@@ -69,6 +69,24 @@
       "parentUuid": "beefb00f_ffad8972",
       "revId": "2a8cabbcc83a206eed1da22bc88f8e3bc4162e6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aef3106f_0e32f216",
+        "filename": "src/dawn/native/webgpu/RenderPipelineWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-23T21:16:12Z",
+      "side": 1,
+      "message": "Ah... hmm you could probably wrap with a push/pop error scope? You would still need to call `WaitAny` in that case to get the result of the pop error scope, but I think that might be better than using the async call because the async call is posting a task in the wgpu frontend, and then in the backend I think we may post another task. That interaction might be the cause of the weirdness you are seeing also?",
+      "parentUuid": "7e33424a_0327a2fa",
+      "revId": "2a8cabbcc83a206eed1da22bc88f8e3bc4162e6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
