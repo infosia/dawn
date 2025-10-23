@@ -69,6 +69,24 @@
       "parentUuid": "2b02addb_90f624ea",
       "revId": "6bb4b08cd82bb376b3f43a38c520ee87ef41c394",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "290fef2a_25c316e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-23T20:42:59Z",
+      "side": 1,
+      "message": "Thanks for checking!\nYeah, now I remembered that we have special handling for `--test-launcher-bot-mode` in ANGLE here https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/src/tests/test_utils/runner/TestSuite.cpp;l\u003d1377;drc\u003d25390156aefd6991c268c6c2c1477e9bb1d4a6f1\nbut since Dawn doesn\u0027t have its own custom harness, it can only use what GTest has in store.\nThere is a total number of tests in output.json, this helps a bit.",
+      "parentUuid": "93a49a3d_f09319d4",
+      "revId": "6bb4b08cd82bb376b3f43a38c520ee87ef41c394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
