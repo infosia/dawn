@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e04a64d_5e082a9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-23T00:41:52Z",
+      "side": 1,
+      "message": "PTAL\n\nThe first two builds on the CI tester failed, but it looks like those aren\u0027t directly related to this hardware config. E.g. the [QueueTimelineTests](https://ci.chromium.org/ui/p/dawn/builders/ci/dawn-mac-x64-amd-5300m-rel/11/infra) failure also occurred on [M2](https://ci.chromium.org/ui/p/dawn/builders/ci/dawn-mac-arm64-apple-m2-rel/47/infra)\n\nI\u0027ll try to group and suppress flakes we\u0027re seeing on CI tomorrow, as I\u0027m starting to see some patterns like `AsyncTaskTest.Basic` flaking regardless of platform.",
+      "revId": "f63bc2caf6df0c8096a0350b46f3361c6485a9a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
