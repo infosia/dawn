@@ -87,6 +87,24 @@
       "parentUuid": "7e33424a_0327a2fa",
       "revId": "2a8cabbcc83a206eed1da22bc88f8e3bc4162e6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c248cf6_f994e602",
+        "filename": "src/dawn/native/webgpu/RenderPipelineWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-23T21:19:37Z",
+      "side": 1,
+      "message": "Yes thanks for reminding the other approach to use push/pop error scope. I will try that in a new CL.",
+      "parentUuid": "aef3106f_0e32f216",
+      "revId": "2a8cabbcc83a206eed1da22bc88f8e3bc4162e6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
