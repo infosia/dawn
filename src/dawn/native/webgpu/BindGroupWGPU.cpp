@@ -186,7 +186,18 @@ MaybeError BindGroup::CaptureCreationParameters(CaptureContext& captureContext) 
                     .textureViewId = 0,
                 }});
             },
-            [&](const SamplerBindingInfo& info) {}, [&](const TextureBindingInfo& info) {},
+            [&](const SamplerBindingInfo& info) {},
+            [&](const TextureBindingInfo& info) {
+                const auto& entry = GetBindingAsTextureView(bindingIndex);
+                entries.push_back(schema::BindGroupEntry{{
+                    .binding = uint32_t(apiBindingIndex),
+                    .bufferId = 0,
+                    .offset = 0,
+                    .size = 0,
+                    .samplerId = 0,
+                    .textureViewId = captureContext.GetId(entry),
+                }});
+            },
             [&](const TexelBufferBindingInfo& info) {},
             [&](const StorageTextureBindingInfo& info) {},
             [&](const ExternalTextureBindingInfo& info) {},
