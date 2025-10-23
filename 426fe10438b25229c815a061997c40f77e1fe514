@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ec5c24c_c5932828",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-23T22:41:52Z",
+      "side": 1,
+      "message": "First CI build looks happy, but want to let it run for a bit longer before landing this, so not enabling autosubmit.",
+      "revId": "426fe10438b25229c815a061997c40f77e1fe514",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
