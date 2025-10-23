@@ -771,7 +771,7 @@ TEST_P(BufferMappingCallbackTests, EmptySubmissionWriteAndThenMap) {
             done[0] = true;
 
             // Step 2 callback should be called first, this is the second.
-            const std::vector<bool> kExpected = {true, false};
+            const std::vector<bool> kExpected = {true, true};
             EXPECT_EQ(done, kExpected);
         });
 
@@ -786,7 +786,7 @@ TEST_P(BufferMappingCallbackTests, EmptySubmissionWriteAndThenMap) {
                             done[1] = true;
 
                             // The buffer is not used by step 1, so this callback is called first.
-                            const std::vector<bool> kExpected = {true, true};
+                            const std::vector<bool> kExpected = {false, true};
                             EXPECT_EQ(done, kExpected);
                         });
 
