@@ -51,6 +51,24 @@
       "parentUuid": "8c9fe077_247c2c3f",
       "revId": "2a8cabbcc83a206eed1da22bc88f8e3bc4162e6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e33424a_0327a2fa",
+        "filename": "src/dawn/native/webgpu/RenderPipelineWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-23T20:59:57Z",
+      "side": 1,
+      "message": "The reason to use async version of creating pipeline is that only with the async version we can get the create pipeline async status to tell if a pipeline creation is successful or error so that we can surface up an internal error.\n\nIf using wgpuCreateComputePipeline and get a WGPUComputePipeline, is there a way to tell if the created pipeline is successful or an error pipeline?",
+      "parentUuid": "beefb00f_ffad8972",
+      "revId": "2a8cabbcc83a206eed1da22bc88f8e3bc4162e6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
