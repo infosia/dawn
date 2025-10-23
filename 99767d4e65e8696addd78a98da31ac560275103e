@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "168ab690_bed033cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-23T14:06:21Z",
+      "side": 1,
+      "message": "PTAL, had to suppress some CTS failures until we get CTS updated.",
+      "revId": "99767d4e65e8696addd78a98da31ac560275103e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
