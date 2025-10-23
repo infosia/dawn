@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "657ded80_576395b0",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-23T15:23:54Z",
+      "side": 1,
+      "message": "Is this what we\u0027re doing now to link to bugs in code?",
+      "range": {
+        "startLine": 180,
+        "startChar": 40,
+        "endLine": 180,
+        "endChar": 67
+      },
+      "revId": "6c7984413645f679fe1e006282c4f3542607acbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
