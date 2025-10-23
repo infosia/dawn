@@ -79,6 +79,10 @@ class AsyncTaskTest : public testing::Test {};
 
 // Emulate the basic usage of worker thread pool in Create*PipelineAsync().
 TEST_F(AsyncTaskTest, Basic) {
+    // TODO(crbug.com/454672586): Causing flaky fatal errors on multiple
+    // platforms.
+    DAWN_SUPPRESS_TEST_IF(IsSwiftShader());
+
     platform::Platform platform;
     std::unique_ptr<platform::WorkerTaskPool> pool = platform.CreateWorkerTaskPool();
 
