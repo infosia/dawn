@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ed47fa9b_0988a95c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-23T14:57:17Z",
+      "side": 1,
+      "message": "Please add some test coverage of this new \"mode\" in `SharedTextureMemoryTests_win.cpp`",
+      "revId": "d7c6f35454aae2ebd4ed5f7ed1a1d4d5e650a539",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "de777dd4_b8888c0b",
         "filename": "include/dawn/native/D3D12Backend.h",
         "patchSetId": 5
@@ -76,6 +93,29 @@
         "startChar": 9,
         "endLine": 100,
         "endChar": 38
+      },
+      "revId": "d7c6f35454aae2ebd4ed5f7ed1a1d4d5e650a539",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2faaf04c_82408c60",
+        "filename": "src/dawn/native/d3d12/SharedTextureMemoryD3D12.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-23T14:57:17Z",
+      "side": 1,
+      "message": "This can be private",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 41
       },
       "revId": "d7c6f35454aae2ebd4ed5f7ed1a1d4d5e650a539",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
