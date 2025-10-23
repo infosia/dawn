@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2c8a23e_e2228187",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-23T03:23:02Z",
+      "side": 1,
+      "message": "Hi Kai, do you have time to take a look? If not that\u0027s fine. I won\u0027t be looking at this until next week and I have stuff to work on so I\u0027m not blocked.",
+      "revId": "3f4c8df29a519352b20ea109ce9fea07c570931a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
