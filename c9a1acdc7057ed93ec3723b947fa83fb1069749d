@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9bae659_855128b2",
+        "filename": "docs/building.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-23T17:40:04Z",
+      "side": 1,
+      "message": "```suggestion\nYou will then need to be using the CLT toolchain as your active toolchain\n```",
+      "revId": "c9a1acdc7057ed93ec3723b947fa83fb1069749d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
