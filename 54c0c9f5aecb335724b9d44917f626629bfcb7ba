@@ -16,6 +16,24 @@
       "message": "Is there a way to identify these issues across all tests?",
       "revId": "54c0c9f5aecb335724b9d44917f626629bfcb7ba",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77cd6360_4285a552",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-23T10:14:16Z",
+      "side": 1,
+      "message": "Good question. Some will cause warnings in gradle builds. Then when we add \u0027unused \u003d ... \u0027 it can actually cause \u0027blaze test\u0027 to fail. Those are the only ones I\u0027m fixing. It\u0027s possible that Android Studio \u0027Inspect Code\u0027 might reveal them.",
+      "parentUuid": "485a321a_587b2130",
+      "revId": "54c0c9f5aecb335724b9d44917f626629bfcb7ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
