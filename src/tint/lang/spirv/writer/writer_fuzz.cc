@@ -43,7 +43,7 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module, const fuzz::ir::Context&,
         return Failure{check.Failure().reason};
     }
 
-    options.bindings = GenerateBindings(module, false);
+    options.bindings = GenerateBindings(module, false, false);
     options.resource_binding = tint::core::ir::transform::GenerateResourceBindingConfig(module);
 
     auto output = Generate(module, options);
