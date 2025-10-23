@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a0f7c79_ad01bf2d",
+        "filename": "src/tint/lang/hlsl/writer/raise/array_offset_from_uniform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-23T21:41:28Z",
+      "side": 1,
+      "message": "I think you need to handle the `Interlocked*` calls as well.",
+      "revId": "d51f767f7bf51e44028f72d50c7201ac96b8236a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56aea584_8771ac4e",
+        "filename": "src/tint/lang/hlsl/writer/raise/array_offset_from_uniform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-23T21:41:28Z",
+      "side": 1,
+      "message": "Since you are just replacing an operand you can just use `SetOperand()` instead of recreating the instruction.",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 77
+      },
+      "revId": "d51f767f7bf51e44028f72d50c7201ac96b8236a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "229e7749_0ef2611c",
+        "filename": "src/tint/lang/hlsl/writer/raise/array_offset_from_uniform.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-23T21:41:28Z",
+      "side": 1,
+      "message": "If we were to run this before `DecomposeUniformAccess` (which I believe we can), then we could actually just use `array\u003cu32, 8\u003e` instead to simplify the indexing logic in this transform.\n\nThe same is now true of `ArrayLengthFromUniform`; I opened https://crbug.com/454692148 for that one.\n\nIf you prefer we can keep this one as is for now and change both transforms together later.",
+      "revId": "d51f767f7bf51e44028f72d50c7201ac96b8236a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
