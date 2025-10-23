@@ -16,6 +16,24 @@
       "message": "PTAL\n\nNot 100% sure `IsSwiftShader()` will work correctly for unittest since they don\u0027t seem to have the same concept of backends as `dawn_end2end_tests`, but it\u0027s worth a try.",
       "revId": "e7c747cdddff5508da22daf8c4ba77ade132a5ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dbf39e1_4a7b86f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-23T20:14:04Z",
+      "side": 1,
+      "message": "Seems like it won\u0027t compile even when adding DawnTest.h and there aren\u0027t any uses of `DAWN_SUPPRESS_TEST_IF` in the unittests, so switched to the `DISABLED` prefix.",
+      "parentUuid": "a81bc8d1_60bfbaad",
+      "revId": "e7c747cdddff5508da22daf8c4ba77ade132a5ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
