@@ -46,6 +46,30 @@
       },
       "revId": "6c7984413645f679fe1e006282c4f3542607acbd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc245fc4_4ef7abe1",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-23T15:25:42Z",
+      "side": 1,
+      "message": "I guess just `crbug.com/454366353` based on how we do that for our `TODO(...)`s?",
+      "parentUuid": "2682d4fc_b2697b0c",
+      "range": {
+        "startLine": 180,
+        "startChar": 40,
+        "endLine": 180,
+        "endChar": 67
+      },
+      "revId": "6c7984413645f679fe1e006282c4f3542607acbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
