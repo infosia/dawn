@@ -16,6 +16,24 @@
       "message": "```suggestion\n    if (!(actualUsage \u0026 wgpu::TextureUsage::TransientAttachment)) {\n```\n\nI think the others are the same right? `bits | bit` will always be true.",
       "revId": "6a904a138a087a9aef4984664c51969ed15f4b31",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8eb11356_8ed8c63f",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-23T17:22:12Z",
+      "side": 1,
+      "message": "You are right. I made the mistake",
+      "parentUuid": "ef7db257_31c36873",
+      "revId": "6a904a138a087a9aef4984664c51969ed15f4b31",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
