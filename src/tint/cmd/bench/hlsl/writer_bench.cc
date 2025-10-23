@@ -41,6 +41,24 @@ void GenerateHLSL(benchmark::State& state, std::string input_name) {
         state.SkipWithError(res.Failure().reason);
         return;
     }
+
+    std::vector<std::string> names;
+    {
+        // Convert the AST program to an IR module, so that we can generating entry point names
+        auto ir = tint::wgsl::reader::ProgramToLoweredIR(res->program);
+        if (ir != Success) {
+            state.SkipWithError(ir.Failure().reason);
+            return;
+        }
+
+        // Get the list of entry point names.
+        for (auto func : ir->functions) {
+            if (func->IsEntryPoint()) {
+                names.push_back(ir->NameOf(func).Name());
+            }
+        }
+    }
+
     for (auto _ : state) {
         // Convert the AST program to an IR module.
         auto ir = tint::wgsl::reader::ProgramToLoweredIR(res->program);
@@ -49,11 +67,13 @@ void GenerateHLSL(benchmark::State& state, std::string input_name) {
             return;
         }
 
-        Options gen_options;
-        gen_options.bindings = GenerateBindings(ir.Get(), false);
-        auto gen_res = Generate(ir.Get(), gen_options);
-        if (gen_res != Success) {
-            state.SkipWithError(gen_res.Failure().reason);
+        for (auto& name : names) {
+            Options gen_options;
+            gen_options.bindings = GenerateBindings(ir.Get(), name, false, false);
+            auto gen_res = Generate(ir.Get(), gen_options);
+            if (gen_res != Success) {
+                state.SkipWithError(gen_res.Failure().reason);
+            }
         }
     }
 }
