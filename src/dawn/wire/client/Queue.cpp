@@ -120,6 +120,13 @@ void Queue::APIWriteBuffer(WGPUBuffer cBuffer,
                            uint64_t bufferOffset,
                            const void* data,
                            size_t size) {
+    // Hacky hacky hack hack hack.
+    const uint64_t magicSize = 4096 * 4096 * 4;
+    if (size == magicSize) {
+        WriteBufferClientImpl(cBuffer, bufferOffset, data, size);
+        return;
+    }
+
     Buffer* buffer = FromAPI(cBuffer);
 
     QueueWriteBufferCmd cmd;
@@ -146,6 +153,32 @@ void Queue::APIWriteTexture(const WGPUTexelCopyTextureInfo* destination,
     cmd.writeSize = writeSize;
 
     GetClient()->SerializeCommand(cmd);
+}
+
+// A POC version of a client-side implementation of WriteBuffer
+void Queue::WriteBufferClientImpl(WGPUBuffer cBuffer,
+                                  uint64_t bufferOffset,
+                                  const void* data,
+                                  size_t size) {
+    Buffer* buffer = FromAPI(cBuffer);
+    Device* device = buffer->GetDevice();
+    // WGPUDevice wDevice = ReturnToAPI(device);
+
+    WGPUBufferDescriptor stagingDesc = {};
+    stagingDesc.usage = WGPUBufferUsage_MapWrite | WGPUBufferUsage_CopySrc;
+    stagingDesc.size = size;
+    stagingDesc.mappedAtCreation = true;
+    WGPUBuffer stagingBuffer = Buffer::Create(device, &stagingDesc);
+    Buffer* staging = FromAPI(stagingBuffer);
+
+    void* mappedData = staging->APIGetMappedRange(0, size);
+    memcpy(mappedData, data, size);
+    staging->APIUnmap();
+
+    // TODO: Submit CopyBufferToBuffer
+
+    // Handle().Submit(0, nullptr);
+    // GetClient()->Flush();
 }
 
 }  // namespace dawn::wire::client

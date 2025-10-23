@@ -74,6 +74,8 @@ class Buffer final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
 
     WGPUBufferMapState APIGetMapState() const;
 
+    Device* GetDevice() const { return mDevice.Get(); }
+
   private:
     friend class Client;
     class MapAsyncEvent;
