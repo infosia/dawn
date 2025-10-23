@@ -124,6 +124,12 @@ auto& operator<<(STREAM& o, BuiltinFn i) {
 /// @returns access restrictions for a function
 tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn);
 
+/// @returns true if fn is one of the load functions
+bool IsLoad(BuiltinFn fn);
+
+/// @returns true if fn is one of the store functions
+bool IsStore(BuiltinFn fn);
+
 }  // namespace tint::hlsl
 // \endcond
 
