@@ -491,6 +491,7 @@ MaybeError AddReferencedFromRenderPass(CaptureContext& captureContext, CommandIt
                 DAWN_SKIP_COMMAND(PushDebugGroup)
                 DAWN_SKIP_COMMAND(WriteTimestamp)
                 DAWN_SKIP_COMMAND(SetImmediateData)
+                DAWN_SKIP_COMMAND(SetVertexBuffer)
             default: {
                 DAWN_CHECK(false);
                 break;
@@ -587,6 +588,19 @@ MaybeError CaptureRenderPass(CaptureContext& captureContext, CommandIterator& co
                         .bindGroupId = captureContext.GetId(cmd.group),
                         .dynamicOffsets = std::vector<uint32_t>(
                             dynamicOffsetsData, dynamicOffsetsData + cmd.dynamicOffsetCount),
+                    }},
+                }};
+                Serialize(captureContext, data);
+                break;
+            }
+            case Command::SetVertexBuffer: {
+                const auto& cmd = *commands.NextCommand<SetVertexBufferCmd>();
+                schema::RenderPassCommandSetVertexBufferCmd data{{
+                    .data = {{
+                        .slot = uint32_t(cmd.slot),
+                        .bufferId = captureContext.GetId(cmd.buffer),
+                        .offset = cmd.offset,
+                        .size = cmd.size,
                     }},
                 }};
                 Serialize(captureContext, data);
