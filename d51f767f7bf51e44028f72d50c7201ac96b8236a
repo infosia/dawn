@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "75168520_1be7496d",
+        "filename": "src/tint/lang/hlsl/writer/raise/array_offset_from_uniform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-24T20:59:53Z",
+      "side": 1,
+      "message": "Thanks! You were right. I added support, and added a dawn_end2end_test (not in this CL). I forgot to add the tint_unittests -- will do so now.",
+      "parentUuid": "3a0f7c79_ad01bf2d",
+      "revId": "d51f767f7bf51e44028f72d50c7201ac96b8236a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "56aea584_8771ac4e",
         "filename": "src/tint/lang/hlsl/writer/raise/array_offset_from_uniform.cc",
         "patchSetId": 2
@@ -31,6 +49,30 @@
       "writtenOn": "2025-10-23T21:41:28Z",
       "side": 1,
       "message": "Since you are just replacing an operand you can just use `SetOperand()` instead of recreating the instruction.",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 77
+      },
+      "revId": "d51f767f7bf51e44028f72d50c7201ac96b8236a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0b755e7_776705ef",
+        "filename": "src/tint/lang/hlsl/writer/raise/array_offset_from_uniform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-24T20:59:53Z",
+      "side": 1,
+      "message": "Done. Used SetArgument, but yeah.",
+      "parentUuid": "56aea584_8771ac4e",
       "range": {
         "startLine": 118,
         "startChar": 0,
@@ -54,6 +96,24 @@
       "writtenOn": "2025-10-23T21:41:28Z",
       "side": 1,
       "message": "If we were to run this before `DecomposeUniformAccess` (which I believe we can), then we could actually just use `array\u003cu32, 8\u003e` instead to simplify the indexing logic in this transform.\n\nThe same is now true of `ArrayLengthFromUniform`; I opened https://crbug.com/454692148 for that one.\n\nIf you prefer we can keep this one as is for now and change both transforms together later.",
+      "revId": "d51f767f7bf51e44028f72d50c7201ac96b8236a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e18b6f86_a0ddeefb",
+        "filename": "src/tint/lang/hlsl/writer/raise/array_offset_from_uniform.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-24T20:59:53Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion!",
+      "parentUuid": "229e7749_0ef2611c",
       "revId": "d51f767f7bf51e44028f72d50c7201ac96b8236a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
