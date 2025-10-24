@@ -16,6 +16,23 @@
       "message": "First CI build looks happy, but want to let it run for a bit longer before landing this, so not enabling autosubmit.",
       "revId": "426fe10438b25229c815a061997c40f77e1fe514",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4380283_70f98e6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-24T12:15:58Z",
+      "side": 1,
+      "message": "Note that dawn_end2end_implicit_device_sync_tests were ci_only on the old bot.\nI hope this is fine, since the standalone bots should run less (once per Dawn CL and not once per Chromium CL), which should give us more capacity.",
+      "revId": "426fe10438b25229c815a061997c40f77e1fe514",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
