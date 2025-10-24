@@ -72,6 +72,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "430dfedd_bc99ec3a",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-24T20:32:53Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure how common that is but it\u0027s probably not too bad?\n\nI don\u0027t think graphite ever allocates zero or non-multiple of four aligned buffers. Graphite also uses mappedAtCreation\u003dtrue for all MapWrite buffers so BufferBase::Initialize() wouldn\u0027t call ClearBuffer(). It\u0027s not a performance problem as a result.\n\nHaving BufferBase::Initialize() clear padding bytes is problematic if we want to  make BufferVk::MapAsyncImpl() never emit barriers. If the buffer was transitioned for GPU usage by BufferBase::Initialize() the first MapAsyncImpl() might have to emit a barrier. There is a [comment from cwallez@](https://docs.google.com/document/d/1rrjfeSMK2EDe7r5WAOFRboZgkw0mEnibYr4SttH4HMA/edit?resourcekey\u003d0-maSl5PQlVSZcnk3Q6vpKaA\u0026disco\u003dAAABs8EZBrg) that\u0027s relevant. Being able to remove TransitionUsageNow() calls from MapAsyncImpl() would avoid changing how barrier tracking works. This doesn\u0027t need to be addressed yet though. I think we also do an eager transition after ClearBuffers() to address it.\n\nFor now though I think we might as well clear the whole buffer here unless it\u0027s zero sized.",
+      "parentUuid": "be78bb6d_ae0c30d1",
+      "range": {
+        "startLine": 567,
+        "startChar": 33,
+        "endLine": 567,
+        "endChar": 46
+      },
+      "revId": "48e3584ffee21da7fa91b63c755b982849c159dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "83aca3b6_ef4f2ca9",
@@ -85,6 +109,30 @@
       "writtenOn": "2025-10-24T19:13:21Z",
       "side": 1,
       "message": "This seems surprising to me... Doesn\u0027t it have to do a copy from staging or something? Otherwise, how does it ensure that the write is visible if we `GetMappedRange`?",
+      "range": {
+        "startLine": 766,
+        "startChar": 4,
+        "endLine": 768,
+        "endChar": 42
+      },
+      "revId": "48e3584ffee21da7fa91b63c755b982849c159dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6a1f1a2_65839d66",
+        "filename": "src/dawn/tests/end2end/BufferTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-24T20:32:53Z",
+      "side": 1,
+      "message": "It uses [this](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BufferVk.cpp;l\u003d654-681;drc\u003d0d7807d5637f6d09b72f7909318da0e3d2ad5590) fast path. The buffer is already mapped so it can just do a memcpy to write to the buffer. Previously that fast path wasn\u0027t used in this test because `isInUse\u003dfalse`, as the ClearBuffer() call hadn\u0027t completed on the GPU yet.\n\nI think it makes sense?",
+      "parentUuid": "83aca3b6_ef4f2ca9",
       "range": {
         "startLine": 766,
         "startChar": 4,
