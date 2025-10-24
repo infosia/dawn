@@ -974,6 +974,27 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::VulkanDirectVariableAccessTransformHandle, true);
     }
 
+<<<<<<< HEAD   (cee9cb0d67e749bf42f5e90cb3b8a6f525dbb920 Fix invalid atomic type in protobuf decode.)
+||||||| BASE   (d7d27a68de5f547939d4faf965b0ce279e752b64 [metal] Expose the exact subgroup size for Apple GPUs)
+    if (IsPixel10()) {
+        // Pixel 10 has a bug in vkGetPipelineCacheData(), see https://crbug.com/437807243.
+        // TODO(crbug.com/437807243): If newer driver version without bug is released then we can
+        // gate this on driver version.
+        deviceToggles->Default(Toggle::VulkanIncompletePipelineCacheWorkaround, true);
+    }
+
+=======
+    if (IsPixel10()) {
+        // Pixel 10 has a bug in vkGetPipelineCacheData(), see https://crbug.com/437807243.
+        // TODO(crbug.com/437807243): If newer driver version without bug is released then we can
+        // gate this on driver version.
+        deviceToggles->Default(Toggle::VulkanIncompletePipelineCacheWorkaround, true);
+
+        // crbug.com/443906252: Polyfill for case switch with large ranges.
+        deviceToggles->Default(Toggle::VulkanPolyfillSwitchWithIf, true);
+    }
+
+>>>>>>> CHANGE (81eda65489d8a1781ee4a076f8a3d2dceda03835 [tint] Polyfill case switch with if)
     if (IsAndroidARM()) {
         // dawn:1550: Resolving multiple color targets in a single pass fails on ARM GPUs. To
         // work around the issue, passes that resolve to multiple color targets will instead be

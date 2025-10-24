@@ -1355,8 +1355,19 @@ class Printer {
                 }
                 break;
             }
+<<<<<<< HEAD   (cee9cb0d67e749bf42f5e90cb3b8a6f525dbb920 Fix invalid atomic type in protobuf decode.)
             default:
                 TINT_UNIMPLEMENTED() << binary->Op();
+||||||| BASE   (d7d27a68de5f547939d4faf965b0ce279e752b64 [metal] Expose the exact subgroup size for Apple GPUs)
+            default:
+                TINT_IR_UNIMPLEMENTED(ir_) << binary->Op();
+=======
+            default: {
+                TINT_IR_UNIMPLEMENTED(ir_)
+                    << "\"" << binary->Op() << "\"  (enum value=" << static_cast<int>(binary->Op())
+                    << ")";
+            }
+>>>>>>> CHANGE (81eda65489d8a1781ee4a076f8a3d2dceda03835 [tint] Polyfill case switch with if)
         }
 
         // Emit the instruction.
