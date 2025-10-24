@@ -16,6 +16,69 @@
       "message": "PTAL.",
       "revId": "9f980c6b9c8d2e09b0f61882686d1dfc6a3a802b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bb08085_6f994cf7",
+        "filename": "src/tint/lang/null/writer/raise/raise.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-24T21:37:09Z",
+      "side": 1,
+      "message": "Nit: Reword comment",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 60
+      },
+      "revId": "9f980c6b9c8d2e09b0f61882686d1dfc6a3a802b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f23a1c9_4fb54727",
+        "filename": "src/tint/lang/null/writer/writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-24T21:37:09Z",
+      "side": 1,
+      "message": "Nit: comment",
+      "revId": "9f980c6b9c8d2e09b0f61882686d1dfc6a3a802b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3b43360_1ff9f795",
+        "filename": "src/tint/lang/null/writer/writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-24T21:37:09Z",
+      "side": 1,
+      "message": "Nit: Reword comment",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 72
+      },
+      "revId": "9f980c6b9c8d2e09b0f61882686d1dfc6a3a802b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
