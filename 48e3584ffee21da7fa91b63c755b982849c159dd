@@ -22,6 +22,30 @@
       },
       "revId": "48e3584ffee21da7fa91b63c755b982849c159dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9895b352_94f1009b",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-24T14:43:25Z",
+      "side": 1,
+      "message": "I guess this logic to clear the padding bytes [on creation](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BufferVk.cpp;l\u003d304-314;drc\u003d78bcfab96d81f28fd6a0a1be7aee7c2401b22ce6) is relevant so it\u0027s important to clear the padding bytes. That handles clear now so clearing here isn\u0027t actually needed.\n\nIdeally BufferBase::Initialize() wouldn\u0027t clear padding bytes with ClearBuffer() on initialization for mapped buffers. This code handles clearing padding bytes if first write happens via map but doesn\u0027t work for first write on GPU. IsFullBufferOverwrittenInTextureToBufferCopy() seems to use buffer GetSize() to verify if any extra clear is needed.\n\nAny thoughts on how all this fits together?",
+      "parentUuid": "0e5d9a18_2a49a448",
+      "range": {
+        "startLine": 567,
+        "startChar": 33,
+        "endLine": 567,
+        "endChar": 46
+      },
+      "revId": "48e3584ffee21da7fa91b63c755b982849c159dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
