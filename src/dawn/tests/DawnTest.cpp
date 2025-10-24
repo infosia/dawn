@@ -1363,6 +1363,10 @@ void DawnTestBase::SetUp() {
     device.GetLimits(deviceLimits.GetLinked());
 
     queue = device.GetQueue();
+
+    // TODO(454782021): hang on Qualcomm Adreno X1.
+    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm() &&
+                          HasToggleEnabled("d3d11_delay_flush_to_gpu"));
 }
 
 void DawnTestBase::TearDown() {
