@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "187483f8_391e0b5a",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-24T19:26:40Z",
+      "side": 1,
+      "message": "Add this inlined",
+      "range": {
+        "startLine": 977,
+        "startChar": 8,
+        "endLine": 977,
+        "endChar": 17
+      },
+      "revId": "75f609b2674a34ea79f65eaeacf2155ec6df5ed6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3abc1b83_3f33c16a",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-24T19:26:40Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 978,
+        "startChar": 9,
+        "endLine": 981,
+        "endChar": 86
+      },
+      "revId": "75f609b2674a34ea79f65eaeacf2155ec6df5ed6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
