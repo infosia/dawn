@@ -974,6 +974,16 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::VulkanDirectVariableAccessTransformHandle, true);
     }
 
+    if (IsPixel10()) {
+        // Pixel 10 has a bug in vkGetPipelineCacheData(), see https://crbug.com/437807243.
+        // TODO(crbug.com/437807243): If newer driver version without bug is released then we can
+        // gate this on driver version.
+        deviceToggles->Default(Toggle::VulkanIncompletePipelineCacheWorkaround, true);
+
+        // crbug.com/443906252: Polyfill for case switch with large ranges.
+        deviceToggles->Default(Toggle::VulkanPolyfillSwitchWithIf, true);
+    }
+
     if (IsAndroidARM()) {
         // dawn:1550: Resolving multiple color targets in a single pass fails on ARM GPUs. To
         // work around the issue, passes that resolve to multiple color targets will instead be
