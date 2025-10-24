@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9476dadb_29e4df13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-24T22:07:23Z",
+      "side": 1,
+      "message": "dawn_json_generator.py LGTM\n\nDo you think the whole \"KOTLIN STUFF\" section is movable to another file that you can have OWNERS on? It would at least somewhat reduce the need for dawn team review.",
+      "revId": "e285a69244dc1bb360815a8cc4b622cb895bde22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
