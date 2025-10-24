@@ -1356,7 +1356,7 @@ class Printer {
                 break;
             }
             default:
-                TINT_UNIMPLEMENTED() << binary->Op();
+                TINT_IR_UNIMPLEMENTED(ir_) << binary->Op();
         }
 
         // Emit the instruction.
