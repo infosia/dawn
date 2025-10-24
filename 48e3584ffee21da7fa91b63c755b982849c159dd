@@ -96,6 +96,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a1ff435_bb2178a2",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-24T20:33:58Z",
+      "side": 1,
+      "message": "I added a comment to explain the size vs allocated size discrepancy here.",
+      "parentUuid": "430dfedd_bc99ec3a",
+      "range": {
+        "startLine": 567,
+        "startChar": 33,
+        "endLine": 567,
+        "endChar": 46
+      },
+      "revId": "48e3584ffee21da7fa91b63c755b982849c159dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "83aca3b6_ef4f2ca9",
