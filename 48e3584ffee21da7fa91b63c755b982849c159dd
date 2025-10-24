@@ -46,6 +46,53 @@
       },
       "revId": "48e3584ffee21da7fa91b63c755b982849c159dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be78bb6d_ae0c30d1",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-24T19:13:21Z",
+      "side": 1,
+      "message": "I think that `BufferBase::Initialize` is only clearing the padding bytes on mapped buffers if the size is effectively 0 right? I\u0027m not sure how common that is but it\u0027s probably not too bad?",
+      "parentUuid": "9895b352_94f1009b",
+      "range": {
+        "startLine": 567,
+        "startChar": 33,
+        "endLine": 567,
+        "endChar": 46
+      },
+      "revId": "48e3584ffee21da7fa91b63c755b982849c159dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83aca3b6_ef4f2ca9",
+        "filename": "src/dawn/tests/end2end/BufferTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-24T19:13:21Z",
+      "side": 1,
+      "message": "This seems surprising to me... Doesn\u0027t it have to do a copy from staging or something? Otherwise, how does it ensure that the write is visible if we `GetMappedRange`?",
+      "range": {
+        "startLine": 766,
+        "startChar": 4,
+        "endLine": 768,
+        "endChar": 42
+      },
+      "revId": "48e3584ffee21da7fa91b63c755b982849c159dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
