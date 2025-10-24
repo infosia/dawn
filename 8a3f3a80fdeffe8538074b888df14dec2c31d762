@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0968663c_eda9b06f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-24T21:21:37Z",
+      "side": 1,
+      "message": "I think for workarounds, we usually force the toggle instead of changing how it\u0027s handled, like [this](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp;l\u003d619-623;drc\u003d8900162810d457b64286ce653cb61bc2009c5068).\n\nPerhaps something like that can be done [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp;l\u003d327;drc\u003d8900162810d457b64286ce653cb61bc2009c5068)?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 50
+      },
+      "revId": "8a3f3a80fdeffe8538074b888df14dec2c31d762",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
