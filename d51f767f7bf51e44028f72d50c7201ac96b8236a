@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2e8a030_baf9ee93",
+        "filename": "src/tint/lang/hlsl/writer/raise/array_offset_from_uniform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-24T21:24:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75168520_1be7496d",
+      "revId": "d51f767f7bf51e44028f72d50c7201ac96b8236a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56aea584_8771ac4e",
