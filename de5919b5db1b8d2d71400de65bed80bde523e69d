@@ -33,6 +33,24 @@
       "message": "I think I need Dawn committership to vote CR+2, unfortunately.",
       "revId": "de5919b5db1b8d2d71400de65bed80bde523e69d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "300ce87c_f1c0343b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-24T18:57:09Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s how it works.",
+      "parentUuid": "f5502624_833fa2b7",
+      "revId": "de5919b5db1b8d2d71400de65bed80bde523e69d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
