@@ -29,6 +29,7 @@
 
 #include <vector>
 
+#include "dawn/common/MatchVariant.h"
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/native/webgpu/CaptureContext.h"
 #include "dawn/native/webgpu/ComputePipelineWGPU.h"
@@ -97,8 +98,40 @@ MaybeError BindGroupLayout::AddReferenced(CaptureContext& captureContext) {
     return {};
 }
 
-MaybeError BindGroupLayout::CaptureCreationParameters(CaptureContext& context) {
-    // TODO(451338754): Implement explicit BindGroupLayout capture
+MaybeError BindGroupLayout::CaptureCreationParameters(CaptureContext& captureContext) {
+    const auto& bindingMap = GetBindingMap();
+
+    schema::BindGroupLayout data{{
+        .numEntries = uint32_t(bindingMap.size()),
+    }};
+    Serialize(captureContext, data);
+
+    for (const auto& [bindingNumbers, apiBindingIndex] : bindingMap) {
+        const auto& bindingInfo = GetAPIBindingInfo(apiBindingIndex);
+
+        DAWN_TRY(MatchVariant(
+            bindingInfo.bindingLayout,
+            [&](const BufferBindingInfo& info) -> MaybeError {
+                schema::BindGroupLayoutEntryTypeBufferBinding entry{{
+                    .binding{{
+                        .binding = uint32_t(bindingInfo.binding),
+                        .visibility = bindingInfo.visibility,
+                        .bindingArraySize = uint32_t(bindingInfo.arraySize),
+                    }},
+                    .data{{
+                        .type = info.type,
+                        .minBindingSize = info.minBindingSize,
+                        .hasDynamicOffset = info.hasDynamicOffset,
+                    }},
+                }};
+                Serialize(captureContext, entry);
+                return {};
+            },
+            [&](const auto& info) -> MaybeError {
+                return DAWN_INTERNAL_ERROR("Unsupported bind layout entry type");
+            }));
+    }
+
     return {};
 }
 

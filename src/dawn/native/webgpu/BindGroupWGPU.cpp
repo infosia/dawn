@@ -134,9 +134,9 @@ MaybeError BindGroup::AddReferenced(CaptureContext& captureContext) {
     {
         BindGroupLayoutBase* layout = GetFrontendLayout();
         if (layout->GetPipelineCompatibilityToken() == kExplicitPCT) {
-            // TODO(452983510): Handle explicit bind group layouts.
-            // DAWN_TRY(captureContext.AddResource(layout));
-            DAWN_CHECK(false);
+            // Note: If it's explicit then it's ok to add the backend deduplicated
+            // object since it will have an explicit layout that is always valid.
+            DAWN_TRY(captureContext.AddResource(layout->GetInternalBindGroupLayout()));
         } else {
             PipelineBase* pipeline = layout->GetPipelineForImplicitLayout();
             DAWN_ASSERT(pipeline != nullptr);
@@ -171,10 +171,20 @@ MaybeError BindGroup::AddReferenced(CaptureContext& captureContext) {
 }
 
 MaybeError BindGroup::CaptureCreationParameters(CaptureContext& captureContext) {
-    std::vector<schema::BindGroupEntry> entries;
-
     BindGroupLayoutInternalBase* layout = GetLayout();
     const auto& bindingMap = layout->GetBindingMap();
+
+    // Note: If it's an implicit layout we must use the FrontEnd layout here since we
+    // need the id to have come from the pipeline's implicit creation of the layout.
+    // If it's explicit then we can use the deduplicated `BindGroupLayoutInternal`
+    BindGroupLayoutBase* frontendLayout = GetFrontendLayout();
+    schema::BindGroup bg{{
+        .layoutId = frontendLayout->GetPipelineCompatibilityToken() == kExplicitPCT
+                        ? captureContext.GetId(layout)
+                        : captureContext.GetId(frontendLayout),
+        .numEntries = uint32_t(bindingMap.size()),
+    }};
+    Serialize(captureContext, bg);
 
     for (const auto& [bindingNumbers, apiBindingIndex] : bindingMap) {
         BindingIndex bindingIndex = layout->AsBindingIndex(apiBindingIndex);
@@ -184,36 +194,29 @@ MaybeError BindGroup::CaptureCreationParameters(CaptureContext& captureContext) 
             bindingInfo.bindingLayout,
             [&](const BufferBindingInfo& info) {
                 const auto& entry = GetBindingAsBufferBinding(bindingIndex);
-                entries.push_back(schema::BindGroupEntry{{
+                schema::BindGroupEntryTypeBufferBinding data{{
                     .binding = uint32_t(apiBindingIndex),
-                    .bufferId = captureContext.GetId(entry.buffer),
-                    .offset = entry.offset,
-                    .size = entry.size,
-                    .samplerId = 0,
-                    .textureViewId = 0,
-                }});
+                    .data{{
+                        .bufferId = captureContext.GetId(entry.buffer),
+                        .offset = entry.offset,
+                        .size = entry.size,
+                    }},
+                }};
+                Serialize(captureContext, data);
             },
             [&](const TextureBindingInfo& info) {
                 const auto& entry = GetBindingAsTextureView(bindingIndex);
-                entries.push_back(schema::BindGroupEntry{{
+                schema::BindGroupEntryTypeTextureBinding data{{
                     .binding = uint32_t(apiBindingIndex),
-                    .bufferId = 0,
-                    .offset = 0,
-                    .size = 0,
-                    .samplerId = 0,
-                    .textureViewId = captureContext.GetId(entry),
-                }});
+                    .data{{
+                        .textureViewId = captureContext.GetId(entry),
+                    }},
+                }};
+                Serialize(captureContext, data);
             },
             [&](const auto& info) { DAWN_CHECK(false); });
     }
 
-    // Note: We must use the FrontEnd layout here. The `BindGroupLayout` not
-    // the `BindGroupLayoutInternal` as the later is deduplicated.
-    schema::BindGroup bg{{
-        .layoutId = captureContext.GetId(GetFrontendLayout()),
-        .entries = entries,
-    }};
-    Serialize(captureContext, bg);
     return {};
 }
 
