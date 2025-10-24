@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc94ecf4_317ebdcf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-24T21:58:22Z",
+      "side": 1,
+      "message": "LGTM with very minor nits. Great work!",
+      "revId": "7a4d48cc4ab156557090f848d0efc112f9e35f1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ead095d1_be9ea5d6",
+        "filename": "src/tint/lang/hlsl/writer/raise/array_offset_from_uniform.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-24T21:58:22Z",
+      "side": 1,
+      "message": "übernit: It\u0027d be nice to clump all of the \"ignore\" cases together (at the end) so it\u0027s easier to scan down the case list and see which ones we handle and which ones we ignore.",
+      "revId": "7a4d48cc4ab156557090f848d0efc112f9e35f1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43daefae_ff1a2f7d",
+        "filename": "src/tint/lang/hlsl/writer/raise/array_offset_from_uniform.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-24T21:58:22Z",
+      "side": 1,
+      "message": "Nit: array\u003cu32, 8\u003e now",
+      "fixSuggestions": [
+        {
+          "fixId": "2f26ff68_04e1ba8e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/array_offset_from_uniform.h",
+              "range": {
+                "startLine": 57,
+                "startChar": 0,
+                "endLine": 58,
+                "endChar": 0
+              },
+              "replacement": "/// var\u003cuniform\u003e buffer_offset_ubo : array\u003cu32, 8\u003e;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7a4d48cc4ab156557090f848d0efc112f9e35f1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70530451_19560f9e",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-24T21:58:22Z",
+      "side": 1,
+      "message": "and also after `ArrayOffsetFromUniform` now.",
+      "revId": "7a4d48cc4ab156557090f848d0efc112f9e35f1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
