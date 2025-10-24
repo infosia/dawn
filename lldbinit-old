@@ -1,0 +1,7 @@
+settings append target.source-map ../../ /Users/gman/src/chromium/src/third_party/dawn/
+settings append target.source-map . /Users/gman/src/chromium/src/third_party/dawn/out/Debug
+
+settings append target.process.thread.step-avoid-regexp ^Matcher
+settings append target.process.thread.step-avoid-regexp ^DawnTestBase::
+settings append target.process.thread.step-avoid-regexp ^internal::
+settings append target.process.thread.step-avoid-regexp ^testing::

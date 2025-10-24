@@ -131,13 +131,11 @@ MaybeError BindGroup::AddReferenced(CaptureContext& captureContext) {
     // layout directly which will cause an explicit bindgroup layout to be
     // created on replay.
     BindGroupLayoutBase* frontendLayout = GetFrontendLayout();
-    BindGroupLayout* layout = ToBackend(frontendLayout->GetInternalBindGroupLayout());
+    BindGroupLayoutInternalBase* layout = frontendLayout->GetInternalBindGroupLayout();
     if (frontendLayout->GetPipelineCompatibilityToken() == kExplicitPCT) {
-        // TODO(452983510): Handle explicit bind group layouts.
-        // DAWN_TRY(captureContext.AddResource(layout));
-        DAWN_CHECK(false);
+        DAWN_TRY(captureContext.AddResource(layout));
     } else {
-        DAWN_TRY(layout->CapturePipelineForImplicitLayout(captureContext));
+        DAWN_TRY(ToBackend(layout)->CapturePipelineForImplicitLayout(captureContext));
     }
 
     const auto& bindingMap = layout->GetBindingMap();
@@ -157,10 +155,14 @@ MaybeError BindGroup::AddReferenced(CaptureContext& captureContext) {
 }
 
 MaybeError BindGroup::CaptureCreationParameters(CaptureContext& captureContext) {
-    std::vector<schema::BindGroupEntry> entries;
-
     BindGroupLayoutInternalBase* layout = GetLayout();
     const auto& bindingMap = layout->GetBindingMap();
+
+    schema::BindGroup bg{{
+        .layoutId = captureContext.GetId(GetLayout()),
+        .numEntries = uint32_t(bindingMap.size()),
+    }};
+    Serialize(captureContext, bg);
 
     for (const auto& [bindingNumbers, apiBindingIndex] : bindingMap) {
         BindingIndex bindingIndex = layout->AsBindingIndex(apiBindingIndex);
@@ -170,34 +172,29 @@ MaybeError BindGroup::CaptureCreationParameters(CaptureContext& captureContext) 
             bindingInfo.bindingLayout,
             [&](const BufferBindingInfo& info) {
                 const auto& entry = GetBindingAsBufferBinding(bindingIndex);
-                entries.push_back(schema::BindGroupEntry{{
+                schema::BindGroupEntryTypeBufferBinding data{{
                     .binding = uint32_t(apiBindingIndex),
-                    .bufferId = captureContext.GetId(entry.buffer),
-                    .offset = entry.offset,
-                    .size = entry.size,
-                    .samplerId = 0,
-                    .textureViewId = 0,
-                }});
+                    .data{{
+                        .bufferId = captureContext.GetId(entry.buffer),
+                        .offset = entry.offset,
+                        .size = entry.size,
+                    }},
+                }};
+                Serialize(captureContext, data);
             },
             [&](const TextureBindingInfo& info) {
                 const auto& entry = GetBindingAsTextureView(bindingIndex);
-                entries.push_back(schema::BindGroupEntry{{
+                schema::BindGroupEntryTypeTextureBinding data{{
                     .binding = uint32_t(apiBindingIndex),
-                    .bufferId = 0,
-                    .offset = 0,
-                    .size = 0,
-                    .samplerId = 0,
-                    .textureViewId = captureContext.GetId(entry),
-                }});
+                    .data{{
+                        .textureViewId = captureContext.GetId(entry),
+                    }},
+                }};
+                Serialize(captureContext, data);
             },
             [&](const auto& info) { DAWN_CHECK(false); });
     }
 
-    schema::BindGroup bg{{
-        .layoutId = captureContext.GetId(GetLayout()),
-        .entries = entries,
-    }};
-    Serialize(captureContext, bg);
     return {};
 }
 
