@@ -91,7 +91,8 @@ constexpr inline wgpu::SType STypeForImpl<d3d11::SharedTextureMemoryD3D11Texture
 template <>
 struct AdditionalExtensions<SharedTextureMemoryDescriptor> {
     using List =
-        AdditionalExtensionsList<const d3d11::SharedTextureMemoryD3D11Texture2DDescriptor*>;
+        AdditionalExtensionsList<const d3d11::SharedTextureMemoryD3D11Texture2DDescriptor*,
+                                  const d3d12::SharedBufferMemoryD3D12ResourceDescriptor*>;
 };
 
 template <>
