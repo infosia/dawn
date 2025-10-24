@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e5d9a18_2a49a448",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-24T14:13:58Z",
+      "side": 1,
+      "message": "This is required because zero sized buffers have size zero but allocated size 4 from [this](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BufferVk.cpp;l\u003d246;drc\u003d0d7807d5637f6d09b72f7909318da0e3d2ad5590) but we don\u0027t actually map them [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Buffer.cpp;l\u003d521;drc\u003dcaac5277edaa28d7556597dc0569c186eb2f2660) and memset will crash trying to write to that memory. The [existing InitializeToZero()](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BufferVk.cpp;l\u003d812-836;drc\u003d0d7807d5637f6d09b72f7909318da0e3d2ad5590) clears the whole allocated size so I kept that the same. I don\u0027t know if it matters or if using GetSize() in memset() would be better.",
+      "range": {
+        "startLine": 567,
+        "startChar": 33,
+        "endLine": 567,
+        "endChar": 46
+      },
+      "revId": "48e3584ffee21da7fa91b63c755b982849c159dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
