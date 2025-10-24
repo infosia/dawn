@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f5353f9_b5e3a00f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-24T21:32:30Z",
+      "side": 1,
+      "message": "CC Peter since you\u0027re interested in this stuff.\nCC Antonio as FYI for HLSL backend changes.\nNo pressure to review, but feel free to if you want to.",
+      "revId": "ed249739022d0b342ec5e2cccfe420ed1429a115",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
