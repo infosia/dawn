@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6360ecbd_e7e07fb2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-24T18:35:48Z",
+      "side": 1,
+      "message": "PTAL\n\nTrybot is green.\n\nLet\u0027s see if Jonathan can stamp Dawn CLs.",
+      "revId": "de5919b5db1b8d2d71400de65bed80bde523e69d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
