@@ -601,17 +601,14 @@ BufferBase::BufferState BufferBase::GetState() const {
 }
 
 wgpu::MapMode BufferBase::MapMode() const {
-    DAWN_ASSERT(IsMappedState(GetState()));
     return mMapMode;
 }
 
 size_t BufferBase::MapOffset() const {
-    DAWN_ASSERT(IsMappedState(GetState()));
     return mMapOffset;
 }
 
 size_t BufferBase::MapSize() const {
-    DAWN_ASSERT(IsMappedState(GetState()));
     return mMapSize;
 }
 
