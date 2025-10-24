@@ -2555,7 +2555,7 @@ class Printer {
         auto id = Value(unary);
         auto* ty = unary->Result()->Type();
         spv::Op op = spv::Op::Max;
-        switch (unary->Op()) {
+        switch (unary->Op()) {TINT_UNIMPLEMENTED
             case core::UnaryOp::kComplement:
                 op = spv::Op::OpNot;
                 break;
