@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d37f5ce1_ac47cb56",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-25T00:20:06Z",
+      "side": 1,
+      "message": "```suggestion\n    /* direction */ IODirection::kInput,\n    /* type_check */ [](const core::type::Type* ty) -\u003e bool { return ty-\u003eIs\u003ccore::type::U32\u003e(); },\n```",
+      "range": {
+        "startLine": 419,
+        "startChar": 0,
+        "endLine": 421,
+        "endChar": 98
+      },
+      "revId": "846c5e18ff9973ed377cdbc2883345001c325c02",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
