@@ -16,6 +16,24 @@
       "message": "It appears to map to `simdgroups_per_threadgroup` ?",
       "revId": "189454e7cb3793e8985059c85151e7db3fd88dc0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0672a405_3d2c698b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-25T01:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3b177d_fba7b7cd",
+      "revId": "189454e7cb3793e8985059c85151e7db3fd88dc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
