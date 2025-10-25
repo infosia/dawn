@@ -16,6 +16,24 @@
       "message": "dawn_json_generator.py LGTM\n\nDo you think the whole \"KOTLIN STUFF\" section is movable to another file that you can have OWNERS on? It would at least somewhat reduce the need for dawn team review.",
       "revId": "e285a69244dc1bb360815a8cc4b622cb895bde22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3669879_d9136823",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-25T10:02:21Z",
+      "side": 1,
+      "message": "I do. We will do that. I have been aware that up to now dawn_json_generator.py has been self-contained (Python-wise at least).",
+      "parentUuid": "9476dadb_29e4df13",
+      "revId": "e285a69244dc1bb360815a8cc4b622cb895bde22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
