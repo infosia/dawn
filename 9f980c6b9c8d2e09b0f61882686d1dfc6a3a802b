@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e410d9fe_62139b2b",
+        "filename": "src/tint/lang/null/writer/raise/raise.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-25T00:13:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bb08085_6f994cf7",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 60
+      },
+      "revId": "9f980c6b9c8d2e09b0f61882686d1dfc6a3a802b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f23a1c9_4fb54727",
@@ -58,6 +82,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "677e5d04_07eab4fe",
+        "filename": "src/tint/lang/null/writer/writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-25T00:13:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f23a1c9_4fb54727",
+      "revId": "9f980c6b9c8d2e09b0f61882686d1dfc6a3a802b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3b43360_1ff9f795",
@@ -71,6 +113,30 @@
       "writtenOn": "2025-10-24T21:37:09Z",
       "side": 1,
       "message": "Nit: Reword comment",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 72
+      },
+      "revId": "9f980c6b9c8d2e09b0f61882686d1dfc6a3a802b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "caafa28e_9c102e99",
+        "filename": "src/tint/lang/null/writer/writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-25T00:13:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3b43360_1ff9f795",
       "range": {
         "startLine": 42,
         "startChar": 0,
