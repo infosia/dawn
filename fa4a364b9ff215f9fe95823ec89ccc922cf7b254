@@ -16,6 +16,24 @@
       "message": "I\u0027m seeing this error today on `/google/bin/releases/copybara/public/copybara/copybara /google/src/head/depot/google3/third_party/dawn/copy.bara.sky default`\n\n\n```\nERROR: third_party/dawn/BUILD:1113:11: Compiling third_party/dawn/src/dawn/native/null/DeviceNull.cpp failed: (Exit 1) clang failed: error executing CppCompile command (from cc_library rule target //third_party/dawn:dawn_native) third_party/android/ndk/stable/toolchains/llvm/prebuilt/linux-x86_64/bin/clang \u0027-ffp-contract\u003doff\u0027 -no-canonical-prefixes \u0027--target\u003dx86_64-linux-android23\u0027 -fdiagnostics-color -Wa,--noexecstack ... (remaining 284 arguments skipped).  [forge_remote_host\u003docaw17]\nthird_party/dawn/src/dawn/native/null/DeviceNull.cpp:484:5: error: no member named \u0027null\u0027 in namespace \u0027tint\u0027; did you mean simply \u0027null\u0027?\n  484 |     tint::null::writer::Options tintOptions;\n      |     ^~~~~~~~~~\n      |     null\nthird_party/dawn/src/dawn/native/null/DeviceNull.cpp:45:25: note: \u0027null\u0027 declared here\n   45 | namespace dawn::native::null {\n      |                         ^\nthird_party/dawn/src/dawn/native/null/DeviceNull.cpp:484:17: error: no member named \u0027writer\u0027 in namespace \u0027dawn::native::null\u0027\n  484 |     tint::null::writer::Options tintOptions;\n      |           ~~~~~~^\nthird_party/dawn/src/dawn/native/null/DeviceNull.cpp:496:18: error: no member named \u0027null\u0027 in namespace \u0027tint\u0027; did you mean simply \u0027null\u0027?\n  496 |     tint::Result\u003ctint::null::writer::Output\u003e tintResult \u003d\n      |                  ^~~~~~~~~~\n      |                  null\nthird_party/dawn/src/dawn/native/null/DeviceNull.cpp:45:25: note: \u0027null\u0027 declared here\n   45 | namespace dawn::native::null {\n      |                         ^\nthird_party/dawn/src/dawn/native/null/DeviceNull.cpp:496:30: error: no member named \u0027writer\u0027 in namespace \u0027dawn::native::null\u0027\n  496 |     tint::Result\u003ctint::null::writer::Output\u003e tintResult \u003d\n      |                        ~~~~~~^\nthird_party/dawn/src/dawn/native/null/DeviceNull.cpp:497:9: error: no member named \u0027null\u0027 in namespace \u0027tint\u0027; did you mean simply \u0027null\u0027?\n  497 |         tint::null::writer::Generate(ir.Get(), tintOptions);\n      |         ^~~~~~~~~~\n      |         null\nthird_party/dawn/src/dawn/native/null/DeviceNull.cpp:45:25: note: \u0027null\u0027 declared here\n   45 | namespace dawn::native::null {\n      |                         ^\nthird_party/dawn/src/dawn/native/null/DeviceNull.cpp:497:21: error: no member named \u0027writer\u0027 in namespace \u0027dawn::native::null\u0027\n  497 |         tint::null::writer::Generate(ir.Get(), tintOptions);\n      |               ~~~~~~^\n6 errors generated.\n```",
       "revId": "fa4a364b9ff215f9fe95823ec89ccc922cf7b254",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b9eb4c7_ebaaed27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-26T12:29:18Z",
+      "side": 1,
+      "message": "This is a fix, landing in my copybara CL\n\nhttps://critique.corp.google.com/cl/824151898/depot/google3/third_party/dawn/BUILD",
+      "parentUuid": "5444b5ac_8f6f6b69",
+      "revId": "fa4a364b9ff215f9fe95823ec89ccc922cf7b254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
