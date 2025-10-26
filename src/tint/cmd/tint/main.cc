@@ -1347,6 +1347,14 @@ bool Generate([[maybe_unused]] const Options& options,
         return false;
     }
 
+    switch (options.format) {
+        case Format::kSpirv:
+        case Format::kSpvAsm:
+            return GenerateSpirv(options, inspector, ir.Get());
+        default:
+            break;
+    }
+
     // Strip the module down to a single entry point.
     if (options.ep_name != "") {
         auto singleEntryPointResult =
@@ -1372,9 +1380,6 @@ bool Generate([[maybe_unused]] const Options& options,
     }
 
     switch (options.format) {
-        case Format::kSpirv:
-        case Format::kSpvAsm:
-            return GenerateSpirv(options, inspector, ir.Get());
         case Format::kMsl:
             return GenerateMsl(options, inspector, ir.Get());
         case Format::kHlsl:
