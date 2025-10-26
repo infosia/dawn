@@ -1361,6 +1361,8 @@ bool Generate([[maybe_unused]] const Options& options,
         case Format::kSpirv:
         case Format::kSpvAsm:
             return GenerateSpirv(options, inspector, ir.Get());
+        case Format::kMsl:
+            return GenerateMsl(options, inspector, ir.Get());
         case Format::kGlsl:
             return GenerateGlsl(options, inspector, ir.Get());
         default:
@@ -1382,8 +1384,6 @@ bool Generate([[maybe_unused]] const Options& options,
     }
 
     switch (options.format) {
-        case Format::kMsl:
-            return GenerateMsl(options, inspector, ir.Get());
         case Format::kHlsl:
         case Format::kHlslFxc:
             return GenerateHlsl(options, inspector, ir.Get());
