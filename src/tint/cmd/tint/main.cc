@@ -1358,6 +1358,9 @@ bool Generate([[maybe_unused]] const Options& options,
     }
 
     switch (options.format) {
+        case Format::kHlsl:
+        case Format::kHlslFxc:
+            return GenerateHlsl(options, inspector, ir.Get());
         case Format::kSpirv:
         case Format::kSpvAsm:
             return GenerateSpirv(options, inspector, ir.Get());
@@ -1384,9 +1387,6 @@ bool Generate([[maybe_unused]] const Options& options,
     }
 
     switch (options.format) {
-        case Format::kHlsl:
-        case Format::kHlslFxc:
-            return GenerateHlsl(options, inspector, ir.Get());
         case Format::kWgsl:
             TINT_UNREACHABLE();
         case Format::kNone:
