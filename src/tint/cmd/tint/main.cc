@@ -1250,6 +1250,7 @@ bool GenerateWgsl([[maybe_unused]] Options& options,
         gen_options.version = tint::glsl::writer::Version();
     }
 
+    gen_options.entry_point_name = options.ep_name;
     gen_options.disable_robustness = !options.enable_robustness;
 
     // Run SubstituteOverrides to replace override instructions with constants.
