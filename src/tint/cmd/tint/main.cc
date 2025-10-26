@@ -1233,6 +1233,15 @@ bool GenerateWgsl([[maybe_unused]] Options& options,
 
     gen_options.disable_robustness = !options.enable_robustness;
 
+    // Run SubstituteOverrides to replace override instructions with constants.
+    // This needs to run after SingleEntryPoint which removes unused overrides.
+    auto substitute_override_cfg = CreateOverrideMap(options, inspector);
+    if (substitute_override_cfg != tint::Success) {
+        std::cerr << "Failed to create override map: " << substitute_override_cfg.Failure() << "\n";
+        return false;
+    }
+    gen_options.substitute_overrides_config = substitute_override_cfg.Get();
+
     auto entry_point = inspector.GetEntryPoint(options.ep_name);
 
     // Immediate data Offset must be 4-byte aligned.
@@ -1370,6 +1379,8 @@ bool Generate([[maybe_unused]] const Options& options,
         case Format::kSpirv:
         case Format::kSpvAsm:
             return GenerateSpirv(options, inspector, ir.Get());
+        case Format::kGlsl:
+            return GenerateGlsl(options, inspector, ir.Get());
         default:
             break;
     }
@@ -1394,8 +1405,6 @@ bool Generate([[maybe_unused]] const Options& options,
         case Format::kHlsl:
         case Format::kHlslFxc:
             return GenerateHlsl(options, inspector, ir.Get());
-        case Format::kGlsl:
-            return GenerateGlsl(options, inspector, ir.Get());
         case Format::kWgsl:
             TINT_UNREACHABLE();
         case Format::kNone:
