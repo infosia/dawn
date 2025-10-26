@@ -273,6 +273,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "51435c4b_6e6a6606",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-26T16:33:05Z",
+      "side": 1,
+      "message": "There\u0027s a clearer way to do that now which is to filter on `category.name !\u003d \u0027callback function\u0027`",
+      "parentUuid": "8381afae_7ee6c31f",
+      "range": {
+        "startLine": 98,
+        "startChar": 22,
+        "endLine": 98,
+        "endChar": 46
+      },
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e3c6b690_e00cd7f9",
         "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
         "patchSetId": 3
