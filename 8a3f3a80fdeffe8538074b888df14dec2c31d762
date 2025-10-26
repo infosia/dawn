@@ -22,6 +22,30 @@
       },
       "revId": "8a3f3a80fdeffe8538074b888df14dec2c31d762",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0049d313_304d1f69",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-10-26T03:06:54Z",
+      "side": 1,
+      "message": "Yes, usually we set the default value of toggle there. \nBut this toggle is a bit special. Some dawn end2end tests force this toggle on, like https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/MultithreadTests.cpp;l\u003d1711?q\u003dd3d11_delay_flush_to_gpu\u0026ss\u003dchromium%2Fchromium%2Fsrc and some others. \nShould I disable all these dawn end2end tests for Qualcomm instead?",
+      "parentUuid": "0968663c_eda9b06f",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 50
+      },
+      "revId": "8a3f3a80fdeffe8538074b888df14dec2c31d762",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
