@@ -34,6 +34,24 @@
       "parentUuid": "5444b5ac_8f6f6b69",
       "revId": "fa4a364b9ff215f9fe95823ec89ccc922cf7b254",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c567488_a6215b99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-26T15:43:26Z",
+      "side": 1,
+      "message": "Fix LGTM, thanks. The fix file lives outside the source tree so didn\u0027t get updated with the change.",
+      "parentUuid": "7b9eb4c7_ebaaed27",
+      "revId": "fa4a364b9ff215f9fe95823ec89ccc922cf7b254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
