@@ -1357,6 +1357,14 @@ bool Generate([[maybe_unused]] const Options& options,
         }
     }
 
+    switch (options.format) {
+        case Format::kSpirv:
+        case Format::kSpvAsm:
+            return GenerateSpirv(options, inspector, ir.Get());
+        default:
+            break;
+    }
+
     // Run SubstituteOverrides to replace override instructions with constants.
     // This needs to run after SingleEntryPoint which removes unused overrides.
     auto substitute_override_cfg = CreateOverrideMap(options, inspector);
@@ -1372,9 +1380,6 @@ bool Generate([[maybe_unused]] const Options& options,
     }
 
     switch (options.format) {
-        case Format::kSpirv:
-        case Format::kSpvAsm:
-            return GenerateSpirv(options, inspector, ir.Get());
         case Format::kMsl:
             return GenerateMsl(options, inspector, ir.Get());
         case Format::kHlsl:
