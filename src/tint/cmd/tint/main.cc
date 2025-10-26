@@ -850,6 +850,7 @@ std::string Disassemble(const std::vector<uint32_t>& data) {
         gen_options.remapped_entry_point_name = "tint_entry_point";
         gen_options.strip_all_names = true;
     }
+    gen_options.entry_point_name = options.ep_name;
     gen_options.disable_robustness = !options.enable_robustness;
     gen_options.disable_workgroup_init = options.disable_workgroup_init;
     gen_options.use_storage_input_output_16 = options.use_storage_input_output_16;
