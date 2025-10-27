@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-10-23 09:13:44AM
+# Last rolled: 2025-10-27 12:36:37AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -607,7 +607,6 @@ crbug.com/42241502 [ dawn-backend-validation nvidia-0x2184 release-x64 target-cp
 crbug.com/407076128 [ angle-d3d11 dawn-backend-validation graphite-enabled no-asan no-clang-coverage nvidia-0x2184 release-x64 target-cpu-64 webgpu-adapter-default ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:srcColorSpace="srgb";dstColorSpace="display-p3";* [ RetryOnFailure ]
 crbug.com/407147668 [ dawn-backend-validation nvidia target-cpu-64 webgpu-adapter-default webgpu-dxc-disabled win ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:srcColorSpace="srgb";dstColorSpace="srgb";dstColorFormat="bgra8unorm";dstPremultiplied=true;srcDoFlipYDuringCopy=true [ Failure ]
 
-
 # `copyToTexture,image_file:from_multiple_formats` failures on Android and Linux
 crbug.com/407088842 [ android-pixel-4 ] webgpu:web_platform,copyToTexture,image_file:from_multiple_formats:imageName="four-colors.avif";srcDoFlipYDuringCopy=false [ Failure ]
 crbug.com/407088842 [ android-pixel-6 ] webgpu:web_platform,copyToTexture,image_file:from_multiple_formats:imageName="four-colors.avif";srcDoFlipYDuringCopy=false [ Failure ]
@@ -1056,7 +1055,6 @@ crbug.com/421941589 [ angle-opengl arch-x86_64 desktop display-server-x graphite
 crbug.com/421941589 [ angle-metal arch-x86_64 dawn-no-backend-validation desktop graphite-enabled intel-0x3e9b memory_ge_16gb no-asan no-clang-coverage release renderer-skia-gl sequoia target-cpu-64 ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:* [ Failure ]
 crbug.com/421941589 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:format="rgb10a2unorm";* [ Failure ]
 
-
 # Unsure if these ever pass on retry, or if they also are flaky-but-fail-on-retry
 crbug.com/432291885 [ dawn-no-backend-validation intel sequoia ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_2d_coords:stage="v";* [ RetryOnFailure ]
 crbug.com/432291885 [ dawn-no-backend-validation intel sequoia ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_3d_coords:stage="v";* [ RetryOnFailure ]
@@ -1079,27 +1077,6 @@ crbug.com/432291885 [ dawn-no-backend-validation intel-0x3e9b sequoia ] webgpu:s
 
 crbug.com/444196974 webgpu:api,validation,capability_checks,limits,maxStorageBuffersInFragmentStage:* [ Failure ]
 crbug.com/444196974 webgpu:api,validation,capability_checks,limits,maxStorageBuffersInVertexStage:* [ Failure ]
-
-# The app should be able to copy to these texture formats from Tier1, but Dawn forbids it.
-# The web_platform failures emit so much output that it causes timeouts. So skip for now
-crbug.com/448129221 webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:destination_texture,format:format="r16snorm" [ Failure ]
-crbug.com/448129221 webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:destination_texture,format:format="r16unorm" [ Failure ]
-crbug.com/448129221 webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:destination_texture,format:format="r8snorm" [ Failure ]
-crbug.com/448129221 webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:destination_texture,format:format="rg11b10ufloat" [ Failure ]
-crbug.com/448129221 webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:destination_texture,format:format="rg16snorm" [ Failure ]
-crbug.com/448129221 webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:destination_texture,format:format="rg16unorm" [ Failure ]
-crbug.com/448129221 webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:destination_texture,format:format="rg8snorm" [ Failure ]
-crbug.com/448129221 webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:destination_texture,format:format="rgba16snorm" [ Failure ]
-crbug.com/448129221 webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:destination_texture,format:format="rgba16unorm" [ Failure ]
-crbug.com/448129221 webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:destination_texture,format:format="rgba8snorm" [ Failure ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstFormat="r16unorm"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstFormat="rg11b10ufloat"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstFormat="rg16unorm"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstFormat="rgba16unorm"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstColorFormat="r16unorm"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstColorFormat="rg11b10ufloat"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstColorFormat="rg16unorm"* [ Skip ]
-crbug.com/448129221 webgpu:web_platform,copyToTexture,*dstColorFormat="rgba16unorm"* [ Skip ]
 
 # Failures on brya devices running Android Desktop.
 crbug.com/445230380 [ android android-brya ] webgpu:api,operation,rendering,basic:large_draw:* [ Failure ]
