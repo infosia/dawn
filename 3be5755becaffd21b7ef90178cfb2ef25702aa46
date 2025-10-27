@@ -33,6 +33,24 @@
       "message": "Before we land this, could you please investigate these flaky failures to finish a shard?\nhttps://ci.chromium.org/ui/p/dawn/builders/ci/dawn-linux-x64-intel-uhd770-rel/9/overview\nhttps://ci.chromium.org/ui/p/dawn/builders/ci/dawn-linux-x64-intel-uhd770-rel/10/overview\nhttps://ci.chromium.org/ui/p/dawn/builders/ci/dawn-linux-x64-intel-uhd770-rel/18/overview\nhttps://ci.chromium.org/ui/p/dawn/builders/ci/dawn-linux-x64-intel-uhd770-rel/24/overview\nhttps://ci.chromium.org/ui/p/dawn/builders/ci/dawn-linux-x64-intel-uhd770-rel/26/overview",
       "revId": "3be5755becaffd21b7ef90178cfb2ef25702aa46",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72007064_32b6e8f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-27T21:33:26Z",
+      "side": 1,
+      "message": "Those all look to be crbug.com/455605671, which is occurring on other platforms/configs as well.",
+      "parentUuid": "8a97e354_e4b11887",
+      "revId": "3be5755becaffd21b7ef90178cfb2ef25702aa46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
