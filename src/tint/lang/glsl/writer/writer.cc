@@ -43,9 +43,7 @@
 
 namespace tint::glsl::writer {
 
-Result<SuccessType> CanGenerate(const core::ir::Module& ir,
-                                const Options& options,
-                                const std::string& ep_name) {
+Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& options) {
     // Check for unsupported types.
     for (auto* ty : ir.Types()) {
         if (ty->Is<core::type::SubgroupMatrix>()) {
@@ -70,7 +68,7 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir,
         if (!f->IsEntryPoint()) {
             continue;
         }
-        if (ir.NameOf(f).NameView() == ep_name) {
+        if (ir.NameOf(f).NameView() == options.entry_point_name) {
             ep_func = f;
             break;
         }

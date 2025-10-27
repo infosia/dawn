@@ -1250,6 +1250,7 @@ bool GenerateWgsl([[maybe_unused]] Options& options,
         gen_options.version = tint::glsl::writer::Version();
     }
 
+    gen_options.entry_point_name = options.ep_name;
     gen_options.disable_robustness = !options.enable_robustness;
 
     // Run SubstituteOverrides to replace override instructions with constants.
@@ -1287,7 +1288,7 @@ bool GenerateWgsl([[maybe_unused]] Options& options,
     gen_options.texture_builtins_from_uniform = std::move(data.texture_builtins_from_uniform);
 
     // Check that the module and options are supported by the backend.
-    auto check = tint::glsl::writer::CanGenerate(ir, gen_options, options.ep_name);
+    auto check = tint::glsl::writer::CanGenerate(ir, gen_options);
     if (check != tint::Success) {
         std::cerr << check.Failure() << "\n";
         return false;
@@ -1388,6 +1389,8 @@ bool Generate([[maybe_unused]] const Options& options,
         case Format::kSpirv:
         case Format::kSpvAsm:
             return GenerateSpirv(options, inspector, ir.Get());
+        case Format::kGlsl:
+            return GenerateGlsl(options, inspector, ir.Get());
         default:
             break;
     }
@@ -1408,8 +1411,6 @@ bool Generate([[maybe_unused]] const Options& options,
             return GenerateHlsl(options, inspector, ir.Get());
         case Format::kMsl:
             return GenerateMsl(options, inspector, ir.Get());
-        case Format::kGlsl:
-            return GenerateGlsl(options, inspector, ir.Get());
         case Format::kWgsl:
             TINT_UNREACHABLE();
         case Format::kNone:
