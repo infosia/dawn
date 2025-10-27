@@ -63,6 +63,30 @@
       },
       "revId": "cb9428c2295b0726b2643cf31bd8b94c916cd4a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca37907a_e9d212ec",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-27T21:24:31Z",
+      "side": 1,
+      "message": "Hmm I\u0027m fine with either, but I think the main reason it\u0027s not clearer is probably because the name `OnStagingMemoryFreePendingOnSubmit` is fairly confusing. (Though I unfortunately don\u0027t have a better alternative atm...)\n\nThe main motivation for the change from my side is to try to remove as many sites that call `GetPendingCommandSerial()` directly because I believe that the way we are handling those serials is a major source of inconveniences for making some more multithread changes. If instead of querying for those serials inline, we vended them out earlier, we could potentially scope a lot of the critical sections to be tighter in the future.",
+      "parentUuid": "9c3ca9e1_53178a5a",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 5
+      },
+      "revId": "cb9428c2295b0726b2643cf31bd8b94c916cd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
