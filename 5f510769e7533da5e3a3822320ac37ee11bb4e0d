@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7757aa5c_fbee031e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-27T18:32:52Z",
+      "side": 1,
+      "message": "Hi Loko and Jiawei, these changes depend on the parent CL, which has already landed: https://dawn-review.googlesource.com/c/dawn/+/268496",
+      "revId": "5f510769e7533da5e3a3822320ac37ee11bb4e0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "085d88d8_62d0ee74",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-27T18:32:52Z",
+      "side": 1,
+      "message": "We could use a map here instead of a vector now that the indices are sparse. I initialize each element to an invalid index (`~0`), and also added an assert to `PipelineLayout::GetDynamicUniformRootParameterIndex` so that it fails if we index in the wrong place.",
+      "range": {
+        "startLine": 233,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 62
+      },
+      "revId": "5f510769e7533da5e3a3822320ac37ee11bb4e0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
