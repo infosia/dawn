@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a048e78e_15c873ab",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-27T18:29:42Z",
+      "side": 1,
+      "message": "Ah I totally forgot, for things that have trivial defaulting we set the INIT struct to UNDEFINED instead of applying the default. That way the INIT structs are more often all-zero.\n\nExample `/*.addressModeU\u003d*/WGPUAddressMode_Undefined`\n\nCould you open a webgpu-headers PR to change this?",
+      "revId": "00783b8c0a95065db43e50dc9d79831dda02e4aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
