@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d80ae2c5_1fa5d17c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-27T20:09:40Z",
+      "side": 1,
+      "message": "LGTM for the dawn generator changes. I will only really be reviewing general dawn generator changes going forwards and leave the Kotlin templates to Jim or OWNERS of those templates.\n\nThe only thing about the templates I wanted to mention is that before, we always used `//*` style commenting for the template files, but the Kotlin templates have a bunch of `{# #}` commenting style now as well. Given that all the other templates in our code uses the `//*` style commenting, I would like to try to unify the style and stick with `//*` if possible. The `//*` style is also a lot easier to read in code reviews since they show up as a different color.\n\nFeel free to update all the commenting in another follow up change.",
+      "revId": "057208e0e1fa325490c659d8ef500e6e184c92df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fa3adf4_f7b0d887",
+        "filename": "generator/dawn_json_utility.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-27T20:09:40Z",
+      "side": 1,
+      "message": "In the future, when we rename files, it\u0027s a lot easier for reviewers if you rename the file in a separate CL before making any more changes. That way, the diff of the two files show up here directly instead of it showing up as two different files.",
+      "revId": "057208e0e1fa325490c659d8ef500e6e184c92df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "743d4e4d_7b2de59c",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-27T20:09:40Z",
+      "side": 1,
+      "message": "Probably removable",
+      "range": {
+        "startLine": 177,
+        "startChar": 4,
+        "endLine": 177,
+        "endChar": 20
+      },
+      "revId": "057208e0e1fa325490c659d8ef500e6e184c92df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f2d00ae_c83bc196",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-27T20:09:40Z",
+      "side": 1,
+      "message": "I think we can remove `\"_callback_info\"` to try here. Basically, we can assume that only the callback will need docs because the callback info just wraps the callback anyways.\n\nI might go back over the `callback function` type later on and rename them so that they don\u0027t have the `\"_callback\"` suffix so that we might be able to remove this special casing entirely.\n\n(This assumes you don\u0027t need callback info docs in the Kotlin generated files. I\u0027m fairly sure most of that was removed in previous changes to the templates.)",
+      "range": {
+        "startLine": 232,
+        "startChar": 28,
+        "endLine": 232,
+        "endChar": 42
+      },
+      "revId": "057208e0e1fa325490c659d8ef500e6e184c92df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb6e6ebc_beb5b65a",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-27T20:09:40Z",
+      "side": 1,
+      "message": "Also fine to remove handling `\"callback info\"` here.",
+      "range": {
+        "startLine": 308,
+        "startChar": 8,
+        "endLine": 308,
+        "endChar": 37
+      },
+      "revId": "057208e0e1fa325490c659d8ef500e6e184c92df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9753eb2b_b1fc4256",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-27T20:09:40Z",
+      "side": 1,
+      "message": "What objects\u0027 names start with `WGPU` if we are just using `CamelCase()`?",
+      "range": {
+        "startLine": 362,
+        "startChar": 8,
+        "endLine": 364,
+        "endChar": 35
+      },
+      "revId": "057208e0e1fa325490c659d8ef500e6e184c92df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
