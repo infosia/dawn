@@ -88,6 +88,10 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                 if (func->IsFragment() && addrspace == core::AddressSpace::kIn &&
                     io.type->IsIntegerScalarOrVector()) {
                     io.attributes.interpolation = {core::InterpolationType::kFlat};
+                } else {
+                    // try position
+                    // io.attributes.interpolation = {core::InterpolationType::kLinear};
+                    // io.attributes.interpolation->sampling = core::InterpolationSampling::kCenter;
                 }
             }
             if (io.attributes.location) {
