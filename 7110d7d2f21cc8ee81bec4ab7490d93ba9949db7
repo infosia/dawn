@@ -1,0 +1,109 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0bb340d_570202a0",
+        "filename": "src/tint/cmd/bench/glsl/writer_bench.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-27T15:43:48Z",
+      "side": 1,
+      "message": "Nit: Weird AI-suggested fix here (sorry I didn\u0027t properly read the suggestion). No need to re-create the symbol from the name that you already have.",
+      "fixSuggestions": [
+        {
+          "fixId": "ab8ff227_a46fe934",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/cmd/bench/glsl/writer_bench.cc",
+              "range": {
+                "startLine": 50,
+                "startChar": 0,
+                "endLine": 51,
+                "endChar": 0
+              },
+              "replacement": "            names.push_back(func-\u003ename-\u003esymbol.Name());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7110d7d2f21cc8ee81bec4ab7490d93ba9949db7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e63040ad_3e9395d3",
+        "filename": "src/tint/cmd/bench/hlsl/writer_bench.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-27T15:43:48Z",
+      "side": 1,
+      "message": "Ditto.",
+      "fixSuggestions": [
+        {
+          "fixId": "2d1aa81f_ef1b0a8e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/cmd/bench/hlsl/writer_bench.cc",
+              "range": {
+                "startLine": 50,
+                "startChar": 0,
+                "endLine": 51,
+                "endChar": 0
+              },
+              "replacement": "            names.push_back(func-\u003ename-\u003esymbol.Name());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7110d7d2f21cc8ee81bec4ab7490d93ba9949db7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9029ebe2_1274350e",
+        "filename": "src/tint/cmd/bench/msl/writer_bench.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-27T15:43:48Z",
+      "side": 1,
+      "message": "Ditto.",
+      "fixSuggestions": [
+        {
+          "fixId": "6649ab30_f2234cde",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/cmd/bench/msl/writer_bench.cc",
+              "range": {
+                "startLine": 51,
+                "startChar": 0,
+                "endLine": 52,
+                "endChar": 0
+              },
+              "replacement": "            names.push_back(func-\u003ename-\u003esymbol.Name());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7110d7d2f21cc8ee81bec4ab7490d93ba9949db7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
