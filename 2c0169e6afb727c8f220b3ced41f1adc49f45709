@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02b4e1bf_2a4baebf",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-27T21:56:48Z",
+      "side": 1,
+      "message": "I tried to disable robustness for dynamic storage buffers, thinking it would just work; however, it cannot work with my current changes, as I noted here.\n\nBasically, say you have a storage buffer of 1000 bytes, and the BGL defines the binding to it at base offset 200 bytes, and size 100 bytes; what we do now with my change is, in BindGroup::Initialize, we create a UAV taht binds the storage buffer at offset 200 with size of 1000 - 100 \u003d 900 -- so from the base offset to the end of the buffer. So say we call setBindGroup with dynamic offset of 500, so that we\u0027re actually indexing at 200 + 500 \u003d 700 bytes, and we attempt to index OOB at index 105, we are still within the bounds of the UAV, and the read/write succeeds.\n\nSo for now, I\u0027m leaving the robustnes checks enabled for dynamic storage buffers. I\u0027m not sure if there\u0027s a way for us to get rid of them. Maybe we\u0027d have to recreate or modify the UAV in the descriptor heap here in BindGroupStateTracker::ApplyBindGroup.",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 188,
+        "endChar": 33
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
