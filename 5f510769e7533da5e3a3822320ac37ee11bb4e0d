@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "08d4192a_1af1ad1a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-27T18:52:57Z",
+      "side": 1,
+      "message": "Hmm, something I did recently broke CTS tests. Let\u0027s wait on the review until this is fixed.",
+      "revId": "5f510769e7533da5e3a3822320ac37ee11bb4e0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "085d88d8_62d0ee74",
         "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.cpp",
         "patchSetId": 11
