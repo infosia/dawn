@@ -43,7 +43,6 @@
 #include "src/tint/cmd/common/helper.h"
 #include "src/tint/lang/core/ir/disassembler.h"
 #include "src/tint/lang/core/ir/transform/resource_binding_helper.h"
-#include "src/tint/lang/core/ir/transform/single_entry_point.h"
 #include "src/tint/lang/core/ir/var.h"
 #include "src/tint/lang/core/type/f16.h"
 #include "src/tint/lang/core/type/pointer.h"
@@ -1116,6 +1115,7 @@ bool GenerateWgsl([[maybe_unused]] Options& options,
         gen_options.remapped_entry_point_name = "tint_entry_point";
         gen_options.strip_all_names = true;
     }
+    gen_options.entry_point_name = options.ep_name;
     gen_options.disable_robustness = !options.enable_robustness;
     gen_options.disable_workgroup_init = options.disable_workgroup_init;
     gen_options.pixel_local = options.pixel_local_options;
@@ -1136,7 +1136,7 @@ bool GenerateWgsl([[maybe_unused]] Options& options,
     gen_options.substitute_overrides_config = substitute_override_cfg.Get();
 
     // Check that the module and options are supported by the backend.
-    auto check = tint::hlsl::writer::CanGenerate(ir, gen_options, options.ep_name);
+    auto check = tint::hlsl::writer::CanGenerate(ir, gen_options);
     if (check != tint::Success) {
         std::cerr << check.Failure() << "\n";
         return false;
@@ -1388,6 +1388,9 @@ bool Generate([[maybe_unused]] const Options& options,
     }
 
     switch (options.format) {
+        case Format::kHlsl:
+        case Format::kHlslFxc:
+            return GenerateHlsl(options, inspector, ir.Get());
         case Format::kMsl:
             return GenerateMsl(options, inspector, ir.Get());
         case Format::kSpirv:
@@ -1395,28 +1398,8 @@ bool Generate([[maybe_unused]] const Options& options,
             return GenerateSpirv(options, inspector, ir.Get());
         case Format::kGlsl:
             return GenerateGlsl(options, inspector, ir.Get());
-        default:
-            break;
-    }
-
-    // Strip the module down to a single entry point.
-    if (options.ep_name != "") {
-        auto singleEntryPointResult =
-            tint::core::ir::transform::SingleEntryPoint(ir.Get(), options.ep_name);
-        if (singleEntryPointResult != tint::Success) {
-            std::cerr << "SingleEntryPoint failed:\n" << singleEntryPointResult.Failure() << "\n";
-            return false;
-        }
-    }
-
-    switch (options.format) {
-        case Format::kHlsl:
-        case Format::kHlslFxc:
-            return GenerateHlsl(options, inspector, ir.Get());
         case Format::kWgsl:
             TINT_UNREACHABLE();
-        case Format::kNone:
-            break;
         default:
             std::cerr << "Unknown output format specified\n";
             break;
