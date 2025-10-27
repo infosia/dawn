@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ce55fda_df18481b",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-10-27T06:57:55Z",
+      "side": 1,
+      "message": "Usually, we suppress in the specific test cases. But for this case, toggle d3d11_delay_flush_to_gpu will cause QC device hang randomly, so we need to disable all the related test cases, including those may be added in future.",
+      "revId": "1c02f59c1b47a222c72b217c2d76bccc81d9a789",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

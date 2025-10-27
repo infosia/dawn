@@ -46,6 +46,30 @@
       },
       "revId": "8a3f3a80fdeffe8538074b888df14dec2c31d762",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "862b94e5_bcc05961",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-10-27T06:57:55Z",
+      "side": 1,
+      "message": "I figured out how to disable all the test cases in a unified place. Please review patchset 2.",
+      "parentUuid": "0049d313_304d1f69",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 50
+      },
+      "revId": "8a3f3a80fdeffe8538074b888df14dec2c31d762",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
