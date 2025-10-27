@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c6fd8ac_821bf34b",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-27T19:24:59Z",
+      "side": 1,
+      "message": "No, left over after a refactor.",
+      "parentUuid": "e586c56f_a1a9f6a0",
+      "revId": "7c7504914b71c924bee5e6331388ab61cb5987a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "929a7cf4_03ef1898",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-10-27T18:49:01Z",
       "side": 1,
       "message": "I think I used ballot im my impl. I doubt there is a difference.",
+      "range": {
+        "startLine": 515,
+        "startChar": 8,
+        "endLine": 515,
+        "endChar": 94
+      },
+      "revId": "7c7504914b71c924bee5e6331388ab61cb5987a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8a2dc68_4663852a",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-27T19:24:59Z",
+      "side": 1,
+      "message": "Ah, `subgroupElect()`, I forgot we had that. Changed.",
+      "parentUuid": "929a7cf4_03ef1898",
       "range": {
         "startLine": 515,
         "startChar": 8,
