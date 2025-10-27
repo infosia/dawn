@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb7cccc5_93340d7c",
+        "filename": "src/tint/api/helpers/generate_bindings.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-27T15:01:24Z",
+      "side": 1,
+      "message": "The GLSL generate also does a group zero. It\u0027s currently a separate call, but it would be nice if we could figure out a way to merge them so I\u0027d prefer to keep this separate.",
+      "parentUuid": "6434d6b0_f7166688",
+      "revId": "c779c644320498a742ee62b6fa4dbe3559d00094",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c6896bd2_76b5dd28",
@@ -90,6 +108,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca35cfab_472edd1a",
+        "filename": "src/tint/cmd/bench/glsl/writer_bench.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-27T15:01:24Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "c6896bd2_76b5dd28",
+      "revId": "c779c644320498a742ee62b6fa4dbe3559d00094",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f934db2_b81f2462",
@@ -107,6 +143,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60dfc6a7_d3de0b28",
+        "filename": "src/tint/cmd/bench/hlsl/writer_bench.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-27T15:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f934db2_b81f2462",
+      "revId": "c779c644320498a742ee62b6fa4dbe3559d00094",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "31e4247f_eef5613d",
@@ -120,6 +174,24 @@
       "writtenOn": "2025-10-27T14:11:38Z",
       "side": 1,
       "message": "ditto",
+      "revId": "c779c644320498a742ee62b6fa4dbe3559d00094",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa9f432a_8c8b0662",
+        "filename": "src/tint/cmd/bench/msl/writer_bench.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-27T15:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31e4247f_eef5613d",
       "revId": "c779c644320498a742ee62b6fa4dbe3559d00094",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -155,6 +227,24 @@
           ]
         }
       ],
+      "revId": "c779c644320498a742ee62b6fa4dbe3559d00094",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8fbe539_73d099bd",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-27T15:01:24Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "b65c83a1_7565ef0c",
       "revId": "c779c644320498a742ee62b6fa4dbe3559d00094",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
