@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5830cfe8_61c1e7e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-27T08:16:25Z",
+      "side": 1,
+      "message": "Note: I refactored the way BindGroups are serialized in this CL from the previous way. Previously they use a generic BindGroupEntry that had buffer, and texture, and sampler all in the same struct with the expectation that only 1 was used. This didn\u0027t cover some other types. I switched it to use a different type for each binding type. This should be better going forward as each type can do what it needs, independent of the others.",
+      "revId": "c3c256a7d6770bfcdb2647a6f99fb9038fbb0eb4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
