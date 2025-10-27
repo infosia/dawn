@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb2f161f_2161c5e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-27T18:33:29Z",
+      "side": 1,
+      "message": "CCing Jiawei and Corentin for reference.",
+      "revId": "1b3b29437f3f5f1bd371e8236853a72169a7c773",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
