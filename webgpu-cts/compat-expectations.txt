@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-10-23 09:13:44AM
+# Last rolled: 2025-10-27 08:06:20AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -1355,5 +1355,8 @@ crbug.com/0000 [ intel-0x9bc5 linux ] webgpu:shader,execution,expression,call,bu
 crbug.com/0000 [ intel-0x9bc5 linux ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:format="rgba8unorm";viewDimension="2d";stage="fragment";access="write";mipLevel=0 [ Failure ]
 crbug.com/0000 [ intel-0x9bc5 linux ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:format="rgba8unorm";viewDimension="2d";stage="fragment";access="write";mipLevel=1 [ Failure ]
 crbug.com/0000 [ intel-0x9bc5 linux ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:format="rgba8unorm";viewDimension="2d";stage="fragment";access="write";mipLevel=2 [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="uniform_buffer_standard_layout" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="uniform_buffer_standard_layout" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="uniform_buffer_standard_layout" [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:shader,validation,shader_io,workgroup_size:workgroup_size:attr="override_expr" [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,canvas,getCurrentTexture:multiple_frames:canvasType="onscreen" [ Failure ]
