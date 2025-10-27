@@ -39,6 +39,30 @@
       },
       "revId": "87a277711a5833a016fd0913d9975d813a6e648c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32881c76_467a705b",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-27T05:56:03Z",
+      "side": 1,
+      "message": "Understood. Updated",
+      "parentUuid": "539b0bf0_afded7f4",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "87a277711a5833a016fd0913d9975d813a6e648c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
