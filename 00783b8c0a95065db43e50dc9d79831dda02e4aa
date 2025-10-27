@@ -37,6 +37,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "5a4080ce_f5a43523",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-10-27T21:31:37Z",
+      "side": 1,
+      "message": "Bits Twiddled",
+      "revId": "00783b8c0a95065db43e50dc9d79831dda02e4aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "a048e78e_15c873ab",
         "filename": "third_party/webgpu-headers/webgpu.h.diff",
         "patchSetId": 1
