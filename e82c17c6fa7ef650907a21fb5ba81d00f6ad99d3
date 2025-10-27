@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f584d165_6469d224",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-27T09:46:25Z",
+      "side": 1,
+      "message": "This CL is no longer needed and can be abandoned, following https://dawn-review.googlesource.com/c/dawn/+/267754 and https://dawn-review.googlesource.com/c/dawn/+/268615.",
+      "revId": "e82c17c6fa7ef650907a21fb5ba81d00f6ad99d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
