@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e586c56f_a1a9f6a0",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-27T18:43:21Z",
+      "side": 1,
+      "message": "Is this really necessary given the check on line 471?",
+      "revId": "7c7504914b71c924bee5e6331388ab61cb5987a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
