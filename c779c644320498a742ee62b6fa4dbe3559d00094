@@ -16,6 +16,147 @@
       "message": "PTAL.",
       "revId": "c779c644320498a742ee62b6fa4dbe3559d00094",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6434d6b0_f7166688",
+        "filename": "src/tint/api/helpers/generate_bindings.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-27T14:11:38Z",
+      "side": 1,
+      "message": "MSL the only things that passes `set_group_to_zero \u003d true`, so we should just rename it to `flatten_bindings` instead of having two flags that are doing different parts of the same thing.",
+      "revId": "c779c644320498a742ee62b6fa4dbe3559d00094",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6896bd2_76b5dd28",
+        "filename": "src/tint/cmd/bench/glsl/writer_bench.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-27T14:11:38Z",
+      "side": 1,
+      "message": "Nit: If we just need the names, there\u0027s no need to convert the whole program to IR.",
+      "fixSuggestions": [
+        {
+          "fixId": "ba9f5127_f304148b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/cmd/bench/glsl/writer_bench.cc",
+              "range": {
+                "startLine": 46,
+                "startChar": 0,
+                "endLine": 53,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/cmd/bench/glsl/writer_bench.cc",
+              "range": {
+                "startLine": 54,
+                "startChar": 0,
+                "endLine": 55,
+                "endChar": 0
+              },
+              "replacement": "        for (auto* func : res-\u003eprogram.AST().Functions()) {\n"
+            },
+            {
+              "path": "src/tint/cmd/bench/glsl/writer_bench.cc",
+              "range": {
+                "startLine": 56,
+                "startChar": 0,
+                "endLine": 57,
+                "endChar": 0
+              },
+              "replacement": "                names.push_back(res-\u003eprogram.Symbols().NameFor(func-\u003eName()).Name());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c779c644320498a742ee62b6fa4dbe3559d00094",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f934db2_b81f2462",
+        "filename": "src/tint/cmd/bench/hlsl/writer_bench.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-27T14:11:38Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c779c644320498a742ee62b6fa4dbe3559d00094",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31e4247f_eef5613d",
+        "filename": "src/tint/cmd/bench/msl/writer_bench.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-27T14:11:38Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c779c644320498a742ee62b6fa4dbe3559d00094",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b65c83a1_7565ef0c",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-27T14:11:38Z",
+      "side": 1,
+      "message": "Should we still have the `!ty-\u003eHasFixedFootprint()` as well so that only generate the `array_length_from_constants` stuff when there is a runtime-sized array?",
+      "fixSuggestions": [
+        {
+          "fixId": "ac69278a_f928ebd5",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/cmd/tint/main.cc",
+              "range": {
+                "startLine": 1019,
+                "startChar": 0,
+                "endLine": 1020,
+                "endChar": 0
+              },
+              "replacement": "        if (ty \u0026\u0026 ty-\u003eAddressSpace() \u003d\u003d tint::core::AddressSpace::kStorage \u0026\u0026\n            !ty-\u003eHasFixedFootprint()) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c779c644320498a742ee62b6fa4dbe3559d00094",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
