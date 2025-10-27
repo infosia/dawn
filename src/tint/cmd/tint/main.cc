@@ -1001,6 +1001,7 @@ bool GenerateWgsl([[maybe_unused]] Options& options,
         gen_options.remapped_entry_point_name = "tint_entry_point";
         gen_options.strip_all_names = true;
     }
+    gen_options.entry_point_name = options.ep_name;
     gen_options.disable_robustness = !options.enable_robustness;
     gen_options.disable_workgroup_init = options.disable_workgroup_init;
     gen_options.pixel_local_attachments = options.pixel_local_attachments;
@@ -1044,7 +1045,7 @@ bool GenerateWgsl([[maybe_unused]] Options& options,
     }
 
     // Check that the module and options are supported by the backend.
-    auto check = tint::msl::writer::CanGenerate(ir, gen_options, options.ep_name);
+    auto check = tint::msl::writer::CanGenerate(ir, gen_options);
     if (check != tint::Success) {
         std::cerr << check.Failure() << "\n";
         return false;
@@ -1386,6 +1387,8 @@ bool Generate([[maybe_unused]] const Options& options,
     }
 
     switch (options.format) {
+        case Format::kMsl:
+            return GenerateMsl(options, inspector, ir.Get());
         case Format::kSpirv:
         case Format::kSpvAsm:
             return GenerateSpirv(options, inspector, ir.Get());
@@ -1409,8 +1412,6 @@ bool Generate([[maybe_unused]] const Options& options,
         case Format::kHlsl:
         case Format::kHlslFxc:
             return GenerateHlsl(options, inspector, ir.Get());
-        case Format::kMsl:
-            return GenerateMsl(options, inspector, ir.Get());
         case Format::kWgsl:
             TINT_UNREACHABLE();
         case Format::kNone:
