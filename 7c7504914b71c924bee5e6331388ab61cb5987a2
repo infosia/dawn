@@ -16,6 +16,29 @@
       "message": "Is this really necessary given the check on line 471?",
       "revId": "7c7504914b71c924bee5e6331388ab61cb5987a2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "929a7cf4_03ef1898",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-27T18:49:01Z",
+      "side": 1,
+      "message": "I think I used ballot im my impl. I doubt there is a difference.",
+      "range": {
+        "startLine": 515,
+        "startChar": 8,
+        "endLine": 515,
+        "endChar": 94
+      },
+      "revId": "7c7504914b71c924bee5e6331388ab61cb5987a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
