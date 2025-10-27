@@ -2843,8 +2843,8 @@ TEST_P(ShaderTests, CopyStructCompute) {
 // Test coverage for a uniform buffer indexing bug with FXC.
 // See crbug.com/454366353.
 TEST_P(ShaderTests, UBOIndexFXC) {
-    // TODO(crbug.com/454396190): WebGPU-on-WebGPU is not enabling the WGSL language feature.
-    DAWN_SUPPRESS_TEST_IF(IsWebGPUOnWebGPU());
+    // // TODO(crbug.com/454396190): WebGPU-on-WebGPU is not enabling the WGSL language feature.
+    // DAWN_SUPPRESS_TEST_IF(IsWebGPUOnWebGPU());
 
     wgpu::ShaderModule csModule = utils::CreateShaderModule(device, R"(
 @group(0) @binding(0) var<uniform> inputs : array<vec2u, 4>;
