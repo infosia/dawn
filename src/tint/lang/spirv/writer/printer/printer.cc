@@ -2647,6 +2647,7 @@ class Printer {
             module_.PushAnnot(spv::Op::OpDecorate, {id, U32Operand(SpvDecorationBuiltIn),
                                                     Builtin(*attrs.builtin, addrspace)});
         }
+
         if (attrs.invariant) {
             module_.PushAnnot(spv::Op::OpDecorate, {id, U32Operand(SpvDecorationInvariant)});
         }
