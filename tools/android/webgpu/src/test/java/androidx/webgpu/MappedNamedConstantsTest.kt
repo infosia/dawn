@@ -94,6 +94,7 @@ class MappedNamedConstantsTest {
         ToneMappingMode::class,
         VertexFormat::class,
         VertexStepMode::class,
+        WaitStatus::class,
         WGSLLanguageFeatureName::class
     )
 
