@@ -39,6 +39,30 @@
       },
       "revId": "cb9428c2295b0726b2643cf31bd8b94c916cd4a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c3ca9e1_53178a5a",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-27T21:06:40Z",
+      "side": 1,
+      "message": "I\u0027m not sure that\u0027s much clearer, personally.",
+      "parentUuid": "7f3fe67b_7a143769",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 5
+      },
+      "revId": "cb9428c2295b0726b2643cf31bd8b94c916cd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
