@@ -16,6 +16,29 @@
       "message": "PS1 had this assert and you can see [failures here](https://ci.chromium.org/ui/p/chromium/builders/try/win-dawn-rel/51568/overview). d3d12::Device::CreateZeroBuffer() runs from d3d12::Device::Initialize() after device mutex is created but it\u0027s not locked. The device mutex isn\u0027t really needed yet since device creation is single threaded. I think we could probably just lock the mutex or delay creating it to end of d3d12::Device::Initialize()?",
       "revId": "cb9428c2295b0726b2643cf31bd8b94c916cd4a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f3fe67b_7a143769",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-27T21:00:42Z",
+      "side": 1,
+      "message": "nit. Can\u0027t this be:\n\n```\nOnStagingMemoryFreePendingOnSubmit(0u);\nif (mMemoryPendingSubmit.load(std::memory_order_relaxed) \u003c\n    kPendingMemorySubmitThreshold) {\n    return {};\n}\n```",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 5
+      },
+      "revId": "cb9428c2295b0726b2643cf31bd8b94c916cd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
