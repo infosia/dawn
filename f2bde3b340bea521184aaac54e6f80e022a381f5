@@ -16,6 +16,23 @@
       "message": "LGTM",
       "revId": "f2bde3b340bea521184aaac54e6f80e022a381f5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10be3c2c_a1b12025",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-27T21:37:29Z",
+      "side": 1,
+      "message": "Nvm thought this needed second review because Review-Enforcement was unhappy. That was probably just the Reauth bug crbug.com/454422917",
+      "revId": "f2bde3b340bea521184aaac54e6f80e022a381f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
