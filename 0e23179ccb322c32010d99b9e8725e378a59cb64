@@ -70,6 +70,24 @@
       "parentUuid": "dcb0e19f_af85a71a",
       "revId": "0e23179ccb322c32010d99b9e8725e378a59cb64",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfd7ed09_7af30dcd",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 4420572
+      },
+      "writtenOn": "2025-10-27T20:51:26Z",
+      "side": 1,
+      "message": "Ooo!! I didn\u0027t know you could do that, but apparently that language feature was added in the C++20 standard! And it does indeed work in VS2022 v143. :) Pushed that change.",
+      "parentUuid": "a22ab860_4698ecb9",
+      "revId": "0e23179ccb322c32010d99b9e8725e378a59cb64",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
