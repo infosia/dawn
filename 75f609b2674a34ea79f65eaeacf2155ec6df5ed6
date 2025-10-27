@@ -24,6 +24,53 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "986fd29c_0da51a97",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-27T20:21:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "187483f8_391e0b5a",
+      "range": {
+        "startLine": 977,
+        "startChar": 8,
+        "endLine": 977,
+        "endChar": 17
+      },
+      "revId": "75f609b2674a34ea79f65eaeacf2155ec6df5ed6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59241939_07dd442e",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-27T20:21:52Z",
+      "side": 1,
+      "message": "The probelm is that we lack this definition",
+      "range": {
+        "startLine": 977,
+        "startChar": 8,
+        "endLine": 977,
+        "endChar": 17
+      },
+      "revId": "75f609b2674a34ea79f65eaeacf2155ec6df5ed6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3abc1b83_3f33c16a",
@@ -37,6 +84,30 @@
       "writtenOn": "2025-10-24T19:26:40Z",
       "side": 1,
       "message": "remove this",
+      "range": {
+        "startLine": 978,
+        "startChar": 9,
+        "endLine": 981,
+        "endChar": 86
+      },
+      "revId": "75f609b2674a34ea79f65eaeacf2155ec6df5ed6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d9b8c78_90ce5205",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-27T20:21:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3abc1b83_3f33c16a",
       "range": {
         "startLine": 978,
         "startChar": 9,
