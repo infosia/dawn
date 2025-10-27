@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "f8901e366d6341d7e7216d8edd9ffa11312b39ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af81d120_346213b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-27T21:54:00Z",
+      "side": 1,
+      "message": "Probably fine to do a blanket suppression for now, but if it\u0027s mostly on the WebGPU/WebGPU backends, I was wondering if that would be enough. (I saw in the bug that there was a Vulkan instance, but am wondering if that one might be a different issue entirely?)",
+      "revId": "f8901e366d6341d7e7216d8edd9ffa11312b39ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
