@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e630df3_446549ce",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-27T13:46:16Z",
+      "side": 1,
+      "message": "PTAL, had to add this temporary case.",
+      "revId": "0fb61200ecc9d0557980bb80916466160af31d97",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
