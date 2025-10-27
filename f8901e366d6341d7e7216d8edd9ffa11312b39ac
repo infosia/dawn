@@ -33,6 +33,24 @@
       "message": "Probably fine to do a blanket suppression for now, but if it\u0027s mostly on the WebGPU/WebGPU backends, I was wondering if that would be enough. (I saw in the bug that there was a Vulkan instance, but am wondering if that one might be a different issue entirely?)",
       "revId": "f8901e366d6341d7e7216d8edd9ffa11312b39ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "223378d4_526a00e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-27T21:57:46Z",
+      "side": 1,
+      "message": "It\u0027s possible. I can try just suppressing on WebGPU on WebGPU for now.",
+      "parentUuid": "af81d120_346213b2",
+      "revId": "f8901e366d6341d7e7216d8edd9ffa11312b39ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
