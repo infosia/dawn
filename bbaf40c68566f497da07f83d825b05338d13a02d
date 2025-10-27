@@ -1,0 +1,109 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62315078_21fd2229",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-27T18:14:00Z",
+      "side": 1,
+      "message": "nit: return \"$kt_file_path/${if (category \u003d\u003d \"object\") \"GPU\" else \"\"}${type.name.camelCase()}\"",
+      "fixSuggestions": [
+        {
+          "fixId": "b93de1f1_5058f6b9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/dawn_json_generator.py",
+              "range": {
+                "startLine": 990,
+                "startChar": 0,
+                "endLine": 994,
+                "endChar": 0
+              },
+              "replacement": "        return f\"{kt_file_path}/{\u0027GPU\u0027 if category \u003d\u003d \u0027object\u0027 else \u0027\u0027}{type.name.CamelCase()}\"\n"
+            }
+          ]
+        }
+      ],
+      "revId": "bbaf40c68566f497da07f83d825b05338d13a02d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84e1eab0_e0cc76c4",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-27T18:14:00Z",
+      "side": 1,
+      "message": "nit: {{- \"GPU\" if category \u003d\u003d \u0027object\u0027 else \"\" }}{{ name -}}\nart/methods.cpp is probably the best place for this if it used only there.",
+      "fixSuggestions": [
+        {
+          "fixId": "794e2e2a_bec99c60",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/api_jni_types.cpp",
+              "range": {
+                "startLine": 133,
+                "startChar": 0,
+                "endLine": 138,
+                "endChar": 0
+              },
+              "replacement": "    {{- \"GPU\" if category \u003d\u003d \u0027object\u0027 else \"\" }}{{ name -}}\n"
+            }
+          ]
+        }
+      ],
+      "revId": "bbaf40c68566f497da07f83d825b05338d13a02d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5455a929_f6149894",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-27T18:14:00Z",
+      "side": 1,
+      "message": "nit: {{- \"GPU\" if category \u003d\u003d \u0027object\u0027 else \"\" }}{{ name -}}\n\nIf this logic might be used in multiple places in the future, we should probably define it in one central location instead of repeating it inline every time.",
+      "fixSuggestions": [
+        {
+          "fixId": "b593e792_8a870195",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/api_kotlin_types.kt",
+              "range": {
+                "startLine": 105,
+                "startChar": 0,
+                "endLine": 110,
+                "endChar": 0
+              },
+              "replacement": "    {{- \"GPU\" if category \u003d\u003d \u0027object\u0027 else \"\" }}{{ name -}}\n"
+            }
+          ]
+        }
+      ],
+      "revId": "bbaf40c68566f497da07f83d825b05338d13a02d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
