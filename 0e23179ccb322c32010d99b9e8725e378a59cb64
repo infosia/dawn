@@ -52,6 +52,24 @@
       "parentUuid": "f03aa6da_e6de40ac",
       "revId": "0e23179ccb322c32010d99b9e8725e378a59cb64",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a22ab860_4698ecb9",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-27T20:46:01Z",
+      "side": 1,
+      "message": "(FYI the `T\u0026\u0026` is an r-value reference, it\u0027s different from reference-to-reference)\n\nI like Dan\u0027s suggestion - if VS2022 accepts it.",
+      "parentUuid": "dcb0e19f_af85a71a",
+      "revId": "0e23179ccb322c32010d99b9e8725e378a59cb64",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
