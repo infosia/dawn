@@ -319,6 +319,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "467f538b_73448bb3",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-27T09:36:16Z",
+      "side": 1,
+      "message": "Removed dependency on method.arguments[:-1]",
+      "parentUuid": "9756fdb3_5f16d219",
+      "range": {
+        "startLine": 98,
+        "startChar": 22,
+        "endLine": 98,
+        "endChar": 46
+      },
+      "revId": "03f63f51c033e4d088d301e859844d7ddeea9803",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3c6b690_e00cd7f9",
