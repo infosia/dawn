@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fab099c8_ecb17921",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-27T21:38:41Z",
+      "side": 1,
+      "message": "Moving myself to CC for now, please re-add me to reviewers if needed.",
+      "revId": "aa5b5d3dd84789a4c5201448d5cac54e79934ccd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
