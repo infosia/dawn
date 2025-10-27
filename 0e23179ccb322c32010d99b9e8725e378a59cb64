@@ -34,6 +34,24 @@
       "parentUuid": "c4d4b579_305f7773",
       "revId": "0e23179ccb322c32010d99b9e8725e378a59cb64",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcb0e19f_af85a71a",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-10-27T19:56:59Z",
+      "side": 1,
+      "message": "In that case can you do:\n\n```\nio.attributes.interpolation \u003d core::Interpolation{core::InterpolationType::kFlat};\n```\n\nTo make it clear what the type is?",
+      "parentUuid": "f03aa6da_e6de40ac",
+      "revId": "0e23179ccb322c32010d99b9e8725e378a59cb64",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
