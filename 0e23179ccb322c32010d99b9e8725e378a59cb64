@@ -16,6 +16,24 @@
       "message": "This is the default value, so shouldn\u0027t be necessary?",
       "revId": "0e23179ccb322c32010d99b9e8725e378a59cb64",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f03aa6da_e6de40ac",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 4420572
+      },
+      "writtenOn": "2025-10-27T19:54:05Z",
+      "side": 1,
+      "message": "I think the issue may be that it\u0027s calling an assignment operator where the right-hand side is a (double) reference type. So the actual type is not necessarily unique and not clearly defined. It could be of type Interpolation \u0026\u0026, but it could also be a (double) reference to any potential derived type.\n\nIt looks like the compiler is getting confused when it\u0027s given an untyped initializer list and not a constructor with a specific type.\n\nThe compile error is:\n\nerror C2664: \u0027std::optional\u003ctint::core::Interpolation\u003e \u0026std::optional\u003ctint::core::Interpolation\u003e::operator \u003d(std::optional\u003ctint::core::Interpolation\u003e \u0026\u0026)\u0027: cannot convert argument 1 from \u0027initializer list\u0027 to \u0027std::optional\u003ctint::core::Interpolation\u003e \u0026\u0026\u0027\n\nIt seems that making the initializer list complete clears up the confusion for the compiler.\n\nUsing an explicit constructor call here instead of an untyped initializer list would\u0027ve made it even more clear to the compiler what type we\u0027re constructing.\n\n(But we\u0027re calling the assignment operator with a temporary object here, which is temporarily allocated on the stack... I\u0027d be a little worried about using references to a temporary stack object... I\u0027d perhaps have a few global instantiated global variables that never get deallocated and can always be referenced. Like having a permanent public static Interpolation::Flat member variable and referencing that.)",
+      "parentUuid": "c4d4b579_305f7773",
+      "revId": "0e23179ccb322c32010d99b9e8725e378a59cb64",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
