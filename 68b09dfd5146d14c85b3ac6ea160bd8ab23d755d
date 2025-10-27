@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "68b09dfd5146d14c85b3ac6ea160bd8ab23d755d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84ccc4a4_a823e693",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-27T21:12:25Z",
+      "side": 1,
+      "message": "Are they printing something to stdout during this time?\nSince I think there is a separate timeout for no I/O.",
+      "revId": "68b09dfd5146d14c85b3ac6ea160bd8ab23d755d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
