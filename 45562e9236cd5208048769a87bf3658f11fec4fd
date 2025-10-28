@@ -1,0 +1,134 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5545cc9c_b1c0aeaa",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/CommandEncoderTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-28T09:10:47Z",
+      "side": 1,
+      "message": "Since we\u0027ve introduced unused* variables, this can now be removed. This will allow us to catch more such cases in the future.",
+      "fixSuggestions": [
+        {
+          "fixId": "53a832f6_236629b7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/CommandEncoderTest.kt",
+              "range": {
+                "startLine": 16,
+                "startChar": 0,
+                "endLine": 17,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "45562e9236cd5208048769a87bf3658f11fec4fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7439dcf0_a0ec80ee",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/CommandEncoderTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-28T09:10:47Z",
+      "side": 1,
+      "message": "Nit: Using _ instead of unusedCommandBuffer would make it more clear.",
+      "fixSuggestions": [
+        {
+          "fixId": "af21a8f5_35391f79",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/CommandEncoderTest.kt",
+              "range": {
+                "startLine": 42,
+                "startChar": 0,
+                "endLine": 43,
+                "endChar": 0
+              },
+              "replacement": "    val _ \u003d encoder.finish()\n"
+            },
+            {
+              "path": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/CommandEncoderTest.kt",
+              "range": {
+                "startLine": 76,
+                "startChar": 0,
+                "endLine": 77,
+                "endChar": 0
+              },
+              "replacement": "    val _ \u003d encoder.finish()\n"
+            },
+            {
+              "path": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/CommandEncoderTest.kt",
+              "range": {
+                "startLine": 95,
+                "startChar": 0,
+                "endLine": 96,
+                "endChar": 0
+              },
+              "replacement": "    val _ \u003d encoder.finish()\n"
+            },
+            {
+              "path": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/CommandEncoderTest.kt",
+              "range": {
+                "startLine": 136,
+                "startChar": 0,
+                "endLine": 137,
+                "endChar": 0
+              },
+              "replacement": "    val _ \u003d encoder.finish()\n"
+            },
+            {
+              "path": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/CommandEncoderTest.kt",
+              "range": {
+                "startLine": 252,
+                "startChar": 0,
+                "endLine": 253,
+                "endChar": 0
+              },
+              "replacement": "    val _ \u003d encoder.finish()\n"
+            },
+            {
+              "path": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/CommandEncoderTest.kt",
+              "range": {
+                "startLine": 288,
+                "startChar": 0,
+                "endLine": 289,
+                "endChar": 0
+              },
+              "replacement": "    val _ \u003d encoder.finish()\n"
+            },
+            {
+              "path": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/CommandEncoderTest.kt",
+              "range": {
+                "startLine": 311,
+                "startChar": 0,
+                "endLine": 312,
+                "endChar": 0
+              },
+              "replacement": "    val _ \u003d encoder.finish()\n"
+            }
+          ]
+        }
+      ],
+      "revId": "45562e9236cd5208048769a87bf3658f11fec4fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
