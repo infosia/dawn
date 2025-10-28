@@ -56,6 +56,30 @@
       },
       "revId": "b817969b4862df87ade5b31b43e0286ba4a5044c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3327086_bbc2c7d5",
+        "filename": "src/dawn/tests/end2end/BufferTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-28T20:20:16Z",
+      "side": 1,
+      "message": "Ugh sorry, Chrome/Dawn context switch error.",
+      "parentUuid": "866f180c_424b83ce",
+      "range": {
+        "startLine": 771,
+        "startChar": 9,
+        "endLine": 771,
+        "endChar": 28
+      },
+      "revId": "b817969b4862df87ade5b31b43e0286ba4a5044c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
