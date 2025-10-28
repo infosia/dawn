@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "c43095f8b8c913f9819f31dd618248370d6d5112",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73e49e2a_7c8652be",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-28T12:58:56Z",
+      "side": 1,
+      "message": "Nit: pointers aren\u0027t constructible either so technically we don\u0027t need this check any more.",
+      "revId": "c43095f8b8c913f9819f31dd618248370d6d5112",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
