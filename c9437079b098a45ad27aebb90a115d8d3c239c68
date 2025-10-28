@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "08eae69a_1bed47ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T00:34:20Z",
+      "side": 1,
+      "message": "I wanted to make sure I was prepared to answer questions when we chatted about this tomorrow so I did some digging and some initial experimentation. If you have a benchmark or something, you could try to patch this in and see if it helps also.\n\nThis is a VERY rough prototype and in the comment below I mention potentially even more optimizations we could do. I just wanted to put this together to make sure that what I was suggesting would even be possible.",
+      "revId": "c9437079b098a45ad27aebb90a115d8d3c239c68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2bd52bf9_2d69051a",
         "filename": "src/dawn/wire/server/ServerQueue.cpp",
         "patchSetId": 1
