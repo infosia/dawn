@@ -46,6 +46,30 @@
       },
       "revId": "39bcb52d1c4840329562a1bfcaae771fdd0f9b2e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bb4e4e6_c3f37c89",
+        "filename": "src/tint/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-28T20:57:56Z",
+      "side": 1,
+      "message": "\u003e This is for the case where I have explicitly turned on HLSL in Tint and forgot to turn on build DXC. The issue is that TINT_BUILD_HLSL_WRITER may depend on DAWN_USE_BUILT_DXC, but it isn\u0027t a strict requirement.\n\nCan you please show me where this happens? There should not be any loose requirement. If there is, we should fix it. A warning during CMake generate isn\u0027t sufficient, not to mention GN would suffer a similar problem.\n\n\u003e If you are on Windows it is fine to only turn on the TINT flag, since it is likely you have an installed version of DXC somewhere that will get used.\n\nThis is no longer true, btw. Rafael Cintron from Microsoft has modified Dawn to only load DXC (and FXC) from the output directory so that we don\u0027t accidentally load system versions, as this is both a security issue and can be confusing.",
+      "parentUuid": "b65fa07f_343d5e2b",
+      "range": {
+        "startLine": 62,
+        "startChar": 50,
+        "endLine": 63,
+        "endChar": 37
+      },
+      "revId": "39bcb52d1c4840329562a1bfcaae771fdd0f9b2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
