@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ea7df3d_d1256759",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-28T17:48:04Z",
+      "side": 1,
+      "message": "I\u0027ll add a CQ test coverage as well for so we catch breakages sooner next time, then re-enable this on the waterfall.",
+      "revId": "9bd57c89503a49ff7d038b1977b71131f752f98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
