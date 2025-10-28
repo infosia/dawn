@@ -55,6 +55,17 @@ if (TINT_BUILD_IR_BINARY)
   endif()
 endif()
 
+if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  if (TINT_BUILD_HLSL_WRITER AND NOT DAWN_USE_BUILT_DXC)
+    message(WARNING "Building HLSL Writer 'TINT_BUILD_HLSL_WRITER', but not "
+                    "building DXC 'DAWN_USE_BUILT_DXC'  on Linux. Linux does"
+                    " not normally ship with DXC, so this will likely cause "
+                    "linking failures. If you have an externally supplied "
+                    "version of DXC on the linking path this message can be "
+                    "ignored.")
+  endif()
+endif()
+
 ################################################################################
 # Helper functions
 ################################################################################
