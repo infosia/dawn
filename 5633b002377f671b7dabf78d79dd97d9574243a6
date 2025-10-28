@@ -16,6 +16,24 @@
       "message": "Is this correct? IIUC, layout will never be nullptr at this point because the way the code works is the front end, if it sees there is no layout, then it creates layout and passes the auto-created layout into the normal path expecting a layout.\n\nThis happens [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Device.cpp;l\u003d2125). `appliedDescriptor` will have a pointer to an auto-generated PipelineLayout. \n\nAs a test, I put a `DAWN_CHECK(false)` at line 59 below, as well as the corresponding place in `RenderPipelineWGPU.cpp` and ran the entire end2end tests. They never hit the check.\n\nAFAICT the backend never sees auto-generated layouts. That\u0027s why I had to add stuff. That also means this code is not really doing what the user requested. That might be okay but, I\u0027d expect that, if the user created a pipeline with no layout then that would get passed to the native impl as a pipeline with no layout. Instead, what is currently happening, is the WebGPU-On-WebGPU part (via it\u0027s frontend) is creating a auto-layout PipelineLayout. It\u0027s then passing that auto-created pipeline as an explicit pipeline, to the backend. Technically that\u0027s not entirely compatible since explicit layouts can be reused and non-explicit can not. I\u0027m guessing the webgpu-on-webgpu part is enforcing that restriction and so the fact that the native part is not seeing that is ok?\n\nAnyway, the short TL:DR; version is, this `if (layout !\u003d nullptr)` should at most be `ASSERT(layout !\u003d nullptr)` AFAICT. wdyt?",
       "revId": "5633b002377f671b7dabf78d79dd97d9574243a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96d80faa_0219af5a",
+        "filename": "src/dawn/native/webgpu/ComputePipelineWGPU.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-28T17:33:31Z",
+      "side": 1,
+      "message": "You are right. It should be `ASSERT(layout !\u003d nullptr)`.\n\nLooking at the code history, the `desc.layout` is assigned from the raw descriptor layout (`ToBackend(desc-\u003elayout)-\u003eGetInnerHandle()`) and that\u0027s where it can be nullptr for \"auto\". Since it\u0027s getting assigned from `GetLayout()`, it should always have a layout.\n\nAnd yes, that seems like the \"inner layer\" backend always have explicit layout assigned. I didn\u0027t realize that. Will this make the capture implicit/explicit pipeline layout part easier?",
+      "parentUuid": "90e645dc_3b0b18b8",
+      "revId": "5633b002377f671b7dabf78d79dd97d9574243a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
