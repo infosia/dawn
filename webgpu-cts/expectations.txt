@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-10-23 09:13:44AM
+# Last rolled: 2025-10-28 04:01:48PM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -607,7 +607,6 @@ crbug.com/42241502 [ dawn-backend-validation nvidia-0x2184 release-x64 target-cp
 crbug.com/407076128 [ angle-d3d11 dawn-backend-validation graphite-enabled no-asan no-clang-coverage nvidia-0x2184 release-x64 target-cpu-64 webgpu-adapter-default ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:srcColorSpace="srgb";dstColorSpace="display-p3";* [ RetryOnFailure ]
 crbug.com/407147668 [ dawn-backend-validation nvidia target-cpu-64 webgpu-adapter-default webgpu-dxc-disabled win ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:srcColorSpace="srgb";dstColorSpace="srgb";dstColorFormat="bgra8unorm";dstPremultiplied=true;srcDoFlipYDuringCopy=true [ Failure ]
 
-
 # `copyToTexture,image_file:from_multiple_formats` failures on Android and Linux
 crbug.com/407088842 [ android-pixel-4 ] webgpu:web_platform,copyToTexture,image_file:from_multiple_formats:imageName="four-colors.avif";srcDoFlipYDuringCopy=false [ Failure ]
 crbug.com/407088842 [ android-pixel-6 ] webgpu:web_platform,copyToTexture,image_file:from_multiple_formats:imageName="four-colors.avif";srcDoFlipYDuringCopy=false [ Failure ]
@@ -1055,7 +1054,6 @@ crbug.com/421941589 [ angle-metal arch-x86_64 dawn-no-backend-validation desktop
 crbug.com/421941589 [ angle-opengl arch-x86_64 desktop display-server-x graphite-disabled intel-0x9bc5 memory_ge_16gb mesa_ge_23.2 no-asan no-clang-coverage release renderer-skia-vulkan target-cpu-64 ubuntu ] webgpu:api,operation,storage_texture,read_only:basic:* [ Failure ]
 crbug.com/421941589 [ angle-metal arch-x86_64 dawn-no-backend-validation desktop graphite-enabled intel-0x3e9b memory_ge_16gb no-asan no-clang-coverage release renderer-skia-gl sequoia target-cpu-64 ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:* [ Failure ]
 crbug.com/421941589 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:format="rgb10a2unorm";* [ Failure ]
-
 
 # Unsure if these ever pass on retry, or if they also are flaky-but-fail-on-retry
 crbug.com/432291885 [ dawn-no-backend-validation intel sequoia ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_2d_coords:stage="v";* [ RetryOnFailure ]
