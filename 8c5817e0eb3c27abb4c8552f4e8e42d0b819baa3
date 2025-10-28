@@ -80,6 +80,30 @@
       },
       "revId": "8c5817e0eb3c27abb4c8552f4e8e42d0b819baa3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c785b0f_2670920e",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-28T21:21:58Z",
+      "side": 1,
+      "message": "Ah, I found the thing I mentioned to Antonio in chat:\nhttps://source.chromium.org/chromium/chromium/src/+/main:out/mac-Debug/gen/third_party/dawn/src/dawn/native/webgpu_absl_format_autogen.h;l\u003d315-317;drc\u003dd8d4b67ada18363701a98bf0d55fb2c321f90779\n\nThat overrides the stringification for `absl::StrFormat`. IDK if it\u0027s includable here though.",
+      "parentUuid": "a05d06c6_1ce7b8a7",
+      "range": {
+        "startLine": 182,
+        "startChar": 52,
+        "endLine": 182,
+        "endChar": 91
+      },
+      "revId": "8c5817e0eb3c27abb4c8552f4e8e42d0b819baa3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
