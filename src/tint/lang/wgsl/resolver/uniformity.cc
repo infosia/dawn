@@ -1278,11 +1278,12 @@ class UniformityGraph {
                                                    bool load_rule = false) {
         // Helper to check if the entry point attribute of `obj` indicates non-uniformity.
         auto has_nonuniform_entry_point_attribute = [&](auto* obj, auto* entry_point) {
-            // Only the num_workgroups and workgroup_id builtins, and subgroup_size builtin used in
-            // compute stage are uniform.
+            // Only the num_subgroups, num_workgroups and workgroup_id builtins, and subgroup_size
+            // builtin used in compute stage are uniform.
             if (auto* builtin_attr = ast::GetAttribute<ast::BuiltinAttribute>(obj->attributes)) {
                 auto builtin = builtin_attr->builtin;
-                if (builtin == core::BuiltinValue::kNumWorkgroups ||
+                if (builtin == core::BuiltinValue::kNumSubgroups ||
+                    builtin == core::BuiltinValue::kNumWorkgroups ||
                     builtin == core::BuiltinValue::kWorkgroupId) {
                     return false;
                 }
