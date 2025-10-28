@@ -33,6 +33,24 @@
       "message": "What happened to the dawn.json changes? This functionality won\u0027t be added to webgpu_cpp otherwise.",
       "revId": "aa5b5d3dd84789a4c5201448d5cac54e79934ccd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "495ec45e_9aa3d130",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4172162
+      },
+      "writtenOn": "2025-10-28T19:59:23Z",
+      "side": 1,
+      "message": "I made a bit of a change to how SharedTextureMemory is created for a D3D12 resource. Rather than adding a new descriptor, I\u0027m now using `SharedBufferMemoryD3D12ResourceDescriptor`, which is already defined in dawn.json. Saves us some code.",
+      "parentUuid": "4fe50ab1_81beae23",
+      "revId": "aa5b5d3dd84789a4c5201448d5cac54e79934ccd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
