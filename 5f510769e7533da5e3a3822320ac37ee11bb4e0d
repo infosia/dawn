@@ -74,6 +74,30 @@
       },
       "revId": "5f510769e7533da5e3a3822320ac37ee11bb4e0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c115e115_6e70f409",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T19:17:50Z",
+      "side": 1,
+      "message": "IIUC, `~0` should also just be `std::numeric_limits\u003cuint32_t\u003e::max()` or any of the `kInvalid*ParameterIndex` values at the top. Maybe we should have a `kInvalidDynamicUniformBufferParameterIndex` constant also and use that here?",
+      "parentUuid": "085d88d8_62d0ee74",
+      "range": {
+        "startLine": 233,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 62
+      },
+      "revId": "5f510769e7533da5e3a3822320ac37ee11bb4e0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

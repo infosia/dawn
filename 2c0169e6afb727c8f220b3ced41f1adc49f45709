@@ -50,6 +50,259 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9f368c43_f039efd3",
+        "filename": "src/dawn/native/d3d12/BindGroupD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T19:17:50Z",
+      "side": 1,
+      "message": "[1] Would it make sense to update `BindingTypeOrder` to separate out `DynamicBuffer` into `DynamicUniformBuffer` and `DynamicStorageBuffer`? Then update `SortBindingsCompare` to handle that appropriately as well? If we do that, I guess it seems like it would make most sense to put the dynamic uniform buffers in the front and then we can skip them by exposing a equivalent `GetDynamicUniformBufferCount()`.",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 69
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fde9c231_d3835da1",
+        "filename": "src/dawn/native/d3d12/BindGroupD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T19:17:50Z",
+      "side": 1,
+      "message": "nit. Probably should add back the comment from before that explains why `isDynamic \u003d\u003d bindingIndex \u003c bgl-\u003eGetDynamicBufferCount()`",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 39
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcdb2a7e_bacf94cd",
+        "filename": "src/dawn/native/d3d12/BindGroupD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T19:17:50Z",
+      "side": 1,
+      "message": "[3]",
+      "range": {
+        "startLine": 96,
+        "startChar": 17,
+        "endLine": 108,
+        "endChar": 0
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "610da4e4_09bad103",
+        "filename": "src/dawn/native/d3d12/BindGroupLayoutD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T19:17:50Z",
+      "side": 1,
+      "message": "nit. If we do [1] then this could just be `bindingIndex \u003c GetDynamicUniformBufferCount()`",
+      "range": {
+        "startLine": 148,
+        "startChar": 12,
+        "endLine": 148,
+        "endChar": 91
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0fb86ab_99431add",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T19:17:50Z",
+      "side": 1,
+      "message": "Given this assert, I think that at [2] we could do:\n`for (BindingIndex bindingIndex : bgl-\u003eGetDynamicBufferIndices())`",
+      "range": {
+        "startLine": 632,
+        "startChar": 8,
+        "endLine": 632,
+        "endChar": 90
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fd99e0e_0dba867f",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T19:17:50Z",
+      "side": 1,
+      "message": "nit. Not too familiar with this code path, but naively isn\u0027t this condition implicitly checked via the for loop below? Is this just to early out the `ToBackend` cast and vector allocation below? If so, maybe it\u0027s ok to just do those and remove this additional if scope?",
+      "range": {
+        "startLine": 636,
+        "startChar": 8,
+        "endLine": 636,
+        "endChar": 55
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afdea482_bc0e080e",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T19:17:50Z",
+      "side": 1,
+      "message": "[2]",
+      "range": {
+        "startLine": 643,
+        "startChar": 12,
+        "endLine": 644,
+        "endChar": 32
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f599001_2e91f088",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T19:17:50Z",
+      "side": 1,
+      "message": "Could just be `GetDynamicUniformBufferIndices()` if we do [1] and add the respective helper.",
+      "range": {
+        "startLine": 237,
+        "startChar": 8,
+        "endLine": 241,
+        "endChar": 13
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "414e406a_f7bbc02f",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T19:17:50Z",
+      "side": 1,
+      "message": "Could update this to `for (BindingIndex dynamicStorageBindingIndex : bindGroupLayout-\u003eGetDynamicStorageBufferIndices())` if we do [1] and add the respective helper.",
+      "range": {
+        "startLine": 319,
+        "startChar": 8,
+        "endLine": 320,
+        "endChar": 60
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e854653_6ff82c07",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T19:17:50Z",
+      "side": 1,
+      "message": "Might be able to coalesce the `hasDynamicOffset` and `type` check if we do [1] into a single index comparison",
+      "range": {
+        "startLine": 468,
+        "startChar": 4,
+        "endLine": 475,
+        "endChar": 63
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd9bf78f_ccf4c800",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T19:17:50Z",
+      "side": 1,
+      "message": "nit. dynamic uniform buffer",
+      "range": {
+        "startLine": 53,
+        "startChar": 62,
+        "endLine": 53,
+        "endChar": 76
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "02b4e1bf_2a4baebf",
         "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
         "patchSetId": 13
@@ -66,6 +319,53 @@
         "startChar": 8,
         "endLine": 188,
         "endChar": 33
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f450ee6d_5536a999",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T19:17:50Z",
+      "side": 1,
+      "message": "I\u0027m not too familiar with the inner workings of D3D12... but I suspect to do this we would need to take into account the dynamic offset at [3] and compute the num elements appropriately? Idk if we easily have access to the dynamic offsets there though?",
+      "parentUuid": "02b4e1bf_2a4baebf",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 188,
+        "endChar": 33
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3656255_2096fc9b",
+        "filename": "src/dawn/tests/end2end/DynamicBufferOffsetTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T19:17:50Z",
+      "side": 1,
+      "message": "Thoughts on doing something like:\n\n```\n// All buffers are usually 256 bytes / 4 + 2 \u003d 66 u32 elements\n\n// mUniformBuffers[0]:\n//   - not dynamic\n//   - @group(0) @binding(0)\n//   - [1, 2, 0 ... 0]\n// mUniformBuffers[1]:\n//   - dynamic\n//   - @group(0) @binding(3)\n//   - [1, 2, 0, ..., 0, 5, 6]\n// mUniformBuffers[2]:\n//   - not dynamic\n//   - @group(1) @binding(0)\n//   - [1, 2, 0 ... 0] (used for inheritance tests)\nwgpu::Buffer mUniformBuffers[3];\n// mStorageBuffers[0]:\n//   - not dynamic\n//   - @group(0) @binding(1)\n//   - shader sets this.xy to mUniformBuffers[0].xy, so [1, 2]\n// mStorageBuffers[1]:\n//   - dynamic\n//   - @group(0) @binding(4)\n//   - shader sets this.xy to (mUniformBuffers[0].xy + mUniformBuffers[1]) * multipleNumber\nwgpu::Buffer mStorageBuffers[2];\n```\n\nThat removes the need for `// clang-format off/on` which made it hard to see that (I think) the comment for `mStorageBuffers[1]` was duplicated unintentionally.",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 36
       },
       "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
