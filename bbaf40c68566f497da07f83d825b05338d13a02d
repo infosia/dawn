@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d8e58bc_fb0da23c",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-28T06:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62315078_21fd2229",
+      "revId": "bbaf40c68566f497da07f83d825b05338d13a02d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84e1eab0_e0cc76c4",
@@ -88,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "188651b1_7d0bfc7c",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-28T06:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84e1eab0_e0cc76c4",
+      "revId": "bbaf40c68566f497da07f83d825b05338d13a02d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ccf82cc4_b9196a45",
@@ -101,6 +137,24 @@
       "writtenOn": "2025-10-28T04:38:53Z",
       "side": 1,
       "message": "`jni_prefixed_name` and `kotlin_prefixed_name` have similar logic. This can be extracted into a single function, similar to `def kotlin_return(method)`. \n\n`def jni_name(type, category\u003dNone)` can also utilize this new function.",
+      "revId": "bbaf40c68566f497da07f83d825b05338d13a02d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "764ac9d8_18464dff",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-28T06:10:29Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. Updated according to this!",
+      "parentUuid": "ccf82cc4_b9196a45",
       "revId": "bbaf40c68566f497da07f83d825b05338d13a02d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -136,6 +190,24 @@
           ]
         }
       ],
+      "revId": "bbaf40c68566f497da07f83d825b05338d13a02d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c421aeff_7899202c",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-28T06:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5455a929_f6149894",
       "revId": "bbaf40c68566f497da07f83d825b05338d13a02d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
