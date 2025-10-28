@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "119d94fa_e1fa4a11",
+        "filename": "src/dawn/native/d3d12/BindGroupD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-28T19:33:10Z",
+      "side": 1,
+      "message": "See [a] where I added a comment in this change to explain this ordering. I can add a similar comment to where `BindingTypeOrder_DynamicBuffer` is declared to help clarify why this isn\u0027t split into two if you think it would help.",
+      "parentUuid": "c7c5ccb3_18214bb3",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 69
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fde9c231_d3835da1",
         "filename": "src/dawn/native/d3d12/BindGroupD3D12.cpp",
         "patchSetId": 13
@@ -228,6 +252,29 @@
         "startChar": 12,
         "endLine": 644,
         "endChar": 32
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6d19743_1dca3d53",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-28T19:33:10Z",
+      "side": 1,
+      "message": "[a]",
+      "range": {
+        "startLine": 645,
+        "startChar": 0,
+        "endLine": 648,
+        "endChar": 96
       },
       "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
