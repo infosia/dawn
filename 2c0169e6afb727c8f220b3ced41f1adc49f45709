@@ -73,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c7c5ccb3_18214bb3",
+        "filename": "src/dawn/native/d3d12/BindGroupD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-28T19:27:19Z",
+      "side": 1,
+      "message": "I did exactly this the first time, but the problem with this is that the reason all dynamic buffers (both uniform and storage) are at the front of the `BindingTypeOrder` is to match the order of dynamic offsets passed into `setBindGroup`. As per [the spec](https://www.w3.org/TR/webgpu/#gpubindingcommandsmixin-setbindgroup):\n\n\"Dynamic offset are applied in GPUBindGroupLayoutEntry.binding order.\nThis means that if dynamic bindings is the list of each GPUBindGroupLayoutEntry in the GPUBindGroupLayout with buffer?.hasDynamicOffset set to true, sorted by GPUBindGroupLayoutEntry.binding, then dynamic offset[i], as supplied to setBindGroup(), will correspond to dynamic bindings[i].\"\n\n\nBy splitting out dynamic uniform and storage buffers, we lose the sort order, and `setBindGroup` suddenly becomes more difficult to implement. So I undid all those changes and went with testing the buffer type in the loops.",
+      "parentUuid": "9f368c43_f039efd3",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 69
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fde9c231_d3835da1",
         "filename": "src/dawn/native/d3d12/BindGroupD3D12.cpp",
         "patchSetId": 13
