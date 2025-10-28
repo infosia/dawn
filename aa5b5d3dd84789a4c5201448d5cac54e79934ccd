@@ -16,6 +16,23 @@
       "message": "Moving myself to CC for now, please re-add me to reviewers if needed.",
       "revId": "aa5b5d3dd84789a4c5201448d5cac54e79934ccd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fe50ab1_81beae23",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-28T19:50:17Z",
+      "side": 1,
+      "message": "What happened to the dawn.json changes? This functionality won\u0027t be added to webgpu_cpp otherwise.",
+      "revId": "aa5b5d3dd84789a4c5201448d5cac54e79934ccd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
