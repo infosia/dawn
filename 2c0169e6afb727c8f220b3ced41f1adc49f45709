@@ -261,6 +261,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5e3290e_28c2561c",
+        "filename": "src/dawn/native/d3d12/BindGroupD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T23:53:04Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "156ceec5_2cba5bda",
+      "range": {
+        "startLine": 96,
+        "startChar": 17,
+        "endLine": 108,
+        "endChar": 0
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "610da4e4_09bad103",
@@ -745,6 +769,30 @@
       "side": 1,
       "message": "Yeah, that\u0027s what I meant when I wrote \"Maybe we\u0027d have to recreate or modify the UAV in the descriptor heap here in BindGroupStateTracker::ApplyBindGroup\". Currently, we create the UAVs at [3], but we\u0027d have to delay this until the dynamic offsets are passed in via `setBindGroup` to create UAVs with the right size in the descriptor tables. For now, we can land this change as-is, and we can look at improving it to avoid robustness in a future CL.",
       "parentUuid": "f450ee6d_5536a999",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 188,
+        "endChar": 33
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "081f94a9_231094c1",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T23:53:04Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0990d725_fa71a147",
       "range": {
         "startLine": 182,
         "startChar": 8,
