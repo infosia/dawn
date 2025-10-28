@@ -142,6 +142,30 @@
       },
       "revId": "39bcb52d1c4840329562a1bfcaae771fdd0f9b2e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9ae908f_c5e19cae",
+        "filename": "src/tint/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-28T21:35:14Z",
+      "side": 1,
+      "message": "Ah, thank you, now I see the problem.\n\n[This](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/cmd/fuzz/wgsl/BUILD.cmake;l\u003d91-93?q\u003dfuzz%2Fwgsl%2FBUILD.cmake) is where we add the dep, which is fine.\n\nFor GN, we only add the dep if `dawn_use_built_dxc` [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/BUILD.gn;l\u003d303-308?q\u003dsrc%2Ftint%2FBUILD.gn). I made this change in [this CL](https://dawn-review.googlesource.com/c/dawn/+/239254), but I should have done the same in CMake. The CMake change should go [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/CMakeLists.txt;l\u003d526-529?q\u003dsrc%2Ftint%2FCMakeLists.txt). I think we only need to add that both `TINT_BUILD_FUZZERS` and `DAWN_USE_BUILT_DXC` are defined to add that dep on `dxcompiler`.\n\nHopefully that does the trick and allows you to build the wgsl fuzzer on Linux without `DAWN_USE_BUILT_DXC` being enabled.",
+      "parentUuid": "161606fa_60a0385f",
+      "range": {
+        "startLine": 62,
+        "startChar": 50,
+        "endLine": 63,
+        "endChar": 37
+      },
+      "revId": "39bcb52d1c4840329562a1bfcaae771fdd0f9b2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
