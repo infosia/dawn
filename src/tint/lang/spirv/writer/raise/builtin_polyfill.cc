@@ -1077,6 +1077,28 @@ struct State {
         builtin->Destroy();
     }
 
+    /// Scalarize the vector form of a `quantizeToF16()` builtin.
+    /// See crbug.com/tint/1741.
+    /// @param builtin the builtin call instruction
+    void InterpolateAtOffset(core::ir::CoreBuiltinCall* builtin) {
+        auto* arg = builtin->Args()[0];
+        auto* vec = arg->Type()->As<core::type::Vector>();
+        TINT_IR_ASSERT(ir, vec);
+
+        // Replace the builtin call with a call to the spirv.dot intrinsic.
+        Vector<core::ir::Value*, 4> args;
+        for (uint32_t i = 0; i < vec->Width(); i++) {
+            auto* el = b.Access(ty.f32(), arg, u32(i));
+            auto* scalar_call = b.Call(ty.f32(), core::BuiltinFn::kQuantizeToF16, el);
+            args.Push(scalar_call->Result());
+            el->InsertBefore(builtin);
+            scalar_call->InsertBefore(builtin);
+        }
+        auto* construct = b.ConstructWithResult(builtin->DetachResult(), std::move(args));
+        construct->InsertBefore(builtin);
+        builtin->Destroy();
+    }
+
     /// Handle an inputAttachmentLoad() builtin.
     /// @param builtin the builtin call instruction
     void InputAttachmentLoad(core::ir::CoreBuiltinCall* builtin) {
