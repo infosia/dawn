@@ -128,6 +128,30 @@
       },
       "revId": "8c5817e0eb3c27abb4c8552f4e8e42d0b819baa3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73f2968f_7f95c983",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-28T23:40:03Z",
+      "side": 1,
+      "message": "I\u0027m going to leave this as-is for now. I don\u0027t think we care too much about the string at this moment, but we can always update in the future if it becomes important.",
+      "parentUuid": "87b5c32a_801da505",
+      "range": {
+        "startLine": 182,
+        "startChar": 52,
+        "endLine": 182,
+        "endChar": 91
+      },
+      "revId": "8c5817e0eb3c27abb4c8552f4e8e42d0b819baa3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
