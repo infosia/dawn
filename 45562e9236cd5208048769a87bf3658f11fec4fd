@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fdda9ec_9e7213da",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/CommandEncoderTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-28T09:22:45Z",
+      "side": 1,
+      "message": "These variables are necessary to fix a build error specific to google3.\n\nThis is used to suppress unused variable warnings.",
+      "parentUuid": "5545cc9c_b1c0aeaa",
+      "revId": "45562e9236cd5208048769a87bf3658f11fec4fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7439dcf0_a0ec80ee",
@@ -127,6 +145,24 @@
           ]
         }
       ],
+      "revId": "45562e9236cd5208048769a87bf3658f11fec4fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25010e00_7b59bf00",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/CommandEncoderTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-10-28T09:22:45Z",
+      "side": 1,
+      "message": "Yes, that\u0027s what I tried, but Kotlin doesn\u0027t allow using a single underscore _ as a variable name for a standard assignment.",
+      "parentUuid": "7439dcf0_a0ec80ee",
       "revId": "45562e9236cd5208048769a87bf3658f11fec4fd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
