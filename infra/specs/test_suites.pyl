@@ -8,6 +8,7 @@
           '--enable-toggles=gl_force_es_31_and_no_extensions',
         ],
         'mixins': [
+          'dawn_end2end_software_gtests_common_args',
           'result_adapter_gtest_json',
           'true_noop_merge',
         ],
@@ -141,6 +142,7 @@
           '--adapter-vendor-id=0x1AE0',
         ],
         'mixins': [
+          'dawn_end2end_software_gtests_common_args',
           'result_adapter_gtest_json',
           'true_noop_merge',
         ],

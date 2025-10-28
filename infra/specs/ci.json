@@ -2664,7 +2664,8 @@
         "args": [
           "--backend=opengles",
           "--use-angle=swiftshader",
-          "--enable-toggles=gl_force_es_31_and_no_extensions"
+          "--enable-toggles=gl_force_es_31_and_no_extensions",
+          "--gtest_filter=-*WebGPU_WebGPU_backend_on*"
         ],
         "merge": {
           "script": "//scripts/merge_scripts/true_noop_merge.py"
@@ -2689,7 +2690,8 @@
       },
       {
         "args": [
-          "--adapter-vendor-id=0x1AE0"
+          "--adapter-vendor-id=0x1AE0",
+          "--gtest_filter=-*WebGPU_WebGPU_backend_on*"
         ],
         "merge": {
           "script": "//scripts/merge_scripts/true_noop_merge.py"
@@ -2841,7 +2843,8 @@
         "args": [
           "--backend=opengles",
           "--use-angle=swiftshader",
-          "--enable-toggles=gl_force_es_31_and_no_extensions"
+          "--enable-toggles=gl_force_es_31_and_no_extensions",
+          "--gtest_filter=-*WebGPU_WebGPU_backend_on*"
         ],
         "merge": {
           "script": "//scripts/merge_scripts/true_noop_merge.py"
@@ -2866,7 +2869,8 @@
       },
       {
         "args": [
-          "--adapter-vendor-id=0x1AE0"
+          "--adapter-vendor-id=0x1AE0",
+          "--gtest_filter=-*WebGPU_WebGPU_backend_on*"
         ],
         "merge": {
           "script": "//scripts/merge_scripts/true_noop_merge.py"
@@ -3018,7 +3022,8 @@
         "args": [
           "--backend=opengles",
           "--use-angle=swiftshader",
-          "--enable-toggles=gl_force_es_31_and_no_extensions"
+          "--enable-toggles=gl_force_es_31_and_no_extensions",
+          "--gtest_filter=-*WebGPU_WebGPU_backend_on*"
         ],
         "merge": {
           "script": "//scripts/merge_scripts/true_noop_merge.py"
@@ -3043,7 +3048,8 @@
       },
       {
         "args": [
-          "--adapter-vendor-id=0x1AE0"
+          "--adapter-vendor-id=0x1AE0",
+          "--gtest_filter=-*WebGPU_WebGPU_backend_on*"
         ],
         "merge": {
           "script": "//scripts/merge_scripts/true_noop_merge.py"
@@ -3195,7 +3201,8 @@
         "args": [
           "--backend=opengles",
           "--use-angle=swiftshader",
-          "--enable-toggles=gl_force_es_31_and_no_extensions"
+          "--enable-toggles=gl_force_es_31_and_no_extensions",
+          "--gtest_filter=-*WebGPU_WebGPU_backend_on*"
         ],
         "merge": {
           "script": "//scripts/merge_scripts/true_noop_merge.py"
@@ -3220,7 +3227,8 @@
       },
       {
         "args": [
-          "--adapter-vendor-id=0x1AE0"
+          "--adapter-vendor-id=0x1AE0",
+          "--gtest_filter=-*WebGPU_WebGPU_backend_on*"
         ],
         "merge": {
           "script": "//scripts/merge_scripts/true_noop_merge.py"
@@ -3382,7 +3390,8 @@
         "args": [
           "--backend=opengles",
           "--use-angle=swiftshader",
-          "--enable-toggles=gl_force_es_31_and_no_extensions"
+          "--enable-toggles=gl_force_es_31_and_no_extensions",
+          "--gtest_filter=-*WebGPU_WebGPU_backend_on*"
         ],
         "merge": {
           "script": "//scripts/merge_scripts/true_noop_merge.py"
@@ -3407,7 +3416,8 @@
       },
       {
         "args": [
-          "--adapter-vendor-id=0x1AE0"
+          "--adapter-vendor-id=0x1AE0",
+          "--gtest_filter=-*WebGPU_WebGPU_backend_on*"
         ],
         "merge": {
           "script": "//scripts/merge_scripts/true_noop_merge.py"
@@ -3529,7 +3539,8 @@
         "args": [
           "--backend=opengles",
           "--use-angle=swiftshader",
-          "--enable-toggles=gl_force_es_31_and_no_extensions"
+          "--enable-toggles=gl_force_es_31_and_no_extensions",
+          "--gtest_filter=-*WebGPU_WebGPU_backend_on*"
         ],
         "merge": {
           "script": "//scripts/merge_scripts/true_noop_merge.py"
@@ -3554,7 +3565,8 @@
       },
       {
         "args": [
-          "--adapter-vendor-id=0x1AE0"
+          "--adapter-vendor-id=0x1AE0",
+          "--gtest_filter=-*WebGPU_WebGPU_backend_on*"
         ],
         "merge": {
           "script": "//scripts/merge_scripts/true_noop_merge.py"

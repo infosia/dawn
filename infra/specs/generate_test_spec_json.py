@@ -67,6 +67,13 @@ ADDITIONAL_MIXINS = {
             '--gtest_filter=-*WebGPU_WebGPU_backend_on*',
         ],
     },
+    'dawn_end2end_software_gtests_common_args': {
+        'win_args': [
+            # TODO(crbug.com/454365243): Remove this filter when including these
+            # tests does not contribute to OOM issues.
+            '--gtest_filter=-*WebGPU_WebGPU_backend_on*',
+        ],
+    },
     'no_swarming': {
         'swarming': {
             'can_use_on_swarming_builders': False,
