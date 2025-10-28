@@ -22,7 +22,7 @@ class AsyncHelperTest {
             )
 
             /* Call an asynchronous method, converted from a callback pattern by a helper. */
-            val result = device.createRenderPipelineAsync(
+            val result = device.createRenderPipelineAwait(
                 RenderPipelineDescriptor(vertex = VertexState(module = shaderModule))
             )
 
@@ -56,7 +56,7 @@ class AsyncHelperTest {
             )
 
             /* Call an asynchronous method, converted from a callback pattern by a helper. */
-            val result = device.createRenderPipelineAsync(
+            val result = device.createRenderPipelineAwait(
                 RenderPipelineDescriptor(
                     vertex = VertexState(module = shaderModule),
                     fragment = FragmentState(

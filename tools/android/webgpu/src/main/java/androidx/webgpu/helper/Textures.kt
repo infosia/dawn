@@ -56,7 +56,7 @@ public suspend fun Texture.createBitmap(device: Device): Bitmap {
         it.finish()
     }))
 
-    readbackBuffer.mapAsync(MapMode.Read, 0, size.toLong())
+    readbackBuffer.mapAwait(MapMode.Read, 0, size.toLong())
 
     return Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888).apply {
         copyPixelsFromBuffer(readbackBuffer.getConstMappedRange(size = readbackBuffer.size))

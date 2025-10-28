@@ -32,6 +32,8 @@ import java.nio.ByteBuffer
 
 public class {{ obj.name.CamelCase() }}(public val handle: Long): AutoCloseable {
     {% for method in obj.methods if include_method(obj, method) %}
+        {% set base_name = method.name.camelCase() %}
+        {% set kotlin_fun_name = base_name | replace('Async', '') %}
         @FastNative
         @JvmName("{{ method.name.camelCase() }}")
         {% for arg in kotlin_record_members(method.arguments) %}
@@ -39,7 +41,7 @@ public class {{ obj.name.CamelCase() }}(public val handle: Long): AutoCloseable 
                 @JvmOverloads
             {% break %}{% endif %}
         {% endfor %}
-        {{ kotlin_annotation(kotlin_return(method)) }} public external fun {{ method.name.camelCase() }}(
+        {{ kotlin_annotation(kotlin_return(method)) }} public external fun {{ kotlin_fun_name }}(
         //* TODO(b/341923892): rework async methods to use futures.
         {%- for arg in kotlin_record_members(method.arguments) %}
             {{- kotlin_annotation(arg) }} {{ as_varName(arg.name) }}: {{ kotlin_definition(arg) }},{{ ' ' }}

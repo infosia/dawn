@@ -197,7 +197,7 @@ class CommandEncoderTest {
 
     queue.submit(arrayOf(commandBuffer))
 
-    val mapResult = runBlocking { readbackBuffer.mapAsync(MapMode.Read, 0, bufferSize) }
+    val mapResult = runBlocking { readbackBuffer.mapAwait(MapMode.Read, 0, bufferSize) }
     TestCase.assertEquals(MapAsyncStatus.Success, mapResult.status)
 
     val mappedData: ByteBuffer = readbackBuffer.getConstMappedRange(0, bufferSize)
