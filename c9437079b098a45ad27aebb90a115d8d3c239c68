@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bd52bf9_2d69051a",
+        "filename": "src/dawn/wire/server/ServerQueue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-28T00:31:30Z",
+      "side": 1,
+      "message": "I would link it here, but for some reason code search is dead for me atm... But if you search for this function in Chromium, you will see that this is backed by shared memory. Atm, this function results in a copy from the shared memory into the target set above by `SetTarget` which makes sense for the current purpose of buffer mapping since we need to copy the results into the results of `GetMappedPointer` or equivalent anyways, but for `WriteBuffer` and `WriteTexture`, we could in theory get rid of this allocation and copy by just providing some way to access the shared memory pointer and passing it to the `queueWriteBuffer` call below.",
+      "range": {
+        "startLine": 91,
+        "startChar": 22,
+        "endLine": 91,
+        "endChar": 43
+      },
+      "revId": "c9437079b098a45ad27aebb90a115d8d3c239c68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
