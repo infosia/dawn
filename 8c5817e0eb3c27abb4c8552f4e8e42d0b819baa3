@@ -104,6 +104,30 @@
       },
       "revId": "8c5817e0eb3c27abb4c8552f4e8e42d0b819baa3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87b5c32a_801da505",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-28T21:25:22Z",
+      "side": 1,
+      "message": "Actually what would make more sense is to print the string that the user provided rather than the C++-style enum name. The JS string is available in the loop at line 130 so maybe you could do these two loops together?\n\nNo really strong feelings from me though on how we format the error message.",
+      "parentUuid": "7c785b0f_2670920e",
+      "range": {
+        "startLine": 182,
+        "startChar": 52,
+        "endLine": 182,
+        "endChar": 91
+      },
+      "revId": "8c5817e0eb3c27abb4c8552f4e8e42d0b819baa3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
