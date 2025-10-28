@@ -25,6 +25,11 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#ifdef UNSAFE_BUFFERS_BUILD
+// TODO(crbug.com/439062058): Remove this and convert code to safer constructs.
+#pragma allow_unsafe_buffers
+#endif
+
 #include "dawn/wire/client/Queue.h"
 
 #include <memory>
@@ -121,15 +126,40 @@ void Queue::APIWriteBuffer(WGPUBuffer cBuffer,
                            const void* data,
                            size_t size) {
     Buffer* buffer = FromAPI(cBuffer);
+    Client* wireClient = buffer->GetClient();
+
+    // Create write handle and prepare to serialize command.
+    size_t writeHandleCreateInfoLength = 0;
+    std::unique_ptr<MemoryTransferService::WriteHandle> writeHandle(
+        wireClient->GetMemoryTransferService()->CreateWriteHandle(size));
+    if (writeHandle == nullptr) {
+        // Probably should do something here to handle this?
+        DAWN_ASSERT(false);
+    }
+    writeHandleCreateInfoLength = writeHandle->SerializeCreateSize();
+
+    // Write the data to the allocated memory.
+    memcpy(writeHandle->GetData(), data, size);
+
+    // Prepare to serialize data update command.
+    size_t writeDataUpdateInfoLength = writeHandle->SizeOfSerializeDataUpdate(0u, size);
 
     QueueWriteBufferCmd cmd;
     cmd.queueId = GetWireHandle(GetClient()).id;
     cmd.bufferId = buffer->GetWireHandle(GetClient()).id;
     cmd.bufferOffset = bufferOffset;
-    cmd.data = static_cast<const uint8_t*>(data);
     cmd.size = size;
+    cmd.writeHandleCreateInfoLength = writeHandleCreateInfoLength;
+    cmd.writeDataUpdateInfoLength = writeDataUpdateInfoLength;
 
-    GetClient()->SerializeCommand(cmd);
+    GetClient()->SerializeCommand(
+        cmd,
+        CommandExtension{
+            writeHandleCreateInfoLength,
+            [&](char* writeHandleBuffer) { writeHandle->SerializeCreate(writeHandleBuffer); }},
+        CommandExtension{writeDataUpdateInfoLength, [&](char* writeHandleBuffer) {
+                             writeHandle->SerializeDataUpdate(writeHandleBuffer, 0, size);
+                         }});
 }
 
 void Queue::APIWriteTexture(const WGPUTexelCopyTextureInfo* destination,

@@ -26,6 +26,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <limits>
+#include <memory>
 
 #include "dawn/common/Assert.h"
 #include "dawn/wire/server/Server.h"
@@ -61,13 +62,39 @@ WireResult Server::DoQueueOnSubmittedWorkDone(Known<WGPUQueue> queue,
 WireResult Server::DoQueueWriteBuffer(Known<WGPUQueue> queue,
                                       Known<WGPUBuffer> buffer,
                                       uint64_t bufferOffset,
-                                      const uint8_t* data,
-                                      uint64_t size) {
+                                      uint64_t size,
+                                      uint64_t writeHandleCreateInfoLength,
+                                      const uint8_t* writeHandleCreateInfo,
+                                      uint64_t writeDataUpdateInfoLength,
+                                      const uint8_t* writeDataUpdateInfo) {
     if (size > std::numeric_limits<size_t>::max()) {
         return WireResult::FatalError;
     }
 
-    mProcs.queueWriteBuffer(queue->handle, buffer->handle, bufferOffset, data,
+    MemoryTransferService::WriteHandle* writeHandle = nullptr;
+    // Deserialize metadata produced from the client to create a companion server handle.
+    if (!mMemoryTransferService->DeserializeWriteHandle(
+            writeHandleCreateInfo, static_cast<size_t>(writeHandleCreateInfoLength),
+            &writeHandle)) {
+        return WireResult::FatalError;
+    }
+    writeHandle->SetDataLength(size);
+
+    // TODO: We can probably optimize this allocation/copy out if we update the handle API a bit.
+    // This should still be better in Chromium though since the handle's memory will be in a block
+    // of shared memory.
+    auto backingData = std::make_unique<char[]>(size);
+    writeHandle->SetTarget(backingData.get());
+
+    // Deserialize the flush info and flush updated data from the handle into the target
+    // of the handle that's just a temporary allocation from above right now.
+    if (!writeHandle->DeserializeDataUpdate(writeDataUpdateInfo,
+                                            static_cast<size_t>(writeDataUpdateInfoLength), 0u,
+                                            static_cast<size_t>(size))) {
+        return WireResult::FatalError;
+    }
+
+    mProcs.queueWriteBuffer(queue->handle, buffer->handle, bufferOffset, backingData.get(),
                             static_cast<size_t>(size));
     return WireResult::Success;
 }
