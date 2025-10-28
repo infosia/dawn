@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d6fdaa5_21ccb226",
+        "filename": "src/tint/lang/msl/writer/function_test.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-28T14:48:51Z",
+      "side": 1,
+      "message": "Nit: This test is the same as the next one now.",
+      "fixSuggestions": [
+        {
+          "fixId": "e06f8aed_1479ae89",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/msl/writer/function_test.cc",
+              "range": {
+                "startLine": 37,
+                "startChar": 0,
+                "endLine": 48,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "08f909c38cb84f7d7e24446908c1ef5ea275c592",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
