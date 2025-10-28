@@ -48,6 +48,9 @@ import kotlin.coroutines.suspendCoroutine
         {% endfor %}
     }
 
+    {% set kotlin_fun_name = method.name.camelCase() | replace('Async', '') %}
+
+
     //* The wrapped method has executor and callback function stripped out (the wrapper supplies
     //* those so the client doesn't have to).
     public suspend fun {{ obj.name.CamelCase() }}.{{ method.name.camelCase() }}(
@@ -57,7 +60,7 @@ import kotlin.coroutines.suspendCoroutine
         ) %}
             {{ kotlin_annotation(arg) }}  {{ as_varName(arg.name) }}: {{ kotlin_definition(arg) }},
         {%- endfor %}): {{ return_name }} = suspendCoroutine {
-        {{ method.name.camelCase() }}(
+        {{ kotlin_fun_name }}(
             {%- for arg in kotlin_record_members(method.arguments) %}
                 {%- if arg.type.category == 'kotlin type' and arg.type.name.get() == 'java.util.concurrent.Executor' -%}
                     Executor(Runnable::run),
