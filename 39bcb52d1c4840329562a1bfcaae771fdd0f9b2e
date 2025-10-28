@@ -22,6 +22,30 @@
       },
       "revId": "39bcb52d1c4840329562a1bfcaae771fdd0f9b2e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b65fa07f_343d5e2b",
+        "filename": "src/tint/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-10-28T20:43:20Z",
+      "side": 1,
+      "message": "This is for the case where I have explicitly turned on HLSL in Tint and forgot to turn on build DXC. The issue is that TINT_BUILD_HLSL_WRITER may depend on DAWN_USE_BUILT_DXC, but it isn\u0027t a strict requirement.\n\nIf you are on Windows it is fine to only turn on the TINT flag, since it is likely you have an installed version of DXC somewhere that will get used. On Linux it is unlikely that DXC is already present, so DAWN_USE_BUILT_DXC needs to be turned on too (I hit this when getting my dev env setup on my new workstation).\n\nI didn\u0027t want to make this a hard requirement with a FATAL/ERROR since I could imagine a situation where a dev wants to supply their own DXC, because they might be testing a patch or a new version, etc.\n\nSo I just made it a warning.\n\nThere is probably a higher road way of approaching this by having CMake check if DXC is present in the linking path, but this was the MVP effort to have a warning for myself in the future to turn on DAWN_USE_BUILD_DXC when I forget.",
+      "parentUuid": "b345d34f_fbc2e2a1",
+      "range": {
+        "startLine": 62,
+        "startChar": 50,
+        "endLine": 63,
+        "endChar": 37
+      },
+      "revId": "39bcb52d1c4840329562a1bfcaae771fdd0f9b2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
