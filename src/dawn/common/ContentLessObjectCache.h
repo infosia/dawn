@@ -94,13 +94,13 @@ struct ContentLessObjectCacheKeyFuncs {
             Ref<RefCountedT> aRef = a.weakRef.Promote();
             Ref<RefCountedT> bRef = b.weakRef.Promote();
 
-            bool equal = (aRef && bRef && BaseEqualityFunc()(aRef.Get(), bRef.Get()));
-            if (aRef) {
-                mCache->TrackTemporaryRef(std::move(aRef));
+            if (!aRef || !bRef) {
+                return false;
             }
-            if (bRef) {
-                mCache->TrackTemporaryRef(std::move(bRef));
-            }
+
+            bool equal = BaseEqualityFunc()(aRef.Get(), bRef.Get());
+            mCache->TrackTemporaryRef(std::move(aRef));
+            mCache->TrackTemporaryRef(std::move(bRef));
             return equal;
         }
 
@@ -117,10 +117,11 @@ struct ContentLessObjectCacheKeyFuncs {
 
         bool operator()(const WeakRefAndHash<RefCountedT>& a, const RefCountedT* b) const {
             Ref<RefCountedT> aRef = a.weakRef.Promote();
-            bool equal = aRef && BaseEqualityFunc()(aRef.Get(), b);
-            if (aRef) {
-                mCache->TrackTemporaryRef(std::move(aRef));
+            if (!aRef) {
+                return false;
             }
+            bool equal = BaseEqualityFunc()(aRef.Get(), b);
+            mCache->TrackTemporaryRef(std::move(aRef));
             return equal;
         }
 

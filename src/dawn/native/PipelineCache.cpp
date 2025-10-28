@@ -57,6 +57,7 @@ bool PipelineCacheBase::CacheHit() const {
 
 MaybeError PipelineCacheBase::Flush() {
     // Try to write the data out to the persistent cache.
+    Mutex::AutoLock lock(&mMutex);
     Blob blob;
     DAWN_TRY(SerializeToBlobImpl(&blob));
     if (blob.Size() > 0) {

@@ -30,6 +30,7 @@
 
 #include <atomic>
 
+#include "dawn/common/Mutex.h"
 #include "dawn/common/RefCounted.h"
 #include "dawn/native/BlobCache.h"
 #include "dawn/native/CacheKey.h"
@@ -80,6 +81,8 @@ class PipelineCacheBase : public RefCounted {
     const bool mStoreOnIdle;
     bool mInitialized = false;
     bool mCacheHit = false;
+
+    Mutex mMutex;
 
     // Multiple threads can be using the pipeline cache concurrently and
     // modifying this variable. Loads and stores are done with relaxed ordering
