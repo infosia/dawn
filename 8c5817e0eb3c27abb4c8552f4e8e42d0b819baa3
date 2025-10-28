@@ -33,6 +33,29 @@
       "message": "This will be a great fix. Thanks!",
       "revId": "8c5817e0eb3c27abb4c8552f4e8e42d0b819baa3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86c77bc9_90c6542b",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-10-28T19:54:07Z",
+      "side": 1,
+      "message": "this will just be a number?\nThere is a conversion from a feature to a string.",
+      "range": {
+        "startLine": 182,
+        "startChar": 52,
+        "endLine": 182,
+        "endChar": 91
+      },
+      "revId": "8c5817e0eb3c27abb4c8552f4e8e42d0b819baa3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
