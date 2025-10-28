@@ -34,6 +34,24 @@
       "parentUuid": "8d78093b_65912ced",
       "revId": "2a17b3fdccafbd93b276f1205785f8bf7568883c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d86447c_9569d544",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-28T16:39:18Z",
+      "side": 1,
+      "message": "I see. Well, I guess \"changes to cr-buildbucket.cfg don\u0027t take effect until a CL lands\" is the root cause of the bug 😊",
+      "parentUuid": "1e3c05f1_60814da6",
+      "revId": "2a17b3fdccafbd93b276f1205785f8bf7568883c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
