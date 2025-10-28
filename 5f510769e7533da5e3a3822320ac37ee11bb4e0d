@@ -98,6 +98,30 @@
       },
       "revId": "5f510769e7533da5e3a3822320ac37ee11bb4e0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be40b5df_5bee87da",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-28T23:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c115e115_6e70f409",
+      "range": {
+        "startLine": 233,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 62
+      },
+      "revId": "5f510769e7533da5e3a3822320ac37ee11bb4e0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

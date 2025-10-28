@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc78559f_6edb488d",
+        "filename": "src/dawn/native/d3d12/BindGroupD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-28T23:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b1fb975_0d304e58",
+      "range": {
+        "startLine": 71,
+        "startChar": 38,
+        "endLine": 71,
+        "endChar": 46
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9f368c43_f039efd3",
@@ -166,6 +190,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab7c0b75_bede1e0f",
+        "filename": "src/dawn/native/d3d12/BindGroupD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-28T23:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fde9c231_d3835da1",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 39
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dcdb2a7e_bacf94cd",
@@ -179,6 +227,30 @@
       "writtenOn": "2025-10-28T19:17:50Z",
       "side": 1,
       "message": "[3]",
+      "range": {
+        "startLine": 96,
+        "startChar": 17,
+        "endLine": 108,
+        "endChar": 0
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "156ceec5_2cba5bda",
+        "filename": "src/dawn/native/d3d12/BindGroupD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-28T23:29:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "dcdb2a7e_bacf94cd",
       "range": {
         "startLine": 96,
         "startChar": 17,
@@ -259,6 +331,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b19d745f_41d1922d",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-28T23:29:51Z",
+      "side": 1,
+      "message": "Yes, this is true, although I think in this case it helps to make it clear that the dynamic bindings are at the beginning of the bind group layout. I\u0027ll leave it as is for now, if that\u0027s okay.",
+      "parentUuid": "a0fb86ab_99431add",
+      "range": {
+        "startLine": 632,
+        "startChar": 8,
+        "endLine": 632,
+        "endChar": 90
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4fd99e0e_0dba867f",
@@ -282,6 +378,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "41bfcc07_fcd06e83",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-28T23:29:51Z",
+      "side": 1,
+      "message": "Yeah, I like that.",
+      "parentUuid": "4fd99e0e_0dba867f",
+      "range": {
+        "startLine": 636,
+        "startChar": 8,
+        "endLine": 636,
+        "endChar": 55
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "afdea482_bc0e080e",
@@ -295,6 +415,30 @@
       "writtenOn": "2025-10-28T19:17:50Z",
       "side": 1,
       "message": "[2]",
+      "range": {
+        "startLine": 643,
+        "startChar": 12,
+        "endLine": 644,
+        "endChar": 32
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64b338cf_a2c3307a",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-28T23:29:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "afdea482_bc0e080e",
       "range": {
         "startLine": 643,
         "startChar": 12,
@@ -516,6 +660,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f315fa95_bfa6e64a",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-28T23:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd9bf78f_ccf4c800",
+      "range": {
+        "startLine": 53,
+        "startChar": 62,
+        "endLine": 53,
+        "endChar": 76
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "02b4e1bf_2a4baebf",
@@ -565,6 +733,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0990d725_fa71a147",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-28T23:29:51Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s what I meant when I wrote \"Maybe we\u0027d have to recreate or modify the UAV in the descriptor heap here in BindGroupStateTracker::ApplyBindGroup\". Currently, we create the UAVs at [3], but we\u0027d have to delay this until the dynamic offsets are passed in via `setBindGroup` to create UAVs with the right size in the descriptor tables. For now, we can land this change as-is, and we can look at improving it to avoid robustness in a future CL.",
+      "parentUuid": "f450ee6d_5536a999",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 188,
+        "endChar": 33
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e3656255_2096fc9b",
         "filename": "src/dawn/tests/end2end/DynamicBufferOffsetTests.cpp",
         "patchSetId": 13
@@ -576,6 +768,30 @@
       "writtenOn": "2025-10-28T19:17:50Z",
       "side": 1,
       "message": "Thoughts on doing something like:\n\n```\n// All buffers are usually 256 bytes / 4 + 2 \u003d 66 u32 elements\n\n// mUniformBuffers[0]:\n//   - not dynamic\n//   - @group(0) @binding(0)\n//   - [1, 2, 0 ... 0]\n// mUniformBuffers[1]:\n//   - dynamic\n//   - @group(0) @binding(3)\n//   - [1, 2, 0, ..., 0, 5, 6]\n// mUniformBuffers[2]:\n//   - not dynamic\n//   - @group(1) @binding(0)\n//   - [1, 2, 0 ... 0] (used for inheritance tests)\nwgpu::Buffer mUniformBuffers[3];\n// mStorageBuffers[0]:\n//   - not dynamic\n//   - @group(0) @binding(1)\n//   - shader sets this.xy to mUniformBuffers[0].xy, so [1, 2]\n// mStorageBuffers[1]:\n//   - dynamic\n//   - @group(0) @binding(4)\n//   - shader sets this.xy to (mUniformBuffers[0].xy + mUniformBuffers[1]) * multipleNumber\nwgpu::Buffer mStorageBuffers[2];\n```\n\nThat removes the need for `// clang-format off/on` which made it hard to see that (I think) the comment for `mStorageBuffers[1]` was duplicated unintentionally.",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 36
+      },
+      "revId": "2c0169e6afb727c8f220b3ced41f1adc49f45709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d48f5e5a_6d1a165e",
+        "filename": "src/dawn/tests/end2end/DynamicBufferOffsetTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-10-28T23:29:51Z",
+      "side": 1,
+      "message": "Thanks, Loko, this is better. And nice catch on the copy-paste mistake.",
+      "parentUuid": "e3656255_2096fc9b",
       "range": {
         "startLine": 51,
         "startChar": 4,
