@@ -1868,9 +1868,15 @@ bool Validator::CheckResult(const Instruction* inst, size_t idx) {
         return false;
     }
 
-    if (inst->Is<core::ir::ControlInstruction>() && result->Type()->Is<core::type::Pointer>()) {
-        AddResultError(inst, idx) << "result type cannot be a pointer";
-        return false;
+    if (inst->Is<core::ir::ControlInstruction>()) {
+        if (result->Type()->Is<core::type::Pointer>()) {
+            AddResultError(inst, idx) << "result type cannot be a pointer";
+            return false;
+        }
+        if (!result->Type()->IsConstructible()) {
+            AddResultError(inst, idx) << "result type must be constructable";
+            return false;
+        }
     }
 
     if (!inst->Is<core::ir::Call>() && result->Type()->Is<core::type::Void>()) {
