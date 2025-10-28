@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ef6f85d_cfba1307",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-28T17:31:39Z",
+      "side": 1,
+      "message": "https://dawn-review.googlesource.com/c/dawn/+/269334 has a possible solution. I\u0027ll see if that passes CQ.",
+      "parentUuid": "6b9c788d_80f3ba26",
+      "revId": "cb9428c2295b0726b2643cf31bd8b94c916cd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f3fe67b_7a143769",
@@ -103,6 +121,30 @@
       "side": 1,
       "message": "Okay, I see your point. We could factor out the code in `OnStagingMemoryFreePendingOnSubmit` to `UpdateMemoryPendingSubmit(uint64_t size)` and call it from both places. Otherwise, what you suggest is fine as well.",
       "parentUuid": "ca37907a_e9d212ec",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 5
+      },
+      "revId": "cb9428c2295b0726b2643cf31bd8b94c916cd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2080d52c_8148ce9f",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-28T17:31:39Z",
+      "side": 1,
+      "message": "\u003e If instead of querying for those serials inline, we vended them out earlier, we could potentially scope a lot of the critical sections to be tighter in the future.\n\nI was actually thinking that Queue should notify DynamicUploader when Queue::Submit() happens. Actually implementing is kinda tricky. There are a couple places that mLastSubmittedSerial gets incremented not just on submit.\n\n\u003e We could factor out the code in OnStagingMemoryFreePendingOnSubmit to UpdateMemoryPendingSubmit(uint64_t size) and call it from both places\n\nI did this. Well I added UpdateMemoryPendingSubmit() which checks serial and resets memory pending submit.",
+      "parentUuid": "4ad64eac_01605e74",
       "range": {
         "startLine": 154,
         "startChar": 4,
