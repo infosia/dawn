@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40990577_eb7730bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-28T06:18:51Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "7822749281123ab2ef22f7e00113b192e63325db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "719348d8_829e19aa",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-28T06:18:51Z",
+      "side": 1,
+      "message": "nit: return (\u0027GPU\u0027 if category \u003d\u003d \u0027object\u0027 else \u0027\u0027) + name",
+      "fixSuggestions": [
+        {
+          "fixId": "283af621_06bb2985",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/dawn_json_generator.py",
+              "range": {
+                "startLine": 933,
+                "startChar": 0,
+                "endLine": 935,
+                "endChar": 0
+              },
+              "replacement": "        return (\u0027GPU\u0027 if category \u003d\u003d \u0027object\u0027 else \u0027\u0027) + name\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7822749281123ab2ef22f7e00113b192e63325db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
