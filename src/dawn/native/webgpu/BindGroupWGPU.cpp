@@ -109,7 +109,7 @@ MaybeError BindGroup::InitializeImpl() {
 void BindGroup::DeleteThis() {
     // This function must first run the destructor and then deallocate memory. Take a reference to
     // the BindGroupLayout+SlabAllocator before running the destructor so this function can access
-    // it afterwards and it's not destroyed prematurely.
+    // it afterwards and it's not destroyed prematurely foo.
     Ref<BindGroupLayout> layout = ToBackend(GetLayout());
     BindGroupBase::DeleteThis();
     layout->DeallocateBindGroup(this);
