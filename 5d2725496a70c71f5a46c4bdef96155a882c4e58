@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9a92b27_e293632e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-29T21:44:51Z",
+      "side": 1,
+      "message": "Loko what do you think of this change? I can get a second reviewer once I finalize the approach. FWIW I triggered this race when I wrote a concurrent buffer unmapping test to ensure second unmap threw a validation error.",
+      "revId": "5d2725496a70c71f5a46c4bdef96155a882c4e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5663094b_aca6d85c",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-29T21:44:51Z",
+      "side": 1,
+      "message": "This is a bit unorthidox so I\u0027m open to suggestions. We need the mutex to outlive both event and buffer.",
+      "revId": "5d2725496a70c71f5a46c4bdef96155a882c4e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d073320_d9dcb005",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-29T21:44:51Z",
+      "side": 1,
+      "message": "This could be moved to a separate CL trivally.",
+      "revId": "5d2725496a70c71f5a46c4bdef96155a882c4e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8709c6d_def85836",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-29T21:44:51Z",
+      "side": 1,
+      "message": "Is `EnsureComplete(EventCompletionType::Shutdown)` needed in the destructor here?",
+      "revId": "5d2725496a70c71f5a46c4bdef96155a882c4e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9407d92a_6059d5ed",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-10-29T21:44:51Z",
+      "side": 1,
+      "message": "We should probably reset this pointer from Unmap(). This is where it\u0027s currently reset when mMapData is updated so I didn\u0027t change it.",
+      "revId": "5d2725496a70c71f5a46c4bdef96155a882c4e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
