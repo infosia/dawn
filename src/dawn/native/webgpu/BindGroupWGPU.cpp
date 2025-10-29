@@ -134,8 +134,17 @@ MaybeError BindGroup::AddReferenced(CaptureContext& captureContext) {
         // DAWN_TRY(captureContext.AddResource(layout));
         DAWN_CHECK(false);
     } else {
-        DAWN_TRY(ToBackend(layout->GetInternalBindGroupLayout())
-                     ->CapturePipelineForImplicitLayout(captureContext));
+        PipelineBase* pipeline = layout->GetPipelineForImplicitLayout();
+        DAWN_ASSERT(pipeline != nullptr);
+        ComputePipelineBase* computePipeline = pipeline->AsComputePipeline();
+        if (computePipeline) {
+            return captureContext.AddResource(computePipeline);
+        }
+        // TODO(451389801): Capture render pass pipelines.
+        // RenderPipelineBase* renderPipeline = pipeline->AsRenderPipeline();
+        // DAWN_ASSERT(renderPipeline);
+        // return captureContext.AddResource(renderPipeline);
+        DAWN_CHECK(false);
     }
 
     return {};
@@ -167,8 +176,10 @@ MaybeError BindGroup::CaptureCreationParameters(CaptureContext& captureContext) 
             [&](const auto& info) { DAWN_CHECK(false); });
     }
 
+    // Note: We must use the FrontEnd layout here. The `BindGroupLayout` not
+    // the `BindGroupLayoutInternal` as the later is deduplicated.
     schema::BindGroup bg{{
-        .layoutId = captureContext.GetId(GetLayout()),
+        .layoutId = captureContext.GetId(GetFrontendLayout()),
         .entries = entries,
     }};
     Serialize(captureContext, bg);

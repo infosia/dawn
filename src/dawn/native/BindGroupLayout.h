@@ -33,6 +33,7 @@
 #include "dawn/native/BindGroupLayoutInternal.h"
 #include "dawn/native/IntegerTypes.h"
 #include "dawn/native/ObjectBase.h"
+#include "dawn/native/Pipeline.h"
 
 namespace dawn::native {
 
@@ -59,6 +60,9 @@ class BindGroupLayoutBase final : public ApiObjectBase {
 
     bool IsEmpty() const;
 
+    void AssociateWithPipeline(PipelineBase* pipeline);
+    PipelineBase* GetPipelineForImplicitLayout() const;
+
   protected:
     void DestroyImpl() override;
 
@@ -69,6 +73,11 @@ class BindGroupLayoutBase final : public ApiObjectBase {
 
     // Non-0 if this BindGroupLayout was created as part of a default PipelineLayout.
     const PipelineCompatibilityToken mPipelineCompatibilityToken = kExplicitPCT;
+
+    // The pipeline that created this bind group layout. This is currently only
+    // set in the WebGPU backend as it needs to be able to re-create this BGL
+    // and for implicit BGLs can only do so it by creating the pipeline that created it.
+    Ref<PipelineBase> mPipelineForImplicitLayout;
 };
 
 }  // namespace dawn::native

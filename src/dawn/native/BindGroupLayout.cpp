@@ -74,4 +74,13 @@ bool BindGroupLayoutBase::IsLayoutEqual(const BindGroupLayoutBase* other,
 
 void BindGroupLayoutBase::DestroyImpl() {}
 
+void BindGroupLayoutBase::AssociateWithPipeline(PipelineBase* pipeline) {
+    DAWN_ASSERT(mPipelineForImplicitLayout == nullptr);
+    mPipelineForImplicitLayout = pipeline;
+}
+
+PipelineBase* BindGroupLayoutBase::GetPipelineForImplicitLayout() const {
+    return mPipelineForImplicitLayout.Get();
+}
+
 }  // namespace dawn::native

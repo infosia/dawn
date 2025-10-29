@@ -76,7 +76,7 @@ void AssociateAutoLayoutBindGroupLayoutsWithPipeline(PipelineBase* pipeline) {
     for (BindGroupIndex groupIndex : pipelineLayout->GetBindGroupLayoutsMask()) {
         BindGroupLayoutBase* bgl = pipelineLayout->GetFrontendBindGroupLayout(groupIndex);
         if (bgl->GetPipelineCompatibilityToken() != kExplicitPCT) {
-            ToBackend(bgl->GetInternalBindGroupLayout())->AssociateWithPipeline(pipeline);
+            bgl->AssociateWithPipeline(pipeline);
         }
     }
 }
