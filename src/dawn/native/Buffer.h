@@ -238,7 +238,8 @@ class BufferBase : public SharedResource {
     wgpu::MapMode mMapMode = wgpu::MapMode::None;
     size_t mMapOffset = 0;
     size_t mMapSize = 0;
-    std::variant<void*, Ref<MapAsyncEvent>> mMapData;
+    void* mMappedPointer = nullptr;
+    Ref<MapAsyncEvent> mPendingMapEvent;
 };
 
 }  // namespace dawn::native
