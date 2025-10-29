@@ -27,6 +27,7 @@
 
 #include "dawn/native/Buffer.h"
 
+#include <atomic>
 #include <cstdio>
 #include <cstring>
 #include <limits>
@@ -46,6 +47,7 @@
 #include "dawn/native/Commands.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/DynamicUploader.h"
+#include "dawn/native/Error.h"
 #include "dawn/native/ErrorData.h"
 #include "dawn/native/EventManager.h"
 #include "dawn/native/Instance.h"
@@ -68,6 +70,10 @@ namespace {
 Mutex* GetPendingMapMutex() {
     static absl::NoDestructor<Mutex> mutex;
     return mutex.get();
+}
+
+std::unique_ptr<ErrorData> ConcurrentUseError() {
+    return DAWN_VALIDATION_ERROR("Concurrent buffer operations are not allowed");
 }
 
 class ErrorBuffer final : public BufferBase {
@@ -466,6 +472,8 @@ void BufferBase::DestroyImpl() {
             }
             break;
         }
+        case BufferState::InsideOperation:
+            DAWN_UNREACHABLE();
         default:
             break;
     }
@@ -521,6 +529,7 @@ wgpu::BufferMapState BufferBase::APIGetMapState() const {
             return wgpu::BufferMapState::Pending;
         case BufferState::Unmapped:
         case BufferState::Destroyed:
+        case BufferState::InsideOperation:
         case BufferState::SharedMemoryNoAccess:
             return wgpu::BufferMapState::Unmapped;
         case BufferState::HostMappedPersistent:
@@ -646,6 +655,8 @@ MaybeError BufferBase::ValidateCanUseOnQueueNow() const {
             return DAWN_VALIDATION_ERROR("%s used in submit while pending map.", this);
         case BufferState::SharedMemoryNoAccess:
             return DAWN_VALIDATION_ERROR("%s used in submit without shared memory access.", this);
+        case BufferState::InsideOperation:
+            return ConcurrentUseError();
         case BufferState::HostMappedPersistent:
         case BufferState::Unmapped:
             return {};
@@ -672,16 +683,47 @@ Future BufferBase::APIMapAsync(wgpu::MapMode mode,
             size = mSize - offset;
         }
 
-        WGPUMapAsyncStatus status = WGPUMapAsyncStatus_Error;
+        bool modifiedState = false;
+        WGPUMapAsyncStatus status = WGPUMapAsyncStatus_Aborted;
         MaybeError maybeError = [&]() -> MaybeError {
-            DAWN_INVALID_IF(mState.load(std::memory_order::acquire) == BufferState::PendingMap,
-                            "%s already has an outstanding map pending.", this);
-            DAWN_TRY(ValidateMapAsync(mode, offset, size, &status));
+            DAWN_TRY(GetDevice()->ValidateIsAlive());
+            status = WGPUMapAsyncStatus_Error;
+
+            DAWN_TRY(GetDevice()->ValidateObject(this));
+
+            switch (mState.load(std::memory_order::acquire)) {
+                case BufferState::Mapped:
+                case BufferState::MappedAtCreation:
+                    return DAWN_VALIDATION_ERROR("%s is already mapped.", this);
+                case BufferState::InsideOperation:
+                    return ConcurrentUseError();
+                case BufferState::PendingMap:
+                    return DAWN_VALIDATION_ERROR("%s already has an outstanding map pending.",
+                                                 this);
+                case BufferState::Destroyed:
+                    return DAWN_VALIDATION_ERROR("%s is destroyed.", this);
+                case BufferState::HostMappedPersistent:
+                    return DAWN_VALIDATION_ERROR("Host-mapped %s cannot be mapped again.", this);
+                case BufferState::SharedMemoryNoAccess:
+                    return DAWN_VALIDATION_ERROR("%s used without shared memory access.", this);
+                case BufferState::Unmapped:
+                    DAWN_TRY(TransitionState(BufferState::Unmapped, BufferState::InsideOperation));
+                    modifiedState = true;
+                    break;
+            }
+
+            DAWN_TRY(ValidateMapAsync(mode, offset, size));
+            status = WGPUMapAsyncStatus_Success;
+
             DAWN_TRY(MapAsyncImpl(mode, offset, size));
             return {};
         }();
 
         if (maybeError.IsError()) {
+            if (modifiedState) {
+                // Reset state from InsideOperation since an error occurred.
+                mState.store(BufferState::Unmapped, std::memory_order::release);
+            }
             auto error = maybeError.AcquireError();
             event = AcquireRef(
                 new MapAsyncErrorEvent(GetDevice(), callbackInfo, error->GetMessage(), status));
@@ -761,6 +803,8 @@ uint64_t BufferBase::APIGetSize() const {
 MaybeError BufferBase::CopyFromStagingBuffer() {
     DAWN_ASSERT(mStagingBuffer != nullptr && mSize != 0);
 
+    auto deviceGuard = GetDevice()->GetGuard();
+
     DAWN_TRY(
         GetDevice()->CopyFromStagingToBuffer(mStagingBuffer.Get(), 0, this, 0, GetAllocatedSize()));
     mStagingBuffer = nullptr;
@@ -784,17 +828,24 @@ void BufferBase::APIUnmap() {
 MaybeError BufferBase::Unmap() {
     switch (mState.load(std::memory_order::acquire)) {
         case BufferState::Mapped:
+            DAWN_TRY(TransitionState(BufferState::Mapped, BufferState::InsideOperation));
             UnmapImpl(BufferState::Mapped);
             break;
         case BufferState::MappedAtCreation:
+            DAWN_TRY(TransitionState(BufferState::MappedAtCreation, BufferState::InsideOperation));
             if (mStagingBuffer != nullptr) {
-                DAWN_TRY(CopyFromStagingBuffer());
+                DAWN_TRY_WITH_CLEANUP(CopyFromStagingBuffer(), {
+                    mState.store(BufferState::MappedAtCreation, std::memory_order::release);
+                });
             }
             if (mSize != 0 && IsCPUWritableAtCreation()) {
                 UnmapImpl(BufferState::MappedAtCreation);
             }
             break;
+        case BufferState::InsideOperation:
+            return ConcurrentUseError();
         case BufferState::Unmapped:
+            return {};
         case BufferState::HostMappedPersistent:
         case BufferState::SharedMemoryNoAccess:
             break;
@@ -825,6 +876,7 @@ MaybeError BufferBase::UnmapInternal(std::string_view earlyUnmapMessage) {
             event = std::move(mPendingMapEvent);
             if (event) {
                 event->WillUnmapEarly(earlyUnmapMessage);
+                DAWN_TRY(TransitionState(BufferState::PendingMap, BufferState::InsideOperation));
             }
         }
 
@@ -848,16 +900,7 @@ MaybeError BufferBase::UnmapInternal(std::string_view earlyUnmapMessage) {
     return {};
 }
 
-MaybeError BufferBase::ValidateMapAsync(wgpu::MapMode mode,
-                                        size_t offset,
-                                        size_t size,
-                                        WGPUMapAsyncStatus* status) const {
-    *status = WGPUMapAsyncStatus_Aborted;
-    DAWN_TRY(GetDevice()->ValidateIsAlive());
-
-    *status = WGPUMapAsyncStatus_Error;
-    DAWN_TRY(GetDevice()->ValidateObject(this));
-
+MaybeError BufferBase::ValidateMapAsync(wgpu::MapMode mode, size_t offset, size_t size) const {
     DAWN_INVALID_IF(uint64_t(offset) > mSize,
                     "Mapping offset (%u) is larger than the size (%u) of %s.", offset, mSize, this);
 
@@ -867,22 +910,6 @@ MaybeError BufferBase::ValidateMapAsync(wgpu::MapMode mode,
     DAWN_INVALID_IF(uint64_t(size) > mSize - uint64_t(offset),
                     "Mapping range (offset:%u, size: %u) doesn't fit in the size (%u) of %s.",
                     offset, size, mSize, this);
-
-    switch (mState.load(std::memory_order::acquire)) {
-        case BufferState::Mapped:
-        case BufferState::MappedAtCreation:
-            return DAWN_VALIDATION_ERROR("%s is already mapped.", this);
-        case BufferState::PendingMap:
-            DAWN_UNREACHABLE();
-        case BufferState::Destroyed:
-            return DAWN_VALIDATION_ERROR("%s is destroyed.", this);
-        case BufferState::HostMappedPersistent:
-            return DAWN_VALIDATION_ERROR("Host-mapped %s cannot be mapped again.", this);
-        case BufferState::SharedMemoryNoAccess:
-            return DAWN_VALIDATION_ERROR("%s used without shared memory access.", this);
-        case BufferState::Unmapped:
-            break;
-    }
 
     bool isReadMode = mode & wgpu::MapMode::Read;
     bool isWriteMode = mode & wgpu::MapMode::Write;
@@ -900,7 +927,6 @@ MaybeError BufferBase::ValidateMapAsync(wgpu::MapMode mode,
                         wgpu::BufferUsage::MapWrite);
     }
 
-    *status = WGPUMapAsyncStatus_Success;
     return {};
 }
 
@@ -933,6 +959,7 @@ bool BufferBase::CanGetMappedRange(bool writable, size_t offset, size_t size) co
 
         case BufferState::PendingMap:
         case BufferState::Unmapped:
+        case BufferState::InsideOperation:
         case BufferState::SharedMemoryNoAccess:
         case BufferState::Destroyed:
             return false;
@@ -1048,6 +1075,14 @@ TexelBufferViewBase* BufferBase::APICreateTexelView(const TexelBufferViewDescrip
 
 ApiObjectList* BufferBase::GetTexelBufferViewTrackingList() {
     return &mTexelBufferViews;
+}
+
+MaybeError BufferBase::TransitionState(BufferState currentState, BufferState desiredState) {
+    if (mState.compare_exchange_strong(currentState, desiredState, std::memory_order_acq_rel)) {
+        return {};
+    }
+
+    return ConcurrentUseError();
 }
 
 }  // namespace dawn::native

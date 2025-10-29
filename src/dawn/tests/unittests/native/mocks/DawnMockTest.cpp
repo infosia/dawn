@@ -50,8 +50,10 @@ void DawnMockTest::SetUp() {
                                mDeviceLostCallback.Callback());
     desc.SetUncapturedErrorCallback(mDeviceErrorCallback.TemplatedCallback(),
                                     mDeviceErrorCallback.TemplatedCallbackUserdata());
-    DeviceDescriptor* nativeDesc = reinterpret_cast<DeviceDescriptor*>(&desc);
+    desc.requiredFeatureCount = mRequiredFeatures.size();
+    desc.requiredFeatures = mRequiredFeatures.data();
 
+    DeviceDescriptor* nativeDesc = reinterpret_cast<DeviceDescriptor*>(&desc);
     auto result = ValidateAndUnpack(nativeDesc);
     DAWN_ASSERT(result.IsSuccess());
     UnpackedPtr<DeviceDescriptor> unpackedDesc = result.AcquireSuccess();
