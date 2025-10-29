@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fece3bf_a1065967",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-29T07:37:21Z",
+      "side": 1,
+      "message": "Note: I moved the `Ref\u003cPipelineBase\u003e` from `BindGroupLayoutInternalWGPU` to `BindGroupLayoutBase`. It\u0027s only set for implicit bind group layouts and it\u0027s only set when using the WebGPU-on-WebGPU backend.\n\nQuestions:\n\n* Should it always be set, regardless of backend?\n\n* Given that there is now this Ref\u003cPipelineBase\u003e, do we need the `mPipelineCompatibilityToken`?\n\n  Since we have the pipeline the bindgroup is compatible with, if we made this association regardless of backend then we know which Pipeline this bindgroup is compatible with and don\u0027t need the token.\n  \n* Is there a Ref cycle? I don\u0027t see one but maybe I\u0027m missing it.",
+      "revId": "67e3e5e68a5273a660a957feeb4f4f2a901c6dfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
