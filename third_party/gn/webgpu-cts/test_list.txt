@@ -344,7 +344,6 @@ webgpu:api,operation,buffers,map_ArrayBuffer:postMessage:transfer=true;mapMode="
 webgpu:api,operation,buffers,map_detach:while_mapped:
 webgpu:api,operation,buffers,map_oom:mappedAtCreation:oom=false;size=16
 webgpu:api,operation,buffers,map_oom:mappedAtCreation:oom=true;size=9007199254740984
-webgpu:api,operation,buffers,map_oom:mappedAtCreation:oom=true;size=137438953472
 webgpu:api,operation,buffers,threading:serialize:
 webgpu:api,operation,buffers,threading:destroyed:
 webgpu:api,operation,command_buffer,basic:empty:
@@ -53399,6 +53398,14 @@ webgpu:shader,execution,expression,access,array,index:concrete_scalar:inputSourc
 webgpu:shader,execution,expression,access,array,index:concrete_scalar:inputSource="const";elementType="f32";indexType="u32"
 webgpu:shader,execution,expression,access,array,index:concrete_scalar:inputSource="const";elementType="f16";indexType="i32"
 webgpu:shader,execution,expression,access,array,index:concrete_scalar:inputSource="const";elementType="f16";indexType="u32"
+webgpu:shader,execution,expression,access,array,index:concrete_scalar:inputSource="uniform";elementType="i32";indexType="i32"
+webgpu:shader,execution,expression,access,array,index:concrete_scalar:inputSource="uniform";elementType="i32";indexType="u32"
+webgpu:shader,execution,expression,access,array,index:concrete_scalar:inputSource="uniform";elementType="u32";indexType="i32"
+webgpu:shader,execution,expression,access,array,index:concrete_scalar:inputSource="uniform";elementType="u32";indexType="u32"
+webgpu:shader,execution,expression,access,array,index:concrete_scalar:inputSource="uniform";elementType="f32";indexType="i32"
+webgpu:shader,execution,expression,access,array,index:concrete_scalar:inputSource="uniform";elementType="f32";indexType="u32"
+webgpu:shader,execution,expression,access,array,index:concrete_scalar:inputSource="uniform";elementType="f16";indexType="i32"
+webgpu:shader,execution,expression,access,array,index:concrete_scalar:inputSource="uniform";elementType="f16";indexType="u32"
 webgpu:shader,execution,expression,access,array,index:concrete_scalar:inputSource="storage_r";elementType="i32";indexType="i32"
 webgpu:shader,execution,expression,access,array,index:concrete_scalar:inputSource="storage_r";elementType="i32";indexType="u32"
 webgpu:shader,execution,expression,access,array,index:concrete_scalar:inputSource="storage_r";elementType="u32";indexType="i32"
@@ -53417,6 +53424,8 @@ webgpu:shader,execution,expression,access,array,index:concrete_scalar:inputSourc
 webgpu:shader,execution,expression,access,array,index:concrete_scalar:inputSource="storage_rw";elementType="f16";indexType="u32"
 webgpu:shader,execution,expression,access,array,index:bool:inputSource="const";indexType="i32"
 webgpu:shader,execution,expression,access,array,index:bool:inputSource="const";indexType="u32"
+webgpu:shader,execution,expression,access,array,index:bool:inputSource="uniform";indexType="i32"
+webgpu:shader,execution,expression,access,array,index:bool:inputSource="uniform";indexType="u32"
 webgpu:shader,execution,expression,access,array,index:bool:inputSource="storage_r";indexType="i32"
 webgpu:shader,execution,expression,access,array,index:bool:inputSource="storage_r";indexType="u32"
 webgpu:shader,execution,expression,access,array,index:bool:inputSource="storage_rw";indexType="i32"
@@ -53455,6 +53464,8 @@ webgpu:shader,execution,expression,access,array,index:vector:inputSource="unifor
 webgpu:shader,execution,expression,access,array,index:vector:inputSource="uniform";elementType="vec4u";indexType="u32"
 webgpu:shader,execution,expression,access,array,index:vector:inputSource="uniform";elementType="vec4f";indexType="i32"
 webgpu:shader,execution,expression,access,array,index:vector:inputSource="uniform";elementType="vec4f";indexType="u32"
+webgpu:shader,execution,expression,access,array,index:vector:inputSource="uniform";elementType="vec4h";indexType="i32"
+webgpu:shader,execution,expression,access,array,index:vector:inputSource="uniform";elementType="vec4h";indexType="u32"
 webgpu:shader,execution,expression,access,array,index:vector:inputSource="storage_r";elementType="vec4i";indexType="i32"
 webgpu:shader,execution,expression,access,array,index:vector:inputSource="storage_r";elementType="vec4i";indexType="u32"
 webgpu:shader,execution,expression,access,array,index:vector:inputSource="storage_r";elementType="vec4u";indexType="i32"
@@ -275440,6 +275451,7 @@ webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="readonly_and_r
 webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="packed_4x8_integer_dot_product"
 webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="unrestricted_pointer_parameters"
 webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="pointer_composite_access"
+webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="uniform_buffer_standard_layout"
 webgpu:shader,validation,parse,semicolon:module_scope_single:
 webgpu:shader,validation,parse,semicolon:module_scope_multiple:
 webgpu:shader,validation,parse,semicolon:after_enable:
