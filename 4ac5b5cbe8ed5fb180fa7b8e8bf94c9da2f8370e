@@ -456,6 +456,24 @@
       "parentUuid": "87cc0696_065490cf",
       "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03d220fa_ffb4618a",
+        "filename": "src/dawn/native/opengl/QueueGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-10-29T17:00:10Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "57436db1_24f6b1ad",
+      "revId": "4ac5b5cbe8ed5fb180fa7b8e8bf94c9da2f8370e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

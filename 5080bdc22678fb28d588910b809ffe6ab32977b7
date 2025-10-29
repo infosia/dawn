@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dc3ca29_4a7086ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-10-29T17:00:10Z",
+      "side": 1,
+      "message": "```suggestion\na centrialized function called ExecutePendingGLWork(). This will ensure that\n```",
+      "revId": "5080bdc22678fb28d588910b809ffe6ab32977b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f99080d_8ce1b67d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-10-29T17:00:10Z",
+      "side": 1,
+      "message": "```suggestion\nonly one thread can trigger ExecutePendingGLWork() at a time.\n```",
+      "revId": "5080bdc22678fb28d588910b809ffe6ab32977b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "1bab75f2_553197b4",
@@ -31,6 +65,23 @@
       "writtenOn": "2025-10-29T09:07:00Z",
       "side": 1,
       "message": "@Stephen friendly ping again",
+      "revId": "5080bdc22678fb28d588910b809ffe6ab32977b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f64a6a0d_7b2c302b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-10-29T17:00:10Z",
+      "side": 1,
+      "message": "LGTM. Sorry for the delay!",
       "revId": "5080bdc22678fb28d588910b809ffe6ab32977b7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
