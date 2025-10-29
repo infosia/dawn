@@ -16,6 +16,24 @@
       "message": "Trying out a tryjob via led to confirm that things no longer blow up.",
       "revId": "2aa3dd406c7d371e3825bb1bbaf8c7850ef4b984",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2297892_fc22d15a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-29T21:50:39Z",
+      "side": 1,
+      "message": "https://ci.chromium.org/ui/p/dawn/builders/try.shadow/dawn-cq-linux-x64-rel/13/infra is looking good, it\u0027s able to trigger and collect the same tests on multiple Intel GPUs.",
+      "parentUuid": "e5643c36_c8868faf",
+      "revId": "2aa3dd406c7d371e3825bb1bbaf8c7850ef4b984",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
