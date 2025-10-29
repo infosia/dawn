@@ -83,8 +83,8 @@ WireResult Server::DoQueueWriteBuffer(Known<WGPUQueue> queue,
     // TODO: We can probably optimize this allocation/copy out if we update the handle API a bit.
     // This should still be better in Chromium though since the handle's memory will be in a block
     // of shared memory.
-    auto backingData = std::make_unique<char[]>(size);
-    writeHandle->SetTarget(backingData.get());
+    // auto backingData = std::make_unique<char[]>(size);
+    // writeHandle->SetTarget(backingData.get());
 
     // Deserialize the flush info and flush updated data from the handle into the target
     // of the handle that's just a temporary allocation from above right now.
@@ -94,7 +94,7 @@ WireResult Server::DoQueueWriteBuffer(Known<WGPUQueue> queue,
         return WireResult::FatalError;
     }
 
-    mProcs.queueWriteBuffer(queue->handle, buffer->handle, bufferOffset, backingData.get(),
+    mProcs.queueWriteBuffer(queue->handle, buffer->handle, bufferOffset, writeHandle->GetTarget().data(),
                             static_cast<size_t>(size));
     return WireResult::Success;
 }
