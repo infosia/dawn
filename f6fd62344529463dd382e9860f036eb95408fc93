@@ -33,6 +33,24 @@
       "message": "This might be fix for something but just FYI, talking to Loko, an issue is that one `BindGroupLayoutInternal` can be used by multiple `BindGroupLayout` objects.\n\nA `BindGroupLayout` object is a front end only object. It\u0027s the thing that prevents an implicit BGL from being used with other pipelines. But behind the scenes, any layout that matches entries as the same BindGroupLayoutInternal. It was my mis-understanding that there was a one-to-one correspondence between a BindGroupLayout and a BindGroupLayoutInternal and because of those 2, only BindGroupLayoutInternal has a WGPU implementation, I put a Ref\u003cPipelineBase\u003e in there. But, it doesn\u0027t belong there. I can make a test will fail separate from the crash bug. I have a fix that moves the Ref\u003cPipelineBase\u003e to BindGroupLayout.",
       "revId": "f6fd62344529463dd382e9860f036eb95408fc93",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bace158_3445a755",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-29T17:25:20Z",
+      "side": 1,
+      "message": "Yep. thanks for looking into and fixing (https://dawn-review.googlesource.com/c/dawn/+/269574). Let\u0027s land that and see if the flake will go away.",
+      "parentUuid": "e6b04190_dcdb3357",
+      "revId": "f6fd62344529463dd382e9860f036eb95408fc93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
