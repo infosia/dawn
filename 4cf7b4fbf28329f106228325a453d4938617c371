@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "21ce1716_0fe95944",
+        "filename": "include/dawn/native/D3D12Backend.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4172162
+      },
+      "writtenOn": "2025-10-29T23:07:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d0bbda6_3173369c",
+      "range": {
+        "startLine": 52,
+        "startChar": 60,
+        "endLine": 52,
+        "endChar": 78
+      },
+      "revId": "4cf7b4fbf28329f106228325a453d4938617c371",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3d74f0e5_49179a71",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-10-28T23:53:24Z",
       "side": 1,
       "message": "`GetOrCreateD3D11on12Device` returns a `ResultOrError\u003c...\u003e`. We should handle the error gracefully and return nullptr on failure.",
+      "range": {
+        "startLine": 220,
+        "startChar": 4,
+        "endLine": 220,
+        "endChar": 33
+      },
+      "revId": "4cf7b4fbf28329f106228325a453d4938617c371",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f67a14b6_0013f0f4",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 4172162
+      },
+      "writtenOn": "2025-10-29T23:07:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d74f0e5_49179a71",
       "range": {
         "startLine": 220,
         "startChar": 4,
