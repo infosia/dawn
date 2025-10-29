@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "589e5bc8_c8824899",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-29T20:33:48Z",
+      "side": 1,
+      "message": "PTAL\n\nI do wonder if we\u0027re getting much value from Win/x86 testing at this point. Windows 11 does not have a 32-bit version, Windows 10 is EoL, and I suspect there are few Chrome users still on 32-bit Windows 10.",
+      "revId": "02990255369d01d452c5d2c8fabb5b7e8bb99ac8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
