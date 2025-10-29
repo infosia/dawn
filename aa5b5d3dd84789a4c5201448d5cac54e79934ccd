@@ -51,6 +51,24 @@
       "parentUuid": "4fe50ab1_81beae23",
       "revId": "aa5b5d3dd84789a4c5201448d5cac54e79934ccd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1ad12fa_2506e931",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-10-29T18:48:47Z",
+      "side": 1,
+      "message": "We should try to keep the naming consistent, using a `SharedBufferMemory...Descriptor` to create `SharedTextureMemory` is not obvious. Please re-add the `SharedTextureMemoryD3D12ResourceDescriptor` even if it has the same structure.",
+      "parentUuid": "495ec45e_9aa3d130",
+      "revId": "aa5b5d3dd84789a4c5201448d5cac54e79934ccd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
