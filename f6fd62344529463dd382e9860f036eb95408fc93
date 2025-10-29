@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "709db9ad_69af7421",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-10-29T02:18:52Z",
+      "side": 1,
+      "message": "Speculative fix:\n1. Comment at https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/PipelineCacheVk.h;l\u003d63;drc\u003dc35a0a84da3d530e04553731043b35b5e1ccc563 suggest only one thread should be inside SerializeToBlobImpl. But multi thread could get in via `ComputePipeline::InitImpl` -\u003e `DidCompilePipeline` -\u003e `Flush` -\u003e `SerializeToBlobImpl`. Add a mutex\n2. The crash backtrace found by gregg is SIGABRT inside EqualityFunc::operator of WeakRef accessing. `WeakRef::Promote` could return nullptr. Do a nullptr check first for aRef and bRef.",
+      "revId": "f6fd62344529463dd382e9860f036eb95408fc93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
