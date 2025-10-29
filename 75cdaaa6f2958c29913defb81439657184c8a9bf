@@ -16,6 +16,24 @@
       "message": "I assume this fixed your linker error?",
       "revId": "75cdaaa6f2958c29913defb81439657184c8a9bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e8774f1_7580e5ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-10-29T17:48:00Z",
+      "side": 1,
+      "message": "Yup, I can build the fuzzers with HLSL support without needing to build DXC. Saves me a significant amount of time when rebuilding too.",
+      "parentUuid": "2ae7225d_d0476086",
+      "revId": "75cdaaa6f2958c29913defb81439657184c8a9bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
