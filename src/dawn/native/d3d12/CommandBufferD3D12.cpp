@@ -624,12 +624,17 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
         }
     }
 
+    // Quick hack, this is not ready for production
+    PerBindGroup<ityp::vector<BindingIndex, uint64_t>> lastDynamicOffsets;
+
     void ApplyBindGroup(ID3D12GraphicsCommandList* commandList,
                         const PipelineLayout* pipelineLayout,
                         BindGroupIndex index,
                         BindGroup* group,
                         const ityp::span<BindingIndex, uint64_t>& dynamicOffsets) {
         DAWN_ASSERT(dynamicOffsets.size() == group->GetLayout()->GetDynamicBufferCount());
+
+        lastDynamicOffsets[index].resize(dynamicOffsets.size(), ~0);
 
         // Usually, the application won't set the same offsets many times,
         // so always try to apply dynamic offsets even if the offsets stay the same
@@ -638,6 +643,12 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
             // Dynamic buffer bindings are packed at the beginning of the layout.
             for (BindingIndex bindingIndex{0}; bindingIndex < dynamicOffsets.size();
                  ++bindingIndex) {
+                // Skip if we've already applied this offset before
+                if (lastDynamicOffsets[index][bindingIndex] == dynamicOffsets[bindingIndex]) {
+                    continue;
+                }
+                lastDynamicOffsets[index][bindingIndex] = dynamicOffsets[bindingIndex];
+
                 const BindingInfo& bindingInfo = group->GetLayout()->GetBindingInfo(bindingIndex);
                 if (bindingInfo.visibility == wgpu::ShaderStage::None) {
                     // Skip dynamic buffers that are not visible. D3D12 does not have None
