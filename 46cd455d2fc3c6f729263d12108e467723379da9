@@ -22,6 +22,30 @@
       },
       "revId": "46cd455d2fc3c6f729263d12108e467723379da9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a6bb947_e0c38195",
+        "filename": "src/tint/lang/wgsl/resolver/uniformity.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1287,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-29T15:47:44Z",
+      "side": 1,
+      "message": "Added a helper to this file instead of cluttering the `core/enums.cc` file with something that will only be needed here.",
+      "parentUuid": "b50b178f_4bb9fba8",
+      "range": {
+        "startLine": 1285,
+        "startChar": 20,
+        "endLine": 1287,
+        "endChar": 63
+      },
+      "revId": "46cd455d2fc3c6f729263d12108e467723379da9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
