@@ -311,6 +311,15 @@
         'test': 'fuzzer_corpus_tests',
       },
     },
+    'tint_benchmark': {
+      'tint_benchmark': {
+        'mixins': [
+          'result_adapter_single',
+          'true_noop_merge',
+        ],
+        'test': 'tint_benchmark',
+      },
+    },
     'tint_unit_gtests': {
       'tint_unittests': {
         'mixins': [
@@ -335,6 +344,7 @@
       'dawn_end2end_sws_gtests',
       'dawn_unit_gtests',
       'dawn_wire_unit_gtests',
+      'tint_benchmark',
       'tint_unit_gtests',
     ],
     # Same as swiftshader_gtests but with the addition of WARP end2end tests.
