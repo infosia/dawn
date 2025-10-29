@@ -381,6 +381,7 @@ group("benchmarks") {
   testonly = true
   deps = []
   if (tint_build_benchmarks && tint_build_wgsl_reader) {
-    deps += [ "${tint_src_dir}/cmd/bench:tint_benchmark" ]
+    data_deps += [ "${tint_src_dir}/cmd/bench:tint_benchmark" ]
   }
+  data = [ "${dawn_root}/scripts/run_tint_benchmark_test.py" ]
 }
