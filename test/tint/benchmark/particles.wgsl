@@ -39,7 +39,7 @@ fn vs_main(in : VertexInput) -> VertexOutput {
   out.position = render_params.modelViewProjectionMatrix * vec4<f32>(position, 1.0);
   out.color = in.color;
   out.quad_pos = in.quad_pos;
-  return out;
+  return out
 }
 
 ////////////////////////////////////////////////////////////////////////////////
