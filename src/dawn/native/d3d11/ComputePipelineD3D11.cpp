@@ -88,10 +88,7 @@ MaybeError ComputePipeline::InitializeImpl() {
     {
         TRACE_EVENT0(device->GetPlatform(), General, "ComputePipelineD3D11::CreateComputeShader");
         SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(device->GetPlatform(), "D3D11.CreateComputeShaderUs");
-        DAWN_TRY(CheckHRESULT(device->GetD3D11Device()->CreateComputeShader(
-                                  compiledShader.shaderBlob.Data(),
-                                  compiledShader.shaderBlob.Size(), nullptr, &mComputeShader),
-                              "D3D11 create compute shader"));
+        DAWN_TRY_ASSIGN(mComputeShader, device->CreateComputeShader(compiledShader));
     }
 
     SetLabelImpl();

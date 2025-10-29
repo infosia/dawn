@@ -487,10 +487,9 @@ MaybeError RenderPipeline::InitializeShaders() {
         {
             TRACE_EVENT0(device->GetPlatform(), General, "RenderPipelineD3D11::CreateVertexShader");
             SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(device->GetPlatform(), "D3D11.CreateVertexShaderUs");
-            DAWN_TRY(
-                CheckHRESULT(device->GetD3D11Device()->CreateVertexShader(
-                                 shaderBlob.Data(), shaderBlob.Size(), nullptr, &mVertexShader),
-                             "D3D11 create vertex shader"));
+
+            DAWN_TRY_ASSIGN(mVertexShader, device->CreateVertexShader(
+                                               compiledShader[SingleShaderStage::Vertex]));
         }
         DAWN_TRY(InitializeInputLayout(shaderBlob));
     }
@@ -558,11 +557,8 @@ MaybeError RenderPipeline::InitializeShaders() {
         {
             TRACE_EVENT0(device->GetPlatform(), General, "RenderPipelineD3D11::CreatePixelShader");
             SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(device->GetPlatform(), "D3D11.CreatePixelShaderUs");
-            DAWN_TRY(CheckHRESULT(device->GetD3D11Device()->CreatePixelShader(
-                                      compiledShader[SingleShaderStage::Fragment].shaderBlob.Data(),
-                                      compiledShader[SingleShaderStage::Fragment].shaderBlob.Size(),
-                                      nullptr, &mPixelShader),
-                                  "D3D11 create pixel shader"));
+            DAWN_TRY_ASSIGN(mPixelShader, device->CreatePixelShader(
+                                               compiledShader[SingleShaderStage::Fragment]));
         }
     }
 
