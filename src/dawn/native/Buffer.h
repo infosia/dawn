@@ -230,15 +230,23 @@ class BufferBase : public SharedResource {
     // staging buffer recursively.
     Ref<BufferBase> mStagingBuffer = nullptr;
 
-    // Track texel buffer views created from this buffer so they can be destroyed
-    // when the buffer is destroyed.
+    // Track texel buffer views created from this buffer so they can be destroyed when the buffer is
+    // destroyed.
     ApiObjectList mTexelBufferViews;
+
+    // This both references an event and provides a synchronization mechanism. Once MapAsync()
+    // returns a future there is a possible race between MapAsyncEvent completing and the buffer
+    // being unmapped. A mutex is held when resetting `mPendingMapEvent` to guard against concurrent
+    // access. If MapAsyncEvent resets this then MapAsync() will complete successfully. If Unmap()
+    // is called concurrently it will complete afterwards. If Unmap() resets this then MapAsync()
+    // will be aborted and the buffer will be unmapped early.
+    Ref<MapAsyncEvent> mPendingMapEvent;
 
     // Mapping specific states.
     wgpu::MapMode mMapMode = wgpu::MapMode::None;
     size_t mMapOffset = 0;
     size_t mMapSize = 0;
-    std::variant<void*, Ref<MapAsyncEvent>> mMapData;
+    void* mMappedPointer = nullptr;
 };
 
 }  // namespace dawn::native
