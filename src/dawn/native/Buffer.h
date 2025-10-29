@@ -234,11 +234,16 @@ class BufferBase : public SharedResource {
     // when the buffer is destroyed.
     ApiObjectList mTexelBufferViews;
 
+    // This both points to an event and also provides an important synchronization mechanism. Once
+    // MapAsync() starts there is a possible race between MapAsync completing and the buffer being
+    // unmapped. A mutex is held when resetting the variable to guard against concurrent access.
+    Ref<MapAsyncEvent> mPendingMapEvent;
+
     // Mapping specific states.
     wgpu::MapMode mMapMode = wgpu::MapMode::None;
     size_t mMapOffset = 0;
     size_t mMapSize = 0;
-    std::variant<void*, Ref<MapAsyncEvent>> mMapData;
+    void* mMappedPointer = nullptr;
 };
 
 }  // namespace dawn::native
