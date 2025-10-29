@@ -311,6 +311,15 @@
         'test': 'fuzzer_corpus_tests',
       },
     },
+    'tint_benchmark': {
+      'tint_benchmark': {
+        'mixins': [
+          'result_adapter_single',
+          'true_noop_merge',
+        ],
+        'test': 'tint_benchmark',
+      },
+    },
     'tint_unit_gtests': {
       'tint_unittests': {
         'mixins': [

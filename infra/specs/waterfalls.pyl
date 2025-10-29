@@ -94,7 +94,10 @@
         ],
         'test_suites': {
           'gtest_tests': 'swiftshader_gtests',
-          'isolated_scripts': 'dawn_node_cts_sws_tests',
+          'isolated_scripts': [
+            'dawn_node_cts_sws_tests',
+            'tint_benchmark',
+          ]
         },
       },
       'dawn-linux-x86-builder-dbg': {
