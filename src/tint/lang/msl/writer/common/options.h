@@ -116,6 +116,9 @@ struct Options {
     /// Set to `true` to polyfill `unpack2x16snorm()`.
     bool polyfill_unpack_2x16_snorm = false;
 
+    /// Set to `true` to polyfill `unpack2x16unorm()`.
+    bool polyfill_unpack_2x16_unorm = false;
+
     /// Set to `true` to scalarize max min and clamp builtins.
     bool scalarize_max_min_clamp = false;
 
