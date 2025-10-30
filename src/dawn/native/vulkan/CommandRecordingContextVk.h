@@ -89,22 +89,7 @@ struct CommandRecordingContext {
     // VulkanSplitCommandBufferOnComputePassAfterRenderPass workaround.
     bool hasRecordedRenderPass = false;
 
-    void AddBufferBarrier(VkAccessFlags srcAccessMask,
-                          VkAccessFlags dstAccessMask,
-                          VkPipelineStageFlags srcStages,
-                          VkPipelineStageFlags dstStages);
-    void EmitBufferBarriers(Device* device);
-
-  private:
-    struct BufferBarrier {
-        VkAccessFlags bufferSrcAccessMask = 0;
-        VkAccessFlags bufferDstAccessMask = 0;
-        VkPipelineStageFlags bufferSrcStages = 0;
-        VkPipelineStageFlags bufferDstStages = 0;
-    };
-
-    BufferBarrier mVertexBufferBarrier;
-    BufferBarrier mNonVertexBufferBarrier;
+    void EmitBufferBarriers(Device* device, const BufferBarrier& barrier);
 };
 
 }  // namespace dawn::native::vulkan

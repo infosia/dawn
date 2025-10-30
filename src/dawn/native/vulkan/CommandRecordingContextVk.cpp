@@ -31,57 +31,20 @@
 #include "vulkan/vulkan_core.h"
 
 namespace dawn::native::vulkan {
-namespace {
 
-// Separate barriers with vertex stages in destination stages from all other barriers.
-// This avoids creating unnecessary fragment->vertex dependencies when merging barriers.
-// Eg. merging a compute->vertex barrier and a fragment->fragment barrier would create
-// a compute|fragment->vertex|fragment barrier.
-constexpr VkPipelineStageFlags vertexStages = VK_PIPELINE_STAGE_VERTEX_INPUT_BIT |
-                                              VK_PIPELINE_STAGE_VERTEX_SHADER_BIT |
-                                              VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT;
-
-}  // namespace
-
-void CommandRecordingContext::AddBufferBarrier(VkAccessFlags srcAccessMask,
-                                               VkAccessFlags dstAccessMask,
-                                               VkPipelineStageFlags srcStages,
-                                               VkPipelineStageFlags dstStages) {
-    BufferBarrier* barrier = nullptr;
-    if (dstStages & vertexStages) {
-        barrier = &mVertexBufferBarrier;
-    } else {
-        barrier = &mNonVertexBufferBarrier;
+void CommandRecordingContext::EmitBufferBarriers(Device* device, const BufferBarrier& barrier) {
+    if (barrier.IsEmpty()) {
+        return;
     }
 
-    barrier->bufferSrcAccessMask |= srcAccessMask;
-    barrier->bufferDstAccessMask |= dstAccessMask;
-    barrier->bufferSrcStages |= srcStages;
-    barrier->bufferDstStages |= dstStages;
-}
+    VkMemoryBarrier vkBarrier;
+    vkBarrier.sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER;
+    vkBarrier.pNext = nullptr;
+    vkBarrier.srcAccessMask = barrier.srcAccessMask;
+    vkBarrier.dstAccessMask = barrier.dstAccessMask;
 
-void CommandRecordingContext::EmitBufferBarriers(Device* device) {
-    auto EmitBarrierIfNeeded = [&](const BufferBarrier& barrier) {
-        if (barrier.bufferSrcStages == 0 || barrier.bufferDstStages == 0) {
-            return;
-        }
-
-        VkMemoryBarrier vkBarrier;
-        vkBarrier.sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER;
-        vkBarrier.pNext = nullptr;
-        vkBarrier.srcAccessMask = barrier.bufferSrcAccessMask;
-        vkBarrier.dstAccessMask = barrier.bufferDstAccessMask;
-
-        device->fn.CmdPipelineBarrier(commandBuffer, barrier.bufferSrcStages,
-                                      barrier.bufferDstStages, 0, 1, &vkBarrier, 0, nullptr, 0,
-                                      nullptr);
-    };
-    // Emit vertex and non-vertex barriers separately to keep src and dst stage masks separate.
-    EmitBarrierIfNeeded(mVertexBufferBarrier);
-    EmitBarrierIfNeeded(mNonVertexBufferBarrier);
-
-    mVertexBufferBarrier = {};
-    mNonVertexBufferBarrier = {};
+    device->fn.CmdPipelineBarrier(commandBuffer, barrier.srcStages, barrier.dstStages, 0, 1,
+                                  &vkBarrier, 0, nullptr, 0, nullptr);
 }
 
 }  // namespace dawn::native::vulkan
