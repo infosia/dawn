@@ -42,6 +42,22 @@ struct CommandRecordingContext;
 class Device;
 struct VulkanFunctions;
 
+struct BufferBarrier {
+    bool IsEmpty() const { return srcStages == 0 || dstStages == 0; }
+
+    void Merge(const BufferBarrier& other) {
+        srcAccessMask |= other.srcAccessMask;
+        dstAccessMask |= other.dstAccessMask;
+        srcStages |= other.srcStages;
+        dstStages |= other.dstStages;
+    }
+
+    VkAccessFlags srcAccessMask = 0;
+    VkAccessFlags dstAccessMask = 0;
+    VkPipelineStageFlags srcStages = 0;
+    VkPipelineStageFlags dstStages = 0;
+};
+
 class Buffer final : public BufferBase {
   public:
     static ResultOrError<Ref<Buffer>> Create(Device* device,
@@ -55,9 +71,9 @@ class Buffer final : public BufferBase {
     void TransitionUsageNow(CommandRecordingContext* recordingContext,
                             wgpu::BufferUsage usage,
                             wgpu::ShaderStage shaderStage = wgpu::ShaderStage::None);
-    void TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingContext,
-                                         wgpu::BufferUsage usage,
-                                         wgpu::ShaderStage shaderStage);
+    BufferBarrier TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingContext,
+                                                  wgpu::BufferUsage usage,
+                                                  wgpu::ShaderStage shaderStage);
 
     // All the Ensure methods return true if the buffer was initialized to zero.
     bool EnsureDataInitialized(CommandRecordingContext* recordingContext);
