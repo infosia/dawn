@@ -69,6 +69,24 @@
       "parentUuid": "e2297892_fc22d15a",
       "revId": "2aa3dd406c7d371e3825bb1bbaf8c7850ef4b984",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6665853f_7a2f11f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-30T19:47:01Z",
+      "side": 1,
+      "message": "Since those are all occurring in Create*Pipeline tests w/ WebGPU on WebGPU, I\u0027m hoping that they\u0027ll be fixed when https://dawn-review.googlesource.com/c/dawn/+/269574 lands.\n\nIn the meantime, automatic retries of failed shards should keep the CQ from surfacing flakes.",
+      "parentUuid": "357fed41_7ba14e62",
+      "revId": "2aa3dd406c7d371e3825bb1bbaf8c7850ef4b984",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
