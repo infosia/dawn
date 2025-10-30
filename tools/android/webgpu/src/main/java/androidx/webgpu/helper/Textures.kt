@@ -29,6 +29,7 @@ public fun Bitmap.createGpuTexture(device: GPUDevice): GPUTexture {
     }
 }
 
+@Suppress("UNUSED_VARIABLE")
 public suspend fun GPUTexture.createBitmap(device: GPUDevice): Bitmap {
     if (width % 64 > 0) {
         throw DawnException("Texture must be a multiple of 64. Was ${width}")
@@ -56,7 +57,11 @@ public suspend fun GPUTexture.createBitmap(device: GPUDevice): Bitmap {
         it.finish()
     }))
 
-    readbackBuffer.mapAsync(MapMode.Read, 0, size.toLong())
+    val bufferMapReturn = readbackBuffer.mapAsync(MapMode.Read, 0, size.toLong())
+
+    if (bufferMapReturn.status != MapAsyncStatus.Success) {
+        throw DawnException("Failed to map buffer: ${bufferMapReturn.message}")
+    }
 
     return Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888).apply {
         copyPixelsFromBuffer(readbackBuffer.getConstMappedRange(size = readbackBuffer.size))
