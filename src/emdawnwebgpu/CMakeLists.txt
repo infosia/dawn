@@ -35,12 +35,20 @@ DawnJSONGenerator(
 add_custom_target(emdawnwebgpu_headers_gen
     DEPENDS ${EMDAWNWEBGPU_HEADERS_GEN_HEADERS}
 )
-# Also copy the webgpu_glfw.h file.
-add_custom_command(TARGET emdawnwebgpu_headers_gen POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy
-        "${DAWN_INCLUDE_DIR}/webgpu/webgpu_glfw.h"
-        "${EM_BUILD_GEN_DIR}/include/webgpu/"
-)
+# Also copy some extra files that we need to be able to include without their siblings.
+macro(emdawnwebgpu_headers_gen_add filename)
+    add_custom_command(TARGET emdawnwebgpu_headers_gen POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+            "${DAWN_INCLUDE_DIR}/webgpu/${filename}"
+            "${EM_BUILD_GEN_DIR}/include/webgpu/${filename}"
+    )
+    set_source_files_properties(
+        "${EM_BUILD_GEN_DIR}/include/webgpu/${filename}"
+        PROPERTIES GENERATED TRUE
+    )
+endmacro()
+emdawnwebgpu_headers_gen_add("webgpu_glfw.h")
+emdawnwebgpu_headers_gen_add("webgpu_enum_class_bitmasks.h")
 
 DawnJSONGenerator(
     TARGET "emdawnwebgpu_js"
@@ -228,7 +236,7 @@ if (EMSCRIPTEN)
             "${EM_BUILD_GEN_DIR}/include/dawn/webgpu_cpp_print.h"
             "${EM_BUILD_GEN_DIR}/include/webgpu/webgpu_cpp.h"
             "${EM_BUILD_GEN_DIR}/include/webgpu/webgpu_cpp_chained_struct.h"
-            "${DAWN_INCLUDE_DIR}/webgpu/webgpu_enum_class_bitmasks.h"
+            "${EM_BUILD_GEN_DIR}/include/webgpu/webgpu_enum_class_bitmasks.h"
         DEPENDS
             emdawnwebgpu_c
     )
@@ -253,7 +261,7 @@ if (EMSCRIPTEN)
 
         # Copy webgpu_enum_class_bitmasks.h
         COMMAND ${CMAKE_COMMAND} -E copy
-            "${DAWN_INCLUDE_DIR}/webgpu/webgpu_enum_class_bitmasks.h"
+            "${EM_BUILD_GEN_DIR}/include/webgpu/webgpu_enum_class_bitmasks.h"
             "${CMAKE_BINARY_DIR}/emdawnwebgpu_pkg/webgpu_cpp/include/webgpu/"
 
         # Copy webgpu_glfw.h
