@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94b7b7c1_a6f317ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 28
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-30T00:09:27Z",
+      "side": 1,
+      "message": "Sorry for the delay, LGTM!",
+      "revId": "0e8019db673ade7b862a2ec7c30dab738e3eb4cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
