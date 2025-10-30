@@ -34,6 +34,41 @@
       "parentUuid": "e5643c36_c8868faf",
       "revId": "2aa3dd406c7d371e3825bb1bbaf8c7850ef4b984",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "357fed41_7ba14e62",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-30T19:37:51Z",
+      "side": 1,
+      "message": "Similar to Mac Intel, many failing end2end shards in\nhttps://ci.chromium.org/ui/p/dawn/builders/luci.dawn.ci/dawn-linux-x64-intel-uhd770-rel?limit\u003d200\u0026cursor\u003did%3E8699557277346569713\nnot seen on e.g. (a bit older, since they were removed)\nhttps://ci.chromium.org/ui/p/chromium/builders/luci.chromium.ci/Dawn%20Linux%20x64%20Release%20%28Intel%20UHD%20770%29?limit\u003d200\u0026cursor\u003did%3E8700274577849090369\n\nLast tests seem to be from WebGPU_WebGPU_backend, e.g.\nhttps://chromium-swarm.appspot.com/task?id\u003d743220965c514c10\n```\n[ RUN      ] MultithreadTests.CreateComputePipelineAsyncInParallel/WebGPU_WebGPU_backend_on_BackendType__Vulkan\nresult_adapter: open result file: open /b/s/w/iominoa5at/output.json: no such file or directory\n```",
+      "revId": "2aa3dd406c7d371e3825bb1bbaf8c7850ef4b984",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad8d88be_b34bd949",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-30T19:37:51Z",
+      "side": 1,
+      "message": "🎉",
+      "parentUuid": "e2297892_fc22d15a",
+      "revId": "2aa3dd406c7d371e3825bb1bbaf8c7850ef4b984",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
