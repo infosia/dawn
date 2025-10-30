@@ -16,6 +16,23 @@
       "message": "LGTM",
       "revId": "7732738782af43aebc9a2269fb8cba3fdb487e93",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b746041b_5d4cfb35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-10-30T19:48:07Z",
+      "side": 1,
+      "message": "Ugh, I am obviously holding abseil wrong somehow, since all of those bots are angry. This built fine for me locally, so I will need to dig into the bot logs to understand why they are so grumpy.",
+      "revId": "7732738782af43aebc9a2269fb8cba3fdb487e93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
