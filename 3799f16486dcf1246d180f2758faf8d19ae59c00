@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7569c2c_9812d1ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-10-30T04:56:38Z",
+      "side": 1,
+      "message": "@kainino, we\u0027d like to exclude fxc compiler (d3dcompiler_47.dll) when dawn_enable_d3d11 is false in gn args. This will help us save package size when releasing D3D12 only dawn_end2end_tests package. Could you please review this fix?\nIf your bots may cover this test scenario (dawn_enable_d3d11\u003dfalse or dawn_enable_d3d12\u003dfalse), it would be more helpful to gate an issue like this. CC @ynovikov@chromium.org.",
+      "revId": "3799f16486dcf1246d180f2758faf8d19ae59c00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
