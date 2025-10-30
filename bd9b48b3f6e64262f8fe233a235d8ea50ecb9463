@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f7e2ead_79aedb4e",
+        "filename": "src/dawn/native/BindGroupLayout.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-30T05:56:53Z",
+      "side": 1,
+      "message": "As per our discussion yesterday, I changed to code so, within a command buffer, it serializes all the pipelines first, then all the bindGroups second. This ensures that schema:::ObjectIds for the implicit bindGroupLayouts referenced by the bindGroups will already exist. \n\nThe only complication is if there\u0027s a call to setBindGroup using an implicit bindGroup from a pipeline that is never set. That case is effectively either (a) a no-op or (b) an error. The error case is caught by the command buffer execution code so the capture code just doesn\u0027t serializes those bindGroups nor their setBindGroup commands.",
+      "parentUuid": "51e23435_cd2f2eaa",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 49
+      },
+      "revId": "bd9b48b3f6e64262f8fe233a235d8ea50ecb9463",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4210fae1_655577d7",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-10-30T00:16:36Z",
       "side": 1,
       "message": "nit. In the comment we should link the bug and mention this is a regression test for it.",
+      "range": {
+        "startLine": 1018,
+        "startChar": 0,
+        "endLine": 1025,
+        "endChar": 73
+      },
+      "revId": "bd9b48b3f6e64262f8fe233a235d8ea50ecb9463",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7aa063d7_c712dd07",
+        "filename": "src/dawn/tests/white_box/CaptureAndReplayTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-30T05:56:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4210fae1_655577d7",
       "range": {
         "startLine": 1018,
         "startChar": 0,
