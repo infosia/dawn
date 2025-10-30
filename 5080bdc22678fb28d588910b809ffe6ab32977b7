@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3249bf3_f72c0b80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-10-30T07:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dc3ca29_4a7086ed",
+      "revId": "5080bdc22678fb28d588910b809ffe6ab32977b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f99080d_8ce1b67d",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-10-29T17:00:10Z",
       "side": 1,
       "message": "```suggestion\nonly one thread can trigger ExecutePendingGLWork() at a time.\n```",
+      "revId": "5080bdc22678fb28d588910b809ffe6ab32977b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "261ae49b_51f4d773",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-10-30T07:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f99080d_8ce1b67d",
       "revId": "5080bdc22678fb28d588910b809ffe6ab32977b7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
