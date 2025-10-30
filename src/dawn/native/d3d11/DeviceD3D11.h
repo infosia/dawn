@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_D3D11_DEVICED3D11_H_
 
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "dawn/common/LRUCache.h"
@@ -36,8 +37,10 @@
 #include "dawn/common/Sha3.h"
 #include "dawn/native/d3d/DeviceD3D.h"
 #include "dawn/native/d3d11/CommandRecordingContextD3D11.h"
+#include "dawn/native/d3d11/CreateShaderTaskD3D11.h"
 #include "dawn/native/d3d11/DeviceInfoD3D11.h"
 #include "dawn/native/d3d11/Forward.h"
+#include "dawn/native/d3d11/FutureComPtrD3D11.h"
 
 namespace dawn::native::d3d {
 struct CompiledShader;
@@ -45,12 +48,6 @@ struct CompiledShader;
 
 namespace dawn::native::d3d11 {
 
-struct Sha3CacheFuncs {
-    size_t operator()(const Sha3_256::Output& key) const;
-    bool operator()(const Sha3_256::Output& a, const Sha3_256::Output& b) const;
-};
-
-// Definition of backend types
 class Device final : public d3d::Device {
   public:
     static ResultOrError<Ref<Device>> Create(AdapterBase* adapter,
@@ -111,12 +108,12 @@ class Device final : public d3d::Device {
         uint64_t size);
     void ReturnStagingBuffer(Ref<BufferBase>&& buffer);
 
-    ResultOrError<ComPtr<ID3D11VertexShader>> GetOrCreateVertexShader(
-        const d3d::CompiledShader& args);
-    ResultOrError<ComPtr<ID3D11PixelShader>> GetOrCreatePixelShader(
-        const d3d::CompiledShader& args);
-    ResultOrError<ComPtr<ID3D11ComputeShader>> GetOrCreateComputeShader(
-        const d3d::CompiledShader& args);
+    Ref<FutureComPtr<ID3D11VertexShader>> GetOrCreateVertexShader(d3d::CompiledShader args,
+                                                                  std::string label);
+    Ref<FutureComPtr<ID3D11PixelShader>> GetOrCreatePixelShader(d3d::CompiledShader args,
+                                                                std::string label);
+    Ref<FutureComPtr<ID3D11ComputeShader>> GetOrCreateComputeShader(d3d::CompiledShader args,
+                                                                    std::string label);
 
   private:
     using Base = d3d::Device;
@@ -183,9 +180,9 @@ class Device final : public d3d::Device {
     // We use the SHA3 hash of the shader blob as the key because it's computed based on the
     // shader blob's hash. SHA3 is a cryptographic hash function, hence it's extremely unlikely
     // to have collisions (in fact, it's impractical).
-    LRUCache<Sha3_256::Output, ComPtr<ID3D11VertexShader>, Sha3CacheFuncs> mVertexShaderCache;
-    LRUCache<Sha3_256::Output, ComPtr<ID3D11PixelShader>, Sha3CacheFuncs> mPixelShaderCache;
-    LRUCache<Sha3_256::Output, ComPtr<ID3D11ComputeShader>, Sha3CacheFuncs> mComputeShaderCache;
+    ShaderObjectCache<ID3D11VertexShader> mVertexShaderCache;
+    ShaderObjectCache<ID3D11PixelShader> mPixelShaderCache;
+    ShaderObjectCache<ID3D11ComputeShader> mComputeShaderCache;
 };
 
 }  // namespace dawn::native::d3d11
