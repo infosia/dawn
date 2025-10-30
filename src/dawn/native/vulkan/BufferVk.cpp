@@ -558,12 +558,11 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
     CommandRecordingContext* recordingContext =
         ToBackend(GetDevice()->GetQueue())->GetPendingRecordingContext();
 
-    if (mode & wgpu::MapMode::Read) {
-        TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapRead);
-    } else {
-        DAWN_ASSERT(mode & wgpu::MapMode::Write);
-        TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapWrite);
-    }
+    // This intentionally drops any returned barrier. If a barrier is required before MapAsync
+    // completes TransitionMappableBuffersEagerly() will handle adding it before vkQueueSubmit().
+    wgpu::BufferUsage usage =
+        (mode & wgpu::MapMode::Read) ? wgpu::BufferUsage::MapRead : wgpu::BufferUsage::MapWrite;
+    TrackUsageAndGetResourceBarrier(recordingContext, usage, wgpu::ShaderStage::None);
 
     return {};
 }
