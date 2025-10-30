@@ -16,6 +16,23 @@
       "message": "LGTM, leaving to Brian to +2",
       "revId": "0fb5f5c97df81a0f3674253fdb95b250cb3772f9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa30a974_19b586de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-30T21:16:31Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "0fb5f5c97df81a0f3674253fdb95b250cb3772f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
