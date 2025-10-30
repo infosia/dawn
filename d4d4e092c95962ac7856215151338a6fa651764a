@@ -52,6 +52,24 @@
       "parentUuid": "0e38aecf_f78cdf6a",
       "revId": "d4d4e092c95962ac7856215151338a6fa651764a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43cb3c37_f2394c84",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/Textures.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2025-10-30T08:20:18Z",
+      "side": 1,
+      "message": "There was an issue earlier that required this unused variable in the first place, but it was causing build warnings in Dawn and Google3 tests. And to fix them @Suppress(\"UNUSED_VARIABLE\") was recommended to be used.\n\nIf this exception handling isn\u0027t really required (which I feel it isn\u0027t), I would suggest removing it and have the suppress annotation instead. This would keep it aligned with elsewhere (like- Please refer to this CL: https://dawn-review.googlesource.com/c/dawn/+/269694\n).\n\nAlso, Jim mentioned in a CL(https://dawn-review.googlesource.com/c/dawn/+/266654) that this should no longer be required after his fixes:\nhttps://dawn-review.googlesource.com/c/dawn/+/267754 and https://dawn-review.googlesource.com/c/dawn/+/268615.\nNot sure why we still doing this. Any idea?",
+      "parentUuid": "72dc147d_435bfb6b",
+      "revId": "d4d4e092c95962ac7856215151338a6fa651764a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
