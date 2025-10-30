@@ -64,9 +64,10 @@ enum class AsyncTaskState : uint8_t {
 using AsyncTaskFunction = std::function<void()>;
 using AsyncTaskCompletionCallback = std::function<void()>;
 
-class AsyncTask : public RefCounted {
+class AsyncTaskBase : public RefCounted {
   public:
-    explicit AsyncTask(AsyncTaskFunction task);
+    AsyncTaskBase();
+    virtual ~AsyncTaskBase() = default;
 
     AsyncTaskState GetState() const { return mState; }
 
@@ -74,12 +75,13 @@ class AsyncTask : public RefCounted {
 
     void AddCompletionCallback(AsyncTaskCompletionCallback completionCallback);
 
-  private:
+  protected:
     // Friends with the task manager to privately manage when tasks are executed.
     friend class AsyncTaskManager;
     void Run();
 
-    AsyncTaskFunction mTask;
+  private:
+    virtual void RunImpl() = 0;
 
     // Use a mutex to guard changes to mCompletionCallbacks, mWaitableEvent and transitioning mState
     // to Completed.
@@ -91,6 +93,16 @@ class AsyncTask : public RefCounted {
     // Hold onto the waitable platform event until the task has completed. Released before the
     // destruction of the AsyncTask to be as light weight as possible.
     std::unique_ptr<dawn::platform::WaitableEvent> mWaitableEvent;
+};
+
+class AsyncTask : public AsyncTaskBase {
+  public:
+    explicit AsyncTask(AsyncTaskFunction task);
+
+  private:
+    void RunImpl() override;
+
+    AsyncTaskFunction mTask;
 };
 
 class ErrorGeneratingAsyncTask : public AsyncTask {
@@ -123,11 +135,11 @@ class AsyncTaskManager {
 
   private:
     struct WaitableTask : NonCopyable {
-        Ref<AsyncTask> asyncTask;
+        Ref<AsyncTaskBase> asyncTask;
         raw_ptr<AsyncTaskManager> taskManager;
     };
 
-    void PostConstructedTask(Ref<AsyncTask> asyncTask);
+    void PostConstructedTask(Ref<AsyncTaskBase> asyncTask);
 
     static void RunTask(void* task);
     void HandleTaskCompletion(WaitableTask* task);

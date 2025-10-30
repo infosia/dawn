@@ -85,24 +85,35 @@ MaybeError ComputePipeline::InitializeImpl() {
                     ToBackend(programmableStage.module)
                         ->Compile(programmableStage, SingleShaderStage::Compute,
                                   ToBackend(GetLayout()), compileFlags, GetImmediateMask()));
-    {
-        TRACE_EVENT0(device->GetPlatform(), General, "ComputePipelineD3D11::CreateComputeShader");
-        SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(device->GetPlatform(), "D3D11.CreateComputeShaderUs");
-        DAWN_TRY_ASSIGN(mComputeShader, device->CreateComputeShader(compiledShader));
-    }
-
+    mComputeShader = device->CreateComputeShader(std::move(compiledShader), GetLabel());
     SetLabelImpl();
 
     return {};
 }
 
 void ComputePipeline::SetLabelImpl() {
-    SetDebugName(ToBackend(GetDevice()), mComputeShader.Get(), "Dawn_ComputePipeline", GetLabel());
+    mLabelChanged = true;
 }
 
-void ComputePipeline::ApplyNow(const ScopedSwapStateCommandRecordingContext* commandContext) {
+MaybeError ComputePipeline::ApplyNow(const ScopedSwapStateCommandRecordingContext* commandContext) {
     auto* d3dDeviceContext = commandContext->GetD3D11DeviceContext3();
-    d3dDeviceContext->CSSetShader(mComputeShader.Get(), nullptr, 0);
+
+    ComPtr<ID3D11ComputeShader> cs;
+    DAWN_TRY_ASSIGN(cs, mComputeShader.Get());
+
+    ApplyLabel(cs.Get());
+
+    d3dDeviceContext->CSSetShader(cs.Get(), nullptr, 0);
+
+    return {};
+}
+
+void ComputePipeline::ApplyLabel(ID3D11ComputeShader* cs) {
+    if (!mLabelChanged) {
+        return;
+    }
+    SetDebugName(ToBackend(GetDevice()), cs, "Dawn_ComputePipeline", GetLabel());
+    mLabelChanged = false;
 }
 
 bool ComputePipeline::UsesNumWorkgroups() const {

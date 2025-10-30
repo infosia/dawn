@@ -28,10 +28,13 @@
 #ifndef SRC_DAWN_NATIVE_D3D11_COMPUTEPIPELINEGL_H_
 #define SRC_DAWN_NATIVE_D3D11_COMPUTEPIPELINEGL_H_
 
+#include <future>
+
 #include "dawn/native/ComputePipeline.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
 
 #include "dawn/native/d3d/d3d_platform.h"
+#include "dawn/native/d3d11/FutureComPtrD3D11.h"
 
 namespace dawn::native::d3d11 {
 
@@ -44,7 +47,7 @@ class ComputePipeline final : public ComputePipelineBase {
         Device* device,
         const UnpackedPtr<ComputePipelineDescriptor>& descriptor);
 
-    void ApplyNow(const ScopedSwapStateCommandRecordingContext* commandContext);
+    MaybeError ApplyNow(const ScopedSwapStateCommandRecordingContext* commandContext);
 
     MaybeError InitializeImpl() override;
 
@@ -54,8 +57,10 @@ class ComputePipeline final : public ComputePipelineBase {
     using ComputePipelineBase::ComputePipelineBase;
     ~ComputePipeline() override;
     void SetLabelImpl() override;
+    void ApplyLabel(ID3D11ComputeShader* cs);
 
-    ComPtr<ID3D11ComputeShader> mComputeShader;
+    FutureComPtr<ID3D11ComputeShader> mComputeShader;
+    bool mLabelChanged = false;
 };
 
 }  // namespace dawn::native::d3d11

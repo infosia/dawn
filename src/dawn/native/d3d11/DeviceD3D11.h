@@ -28,14 +28,16 @@
 #ifndef SRC_DAWN_NATIVE_D3D11_DEVICED3D11_H_
 #define SRC_DAWN_NATIVE_D3D11_DEVICED3D11_H_
 
+#include <future>
 #include <memory>
 #include <vector>
 
-#include "dawn/common/SerialQueue.h"
 #include "dawn/common/LRUCache.h"
+#include "dawn/common/SerialQueue.h"
 #include "dawn/common/Sha3.h"
 #include "dawn/native/d3d/DeviceD3D.h"
 #include "dawn/native/d3d11/CommandRecordingContextD3D11.h"
+#include "dawn/native/d3d11/CreateShaderTaskD3D11.h"
 #include "dawn/native/d3d11/DeviceInfoD3D11.h"
 #include "dawn/native/d3d11/Forward.h"
 
@@ -45,12 +47,6 @@ struct CompiledShader;
 
 namespace dawn::native::d3d11 {
 
-struct Sha3CacheFuncs {
-    size_t operator()(const Sha3_256::Output& key) const;
-    bool operator()(const Sha3_256::Output& a, const Sha3_256::Output& b) const;
-};
-
-// Definition of backend types
 class Device final : public d3d::Device {
   public:
     static ResultOrError<Ref<Device>> Create(AdapterBase* adapter,
@@ -111,12 +107,15 @@ class Device final : public d3d::Device {
         uint64_t size);
     void ReturnStagingBuffer(Ref<BufferBase>&& buffer);
 
-    ResultOrError<ComPtr<ID3D11VertexShader>> CreateVertexShader(
-        const d3d::CompiledShader& args);
-    ResultOrError<ComPtr<ID3D11PixelShader>> CreatePixelShader(
-        const d3d::CompiledShader& args);
-    ResultOrError<ComPtr<ID3D11ComputeShader>> CreateComputeShader(
-        const d3d::CompiledShader& args);
+    std::future<ResultOrError<ComPtr<ID3D11VertexShader>>> CreateVertexShader(
+        d3d::CompiledShader args,
+        std::string label);
+    std::future<ResultOrError<ComPtr<ID3D11PixelShader>>> CreatePixelShader(
+        d3d::CompiledShader args,
+        std::string label);
+    std::future<ResultOrError<ComPtr<ID3D11ComputeShader>>> CreateComputeShader(
+        d3d::CompiledShader args,
+        std::string label);
 
   private:
     using Base = d3d::Device;
@@ -179,9 +178,9 @@ class Device final : public d3d::Device {
     std::vector<Ref<BufferBase>> mStagingBuffers;
     uint64_t mTotalStagingBufferSize = 0;
 
-    LRUCache<Sha3_256::Output, ComPtr<ID3D11VertexShader>, Sha3CacheFuncs> mVertexShaderCache;
-    LRUCache<Sha3_256::Output, ComPtr<ID3D11PixelShader>, Sha3CacheFuncs> mPixelShaderCache;
-    LRUCache<Sha3_256::Output, ComPtr<ID3D11ComputeShader>, Sha3CacheFuncs> mComputeShaderCache;
+    ShaderObjectCache<ID3D11VertexShader> mVertexShaderCache;
+    ShaderObjectCache<ID3D11PixelShader> mPixelShaderCache;
+    ShaderObjectCache<ID3D11ComputeShader> mComputeShaderCache;
 };
 
 }  // namespace dawn::native::d3d11

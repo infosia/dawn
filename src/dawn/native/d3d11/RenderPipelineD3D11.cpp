@@ -271,20 +271,31 @@ MaybeError RenderPipeline::InitializeImpl() {
 
 RenderPipeline::~RenderPipeline() = default;
 
-void RenderPipeline::ApplyNow(const ScopedSwapStateCommandRecordingContext* commandContext,
-                              const std::array<float, 4>& blendColor,
-                              uint32_t stencilReference) {
+MaybeError RenderPipeline::ApplyNow(const ScopedSwapStateCommandRecordingContext* commandContext,
+                                    const std::array<float, 4>& blendColor,
+                                    uint32_t stencilReference) {
     auto* d3d11DeviceContext = commandContext->GetD3D11DeviceContext3();
     d3d11DeviceContext->IASetPrimitiveTopology(mD3DPrimitiveTopology);
     // TODO(dawn:1753): deduplicate these objects in the backend eventually, and to avoid redundant
     // state setting.
     d3d11DeviceContext->IASetInputLayout(mInputLayout.Get());
     d3d11DeviceContext->RSSetState(mRasterizerState.Get());
-    d3d11DeviceContext->VSSetShader(mVertexShader.Get(), nullptr, 0);
-    d3d11DeviceContext->PSSetShader(mPixelShader.Get(), nullptr, 0);
+
+    ComPtr<ID3D11VertexShader> vs;
+    DAWN_TRY_ASSIGN(vs, mVertexShader.Get());
+
+    ComPtr<ID3D11PixelShader> ps;
+    DAWN_TRY_ASSIGN(ps, mPixelShader.Get());
+
+    ApplyLabel(vs.Get(), ps.Get());
+
+    d3d11DeviceContext->VSSetShader(vs.Get(), nullptr, 0);
+    d3d11DeviceContext->PSSetShader(ps.Get(), nullptr, 0);
 
     ApplyBlendState(commandContext, blendColor);
     ApplyDepthStencilState(commandContext, stencilReference);
+
+    return {};
 }
 
 void RenderPipeline::ApplyBlendState(const ScopedSwapStateCommandRecordingContext* commandContext,
@@ -301,13 +312,22 @@ void RenderPipeline::ApplyDepthStencilState(
 }
 
 void RenderPipeline::SetLabelImpl() {
+    mLabelChanged = true;
+}
+
+void RenderPipeline::ApplyLabel(ID3D11VertexShader* vs, ID3D11PixelShader* ps) {
+    if (!mLabelChanged) {
+        return;
+    }
+
     SetDebugName(ToBackend(GetDevice()), mRasterizerState.Get(), "Dawn_RenderPipeline", GetLabel());
     SetDebugName(ToBackend(GetDevice()), mInputLayout.Get(), "Dawn_RenderPipeline", GetLabel());
-    SetDebugName(ToBackend(GetDevice()), mVertexShader.Get(), "Dawn_RenderPipeline", GetLabel());
-    SetDebugName(ToBackend(GetDevice()), mPixelShader.Get(), "Dawn_RenderPipeline", GetLabel());
+    SetDebugName(ToBackend(GetDevice()), vs, "Dawn_RenderPipeline", GetLabel());
+    SetDebugName(ToBackend(GetDevice()), ps, "Dawn_RenderPipeline", GetLabel());
     SetDebugName(ToBackend(GetDevice()), mBlendState.Get(), "Dawn_RenderPipeline", GetLabel());
     SetDebugName(ToBackend(GetDevice()), mDepthStencilState.Get(), "Dawn_RenderPipeline",
                  GetLabel());
+    mLabelChanged = false;
 }
 
 MaybeError RenderPipeline::InitializeRasterizerState() {
@@ -484,14 +504,9 @@ MaybeError RenderPipeline::InitializeShaders() {
                                       ToBackend(GetLayout()), compileFlags | additionalCompileFlags,
                                       GetImmediateMask(), usedInterstageVariables));
         const Blob& shaderBlob = compiledShader[SingleShaderStage::Vertex].shaderBlob;
-        {
-            TRACE_EVENT0(device->GetPlatform(), General, "RenderPipelineD3D11::CreateVertexShader");
-            SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(device->GetPlatform(), "D3D11.CreateVertexShaderUs");
-
-            DAWN_TRY_ASSIGN(mVertexShader, device->CreateVertexShader(
-                                               compiledShader[SingleShaderStage::Vertex]));
-        }
         DAWN_TRY(InitializeInputLayout(shaderBlob));
+        mVertexShader = device->CreateVertexShader(
+            std::move(compiledShader[SingleShaderStage::Vertex]), GetLabel());
     }
 
     std::optional<tint::hlsl::writer::PixelLocalOptions> pixelLocalOptions;
@@ -554,12 +569,9 @@ MaybeError RenderPipeline::InitializeShaders() {
                 ->Compile(programmableStage, SingleShaderStage::Fragment, ToBackend(GetLayout()),
                           compileFlags | additionalCompileFlags, GetImmediateMask(),
                           usedInterstageVariables, pixelLocalOptions));
-        {
-            TRACE_EVENT0(device->GetPlatform(), General, "RenderPipelineD3D11::CreatePixelShader");
-            SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(device->GetPlatform(), "D3D11.CreatePixelShaderUs");
-            DAWN_TRY_ASSIGN(mPixelShader, device->CreatePixelShader(
-                                               compiledShader[SingleShaderStage::Fragment]));
-        }
+        mPixelShader =
+            device->CreatePixelShader(std::move(compiledShader[SingleShaderStage::Fragment]),
+                                      GetLabel());
     }
 
     return {};
