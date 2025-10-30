@@ -70,6 +70,24 @@
       "parentUuid": "72dc147d_435bfb6b",
       "revId": "d4d4e092c95962ac7856215151338a6fa651764a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31f00ccf_ec98f3e1",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/Textures.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-10-30T09:00:56Z",
+      "side": 1,
+      "message": "This change is related to `helper/Textures.kt` which is not a generated kotlin file. The template fixes mentioned in the CLs you\u0027ve mentioned are related the AsyncHelper.kt file.",
+      "parentUuid": "43cb3c37_f2394c84",
+      "revId": "d4d4e092c95962ac7856215151338a6fa651764a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
