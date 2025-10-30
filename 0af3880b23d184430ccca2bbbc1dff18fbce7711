@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "0af3880b23d184430ccca2bbbc1dff18fbce7711",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a42cb4a_69217af3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-30T19:21:05Z",
+      "side": 1,
+      "message": "Hmm,\nhttps://ci.chromium.org/ui/p/dawn/builders/luci.dawn.ci/dawn-mac-x64-intel-uhd630-rel?limit\u003d200\u0026cursor\u003did%3E8699562496560868593\nhas some (3) flaky timing out shards, which I don\u0027t see on\nhttps://ci.chromium.org/ui/p/chromium/builders/luci.chromium.ci/Dawn%20Mac%20x64%20Release%20%28Intel%29?limit\u003d200\u0026cursor\u003did%3E8699558237259979537\n\nI\u0027m worried about increased CQ flakiness.\nCould be because of no bot mode in standalone?\nOr maybe because we don\u0027t skip \"WebGPU_WebGPU_backend\" on Mac like on other platforms?",
+      "revId": "0af3880b23d184430ccca2bbbc1dff18fbce7711",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
