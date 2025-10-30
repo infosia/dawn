@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2fb85c6_dc391090",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-30T19:12:29Z",
+      "side": 1,
+      "message": "Testing with different GN args needs double the resources than testing with one set of GN args, I don\u0027t think this issue justifies such an investment.\nOur builders currently use the defaults from here:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/scripts/dawn_features.gni;l\u003d79;drc\u003d08a5058f4ea1236eff4170fae5438ee206464165\n```\n  # Enables the compilation of Dawn\u0027s D3D11 backend\n  dawn_enable_d3d11 \u003d is_win\n\n  # Enables the compilation of Dawn\u0027s D3D12 backend\n  dawn_enable_d3d12 \u003d is_win\n```\nSo that we can test all backends in one run.\n@bsheedy@chromium.org",
+      "parentUuid": "c7569c2c_9812d1ca",
+      "revId": "3799f16486dcf1246d180f2758faf8d19ae59c00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5ddc7794_35af021a",
