@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4fab8a0_4ef7721f",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-10-30T15:50:04Z",
+      "side": 1,
+      "message": "Given that this does indeed seem like it was just a shift in that other CL, I\u0027d suggest removing this comment as it would probably be confusing to future readers.",
+      "fixSuggestions": [
+        {
+          "fixId": "0faa4183_18026d96",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+              "range": {
+                "startLine": 397,
+                "startChar": 0,
+                "endLine": 399,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "02ea57dfc1c59c828e426cc2d0575880c8fa1a62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
