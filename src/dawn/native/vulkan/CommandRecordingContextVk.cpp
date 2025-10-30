@@ -60,7 +60,8 @@ void CommandRecordingContext::AddBufferBarrier(VkAccessFlags srcAccessMask,
     barrier->bufferDstStages |= dstStages;
 }
 
-void CommandRecordingContext::EmitBufferBarriers(Device* device) {
+bool CommandRecordingContext::EmitBufferBarriers(Device* device) {
+    bool emitted = false;
     auto EmitBarrierIfNeeded = [&](const BufferBarrier& barrier) {
         if (barrier.bufferSrcStages == 0 || barrier.bufferDstStages == 0) {
             return;
@@ -75,6 +76,7 @@ void CommandRecordingContext::EmitBufferBarriers(Device* device) {
         device->fn.CmdPipelineBarrier(commandBuffer, barrier.bufferSrcStages,
                                       barrier.bufferDstStages, 0, 1, &vkBarrier, 0, nullptr, 0,
                                       nullptr);
+        emitted = true;
     };
     // Emit vertex and non-vertex barriers separately to keep src and dst stage masks separate.
     EmitBarrierIfNeeded(mVertexBufferBarrier);
@@ -82,6 +84,8 @@ void CommandRecordingContext::EmitBufferBarriers(Device* device) {
 
     mVertexBufferBarrier = {};
     mNonVertexBufferBarrier = {};
+
+    return emitted;
 }
 
 }  // namespace dawn::native::vulkan

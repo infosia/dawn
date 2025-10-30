@@ -36,6 +36,9 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/GPUInfo.h"
+#include "dawn/common/Log.h"
+#include "dawn/common/Math.h"
+#include "dawn/native/Buffer.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/PhysicalDevice.h"
@@ -432,11 +435,11 @@ VkBuffer Buffer::GetHandle() const {
     return mHandle;
 }
 
-void Buffer::TransitionUsageNow(CommandRecordingContext* recordingContext,
+bool Buffer::TransitionUsageNow(CommandRecordingContext* recordingContext,
                                 wgpu::BufferUsage usage,
                                 wgpu::ShaderStage shaderStage) {
     TrackUsageAndGetResourceBarrier(recordingContext, usage, shaderStage);
-    recordingContext->EmitBufferBarriers(ToBackend(GetDevice()));
+    return recordingContext->EmitBufferBarriers(ToBackend(GetDevice()));
 }
 
 void Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingContext,
@@ -537,6 +540,11 @@ void Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingC
         // CPU usage, but a pipeline barrier is needed, so mark the buffer as used within the
         // pending commands.
         MarkUsedInPendingCommands();
+
+        DAWN_CHECK(IsSubset(usage, kMappableBufferUsages));
+
+        // The eager transition at end of submit will handle inserting barriers.
+        return;
     }
 
     recordingContext->AddBufferBarrier(srcAccess, /* dstAccess */ VulkanAccessFlags(usage),
@@ -558,10 +566,10 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
         ToBackend(GetDevice()->GetQueue())->GetPendingRecordingContext();
 
     if (mode & wgpu::MapMode::Read) {
-        TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapRead);
+        DAWN_CHECK(!TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapRead));
     } else {
         DAWN_ASSERT(mode & wgpu::MapMode::Write);
-        TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapWrite);
+        DAWN_CHECK(!TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapWrite));
     }
 
     return {};
