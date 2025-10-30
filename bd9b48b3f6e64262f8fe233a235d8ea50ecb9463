@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51e23435_cd2f2eaa",
+        "filename": "src/dawn/native/BindGroupLayout.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-30T00:16:36Z",
+      "side": 1,
+      "message": "As I mentioned to you offline, I think this will create a ref-cyle in:\n\nPipeline -refs-\u003e PipelineLayout -refs-\u003e BindGroupLayout -refs-\u003e Pipeline.\n\nWe will need to somehow break this cycle if we want to keep this as is, otherwise I believe that this will cause a potential memory leak of these objects.\n\nSeparately though, after reviewing the change and talking with Shrek to understand this a bit more, I actually think it might make more sense to save something like a `std::pair\u003cRef\u003cPipeline\u003e, BindGroupIndex\u003e` in the `webgpu::BindGroup` instead when it is created with an implicit `BindGroupLayout`. If we do that, then I\u0027m pretty sure we avoid the ref cycle entirely, and IIUC, the only time we even need to recreate the pipeline to get the `BindGroupLayout` from it is when we want to create a `BindGroup` using the specific layout. This also has the added benefit of keeping this detail in the webgpu backend instead of having to push it up to the frontend.",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 49
+      },
+      "revId": "bd9b48b3f6e64262f8fe233a235d8ea50ecb9463",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4210fae1_655577d7",
+        "filename": "src/dawn/tests/white_box/CaptureAndReplayTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-30T00:16:36Z",
+      "side": 1,
+      "message": "nit. In the comment we should link the bug and mention this is a regression test for it.",
+      "range": {
+        "startLine": 1018,
+        "startChar": 0,
+        "endLine": 1025,
+        "endChar": 73
+      },
+      "revId": "bd9b48b3f6e64262f8fe233a235d8ea50ecb9463",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
