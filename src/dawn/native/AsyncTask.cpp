@@ -33,9 +33,9 @@
 
 namespace dawn::native {
 
-AsyncTask::AsyncTask(std::function<void()> task) : mTask(task) {}
+AsyncTaskBase::AsyncTaskBase() = default;
 
-void AsyncTask::Wait() {
+void AsyncTaskBase::Wait() {
     std::unique_ptr<dawn::platform::WaitableEvent> waitableEvent;
     {
         std::scoped_lock<std::mutex> lock(mMutex);
@@ -47,7 +47,7 @@ void AsyncTask::Wait() {
     }
 }
 
-void AsyncTask::AddCompletionCallback(AsyncTaskCompletionCallback completionCallback) {
+void AsyncTaskBase::AddCompletionCallback(AsyncTaskCompletionCallback completionCallback) {
     std::scoped_lock<std::mutex> lock(mMutex);
 
     // If this task has already completed, call the completion callback immediately.
@@ -59,17 +59,13 @@ void AsyncTask::AddCompletionCallback(AsyncTaskCompletionCallback completionCall
     mCompletionCallbacks.push_back(completionCallback);
 }
 
-void AsyncTask::Run() {
+void AsyncTaskBase::Run() {
     {
         AsyncTaskState prevState = mState.exchange(AsyncTaskState::Running);
         DAWN_ASSERT(prevState == AsyncTaskState::Pending);
     }
 
-    mTask();
-
-    // AsyncTask may have a much longer life time than the task itself.
-    // Reset it to release any references that were captured.
-    mTask = nullptr;
+    RunImpl();
 
     // Grab the completion callbacks while locked but call them outside the lock.
     std::vector<AsyncTaskCompletionCallback> completionCallbacks;
@@ -85,6 +81,16 @@ void AsyncTask::Run() {
     for (auto completionCallback : completionCallbacks) {
         completionCallback();
     }
+}
+
+AsyncTask::AsyncTask(std::function<void()> task) : mTask(std::move(task)) {}
+
+void AsyncTask::RunImpl() {
+    mTask();
+
+    // AsyncTask may have a much longer life time than the task itself.
+    // Reset it to release any references that were captured.
+    mTask = nullptr;
 }
 
 ErrorGeneratingAsyncTask::ErrorGeneratingAsyncTask(std::function<MaybeError()> task)
@@ -124,7 +130,7 @@ AsyncTaskManager::~AsyncTaskManager() {
     WaitAllPendingTasks();
 }
 
-void AsyncTaskManager::PostConstructedTask(Ref<AsyncTask> asyncTask) {
+void AsyncTaskManager::PostConstructedTask(Ref<AsyncTaskBase> asyncTask) {
     // We insert new waitableTask objects into mPendingTasks in main thread (PostTask()),
     // and we may remove waitableTask objects from mPendingTasks in either main thread
     // (WaitAllPendingTasks()) or sub-thread (TaskCompleted), so mPendingTasks should be
