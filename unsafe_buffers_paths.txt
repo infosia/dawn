@@ -32,9 +32,7 @@
 
 -src/dawn/native/
 -src/dawn/node
--src/dawn/samples
 -src/dawn/tests
--src/dawn/utils
 -src/tint
 -src/utils
 

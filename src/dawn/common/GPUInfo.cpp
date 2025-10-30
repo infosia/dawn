@@ -29,7 +29,6 @@
 // TODO(crbug.com/439062058): Remove this and convert code to safer constructs.
 #pragma allow_unsafe_buffers
 #endif
-
 #include "dawn/common/GPUInfo.h"
 #include "dawn/common/GPUInfo_autogen.h"
 
