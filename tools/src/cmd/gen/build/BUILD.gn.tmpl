@@ -72,7 +72,7 @@ tint_fuzz_source_set("fuzz") {
 test("{{$.OutputName}}") {
   testonly = true
 {{- else if $.Kind.IsBenchCmd -}}
-test("bench_cmd") {
+test("{{$.OutputName}}") {
   testonly = true
 {{- else if $.Kind.IsFuzzCmd -}}
 tint_fuzzer_test("{{$.Directory.Name}}") {
