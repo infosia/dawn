@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e834c236_de86575b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-30T19:07:12Z",
+      "side": 1,
+      "message": "nit. We should add some more context to the CL description",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 41
+      },
+      "revId": "4b8c516ca31741dba97a4c94c6e2e48417a94c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e872af3b_f006f561",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-30T19:07:12Z",
+      "side": 1,
+      "message": "Nice! Thanks Gregg for iterating on this! And sorry it was a pretty big architectural change.",
+      "revId": "4b8c516ca31741dba97a4c94c6e2e48417a94c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc7741bd_3b488904",
+        "filename": "src/dawn/native/webgpu/BindGroupWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-30T19:07:12Z",
+      "side": 1,
+      "message": "nit. that that",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 11
+      },
+      "revId": "4b8c516ca31741dba97a4c94c6e2e48417a94c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f98e1fc2_d6f91538",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-30T19:07:12Z",
+      "side": 1,
+      "message": "nit. fine",
+      "range": {
+        "startLine": 66,
+        "startChar": 19,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "4b8c516ca31741dba97a4c94c6e2e48417a94c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84d2118f_93495584",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-30T19:07:12Z",
+      "side": 1,
+      "message": "Do we actually emit an error if it\u0027s never used? I think that in the nominal case we also actually do no-op so this would reflect how native handles it also?\n\nI guess the downside of this right now is that if a user only set the bad bind group and didn\u0027t correctly overwrite it with a valid one later, then we would probably cause a different error (maybe something like didn\u0027t assign a bind group or something?) \n\nOne possibility to address this is we could consider wrapping the scope of the capture in push/pop error scopes, and then save them so that we could either emit the same errors or surface it immediately to the user that they are capturing bad code?",
+      "range": {
+        "startLine": 736,
+        "startChar": 44,
+        "endLine": 737,
+        "endChar": 75
+      },
+      "revId": "4b8c516ca31741dba97a4c94c6e2e48417a94c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e2c4d56_ae762de6",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-30T19:07:12Z",
+      "side": 1,
+      "message": "nit. do is check that the implicit bindGroupLayout has been assigned an id",
+      "range": {
+        "startLine": 738,
+        "startChar": 50,
+        "endLine": 739,
+        "endChar": 43
+      },
+      "revId": "4b8c516ca31741dba97a4c94c6e2e48417a94c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79a09143_08b6b10a",
+        "filename": "src/dawn/tests/white_box/CaptureAndReplayTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-10-30T19:07:12Z",
+      "side": 1,
+      "message": "nit. will",
+      "range": {
+        "startLine": 1023,
+        "startChar": 3,
+        "endLine": 1023,
+        "endChar": 7
+      },
+      "revId": "4b8c516ca31741dba97a4c94c6e2e48417a94c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
