@@ -1211,12 +1211,14 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
                                     "if `decompose_uniform_buffers` is not used",
                                     feature));
             }
+#if 0
             // TODO(crbug.com/42251215): Investigate f16 CTS test failures to enable on Nvidia.
             if (gpu_info::IsNvidia(mVendorId) &&
                 !toggles.IsEnabled(Toggle::VulkanEnableF16OnNvidia)) {
                 return FeatureValidationResult(
                     absl::StrFormat("Feature %s is not yet supported on Nvidia GPUs", feature));
             }
+#endif
             break;
 
         default:
