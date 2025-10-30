@@ -299,14 +299,17 @@ MaybeError PrepareResourcesForSyncScope(Device* device,
                                               VK_PIPELINE_STAGE_VERTEX_SHADER_BIT |
                                               VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT;
 
-    struct Barriers {
+    struct ImageBarriers {
         std::vector<VkImageMemoryBarrier> imageBarriers;
         VkPipelineStageFlags srcStages = 0;
         VkPipelineStageFlags dstStages = 0;
     };
 
-    Barriers vertexBarriers;
-    Barriers nonVertexBarriers;
+    ImageBarriers vertexImageBarriers;
+    ImageBarriers nonVertexImageBarriers;
+
+    BufferBarrier vertexBufferBarrier;
+    BufferBarrier nonVertexBufferBarrier;
 
     for (size_t i = 0; i < scope.buffers.size(); ++i) {
         Buffer* buffer = ToBackend(scope.buffers[i]);
@@ -324,11 +327,17 @@ MaybeError PrepareResourcesForSyncScope(Device* device,
         wgpu::BufferUsage usage =
             scope.bufferSyncInfos[i].usage & (~kIndirectBufferForFrontendValidation);
 
-        buffer->TrackUsageAndGetResourceBarrier(recordingContext, usage,
-                                                scope.bufferSyncInfos[i].shaderStages);
+        BufferBarrier barrier = buffer->TrackUsageAndGetResourceBarrier(
+            recordingContext, usage, scope.bufferSyncInfos[i].shaderStages);
+
+        if (barrier.dstStages & vertexStages) {
+            vertexBufferBarrier.Merge(barrier);
+        } else {
+            nonVertexBufferBarrier.Merge(barrier);
+        }
     }
 
-    auto MergeImageBarriers = [](Barriers* barriers, VkPipelineStageFlags srcStages,
+    auto MergeImageBarriers = [](ImageBarriers* barriers, VkPipelineStageFlags srcStages,
                                  VkPipelineStageFlags dstStages,
                                  const std::vector<VkImageMemoryBarrier>& imageBarriers) {
         barriers->srcStages |= srcStages;
@@ -359,20 +368,22 @@ MaybeError PrepareResourcesForSyncScope(Device* device,
                                         &srcStages, &dstStages);
 
         if (!imageBarriers.empty()) {
-            MergeImageBarriers((dstStages & vertexStages) ? &vertexBarriers : &nonVertexBarriers,
-                               srcStages, dstStages, imageBarriers);
+            MergeImageBarriers(
+                (dstStages & vertexStages) ? &vertexImageBarriers : &nonVertexImageBarriers,
+                srcStages, dstStages, imageBarriers);
             imageBarriers.clear();
         }
     }
 
-    for (const Barriers& barriers : {vertexBarriers, nonVertexBarriers}) {
+    for (const ImageBarriers& barriers : {vertexImageBarriers, nonVertexImageBarriers}) {
         if (!barriers.imageBarriers.empty()) {
             device->fn.CmdPipelineBarrier(
                 recordingContext->commandBuffer, barriers.srcStages, barriers.dstStages, 0, 0,
                 nullptr, 0, nullptr, barriers.imageBarriers.size(), barriers.imageBarriers.data());
         }
     }
-    recordingContext->EmitBufferBarriers(device);
+    recordingContext->EmitBufferBarrier(device, vertexBufferBarrier);
+    recordingContext->EmitBufferBarrier(device, nonVertexBufferBarrier);
 
     return {};
 }
