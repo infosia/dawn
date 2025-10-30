@@ -325,7 +325,7 @@ MaybeError PrepareResourcesForSyncScope(Device* device,
             scope.bufferSyncInfos[i].usage & (~kIndirectBufferForFrontendValidation);
 
         buffer->TrackUsageAndGetResourceBarrier(recordingContext, usage,
-                                                scope.bufferSyncInfos[i].shaderStages);
+                                                scope.bufferSyncInfos[i].shaderStages, false);
     }
 
     auto MergeImageBarriers = [](Barriers* barriers, VkPipelineStageFlags srcStages,

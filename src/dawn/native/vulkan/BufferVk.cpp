@@ -31,11 +31,13 @@
 #include <cstring>
 #include <limits>
 #include <memory>
+#include <string>
 #include <utility>
 #include <vector>
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/GPUInfo.h"
+#include "dawn/common/Log.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/PhysicalDevice.h"
@@ -284,6 +286,8 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
         device->fn.CreateBuffer(device->GetVkDevice(), &createInfo, nullptr, &*mHandle),
         "vkCreateBuffer"));
 
+    // dawn::ErrorLog() << "BufferVk size=" << mAllocatedSize << " handle=" << mHandle;
+
     // Gather requirements for the buffer's memory and allocate it.
     VkMemoryRequirements requirements;
     device->fn.GetBufferMemoryRequirements(device->GetVkDevice(), mHandle, &requirements);
@@ -310,6 +314,7 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
     if (device->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse) && !mappedAtCreation) {
         uint32_t paddingBytes = GetAllocatedSize() - GetSize();
         if (paddingBytes > 0) {
+            // dawn::ErrorLog() << "Clear padding bytes";
             uint32_t clearSize = Align(paddingBytes, 4);
             uint64_t clearOffset = GetAllocatedSize() - clearSize;
 
@@ -435,18 +440,20 @@ VkBuffer Buffer::GetHandle() const {
 void Buffer::TransitionUsageNow(CommandRecordingContext* recordingContext,
                                 wgpu::BufferUsage usage,
                                 wgpu::ShaderStage shaderStage) {
-    TrackUsageAndGetResourceBarrier(recordingContext, usage, shaderStage);
+    TrackUsageAndGetResourceBarrier(recordingContext, usage, shaderStage, false);
     recordingContext->EmitBufferBarriers(ToBackend(GetDevice()));
 }
 
 void Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingContext,
                                              wgpu::BufferUsage usage,
-                                             wgpu::ShaderStage shaderStage) {
+                                             wgpu::ShaderStage shaderStage,
+                                             bool isMapAsync) {
     if (shaderStage == wgpu::ShaderStage::None) {
         // If the buffer isn't used in any shader stages, ignore shader usages. Eg. ignore a uniform
         // buffer that isn't actually read in any shader.
         usage &= ~kShaderBufferUsages;
     }
+    // dawn::ErrorLog() << "TrackUsageAndGetResourceBarrier[" << mHandle << "]";
 
     const bool isMapUsage = usage & kMappableBufferUsages;
     if (!isMapUsage) {
@@ -539,6 +546,19 @@ void Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingC
         MarkUsedInPendingCommands();
     }
 
+    if (isMapAsync) {
+        DAWN_CHECK(IsSubset(usage, kMappableBufferUsages));
+        std::string barrier_str =
+            absl::StrFormat("srcStages=%s srcAccessMask=%s dstStages=%s dstAccessMask=%s",
+                            PipelineStageToString(srcStage), AccessFlagToString(srcAccess),
+                            PipelineStageToString(VulkanPipelineStage(usage, shaderStage)),
+                            AccessFlagToString(VulkanAccessFlags(usage)));
+
+        dawn::ErrorLog() << "Skip Barrier[" << mHandle << "] " << barrier_str;
+        // The eager transition at end of submit will handle inserting barriers.
+        return;
+    }
+
     recordingContext->AddBufferBarrier(srcAccess, /* dstAccess */ VulkanAccessFlags(usage),
                                        srcStage,
                                        /* dstStage */ VulkanPipelineStage(usage, shaderStage));
@@ -558,10 +578,12 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
         ToBackend(GetDevice()->GetQueue())->GetPendingRecordingContext();
 
     if (mode & wgpu::MapMode::Read) {
-        TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapRead);
+        TrackUsageAndGetResourceBarrier(recordingContext, wgpu::BufferUsage::MapRead,
+                                        wgpu::ShaderStage::None, true);
     } else {
         DAWN_ASSERT(mode & wgpu::MapMode::Write);
-        TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapWrite);
+        TrackUsageAndGetResourceBarrier(recordingContext, wgpu::BufferUsage::MapWrite,
+                                        wgpu::ShaderStage::None, true);
     }
 
     return {};
@@ -816,8 +838,8 @@ void Buffer::TransitionMappableBuffersEagerly(Device* device,
     size_t originalBufferCount = buffers.size();
     for (const Ref<Buffer>& buffer : buffers) {
         wgpu::BufferUsage mapUsage = buffer->GetInternalUsage() & kMappableBufferUsages;
-        buffer->TrackUsageAndGetResourceBarrier(recordingContext, mapUsage,
-                                                wgpu::ShaderStage::None);
+        buffer->TrackUsageAndGetResourceBarrier(recordingContext, mapUsage, wgpu::ShaderStage::None,
+                                                false);
     }
     // TrackUsageAndGetResourceBarrier() should not modify recordingContext for map usages.
     DAWN_ASSERT(buffers.size() == originalBufferCount);

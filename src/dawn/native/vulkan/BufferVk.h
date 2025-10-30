@@ -57,7 +57,8 @@ class Buffer final : public BufferBase {
                             wgpu::ShaderStage shaderStage = wgpu::ShaderStage::None);
     void TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingContext,
                                          wgpu::BufferUsage usage,
-                                         wgpu::ShaderStage shaderStage);
+                                         wgpu::ShaderStage shaderStage,
+                                         bool isMapAsync);
 
     // All the Ensure methods return true if the buffer was initialized to zero.
     bool EnsureDataInitialized(CommandRecordingContext* recordingContext);

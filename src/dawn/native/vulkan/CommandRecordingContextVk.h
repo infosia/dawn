@@ -27,6 +27,7 @@
 #ifndef SRC_DAWN_NATIVE_VULKAN_COMMANDRECORDINGCONTEXT_H_
 #define SRC_DAWN_NATIVE_VULKAN_COMMANDRECORDINGCONTEXT_H_
 
+#include <string>
 #include <vector>
 
 #include "absl/container/flat_hash_set.h"
@@ -38,6 +39,8 @@
 namespace dawn::native::vulkan {
 
 class Texture;
+std::string AccessFlagToString(VkAccessFlags flags);
+std::string PipelineStageToString(VkPipelineStageFlags flags);
 
 // Wrapping class that currently associates a command buffer to it's corresponding pool.
 // TODO(dawn:1601) Revisit this structure since it is where the 1:1 mapping is implied.
