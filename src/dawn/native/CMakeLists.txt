@@ -374,6 +374,7 @@ if (DAWN_ENABLE_D3D11)
         "d3d11/CommandBufferD3D11.h"
         "d3d11/CommandRecordingContextD3D11.h"
         "d3d11/ComputePipelineD3D11.h"
+        "d3d11/CreateShaderTaskD3D11.h"
         "d3d11/DeviceD3D11.h"
         "d3d11/DeviceInfoD3D11.h"
         "d3d11/Forward.h"
