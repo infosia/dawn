@@ -30,6 +30,7 @@
 #include <algorithm>
 #include <limits>
 #include <sstream>
+#include <string>
 #include <utility>
 
 #include "dawn/common/GPUInfo.h"
@@ -48,6 +49,7 @@
 #include "dawn/native/d3d11/CommandBufferD3D11.h"
 #include "dawn/native/d3d11/CommandRecordingContextD3D11.h"
 #include "dawn/native/d3d11/ComputePipelineD3D11.h"
+#include "dawn/native/d3d11/CreateShaderTaskD3D11.h"
 #include "dawn/native/d3d11/PhysicalDeviceD3D11.h"
 #include "dawn/native/d3d11/PipelineLayoutD3D11.h"
 #include "dawn/native/d3d11/PlatformFunctionsD3D11.h"
@@ -65,13 +67,6 @@
 #include "dawn/platform/tracing/TraceEvent.h"
 
 namespace dawn::native::d3d11 {
-
-size_t Sha3CacheFuncs::operator()(const Sha3_256::Output& key) const {
-    return absl::HashOf(absl::MakeSpan(key.data(), 8), absl::MakeSpan(key.data() + 24, 8));
-}
-bool Sha3CacheFuncs::operator()(const Sha3_256::Output& a, const Sha3_256::Output& b) const {
-    return std::memcmp(a.data(), b.data(), sizeof(Sha3_256::Output)) == 0;
-}
 
 namespace {
 
@@ -630,40 +625,40 @@ void Device::ReturnStagingBuffer(Ref<BufferBase>&& buffer) {
     }
 }
 
-ResultOrError<ComPtr<ID3D11VertexShader>> Device::GetOrCreateVertexShader(
-    const d3d::CompiledShader& args) {
-    return mVertexShaderCache.GetOrCreate(
-        args.sha3, [&](const Sha3_256::Output&) -> ResultOrError<ComPtr<ID3D11VertexShader>> {
-            ComPtr<ID3D11VertexShader> vs;
-            DAWN_TRY(CheckHRESULT(mD3d11Device->CreateVertexShader(
-                                      args.shaderBlob.Data(), args.shaderBlob.Size(), nullptr, &vs),
-                                  "D3D11 create vertex shader"));
-            return vs;
-        });
+FutureComPtr<ID3D11VertexShader> Device::GetOrCreateVertexShader(d3d::CompiledShader args,
+                                                                 std::string label) {
+    std::promise<ResultOrError<ComPtr<ID3D11VertexShader>>> promise;
+    std::future<ResultOrError<ComPtr<ID3D11VertexShader>>> future = promise.get_future();
+
+    GetAsyncTaskManager()->PostTask<CreateShaderTask<SingleShaderStage::Vertex>>(
+        mD3d11Device, GetPlatform(), mVertexShaderCache, std::move(args), std::move(promise),
+        std::move(label));
+
+    return FutureComPtr<ID3D11VertexShader>(std::move(future));
 }
 
-ResultOrError<ComPtr<ID3D11PixelShader>> Device::GetOrCreatePixelShader(
-    const d3d::CompiledShader& args) {
-    return mPixelShaderCache.GetOrCreate(
-        args.sha3, [&](const Sha3_256::Output&) -> ResultOrError<ComPtr<ID3D11PixelShader>> {
-            ComPtr<ID3D11PixelShader> ps;
-            DAWN_TRY(CheckHRESULT(mD3d11Device->CreatePixelShader(
-                                      args.shaderBlob.Data(), args.shaderBlob.Size(), nullptr, &ps),
-                                  "D3D11 create pixel shader"));
-            return ps;
-        });
+FutureComPtr<ID3D11PixelShader> Device::GetOrCreatePixelShader(d3d::CompiledShader args,
+                                                               std::string label) {
+    std::promise<ResultOrError<ComPtr<ID3D11PixelShader>>> promise;
+    std::future<ResultOrError<ComPtr<ID3D11PixelShader>>> future = promise.get_future();
+
+    GetAsyncTaskManager()->PostTask<CreateShaderTask<SingleShaderStage::Fragment>>(
+        mD3d11Device, GetPlatform(), mPixelShaderCache, std::move(args), std::move(promise),
+        std::move(label));
+
+    return FutureComPtr<ID3D11PixelShader>(std::move(future));
 }
 
-ResultOrError<ComPtr<ID3D11ComputeShader>> Device::GetOrCreateComputeShader(
-    const d3d::CompiledShader& args) {
-    return mComputeShaderCache.GetOrCreate(
-        args.sha3, [&](const Sha3_256::Output&) -> ResultOrError<ComPtr<ID3D11ComputeShader>> {
-            ComPtr<ID3D11ComputeShader> cs;
-            DAWN_TRY(CheckHRESULT(mD3d11Device->CreateComputeShader(
-                                      args.shaderBlob.Data(), args.shaderBlob.Size(), nullptr, &cs),
-                                  "D3D11 create compute shader"));
-            return cs;
-        });
+FutureComPtr<ID3D11ComputeShader> Device::GetOrCreateComputeShader(d3d::CompiledShader args,
+                                                                   std::string label) {
+    std::promise<ResultOrError<ComPtr<ID3D11ComputeShader>>> promise;
+    std::future<ResultOrError<ComPtr<ID3D11ComputeShader>>> future = promise.get_future();
+
+    GetAsyncTaskManager()->PostTask<CreateShaderTask<SingleShaderStage::Compute>>(
+        mD3d11Device, GetPlatform(), mComputeShaderCache, std::move(args), std::move(promise),
+        std::move(label));
+
+    return FutureComPtr<ID3D11ComputeShader>(std::move(future));
 }
 
 }  // namespace dawn::native::d3d11
