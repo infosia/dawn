@@ -131,7 +131,7 @@ MaybeError SharedTextureMemory::BeginAccessImpl(
     DAWN_TRY(d3d::SharedTextureMemory::BeginAccessImpl(texture, descriptor));
 
     if (auto* beginState = descriptor.Get<SharedTextureMemoryD3DSwapchainBeginState>()) {
-        ToBackend(texture)->SetIsSwapchainTexture(beginState->isSwapchain);
+        ToBackend(texture)->SetIsExternalSwapchainTexture(beginState->isSwapchain);
     }
 
     // Reset state to COMMON. BeginAccess contains a list of fences to wait on after
@@ -148,7 +148,7 @@ ResultOrError<FenceAndSignalValue> SharedTextureMemory::EndAccessImpl(
     TextureBase* texture,
     ExecutionSerial lastUsageSerial,
     UnpackedPtr<EndAccessState>& state) {
-    ToBackend(texture)->NotifySwapChainPresentToPIX();
+    ToBackend(texture)->NotifySwapChainPresent();
     return d3d::SharedTextureMemory::EndAccessImpl(texture, lastUsageSerial, state);
 }
 
