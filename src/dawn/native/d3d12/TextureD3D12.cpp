@@ -56,6 +56,8 @@
 #include "dawn/native/d3d12/TextureCopySplitter.h"
 #include "dawn/native/d3d12/UtilsD3D12.h"
 
+#include "renderdoc/api/app/renderdoc_app.h"
+
 namespace dawn::native::d3d12 {
 
 namespace {
@@ -232,7 +234,7 @@ MaybeError Texture::InitializeAsExternalTexture(ComPtr<IUnknown> d3dTexture,
                            ResourceHeapKind::InvalidEnum};
     mKeyedMutex = std::move(keyedMutex);
     mWaitFences = std::move(waitFences);
-    mSwapChainTexture = isSwapChainTexture;
+    mIsExternalSwapChainTexture = isSwapChainTexture;
 
     SetLabelHelper("Dawn_ExternalTexture");
 
@@ -347,8 +349,9 @@ Texture::~Texture() = default;
 void Texture::DestroyImpl() {
     TextureBase::DestroyImpl();
     ToBackend(GetDevice())->DeallocateMemory(mResourceAllocation);
-    // Set mSwapChainTexture to false to prevent ever calling ID3D12SharingContract::Present again.
-    mSwapChainTexture = false;
+    // Set mIsExternalSwapChainTexture to false to prevent ever calling
+    // ID3D12SharingContract::Present again.
+    mIsExternalSwapChainTexture = false;
 }
 
 DXGI_FORMAT Texture::GetD3D12Format() const {
@@ -418,24 +421,51 @@ MaybeError Texture::SynchronizeTextureBeforeUse(CommandRecordingContext* command
     return {};
 }
 
-void Texture::NotifySwapChainPresentToPIX() {
-    // In PIX's D3D12-only mode, there is no way to determine frame boundaries
-    // for WebGPU since Dawn does not manage DXGI swap chains. Without assistance,
-    // PIX will wait forever for a present that never happens.
-    // If we know we're dealing with a swapbuffer texture, inform PIX we've
-    // "presented" the texture so it can determine frame boundaries and use its
-    // contents for the UI.
-    if (mSwapChainTexture) {
+void Texture::NotifySwapChainPresent() {
+    // When using an external swap chain texture, there's no way to determine frame boundaries since
+    // Dawn isn't managing the DXGI swap chains. In this mode, external tools like PIX and RenderDoc
+    // will wait forever for a present that never happens in D3D12. We handle this by using
+    // tool-specific hooks to inform them of the "presented" texture so it can determine frame
+    // boundaries and use its contents for the UI.
+    if (mIsExternalSwapChainTexture) {
+        Device* device = ToBackend(GetDevice());
+
+        // For PIX, call ID3D12SharingContract::Present
         ID3D12SharingContract* d3dSharingContract =
-            ToBackend(GetDevice()->GetQueue())->GetSharingContract();
+            ToBackend(device->GetQueue())->GetSharingContract();
         if (d3dSharingContract != nullptr) {
             d3dSharingContract->Present(mResourceAllocation.GetD3D12Resource(), 0, 0);
+        }
+
+        // For RenderDoc, we expect the user to enable and use process injection to inject RenderDoc
+        // into the GPU process at startup. We start capturing all frames right away. The user has
+        // to kill the process or stop it from rendering (e.g. close or change tabs in Chrome).
+        if (GetDevice()->IsToggleEnabled(Toggle::EnableRenderDocProcessInjection)) {
+            using RenderDocApiType = RENDERDOC_API_1_1_2;
+            constexpr auto kRenderDocApiVersion = eRENDERDOC_API_Version_1_1_2;
+            // Lazily attempt to load the DLL and get the API object
+            if (mRenderDocApi == nullptr) {
+                if (HMODULE mod = GetModuleHandleA("renderdoc.dll")) {
+                    pRENDERDOC_GetAPI RENDERDOC_GetAPI =
+                        (pRENDERDOC_GetAPI)GetProcAddress(mod, "RENDERDOC_GetAPI");
+                    RENDERDOC_GetAPI(kRenderDocApiVersion, &mRenderDocApi);
+                    DAWN_ASSERT(mRenderDocApi);
+                }
+            }
+            // If we loaded the API object, send it the frame start/end capture
+            if (mRenderDocApi) {
+                auto* api = reinterpret_cast<RenderDocApiType*>(mRenderDocApi);
+                // We signal the end of the current frame and the start of the next.
+                // This means we miss capturing the very first frame.
+                api->EndFrameCapture(device->GetD3D12Device(), NULL);
+                api->StartFrameCapture(device->GetD3D12Device(), NULL);
+            }
         }
     }
 }
 
-void Texture::SetIsSwapchainTexture(bool isSwapChainTexture) {
-    mSwapChainTexture = isSwapChainTexture;
+void Texture::SetIsExternalSwapchainTexture(bool isSwapChainTexture) {
+    mIsExternalSwapChainTexture = isSwapChainTexture;
 }
 
 void Texture::TrackUsageAndTransitionNow(CommandRecordingContext* commandContext,
