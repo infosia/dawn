@@ -51,6 +51,24 @@
       "parentUuid": "7a42cb4a_69217af3",
       "revId": "0af3880b23d184430ccca2bbbc1dff18fbce7711",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98ee652f_10a2cdb3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-31T13:44:09Z",
+      "side": 1,
+      "message": "Here https://chromium-swarm.appspot.com/task?id\u003d74450e56fd24a710 it stopped on\n[ RUN      ] DepthStencilLoadOpTests.ClearMip1/WebGPU_WebGPU_backend_on_BackendType__Metal_Format_TextureFormat__Depth24PlusStencil8_Check_CopyStencil\n\nLater timeouts did not, but I think they did run some WebGPU_WebGPU_backend tests, like:\nhttps://chromium-swarm.appspot.com/task?id\u003d744cffb8c50a7210\n[ RUN      ] BindGroupTests.ReusedUBO/WebGPU_WebGPU_backend_on_BackendType__Metal\n[       OK ] BindGroupTests.ReusedUBO/WebGPU_WebGPU_backend_on_BackendType__Metal (13 ms)",
+      "parentUuid": "5fc956c7_0851e1b4",
+      "revId": "0af3880b23d184430ccca2bbbc1dff18fbce7711",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
