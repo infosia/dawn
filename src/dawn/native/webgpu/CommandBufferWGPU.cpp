@@ -490,12 +490,30 @@ void EncodeRenderPass(const Device* device,
             }
 
             case Command::MultiDrawIndirect: {
-                DAWN_UNREACHABLE();
+                auto cmd = commands.NextCommand<MultiDrawIndirectCmd>();
+                wgpu.renderPassEncoderMultiDrawIndirect(
+                    passEncoder,
+                    ToBackend(cmd->indirectBuffer)->GetInnerHandle(),
+                    cmd->indirectOffset,
+                    cmd->maxDrawCount,
+                    cmd->drawCountBuffer ? ToBackend(cmd->drawCountBuffer)->GetInnerHandle()
+                                        : nullptr,
+                    cmd->drawCountOffset
+                );
                 break;
             }
 
             case Command::MultiDrawIndexedIndirect: {
-                DAWN_UNREACHABLE();
+                auto cmd = commands.NextCommand<MultiDrawIndexedIndirectCmd>();
+                wgpu.renderPassEncoderMultiDrawIndexedIndirect(
+                    passEncoder,
+                    ToBackend(cmd->indirectBuffer)->GetInnerHandle(),
+                    cmd->indirectOffset,
+                    cmd->maxDrawCount,
+                    cmd->drawCountBuffer ? ToBackend(cmd->drawCountBuffer)->GetInnerHandle()
+                                        : nullptr,
+                    cmd->drawCountOffset
+                );
                 break;
             }
 
