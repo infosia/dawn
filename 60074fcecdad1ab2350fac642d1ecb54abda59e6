@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "2ef8d8a5_c296a480",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-31T17:07:33Z",
+      "side": 1,
+      "message": "I believe we originally removed them for capacity reasons, not stability reasons. I\u0027ll keep an eye on capacity and remove if necessary.",
+      "parentUuid": "1471a2f1_eedff42d",
+      "range": {
+        "startLine": 9,
+        "startChar": 62,
+        "endLine": 10,
+        "endChar": 46
+      },
+      "revId": "60074fcecdad1ab2350fac642d1ecb54abda59e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "0bba16b3_6abe489b",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
