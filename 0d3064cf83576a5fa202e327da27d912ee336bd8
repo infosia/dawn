@@ -16,6 +16,24 @@
       "message": "PTAL\n\nWill likely hold off until Monday to submit",
       "revId": "0d3064cf83576a5fa202e327da27d912ee336bd8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ea3f1db_7dd21c66",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-10-31T19:51:05Z",
+      "side": 1,
+      "message": "Well, since Yuly +2\u0027d already and this should be pretty safe (haven\u0027t had issues with other Windows configs being added to the CQ), submitting now.",
+      "parentUuid": "ed713853_298c6c6f",
+      "revId": "0d3064cf83576a5fa202e327da27d912ee336bd8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
