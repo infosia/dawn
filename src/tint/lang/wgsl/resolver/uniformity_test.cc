@@ -1477,7 +1477,7 @@ test:13:3 note: control flow depends on possibly non-uniform value
 test:13:7 note: reading from read_write storage buffer 'n' may result in a non-uniform value
   if (n == 42) {
       ^
-)");
+)");  // } }
     }
 }
 
@@ -1516,7 +1516,7 @@ test:9:3 note: control flow depends on possibly non-uniform value
 test:9:7 note: reading from read_write storage buffer 'n' may result in a non-uniform value
   if (n == 42) {
       ^
-)");
+)");  // } }
         }
     }
 }
@@ -1559,7 +1559,7 @@ test:8:7 note: reading from read_write storage buffer 'n' may result in a non-un
   if (n == 42) {
       ^
 )");
-    }
+    }  // } }
 }
 
 TEST_P(LoopDeadCodeTest, ForWithoutCond_AfterLoop) {
@@ -1597,7 +1597,7 @@ test:8:3 note: control flow depends on possibly non-uniform value
 test:8:7 note: reading from read_write storage buffer 'n' may result in a non-uniform value
   if (n == 42) {
       ^
-)");
+)");  // } }
         }
     }
 }
@@ -1636,7 +1636,7 @@ test:8:3 note: control flow depends on possibly non-uniform value
 test:8:7 note: reading from read_write storage buffer 'n' may result in a non-uniform value
   if (n == 42) {
       ^
-)");
+)");  // } }
 }
 
 TEST_F(UniformityAnalysisTest, Loop_VarBecomesNonUniformInLoopAfterBarrier) {
@@ -1671,7 +1671,7 @@ test:7:5 note: control flow depends on possibly non-uniform value
 test:12:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest,
@@ -1709,7 +1709,7 @@ test:7:5 note: control flow depends on possibly non-uniform value
 test:12:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest,
@@ -1750,7 +1750,7 @@ test:7:5 note: control flow depends on possibly non-uniform value
 test:12:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, Loop_VarBecomesNonUniformInLoopAfterBarrier_BreakAtEnd) {
@@ -1810,7 +1810,7 @@ test:7:5 note: control flow depends on possibly non-uniform value
 test:11:11 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
       v = non_uniform;
           ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest,
@@ -1848,7 +1848,7 @@ test:7:5 note: control flow depends on possibly non-uniform value
 test:12:11 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
       v = non_uniform;
           ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest,
@@ -1935,7 +1935,7 @@ test:13:5 note: control flow depends on possibly non-uniform value
 test:8:11 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
       v = non_uniform;
           ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, Loop_ConditionalAssignNonUniformWithBreak_BarrierAfterLoop) {
@@ -1973,7 +1973,7 @@ test:14:3 note: control flow depends on possibly non-uniform value
 test:8:11 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
       v = non_uniform;
           ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, Loop_VarBecomesUniformBeforeSomeExits_BarrierAfterLoop) {
@@ -2016,7 +2016,7 @@ test:19:3 note: control flow depends on possibly non-uniform value
 test:11:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, Loop_VarBecomesUniformBeforeAllExits_BarrierAfterLoop) {
@@ -2090,7 +2090,7 @@ test:19:3 note: control flow depends on possibly non-uniform value
 test:7:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, Loop_VarBecomesNonUniformBeforeConditionalContinue_BarrierAtStart) {
@@ -2131,7 +2131,7 @@ test:7:5 note: control flow depends on possibly non-uniform value
 test:12:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest,
@@ -2175,7 +2175,7 @@ test:15:7 note: control flow depends on possibly non-uniform value
 test:7:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, Loop_VarBecomesUniformAfterConditionalContinue_BarrierInContinuing) {
@@ -2216,7 +2216,7 @@ test:13:7 note: control flow depends on possibly non-uniform value
 test:8:11 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
       v = non_uniform;
           ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, Loop_VarBecomesNonUniformBeforeBreak_BarrierInContinuing) {
@@ -2315,7 +2315,7 @@ test:7:5 note: control flow depends on possibly non-uniform value
 test:12:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, Loop_VarBecomesNonUniformInNestedLoopWithBreak_BarrierInLoop) {
@@ -2356,7 +2356,7 @@ test:7:5 note: control flow depends on possibly non-uniform value
 test:14:13 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
         v = non_uniform;
             ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest,
@@ -2474,7 +2474,7 @@ test:15:7 note: control flow depends on possibly non-uniform value
 test:7:13 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     var v = non_uniform;
             ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, Loop_NonUniformBreakInBody_Reconverge) {
@@ -2562,7 +2562,7 @@ test:5:3 note: control flow depends on possibly non-uniform value
 test:5:23 note: reading from read_write storage buffer 'n' may result in a non-uniform value
   for (var i = 0; i < n; i = i + 1) {
                       ^
-)");
+)");  // } }
 }
 
 TEST_F(UniformityAnalysisTest, ForLoop_VarBecomesNonUniformInContinuing_BarrierInLoop) {
@@ -2595,7 +2595,7 @@ test:7:5 note: control flow depends on possibly non-uniform value
 test:6:31 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
   for (var i = 0; i < 10; v = non_uniform) {
                               ^^^^^^^^^^^
-)");
+)");  // } }
 }
 
 TEST_F(UniformityAnalysisTest, ForLoop_VarBecomesUniformInContinuing_BarrierInLoop) {
@@ -2673,7 +2673,7 @@ test:9:3 note: control flow depends on possibly non-uniform value
 test:6:31 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
   for (var i = 0; i < 10; v = non_uniform) {
                               ^^^^^^^^^^^
-)");
+)");  // } }
 }
 
 TEST_F(UniformityAnalysisTest, ForLoop_VarBecomesUniformInContinuing_BarrierAfterLoop) {
@@ -2750,7 +2750,7 @@ test:7:5 note: control flow depends on possibly non-uniform value
 test:12:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, ForLoop_VarBecomesNonUniformInLoopAfterBarrier_BeforeContinue) {
@@ -2786,7 +2786,7 @@ test:7:5 note: control flow depends on possibly non-uniform value
 test:12:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest,
@@ -2824,7 +2824,7 @@ test:7:5 note: control flow depends on possibly non-uniform value
 test:12:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, ForLoop_ConditionalAssignNonUniformWithBreak_BarrierInLoop) {
@@ -2885,7 +2885,7 @@ test:14:3 note: control flow depends on possibly non-uniform value
 test:8:11 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
       v = non_uniform;
           ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, ForLoop_VarRemainsNonUniformAtLoopEnd_BarrierAfterLoop) {
@@ -2930,7 +2930,7 @@ test:20:3 note: control flow depends on possibly non-uniform value
 test:12:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest,
@@ -2972,7 +2972,7 @@ test:7:5 note: control flow depends on possibly non-uniform value
 test:12:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, ForLoop_VarBecomesNonUniformBeforeConditionalContinue) {
@@ -3013,7 +3013,7 @@ test:7:5 note: control flow depends on possibly non-uniform value
 test:12:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest,
@@ -3050,7 +3050,7 @@ test:5:3 note: control flow depends on possibly non-uniform value
 test:10:11 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
       i = non_uniform;
           ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, ForLoop_NonUniformBarrierInUnreachableContinuingStatement) {
@@ -3213,7 +3213,7 @@ test:6:3 note: control flow depends on possibly non-uniform value
 test:6:14 note: reading from read_write storage buffer 'n' may result in a non-uniform value
   while (i < n) {
              ^
-)");
+)");  // } }
 }
 
 TEST_F(UniformityAnalysisTest, While_VarBecomesNonUniformInLoopAfterBarrier) {
@@ -3250,7 +3250,7 @@ test:8:5 note: control flow depends on possibly non-uniform value
 test:13:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, While_ConditionalAssignNonUniformWithBreak_BarrierInLoop) {
@@ -3315,7 +3315,7 @@ test:16:3 note: control flow depends on possibly non-uniform value
 test:9:11 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
       v = non_uniform;
           ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, While_VarRemainsNonUniformAtLoopEnd_BarrierAfterLoop) {
@@ -3362,7 +3362,7 @@ test:22:3 note: control flow depends on possibly non-uniform value
 test:13:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, While_VarBecomesNonUniformBeforeConditionalContinue_BarrierAtStart) {
@@ -3405,7 +3405,7 @@ test:8:5 note: control flow depends on possibly non-uniform value
 test:13:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, While_VarBecomesNonUniformBeforeConditionalContinue) {
@@ -3448,7 +3448,7 @@ test:8:5 note: control flow depends on possibly non-uniform value
 test:13:9 note: reading from read_write storage buffer 'non_uniform' may result in a non-uniform value
     v = non_uniform;
         ^^^^^^^^^^^
-)");
+)");  // }
 }
 
 TEST_F(UniformityAnalysisTest, While_NonUniformCondition_Reconverge) {
