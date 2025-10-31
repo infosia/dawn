@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ad088c6_7b7a5a13",
+        "filename": "src/dawn/tests/white_box/CaptureAndReplayTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-31T22:58:17Z",
+      "side": 1,
+      "message": "IDK if it\u0027s accessible here but you could consider using CreateBufferFromData from WGPUHelpers",
+      "revId": "e9790adcc8572f3c394c312998d46f6d4bc31a32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
