@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "1471a2f1_eedff42d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-31T13:55:47Z",
+      "side": 1,
+      "message": "note that no_dxc tests didn\u0027t run on x86.\nI guess it\u0027s OK to add them since they pass and as long as we have capacity.",
+      "range": {
+        "startLine": 9,
+        "startChar": 62,
+        "endLine": 10,
+        "endChar": 46
+      },
+      "revId": "60074fcecdad1ab2350fac642d1ecb54abda59e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "0bba16b3_6abe489b",
