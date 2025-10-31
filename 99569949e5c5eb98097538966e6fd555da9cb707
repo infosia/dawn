@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f6a3028_1262d91f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-31T12:21:54Z",
+      "side": 1,
+      "message": "As discussed offline, please route all logic through the new `kotlin_name` macro (making changes to use that macro wherever possible).",
+      "revId": "99569949e5c5eb98097538966e6fd555da9cb707",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
