@@ -87,6 +87,24 @@
       "parentUuid": "357fed41_7ba14e62",
       "revId": "2aa3dd406c7d371e3825bb1bbaf8c7850ef4b984",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "caa93c3d_33e1978b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-10-31T13:49:00Z",
+      "side": 1,
+      "message": "It\u0027s not good that these failures look like shard timing out (i.e. infra failure) and the specific failing test is not reported.\nI think the next step for Dawn standalone CQ should be porting ANGLE\u0027s test harness, which runs tests in a separate process, and thus is able to report these as either test or batch timeouts.\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/src/tests/test_utils/runner/README.md\n\nWould also allow us to parallelize and speed up these test suites.",
+      "parentUuid": "6665853f_7a2f11f1",
+      "revId": "2aa3dd406c7d371e3825bb1bbaf8c7850ef4b984",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
