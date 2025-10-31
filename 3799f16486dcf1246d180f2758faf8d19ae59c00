@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "574685dc_6dae774b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-10-31T00:21:40Z",
+      "side": 1,
+      "message": "Understood. We discovered that further cleanup is required to eliminate the dependency on the FXC compiler in the D3D12 path. We\u0027ll conduct more tests locally.",
+      "parentUuid": "a2fb85c6_dc391090",
+      "revId": "3799f16486dcf1246d180f2758faf8d19ae59c00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5ddc7794_35af021a",
