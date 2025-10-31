@@ -1,3 +1,5 @@
+@file:JvmName("StreamUtils")
+
 package androidx.webgpu.helper
 
 import java.io.InputStream

@@ -1,3 +1,5 @@
+@file:JvmName("TextureUtils")
+
 package androidx.webgpu.helper
 
 import android.graphics.Bitmap
