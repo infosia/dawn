@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "92b3a317_f37e0572",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-31T23:29:10Z",
+      "side": 1,
+      "message": "Seems like the only thing we\u0027re adding to the build is a C header (and the dawn code) so it seems OK to me",
+      "parentUuid": "7dadbb57_3fc9f90a",
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "00900000_d20949e6",
         "filename": "src/dawn/native/Toggles.cpp",
         "patchSetId": 3
@@ -48,6 +66,30 @@
       "writtenOn": "2025-10-31T20:15:47Z",
       "side": 1,
       "message": "Not sure about the name. Also, not sure it should be a toggle or a env var?",
+      "range": {
+        "startLine": 713,
+        "startChar": 13,
+        "endLine": 713,
+        "endChar": 44
+      },
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb703768_0d306a6d",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-31T23:29:10Z",
+      "side": 1,
+      "message": "Toggle probably makes sense since we don\u0027t otherwise use env vars. But it would be ideal if we can enable this automatically somehow. I see chrome is started before renderdoc attaches but does it inject anything that we would be able to detect (efficiently)? If so then we could just check that and not have a toggle, I think.\n\nI _am_ interested in having one top-level Chromium flag that sets all the correct flags (noted here https://crbug.com/40639434) but that\u0027s future work - so if there is a toggle then that could enable it.",
+      "parentUuid": "00900000_d20949e6",
       "range": {
         "startLine": 713,
         "startChar": 13,
@@ -99,6 +141,29 @@
         "startChar": 12,
         "endLine": 443,
         "endChar": 23
+      },
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7abb9ec8_b60d4e92",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-10-31T23:29:10Z",
+      "side": 1,
+      "message": "nit: This feels like it should either be a static function that stores the handle statically, or at least a method of dawn::native::d3d12::Device",
+      "range": {
+        "startLine": 447,
+        "startChar": 0,
+        "endLine": 454,
+        "endChar": 13
       },
       "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
