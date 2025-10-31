@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "9048a39b_ab79338d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-31T01:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e834c236_de86575b",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 41
+      },
+      "revId": "4b8c516ca31741dba97a4c94c6e2e48417a94c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "e872af3b_f006f561",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 7
@@ -64,6 +88,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "29c8ea7e_a9d34979",
+        "filename": "src/dawn/native/webgpu/BindGroupWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-31T01:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc7741bd_3b488904",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 11
+      },
+      "revId": "4b8c516ca31741dba97a4c94c6e2e48417a94c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f98e1fc2_d6f91538",
@@ -77,6 +125,30 @@
       "writtenOn": "2025-10-30T19:07:12Z",
       "side": 1,
       "message": "nit. fine",
+      "range": {
+        "startLine": 66,
+        "startChar": 19,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "4b8c516ca31741dba97a4c94c6e2e48417a94c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a7ad56a_37648d33",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-31T01:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f98e1fc2_d6f91538",
       "range": {
         "startLine": 66,
         "startChar": 19,
@@ -110,6 +182,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "663552f0_5b53c60f",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-31T01:29:16Z",
+      "side": 1,
+      "message": "Sorry, there is no error here. The error would have already be caught at encoding time. Fixed the comment.",
+      "parentUuid": "84d2118f_93495584",
+      "range": {
+        "startLine": 736,
+        "startChar": 44,
+        "endLine": 737,
+        "endChar": 75
+      },
+      "revId": "4b8c516ca31741dba97a4c94c6e2e48417a94c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e2c4d56_ae762de6",
@@ -133,6 +229,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06a688d3_51a250c6",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-31T01:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e2c4d56_ae762de6",
+      "range": {
+        "startLine": 738,
+        "startChar": 50,
+        "endLine": 739,
+        "endChar": 43
+      },
+      "revId": "4b8c516ca31741dba97a4c94c6e2e48417a94c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "79a09143_08b6b10a",
@@ -146,6 +266,30 @@
       "writtenOn": "2025-10-30T19:07:12Z",
       "side": 1,
       "message": "nit. will",
+      "range": {
+        "startLine": 1023,
+        "startChar": 3,
+        "endLine": 1023,
+        "endChar": 7
+      },
+      "revId": "4b8c516ca31741dba97a4c94c6e2e48417a94c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40a50557_759c6e38",
+        "filename": "src/dawn/tests/white_box/CaptureAndReplayTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-10-31T01:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79a09143_08b6b10a",
       "range": {
         "startLine": 1023,
         "startChar": 3,
