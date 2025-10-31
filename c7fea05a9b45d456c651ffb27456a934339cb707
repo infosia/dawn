@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb621590_652c98d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-10-31T15:03:49Z",
+      "side": 1,
+      "message": "As discussed offline I think the right place to modify the copyright headers is in the Google3 job that syncs AndroidX from Gerrit.",
+      "revId": "c7fea05a9b45d456c651ffb27456a934339cb707",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
