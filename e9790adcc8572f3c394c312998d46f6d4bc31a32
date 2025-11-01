@@ -16,6 +16,24 @@
       "message": "IDK if it\u0027s accessible here but you could consider using CreateBufferFromData from WGPUHelpers",
       "revId": "e9790adcc8572f3c394c312998d46f6d4bc31a32",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d653875c_6666fa3f",
+        "filename": "src/dawn/tests/white_box/CaptureAndReplayTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-01T00:57:20Z",
+      "side": 1,
+      "message": "I thought about using that. I just thought it would be less confusing to use one function. Some of the tests make a size 8 buffer and put 4 bytes in it. Some don\u0027t put any data. And some the whole thing. Plus, sometimes I want to capture the WriteBuffer call and sometimes I don\u0027t so I think it\u0027s less confusing to not call out to utils::CreateBufferFromData in this particular case and have to remember. Further it might change from writeBuffer to mapppedAtCreation or visa-versa.",
+      "parentUuid": "0ad088c6_7b7a5a13",
+      "revId": "e9790adcc8572f3c394c312998d46f6d4bc31a32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
