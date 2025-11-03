@@ -190,6 +190,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "825a2984_014929d6",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-03T21:38:51Z",
+      "side": 1,
+      "message": "And baldurk said no. So we\u0027ll just keep this as is for now, and we\u0027ll look into adding a way to perform captures in Chrome in the future.",
+      "parentUuid": "797aa929_d8ba1135",
+      "range": {
+        "startLine": 713,
+        "startChar": 13,
+        "endLine": 713,
+        "endChar": 44
+      },
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "382a5e7c_ae12ca43",
@@ -213,6 +237,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34505c3a_9d680432",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-03T21:38:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "382a5e7c_ae12ca43",
+      "range": {
+        "startLine": 430,
+        "startChar": 4,
+        "endLine": 430,
+        "endChar": 38
+      },
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d30f2bae_728815ac",
@@ -226,6 +274,30 @@
       "writtenOn": "2025-10-31T20:44:23Z",
       "side": 1,
       "message": "nit. does `device` work here?",
+      "range": {
+        "startLine": 443,
+        "startChar": 12,
+        "endLine": 443,
+        "endChar": 23
+      },
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "885260b0_511d6643",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-03T21:38:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d30f2bae_728815ac",
       "range": {
         "startLine": 443,
         "startChar": 12,
@@ -307,6 +379,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b139a29b_6bf3eb57",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-03T21:38:51Z",
+      "side": 1,
+      "message": "I did something similar that that is thread-safe using an immediately invoked lambda assigned to a static variable.",
+      "parentUuid": "a873a3ca_5eaa5713",
+      "range": {
+        "startLine": 447,
+        "startChar": 0,
+        "endLine": 454,
+        "endChar": 13
+      },
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9bef964e_714c0054",
@@ -344,6 +440,30 @@
       "side": 1,
       "message": "I\u0027m pretty sure BeginAccessImpl can happen later in the frame. E.g. in the requestAnimationFrame callback in JS you can do a bunch of stuff before calling getCurrentTexture(), that should be considered part of the frame.\n\nYou could put a StartFrameCapture in device creation maybe? Would that be bad if it turns out to be a device that never presents anything?",
       "parentUuid": "9bef964e_714c0054",
+      "range": {
+        "startLine": 460,
+        "startChar": 0,
+        "endLine": 461,
+        "endChar": 71
+      },
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a19c7d50_7e0e087f",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-03T21:38:51Z",
+      "side": 1,
+      "message": "Okay, I\u0027ll leave this alone. Am pretty sure we cannot call `StartFrameCapture` just once, and `EndFrameCapture` multiple times.",
+      "parentUuid": "8dcf622b_d5810b13",
       "range": {
         "startLine": 460,
         "startChar": 0,
@@ -421,6 +541,24 @@
       "side": 1,
       "message": "How about I add a preprocessor macro to enable this feature, which we\u0027ll define in both our GN and CMake builds, and will therefore be disabled for the g3 build? This way, we only have to worry about this dependency in Chrome/Standalone.",
       "parentUuid": "9ac6f3e9_bc8c1740",
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3b5c64f_05f97d33",
+        "filename": "third_party/renderdoc/renderdoc/api/app/renderdoc_app.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-03T21:38:51Z",
+      "side": 1,
+      "message": "I added a `DAWN_ENABLE_RENDERDOC` preprocessor define that is enabled in the GN and CMake builds so for g3, we can simply disable copying `third_party/renderdoc`.",
+      "parentUuid": "e82f19f2_4dd4d30b",
       "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
