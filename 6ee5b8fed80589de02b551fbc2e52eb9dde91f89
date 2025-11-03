@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46aab82c_976578a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-03T09:41:26Z",
+      "side": 1,
+      "message": "Nice :D",
+      "revId": "6ee5b8fed80589de02b551fbc2e52eb9dde91f89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffa91637_ad1d848a",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-03T09:41:26Z",
+      "side": 1,
+      "message": "In a follow-up (if not done) can we use that to increase the size of immediates to contain 64 bytes as the group agreed to require?",
+      "revId": "6ee5b8fed80589de02b551fbc2e52eb9dde91f89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
