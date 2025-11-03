@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec303bd3_b9c44704",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-03T20:11:56Z",
+      "side": 1,
+      "message": "FYI Gregg you should be able to satisfy Review-Enforcement either by reauthing and reuploading or by CR+2ing your own CL. Review-Enforcement \u003e View Conditions \u003e mouseover says:\n\u003e Atom evaluates to False: Insufficient number of approvals (gman@chromium.org missing ReAuth)\n\nThere are some bugs with the Review-Enforcement system right now.",
+      "revId": "8f3e25ae1a34b7175e92418f611add099b8da200",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
