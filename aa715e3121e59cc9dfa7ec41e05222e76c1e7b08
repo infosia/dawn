@@ -16,6 +16,23 @@
       "message": "@geofflang@chromium.org Can you re-approve this change? I had to perform a rebase to fix merge conflicts.",
       "revId": "aa715e3121e59cc9dfa7ec41e05222e76c1e7b08",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f373205_c116bc8b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-03T22:00:37Z",
+      "side": 1,
+      "message": "Stamp for trivial rebase",
+      "revId": "aa715e3121e59cc9dfa7ec41e05222e76c1e7b08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
