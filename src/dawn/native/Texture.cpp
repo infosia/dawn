@@ -501,16 +501,6 @@ MaybeError ValidateTextureComponentSwizzle(const DeviceBase* device,
     return {};
 }
 
-wgpu::TextureUsage RemoveInvalidViewUsages(wgpu::TextureUsage viewUsage, const Format* viewFormat) {
-    wgpu::TextureUsage adjustedUsage = viewUsage;
-    if (viewFormat->format == wgpu::TextureFormat::RGBA8UnormSrgb ||
-        viewFormat->format == wgpu::TextureFormat::BGRA8UnormSrgb) {
-        adjustedUsage = viewUsage & ~wgpu::TextureUsage::StorageBinding;
-    }
-
-    return adjustedUsage;
-}
-
 MaybeError ValidateTextureViewUsage(const DeviceBase* device,
                                     const TextureBase* texture,
                                     wgpu::TextureUsage usage,
@@ -521,13 +511,7 @@ MaybeError ValidateTextureViewUsage(const DeviceBase* device,
                     "The texture view usage (%s) is not a subset of the texture usage (%s).",
                     inheritedUsage, texture->GetUsage());
 
-    // Validate the view usage only when it is explicitly requested for now because it is not yet
-    // possible to request view usage all the way from the WebGPU API.
-    if (usage != wgpu::TextureUsage::None) {
-        DAWN_TRY(ValidateTextureUsage(device, texture->GetDimension(), inheritedUsage, format, {}));
-    }
-
-    return {};
+    return ValidateTextureUsage(device, texture->GetDimension(), inheritedUsage, format, {});
 }
 
 // We need to add an internal RenderAttachment usage to some textures that has CopyDst usage as we
@@ -1743,8 +1727,7 @@ TextureViewBase::TextureViewBase(TextureBase* texture,
       mRange({ConvertViewAspect(*mFormat, descriptor->aspect),
               {descriptor->baseArrayLayer, descriptor->arrayLayerCount},
               {descriptor->baseMipLevel, descriptor->mipLevelCount}}),
-      mUsage(RemoveInvalidViewUsages(GetTextureViewUsage(texture->GetUsage(), descriptor->usage),
-                                     &mFormat.get())),
+      mUsage(GetTextureViewUsage(texture->GetUsage(), descriptor->usage)),
       mInternalUsage(
           AddInternalUsages(GetDevice(),
                             GetTextureViewUsage(texture->GetInternalUsage(), descriptor->usage),
@@ -1762,19 +1745,6 @@ TextureViewBase::TextureViewBase(TextureBase* texture,
     mIsSwizzleIdentity = GetSwizzle() == kRGBASwizzle;
 
     GetObjectTrackingList()->Track(this);
-
-    // Emit a warning if invalid usages were removed for this view.
-    // TODO(363903526): Remove this warning after deprecation period.
-    wgpu::TextureUsage inheritedUsage = GetTextureViewUsage(texture->GetUsage(), descriptor->usage);
-    if (mUsage != inheritedUsage) {
-        DAWN_ASSERT(descriptor->usage == wgpu::TextureUsage::None);
-        std::string warning = absl::StrFormat(
-            "%s with format (%s) and inherited usage (%s) is deprecated. Please request explicit "
-            "usages on texture views when the view format is not compatible with all inherited "
-            "texture usages.",
-            this, mFormat->format, inheritedUsage);
-        GetDevice()->EmitWarningOnce(warning.c_str());
-    }
 }
 
 TextureViewBase::TextureViewBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label)
