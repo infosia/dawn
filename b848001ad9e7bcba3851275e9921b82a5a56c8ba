@@ -16,6 +16,23 @@
       "message": "Ugh, this is failing in the wasm/emscripten build stuff, which I hasn\u0027t setup on my new workstation, which is why this was failing on the bots, but not locally for me. I will get that setup and fix this.",
       "revId": "b848001ad9e7bcba3851275e9921b82a5a56c8ba",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfe92d93_4155bb5e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-03T21:37:12Z",
+      "side": 1,
+      "message": "Determined the root cause is a bug in abseil-cpp. Upstream patch generated and sent out for review. I will need to import that into chromium and then in dawn once they land.",
+      "revId": "b848001ad9e7bcba3851275e9921b82a5a56c8ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
