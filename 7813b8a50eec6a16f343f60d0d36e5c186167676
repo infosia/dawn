@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e1d767b_59c9a8a5",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-03T14:28:31Z",
+      "side": 1,
+      "message": "Is there a way somehow to check what the comment says? It seems that the barrier returned here should be a noop and that we can assert that?",
+      "revId": "7813b8a50eec6a16f343f60d0d36e5c186167676",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
