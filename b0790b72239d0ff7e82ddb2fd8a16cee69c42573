@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c166b88_fc9b9702",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-03T09:07:26Z",
+      "side": 1,
+      "message": "This CL uses an in-memory cache, is there a way to serialize to disk instead?\n\nIf we have to stay in-memory, then we should hook the caches up with `TrimMemory`",
+      "revId": "b0790b72239d0ff7e82ddb2fd8a16cee69c42573",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbf69313_a9014c49",
+        "filename": "src/dawn/native/d3d11/DeviceD3D11.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-03T09:07:26Z",
+      "side": 1,
+      "message": "Maybe this to show it is a cache in the function name?\n\n```suggestion\n    ResultOrError\u003cComPtr\u003cID3D11VertexShader\u003e\u003e GetOrCreateVertexShader(const d3d::CompiledShader\u0026 args);\n```",
+      "range": {
+        "startLine": 114,
+        "startChar": 46,
+        "endLine": 114,
+        "endChar": 64
+      },
+      "revId": "b0790b72239d0ff7e82ddb2fd8a16cee69c42573",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ce0dd33_9d0cc6e1",
+        "filename": "src/dawn/native/d3d11/DeviceD3D11.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-03T09:07:26Z",
+      "side": 1,
+      "message": "Can we have a comment explaining why the SHA3 is sufficient as a key?",
+      "revId": "b0790b72239d0ff7e82ddb2fd8a16cee69c42573",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
