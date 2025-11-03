@@ -43,7 +43,7 @@ import dalvik.annotation.optimization.FastNative
 
     {%- endif %}
     @FastNative
-    {{ kotlin_annotation(kotlin_return(function)) }} public external fun {{ function.name.camelCase() }}(
+    {{ kotlin_annotation(kotlin_return(function)) }} public external fun {{ kotlin_name(function) }}(
         {%- for arg in function.arguments -%}
             {{- kotlin_annotation(arg) }} {{ as_varName(arg.name) }}: {{ kotlin_definition(arg) }},{{' '}}
         {%- endfor %}): {{ kotlin_declaration(kotlin_return(function)) }}

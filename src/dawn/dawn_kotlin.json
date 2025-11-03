@@ -82,6 +82,12 @@
         "objects": {
             "device": {
                 "methods": {
+                    "create compute pipeline": {
+                        "omitted": true
+                    },
+                    "create render pipeline": {
+                        "omitted": true
+                    },
                     "get lost future": {
                         "omitted": true
                     }

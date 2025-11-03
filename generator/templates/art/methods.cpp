@@ -66,7 +66,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
 
 {% macro render_method(method, object) %}
     {% set ObjectName = kotlin_name(object) if object else "FunctionsKt" %}
-    {% set FunctionSuffix = ObjectName + "_" +  method.name.camelCase() %}
+    {% set FunctionSuffix = ObjectName + "_" +  kotlin_name(method) %}
     {% set KotlinRecord = FunctionSuffix + "KotlinRecord" %}
     {% set ArgsStruct = FunctionSuffix + "ArgsStruct" %}
 

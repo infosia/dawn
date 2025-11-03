@@ -56,13 +56,13 @@ public class {{ kotlin_name(obj) }}(public val handle: Long): AutoCloseable {
 
         {%- endif %}
         @FastNative
-        @JvmName("{{ method.name.camelCase() }}")
+        @JvmName("{{ kotlin_name(method) }}")
         {% for arg in kotlin_record_members(method.arguments) %}
             {% if kotlin_default(arg) is not none %}
                 @JvmOverloads
             {% break %}{% endif %}
         {% endfor %}
-        {{ kotlin_annotation(kotlin_return(method)) }} public external fun {{ method.name.camelCase() }}(
+        {{ kotlin_annotation(kotlin_return(method)) }} public external fun {{ kotlin_name(method) }}(
         //* TODO(b/341923892): rework async methods to use futures.
         {%- for arg in kotlin_record_members(method.arguments) %}
             {{- kotlin_annotation(arg) }} {{ as_varName(arg.name) }}: {{ kotlin_definition(arg) }},{{ ' ' }}
@@ -73,7 +73,7 @@ public class {{ kotlin_name(obj) }}(public val handle: Long): AutoCloseable {
             //* camelCase() (lower case first word). E.g. "get foo bar" translated to fooBar.
             {% set name = method.name.chunks[1] + method.name.chunks[2:] | map('title') | join %}
             @get:JvmName("{{ name }}")
-            public val {{ name }}: {{ kotlin_declaration(kotlin_return(method)) }} get() = {{ method.name.camelCase() }}()
+            public val {{ name }}: {{ kotlin_declaration(kotlin_return(method)) }} get() = {{ kotlin_name(method) }}()
 
         {% endif %}
 

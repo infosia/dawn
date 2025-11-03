@@ -59,7 +59,7 @@ package {{ kotlin_package }}
     {% set object_info = all_objects.get(obj.name.get()) %}
     {% set method_info = object_info.methods.get(method.name.snake_case()) if object_info else None %}
     {% if not method_info %}
-        {% set method_info = object_info.methods.get(method.name.camelCase()) if object_info else None %}
+        {% set method_info = object_info.methods.get(kotlin_name(method)) if object_info else None %}
     {% endif %}
     {% set method_doc = method_info.doc if method_info and method_info.doc else "" %}
     {% set return_doc = method_info.returns_doc if method_info and method_info.returns_doc else "" %}
@@ -76,14 +76,14 @@ package {{ kotlin_package }}
     {%- endif %}
     //* The wrapped method has executor and callback function stripped out (the wrapper supplies
     //* those so the client doesn't have to).
-    public suspend fun {{ method.name.camelCase() }}(
+    public suspend fun {{ kotlin_name(method) }}(
         {%- for arg in kotlin_record_members(method.arguments) if not (
             arg.type.category == 'callback function' or
             (arg.type.category == 'kotlin type' and arg.type.name.get() == 'java.util.concurrent.Executor')
         ) %}
             {{ kotlin_annotation(arg) }}  {{ as_varName(arg.name) }}: {{ kotlin_definition(arg) }},
         {%- endfor %}): {{ return_name }} = suspendCancellableCoroutine {
-        {{ method.name.camelCase() }}(
+            {{ kotlin_name(method) }}(
             {%- for arg in kotlin_record_members(method.arguments) %}
                 {%- if arg.type.category == 'kotlin type' and arg.type.name.get() == 'java.util.concurrent.Executor' -%}
                     Executor(Runnable::run),

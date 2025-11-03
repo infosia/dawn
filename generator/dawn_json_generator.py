@@ -929,8 +929,20 @@ def compute_kotlin_params(loaded_json, kotlin_json, webgpu_json_data=None):
         )
         return None
 
-    def kotlin_name(type):
-        return f"{'GPU' if type.category == 'object' else ''}{type.name.CamelCase()}"
+    def kotlin_name(type, as_instance=False):
+        if isinstance(type, (FunctionDeclaration, Method)):
+            return type.name.camelCase().replace('Async', '')
+        base_name = type.name.camelCase(
+        ) if as_instance else type.name.CamelCase()
+        if type.category == 'object':
+            return 'GPU' + base_name.replace('Async', '')
+        if type.category == 'structure':
+            return base_name.replace('Async', '')
+        if type.category in [
+                'bitmask', 'callback function', 'enum', 'function pointer'
+        ]:
+            return base_name
+        unreachable_code(f"No name converter for '{type.category}'")
 
     def kotlin_return(method):
         for argument in method.arguments:
