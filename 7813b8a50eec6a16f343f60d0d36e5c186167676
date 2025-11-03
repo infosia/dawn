@@ -16,6 +16,24 @@
       "message": "Is there a way somehow to check what the comment says? It seems that the barrier returned here should be a noop and that we can assert that?",
       "revId": "7813b8a50eec6a16f343f60d0d36e5c186167676",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50b76f6f_a6976bbe",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-03T19:56:27Z",
+      "side": 1,
+      "message": "If TrackUsageAndGetResourceBarrier() returns an empty BufferBarrier that is easy to assert. I think that should happen if the eager transition already happened, aka this buffer was used on the GPU in a previous submit and eager transition happened at submit time. That is also the common case.\n\nIf the buffer was used on the GPU and the eager transition hasn\u0027t happened yet TrackUsageAndGetResourceBarrier() should return a non-empty BufferBarrier though. That would be fine if:\n1. TransitionMappableBuffersEagerly() will emit a barrier before the next submit.\n2. That barrier is equivalent to what would be emitted here.\n3. The MapAsync future waits on that next submit\u0027s completion.\n\nIf TrackUsageAndGetResourceBarrier() doesn\u0027t exit early then it calls [MarkUsedInPendingCommands() from here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BufferVk.cpp;l\u003d539;drc\u003d35d26d364efb57d0386b98312ba739f7f65ae97e) then it emits a barrier. I think that ensures #3.\n\nFor #1 we have to know that TransitionMappableBuffersEagerly() will run TrackUsageAndGetResourceBarrier() next submit if mappableBuffersForEagerTransition contains this buffer. If this buffer was used on the GPU then TransitionUsageNow()TrackUsageAndGetResourceBarrier() was called with a BufferUsage that isn\u0027t mappable so it must have been added to the set [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BufferVk.cpp;l\u003d461;drc\u003d35d26d364efb57d0386b98312ba739f7f65ae97e). Verifying it\u0027s in the set is trickier if we want to avoid accessing it here.\n\nEven if we verify the buffer is in mappableBuffersForEagerTransition that doesn\u0027t mean an equivalent barrier will be emitted. If the inputs to TrackUsageAndGetResourceBarrier() are the same it will produce the same barrier. Those are parameters `usage` + `stage` and some member variables `mReadShaderStages` + `mReadUsage` + mLastWriteShaderStage` + `mLastWriteUsage`. This call to TrackUsageAndGetResourceBarrier() modifies those member variables? Hmm. Maybe this calls shouldn\u0027t be updating the usage/stage member variables at all.\n\nAnother thing that could be different is the call from MapAsyncImpl has either usage MapRead or MapWrite. The call from TransitionMappableBuffersEagerly() will have [both MapRead and MapWrite usage](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BufferVk.cpp;l\u003d818;drc\u003d35d26d364efb57d0386b98312ba739f7f65ae97e) if the buffer was created with both usages. So it\u0027s possible that call here would take `readOnly` path while the TransitionMappableBuffersEagerly() call takes the other branch. Not sure if that is a a problem...\n\n(sorry this reply got a bit longer than I expected as I tried to work through what\u0027s happening).",
+      "parentUuid": "8e1d767b_59c9a8a5",
+      "revId": "7813b8a50eec6a16f343f60d0d36e5c186167676",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
