@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1990d158_7e925aa7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-03T14:10:39Z",
+      "side": 1,
+      "message": "Technically a user could use a BG with an implicit layout and later override it with an explicit bindgroup. This would cause issues because the pipeline for the implicit bindgroup would not be captured.\n\nI don\u0027t exactly remember if there is a reason why we didn\u0027t add a `Ref\u003cPipeline\u003e` in `BindGroupLayoutBase` that could be used in `AddReferenced`. The PCT is useful to do a single check for pipeline,index together but that\u0027s not in hot code (anymore?) so maybe we could take the ref. Or maybe this was to avoid a BG keeping a BGL alive, itself keeping a pipeline alive (which would be expensive), I\u0027m not sure.",
+      "revId": "43be1a4dda86f981fab9ca598571a322770dc816",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
