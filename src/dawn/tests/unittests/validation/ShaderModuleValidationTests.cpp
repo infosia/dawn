@@ -860,6 +860,11 @@ TEST_F(ShaderModuleValidationTest, CreateErrorShaderModule) {
     FlushWire();
 }
 
+// Regression test for https://issues.chromium.org/453125753
+TEST_F(ShaderModuleValidationTest, InvalidUtf8InComment) {
+    utils::CreateShaderModule(device, "/*\x80\x80\x80\x80*/ whatever_that_makes_an_error;");
+}
+
 struct WGSLExtensionInfo {
     const char* wgslName;
     // Is this WGSL extension experimental, i.e. guarded by AllowUnsafeAPIs toggle
