@@ -16,6 +16,91 @@
       "message": "PTAL.",
       "revId": "4a58e42a15337d94596e1f8a8a3020e3d4d74a98",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdd6535b_41e52299",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-03T20:55:52Z",
+      "side": 1,
+      "message": "`s` can only be `i32` here (I replied to your comment on the proposal).",
+      "revId": "4a58e42a15337d94596e1f8a8a3020e3d4d74a98",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ddc150e_976007b4",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-03T20:55:52Z",
+      "side": 1,
+      "message": "and only `u32` here",
+      "revId": "4a58e42a15337d94596e1f8a8a3020e3d4d74a98",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95a7394f_90d1edd1",
+        "filename": "src/tint/lang/wgsl/enums.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-03T20:55:52Z",
+      "side": 1,
+      "message": "Needs to be added to the template so that it shows up here too.\n\nThis will show up as a missed case in the uniformity analysis, so worth a case for it in `uniformity_test.cc` when you add this.",
+      "revId": "4a58e42a15337d94596e1f8a8a3020e3d4d74a98",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0ea8488_3eb62342",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-03T20:55:52Z",
+      "side": 1,
+      "message": "i32 only",
+      "revId": "4a58e42a15337d94596e1f8a8a3020e3d4d74a98",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e713b5a2_09a7db07",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-03T20:55:52Z",
+      "side": 1,
+      "message": "u32 only",
+      "revId": "4a58e42a15337d94596e1f8a8a3020e3d4d74a98",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
