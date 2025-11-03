@@ -144,6 +144,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "62f955df_3e26f822",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-03T20:07:19Z",
+      "side": 1,
+      "message": "Ah OK, `GetModuleHandleA` only returns the module if it\u0027s already loaded. Then as long as it\u0027s not slow I think it\u0027s fine to call once somewhere in initialization, and we can cache the result (assuming we don\u0027t care to handle the DLL getting loaded after startup).\n\nIs there any way to ask the Renderdoc API if it\u0027s currently capturing, and then conditionally Start/EndFrameCapture? I see `IsFrameCapturing` but that might not be the right thing. Maybe\n\n```\nif (IsFrameCapturing()) {\n  EndFrameCapture();\n  StartFrameCapture();\n}\n```\nwould work?",
+      "parentUuid": "1be45c2b_a8bd0adf",
+      "range": {
+        "startLine": 713,
+        "startChar": 13,
+        "endLine": 713,
+        "endChar": 44
+      },
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "382a5e7c_ae12ca43",
         "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
         "patchSetId": 3
@@ -237,6 +261,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a873a3ca_5eaa5713",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-03T20:07:19Z",
+      "side": 1,
+      "message": "Yeah, I was thinking something along the lines of\n\n```cpp\nstatic RENDERDOC_API_1_1_2 LazyLoadRenderdoc() {\n    static RENDERDOC_API_1_1_2 mod; // possibly needs to be atomic\n    if (mod \u003d\u003d nullptr) { ... }\n    return mod;\n}\n```",
+      "parentUuid": "bdb68fe2_3c1733ed",
+      "range": {
+        "startLine": 447,
+        "startChar": 0,
+        "endLine": 454,
+        "endChar": 13
+      },
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9bef964e_714c0054",
         "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
         "patchSetId": 3
@@ -248,6 +296,30 @@
       "writtenOn": "2025-11-03T16:19:12Z",
       "side": 1,
       "message": "Question for @cwallez@chromium.org: I\u0027m doing this \"End/Start\" thing here, which works, but misses capturing the very first frame. My initial thought was to hook into `SharedTextureMemory::BeginAccessImpl` for the `StartFrameCapture`, and `SharedTextureMemory::EndAccessImpl` (what\u0027s currently calling `NotifySwapChainPresent`) for the `EndFrameCapture`, but I wasn\u0027t sure if these Begin/EndAccessImpl calls are really called at the start and end of the frame so that all D3D12 commands in between are properly captured.",
+      "range": {
+        "startLine": 460,
+        "startChar": 0,
+        "endLine": 461,
+        "endChar": 71
+      },
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dcf622b_d5810b13",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-03T20:07:19Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure BeginAccessImpl can happen later in the frame. E.g. in the requestAnimationFrame callback in JS you can do a bunch of stuff before calling getCurrentTexture(), that should be considered part of the frame.\n\nYou could put a StartFrameCapture in device creation maybe? Would that be bad if it turns out to be a device that never presents anything?",
+      "parentUuid": "9bef964e_714c0054",
       "range": {
         "startLine": 460,
         "startChar": 0,
@@ -289,6 +361,24 @@
       "side": 1,
       "message": "I considered mirroring the RenderDoc GitHub to our googlesource.com and then DEPing on that, even though we\u0027d only need the one header. Would you prefer that? It would have the advantage that we\u0027d know which version we\u0027re pinned to.",
       "parentUuid": "986bce92_498394f4",
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ac6f3e9_bc8c1740",
+        "filename": "third_party/renderdoc/renderdoc/api/app/renderdoc_app.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-03T20:07:19Z",
+      "side": 1,
+      "message": "g3\u0027s one version rule probably would require us to import this as a separate third_party anyway, though that\u0027s kind of separate from whether we use DEPS or not.\n\nUnfortunately g3 doesn\u0027t yet have a copy of this header so we are probably going to have to create a new g3 third_party entry either way...",
+      "parentUuid": "49e149a8_b6ed333b",
       "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
