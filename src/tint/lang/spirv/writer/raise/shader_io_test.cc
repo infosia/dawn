@@ -130,9 +130,15 @@ $B1: {  # root
   $B4: {
     %13:bool = load %foo_front_facing_Input
     %14:vec4<f32> = load %foo_position_Input
-    %15:f32 = load %foo_loc0_Input
-    %16:f32 = load %foo_loc1_Input
-    %17:void = call %foo_inner, %13, %14, %15, %16
+    %15:vec2<f32> = swizzle %14, xy
+    %16:vec2<f32> = floor %15
+    %17:vec2<f32> = construct 0.5f, 0.5f
+    %18:vec2<f32> = add %16, %17
+    %19:vec2<f32> = swizzle %14, zw
+    %20:vec4<f32> = construct %18, %19
+    %21:f32 = load %foo_loc0_Input
+    %22:f32 = load %foo_loc1_Input
+    %23:void = call %foo_inner, %13, %20, %21, %22
     ret
   }
 }
@@ -263,10 +269,16 @@ $B1: {  # root
   $B4: {
     %14:bool = load %foo_front_facing_Input
     %15:vec4<f32> = load %foo_position_Input
-    %16:f32 = load %foo_loc0_Input
-    %17:f32 = load %foo_loc1_Input
-    %18:Inputs = construct %14, %15, %16, %17
-    %19:void = call %foo_inner, %18
+    %16:vec2<f32> = swizzle %15, xy
+    %17:vec2<f32> = floor %16
+    %18:vec2<f32> = construct 0.5f, 0.5f
+    %19:vec2<f32> = add %17, %18
+    %20:vec2<f32> = swizzle %15, zw
+    %21:vec4<f32> = construct %19, %20
+    %22:f32 = load %foo_loc0_Input
+    %23:f32 = load %foo_loc1_Input
+    %24:Inputs = construct %14, %21, %22, %23
+    %25:void = call %foo_inner, %24
     ret
   }
 }
@@ -376,10 +388,16 @@ $B1: {  # root
   $B4: {
     %14:bool = load %foo_front_facing_Input
     %15:vec4<f32> = load %foo_position_Input
-    %16:f32 = load %foo_loc0_Input
-    %17:Inputs = construct %15, %16
-    %18:f32 = load %foo_loc1_Input
-    %19:void = call %foo_inner, %14, %17, %18
+    %16:vec2<f32> = swizzle %15, xy
+    %17:vec2<f32> = floor %16
+    %18:vec2<f32> = construct 0.5f, 0.5f
+    %19:vec2<f32> = add %17, %18
+    %20:vec2<f32> = swizzle %15, zw
+    %21:vec4<f32> = construct %19, %20
+    %22:f32 = load %foo_loc0_Input
+    %23:Inputs = construct %21, %22
+    %24:f32 = load %foo_loc1_Input
+    %25:void = call %foo_inner, %14, %23, %24
     ret
   }
 }
