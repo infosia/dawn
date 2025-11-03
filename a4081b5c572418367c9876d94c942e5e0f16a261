@@ -168,6 +168,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "797aa929_d8ba1135",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-03T20:15:10Z",
+      "side": 1,
+      "message": "Unfortunately, I don\u0027t think `IsFrameCapturing` is what we want. I opened [this issue](https://github.com/baldurk/renderdoc/issues/3726) to ask for this feature.",
+      "parentUuid": "62f955df_3e26f822",
+      "range": {
+        "startLine": 713,
+        "startChar": 13,
+        "endLine": 713,
+        "endChar": 44
+      },
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "382a5e7c_ae12ca43",
         "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
         "patchSetId": 3
@@ -379,6 +403,24 @@
       "side": 1,
       "message": "g3\u0027s one version rule probably would require us to import this as a separate third_party anyway, though that\u0027s kind of separate from whether we use DEPS or not.\n\nUnfortunately g3 doesn\u0027t yet have a copy of this header so we are probably going to have to create a new g3 third_party entry either way...",
       "parentUuid": "49e149a8_b6ed333b",
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e82f19f2_4dd4d30b",
+        "filename": "third_party/renderdoc/renderdoc/api/app/renderdoc_app.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-03T20:15:10Z",
+      "side": 1,
+      "message": "How about I add a preprocessor macro to enable this feature, which we\u0027ll define in both our GN and CMake builds, and will therefore be disabled for the g3 build? This way, we only have to worry about this dependency in Chrome/Standalone.",
+      "parentUuid": "9ac6f3e9_bc8c1740",
       "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
