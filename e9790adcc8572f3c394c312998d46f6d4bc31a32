@@ -34,6 +34,24 @@
       "parentUuid": "0ad088c6_7b7a5a13",
       "revId": "e9790adcc8572f3c394c312998d46f6d4bc31a32",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aab40c10_40992370",
+        "filename": "src/dawn/tests/white_box/CaptureAndReplayTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-03T20:08:52Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "d653875c_6666fa3f",
+      "revId": "e9790adcc8572f3c394c312998d46f6d4bc31a32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
