@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a3efc0d_5c318969",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-03T19:38:21Z",
+      "side": 1,
+      "message": "the GTX-1660 configuration is now stable, and runs as linux-dawn-rel\n\nAlso, jrprice has a newer iteration of this work at https://dawn-review.googlesource.com/c/dawn/+/257215",
+      "revId": "4713ebb4a61da5562fc15e0e5b2d66b51b360c3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
