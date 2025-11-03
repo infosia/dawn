@@ -44,6 +44,7 @@
 #include "src/tint/lang/core/type/sampled_texture.h"
 #include "src/tint/lang/core/type/storage_texture.h"
 #include "src/tint/lang/core/type/texture.h"
+#include "src/tint/lang/spirv/ir/binary.h"
 #include "src/tint/lang/spirv/ir/builtin_call.h"
 #include "src/tint/lang/spirv/ir/literal_operand.h"
 #include "src/tint/lang/spirv/type/resource_binding.h"
@@ -242,6 +243,7 @@ struct State {
                     case core::BuiltinFn::kSubgroupMatrixStore:
                     case core::BuiltinFn::kSubgroupMatrixMultiply:
                     case core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate:
+                    case core::BuiltinFn::kSubgroupMatrixScalarAdd:
                         worklist.Push(builtin);
                         break;
                     case core::BuiltinFn::kQuantizeToF16:
@@ -343,6 +345,9 @@ struct State {
                     break;
                 case core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate:
                     SubgroupMatrixMultiplyAccumulate(builtin);
+                    break;
+                case core::BuiltinFn::kSubgroupMatrixScalarAdd:
+                    SubgroupMatrixScalarAdd(builtin);
                     break;
                 default:
                     break;
@@ -1307,6 +1312,22 @@ struct State {
             b.CallWithResult<spirv::ir::BuiltinCall>(builtin->DetachResult(),
                                                      spirv::BuiltinFn::kCooperativeMatrixMulAdd,
                                                      left, right, acc, operands);
+        });
+        builtin->Destroy();
+    }
+
+    /// Replace a subgroupMatrixScalarAdd builtin.
+    /// @param builtin the builtin call instruction
+    void SubgroupMatrixScalarAdd(core::ir::CoreBuiltinCall* builtin) {
+        b.InsertBefore(builtin, [&] {
+            auto* result_ty = builtin->Result()->Type()->As<core::type::SubgroupMatrix>();
+
+            auto* mat = builtin->Args()[0];
+            auto* scalar = builtin->Args()[1];
+
+            auto* scalar_mat = b.Construct(result_ty, scalar);
+            b.BinaryWithResult<spirv::ir::Binary>(builtin->DetachResult(), core::BinaryOp::kAdd,
+                                                  mat, scalar_mat);
         });
         builtin->Destroy();
     }
