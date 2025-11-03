@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2fceb02_b2a9cb11",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-03T10:16:24Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "efc9df32f4a4bb249dd9c0fc55e089b84e7934fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0403a1d_3d577693",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-03T10:16:24Z",
+      "side": 1,
+      "message": "WDYT of putting this in the BufferBarrier as well (as an inline vector? IDK) to make this method not require `recordingContext` which better enforce that all side effects on the recording context are deferred to the caller?",
+      "range": {
+        "startLine": 461,
+        "startChar": 26,
+        "endLine": 461,
+        "endChar": 59
+      },
+      "revId": "efc9df32f4a4bb249dd9c0fc55e089b84e7934fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd17c77f_435e97a3",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-03T10:16:24Z",
+      "side": 1,
+      "message": "u-nit: can we have a comment explaining what this struct is for? Also implementation can be in the .cpp.",
+      "revId": "efc9df32f4a4bb249dd9c0fc55e089b84e7934fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
