@@ -167,6 +167,23 @@
       },
       "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "986bce92_498394f4",
+        "filename": "third_party/renderdoc/renderdoc/api/app/renderdoc_app.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-03T10:00:48Z",
+      "side": 1,
+      "message": "Note that checking this file directly in Dawn is likely to cause g3 mixed-license issues on the next copybara import.",
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
