@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "56cf4787_1077d366",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-03T16:14:23Z",
+      "side": 1,
+      "message": "Yeah, like Kai said, it\u0027s just the one header, and doesn\u0027t really pull in anything but some preprocessor macros and typedefs.",
+      "parentUuid": "92b3a317_f37e0572",
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "00900000_d20949e6",
@@ -90,6 +108,30 @@
       "side": 1,
       "message": "Toggle probably makes sense since we don\u0027t otherwise use env vars. But it would be ideal if we can enable this automatically somehow. I see chrome is started before renderdoc attaches but does it inject anything that we would be able to detect (efficiently)? If so then we could just check that and not have a toggle, I think.\n\nI _am_ interested in having one top-level Chromium flag that sets all the correct flags (noted here https://crbug.com/40639434) but that\u0027s future work - so if there is a toggle then that could enable it.",
       "parentUuid": "00900000_d20949e6",
+      "range": {
+        "startLine": 713,
+        "startChar": 13,
+        "endLine": 713,
+        "endChar": 44
+      },
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1be45c2b_a8bd0adf",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-03T16:14:23Z",
+      "side": 1,
+      "message": "Yeah, so when RenderDoc injects itself into the process, all that really means is that the DLL is loaded in the process\u0027s dynamic library table. So we can detect this with `GetModuleHandleA(\"renderdoc.dll\")` as I do in this change. Right now, I\u0027m storing this handle on TextureD3D12, which means if the DLL is not injected, then we keep attempting to get the module handle every frame. I don\u0027t know if this is actually a performance problem, but if it is, we could move this to the d3d12 Device, as you suggested in another comment.\n\nHaving said that, the real reason behind this toggle isn\u0027t just to avoid calling `GetModuleHandleA` every frame, but rather, it\u0027s because the behaviour is to start capturing every frame when a WebGPU app is running in Chrome, which the user may not want. You see, when injecting RenderDoc into Chrome\u0027s GPU process, it does manage to detect the D3D11\u0027s draw calls, and shows the usual RenderDoc overlay where you can press \"F12\" to capture the next frame. So say the user for some reason wants to capture the D3D11 info when running a WebGPU app, they wouldn\u0027t want a bunch of D3D12 auto-captures every frame, necessarily.\n\nTo be honest, what I really would want is to avoid the auto-capturing, and allow the user to press a hotkey, like F12 or whatever, to perform a D3D12 capture, but this isn\u0027t possible with the current API as far as I can tell. Maybe it\u0027s somethign we can look into adding to RenderDoc - instead of `Start/EndFrameCapture` we would want something like `Start/EndPresent` to signal \"this is where we\u0027re presenting\", and RenderDoc could do its overlay thing. In the meantime, given the current limitation of the API, I figured I\u0027d put this \"start auto capturing every frame\" behind a toggle.\n\nIt\u0027s worth mentioning that I also wondered whether we should add this to a WebGPU dev tools menu with RenderDoc options to capture next frame, or next N frames, start/top capture, etc. I don\u0027t know how much work this would be, though.",
+      "parentUuid": "cb703768_0d306a6d",
       "range": {
         "startLine": 713,
         "startChar": 13,
@@ -182,6 +224,24 @@
       "writtenOn": "2025-11-03T10:00:48Z",
       "side": 1,
       "message": "Note that checking this file directly in Dawn is likely to cause g3 mixed-license issues on the next copybara import.",
+      "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49e149a8_b6ed333b",
+        "filename": "third_party/renderdoc/renderdoc/api/app/renderdoc_app.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-03T16:14:23Z",
+      "side": 1,
+      "message": "I considered mirroring the RenderDoc GitHub to our googlesource.com and then DEPing on that, even though we\u0027d only need the one header. Would you prefer that? It would have the advantage that we\u0027d know which version we\u0027re pinned to.",
+      "parentUuid": "986bce92_498394f4",
       "revId": "a4081b5c572418367c9876d94c942e5e0f16a261",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
