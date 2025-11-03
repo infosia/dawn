@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "00477575_da2b33c7",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-03T20:52:10Z",
+      "side": 1,
+      "message": "I like that idea. Done with a slightly different approach.",
+      "parentUuid": "d0403a1d_3d577693",
+      "range": {
+        "startLine": 461,
+        "startChar": 26,
+        "endLine": 461,
+        "endChar": 59
+      },
+      "revId": "efc9df32f4a4bb249dd9c0fc55e089b84e7934fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd17c77f_435e97a3",
@@ -54,6 +78,24 @@
       "writtenOn": "2025-11-03T10:16:24Z",
       "side": 1,
       "message": "u-nit: can we have a comment explaining what this struct is for? Also implementation can be in the .cpp.",
+      "revId": "efc9df32f4a4bb249dd9c0fc55e089b84e7934fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32416b5a_8d92d02a",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-03T20:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd17c77f_435e97a3",
       "revId": "efc9df32f4a4bb249dd9c0fc55e089b84e7934fd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
