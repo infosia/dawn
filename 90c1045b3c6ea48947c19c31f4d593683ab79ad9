@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ca403eb_a07e6391",
+        "filename": "src/dawn/native/d3d11/DeviceD3D11.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-11-03T16:23:59Z",
+      "side": 1,
+      "message": "This could use a comment, why these specific bytes?",
+      "range": {
+        "startLine": 70,
+        "startChar": 24,
+        "endLine": 70,
+        "endChar": 89
+      },
+      "revId": "90c1045b3c6ea48947c19c31f4d593683ab79ad9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
