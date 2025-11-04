@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e8c206a_9e097ee4",
+        "filename": "src/tint/lang/core/ir/validator_type_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-04T14:44:30Z",
+      "side": 1,
+      "message": "I don\u0027t know how this test passed previously as it uses i8 and u8 ... ?",
+      "revId": "8a9fc9986ae4a216b7ed6d44f5877c16e8d97cca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
