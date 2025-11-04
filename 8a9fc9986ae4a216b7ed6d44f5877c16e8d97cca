@@ -51,6 +51,24 @@
       "message": "Looks like a bunch of old expectations from when you had extra overloads in the wgsl.def file.",
       "revId": "8a9fc9986ae4a216b7ed6d44f5877c16e8d97cca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b92dd2d0_b578dd56",
+        "filename": "test/tint/builtins/gen/var/subgroupMatrixScalarAdd/00dde1.wgsl.expected.spvasm",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-04T21:23:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f14a95f_267be9ab",
+      "revId": "8a9fc9986ae4a216b7ed6d44f5877c16e8d97cca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
