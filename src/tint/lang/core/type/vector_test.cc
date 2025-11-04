@@ -40,8 +40,8 @@ using VectorTest = TestHelper;
 
 TEST_F(VectorTest, Creation) {
     Manager ty;
-    auto* a = ty.vec2(ty.i32());
-    auto* b = ty.vec2(ty.i32());
+    auto* a = ty.vec2i();
+    auto* b = ty.vec2i();
     auto* c = ty.vec2(ty.f32());
     auto* d = ty.vec3(ty.f32());
 
@@ -71,16 +71,16 @@ TEST_F(VectorTest, Creation_Packed) {
 
 TEST_F(VectorTest, Hash) {
     Manager ty;
-    auto* a = ty.vec2(ty.i32());
-    auto* b = ty.vec2(ty.i32());
+    auto* a = ty.vec2i();
+    auto* b = ty.vec2i();
 
     EXPECT_EQ(a->unique_hash, b->unique_hash);
 }
 
 TEST_F(VectorTest, Equals) {
     Manager ty;
-    auto* a = ty.vec2(ty.i32());
-    auto* b = ty.vec2(ty.i32());
+    auto* a = ty.vec2i();
+    auto* b = ty.vec2i();
     auto* c = ty.vec2(ty.f32());
     auto* d = ty.vec3(ty.f32());
 
@@ -92,8 +92,7 @@ TEST_F(VectorTest, Equals) {
 
 TEST_F(VectorTest, FriendlyName) {
     Manager ty;
-    auto* f32 = ty.f32();
-    auto* v = ty.vec3(f32);
+    auto* v = ty.vec3f();
     EXPECT_EQ(v->FriendlyName(), "vec3<f32>");
 }
 
@@ -106,7 +105,7 @@ TEST_F(VectorTest, FriendlyName_Packed) {
 
 TEST_F(VectorTest, Clone) {
     Manager ty;
-    auto* a = ty.vec2(ty.i32());
+    auto* a = ty.vec2i();
 
     core::type::Manager mgr;
     core::type::CloneContext ctx{{nullptr}, {nullptr, &mgr}};
