@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "802c2ea4_34497fb1",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-04T13:46:41Z",
+      "side": 1,
+      "message": "This works but slightly error prone since we need to add calls next to most but not all `EmitBufferBarrierIfNecessary`. In the next CL I have a suggestion that could let us add an ASSERT of this.",
+      "revId": "48cc4a456b0ec4b87bbc93290870767685ff8537",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
