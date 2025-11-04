@@ -963,6 +963,7 @@ struct State {
         b.InsertBefore(call, [&] {
             auto* dims = b.Call<vec2<u32>>(core::BuiltinFn::kTextureDimensions, texture);
             auto* fdims = b.Convert<vec2<f32>>(dims);
+            // NOLINTNEXTLINE(google-runtime-float)
             auto* half_texel = b.Divide<vec2<f32>>(b.Splat<vec2<f32>>(0.5_f), fdims);
             auto* one_minus_half_texel = b.Subtract<vec2<f32>>(b.Splat<vec2<f32>>(1_f), half_texel);
             auto* clamped = b.Call<vec2<f32>>(core::BuiltinFn::kClamp, coords, half_texel,
