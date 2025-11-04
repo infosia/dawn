@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "713c60c1_dfb559e4",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-04T15:55:47Z",
+      "side": 1,
+      "message": "Effectively this is supposed to be the only side effect of TrackUsageAndGetResourceBarrier() being called from MapAsyncImpl. Although I\u0027m not sure it\u0027s necessary?\n\nIf the a barrier means that buffer was used by the GPU and hasn\u0027t been transitioned back to map usage(s) yet then that use by the GPU should already have called MarkUsedInPendingCommands(). If that\u0027s true MapAsyncImpl() calling TrackUsageAndGetResourceBarrier() is a no-op. I\u0027m not totally confident in that analysis.",
+      "revId": "50647ad21b4a8ec5deb5f3a453385d1f91d754fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

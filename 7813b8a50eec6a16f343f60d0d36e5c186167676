@@ -52,6 +52,24 @@
       "parentUuid": "50b76f6f_a6976bbe",
       "revId": "7813b8a50eec6a16f343f60d0d36e5c186167676",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "526efce6_58501a62",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-04T15:55:47Z",
+      "side": 1,
+      "message": "\u003e I got a bit confused about the part discussing stages for TrackUsageAndGetResourceBarrier.\n\nSorry, to clarify I think there is a real problem in the first PS. When MapAsyncImpl() calls TrackUsageAndGetResourceBarrier() it modifies usage/stage member variables. By changing those member variables TransitionMappableBuffersEagerly() calling into TrackUsageAndGetResourceBarrier() later might not emit a barrier. \n\nFor example, if MapAsyncImpl() calls TrackUsageAndGetResourceBarrier() with usage MapRead it adds that usage to mReadUsage [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BufferVk.cpp;l\u003d489;drc\u003d621dcd575ae9f44c148e6c9e6a03ffa303427169) and it returns a barrier which MapAsyncImpl() ignores. Later TransitionMappableBuffersEagerly() calls into TrackUsageAndGetResourceBarrier() with usage MapRead [this code](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BufferVk.cpp;l\u003d477;drc\u003d621dcd575ae9f44c148e6c9e6a03ffa303427169) sees mReadUsage already has MapRead and early returns without emitting a barrier. We\u0027ve lost the barrier.\n\nI uploaded a patchset that I think fixes it. The logic in TrackUsageAndGetResourceBarrier() has no side effects beyond calling MarkUsedInPendingCommands() when it\u0027s run here (see my other comment).\n\n\u003e In any case I believe that we should be able to completely remove the barrier call here, and instead in FinalizeMapImpl, have an ASSERT that TrackUsageAndGetResourceBarrier returns the null barrier.\n\nSo I added the assert. I\u0027m not sure how valuable it is since TrackUsageAndGetResourceBarrier() just skips returning a barrier if isMapAsync.\n\n\u003e The only other case would be for buffers that are map read + write if we mapped them with one usage and then the other, but even then the barrier should be empty AFAIU.\n\nWe skip emitting barriers for map-\u003emap if the second usage is MapWrite [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BufferVk.cpp;l\u003d510;drc\u003d621dcd575ae9f44c148e6c9e6a03ffa303427169). We don\u0027t have equivalent logic in the `readOnly` true branch though unless I\u0027m missing it?",
+      "parentUuid": "c7c069d7_c5ae745f",
+      "revId": "7813b8a50eec6a16f343f60d0d36e5c186167676",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
