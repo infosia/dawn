@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbbf4bc4_56a3aa6f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-04T23:22:03Z",
+      "side": 1,
+      "message": "Gregg PTAL (and you can CQ)",
+      "revId": "5fac28c82fe83663a3b9c4f083a2f1c3e37d040b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
