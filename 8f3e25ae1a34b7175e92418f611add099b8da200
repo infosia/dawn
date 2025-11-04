@@ -50,6 +50,24 @@
       "message": "nit: unrelated, but also why is it needed?",
       "revId": "8f3e25ae1a34b7175e92418f611add099b8da200",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef6a9cc5_b8ff31b5",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-04T23:02:09Z",
+      "side": 1,
+      "message": "https://dawn-review.googlesource.com/c/dawn/+/265318/comments/63c6dfa5_a08bd69a",
+      "parentUuid": "7f7a5176_0dc17c36",
+      "revId": "8f3e25ae1a34b7175e92418f611add099b8da200",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
