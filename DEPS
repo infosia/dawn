@@ -128,8 +128,8 @@ deps = {
 
   # Dependencies required to use GN, and Clang in standalone.
 
-  # The //build, //tools/clang, //tools/memory, and '//tools/valgrind' deps
-  # should all be updated in unison, as there are dependencies between them.
+  # The //build and //tools/* deps should all be updated in unison, as
+  #  there are dependencies between them.
   'build': {
   'url': '{chromium_git}/chromium/src/build@99f8d0f4dbccc2724258ab280f0e000b94681e8d',
     'condition': 'dawn_standalone',
@@ -145,6 +145,10 @@ deps = {
   'tools/valgrind': {
     'url': '{chromium_git}/chromium/src/tools/valgrind@da34b95fdbf2032df6cda5f3828c2ba421592644',
     'condition': 'dawn_standalone',
+  },
+  'tools/win': {
+    'url': Var('chromium_git') + '/chromium/src/tools/win@24494b071e019a2baea4355d9870ffc5fc0bbafe',
+    'condition': 'checkout_win and not build_with_chromium',
   },
 
   # Linux sysroots for hermetic builds instead of relying on whatever is
@@ -339,7 +343,7 @@ deps = {
   },
 
   'third_party/abseil-cpp': {
-    'url': '{chromium_git}/chromium/src/third_party/abseil-cpp@9d692d669253232c024b20ae19d2ff0b581ee1cd',
+    'url': '{chromium_git}/chromium/src/third_party/abseil-cpp@e1655ca1acab4bf3f4f293ac0e14a8ddec440332',
     'condition': 'dawn_standalone',
   },
 
