@@ -441,7 +441,8 @@ void Buffer::TransitionUsageNow(CommandRecordingContext* recordingContext,
 }
 
 BufferBarrier Buffer::TrackUsageAndGetResourceBarrier(wgpu::BufferUsage usage,
-                                                      wgpu::ShaderStage shaderStage) {
+                                                      wgpu::ShaderStage shaderStage,
+                                                      bool isMapAsync) {
     if (shaderStage == wgpu::ShaderStage::None) {
         // If the buffer isn't used in any shader stages, ignore shader usages. Eg. ignore a uniform
         // buffer that isn't actually read in any shader.
@@ -449,6 +450,8 @@ BufferBarrier Buffer::TrackUsageAndGetResourceBarrier(wgpu::BufferUsage usage,
     }
 
     const bool isMapUsage = usage & kMappableBufferUsages;
+    DAWN_ASSERT(!isMapAsync || isMapUsage);
+
     if (!isMapUsage) {
         // Request non CPU usage, so assume the buffer will be used in pending commands.
         MarkUsedInPendingCommands();
@@ -479,8 +482,10 @@ BufferBarrier Buffer::TrackUsageAndGetResourceBarrier(wgpu::BufferUsage usage,
             usage |= GetInternalUsage() & kReadOnlyShaderBufferUsages;
         }
 
-        mReadUsage |= usage;
-        mReadShaderStages |= shaderStage;
+        if (!isMapAsync) {
+            mReadUsage |= usage;
+            mReadShaderStages |= shaderStage;
+        }
 
         if (mLastWriteUsage == wgpu::BufferUsage::None) {
             // Read dependency with no prior writes. No barrier needed.
@@ -515,21 +520,24 @@ BufferBarrier Buffer::TrackUsageAndGetResourceBarrier(wgpu::BufferUsage usage,
             srcStage = VulkanPipelineStage(mReadUsage, mReadShaderStages);
         }
 
-        mLastWriteUsage = usage;
-        mLastWriteShaderStage = shaderStage;
+        if (!isMapAsync) {
+            mLastWriteUsage = usage;
+            mLastWriteShaderStage = shaderStage;
 
-        mReadUsage = wgpu::BufferUsage::None;
-        mReadShaderStages = wgpu::ShaderStage::None;
+            mReadUsage = wgpu::BufferUsage::None;
+            mReadShaderStages = wgpu::ShaderStage::None;
+        }
 
         if (skipBarrier) {
             return {};
         }
     }
 
-    if (isMapUsage) {
+    if (isMapAsync) {
         // CPU usage, but a pipeline barrier is needed, so mark the buffer as used within the
         // pending commands.
         MarkUsedInPendingCommands();
+        return {};
     }
 
     return BufferBarrier{.srcAccessMask = srcAccess,
@@ -548,15 +556,13 @@ MaybeError Buffer::MapAtCreationImpl() {
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
-    CommandRecordingContext* recordingContext =
-        ToBackend(GetDevice()->GetQueue())->GetPendingRecordingContext();
-
-    if (mode & wgpu::MapMode::Read) {
-        TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapRead);
-    } else {
-        DAWN_ASSERT(mode & wgpu::MapMode::Write);
-        TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapWrite);
-    }
+    // This intentionally drops any returned barrier. If a barrier is required before MapAsync
+    // completes TransitionMappableBuffersEagerly() will handle adding it before vkQueueSubmit().
+    wgpu::BufferUsage usage =
+        (mode & wgpu::MapMode::Read) ? wgpu::BufferUsage::MapRead : wgpu::BufferUsage::MapWrite;
+    BufferBarrier barrier =
+        TrackUsageAndGetResourceBarrier(usage, wgpu::ShaderStage::None, /*isMapAsync=*/true);
+    DAWN_ASSERT(barrier.IsEmpty());
 
     return {};
 }
