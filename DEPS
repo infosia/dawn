@@ -131,7 +131,7 @@ deps = {
   # The //build, //tools/clang, //tools/memory, and '//tools/valgrind' deps
   # should all be updated in unison, as there are dependencies between them.
   'build': {
-  'url': '{chromium_git}/chromium/src/build@99f8d0f4dbccc2724258ab280f0e000b94681e8d',
+  'url': 'https://github.com/victorvianna/chromium-build.git@9965d133cc8e2febb5fb4dd36e939e30879d41ea',
     'condition': 'dawn_standalone',
   },
   'tools/clang': {
