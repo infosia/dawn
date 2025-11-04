@@ -22,6 +22,30 @@
       },
       "revId": "9ea6e264bb311233c435a5759a023e3b08c4f844",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68bdd27f_e228c589",
+        "filename": "src/tint/lang/wgsl/resolver/materialize_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-04T20:58:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05581d90_f2ae73a9",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "9ea6e264bb311233c435a5759a023e3b08c4f844",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
