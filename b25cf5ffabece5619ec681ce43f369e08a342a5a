@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af2e9499_8a0a0426",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-04T00:35:27Z",
+      "side": 1,
+      "message": "PTAL! First pass at something that I feel could actually land. Effectively just a Dawn-side version of https://chromium-review.googlesource.com/c/chromium/src/+/7087370, which isn\u0027t as clean code-wise but which I think I prefer because it would benefit any Dawn wire users. Initial benchmarks show that the two CLs perform roughly identically.",
+      "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "621eb08f_b9fba89e",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-04T00:35:27Z",
+      "side": 1,
+      "message": "Not a big fan of this type of static limit, but my benchmarking shows that the existing WriteBuffer path is still faster for smaller uploads (likely due to no chunking, batched submits, and recycled staging buffers)",
+      "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7dac9fdf_b66de769",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-04T00:35:27Z",
+      "side": 1,
+      "message": "It feels a bit weird to me to be mixing this type of C-style call with the more OOP approach above, but I fumbled around for a while and couldn\u0027t see a pattern for using the full C++ wgpu:: API calls here. If there\u0027s a better pattern I should be using I\u0027m all for it!",
+      "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
