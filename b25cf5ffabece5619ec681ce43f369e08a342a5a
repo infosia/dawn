@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "30e53330_d604c638",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-04T07:34:57Z",
+      "side": 1,
+      "message": "I think that this shouldn\u0027t be a static. We should be able to compute it based on the value we get when initializing the wire client and checking the capabilities via `GetMaximumAllocationSize()`",
+      "parentUuid": "848ab888_f621a8a7",
+      "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "83343cc6_92424166",
         "filename": "src/dawn/wire/client/Queue.cpp",
         "patchSetId": 1
@@ -83,6 +101,24 @@
       "writtenOn": "2025-11-04T02:32:23Z",
       "side": 1,
       "message": "If creating the mapping OOMs this will return null. Maybe in this case inject an `internal` error and return (which should result in device loss).\n\nIf the GPU buffer OOMs then you\u0027ll get `out-of-memory` from Dawn which will cause `WriteBuffer` to fail with a `validation` error - but really we want it to also lose the device. I don\u0027t think there is really a way to deal with that here, we would need to add some kind of special flag to this allocation telling it to consider OOM fatal.\n\nI think a better implementation would be to `CreateWriteHandle` here and have a new wire command that does `WriteBuffer` from a memory handle. You would still need to handle client OOM manually, but the staging buffer would get allocated by dawn native which should already handle OOM, and also can reuse existing staging memory. (Also then dawn native can avoid a copy if there\u0027s a way to copy from CPU directly into a buffer. IDK if we currently do this in any backend.)\n\nHowever I am not sure how difficult that will be, so maybe it is worth getting this perf fix in now even if it will have some incorrect corner cases.",
+      "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9985143_a442391f",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-04T07:34:57Z",
+      "side": 1,
+      "message": "That\u0027s what I did for my initial prototype here: https://dawn-review.googlesource.com/c/dawn/+/269134\n\nAnd with additional Chromium changes to get rid of the memcpy: https://dawn-review.googlesource.com/c/dawn/+/269814 + https://chromium-review.googlesource.com/c/chromium/src/+/7097949\n\nThe weird thing was that compared to Brandon\u0027s initial changes on only the Blink side, even without the additional memcpy, the performance seemed to be slightly better with Brandon\u0027s change. I\u0027ve been investigating this though because from what I understand of the code, my changes along with the Chromium changes should actually be the fastest assuming I understand everything correctly.\n\nThat said, I don\u0027t know how it compares with these changes. I am also on the edge about causing an explicit submit here. In theory we shouldn\u0027t need to do that because if we do it via the `WriteHandle` those will be handled and submitted when the native side reaches its capacity. My theory is still that the explicit submit might also be the cause of why the performance of this solution to appear better than the alternative, though that is purely speculation still...",
+      "parentUuid": "83343cc6_92424166",
       "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -118,6 +154,24 @@
       "side": 1,
       "message": "To use C++ you would use `dawn/wire/client/webgpu_cpp.h` and `wgpu::dawn::wire::client::Device` etc. instead, but I don\u0027t know offhand whether that would work. (Maybe you tried this already.)\n\n(Aside: I was going to say this should go through a proc table instead, but AFAICT these definitions are static, not function pointers, so that seems not a problem.)",
       "parentUuid": "7dac9fdf_b66de769",
+      "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c161d768_640b60b8",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-04T07:34:57Z",
+      "side": 1,
+      "message": "We can potentially get rid of these if we directly use the `WriteHandle` mechanism.",
+      "parentUuid": "83d2855f_9e718cc9",
       "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
