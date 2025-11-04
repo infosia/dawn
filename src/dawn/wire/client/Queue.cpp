@@ -32,12 +32,16 @@
 #include <utility>
 
 #include "dawn/common/StringViewUtils.h"
+#include "dawn/wire/client/ApiObjects_autogen.h"
 #include "dawn/wire/client/Client.h"
 #include "dawn/wire/client/EventManager.h"
+#include "dawn/wire/client/webgpu.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::wire::client {
 namespace {
+
+const uint64_t kClientWriteBufferThreshold = 1024 * 1024 * 4;
 
 class WorkDoneEvent : public TrackedEvent {
   public:
@@ -120,6 +124,11 @@ void Queue::APIWriteBuffer(WGPUBuffer cBuffer,
                            uint64_t bufferOffset,
                            const void* data,
                            size_t size) {
+    if (size > kClientWriteBufferThreshold) {
+        WriteBufferClientImpl(cBuffer, bufferOffset, data, size);
+        return;
+    }
+
     Buffer* buffer = FromAPI(cBuffer);
 
     QueueWriteBufferCmd cmd;
@@ -146,6 +155,39 @@ void Queue::APIWriteTexture(const WGPUTexelCopyTextureInfo* destination,
     cmd.writeSize = writeSize;
 
     GetClient()->SerializeCommand(cmd);
+}
+
+// A wire-client-side implementation of WriteBuffer. Doing it this way avoids some copies and skips
+// the need to break larger data blocks into chunks over the wire.
+void Queue::WriteBufferClientImpl(WGPUBuffer cBuffer,
+                                  uint64_t bufferOffset,
+                                  const void* data,
+                                  size_t size) {
+    Device* device = FromAPI(cBuffer)->GetDevice();
+
+    // Create a new staging buffer large enough for the copy.
+    WGPUBufferDescriptor stagingDesc = {};
+    stagingDesc.usage = WGPUBufferUsage_MapWrite | WGPUBufferUsage_CopySrc;
+    stagingDesc.size = size;
+    stagingDesc.mappedAtCreation = true;
+    WGPUBuffer stagingBuffer = Buffer::Create(device, &stagingDesc);
+    Buffer* staging = FromAPI(stagingBuffer);
+
+    // Write the data to the staging buffer and unmap to prepare it for copying.
+    staging->APIWriteMappedRange(0, data, size);
+    staging->APIUnmap();
+
+    // Encode a copyBufferToBuffer command from the staging buffer to the destination buffer.
+    auto encoder = wgpuDawnWireClientDeviceCreateCommandEncoder(ToAPI(device), nullptr);
+    wgpuDawnWireClientCommandEncoderCopyBufferToBuffer(encoder, stagingBuffer, 0, cBuffer,
+                                                       bufferOffset, size);
+    auto commandBuffer = wgpuDawnWireClientCommandEncoderFinish(encoder, nullptr);
+
+    // Submit the copy command.
+    wgpuDawnWireClientQueueSubmit(ToAPI(this), 1, &commandBuffer);
+
+    // Destroy the staging buffer.
+    staging->APIDestroy();
 }
 
 }  // namespace dawn::wire::client

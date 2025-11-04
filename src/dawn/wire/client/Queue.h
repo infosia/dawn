@@ -50,6 +50,12 @@ class Queue final : public ObjectWithEventsBase {
                          size_t dataSize,
                          const WGPUTexelCopyBufferLayout* dataLayout,
                          const WGPUExtent3D* writeSize);
+
+  private:
+    void WriteBufferClientImpl(WGPUBuffer buffer,
+                               uint64_t bufferOffset,
+                               const void* data,
+                               size_t size);
 };
 
 }  // namespace dawn::wire::client
