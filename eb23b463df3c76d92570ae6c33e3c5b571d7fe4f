@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "eb23b463df3c76d92570ae6c33e3c5b571d7fe4f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6b6d77b_135ab94e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-04T15:35:46Z",
+      "side": 1,
+      "message": "I\u0027ve compared gn.args with https://ci.chromium.org/ui/p/chromium/builders/ci/Dawn%20Win10%20x64%20ASAN%20Builder/17786/overview.\nThere are many differences, but an important one I\u0027ve noticed is that \"dcheck_always_on \u003d true\" is missing. I think we should enable it on all Release builders.",
+      "revId": "eb23b463df3c76d92570ae6c33e3c5b571d7fe4f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
