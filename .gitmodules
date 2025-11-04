@@ -28,7 +28,7 @@
 	gclient-condition = dawn_standalone and host_os == "linux"
 [submodule "build"]
 	path = build
-	url = https://chromium.googlesource.com/chromium/src/build
+	url = https://github.com/victorvianna/chromium-build.git
 	gclient-condition = dawn_standalone
 [submodule "tools/clang"]
 	path = tools/clang
@@ -197,3 +197,6 @@
 	path = third_party/partition_alloc
 	url = https://chromium.googlesource.com/chromium/src/base/allocator/partition_allocator.git
 	gclient-condition = dawn_standalone
+[submodule "chromium-build"]
+	path = build
+	url = https://github.com/victorvianna/chromium-build.git
