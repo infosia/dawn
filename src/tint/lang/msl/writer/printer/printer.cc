@@ -962,6 +962,13 @@ class Printer : public tint::TextGenerator {
             return;
         }
         if (c->Func() == msl::BuiltinFn::kConvert) {
+            // Subgroup matrix types don't convert, they're the same type as there is no concept of
+            // left/right/result in MSL. So, just no-op the actual conversion.
+            if (c->Result()->Type()->Is<core::type::SubgroupMatrix>()) {
+                EmitValue(out, c->Operand(0));
+                return;
+            }
+
             EmitType(out, c->Result()->Type());
             out << "(";
             EmitValue(out, c->Operand(0));
@@ -975,6 +982,13 @@ class Printer : public tint::TextGenerator {
             EmitValue(out, c->Operand(0));
             out << ") + ";
             EmitValue(out, c->Operand(1));
+            out << ")";
+            return;
+        }
+        if (c->Func() == msl::BuiltinFn::kMakeDiagonalSimdgroupMatrix) {
+            EmitType(out, c->Result()->Type());
+            out << "(";
+            EmitValue(out, c->Args()[0]);
             out << ")";
             return;
         }
