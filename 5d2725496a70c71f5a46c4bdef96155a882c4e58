@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "d2c57f30_f6c3dcd6",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-04T21:42:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5663094b_aca6d85c",
+      "revId": "5d2725496a70c71f5a46c4bdef96155a882c4e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "4d073320_d9dcb005",
         "filename": "src/dawn/native/Buffer.cpp",
         "patchSetId": 7
@@ -65,6 +83,24 @@
       "writtenOn": "2025-10-29T21:44:51Z",
       "side": 1,
       "message": "Is `EnsureComplete(EventCompletionType::Shutdown)` needed in the destructor here?",
+      "revId": "5d2725496a70c71f5a46c4bdef96155a882c4e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66deb2af_3d6befee",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-04T21:42:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8709c6d_def85836",
       "revId": "5d2725496a70c71f5a46c4bdef96155a882c4e58",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
