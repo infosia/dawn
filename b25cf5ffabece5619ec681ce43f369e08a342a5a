@@ -37,6 +37,58 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dda9b08f_851fb07d",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-04T02:32:23Z",
+      "side": 1,
+      "message": "nit: I would probably move this to a local const inside APIWriteBuffer so it\u0027s close to where it\u0027s used, since it\u0027s not used elsewhere for now.",
+      "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "848ab888_f621a8a7",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-04T02:32:23Z",
+      "side": 1,
+      "message": "I think a heuristic is fine. Needs a comment though to explain that it\u0027s chosen based on a rough estimate for which mode is faster.",
+      "parentUuid": "621eb08f_b9fba89e",
+      "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83343cc6_92424166",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-04T02:32:23Z",
+      "side": 1,
+      "message": "If creating the mapping OOMs this will return null. Maybe in this case inject an `internal` error and return (which should result in device loss).\n\nIf the GPU buffer OOMs then you\u0027ll get `out-of-memory` from Dawn which will cause `WriteBuffer` to fail with a `validation` error - but really we want it to also lose the device. I don\u0027t think there is really a way to deal with that here, we would need to add some kind of special flag to this allocation telling it to consider OOM fatal.\n\nI think a better implementation would be to `CreateWriteHandle` here and have a new wire command that does `WriteBuffer` from a memory handle. You would still need to handle client OOM manually, but the staging buffer would get allocated by dawn native which should already handle OOM, and also can reuse existing staging memory. (Also then dawn native can avoid a copy if there\u0027s a way to copy from CPU directly into a buffer. IDK if we currently do this in any backend.)\n\nHowever I am not sure how difficult that will be, so maybe it is worth getting this perf fix in now even if it will have some incorrect corner cases.",
+      "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7dac9fdf_b66de769",
         "filename": "src/dawn/wire/client/Queue.cpp",
         "patchSetId": 1
@@ -48,6 +100,24 @@
       "writtenOn": "2025-11-04T00:35:27Z",
       "side": 1,
       "message": "It feels a bit weird to me to be mixing this type of C-style call with the more OOP approach above, but I fumbled around for a while and couldn\u0027t see a pattern for using the full C++ wgpu:: API calls here. If there\u0027s a better pattern I should be using I\u0027m all for it!",
+      "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83d2855f_9e718cc9",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-04T02:32:23Z",
+      "side": 1,
+      "message": "To use C++ you would use `dawn/wire/client/webgpu_cpp.h` and `wgpu::dawn::wire::client::Device` etc. instead, but I don\u0027t know offhand whether that would work. (Maybe you tried this already.)\n\n(Aside: I was going to say this should go through a proc table instead, but AFAICT these definitions are static, not function pointers, so that seems not a problem.)",
+      "parentUuid": "7dac9fdf_b66de769",
       "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
