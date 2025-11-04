@@ -80,7 +80,7 @@ ResultOrError<UnpackedPtr<TexelBufferViewDescriptor>> ValidateTexelBufferViewDes
     const BufferBase* buffer,
     const TexelBufferViewDescriptor* descriptor);
 
-class BufferBase : public SharedResource {
+class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
   public:
     enum class BufferState {
         Unmapped,
@@ -177,7 +177,7 @@ class BufferBase : public SharedResource {
     ExecutionSerial mLastUsageSerial = ExecutionSerial(0);
 
   private:
-    struct MapAsyncEvent;
+    class MapAsyncEvent;
 
     virtual MaybeError MapAtCreationImpl() = 0;
     virtual MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) = 0;
@@ -230,15 +230,24 @@ class BufferBase : public SharedResource {
     // staging buffer recursively.
     Ref<BufferBase> mStagingBuffer = nullptr;
 
-    // Track texel buffer views created from this buffer so they can be destroyed
-    // when the buffer is destroyed.
+    // Track texel buffer views created from this buffer so they can be destroyed when the buffer is
+    // destroyed.
     ApiObjectList mTexelBufferViews;
+
+    // This both references an event and provides a synchronization mechanism. Once MapAsync()
+    // returns a future there is a possible race between MapAsyncEvent completing and the buffer
+    // being unmapped. A mutex is held when resetting `mPendingMapEvent` to guard against concurrent
+    // access. If MapAsyncEvent resets this then MapAsync() will complete successfully. If Unmap()
+    // is called concurrently it will complete afterwards. If Unmap() resets this then MapAsync()
+    // will be aborted and the buffer will be unmapped early.
+    Mutex mPendingMapMutex;
+    Ref<MapAsyncEvent> mPendingMapEvent;
 
     // Mapping specific states.
     wgpu::MapMode mMapMode = wgpu::MapMode::None;
     size_t mMapOffset = 0;
     size_t mMapSize = 0;
-    std::variant<void*, Ref<MapAsyncEvent>> mMapData;
+    void* mMappedPointer = nullptr;
 };
 
 }  // namespace dawn::native
