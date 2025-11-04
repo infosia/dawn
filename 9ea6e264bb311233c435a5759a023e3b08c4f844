@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05581d90_f2ae73a9",
+        "filename": "src/tint/lang/wgsl/resolver/materialize_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-04T20:50:12Z",
+      "side": 1,
+      "message": "nit\n```suggestion\nusing f32M \u003d mat3x2f;\nusing f16M \u003d mat3x2h;\n```",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "9ea6e264bb311233c435a5759a023e3b08c4f844",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
