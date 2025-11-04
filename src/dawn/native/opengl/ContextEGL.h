@@ -59,7 +59,8 @@ class ContextEGL : NonMovable {
                           bool useRobustness,
                           bool useANGLETextureSharing,
                           bool disableEGL15Robustness,
-                          bool forceES31AndMinExtensions EGLint angleVirtualizationGroup);
+                          bool forceES31AndMinExtensions,
+                          EGLint angleVirtualizationGroup);
     void RequestRequiredExtensionsExplicitly();
     bool IsInScopedMakeCurrent() const;
 
