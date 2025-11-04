@@ -34,6 +34,24 @@
       "parentUuid": "1990d158_7e925aa7",
       "revId": "43be1a4dda86f981fab9ca598571a322770dc816",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33edd8e7_81935626",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-04T08:57:45Z",
+      "side": 1,
+      "message": "Ah that makes sense, thanks for the reminder of why we have the PCT. Either RefCountedWithExternalCount or a WeakRef could fix this but in both cases getting correct pipeline creation information for the capture would be challenging.",
+      "parentUuid": "5c1c914d_c916ca02",
+      "revId": "43be1a4dda86f981fab9ca598571a322770dc816",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
