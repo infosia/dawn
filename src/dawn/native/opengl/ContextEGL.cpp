@@ -81,14 +81,9 @@ ResultOrError<std::unique_ptr<ContextEGL>> ContextEGL::Create(Ref<DisplayEGL> di
                                                               bool forceES31AndMinExtensions,
                                                               EGLint angleVirtualizationGroup) {
     auto context = std::make_unique<ContextEGL>(std::move(display));
-<<<<<<< HEAD
     DAWN_TRY(context->Initialize(backend, useRobustness, disableEGL15Robustness,
                                  useANGLETextureSharing, forceES31AndMinExtensions,
                                  angleVirtualizationGroup));
-=======
-    DAWN_TRY(context->Initialize(backend, useRobustness, useANGLETextureSharing,
-                                 forceES31AndMinExtensions, angleVirtualizationGroup));
->>>>>>> fd6bc22ce5 (fix)
     return std::move(context);
 }
 
