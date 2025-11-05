@@ -110,6 +110,30 @@
       },
       "revId": "ed2bef8d8da48b335fe796758c75d4001a9498d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d315d1b_0cd8381a",
+        "filename": "tools/src/cmd/cts/config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-05T20:11:26Z",
+      "side": 1,
+      "message": "This code only looks at WebGPU results, so I would except the flat scheme to be irrelevant eventually.",
+      "parentUuid": "d83a244a_529ed8fd",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 78
+      },
+      "revId": "ed2bef8d8da48b335fe796758c75d4001a9498d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
