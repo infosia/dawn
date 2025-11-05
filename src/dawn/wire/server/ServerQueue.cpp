@@ -61,14 +61,34 @@ WireResult Server::DoQueueOnSubmittedWorkDone(Known<WGPUQueue> queue,
 WireResult Server::DoQueueWriteBuffer(Known<WGPUQueue> queue,
                                       Known<WGPUBuffer> buffer,
                                       uint64_t bufferOffset,
-                                      const uint8_t* data,
-                                      uint64_t size) {
+                                      uint64_t size,
+                                      uint64_t writeHandleCreateInfoLength,
+                                      const uint8_t* writeHandleCreateInfo,
+                                      uint64_t writeDataUpdateInfoLength,
+                                      const uint8_t* writeDataUpdateInfo) {
     if (size > std::numeric_limits<size_t>::max()) {
         return WireResult::FatalError;
     }
 
-    mProcs.queueWriteBuffer(queue->handle, buffer->handle, bufferOffset, data,
-                            static_cast<size_t>(size));
+    MemoryTransferService::WriteHandle* writeHandle = nullptr;
+    // Deserialize metadata produced from the client to create a companion server handle.
+    if (!mMemoryTransferService->DeserializeWriteHandle(
+            writeHandleCreateInfo, static_cast<size_t>(writeHandleCreateInfoLength),
+            &writeHandle)) {
+        return WireResult::FatalError;
+    }
+    writeHandle->SetDataLength(size);
+
+    // Deserialize the flush info and flush updated data from the handle into the target
+    // of the handle that's just a temporary allocation from above right now.
+    /*if (!writeHandle->DeserializeDataUpdate(writeDataUpdateInfo,
+                                            static_cast<size_t>(writeDataUpdateInfoLength), 0u,
+                                            static_cast<size_t>(size))) {
+        return WireResult::FatalError;
+    }*/
+
+    mProcs.queueWriteBuffer(queue->handle, buffer->handle, bufferOffset,
+                            writeHandle->GetTarget().data(), static_cast<size_t>(size));
     return WireResult::Success;
 }
 
