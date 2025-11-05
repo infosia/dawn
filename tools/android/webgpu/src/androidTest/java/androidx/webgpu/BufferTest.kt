@@ -2,6 +2,7 @@ package androidx.webgpu
 
 import androidx.test.filters.MediumTest
 import androidx.test.filters.SmallTest
+import androidx.webgpu.helper.DawnException
 import androidx.webgpu.helper.ValidationException
 import androidx.webgpu.helper.WebGpu
 import androidx.webgpu.helper.createWebGpu
@@ -11,6 +12,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.After
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
@@ -232,9 +234,11 @@ class BufferTest {
 
     val readByteBuffer =
       ByteBuffer.allocateDirect(bufferSize.toInt()).order(ByteOrder.nativeOrder())
-    val status = buffer.readMappedRange(0, readByteBuffer)
-    assertEquals(MapAsyncStatus.Success, status)
-
+    try {
+        buffer.readMappedRange(0, readByteBuffer)
+    } catch (e: DawnException) {
+        fail("buffer.readMappedRange() threw an unexpected exception: ${e.message}")
+    }
     val readByteBufferFloat = readByteBuffer.asFloatBuffer()
     val readData = FloatArray(readByteBufferFloat.remaining())
 
@@ -261,7 +265,7 @@ class BufferTest {
     val byteBuffer = ByteBuffer.allocateDirect(16)
 
     //TODO(b/452516879): Catch a more specific exception type.
-    assertThrows(Error::class.java) {
+    assertThrows(DawnException::class.java) {
       buffer.writeMappedRange(0, byteBuffer)
     }
   }
