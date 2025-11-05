@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e81d07ab_9dab926d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-05T11:00:29Z",
+      "side": 1,
+      "message": "LGTM after Kai\u0027s comments.",
+      "revId": "5631bd2672e55275e03d5c6a801cb83203c01504",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dd55dc7a_175619c8",
