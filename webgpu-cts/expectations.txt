@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-10-29 12:22:02PM
+# Last rolled: 2025-11-05 05:11:47AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -366,7 +366,6 @@ crbug.com/42251220 [ amd mac ] webgpu:shader,execution,expression,call,builtin,l
 # Failures due to Linux/Intel UHD 630 OS/driver upgrade
 crbug.com/42251290 [ intel-0x9bc5 linux mesa_ge_23.2 ] webgpu:shader,execution,memory_model,atomicity:atomicity:memType="atomic_storage";testType="inter_workgroup" [ Failure ]
 
-
 # Intel failures for robust access on Windows
 # crbug.com/tint/2213: F16 tests always fail.
 # crbug.com/42251180: Non-f16 tests are flaky on DXC.
@@ -438,7 +437,6 @@ crbug.com/42251088 [ android-r ] webgpu:shader,execution,expression,call,builtin
 # DXC failures
 crbug.com/42241085 [ nvidia-0x2184 webgpu-dxc-enabled win ] webgpu:shader,execution,expression,call,builtin,tanh:f32:* [ Failure ] # finder:disable-general UPF disabled until Dawn Win/GTX 1660 experiment is enabled crbug.com/413300864
 
-
 # Intel Mesa failures for f16 vector saturate when loading from uniform buffer
 crbug.com/448873316 [ intel-0x9bc5 ubuntu ] webgpu:shader,execution,expression,call,builtin,saturate:f16:inputSource="uniform";vectorize=2 [ Failure ]
 crbug.com/448873316 [ intel-0x9bc5 ubuntu ] webgpu:shader,execution,expression,call,builtin,saturate:f16:inputSource="uniform";vectorize=3 [ Failure ]
@@ -498,7 +496,6 @@ crbug.com/42241269 [ amd mac ] webgpu:shader,execution,zero_init:compute,zero_in
 crbug.com/373670513 [ android-pixel-6 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ RetryOnFailure ]
 crbug.com/373485785 [ intel win10 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ RetryOnFailure ]
 crbug.com/373485785 [ android-chromium android-pixel-4 android-r angle-opengles graphite-disabled mobile qualcomm target-cpu-32 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ RetryOnFailure ]
-
 
 # textureSampleCompare(Level):arrayed_3d_coords on Pixel 4
 crbug.com/408250014 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:arrayed_3d_coords:* [ Failure ]
@@ -1089,7 +1086,6 @@ crbug.com/445537566 [ android android-brya webgpu-dedicated-worker ] webgpu:web_
 # Pixel 4 timeouts
 crbug.com/448716473 [ android-pixel-4 ] webgpu:api,validation,buffer,mapping:gc_behavior,mapAsync:* [ Skip ]
 crbug.com/448716479 [ android-pixel-4 ] webgpu:shader,validation,expression,call,builtin,quadSwap:*;op="quadSwapX";* [ Skip ]
-
 
 # textureLoad failures on mac AMD for depth2plus-stencil8 format
 crbug.com/448397616 [ amd-0x67ef mac ] webgpu:shader,execution,expression,call,builtin,textureLoad:arrayed:stage="f";format="depth24plus-stencil8";texture_type="texture_2d_array" [ Failure ]
