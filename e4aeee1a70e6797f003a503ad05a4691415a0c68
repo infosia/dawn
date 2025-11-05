@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "e4aeee1a70e6797f003a503ad05a4691415a0c68",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bca9f3ea_f740523d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-05T15:02:58Z",
+      "side": 1,
+      "message": "Can you also add a docs/tint/extensions/fragment_depth.md file to explain the feature?",
+      "revId": "e4aeee1a70e6797f003a503ad05a4691415a0c68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
