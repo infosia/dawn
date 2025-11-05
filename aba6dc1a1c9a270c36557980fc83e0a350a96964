@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b166d3e_65805ecc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-05T19:13:24Z",
+      "side": 1,
+      "message": "0,0,64 LGTM (For the record there will be a followup to make it 0,64 and eventually 64,64)",
+      "revId": "aba6dc1a1c9a270c36557980fc83e0a350a96964",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
