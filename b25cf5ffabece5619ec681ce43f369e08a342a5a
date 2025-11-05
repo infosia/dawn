@@ -161,6 +161,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4a30e2d7_d39eb0bf",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-05T19:11:54Z",
+      "side": 1,
+      "message": "Upon doing some more testing yesterday, it does seem that the change + chromium change seems to perform at least as good as this on both Mac and Linux. On Windows, there\u0027s a lot more variation. The nice thing is that that solution doesn\u0027t even need the heuristic to perform similarly to ToT.",
+      "parentUuid": "561e4492_c5b71f2b",
+      "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7dac9fdf_b66de769",
         "filename": "src/dawn/wire/client/Queue.cpp",
         "patchSetId": 1
