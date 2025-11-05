@@ -1,0 +1,49 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "641f9812_f1d6a831",
+        "filename": "generator/templates/art/api_kotlin_object.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-11-05T15:50:21Z",
+      "side": 1,
+      "message": "The `import {{ kotlin_package }}.helper.DawnException` is added unconditionally, but `DawnException` is only used by `async_wrapper` code. This code is only generated for category \u003d\u003d \"callback function\".\n\nCould we update the template to only add the DawnException import when it\u0027s actually needed?",
+      "fixSuggestions": [
+        {
+          "fixId": "f9cd77e2_c0b44a87",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/api_kotlin_object.kt",
+              "range": {
+                "startLine": 29,
+                "startChar": 0,
+                "endLine": 29,
+                "endChar": 0
+              },
+              "replacement": "{% set needs_dawn_exception \u003d false %}\n{% for method in obj.methods if include_method(obj, method) %}\n    {% for arg in kotlin_record_members(method.arguments) %}\n        {% if arg.type.category \u003d\u003d \u0027callback function\u0027 %}\n            {% set needs_dawn_exception \u003d true %}\n        {% endif %}\n    {% endfor %}\n{% endfor %}\n{% if needs_dawn_exception %}\n"
+            },
+            {
+              "path": "generator/templates/art/api_kotlin_object.kt",
+              "range": {
+                "startLine": 30,
+                "startChar": 0,
+                "endLine": 30,
+                "endChar": 0
+              },
+              "replacement": "{% endif %}\n"
+            }
+          ]
+        }
+      ],
+      "revId": "03c3b21aa9a7a1ed064326f59bb9aa5afc73de66",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
