@@ -33,6 +33,24 @@
       "message": "In a follow-up (if not done) can we use that to increase the size of immediates to contain 64 bytes as the group agreed to require?",
       "revId": "6ee5b8fed80589de02b551fbc2e52eb9dde91f89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0afc417f_6266d6d7",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-05T19:44:22Z",
+      "side": 1,
+      "message": "https://dawn-review.googlesource.com/c/dawn/+/271054/",
+      "parentUuid": "ffa91637_ad1d848a",
+      "revId": "6ee5b8fed80589de02b551fbc2e52eb9dde91f89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
