@@ -774,7 +774,8 @@ DAWN_INSTANTIATE_TEST_P(SubgroupMatrix_MatrixScalarArithmeticTest,
                         });
 
 using InputColumnMajor = bool;
-DAWN_TEST_PARAM_STRUCT(MatrixStoreParams, InputColumnMajor);
+using NoArgConstructor = bool;
+DAWN_TEST_PARAM_STRUCT(MatrixStoreParams, InputColumnMajor, NoArgConstructor);
 class SubgroupMatrix_MatrixStoreTest : public DawnTestWithParams<MatrixStoreParams> {
   protected:
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
@@ -791,7 +792,8 @@ class SubgroupMatrix_MatrixStoreTest : public DawnTestWithParams<MatrixStorePara
     wgpu::ComputePipeline GetComputePipelineFromSubgroupMatrixConfig(
         const wgpu::SubgroupMatrixConfig& config,
         uint32_t subgroupMaxSize,
-        bool inputColumnMajor) {
+        bool inputColumnMajor,
+        bool noArgConstructor) {
         // Generate a shader that stores a subgroup matrix into a storage buffer.
         std::ostringstream shader;
         shader << "enable chromium_experimental_subgroup_matrix;\n";
@@ -804,13 +806,10 @@ class SubgroupMatrix_MatrixStoreTest : public DawnTestWithParams<MatrixStorePara
                << ";\n";
         shader << "alias ArrayType = " << ComponentTypeToScalarShaderType(config.componentType)
                << ";\n\n";
-        shader << "alias InputType = subgroup_matrix_left<ComponentType, K, M>;\n";
         shader << "const K = " << config.K << ";\n";
         shader << "const M = " << config.M << ";\n";
 
-        shader << "const kStoreOffset = K * M;\n";
-
-        shader << "const kInputArraySize = kStoreOffset";
+        shader << "const kOutputArraySize = (K * M)";
         if (config.componentType == wgpu::SubgroupMatrixComponentType::U8 ||
             config.componentType == wgpu::SubgroupMatrixComponentType::I8) {
             shader << "/4";
@@ -819,8 +818,7 @@ class SubgroupMatrix_MatrixStoreTest : public DawnTestWithParams<MatrixStorePara
 
         shader << "const SubgroupMaxSize = " << subgroupMaxSize << ";\n";
         shader << R"(
-@group(0) @binding(0) var<storage, read>       input : array<ArrayType, kInputArraySize>;
-@group(0) @binding(1) var<storage, read_write> output : array<ArrayType, kInputArraySize * 2>;
+@group(0) @binding(1) var<storage, read_write> output : array<ArrayType, kOutputArraySize>;
 
 @compute @workgroup_size(SubgroupMaxSize)
 fn main() {
@@ -831,13 +829,21 @@ fn main() {
         if (inputColumnMajor) {
             // When the matrix is stored in column major, the stride should be the total number of
             // rows.
-            loadInput = "let input_matrix = subgroupMatrixLoad<InputType>(&input, 0, true, M);";
-            storeResult = "subgroupMatrixStore(&output, kStoreOffset, input_matrix, true, M);";
+            loadInput = "let input_matrix = subgroup_matrix_right<ComponentType, K, M>(";
+            if (!noArgConstructor) {
+                loadInput += "5";
+            }
+            loadInput += ");";
+            storeResult = "subgroupMatrixStore(&output, 0, input_matrix, true, M);";
         } else {
             // When the matrix is stored in row major, the stride should be the total number of
             // columns.
-            loadInput = "let input_matrix = subgroupMatrixLoad<InputType>(&input,  0, false, K);";
-            storeResult = "subgroupMatrixStore(&output, kStoreOffset, input_matrix, false, K);";
+            loadInput = "let input_matrix = subgroup_matrix_right<ComponentType, K, M>(";
+            if (!noArgConstructor) {
+                loadInput += "5";
+            }
+            loadInput += ");";
+            storeResult = "subgroupMatrixStore(&output, 0, input_matrix, false, K);";
         }
 
         shader << loadInput << "\n" << storeResult << "\n\n}";
@@ -849,36 +855,23 @@ fn main() {
 
     void TestSubgroupMatrixConfig(const wgpu::SubgroupMatrixConfig& config,
                                   uint32_t subgroupMaxSize,
-                                  bool inputColumnMajor) {
+                                  bool inputColumnMajor,
+                                  bool noArgConstructor) {
         // In the tests we use a compute pipeline to store a subgroup matrix into a storage buffer
         // and check if the data in the buffer matches the expectation.
-        wgpu::ComputePipeline pipeline =
-            GetComputePipelineFromSubgroupMatrixConfig(config, subgroupMaxSize, inputColumnMajor);
+        wgpu::ComputePipeline pipeline = GetComputePipelineFromSubgroupMatrixConfig(
+            config, subgroupMaxSize, inputColumnMajor, noArgConstructor);
 
-        // Create the input matrix and fill it with values.
         Matrix inputMatrix(config.K, config.M, config.componentType, inputColumnMajor);
-        inputMatrix.Fill(0);
-
-        // Create the input buffer and copy the input matrix to it.
-        wgpu::BufferDescriptor inputDescriptor{
-            .usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::Storage,
-            .size = inputMatrix.TotalByteSize(),
-            .mappedAtCreation = true,
-        };
-        wgpu::Buffer inputBuffer = device.CreateBuffer(&inputDescriptor);
-        memcpy(inputBuffer.GetMappedRange(), inputMatrix.data, inputMatrix.TotalByteSize());
-        inputBuffer.Unmap();
-
-        uint64_t storeOffset = inputMatrix.TotalByteSize();
 
         // Create the output buffer.
         wgpu::BufferDescriptor outputDescriptor{
             .usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::Storage,
-            .size = inputMatrix.TotalByteSize() + storeOffset,
+            .size = inputMatrix.TotalByteSize(),
         };
         wgpu::Buffer output = device.CreateBuffer(&outputDescriptor);
-        wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
-                                                         {{0, inputBuffer}, {1, output}});
+        wgpu::BindGroup bindGroup =
+            utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0), {{1, output}});
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
         wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
         pass.SetPipeline(pipeline);
@@ -890,10 +883,32 @@ fn main() {
         queue.Submit(1, &commands);
 
         // Verify the result in the output buffer.
-        std::vector<uint8_t> zeroBuffer(storeOffset, static_cast<uint8_t>(0));
-        EXPECT_BUFFER_U8_RANGE_EQ(zeroBuffer.data(), output, 0, storeOffset);
-        EXPECT_BUFFER_U8_RANGE_EQ(inputMatrix.data, output, storeOffset,
-                                  inputMatrix.TotalByteSize());
+        Matrix expected(config.N, config.M, config.resultComponentType, false);
+        GenerateReferenceResult(expected, noArgConstructor);
+        EXPECT_BUFFER_U8_RANGE_EQ(expected.data, output, 0, expected.TotalByteSize());
+    }
+
+    void GenerateReferenceResult(Matrix& expected, bool noArgConstructor) {
+        const bool is_float = expected.component_type == wgpu::SubgroupMatrixComponentType::F16 ||
+                              expected.component_type == wgpu::SubgroupMatrixComponentType::F32;
+        for (uint32_t r = 0; r < expected.rows; r++) {
+            for (uint32_t c = 0; c < expected.cols; c++) {
+                if (is_float) {
+                    float ref = 0.f;
+                    if (!noArgConstructor) {
+                        ref += 5.f;
+                    }
+
+                    expected.SetFloat(ref, c, r);
+                } else {
+                    int64_t ref = 0;
+                    if (!noArgConstructor) {
+                        ref = 5;
+                    }
+                    expected.SetInt(ref, c, r);
+                }
+            }
+        }
     }
 };
 
@@ -917,7 +932,8 @@ TEST_P(SubgroupMatrix_MatrixStoreTest, MatrixStoreWithOffset) {
                    << ComponentTypeToWgslType(config.resultComponentType);
         SCOPED_TRACE(configInfo.str());
 
-        TestSubgroupMatrixConfig(config, info.subgroupMaxSize, GetParam().mInputColumnMajor);
+        TestSubgroupMatrixConfig(config, info.subgroupMaxSize, GetParam().mInputColumnMajor,
+                                 GetParam().mNoArgConstructor);
     }
 }
 
@@ -929,6 +945,11 @@ DAWN_INSTANTIATE_TEST_P(SubgroupMatrix_MatrixStoreTest,
                         },
                         {
                             // Input matrix is in column-major or not
+                            true,
+                            false,
+                        },
+                        {
+                            // Use the no argument constructor
                             true,
                             false,
                         });
