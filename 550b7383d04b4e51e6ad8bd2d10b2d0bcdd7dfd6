@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a5f7cad_9209fadd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-05T16:53:32Z",
+      "side": 1,
+      "message": "This is looking good so far. When you\u0027ve got it working I\u0027d suggest pulling the MSL specific bits into a follow up CL. Then you can do a CL per backend. So, the initial one does the round trip WGSL-\u003eWGSL output and then follow ups to extend to each backend.",
+      "revId": "550b7383d04b4e51e6ad8bd2d10b2d0bcdd7dfd6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc85fbb2_3b24d6c0",
+        "filename": "src/tint/cmd/fuzz/wgsl/dictionary.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-05T16:53:32Z",
+      "side": 1,
+      "message": "Note, I filed https://github.com/gpuweb/gpuweb/issues/5428 to bikeshed the `greater`, `less` names.",
+      "revId": "550b7383d04b4e51e6ad8bd2d10b2d0bcdd7dfd6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
