@@ -32,6 +32,19 @@ import dalvik.annotation.optimization.FastNative
 
 {% set all_functions_info = kdocs.functions %}
 {% for function in by_category['function'] if include_method(None, function) %}
+    {% set _kotlin_return = kotlin_return(function) %}
+    //* Check if this is a "status-only" return.
+    {% set _is_status_only_return = (
+            function.returns and
+            function.returns.type.name.canonical_case() == 'status' and
+            _kotlin_return and
+            _kotlin_return.type.name.canonical_case() == 'status'
+        )
+    %}
+    //* If it's a "status-only" return, we OVERRIDE _kotlin_return to None so the JNI function will be generated as 'Unit'.
+    {% if _is_status_only_return %}
+        {% set _kotlin_return = None %}
+    {% endif %}
     //* Generating KDocs
     {% set function_info = all_functions_info.get(function.name.get()) %}
     {% set main_doc = function_info.doc if function_info else "" %}
@@ -43,8 +56,8 @@ import dalvik.annotation.optimization.FastNative
 
     {%- endif %}
     @FastNative
-    {{ kotlin_annotation(kotlin_return(function)) }} public external fun {{ function.name.camelCase() }}(
+    {{ kotlin_annotation(_kotlin_return) if _kotlin_return else '' }} public external fun {{ function.name.camelCase() }}(
         {%- for arg in function.arguments -%}
             {{- kotlin_annotation(arg) }} {{ as_varName(arg.name) }}: {{ kotlin_definition(arg) }},{{' '}}
-        {%- endfor %}): {{ kotlin_declaration(kotlin_return(function)) }}
+        {%- endfor %}): {{ kotlin_declaration(_kotlin_return) if _kotlin_return else 'Unit' }}
 {% endfor %}

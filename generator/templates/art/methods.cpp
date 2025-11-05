@@ -85,6 +85,17 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
     {{ define_kotlin_to_struct_conversion("ConvertInternal", KotlinRecord, ArgsStruct, method.arguments)}}
 
     {% set _kotlin_return = kotlin_return(method) %}
+    {% set _is_status_only_return = (
+            method.returns and
+            method.returns.type.name.canonical_case() == 'status' and
+            _kotlin_return and
+            _kotlin_return.type.name.canonical_case() == 'status'
+        )
+    %}
+    //* If it's a "status-only" return, we OVERRIDE _kotlin_return to None. Therefore the generated method will be 'void'.
+    {% if _is_status_only_return %}
+        {% set _kotlin_return = None %}
+    {% endif %}
     //*  A JNI-external method is built with the JNI signature expected to match the host Kotlin.
     DEFAULT extern "C"
     {{ arg_to_jni_type(_kotlin_return) }}
@@ -161,8 +172,16 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
         {% if method.returns and method.returns.type.name.canonical_case() == 'status' %}
             if (result != WGPUStatus_Success) {
                 //* TODO(b/344805524): custom exception for Dawn.
-                env->ThrowNew(env->FindClass("java/lang/Error"), "Method failed");
-                return{{ ' 0' if method.returns }};
+                jclass exClass = env->FindClass("java/lang/RuntimeException");
+                if (exClass == nullptr) {
+                    //* Failed to find exception class, fall back to default.
+                    env->ThrowNew(env->FindClass("java/lang/Error"), "Method failed");
+                    return{{ ' 0' if _kotlin_return }};
+                }
+
+                std::string message = "Dawn method failed with status: " + std::to_string(result);
+                env->ThrowNew(exClass, message.c_str());
+                return{{ ' 0' if _kotlin_return }};
             }
         {% endif %}
     {% endif %}
