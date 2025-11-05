@@ -16,6 +16,29 @@
       "message": "The [proposal](https://github.com/gpuweb/gpuweb/blob/main/proposals/immediate-data.md) requires 64 as a minimum. I believe we can now do that on all core backends so we can go ahead and change this:\n\n```suggestion\n  X(v1, Maximum, maxImmediateSize,      0,    64)\n```\n\nEventually this should be `64, 64`, as I\u0027m pretty sure it\u0027s implementable on GLES - but I guess that\u0027s not done yet.",
       "revId": "5631bd2672e55275e03d5c6a801cb83203c01504",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2eda1881_c9f4c7f0",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-05T00:23:06Z",
+      "side": 1,
+      "message": "more correct code suggestion:\n```suggestion\n//                                 compat  tier0\n#define LIMITS_IMMEDIATE_SIZE(X) \\\n  X(v1, Maximum, maxImmediateSize,      0,    64)\n```",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 66
+      },
+      "revId": "5631bd2672e55275e03d5c6a801cb83203c01504",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
