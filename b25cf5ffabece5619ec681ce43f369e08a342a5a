@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "868877b9_5b7bee78",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-05T18:05:23Z",
+      "side": 1,
+      "message": "Makes sense to me",
+      "parentUuid": "30e53330_d604c638",
+      "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "83343cc6_92424166",
         "filename": "src/dawn/wire/client/Queue.cpp",
         "patchSetId": 1
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "That\u0027s what I did for my initial prototype here: https://dawn-review.googlesource.com/c/dawn/+/269134\n\nAnd with additional Chromium changes to get rid of the memcpy: https://dawn-review.googlesource.com/c/dawn/+/269814 + https://chromium-review.googlesource.com/c/chromium/src/+/7097949\n\nThe weird thing was that compared to Brandon\u0027s initial changes on only the Blink side, even without the additional memcpy, the performance seemed to be slightly better with Brandon\u0027s change. I\u0027ve been investigating this though because from what I understand of the code, my changes along with the Chromium changes should actually be the fastest assuming I understand everything correctly.\n\nThat said, I don\u0027t know how it compares with these changes. I am also on the edge about causing an explicit submit here. In theory we shouldn\u0027t need to do that because if we do it via the `WriteHandle` those will be handled and submitted when the native side reaches its capacity. My theory is still that the explicit submit might also be the cause of why the performance of this solution to appear better than the alternative, though that is purely speculation still...",
       "parentUuid": "83343cc6_92424166",
+      "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "561e4492_c5b71f2b",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-05T18:05:23Z",
+      "side": 1,
+      "message": "As I mentioned to Brandon yesterday, I\u0027m OK landing this with just the fix for client-side OOM handling, I think server-side OOM is okay to have as a wart for now. Would love to understand why it\u0027s faster though!",
+      "parentUuid": "e9985143_a442391f",
       "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
