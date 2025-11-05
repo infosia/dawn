@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7a29e8c_362b67d8",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-05T21:36:39Z",
+      "side": 1,
+      "message": "Hmm, apparently this actually causes a validation error and if we want to lose the device we need to do something else:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Device.cpp;l\u003d1977-1983;drc\u003d73c76f093d1b6a1e018508b0e3d4a4e806e11aba",
+      "revId": "5bdb63c4af345d3048213646fd8e7b34d37d3c35",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
