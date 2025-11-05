@@ -16,6 +16,214 @@
       "message": "PTAL",
       "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05fe069b_e1431902",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-05T20:55:09Z",
+      "side": 1,
+      "message": "Nit: scalar",
+      "fixSuggestions": [
+        {
+          "fixId": "546efccd_7f50a4ae",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+              "range": {
+                "startLine": 362,
+                "startChar": 0,
+                "endLine": 363,
+                "endChar": 0
+              },
+              "replacement": "        // Generate a shader that performs a matrix scalar operation that matches the config.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c89f472d_5caf874d",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-05T20:55:09Z",
+      "side": 1,
+      "message": "Also `M*N` is the size of the result matrix, but you\u0027re using the left matrix as the result so this needs to be `K*M`. Likewise your input array just needs to be one `K*M` matrix.",
+      "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5449a016_14af3b97",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-05T20:55:09Z",
+      "side": 1,
+      "message": "For these scalar ops the result type is the same as the input type, so we don\u0027t want to use `ResultComponentType` here.\n(this works for Metal because they are always the same, but will likely fail on other devices that do things like `f16-\u003ef32`)",
+      "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74da6ac3_e0224024",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-05T20:55:09Z",
+      "side": 1,
+      "message": "Stride \u003d\u003d K since you\u0027re storing a left matrix again.",
+      "fixSuggestions": [
+        {
+          "fixId": "b952d7e8_ee7eee2c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+              "range": {
+                "startLine": 627,
+                "startChar": 0,
+                "endLine": 628,
+                "endChar": 0
+              },
+              "replacement": "            storeResult \u003d \"subgroupMatrixStore(\u0026output, 0, result, false, K);\";\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b475a9d5_e837ba4f",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-05T20:55:09Z",
+      "side": 1,
+      "message": "Nit: matrix scalar operation",
+      "fixSuggestions": [
+        {
+          "fixId": "af36fc58_199c0dff",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+              "range": {
+                "startLine": 469,
+                "startChar": 0,
+                "endLine": 470,
+                "endChar": 0
+              },
+              "replacement": "        // Generate a compute pipeline that performs a matrix scalar operation that matches the\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "625b661f_3f8c6399",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-05T20:55:09Z",
+      "side": 1,
+      "message": "Nit: there\u0027s no offsetting here since you just have one matrix",
+      "fixSuggestions": [
+        {
+          "fixId": "b4854525_b373565c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+              "range": {
+                "startLine": 695,
+                "startChar": 0,
+                "endLine": 696,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "007fd36f_7d63dad8",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-05T20:55:09Z",
+      "side": 1,
+      "message": "K * M",
+      "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e93868c_d509a114",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-05T20:55:09Z",
+      "side": 1,
+      "message": "K * M",
+      "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
