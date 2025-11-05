@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d200cde8_65389f8d",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-05T19:33:34Z",
+      "side": 1,
+      "message": "Do you remember why this is necessary? It\u0027s not clear to me why the autoroller should care about this if this script is handling all the changes.",
+      "parentUuid": "32ae1671_dedd22ab",
+      "range": {
+        "startLine": 69,
+        "startChar": 3,
+        "endLine": 69,
+        "endChar": 20
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8a87043a_3ed1ca19",
         "filename": "scripts/roll_chromium_deps.py",
         "patchSetId": 2
@@ -71,6 +95,30 @@
       "writtenOn": "2025-11-05T15:58:13Z",
       "side": 1,
       "message": "Why do we need this?\nANGLE just rolls the DEP and it changes the variable automatically.\n`gclient setdep` takes care of updating the variable.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 17
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f96eb2ab_0b9bb78e",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-05T19:33:34Z",
+      "side": 1,
+      "message": "I\u0027ll give it a try in Dawn and report back.",
+      "parentUuid": "8a87043a_3ed1ca19",
       "range": {
         "startLine": 51,
         "startChar": 0,
@@ -117,6 +165,24 @@
         "endLine": 73,
         "endChar": 22
       },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c93dceea_11304b14",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-05T19:33:34Z",
+      "side": 1,
+      "message": "\u003e Is DXC shared and should it be pulled in as well?\n\nI\u0027m not seeing any mention of \"dxc\" in [Chromium\u0027s DEPS file](https://source.chromium.org/chromium/chromium/src/+/main:DEPS)\n\n\u003e zlib\n\nThis is actually synced, but since Dawn uses the version exported by Chromium, it\u0027s in `EXPORTED_CHROMIUM_REPOS` mapping instead.\n\n\u003e opengl-registry, egl-registry\n\nSimilar to DXC, I\u0027m not seeing any mention of either of those in Chromium\u0027s DEPS file.\n\n\u003e Have we gone through all the dawn deps and set them to sync\u0027d or is this a specific list?\n\nThis is based on the list in the \"Automatic DEPS Rolling\" section of go/dawn-standalone-builders-dd that I initially got by auditing all of Dawn\u0027s DEPS entries and seeing if there was an equivalent in Chromium\u0027s file. It\u0027s possible that new entries that should be synced were added since the doc was written, but this should be a fairly complete list.",
+      "parentUuid": "9596bb56_11fddab5",
       "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -180,6 +246,30 @@
       "writtenOn": "2025-11-05T15:58:13Z",
       "side": 1,
       "message": "I just copied Chromium\u0027s BUILD.gn into ANGLE in https://chromium-review.googlesource.com/c/angle/angle/+/6870430.\nBUILD.gn autoupdate that Jamie set up seems to be incompatible with git submodules.\nI.e. `third_party/googletest/src` submodule can\u0027t co-exist with `third_party/googletest` submodule.",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 78
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e9b746c_173d5318",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-05T19:33:34Z",
+      "side": 1,
+      "message": "Ack. I\u0027ll keep that in mind if/when I get around to tackling this. For now, we can keep things as they are.",
+      "parentUuid": "801aee30_f72eff2d",
       "range": {
         "startLine": 82,
         "startChar": 6,
@@ -319,6 +409,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "76f87a1e_507e6eb1",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-05T19:33:34Z",
+      "side": 1,
+      "message": "\u003e Is the plan for this roller to replace all the skia rollers we have now?\n\nIn general, yes. If there\u0027s a reason that a separate roller should still exist (which sounds to be the case for `vulkan-headers`), then there shouldn\u0027t be any issues with continuing to use a separate roller. Doing so should just require removing the relevant entry from this script.\n\nRegarding `vulkan-headers`, is it just `vulkan-headers` that should have its own roller or everything that\u0027s currently handled by the `vulkan-deps-dawn-autoroll` roller?",
+      "parentUuid": "a72f76f0_1b4ea3cb",
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "93941ed7_94677cf0",
         "filename": "scripts/roll_chromium_deps.py",
         "patchSetId": 2
@@ -353,6 +461,30 @@
       "writtenOn": "2025-11-05T15:58:13Z",
       "side": 1,
       "message": "What about tools/memory and tools/valgrind, which a comment says need to be updated in unison?\n\nAlso tools/mb is missing.\n\nWhat about `node` and `golang`, do we want to sync these as well?",
+      "range": {
+        "startLine": 119,
+        "startChar": 5,
+        "endLine": 119,
+        "endChar": 16
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0056de77_928c0272",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-05T19:33:34Z",
+      "side": 1,
+      "message": "Good catch. Various `tools/` dependencies were added after the doc was written so I missed them.\n\nAs for `node`, Chromium uses a different approach (pre-bundled node + modules from GCS), so they can\u0027t be synced. Chromium also doesn\u0027t compile any Go code (Go isn\u0027t an approved language in the chromium/src repo), so there\u0027s no Go-related DEPS entry.",
+      "parentUuid": "c3c78725_12690518",
       "range": {
         "startLine": 119,
         "startChar": 5,
