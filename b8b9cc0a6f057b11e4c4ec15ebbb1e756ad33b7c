@@ -69,6 +69,24 @@
       "parentUuid": "6068aee1_d4839887",
       "revId": "b8b9cc0a6f057b11e4c4ec15ebbb1e756ad33b7c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52d55075_474d5ea2",
+        "filename": "third_party/gn/dxc/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 2404,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-05T18:39:44Z",
+      "side": 1,
+      "message": "Tried removing these assignments, immediately started getting build failures related to `error: Microsoft C++ extensions was disabled in precompiled file ...`, so this appears to be load bearing.\n\n@amaiorano@google.com probably can explain why this is in more detail. I assume it is something related to how GN moves values between variable scopes and the complexity of building dxc.\n\nI am going to leave this as-is.",
+      "parentUuid": "85bad34d_86a0a8d8",
+      "revId": "b8b9cc0a6f057b11e4c4ec15ebbb1e756ad33b7c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
