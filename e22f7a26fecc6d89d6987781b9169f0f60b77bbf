@@ -16,6 +16,75 @@
       "message": "PTAL I\u0027ve updated the approach",
       "revId": "e22f7a26fecc6d89d6987781b9169f0f60b77bbf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c1121dc_bf9c553b",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-05T00:51:26Z",
+      "side": 1,
+      "message": "I think it would be safer to check the status code here instead of whether the string is empty. (In case we mess up and don\u0027t provide a message for any reason.) Alternatively, we can also assert here that the message isn\u0027t empty if the status is not WGPUMapAsyncStatus_Success.",
+      "range": {
+        "startLine": 307,
+        "startChar": 12,
+        "endLine": 307,
+        "endChar": 34
+      },
+      "revId": "e22f7a26fecc6d89d6987781b9169f0f60b77bbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "026d2760_38d3cc38",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-05T00:51:26Z",
+      "side": 1,
+      "message": "nit. Hmm maybe this is fine as a busy loop, but we could also use `std::atomic::wait` and the accompanying `std::atomic::notify_one/all` to avoid busy-waiting.",
+      "range": {
+        "startLine": 838,
+        "startChar": 8,
+        "endLine": 839,
+        "endChar": 9
+      },
+      "revId": "e22f7a26fecc6d89d6987781b9169f0f60b77bbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8b676aa_df19d46e",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-05T00:51:26Z",
+      "side": 1,
+      "message": "nit. Why not have this as a `MutexProtected\u003cRef\u003cMapAsyncEvent\u003e\u003e`?",
+      "range": {
+        "startLine": 243,
+        "startChar": 4,
+        "endLine": 244,
+        "endChar": 40
+      },
+      "revId": "e22f7a26fecc6d89d6987781b9169f0f60b77bbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
