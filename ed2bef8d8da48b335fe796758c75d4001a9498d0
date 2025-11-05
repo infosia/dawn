@@ -43,6 +43,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "191dcd4c_e159b108",
+        "filename": "tools/src/cmd/cts/common/results.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 4401357
+      },
+      "writtenOn": "2025-11-05T20:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1fce94a_ec010872",
+      "range": {
+        "startLine": 658,
+        "startChar": 50,
+        "endLine": 658,
+        "endChar": 57
+      },
+      "revId": "ed2bef8d8da48b335fe796758c75d4001a9498d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "4f658669_1014c402",
         "filename": "tools/src/cmd/cts/config.json",
         "patchSetId": 1
@@ -54,6 +78,30 @@
       "writtenOn": "2025-11-05T18:15:59Z",
       "side": 1,
       "message": "These can be removed once the WebGPU format is used everywhere and all other data has aged out, correct? It would be nice to track that, but JSON doesn\u0027t allow for comments to add TODOs.",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 78
+      },
+      "revId": "ed2bef8d8da48b335fe796758c75d4001a9498d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d83a244a_529ed8fd",
+        "filename": "tools/src/cmd/cts/config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4401357
+      },
+      "writtenOn": "2025-11-05T20:00:33Z",
+      "side": 1,
+      "message": "AFAIK tests with the flat scheme still need support but aren\u0027t consider worthy enough to get a dedicated scheme. So I don\u0027t know wether they\u0027ll be changed or even if we\u0027ll run into them.",
+      "parentUuid": "4f658669_1014c402",
       "range": {
         "startLine": 10,
         "startChar": 8,
