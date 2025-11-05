@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "938790f4_ab9aaa8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-05T18:15:59Z",
+      "side": 1,
+      "message": "LGTM % nit",
+      "revId": "ed2bef8d8da48b335fe796758c75d4001a9498d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1fce94a_ec010872",
+        "filename": "tools/src/cmd/cts/common/results.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-05T18:15:59Z",
+      "side": 1,
+      "message": "Nit: Update error string to include `gpu_test_class` as well.",
+      "range": {
+        "startLine": 658,
+        "startChar": 50,
+        "endLine": 658,
+        "endChar": 57
+      },
+      "revId": "ed2bef8d8da48b335fe796758c75d4001a9498d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f658669_1014c402",
+        "filename": "tools/src/cmd/cts/config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-05T18:15:59Z",
+      "side": 1,
+      "message": "These can be removed once the WebGPU format is used everywhere and all other data has aged out, correct? It would be nice to track that, but JSON doesn\u0027t allow for comments to add TODOs.",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 78
+      },
+      "revId": "ed2bef8d8da48b335fe796758c75d4001a9498d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
