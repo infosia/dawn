@@ -33,6 +33,40 @@
       "message": "Removing autosubmit and adding dsinclair to stamp since neither Yuly nor I have OWNERS.",
       "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9596bb56_11fddab5",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-05T13:40:28Z",
+      "side": 1,
+      "message": "Is DXC shared and should it be pulled in as well?\n\nThere are also some others that maybe shared, like zlib, opengl-registry, egl-registry. Have we gone through all the dawn deps and set them to sync\u0027d or is this a specific list?",
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef8331b2_319a06f3",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-05T13:40:28Z",
+      "side": 1,
+      "message": "Is the plan for this roller to replace all the skia rollers we have now? If so, we\u0027ll still be able to do a manual roll, yea? Like, what happens if a vulkan-headers change breaks that breaks dawn so it can\u0027t roll into chromium. We\u0027d still be able to roll it manually, land the dawn break and then do a combined roll into chromium?",
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
