@@ -29,6 +29,7 @@
 
 #include <memory>
 
+#include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/transform/shader_io.h"
@@ -54,6 +55,9 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
     /// The configuration options.
     const ShaderIOConfig& config;
+
+    // True if the fragment shader is called once per sample (MSAA context).
+    bool fragment_once_per_sample_ = false;
 
     /// Constructor
     StateImpl(core::ir::Module& mod, core::ir::Function* f, const ShaderIOConfig& cfg)
@@ -107,6 +111,17 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                 }
             }
 
+            if (func->IsFragment()) {
+                // If either 'sample' is specified in an interpolant or using the 'sample_index'
+                // then the fragment is invoked once per sample (not pixel).
+                if ((io.attributes.interpolation && io.attributes.interpolation->sampling ==
+                                                        core::InterpolationSampling::kSample) ||
+                    (io.attributes.builtin &&
+                     io.attributes.builtin == core::BuiltinValue::kSampleIndex)) {
+                    fragment_once_per_sample_ = true;
+                }
+            }
+
             // Create an IO variable and add it to the root block.
             auto* ptr = ty.ptr(addrspace, store_type, access);
             auto* var = b.Var(name.str(), ptr);
@@ -130,6 +145,8 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
     /// @copydoc ShaderIO::BackendState::GetInput
     core::ir::Value* GetInput(core::ir::Builder& builder, uint32_t idx) override {
+        auto* vec4f = ty.vec4<f32>();
+        auto* vec2f = ty.vec2<f32>();
         // Load the input from the global variable declared earlier.
         auto* ptr = ty.ptr(core::AddressSpace::kIn, inputs[idx].type, core::Access::kRead);
         auto* from = input_vars[idx]->Result();
@@ -144,6 +161,19 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         // Convert f32 values to f16 values if needed.
         if (config.polyfill_f16_io && inputs[idx].type->DeepestElement()->Is<core::type::F16>()) {
             value = builder.Convert(inputs[idx].type, value)->Result();
+        }
+
+        if (config.force_pixel_centers && fragment_once_per_sample_ &&
+            inputs[idx].attributes.builtin == core::BuiltinValue::kPosition) {
+            // This fix is idempotent in that if it was not needed it will still apply correctly.
+            auto* vec_xy = builder.Swizzle(vec2f, value, {0, 1});
+            auto* floor_xy = builder.Call(vec2f, core::BuiltinFn::kFloor, vec_xy);
+            auto p5_const = builder.Constant(0.5_f);
+            auto* plus_p5 =
+                builder.Add(vec2f, floor_xy, builder.Construct(vec2f, p5_const, p5_const))
+                    ->Result();
+            auto* vec_zw = builder.Swizzle(vec2f, value, {2, 3});
+            value = builder.Construct(vec4f, plus_p5, vec_zw)->Result();
         }
 
         return value;
