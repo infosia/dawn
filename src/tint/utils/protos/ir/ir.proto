@@ -587,6 +587,12 @@ enum BuiltinValue {
     num_subgroups = 20;
 }
 
+enum BuiltinDepthMode {
+    any = 0;
+    greater = 1;
+    less = 1;
+}
+
 enum BuiltinFn {
     abs = 0;
     acos = 1;
