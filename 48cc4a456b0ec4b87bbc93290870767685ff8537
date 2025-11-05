@@ -16,6 +16,24 @@
       "message": "This works but slightly error prone since we need to add calls next to most but not all `EmitBufferBarrierIfNecessary`. In the next CL I have a suggestion that could let us add an ASSERT of this.",
       "revId": "48cc4a456b0ec4b87bbc93290870767685ff8537",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8412dd9_74e727dc",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-05T19:12:40Z",
+      "side": 1,
+      "message": "IIUC you meant add absl::InlineVector\u003cRef\u003cBuffer\u003e\u003e to BufferBarrier? I\u0027m a little concerned about the cost/complexity there. BufferBarrier is POD now but it would be a complex class with non-trivial constructor/destructor with that change.\n\nIt also just makes BufferBarrier/EmitBufferBarrierIfNecessary() have responsibility for two separate (if related) concepts, tracking pipeline barriers and tracking buffers that will need a future pipeline barrier.",
+      "parentUuid": "802c2ea4_34497fb1",
+      "revId": "48cc4a456b0ec4b87bbc93290870767685ff8537",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
