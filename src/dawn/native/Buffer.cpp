@@ -27,6 +27,7 @@
 
 #include "dawn/native/Buffer.h"
 
+#include <atomic>
 #include <cstdio>
 #include <cstring>
 #include <limits>
@@ -313,6 +314,7 @@ class BufferBase::MapAsyncEvent final : public EventManager::TrackedEvent {
 
         DAWN_ASSERT(buffer);
         buffer->FinalizeMap(BufferState::Mapped);
+        buffer->mState.notify_all();
         RunCallback(WGPUMapAsyncStatus_Success, "");
     }
 
@@ -838,8 +840,7 @@ MaybeError BufferBase::UnmapInternal(std::string_view earlyUnmapMessage) {
         }
 
         // Wait until FinalizeMap() finishes before falling through to a regular unmap.
-        while (mState.load(std::memory_order_acquire) == BufferState::PendingMap) {
-        }
+        mState.wait(BufferState::PendingMap, std::memory_order_acquire);
     }
 
     DAWN_TRY(Unmap());
