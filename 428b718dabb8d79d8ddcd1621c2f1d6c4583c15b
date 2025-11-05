@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edbc836e_ae084db2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-11-05T18:24:57Z",
+      "side": 1,
+      "message": "Loko: PTAL. Edge case with implicit sync.",
+      "revId": "428b718dabb8d79d8ddcd1621c2f1d6c4583c15b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
