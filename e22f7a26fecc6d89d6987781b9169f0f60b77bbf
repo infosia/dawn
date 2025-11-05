@@ -114,6 +114,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "01f775cf_ffe1d328",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-05T20:59:00Z",
+      "side": 1,
+      "message": "Hmm it *should* work now? I landed some changes using `std::atomic::wait` a bit ago and didn\u0027t hear any complaints from Skia side. Though those changes ultimately got reverted anyways because of other reasons so I guess I can\u0027t be positive?",
+      "parentUuid": "cd064191_2536fd45",
+      "range": {
+        "startLine": 838,
+        "startChar": 8,
+        "endLine": 839,
+        "endChar": 9
+      },
+      "revId": "e22f7a26fecc6d89d6987781b9169f0f60b77bbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d8b676aa_df19d46e",
         "filename": "src/dawn/native/Buffer.h",
         "patchSetId": 9
@@ -149,6 +173,30 @@
       "side": 1,
       "message": "That\u0027s possible but the mutex isn\u0027t just protecting mPendingMapEvent. It also guards some access to MapAsyncEvent::mStatus. I updated the comment here since it was from old approach to better explain that?\n\nIf you want I\u0027ll change it to MutexProtected though since it\u0027s prettty much equivalent?",
       "parentUuid": "d8b676aa_df19d46e",
+      "range": {
+        "startLine": 243,
+        "startChar": 4,
+        "endLine": 244,
+        "endChar": 40
+      },
+      "revId": "e22f7a26fecc6d89d6987781b9169f0f60b77bbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1ed4bbb_752142a3",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-05T20:59:00Z",
+      "side": 1,
+      "message": "Since `mStatus` is a part of the event I think that\u0027s ok? I think I would prefer it to use `MutexProtected` for now to make it clearer for now. Thanks!",
+      "parentUuid": "e747ce6f_21e75f9f",
       "range": {
         "startLine": 243,
         "startChar": 4,
