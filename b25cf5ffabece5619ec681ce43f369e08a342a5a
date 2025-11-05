@@ -106,6 +106,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a55ebb85_fad0438e",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-05T20:51:56Z",
+      "side": 1,
+      "message": "In testing we found that GetMaximumAllocationSize() was reporting 16Mb, which was well above the limit where this method began showing gains, so I\u0027ve kept it as a static 4Mb here (which proved to be a reasonable cutoff point on every device I tested, mobile or desktop).",
+      "parentUuid": "868877b9_5b7bee78",
+      "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f36addcb_0d2f1f88",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-05T20:51:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dda9b08f_851fb07d",
+      "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "83343cc6_92424166",
@@ -173,6 +209,24 @@
       "side": 1,
       "message": "Upon doing some more testing yesterday, it does seem that the change + chromium change seems to perform at least as good as this on both Mac and Linux. On Windows, there\u0027s a lot more variation. The nice thing is that that solution doesn\u0027t even need the heuristic to perform similarly to ToT.",
       "parentUuid": "561e4492_c5b71f2b",
+      "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f35bd0b_a996b661",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-05T20:51:56Z",
+      "side": 1,
+      "message": "When you say \"the change + chromium change\" you\u0027re referring to your CLs, correct?",
+      "parentUuid": "4a30e2d7_d39eb0bf",
       "revId": "b25cf5ffabece5619ec681ce43f369e08a342a5a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
