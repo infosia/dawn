@@ -105,6 +105,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "4f1e176b_3296c11c",
+        "filename": "include/dawn/native/OpenGLBackend.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003851
+      },
+      "writtenOn": "2025-11-05T13:50:06Z",
+      "side": 1,
+      "message": "Sorry it took me quite a bit of time for variety of reasons, but should be done now.",
+      "parentUuid": "7f0b6b3e_80ed833c",
+      "revId": "63dc8d3474bbc381ca0f2bb778c04ab0b745c00a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "96a0fd0e_86b9992c",
         "filename": "src/dawn/native/opengl/BackendGL.cpp",
         "patchSetId": 8
