@@ -44,6 +44,24 @@
       ],
       "revId": "03c3b21aa9a7a1ed064326f59bb9aa5afc73de66",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7ce19fb_51e9914a",
+        "filename": "generator/templates/art/api_kotlin_object.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-05T16:29:46Z",
+      "side": 1,
+      "message": "I have a plan to deal with that (https://buganizer.corp.google.com/issues/456976501) if that\u0027s not feasible I\u0027ll add the logic in but the issue is the logic will be quite messy and involve duplication.",
+      "parentUuid": "641f9812_f1d6a831",
+      "revId": "03c3b21aa9a7a1ed064326f59bb9aa5afc73de66",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
