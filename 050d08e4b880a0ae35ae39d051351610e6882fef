@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4009bf8_01b85f32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-05T01:07:51Z",
+      "side": 1,
+      "message": "PTAL\n\nNot enabling autosubmit since this will conflict with the NVIDIA version.",
+      "revId": "050d08e4b880a0ae35ae39d051351610e6882fef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
