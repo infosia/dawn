@@ -37,6 +37,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "32ae1671_dedd22ab",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-05T15:58:13Z",
+      "side": 1,
+      "message": "For autorollers to be able to update this, you\u0027ll also need a fake DEPS entry like https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/DEPS;l\u003d798;drc\u003dbe1fae49c38b837f9fe6c07cdabb43c4eb1ab0c0.\nYou\u0027d also need to remove it from .gitmodules and gitlink after adding to DEPS, like here:\nhttps://chromium-review.googlesource.com/c/angle/angle/+/4762704",
+      "range": {
+        "startLine": 69,
+        "startChar": 3,
+        "endLine": 69,
+        "endChar": 20
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a87043a_3ed1ca19",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-05T15:58:13Z",
+      "side": 1,
+      "message": "Why do we need this?\nANGLE just rolls the DEP and it changes the variable automatically.\n`gclient setdep` takes care of updating the variable.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 17
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9596bb56_11fddab5",
         "filename": "scripts/roll_chromium_deps.py",
         "patchSetId": 2
@@ -54,6 +100,190 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dc783b88_19ea2109",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-05T15:58:13Z",
+      "side": 1,
+      "message": "Updated by https://autoroll.skia.org/r/angle-dawn-autoroll",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f02acb6_f2787b1e",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-05T15:58:13Z",
+      "side": 1,
+      "message": "Need to remove https://autoroll.skia.org/r/depot-tools-dawn.",
+      "range": {
+        "startLine": 76,
+        "startChar": 5,
+        "endLine": 76,
+        "endChar": 28
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8398aa6e_9ba7902c",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-05T15:58:13Z",
+      "side": 1,
+      "message": "updated by https://autoroll.skia.org/r/vulkan-deps-dawn-autoroll",
+      "range": {
+        "startLine": 80,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 28
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "801aee30_f72eff2d",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-05T15:58:13Z",
+      "side": 1,
+      "message": "I just copied Chromium\u0027s BUILD.gn into ANGLE in https://chromium-review.googlesource.com/c/angle/angle/+/6870430.\nBUILD.gn autoupdate that Jamie set up seems to be incompatible with git submodules.\nI.e. `third_party/googletest/src` submodule can\u0027t co-exist with `third_party/googletest` submodule.",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 78
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c634fdf5_ac10d634",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-05T15:58:13Z",
+      "side": 1,
+      "message": "updated by https://autoroll.skia.org/r/swiftshader-dawn-autoroll",
+      "range": {
+        "startLine": 93,
+        "startChar": 5,
+        "endLine": 93,
+        "endChar": 28
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "882164d7_eedcb99f",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-05T15:58:13Z",
+      "side": 1,
+      "message": "updated by https://autoroll.skia.org/r/vulkan-deps-dawn-autoroll",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3691f82_3f181d98",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-05T15:58:13Z",
+      "side": 1,
+      "message": "updated by https://autoroll.skia.org/r/vulkan-deps-dawn-autoroll",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 28
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "250114a0_1712a69d",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-05T15:58:13Z",
+      "side": 1,
+      "message": "Per my understanding, this is updated manually in the repos that use it, I believe because it requires code changes in the user, see b/295208838 for an example.",
+      "range": {
+        "startLine": 95,
+        "startChar": 5,
+        "endLine": 95,
+        "endChar": 40
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ef8331b2_319a06f3",
         "filename": "scripts/roll_chromium_deps.py",
         "patchSetId": 2
@@ -65,6 +295,70 @@
       "writtenOn": "2025-11-05T13:40:28Z",
       "side": 1,
       "message": "Is the plan for this roller to replace all the skia rollers we have now? If so, we\u0027ll still be able to do a manual roll, yea? Like, what happens if a vulkan-headers change breaks that breaks dawn so it can\u0027t roll into chromium. We\u0027d still be able to roll it manually, land the dawn break and then do a combined roll into chromium?",
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a72f76f0_1b4ea3cb",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-05T15:58:13Z",
+      "side": 1,
+      "message": "Yeah, vulkan-headers should continue to be rolled directly, so removed from this list.\ndepot_tools roller should be turned off, OTOH.",
+      "parentUuid": "ef8331b2_319a06f3",
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93941ed7_94677cf0",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-05T15:58:13Z",
+      "side": 1,
+      "message": "updated by https://autoroll.skia.org/r/vulkan-deps-dawn-autoroll",
+      "range": {
+        "startLine": 96,
+        "startChar": 5,
+        "endLine": 100,
+        "endChar": 53
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3c78725_12690518",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-05T15:58:13Z",
+      "side": 1,
+      "message": "What about tools/memory and tools/valgrind, which a comment says need to be updated in unison?\n\nAlso tools/mb is missing.\n\nWhat about `node` and `golang`, do we want to sync these as well?",
+      "range": {
+        "startLine": 119,
+        "startChar": 5,
+        "endLine": 119,
+        "endChar": 16
+      },
       "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
