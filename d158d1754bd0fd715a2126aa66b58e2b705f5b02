@@ -16,6 +16,23 @@
       "message": "PTAAL\n\nThis has gotten by the build failures on Windows I think, so I am expecting the bots to go green.",
       "revId": "d158d1754bd0fd715a2126aa66b58e2b705f5b02",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "718c8346_3507637b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-05T14:41:41Z",
+      "side": 1,
+      "message": "MSVC is being difficult now :-(",
+      "revId": "d158d1754bd0fd715a2126aa66b58e2b705f5b02",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
