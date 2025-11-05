@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4af44ecc_2bf679eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001102
+      },
+      "writtenOn": "2025-11-05T22:04:17Z",
+      "side": 1,
+      "message": "lgtm since it lg to brian (IDK if my code-review vote counts for anything in this gerrit instance)",
+      "revId": "1ab0c24df4518484e943cdae5a51c0f85d9899c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
