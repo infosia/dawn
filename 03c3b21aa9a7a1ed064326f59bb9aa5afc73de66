@@ -62,6 +62,24 @@
       "parentUuid": "641f9812_f1d6a831",
       "revId": "03c3b21aa9a7a1ed064326f59bb9aa5afc73de66",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30953983_c108f5b9",
+        "filename": "generator/templates/art/api_kotlin_object.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-11-05T17:30:28Z",
+      "side": 1,
+      "message": "Sounds good, that is a much cleaner plan. This CL is a massive improvement, looks great!",
+      "parentUuid": "d7ce19fb_51e9914a",
+      "revId": "03c3b21aa9a7a1ed064326f59bb9aa5afc73de66",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
