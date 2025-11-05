@@ -51,6 +51,24 @@
       "parentUuid": "bca9f3ea_f740523d",
       "revId": "e4aeee1a70e6797f003a503ad05a4691415a0c68",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0107e16_813a2283",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-05T15:18:43Z",
+      "side": 1,
+      "message": "I think copy it, and then add a link to the Proposal doc. Just makes it easier to lookup stuff if it\u0027s in the repo until it lands in the spec.",
+      "parentUuid": "a6d8d618_bac234ad",
+      "revId": "e4aeee1a70e6797f003a503ad05a4691415a0c68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
