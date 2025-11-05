@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6068aee1_d4839887",
+        "filename": "third_party/gn/dxc/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 2404,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-05T17:45:24Z",
+      "side": 1,
+      "message": "These assignment are a bit weird, are they actually needed?",
+      "revId": "b8b9cc0a6f057b11e4c4ec15ebbb1e756ad33b7c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
