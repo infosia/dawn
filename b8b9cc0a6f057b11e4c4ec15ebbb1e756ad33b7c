@@ -51,6 +51,24 @@
       "message": "These assignment are a bit weird, are they actually needed?",
       "revId": "b8b9cc0a6f057b11e4c4ec15ebbb1e756ad33b7c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85bad34d_86a0a8d8",
+        "filename": "third_party/gn/dxc/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 2404,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-05T18:16:40Z",
+      "side": 1,
+      "message": "I am not sure, I agree they are weird, but they were pre-existing. After I get the CL passing on the bots, I will try to remove them to check if they are subtly load bearing somewhere.",
+      "parentUuid": "6068aee1_d4839887",
+      "revId": "b8b9cc0a6f057b11e4c4ec15ebbb1e756ad33b7c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
