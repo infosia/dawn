@@ -136,6 +136,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cf25579_9978c8a3",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-05T22:02:08Z",
+      "side": 1,
+      "message": "https://dawn-review.googlesource.com/c/dawn/+/271537 has that change I can land as a follow up.",
+      "parentUuid": "01f775cf_ffe1d328",
+      "range": {
+        "startLine": 838,
+        "startChar": 8,
+        "endLine": 839,
+        "endChar": 9
+      },
+      "revId": "e22f7a26fecc6d89d6987781b9169f0f60b77bbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d8b676aa_df19d46e",
@@ -197,6 +221,30 @@
       "side": 1,
       "message": "Since `mStatus` is a part of the event I think that\u0027s ok? I think I would prefer it to use `MutexProtected` for now to make it clearer for now. Thanks!",
       "parentUuid": "e747ce6f_21e75f9f",
+      "range": {
+        "startLine": 243,
+        "startChar": 4,
+        "endLine": 244,
+        "endChar": 40
+      },
+      "revId": "e22f7a26fecc6d89d6987781b9169f0f60b77bbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14c663c7_ed8c7387",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-05T22:02:08Z",
+      "side": 1,
+      "message": "Per offline discusson MutexProtected didn\u0027t work. I\u0027ve added a comment.",
+      "parentUuid": "b1ed4bbb_752142a3",
       "range": {
         "startLine": 243,
         "startChar": 4,
