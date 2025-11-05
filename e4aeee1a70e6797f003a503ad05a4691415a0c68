@@ -69,6 +69,24 @@
       "parentUuid": "a6d8d618_bac234ad",
       "revId": "e4aeee1a70e6797f003a503ad05a4691415a0c68",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "850e5a98_caca85d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-05T16:05:15Z",
+      "side": 1,
+      "message": "I\u0027ll do that then! In the meantime, I\u0027m exploring how to add builtin depth mode at https://dawn-review.googlesource.com/c/dawn/+/271394. Let me know if I\u0027m heading in the right direction. I\u0027ll ask for proper review when I add tests but for now it works locally (which makes me happy) ;)",
+      "parentUuid": "c0107e16_813a2283",
+      "revId": "e4aeee1a70e6797f003a503ad05a4691415a0c68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
