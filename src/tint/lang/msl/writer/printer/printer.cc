@@ -1304,7 +1304,18 @@ class Printer : public tint::TextGenerator {
                 out << "}";
             },
             [&](Default) {
-                EmitType(out, c->Result()->Type());
+                // When constructing a subgroup_matrix with a given value, WGSL requires the matrix
+                // to be a filled matrix. The default constructor in MSL creates a diagonal matrix.
+                // Swap in the make_filled_simdgroup_matrix method instead.
+                auto* sm = c->Result()->Type()->As<core::type::SubgroupMatrix>();
+                if (sm && !c->Args().IsEmpty()) {
+                    out << "make_filled_simdgroup_matrix<";
+                    EmitType(out, sm->Type());
+                    out << ", " << sm->Columns() << ", " << sm->Rows() << ">";
+                } else {
+                    EmitType(out, c->Result()->Type());
+                }
+
                 out << "(";
                 size_t i = 0;
                 for (auto* arg : c->Args()) {
