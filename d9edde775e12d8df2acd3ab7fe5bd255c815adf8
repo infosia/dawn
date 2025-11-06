@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b160cad7_76bb7a1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-06T14:57:32Z",
+      "side": 1,
+      "message": "Yeah that\u0027s fine, for a CL that adds frontend support it\u0027s expected to just go as far as program_to_ir.",
+      "parentUuid": "d2dc94e3_82c1ec30",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f78a8ce3_ba78847b",
@@ -100,6 +118,24 @@
       "writtenOn": "2025-11-06T14:50:38Z",
       "side": 1,
       "message": "Add a tests that failing comma are accepted.  Both: `@builtin(frag_depth,)` and `@builtin(frag_depth, greater,)`",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bdde369_60abd2a9",
+        "filename": "src/tint/lang/wgsl/resolver/builtins_validation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-06T14:57:32Z",
+      "side": 1,
+      "message": "Note: This would be a parser test, not a resolver test. See the `Attribute_Builtin_*` tests in `parser/variable_attribute_test.cc` Same for a couple of the other comments.",
+      "parentUuid": "3b15ab28_cef0d1de",
       "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
