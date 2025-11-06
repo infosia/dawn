@@ -283,7 +283,7 @@ deps = {
   },
 
   'third_party/angle': {
-    'url': '{chromium_git}/angle/angle@09fea0f420adf06557370c63ae9e1411e0e43bf7',
+    'url': '{chromium_git}/angle/angle@7da12a27312fabf95c54ff3156f08c9259628b84',
     'condition': 'dawn_standalone',
   },
 
@@ -293,7 +293,7 @@ deps = {
   },
 
   'third_party/vulkan-deps': {
-    'url': '{chromium_git}/vulkan-deps@5a075c3f5e7c5043e79bf5bb3ee27e1a609cc662',
+    'url': '{chromium_git}/vulkan-deps@2599d7d265472cfde1705d8ee7d10a1ba2868ad2',
     'condition': 'dawn_standalone',
   },
 
@@ -303,12 +303,12 @@ deps = {
   },
 
   'third_party/spirv-headers/src': {
-    'url': '{chromium_git}/external/github.com/KhronosGroup/SPIRV-Headers@f2e4bd213104fe323a01e935df56557328d37ac8',
+    'url': '{chromium_git}/external/github.com/KhronosGroup/SPIRV-Headers@0ff65315141cf745c1ac286084943409edbe6504',
     'condition': 'dawn_standalone',
   },
 
   'third_party/spirv-tools/src': {
-    'url': '{chromium_git}/external/github.com/KhronosGroup/SPIRV-Tools@84c917b958000db3040752ffc1ae0dee8d2d945d',
+    'url': '{chromium_git}/external/github.com/KhronosGroup/SPIRV-Tools@3039293356a99e4b4e849c154e63994ce4e8804f',
     'condition': 'dawn_standalone',
   },
 
@@ -333,7 +333,7 @@ deps = {
   },
 
   'third_party/vulkan-validation-layers/src': {
-    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-ValidationLayers@257b5fea0281b06344325e759f3281c68f929886',
+    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-ValidationLayers@42e34636e9b76c76fb28427531f6a728c1b0b2bb',
     'condition': 'dawn_standalone',
   },
 
@@ -348,7 +348,7 @@ deps = {
   },
 
   'third_party/dxc': {
-    'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@b0245e32fdcf412850ed073476669f3a83fa5a76',
+    'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@facd05ab3a87aa3097174715f0d3509d9e5e66ab',
   },
 
   'third_party/dxheaders': {
@@ -367,7 +367,7 @@ deps = {
 
   # WebGPU CTS - Used both by the dawn_node tests and transitively by Chromium.
   'third_party/webgpu-cts': {
-    'url': '{chromium_git}/external/github.com/gpuweb/cts@8a39e1d407a620d7de788cb87b38e96bb6b0782c',
+    'url': '{chromium_git}/external/github.com/gpuweb/cts@07253ddadf231da82375cc0fb992b75ee857c1e1',
     'condition': 'build_with_chromium or dawn_standalone',
   },
 
