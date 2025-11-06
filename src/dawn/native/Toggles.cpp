@@ -805,6 +805,11 @@ TogglesState TogglesState::CreateFromTogglesDescriptor(const DawnTogglesDescript
             if (toggleInfo->stage <= requiredStage) {
                 togglesState.mTogglesSet.Set(toggle, true);
                 togglesState.mEnabledToggles.Set(toggle, true);
+            } else {
+                dawn::ErrorLog() << "Setting toggle at wrong stage \"" << ToggleEnumToName(toggle)
+                                 << "\" current " << int(toggleInfo->stage) << " required"
+                                 << int(requiredStage);
+                DAWN_ASSERT(false);
             }
         }
     }
@@ -817,6 +822,11 @@ TogglesState TogglesState::CreateFromTogglesDescriptor(const DawnTogglesDescript
             if (toggleInfo->stage <= requiredStage) {
                 togglesState.mTogglesSet.Set(toggle, true);
                 togglesState.mEnabledToggles.Set(toggle, false);
+            } else {
+                dawn::ErrorLog() << "Setting toggle at wrong stage \"" << ToggleEnumToName(toggle)
+                                 << "\" current " << int(toggleInfo->stage) << " required"
+                                 << int(requiredStage);
+                DAWN_ASSERT(false);
             }
         }
     }
