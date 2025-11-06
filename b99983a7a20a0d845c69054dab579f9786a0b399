@@ -141,6 +141,53 @@
       },
       "revId": "b99983a7a20a0d845c69054dab579f9786a0b399",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "426b4252_82c067b1",
+        "filename": "src/dawn/native/d3d11/CreateShaderTaskD3D11.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-11-06T16:12:23Z",
+      "side": 1,
+      "message": "Ugh, that\u0027s frustrating. `std::move_only_function` is c++23..\n\nI still think I\u0027d really prefer to not use inheritence here though. Can we just add another allocation to fix this? `std::make_shared\u003cd3d::CompiledShader\u003e(std::move(compiledShader))` and pass that to the std::function.",
+      "parentUuid": "a6335e95_2c42a17f",
+      "range": {
+        "startLine": 78,
+        "startChar": 32,
+        "endLine": 78,
+        "endChar": 45
+      },
+      "revId": "b99983a7a20a0d845c69054dab579f9786a0b399",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19eedb7c_144879d5",
+        "filename": "src/dawn/native/d3d11/CreateShaderTaskD3D11.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-11-06T16:12:23Z",
+      "side": 1,
+      "message": "These can be moved into your CreateShaderTaskTraits struct, ex:\n\n```\ntemplate \u003c\u003e\nstruct CreateShaderTaskTraits\u003cSingleShaderStage::Vertex\u003e {\n    using Type \u003d ID3D11VertexShader;\n    static constexpr const char* kTraceLabel \u003d \"DeviceD3D11::CreateVertexShader\";\n    static constexpr const char* kHistogramLabel \u003d \"D3D11.CreateVertexShaderUs\";\n};\n```\n\nMaybe the call to `mD3D11Device-\u003eCreate*Shader` too but it\u0027s not as obvious.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 9
+      },
+      "revId": "b99983a7a20a0d845c69054dab579f9786a0b399",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
