@@ -156,6 +156,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dddef7d2_0dfda137",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-06T20:39:30Z",
+      "side": 1,
+      "message": "Replied offline.\nAlso, tracking a particular dependency is needed for \"manual roll\" functionality.",
+      "parentUuid": "202954ec_5d003509",
+      "range": {
+        "startLine": 69,
+        "startChar": 3,
+        "endLine": 69,
+        "endChar": 20
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8a87043a_3ed1ca19",
         "filename": "scripts/roll_chromium_deps.py",
         "patchSetId": 2
@@ -601,6 +625,24 @@
       "side": 1,
       "message": "Yes, but is the intention to continue using separate rollers for all of those? At least for ANGLE, you mentioned in the doc that \"This has a dedicated roller at the moment https://autoroll.skia.org/r/angle-dawn-autoroll. I think it\u0027s actually good if Dawn syncs Chromium\u0027s revision. Now we have a circular dependency problem, because of which we have to manually roll Dawn into ANGLE. If both Dawn and ANGLE sync Chromium\u0027s version of each other, it should be a good solution for the circular dependency.\"",
       "parentUuid": "8e44777d_25045a17",
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ac51cc8_0328b683",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-06T20:39:30Z",
+      "side": 1,
+      "message": "Yeah, it would solve the circular dependency issue.\nBut I think it won\u0027t be good if we combine too much stuff in a single roller.\nWhen there are a lot of dependencies rolled together, one bad dependency will block others from updating.\nAnd while one dependency is being fixed, another can get broken, and in the end the roll never proceeds.\nSo, I\u0027d like to keep all the existing rollers, other than the depot_tools one.\nI see Chromium-\u003eDawn roller as \"build system\" update.\nANGLE, vulkan-deps and SwiftShader do not need to roll together with build system updates.",
+      "parentUuid": "8a2e248e_3624561f",
       "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
