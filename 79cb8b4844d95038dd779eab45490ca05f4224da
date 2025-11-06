@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0506d739_02e14f6b",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-06T10:47:09Z",
+      "side": 1,
+      "message": "```suggestion\n    // Any required barriers for mapping must have been inserted before map finalizes. This is done by eagerly transitioning mappables buffers at the end of GPU submissions that use them. If this ASSERT triggers, there is most likely a missing call to `CheckBufferNeedsEagerTransition` after a transition of the buffer for GPU usage.\n```",
+      "revId": "79cb8b4844d95038dd779eab45490ca05f4224da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "341d6a50_fee3ca8f",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-06T10:47:09Z",
+      "side": 1,
+      "message": "What if we map readwrite (is that possible with extended usages?), in that case we should pass `MapRead|MapWrite`",
+      "revId": "79cb8b4844d95038dd779eab45490ca05f4224da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
