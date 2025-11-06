@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "ce19fa3ff9fa02485913eeea68ed45f641028f16",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de56d80b_de62f8c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-06T15:55:46Z",
+      "side": 1,
+      "message": "I think ASAN is too slow for CQ and will use a lot of capacity.\n\"Dawn Win10 x64 ASAN Release (Intel)\" and \"Dawn Win10 x64 ASAN Release (NVIDIA)\" aren\u0027t mirrored by CQ bots either.\nWe can consider this if we have extra capacity on these machines, but I don\u0027t believe this is the case now.",
+      "revId": "ce19fa3ff9fa02485913eeea68ed45f641028f16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
