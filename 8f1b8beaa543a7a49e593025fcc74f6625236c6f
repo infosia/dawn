@@ -16,6 +16,24 @@
       "message": "LGTM though I think we could simplify the code a bunch after this stack of CLs by removing the various early-return logic and instead changing BufferBarrier `IsEmpty` to be `IsNoop()` which looks like:\n\n```\nIsNoop() {\n  ASSERT(dstAccess !\u003d 0 \u0026\u0026 dstStages !\u003d 0); // we cannot transition to None\n  if (srcAccess \u003d\u003d 0 || srcStages \u003d\u003d 0) {return true}\n  if (srcStages \u003d\u003d dstStages \u003d\u003d VK_PIPELINE_STAGE_HOST_BIT) {return true}\n  return false;\n}\n```\n\nI can take care of that after that stack if you want. What I\u0027m trying to do is find ways to simplify this logic that\u0027s kind of inscrutable right now.",
       "revId": "8f1b8beaa543a7a49e593025fcc74f6625236c6f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "878a0e68_7cae87ae",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-06T14:02:54Z",
+      "side": 1,
+      "message": "\u003e I can take care of that after that stack if you want. What I\u0027m trying to do is find ways to simplify this logic that\u0027s kind of inscrutable right now.\n\nsgtm! Even this simple change was a bit difficult to figure out where the check and early out should go so anything to reduce complexity here sounds great.",
+      "parentUuid": "c35c20d3_e641aee7",
+      "revId": "8f1b8beaa543a7a49e593025fcc74f6625236c6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
