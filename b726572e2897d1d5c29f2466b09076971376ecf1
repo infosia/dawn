@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd28cd67_641ae0e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-06T20:55:45Z",
+      "side": 1,
+      "message": "LGTM. Validation is definitely less confusing now.",
+      "revId": "b726572e2897d1d5c29f2466b09076971376ecf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d601ef30_e6e829c9",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-06T20:55:45Z",
+      "side": 1,
+      "message": "AllowUnsafeAPIs is an instance-level toggle whereas EnableImmediateData is a device-level toggle. So I think this kind of implies that EnableImmediateData is safe, just not enabled by default yet, and therefore it\u0027s okay if it\u0027s exposed to the renderer process (just not the Web but that\u0027s not a problem because it\u0027s not implemented in Blink).\n\nIf we agree that\u0027s what we want, just nit: make it clearer in this comment.\n\n```suggestion\n    // EnableImmediateData is safe, but not yet stable and not enabled by\n    // default yet. Enable it by default with AllowUnsafeAPIs for convenience\n    // of tests and other users of unsafe APIs.\n```",
+      "revId": "b726572e2897d1d5c29f2466b09076971376ecf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "964fccb6_4b5c407f",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-06T20:55:45Z",
+      "side": 1,
+      "message": "nit: Use `kMaxImmediateDataBytes` here?",
+      "revId": "b726572e2897d1d5c29f2466b09076971376ecf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
