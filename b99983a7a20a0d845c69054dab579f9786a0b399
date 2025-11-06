@@ -93,6 +93,30 @@
       },
       "revId": "b99983a7a20a0d845c69054dab579f9786a0b399",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ad104f4_ece42b37",
+        "filename": "src/dawn/native/d3d11/CreateShaderTaskD3D11.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-06T13:26:52Z",
+      "side": 1,
+      "message": "Even if the `d3d::CompiledShader` is non-copyable, the lambda shoud be able to capture it via a move (since we can see that the type is moveable here).",
+      "parentUuid": "490f7ef3_2aca8eac",
+      "range": {
+        "startLine": 78,
+        "startChar": 32,
+        "endLine": 78,
+        "endChar": 45
+      },
+      "revId": "b99983a7a20a0d845c69054dab579f9786a0b399",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
