@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b978612b_df801903",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T18:09:32Z",
+      "side": 1,
+      "message": "lgtm. Will leave to Yuly to +2",
+      "revId": "b4972aab7299890ae5e640fd6241ae86164bc5fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
