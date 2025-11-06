@@ -31,12 +31,15 @@
 #include "dawn/native/RenderBundle.h"
 #include "dawn/native/RenderBundleEncoder.h"
 #include "dawn/native/webgpu/ObjectWGPU.h"
+#include "dawn/native/webgpu/RecordableObject.h"
 
 namespace dawn::native::webgpu {
 
 class Device;
 
-class RenderBundle final : public RenderBundleBase, public ObjectWGPU<WGPURenderBundle> {
+class RenderBundle final : public RenderBundleBase,
+                           public RecordableObject,
+                           public ObjectWGPU<WGPURenderBundle> {
   public:
     static Ref<RenderBundleBase> Create(RenderBundleEncoderBase* encoder,
                                         const RenderBundleDescriptor* descriptor,
@@ -47,6 +50,9 @@ class RenderBundle final : public RenderBundleBase, public ObjectWGPU<WGPURender
                  const RenderBundleDescriptor* descriptor,
                  RenderPassResourceUsage usages,
                  IndirectDrawMetadata indirectDrawMetaData);
+
+    MaybeError AddReferenced(CaptureContext& captureContext) override;
+    MaybeError CaptureCreationParameters(CaptureContext& context) override;
 
   private:
     void DestroyImpl() override;
