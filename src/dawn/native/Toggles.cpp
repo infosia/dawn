@@ -805,6 +805,8 @@ TogglesState TogglesState::CreateFromTogglesDescriptor(const DawnTogglesDescript
             if (toggleInfo->stage <= requiredStage) {
                 togglesState.mTogglesSet.Set(toggle, true);
                 togglesState.mEnabledToggles.Set(toggle, true);
+            } else {
+                DAWN_CHECK(false);
             }
         }
     }
@@ -817,6 +819,8 @@ TogglesState TogglesState::CreateFromTogglesDescriptor(const DawnTogglesDescript
             if (toggleInfo->stage <= requiredStage) {
                 togglesState.mTogglesSet.Set(toggle, true);
                 togglesState.mEnabledToggles.Set(toggle, false);
+            } else {
+                DAWN_CHECK(false);
             }
         }
     }
