@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cde1b423_6c7c24bc",
+        "filename": "src/dawn/native/d3d11/ComputePipelineD3D11.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-11-06T14:47:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ee5aa1_c5039c21",
+      "revId": "4fd1bce186e19eb59fe17b166dcc9fcbc3199f59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58e4b4d9_4ad8222e",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-11-06T13:26:52Z",
       "side": 1,
       "message": "The error handling logic is done repeatedly on `Apply` when it\u0027s only needed when we haven\u0027t waited on the compilation yet. We could have members for the vs/fs then here do:\n\n```\nif (mVertexShader \u003d\u003d nullptr) {\n  // This is the first time that we apply this pipeline, wait for the shaders to be compiled.\n  DAWN_TRY_ASSIGN(mVertexShader, mVertexShaderFuture-\u003eTryGet());\n  if (mPixelShaderFuture !\u003d nullptr) {\n    // same for pixel (or does D3D11 always require a pixel shader in which case we don\u0027t need that if?)\n  }\n  SetLabelImpl() // and there is no need for mLabelChanged anymore!\n}\n\nuse mVertexShader/PixelShader\n```",
+      "revId": "4fd1bce186e19eb59fe17b166dcc9fcbc3199f59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6143bdf_2f053fce",
+        "filename": "src/dawn/native/d3d11/RenderPipelineD3D11.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-11-06T14:47:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58e4b4d9_4ad8222e",
       "revId": "4fd1bce186e19eb59fe17b166dcc9fcbc3199f59",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
