@@ -220,6 +220,28 @@ TEST_F(ResolverBuiltinsValidationTest, FragDepthIsInputStruct_Fail) {
 note: while analyzing entry point 'fragShader')");
 }
 
+TEST_F(ResolverBuiltinsValidationTest, UseFragDepthModeWithoutExtension) {
+    // @fragment
+    // fn fs_main() -> @builtin(frag_depth, any) f32 { return 1.0; }
+    Func(
+        "fs_main", tint::Empty, ty.f32(),
+        Vector{
+            Return(1_f),
+        },
+        Vector{
+            Stage(ast::PipelineStage::kFragment),
+        },
+        Vector{
+            Builtin(Source{{12, 34}}, core::BuiltinValue::kFragDepth, core::BuiltinDepthMode::kAny),
+        });
+
+    Resolver resolver{this, wgsl::AllowedFeatures{}};
+    EXPECT_FALSE(resolver.Resolve());
+    EXPECT_EQ(r()->error(),
+              "12:34 error: use of '@builtin(frag_depth)' attribute requires the 'fragment_depth' "
+              "language feature");
+}
+
 TEST_F(ResolverBuiltinsValidationTest, StructBuiltinInsideEntryPoint_Ignored) {
     // struct S {
     //   @builtin(vertex_index) idx: u32;

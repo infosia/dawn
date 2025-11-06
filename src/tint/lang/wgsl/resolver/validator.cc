@@ -1043,6 +1043,13 @@ bool Validator::BuiltinAttribute(const ast::BuiltinAttribute* attr,
                 !(stage == ast::PipelineStage::kFragment && !is_input)) {
                 is_stage_mismatch = true;
             }
+            if (!allowed_features_.features.contains(wgsl::LanguageFeature::kFragmentDepth)) {
+                AddError(attr->source)
+                    << "use of " << style::Attribute("@builtin")
+                    << style::Code("(", style::Enum(builtin), ")") << " attribute requires the "
+                    << style::Code("fragment_depth") << " language feature";
+                return false;
+            }
             if (!type->Is<core::type::F32>()) {
                 err_builtin_type("f32");
                 return false;
