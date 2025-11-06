@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61f9ea0b_b91a4aa1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-06T21:56:13Z",
+      "side": 1,
+      "message": "This takes the place of my previous attempt at https://dawn-review.googlesource.com/c/dawn/+/270895 because Loko was able to get the times down enough to match that approach and it follows the feedback given on the previous CL. Mostly Loko\u0027s code, I\u0027ve just done some touchups to allow it to land more cleanly. \n\nShould be noted that this patch on it\u0027s own doesn\u0027t actually gain any performance (but doesn\u0027t necessarily hurt it either) but after it lands it can be combined with https://chromium-review.googlesource.com/c/chromium/src/+/7128912 to get something around a 2X speedup over the current WriteBuffer implementation.",
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
