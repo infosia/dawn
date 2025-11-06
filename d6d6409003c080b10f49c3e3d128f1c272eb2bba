@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69625dc0_137a5ecf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-06T15:40:35Z",
+      "side": 1,
+      "message": "Part of the fix for the circular dependency issue preventing copybara yesterday.",
+      "revId": "d6d6409003c080b10f49c3e3d128f1c272eb2bba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
