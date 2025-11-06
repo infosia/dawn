@@ -132,6 +132,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "202954ec_5d003509",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-06T18:53:29Z",
+      "side": 1,
+      "message": "Hm, is there no option to have an autoroller just run on a schedule without tracking a particular dependency? Chromium is effectively guaranteed to always have new revisions anytime the roller is run, so we\u0027re not gaining any benefit by tracking it. It would be nice to not have to have a dummy DEPS entry like this if possible.",
+      "parentUuid": "c6a1ce3e_f907bda6",
+      "range": {
+        "startLine": 69,
+        "startChar": 3,
+        "endLine": 69,
+        "endChar": 20
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8a87043a_3ed1ca19",
         "filename": "scripts/roll_chromium_deps.py",
         "patchSetId": 2
@@ -559,6 +583,24 @@
       "side": 1,
       "message": "Everything that I mentioned that has its own separate roller (vulkan-deps, ANGLE, SwiftShader).",
       "parentUuid": "76f87a1e_507e6eb1",
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a2e248e_3624561f",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-06T18:53:29Z",
+      "side": 1,
+      "message": "Yes, but is the intention to continue using separate rollers for all of those? At least for ANGLE, you mentioned in the doc that \"This has a dedicated roller at the moment https://autoroll.skia.org/r/angle-dawn-autoroll. I think it\u0027s actually good if Dawn syncs Chromium\u0027s revision. Now we have a circular dependency problem, because of which we have to manually roll Dawn into ANGLE. If both Dawn and ANGLE sync Chromium\u0027s version of each other, it should be a good solution for the circular dependency.\"",
+      "parentUuid": "8e44777d_25045a17",
       "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
