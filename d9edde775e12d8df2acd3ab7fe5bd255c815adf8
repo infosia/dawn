@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "20df2322_5b423e34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T15:01:17Z",
+      "side": 1,
+      "message": "It would possibly just flow through the IR but there should be WGSL writer changes to emit the enum.\n\nI\u0027d suggest adding a folder into `test/tint/extensions/fragment_depth` and then creating a single WGSL file like:\n\nfragment_depth.wgsl\n```\nenable fragment_depth;\n\n@fragment\nfn main(@builtin(frag_depth, greater) depth) {}\n```\n\nThen when you run `tools/run tests --tint \u003cpath to tint\u003e --generate-expected --generate-skips test/tint/extensions/fragment_depth` it should create SKIP files for all backends except WGSL which should pass",
+      "parentUuid": "d2dc94e3_82c1ec30",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f78a8ce3_ba78847b",
         "filename": "src/tint/lang/hlsl/writer/raise/shader_io_test.cc",
         "patchSetId": 8
