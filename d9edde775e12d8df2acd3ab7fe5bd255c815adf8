@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f78a8ce3_ba78847b",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1400,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-06T14:49:54Z",
+      "side": 1,
+      "message": "Nit: We can use designated initializers now so I\u0027d just change this to do `.builtin \u003d core::BuiltinValue::kNumWorkgroups` and drop the rest of the fields.",
+      "fixSuggestions": [
+        {
+          "fixId": "b12c78c8_214f520c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/shader_io_test.cc",
+              "range": {
+                "startLine": 1396,
+                "startChar": 0,
+                "endLine": 1403,
+                "endChar": 0
+              },
+              "replacement": "                                         .builtin \u003d core::BuiltinValue::kNumWorkgroups,\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ad72cf1_a0fc11cb",
+        "filename": "src/tint/lang/wgsl/resolver/builtins_validation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-06T14:49:54Z",
+      "side": 1,
+      "message": "Please also test this validation when the builtin is used in a struct.",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
