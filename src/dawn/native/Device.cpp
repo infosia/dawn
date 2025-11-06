@@ -82,6 +82,7 @@
 #include "dawn/native/SwapChain.h"
 #include "dawn/native/TexelBufferView.h"
 #include "dawn/native/Texture.h"
+#include "dawn/native/Toggles.h"
 #include "dawn/native/ValidationUtils_autogen.h"
 #include "dawn/native/WaitListEvent.h"
 #include "dawn/native/utils/WGPUHelpers.h"
