@@ -16,6 +16,41 @@
       "message": "PTAL.",
       "revId": "c81cc2f1b9d96d8880c2fae53451423ee0445a8f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d60e9c3_1cc3cf39",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-06T20:22:43Z",
+      "side": 1,
+      "message": "Nit: Remove comment since you don\u0027t test row-major here?",
+      "fixSuggestions": [
+        {
+          "fixId": "3c28fddf_5f9b7c8d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+              "range": {
+                "startLine": 987,
+                "startChar": 0,
+                "endLine": 989,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "c81cc2f1b9d96d8880c2fae53451423ee0445a8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
