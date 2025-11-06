@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dd3cd5c_74c5137b",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-06T14:21:32Z",
+      "side": 1,
+      "message": "This will update the entry-\u003ebinding slot with whatever is in entry.",
+      "revId": "2498e7af49155ad5e2f13388e596875b0137eccf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c903b372_f1e70c5c",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-06T14:21:32Z",
+      "side": 1,
+      "message": "This will require that entry-\u003ebinding is BindGroupBindingUndefined.",
+      "revId": "2498e7af49155ad5e2f13388e596875b0137eccf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
