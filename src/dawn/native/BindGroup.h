@@ -69,6 +69,8 @@ class BindGroupBase : public ApiObjectBase {
 
     // Dawn API
     void APIDestroy();
+    wgpu::Status APIUpdate(const BindGroupEntry* entry);
+    uint32_t APIInsertBinding(const BindGroupEntryContents* entry);
 
     BindGroupLayoutBase* GetFrontendLayout();
     const BindGroupLayoutBase* GetFrontendLayout() const;
