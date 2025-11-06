@@ -167,6 +167,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2d6e551_7a4be1cd",
+        "filename": "src/dawn/native/d3d11/CreateShaderTaskD3D11.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-11-06T18:02:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "426b4252_82c067b1",
+      "range": {
+        "startLine": 78,
+        "startChar": 32,
+        "endLine": 78,
+        "endChar": 45
+      },
+      "revId": "b99983a7a20a0d845c69054dab579f9786a0b399",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19eedb7c_144879d5",
@@ -180,6 +204,30 @@
       "writtenOn": "2025-11-06T16:12:23Z",
       "side": 1,
       "message": "These can be moved into your CreateShaderTaskTraits struct, ex:\n\n```\ntemplate \u003c\u003e\nstruct CreateShaderTaskTraits\u003cSingleShaderStage::Vertex\u003e {\n    using Type \u003d ID3D11VertexShader;\n    static constexpr const char* kTraceLabel \u003d \"DeviceD3D11::CreateVertexShader\";\n    static constexpr const char* kHistogramLabel \u003d \"D3D11.CreateVertexShaderUs\";\n};\n```\n\nMaybe the call to `mD3D11Device-\u003eCreate*Shader` too but it\u0027s not as obvious.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 9
+      },
+      "revId": "b99983a7a20a0d845c69054dab579f9786a0b399",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a7ec27d_cd4acce4",
+        "filename": "src/dawn/native/d3d11/CreateShaderTaskD3D11.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-11-06T18:02:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19eedb7c_144879d5",
       "range": {
         "startLine": 100,
         "startChar": 0,
