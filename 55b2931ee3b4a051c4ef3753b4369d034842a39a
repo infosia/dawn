@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6c2c18b_702c2508",
+        "filename": "generator/templates/art/api_kotlin_exceptions.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-06T19:32:04Z",
+      "side": 1,
+      "message": "nit. 2025",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "55b2931ee3b4a051c4ef3753b4369d034842a39a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
