@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4ba1d01_2aef668f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T14:50:38Z",
+      "side": 1,
+      "message": "looking good, just needs some more validation tests I think.",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f78a8ce3_ba78847b",
@@ -49,6 +66,108 @@
       "writtenOn": "2025-11-06T14:49:54Z",
       "side": 1,
       "message": "Please also test this validation when the builtin is used in a struct.",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b15ab28_cef0d1de",
+        "filename": "src/tint/lang/wgsl/resolver/builtins_validation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T14:50:38Z",
+      "side": 1,
+      "message": "Add a tests that failing comma are accepted.  Both: `@builtin(frag_depth,)` and `@builtin(frag_depth, greater,)`",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "573849d9_cc396303",
+        "filename": "src/tint/lang/wgsl/resolver/builtins_validation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T14:50:38Z",
+      "side": 1,
+      "message": "Can you add a validation test that for when the extension is enabled and there is `@builtin(frag_depth, greater)` that it validates correctly?",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c23aa220_6ad5c532",
+        "filename": "src/tint/lang/wgsl/resolver/builtins_validation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T14:50:38Z",
+      "side": 1,
+      "message": "Add a test where the builtin is provided twice `@builtin(frag_depth, greater, greater)` is invalid",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a7a7f43_6fa106c0",
+        "filename": "src/tint/lang/wgsl/resolver/builtins_validation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T14:50:38Z",
+      "side": 1,
+      "message": "Add a tests for invalid strings in the mode position: `@builtin(frag_depth, 4)`, `@builtin(frag_depth, position)`, `@builtin(frag_depth, \u003c)` are all invalid.",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38469c33_00ce015f",
+        "filename": "src/tint/lang/wgsl/resolver/builtins_validation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T14:50:38Z",
+      "side": 1,
+      "message": "Add a test where it just uses the mode so just `@builtin(greater)` and is invalid",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "212e935a_3ff75e0b",
+        "filename": "src/tint/lang/wgsl/resolver/builtins_validation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T14:50:38Z",
+      "side": 1,
+      "message": "Add a test where the ordering is backwards `@builtin(greater, frag_depth)` and is invalid",
       "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
