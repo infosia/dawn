@@ -69,6 +69,24 @@
       "parentUuid": "ea1d3e86_76f1fd74",
       "revId": "e5ed22c3e38f1cb203d223aa6fb9d1cf4c2a1dcd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4ea64fd_e20e3ce0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-06T19:53:43Z",
+      "side": 1,
+      "message": "FYI you can just use `-l` in `grep` to find files that match:\n```\ngit grep -l \"\\.Not\"\n```",
+      "parentUuid": "080b25e9_22befd94",
+      "revId": "e5ed22c3e38f1cb203d223aa6fb9d1cf4c2a1dcd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
