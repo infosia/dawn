@@ -51,6 +51,24 @@
       ],
       "revId": "c81cc2f1b9d96d8880c2fae53451423ee0445a8f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa8869ec_67d5ba94",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T20:24:16Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "8d60e9c3_1cc3cf39",
+      "revId": "c81cc2f1b9d96d8880c2fae53451423ee0445a8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
