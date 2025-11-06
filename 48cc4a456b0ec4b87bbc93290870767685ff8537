@@ -34,6 +34,24 @@
       "parentUuid": "802c2ea4_34497fb1",
       "revId": "48cc4a456b0ec4b87bbc93290870767685ff8537",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d55fb0f_b7d5c799",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-06T10:44:05Z",
+      "side": 1,
+      "message": "Sorry, let me try to rephrase the original comment (basically we agree on what to do):\n\nYeah that was my original suggestion but like you said `absl::InlineVector\u003cRef\u003cBuffer\u003e\u003e` is a bit overkill for that.\n\nThe drawback of the current approach is that we need to remember to put the call to `CheckBufferNeedsEagerTransition` when we modify the code, but since we are adding an ASSERT in the next CL, it should catch regressions if we forget to add a `CheckBufferNeedsEagerTransition` in the future.",
+      "parentUuid": "e8412dd9_74e727dc",
+      "revId": "48cc4a456b0ec4b87bbc93290870767685ff8537",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
