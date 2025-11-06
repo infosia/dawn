@@ -27,6 +27,7 @@
 
 #include "src/dawn/native/webgpu/RenderPipelineWGPU.h"
 
+#include <limits>
 #include <string>
 #include <vector>
 #include "dawn/common/StringViewUtils.h"
@@ -184,7 +185,49 @@ MaybeError RenderPipeline::InitializeImpl() {
         desc.fragment = nullptr;
     }
 
+    device->wgpu.devicePushErrorScope(device->GetInnerHandle(), WGPUErrorFilter_Validation);
+
     mInnerHandle = device->wgpu.deviceCreateRenderPipeline(device->GetInnerHandle(), &desc);
+
+    struct ErrorScopeCallbackUserData {
+        WGPUPopErrorScopeStatus status = WGPUPopErrorScopeStatus_Success;
+        WGPUErrorType type = WGPUErrorType_NoError;
+        std::string message;
+    } userdata;
+
+    WGPUPopErrorScopeCallbackInfo popErrorscopeCallbackInfo = {
+        .nextInChain = nullptr,
+        .mode = WGPUCallbackMode_WaitAnyOnly,
+        .callback =
+            [](WGPUPopErrorScopeStatus status, WGPUErrorType type, WGPUStringView message,
+               void* userdata, void*) {
+                auto* data = static_cast<ErrorScopeCallbackUserData*>(userdata);
+                data->status = status;
+                data->type = type;
+                data->message = ToString(message);
+            },
+        .userdata1 = &userdata,
+        .userdata2 = nullptr,
+    };
+
+    WGPUFutureWaitInfo waitInfo = WGPU_FUTURE_WAIT_INFO_INIT;
+    waitInfo.future =
+        device->wgpu.devicePopErrorScope(device->GetInnerHandle(), popErrorscopeCallbackInfo);
+    device->wgpu.instanceWaitAny(device->GetInnerInstance(), 1, &waitInfo,
+                                 std::numeric_limits<uint64_t>::max());
+
+    if (userdata.status == WGPUPopErrorScopeStatus_Success) {
+        switch (userdata.type) {
+            case WGPUErrorType_NoError:
+                break;
+            case WGPUErrorType_Validation:
+                return DAWN_MAKE_ERROR(InternalErrorType::Validation, userdata.message);
+            case WGPUErrorType_OutOfMemory:
+                return DAWN_OUT_OF_MEMORY_ERROR(userdata.message);
+            default:
+                return DAWN_INTERNAL_ERROR(userdata.message);
+        }
+    }
     DAWN_ASSERT(mInnerHandle);
     return {};
 }
