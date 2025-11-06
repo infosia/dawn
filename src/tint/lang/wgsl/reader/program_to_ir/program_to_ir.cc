@@ -314,7 +314,10 @@ class Impl {
                         ir_func->SetReturnInterpolation(interp->interpolation);
                     },
                     [&](const ast::InvariantAttribute*) { ir_func->SetReturnInvariant(true); },
-                    [&](const ast::BuiltinAttribute* b) { ir_func->SetReturnBuiltin(b->builtin); });
+                    [&](const ast::BuiltinAttribute* b) {
+                        ir_func->SetReturnBuiltin(b->builtin);
+                        ir_func->SetReturnDepthMode(b->depth_mode);
+                    });
             }
             ir_func->SetReturnLocation(sem->ReturnLocation());
         }

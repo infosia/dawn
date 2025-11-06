@@ -314,6 +314,9 @@ void Disassembler::EmitReturnAttributes(const Function* func) {
     if (func->ReturnBuiltin().has_value()) {
         comma();
         out_ << StyleAttribute("@", func->ReturnBuiltin().value());
+        if (func->ReturnDepthMode().has_value()) {
+            out_ << ", " << func->ReturnDepthMode().value();
+        }
         need_comma = true;
     }
     out_ << "]";
