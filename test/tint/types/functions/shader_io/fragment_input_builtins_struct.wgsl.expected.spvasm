@@ -1,10 +1,11 @@
 ; SPIR-V
 ; Version: 1.3
 ; Generator: Google Tint Compiler; 1
-; Bound: 39
+; Bound: 48
 ; Schema: 0
                OpCapability Shader
                OpCapability SampleRateShading
+         %35 = OpExtInstImport "GLSL.std.450"
                OpMemoryModel Logical GLSL450
                OpEntryPoint Fragment %main "main" %main_position_Input %main_front_facing_Input %main_sample_index_Input %main_sample_mask_Input
                OpExecutionMode %main OriginUpperLeft
@@ -45,6 +46,8 @@
 %FragmentInputs = OpTypeStruct %v4float %bool %uint %uint
          %19 = OpTypeFunction %void %FragmentInputs
          %29 = OpTypeFunction %void
+    %v2float = OpTypeVector %float 2
+  %float_0_5 = OpConstant %float 0.5
      %uint_0 = OpConstant %uint 0
  %main_inner = OpFunction %void None %19
      %inputs = OpFunctionParameter %FragmentInputs
@@ -64,11 +67,17 @@
        %main = OpFunction %void None %29
          %30 = OpLabel
          %31 = OpLoad %v4float %main_position_Input None
-         %32 = OpLoad %bool %main_front_facing_Input None
-         %33 = OpLoad %uint %main_sample_index_Input None
-         %34 = OpAccessChain %_ptr_Input_uint %main_sample_mask_Input %uint_0
-         %36 = OpLoad %uint %34 None
-         %37 = OpCompositeConstruct %FragmentInputs %31 %32 %33 %36
-         %38 = OpFunctionCall %void %main_inner %37
+         %32 = OpVectorShuffle %v2float %31 %31 0 1
+         %34 = OpExtInst %v2float %35 Floor %32
+         %36 = OpCompositeConstruct %v2float %float_0_5 %float_0_5
+         %38 = OpFAdd %v2float %34 %36
+         %39 = OpVectorShuffle %v2float %31 %31 2 3
+         %40 = OpCompositeConstruct %v4float %38 %39
+         %41 = OpLoad %bool %main_front_facing_Input None
+         %42 = OpLoad %uint %main_sample_index_Input None
+         %43 = OpAccessChain %_ptr_Input_uint %main_sample_mask_Input %uint_0
+         %45 = OpLoad %uint %43 None
+         %46 = OpCompositeConstruct %FragmentInputs %40 %41 %42 %45
+         %47 = OpFunctionCall %void %main_inner %46
                OpReturn
                OpFunctionEnd

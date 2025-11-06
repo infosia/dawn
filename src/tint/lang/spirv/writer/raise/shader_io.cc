@@ -28,7 +28,10 @@
 #include "src/tint/lang/spirv/writer/raise/shader_io.h"
 
 #include <memory>
+#include <optional>
 
+#include "src/tint/lang/core/enums.h"
+#include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/transform/shader_io.h"
@@ -55,6 +58,12 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     /// The configuration options.
     const ShaderIOConfig& config;
 
+    // True if the fragment shader is called once per sample (MSAA context).
+    bool fragment_once_per_sample_ = false;
+
+    core::ir::Value* out_pos = nullptr;
+    std::optional<uint32_t> center_pos_vert_idx;
+    std::optional<uint32_t> center_pos_frag_idx;
     /// Constructor
     StateImpl(core::ir::Module& mod, core::ir::Function* f, const ShaderIOConfig& cfg)
         : ShaderIOBackendState(mod, f), config(cfg) {}
@@ -73,6 +82,24 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                   core::AddressSpace addrspace,
                   core::Access access,
                   const char* name_suffix) {
+        printf(" is frag %d has center = %d\n", func->IsFragment(),
+               center_pos_frag_idx.has_value());
+        if (func->IsVertex() && addrspace == core::AddressSpace::kOut) {
+            center_pos_vert_idx = this->AddOutput(
+                ir.symbols.New("center_pos"), ty.vec4f(),
+                core::IOAttributes{
+                    .location = 2,
+                    .interpolation = core::Interpolation{core::InterpolationType::kLinear,
+                                                         core::InterpolationSampling::kCenter}});
+        } else if (func->IsFragment() && addrspace == core::AddressSpace::kIn) {
+            center_pos_frag_idx = this->AddInput(
+                ir.symbols.New("center_pos"), ty.vec4f(),
+                core::IOAttributes{
+                    .location = 2,
+                    .interpolation = core::Interpolation{core::InterpolationType::kLinear,
+                                                         core::InterpolationSampling::kCenter}});
+        }
+
         for (auto io : entries) {
             StringStream name;
             name << ir.NameOf(func).Name();
@@ -104,6 +131,17 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             if (config.polyfill_f16_io) {
                 if (store_type->DeepestElement()->Is<core::type::F16>()) {
                     store_type = ty.MatchWidth(ty.f32(), io.type);
+                }
+            }
+
+            if (func->IsFragment()) {
+                // If either 'sample' is specified in an interpolant or using the 'sample_index'
+                // then the fragment is invoked once per sample (not pixel).
+                if ((io.attributes.interpolation && io.attributes.interpolation->sampling ==
+                                                        core::InterpolationSampling::kSample) ||
+                    (io.attributes.builtin &&
+                     io.attributes.builtin == core::BuiltinValue::kSampleIndex)) {
+                    fragment_once_per_sample_ = true;
                 }
             }
 
@@ -146,22 +184,65 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             value = builder.Convert(inputs[idx].type, value)->Result();
         }
 
+        if (config.force_pixel_centers && fragment_once_per_sample_ &&
+            inputs[idx].attributes.builtin == core::BuiltinValue::kPosition &&
+            center_pos_frag_idx.has_value()) {
+            // This fix is idempotent in that if it was not needed it will still apply correctly.
+            auto* vec_xy = builder.Swizzle(ty.vec2f(), value, {0, 1});
+            auto* floor_xy = builder.Call(ty.vec2f(), core::BuiltinFn::kFloor, vec_xy);
+            auto p5_const = builder.Constant(0.5_f);
+            auto* plus_p5 =
+                builder
+                    .Add(ty.vec2f(), floor_xy, builder.Construct(ty.vec2f(), p5_const, p5_const))
+                    ->Result();
+
+            auto* xyzw_from_user_center =
+                builder.Load(input_vars[center_pos_frag_idx.value()]->Result())->Result();
+
+            auto* vec_zw = builder.Swizzle(ty.vec2f(), xyzw_from_user_center, {2, 3});
+            value = builder.Construct(ty.vec4f(), plus_p5, vec_zw)->Result();
+        }
+
         return value;
+    }
+
+    /// Propagate outputs from the inner function call to their final destination.
+    /// @param builder the IR builder for new instructions
+    /// @param inner_result the return value from calling the original entry point function
+    void SetCustomOutputs(core::ir::Builder& builder, core::ir::Value* inner_result) override {
+        if (center_pos_vert_idx.has_value()) {
+            SetOutput(builder, center_pos_vert_idx.value(), inner_result);
+        }
     }
 
     /// @copydoc ShaderIO::BackendState::SetOutput
     void SetOutput(core::ir::Builder& builder, uint32_t idx, core::ir::Value* value) override {
+        printf("set output called  %d\n", idx);
         // Store the output to the global variable declared earlier.
-        auto* ptr = ty.ptr(core::AddressSpace::kOut, outputs[idx].type, core::Access::kWrite);
+        auto& output = outputs[idx];
+        auto* ptr = ty.ptr(core::AddressSpace::kOut, output.type, core::Access::kWrite);
         auto* to = output_vars[idx]->Result();
 
         // SampleMask becomes an array for SPIR-V, so store to the first element.
-        if (outputs[idx].attributes.builtin == core::BuiltinValue::kSampleMask) {
+        if (output.attributes.builtin == core::BuiltinValue::kSampleMask) {
             to = builder.Access(ptr, to, 0_u)->Result();
         }
 
+        if (output.attributes.builtin == core::BuiltinValue::kPosition) {
+            out_pos = value;
+        }
+
+        if (center_pos_vert_idx == idx) {
+            // Special center position polyfill. From within vertex
+            // hacked
+            printf(" setting center pos output %d. \n", idx);
+            auto one_div_w = builder.Divide(ty.f32() , 1_f,  builder.Swizzle(ty.f32() , out_pos, {3u}));
+            auto z_div_w = builder.Multiply(ty.f32(), one_div_w, builder.Swizzle(ty.f32(), out_pos, {2u}))->Result();
+            value = builder.Construct(ty.vec4f(), builder.Swizzle(ty.vec2f(), out_pos, {0, 1}), z_div_w, one_div_w)->Result();
+        }
+
         // Clamp frag_depth values if necessary.
-        if (outputs[idx].attributes.builtin == core::BuiltinValue::kFragDepth) {
+        if (output.attributes.builtin == core::BuiltinValue::kFragDepth) {
             value = ClampFragDepth(builder, value);
         }
 
