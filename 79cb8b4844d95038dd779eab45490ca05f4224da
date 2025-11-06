@@ -86,6 +86,24 @@
       "message": "One thing I realized is that TrackUsageAndGetResourceBarrier() has side effects but we\u0027re only running it when assertions are enabled. I\u0027m thinking this should always run TrackUsageAndGetResourceBarrier() to be consistent? I made that change in the latest PS.",
       "revId": "79cb8b4844d95038dd779eab45490ca05f4224da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66f8be57_f3093e31",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-06T17:02:58Z",
+      "side": 1,
+      "message": "Yeah that makes sense!",
+      "parentUuid": "55daa3b0_59e014b5",
+      "revId": "79cb8b4844d95038dd779eab45490ca05f4224da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
