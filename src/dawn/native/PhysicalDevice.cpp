@@ -181,6 +181,8 @@ FeatureValidationResult PhysicalDeviceBase::ValidateFeatureSupportedWithToggles(
         return FeatureValidationResult(validateNameResult.AcquireError()->GetMessage());
     }
 
+    // toggles.GetStage()
+
     if (!mSupportedFeatures.IsEnabled(feature)) {
         return FeatureValidationResult(
             absl::StrFormat("Requested feature %s is not supported.", feature));
