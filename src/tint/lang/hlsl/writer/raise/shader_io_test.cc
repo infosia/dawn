@@ -2149,7 +2149,7 @@ foo_outputs = struct @align(16) {
 }
 )";
 
-    capabilities = core::ir::Capability::kAllowClipDistancesOnF32;
+    capabilities = core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector;
     core::ir::transform::ImmediateDataLayout immediate_data;
     ShaderIOConfig config{immediate_data};
     Run(ShaderIO, config);
@@ -2225,7 +2225,7 @@ foo_outputs = struct @align(16) {
 }
 )";
 
-    capabilities = core::ir::Capability::kAllowClipDistancesOnF32;
+    capabilities = core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector;
     core::ir::transform::ImmediateDataLayout immediate_data;
     ShaderIOConfig config{immediate_data};
     Run(ShaderIO, config);
@@ -2302,7 +2302,7 @@ foo_outputs = struct @align(16) {
 }
 )";
 
-    capabilities = core::ir::Capability::kAllowClipDistancesOnF32;
+    capabilities = core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector;
     core::ir::transform::ImmediateDataLayout immediate_data;
     ShaderIOConfig config{immediate_data};
     Run(ShaderIO, config);
@@ -2380,7 +2380,7 @@ foo_outputs = struct @align(16) {
 }
 )";
 
-    capabilities = core::ir::Capability::kAllowClipDistancesOnF32;
+    capabilities = core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector;
     core::ir::transform::ImmediateDataLayout immediate_data;
     ShaderIOConfig config{immediate_data};
     Run(ShaderIO, config);
@@ -2460,7 +2460,7 @@ foo_outputs = struct @align(16) {
 }
 )";
 
-    capabilities = core::ir::Capability::kAllowClipDistancesOnF32;
+    capabilities = core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector;
     core::ir::transform::ImmediateDataLayout immediate_data;
     ShaderIOConfig config{immediate_data};
     Run(ShaderIO, config);
@@ -2542,7 +2542,7 @@ foo_outputs = struct @align(16) {
 }
 )";
 
-    capabilities = core::ir::Capability::kAllowClipDistancesOnF32;
+    capabilities = core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector;
     core::ir::transform::ImmediateDataLayout immediate_data;
     ShaderIOConfig config{immediate_data};
     Run(ShaderIO, config);
@@ -2625,7 +2625,7 @@ foo_outputs = struct @align(16) {
 }
 )";
 
-    capabilities = core::ir::Capability::kAllowClipDistancesOnF32;
+    capabilities = core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector;
     core::ir::transform::ImmediateDataLayout immediate_data;
     ShaderIOConfig config{immediate_data};
     Run(ShaderIO, config);
@@ -2709,7 +2709,7 @@ foo_outputs = struct @align(16) {
 }
 )";
 
-    capabilities = core::ir::Capability::kAllowClipDistancesOnF32;
+    capabilities = core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector;
     core::ir::transform::ImmediateDataLayout immediate_data;
     ShaderIOConfig config{immediate_data};
     Run(ShaderIO, config);
@@ -2789,7 +2789,7 @@ foo_outputs = struct @align(16) {
 }
 )";
 
-    capabilities = core::ir::Capability::kAllowClipDistancesOnF32;
+    capabilities = core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector;
     core::ir::transform::ImmediateDataLayout immediate_data;
     ShaderIOConfig config{immediate_data};
     Run(ShaderIO, config);
