@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d202aab_55e72aad",
+        "filename": "src/dawn/native/FutureResult.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-11-06T10:10:53Z",
+      "side": 1,
+      "message": "Done. Thanks, I didn\u0027t know C++20 has that feature.",
+      "parentUuid": "9975fcbc_e679a5b6",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 35
+      },
+      "revId": "b99983a7a20a0d845c69054dab579f9786a0b399",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0553a1bf_143f0eae",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-11-05T22:02:57Z",
       "side": 1,
       "message": "Could this be a function which returns a lambda instead? It keeps AsyncTask a simple class without virtual functions.",
+      "range": {
+        "startLine": 78,
+        "startChar": 32,
+        "endLine": 78,
+        "endChar": 45
+      },
+      "revId": "b99983a7a20a0d845c69054dab579f9786a0b399",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "490f7ef3_2aca8eac",
+        "filename": "src/dawn/native/d3d11/CreateShaderTaskD3D11.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-11-06T10:10:53Z",
+      "side": 1,
+      "message": "lambda is a bit tricky because it will need to be converted to `std::function`. and `std::function` doesn\u0027t support capturing non-copyable variables such as `d3d::CompiledShader` AFAIK.\n\nWe would have had to add a wrapper struct for `d3d::CompiledShader` to be captured in a lambda. In this case, why don\u0027t just store `d3d::CompiledShader` in the AsyncTask object instead.",
+      "parentUuid": "0553a1bf_143f0eae",
       "range": {
         "startLine": 78,
         "startChar": 32,
