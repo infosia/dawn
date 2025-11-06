@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b951f2a8_f39a3c72",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-06T15:04:42Z",
+      "side": 1,
+      "message": "I\u0027ll do that then. \n\nFWIW, when using `--enable-dawn-features\u003ddump_shaders`, I can see the dumped generated MSL includes stuff like `depth(greater)` with https://dawn-review.googlesource.com/c/dawn/+/271634 which doesn\u0027t touch IR. I guess this is what you mean with \"It would possibly just flow through the IR\" right?",
+      "parentUuid": "20df2322_5b423e34",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f78a8ce3_ba78847b",
         "filename": "src/tint/lang/hlsl/writer/raise/shader_io_test.cc",
         "patchSetId": 8
