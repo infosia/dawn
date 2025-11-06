@@ -1397,6 +1397,7 @@ TEST_F(HlslWriterTransformTest, ShaderIOParameters_Immediate_NumWorkgroups_Struc
                                          /* blend_src */ std::nullopt,
                                          /* color */ std::nullopt,
                                          /* builtin */ core::BuiltinValue::kNumWorkgroups,
+                                         /* depth_mode */ std::nullopt,
                                          /* interpolation */ std::nullopt,
                                          /* invariant */ false,
                                      },
