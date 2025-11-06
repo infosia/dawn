@@ -108,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c6a1ce3e_f907bda6",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-06T16:22:24Z",
+      "side": 1,
+      "message": "In Skia autoroll configuration you need to tell it a single dependency that it would monitor and create rolls to update.\nYou\u0027d need to have `https://chromium.googlesource.com/chromium/src.git` in the roller config, and then Skia will search for it in the DEPS file (it doesn\u0027t use gclient, it parses the DEPS file directly).\nThen, Skia autoroll will need to run this script to update the rest of the dependencies.",
+      "parentUuid": "a061e1c2_3e1c5c30",
+      "range": {
+        "startLine": 69,
+        "startChar": 3,
+        "endLine": 69,
+        "endChar": 20
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8a87043a_3ed1ca19",
         "filename": "scripts/roll_chromium_deps.py",
         "patchSetId": 2
@@ -167,6 +191,30 @@
       "side": 1,
       "message": "Works without issue. I\u0027ve switched all entries that were affected by `SYNCED_VARIABLES` to be in `SYNCED_CIPD_DEPS` instead. We still use `ChangedVariable` for updating `chromium_revision` and there may be a need to sync other variables in the future, so I\u0027m keeping the variable syncing code around.",
       "parentUuid": "f96eb2ab_0b9bb78e",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 17
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25472446_7da30186",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-06T16:22:24Z",
+      "side": 1,
+      "message": "Sounds good, ANGLE also has special handling for this here https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/scripts/roll_chromium_deps.py;l\u003d529;drc\u003d4dcd4d2fc6024a01337bb173198d14a6783ba252.\nThis is for the case when the script fails to be run by the autoroller and needs to be run from a local checkout. This happens when Chromium renames a dependency, and the script fails to find it for syncing.\nWhen the script is run by the autoroller, autoroller updates chromium_revision and creates a CL that this script will modify to update the rest.",
+      "parentUuid": "c0853d45_41005a79",
       "range": {
         "startLine": 51,
         "startChar": 0,
@@ -328,6 +376,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5151362_3f99f0b5",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-06T16:22:24Z",
+      "side": 1,
+      "message": "I\u0027ve meant there is no need to follow up, current solution is good.\nI need to follow up in ANGLE and remove the extra jsoncpp.",
+      "parentUuid": "2e9b746c_173d5318",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 78
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c634fdf5_ac10d634",
@@ -469,6 +541,24 @@
       "side": 1,
       "message": "\u003e Is the plan for this roller to replace all the skia rollers we have now?\n\nIn general, yes. If there\u0027s a reason that a separate roller should still exist (which sounds to be the case for `vulkan-headers`), then there shouldn\u0027t be any issues with continuing to use a separate roller. Doing so should just require removing the relevant entry from this script.\n\nRegarding `vulkan-headers`, is it just `vulkan-headers` that should have its own roller or everything that\u0027s currently handled by the `vulkan-deps-dawn-autoroll` roller?",
       "parentUuid": "a72f76f0_1b4ea3cb",
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e44777d_25045a17",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-06T16:22:24Z",
+      "side": 1,
+      "message": "Everything that I mentioned that has its own separate roller (vulkan-deps, ANGLE, SwiftShader).",
+      "parentUuid": "76f87a1e_507e6eb1",
       "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
