@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "20c10a1f_3a5d38c2",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-06T20:33:02Z",
+      "side": 1,
+      "message": "This should basically never be hit. WebGPU isn\u0027t muli-threaded AFAIK. Graphite won\u0027t unmap buffers that are pending map except maybe in test shutdown where we destroy the wgpu::Device.\n\nI also have https://dawn-review.googlesource.com/c/dawn/+/271537 to switch this to an atomic wait I just wanted to land that separately due to being bitten by previous C++20 feature support downstream.",
+      "parentUuid": "3f144b35_4d0dd830",
+      "revId": "692d427e8b62ffba210d91612603f842b6862ab9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35b40665_bc45ea12",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-11-06T20:25:38Z",
       "side": 1,
       "message": "Would it be possible to use `MutexProtected\u003cRef\u003cMapAsyncEvent\u003e\u003e`? I strongly prefer to use MutexProtected where it\u0027s possible, it\u0027s generally much easier to reason about. There will still be some external things that need to be protected by the same mutex but at least the locking of the MapAsyncEvent itself will be a little easier to understand.\n\nDisregard if this doesn\u0027t work or makes things more complex for some reason.",
+      "range": {
+        "startLine": 242,
+        "startChar": 13,
+        "endLine": 243,
+        "endChar": 64
+      },
+      "revId": "692d427e8b62ffba210d91612603f842b6862ab9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d388dc4a_1dbe5abb",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-06T20:33:02Z",
+      "side": 1,
+      "message": "Loko suggested the same thing. There is a problem with MutexProtected guard type exposing only the T* instead of Ref\u003cT\u003e that is documented in the comment above.",
+      "parentUuid": "35b40665_bc45ea12",
       "range": {
         "startLine": 242,
         "startChar": 13,
