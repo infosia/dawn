@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5d3498a_ccce5d0c",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-06T20:58:44Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "20c10a1f_3a5d38c2",
+      "revId": "692d427e8b62ffba210d91612603f842b6862ab9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35b40665_bc45ea12",
@@ -73,6 +91,30 @@
       "side": 1,
       "message": "Loko suggested the same thing. There is a problem with MutexProtected guard type exposing only the T* instead of Ref\u003cT\u003e that is documented in the comment above.",
       "parentUuid": "35b40665_bc45ea12",
+      "range": {
+        "startLine": 242,
+        "startChar": 13,
+        "endLine": 243,
+        "endChar": 64
+      },
+      "revId": "692d427e8b62ffba210d91612603f842b6862ab9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "013f2d44_66d47208",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-06T20:58:44Z",
+      "side": 1,
+      "message": "Ohh I see it\u0027s a specialization of MutexProtected, I forgot about that. I feel like there must be a workaround like `MutexProtected\u003cstruct { Ref\u003cMapAsyncEvent\u003e event; }\u003e` but at that point it\u0027s silly.",
+      "parentUuid": "d388dc4a_1dbe5abb",
       "range": {
         "startLine": 242,
         "startChar": 13,
