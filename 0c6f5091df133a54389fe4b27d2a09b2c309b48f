@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ed25b3a_39324453",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T16:09:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05fe069b_e1431902",
+      "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c89f472d_5caf874d",
@@ -83,6 +101,42 @@
       "writtenOn": "2025-11-05T20:55:09Z",
       "side": 1,
       "message": "For these scalar ops the result type is the same as the input type, so we don\u0027t want to use `ResultComponentType` here.\n(this works for Metal because they are always the same, but will likely fail on other devices that do things like `f16-\u003ef32`)",
+      "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3df80aae_8832ff8f",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T16:09:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c89f472d_5caf874d",
+      "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3749fffa_59be63a2",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T16:09:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5449a016_14af3b97",
       "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -122,6 +176,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cbe0110_dedbde3e",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T16:09:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74da6ac3_e0224024",
+      "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b475a9d5_e837ba4f",
@@ -153,6 +225,24 @@
           ]
         }
       ],
+      "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "726e6b71_ebb140db",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T16:09:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b475a9d5_e837ba4f",
       "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -192,6 +282,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "621633e7_c23f3b89",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T16:09:51Z",
+      "side": 1,
+      "message": "I think it was annotation the fact that a `0` was passed in. Removed the value to make it clear it doesn\u0027t do anything.",
+      "parentUuid": "625b661f_3f8c6399",
+      "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "007fd36f_7d63dad8",
@@ -209,6 +317,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28f74b3a_539cff7a",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T16:09:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "007fd36f_7d63dad8",
+      "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e93868c_d509a114",
@@ -222,6 +348,24 @@
       "writtenOn": "2025-11-05T20:55:09Z",
       "side": 1,
       "message": "K * M",
+      "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14ac55b3_a3cfd74f",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T16:09:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e93868c_d509a114",
       "revId": "0c6f5091df133a54389fe4b27d2a09b2c309b48f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
