@@ -92,6 +92,8 @@ struct ShaderIOBackendState {
     /// @param value the value to set
     virtual void SetOutput(Builder& builder, uint32_t idx, Value* value) = 0;
 
+    virtual void SetCustomOutputs(Builder& builder, Value* inner_result) {}
+
     /// Create the return value for the entry point, based on the output values that have been set.
     /// @param builder the IR builder for new instructions
     /// @returns the return value for the new entry point

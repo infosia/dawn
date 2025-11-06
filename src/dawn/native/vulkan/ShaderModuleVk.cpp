@@ -260,7 +260,9 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     }
 
     // Set internal immediate constant offsets
+    printf("GET ready! \n");
     if (HasImmediateConstants(&RenderImmediateConstants::clampFragDepth, pipelineImmediateMask)) {
+        printf("Setting immidiate constants \n");
         uint32_t offsetStartBytes = GetImmediateByteOffsetInPipeline(
             &RenderImmediateConstants::clampFragDepth, pipelineImmediateMask);
         req.tintOptions.depth_range_offsets = {

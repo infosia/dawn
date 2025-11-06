@@ -31,6 +31,7 @@
 namespace dawn::native {
 void RenderImmediateConstantsTrackerBase::SetClampFragDepth(float minClampFragDepth,
                                                             float maxClampFragDepth) {
+    printf("setting clamped depth in imm const %f %f \n", minClampFragDepth, maxClampFragDepth);
     // Put the data in the right layout to match the RenderImmediateConstants struct
     ClampFragDepthArgs fragDepthArgs;
     fragDepthArgs.minClampFragDepth = minClampFragDepth;

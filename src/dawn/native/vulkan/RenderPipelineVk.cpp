@@ -363,7 +363,9 @@ MaybeError RenderPipeline::InitializeImpl() {
     }
 
     // Gather list of internal immediate constants used by this pipeline
-    if (UsesFragDepth() && !HasUnclippedDepth()) {
+    printf(" Checking frag depth %d   , %d \n", UsesFragDepth(), !HasUnclippedDepth());
+    if ((UsesFragPosition() || UsesFragDepth()) && !HasUnclippedDepth()) {
+        printf(" setting this frag depth \n");
         mImmediateMask |= GetImmediateConstantBlockBits(
             offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
     }
