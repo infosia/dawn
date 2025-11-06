@@ -60,6 +60,19 @@
 
 namespace dawn::native {
 
+enum class Cap : uint16_t {
+    None = 0x0,
+    Multisample = 0x1,
+    Renderable = 0x2,
+    Resolve = 0x4,
+    StorageR = 0x8,      // Read-Only.
+    StorageW = 0x10,     // Write-Only
+    StorageROrW = 0x18,  // Read Or Write, but not ReadWrite in the shader.
+    StorageRW = 0x20,    // Implies StorageR and StorageW
+    PLS = 0x40,
+    Blendable = 0x80,
+};
+
 enum class Aspect : uint8_t;
 class DeviceBase;
 
@@ -104,7 +117,15 @@ struct RequiresFeature {
     wgpu::FeatureName feature;
 };
 
+inline bool operator==(const RequiresFeature& lhs, const RequiresFeature& rhs) {
+    return lhs.feature == rhs.feature;
+}
+
 struct CompatibilityMode {};
+
+inline bool operator==(const CompatibilityMode&, const CompatibilityMode&) {
+    return true;
+}
 
 using UnsupportedReason =
     std::variant</* is supported */ std::monostate, RequiresFeature, CompatibilityMode>;
@@ -132,6 +153,7 @@ struct Format {
     wgpu::TextureFormat format = wgpu::TextureFormat::Undefined;
 
     static const UnsupportedReason supported;
+    Cap caps = Cap::None;
 
     // TODO(crbug.com/dawn/1332): These members could be stored in a Format capability matrix.
     bool isRenderable = false;
@@ -229,6 +251,11 @@ absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConv
 
 template <>
 struct wgpu::IsWGPUBitmask<dawn::native::SampleTypeBit> {
+    static constexpr bool enable = true;
+};
+
+template <>
+struct wgpu::IsWGPUBitmask<dawn::native::Cap> {
     static constexpr bool enable = true;
 };
 
