@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "886a99a6_53d442d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-06T15:07:02Z",
+      "side": 1,
+      "message": "Yea, it\u0027s flowing through the IO attributes struct which gets attached to things in the IR.",
+      "parentUuid": "b951f2a8_f39a3c72",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f78a8ce3_ba78847b",
         "filename": "src/tint/lang/hlsl/writer/raise/shader_io_test.cc",
         "patchSetId": 8
