@@ -60,6 +60,27 @@
 
 namespace dawn::native {
 
+enum class FormatCapability : uint16_t {
+    None = 0x0,
+    Multisample = 0x1,
+    Renderable = 0x2,
+    Resolve = 0x4,
+    StorageROnly = 0x8,   // Read-Only.
+    StorageWOnly = 0x10,  // Write-Only
+    StorageRW = 0x20,     // When set StorageR/WOnly will be set as well.
+    PLS = 0x40,
+    Blendable = 0x80,
+};
+}  // namespace dawn::native
+
+template <>
+struct wgpu::IsWGPUBitmask<dawn::native::FormatCapability> {
+    static constexpr bool enable = true;
+};
+
+namespace dawn::native {
+using Cap = FormatCapability;
+
 enum class Aspect : uint8_t;
 class DeviceBase;
 
@@ -102,9 +123,12 @@ enum class TextureSubsampling {
 
 struct RequiresFeature {
     wgpu::FeatureName feature;
+    auto operator<=>(const RequiresFeature&) const = default;
 };
 
-struct CompatibilityMode {};
+struct CompatibilityMode {
+    auto operator<=>(const CompatibilityMode&) const = default;
+};
 
 using UnsupportedReason =
     std::variant</* is supported */ std::monostate, RequiresFeature, CompatibilityMode>;
@@ -132,21 +156,26 @@ struct Format {
     wgpu::TextureFormat format = wgpu::TextureFormat::Undefined;
 
     static const UnsupportedReason supported;
+    Cap caps = Cap::None;
 
     // TODO(crbug.com/dawn/1332): These members could be stored in a Format capability matrix.
-    bool isRenderable = false;
     bool isBC = false;
     bool isASTC = false;
     bool isCompressed = false;
-    bool isBlendable = false;
     // A format can be known but not supported because it is part of a disabled extension.
     UnsupportedReason unsupportedReason;
-    bool supportsReadOnlyStorageUsage = false;
-    bool supportsWriteOnlyStorageUsage = false;
-    bool supportsReadWriteStorageUsage = false;
-    bool supportsMultisample = false;
-    bool supportsResolveTarget = false;
-    bool supportsStorageAttachment = false;
+    bool IsRenderable() const { return static_cast<bool>(caps & Cap::Renderable); }
+    bool IsBlendable() const { return static_cast<bool>(caps & Cap::Blendable); }
+    bool SupportsMultisample() const { return static_cast<bool>(caps & Cap::Multisample); }
+    bool SupportsResolveTarget() const { return static_cast<bool>(caps & Cap::Resolve); }
+    bool SupportsReadOnlyStorageUsage() const {
+        return static_cast<bool>(caps & Cap::StorageROnly);
+    }
+    bool SupportsWriteOnlyStorageUsage() const {
+        return static_cast<bool>(caps & Cap::StorageWOnly);
+    }
+    bool SupportsReadWriteStorageUsage() const { return static_cast<bool>(caps & Cap::StorageRW); }
+    bool SupportsStorageAttachment() const { return static_cast<bool>(caps & Cap::PLS); }
     Aspect aspects{};
     // Only used for renderable color formats:
     uint8_t componentCount = 0;                  // number of color channels
