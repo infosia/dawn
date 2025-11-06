@@ -1,6 +1,14 @@
 --- webgpu_header
 +++ dawn_header
 @@
+ #define WGPU_TRUE (UINT32_C(1))
+ #define WGPU_FALSE (UINT32_C(0))
+ #define WGPU_ARRAY_LAYER_COUNT_UNDEFINED (UINT32_MAX)
++#define WGPU_BIND_GROUP_BINDING_UNDEFINED (UINT32_MAX)
+ #define WGPU_COPY_STRIDE_UNDEFINED (UINT32_MAX)
+ #define WGPU_DEPTH_CLEAR_VALUE_UNDEFINED (NAN)
+ #define WGPU_DEPTH_SLICE_UNDEFINED (UINT32_MAX)
+@@
  struct WGPUTexelCopyBufferLayout;
  struct WGPUTextureBindingLayout;
  struct WGPUTextureComponentSwizzle;
@@ -24,6 +32,15 @@
      WGPUSType_Force32 = 0x7FFFFFFF
  } WGPUSType WGPU_ENUM_ATTRIBUTE;
  
+@@
+ 
+ #define WGPU_BIND_GROUP_ENTRY_INIT _wgpu_MAKE_INIT_STRUCT(WGPUBindGroupEntry, { \
+     /*.nextInChain=*/NULL _wgpu_COMMA \
+-    /*.binding=*/0 _wgpu_COMMA \
++    /*.binding=*/WGPU_BIND_GROUP_BINDING_UNDEFINED _wgpu_COMMA \
+     /*.buffer=*/NULL _wgpu_COMMA \
+     /*.offset=*/0 _wgpu_COMMA \
+     /*.size=*/WGPU_WHOLE_SIZE _wgpu_COMMA \
 @@
      /*.a=*/WGPUComponentSwizzle_Undefined _wgpu_COMMA \
  })
