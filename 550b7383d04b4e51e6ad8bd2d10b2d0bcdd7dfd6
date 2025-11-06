@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "681157f4_bf421dc1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-06T14:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a5f7cad_9209fadd",
+      "revId": "550b7383d04b4e51e6ad8bd2d10b2d0bcdd7dfd6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc85fbb2_3b24d6c0",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-11-05T16:53:32Z",
       "side": 1,
       "message": "Note, I filed https://github.com/gpuweb/gpuweb/issues/5428 to bikeshed the `greater`, `less` names.",
+      "revId": "550b7383d04b4e51e6ad8bd2d10b2d0bcdd7dfd6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35bc847d_e866a9b7",
+        "filename": "src/tint/cmd/fuzz/wgsl/dictionary.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-06T14:26:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "cc85fbb2_3b24d6c0",
       "revId": "550b7383d04b4e51e6ad8bd2d10b2d0bcdd7dfd6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
