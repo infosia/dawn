@@ -363,7 +363,8 @@ MaybeError RenderPipeline::InitializeImpl() {
     }
 
     // Gather list of internal immediate constants used by this pipeline
-    if (UsesFragDepth() && !HasUnclippedDepth()) {
+
+    if ((UsesFragPosition() || UsesFragDepth()) && !HasUnclippedDepth()) {
         mImmediateMask |= GetImmediateConstantBlockBits(
             offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
     }
