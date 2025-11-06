@@ -376,7 +376,7 @@ class Printer : public tint::TextGenerator {
                 out << NameOf(param);
 
                 if (auto builtin = param->Builtin()) {
-                    auto name = BuiltinToAttribute(builtin.value());
+                    auto name = BuiltinToAttribute(builtin.value(), param->DepthMode());
                     TINT_IR_ASSERT(ir_, !name.empty());
                     out << " [[" << name << "]]";
                 }
@@ -1633,7 +1633,7 @@ class Printer : public tint::TextGenerator {
             auto& attributes = mem->Attributes();
 
             if (auto builtin = attributes.builtin) {
-                auto name = BuiltinToAttribute(builtin.value());
+                auto name = BuiltinToAttribute(builtin.value(), attributes.depth_mode);
                 if (name.empty()) {
                     TINT_IR_ICE(ir_) << "unknown builtin";
                 }
