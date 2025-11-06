@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "36023b69_d8b298d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-11-06T23:17:30Z",
+      "side": 1,
+      "message": "Oops, comments posted without adding reviewers. Please look at [comment link](https://dawn-review.googlesource.com/c/dawn/+/271816/comments/ed5ce353_7f51b0e8) for questions. thanks!",
+      "revId": "27df15f1b6238224fe1b304e33d38a6284fb1a55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "849a1858_2fdb9562",
