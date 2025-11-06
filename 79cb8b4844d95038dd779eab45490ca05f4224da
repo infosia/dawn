@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "49c6f806_938f7d11",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-06T14:40:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0506d739_02e14f6b",
+      "revId": "79cb8b4844d95038dd779eab45490ca05f4224da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "341d6a50_fee3ca8f",
@@ -31,6 +49,41 @@
       "writtenOn": "2025-11-06T10:47:09Z",
       "side": 1,
       "message": "What if we map readwrite (is that possible with extended usages?), in that case we should pass `MapRead|MapWrite`",
+      "revId": "79cb8b4844d95038dd779eab45490ca05f4224da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d64f81ae_46b74c52",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-06T14:40:23Z",
+      "side": 1,
+      "message": "It\u0027s possible to create a extended usages buffer with usage\u003dMapRead|MapWrite but MapAsync validation enforces it\u0027s only one [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Buffer.cpp;l\u003d855-858;drc\u003dec4e13e9674b21705dc66421e5438387e069bfe9) so no.",
+      "parentUuid": "341d6a50_fee3ca8f",
+      "revId": "79cb8b4844d95038dd779eab45490ca05f4224da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55daa3b0_59e014b5",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-06T14:40:23Z",
+      "side": 1,
+      "message": "One thing I realized is that TrackUsageAndGetResourceBarrier() has side effects but we\u0027re only running it when assertions are enabled. I\u0027m thinking this should always run TrackUsageAndGetResourceBarrier() to be consistent? I made that change in the latest PS.",
       "revId": "79cb8b4844d95038dd779eab45490ca05f4224da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
