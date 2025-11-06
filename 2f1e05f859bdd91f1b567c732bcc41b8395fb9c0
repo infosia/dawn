@@ -22,6 +22,30 @@
       },
       "revId": "2f1e05f859bdd91f1b567c732bcc41b8395fb9c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ade73f8a_ed72c9b7",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-06T18:14:38Z",
+      "side": 1,
+      "message": "At ToT the MapAsyncEvent mutex is released after FinalizeMap() runs but before the callback runs so that is already a problem.\n\nEven if you change this to notify after the callback returns, if timing changes slightly and APIUnmap() runs immediately after mState changes to Mapped then Unmap() will start on regular path. Unmap() will happen immediately and the buffer might be unmapped by the time the callback does something like GetMappedPtr() on a different thread.\n\nI think we can rely on calls to buffer being externally synchronized? If the application intentionally unmaps a buffer pending map it should have somehow cancelled the map async callback so it won\u0027t use the buffer.",
+      "parentUuid": "fc045bfa_340f041e",
+      "range": {
+        "startLine": 317,
+        "startChar": 8,
+        "endLine": 318,
+        "endChar": 52
+      },
+      "revId": "2f1e05f859bdd91f1b567c732bcc41b8395fb9c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
