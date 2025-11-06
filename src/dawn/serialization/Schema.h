@@ -40,6 +40,7 @@ enum class ObjectType : uint32_t {
     Device,
     PipelineLayout,
     QuerySet,
+    RenderBundle,
     RenderPipeline,
     Sampler,
     ShaderModule,
@@ -308,6 +309,15 @@ DAWN_REPLAY_SERIALIZABLE(struct, Buffer, BUFFER_CREATION_MEMBER){};
 
 DAWN_REPLAY_SERIALIZABLE(struct, Sampler, SAMPLER_CREATION_MEMBER){};
 
+#define RENDER_BUNDLE_CREATION_MEMBER(X)              \
+    X(std::vector<wgpu::TextureFormat>, colorFormats) \
+    X(wgpu::TextureFormat, depthStencilFormat)        \
+    X(uint32_t, sampleCount)                          \
+    X(bool, depthReadOnly)                            \
+    X(bool, stencilReadOnly)
+
+DAWN_REPLAY_SERIALIZABLE(struct, RenderBundle, RENDER_BUNDLE_CREATION_MEMBER){};
+
 #define TEXTURE_CREATION_MEMBER(X)       \
     X(wgpu::TextureUsage, usage)         \
     X(wgpu::TextureDimension, dimension) \
@@ -559,6 +569,10 @@ DAWN_REPLAY_MAKE_RENDER_PASS_CMD_AND_CMD_DATA(SetBindGroup, SET_BIND_GROUP_CMD_D
 
 DAWN_REPLAY_MAKE_RENDER_PASS_CMD_AND_CMD_DATA(BeginOcclusionQuery,
                                               BEGIN_OCCLUSION_QUERY_CMD_DATA_MEMBER){};
+
+#define EXECUTE_BUNDLES_CMD_DATA_MEMBER(X) X(std::vector<ObjectId>, bundleIds)
+
+DAWN_REPLAY_MAKE_RENDER_PASS_CMD_AND_CMD_DATA(ExecuteBundles, EXECUTE_BUNDLES_CMD_DATA_MEMBER){};
 
 #define SET_VERTEX_BUFFER_CMD_DATA_MEMBER(X) \
     X(uint32_t, slot)                        \
