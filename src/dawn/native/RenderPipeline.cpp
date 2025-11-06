@@ -1064,6 +1064,7 @@ RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
 
     if (HasStage(SingleShaderStage::Fragment)) {
         mUsesFragDepth = GetStage(SingleShaderStage::Fragment).metadata->usesFragDepth;
+        mUsesFragPosition = GetStage(SingleShaderStage::Fragment).metadata->usesFragPosition;
     }
 
     if (HasStage(SingleShaderStage::Vertex)) {
@@ -1274,6 +1275,11 @@ bool RenderPipelineBase::WritesStencil() const {
 bool RenderPipelineBase::UsesFragDepth() const {
     DAWN_ASSERT(!IsError());
     return mUsesFragDepth;
+}
+
+bool RenderPipelineBase::UsesFragPosition() const {
+    DAWN_ASSERT(!IsError());
+    return mUsesFragPosition;
 }
 
 bool RenderPipelineBase::UsesVertexIndex() const {
