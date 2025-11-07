@@ -33,6 +33,7 @@
 #include <utility>
 #include <vector>
 
+#include "dawn/common/Log.h"
 #include "dawn/native/CommandAllocator.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/ErrorData.h"
@@ -64,11 +65,11 @@ class EncodingContext {
 
     template <typename EncodeFunction>
     inline bool TryEncode(const ApiObjectBase* encoder, EncodeFunction&& encodeFunction) {
-        if (ConsumedError(ValidateCanEncodeOn(encoder))) {
+        if (ConsumedError(encoder, ValidateCanEncodeOn(encoder))) {
             return false;
         }
         DAWN_ASSERT(!mWereCommandsAcquired);
-        return !ConsumedError(encodeFunction(&mPendingCommands));
+        return !ConsumedError(encoder, encodeFunction(&mPendingCommands));
     }
 
     template <typename EncodeFunction, typename... Args>
@@ -76,11 +77,14 @@ class EncodingContext {
                           EncodeFunction&& encodeFunction,
                           const char* formatStr,
                           const Args&... args) {
-        if (ConsumedError(ValidateCanEncodeOn(encoder), formatStr, args...)) {
+            DAWN_DEBUG();
+        if (ConsumedError(encoder, ValidateCanEncodeOn(encoder), formatStr, args...)) {
             return false;
         }
-        DAWN_ASSERT(!mWereCommandsAcquired);
-        return !ConsumedError(encodeFunction(&mPendingCommands), formatStr, args...);
+            DAWN_DEBUG();
+        DAWN_ASSERT(!mWereCommandsAcquired || encoder->IsError());
+            DAWN_DEBUG();
+        return !ConsumedError(encoder, encodeFunction(&mPendingCommands), formatStr, args...);
     }
 
     // Must be called prior to encoding a BeginRenderPassCmd. Note that it's OK to call this
@@ -98,7 +102,7 @@ class EncodingContext {
     MaybeError Finish();
 
     // Called when a pass encoder is deleted. Provides an opportunity to clean up if it's the
-    // mCurrentEncoder.
+    // mCurrentValidEncoder.
     void EnsurePassExited(const ApiObjectBase* passEncoder);
 
     const RenderPassUsages& GetRenderPassUsages() const;
@@ -112,19 +116,21 @@ class EncodingContext {
 
   private:
     // Functions to handle encoder errors
-    void HandleError(std::unique_ptr<ErrorData> error);
+    void HandleError(const ApiObjectBase* encoder, std::unique_ptr<ErrorData> error);
 
-    inline bool ConsumedError(MaybeError maybeError) {
+    inline bool ConsumedError(const ApiObjectBase* encoder, MaybeError maybeError) {
         if (maybeError.IsError()) [[unlikely]] {
-            HandleError(maybeError.AcquireError());
+            HandleError(encoder, maybeError.AcquireError());
             return true;
         }
         return false;
     }
 
     template <typename... Args>
-    inline bool ConsumedError(MaybeError maybeError, const char* formatStr, const Args&... args) {
+    inline bool ConsumedError(const ApiObjectBase* encoder, MaybeError maybeError, const char* formatStr, const Args&... args) {
+            DAWN_DEBUG();
         if (maybeError.IsError()) [[unlikely]] {
+            DAWN_DEBUG();
             std::unique_ptr<ErrorData> error = maybeError.AcquireError();
             if (error->GetType() == InternalErrorType::Validation) {
                 std::string out;
@@ -136,24 +142,32 @@ class EncodingContext {
                         absl::StrFormat("[Failed to format error message: \"%s\"].", formatStr));
                 }
             }
-            HandleError(std::move(error));
+            DAWN_DEBUG();
+            HandleError(encoder, std::move(error));
+            DAWN_DEBUG();
             return true;
         }
+            DAWN_DEBUG();
         return false;
     }
 
     inline MaybeError ValidateCanEncodeOn(const ApiObjectBase* encoder) {
-        if (encoder != mCurrentEncoder) [[unlikely]] {
+            DAWN_DEBUG();
+        if (encoder != mCurrentValidEncoder) [[unlikely]] {
             switch (mStatus) {
                 case Status::ErrorAtCreation:
+            DAWN_DEBUG();
                     return DAWN_VALIDATION_ERROR("Recording in an error %s.", encoder);
                 case Status::ErrorInRecording:
+            DAWN_DEBUG();
                     return DAWN_VALIDATION_ERROR("Recording in an already invalidated %s.",
                                                  encoder);
                 case Status::Destroyed:
+            DAWN_DEBUG();
                     return DAWN_VALIDATION_ERROR("Recording in a destroyed %s.", encoder);
 
                 case Status::Finished:
+            DAWN_DEBUG();
                     // The encoder has been finished, select the correct error message.
                     DAWN_INVALID_IF(encoder->GetType() == ObjectType::CommandEncoder ||
                                         encoder->GetType() == ObjectType::RenderBundleEncoder,
@@ -162,6 +176,7 @@ class EncodingContext {
                                                  encoder);
 
                 case Status::Open:
+            DAWN_DEBUG();
                     // This could happen when an error child encoder is created on an otherwise
                     // valid EncodingContext that then doesn't get notified of the current encoder
                     // change.
@@ -170,7 +185,7 @@ class EncodingContext {
                     // This happens when the CommandEncoder is used while a pass is open.
                     DAWN_INVALID_IF(encoder == mTopLevelEncoder,
                                     "Recording in %s which is locked while %s is open.", encoder,
-                                    mCurrentEncoder);
+                                    mCurrentValidEncoder);
 
                     // The remaining case is when an encoder is ended but we still try to encode
                     // commands in it.
@@ -204,6 +219,7 @@ class EncodingContext {
     // The current encoder changes with Enter/ExitPass which should be called by
     // CommandEncoder::Begin/EndPass.
     raw_ptr<const ApiObjectBase> mCurrentEncoder;
+    raw_ptr<const ApiObjectBase> mCurrentValidEncoder;
 
     RenderPassUsages mRenderPassUsages;
     bool mWereRenderPassUsagesAcquired = false;

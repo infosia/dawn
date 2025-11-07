@@ -1308,8 +1308,10 @@ Ref<ComputePassEncoder> CommandEncoder::BeginComputePass(const ComputePassDescri
         return passEncoder;
     }
 
-    return ComputePassEncoder::MakeError(device, this, &mEncodingContext,
+    auto r = ComputePassEncoder::MakeError(device, this, &mEncodingContext,
                                          descriptor ? descriptor->label : nullptr);
+    mEncodingContext.EnterPass(r.Get());
+    return r;
 }
 
 RenderPassEncoder* CommandEncoder::APIBeginRenderPass(const RenderPassDescriptor* descriptor) {
@@ -1334,8 +1336,10 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
 
     // Lazy make error function to be called if we error and need to return an error encoder.
     auto MakeError = [&]() {
-        return RenderPassEncoder::MakeError(device, this, &mEncodingContext,
+        auto r = RenderPassEncoder::MakeError(device, this, &mEncodingContext,
                                             rawDescriptor ? rawDescriptor->label : nullptr);
+        mEncodingContext.EnterPass(r.Get());
+        return r;
     };
 
     UnpackedPtr<RenderPassDescriptor> descriptor;
@@ -1569,6 +1573,7 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
         }();
 
         if (device->ConsumedError(std::move(error))) {
+            mEncodingContext.EnsurePassExited(passEncoder.Get());
             return MakeError();
         }
 

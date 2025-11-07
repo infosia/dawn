@@ -176,9 +176,11 @@ void RenderPassEncoder::End() {
     mEnded = true;
     mCommandBufferState.End();
 
+            DAWN_DEBUG();
     mEncodingContext->TryEncode(
         this,
         [&](CommandAllocator* allocator) -> MaybeError {
+            DAWN_DEBUG();
             if (IsValidationEnabled()) {
                 DAWN_TRY(ValidateProgrammableEncoderEnd());
 
@@ -197,10 +199,13 @@ void RenderPassEncoder::End() {
                                                       mCommandEncoder.Get(),
                                                       std::move(mIndirectDrawMetadata)));
 
+            DAWN_DEBUG();
             DAWN_TRY(mEndCallback());
+            DAWN_DEBUG();
             return {};
         },
         "encoding %s.End().", this);
+            DAWN_DEBUG();
 }
 
 void RenderPassEncoder::APISetStencilReference(uint32_t reference) {
