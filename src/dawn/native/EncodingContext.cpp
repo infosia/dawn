@@ -80,14 +80,14 @@ CommandIterator EncodingContext::AcquireCommands() {
     return commands;
 }
 
-void EncodingContext::HandleError(std::unique_ptr<ErrorData> error) {
+void EncodingContext::HandleError(const ApiObjectBase* encoder, std::unique_ptr<ErrorData> error) {
     // Append in reverse so that the most recently set debug group is printed first, like a
     // call stack.
     for (auto iter = mDebugGroupLabels.rbegin(); iter != mDebugGroupLabels.rend(); ++iter) {
         error->AppendDebugGroup(*iter);
     }
 
-    if (mDevice->IsImmediateErrorHandlingEnabled() || mStatus == Status::Finished) {
+    if (mDevice->IsImmediateErrorHandlingEnabled() || encoder != mCurrentEncoder) {
         // EncodingContext is unprotected from multiple threads by default, but this code will
         // modify Device's internal states so we need to lock the device now.
         auto deviceGuard = mDevice->GetGuard();
@@ -181,7 +181,7 @@ void EncodingContext::EnsurePassExited(const ApiObjectBase* passEncoder) {
     if (mCurrentEncoder != mTopLevelEncoder && mCurrentEncoder == passEncoder) {
         // The current pass encoder is being deleted. Implicitly end the pass with an error.
         mCurrentEncoder = mTopLevelEncoder;
-        HandleError(DAWN_VALIDATION_ERROR("Command buffer recording ended before %s was ended.",
+        HandleError(passEncoder, DAWN_VALIDATION_ERROR("Command buffer recording ended before %s was ended.",
                                           passEncoder));
     }
 }
