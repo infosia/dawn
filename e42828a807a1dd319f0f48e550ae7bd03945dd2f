@@ -141,6 +141,30 @@
       },
       "revId": "e42828a807a1dd319f0f48e550ae7bd03945dd2f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e48a5e35_c1404809",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-07T20:48:31Z",
+      "side": 1,
+      "message": "I\u0027m going to try updating ityp::bitset ctor to assert that we don\u0027t truncate bits and see if anything fails.",
+      "parentUuid": "86cd9e2d_c4284570",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 43
+      },
+      "revId": "e42828a807a1dd319f0f48e550ae7bd03945dd2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
