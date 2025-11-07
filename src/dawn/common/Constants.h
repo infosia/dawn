@@ -53,13 +53,10 @@ static constexpr uint32_t kImmediateConstantElementByteSize = sizeof(uint32_t);
 // Known as 'Immediate Data'. User could update them through APIs.
 static constexpr uint32_t kMaxExternalImmediateConstantsPerPipeline = 16u;
 
-// Vulkan requires min-max push constant bytes is 128 byte, which is
-// equals to 32 32bit constants. D3D12 requires 64 32bit constants limits.
-// Pick 32 here.
-static constexpr uint32_t kMaxImmediateConstantsPerPipeline = 32u;
-
 // Adapter Max limitation for user immediate constants is 64 bytes.
 static constexpr uint32_t kMaxImmediateDataBytes = 64u;
+static constexpr uint32_t kMaxImmediateConstantsPerPipeline =
+    kMaxImmediateDataBytes / sizeof(uint32_t);
 
 // Default subgroup sizes.
 static constexpr uint32_t kDefaultSubgroupMinSize = 4u;
