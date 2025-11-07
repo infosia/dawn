@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "4dcfd63c_96aec222",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-07T16:32:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "752939b9_969ab1a9",
+      "revId": "08588978a5723f50c09a04020025f6153f9dce01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "80bb357d_adbca7dc",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a54475d_df38bacb",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-07T16:32:30Z",
+      "side": 1,
+      "message": "Created https://g-issues.chromium.org/issues/458693086",
+      "parentUuid": "84453a04_d7125076",
+      "revId": "08588978a5723f50c09a04020025f6153f9dce01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93466858_5d110c2b",
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fac4afe6_1ca9ede6",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-07T16:32:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93466858_5d110c2b",
+      "revId": "08588978a5723f50c09a04020025f6153f9dce01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "421c67c6_3e226d20",
@@ -82,6 +136,24 @@
       "writtenOn": "2025-11-07T10:21:58Z",
       "side": 1,
       "message": "Can we have a TODO to remember to remove this limitation? https://issues.chromium.org/issues/458102548 is a good issue for that.",
+      "revId": "08588978a5723f50c09a04020025f6153f9dce01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1b006dd_66330543",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-07T16:32:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "421c67c6_3e226d20",
       "revId": "08588978a5723f50c09a04020025f6153f9dce01",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
