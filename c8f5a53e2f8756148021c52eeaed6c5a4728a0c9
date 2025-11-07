@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "918d626d_ede13cf9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-07T11:20:56Z",
+      "side": 1,
+      "message": "I\u0027ll start implementing bindless bindgroup updates even if the exact shape is still under discussion in the group. PTAL!",
+      "revId": "c8f5a53e2f8756148021c52eeaed6c5a4728a0c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60e93ba7_f38400cc",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-07T11:20:56Z",
+      "side": 1,
+      "message": "This will update the entry-\u003ebinding slot with whatever is in entry.",
+      "revId": "c8f5a53e2f8756148021c52eeaed6c5a4728a0c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8406388c_f6ba814b",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-07T11:20:56Z",
+      "side": 1,
+      "message": "This will require that entry-\u003ebinding is BindGroupBindingUndefined.",
+      "revId": "c8f5a53e2f8756148021c52eeaed6c5a4728a0c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
