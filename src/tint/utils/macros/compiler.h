@@ -140,6 +140,15 @@
 #define TINT_DISABLE_WARNING_ZERO_AS_NULLPTR \
     _Pragma("clang diagnostic ignored \"-Wzero-as-null-pointer-constant\"")
 
+#if defined(__has_attribute)
+#if __has_attribute(unsafe_buffer_usage)
+#define TINT_UNSAFE_BUFFER_USAGE [[clang::unsafe_buffer_usage]]
+#endif
+#endif
+#if !defined(TINT_UNSAFE_BUFFER_USAGE)
+#define TINT_UNSAFE_BUFFER_USAGE
+#endif
+
 // clang-format off
 #define TINT_BEGIN_DISABLE_PROTOBUF_WARNINGS() \
     _Pragma("clang diagnostic push")           \
@@ -174,7 +183,19 @@
 #define TINT_END_DISABLE_WARNING(name) \
     _Pragma("clang diagnostic pop")    \
     TINT_REQUIRE_SEMICOLON
+
+#if defined(UNSAFE_BUFFERS_BUILD)
+#    define TINT_UNSAFE_BUFFERS(...)                  \
+         _Pragma("clang unsafe_buffer_usage begin")    \
+         __VA_ARGS__                                   \
+         _Pragma("clang unsafe_buffer_usage end")
+#else
+#    define TINT_UNSAFE_BUFFERS(...) __VA_ARGS__
+#endif
 // clang-format on
+
+// Like TINT_UNSAFE_BUFFERS(), but indicates there is a TODO() task.
+#define TINT_UNSAFE_TODO(...) TINT_UNSAFE_BUFFERS(__VA_ARGS__)
 
 #elif defined(__GNUC__)
 ////////////////////////////////////////////////////////////////////////////////

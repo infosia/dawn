@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/439062058): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "src/tint/lang/spirv/writer/common/binary_writer.h"
 
 #include <cstring>
@@ -85,7 +80,13 @@ void BinaryWriter::ProcessOp(const Operand& op) {
     if (auto* str = std::get_if<std::string>(&op)) {
         auto idx = out_.size();
         out_.resize(out_.size() + OperandLength(op), 0);
-        memcpy(&out_[idx], str->c_str(), str->size() + 1);
+        // SAFETY: Typically, a resize+memcpy is better served with a vector::insert, but there is
+        // also a type conversion here from std::string to uint32_t. The resize is done properly by
+        // taking the strlen(op) + 1, rounding up to the number of uint32_ts needed for the resize.
+        // There is still a potential risk if the string is longer than the max size of a uint32_t,
+        // but without a safer copy implementation that can handle the type conversion this is the
+        // best solution.
+        TINT_UNSAFE_TODO(memcpy(&out_[idx], str->c_str(), str->size() + 1));
         return;
     }
 }
