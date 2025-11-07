@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ea9ba1a8_f4f4645a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-07T00:22:18Z",
+      "side": 1,
+      "message": "Hmm it looks like it also failed on Metal on some bots... It would be nice to have an idea as to what\u0027s causing it before just blindly suppressing it, though if it\u0027s too hard to trace, I think it\u0027s fine to defer with a TODO bug or something?",
+      "parentUuid": "ed5ce353_7f51b0e8",
+      "revId": "27df15f1b6238224fe1b304e33d38a6284fb1a55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "849a1858_2fdb9562",
         "filename": "src/dawn/native/webgpu/ComputePipelineWGPU.cpp",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2025-11-06T23:15:58Z",
       "side": 1,
       "message": "Question:\n\nI assume we will only catch Validation error if the we have WGPUErrorFilter_Validation as the filter.\n\nLooks like it\u0027s enough to pass the test, as in webgpu backend we never actually compile the wgsl shader and it\u0027s the inner layer that actually compiles found the validation error and we surface up.\n\nSo for internal error, is there internal error emit from initializing a pipeline? If so, I assume we just push another error scope with WGPUErrorFilter_Internal.\n\nWhat about out of memory error? Is it worth pushing another error scope?",
+      "revId": "27df15f1b6238224fe1b304e33d38a6284fb1a55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9ebb99d_2a67d7b8",
+        "filename": "src/dawn/native/webgpu/ComputePipelineWGPU.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-07T00:22:18Z",
+      "side": 1,
+      "message": "Yea, it might be a good idea to make some sort of utility function that takes a list of error types that we might be interested in push/popping and be able to use it instead of duplicating the error checking code for both the compute and render pipelines.",
+      "parentUuid": "849a1858_2fdb9562",
       "revId": "27df15f1b6238224fe1b304e33d38a6284fb1a55",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
