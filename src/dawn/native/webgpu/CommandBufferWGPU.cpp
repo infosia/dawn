@@ -163,12 +163,12 @@ void EncodeComputePass(const DawnProcTable& wgpu,
                 break;
             }
 
-            case Command::SetImmediateData: {
-                auto cmd = commands.NextCommand<SetImmediateDataCmd>();
+            case Command::SetImmediates: {
+                auto cmd = commands.NextCommand<SetImmediatesCmd>();
                 DAWN_ASSERT(cmd->size > 0);
                 uint8_t* value = nullptr;
                 value = commands.NextData<uint8_t>(cmd->size);
-                wgpu.computePassEncoderSetImmediateData(passEncoder, cmd->offset, value, cmd->size);
+                wgpu.computePassEncoderSetImmediates(passEncoder, cmd->offset, value, cmd->size);
                 break;
             }
 
@@ -282,12 +282,12 @@ void EncodeRenderBundleCommand(const DawnProcTable& wgpu,
             break;
         }
 
-        case Command::SetImmediateData: {
-            auto cmd = commands.NextCommand<SetImmediateDataCmd>();
+        case Command::SetImmediates: {
+            auto cmd = commands.NextCommand<SetImmediatesCmd>();
             DAWN_ASSERT(cmd->size > 0);
             uint8_t* value = nullptr;
             value = commands.NextData<uint8_t>(cmd->size);
-            wgpu.renderBundleEncoderSetImmediateData(encoder, cmd->offset, value, cmd->size);
+            wgpu.renderBundleEncoderSetImmediates(encoder, cmd->offset, value, cmd->size);
             break;
         }
 
@@ -554,12 +554,12 @@ void EncodeRenderPass(const Device* device,
                 break;
             }
 
-            case Command::SetImmediateData: {
-                auto cmd = commands.NextCommand<SetImmediateDataCmd>();
+            case Command::SetImmediates: {
+                auto cmd = commands.NextCommand<SetImmediatesCmd>();
                 DAWN_ASSERT(cmd->size > 0);
                 uint8_t* value = nullptr;
                 value = commands.NextData<uint8_t>(cmd->size);
-                wgpu.renderPassEncoderSetImmediateData(passEncoder, cmd->offset, value, cmd->size);
+                wgpu.renderPassEncoderSetImmediates(passEncoder, cmd->offset, value, cmd->size);
                 break;
             }
 
@@ -608,7 +608,7 @@ MaybeError GatherReferencedResourcesFromComputePass(CaptureContext& captureConte
                 DAWN_SKIP_COMMAND(PopDebugGroup)
                 DAWN_SKIP_COMMAND(PushDebugGroup)
                 DAWN_SKIP_COMMAND(WriteTimestamp)
-                DAWN_SKIP_COMMAND(SetImmediateData)
+                DAWN_SKIP_COMMAND(SetImmediates)
             default: {
                 DAWN_CHECK(false);
                 break;
@@ -649,7 +649,7 @@ MaybeError GatherReferencedResourcesFromRenderPass(CaptureContext& captureContex
                 DAWN_SKIP_COMMAND(PopDebugGroup)
                 DAWN_SKIP_COMMAND(PushDebugGroup)
                 DAWN_SKIP_COMMAND(WriteTimestamp)
-                DAWN_SKIP_COMMAND(SetImmediateData)
+                DAWN_SKIP_COMMAND(SetImmediates)
                 DAWN_SKIP_COMMAND(SetVertexBuffer)
             default: {
                 DAWN_CHECK(false);
