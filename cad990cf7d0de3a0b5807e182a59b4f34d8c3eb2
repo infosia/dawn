@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "070dce88_4ff418c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-07T15:43:15Z",
+      "side": 1,
+      "message": "Is this the right bug? This one is about implementing immediates...",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 14
+      },
+      "revId": "cad990cf7d0de3a0b5807e182a59b4f34d8c3eb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "4bb5f557_f58c0f07",
