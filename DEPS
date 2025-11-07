@@ -64,9 +64,14 @@ vars = {
   # Set to True by Chromium if syncing from a Chromium checkout.
   'build_with_chromium': False,
 
+  # Version of Chromium the DEPS entries synced by scripts/roll_chromium_deps.py
+  # were last synced to.
   # NOTE: This is not currently accurate since no Chromium -> Dawn roll has
   # been performed yet.
   'chromium_revision': 'c2d941cd12644d6b893c305b1904e358727d597d',
+  # We never want to actually checkout Chromium, but we need a fake DEPS entry
+  # in order for the Chromium -> Dawn DEPS autoroller to work.
+  'checkout_fake_chromium': False,
 }
 
 deps = {
@@ -592,6 +597,13 @@ deps = {
   'third_party/partition_alloc': {
     'url': '{chromium_git}/chromium/src/base/allocator/partition_allocator.git@fae4df38cef9720a13dd55a6b1d20600919e671b',
     'condition': 'dawn_standalone',
+  },
+
+  # We never want to actually checkout Chromium, but we need a fake DEPS entry
+  # in order for the Chromium -> Dawn DEPS autoroller to work.
+  'third_party/fake_chromium': {
+    'url': '{chromium_git}/chromium/src.git' + '@' + Var('chromium_revision'),
+    'condition': 'checkout_fake_chromium',
   },
 }
 
