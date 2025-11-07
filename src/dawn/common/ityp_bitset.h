@@ -162,6 +162,9 @@ class bitset : private ::std::bitset<N> {
     explicit constexpr bitset(const Base& rhs) : Base(rhs) {}
 
   public:
+    // Number of bits in this bitset. Not part of std::bitset.
+    static constexpr size_t NumBits = N;
+
     using Iterator = std::conditional_t<(N < sizeof(uint64_t) * 8),
                                         detail::Iterator64<Index, N>,      // true
                                         detail::IteratorArray<Index, N>>;  // false
