@@ -230,6 +230,30 @@
       },
       "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43e23eb3_3f01973a",
+        "filename": "src/dawn/wire/server/ServerQueue.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-07T00:51:12Z",
+      "side": 1,
+      "message": "Alternatively could: land GetSourceData in Dawn, then implement it in Chrome, then do the rest of this change (and also hopefully make GetSourceData pure-virtual).",
+      "parentUuid": "17aacd63_0133842b",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 94,
+        "endChar": 37
+      },
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
