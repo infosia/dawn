@@ -29,7 +29,6 @@
 // TODO(crbug.com/439062058): Remove this and convert code to safer constructs.
 #pragma allow_unsafe_buffers
 #endif
-
 #ifndef SRC_DAWN_COMMON_SERIALSTORAGE_H_
 #define SRC_DAWN_COMMON_SERIALSTORAGE_H_
 
