@@ -219,7 +219,7 @@ class RenderPassEncoderTest {
   fun testDrawIndexedWithoutIndexBufferFails() {
     val encoder = device.createCommandEncoder()
     val passEncoder = beginDefaultRenderPass(encoder)
-    passEncoder.setPipeline(defaultColorPipeline)
+    passEncoder.pipeline = defaultColorPipeline
     passEncoder.drawIndexed(3)  // Invalid: index buffer not set.
     passEncoder.end()
 
@@ -235,7 +235,7 @@ class RenderPassEncoderTest {
     val indexBuffer = createIndexBuffer(shortArrayOf(0, 1, 2))
     val encoder = device.createCommandEncoder()
     val passEncoder = beginDefaultRenderPass(encoder)
-    passEncoder.setPipeline(defaultColorPipeline)
+    passEncoder.pipeline = defaultColorPipeline
     passEncoder.setIndexBuffer(indexBuffer, IndexFormat.Uint16)  // Valid.
     passEncoder.drawIndexed(3)  // Valid.
     passEncoder.end()
@@ -255,7 +255,7 @@ class RenderPassEncoderTest {
     )
     val encoder = device.createCommandEncoder()
     val passEncoder = beginDefaultRenderPass(encoder)
-    passEncoder.setPipeline(defaultColorPipeline)
+    passEncoder.pipeline = defaultColorPipeline
     passEncoder.drawIndirect(invalidBuffer, 0)  // Invalid.
     passEncoder.end()
 
@@ -272,7 +272,7 @@ class RenderPassEncoderTest {
     val indirectBuffer = createIndirectBuffer(intArrayOf(3, 1, 0, 0, 0))
     val encoder = device.createCommandEncoder()
     val passEncoder = beginDefaultRenderPass(encoder)
-    passEncoder.setPipeline(defaultColorPipeline)
+    passEncoder.pipeline = defaultColorPipeline
     passEncoder.drawIndexedIndirect(indirectBuffer, 0)  // Invalid.
     passEncoder.end()
 
@@ -290,7 +290,7 @@ class RenderPassEncoderTest {
     val indexBuffer = createIndexBuffer(shortArrayOf(0, 1, 2))
     val encoder = device.createCommandEncoder()
     val passEncoder = beginDefaultRenderPass(encoder)
-    passEncoder.setPipeline(defaultColorPipeline)
+    passEncoder.pipeline = defaultColorPipeline
     passEncoder.setIndexBuffer(indexBuffer, IndexFormat.Uint16)  // Valid.
     passEncoder.drawIndexedIndirect(indirectBuffer, 0)  // Valid.
     passEncoder.end()
@@ -354,7 +354,7 @@ class RenderPassEncoderTest {
     )
 
     passEncoder.beginOcclusionQuery(0)
-    passEncoder.setPipeline(depthPipeline)  // Use the local depth-pipeline.
+    passEncoder.pipeline = depthPipeline  // Use the local depth-pipeline.
     passEncoder.draw(3)
     passEncoder.endOcclusionQuery()
     passEncoder.end()
@@ -375,8 +375,8 @@ class RenderPassEncoderTest {
     val passEncoder = beginDefaultRenderPass(encoder)
     passEncoder.setViewport(0f, 0f, 1f, 1f, 0f, 1f)
     passEncoder.setScissorRect(0, 0, 1, 1)
-    passEncoder.setBlendConstant(Color(0.0, 0.0, 0.0, 0.0))
-    passEncoder.setStencilReference(0)
+    passEncoder.blendConstant = Color(0.0, 0.0, 0.0, 0.0)
+    passEncoder.stencilReference = 0
     passEncoder.end()
 
     device.pushErrorScope(ErrorFilter.Validation)
@@ -406,7 +406,7 @@ class RenderPassEncoderTest {
         colorFormats = intArrayOf(TextureFormat.RGBA8Unorm)
       )
     )
-    bundleEncoder.setPipeline(defaultColorPipeline)  // Use the color-only pipeline.
+    bundleEncoder.pipeline = defaultColorPipeline  // Use the color-only pipeline.
     bundleEncoder.draw(3)
     val bundle = bundleEncoder.finish()
 

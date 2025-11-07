@@ -124,8 +124,7 @@ class ComputePassEncoderTest {
   fun testDispatchWorkgroupsValid() {
     val encoder = device.createCommandEncoder()
     val passEncoder = encoder.beginComputePass()
-
-    passEncoder.setPipeline(pipeline)  // Set the valid pipeline.
+    passEncoder.pipeline = pipeline
     passEncoder.dispatchWorkgroups(1, 1, 1)  // Valid dispatch.
 
     passEncoder.end()
@@ -152,7 +151,7 @@ class ComputePassEncoderTest {
 
     val encoder = device.createCommandEncoder()
     val passEncoder = encoder.beginComputePass()
-    passEncoder.setPipeline(pipeline)
+    passEncoder.pipeline = pipeline
     passEncoder.dispatchWorkgroupsIndirect(invalidBuffer, 0)
     passEncoder.end()
 
@@ -181,7 +180,7 @@ class ComputePassEncoderTest {
 
     val encoder = device.createCommandEncoder()
     val passEncoder = encoder.beginComputePass()
-    passEncoder.setPipeline(pipeline)
+    passEncoder.pipeline = pipeline
     passEncoder.dispatchWorkgroupsIndirect(validBuffer, 0)
     passEncoder.end()
 
@@ -201,7 +200,7 @@ class ComputePassEncoderTest {
   fun testDispatchAfterEndFails() {
     val encoder = device.createCommandEncoder()
     val passEncoder = encoder.beginComputePass()
-    passEncoder.setPipeline(pipeline)
+    passEncoder.pipeline = pipeline
     passEncoder.end()  // Pass has ended.
 
     passEncoder.dispatchWorkgroups(1)  // Invalid call after end.

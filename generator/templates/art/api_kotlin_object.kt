@@ -63,9 +63,9 @@ public class {{ kotlin_name(obj) }} private constructor(public val handle: Long)
                 @JvmOverloads
             {% break %}{% endif %}
         {% endfor %}
-        {{ kotlin_annotation(_kotlin_return) if _kotlin_return else '' }} public external fun {{ method.name.camelCase() }}(
-        //* TODO(b/341923892): rework async methods to use futures.
-        {%- for arg in kotlin_record_members(method.arguments) %}
+        {% if method.name.chunks[0] == 'set' and method.arguments | length == 1 %}
+        {{ kotlin_annotation(_kotlin_return) if _kotlin_return else '' }} private external fun {{ method.name.chunks | join('') | lower | replace('set', 'setinternal', 1) }}({% else %}
+        {{ kotlin_annotation(_kotlin_return) if _kotlin_return else '' }} public external fun {{ method.name.camelCase() }}({% endif %}{%- for arg in kotlin_record_members(method.arguments) %}
             {{- kotlin_annotation(arg) }} {{ as_varName(arg.name) }}: {{ kotlin_definition(arg) }},{{ ' ' }}
         {%- endfor -%}): {{ kotlin_declaration(_kotlin_return) if _kotlin_return else 'Unit' }}
 
@@ -76,6 +76,15 @@ public class {{ kotlin_name(obj) }} private constructor(public val handle: Long)
             @get:JvmName("{{ name }}")
             public val {{ name }}: {{ kotlin_declaration(_kotlin_return) if _kotlin_return else 'Unit' }} get() = {{ method.name.camelCase() }}()
 
+        {% endif %}
+        {% if method.name.chunks[0] == 'set' and method.arguments | length == 1 %}
+            //* For Kotlin-style setter property. E.g. "set foo bar" becomes fooBar.
+            {% set setter_chunks = method.name.chunks[1:] %}
+            {% set property_name = setter_chunks[0] | lower + setter_chunks[1:] | map('title') | join %}
+            public var {{ property_name }}: {{ kotlin_declaration(method.arguments[0]) }}
+                get() = throw UnsupportedOperationException("Getter not available for {{ property_name }}.")
+                @JvmName("{{ method.name.camelCase()}}Property")
+                set(value) = {{ method.name.chunks | join('') | lower | replace('set', 'setinternal', 1) }}(value)
         {% endif %}
 
         //* Every method that is identified as using callbacks is given a helper method that wraps the

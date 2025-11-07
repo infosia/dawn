@@ -170,7 +170,7 @@ class RenderBundleEncoderTest {
   @Test
   fun testDrawWithPipelineSucceeds() {
     val bundleEncoder = createDefaultBundleEncoder()
-    bundleEncoder.setPipeline(defaultColorPipeline)  // Valid.
+    bundleEncoder.pipeline = defaultColorPipeline  // Valid.
     bundleEncoder.draw(3)  // Valid.
 
     device.pushErrorScope(ErrorFilter.Validation)
@@ -215,7 +215,7 @@ class RenderBundleEncoderTest {
   @Test
   fun testDrawIndexedWithoutIndexBufferFails() {
     val bundleEncoder = createDefaultBundleEncoder()
-    bundleEncoder.setPipeline(defaultColorPipeline)
+    bundleEncoder.pipeline = defaultColorPipeline
     bundleEncoder.drawIndexed(3)  // Invalid: index buffer not set.
 
     device.pushErrorScope(ErrorFilter.Validation)
@@ -229,7 +229,7 @@ class RenderBundleEncoderTest {
   fun testDrawIndexedValidSucceeds() {
     val indexBuffer = createIndexBuffer(shortArrayOf(0, 1, 2))
     val bundleEncoder = createDefaultBundleEncoder()
-    bundleEncoder.setPipeline(defaultColorPipeline)
+    bundleEncoder.pipeline = defaultColorPipeline
     bundleEncoder.setIndexBuffer(indexBuffer, IndexFormat.Uint16)  // Valid.
     bundleEncoder.drawIndexed(3)  // Valid.
 
@@ -248,7 +248,7 @@ class RenderBundleEncoderTest {
       BufferDescriptor(size = 16, usage = BufferUsage.CopyDst)
     )
     val bundleEncoder = createDefaultBundleEncoder()
-    bundleEncoder.setPipeline(defaultColorPipeline)
+    bundleEncoder.pipeline = defaultColorPipeline
     bundleEncoder.drawIndirect(invalidBuffer, 0)  // Invalid.
 
     device.pushErrorScope(ErrorFilter.Validation)
@@ -263,7 +263,7 @@ class RenderBundleEncoderTest {
   fun testDrawIndirectValidSucceeds() {
     val indirectBuffer = createIndirectBuffer(intArrayOf(3, 1, 0, 0))
     val bundleEncoder = createDefaultBundleEncoder()
-    bundleEncoder.setPipeline(defaultColorPipeline)
+    bundleEncoder.pipeline = defaultColorPipeline
     bundleEncoder.drawIndirect(indirectBuffer, 0)  // Valid.
 
     device.pushErrorScope(ErrorFilter.Validation)
@@ -279,7 +279,7 @@ class RenderBundleEncoderTest {
   fun testDrawIndexedIndirectWithoutIndexBufferFails() {
     val indirectBuffer = createIndirectBuffer(intArrayOf(3, 1, 0, 0, 0))
     val bundleEncoder = createDefaultBundleEncoder()
-    bundleEncoder.setPipeline(defaultColorPipeline)
+    bundleEncoder.pipeline = defaultColorPipeline
     bundleEncoder.drawIndexedIndirect(indirectBuffer, 0)  // Invalid.
 
     device.pushErrorScope(ErrorFilter.Validation)
@@ -296,7 +296,7 @@ class RenderBundleEncoderTest {
     val indirectBuffer = createIndirectBuffer(intArrayOf(3, 1, 0, 0, 0))
     val indexBuffer = createIndexBuffer(shortArrayOf(0, 1, 2))
     val bundleEncoder = createDefaultBundleEncoder()
-    bundleEncoder.setPipeline(defaultColorPipeline)
+    bundleEncoder.pipeline = defaultColorPipeline
     bundleEncoder.setIndexBuffer(indexBuffer, IndexFormat.Uint16)  // Valid.
     bundleEncoder.drawIndexedIndirect(indirectBuffer, 0)  // Valid.
 
@@ -340,7 +340,7 @@ class RenderBundleEncoderTest {
     )
 
     val bundleEncoder = createDefaultBundleEncoder()
-    bundleEncoder.setPipeline(bgPipeline)  // Requires bind group 0.
+    bundleEncoder.pipeline = bgPipeline  // Requires bind group 0.
     bundleEncoder.draw(3)  // Invalid: Bind group 0 not set.
 
     device.pushErrorScope(ErrorFilter.Validation)
@@ -400,7 +400,7 @@ class RenderBundleEncoderTest {
     )
 
     val bundleEncoder = createDefaultBundleEncoder()
-    bundleEncoder.setPipeline(bgPipeline)
+    bundleEncoder.pipeline = bgPipeline
     bundleEncoder.setBindGroup(0, bindGroup)  // Valid.
     bundleEncoder.draw(3)  // Valid.
 

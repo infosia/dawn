@@ -66,7 +66,7 @@ class ImageTest {
                             )
                         )
                     ) {
-                        setPipeline(
+                        pipeline =
                             device.createRenderPipeline(
                                 RenderPipelineDescriptor(
                                     vertex = VertexState(module = shaderModule),
@@ -83,7 +83,6 @@ class ImageTest {
                                     )
                                 )
                             )
-                        )
                         draw(3)
                         end()
                     }
