@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "752939b9_969ab1a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-07T10:21:58Z",
+      "side": 1,
+      "message": "I concurrently greated https://issues.chromium.org/issues/458084505 that this fixes!",
+      "revId": "08588978a5723f50c09a04020025f6153f9dce01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80bb357d_adbca7dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-07T10:21:58Z",
+      "side": 1,
+      "message": "Nice! Thank you for pushing this forward!",
+      "revId": "08588978a5723f50c09a04020025f6153f9dce01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84453a04_d7125076",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-07T10:21:58Z",
+      "side": 1,
+      "message": "Do we ever ever plan to expose more than 64 bytes? (Kai\u0027s issues on GPUWeb sounds like we won\u0027t, and at least for Dawn I don\u0027t think we\u0027ll ever want to?). Then in a follow-up can we change `kMaxImmediateConstantsPerPipeline` to be `kMaxImmediateDataBytes/sizeof(uint32_t)`?",
+      "revId": "08588978a5723f50c09a04020025f6153f9dce01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93466858_5d110c2b",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-07T10:21:58Z",
+      "side": 1,
+      "message": "Can we have a TODO to remove this toggle after the feature has landed safely?",
+      "revId": "08588978a5723f50c09a04020025f6153f9dce01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "421c67c6_3e226d20",
+        "filename": "src/dawn/tests/end2end/ImmediateDataBufferLengthTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-07T10:21:58Z",
+      "side": 1,
+      "message": "Can we have a TODO to remember to remove this limitation? https://issues.chromium.org/issues/458102548 is a good issue for that.",
+      "revId": "08588978a5723f50c09a04020025f6153f9dce01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
