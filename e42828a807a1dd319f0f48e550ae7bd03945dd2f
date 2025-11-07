@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "55b101b1_c592212c",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-07T20:30:51Z",
+      "side": 1,
+      "message": "nit: I think this was already the case before but it doesn\u0027t seem like a good idea to do this math in `size_t` - if the number of bits in `ImmediateConstantMask` (which is `kMaxImmediateConstantsPerPipeline`) went over 32 I think it would silently break.\n```suggestion\n    // This bit math can be done in uint64_t because there are \u003c\u003d 64 bits in the mask.\n    static_assert(ImmediateConstantMask.size() \u003c\u003d 64);\n    uint64_t firstIndex \u003d byteOffset / kImmediateConstantElementByteSize;\n    uint64_t constantCount \u003d byteSize / kImmediateConstantElementByteSize;\n    uint64_t mask \u003d ((1u \u003c\u003c constantCount) - 1u) \u003c\u003c firstIndex;\n```",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 61
+      },
+      "revId": "e42828a807a1dd319f0f48e550ae7bd03945dd2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c3ebd842_22305c3c",
         "filename": "src/dawn/native/ImmediateConstantsLayout.h",
         "patchSetId": 3
@@ -37,6 +60,30 @@
       "writtenOn": "2025-11-07T20:14:12Z",
       "side": 1,
       "message": "Note that I had to make this function `inline` instead of `constexpr` because `std::bitset::to_ulong` is not a `constexpr` before C++23.",
+      "parentUuid": "c3ebd842_22305c3c",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 43
+      },
+      "revId": "e42828a807a1dd319f0f48e550ae7bd03945dd2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3da868b3_7e918d4e",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-07T20:30:51Z",
+      "side": 1,
+      "message": "Oof, we definitely should try to avoid difficult debugging like that in the future. Silently truncating doesn\u0027t seem useful to me. Maybe we just change constructor #2 to ASSERT? (here https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/ityp_bitset.h;l\u003d180;drc\u003da56b9331922df97870f89fca22d923d7914fc279)",
       "parentUuid": "c3ebd842_22305c3c",
       "range": {
         "startLine": 87,
