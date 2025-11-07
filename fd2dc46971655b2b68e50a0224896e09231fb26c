@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dcdae3a_cb82bc10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-07T11:18:54Z",
+      "side": 1,
+      "message": "PTAL! See also https://github.com/gpuweb/cts/pull/4495",
+      "revId": "fd2dc46971655b2b68e50a0224896e09231fb26c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
