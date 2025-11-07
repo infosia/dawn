@@ -42,6 +42,7 @@ enum class [[nodiscard]] WireResult {
     do {                                                      \
         WireResult exprResult = EXPR;                         \
         if (exprResult != WireResult::Success) [[unlikely]] { \
+            DAWN_ASSERT(false);                               \
             return exprResult;                                \
         }                                                     \
     } while (0)

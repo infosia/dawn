@@ -611,7 +611,10 @@ WireResult WGPUStringViewSerialize(
     transfer->has_data = has_data;
 
     if (!has_data) {
+        DAWN_ASSERT(length == 0 || length == WGPU_STRLEN);
         transfer->length = length;
+        dawn::ErrorLog() << "Assertion failure context SERIALIZE: length=" << length << " WGPU_STRLEN=" << WGPU_STRLEN << " sizeof(void*)=" << sizeof(void*);
+        DAWN_ASSERT(WGPU_STRLEN != UINT32_MAX); // This is a 64 bit build so WGPU_STRLEN should be UINT64_MAX.
         return WireResult::Success;
     }
     if (length == WGPU_STRLEN) {
@@ -636,12 +639,15 @@ WireResult WGPUStringViewDeserialize(
     uint64_t length = transfer->length;
 
     if (length > WGPU_STRLEN) {
+        DAWN_ASSERT(false);
         return WireResult::FatalError;
     }
     if (!has_data) {
         record->data = nullptr;
         if (length != 0 && length != WGPU_STRLEN) {
             // Invalid string.
+            dawn::ErrorLog() << "Assertion failure context DESERIALIZE: length=" << length << " WGPU_STRLEN=" << WGPU_STRLEN;
+            DAWN_ASSERT(false);
             return WireResult::FatalError;
         }
         record->length = static_cast<size_t>(length);
