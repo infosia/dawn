@@ -70,6 +70,30 @@
       },
       "revId": "2f1e05f859bdd91f1b567c732bcc41b8395fb9c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5c412ff_6640502d",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-07T15:41:02Z",
+      "side": 1,
+      "message": "I think there might be bigger problems with keeping another dawn thread blocked while the callback runs.\n\nFor example: Thread A is in MapAsyncEvent::Complete() running the callback. Thread B called wgpu::Buffer::Unmap() which locks device mutex, runs Buffer::APIUnamp() and ends up blocked waiting on thread A. If the user defined callback on thread A makes some dawn API call that needs to lock device mutex that will deadlock waiting on thread B. It\u0027s a user defined callback so it can do anything.\n\nAfter I remove the device mutex from APIUnmap()/APIDestroy() that problem goes away at least. I don\u0027t know if there is any other mutex or similar synchronization primitive that could be held while EventManager is triggering event completion? It seems hard to guarantee.",
+      "parentUuid": "355ba9ed_69248b68",
+      "range": {
+        "startLine": 317,
+        "startChar": 8,
+        "endLine": 318,
+        "endChar": 52
+      },
+      "revId": "2f1e05f859bdd91f1b567c732bcc41b8395fb9c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
