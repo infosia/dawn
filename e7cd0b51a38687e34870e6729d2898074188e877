@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ca49327_066c62c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-11-07T19:48:02Z",
+      "side": 1,
+      "message": "This commit seems to cause Dawn roll into Chrome to fail.\n```\nIn file included from ../../third_party/dawn/src/dawn/samples/SampleUtils.cpp:28:\n../../third_party/dawn/src/dawn/samples/SampleUtils.h:32:10: fatal error: \u0027GLFW/glfw3.h\u0027 file not found\n   32 | #include \"GLFW/glfw3.h\"\n      |          ^~~~~~~~~~~~~~\n```\nI tried [reverting](https://chromium-review.googlesource.com/c/chromium/src/+/7133298) this and a test roll succeeded compiling.\n\nI\u0027m not sure what\u0027s wrong. But it\u0027s possible this CL causes gn to build dawn sample tests by default. And a CQ\u0027s chromium checkout doesn\u0027t have sufficient dependencies to compile the samples.",
+      "revId": "e7cd0b51a38687e34870e6729d2898074188e877",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
