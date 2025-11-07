@@ -41,26 +41,22 @@ namespace {
 class RenderPassDescriptorValidationTest : public ValidationTest {
   public:
     void AssertBeginRenderPassSuccess(const wgpu::RenderPassDescriptor* descriptor) {
-        wgpu::CommandEncoder commandEncoder = TestBeginRenderPass(descriptor);
+        wgpu::CommandEncoder commandEncoder = device.CreateCommandEncoder();
+        wgpu::RenderPassEncoder renderPassEncoder = commandEncoder.BeginRenderPass(descriptor);
+        renderPassEncoder.End();
         commandEncoder.Finish();
     }
     void AssertBeginRenderPassError(const wgpu::RenderPassDescriptor* descriptor) {
-        wgpu::CommandEncoder commandEncoder = TestBeginRenderPass(descriptor);
+        wgpu::CommandEncoder commandEncoder = device.CreateCommandEncoder();
+        wgpu::RenderPassEncoder renderPassEncoder = commandEncoder.BeginRenderPass(descriptor);
         ASSERT_DEVICE_ERROR(commandEncoder.Finish());
     }
 
     void AssertBeginRenderPassError(const wgpu::RenderPassDescriptor* descriptor,
                                     testing::Matcher<std::string> errorMatcher) {
-        wgpu::CommandEncoder commandEncoder = TestBeginRenderPass(descriptor);
-        ASSERT_DEVICE_ERROR(commandEncoder.Finish(), errorMatcher);
-    }
-
-  private:
-    wgpu::CommandEncoder TestBeginRenderPass(const wgpu::RenderPassDescriptor* descriptor) {
         wgpu::CommandEncoder commandEncoder = device.CreateCommandEncoder();
         wgpu::RenderPassEncoder renderPassEncoder = commandEncoder.BeginRenderPass(descriptor);
-        renderPassEncoder.End();
-        return commandEncoder;
+        ASSERT_DEVICE_ERROR(commandEncoder.Finish(), errorMatcher);
     }
 };
 

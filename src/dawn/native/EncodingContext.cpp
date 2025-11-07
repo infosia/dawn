@@ -80,19 +80,19 @@ CommandIterator EncodingContext::AcquireCommands() {
     return commands;
 }
 
-void EncodingContext::HandleError(std::unique_ptr<ErrorData> error) {
+void EncodingContext::HandleError(const ApiObjectBase* encoder, std::unique_ptr<ErrorData> error) {
     // Append in reverse so that the most recently set debug group is printed first, like a
     // call stack.
     for (auto iter = mDebugGroupLabels.rbegin(); iter != mDebugGroupLabels.rend(); ++iter) {
         error->AppendDebugGroup(*iter);
     }
 
-    if (mDevice->IsImmediateErrorHandlingEnabled() || mStatus == Status::Finished) {
-        // EncodingContext is unprotected from multiple threads by default, but this code will
-        // modify Device's internal states so we need to lock the device now.
-        auto deviceGuard = mDevice->GetGuard();
-        mDevice->HandleEncoderError(std::move(error));
-    } else {
+    bool deferErrors = encoder == mCurrentEncoder;
+    if (mDevice->IsImmediateErrorHandlingEnabled()) {
+        deferErrors = false;
+    }
+
+    if (deferErrors) {
         // TODO(crbug.com/42240579): ASSERT that encoding only generates validation errors.
 
         // If the encoding context is not finished, errors are deferred until
@@ -100,6 +100,11 @@ void EncodingContext::HandleError(std::unique_ptr<ErrorData> error) {
         if (mError == nullptr) {
             mError = std::move(error);
         }
+    } else {
+        // EncodingContext is unprotected from multiple threads by default, but this code will
+        // modify Device's internal states so we need to lock the device now.
+        auto deviceGuard = mDevice->GetGuard();
+        mDevice->HandleEncoderError(std::move(error));
     }
 
     CloseWithStatus(Status::ErrorInRecording);
@@ -178,11 +183,10 @@ void EncodingContext::ExitComputePass(const ApiObjectBase* passEncoder,
 }
 
 void EncodingContext::EnsurePassExited(const ApiObjectBase* passEncoder) {
-    if (mCurrentEncoder != mTopLevelEncoder && mCurrentEncoder == passEncoder) {
-        // The current pass encoder is being deleted. Implicitly end the pass with an error.
-        mCurrentEncoder = mTopLevelEncoder;
-        HandleError(DAWN_VALIDATION_ERROR("Command buffer recording ended before %s was ended.",
+    if (mCurrentEncoder == passEncoder) {
+        HandleError(passEncoder, DAWN_VALIDATION_ERROR("%s was destroyed before End() was called.",
                                           passEncoder));
+        mCurrentEncoder = nullptr;
     }
 }
 
@@ -274,6 +278,8 @@ void EncodingContext::CloseWithStatus(Status status) {
             if (mStatus == Status::ErrorInRecording || mStatus == Status::Open) {
                 mStatus = status;
             }
+            mTopLevelEncoder = nullptr;
+            mCurrentEncoder = nullptr;
             break;
 
         case Status::ErrorInRecording:
@@ -282,9 +288,6 @@ void EncodingContext::CloseWithStatus(Status status) {
             }
             break;
     }
-
-    mTopLevelEncoder = nullptr;
-    mCurrentEncoder = nullptr;
 }
 
 }  // namespace dawn::native
