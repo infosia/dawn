@@ -261,6 +261,30 @@
       },
       "revId": "e42828a807a1dd319f0f48e550ae7bd03945dd2f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70b5dd12_a5d4ff6a",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-07T21:20:22Z",
+      "side": 1,
+      "message": "I found a few answers that use the comma operator to _somehow_ make things work but I don\u0027t understand them.\nhttps://stackoverflow.com/a/18648361\nhttps://stackoverflow.com/q/59880069",
+      "parentUuid": "68cf57f6_6aabc623",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 43
+      },
+      "revId": "e42828a807a1dd319f0f48e550ae7bd03945dd2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
