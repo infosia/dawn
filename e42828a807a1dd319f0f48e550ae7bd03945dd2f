@@ -189,6 +189,30 @@
       },
       "revId": "e42828a807a1dd319f0f48e550ae7bd03945dd2f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33cf04dc_3d6b210c",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-07T21:03:26Z",
+      "side": 1,
+      "message": "Yeah, I can\u0027t add DAWN_ASSERT. The only solution I can see is to conditionally add a `bool is_valid` if `DAWN_ENABLE_ASSERTS` to ityp::bitset that we set in the ctor, and then `DAWN_ASSERT` it in a bunch of member functions. Not awesome.",
+      "parentUuid": "b568f7fc_7fa59dcd",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 43
+      },
+      "revId": "e42828a807a1dd319f0f48e550ae7bd03945dd2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
