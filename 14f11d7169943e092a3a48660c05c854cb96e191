@@ -331,6 +331,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfa9f0c2_a3312217",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-07T01:25:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc783b88_19ea2109",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f02acb6_f2787b1e",
@@ -354,6 +378,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80950eba_b8a6e404",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-07T01:25:52Z",
+      "side": 1,
+      "message": "Ack, will pause and eventually remove this roller once we\u0027re ready to run this script as an autoroller.",
+      "parentUuid": "1f02acb6_f2787b1e",
+      "range": {
+        "startLine": 76,
+        "startChar": 5,
+        "endLine": 76,
+        "endChar": 28
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8398aa6e_9ba7902c",
@@ -367,6 +415,30 @@
       "writtenOn": "2025-11-05T15:58:13Z",
       "side": 1,
       "message": "updated by https://autoroll.skia.org/r/vulkan-deps-dawn-autoroll",
+      "range": {
+        "startLine": 80,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 28
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe998725_9d16d5f4",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-07T01:25:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8398aa6e_9ba7902c",
       "range": {
         "startLine": 80,
         "startChar": 5,
@@ -494,6 +566,54 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b26b1335_d0d5d259",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-07T01:25:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "882164d7_eedcb99f",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e9eb44f_fbd390f0",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-07T01:25:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c634fdf5_ac10d634",
+      "range": {
+        "startLine": 93,
+        "startChar": 5,
+        "endLine": 93,
+        "endChar": 28
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c3691f82_3f181d98",
@@ -517,6 +637,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a53d3f3d_3619d3ec",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-07T01:25:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3691f82_3f181d98",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 28
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "250114a0_1712a69d",
@@ -530,6 +674,30 @@
       "writtenOn": "2025-11-05T15:58:13Z",
       "side": 1,
       "message": "Per my understanding, this is updated manually in the repos that use it, I believe because it requires code changes in the user, see b/295208838 for an example.",
+      "range": {
+        "startLine": 95,
+        "startChar": 5,
+        "endLine": 95,
+        "endChar": 40
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25423776_9a8c1160",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-07T01:25:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "250114a0_1712a69d",
       "range": {
         "startLine": 95,
         "startChar": 5,
@@ -647,6 +815,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e06e26b3_dcd5d743",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-07T01:25:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ac51cc8_0328b683",
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93941ed7_94677cf0",
@@ -660,6 +846,30 @@
       "writtenOn": "2025-11-05T15:58:13Z",
       "side": 1,
       "message": "updated by https://autoroll.skia.org/r/vulkan-deps-dawn-autoroll",
+      "range": {
+        "startLine": 96,
+        "startChar": 5,
+        "endLine": 100,
+        "endChar": 53
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3a6c2b2_f6dcd41c",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-07T01:25:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93941ed7_94677cf0",
       "range": {
         "startLine": 96,
         "startChar": 5,
