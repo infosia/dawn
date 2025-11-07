@@ -3882,6 +3882,10 @@ webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha
 webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="non-zero";querySetOffset="non-zero";alpha=0.75
 webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="non-zero";querySetOffset="non-zero";alpha=1
 webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,multi_resolve:
+webgpu:api,operation,command_buffer,render,render_bundle:basic:
+webgpu:api,operation,command_buffer,render,render_bundle:two_bundles:
+webgpu:api,operation,command_buffer,render,render_bundle:one_bundle_used_multiple_times:
+webgpu:api,operation,command_buffer,render,render_bundle:one_bundle_used_multiple_times_same_executeBundles:
 webgpu:api,operation,command_buffer,render,state_tracking:set_index_buffer_without_changing_buffer:
 webgpu:api,operation,command_buffer,render,state_tracking:set_vertex_buffer_without_changing_buffer:
 webgpu:api,operation,command_buffer,render,state_tracking:change_pipeline_before_and_after_vertex_buffer:
