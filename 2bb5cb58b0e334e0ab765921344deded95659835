@@ -16,6 +16,23 @@
       "message": "Removed implicit pipelinelayout/bindgrouplayout support as discussed.",
       "revId": "2bb5cb58b0e334e0ab765921344deded95659835",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1ebd798_e53294ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-07T10:14:18Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "2bb5cb58b0e334e0ab765921344deded95659835",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
