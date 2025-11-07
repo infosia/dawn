@@ -1970,4 +1970,48 @@ std::string CopyLabel(StringView label) {
     return {label.data, length};
 }
 
+bool ConvertDataElementsToSpan(Napi::Env env,
+                               std::span<const uint8_t>* out,
+                               interop::AllowSharedBufferSource data,
+                               interop::GPUSize64 dataOffsetElements,
+                               std::optional<interop::GPUSize64> sizeElements) {
+    Converter::BufferSource src{};
+    Converter conv(env);
+    if (!conv(src, data)) {
+        return false;
+    }
+
+    // The offset is in elements.
+    if (dataOffsetElements > uint64_t(src.size / src.bytesPerElement)) {
+        binding::Errors::OperationError(env, "dataOffset is larger than data's size.")
+            .ThrowAsJavaScriptException();
+        return false;
+    }
+    uint64_t dataOffset = dataOffsetElements * src.bytesPerElement;
+    src.data = reinterpret_cast<uint8_t*>(src.data) + dataOffset;
+    src.size -= dataOffset;
+
+    // Size defaults to dataSize - dataOffset. Instead of computing in elements, we directly
+    // use it in bytes, and convert the provided value, if any, in bytes.
+    uint64_t size64 = uint64_t(src.size);
+    if (sizeElements.has_value()) {
+        if (sizeElements.value() > std::numeric_limits<uint64_t>::max() / src.bytesPerElement) {
+            binding::Errors::OperationError(env, "size overflows.").ThrowAsJavaScriptException();
+            return false;
+        }
+        size64 = sizeElements.value() * src.bytesPerElement;
+    }
+
+    if (size64 > uint64_t(src.size)) {
+        binding::Errors::OperationError(env, "size + dataOffset is larger than data's size.")
+            .ThrowAsJavaScriptException();
+        return false;
+    }
+
+    assert(size64 <= std::numeric_limits<size_t>::max());
+    *out = {reinterpret_cast<const uint8_t*>(src.data), static_cast<size_t>(size64)};
+
+    return true;
+}
+
 }  // namespace wgpu::binding
