@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5117c4b1_269a502e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-07T08:14:23Z",
+      "side": 1,
+      "message": "I have refactored Format.cpp according to the comment(https://dawn-review.googlesource.com/c/dawn/+/247975/comment/d0876dbc_b7141e96/). PTAL, thanks!",
+      "revId": "0516d1f38fb6ae60636bdf17981acc23085f0bf9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
