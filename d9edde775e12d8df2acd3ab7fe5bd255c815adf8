@@ -107,6 +107,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "334f622f_c73cfecd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-07T11:12:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "886a99a6_53d442d3",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f78a8ce3_ba78847b",
@@ -138,6 +156,24 @@
           ]
         }
       ],
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d165f9d_b6467e1b",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1400,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-07T11:12:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f78a8ce3_ba78847b",
       "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -190,6 +226,42 @@
       "side": 1,
       "message": "Note: This would be a parser test, not a resolver test. See the `Attribute_Builtin_*` tests in `parser/variable_attribute_test.cc` Same for a couple of the other comments.",
       "parentUuid": "3b15ab28_cef0d1de",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b513b933_91f77906",
+        "filename": "src/tint/lang/wgsl/resolver/builtins_validation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-07T11:12:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ad72cf1_a0fc11cb",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eed9bf35_70bdda64",
+        "filename": "src/tint/lang/wgsl/resolver/builtins_validation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-07T11:12:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bdde369_60abd2a9",
       "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -275,6 +347,96 @@
       "writtenOn": "2025-11-06T14:50:38Z",
       "side": 1,
       "message": "Add a test where the ordering is backwards `@builtin(greater, frag_depth)` and is invalid",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bffee8d_01e8297f",
+        "filename": "src/tint/lang/wgsl/resolver/builtins_validation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-07T11:12:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38469c33_00ce015f",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca45ca1d_ac06dc23",
+        "filename": "src/tint/lang/wgsl/resolver/builtins_validation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-07T11:12:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "573849d9_cc396303",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f80b087d_05f8a098",
+        "filename": "src/tint/lang/wgsl/resolver/builtins_validation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-07T11:12:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c23aa220_6ad5c532",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4b1e2fc_c88338f9",
+        "filename": "src/tint/lang/wgsl/resolver/builtins_validation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-07T11:12:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "212e935a_3ff75e0b",
+      "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78b4bf0a_0c1a90ed",
+        "filename": "src/tint/lang/wgsl/resolver/builtins_validation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-07T11:12:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a7a7f43_6fa106c0",
       "revId": "d9edde775e12d8df2acd3ab7fe5bd255c815adf8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
