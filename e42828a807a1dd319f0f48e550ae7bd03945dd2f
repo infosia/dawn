@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3ebd842_22305c3c",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-07T19:59:58Z",
+      "side": 1,
+      "message": "I added this because initially I had modified `kMaxImmediateConstantsPerPipeline`, and then e2e and CTS tests started failing. I figured out that that this constant is used for the total size of internal immediates \u003d user immediates (called \"external\") and internal ones (workgroup sizes). The failures were surprising - like D3D11 failing because FXC was failing to compile Tint shaders that emitted spaces for bindings. Turned out this happened because functions like `GetImmediateByteOffsetInPipelineIfAny` were returning nullopt, and this is because the computed bits from `GetImmediateConstantBlockBits` were now out of range (\u003e16 bits). I discovered that `std::bitset`\u0027s constructor silently ignores any bits that are out of range (https://en.cppreference.com/w/cpp/utility/bitset/bitset.html see #2). So I added this assert here to catch when this happens. Maybe we should add an alternate constructor to our ityp::bitset that does this instead. I\u0027m not sure how useful silently truncating bits is.",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 43
+      },
+      "revId": "e42828a807a1dd319f0f48e550ae7bd03945dd2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
