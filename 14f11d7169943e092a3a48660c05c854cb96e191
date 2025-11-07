@@ -178,6 +178,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "33d39a6d_fb36b50b",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-07T18:11:03Z",
+      "side": 1,
+      "message": "I confirmed with borenet@ that Skia autorollers are tied to the idea of tracking a particular DEPS entry, so we\u0027ll need a dummy Chromium DEPS entry. I\u0027ll handle that in a follow-up since the script works as a manual roll script ATM and I adding the dummy entry will wipe votes.",
+      "parentUuid": "dddef7d2_0dfda137",
+      "range": {
+        "startLine": 69,
+        "startChar": 3,
+        "endLine": 69,
+        "endChar": 20
+      },
+      "revId": "14f11d7169943e092a3a48660c05c854cb96e191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a87043a_3ed1ca19",
