@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a54c896c_33ded3f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-07T02:28:38Z",
+      "side": 1,
+      "message": "I didn\u0027t pay enough attention to this CL. Sorry. I think maybe this needs to be changed. You can submit a render bundle multiple times. It doesn\u0027t feel like we should be creating a new render bundle every time one is executed. The user created one bundle, over 1000 frames they execute it once each frame. On the backend there are now 1000 render bundles, or rather, 1000 render bundles were created and destroyed\n\nI think we need to come up with another solution. Either\n\n* Add per-backend render bundles.\n\n  We can have a default impl so other backends don\u0027t have to add one\n  \n* Add an internal RenderBundleWGPU\n\n  In this case, the code would be similar to what\u0027s already where but we\u0027d\n  cache the creation of the inner bundles so we only create them the first\n  time we see them. If we see them again we just execute them again.\n  \n  The issue here is how to track the lifetime of the inner bundle. It only\n  needs to exist as long as the front end RenderBundle exists.\n\nThis came up as I was trying to add capture and replay. The user is going to want to see 1 bundle in their playback / debugging UI, not 1 per execution.",
+      "revId": "0148d28c64175227a53d85ec8b7a89b318336561",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
