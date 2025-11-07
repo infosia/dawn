@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fb7641c_364b9b09",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-07T06:53:08Z",
+      "side": 1,
+      "message": "I had mistakenly thought I needed to explicitly call reset on the `CommandIterator` to re-use it. It resets it self though so as a long as you iterate the entire thing it works so no need for `UseCommands`",
+      "revId": "691041ec926829a236a7c7b6d61ec2a7263d81ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
