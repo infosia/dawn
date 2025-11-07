@@ -79,11 +79,15 @@ DAWN_DISABLE_STRUCT_PADDING_WARNINGS
 
 // Convert byte sizes and offsets into immediate constant indices and offsets
 // (dividing everything by kImmediateConstantElementByteSize)
-constexpr ImmediateConstantMask GetImmediateConstantBlockBits(size_t byteOffset, size_t byteSize) {
+inline ImmediateConstantMask GetImmediateConstantBlockBits(size_t byteOffset, size_t byteSize) {
     size_t firstIndex = byteOffset / kImmediateConstantElementByteSize;
     size_t constantCount = byteSize / kImmediateConstantElementByteSize;
-
-    return ((1u << constantCount) - 1u) << firstIndex;
+    size_t mask = ((1u << constantCount) - 1u) << firstIndex;
+    auto result = ImmediateConstantMask{mask};
+    // If assert trips, ImmediateConstantMask may be too small. Update
+    // kMaxImmediateConstantsPerPipeline.
+    DAWN_ASSERT(result.to_ulong() == mask);
+    return result;
 }
 
 // Returns the offset of the member in the packed immediates of the pipeline.
