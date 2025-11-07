@@ -93,6 +93,30 @@
       },
       "revId": "e42828a807a1dd319f0f48e550ae7bd03945dd2f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86cd9e2d_c4284570",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-07T20:33:09Z",
+      "side": 1,
+      "message": "Yeah, I was wondering if we should do that, but I feel a bit iffy about modifying the container\u0027s default behaviour, since the `ityp` wrappers are mainly just to enforce strong typing, not changes in behaviour. This is why I suggested maybe adding a new constructor or (static) function that is unique to Dawn that performs the check.",
+      "parentUuid": "3da868b3_7e918d4e",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 43
+      },
+      "revId": "e42828a807a1dd319f0f48e550ae7bd03945dd2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
