@@ -22,6 +22,30 @@
       },
       "revId": "e42828a807a1dd319f0f48e550ae7bd03945dd2f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b164e41_cf11ed76",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-07T20:14:12Z",
+      "side": 1,
+      "message": "Note that I had to make this function `inline` instead of `constexpr` because `std::bitset::to_ulong` is not a `constexpr` before C++23.",
+      "parentUuid": "c3ebd842_22305c3c",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 43
+      },
+      "revId": "e42828a807a1dd319f0f48e550ae7bd03945dd2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
