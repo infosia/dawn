@@ -213,6 +213,30 @@
       },
       "revId": "e42828a807a1dd319f0f48e550ae7bd03945dd2f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68cf57f6_6aabc623",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-07T21:17:12Z",
+      "side": 1,
+      "message": "IMO it\u0027s fine to add an assert since it won\u0027t change the behavior in non-crashing cases. We actually used to have bounds checks in some of our ityp containers too but took them out because libc++ is configured to do them for us. https://dawn-review.googlesource.com/c/dawn/+/260462\n\nIt seems like C\u0027s `assert` can be used in constexpr, but I don\u0027t know if it\u0027s possible to make ours work. It would be very nice though.\n\nMaybe we can do something like, `if (std::is_constant_evaluated())` to choose between DAWN_ASSERT and some kind of compile-time failure? (best I can find for that is to throw an exception, idk if that works for us)",
+      "parentUuid": "33cf04dc_3d6b210c",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 43
+      },
+      "revId": "e42828a807a1dd319f0f48e550ae7bd03945dd2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
