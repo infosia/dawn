@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ddfa79a2_2f518812",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-11-07T18:55:34Z",
+      "side": 1,
+      "message": "It\u0027s intel on Metal and linux. Swiftshader on Win. (Is errorscope has known different behavior on intel?)\n\nThat\u0027s more issues than the creation*PipelineAsync. I will go that way.",
+      "parentUuid": "ea9ba1a8_f4f4645a",
+      "revId": "27df15f1b6238224fe1b304e33d38a6284fb1a55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "849a1858_2fdb9562",
         "filename": "src/dawn/native/webgpu/ComputePipelineWGPU.cpp",
         "patchSetId": 1
