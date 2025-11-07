@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "376281d8_5bf98c2a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-07T00:49:31Z",
+      "side": 1,
+      "message": "Not too much slower for small writes? Sometimes apps have a lot of small writes so it\u0027s pretty important",
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "61f9ea0b_b91a4aa1",
@@ -107,6 +124,86 @@
         "startChar": 8,
         "endLine": 138,
         "endChar": 27
+      },
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a2fd7e2_2b344ecf",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-07T00:49:31Z",
+      "side": 1,
+      "message": "How about just `client-\u003eDisconnect(); return;`? That should lose the device instead of crashing the renderer.\n\nIs it possible to hit this on-demand by just doing a really huge writeBuffer? I don\u0027t think we validate the size until the server side.",
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f90e05f_76d7b188",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-07T00:49:31Z",
+      "side": 1,
+      "message": "nit: Unrelated to this CL but it\u0027s confusing that this doesn\u0027t get initialized. AFAICT it\u0027s never used in the wire at all, only after deserializing from the wire. I guess this is how all pointers work in the wire under the hood but this one is confusing because it\u0027s more visible. Maybe a short comment on these (and on the ones in `Buffer::Create` and `Buffer::APIUnmap`) saying something like `// placeholder to be filled by deserialization`",
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47b29d5c_24dbcf72",
+        "filename": "src/dawn/wire/server/ServerQueue.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-07T00:49:31Z",
+      "side": 1,
+      "message": "nit: unclear why we wouldn\u0027t be able to\n```suggestion\n    // Try first to use GetSourceData if the memory transfer service implements\n    // it. If so, we can avoid a copy.\n```",
+      "range": {
+        "startLine": 82,
+        "startChar": 24,
+        "endLine": 82,
+        "endChar": 65
+      },
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd639cf3_de9ffae7",
+        "filename": "src/dawn/wire/server/ServerQueue.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-07T00:49:31Z",
+      "side": 1,
+      "message": "```suggestion\n    // Otherwise, fall back to DeserializeDataUpdate.\n```",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 23
       },
       "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
