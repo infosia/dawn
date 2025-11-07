@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "81b970b5_69001ecd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-07T15:49:37Z",
+      "side": 1,
+      "message": "Yeah it\u0027s kind of a cleanup before adding immediates in a future CL. I\u0027ll edit the commit message.",
+      "parentUuid": "070dce88_4ff418c2",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 14
+      },
+      "revId": "cad990cf7d0de3a0b5807e182a59b4f34d8c3eb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "4bb5f557_f58c0f07",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
