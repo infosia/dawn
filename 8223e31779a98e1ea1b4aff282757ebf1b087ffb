@@ -46,6 +46,30 @@
       },
       "revId": "8223e31779a98e1ea1b4aff282757ebf1b087ffb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75092f04_01c8cd87",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-08T03:07:26Z",
+      "side": 1,
+      "message": "In a previous comment I suggested `ImmediateConstantMask.size()` without the `{}`, which didn\u0027t make sense, maybe that was what you tried.",
+      "parentUuid": "0774da63_90b7e365",
+      "range": {
+        "startLine": 84,
+        "startChar": 18,
+        "endLine": 84,
+        "endChar": 48
+      },
+      "revId": "8223e31779a98e1ea1b4aff282757ebf1b087ffb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
