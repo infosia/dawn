@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4177f37c_cc2a53f4",
+        "filename": "src/dawn/tests/unittests/ITypBitsetTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-08T02:22:31Z",
+      "side": 1,
+      "message": "nit: Harness name should end in DeathTest. To achieve this you can just do\n```\nusing ITypBitsetDeathTest \u003d ITypBitsetTest;\n```\nlike I did here: https://dawn-review.googlesource.com/c/dawn/+/260379",
+      "range": {
+        "startLine": 229,
+        "startChar": 7,
+        "endLine": 229,
+        "endChar": 21
+      },
+      "revId": "0f0f4d490147206aed02b0e282efd1e28adcbf4f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bebd0e62_ed021292",
+        "filename": "src/dawn/tests/unittests/ITypBitsetTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-08T02:22:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t need to skip, that\u0027s only for other containers where we\u0027re relying on the STL implementation to do the bounds check instead of doing it ourselves.",
+      "revId": "0f0f4d490147206aed02b0e282efd1e28adcbf4f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
