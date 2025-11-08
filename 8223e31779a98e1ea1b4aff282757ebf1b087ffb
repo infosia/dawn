@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d579f605_2e4c0331",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-08T02:27:27Z",
+      "side": 1,
+      "message": "Would `ImmediateConstantMask{}.size()` work? (If not never mind.)",
+      "range": {
+        "startLine": 84,
+        "startChar": 18,
+        "endLine": 84,
+        "endChar": 48
+      },
+      "revId": "8223e31779a98e1ea1b4aff282757ebf1b087ffb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
