@@ -42,6 +42,7 @@
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/common/SystemUtils.h"
 #include "dawn/common/Version_autogen.h"
+#include "dawn/common/Sha3.h"
 #include "dawn/native/AsyncTask.h"
 #include "dawn/native/AttachmentState.h"
 #include "dawn/native/BindGroup.h"
@@ -419,8 +420,13 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
     // Record the cache key from the adapter info. Note that currently, if a new extension
     // descriptor is added (and probably handled here), the cache key recording needs to be
     // updated.
-    StreamIn(&mDeviceCacheKey, kDawnVersion, adapterInfo, mEnabledFeatures.featuresBitSet, mToggles,
+    CacheKey cacheKey;
+    StreamIn(&cacheKey, kDawnVersion, adapterInfo, mEnabledFeatures.featuresBitSet, mToggles,
              cacheDesc);
+
+    // Hash the key to make it smaller.
+    Sha3_224::Output hash = Sha3_224::Hash(cacheKey.data(), cacheKey.size());
+    StreamIn(&mDeviceCacheKey, hash);
 }
 
 DeviceBase::DeviceBase() : mState(State::Alive), mToggles(ToggleStage::Device) {
