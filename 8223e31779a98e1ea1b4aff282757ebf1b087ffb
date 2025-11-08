@@ -22,6 +22,30 @@
       },
       "revId": "8223e31779a98e1ea1b4aff282757ebf1b087ffb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0774da63_90b7e365",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-08T02:37:04Z",
+      "side": 1,
+      "message": "This is exactly what I tried the first time, and it didn\u0027t compile... and I convinced myself that it made sense. Then you suggest the same thing here, and I was replying to explain why it doesn\u0027t work, but I couldn\u0027t make sense of it... so I tried again it now it compiles. I don\u0027t know, but it\u0027s definitely better 😊",
+      "parentUuid": "d579f605_2e4c0331",
+      "range": {
+        "startLine": 84,
+        "startChar": 18,
+        "endLine": 84,
+        "endChar": 48
+      },
+      "revId": "8223e31779a98e1ea1b4aff282757ebf1b087ffb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
