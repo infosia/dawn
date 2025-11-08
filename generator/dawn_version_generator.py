@@ -106,9 +106,20 @@ def get_version(args):
     return get_git_hash(os.path.abspath(args.dawn_dir))
 
 
+def get_version_byte_array(version_str):
+    version_str = version_str.strip()
+    if len(version_str) != 40:
+        return ", ".join(["0x00"] * 20)
+    byte_values = [
+        f"0x{version_str[i:i+2]}" for i in range(0, len(version_str), 2)
+    ]
+    return ", ".join(byte_values)
+
+
 def compute_params(args):
+    version = get_version(args)
     return {
-        "get_version": lambda: get_version(args),
+        "get_version_byte_array": lambda: get_version_byte_array(version),
     }
 
 
