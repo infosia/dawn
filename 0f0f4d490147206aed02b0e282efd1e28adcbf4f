@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cabce798_287c5a83",
+        "filename": "src/dawn/tests/unittests/ITypBitsetTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-08T02:27:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4177f37c_cc2a53f4",
+      "range": {
+        "startLine": 229,
+        "startChar": 7,
+        "endLine": 229,
+        "endChar": 21
+      },
+      "revId": "0f0f4d490147206aed02b0e282efd1e28adcbf4f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bebd0e62_ed021292",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-11-08T02:22:31Z",
       "side": 1,
       "message": "Shouldn\u0027t need to skip, that\u0027s only for other containers where we\u0027re relying on the STL implementation to do the bounds check instead of doing it ourselves.",
+      "revId": "0f0f4d490147206aed02b0e282efd1e28adcbf4f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c862bb4_2923848e",
+        "filename": "src/dawn/tests/unittests/ITypBitsetTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-08T02:27:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bebd0e62_ed021292",
       "revId": "0f0f4d490147206aed02b0e282efd1e28adcbf4f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
