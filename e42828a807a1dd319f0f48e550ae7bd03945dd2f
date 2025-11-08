@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bda5d6a_36638867",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-08T01:57:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "193554e6_dcda8d1b",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 61
+      },
+      "revId": "e42828a807a1dd319f0f48e550ae7bd03945dd2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c3ebd842_22305c3c",
@@ -301,6 +325,30 @@
       "side": 1,
       "message": "Discussed with Kai offline, and got it working. Am going to land a separate CL with this check in the `ityp::bitset` ctor first, and will remove the assert from here.",
       "parentUuid": "70b5dd12_a5d4ff6a",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 43
+      },
+      "revId": "e42828a807a1dd319f0f48e550ae7bd03945dd2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd7ad950_392ed008",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-08T01:57:19Z",
+      "side": 1,
+      "message": "https://dawn-review.googlesource.com/c/dawn/+/271835",
+      "parentUuid": "4c425421_11b2103c",
       "range": {
         "startLine": 87,
         "startChar": 0,
