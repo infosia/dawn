@@ -1,6 +1,52 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdfbc622_f23ba47d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-08T03:00:42Z",
+      "side": 1,
+      "message": "GPUTextureViewDescriptor",
+      "range": {
+        "startLine": 9,
+        "startChar": 14,
+        "endLine": 9,
+        "endChar": 29
+      },
+      "revId": "fd2dc46971655b2b68e50a0224896e09231fb26c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d02c94c_a32df190",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-08T03:00:42Z",
+      "side": 1,
+      "message": "This was a spec breaking change, right? Do you have a link to the WG decision to do a breaking change? I can\u0027t find it and I don\u0027t really remember the discussion. (Though I know we discussed this recently in relation to swizzles.)",
+      "range": {
+        "startLine": 9,
+        "startChar": 48,
+        "endLine": 9,
+        "endChar": 70
+      },
+      "revId": "fd2dc46971655b2b68e50a0224896e09231fb26c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "7dcdae3a_cb82bc10",
