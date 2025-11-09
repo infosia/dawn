@@ -112,14 +112,15 @@ $B1: {  # root
   %foo_position_Input:ptr<__in, vec4<f32>, read> = var undef @invariant @builtin(position)
   %foo_loc0_Input:ptr<__in, f32, read> = var undef @location(0)
   %foo_loc1_Input:ptr<__in, f32, read> = var undef @location(1) @interpolate(linear, sample)
+  %foo_loc2_Input:ptr<__in, vec4<f32>, read> = var undef @location(2) @interpolate(linear, center)
 }
 
 %foo_inner = func(%front_facing:bool, %position:vec4<f32>, %color1:f32, %color2:f32):void {
   $B2: {
     if %front_facing [t: $B3] {  # if_1
       $B3: {  # true
-        %10:f32 = add %color1, %color2
-        %11:vec4<f32> = mul %position, %10
+        %11:f32 = add %color1, %color2
+        %12:vec4<f32> = mul %position, %11
         exit_if  # if_1
       }
     }
@@ -128,11 +129,11 @@ $B1: {  # root
 }
 %foo = @fragment func():void {
   $B4: {
-    %13:bool = load %foo_front_facing_Input
-    %14:vec4<f32> = load %foo_position_Input
-    %15:f32 = load %foo_loc0_Input
-    %16:f32 = load %foo_loc1_Input
-    %17:void = call %foo_inner, %13, %14, %15, %16
+    %14:bool = load %foo_front_facing_Input
+    %15:vec4<f32> = load %foo_position_Input
+    %16:f32 = load %foo_loc0_Input
+    %17:f32 = load %foo_loc1_Input
+    %18:void = call %foo_inner, %14, %15, %16, %17
     ret
   }
 }
@@ -241,18 +242,19 @@ $B1: {  # root
   %foo_position_Input:ptr<__in, vec4<f32>, read> = var undef @invariant @builtin(position)
   %foo_loc0_Input:ptr<__in, f32, read> = var undef @location(0)
   %foo_loc1_Input:ptr<__in, f32, read> = var undef @location(1) @interpolate(linear, sample)
+  %foo_loc2_Input:ptr<__in, vec4<f32>, read> = var undef @location(2) @interpolate(linear, center)
 }
 
 %foo_inner = func(%inputs:Inputs):void {
   $B2: {
-    %7:bool = access %inputs, 0i
-    if %7 [t: $B3] {  # if_1
+    %8:bool = access %inputs, 0i
+    if %8 [t: $B3] {  # if_1
       $B3: {  # true
-        %8:vec4<f32> = access %inputs, 1i
-        %9:f32 = access %inputs, 2i
-        %10:f32 = access %inputs, 3i
-        %11:f32 = add %9, %10
-        %12:vec4<f32> = mul %8, %11
+        %9:vec4<f32> = access %inputs, 1i
+        %10:f32 = access %inputs, 2i
+        %11:f32 = access %inputs, 3i
+        %12:f32 = add %10, %11
+        %13:vec4<f32> = mul %9, %12
         exit_if  # if_1
       }
     }
@@ -261,12 +263,12 @@ $B1: {  # root
 }
 %foo = @fragment func():void {
   $B4: {
-    %14:bool = load %foo_front_facing_Input
-    %15:vec4<f32> = load %foo_position_Input
-    %16:f32 = load %foo_loc0_Input
-    %17:f32 = load %foo_loc1_Input
-    %18:Inputs = construct %14, %15, %16, %17
-    %19:void = call %foo_inner, %18
+    %15:bool = load %foo_front_facing_Input
+    %16:vec4<f32> = load %foo_position_Input
+    %17:f32 = load %foo_loc0_Input
+    %18:f32 = load %foo_loc1_Input
+    %19:Inputs = construct %15, %16, %17, %18
+    %20:void = call %foo_inner, %19
     ret
   }
 }
@@ -356,16 +358,17 @@ $B1: {  # root
   %foo_position_Input:ptr<__in, vec4<f32>, read> = var undef @invariant @builtin(position)
   %foo_loc0_Input:ptr<__in, f32, read> = var undef @location(0)
   %foo_loc1_Input:ptr<__in, f32, read> = var undef @location(1) @interpolate(linear, sample)
+  %foo_loc2_Input:ptr<__in, vec4<f32>, read> = var undef @location(2) @interpolate(linear, center)
 }
 
 %foo_inner = func(%front_facing:bool, %inputs:Inputs, %color2:f32):void {
   $B2: {
     if %front_facing [t: $B3] {  # if_1
       $B3: {  # true
-        %9:vec4<f32> = access %inputs, 0i
-        %10:f32 = access %inputs, 1i
-        %11:f32 = add %10, %color2
-        %12:vec4<f32> = mul %9, %11
+        %10:vec4<f32> = access %inputs, 0i
+        %11:f32 = access %inputs, 1i
+        %12:f32 = add %11, %color2
+        %13:vec4<f32> = mul %10, %12
         exit_if  # if_1
       }
     }
@@ -374,12 +377,12 @@ $B1: {  # root
 }
 %foo = @fragment func():void {
   $B4: {
-    %14:bool = load %foo_front_facing_Input
-    %15:vec4<f32> = load %foo_position_Input
-    %16:f32 = load %foo_loc0_Input
-    %17:Inputs = construct %15, %16
-    %18:f32 = load %foo_loc1_Input
-    %19:void = call %foo_inner, %14, %17, %18
+    %15:bool = load %foo_front_facing_Input
+    %16:vec4<f32> = load %foo_position_Input
+    %17:f32 = load %foo_loc0_Input
+    %18:Inputs = construct %16, %17
+    %19:f32 = load %foo_loc1_Input
+    %20:void = call %foo_inner, %15, %18, %19
     ret
   }
 }
@@ -552,24 +555,32 @@ $B1: {  # root
   %foo_position_Output:ptr<__out, vec4<f32>, write> = var undef @invariant @builtin(position)
   %foo_loc0_Output:ptr<__out, f32, write> = var undef @location(0)
   %foo_loc1_Output:ptr<__out, f32, write> = var undef @location(1) @interpolate(linear, sample)
+  %foo_loc2_Output:ptr<__out, vec4<f32>, write> = var undef @location(2) @interpolate(linear, center)
 }
 
 %foo_inner = func():Outputs {
   $B2: {
-    %5:vec4<f32> = construct 0.0f
-    %6:Outputs = construct %5, 0.25f, 0.75f
-    ret %6
+    %6:vec4<f32> = construct 0.0f
+    %7:Outputs = construct %6, 0.25f, 0.75f
+    ret %7
   }
 }
 %foo = @vertex func():void {
   $B3: {
-    %8:Outputs = call %foo_inner
-    %9:vec4<f32> = access %8, 0u
-    store %foo_position_Output, %9
-    %10:f32 = access %8, 1u
-    store %foo_loc0_Output, %10
-    %11:f32 = access %8, 2u
-    store %foo_loc1_Output, %11
+    %9:Outputs = call %foo_inner
+    %10:vec4<f32> = access %9, 0u
+    store %foo_position_Output, %10
+    %11:f32 = access %9, 1u
+    store %foo_loc0_Output, %11
+    %12:f32 = access %9, 2u
+    store %foo_loc1_Output, %12
+    %13:f32 = swizzle %10, w
+    %14:f32 = div 1.0f, %13
+    %15:f32 = swizzle %10, z
+    %16:f32 = mul %14, %15
+    %17:vec2<f32> = swizzle %10, xy
+    %18:vec4<f32> = construct %17, %16, %14
+    store %foo_loc2_Output, %18
     ret
   }
 }
@@ -1344,6 +1355,191 @@ $B1: {  # root
     core::ir::transform::ImmediateDataLayout immediate_data;
     ShaderIOConfig config{immediate_data};
     config.polyfill_f16_io = true;
+    Run(ShaderIO, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(SpirvWriter_ShaderIOTest, ForcePixelCenters_SampleInterpolation) {
+    auto* position = b.FunctionParam("position", ty.vec4<f32>());
+    position->SetBuiltin(core::BuiltinValue::kPosition);
+    auto* color = b.FunctionParam("color", ty.f32());
+    color->SetLocation(0);
+    color->SetInterpolation(core::Interpolation{core::InterpolationType::kLinear,
+                                                core::InterpolationSampling::kSample});
+
+    auto* ep = b.Function("foo", ty.void_());
+    ep->SetParams({position, color});
+    ep->SetStage(core::ir::Function::PipelineStage::kFragment);
+
+    b.Append(ep->Block(), [&] {
+        b.Let("p", position);
+        b.Return(ep);
+    });
+
+    auto* src = R"(
+%foo = @fragment func(%position:vec4<f32> [@position], %color:f32 [@location(0), @interpolate(linear, sample)]):void {
+  $B1: {
+    %p:vec4<f32> = let %position
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %foo_position_Input:ptr<__in, vec4<f32>, read> = var undef @builtin(position)
+  %foo_loc0_Input:ptr<__in, f32, read> = var undef @location(0) @interpolate(linear, sample)
+  %foo_loc1_Input:ptr<__in, vec4<f32>, read> = var undef @location(1) @interpolate(linear, center)
+}
+
+%foo_inner = func(%position:vec4<f32>, %color:f32):void {
+  $B2: {
+    %p:vec4<f32> = let %position
+    ret
+  }
+}
+%foo = @fragment func():void {
+  $B3: {
+    %9:vec4<f32> = load %foo_position_Input
+    %10:vec2<f32> = swizzle %9, xy
+    %11:vec2<f32> = floor %10
+    %12:vec2<f32> = construct 0.5f, 0.5f
+    %13:vec2<f32> = add %11, %12
+    %14:vec4<f32> = load %foo_loc1_Input
+    %15:f32 = swizzle %14, z
+    %16:f32 = swizzle %14, w
+    %17:vec4<f32> = construct %13, %15, %16
+    %18:f32 = load %foo_loc0_Input
+    %19:void = call %foo_inner, %17, %18
+    ret
+  }
+}
+)";
+
+    core::ir::transform::ImmediateDataLayout immediate_data;
+    ShaderIOConfig config{immediate_data};
+    config.apply_pixel_center_workaround = true;
+    Run(ShaderIO, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(SpirvWriter_ShaderIOTest, ForcePixelCenters_SampleIndex) {
+    auto* position = b.FunctionParam("position", ty.vec4<f32>());
+    position->SetBuiltin(core::BuiltinValue::kPosition);
+    auto* idx = b.FunctionParam("idx", ty.u32());
+    idx->SetBuiltin(core::BuiltinValue::kSampleIndex);
+
+    auto* ep = b.Function("foo", ty.void_());
+    ep->SetParams({position, idx});
+    ep->SetStage(core::ir::Function::PipelineStage::kFragment);
+
+    b.Append(ep->Block(), [&] {
+        b.Let("p", position);
+        b.Return(ep);
+    });
+
+    auto* src = R"(
+%foo = @fragment func(%position:vec4<f32> [@position], %idx:u32 [@sample_index]):void {
+  $B1: {
+    %p:vec4<f32> = let %position
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %foo_position_Input:ptr<__in, vec4<f32>, read> = var undef @builtin(position)
+  %foo_sample_index_Input:ptr<__in, u32, read> = var undef @interpolate(flat) @builtin(sample_index)
+  %foo_loc0_Input:ptr<__in, vec4<f32>, read> = var undef @location(0) @interpolate(linear, center)
+}
+
+%foo_inner = func(%position:vec4<f32>, %idx:u32):void {
+  $B2: {
+    %p:vec4<f32> = let %position
+    ret
+  }
+}
+%foo = @fragment func():void {
+  $B3: {
+    %9:vec4<f32> = load %foo_position_Input
+    %10:vec2<f32> = swizzle %9, xy
+    %11:vec2<f32> = floor %10
+    %12:vec2<f32> = construct 0.5f, 0.5f
+    %13:vec2<f32> = add %11, %12
+    %14:vec4<f32> = load %foo_loc0_Input
+    %15:f32 = swizzle %14, z
+    %16:f32 = swizzle %14, w
+    %17:vec4<f32> = construct %13, %15, %16
+    %18:u32 = load %foo_sample_index_Input
+    %19:void = call %foo_inner, %17, %18
+    ret
+  }
+}
+)";
+
+    core::ir::transform::ImmediateDataLayout immediate_data;
+    ShaderIOConfig config{immediate_data};
+    config.apply_pixel_center_workaround = true;
+    Run(ShaderIO, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(SpirvWriter_ShaderIOTest, ForcePixelCenters_NoModification) {
+    auto* position = b.FunctionParam("position", ty.vec4<f32>());
+    position->SetBuiltin(core::BuiltinValue::kPosition);
+    auto* color = b.FunctionParam("color", ty.f32());
+    color->SetLocation(0);
+
+    auto* ep = b.Function("foo", ty.void_());
+    ep->SetParams({position, color});
+    ep->SetStage(core::ir::Function::PipelineStage::kFragment);
+
+    b.Append(ep->Block(), [&] {
+        b.Let("p", position);
+        b.Return(ep);
+    });
+
+    auto* src = R"(
+%foo = @fragment func(%position:vec4<f32> [@position], %color:f32 [@location(0)]):void {
+  $B1: {
+    %p:vec4<f32> = let %position
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %foo_position_Input:ptr<__in, vec4<f32>, read> = var undef @builtin(position)
+  %foo_loc0_Input:ptr<__in, f32, read> = var undef @location(0)
+}
+
+%foo_inner = func(%position:vec4<f32>, %color:f32):void {
+  $B2: {
+    %p:vec4<f32> = let %position
+    ret
+  }
+}
+%foo = @fragment func():void {
+  $B3: {
+    %8:vec4<f32> = load %foo_position_Input
+    %9:f32 = load %foo_loc0_Input
+    %10:void = call %foo_inner, %8, %9
+    ret
+  }
+}
+)";
+
+    core::ir::transform::ImmediateDataLayout immediate_data;
+    ShaderIOConfig config{immediate_data};
+    config.apply_pixel_center_workaround = true;
     Run(ShaderIO, config);
 
     EXPECT_EQ(expect, str());
