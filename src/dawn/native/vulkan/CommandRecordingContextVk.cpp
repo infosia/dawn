@@ -27,6 +27,7 @@
 
 #include "src/dawn/native/vulkan/CommandRecordingContextVk.h"
 
+#include "dawn/native/vulkan/BufferVk.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "vulkan/vulkan_core.h"
 
@@ -37,6 +38,73 @@ void CommandRecordingContext::CheckBufferNeedsEagerTransition(Buffer* buffer,
     if (!(usage & kMappableBufferUsages) && (buffer->GetInternalUsage() & kMappableBufferUsages)) {
         mappableBuffersForEagerTransition.insert(buffer);
     }
+// Separate barriers with vertex stages in destination stages from all other barriers.
+// This avoids creating unnecessary fragment->vertex dependencies when merging barriers.
+// Eg. merging a compute->vertex barrier and a fragment->fragment barrier would create
+// a compute|fragment->vertex|fragment barrier.
+constexpr VkPipelineStageFlags vertexStages = VK_PIPELINE_STAGE_VERTEX_INPUT_BIT |
+                                              VK_PIPELINE_STAGE_VERTEX_SHADER_BIT |
+                                              VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT;
+
+}  // namespace
+
+bool CommandRecordingContext::AddBufferBarrier(VkAccessFlags srcAccessMask,
+                                               VkAccessFlags dstAccessMask,
+                                               VkPipelineStageFlags srcStages,
+                                               VkPipelineStageFlags dstStages,
+                                               ImplicitBarrierSyncId buffer_barrier_sync_id) {
+    if (IsRedundantBarrier(srcAccessMask, dstAccessMask, srcStages, dstStages,
+                           buffer_barrier_sync_id)) {
+        return false;
+    }
+    BufferBarrier* barrier = nullptr;
+    if (dstStages & vertexStages) {
+        barrier = &mVertexBufferBarrier;
+    } else {
+        barrier = &mNonVertexBufferBarrier;
+    }
+
+    barrier->bufferSrcAccessMask |= srcAccessMask;
+    barrier->bufferDstAccessMask |= dstAccessMask;
+    barrier->bufferSrcStages |= srcStages;
+    barrier->bufferDstStages |= dstStages;
+    return true;
+}
+
+void CommandRecordingContext::UpdateBarrierSyncId(Buffer* buffer) {
+    if (mEnableSkipRedundantBarriers) {
+        buffer->UpdateImplicitBarrierSyncId(mImplicitBarrierSyncId);
+    }
+}
+
+bool CommandRecordingContext::IsRedundantBarrier(VkAccessFlags srcAccessMask,
+                                                 VkAccessFlags dstAccessMask,
+                                                 VkPipelineStageFlags srcStages,
+                                                 VkPipelineStageFlags dstStages,
+                                                 ImplicitBarrierSyncId buffer_barrier_sync_id) {
+    if (!mEnableSkipRedundantBarriers) {
+        return false;
+    }
+    // We do not bother to avoid redundant barriers for vertex. We could in the future.
+    if (dstStages & vertexStages) {
+        return false;
+    }
+
+    for (auto [barrier, lastSync] : mNonVertexBarrierMapSync) {
+        if (IsSubset(srcStages, barrier.bufferSrcStages) &&
+            IsSubset(dstStages, barrier.bufferDstStages)) {
+            if (IsSubset(dstAccessMask, barrier.bufferDstAccessMask) &&
+                IsSubset(srcAccessMask, barrier.bufferSrcAccessMask)) {
+                // Any barrier that came after the the last update to this buffer will have a larger
+                // sync id.
+                if (buffer_barrier_sync_id < lastSync) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
 }
 
 void CommandRecordingContext::EmitBufferBarrierIfNecessary(Device* device,
@@ -53,6 +121,21 @@ void CommandRecordingContext::EmitBufferBarrierIfNecessary(Device* device,
 
     device->fn.CmdPipelineBarrier(commandBuffer, barrier.srcStages, barrier.dstStages, 0, 1,
                                   &vkBarrier, 0, nullptr, 0, nullptr);
+        device->fn.CmdPipelineBarrier(commandBuffer, barrier.bufferSrcStages,
+                                      barrier.bufferDstStages, 0, 1, &vkBarrier, 0, nullptr, 0,
+                                      nullptr);
+    };
+    // Emit vertex and non-vertex barriers separately to keep src and dst stage masks separate.
+    EmitBarrierIfNeeded(mVertexBufferBarrier);
+    EmitBarrierIfNeeded(mNonVertexBufferBarrier);
+
+    if (mEnableSkipRedundantBarriers) {
+        mImplicitBarrierSyncId++;
+        mNonVertexBarrierMapSync[mNonVertexBufferBarrier] = mImplicitBarrierSyncId;
+    }
+
+    mVertexBufferBarrier = {};
+    mNonVertexBufferBarrier = {};
 }
 
 }  // namespace dawn::native::vulkan
