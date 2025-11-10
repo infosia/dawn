@@ -33,6 +33,24 @@
       "message": "ptal and tell me what you want me to do for the previous comment.",
       "revId": "bdf6ca7d6e7021351545e02aaefeab84d96d0b8b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac51d76c_fe7dc7a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-11-10T21:09:42Z",
+      "side": 1,
+      "message": "I touched the similar issue and I went for checking aspect info of the view and read-only info ([related code](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/webgpu/ToWGPU.cpp;l\u003d182;drc\u003de5539b754d83764f2f7772dc81aaf73d09d595a3)), which looks like the way of 3 or 4. Vote +1 for 3, as the captured result is technically correct in terms of spec and can theoretically be consumed by another webgpu impl.",
+      "parentUuid": "8842afce_3208ee24",
+      "revId": "bdf6ca7d6e7021351545e02aaefeab84d96d0b8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
