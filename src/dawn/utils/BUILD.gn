@@ -113,6 +113,8 @@ static_library("system_utils") {
     "${dawn_root}/src/dawn/common",
   ]
 
+  deps = [ "${dawn_root}/src/dawn/native:sources" ]
+
   frameworks = []
 
   if (is_win && !dawn_is_winuwp) {
