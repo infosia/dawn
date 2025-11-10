@@ -208,25 +208,32 @@ ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial wai
 }
 
 MaybeError Queue::SubmitFenceSync() {
-    return mFencesInFlight.Use([&](auto fencesInFlight) -> MaybeError {
-        if (!mHasPendingCommands) {
+    Device* device = ToBackend(GetDevice());
+    return device->ExecuteGLWork([this](const OpenGLFunctions& gl) {
+        return mFencesInFlight.Use([&](auto fencesInFlight) -> MaybeError {
+            if (!mHasPendingCommands) {
+                return {};
+            }
+            Device* device = ToBackend(GetDevice());
+
+            if (!device->IsToggleEnabled(Toggle::GLForceDisablePersistentMap)) {
+                DAWN_GL_TRY(gl, MemoryBarrier(GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT_EXT));
+            }
+
+            Ref<WrappedEGLSync> sync;
+            DAWN_TRY_ASSIGN(sync, WrappedEGLSync::Create(device, mEGLSyncType, nullptr));
+
+            // Signal the sync if it is EGL_SYNC_REUSABLE_KHR. On the other hand,
+            // EGL_SYNC_FENCE_KHR has its signal scheduled on creation.
+            if (mEGLSyncType == EGL_SYNC_REUSABLE_KHR) {
+                DAWN_TRY(sync->Signal(EGL_SIGNALED));
+            }
+
+            IncrementLastSubmittedCommandSerial();
+            fencesInFlight->emplace_back(sync, GetLastSubmittedCommandSerial());
+            mHasPendingCommands = false;
             return {};
-        }
-        Device* device = ToBackend(GetDevice());
-
-        Ref<WrappedEGLSync> sync;
-        DAWN_TRY_ASSIGN(sync, WrappedEGLSync::Create(device, mEGLSyncType, nullptr));
-
-        // Signal the sync if it is EGL_SYNC_REUSABLE_KHR. On the other hand,
-        // EGL_SYNC_FENCE_KHR has its signal scheduled on creation.
-        if (mEGLSyncType == EGL_SYNC_REUSABLE_KHR) {
-            DAWN_TRY(sync->Signal(EGL_SIGNALED));
-        }
-
-        IncrementLastSubmittedCommandSerial();
-        fencesInFlight->emplace_back(sync, GetLastSubmittedCommandSerial());
-        mHasPendingCommands = false;
-        return {};
+        });
     });
 }
 
