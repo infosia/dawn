@@ -306,6 +306,11 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     if (SupportTextureComponentSwizzle()) {
         EnableFeature(Feature::TextureComponentSwizzle);
     }
+
+    // BufferMapExtendedUsages
+    if (mFunctions.IsGLExtensionSupported("GL_EXT_buffer_storage")) {
+        EnableFeature(Feature::BufferMapExtendedUsages);
+    }
 }
 
 namespace {
@@ -446,6 +451,8 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         isFloat32Renderable || gl.IsGLExtensionSupported("GL_EXT_color_buffer_half_float");
     bool isRG11B10UfloatRenderable = isFloat32Renderable;
 
+    const bool supportsPersistentMap = gl.IsGLExtensionSupported("GL_EXT_buffer_storage");
+
     // TODO(crbug.com/dawn/343): Investigate emulation.
     deviceToggles->Default(Toggle::DisableIndexedDrawBuffers, !supportsIndexedDrawBuffers);
     deviceToggles->Default(Toggle::DisableSampleVariables, !supportsSampleVariables);
@@ -497,6 +504,17 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     deviceToggles->Default(Toggle::GLDepthBiasModifier, gl.GetVersion().IsDesktop() ||
                                                             IsANGLEDesktopGL(mName) ||
                                                             IsSwiftShader(mName));
+
+    if (!supportsPersistentMap) {
+        deviceToggles->ForceSet(Toggle::GLForceDisablePersistentMap, true);
+    }
+
+    if (mVendorId == gpu_info::kVendorID_ARM) {
+        // TODO(crbug.com/451928481): Mali seems to have bugs when using persistently mapped buffers
+        // together with server writes such as glCopyBufferSubData. A glMemoryBarrier would
+        // work-around that.
+        deviceToggles->ForceSet(Toggle::GLForceMemoryBarrierForPersistentMap, true);
+    }
 
     // (crbug.com/379805731): PowerVR GE8300 GLES 3.1 driver cannot compile .length() on SSBO
     // dynamic array.

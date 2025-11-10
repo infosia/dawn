@@ -763,7 +763,17 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
      {"ignore_imported_ahardwarebuffer_vulkan_image_size",
       "Don't validate the required VkImage size against the size of the AHardwareBuffer on import. "
       "Some drivers report the wrong size.",
-      "https://crbug.com/333424893", ToggleStage::Device}},
+      "https://crbug.com/chromium/333424893", ToggleStage::Device}},
+    {Toggle::GLForceDisablePersistentMap,
+     {"gl_force_disable_persistent_map",
+      "Disable the use of persistently mapped buffers in the GL backend.",
+      "https://crbug.com/dawn/451928481", ToggleStage::Device}},
+    {Toggle::GLForceMemoryBarrierForPersistentMap,
+     {"gl_force_memory_barrier_for_persistent_map",
+      "On some devices, persistent map would race with certain server writes such as "
+      "glCopyBufferSubData. "
+      "This toggle forces a memory barrier to work around that.",
+      "https://crbug.com/dawn/451928481", ToggleStage::Device}},
     // Comment to separate the }} so it is clearer what to copy-paste to add a toggle.
 }};
 

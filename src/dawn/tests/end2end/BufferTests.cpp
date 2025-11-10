@@ -627,7 +627,9 @@ TEST_P(BufferMappingTests, RegressChromium1421170) {
 
 DAWN_INSTANTIATE_TEST_P(BufferMappingTests,
                         {D3D11Backend(), D3D12Backend(), MetalBackend(), OpenGLBackend(),
-                         OpenGLESBackend(), VulkanBackend(), WebGPUBackend()},
+                         OpenGLBackend({"gl_force_disable_persistent_map"}), OpenGLESBackend(),
+                         OpenGLESBackend({"gl_force_disable_persistent_map"}), VulkanBackend(),
+                         WebGPUBackend()},
                         std::initializer_list<wgpu::CallbackMode>{
                             wgpu::CallbackMode::WaitAnyOnly, wgpu::CallbackMode::AllowProcessEvents,
                             wgpu::CallbackMode::AllowSpontaneous});
@@ -1053,7 +1055,9 @@ DAWN_INSTANTIATE_TEST(BufferMappedAtCreationTests,
                       D3D12Backend({}, {"use_d3d12_resource_heap_tier2"}),
                       MetalBackend(),
                       OpenGLBackend(),
+                      OpenGLBackend({"gl_force_disable_persistent_map"}),
                       OpenGLESBackend(),
+                      OpenGLESBackend({"gl_force_disable_persistent_map"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -1297,7 +1301,9 @@ DAWN_INSTANTIATE_TEST(BufferTests,
                       D3D12Backend(),
                       MetalBackend(),
                       OpenGLBackend(),
+                      OpenGLBackend({"gl_force_disable_persistent_map"}),
                       OpenGLESBackend(),
+                      OpenGLESBackend({"gl_force_disable_persistent_map"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -1326,14 +1332,17 @@ TEST_P(BufferNoSuballocationTests, WriteBufferThenDestroy) {
     WaitForAllOperations();
 }
 
-DAWN_INSTANTIATE_TEST(BufferNoSuballocationTests,
-                      D3D11Backend({"disable_resource_suballocation"}),
-                      D3D12Backend({"disable_resource_suballocation"}),
-                      MetalBackend({"disable_resource_suballocation"}),
-                      OpenGLBackend({"disable_resource_suballocation"}),
-                      OpenGLESBackend({"disable_resource_suballocation"}),
-                      VulkanBackend({"disable_resource_suballocation"}),
-                      WebGPUBackend({"disable_resource_suballocation"}));
+DAWN_INSTANTIATE_TEST(
+    BufferNoSuballocationTests,
+    D3D11Backend({"disable_resource_suballocation"}),
+    D3D12Backend({"disable_resource_suballocation"}),
+    MetalBackend({"disable_resource_suballocation"}),
+    OpenGLBackend({"disable_resource_suballocation"}),
+    OpenGLBackend({"disable_resource_suballocation", "gl_force_disable_persistent_map"}),
+    OpenGLESBackend({"disable_resource_suballocation"}),
+    OpenGLESBackend({"disable_resource_suballocation", "gl_force_disable_persistent_map"}),
+    VulkanBackend({"disable_resource_suballocation"}),
+    WebGPUBackend({"disable_resource_suballocation"}));
 
 class BufferMapExtendedUsagesTests : public DawnTest {
   protected:
