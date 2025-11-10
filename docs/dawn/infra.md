@@ -2,6 +2,11 @@
 
 Dawn uses Chromium's continuous integration (CI) infrastructure to continually run tests on changes to Dawn and provide a way for developers to run tests against their changes before submitting. CI bots continually build and run tests for every new change, and Try bots build and run developers' pending changes before submission. Dawn uses two different build recipes. There is a Dawn build recipe which checks out Dawn standalone, compiles, and runs the `dawn_unittests`. And, there is the Chromium build recipe which checks out Dawn inside a Chromium checkout. Inside a Chromium checkout, there is more infrastructure available for triggering `dawn_end2end_tests` that run on real GPU hardware, and we are able to run Chromium integration tests as well as tests for WebGPU.
 
+Dawn uses Chromium's continuous integration (CI) infrastructure to continually run tests on changes to Dawn and provide a way for developers to run tests against their changes before submitting. CI bots continually build and run tests for every new change, and Try bots build and run developers' pending changes before submission. Dawn uses two different builder setups:
+
+1. Standalone Dawn checkouts, which directly check out Dawn and its dependencies. This is used to provide test coverage of Dawn itself.
+2. Chromium checkouts, which are capable of building Dawn targets. This is used to provide coverage of Dawn tests using Chromium's versions of dependencies while also allowing Dawn-related Chromium tests to run. For example, most WebGPU CTS testing is done on Chromium builders in order to make use of a full Chrome browser.
+
  - [Dawn CI Builders](https://ci.chromium.org/p/dawn/g/ci/builders)
  - [Dawn Try Builders](https://ci.chromium.org/p/dawn/g/try/builders)
  - [chromium.dawn Waterfall](https://ci.chromium.org/p/chromium/g/chromium.dawn/console)
@@ -9,28 +14,19 @@ Dawn uses Chromium's continuous integration (CI) infrastructure to continually r
 For additional information on GPU testing in Chromium, please see [[chromium/src]//docs/gpu/gpu_testing_bot_details.md](https://chromium.googlesource.com/chromium/src.git/+/main/docs/gpu/gpu_testing_bot_details.md).
 
 ## Dawn CI/Try Builders
-Dawn builders are specified in [[dawn]//infra/config/global/cr-buildbucket.cfg](../../infra/config/global/generated/cr-buildbucket.cfg). This file contains a few mixins such as `clang`, `no_clang`, `x64`, `x86`, `debug`, `release` which are used to specify the bot dimensions and build properties (builder_mixins.recipe.properties). At the time of writing, we have the following builders:
-  - [dawn/try/presubmit](https://ci.chromium.org/p/dawn/builders/try/presubmit)
-  - [dawn/try/linux-clang-dbg-x64](https://ci.chromium.org/p/dawn/builders/try/linux-clang-dbg-x64)
-  - [dawn/try/linux-clang-dbg-x86](https://ci.chromium.org/p/dawn/builders/try/linux-clang-dbg-x86)
-  - [dawn/try/linux-clang-rel-x64](https://ci.chromium.org/p/dawn/builders/try/linux-clang-rel-x64)
-  - [dawn/try/mac-dbg](https://ci.chromium.org/p/dawn/builders/try/mac-dbg)
-  - [dawn/try/mac-rel](https://ci.chromium.org/p/dawn/builders/try/mac-rel)
-  - [dawn/try/win-clang-dbg-x86](https://ci.chromium.org/p/dawn/builders/try/win-clang-dbg-x86)
-  - [dawn/try/win-clang-rel-x64](https://ci.chromium.org/p/dawn/builders/try/win-clang-rel-x64)
-  - [dawn/try/win-msvc-dbg-x86](https://ci.chromium.org/p/dawn/builders/try/win-msvc-dbg-x86)
-  - [dawn/try/win-msvc-rel-x64](https://ci.chromium.org/p/dawn/builders/try/win-msvc-rel-x64)
+Standalone Dawn builders are defined in the following Starlark files, which are used to generate files consumed by the builders when running [//infra/config/globla/main.star](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/infra/config/global/main.star):
+  - [//infra/config/global/gn_standalone_ci.star](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/infra/config/global/gn_standalone_ci.star), which defines all CI builders which use GN as their buildsystem. This encompasses the majority of Dawn's CI builders.
+  - [//infra/config/global/gn_standalone_try.star](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/infra/config/global/gn_standalone_try.star), which defines al try builders which use GN as their buildsystem. This includes both manual-only trybots and the ones automatically added to all CLs. This encompasses the majority of Dawn's try builders.
+  - [//infra/config/global/legacy_builders.star](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/infra/config/global/legacy_builders.star), which defines all other CI and try builders such as those that use CMake or mirror Chromium builders. Long-term, all builders in this file will either be removed or moved to appropriately named files.
 
 There are additional `chromium/try` builders, but those are described later in this document.
 
 These bots are defined in both buckets luci.dawn.ci and luci.dawn.try, though their ACL permissions differ. luci.dawn.ci bots will be scheduled regularly based on [[dawn]//infra/config/global/luci-scheduler.cfg](../../infra/config/global/generated/luci-scheduler.cfg). luci.dawn.try bots will be triggered on the CQ based on [[dawn]//infra/config/global/commit-queue.cfg](../../infra/config/global/generated/commit-queue.cfg).
 
-One particular note is `buckets.swarming.builder_defaults.recipe.name: "dawn"` which specifies these use the [`dawn.py`](https://source.chromium.org/search/?q=file:recipes/dawn.py) build recipe.
-
 Build status for both CI and Try builders can be seen at this [console](https://ci.chromium.org/p/dawn) which is generated from [[dawn]//infra/config/global/luci-milo.cfg](../../infra/config/global/generated/luci-milo.cfg).
 
 ## Dawn Build Recipe
-There are two recipes for building Dawn/Tint, one for [GN based](https://source.chromium.org/chromium/infra/infra_superproject/+/main:build/recipes/recipes/dawn/gn.py) builds and one for [CMake based](https://source.chromium.org/chromium/infra/infra_superproject/+/main:build/recipes/recipes/dawn/cmake.py) builds.
+There are two recipes for building Dawn/Tint, one for [GN based](https://source.chromium.org/chromium/infra/infra_superproject/+/main:build/recipes/recipes/dawn/gn_v2.py) builds and one for [CMake based](https://source.chromium.org/chromium/infra/infra_superproject/+/main:build/recipes/recipes/dawn/cmake.py) builds.
 
 **Note:** There is WIP/experimental version of the GN recipe (`*_v2.py`) in the repo that is _NOT_ currently used.
 
