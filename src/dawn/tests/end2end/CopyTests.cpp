@@ -2007,8 +2007,9 @@ TEST_P(CopyTests_T2B, Texture3DMipUnaligned) {
 }
 
 DAWN_INSTANTIATE_TEST_P(CopyTests_T2B,
-                        {D3D11Backend(), D3D12Backend(), MetalBackend(), OpenGLBackend(),
-                         OpenGLESBackend(), VulkanBackend(),
+                        {D3D11Backend(), D3D12Backend(), MetalBackend(),
+                         OpenGLBackend({"gl_force_disable_persistent_map"}), OpenGLESBackend(),
+                         OpenGLESBackend({"gl_force_disable_persistent_map"}), VulkanBackend(),
                          VulkanBackend({"use_blit_for_snorm_texture_to_buffer_copy",
                                         "use_blit_for_bgra8unorm_texture_to_buffer_copy"}),
                          WebGPUBackend()},
@@ -2115,8 +2116,9 @@ DAWN_INSTANTIATE_TEST(CopyTests_T2B_No_Format_Param,
                       D3D11Backend(),
                       D3D12Backend(),
                       MetalBackend(),
-                      OpenGLBackend(),
+                      OpenGLBackend({"gl_force_disable_persistent_map"}),
                       OpenGLESBackend(),
+                      OpenGLESBackend({"gl_force_disable_persistent_map"}),
                       VulkanBackend(),
                       VulkanBackend({"use_blit_for_depth32float_texture_to_buffer_copy"}),
                       WebGPUBackend());
@@ -2204,8 +2206,9 @@ TEST_P(CopyTests_T2B_Compat, TextureCubeRegionNonzeroRowsPerImage) {
 DAWN_INSTANTIATE_TEST_P(CopyTests_T2B_Compat,
                         {
                             D3D11Backend(),
-                            OpenGLBackend(),
+                            OpenGLBackend({"gl_force_disable_persistent_map"}),
                             OpenGLESBackend(),
+                            OpenGLESBackend({"gl_force_disable_persistent_map"}),
                         },
                         {
                             // Control case: format not using blit workaround
@@ -2835,8 +2838,10 @@ TEST_P(CopyTests_B2T, Texture1DFull) {
 
 DAWN_INSTANTIATE_TEST_P(CopyTests_B2T,
                         {D3D11Backend(), D3D11Backend({"d3d11_disable_cpu_buffers"}),
-                         D3D12Backend(), MetalBackend(), OpenGLBackend(), OpenGLESBackend(),
-                         VulkanBackend(), WebGPUBackend()},
+                         D3D12Backend(), MetalBackend(),
+                         OpenGLBackend({"gl_force_disable_persistent_map"}), OpenGLESBackend(),
+                         OpenGLESBackend({"gl_force_disable_persistent_map"}), VulkanBackend(),
+                         WebGPUBackend()},
                         {
                             wgpu::TextureFormat::R8Unorm,
                             wgpu::TextureFormat::RG8Unorm,
@@ -3381,7 +3386,8 @@ DAWN_INSTANTIATE_TEST_P(
                    "mip_level"}),
      D3D12Backend(
          {"d3d12_use_temp_buffer_in_texture_to_texture_copy_between_different_dimensions"}),
-     MetalBackend(), OpenGLBackend(), OpenGLESBackend(), VulkanBackend(), WebGPUBackend()},
+     MetalBackend(), OpenGLBackend({"gl_force_disable_persistent_map"}), OpenGLESBackend(),
+     OpenGLESBackend({"gl_force_disable_persistent_map"}), VulkanBackend(), WebGPUBackend()},
     {wgpu::TextureFormat::RGBA8Unorm, wgpu::TextureFormat::RGB9E5Ufloat});
 
 // Test copying between textures that have srgb compatible texture formats;
@@ -3395,8 +3401,10 @@ TEST_P(CopyTests_T2T_Srgb, FullCopy) {
 }
 
 DAWN_INSTANTIATE_TEST_P(CopyTests_T2T_Srgb,
-                        {D3D11Backend(), D3D12Backend(), MetalBackend(), OpenGLBackend(),
-                         OpenGLESBackend(), VulkanBackend(), WebGPUBackend()},
+                        {D3D11Backend(), D3D12Backend(), MetalBackend(),
+                         OpenGLBackend({"gl_force_disable_persistent_map"}), OpenGLESBackend(),
+                         OpenGLESBackend({"gl_force_disable_persistent_map"}), VulkanBackend(),
+                         WebGPUBackend()},
                         {wgpu::TextureFormat::RGBA8Unorm, wgpu::TextureFormat::RGBA8UnormSrgb,
                          wgpu::TextureFormat::BGRA8Unorm, wgpu::TextureFormat::BGRA8UnormSrgb});
 
@@ -3430,8 +3438,9 @@ DAWN_INSTANTIATE_TEST(CopyTests_B2B,
                       D3D11Backend(),
                       D3D12Backend(),
                       MetalBackend(),
-                      OpenGLBackend(),
+                      OpenGLBackend({"gl_force_disable_persistent_map"}),
                       OpenGLESBackend(),
+                      OpenGLESBackend({"gl_force_disable_persistent_map"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -3460,8 +3469,9 @@ DAWN_INSTANTIATE_TEST(ClearBufferTests,
                       D3D11Backend(),
                       D3D12Backend(),
                       MetalBackend(),
-                      OpenGLBackend(),
+                      OpenGLBackend({"gl_force_disable_persistent_map"}),
                       OpenGLESBackend(),
+                      OpenGLESBackend({"gl_force_disable_persistent_map"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -3643,7 +3653,8 @@ DAWN_INSTANTIATE_TEST_P(
     CopyToDepthStencilTextureAfterDestroyingBigBufferTests,
     {D3D11Backend(), D3D12Backend(),
      D3D12Backend({"d3d12_force_clear_copyable_depth_stencil_texture_on_creation"}), MetalBackend(),
-     OpenGLBackend(), OpenGLESBackend(), VulkanBackend(), WebGPUBackend()},
+     OpenGLBackend({"gl_force_disable_persistent_map"}), OpenGLESBackend(),
+     OpenGLESBackend({"gl_force_disable_persistent_map"}), VulkanBackend(), WebGPUBackend()},
     {wgpu::TextureFormat::Depth16Unorm, wgpu::TextureFormat::Stencil8},
     {InitializationMethod::CopyBufferToTexture, InitializationMethod::WriteTexture,
      InitializationMethod::CopyTextureToTexture},
@@ -3840,8 +3851,9 @@ TEST_P(T2TCopyFromDirtyHeapTests, From2DMultiMipmapLevelTexture) {
 DAWN_INSTANTIATE_TEST(T2TCopyFromDirtyHeapTests,
                       D3D12Backend(),
                       MetalBackend(),
-                      OpenGLBackend(),
+                      OpenGLBackend({"gl_force_disable_persistent_map"}),
                       OpenGLESBackend(),
+                      OpenGLESBackend({"gl_force_disable_persistent_map"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
