@@ -91,12 +91,16 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   uint64_t bufferOffset,
                                   const void* data,
                                   size_t size) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    auto device = ToBackend(GetDevice());
+    Ref<Buffer> bufferGL = ToBackend(buffer);
 
-    DAWN_TRY(ToBackend(buffer)->EnsureDataInitializedAsDestination(bufferOffset, size));
+    DAWN_TRY(bufferGL->EnsureDataInitializedAsDestination(bufferOffset, size));
 
-    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, ToBackend(buffer)->GetHandle()));
-    DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, size, data));
+    // Defer buffer write to when we submit the command buffer.
+    DAWN_TRY(device->ExecuteGLWork([=](const OpenGLFunctions& gl) -> MaybeError {
+        return bufferGL->Write(gl, bufferOffset, data, size);
+    }));
+
     buffer->MarkUsedInPendingCommands();
     return {};
 }
@@ -208,25 +212,32 @@ ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial wai
 }
 
 MaybeError Queue::SubmitFenceSync() {
-    return mFencesInFlight.Use([&](auto fencesInFlight) -> MaybeError {
-        if (!mHasPendingCommands) {
+    Device* device = ToBackend(GetDevice());
+    return device->ExecuteGLWork([this](const OpenGLFunctions& gl) {
+        return mFencesInFlight.Use([&](auto fencesInFlight) -> MaybeError {
+            if (!mHasPendingCommands) {
+                return {};
+            }
+            Device* device = ToBackend(GetDevice());
+
+            if (!device->IsToggleEnabled(Toggle::GLForceDisablePersistentMap)) {
+                DAWN_GL_TRY(gl, MemoryBarrier(GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT_EXT));
+            }
+
+            Ref<WrappedEGLSync> sync;
+            DAWN_TRY_ASSIGN(sync, WrappedEGLSync::Create(device, mEGLSyncType, nullptr));
+
+            // Signal the sync if it is EGL_SYNC_REUSABLE_KHR. On the other hand,
+            // EGL_SYNC_FENCE_KHR has its signal scheduled on creation.
+            if (mEGLSyncType == EGL_SYNC_REUSABLE_KHR) {
+                DAWN_TRY(sync->Signal(EGL_SIGNALED));
+            }
+
+            IncrementLastSubmittedCommandSerial();
+            fencesInFlight->emplace_back(sync, GetLastSubmittedCommandSerial());
+            mHasPendingCommands = false;
             return {};
-        }
-        Device* device = ToBackend(GetDevice());
-
-        Ref<WrappedEGLSync> sync;
-        DAWN_TRY_ASSIGN(sync, WrappedEGLSync::Create(device, mEGLSyncType, nullptr));
-
-        // Signal the sync if it is EGL_SYNC_REUSABLE_KHR. On the other hand,
-        // EGL_SYNC_FENCE_KHR has its signal scheduled on creation.
-        if (mEGLSyncType == EGL_SYNC_REUSABLE_KHR) {
-            DAWN_TRY(sync->Signal(EGL_SIGNALED));
-        }
-
-        IncrementLastSubmittedCommandSerial();
-        fencesInFlight->emplace_back(sync, GetLastSubmittedCommandSerial());
-        mHasPendingCommands = false;
-        return {};
+        });
     });
 }
 
