@@ -33,6 +33,24 @@
       "message": "Because I moved the abseil target up to this file, it exposed all the build rules to Chromium\u0027s build unintentionally, so guarding the CLI targets with if(dawn_standalone)",
       "revId": "32e32d12e0f46a058a0af167833dc2d329ace54a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be0c030c_c4b26e8d",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-10T21:23:30Z",
+      "side": 1,
+      "message": "Does this mean the benchmarks cannot be built from within a Chromium checkout any more?\n\nWe need to be able to build the Tint benchmarks in a Chromium checkout for the Chrome perf waterfall.",
+      "parentUuid": "f167180a_4886830f",
+      "revId": "32e32d12e0f46a058a0af167833dc2d329ace54a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
