@@ -38,6 +38,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "4b9a34b0_c3fe424e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-10T23:48:15Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e53b05c9_eee83662",
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "61f9ea0b_b91a4aa1",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 5
@@ -309,6 +327,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a4c501bf_05646817",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-10T23:48:15Z",
+      "side": 1,
+      "message": "QueueWriteBufferCmd has these pointers so they can get populated during deserialization, but we use the same Cmd struct on the client as well and they\u0027re not used at all on the client. It\u0027s fine, it\u0027s just confusing to read so it would be nice to have short comments on them (at least until we find a way to remove them).",
+      "parentUuid": "23784111_a2e2fe13",
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "47b29d5c_24dbcf72",
         "filename": "src/dawn/wire/server/ServerQueue.cpp",
         "patchSetId": 5
@@ -486,6 +522,30 @@
       "side": 1,
       "message": "It actually wasn\u0027t passing. I hadn\u0027t tried a dry run with it yet. (I did out of curiosity after you mentioned this and it predictably failed.)\n\nI don\u0027t see the extra branch here as so annoying that I\u0027d go to great lengths to avoid it. It\u0027d be easy enough to strip out later.",
       "parentUuid": "f8eda4e0_ced8eaa5",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 94,
+        "endChar": 37
+      },
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0bc17b7_2f33e5a5",
+        "filename": "src/dawn/wire/server/ServerQueue.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-10T23:48:15Z",
+      "side": 1,
+      "message": "Ah for some reason I thought Gerrit said it had passed.",
+      "parentUuid": "b6b3abb6_ac221820",
       "range": {
         "startLine": 90,
         "startChar": 4,
