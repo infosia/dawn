@@ -33,6 +33,23 @@
       "message": "LGTM",
       "revId": "bd8f7b8ae4e8de323b2cfcaa67ce00be91a9e318",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7f64dde_1fddcff9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-10T19:45:19Z",
+      "side": 1,
+      "message": "Second pinpoint job confirms this fixes the bot. Unfortunately I didn\u0027t realize I disabled this test when I removed `--enable-unsafe-webgpu` (I\u0027m not sure why it requires that flag) so I will look into that separately in bug 443111618",
+      "revId": "bd8f7b8ae4e8de323b2cfcaa67ce00be91a9e318",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
