@@ -124,6 +124,13 @@ def parse_version(version):
     return Version(*map(int, version.split('.')))
 
 
+# Allowlist for extensions that are known to use functions that are aliases of
+# core functions. The generator will not assert on these.
+EXTENSIONS_WITH_ALIASES_ALLOWED = [
+    'GL_EXT_buffer_storage',
+]
+
+
 def compute_params(root, supported_extensions):
     # Parse all the commands and enums
     all_procs = {}
@@ -178,7 +185,8 @@ def compute_params(root, supported_extensions):
         section_procs = []
         for command in section.findall('./require/command'):
             proc_name = command.attrib['name']
-            assert all_procs[proc_name].alias == None
+            if extension not in EXTENSIONS_WITH_ALIASES_ALLOWED:
+                assert all_procs[proc_name].alias == None
             section_procs.append(all_procs[proc_name])
 
         section_enums = []
