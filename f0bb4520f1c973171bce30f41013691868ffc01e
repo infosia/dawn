@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ef7427a_98025ec5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4437145
+      },
+      "writtenOn": "2025-11-10T04:08:46Z",
+      "side": 1,
+      "message": "I just rebased the main since there are merge conflicts, pls help to review again, thanks.",
+      "parentUuid": "249d1e7a_91f1defe",
+      "revId": "f0bb4520f1c973171bce30f41013691868ffc01e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48ed1925_460f5119",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-11-03T08:58:49Z",
       "side": 1,
       "message": "While this fix works in the short term, we will want to run the SharedTextureMemoryTests_win importing a D3D11 texture even when only the D3D12 backend is enabled. So we could rename the file to mention D3D11 in the name, and explicitly link against D3D11 here as well. Ditto for D3D12 for SBM.",
+      "revId": "f0bb4520f1c973171bce30f41013691868ffc01e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe76a718_73f0043f",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 4437145
+      },
+      "writtenOn": "2025-11-10T04:08:46Z",
+      "side": 1,
+      "message": "That will be another case I think, but so far, this short term fix will unblock us from building the dawn_end2end_tests when dawn_enable_d3d11\u003dfalse flag is set in build gn args. By the way, I just rebased the main since there are merge conflicts, pls help to review again, thanks!",
+      "parentUuid": "48ed1925_460f5119",
       "revId": "f0bb4520f1c973171bce30f41013691868ffc01e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
