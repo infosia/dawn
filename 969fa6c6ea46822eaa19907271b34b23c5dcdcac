@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab95c69c_2b7d3f26",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-10T16:14:50Z",
+      "side": 1,
+      "message": "This is an enum instead of a tuple, so that EnumSet can be used instead of HashSet in BuiltInChecker, so it can still be a constexpr.",
+      "revId": "969fa6c6ea46822eaa19907271b34b23c5dcdcac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

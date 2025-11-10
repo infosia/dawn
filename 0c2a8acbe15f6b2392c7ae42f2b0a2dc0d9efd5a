@@ -16,6 +16,24 @@
       "message": "```suggestion\n/// How an attribute is being used, a tuple of the shader stage and IO direction\n```",
       "revId": "0c2a8acbe15f6b2392c7ae42f2b0a2dc0d9efd5a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63b73e61_9e445589",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-10T16:14:50Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "06cca60b_cc949f12",
+      "revId": "0c2a8acbe15f6b2392c7ae42f2b0a2dc0d9efd5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
