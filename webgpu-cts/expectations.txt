@@ -528,10 +528,6 @@ crbug.com/407109054 [ android-r qualcomm ] webgpu:api,operation,render_pipeline,
 crbug.com/407109054 [ android-r dawn-no-backend-validation qualcomm ] webgpu:api,operation,render_pipeline,overrides:multi_entry_points:isAsync=true [ Failure ]
 crbug.com/407109054 [ android-r qualcomm ] webgpu:api,operation,render_pipeline,overrides:shared_shader_module:isAsync=true [ Failure ]
 
-crbug.com/407109057 [ android-pixel-6 arm ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage:nearFar=[0,1];sampleCount=4;interpolation={"type":"linear","sampling":"sample"} [ Failure ]
-crbug.com/407109057 [ android-pixel-6 android-t arm ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage:nearFar=[0,1];sampleCount=4;interpolation={"type":"perspective","sampling":"sample"} [ Failure ]
-crbug.com/407109057 [ android-pixel-6 arm ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage:nearFar=[0.25,0.75];sampleCount=4;interpolation={"type":"linear","sampling":"sample"} [ Failure ]
-crbug.com/407109057 [ android-pixel-6 android-t arm ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage:nearFar=[0.25,0.75];sampleCount=4;interpolation={"type":"perspective","sampling":"sample"} [ Failure ]
 
 # `memory_layout:read_layout` failures on Pixel 4
 crbug.com/407109058 [ android-pixel-4 ] webgpu:shader,execution,memory_layout:read_layout:case="array_stride_size";aspace="function" [ Failure ]
@@ -751,13 +747,6 @@ crbug.com/407076135 [ apple-angle-metal-renderer:-apple-m2 mac ] webgpu:shader,e
 # All textureSampleBias tests marked failing on Linux NVIDIA
 crbug.com/407109061 [ clang-coverage dawn-no-backend-validation linux nvidia-0x2184 nvidia_lt_535.183.01 ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:* [ Failure ]
 
-# fragment_builtins with multisampling and "sample" mode failing on many Vulkan devices
-crbug.com/407144390 [ android-14 android-pixel-6 ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,position:nearFar=*;sampleCount=4;interpolation={"type":"*","sampling":"sample"} [ Failure ]
-crbug.com/407144390 [ android-14 android-pixel-6 ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,sample_mask:nearFar=*;sampleCount=4;interpolation={"type":"*","sampling":"sample"} [ Failure ]
-crbug.com/407144390 [ intel linux ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,position:nearFar=*;sampleCount=4;interpolation={"type":"*","sampling":"sample"} [ Failure ]
-crbug.com/407144390 [ intel linux ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,sample_mask:nearFar=*;sampleCount=4;interpolation={"type":"*","sampling":"sample"} [ Failure ]
-crbug.com/407144390 [ linux no-clang-coverage nvidia-0x2184 nvidia_ge_535.183.01 ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,position:nearFar=*;sampleCount=4;interpolation={"type":"*","sampling":"sample"} [ Failure ]
-crbug.com/407144390 [ linux nvidia-0x2184 ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,sample_mask:nearFar=*;sampleCount=4;interpolation={"type":"*","sampling":"sample"} [ Failure ]
 
 # depth_bias test failures on Linux NVIDIA
 crbug.com/407133970 [ linux nvidia-0x2184 nvidia_lt_535.183.01 ] webgpu:api,operation,rendering,depth_bias:depth_bias:quadAngle=0;bias=-8388608;biasSlopeScale=0;biasClamp=0.125 [ Failure ]
@@ -1319,11 +1308,6 @@ crbug.com/0000 [ android-t ] webgpu:shader,execution,expression,constructor,non_
 crbug.com/0000 [ intel win ] webgpu:shader,execution,expression,unary,af_arithmetic:negation:inputSource="const";vectorize="_undef_" [ Failure ]
 crbug.com/0000 [ dawn-no-backend-validation no-asan webgpu-dxc-disabled win ] webgpu:shader,execution,limits:struct_members: [ Failure ]
 crbug.com/0000 [ android-r qualcomm ] webgpu:shader,execution,memory_layout:write_layout:* [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage:nearFar=[0,1];sampleCount=4;interpolation={"type":"linear","sampling":"sample"} [ Failure ]
-crbug.com/0000 [ android-pixel-6 android-t ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage:nearFar=[0,1];sampleCount=4;interpolation={"type":"perspective","sampling":"sample"} [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage:nearFar=[0.25,0.75];sampleCount=4;interpolation={"type":"linear","sampling":"sample"} [ Failure ]
-crbug.com/0000 [ android-pixel-6 android-t ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage:nearFar=[0.25,0.75];sampleCount=4;interpolation={"type":"perspective","sampling":"sample"} [ Failure ]
-crbug.com/0000 [ android-r ] webgpu:shader,execution,shader_io,vertex_builtins:* [ Failure ]
 crbug.com/0000 [ no-clang-coverage nvidia webgpu-dxc-disabled win ] webgpu:shader,execution,statement,discard:derivatives:useStorageBuffers=true [ Failure ]
 crbug.com/0000 [ intel win ] webgpu:shader,validation,decl,var:module_scope_types:type="atomic%3Ci32%3E";kind="uniform";via_alias=true [ Failure ]
 crbug.com/0000 [ intel win ] webgpu:shader,validation,decl,var:module_scope_types:type="i32";kind="handle";via_alias=true [ Failure ]
