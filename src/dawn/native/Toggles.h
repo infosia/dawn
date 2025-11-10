@@ -188,6 +188,7 @@ enum class Toggle {
     D3D11DisableFence,
     D3D11DelayFlushToGPU,
     IgnoreImportedAHardwareBufferVulkanImageSize,
+    GLForceDisablePersistentMap,
 
     EnumCount,
     InvalidEnum = EnumCount,
