@@ -33,6 +33,24 @@
       "message": "Is this always false for is_wasm? Or should we check both?",
       "revId": "bd00d431855104fad8913fc20a2f6699f2e9adcf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92dc8705_c9b35b7b",
+        "filename": "src/dawn/samples/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-10T22:05:54Z",
+      "side": 1,
+      "message": "It should be, the rule from the .gni is `(is_win \u0026\u0026 !dawn_is_winuwp) || (is_linux \u0026\u0026 !is_chromeos) || is_mac`\n\nThe `is_XXX` vars are set from `target_os`, and specifically `is_wasm` is for `target_os \u003d \"emscripten\"`. Desktop Linux is `linux`, etc.\n\nSo as written this value should only ever be true if we are building for non-UWP windows, desktop linux or desktop mac. (android, cros, etc have their own target_os strings other than \u0027linux\u0027 to differentiate them from desktop linux)",
+      "parentUuid": "549c135a_9e077384",
+      "revId": "bd00d431855104fad8913fc20a2f6699f2e9adcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
