@@ -16,6 +16,23 @@
       "message": "Kai or anyone still online, please +2",
       "revId": "f72bce5da4ad78c43996b59294c6199caeb3edbd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7693a00f_06e2a93d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-11-10T15:07:13Z",
+      "side": 1,
+      "message": "For some reasons, this revert failed the presubmit because it says the source needs re-format. Is there a way to bypass it?",
+      "revId": "f72bce5da4ad78c43996b59294c6199caeb3edbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
