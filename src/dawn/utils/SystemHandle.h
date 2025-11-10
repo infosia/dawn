@@ -25,16 +25,15 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_DAWN_NATIVE_SYSTEMHANDLE_H_
-#define SRC_DAWN_NATIVE_SYSTEMHANDLE_H_
+#ifndef SRC_DAWN_UTILS_SYSTEMHANDLE_H_
+#define SRC_DAWN_UTILS_SYSTEMHANDLE_H_
 
 #include <utility>
 
 #include "dawn/common/NonCopyable.h"
 #include "dawn/common/Platform.h"
-#include "dawn/native/Error.h"
 
-namespace dawn::native {
+namespace dawn {
 
 class SystemHandle : public NonCopyable {
   public:
@@ -62,13 +61,13 @@ class SystemHandle : public NonCopyable {
     // Create a SystemHandle by duplicating `handle`.
     // Declaration is a template so that there is never implicit
     // conversion of the handle arg.
+    // Fails fast with DAWN_CHECK on failure.
     template <typename Arg>
-    static ResultOrError<SystemHandle> Duplicate(Arg handle) {
+    static SystemHandle Duplicate(Arg handle) {
         SystemHandle tmpOwnedHandle = SystemHandle::Acquire(handle);
-        SystemHandle dupHandle;
-        DAWN_TRY_ASSIGN(dupHandle, tmpOwnedHandle.Duplicate());
+        SystemHandle dupHandle = tmpOwnedHandle.Duplicate();
         tmpOwnedHandle.Detach();
-        return ResultOrError<SystemHandle>{std::move(dupHandle)};
+        return dupHandle;
     }
 
     bool IsValid() const;
@@ -79,7 +78,7 @@ class SystemHandle : public NonCopyable {
     Handle Get() const;
     Handle* GetMut();
     Handle Detach();
-    ResultOrError<SystemHandle> Duplicate() const;
+    SystemHandle Duplicate() const;
     void Close();
 
     ~SystemHandle();
@@ -99,6 +98,6 @@ class SystemHandle : public NonCopyable {
     Handle mHandle;
 };
 
-}  // namespace dawn::native
+}  // namespace dawn
 
-#endif  // SRC_DAWN_NATIVE_SYSTEMHANDLE_H_
+#endif  // SRC_DAWN_UTILS_SYSTEMHANDLE_H_

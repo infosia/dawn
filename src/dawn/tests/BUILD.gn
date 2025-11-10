@@ -591,6 +591,7 @@ source_set("end2end_tests_sources") {
     "${dawn_root}/src/dawn:proc",
     "${dawn_root}/src/dawn/common",
     "${dawn_root}/src/dawn/native:headers",
+    "${dawn_root}/src/dawn/native:sources",
     "${dawn_root}/src/dawn/partition_alloc:raw_ptr",
     "${dawn_root}/src/dawn/platform",
     "${dawn_root}/src/dawn/utils:system_utils",

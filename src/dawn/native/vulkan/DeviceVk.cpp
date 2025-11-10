@@ -41,7 +41,6 @@
 #include "dawn/native/ErrorData.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/IntegerTypes.h"
-#include "dawn/native/SystemHandle.h"
 #include "dawn/native/VulkanBackend.h"
 #include "dawn/native/vulkan/BackendVk.h"
 #include "dawn/native/vulkan/BindGroupLayoutVk.h"
