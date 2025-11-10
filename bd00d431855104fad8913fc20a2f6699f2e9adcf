@@ -16,6 +16,23 @@
       "message": "PTAL\n\nAnother GN fix/cleanup that I am queueing up to land once we have a working roll into Chromium.\n\nMy accidental exposure of the CLI targets to Chromium build, unearthed the fact that we are not correctly guarding for GLFW presence in the build rules for the samples.",
       "revId": "bd00d431855104fad8913fc20a2f6699f2e9adcf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "549c135a_9e077384",
+        "filename": "src/dawn/samples/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-10T21:52:02Z",
+      "side": 1,
+      "message": "Is this always false for is_wasm? Or should we check both?",
+      "revId": "bd00d431855104fad8913fc20a2f6699f2e9adcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
