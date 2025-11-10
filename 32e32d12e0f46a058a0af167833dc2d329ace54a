@@ -51,6 +51,24 @@
       "parentUuid": "f167180a_4886830f",
       "revId": "32e32d12e0f46a058a0af167833dc2d329ace54a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02f527f9_a04fde5b",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-10T21:35:43Z",
+      "side": 1,
+      "message": "Yes but No.\n\nThis would prevent the top-level target `//third_party/dawn:benchmarks` from building at the root of a Chromium checkout, but that I believe that is the current state of the GN builds before any of my changes. (Looking at the output of `gn ls out/Default/` in my Chromium checkout I don\u0027t see that target)\n\nThe specific target `//third_party/dawn/src/tint:benchmarks` it wrape is still available in my Chromium checkout, so I assume that is what the waterfall depends on.\n\nIf we want `//third_party/dawn:benchmarks` to be available in a Chromium checkout, I can move it also outside of the guard. I was just replicating the existing behaviour as much as possible.",
+      "parentUuid": "be0c030c_c4b26e8d",
+      "revId": "32e32d12e0f46a058a0af167833dc2d329ace54a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
