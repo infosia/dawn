@@ -16,6 +16,23 @@
       "message": "PTAL\n\nThis is a reland of my post-Skia GN changes with a fix for the issue in the Chromium roll.\n\nThere are other issues currently with the Chromium roll, so I will hold off on landing this until that is working again.",
       "revId": "32e32d12e0f46a058a0af167833dc2d329ace54a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f167180a_4886830f",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-10T21:19:56Z",
+      "side": 1,
+      "message": "Because I moved the abseil target up to this file, it exposed all the build rules to Chromium\u0027s build unintentionally, so guarding the CLI targets with if(dawn_standalone)",
+      "revId": "32e32d12e0f46a058a0af167833dc2d329ace54a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
