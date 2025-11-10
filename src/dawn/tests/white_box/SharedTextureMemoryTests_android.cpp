@@ -278,9 +278,13 @@ TEST_P(SharedTextureMemoryTests, GPUWriteThenCPURead) {
     exportInfo.nextInChain = &syncFdExportInfo;
     endState.fences[0].ExportInfo(&exportInfo);
 
+    // AHardwareBuffer_lock consumes the fd. Release the fence to transfer ownership.
+    const int fd = syncFdExportInfo.handle;
+    endState.fences[0] = nullptr;
+
     void* ptr;
-    EXPECT_EQ(AHardwareBuffer_lock(aHardwareBuffer, AHARDWAREBUFFER_USAGE_CPU_READ_OFTEN,
-                                   syncFdExportInfo.handle, nullptr, &ptr),
+    EXPECT_EQ(AHardwareBuffer_lock(aHardwareBuffer, AHARDWAREBUFFER_USAGE_CPU_READ_OFTEN, fd,
+                                   nullptr, &ptr),
               0);
 
     auto* pixels = static_cast<utils::RGBA8*>(ptr);
