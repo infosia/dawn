@@ -28,13 +28,17 @@
 #ifndef SRC_DAWN_NATIVE_OPENGL_BUFFERGL_H_
 #define SRC_DAWN_NATIVE_OPENGL_BUFFERGL_H_
 
+#include <vector>
+
 #include "dawn/native/Buffer.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
+#include "dawn/native/opengl/FutureHandle.h"
 #include "dawn/native/opengl/opengl_platform.h"
 
 namespace dawn::native::opengl {
 
+struct OpenGLFunctions;
 class Device;
 
 class Buffer : public BufferBase {
@@ -45,7 +49,7 @@ class Buffer : public BufferBase {
     static ResultOrError<Ref<Buffer>> Create(Device* device,
                                              const UnpackedPtr<BufferDescriptor>& descriptor);
 
-    GLuint GetHandle() const;
+    const FutureHandle& GetHandle() const;
 
     MaybeError EnsureDataInitialized(bool* outDidDataInitialization = nullptr);
     MaybeError EnsureDataInitializedAsDestination(uint64_t offset,
@@ -56,6 +60,16 @@ class Buffer : public BufferBase {
 
     void TrackUsage() { MarkUsedInPendingCommands(); }
 
+    MaybeError Write(uint64_t offset, const void* data, size_t size);
+
+    // Notify this object that a copy to this buffer has been completed.
+    // This is typically used to sync the shadow copy.
+    MaybeError OnCopiedTo();
+
+    // Return whether to track the completion of a copy command if this buffer is used as a
+    // destination. This will be true if the buffer has a shadow copy.
+    bool NeedsCopyDstTracking() const;
+
   protected:
     Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor);
     ~Buffer() override;
@@ -65,8 +79,9 @@ class Buffer : public BufferBase {
     virtual MaybeError InitializeImpl(bool isMappedAtCreation);
     void DestroyImpl() override;
 
-    GLuint mBuffer = 0;
-    raw_ptr<void> mMappedData = nullptr;
+    // Using FutureHandle allows the possibility of creating the underlying GL buffer asynchronously
+    // if we need it in future.
+    Ref<FutureHandle> mHandle;
 
   private:
     static ResultOrError<Ref<Buffer>> CreateUninitializedBuffer(
@@ -81,6 +96,13 @@ class Buffer : public BufferBase {
     void* GetMappedPointerImpl() override;
 
     MaybeError InitializeToZero();
+
+    MaybeError WriteRealBuffer(const OpenGLFunctions& gl,
+                               uint64_t offset,
+                               const void* data,
+                               size_t size);
+
+    std::vector<uint8_t> mShadowCopy;
 };
 
 }  // namespace dawn::native::opengl
