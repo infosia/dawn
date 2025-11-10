@@ -1712,7 +1712,9 @@ DAWN_INSTANTIATE_TEST(MultithreadTests,
                       D3D12Backend(),
                       MetalBackend(),
                       OpenGLBackend(),
+                      OpenGLBackend({"gl_force_disable_persistent_map"}),
                       OpenGLESBackend(),
+                      OpenGLESBackend({"gl_force_disable_persistent_map"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -1723,7 +1725,9 @@ DAWN_INSTANTIATE_TEST(MultithreadCachingTests,
                       D3D12Backend(),
                       MetalBackend(),
                       OpenGLBackend(),
+                      OpenGLBackend({"gl_force_disable_persistent_map"}),
                       OpenGLESBackend(),
+                      OpenGLESBackend({"gl_force_disable_persistent_map"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -1736,7 +1740,9 @@ DAWN_INSTANTIATE_TEST(MultithreadEncodingTests,
                       MetalBackend(),
                       MetalBackend({"always_resolve_into_zero_level_and_layer"}),
                       OpenGLBackend(),
+                      OpenGLBackend({"gl_force_disable_persistent_map"}),
                       OpenGLESBackend(),
+                      OpenGLESBackend({"gl_force_disable_persistent_map"}),
                       VulkanBackend(),
                       VulkanBackend({"always_resolve_into_zero_level_and_layer"}),
                       WebGPUBackend());
@@ -1750,7 +1756,9 @@ DAWN_INSTANTIATE_TEST(
                   "use_blit_for_depth_texture_to_texture_copy_to_nonzero_subresource"}),
     MetalBackend({"use_blit_for_buffer_to_stencil_texture_copy"}),
     OpenGLBackend(),
+    OpenGLBackend({"gl_force_disable_persistent_map"}),
     OpenGLESBackend(),
+    OpenGLESBackend({"gl_force_disable_persistent_map"}),
     VulkanBackend(),
     WebGPUBackend());
 
@@ -1759,7 +1767,9 @@ DAWN_INSTANTIATE_TEST(MultithreadDrawIndexedIndirectTests,
                       D3D12Backend(),
                       MetalBackend(),
                       OpenGLBackend(),
+                      OpenGLBackend({"gl_force_disable_persistent_map"}),
                       OpenGLESBackend(),
+                      OpenGLESBackend({"gl_force_disable_persistent_map"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -1769,7 +1779,9 @@ DAWN_INSTANTIATE_TEST(MultithreadTimestampQueryTests,
                       D3D12Backend(),
                       MetalBackend(),
                       OpenGLBackend(),
+                      OpenGLBackend({"gl_force_disable_persistent_map"}),
                       OpenGLESBackend(),
+                      OpenGLESBackend({"gl_force_disable_persistent_map"}),
                       VulkanBackend());
 
 }  // anonymous namespace
