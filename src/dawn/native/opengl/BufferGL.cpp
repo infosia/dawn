@@ -38,18 +38,101 @@
 
 namespace dawn::native::opengl {
 
+namespace {
+// A small subclass of Buffer that uses the EXT_buffer_storage extension to create a
+// persistently mapped buffer. This avoids a shadow copy of the buffer on the CPU and the
+// expensive glBufferSubData calls.
+class PersistentMappedBuffer final : public Buffer {
+  public:
+    PersistentMappedBuffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor)
+        : Buffer(device, descriptor) {}
+
+  private:
+    MaybeError InitializeImpl(bool isMappedAtCreation) override {
+        Device* device = ToBackend(GetDevice());
+        Ref<PersistentMappedBuffer> self = this;
+        const OpenGLFunctions& gl = device->GetGL();
+
+        GLuint glHandle = 0;
+        DAWN_GL_TRY(gl, GenBuffers(1, &glHandle));
+        DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, glHandle));
+
+        GLbitfield flags = GL_MAP_PERSISTENT_BIT_EXT | GL_MAP_COHERENT_BIT_EXT;
+        if (GetUsage() & wgpu::BufferUsage::MapRead) {
+            flags |= GL_MAP_READ_BIT;
+        }
+        if (GetUsage() & wgpu::BufferUsage::MapWrite || isMappedAtCreation) {
+            flags |= GL_MAP_WRITE_BIT;
+        }
+
+        // TODO(451928481): GL_MAP_COHERENT_BIT_EXT might cause OOM. Fallback to without
+        // that bit in future and explicit Flush + barrier
+        DAWN_GL_TRY_ALWAYS_CHECK(gl, BufferStorageEXT(GL_ARRAY_BUFFER, GetAllocatedSize(), nullptr,
+                                                      flags | GL_DYNAMIC_STORAGE_BIT));
+        mMappedData = DAWN_GL_TRY_ALWAYS_CHECK(
+            gl, MapBufferRange(GL_ARRAY_BUFFER, 0, GetAllocatedSize(), flags));
+
+        // The buffers with isMappedAtCreation == true will be initialized in
+        // BufferBase::MapAtCreation().
+        if (device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting) &&
+            !isMappedAtCreation) {
+            memset(mMappedData, 1, GetAllocatedSize());
+        }
+
+        mBuffer = glHandle;
+        return {};
+    }
+
+    void DestroyImpl() override {
+        if (mBuffer != 0 && mMappedData != nullptr) {
+            Device* device = ToBackend(GetDevice());
+            const OpenGLFunctions& gl = device->GetGL();
+            DAWN_GL_TRY_IGNORE_ERRORS(gl, BindBuffer(GL_ARRAY_BUFFER, mBuffer));
+            DAWN_GL_TRY_IGNORE_ERRORS(gl, UnmapBuffer(GL_ARRAY_BUFFER));
+        }
+        Buffer::DestroyImpl();
+    }
+
+    void* GetMappedPointerImpl() override { return mMappedData; }
+
+    void UnmapImpl(BufferState oldState) override {}
+
+    MaybeError MapAtCreationImpl() override {
+        DAWN_ASSERT(mMappedData != nullptr);
+        return {};
+    }
+
+    MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override {
+        DAWN_ASSERT(mMappedData != nullptr);
+        DAWN_TRY(EnsureDataInitialized());
+        return {};
+    }
+
+    bool IsCPUWritableAtCreation() const override { return mMappedData != nullptr; }
+};
+
+}  // namespace
+
 // Buffer
+
+// static
+ResultOrError<Ref<Buffer>> Buffer::CreateUninitializedBuffer(
+    Device* device,
+    const UnpackedPtr<BufferDescriptor>& descriptor) {
+    if (((descriptor->usage & kMappableBufferUsages) || descriptor->mappedAtCreation) &&
+        !device->IsToggleEnabled(Toggle::GLForceDisablePersistentMap)) {
+        return AcquireRef(new PersistentMappedBuffer(device, descriptor));
+    }
+    return AcquireRef(new Buffer(device, descriptor));
+}
 
 // static
 ResultOrError<Ref<Buffer>> Buffer::CreateInternalBuffer(Device* device,
                                                         const BufferDescriptor* descriptor,
                                                         bool shouldLazyClear) {
     Ref<Buffer> buffer;
-    DAWN_TRY_ASSIGN(buffer, Buffer::Create(device, Unpack(descriptor)));
-
-    if (!shouldLazyClear) {
-        buffer->SetInitialized(true);
-    }
+    DAWN_TRY_ASSIGN(buffer, CreateUninitializedBuffer(device, Unpack(descriptor)));
+    DAWN_TRY(buffer->Initialize(shouldLazyClear, descriptor->mappedAtCreation));
 
     if (descriptor->mappedAtCreation) {
         [[maybe_unused]] bool usingStagingBuffer;
@@ -62,34 +145,14 @@ ResultOrError<Ref<Buffer>> Buffer::CreateInternalBuffer(Device* device,
 // static
 ResultOrError<Ref<Buffer>> Buffer::Create(Device* device,
                                           const UnpackedPtr<BufferDescriptor>& descriptor) {
-    const OpenGLFunctions& gl = device->GetGL();
-
-    GLuint handle = 0;
-    DAWN_GL_TRY(gl, GenBuffers(1, &handle));
-    Ref<Buffer> buffer = AcquireRef(new Buffer(device, descriptor, handle));
-
-    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, handle));
-
-    // The buffers with mappedAtCreation == true will be initialized in
-    // BufferBase::MapAtCreation().
-    if (device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting) &&
-        !descriptor->mappedAtCreation) {
-        std::vector<uint8_t> clearValues(buffer->mAllocatedSize, 1u);
-        DAWN_GL_TRY_ALWAYS_CHECK(gl, BufferData(GL_ARRAY_BUFFER, buffer->mAllocatedSize,
-                                                clearValues.data(), GL_STATIC_DRAW));
-    } else {
-        // Buffers start uninitialized if you pass nullptr to glBufferData.
-        DAWN_GL_TRY_ALWAYS_CHECK(
-            gl, BufferData(GL_ARRAY_BUFFER, buffer->mAllocatedSize, nullptr, GL_STATIC_DRAW));
-    }
-
-    buffer->TrackUsage();
-
-    return std::move(buffer);
+    Ref<Buffer> buffer;
+    DAWN_TRY_ASSIGN(buffer, CreateUninitializedBuffer(device, descriptor));
+    DAWN_TRY(buffer->Initialize(/*shouldLazyClear=*/true, descriptor->mappedAtCreation));
+    return buffer;
 }
 
-Buffer::Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor, GLuint handle)
-    : BufferBase(device, descriptor), mBuffer(handle) {
+Buffer::Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor)
+    : BufferBase(device, descriptor) {
     // Allocate at least 4 bytes so clamped accesses are always in bounds.
     // Align with 4 byte to avoid out-of-bounds access issue in compute emulation for 2 byte
     // element.
@@ -100,6 +163,40 @@ Buffer::Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor, 
         alignment = 16u;
     }
     mAllocatedSize = Align(std::max(GetSize(), uint64_t(4u)), alignment);
+}
+
+MaybeError Buffer::Initialize(bool shouldLazyClear, bool isMappedAtCreation) {
+    if (!shouldLazyClear) {
+        SetInitialized(true);
+    }
+
+    DAWN_TRY(InitializeImpl(isMappedAtCreation));
+
+    TrackUsage();
+    return {};
+}
+
+MaybeError Buffer::InitializeImpl(bool isMappedAtCreation) {
+    Device* device = ToBackend(GetDevice());
+
+    const OpenGLFunctions& gl = device->GetGL();
+    GLuint glHandle = 0;
+    DAWN_GL_TRY(gl, GenBuffers(1, &glHandle));
+    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, glHandle));
+
+    // The buffers with mappedAtCreation == true will be initialized in
+    // BufferBase::MapAtCreation().
+    if (device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting) &&
+        !isMappedAtCreation) {
+        std::vector<uint8_t> clearValues(mAllocatedSize, 1u);
+        DAWN_GL_TRY_ALWAYS_CHECK(
+            gl, BufferData(GL_ARRAY_BUFFER, mAllocatedSize, clearValues.data(), GL_STATIC_DRAW));
+    } else {
+        DAWN_GL_TRY_ALWAYS_CHECK(
+            gl, BufferData(GL_ARRAY_BUFFER, mAllocatedSize, nullptr, GL_STATIC_DRAW));
+    }
+    mBuffer = glHandle;
+    return {};
 }
 
 Buffer::~Buffer() = default;
