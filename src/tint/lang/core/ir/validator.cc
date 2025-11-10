@@ -224,7 +224,7 @@ void WalkTypeAndMembers(CTX& ctx,
 /// The IO direction of an operation.
 enum class IODirection : uint8_t { kInput, kOutput };
 
-/// @returns a human-reabable string for an IODirection
+/// @returns a human-readable string for an IODirection
 std::string_view ToString(IODirection value) {
     switch (value) {
         case IODirection::kInput:
@@ -573,48 +573,54 @@ const BuiltInChecker& BuiltinCheckerFor(BuiltinValue builtin, const Capabilities
     }
 }
 
-/// Validates the basic spec rules for builtin usage
-/// @param builtin the builtin to test
-/// @param stage the shader stage the builtin is being used
-/// @param is_input the IO direction of usage, true if input, false if output
-/// @param capabilities enabled optional IR capabilities
-/// @param ty the data type being decorated by the builtin
-/// @returns Success if a valid usage, or reason for invalidity in Failure
-Result<SuccessType, std::string> ValidateBuiltIn(const BuiltinValue builtin,
-                                                 const Function::PipelineStage stage,
-                                                 const bool is_input,
-                                                 const Capabilities& capabilities,
-                                                 const core::type::Type* ty) {
-    // This is not an entry point function, either it is dead code and thus never called, or any
-    // issues will be detected when validating the calling entry point.
-    if (stage == Function::PipelineStage::kUndefined) {
-        return Success;
-    }
+/// IOAttributeChecker is the interface used to check that a usage of an IO attribute
+/// meets the spec rules for a given context.
+struct IOAttributeChecker {
+    IOAttributeKind kind;
+    /// What combination of stage and IO direction is this attribute legal for.
+    EnumSet<IOAttributeUsage> valid_usages;
 
-    const auto io_direction = is_input ? IODirection::kInput : IODirection::kOutput;
-    const IOAttributeUsage usage = IOAttributeUsageFor(stage, io_direction);
-    const auto& checker = BuiltinCheckerFor(builtin, capabilities);
-    if (!checker.valid_usages.Contains(usage)) {
-        std::stringstream msg;
-        msg << ToString(builtin) << " cannot be used on a " << ToString(usage) << ". ";
-        if (checker.valid_usages.Size() == 1) {
-            const auto v = *checker.valid_usages.begin();
-            msg << "It can only be used on a " << ToString(v) << ".";
-        } else {
-            msg << "It can only be used on one of " << ToString(checker.valid_usages);
+    /// Implements the validation logic for a specific attribute.
+    /// using TypeCheckFn = bool(const core::type::Type* type);
+    using CheckFn = Result<SuccessType, std::string>(const IOAttributes& attr,
+                                                     const core::type::Type* ty,
+                                                     const Capabilities& cap,
+                                                     bool is_struct_member);
+
+    /// The validation function.
+    CheckFn* const check;
+};
+
+constexpr IOAttributeChecker kInvariantChecker{
+    /* kind */ IOAttributeKind::kInvariant,
+    /* valid_usages */
+    EnumSet<IOAttributeUsage>{IOAttributeUsage::kVertexOutputUsage,
+                              IOAttributeUsage::kFragmentInputUsage},
+    /* check */
+    [](const IOAttributes& attr, const core::type::Type*, const Capabilities&, bool)
+        -> Result<SuccessType, std::string> {
+        if (attr.builtin != BuiltinValue::kPosition) {
+            return {"'invariant' attribute requires the 'position' builtin"};
         }
-        return msg.str();
-    }
+        return Success;
+    },
+};
 
-    if (!checker.type_check(ty)) {
-        return std::string(checker.type_error);
+/// @returns all the appropriate IOAttributeCheckers for @p attr
+/// Note: The ordering of the vector is the order that the checkers will be run in, so for
+/// location/blend_src they need to be sequence correctly to initialize shared context
+std::span<const IOAttributeChecker*> IOAttributeCheckersFor(const IOAttributes& attr) {
+    Vector<const IOAttributeChecker*, 4> checkers{};
+    if (attr.invariant) {
+        checkers.Push(&kInvariantChecker);
     }
-
-    return Success;
+    // TODO(455376684): Implement all the other checkers
+    return checkers.AsSpan();
 }
 
 /// Annotations that can be associated with a value that are used for shader IO,
 /// e.g. binding_points, @location, being in workgroup address space, etc.
+/// These are a subset of IOAttributes.
 enum class IOAnnotation : uint8_t {
     /// @group + @binding
     kBindingPoint,
@@ -713,6 +719,88 @@ class Validator {
     /// @param mod the module to be validated
     /// @param capabilities the optional capabilities that are allowed
     explicit Validator(const Module& mod, Capabilities capabilities);
+
+    /// Validates the basic spec rules for builtin usage
+    /// @param msg_anchor the object to anchor the error message to
+    /// @param builtin the builtin to test
+    /// @param stage the shader stage the builtin is being used
+    /// @param is_input the IO direction of usage, true if input, false if output
+    /// @param ty the data type being decorated by the builtin
+    /// @param err_prefix an optional prefix for the error message
+    template <typename MSG_ANCHOR>
+    void ValidateBuiltIn(const MSG_ANCHOR* msg_anchor,
+                         const BuiltinValue builtin,
+                         const Function::PipelineStage stage,
+                         const bool is_input,
+                         const core::type::Type* ty,
+                         const std::string& err_prefix = "") {
+        // This is not an entry point function, either it is dead code and thus never called, or any
+        // issues will be detected when validating the calling entry point.
+        if (stage == Function::PipelineStage::kUndefined) {
+            return;
+        }
+
+        const auto io_direction = is_input ? IODirection::kInput : IODirection::kOutput;
+        const IOAttributeUsage usage = IOAttributeUsageFor(stage, io_direction);
+        const auto& checker = BuiltinCheckerFor(builtin, capabilities_);
+        if (!checker.valid_usages.Contains(usage)) {
+            std::stringstream msg;
+            msg << err_prefix << ToString(builtin) << " cannot be used on a " << ToString(usage)
+                << ". ";
+            if (checker.valid_usages.Size() == 1) {
+                const auto v = *checker.valid_usages.begin();
+                msg << "It can only be used on a " << ToString(v) << ".";
+            } else {
+                msg << "It can only be used on one of " << ToString(checker.valid_usages);
+            }
+            AddError(msg_anchor) << msg.str();
+            return;
+        }
+
+        if (!checker.type_check(ty)) {
+            AddError(msg_anchor) << err_prefix << checker.type_error;
+        }
+    }
+
+    /// Validates the spec rules for IO attribute usage
+    /// @param msg_anchor the object to anchor the error message to
+    /// @param attr the attributes to test
+    /// @param stage the shader stage the builtin is being used
+    /// @param is_input the IO direction of usage, true if input, false if output
+    /// @param ty the data type being decorated by the attributes
+    template <typename MSG_ANCHOR>
+    void ValidateIOAttributes(const MSG_ANCHOR* msg_anchor,
+                              const IOAttributes& attr,
+                              const Function::PipelineStage stage,
+                              const bool is_input,
+                              const core::type::Type* ty) {
+        // This is not an entry point function, either it is dead code and thus never called, or any
+        // issues will be detected when validating the calling entry point.
+        if (stage == Function::PipelineStage::kUndefined) {
+            return;
+        }
+
+        const auto io_direction = is_input ? IODirection::kInput : IODirection::kOutput;
+        const IOAttributeUsage usage = IOAttributeUsageFor(stage, io_direction);
+        const auto& checkers = IOAttributeCheckersFor(attr);
+        for (const auto& checker : checkers) {
+            if (!checker->valid_usages.Contains(usage)) {
+                std::stringstream msg;
+                msg << ToString(checker->kind) << " IO attributes cannot be declared for a "
+                    << ToString(usage) << ". ";
+                if (checker->valid_usages.Size() == 1) {
+                    const auto v = *checker->valid_usages.begin();
+                    msg << "They can only be used for a " << ToString(v) << ".";
+                } else {
+                    msg << "They can only be used for " << ToString(checker->valid_usages);
+                }
+                AddError(msg_anchor) << msg.str();
+            } else {
+                checker->check(attr, ty, capabilities_, false);
+            }
+
+        }
+    }
 
     /// Destructor
     ~Validator();
@@ -965,74 +1053,60 @@ class Validator {
     /// @param ep the function to validate
     void CheckVertexEntryPoint(const Function* ep);
 
-    /// @returns a function that validates builtins on function params
-    auto CheckBuiltinFunctionParam(const std::string& err) {
-        return [this, err](const FunctionParam* param, const IOAttributes& attr,
-                           const core::type::Type* ty) {
-            if (!attr.builtin.has_value()) {
-                return;
-            }
-            auto result = ValidateBuiltIn(attr.builtin.value(), param->Function()->Stage(), true,
-                                          capabilities_, ty);
-            if (result != Success) {
-                AddError(param) << err << result.Failure();
-            }
-        };
-    }
+    /// Validates builtins on function params.
+    /// @param param the function parameter
+    /// @param attr the IO attributes
+    /// @param ty the type
+    /// @param err an optional prefix for the error message
+    void CheckBuiltinFunctionParam(const FunctionParam* param,
+                                   const IOAttributes& attr,
+                                   const core::type::Type* ty,
+                                   const std::string& err);
 
-    /// @returns a function that validates builtins on function returns
-    auto CheckBuiltinFunctionReturn(const std::string& err) {
-        return [this, err](const Function* func, const IOAttributes& attr,
-                           const core::type::Type* ty) {
-            if (!attr.builtin.has_value()) {
-                return;
-            }
-            auto result =
-                ValidateBuiltIn(attr.builtin.value(), func->Stage(), false, capabilities_, ty);
-            if (result != Success) {
-                AddError(func) << err << result.Failure();
-            }
-        };
-    }
+    /// Validates builtins on function returns.
+    /// @param func the function
+    /// @param attr the IO attributes
+    /// @param ty the type
+    /// @param err an optional prefix for the error message
+    void CheckBuiltinFunctionReturn(const Function* func,
+                                    const IOAttributes& attr,
+                                    const core::type::Type* ty,
+                                    const std::string& err);
 
-    /// @returns a function that validates color attributes on function params
-    auto CheckColorFunctionParam(const std::string& err) {
-        return [this, err](const FunctionParam* param, const IOAttributes& attr,
-                           const core::type::Type*) {
-            if (!attr.color.has_value()) {
-                return;
-            }
+    /// Validates color attributes on function params.
+    /// @param param the function parameter
+    /// @param attr the IO attributes
+    /// @param err an optional prefix for the error message
+    void CheckColorFunctionParam(const FunctionParam* param,
+                                 const IOAttributes& attr,
+                                 const std::string& err);
 
-            auto* func = param->Function();
-            if (func->IsEntryPoint() && func->Stage() != Function::PipelineStage::kFragment) {
-                AddError(param) << err << "@color can only be used on fragment shader inputs";
-            }
-        };
-    }
-
-    /// @returns a function that validates that type is bool only if it is decorated with
-    /// @builtin(front_facing)
+    /// Validates that a type is a bool only if it is decorated with @builtin(front_facing).
+    /// @param msg_anchor the message anchor
+    /// @param attr the IO attributes
+    /// @param ty the type
     /// @param err error message to log when check fails
     template <typename MSG_ANCHOR>
-    auto CheckFrontFacingIfBoolFunc(const std::string& err) {
-        return [this, err](const MSG_ANCHOR* msg_anchor, const IOAttributes& attr,
-                           const core::type::Type* ty) {
-            if (ty->Is<core::type::Bool>() && attr.builtin != BuiltinValue::kFrontFacing) {
-                AddError(msg_anchor) << err;
-            }
-        };
+    void CheckFrontFacingIfBool(const MSG_ANCHOR* msg_anchor,
+                                const IOAttributes& attr,
+                                const core::type::Type* ty,
+                                const std::string& err) {
+        if (ty->Is<core::type::Bool>() && attr.builtin != BuiltinValue::kFrontFacing) {
+            AddError(msg_anchor) << err;
+        }
     }
 
-    /// @returns a function that validates that type is not bool
+    /// Validates that a type is not a bool.
+    /// @param msg_anchor the message anchor
+    /// @param ty the type
     /// @param err error message to log when check fails
     template <typename MSG_ANCHOR>
-    auto CheckNotBool(const std::string& err) {
-        return [this, err](const MSG_ANCHOR* msg_anchor, [[maybe_unused]] const IOAttributes& attr,
-                           const core::type::Type* ty) {
-            if (ty->Is<core::type::Bool>()) {
-                AddError(msg_anchor) << err;
-            }
-        };
+    void CheckNotBool(const MSG_ANCHOR* msg_anchor,
+                      const core::type::Type* ty,
+                      const std::string& err) {
+        if (ty->Is<core::type::Bool>()) {
+            AddError(msg_anchor) << err;
+        }
     }
 
     /// Checks spec rules for invariant attributes
@@ -2416,8 +2490,8 @@ void Validator::CheckFunction(const Function* func) {
         WalkTypeAndMembers(
             param, param->Type(), param->Attributes(),
             [this](const core::type::Type* t, const IOAttributes& a, const FunctionParam* p) {
-                CheckBuiltinFunctionParam("")(p, a, t);
-                CheckColorFunctionParam("")(p, a, t);
+                CheckBuiltinFunctionParam(p, a, t, "");
+                CheckColorFunctionParam(p, a, "");
                 if (!t->Is<core::type::Struct>()) {
                     CheckInvariant(p, a);
                 }
@@ -2426,16 +2500,17 @@ void Validator::CheckFunction(const Function* func) {
         if (func->IsFragment()) {
             WalkTypeAndMembers(param, param->Type(), param->Attributes(),
                                [this](const auto* t, const auto& a, const auto* p) {
-                                   CheckFrontFacingIfBoolFunc<FunctionParam>(
+                                   CheckFrontFacingIfBool(
+                                       p, a, t,
                                        "fragment entry point params can only be a bool if "
-                                       "decorated with @builtin(front_facing)")(p, a, t);
+                                       "decorated with @builtin(front_facing)");
                                });
         } else if (func->IsEntryPoint()) {
             WalkTypeAndMembers(
                 param, param->Type(), param->Attributes(),
-                [this](const auto* t, const auto& a, const auto* p) {
-                    CheckNotBool<FunctionParam>(
-                        "entry point params can only be a bool for fragment shaders")(p, a, t);
+                [this](const auto* t, const auto&, const auto* p) {
+                    CheckNotBool(p, t,
+                                 "entry point params can only be a bool for fragment shaders");
                 });
         }
 
@@ -2494,7 +2569,7 @@ void Validator::CheckFunction(const Function* func) {
 
     WalkTypeAndMembers(func, func->ReturnType(), func->ReturnAttributes(),
                        [this](const core::type::Type* t, const IOAttributes& a, const Function* f) {
-                           CheckBuiltinFunctionReturn("")(f, a, t);
+                           CheckBuiltinFunctionReturn(f, a, t, "");
                            if (!t->Is<core::type::Struct>()) {
                                CheckInvariant(f, a);
                            }
@@ -2532,8 +2607,7 @@ void Validator::CheckFunction(const Function* func) {
         WalkTypeAndMembers(
             func, func->ReturnType(), func->ReturnAttributes(),
             [this](const core::type::Type* t, const IOAttributes& a, const Function* f) {
-                CheckFrontFacingIfBoolFunc<Function>("entry point returns can not be 'bool'")(f, a,
-                                                                                              t);
+                CheckNotBool(f, t, "entry point returns can not be 'bool'");
             });
 
         Hashset<BindingPoint, 4> binding_points{};
@@ -2571,18 +2645,20 @@ void Validator::CheckFunction(const Function* func) {
             if (func->IsFragment() && mv->AddressSpace() == AddressSpace::kIn) {
                 WalkTypeAndMembers(
                     var, ty, attr, [this](const auto* t, const auto& a, const auto* v) {
-                        CheckFrontFacingIfBoolFunc<Var>(
+                        CheckFrontFacingIfBool(
+                            v, a, t,
                             "input address space values referenced by fragment shaders "
                             "can only be 'bool' if decorated with "
-                            "@builtin(front_facing)")(v, a, t);
+                            "@builtin(front_facing)");
                     });
             } else {
                 WalkTypeAndMembers(
                     var, ty, attr, [this](const auto* t, const auto& a, const auto* v) {
-                        CheckNotBool<Var>(
-                            "IO address space values referenced by shader entry points can only be "
-                            "'bool' if in the input space, used only by fragment shaders and "
-                            "decorated with @builtin(front_facing)")(v, a, t);
+                        CheckNotBool(
+                            v, t,
+                            "IO address space values referenced by shader entry points can "
+                            "only be 'bool' if in the input space, used only by fragment "
+                            "shaders and decorated with @builtin(front_facing)");
                     });
             }
         }
@@ -2594,6 +2670,39 @@ void Validator::CheckFunction(const Function* func) {
 
     QueueBlock(func->Block());
     ProcessTasks();
+}
+
+void Validator::CheckBuiltinFunctionParam(const FunctionParam* param,
+                                          const IOAttributes& attr,
+                                          const core::type::Type* ty,
+                                          const std::string& err) {
+    if (!attr.builtin.has_value()) {
+        return;
+    }
+    ValidateBuiltIn(param, attr.builtin.value(), param->Function()->Stage(), true, ty, err);
+}
+
+void Validator::CheckBuiltinFunctionReturn(const Function* func,
+                                           const IOAttributes& attr,
+                                           const core::type::Type* ty,
+                                           const std::string& err) {
+    if (!attr.builtin.has_value()) {
+        return;
+    }
+    ValidateBuiltIn(func, attr.builtin.value(), func->Stage(), false, ty, err);
+}
+
+void Validator::CheckColorFunctionParam(const FunctionParam* param,
+                                        const IOAttributes& attr,
+                                        const std::string& err) {
+    if (!attr.color.has_value()) {
+        return;
+    }
+
+    auto* func = param->Function();
+    if (func->IsEntryPoint() && func->Stage() != Function::PipelineStage::kFragment) {
+        AddError(param) << err << "@color can only be used on fragment shader inputs";
+    }
 }
 
 void Validator::CheckEntryPointLocationsAndBlendSrc(const Function* func) {
