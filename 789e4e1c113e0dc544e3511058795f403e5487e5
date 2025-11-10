@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a5fdd93_ff52a5e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-10T22:39:00Z",
+      "side": 1,
+      "message": "Needs to be updated since the original CL now targets Ubuntu 22 and 24, but otherwise LGTM.",
+      "revId": "789e4e1c113e0dc544e3511058795f403e5487e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
