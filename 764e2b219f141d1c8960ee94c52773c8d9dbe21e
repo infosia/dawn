@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93992118_7d2afec8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-10T20:29:12Z",
+      "side": 1,
+      "message": "LGTM but we definitely need to clean this up a bit further. I have commented on the bug.",
+      "revId": "764e2b219f141d1c8960ee94c52773c8d9dbe21e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
