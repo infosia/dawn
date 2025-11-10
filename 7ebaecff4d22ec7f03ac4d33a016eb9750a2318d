@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "e53b05c9_eee83662",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-10T18:06:34Z",
+      "side": 1,
+      "message": "Smaller writes appear to be the same speed on most devices. The outlier is Windows where some of the times can come back higher for small uploads but the timing is very noisy. For example, on my Windows machine a 1Mb WriteBuffer call appeared on average to be 0.08ms slower (0.63ms vs 0.55ms) with this change, while on every other tested device the timings were the same or better.\n\nWe could put back in a heuristic where we continue using the previous method for Windows uploads under 4Mb only, and that would cover the only potential regressions we\u0027ve seen.",
+      "parentUuid": "376281d8_5bf98c2a",
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "61f9ea0b_b91a4aa1",
@@ -108,6 +126,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eb2b37f0_b89645fc",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-10T18:06:34Z",
+      "side": 1,
+      "message": "I\u0027d prefer this as a follow up.",
+      "parentUuid": "d6db08f3_5bbffb4d",
+      "range": {
+        "startLine": 146,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 66
+      },
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f7b460d1_ad4f32ff",
         "filename": "src/dawn/wire/client/Queue.cpp",
         "patchSetId": 5
@@ -146,6 +188,48 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "842fa233_85333de1",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-10T18:06:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a2fd7e2_2b344ecf",
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8394543b_d820f4cc",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-10T18:06:34Z",
+      "side": 1,
+      "message": "Implemented Kai\u0027s suggestion.",
+      "parentUuid": "f7b460d1_ad4f32ff",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 138,
+        "endChar": 27
+      },
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3f90e05f_76d7b188",
@@ -159,6 +243,24 @@
       "writtenOn": "2025-11-07T00:49:31Z",
       "side": 1,
       "message": "nit: Unrelated to this CL but it\u0027s confusing that this doesn\u0027t get initialized. AFAICT it\u0027s never used in the wire at all, only after deserializing from the wire. I guess this is how all pointers work in the wire under the hood but this one is confusing because it\u0027s more visible. Maybe a short comment on these (and on the ones in `Buffer::Create` and `Buffer::APIUnmap`) saying something like `// placeholder to be filled by deserialization`",
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66511f61_0a6f34c9",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-10T18:06:34Z",
+      "side": 1,
+      "message": "This was in Loko\u0027s original code, and I meant to ask him about it. What\u0027s the reason for the nulls?",
+      "parentUuid": "3f90e05f_76d7b188",
       "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -186,6 +288,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27869f56_bfc2ae6b",
+        "filename": "src/dawn/wire/server/ServerQueue.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-10T18:06:34Z",
+      "side": 1,
+      "message": "Comment updated",
+      "parentUuid": "47b29d5c_24dbcf72",
+      "range": {
+        "startLine": 82,
+        "startChar": 24,
+        "endLine": 82,
+        "endChar": 65
+      },
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd639cf3_de9ffae7",
@@ -199,6 +325,30 @@
       "writtenOn": "2025-11-07T00:49:31Z",
       "side": 1,
       "message": "```suggestion\n    // Otherwise, fall back to DeserializeDataUpdate.\n```",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 23
+      },
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c366052_e84fb734",
+        "filename": "src/dawn/wire/server/ServerQueue.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-10T18:06:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd639cf3_de9ffae7",
       "range": {
         "startLine": 90,
         "startChar": 0,
@@ -270,6 +420,30 @@
       "side": 1,
       "message": "Actually I guess since https://chromium-review.googlesource.com/c/chromium/src/+/7128912 passes already (I guess `override` is ignored), you could just land that first, and then do all the Dawn stuff at once?",
       "parentUuid": "43e23eb3_3f01973a",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 94,
+        "endChar": 37
+      },
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6b3abb6_ac221820",
+        "filename": "src/dawn/wire/server/ServerQueue.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-10T18:06:34Z",
+      "side": 1,
+      "message": "It actually wasn\u0027t passing. I hadn\u0027t tried a dry run with it yet. (I did out of curiosity after you mentioned this and it predictably failed.)\n\nI don\u0027t see the extra branch here as so annoying that I\u0027d go to great lengths to avoid it. It\u0027d be easy enough to strip out later.",
+      "parentUuid": "f8eda4e0_ced8eaa5",
       "range": {
         "startLine": 90,
         "startChar": 4,
