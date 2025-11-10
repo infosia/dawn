@@ -36,7 +36,7 @@
 #include "dawn/common/Platform.h"
 #include "dawn/common/RefCounted.h"
 #include "dawn/common/Time.h"
-#include "dawn/native/SystemHandle.h"
+#include "dawn/utils/SystemHandle.h"
 
 namespace dawn::native {
 
@@ -55,17 +55,17 @@ class SystemEventReceiver final : NonCopyable {
     static SystemEventReceiver CreateAlreadySignaled();
 
     SystemEventReceiver() = default;
-    explicit SystemEventReceiver(SystemHandle primitive);
+    explicit SystemEventReceiver(dawn::utils::SystemHandle primitive);
     SystemEventReceiver(SystemEventReceiver&&) = default;
     SystemEventReceiver& operator=(SystemEventReceiver&&) = default;
 
-    const SystemHandle& GetPrimitive() const;
+    const dawn::utils::SystemHandle& GetPrimitive() const;
 
   private:
     template <typename It>
     friend bool WaitAnySystemEvent(It begin, It end, Nanoseconds timeout);
     friend std::pair<SystemEventPipeSender, SystemEventReceiver> CreateSystemEventPipe();
-    SystemHandle mPrimitive;
+    dawn::utils::SystemHandle mPrimitive;
 };
 
 // See CreateSystemEventPipe.
@@ -81,7 +81,7 @@ class SystemEventPipeSender final : NonCopyable {
 
   private:
     friend std::pair<SystemEventPipeSender, SystemEventReceiver> CreateSystemEventPipe();
-    SystemHandle mPrimitive;
+    dawn::utils::SystemHandle mPrimitive;
 };
 
 // CreateSystemEventPipe provides an SystemEventReceiver that can be signalled by Dawn code. This is
