@@ -69,6 +69,24 @@
       "parentUuid": "be0c030c_c4b26e8d",
       "revId": "32e32d12e0f46a058a0af167833dc2d329ace54a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3dbff51_c8cd111b",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-10T21:43:38Z",
+      "side": 1,
+      "message": "Ack, thanks for explaining!",
+      "parentUuid": "02f527f9_a04fde5b",
+      "revId": "32e32d12e0f46a058a0af167833dc2d329ace54a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
