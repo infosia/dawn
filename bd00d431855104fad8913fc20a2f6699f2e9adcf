@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "780dee52_ff4899ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-10T21:49:03Z",
+      "side": 1,
+      "message": "PTAL\n\nAnother GN fix/cleanup that I am queueing up to land once we have a working roll into Chromium.\n\nMy accidental exposure of the CLI targets to Chromium build, unearthed the fact that we are not correctly guarding for GLFW presence in the build rules for the samples.",
+      "revId": "bd00d431855104fad8913fc20a2f6699f2e9adcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
