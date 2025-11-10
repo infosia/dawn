@@ -36,8 +36,9 @@
 namespace dawn::native::opengl {
 
 class Device;
+struct OpenGLFunctions;
 
-class Buffer final : public BufferBase {
+class Buffer : public BufferBase {
   public:
     static ResultOrError<Ref<Buffer>> CreateInternalBuffer(Device* device,
                                                            const BufferDescriptor* descriptor,
@@ -56,21 +57,36 @@ class Buffer final : public BufferBase {
 
     void TrackUsage() { MarkUsedInPendingCommands(); }
 
-  private:
-    Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor, GLuint handle);
+    virtual MaybeError Write(const OpenGLFunctions& gl,
+                             uint64_t offset,
+                             const void* data,
+                             size_t size);
+
+  protected:
+    Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor);
     ~Buffer() override;
+
+    MaybeError Initialize(bool shouldLazyClear, bool isMappedAtCreation);
+
+    virtual MaybeError InitializeImpl(bool isMappedAtCreation);
+    void DestroyImpl() override;
+
+    GLuint mBuffer = 0;
+    raw_ptr<void> mMappedData = nullptr;
+
+  private:
+    static ResultOrError<Ref<Buffer>> CreateUninitializedBuffer(
+        Device* device,
+        const UnpackedPtr<BufferDescriptor>& descriptor);
+
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override;
     void FinalizeMapImpl(BufferState newState) override;
     void UnmapImpl(BufferState oldState) override;
-    void DestroyImpl() override;
     bool IsCPUWritableAtCreation() const override;
     MaybeError MapAtCreationImpl() override;
     void* GetMappedPointerImpl() override;
 
-    MaybeError InitializeToZero();
-
-    GLuint mBuffer = 0;
-    raw_ptr<void> mMappedData = nullptr;
+    virtual MaybeError InitializeToZero();
 };
 
 }  // namespace dawn::native::opengl

@@ -351,7 +351,9 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                 bindingInfo.bindingLayout,
                 [&](const BufferBindingInfo& layout) -> MaybeError {
                     BufferBinding binding = group->GetBindingAsBufferBinding(bindingIndex);
-                    GLuint buffer = ToBackend(binding.buffer)->GetHandle();
+                    Buffer* buffer = ToBackend(binding.buffer);
+                    buffer->TrackUsage();
+                    GLuint bufferHandle = buffer->GetHandle();
                     FlatBindingIndex index = indices[bindingIndex];
                     GLuint offset = binding.offset;
 
@@ -381,8 +383,8 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                             DAWN_UNREACHABLE();
                     }
 
-                    DAWN_GL_TRY(
-                        gl, BindBufferRange(target, GLuint(index), buffer, offset, binding.size));
+                    DAWN_GL_TRY(gl, BindBufferRange(target, GLuint(index), bufferHandle, offset,
+                                                    binding.size));
                     return {};
                 },
                 [&](const StaticSamplerBindingInfo& layout) -> MaybeError {
@@ -1036,9 +1038,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
 
                 if (!clearedToZero) {
                     const std::vector<uint8_t> clearValues(cmd->size, 0u);
-                    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, dstBuffer->GetHandle()));
-                    DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, cmd->offset, cmd->size,
-                                                  clearValues.data()));
+                    DAWN_TRY(dstBuffer->Write(gl, cmd->offset, clearValues.data(), cmd->size));
                 }
 
                 dstBuffer->TrackUsage();
@@ -1068,9 +1068,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                     values[i] = value;
                 }
 
-                DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, destination->GetHandle()));
-                DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, cmd->destinationOffset, size,
-                                              values.data()));
+                DAWN_TRY(destination->Write(gl, cmd->destinationOffset, values.data(), size));
 
                 break;
             }
@@ -1100,8 +1098,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                 uint8_t* data = mCommands.NextData<uint8_t>(size);
                 DAWN_TRY(dstBuffer->EnsureDataInitializedAsDestination(offset, size));
 
-                DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, dstBuffer->GetHandle()));
-                DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, offset, size, data));
+                DAWN_TRY(dstBuffer->Write(gl, offset, data, size));
 
                 dstBuffer->TrackUsage();
                 break;
