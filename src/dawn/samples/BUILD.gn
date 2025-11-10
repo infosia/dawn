@@ -25,6 +25,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+import("${dawn_root}/scripts/dawn_features.gni")
 import("../../../scripts/dawn_overrides_with_defaults.gni")
 
 group("samples") {
@@ -34,7 +35,7 @@ group("samples") {
     ":HelloTriangle",
   ]
 
-  if (!is_wasm) {
+  if (dawn_supports_glfw_for_windowing) {
     deps += [
       ":DawnInfo",
       ":ManualSurfaceTest",
@@ -57,7 +58,7 @@ static_library("utils") {
     "${dawn_root}/src/dawn/utils:wgpu_utils",
   ]
 
-  if (!is_wasm) {
+  if (dawn_supports_glfw_for_windowing) {
     public_deps += [
       "${dawn_root}/src/dawn/glfw",
       "${dawn_root}/src/dawn/native",
@@ -97,10 +98,12 @@ sample("Animometer") {
   sources = [ "Animometer.cpp" ]
 }
 
-sample("ManualSurfaceTest") {
-  sources = [ "ManualSurfaceTest.cpp" ]
-}
+if (dawn_supports_glfw_for_windowing) {
+  sample("ManualSurfaceTest") {
+    sources = [ "ManualSurfaceTest.cpp" ]
+  }
 
-sample("DawnInfo") {
-  sources = [ "DawnInfo.cpp" ]
+  sample("DawnInfo") {
+    sources = [ "DawnInfo.cpp" ]
+  }
 }
