@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7dd208e_f95b79c7",
+        "filename": "infra/config/global/legacy_builders.star",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-10T22:14:47Z",
+      "side": 1,
+      "message": "If there\u0027s going to be a period where both Ubuntu 22 and Ubuntu 24 machines are available, this should instead be `Ubuntu-22.04|Ubuntu-24.04` for now and only changed to `Ubuntu-24.04` once everything has been moved over.",
+      "range": {
+        "startLine": 64,
+        "startChar": 16,
+        "endLine": 64,
+        "endChar": 28
+      },
+      "revId": "8a57b51aac5a5a88e230327a0d1ae3f8279714dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
