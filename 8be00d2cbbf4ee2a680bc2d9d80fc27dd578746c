@@ -34,6 +34,24 @@
       ],
       "revId": "8be00d2cbbf4ee2a680bc2d9d80fc27dd578746c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8495f2a7_7bcb00d3",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-10T15:29:39Z",
+      "side": 1,
+      "message": "We should. I also adapted the other \u0027throw\u0027 instances. PTAL.",
+      "parentUuid": "7079c296_ecbaa399",
+      "revId": "8be00d2cbbf4ee2a680bc2d9d80fc27dd578746c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
