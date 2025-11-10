@@ -298,14 +298,14 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
                        const UnpackedPtr<DeviceDescriptor>& descriptor,
                        const TogglesState& deviceToggles,
                        Ref<DeviceLostEvent>&& lostEvent)
-    : mPendingLostEvent(std::move(lostEvent)),
+    : mLostEvent(std::move(lostEvent)),
       mAdapter(adapter),
       mToggles(deviceToggles),
       mNextPipelineCompatibilityToken(1) {
     DAWN_ASSERT(descriptor);
 
-    DAWN_ASSERT(mPendingLostEvent);
-    mPendingLostEvent->mDevice = this;
+    DAWN_ASSERT(mLostEvent);
+    mLostEvent->mDevice = this;
 
 #if defined(DAWN_ENABLE_ASSERTS)
     static constexpr WGPUUncapturedErrorCallbackInfo kDefaultUncapturedErrorCallbackInfo = {
@@ -431,8 +431,8 @@ DeviceBase::DeviceBase() : mState(State::Alive), mToggles(ToggleStage::Device) {
     DeviceDescriptor desc = {};
     desc.deviceLostCallbackInfo = {nullptr, WGPUCallbackMode_AllowSpontaneous, nullptr, nullptr,
                                    nullptr};
-    mPendingLostEvent = DeviceLostEvent::Create(&desc);
-    mPendingLostEvent->mDevice = this;
+    mLostEvent = DeviceLostEvent::Create(&desc);
+    mLostEvent->mDevice = this;
 }
 
 DeviceBase::~DeviceBase() {
@@ -493,10 +493,6 @@ MaybeError DeviceBase::Initialize(const UnpackedPtr<DeviceDescriptor>& descripto
     }
 
     GetInstance()->AddDevice(this);
-
-    // Initialization is successful, allow the device lost event to be triggered from within the
-    // device.
-    mLostEvent = std::move(mPendingLostEvent);
 
     return {};
 }
@@ -2686,6 +2682,10 @@ bool DeviceBase::HasFlexibleTextureViews() const {
 
 std::string_view DeviceBase::GetIsolatedEntryPointName() const {
     return mIsolatedEntryPointName;
+}
+
+void DeviceBase::ResetLostEvent() {
+    mLostEvent = nullptr;
 }
 
 IgnoreLazyClearCountScope::IgnoreLazyClearCountScope(DeviceBase* device)
