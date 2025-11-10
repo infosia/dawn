@@ -48,6 +48,7 @@
 #include "dawn/native/Sampler.h"
 #include "dawn/native/ShaderModuleParseRequest.h"
 #include "dawn/native/TintUtils.h"
+#include "third_party/glslang/src/glslang/Include/glslang_c_shader_types.h"
 
 #ifdef DAWN_ENABLE_SPIRV_VALIDATION
 #include "dawn/native/SpirvValidation.h"
@@ -1011,6 +1012,10 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
 
             metadata->usedInterStageVariables[location] = true;
             metadata->interStageVariables[location] = variable;
+            if (inputVar.interpolation_sampling ==
+                tint::inspector::InterpolationSampling::kSample) {
+                metadata->isFragSampled = true;
+            }
         }
 
         uint32_t totalInterStageShaderVariables = entryPoint.input_variables.size();
@@ -1023,6 +1028,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
             ++totalInterStageShaderVariables;
         }
         metadata->usesFragDepth = entryPoint.frag_depth_used;
+        metadata->usesFragPosition = entryPoint.frag_position_used;
 
         metadata->totalInterStageShaderVariables = totalInterStageShaderVariables;
         if (metadata->totalInterStageShaderVariables > maxInterStageShaderVariables) {
