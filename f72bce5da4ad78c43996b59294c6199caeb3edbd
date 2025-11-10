@@ -33,6 +33,23 @@
       "message": "For some reasons, this revert failed the presubmit because it says the source needs re-format. Is there a way to bypass it?",
       "revId": "f72bce5da4ad78c43996b59294c6199caeb3edbd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d0ece0f_b1902f06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-10T15:11:30Z",
+      "side": 1,
+      "message": "The dawn -\u003e chromium breakage is being discussed here:\n\nhttps://chat.google.com/u/0/app/chat/AAAAtUp2tb0/topic/KhvXLO-Aq18",
+      "revId": "f72bce5da4ad78c43996b59294c6199caeb3edbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
