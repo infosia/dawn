@@ -83,6 +83,7 @@ ResultOrError<UnpackedPtr<TexelBufferViewDescriptor>> ValidateTexelBufferViewDes
 class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
   public:
     enum class BufferState {
+        InsideOperation,
         Unmapped,
         PendingMap,
         Mapped,
@@ -198,6 +199,10 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     // Updates internal state to reflect that the buffer is now mapped.
     void FinalizeMap(BufferState newState);
 
+    // Atomically exchanges `currentState` to `desiredState`. Throws a validation error indication
+    // concurrent use if another thread has modified the current state and compare_exchange failed.
+    MaybeError TransitionState(BufferState currentState, BufferState desiredState);
+
     const uint64_t mSize = 0;
     const wgpu::BufferUsage mUsage = wgpu::BufferUsage::None;
     const wgpu::BufferUsage mInternalUsage = wgpu::BufferUsage::None;
@@ -206,6 +211,7 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     // The following members are mutable state of the buffer w.r.t mapping. They are all loosely
     // guarded by |mBufferState| by update ordering.
 
+    // TODO: Update comment.
     // Currently, our API relies on the fact that there is a device level lock that synchronizes
     // everything. For API*MappedRange calls, however, it is more efficient to not acquire the
     // device-wide lock since we cannot actually protect against racing w.r.t Unmap, i.e. a user
