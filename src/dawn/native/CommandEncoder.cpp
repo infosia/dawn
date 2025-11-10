@@ -1449,8 +1449,6 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                 depthReadOnly = descriptor->depthStencilAttachment->depthReadOnly;
 
                 cmd->depthStencilAttachment.depthReadOnly = false;
-                cmd->depthStencilAttachment.depthLoadOp = wgpu::LoadOp::Load;
-                cmd->depthStencilAttachment.depthStoreOp = wgpu::StoreOp::Store;
                 if (attachment->GetFormat().HasDepth()) {
                     cmd->depthStencilAttachment.depthReadOnly = depthReadOnly;
                     if (!depthReadOnly) {
@@ -1458,6 +1456,9 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                             descriptor->depthStencilAttachment->depthLoadOp;
                         cmd->depthStencilAttachment.depthStoreOp =
                             descriptor->depthStencilAttachment->depthStoreOp;
+                    } else {
+                        cmd->depthStencilAttachment.depthLoadOp = wgpu::LoadOp::Load;
+                        cmd->depthStencilAttachment.depthStoreOp = wgpu::StoreOp::Store;
                     }
 
                     usageRange.aspects = Aspect::Depth;
@@ -1465,6 +1466,9 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                                                     depthReadOnly
                                                         ? kReadOnlyRenderAttachment
                                                         : wgpu::TextureUsage::RenderAttachment);
+                } else {
+                    cmd->depthStencilAttachment.depthLoadOp = wgpu::LoadOp::Undefined;
+                    cmd->depthStencilAttachment.depthStoreOp = wgpu::StoreOp::Undefined;
                 }
 
                 // Stencil aspect:
@@ -1476,8 +1480,6 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                 stencilReadOnly = descriptor->depthStencilAttachment->stencilReadOnly;
 
                 cmd->depthStencilAttachment.stencilReadOnly = false;
-                cmd->depthStencilAttachment.stencilLoadOp = wgpu::LoadOp::Load;
-                cmd->depthStencilAttachment.stencilStoreOp = wgpu::StoreOp::Store;
                 if (attachment->GetFormat().HasStencil()) {
                     cmd->depthStencilAttachment.stencilReadOnly = stencilReadOnly;
                     if (!stencilReadOnly) {
@@ -1485,6 +1487,9 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                             descriptor->depthStencilAttachment->stencilLoadOp;
                         cmd->depthStencilAttachment.stencilStoreOp =
                             descriptor->depthStencilAttachment->stencilStoreOp;
+                    } else {
+                        cmd->depthStencilAttachment.stencilLoadOp = wgpu::LoadOp::Load;
+                        cmd->depthStencilAttachment.stencilStoreOp = wgpu::StoreOp::Store;
                     }
 
                     usageRange.aspects = Aspect::Stencil;
@@ -1492,6 +1497,9 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                                                     stencilReadOnly
                                                         ? kReadOnlyRenderAttachment
                                                         : wgpu::TextureUsage::RenderAttachment);
+                } else {
+                    cmd->depthStencilAttachment.stencilLoadOp = wgpu::LoadOp::Undefined;
+                    cmd->depthStencilAttachment.stencilStoreOp = wgpu::StoreOp::Undefined;
                 }
             }
 
