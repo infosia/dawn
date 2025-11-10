@@ -593,4 +593,16 @@ const Buffer* Device::GetInternalArrayLengthUniformBuffer() const {
     return mArrayLengthBuffer.Get();
 }
 
+bool Device::CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage storageUsage,
+                                                          wgpu::BufferUsage originalUsage,
+                                                          size_t bufferSize) const {
+    if (!IsToggleEnabled(Toggle::GLForceDisablePersistentMap)) {
+        // If persistent map is available, then we can add storage usage to any buffer.
+        return true;
+    }
+
+    // Cannot add storage usage to mappable buffers because they use shadow copies.
+    return !(originalUsage & kMappableBufferUsages);
+}
+
 }  // namespace dawn::native::opengl
