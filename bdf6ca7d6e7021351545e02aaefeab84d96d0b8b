@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8842afce_3208ee24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-10T08:42:19Z",
+      "side": 1,
+      "message": "Need input: ptal\n\nThe CommandEncoder currently throws away the fact that the user specified the spec compliant LoadOp::Undefined, StoreOp::Undefined and replaces them with Load,Store. On reply that fails. For example, add a depth attachment, no stencil, the stencil ops are defined as Load/Store, gets error \"Load/Store not allow on stencil if there is no stencil\"\n\nThe question is how should I fix it. I tried this CL but backends fail.\n\nI can do one of \n\n1. Keep this change and Fix all the backends so they expect undefined\n\n2. Discard this change and add settings that are used only by capture/replay that encode the user\u0027s actual parameters\n\n3. At capture time, check if there is a depth and/or stencil and save undefined/undefined if not.\n\n4. At replay time, check if there is a depth and/or stencil and set the descriptor to undefined/undefined\n\n5. other?\n\nI prefer 1 because 3, 4 seems like a tech debt and 2 seems capture only. For 3, 4, we don\u0027t know how things will change in the future and guessing the intent based on indirect data seems bad, though I expect this particular part is unlikely to break using 3 or 4. Further, ideally we record what the user specified otherwise they\u0027ll be confused if they inspect the descriptor and see something other than undefined/undefined.",
+      "revId": "bdf6ca7d6e7021351545e02aaefeab84d96d0b8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
