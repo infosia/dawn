@@ -91,12 +91,16 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   uint64_t bufferOffset,
                                   const void* data,
                                   size_t size) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    auto device = ToBackend(GetDevice());
+    Ref<Buffer> bufferGL = ToBackend(buffer);
 
-    DAWN_TRY(ToBackend(buffer)->EnsureDataInitializedAsDestination(bufferOffset, size));
+    DAWN_TRY(bufferGL->EnsureDataInitializedAsDestination(bufferOffset, size));
 
-    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, ToBackend(buffer)->GetHandle()));
-    DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, size, data));
+    // Defer buffer write to when we submit the command buffer.
+    DAWN_TRY(device->ExecuteGLWork([=](const OpenGLFunctions& gl) -> MaybeError {
+        return bufferGL->Write(gl, bufferOffset, data, size);
+    }));
+
     buffer->MarkUsedInPendingCommands();
     return {};
 }
