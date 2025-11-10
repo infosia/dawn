@@ -323,7 +323,7 @@ std::string ToString(const EnumSet<T>& values) {
 /// The IO direction of an operation.
 enum class IODirection : uint8_t { kInput, kOutput };
 
-/// @returns a human-reabable string for an IODirection
+/// @returns a human-readable string for an IODirection
 std::string_view ToString(IODirection value) {
     switch (value) {
         case IODirection::kInput:
@@ -712,8 +712,98 @@ Result<SuccessType, std::string> ValidateBuiltIn(const BuiltinValue builtin,
     return Success;
 }
 
+/// IOAttributeChecker is the interface used to check that a usage of an IO attribute
+/// meets the spec rules for a given context.
+struct IOAttributeChecker {
+    IOAttributeKind kind;
+    /// What combination of stage and IO direction is this attribute legal for.
+    EnumSet<IOAttributeUsage> valid_usages;
+
+    /// Implements the validation logic for a specific attribute.
+    /// using TypeCheckFn = bool(const core::type::Type* type);
+    using CheckFn = Result<SuccessType, std::string>(const IOAttributes& attr,
+                                                     const core::type::Type* ty,
+                                                     const Capabilities& cap,
+                                                     bool is_struct_member);
+
+    /// The validation function.
+    CheckFn* const check;
+};
+
+constexpr IOAttributeChecker kInvariantChecker{
+    /* kind */ IOAttributeKind::kInvariant,
+    /* valid_usages */
+    EnumSet<IOAttributeUsage>{IOAttributeUsage::kVertexOutputUsage,
+                              IOAttributeUsage::kFragmentInputUsage},
+    /* check */
+    [](const IOAttributes& attr, const core::type::Type*, const Capabilities&, bool)
+        -> Result<SuccessType, std::string> {
+        if (attr.builtin != BuiltinValue::kPosition) {
+            return {"'invariant' attribute requires the 'position' builtin"};
+        }
+        return Success;
+    },
+};
+
+/// @returns all the appropriate IOAttributeCheckers for @p attr
+/// Note: The ordering of the vector is the order that the checkers will be run in, so for
+/// location/blend_src they need to be sequence correctly to initialize shared context
+std::span<const IOAttributeChecker*> IOAttributeCheckersFor(const IOAttributes& attr) {
+    Vector<const IOAttributeChecker*, 4> checkers{};
+    if (attr.invariant) {
+        checkers.Push(&kInvariantChecker);
+    }
+    // TODO(455376684): Implement all the other checkers
+    return checkers.AsSpan();
+}
+
+/// Validates the spec rules for IO attribute usage
+/// @param attr the attributes to test
+/// @param stage the shader stage the builtin is being used
+/// @param is_input the IO direction of usage, true if input, false if output
+/// @param capabilities enabled optional IR capabilities
+/// @param ty the data type being decorated by the attributes
+/// @returns Success if a valid usage, or reason for invalidity in Failure
+Result<SuccessType, std::string> ValidateIOAttributes(const IOAttributes& attr,
+                                                      const Function::PipelineStage stage,
+                                                      const bool is_input,
+                                                      const Capabilities& capabilities,
+                                                      const core::type::Type* ty) {
+    // This is not an entry point function, either it is dead code and thus never called, or any
+    // issues will be detected when validating the calling entry point.
+    if (stage == Function::PipelineStage::kUndefined) {
+        return Success;
+    }
+
+    const auto io_direction = is_input ? IODirection::kInput : IODirection::kOutput;
+    const IOAttributeUsage usage = IOAttributeUsageFor(stage, io_direction);
+    const auto& checkers = IOAttributeCheckersFor(attr);
+    if (checkers.size() == 0) {
+        return Success;
+    }
+
+    for (const auto& checker : checkers) {
+        if (!checker->valid_usages.Contains(usage)) {
+            std::stringstream msg;
+            msg << ToString(checker->kind) << " IO attributes cannot be declared for a "
+                << ToString(usage) << ". ";
+            if (checker->valid_usages.Size() == 1) {
+                const auto v = *checker->valid_usages.begin();
+                msg << "They can only be used for a " << ToString(v) << ".";
+            } else {
+                msg << "They can only be used for " << ToString(checker->valid_usages);
+            }
+        }
+    }
+
+    if (checkers.c) {
+        return Success;
+    }
+}
+
 /// Annotations that can be associated with a value that are used for shader IO,
 /// e.g. binding_points, @location, being in workgroup address space, etc.
+/// These are a subset of IOAttributes.
 enum class IOAnnotation : uint8_t {
     /// @group + @binding
     kBindingPoint,
