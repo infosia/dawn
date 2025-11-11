@@ -40,6 +40,8 @@ declare_args() {
 # Enables assertions on safety checks in libc++.
 enable_safe_libcxx = true
 
+use_cxx23 = true
+
 # Detect whether we can use the hermetic XCode like in Chromium and do so if
 # possible.
 if (host_os == "mac" && use_system_xcode == "") {
