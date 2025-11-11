@@ -152,6 +152,14 @@ CommandIterator RenderBundleEncoder::AcquireCommands() {
     return mBundleEncodingContext.AcquireCommands();
 }
 
+RenderPassResourceUsage RenderBundleEncoder::AcquireRenderPassUsages() {
+    return mUsageTracker.AcquireResourceUsage();
+}
+
+IndirectDrawMetadata RenderBundleEncoder::AcquireIndirectDrawMetadata() {
+    return std::move(mIndirectDrawMetadata);
+}
+
 RenderBundleBase* RenderBundleEncoder::APIFinish(const RenderBundleDescriptor* descriptor) {
     Ref<RenderBundleBase> result;
 
@@ -178,9 +186,7 @@ ResultOrError<Ref<RenderBundleBase>> RenderBundleEncoder::Finish(
         DAWN_TRY(ValidateFinish(usages));
     }
 
-    return AcquireRef(new RenderBundleBase(this, descriptor, AcquireAttachmentState(),
-                                           IsDepthReadOnly(), IsStencilReadOnly(),
-                                           std::move(usages), std::move(mIndirectDrawMetadata)));
+    return GetDevice()->CreateRenderBundle(this, descriptor);
 }
 
 MaybeError RenderBundleEncoder::ValidateFinish(const RenderPassResourceUsage& usages) const {

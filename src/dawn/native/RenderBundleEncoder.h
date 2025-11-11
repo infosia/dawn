@@ -53,6 +53,9 @@ class RenderBundleEncoder final : public RenderEncoderBase {
 
     CommandIterator AcquireCommands();
 
+    RenderPassResourceUsage AcquireRenderPassUsages();
+    IndirectDrawMetadata AcquireIndirectDrawMetadata();
+
   private:
     RenderBundleEncoder(DeviceBase* device, const RenderBundleEncoderDescriptor* descriptor);
     RenderBundleEncoder(DeviceBase* device, ErrorTag errorTag, StringView label);
