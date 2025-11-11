@@ -1703,6 +1703,7 @@ TEST_F(IR_ValidatorTest, Function_Return_Struct_InvariantWithoutPosition) {
 
     IOAttributes attr;
     attr.invariant = true;
+    attr.location = 0;
     auto* str_ty =
         ty.Struct(mod.symbols.New("MyStruct"), {
                                                    {mod.symbols.New("pos"), ty.vec4<f32>(), attr},
