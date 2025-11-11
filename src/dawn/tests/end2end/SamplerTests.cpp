@@ -231,6 +231,9 @@ class SamplerTest : public DawnTest {
 
 // Test drawing a rect with a checkerboard texture with different address modes.
 TEST_P(SamplerTest, AddressMode) {
+    // TODO(crbug.com/459848481): Fails on Win/Snapdragon X Elite w/ D3D12.
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     InitShaders(kBasicFS);
     for (auto u : addressModes) {
         for (auto v : addressModes) {
@@ -243,6 +246,9 @@ TEST_P(SamplerTest, AddressMode) {
 
 // Test that passing texture and sampler objects through user-defined functions works correctly.
 TEST_P(SamplerTest, PassThroughUserFunctionParameters) {
+    // TODO(crbug.com/459848481): Fails on Win/Snapdragon X Elite w/ D3D12.
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     InitShaders(kPassThroughUserFunctionsFS);
     for (auto u : addressModes) {
         for (auto v : addressModes) {
