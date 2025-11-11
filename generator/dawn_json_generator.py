@@ -791,6 +791,48 @@ def compute_wire_params(api_params, wire_json):
 # KOTLIN STUFF
 ############################################################
 
+def analyze_n2k_usage(params_kotlin):
+    for struct in params_kotlin['by_category']['structure']:
+        struct.needs_n2k = False
+
+    def mark_n2k(typ):
+        # Only proceed if it's a structure and hasn't been marked yet to avoid infinite recursion.
+        if isinstance(typ, StructureType) and not typ.needs_n2k:
+            typ.needs_n2k = True
+            # Recursively mark all members of this structure.
+            for member in typ.members:
+                mark_n2k(member.type)
+
+    # Scan Objects and Methods for roots
+    for obj in params_kotlin['by_category']['object']:
+        for method in obj.methods:
+            if not params_kotlin['include_method'](obj, method):
+                continue
+
+            # Root A: Return values are always Native -> Kotlin
+            if method.returns:
+                 mark_n2k(method.returns.type)
+
+            # Root B: Output parameters (mutable pointers '*') are Native -> Kotlin
+            for arg in method.arguments:
+                if arg.annotation == '*':
+                    mark_n2k(arg.type)
+
+    # Scan Callback Functions for roots
+    # When native code invokes a callback, ALL arguments passed to that callback
+    # are flowing from Native -> Kotlin.
+    for cb in params_kotlin['by_category']['callback function']:
+        for arg in cb.arguments:
+            mark_n2k(arg.type)
+
+    # Scan global functions if API exposes them
+    for func in params_kotlin['by_category']['function']:
+        if func.returns:
+             mark_n2k(func.returns.type)
+        for arg in func.arguments:
+             if arg.annotation == '*':
+                 mark_n2k(arg.type)
+
 
 def compute_kotlin_params(loaded_json, kotlin_json, webgpu_json_data=None):
     params_kotlin = parse_json(loaded_json, enabled_tags=['art'])
@@ -1031,6 +1073,8 @@ def compute_kotlin_params(loaded_json, kotlin_json, webgpu_json_data=None):
         structure for structure in by_category['structure']
         if include_structure(structure)
     ]
+
+    analyze_n2k_usage(params_kotlin)
 
     return params_kotlin
 
