@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d80ec31_26741700",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-11T12:07:35Z",
+      "side": 1,
+      "message": "Please add `Bug: b/451995459` to the description. CLs should always have a bug reference, even if it\u0027s `Bug: None` (only use \u0027none\u0027 if the fix is trivial and the need very obvious),",
+      "revId": "97a7a9cd6262fc39e9df82b8117c5c47454edcbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1aedc29c_b6614a7e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-11T12:07:35Z",
+      "side": 1,
+      "message": "Now we\u0027re not forced to handle logic for callback types (which we can\u0027t convert), in `kotlin_record_conversion.cpp` find the line that reads\n\n```\nnullptr  {#- We can\u0027t make these. TODO(b/451995459): Don\u0027t even create the converter. #}\n```\n\n.. and replace it with  `{{ unreachable_code() }}`",
+      "revId": "97a7a9cd6262fc39e9df82b8117c5c47454edcbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae5967ee_d081e68b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-11T12:07:35Z",
+      "side": 1,
+      "message": "This is great! I measured the code reduction\n\n\u003e structures.cpp reduced from 6139 lines to 4859 (21% reduction)\nstructures.h reduced from 159 lines to 90 lines (43% reduction)\n62K reduction in aar size (compressed). Typical .so file reduction (uncompressed) is 141K.",
+      "revId": "97a7a9cd6262fc39e9df82b8117c5c47454edcbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b1e6b7c_aac09775",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-11T12:07:35Z",
+      "side": 1,
+      "message": "Nit; all comments (throughout) that are full sentences should end with a period.",
+      "revId": "97a7a9cd6262fc39e9df82b8117c5c47454edcbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "568e9854_76758a24",
+        "filename": "generator/templates/art/structures.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-11T12:07:35Z",
+      "side": 1,
+      "message": "If you change the \u0027for\u0027 statement to read \n\n`{%- for structure in by_category[\u0027structure\u0027] if include_structure(structure) and structure.needs_n2k %}`\n\nyou can remove the \u0027if\u0027 and return the indent to its current level.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 32
+      },
+      "revId": "97a7a9cd6262fc39e9df82b8117c5c47454edcbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
