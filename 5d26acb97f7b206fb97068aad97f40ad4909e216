@@ -108,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "db05c499_81c860b6",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-11T19:57:32Z",
+      "side": 1,
+      "message": "Right, devices get the defaults. But if the adapter has 0 then the default should be 0? Maybe if 0 is an allowed tier then this will work?\n\nOr would it require reverting too much of the original change to allow 0 to be the default? If so then this hack is fine.",
+      "parentUuid": "db237aa0_a4e2717b",
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "837efe3f_f9dc0b45",
         "filename": "src/dawn/tests/unittests/ToggleTests.cpp",
         "patchSetId": 4
@@ -143,6 +161,30 @@
       "side": 1,
       "message": "The comment is explaining why we have to check that enableImmediateData is also enabled. `CreateAdapterAndValidateToggles`s second argument is the list of toggles we expect to be enabled after seting them to the ones in `adapterTogglesDesc` (first argument).",
       "parentUuid": "837efe3f_f9dc0b45",
+      "range": {
+        "startLine": 332,
+        "startChar": 64,
+        "endLine": 332,
+        "endChar": 83
+      },
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7908fb25_0618dec6",
+        "filename": "src/dawn/tests/unittests/ToggleTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-11T19:57:32Z",
+      "side": 1,
+      "message": "Ohh got it. Sorry I didn\u0027t look into what that parameter was.",
+      "parentUuid": "84e0d97b_2b23b744",
       "range": {
         "startLine": 332,
         "startChar": 64,
