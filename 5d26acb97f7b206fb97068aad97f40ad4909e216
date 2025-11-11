@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3413a8fc_09ecd592",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-11T19:27:44Z",
+      "side": 1,
+      "message": "Surprising for this to happen in a place called \"UpdateLimits\". Is there a better place for it? Constructor maybe?",
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e424d06_b80b20d9",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-11T19:27:44Z",
+      "side": 1,
+      "message": "This would expose 0 despite the tiers saying it\u0027s not possible, which is a bit confusing. Is it possible to set this before ApplyLimitTiers, and keep the 0 tier (for now)?",
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f768190d_796f8cc2",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-11T19:27:44Z",
+      "side": 1,
+      "message": "This seems like it may not be necessary. If the adapter limit is 0 then the device limit should also automatically be 0? Not quite sure if that\u0027s what happens though.",
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "837efe3f_f9dc0b45",
+        "filename": "src/dawn/tests/unittests/ToggleTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-11T19:27:44Z",
+      "side": 1,
+      "message": "Comment says this isn\u0027t necessary, so why is it done? (Probably just update comment to explain)",
+      "range": {
+        "startLine": 332,
+        "startChar": 64,
+        "endLine": 332,
+        "endChar": 83
+      },
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9913f158_40256809",
+        "filename": "src/dawn/tests/unittests/ToggleTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-11T19:27:44Z",
+      "side": 1,
+      "message": "Same",
+      "range": {
+        "startLine": 346,
+        "startChar": 71,
+        "endLine": 346,
+        "endChar": 90
+      },
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
