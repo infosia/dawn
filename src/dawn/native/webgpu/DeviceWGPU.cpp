@@ -58,6 +58,7 @@
 #include "dawn/native/webgpu/PipelineLayoutWGPU.h"
 #include "dawn/native/webgpu/QuerySetWGPU.h"
 #include "dawn/native/webgpu/QueueWGPU.h"
+#include "dawn/native/webgpu/RenderBundleWGPU.h"
 #include "dawn/native/webgpu/RenderPipelineWGPU.h"
 #include "dawn/native/webgpu/SamplerWGPU.h"
 #include "dawn/native/webgpu/ShaderModuleWGPU.h"
@@ -176,6 +177,14 @@ ResultOrError<Ref<CommandBufferBase>> Device::CreateCommandBuffer(
     // This is called by CommandEncoder::Finish
     // TODO(crbug.com/413053623): Store CommandEncoderDescriptor and assign here.
     return CommandBuffer::Create(encoder, descriptor);
+}
+ResultOrError<Ref<RenderBundleBase>> Device::CreateRenderBundle(
+    RenderBundleEncoderBase* encoder,
+    const RenderBundleDescriptor* descriptor,
+    RenderPassResourceUsage usages,
+    IndirectDrawMetadata indirectDrawMetadata) {
+    return RenderBundle::Create(encoder, descriptor, std::move(usages),
+                                std::move(indirectDrawMetadata));
 }
 Ref<ComputePipelineBase> Device::CreateUninitializedComputePipelineImpl(
     const UnpackedPtr<ComputePipelineDescriptor>& descriptor) {

@@ -56,10 +56,12 @@
 #include "dawn/native/Features.h"
 #include "dawn/native/Format.h"
 #include "dawn/native/Forward.h"
+#include "dawn/native/IndirectDrawMetadata.h"
 #include "dawn/native/Limits.h"
 #include "dawn/native/LogEmitter.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/ObjectType_autogen.h"
+#include "dawn/native/PassResourceUsage.h"
 #include "dawn/native/Toggles.h"
 #include "dawn/native/UsageValidationMode.h"
 #include "partition_alloc/pointers/raw_ptr.h"
@@ -163,6 +165,12 @@ class DeviceBase : public ErrorSink,
     virtual ResultOrError<Ref<CommandBufferBase>> CreateCommandBuffer(
         CommandEncoder* encoder,
         const CommandBufferDescriptor* descriptor) = 0;
+
+    virtual ResultOrError<Ref<RenderBundleBase>> CreateRenderBundle(
+        RenderBundleEncoder* encoder,
+        const RenderBundleDescriptor* descriptor,
+        RenderPassResourceUsage usages,
+        IndirectDrawMetadata indirectDrawMetadata);
 
     // Many Dawn objects are completely immutable once created which means that if two
     // creations are given the same arguments, they can return the same object. Reusing
