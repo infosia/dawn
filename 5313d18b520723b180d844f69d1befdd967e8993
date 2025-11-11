@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "5313d18b520723b180d844f69d1befdd967e8993",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68d47185_739cdba8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-11T20:08:30Z",
+      "side": 1,
+      "message": "Sorry for the delay in review. I am syncing with Corentin before providing more feedback on this change to make sure we have the same vision for this before asking you to make any changes! Will get back to you asap.",
+      "revId": "5313d18b520723b180d844f69d1befdd967e8993",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
