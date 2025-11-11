@@ -1023,7 +1023,7 @@ TEST_F(IRToProgramTest, UnaryOp_Negate) {
     auto* i = b.FunctionParam("i", ty.i32());
     fn->SetParams({i});
 
-    b.Append(fn->Block(), [&] { b.Return(fn, b.Negation(ty.i32(), i)); });
+    b.Append(fn->Block(), [&] { b.Return(fn, b.Negation(i)); });
 
     EXPECT_WGSL(R"(
 fn f(i : i32) -> i32 {
@@ -1037,7 +1037,7 @@ TEST_F(IRToProgramTest, UnaryOp_Complement) {
     auto* i = b.FunctionParam("i", ty.u32());
     fn->SetParams({i});
 
-    b.Append(fn->Block(), [&] { b.Return(fn, b.Complement(ty.u32(), i)); });
+    b.Append(fn->Block(), [&] { b.Return(fn, b.Complement(i)); });
 
     EXPECT_WGSL(R"(
 fn f(i : u32) -> u32 {
@@ -1051,7 +1051,7 @@ TEST_F(IRToProgramTest, UnaryOp_Not) {
     auto* i = b.FunctionParam("b", ty.bool_());
     fn->SetParams({i});
 
-    b.Append(fn->Block(), [&] { b.Return(fn, b.Not(ty.bool_(), i)); });
+    b.Append(fn->Block(), [&] { b.Return(fn, b.Not(i)); });
 
     EXPECT_WGSL(R"(
 fn f(b : bool) -> bool {
@@ -2025,7 +2025,7 @@ TEST_F(IRToProgramTest, LetUsedOnce) {
     fn->SetParams({i});
 
     b.Append(fn->Block(), [&] {
-        auto* v = b.Let("v", b.Complement(ty.u32(), i));
+        auto* v = b.Let("v", b.Complement(i));
         b.Return(fn, v);
     });
 
@@ -3492,7 +3492,7 @@ TEST_F(IRToProgramTest, Override_UnaryInitializer) {
     EXPECT_WGSL(R"(
 @id(10) override cond : bool = true;
 
-override o : bool = !(cond);
+override o : bool = !(true);
 
 fn f() -> bool {
   return o;

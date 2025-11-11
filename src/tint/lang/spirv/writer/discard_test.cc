@@ -74,7 +74,7 @@ TEST_F(SpirvWriterTest, Discard) {
                OpBranch %25
          %25 = OpLabel
          %27 = OpLoad %bool %continue_execution None
-         %28 = OpLogicalNot %bool %27
+         %28 = OpLogicalNot %bool %true
                OpSelectionMerge %29 None
                OpBranchConditional %28 %30 %29
          %30 = OpLabel
@@ -130,7 +130,7 @@ TEST_F(SpirvWriterTest, DiscardBeforeAtomic) {
          %25 = OpLabel
          %28 = OpPhi %int %29 %26 %30 %27
          %31 = OpLoad %bool %continue_execution None
-         %32 = OpLogicalNot %bool %31
+         %32 = OpLogicalNot %bool %true
                OpSelectionMerge %33 None
                OpBranchConditional %32 %34 %33
          %34 = OpLabel

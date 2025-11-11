@@ -937,7 +937,6 @@ class Impl {
                     return;
                 }
                 core::ir::Instruction* inst = nullptr;
-                auto* sem = impl.program_.Sem().Get(expr);
                 switch (expr->op) {
                     case core::UnaryOp::kAddressOf:
                     case core::UnaryOp::kIndirection:
@@ -946,18 +945,15 @@ class Impl {
                         Bind(expr, val);
                         return;
                     case core::UnaryOp::kComplement: {
-                        auto* ty = sem->Type()->Clone(impl.clone_ctx_.type_ctx);
-                        inst = impl.builder_.Complement(ty, val);
+                        inst = impl.builder_.Complement(val);
                         break;
                     }
                     case core::UnaryOp::kNegation: {
-                        auto* ty = sem->Type()->Clone(impl.clone_ctx_.type_ctx);
-                        inst = impl.builder_.Negation(ty, val);
+                        inst = impl.builder_.Negation(val);
                         break;
                     }
                     case core::UnaryOp::kNot: {
-                        auto* ty = sem->Type()->Clone(impl.clone_ctx_.type_ctx);
-                        inst = impl.builder_.Not(ty, val);
+                        inst = impl.builder_.Not(val);
                         break;
                     }
                 }

@@ -685,7 +685,7 @@ TEST_F(SpirvWriter_MergeReturnTest, IfElse_BothSidesReturn_NestedInLoop) {
           }
         }
         %4:bool = load %continue_execution
-        %5:bool = not %4
+        %5:bool = not true
         if %5 [t: $B5] {  # if_2
           $B5: {  # true
             exit_loop  # loop_1
@@ -2139,7 +2139,7 @@ $B1: {  # root
           }
         }
         %6:bool = load %continue_execution
-        %7:bool = not %6
+        %7:bool = not true
         if %7 [t: $B7] {  # if_2
           $B7: {  # true
             exit_loop  # loop_1
@@ -2253,7 +2253,7 @@ $B1: {  # root
           }
         }
         %6:bool = load %continue_execution
-        %7:bool = not %6
+        %7:bool = not true
         if %7 [t: $B7] {  # if_2
           $B7: {  # true
             exit_loop  # loop_1
@@ -2463,7 +2463,7 @@ TEST_F(SpirvWriter_MergeReturnTest, Loop_ConditionalReturnInBody_ThenVarDeclUsed
           }
         }
         %5:bool = load %continue_execution
-        %6:bool = not %5
+        %6:bool = not true
         if %6 [t: $B6] {  # if_2
           $B6: {  # true
             exit_loop  # loop_1
@@ -2590,7 +2590,7 @@ TEST_F(SpirvWriter_MergeReturnTest,
               }
             }
             %5:bool = load %continue_execution
-            %6:bool = not %5
+            %6:bool = not true
             if %6 [t: $B8] {  # if_2
               $B8: {  # true
                 exit_loop  # loop_2
@@ -2605,7 +2605,7 @@ TEST_F(SpirvWriter_MergeReturnTest,
           }
         }
         %8:bool = load %continue_execution
-        %9:bool = not %8
+        %9:bool = not true
         if %9 [t: $B9] {  # if_3
           $B9: {  # true
             exit_loop  # loop_1
@@ -2779,7 +2779,7 @@ $B1: {  # root
           }
         }
         %7:bool = load %continue_execution
-        %8:bool = not %7
+        %8:bool = not true
         if %8 [t: $B7] {  # if_2
           $B7: {  # true
             exit_switch  # switch_1
@@ -2934,7 +2934,7 @@ TEST_F(SpirvWriter_MergeReturnTest, LoopIfReturnThenContinue) {
           }
         }
         %3:bool = load %continue_execution
-        %4:bool = not %3
+        %4:bool = not true
         if %4 [t: $B4] {  # if_2
           $B4: {  # true
             exit_loop  # loop_1

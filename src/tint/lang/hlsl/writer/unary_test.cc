@@ -39,7 +39,7 @@ TEST_F(HlslWriterTest, UnaryComplement) {
     auto* func = b.ComputeFunction("main");
     b.Append(func->Block(), [&] {
         auto* a = b.Var("a", b.Zero<i32>());
-        b.Var("b", b.Complement<i32>(b.Load(a)));
+        b.Var("b", b.Complement(b.Load(a)));
         b.Return(func);
     });
 
@@ -67,7 +67,7 @@ TEST_F(HlslWriterTest, UnaryNot) {
 [numthreads(1, 1, 1)]
 void main() {
   bool a = false;
-  bool b = !(a);
+  bool b = !(true);
 }
 
 )");
@@ -77,7 +77,7 @@ TEST_F(HlslWriterTest, UnaryNegation) {
     auto* func = b.ComputeFunction("main");
     b.Append(func->Block(), [&] {
         auto* a = b.Var("a", b.Zero<f32>());
-        b.Var("b", b.Negation<f32>(b.Load(a)));
+        b.Var("b", b.Negation(b.Load(a)));
         b.Return(func);
     });
 
