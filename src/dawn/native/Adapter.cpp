@@ -98,14 +98,21 @@ InstanceBase* AdapterBase::APIGetInstance() const {
 void AdapterBase::UpdateLimits() {
     mLimits = mPhysicalDevice->GetLimits();
 
-    // Disable unsafe limits if needed.
-    if (!mTogglesState.IsEnabled(Toggle::AllowUnsafeAPIs)) {
-        mLimits.v1.maxImmediateSize = 0;
-    }
-
     // Apply the tiered limits if needed.
     if (mUseTieredLimits) {
         ApplyLimitTiers(&mLimits);
+    }
+
+    // EnableImmediateData is safe, but not yet stable and not enabled by
+    // default yet. Enable it by default with AllowUnsafeAPIs for convenience
+    // of tests and other users of unsafe APIs.
+    if (mTogglesState.IsEnabled(Toggle::AllowUnsafeAPIs)) {
+        mTogglesState.Default(Toggle::EnableImmediateData, true);
+    }
+
+    // If immediate data is not enabled, report a maxImmediateSize of 0
+    if (!mTogglesState.IsEnabled(Toggle::EnableImmediateData)) {
+        mLimits.v1.maxImmediateSize = 0;
     }
 }
 
