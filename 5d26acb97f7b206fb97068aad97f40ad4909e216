@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2898112d_4a37ed64",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-11T19:51:25Z",
+      "side": 1,
+      "message": "I put it here because we query the toggle right below, but yes it could be moved to the constructor, I think. I\u0027ll try that.",
+      "parentUuid": "3413a8fc_09ecd592",
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5e424d06_b80b20d9",
         "filename": "src/dawn/native/Adapter.cpp",
         "patchSetId": 4
@@ -31,6 +49,24 @@
       "writtenOn": "2025-11-11T19:27:44Z",
       "side": 1,
       "message": "This would expose 0 despite the tiers saying it\u0027s not possible, which is a bit confusing. Is it possible to set this before ApplyLimitTiers, and keep the 0 tier (for now)?",
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e633ea5d_2e4bd334",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-11T19:51:25Z",
+      "side": 1,
+      "message": "Ah, that\u0027s why the former change that did something similar, but with AllowUnsafeAPIs, was doing it before ApplyLimitTiers. I\u0027ll move it up.",
+      "parentUuid": "5e424d06_b80b20d9",
       "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "db237aa0_a4e2717b",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-11T19:51:25Z",
+      "side": 1,
+      "message": "Yeah, there\u0027s no inheriting of limits like there is for toggles. A few lines above, we either unpack the user\u0027s required limits, or GetDefaultLimits; in both cases, unless the user specifies maxImmediateSize in requiredLimits, we\u0027ll get the default of 64 here.\n\nI discussed this with Corentin, and we agreed that overriding the limit to 0 if the toggles are not enabled is a hack, and we need to do it in both places. Also, keep in mind that both of these will be removed once this feature is enabled in core.",
+      "parentUuid": "f768190d_796f8cc2",
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "837efe3f_f9dc0b45",
         "filename": "src/dawn/tests/unittests/ToggleTests.cpp",
         "patchSetId": 4
@@ -65,6 +119,30 @@
       "writtenOn": "2025-11-11T19:27:44Z",
       "side": 1,
       "message": "Comment says this isn\u0027t necessary, so why is it done? (Probably just update comment to explain)",
+      "range": {
+        "startLine": 332,
+        "startChar": 64,
+        "endLine": 332,
+        "endChar": 83
+      },
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84e0d97b_2b23b744",
+        "filename": "src/dawn/tests/unittests/ToggleTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-11T19:51:25Z",
+      "side": 1,
+      "message": "The comment is explaining why we have to check that enableImmediateData is also enabled. `CreateAdapterAndValidateToggles`s second argument is the list of toggles we expect to be enabled after seting them to the ones in `adapterTogglesDesc` (first argument).",
+      "parentUuid": "837efe3f_f9dc0b45",
       "range": {
         "startLine": 332,
         "startChar": 64,
