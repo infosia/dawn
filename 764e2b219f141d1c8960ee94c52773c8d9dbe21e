@@ -33,6 +33,24 @@
       "message": "@shaoboyan@microsoft.com\nReview-Enforcement -\u003e mouseover -\u003e View Conditions -\u003e mouseover says that your review is missing ReAuth. This has been a really common issue with ReAuth lately, I don\u0027t know how to fix it but you can try something like logging out and back in and then un-setting and re-setting the CR+2 flag.\nhttps://chromium.googlesource.com/chromium/src/+/HEAD/docs/gerrit_reauth.md",
       "revId": "764e2b219f141d1c8960ee94c52773c8d9dbe21e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "baefdacc_09dccdea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-11-11T05:10:51Z",
+      "side": 1,
+      "message": "Thanks! It works!",
+      "parentUuid": "308d809a_cc17d154",
+      "revId": "764e2b219f141d1c8960ee94c52773c8d9dbe21e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
