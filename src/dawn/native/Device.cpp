@@ -377,6 +377,11 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
         GetDefaultLimits(&mLimits, effectiveFeatureLevel);
     }
 
+    // If immediate data is not enabled, report a maxImmediateSize of 0
+    if (!IsToggleEnabled(Toggle::EnableImmediateData)) {
+        mLimits.v1.maxImmediateSize = 0;
+    }
+
     // Get texelCopyBufferRowAlignmentLimits from physical device
     mLimits.texelCopyBufferRowAlignmentLimits =
         GetPhysicalDevice()->GetLimits().texelCopyBufferRowAlignmentLimits;
