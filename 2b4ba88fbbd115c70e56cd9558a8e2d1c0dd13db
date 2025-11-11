@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dc5439f_c4f81202",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-11T15:33:30Z",
+      "side": 1,
+      "message": "PTAL! The presubmit error is noted below and I\u0027ll fix it before submitting.",
+      "revId": "2b4ba88fbbd115c70e56cd9558a8e2d1c0dd13db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adf56818_aef3c09b",
+        "filename": "src/dawn/node/binding/Converter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2004,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-11T15:33:30Z",
+      "side": 1,
+      "message": "`#include \u003climits\u003e for numeric_limits\u003c\u003e  [build/include_what_you_use]`",
+      "revId": "2b4ba88fbbd115c70e56cd9558a8e2d1c0dd13db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
