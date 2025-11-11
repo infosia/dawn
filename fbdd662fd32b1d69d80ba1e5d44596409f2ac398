@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb8b9d6f_d9161d2c",
+        "filename": "src/dawn/native/EncodingContext.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-11T18:08:40Z",
+      "side": 1,
+      "message": "Make this OnBeginPass/EndPass/PassDestroyed",
+      "revId": "fbdd662fd32b1d69d80ba1e5d44596409f2ac398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df88e537_dc4bf1a2",
+        "filename": "src/dawn/native/EncodingContext.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-11T18:08:40Z",
+      "side": 1,
+      "message": "Yes",
+      "revId": "fbdd662fd32b1d69d80ba1e5d44596409f2ac398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
