@@ -3,6 +3,7 @@ package androidx.webgpu
 import androidx.test.filters.SmallTest
 import androidx.webgpu.helper.WebGpu
 import androidx.webgpu.helper.createWebGpu
+import java.nio.ByteOrder
 import java.util.concurrent.Executor
 import junit.framework.TestCase
 import kotlinx.coroutines.runBlocking
@@ -217,5 +218,102 @@ class QuerySetTest {
     assertThrows(ValidationException::class.java) {
       runBlocking { device.popErrorScope() }
     }
+  }
+
+  @Test
+  fun testResolveQuerySetAndReadback() = runBlocking {
+    val renderTarget = device.createTexture(
+      TextureDescriptor(
+        size = Extent3D(1, 1, 1),
+        format = TextureFormat.RGBA8Unorm,
+        usage = TextureUsage.RenderAttachment
+      )
+    )
+    val renderTargetView = renderTarget.createView()
+
+    val renderTargetDepth = device.createTexture(
+      TextureDescriptor(
+        size = Extent3D(1, 1, 1),
+        format = TextureFormat.Depth24Plus,
+        usage = TextureUsage.RenderAttachment
+      )
+    )
+    val renderTargetDepthView = renderTargetDepth.createView()
+
+    val queryCount = 1
+
+    val querySet = device.createQuerySet(
+      QuerySetDescriptor(type = QueryType.Occlusion, count = queryCount)
+    )
+
+    // Usage must include QUERY_RESOLVE (to accept the result) and COPY_SRC (to move data out).
+    val resolveBufferSize = (queryCount * Long.SIZE_BYTES).toLong()
+    val resolveBuffer = device.createBuffer(
+      BufferDescriptor(
+        size = resolveBufferSize,
+        usage = BufferUsage.QueryResolve or BufferUsage.CopySrc
+      )
+    )
+
+    val readbackBuffer = device.createBuffer(
+      BufferDescriptor(
+        size = resolveBufferSize,
+        usage = BufferUsage.CopyDst or BufferUsage.MapRead
+      )
+    )
+
+    val encoder = device.createCommandEncoder()
+
+    // We need a depth stencil attachment for occlusion queries to work.
+    val passEncoder = encoder.beginRenderPass(
+      RenderPassDescriptor(
+        colorAttachments = arrayOf(
+          RenderPassColorAttachment(
+            view = renderTargetView,
+            loadOp = LoadOp.Clear,
+            storeOp = StoreOp.Store,
+            clearValue = Color(0.0, 0.0, 0.0, 1.0)
+          )
+        ),
+        depthStencilAttachment = RenderPassDepthStencilAttachment(
+          view = renderTargetDepthView,
+          depthLoadOp = LoadOp.Clear,
+          depthStoreOp = StoreOp.Store,
+          depthClearValue = 1.0f
+        ),
+        occlusionQuerySet = querySet
+      )
+    )
+
+    passEncoder.beginOcclusionQuery(0)
+    // We don't draw anything, so the expected result is 0.
+    // If we drew something that passed depth testing, it would be > 0.
+    passEncoder.endOcclusionQuery()
+    passEncoder.end()
+
+    encoder.resolveQuerySet(querySet, 0, queryCount, resolveBuffer, 0)
+
+    // encoder.copyBufferToBuffer(resolveBuffer, 0, readbackBuffer, 0, resolveBufferSize)
+
+    val commandBuffer = encoder.finish()
+
+    device.queue.submit(arrayOf(commandBuffer))
+    device.queue.onSubmittedWorkDone()
+
+    readbackBuffer.mapAsync(MapMode.Read, 0, resolveBufferSize)
+
+    val mappedBuffer = readbackBuffer.getConstMappedRange(size = resolveBufferSize)
+    val result = mappedBuffer.order(ByteOrder.nativeOrder()).getLong(0)
+
+    // Since we drew nothing, the occlusion count should be 0.
+    // This verifies the resolve operation successfully wrote a 64-bit integer to the buffer.
+    assertEquals(0L, result)
+
+    readbackBuffer.unmap()
+    readbackBuffer.destroy()
+    resolveBuffer.destroy()
+    querySet.destroy()
+    renderTarget.destroy()
+    renderTargetDepth.destroy()
   }
 }
