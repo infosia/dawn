@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14ab51bb_2a728e1f",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-11T15:21:31Z",
+      "side": 1,
+      "message": "While this is well specified this only needs to be a conservative check.",
+      "range": {
+        "startLine": 366,
+        "startChar": 9,
+        "endLine": 366,
+        "endChar": 18
+      },
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6c13821_a3a52482",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-11T15:21:31Z",
+      "side": 1,
+      "message": "Does this already exist?",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 46
+      },
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d239110f_a3d60914",
+        "filename": "src/dawn/tests/end2end/MultisampledInterpolationTests.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-11T15:21:31Z",
+      "side": 1,
+      "message": "This comment is useful (about the sample placements) but needs to be updated to reflect the intention of this test",
+      "range": {
+        "startLine": 42,
+        "startChar": 25,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
