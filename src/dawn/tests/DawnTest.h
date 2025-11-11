@@ -376,6 +376,7 @@ class DawnTestBase {
         mDeviceErrorCallback;
     testing::StrictMock<testing::MockCppCallback<wgpu::DeviceLostCallback<void>*>>
         mDeviceLostCallback;
+    testing::StrictMock<testing::MockCppCallback<wgpu::MapAsyncCallback>> mMapAsyncCallback;
 
     // Helper methods to implement the EXPECT_ macros
     std::ostringstream& AddBufferExpectation(const char* file,
