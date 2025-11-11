@@ -178,9 +178,8 @@ ResultOrError<Ref<RenderBundleBase>> RenderBundleEncoder::Finish(
         DAWN_TRY(ValidateFinish(usages));
     }
 
-    return AcquireRef(new RenderBundleBase(this, descriptor, AcquireAttachmentState(),
-                                           IsDepthReadOnly(), IsStencilReadOnly(),
-                                           std::move(usages), std::move(mIndirectDrawMetadata)));
+    return GetDevice()->CreateRenderBundle(this, descriptor, std::move(usages),
+                                           std::move(mIndirectDrawMetadata));
 }
 
 MaybeError RenderBundleEncoder::ValidateFinish(const RenderPassResourceUsage& usages) const {
