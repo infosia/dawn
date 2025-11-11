@@ -117,7 +117,7 @@ jobject ToKotlin(JNIEnv* env, const WGPUStringView* s) {
         {% for member in kotlin_record_members(structure.members) %}
             {{ convert_to_kotlin('input->' + member.name.camelCase(), member.name.camelCase(),
                                  'input->' + member.length.name.camelCase() if member.length.name,
-                                 member) | indent(4) -}}
+                                 member, true) | indent(4) -}}
         {% endfor %}
         //* Allow conversion of every child structure.
         {%- for structure in chain_children[structure.name.get()] %}

@@ -94,7 +94,7 @@
                                 {{ convert_to_kotlin(callbackArg.name.camelCase(),
                                                       '_' + callbackArg.name.camelCase(),
                                                       'input->' + callbackArg.length.name.camelCase() if callbackArg.length.name,
-                                                      callbackArg) }}
+                                                      callbackArg, false) }}
                             {% endfor %}
 
                             jclass executorClass = env->FindClass("java/util/concurrent/Executor");
