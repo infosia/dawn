@@ -864,9 +864,6 @@ DawnTestBase::~DawnTestBase() {
     device = nullptr;
     adapter = nullptr;
 
-    // Since the native instance is a global, we can't rely on it's destruction to clean up all
-    // callbacks. Instead, for each test, we make sure to clear all events.
-    WaitForAllOperations();
     instance = nullptr;
 
     // D3D11 and D3D12's GPU-based validation will accumulate objects over time if the backend
@@ -1367,6 +1364,10 @@ void DawnTestBase::SetUp() {
 }
 
 void DawnTestBase::TearDown() {
+    // Add a wait to ensure all operations are finished before the test fixtures are torn
+    // down. This can be necessary when a test fails and leaves operations in flight.
+    WaitForAllOperations();
+
     ResolveDeferredExpectationsNow();
 
     if (mRequireUseTieredLimits) {
@@ -1800,11 +1801,28 @@ void DawnTestBase::MapAsyncAndWait(const wgpu::Buffer& buffer,
         MockCppCallback<void (*)(wgpu::MapAsyncStatus, wgpu::StringView)> mockCb;
         EXPECT_CALL(mockCb, Call(wgpu::MapAsyncStatus::Success, _)).Times(1);
 
-        ASSERT_EQ(
-            instance.WaitAny(buffer.MapAsync(mapMode, offset, size, wgpu::CallbackMode::WaitAnyOnly,
-                                             mockCb.Callback()),
-                             UINT64_MAX),
-            wgpu::WaitStatus::Success);
+        // The mock callback is local to this function, but the async map request can live longer
+        // if the test times out. To prevent a use-after-free, we use a shared pointer to
+        // control the mock callback's availability.
+        auto sharedMockCb = std::make_shared<decltype(mockCb)*>(&mockCb);
+        wgpu::WaitStatus status = instance.WaitAny(
+            buffer.MapAsync(
+                mapMode, offset, size, wgpu::CallbackMode::WaitAnyOnly,
+                [](wgpu::MapAsyncStatus status, wgpu::StringView message, void* userdata1,
+                   void* userdata2) {
+                    auto* cbPtr = static_cast<std::shared_ptr<decltype(mockCb)*>*>(userdata2);
+                    if (**cbPtr != nullptr) {
+                        (**cbPtr)->Callback()(status, message, userdata1, nullptr);
+                    }
+                    delete cbPtr;
+                },
+                nullptr, new auto(sharedMockCb)),
+            UINT64_MAX);
+
+        // Disarm the callback.
+        *sharedMockCb = nullptr;
+
+        ASSERT_EQ(status, wgpu::WaitStatus::Success);
     } else {
         bool done = false;
         buffer.MapAsync(mapMode, offset, size, wgpu::CallbackMode::AllowProcessEvents,
