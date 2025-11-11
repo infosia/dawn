@@ -126,6 +126,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5a0eea5f_4bad76d3",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-11T19:59:41Z",
+      "side": 1,
+      "message": "It probably would work if we put back the 0 to be the default, but then that somewhat defeats the purpose of the original change. If immediates are enabled, we should get 64 bytes for maxImmediateSize. I think this hack is the right move if that\u0027s what we mean.",
+      "parentUuid": "db05c499_81c860b6",
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "837efe3f_f9dc0b45",
         "filename": "src/dawn/tests/unittests/ToggleTests.cpp",
         "patchSetId": 4
