@@ -236,7 +236,9 @@
         'mixins': [
           'win11_qualcomm_snapdragon_x_elite_stable',
         ],
-        'test_suites': {},
+        'test_suites': {
+          'gtest_tests': 'real_hardware_win_gtests',
+        },
       },
       'dawn-win-x64-builder-asan': {
         'additional_compile_targets': [
