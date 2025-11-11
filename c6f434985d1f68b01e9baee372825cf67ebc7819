@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97cc6d08_66495b91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-11T16:08:50Z",
+      "side": 1,
+      "message": "Helped clarify my understanding of what the code was doing, so thanks! Would appreciate Loko taking a quick peek since he\u0027s more familiar with the area thank I am, but LGTM given that they feel pretty accurate.",
+      "revId": "c6f434985d1f68b01e9baee372825cf67ebc7819",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
