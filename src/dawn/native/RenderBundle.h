@@ -47,7 +47,7 @@ namespace dawn::native {
 struct RenderBundleDescriptor;
 class RenderBundleEncoder;
 
-class RenderBundleBase final : public ApiObjectBase {
+class RenderBundleBase : public ApiObjectBase {
   public:
     RenderBundleBase(RenderBundleEncoder* encoder,
                      const RenderBundleDescriptor* descriptor,

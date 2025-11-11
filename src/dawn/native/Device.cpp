@@ -2183,14 +2183,15 @@ ResultOrError<Ref<QuerySetBase>> DeviceBase::CreateQuerySet(const QuerySetDescri
     return CreateQuerySetImpl(descriptor);
 }
 
-ResultOrError<Ref<RenderBundleEncoder>> DeviceBase::CreateRenderBundleEncoder(
+ResultOrError<Ref<RenderBundleEncoderBase>> DeviceBase::CreateRenderBundleEncoder(
     const RenderBundleEncoderDescriptor* descriptor) {
     DAWN_TRY(ValidateIsAlive());
     if (IsValidationEnabled()) {
         DAWN_TRY_CONTEXT(ValidateRenderBundleEncoderDescriptor(this, descriptor),
                          "validating render bundle encoder descriptor.");
     }
-    return RenderBundleEncoder::Create(this, descriptor);
+    // return RenderBundleEncoder::Create(this, descriptor);
+    return CreateRenderBundleEncoderImpl(descriptor);
 }
 
 ResultOrError<Ref<RenderPipelineBase>> DeviceBase::CreateRenderPipeline(
@@ -2405,6 +2406,12 @@ ResultOrError<Ref<TexelBufferViewBase>> DeviceBase::CreateTexelBufferViewImpl(
     BufferBase* buffer,
     const UnpackedPtr<TexelBufferViewDescriptor>& descriptor) {
     return AcquireRef(new TexelBufferViewBase(buffer, descriptor));
+}
+
+Ref<RenderBundleEncoderBase> DeviceBase::CreateRenderBundleEncoderImpl(
+    // const UnpackedPtr<RenderBundleEncoderDescriptor>& descriptor
+    const RenderBundleEncoderDescriptor* descriptor) {
+    return RenderBundleEncoder::Create(this, descriptor);
 }
 
 // Other implementation details

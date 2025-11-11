@@ -58,6 +58,7 @@
 #include "dawn/native/webgpu/PipelineLayoutWGPU.h"
 #include "dawn/native/webgpu/QuerySetWGPU.h"
 #include "dawn/native/webgpu/QueueWGPU.h"
+#include "dawn/native/webgpu/RenderBundleEncoderWGPU.h"
 #include "dawn/native/webgpu/RenderPipelineWGPU.h"
 #include "dawn/native/webgpu/SamplerWGPU.h"
 #include "dawn/native/webgpu/ShaderModuleWGPU.h"
@@ -216,6 +217,11 @@ ResultOrError<Ref<TextureViewBase>> Device::CreateTextureViewImpl(
     TextureBase* texture,
     const UnpackedPtr<TextureViewDescriptor>& descriptor) {
     return TextureView::Create(texture, descriptor);
+}
+Ref<RenderBundleEncoderBase> Device::CreateRenderBundleEncoderImpl(
+    // const UnpackedPtr<RenderBundleEncoderDescriptor>& descriptor
+    const RenderBundleEncoderDescriptor* descriptor) {
+    return RenderBundleEncoder::Create(this, descriptor);
 }
 
 void Device::DestroyImpl() {

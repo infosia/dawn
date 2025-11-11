@@ -221,7 +221,7 @@ class DeviceBase : public ErrorSink,
         const PipelineLayoutDescriptor* rawDescriptor,
         PipelineCompatibilityToken pipelineCompatibilityToken = kExplicitPCT);
     ResultOrError<Ref<QuerySetBase>> CreateQuerySet(const QuerySetDescriptor* descriptor);
-    ResultOrError<Ref<RenderBundleEncoder>> CreateRenderBundleEncoder(
+    ResultOrError<Ref<RenderBundleEncoderBase>> CreateRenderBundleEncoder(
         const RenderBundleEncoderDescriptor* descriptor);
     ResultOrError<Ref<RenderPipelineBase>> CreateRenderPipeline(
         const RenderPipelineDescriptor* descriptor,
@@ -537,6 +537,9 @@ class DeviceBase : public ErrorSink,
         const UnpackedPtr<ComputePipelineDescriptor>& descriptor) = 0;
     virtual Ref<RenderPipelineBase> CreateUninitializedRenderPipelineImpl(
         const UnpackedPtr<RenderPipelineDescriptor>& descriptor) = 0;
+    virtual Ref<RenderBundleEncoderBase> CreateRenderBundleEncoderImpl(
+        // const UnpackedPtr<RenderBundleEncoderDescriptor>& descriptor
+        const RenderBundleEncoderDescriptor* descriptor);
     virtual ResultOrError<Ref<SharedTextureMemoryBase>> ImportSharedTextureMemoryImpl(
         const SharedTextureMemoryDescriptor* descriptor);
     virtual ResultOrError<Ref<SharedBufferMemoryBase>> ImportSharedBufferMemoryImpl(
