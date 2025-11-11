@@ -726,7 +726,7 @@ void my_func(int a) {
 
 void main() {
   my_func(int(0));
-  if (!(continue_execution)) {
+  if (!(true)) {
     discard;
   }
 }
@@ -824,7 +824,7 @@ int my_func(int a) {
 
 void main() {
   my_func(int(0));
-  if (!(continue_execution)) {
+  if (!(true)) {
     discard;
   }
 }
