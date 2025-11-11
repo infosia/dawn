@@ -51,6 +51,24 @@
       "parentUuid": "8842afce_3208ee24",
       "revId": "bdf6ca7d6e7021351545e02aaefeab84d96d0b8b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20a3474f_2ab3981f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-11T11:50:02Z",
+      "side": 1,
+      "message": "It seems that the fixes in the backend should be minimal, as they should all be checking the there is a DS attachment before trying to switch-case on the Load/StoreOp. The only issues might be looking at one aspect (depth or stencil) that\u0027s not in the DS attachment.\n\nOtherwise it seems 3 would be fine, the frontend tries to reify things for the backends, which sometimes it might do a bit too much for the WebGPU backend, because it is a slightly special one (it is as expressive as the frontend\u0027s input because it is the same API, while other backends need less information for a bunch of things).",
+      "parentUuid": "ac51d76c_fe7dc7a1",
+      "revId": "bdf6ca7d6e7021351545e02aaefeab84d96d0b8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
