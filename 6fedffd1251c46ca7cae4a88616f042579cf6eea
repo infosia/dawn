@@ -3,6 +3,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5c5a7f75_c303d319",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 37
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "```suggestion\nFor MSL/HLSL this will always be the case even with multi-sampled\n```",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91ab89ed_3920b386",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 37
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "```suggestion\ninterpolant that is introduced to emulate the \u0027position\u0027 builtin.\n```",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "14ab51bb_2a728e1f",
         "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
         "patchSetId": 37
@@ -20,6 +54,23 @@
         "endLine": 366,
         "endChar": 18
       },
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dea0038d_ab476ab2",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "```suggestion\n    if ((isSampled || UsesFragDepth()) \u0026\u0026 !HasUnclippedDepth()) {\n```",
       "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -66,6 +117,302 @@
         "endLine": 42,
         "endChar": 26
       },
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2b52226_0e54c14e",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "```suggestion\n    // IO index for vertex position emulation interpolant\n```",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f9c25c7_58119f89",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "```suggestion\n    // IO index for fragment position emulation interpolant\n```",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "154a069f_9d5b44b7",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "```suggestion\n    /// Add a new interpolant that will be used to emulate the position builtin as if it always is\n```",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5f5e9a5_10573504",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "Does this ever not return a value?",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f124730d_df6ca423",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "I think we should get this from Dawn instead of trying to calculate it",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0a8e527_5b16acda",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "```suggestion\n                                                    .type \u003d core::InterpolationType::kLinear,\n                                                    .sampling \u003d core::InterpolationSampling::kCenter}});\n```",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 60
+      },
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e673e981_d910bd67",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "If returns, no need for else",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03a61d63_dc406785",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 115,
+        "startChar": 51,
+        "endLine": 116,
+        "endChar": 57
+      },
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb8e0fdc_3d53e842",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "So, we always add this for any vertex out or fragment out? It doesn\u0027t matter if sampled is set or not? Or, I gues swe only set apply_pixel_center_polyfill if a sampled is used?",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fa707ba_6a6a46e8",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "I don\u0027t think this one is necessary.\n```suggestion\n                builder.Load(input_vars[center_pos_frag_idx.value()])-\u003eResult();\n```",
+      "range": {
+        "startLine": 225,
+        "startChar": 68,
+        "endLine": 225,
+        "endChar": 78
+      },
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2a29102_596ba6b8",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "This seems more like `viewport_user_center_z` as opposed to clamped?",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4db3fa65_756263f9",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "```suggestion\n    /// Remap viewport z if necessary.\n```",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbae1a86_c2764c12",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "Is there a link or some context we can put in here as to what a `viewport remapping depth normalization` is?",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f2b9088_da1254fb",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "```suggestion\n        // Viewport remapping depth normalization equation.\n```",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c457b1d_e7637e3a",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "```suggestion\n        return builder.Add(ty.f32(), min, rhs)-\u003eResult();\n```",
+      "range": {
+        "startLine": 310,
+        "startChar": 0,
+        "endLine": 311,
+        "endChar": 29
+      },
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c4a946d_c1d56bf3",
+        "filename": "src/tint/lang/wgsl/inspector/entry_point.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-11T19:21:48Z",
+      "side": 1,
+      "message": "```suggestion\n    /// Does the fragment entry point use the position builtin\n```",
       "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
