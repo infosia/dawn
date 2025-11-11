@@ -33,6 +33,24 @@
       "message": "```suggestion\n  subgroupMatrixStore(\u0026ibuffer, 0, subgroup_matrix_left\u003ci8, 8, 8\u003e(-42), false, 64);\n```",
       "revId": "a948db559cdad66cbec8112520763bec53959c5f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24e1de71_e43aa9aa",
+        "filename": "test/tint/extensions/subgroup_matrix/construct_8bit.wgsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-11T21:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ff4339a_df1a2a43",
+      "revId": "a948db559cdad66cbec8112520763bec53959c5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
