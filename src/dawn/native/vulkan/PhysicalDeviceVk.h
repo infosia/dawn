@@ -103,7 +103,8 @@ class PhysicalDevice : public PhysicalDeviceBase {
     bool CheckSemaphoreSupport(DeviceExt deviceExt,
                                VkExternalSemaphoreHandleTypeFlagBits handleType) const;
 
-    void PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) const override;
+    void PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
+                                   const TogglesState& adapterToggles) const override;
     void PopulateBackendFormatCapabilities(
         wgpu::TextureFormat format,
         UnpackedPtr<DawnFormatCapabilities>& capabilities) const override;

@@ -1455,7 +1455,8 @@ const AHBFunctions* PhysicalDevice::GetOrLoadAHBFunctions() {
 #endif  // DAWN_PLATFORM_IS(ANDROID)
 }
 
-void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) const {
+void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
+                                               const TogglesState& toggles) const {
     if (auto* memoryHeapProperties = info.Get<AdapterPropertiesMemoryHeaps>()) {
         size_t count = mDeviceInfo.memoryHeaps.size();
         auto* heapInfo = new MemoryHeapInfo[count];
@@ -1489,9 +1490,21 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) c
     if (auto* subgroupMatrixConfigs = info.Get<AdapterPropertiesSubgroupMatrixConfigs>()) {
         size_t count = mSubgroupMatrixConfigs.size();
         SubgroupMatrixConfig* configs = new SubgroupMatrixConfig[count];
+
+        // If we are on NVIDIA and the toggle to force-enable f16 is not enabled, we need to filter
+        // out the f16 configs here.
+        uint32_t filtered_count = 0;
+        for (uint32_t i = 0; i < count; i++) {
+            if (mSubgroupMatrixConfigs[i].componentType != wgpu::SubgroupMatrixComponentType::F16 &&
+                !toggles.IsEnabled(Toggle::VulkanEnableF16OnNvidia)) {
+                continue;
+            }
+            configs[filtered_count++] = mSubgroupMatrixConfigs[i];
+        }
         subgroupMatrixConfigs->configs = configs;
-        subgroupMatrixConfigs->configCount = count;
-        memcpy(configs, mSubgroupMatrixConfigs.data(), count * sizeof(SubgroupMatrixConfig));
+        subgroupMatrixConfigs->configCount = filtered_count;
+        memcpy(configs, mSubgroupMatrixConfigs.data(),
+               filtered_count * sizeof(SubgroupMatrixConfig));
     }
 }
 
@@ -1528,6 +1541,11 @@ void PhysicalDevice::PopulateSubgroupMatrixConfigs() {
     auto SupportComponentType = [&](wgpu::SubgroupMatrixComponentType componentType) {
         if (componentType == wgpu::SubgroupMatrixComponentType::F16) {
             TogglesState togglesState(ToggleStage::Adapter);
+            // Validate assuming that F16 is enabled on NVIDIA, since this method is called before
+            // we know what the actual adapter toggles are. We will filter out f16 configs if
+            // necessary when they are queried from the adapter, at which point we do have the
+            // actual toggles.
+            togglesState.ForceSet(Toggle::VulkanEnableF16OnNvidia, true);
             return IsFeatureSupportedWithToggles(wgpu::FeatureName::ShaderF16, togglesState);
         }
         return true;
