@@ -587,8 +587,8 @@ class SubgroupMatrix_MatrixScalarArithmeticTest : public SubgroupMatrixArithmeti
         shader << "\n";
         shader << "alias ComponentType = " << ComponentTypeToWgslType(config.componentType)
                << ";\n";
-        shader << "alias InputArrayType = " << ComponentTypeToScalarShaderType(config.componentType)
-               << ";\n";
+        shader << "alias ScalarShaderType = "
+               << ComponentTypeToScalarShaderType(config.componentType) << ";\n";
         shader << "\n";
         shader << "const M = " << config.M << ";\n";
         shader << "const K = " << config.K << ";\n";
@@ -603,8 +603,8 @@ class SubgroupMatrix_MatrixScalarArithmeticTest : public SubgroupMatrixArithmeti
 
         shader << "const SubgroupMaxSize = " << subgroupMaxSize << ";\n";
         shader << R"(
-@group(0) @binding(0) var<storage, read>       inputs : array<InputArrayType, kMatrixDataSize>;
-@group(0) @binding(1) var<storage, read_write> output : array<ComponentType, kMatrixDataSize>;
+@group(0) @binding(0) var<storage, read>       inputs : array<ScalarShaderType, kMatrixDataSize>;
+@group(0) @binding(1) var<storage, read_write> output : array<ScalarShaderType, kMatrixDataSize>;
 
 @compute @workgroup_size(SubgroupMaxSize)
 fn main() {
