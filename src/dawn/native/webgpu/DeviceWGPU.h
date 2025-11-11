@@ -102,6 +102,8 @@ class Device final : public DeviceBase, public ObjectWGPU<WGPUDevice> {
     ResultOrError<Ref<TextureViewBase>> CreateTextureViewImpl(
         TextureBase* texture,
         const UnpackedPtr<TextureViewDescriptor>& descriptor) override;
+    Ref<RenderBundleEncoderBase> CreateRenderBundleEncoderImpl(
+        const RenderBundleEncoderDescriptor* descriptor) override;
 
     MaybeError TickImpl() override;
 

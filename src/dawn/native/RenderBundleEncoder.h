@@ -39,7 +39,7 @@ namespace dawn::native {
 MaybeError ValidateRenderBundleEncoderDescriptor(DeviceBase* device,
                                                  const RenderBundleEncoderDescriptor* descriptor);
 
-class RenderBundleEncoder final : public RenderEncoderBase {
+class RenderBundleEncoder : public RenderEncoderBase {
   public:
     static Ref<RenderBundleEncoder> Create(DeviceBase* device,
                                            const RenderBundleEncoderDescriptor* descriptor);
@@ -53,11 +53,14 @@ class RenderBundleEncoder final : public RenderEncoderBase {
 
     CommandIterator AcquireCommands();
 
-  private:
+  protected:
+    virtual Ref<RenderBundleBase> CreateRenderBundleImpl(const RenderBundleDescriptor* descriptor,
+                                                         RenderPassResourceUsage usages);
     RenderBundleEncoder(DeviceBase* device, const RenderBundleEncoderDescriptor* descriptor);
-    RenderBundleEncoder(DeviceBase* device, ErrorTag errorTag, StringView label);
-
     void DestroyImpl() override;
+
+  private:
+    RenderBundleEncoder(DeviceBase* device, ErrorTag errorTag, StringView label);
 
     ResultOrError<Ref<RenderBundleBase>> Finish(const RenderBundleDescriptor* descriptor);
     MaybeError ValidateFinish(const RenderPassResourceUsage& usages) const;
