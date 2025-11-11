@@ -301,6 +301,11 @@ shared_library("dawn_node") {
     deps += [ ":napi_symbols_lib" ]
     ldflags =
         [ rebase_path("$dawn_node_gen_dir/NapiSymbols.lib", root_build_dir) ]
+    if (target_cpu == "x64") {
+      ldflags += [ "/machine:x64" ]
+    } else if (target_cpu == "arm64") {
+      ldflags += [ "/machine:arm64" ]
+    }
   } else {
     # Don't pass '-z,defs' linker arg when compiling weak symbols
     configs -= [ "//build/config/compiler:no_unresolved_symbols" ]
