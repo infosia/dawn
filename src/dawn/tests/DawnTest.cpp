@@ -1367,6 +1367,10 @@ void DawnTestBase::SetUp() {
 }
 
 void DawnTestBase::TearDown() {
+    // Add a wait to ensure all operations are finished before the test fixtures are torn
+    // down. This can be necessary when a test fails and leaves operations in flight.
+    WaitForAllOperations();
+
     ResolveDeferredExpectationsNow();
 
     if (mRequireUseTieredLimits) {
