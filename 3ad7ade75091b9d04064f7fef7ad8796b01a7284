@@ -39,6 +39,30 @@
       },
       "revId": "3ad7ade75091b9d04064f7fef7ad8796b01a7284",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60d0a77c_8112911b",
+        "filename": "src/dawn/native/opengl/ContextEGL.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-11-11T22:39:45Z",
+      "side": 1,
+      "message": "Sadly, it can change under us. We maintain an EGLContext per-Device (so consecutive JS calls might be to different WebGPU Devices), and Chrome itself can change the context as well.",
+      "parentUuid": "9fa37b68_aa70d881",
+      "range": {
+        "startLine": 64,
+        "startChar": 8,
+        "endLine": 64,
+        "endChar": 40
+      },
+      "revId": "3ad7ade75091b9d04064f7fef7ad8796b01a7284",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
