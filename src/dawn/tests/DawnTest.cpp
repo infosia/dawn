@@ -1800,11 +1800,28 @@ void DawnTestBase::MapAsyncAndWait(const wgpu::Buffer& buffer,
         MockCppCallback<void (*)(wgpu::MapAsyncStatus, wgpu::StringView)> mockCb;
         EXPECT_CALL(mockCb, Call(wgpu::MapAsyncStatus::Success, _)).Times(1);
 
-        ASSERT_EQ(
-            instance.WaitAny(buffer.MapAsync(mapMode, offset, size, wgpu::CallbackMode::WaitAnyOnly,
-                                             mockCb.Callback()),
-                             UINT64_MAX),
-            wgpu::WaitStatus::Success);
+        // The mock callback is local to this function, but the async map request can live longer
+        // if the test times out. To prevent a use-after-free, we use a shared pointer to
+        // control the mock callback's availability.
+        auto sharedMockCb = std::make_shared<decltype(mockCb)*>(&mockCb);
+        wgpu::WaitStatus status = instance.WaitAny(
+            buffer.MapAsync(
+                mapMode, offset, size, wgpu::CallbackMode::WaitAnyOnly,
+                [](wgpu::MapAsyncStatus status, wgpu::StringView message, void* userdata) {
+                    // Cast userdata back to std::shared_ptr<decltype(mockCb)*>*
+                    auto* cbPtr = static_cast<std::shared_ptr<decltype(mockCb)*>*>(userdata);
+
+                    if (**cbPtr != nullptr) {
+                        (**cbPtr)->Callback()(status, message);
+                    }
+                    delete cbPtr;
+                },
+                static_cast<void*>(new auto(sharedMockCb))),  // Explicitly cast to void*
+            UINT64_MAX);
+
+        // Disarm the callback.
+        *sharedMockCb = nullptr;
+        ASSERT_EQ(status, wgpu::WaitStatus::Success);
     } else {
         bool done = false;
         buffer.MapAsync(mapMode, offset, size, wgpu::CallbackMode::AllowProcessEvents,
