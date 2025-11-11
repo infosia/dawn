@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c0bcad6_e0e2e3f8",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-11T20:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2898112d_4a37ed64",
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e424d06_b80b20d9",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "Ah, that\u0027s why the former change that did something similar, but with AllowUnsafeAPIs, was doing it before ApplyLimitTiers. I\u0027ll move it up.",
       "parentUuid": "5e424d06_b80b20d9",
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "985c7817_399a0518",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-11T20:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e633ea5d_2e4bd334",
       "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -138,6 +174,24 @@
       "side": 1,
       "message": "It probably would work if we put back the 0 to be the default, but then that somewhat defeats the purpose of the original change. If immediates are enabled, we should get 64 bytes for maxImmediateSize. I think this hack is the right move if that\u0027s what we mean.",
       "parentUuid": "db05c499_81c860b6",
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98ac1cd9_eaee2fea",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-11T20:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a0eea5f_4bad76d3",
       "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -226,6 +280,30 @@
       "writtenOn": "2025-11-11T19:27:44Z",
       "side": 1,
       "message": "Same",
+      "range": {
+        "startLine": 346,
+        "startChar": 71,
+        "endLine": 346,
+        "endChar": 90
+      },
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dd7e2bf_f66510ff",
+        "filename": "src/dawn/tests/unittests/ToggleTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-11T20:06:47Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9913f158_40256809",
       "range": {
         "startLine": 346,
         "startChar": 71,
