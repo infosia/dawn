@@ -16,6 +16,23 @@
       "message": "I\u0027m running the Dawn into Chromium CQ here to make sure this doesn\u0027t break the roll again: https://chromium-review.googlesource.com/c/chromium/src/+/7142498?tab\u003dchecks",
       "revId": "e4812f8455980c4465ec55009faa52eafabf6736",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d288be6_196a097b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-11T18:38:32Z",
+      "side": 1,
+      "message": "I wanted to point out that I first pushed the original changes, and then pushed new changes on top, so you can see what has changed since the revert by looking at the diffs from patchset 1: https://dawn-review.googlesource.com/c/dawn/+/272734/1..3",
+      "revId": "e4812f8455980c4465ec55009faa52eafabf6736",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
