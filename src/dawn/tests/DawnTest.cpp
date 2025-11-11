@@ -864,9 +864,6 @@ DawnTestBase::~DawnTestBase() {
     device = nullptr;
     adapter = nullptr;
 
-    // Since the native instance is a global, we can't rely on it's destruction to clean up all
-    // callbacks. Instead, for each test, we make sure to clear all events.
-    WaitForAllOperations();
     instance = nullptr;
 
     // D3D11 and D3D12's GPU-based validation will accumulate objects over time if the backend
@@ -1367,6 +1364,17 @@ void DawnTestBase::SetUp() {
 }
 
 void DawnTestBase::TearDown() {
+    // Destroy the device to force all pending callbacks to be called. This is needed because
+    // some callbacks might be for operations that are not waited on by the test, and if the
+    // test fails, the callback might be called after the mock object is destroyed.
+    if (device != nullptr) {
+        device.Destroy();
+    }
+
+    // Add a wait to ensure all operations are finished before the test fixtures are torn
+    // down. This can be necessary when a test fails and leaves operations in flight.
+    WaitForAllOperations();
+
     ResolveDeferredExpectationsNow();
 
     if (mRequireUseTieredLimits) {
@@ -1795,14 +1803,13 @@ void DawnTestBase::MapAsyncAndWait(const wgpu::Buffer& buffer,
     DAWN_ASSERT(mapMode == wgpu::MapMode::Read || mapMode == wgpu::MapMode::Write);
 
     if (!UsesWire()) {
-        // We use a new mock callback here so that the validation on the call happens as soon as the
-        // scope of this call ends.
-        MockCppCallback<void (*)(wgpu::MapAsyncStatus, wgpu::StringView)> mockCb;
-        EXPECT_CALL(mockCb, Call(wgpu::MapAsyncStatus::Success, _)).Times(1);
+        // We use a member mock callback so that if the WaitAny times out, the callback
+        // will still be valid when the device is destroyed.
+        EXPECT_CALL(mMapAsyncCallback, Call(wgpu::MapAsyncStatus::Success, _)).Times(1);
 
         ASSERT_EQ(
             instance.WaitAny(buffer.MapAsync(mapMode, offset, size, wgpu::CallbackMode::WaitAnyOnly,
-                                             mockCb.Callback()),
+                                             mMapAsyncCallback.Callback()),
                              UINT64_MAX),
             wgpu::WaitStatus::Success);
     } else {
