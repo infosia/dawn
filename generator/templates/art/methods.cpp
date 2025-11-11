@@ -180,7 +180,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
         {{ convert_to_kotlin("args." + as_varName(_kotlin_return.name) if _kotlin_return.annotation == '*' else 'result',
                              'result_kt',
                              'size' if _kotlin_return.type.name.get() in ['void const *', 'void *'] or _kotlin_return.length == 'size_t',
-                             _kotlin_return) }}
+                             _kotlin_return, true) }}
         return result_kt;
     {% endif %}
 } {% endmacro %}

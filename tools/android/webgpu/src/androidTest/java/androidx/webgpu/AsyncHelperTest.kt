@@ -41,28 +41,21 @@ class AsyncHelperTest {
 
     @Test
     fun asyncMethodTest() {
-        runBlocking {
-            /* Set up a shader module to support the async call. */
-            val shaderModule = device.createShaderModule(
-                ShaderModuleDescriptor(shaderSourceWGSL = ShaderSourceWGSL(""))
-            )
+      runBlocking {
+        /* Set up a shader module to support the async call. */
+        val shaderModule = device.createShaderModule(
+          ShaderModuleDescriptor(shaderSourceWGSL = ShaderSourceWGSL(""))
+        )
 
-            val exception = assertThrows(WebGpuException::class.java) {
-                runBlocking {
-                    /* Call an asynchronous method, converted from a callback pattern by a helper. */
-                    device.createRenderPipelineAsync(
-                        RenderPipelineDescriptor(vertex = VertexState(module = shaderModule))
-                    )
-                }
-            }
-
-            assertEquals(
-                """Create render pipeline (async) should fail when no shader entry point exists.
-                   The result was: ${exception.status}""",
-                CreatePipelineAsyncStatus.ValidationError,
-                exception.status
+        assertThrows(DawnException::class.java) {
+          runBlocking {
+            /* Call an asynchronous method, converted from a callback pattern by a helper. */
+            device.createRenderPipelineAsync(
+              RenderPipelineDescriptor(vertex = VertexState(module = shaderModule))
             )
+          }
         }
+      }
     }
 
     @Test

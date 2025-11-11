@@ -85,11 +85,11 @@
         jobject {{ output }} = env->NewObject(clz, init, static_cast<jint>({{ input }}));
     {%- else -%}
         //* Declares an instance of 'output'
-        {{ convert_to_kotlin(input, output, size, member) }}
+        {{ convert_to_kotlin(input, output, size, member, true) }}
     {%- endif -%}
 {% endmacro %}
 
-{% macro convert_to_kotlin(input, output, size, member) %}
+{% macro convert_to_kotlin(input, output, size, member, return_on_null_object) %}
     {% if size is string %}
         {% if member.type.name.get() in ['void const *', 'void *'] %}
             jobject {{ output }} = toByteBuffer(env, {{ input }}, {{ size }});
@@ -110,6 +110,15 @@
     {% elif member.type.category == 'object' %}
         jobject {{ output }};
         {
+            if ({{ input }} == nullptr) {
+              jclass exceptionClass = env->FindClass("androidx/webgpu/DawnException");
+              env->ThrowNew(exceptionClass, "Dawn method returned null.");
+              {% if return_on_null_object %}
+                  return nullptr;
+              {% else %}
+                  return;
+              {% endif %}
+            }
             jclass clz = classes->{{ member.type.name.camelCase() }};
             jmethodID init = env->GetMethodID(clz, "<init>", "(J)V");
             {{ output }} = env->NewObject(clz, init, reinterpret_cast<jlong>({{ input }}));

@@ -88,13 +88,45 @@
                             if (env->ExceptionCheck()) {
                                 return;
                             }
+                            // TODO
+                            {% for arg in member.type.arguments %}
+                                "Status:"{{as_annotated_cType(arg)}}
+                                "Status:"{{arg.name.camelCase().lower()}}
+                                "message:"{{arg.name.camelCase().lower()}}
+                                {% if 'status' in arg.name.camelCase().lower() %}
+                                    {% set STATUS_ARG = arg.name %}
+                                    {% set STATUS_TYPE = arg.type.name %}
+                                {% elif 'message' in arg.name.camelCase().lower() %}
+                                    {% set MESSAGE_ARG = arg.name %}
+                                {% endif %}
+                            {% endfor %}
+                            "Status2:"{{STATUS_ARG}}
+                            "message2:"{{MESSAGE_ARG}}
+                            {% if STATUS_ARG != "" %}
+                            if({{ STATUS_ARG }} != WGPU{{ STATUS_TYPE }}_Success){
+                            jstring jMessage = ToKotlin(env, &{{ MESSAGE_ARG }});
+                            jclass exceptionClass = env->FindClass("androidx/webgpu/WebGpuException");
+                            jmethodID exceptionConstructor = env->GetMethodID(
+                                    exceptionClass,
+                                    "<init>",
+                                    "(ILjava/lang/String;)V");
+                            jobject exceptionInstance = env->NewObject(
+                                    exceptionClass,
+                                    exceptionConstructor,
+                                    (jint){{ STATUS_ARG }}, // Pass the status code
+                                    jMessage // Pass the translated message
+                            );
+                            env->Throw((jthrowable)exceptionInstance);
+                            return;
+                            }
+                            {% endif %}
                             JNIClasses* classes = JNIClasses::getInstance(env);
 
                             {% for callbackArg in kotlin_record_members(member.type.arguments) -%}
                                 {{ convert_to_kotlin(callbackArg.name.camelCase(),
                                                       '_' + callbackArg.name.camelCase(),
                                                       'input->' + callbackArg.length.name.camelCase() if callbackArg.length.name,
-                                                      callbackArg) }}
+                                                      callbackArg, false) }}
                             {% endfor %}
 
                             jclass executorClass = env->FindClass("java/util/concurrent/Executor");
