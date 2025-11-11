@@ -343,6 +343,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb14f12a_8e0597ab",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-11T00:10:41Z",
+      "side": 1,
+      "message": "Actually rereading the CL I realized it\u0027s because of `skip_serialize`. I can just upload a followup CL to comment this.",
+      "parentUuid": "a4c501bf_05646817",
+      "revId": "7ebaecff4d22ec7f03ac4d33a016eb9750a2318d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "47b29d5c_24dbcf72",
