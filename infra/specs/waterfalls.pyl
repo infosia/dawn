@@ -286,7 +286,9 @@
         'mixins': [
           'win10_intel_uhd_770_stable',
         ],
-        'test_suites': {},
+        'test_suites': {
+          'gtest_tests': 'real_hardware_win_gtests',
+        },
       },
       'dawn-win-x64-nvidia-gtx1660-asan': {
         'os_type': 'win',
