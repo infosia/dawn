@@ -16,6 +16,23 @@
       "message": "It doesn\u0027t look like there\u0027s any change from the reland and the original change. Could you include what changed (did we fix it in SS or something?) so that we can reland this in the description?\n\nAlso, probably good to try it in g3 (or mention that) if possible to make sure it works now.",
       "revId": "fe197877457450bcf22b458a6b6d41fd41b5baae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c42800dd_19c11879",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-11T18:05:11Z",
+      "side": 1,
+      "message": "I was trying to run webgpu_cts on Pixel 9 and VVL threw a validation error about vkpipelinerobustness misuse until I patched in this CL. It would be nice to have landed if possible!",
+      "revId": "fe197877457450bcf22b458a6b6d41fd41b5baae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
