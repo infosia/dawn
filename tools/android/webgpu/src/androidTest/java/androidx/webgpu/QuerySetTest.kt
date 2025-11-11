@@ -3,6 +3,7 @@ package androidx.webgpu
 import androidx.test.filters.SmallTest
 import androidx.webgpu.helper.WebGpu
 import androidx.webgpu.helper.createWebGpu
+import java.nio.ByteOrder
 import java.util.concurrent.Executor
 import junit.framework.TestCase
 import kotlinx.coroutines.runBlocking
@@ -217,5 +218,143 @@ class QuerySetTest {
     assertThrows(ValidationException::class.java) {
       runBlocking { device.popErrorScope() }
     }
+  }
+
+  @Test
+  fun testResolveQuerySetAndReadback() {
+    val renderTarget = device.createTexture(
+      TextureDescriptor(
+        size = Extent3D(1, 1, 1),
+        format = TextureFormat.RGBA8Unorm,
+        usage = TextureUsage.RenderAttachment
+      )
+    )
+    val renderTargetView = renderTarget.createView()
+
+    val depthTexture = device.createTexture(
+      TextureDescriptor(
+        size = Extent3D(1, 1, 1),
+        format = TextureFormat.Depth24Plus,
+        usage = TextureUsage.RenderAttachment
+      )
+    )
+    val depthView = depthTexture.createView()
+
+    val queryCount = 1
+    val querySet = device.createQuerySet(
+      QuerySetDescriptor(type = QueryType.Occlusion, count = queryCount)
+    )
+
+    val resolveBufferSize = queryCount * Long.SIZE_BYTES.toLong()
+    val resolveBuffer = device.createBuffer(
+      BufferDescriptor(
+        size = resolveBufferSize,
+        usage = BufferUsage.QueryResolve or BufferUsage.CopySrc
+      )
+    )
+    val readbackBuffer = device.createBuffer(
+      BufferDescriptor(
+        size = resolveBufferSize,
+        usage = BufferUsage.CopyDst or BufferUsage.MapRead
+      )
+    )
+
+    val vertexShaderCode = """
+        @vertex
+        fn main(@builtin(vertex_index) VertexIndex : u32)
+             -> @builtin(position) vec4<f32> {
+            var positions = array<vec2<f32>, 3>(
+                vec2<f32>(0.0, 0.5),
+                vec2<f32>(-0.5, -0.5),
+                vec2<f32>(0.5, -0.5)
+            );
+            let pos = positions[VertexIndex];
+            return vec4<f32>(pos, 0.0, 1.0);
+        }
+    """.trimIndent()
+
+    val fragmentShaderCode = """
+        @fragment
+        fn main() -> @location(0) vec4<f32> {
+            return vec4<f32>(1.0, 0.0, 0.0, 1.0);
+        }
+    """.trimIndent()
+
+    val shaderModuleVert = device.createShaderModule(
+      ShaderModuleDescriptor(
+        shaderSourceWGSL = ShaderSourceWGSL(vertexShaderCode)
+      )
+    )
+    val shaderModuleFrag = device.createShaderModule(
+      ShaderModuleDescriptor(
+        shaderSourceWGSL = ShaderSourceWGSL(fragmentShaderCode)
+      )
+    )
+
+    val pipeline = device.createRenderPipeline(
+      RenderPipelineDescriptor(
+        vertex = VertexState(module = shaderModuleVert, entryPoint = "main"),
+        fragment = FragmentState(
+          module = shaderModuleFrag,
+          entryPoint = "main",
+          targets = arrayOf(ColorTargetState(format = TextureFormat.RGBA8Unorm))
+        ),
+        primitive = PrimitiveState(topology = PrimitiveTopology.TriangleList),
+        depthStencil = DepthStencilState(
+          format = TextureFormat.Depth24Plus,
+          depthWriteEnabled = OptionalBool.Companion.True,
+          depthCompare = CompareFunction.Less
+        )
+      )
+    )
+
+    val encoder = device.createCommandEncoder()
+
+    val passEncoder = encoder.beginRenderPass(
+      RenderPassDescriptor(
+        colorAttachments = arrayOf(
+          RenderPassColorAttachment(
+            view = renderTargetView,
+            loadOp = LoadOp.Clear,
+            storeOp = StoreOp.Store,
+            clearValue = Color(0.0, 0.0, 0.0, 1.0)
+          )
+        ),
+        depthStencilAttachment = RenderPassDepthStencilAttachment(
+          view = depthView,
+          depthLoadOp = LoadOp.Clear,
+          depthStoreOp = StoreOp.Store,
+          depthClearValue = 1.0f
+        ),
+        occlusionQuerySet = querySet
+      )
+    )
+
+    passEncoder.beginOcclusionQuery(0)
+    passEncoder.setPipeline(pipeline)
+    passEncoder.draw(3)
+    passEncoder.endOcclusionQuery()
+    passEncoder.end()
+
+    encoder.resolveQuerySet(querySet, firstQuery = 0, queryCount, resolveBuffer, 0)
+    encoder.copyBufferToBuffer(resolveBuffer, 0, readbackBuffer, 0, resolveBufferSize)
+
+    val commandBuffer = encoder.finish()
+    device.queue.submit(arrayOf(commandBuffer))
+    runBlocking {
+      device.queue.onSubmittedWorkDone()
+      readbackBuffer.mapAsync(MapMode.Read, 0, resolveBufferSize)
+    }
+    val mappedBuffer = readbackBuffer.getConstMappedRange(size = resolveBufferSize)
+    val result = mappedBuffer.order(ByteOrder.nativeOrder()).getLong(0)
+
+    assert(result == 1L)
+
+    readbackBuffer.unmap()
+    readbackBuffer.destroy()
+    resolveBuffer.destroy()
+    querySet.destroy()
+    renderTarget.destroy()
+    depthTexture.destroy()
   }
 }
