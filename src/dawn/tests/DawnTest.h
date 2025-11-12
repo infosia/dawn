@@ -372,6 +372,7 @@ class DawnTestBase {
         mDeviceErrorCallback;
     testing::StrictMock<testing::MockCppCallback<wgpu::DeviceLostCallback<void>*>>
         mDeviceLostCallback;
+    uint32_t mDeviceLostCallbackFailedCreationCount = 0;
 
     // Helper methods to implement the EXPECT_ macros
     std::ostringstream& AddBufferExpectation(const char* file,
@@ -780,6 +781,8 @@ class DawnTestBase {
 
     // Assuming the data is mapped, checks all expectations
     void ResolveExpectations();
+
+    void HandleDeviceCreationFailure();
 
     bool mRequireUseTieredLimits = false;
     native::Adapter mBackendAdapter;
