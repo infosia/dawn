@@ -133,6 +133,7 @@ ComputePassEncoder::ComputePassEncoder(DeviceBase* device,
 }
 
 ComputePassEncoder::~ComputePassEncoder() {
+    mEncodingContext->OnPassDestroyed(this);
     mEncodingContext = nullptr;
 }
 
@@ -163,8 +164,6 @@ Ref<ComputePassEncoder> ComputePassEncoder::MakeError(DeviceBase* device,
 
 void ComputePassEncoder::DestroyImpl() {
     mCommandBufferState.End();
-
-    mEncodingContext->OnPassDestroyed(this);
 }
 
 ObjectType ComputePassEncoder::GetType() const {
@@ -180,19 +179,22 @@ void ComputePassEncoder::APIEnd() {
     mEnded = true;
     mCommandBufferState.End();
 
-    if (mEncodingContext->TryEncode(
-            this,
-            [&](CommandAllocator* allocator) -> MaybeError {
-                if (IsValidationEnabled()) {
-                    DAWN_TRY(ValidateProgrammableEncoderEnd());
-                }
+    bool success = mEncodingContext->TryEncode(
+        this,
+        [&](CommandAllocator* allocator) -> MaybeError {
+            if (IsValidationEnabled()) {
+                DAWN_TRY(ValidateProgrammableEncoderEnd());
+            }
 
-                allocator->Allocate<EndComputePassCmd>(Command::EndComputePass);
+            allocator->Allocate<EndComputePassCmd>(Command::EndComputePass);
+            mEncodingContext->ExitComputePass(this, mUsageTracker.AcquireResourceUsage());
 
-                return {};
-            },
-            "encoding %s.End().", this)) {
-        mEncodingContext->ExitComputePass(this, mUsageTracker.AcquireResourceUsage());
+            return {};
+        },
+        "encoding %s.End().", this);
+
+    if (!success) {
+        mEncodingContext->OnPassEnd(this);
     }
 }
 

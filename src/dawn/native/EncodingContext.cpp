@@ -28,6 +28,7 @@
 #include "dawn/native/EncodingContext.h"
 
 #include "dawn/common/Assert.h"
+#include "dawn/common/Log.h"
 #include "dawn/native/CommandEncoder.h"
 #include "dawn/native/Commands.h"
 #include "dawn/native/Device.h"
@@ -41,6 +42,7 @@ EncodingContext::EncodingContext(DeviceBase* device, const ApiObjectBase* initia
     : mDevice(device),
       mTopLevelEncoder(initialEncoder),
       mCurrentEncoder(initialEncoder),
+      mDeferredErrorEncoder(initialEncoder),
       mStatus(Status::Open) {
     DAWN_ASSERT(!initialEncoder->IsError());
 }
@@ -49,6 +51,7 @@ EncodingContext::EncodingContext(DeviceBase* device, ErrorMonad::ErrorTag tag)
     : mDevice(device),
       mTopLevelEncoder(nullptr),
       mCurrentEncoder(nullptr),
+      mDeferredErrorEncoder(nullptr),
       mStatus(Status::ErrorAtCreation) {}
 
 EncodingContext::~EncodingContext() {
@@ -87,7 +90,9 @@ void EncodingContext::HandleError(const ApiObjectBase* encoder, std::unique_ptr<
         error->AppendDebugGroup(*iter);
     }
 
-    bool deferErrors = mStatus != Status::Finished;
+    bool deferErrors = encoder == mTopLevelEncoder || encoder == mDeferredErrorEncoder;
+    DAWN_DEBUG() << "deferErrors " << deferErrors << " = " << encoder
+                 << " == " << mDeferredErrorEncoder;
     if (mDevice->IsImmediateErrorHandlingEnabled()) {
         deferErrors = false;
     }
@@ -114,8 +119,18 @@ void EncodingContext::OnPassBegin(const ApiObjectBase* passEncoder) {
     DAWN_ASSERT(passEncoder != nullptr);
 
     if (mCurrentEncoder == mTopLevelEncoder) {
-        mCurrentEncoder = passEncoder;
+        if (!passEncoder->IsError()) {
+            mCurrentEncoder = passEncoder;
+        }
     }
+    if (mTopLevelEncoder != nullptr && mDeferredErrorEncoder == mTopLevelEncoder) {
+        mDeferredErrorEncoder = passEncoder;
+    }
+
+    DAWN_DEBUG() << "OnPassBegin(" << passEncoder << ")";
+    DAWN_DEBUG() << "mCurrentEncoder " << mCurrentEncoder;
+    DAWN_DEBUG() << "mDeferredErrorEncoder " << mDeferredErrorEncoder;
+    DAWN_DEBUG() << "mTopLevelEncoder " << mTopLevelEncoder;
 }
 
 void EncodingContext::OnPassDestroyed(const ApiObjectBase* passEncoder) {
@@ -125,14 +140,25 @@ void EncodingContext::OnPassDestroyed(const ApiObjectBase* passEncoder) {
         HandleError(passEncoder, DAWN_VALIDATION_ERROR("%s was destroyed before End() was called.",
                                                        passEncoder));
     }
+
+    if (mDeferredErrorEncoder == passEncoder) {
+        mDeferredErrorEncoder = nullptr;
+    }
 }
 
 void EncodingContext::OnPassEnd(const ApiObjectBase* passEncoder) {
-    // The validation of PassEncoder::End() should only pass if it is the current encoder.
-    DAWN_ASSERT(mCurrentEncoder != mTopLevelEncoder);
-    DAWN_ASSERT(mCurrentEncoder == passEncoder);
+    if (mCurrentEncoder == passEncoder) {
+        mCurrentEncoder = mTopLevelEncoder;
+    }
 
-    mCurrentEncoder = mTopLevelEncoder;
+    if (mDeferredErrorEncoder == passEncoder) {
+        mDeferredErrorEncoder = mTopLevelEncoder;
+    }
+
+    DAWN_DEBUG() << "OnPassEnd(" << passEncoder << ")";
+    DAWN_DEBUG() << "mCurrentEncoder " << mCurrentEncoder;
+    DAWN_DEBUG() << "mDeferredErrorEncoder " << mDeferredErrorEncoder;
+    DAWN_DEBUG() << "mTopLevelEncoder " << mTopLevelEncoder;
 }
 
 void EncodingContext::WillBeginRenderPass() {
@@ -281,6 +307,8 @@ void EncodingContext::CloseWithStatus(Status status) {
             if (mStatus == Status::ErrorInRecording || mStatus == Status::Open) {
                 mStatus = status;
             }
+            mTopLevelEncoder = nullptr;
+            mDeferredErrorEncoder = nullptr;
             break;
 
         case Status::ErrorInRecording:
@@ -290,7 +318,6 @@ void EncodingContext::CloseWithStatus(Status status) {
             break;
     }
 
-    mTopLevelEncoder = nullptr;
     mCurrentEncoder = nullptr;
 }
 

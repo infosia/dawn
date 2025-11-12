@@ -32,6 +32,7 @@
 #include <utility>
 
 #include "dawn/common/Constants.h"
+#include "dawn/common/Log.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/Buffer.h"
 #include "dawn/native/ChainUtils.h"
@@ -131,6 +132,7 @@ Ref<RenderPassEncoder> RenderPassEncoder::MakeError(DeviceBase* device,
 }
 
 RenderPassEncoder::~RenderPassEncoder() {
+    mEncodingContext->OnPassDestroyed(this);
     mEncodingContext = nullptr;
 }
 
@@ -139,7 +141,6 @@ void RenderPassEncoder::DestroyImpl() {
     mCommandBufferState.End();
 
     RenderEncoderBase::DestroyImpl();
-    mEncodingContext->OnPassDestroyed(this);
 }
 
 ObjectType RenderPassEncoder::GetType() const {
@@ -166,7 +167,9 @@ void RenderPassEncoder::APIEnd() {
 void RenderPassEncoder::End() {
     DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
 
+    DAWN_DEBUG() << "Ending" << this;
     if (mEnded && IsValidationEnabled()) {
+        DAWN_DEBUG() << "Already ended!";
         GetDevice()->HandleEncoderError(DAWN_VALIDATION_ERROR("%s was already ended.", this));
         return;
     }
@@ -174,7 +177,7 @@ void RenderPassEncoder::End() {
     mEnded = true;
     mCommandBufferState.End();
 
-    mEncodingContext->TryEncode(
+    bool success = mEncodingContext->TryEncode(
         this,
         [&](CommandAllocator* allocator) -> MaybeError {
             if (IsValidationEnabled()) {
@@ -199,6 +202,10 @@ void RenderPassEncoder::End() {
             return {};
         },
         "encoding %s.End().", this);
+
+    if (!success) {
+        mEncodingContext->OnPassEnd(this);
+    }
 }
 
 void RenderPassEncoder::APISetStencilReference(uint32_t reference) {

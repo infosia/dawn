@@ -210,6 +210,9 @@ class EncodingContext {
     // The current encoder changes with Enter/ExitPass which should be called by
     // CommandEncoder::Begin/EndPass.
     raw_ptr<const ApiObjectBase> mCurrentEncoder;
+    // WebGPU requires that the errors be deferred to Finish() for commands on the current encoder,
+    // but contrary to mCurrentEncoder, that encoder is not cleared on the first error.
+    raw_ptr<const ApiObjectBase> mDeferredErrorEncoder;
 
     RenderPassUsages mRenderPassUsages;
     bool mWereRenderPassUsagesAcquired = false;
