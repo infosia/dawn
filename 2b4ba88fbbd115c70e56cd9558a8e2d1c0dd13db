@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "508c5e37_ec30f2e0",
+        "filename": "src/dawn/node/binding/Converter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1982,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-12T15:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a0e1e90_ab4af8c9",
+      "range": {
+        "startLine": 1982,
+        "startChar": 50,
+        "endLine": 1982,
+        "endChar": 68
+      },
+      "revId": "2b4ba88fbbd115c70e56cd9558a8e2d1c0dd13db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "adf56818_aef3c09b",
@@ -71,6 +95,24 @@
       "writtenOn": "2025-11-11T15:33:30Z",
       "side": 1,
       "message": "`#include \u003climits\u003e for numeric_limits\u003c\u003e  [build/include_what_you_use]`",
+      "revId": "2b4ba88fbbd115c70e56cd9558a8e2d1c0dd13db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "566c0b51_6e9f0a99",
+        "filename": "src/dawn/node/binding/Converter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2004,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-12T15:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adf56818_aef3c09b",
       "revId": "2b4ba88fbbd115c70e56cd9558a8e2d1c0dd13db",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
