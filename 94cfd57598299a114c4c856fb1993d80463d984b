@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "445fc20f_966e04af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-12T10:33:00Z",
+      "side": 1,
+      "message": "Please take a look, thanks!\nThis CL change the behavior of Dawn end-to-end test to allow device creation (including initialization) failure, and skip the test in this case. Without this CL, assertion failure or even memory access violation will occurs and halt the whole E2E tests. This CL make it possible to, for example, automatically skip all tests on DXC-disabled D3D12 backend on a device without FXC (which will result in device creation failure currently).\n\nAlthough, a much more complex solution might be possible, e.g. make D3D physical device ensure the DXC/FXC compiler and force set the UseDXC toggle based on the result (so that no device creation would occurs due to enabling/disabling the toggle), and further change the E2E tests\u0027 [`GetAvailableAdapterTestParamsForBackends`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/DawnTest.cpp;l\u003d590;drc\u003ddce6bb944aa5c46b37a8cc4a314e2357cbfeab6d;bpv\u003d0;bpt\u003d1) to validate the required toggles are all honored or otherwise skip the backend.",
+      "revId": "94cfd57598299a114c4c856fb1993d80463d984b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
