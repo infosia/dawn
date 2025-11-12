@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6357fd16_b38a586e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-12T03:12:43Z",
+      "side": 1,
+      "message": "Hey folks, just soliciting some opinions on whether this is even a worthwhile thing to add, see comment below.",
+      "revId": "86bca4359117e896450f78ea9515b7b2fa726f7f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86bff3e3_31d742e2",
+        "filename": "src/dawn/tests/end2end/ComputeSharedMemoryTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-12T03:12:43Z",
+      "side": 1,
+      "message": "This is gross and I hate it, but I couldn\u0027t figure out a better way to do this.\n\nWe could also just skip this test on all Qualcomm and try to remember to re-enable it when we eventually drop Pixel 4 from CQ. Or just don\u0027t bother adding this E2E test at all and rely on CTS instead (since this is just a reduced CTS test).\n\nThe only reason I considered adding it was because it took me a long time to create this reliable+minimal reproducer from the flakily failing CTS tests. But maybe a link to an abandoned CL from the bug is better than the above grossness.\n\nAdding some people for opinions on this rather than review of the test itself.",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 9
+      },
+      "revId": "86bca4359117e896450f78ea9515b7b2fa726f7f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
