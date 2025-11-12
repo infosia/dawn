@@ -406,6 +406,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1fd37139_ca7d21dc",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-12T15:30:28Z",
+      "side": 1,
+      "message": "They can\u0027t have different values, but Dawn, I believe, should already know where the hole will be that you want to fill. Like, the graphics pipeline has the vertex attributes attached which contains the shaderLocation for each of these, so from that Dawn would know where we can place the value, no?",
+      "parentUuid": "f5e653b4_22f4b695",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d0a8e527_5b16acda",
         "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
         "patchSetId": 37
