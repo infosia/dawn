@@ -106,6 +106,24 @@
       "parentUuid": "0eba0f5f_0c9ab49e",
       "revId": "5665177422dc93da21b96d04e383cdb06041c5c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4d04d99_0101e108",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-12T16:46:45Z",
+      "side": 1,
+      "message": "I\u0027d suggest setting `TINT_DUMP_IR_WHEN_VALIDATING` to `1` in `core/ir/validator.cc`, and then you can see the IR after every transform. Then you\u0027ll be able to see where the depth mode is getting dropped.",
+      "parentUuid": "8cc2216c_1adf06a0",
+      "revId": "5665177422dc93da21b96d04e383cdb06041c5c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
