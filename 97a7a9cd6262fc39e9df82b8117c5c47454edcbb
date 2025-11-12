@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "82cbe144_ad9fa6c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4374400
+      },
+      "writtenOn": "2025-11-12T06:47:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d80ec31_26741700",
+      "revId": "97a7a9cd6262fc39e9df82b8117c5c47454edcbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1aedc29c_b6614a7e",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-11-11T12:07:35Z",
       "side": 1,
       "message": "Now we\u0027re not forced to handle logic for callback types (which we can\u0027t convert), in `kotlin_record_conversion.cpp` find the line that reads\n\n```\nnullptr  {#- We can\u0027t make these. TODO(b/451995459): Don\u0027t even create the converter. #}\n```\n\n.. and replace it with  `{{ unreachable_code() }}`",
+      "revId": "97a7a9cd6262fc39e9df82b8117c5c47454edcbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab6aa0f1_63d54f95",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4374400
+      },
+      "writtenOn": "2025-11-12T06:47:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aedc29c_b6614a7e",
       "revId": "97a7a9cd6262fc39e9df82b8117c5c47454edcbb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba4d0911_3a4abde4",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 4374400
+      },
+      "writtenOn": "2025-11-12T06:47:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b1e6b7c_aac09775",
+      "revId": "97a7a9cd6262fc39e9df82b8117c5c47454edcbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "568e9854_76758a24",
@@ -82,6 +136,30 @@
       "writtenOn": "2025-11-11T12:07:35Z",
       "side": 1,
       "message": "If you change the \u0027for\u0027 statement to read \n\n`{%- for structure in by_category[\u0027structure\u0027] if include_structure(structure) and structure.needs_n2k %}`\n\nyou can remove the \u0027if\u0027 and return the indent to its current level.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 32
+      },
+      "revId": "97a7a9cd6262fc39e9df82b8117c5c47454edcbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "353ba1a9_17ceb303",
+        "filename": "generator/templates/art/structures.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 4374400
+      },
+      "writtenOn": "2025-11-12T06:47:36Z",
+      "side": 1,
+      "message": "If I do so, then all the methods inside the \u0027for\u0027 block including \u0027ToNative\u0027 won\u0027t be generated. This \u0027if\u0027 block only checks for the need of \u0027ToKotlin\u0027 method.",
+      "parentUuid": "568e9854_76758a24",
       "range": {
         "startLine": 97,
         "startChar": 0,
