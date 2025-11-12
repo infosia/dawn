@@ -1308,8 +1308,10 @@ Ref<ComputePassEncoder> CommandEncoder::BeginComputePass(const ComputePassDescri
         return passEncoder;
     }
 
-    return ComputePassEncoder::MakeError(device, this, &mEncodingContext,
-                                         descriptor ? descriptor->label : nullptr);
+    auto errorPassEncoder = ComputePassEncoder::MakeError(device, this, &mEncodingContext,
+                                                          descriptor ? descriptor->label : nullptr);
+    mEncodingContext.OnPassBegin(errorPassEncoder.Get());
+    return errorPassEncoder;
 }
 
 RenderPassEncoder* CommandEncoder::APIBeginRenderPass(const RenderPassDescriptor* descriptor) {
@@ -1331,12 +1333,6 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
 
     RenderPassValidationState validationState(
         GetDevice()->IsToggleEnabled(Toggle::AllowUnsafeAPIs));
-
-    // Lazy make error function to be called if we error and need to return an error encoder.
-    auto MakeError = [&]() {
-        return RenderPassEncoder::MakeError(device, this, &mEncodingContext,
-                                            rawDescriptor ? rawDescriptor->label : nullptr);
-    };
 
     UnpackedPtr<RenderPassDescriptor> descriptor;
     ClearWithDrawHelper clearWithDrawHelper;
@@ -1568,14 +1564,18 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
             return {};
         }();
 
-        if (device->ConsumedError(std::move(error))) {
-            return MakeError();
+        if (!device->ConsumedError(std::move(error))) {
+            return passEncoder;
         }
 
-        return passEncoder;
+        // Fall back to creating an error pass, but first mark the failed pass as ended.
+        mEncodingContext.OnPassEnd(passEncoder.Get());
     }
 
-    return MakeError();
+    auto errorPassEncoder = RenderPassEncoder::MakeError(
+        device, this, &mEncodingContext, rawDescriptor ? rawDescriptor->label : nullptr);
+    mEncodingContext.OnPassBegin(errorPassEncoder.Get());
+    return errorPassEncoder;
 }
 
 void CommandEncoder::APICopyBufferToBuffer(BufferBase* source,

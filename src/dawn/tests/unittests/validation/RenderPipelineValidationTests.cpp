@@ -2071,7 +2071,7 @@ TEST_F(RenderPipelineValidationTest, DrawAfterEndShouldNotAccessPipeline) {
 
     // This call shouldn't access any CommandBufferStateTracker state but prior to the fix, it would
     // and cause an ASSERT() to trigger.
-    pass.DrawIndirect(buffer, 0);
+    ASSERT_DEVICE_ERROR(pass.DrawIndirect(buffer, 0));
     ASSERT_DEVICE_ERROR(encoder.Finish());
 }
 

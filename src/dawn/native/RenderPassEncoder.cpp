@@ -131,6 +131,8 @@ Ref<RenderPassEncoder> RenderPassEncoder::MakeError(DeviceBase* device,
 }
 
 RenderPassEncoder::~RenderPassEncoder() {
+    // Call OnPassDestroyed even for error passes.
+    mEncodingContext->OnPassDestroyed(this);
     mEncodingContext = nullptr;
 }
 
@@ -139,7 +141,6 @@ void RenderPassEncoder::DestroyImpl() {
     mCommandBufferState.End();
 
     RenderEncoderBase::DestroyImpl();
-    mEncodingContext->OnPassDestroyed(this);
 }
 
 ObjectType RenderPassEncoder::GetType() const {
@@ -174,7 +175,7 @@ void RenderPassEncoder::End() {
     mEnded = true;
     mCommandBufferState.End();
 
-    mEncodingContext->TryEncode(
+    bool success = mEncodingContext->TryEncode(
         this,
         [&](CommandAllocator* allocator) -> MaybeError {
             if (IsValidationEnabled()) {
@@ -199,6 +200,11 @@ void RenderPassEncoder::End() {
             return {};
         },
         "encoding %s.End().", this);
+
+    // Even if an error happened, tell the EncodingContext about the lifetime change.
+    if (!success) {
+        mEncodingContext->OnPassEnd(this);
+    }
 }
 
 void RenderPassEncoder::APISetStencilReference(uint32_t reference) {

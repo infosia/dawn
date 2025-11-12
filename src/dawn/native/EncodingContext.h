@@ -152,7 +152,7 @@ class EncodingContext {
     }
 
     inline MaybeError ValidateCanEncodeOn(const ApiObjectBase* encoder) {
-        if (encoder != mCurrentEncoder) [[unlikely]] {
+        if (encoder != mValidToEncodeOn) [[unlikely]] {
             switch (mStatus) {
                 case Status::ErrorAtCreation:
                     return DAWN_VALIDATION_ERROR("Recording in an error %s.", encoder);
@@ -179,7 +179,7 @@ class EncodingContext {
                     // This happens when the CommandEncoder is used while a pass is open.
                     DAWN_INVALID_IF(encoder == mTopLevelEncoder,
                                     "Recording in %s which is locked while %s is open.", encoder,
-                                    mCurrentEncoder);
+                                    mValidToEncodeOn);
 
                     // The remaining case is when an encoder is ended but we still try to encode
                     // commands in it.
@@ -208,11 +208,14 @@ class EncodingContext {
     // It doubles as a flag for mStatus != Open when it is nullptr, so that a single comparison
     // is necessary in ValidateCanEncodeOn.
     raw_ptr<const ApiObjectBase> mTopLevelEncoder;
-    // The current encoder must be the same as the encoder provided to TryEncode,
-    // otherwise an error is produced. It may be nullptr if the EncodingContext is an error.
-    // The current encoder changes with Enter/ExitPass which should be called by
-    // CommandEncoder::Begin/EndPass.
-    raw_ptr<const ApiObjectBase> mCurrentEncoder;
+    // The only encoder that's valid to encode on at the moment. It must be the same as the encoder
+    // provided to TryEncode, otherwise an error is produced. It may be nullptr if the
+    // EncodingContext is an error, an error occurred or Finish() happened.
+    raw_ptr<const ApiObjectBase> mValidToEncodeOn;
+    // WebGPU requires that the errors be deferred to Finish() for commands on the current encoder,
+    // but contrary to mValidToEncodeOn, that encoder is not cleared on the first error and can be
+    // an error encoder.
+    raw_ptr<const ApiObjectBase> mDeferredErrorEncoder;
 
     RenderPassUsages mRenderPassUsages;
     bool mWereRenderPassUsagesAcquired = false;
