@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bc80a028_3d480bb4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-12T03:25:48Z",
+      "side": 1,
+      "message": "I think this is a good addition even if we remove it in ~2 years",
+      "revId": "86bca4359117e896450f78ea9515b7b2fa726f7f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "86bff3e3_31d742e2",
         "filename": "src/dawn/tests/end2end/ComputeSharedMemoryTests.cpp",
         "patchSetId": 3
