@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "afd72f50_1e5c2951",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-12T16:37:53Z",
+      "side": 1,
+      "message": "Yeah, this is what the API needs to produces.",
+      "parentUuid": "73b17d49_db7d993f",
+      "range": {
+        "startLine": 1492,
+        "startChar": 8,
+        "endLine": 1492,
+        "endChar": 72
+      },
+      "revId": "1b61e4bbf66476dd597c2b03b426deaf68ab2d08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98d9784c_7d7d54ce",
@@ -72,6 +96,24 @@
       "side": 1,
       "message": "I think that\u0027d work better yes!",
       "parentUuid": "98d9784c_7d7d54ce",
+      "revId": "1b61e4bbf66476dd597c2b03b426deaf68ab2d08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c52bf8c_d5ec853e",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-12T16:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71403882_1a3f550d",
       "revId": "1b61e4bbf66476dd597c2b03b426deaf68ab2d08",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
