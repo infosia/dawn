@@ -288,18 +288,18 @@ TEST_F(CommandBufferValidationTest, PassDereferenced) {
     {
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
         encoder.BeginRenderPass(&placeholderRenderPass);
-        ASSERT_DEVICE_ERROR(encoder.Finish(),
-                            HasSubstr("Command buffer recording ended before [RenderPassEncoder "
-                                      "(unlabeled)] was ended."));
+        ASSERT_DEVICE_ERROR(
+            encoder.Finish(),
+            HasSubstr("[RenderPassEncoder (unlabeled)] was destroyed before End() was called."));
     }
 
     // Error case, no reference is kept to a compute pass.
     {
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
         encoder.BeginComputePass();
-        ASSERT_DEVICE_ERROR(encoder.Finish(),
-                            HasSubstr("Command buffer recording ended before [ComputePassEncoder "
-                                      "(unlabeled)] was ended."));
+        ASSERT_DEVICE_ERROR(
+            encoder.Finish(),
+            HasSubstr("[ComputePassEncoder (unlabeled)] was destroyed before End() was called."));
     }
 
     // Error case, beginning a new pass after failing to end a de-referenced pass.
@@ -308,9 +308,9 @@ TEST_F(CommandBufferValidationTest, PassDereferenced) {
         encoder.BeginRenderPass(&placeholderRenderPass);
         wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
         pass.End();
-        ASSERT_DEVICE_ERROR(encoder.Finish(),
-                            HasSubstr("Command buffer recording ended before [RenderPassEncoder "
-                                      "(unlabeled)] was ended."));
+        ASSERT_DEVICE_ERROR(
+            encoder.Finish(),
+            HasSubstr("[RenderPassEncoder (unlabeled)] was destroyed before End() was called."));
     }
 
     // Error case, deleting the pass after finishing the command encoder shouldn't generate an

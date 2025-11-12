@@ -83,29 +83,34 @@ class EncodingContext {
         return !ConsumedError(encodeFunction(&mPendingCommands), formatStr, args...);
     }
 
+    // Notifications that must be called to let the encoding context know of the pass's lifetimes.
+    void OnPassBegin(const ApiObjectBase* passEncoder);
+    void OnPassEnd(const ApiObjectBase* passEncoder);  // Called inside Exit*Pass
+    void OnPassDestroyed(const ApiObjectBase* passEncoder);
+
     // Must be called prior to encoding a BeginRenderPassCmd. Note that it's OK to call this
     // and then not actually call EnterPass+ExitRenderPass, for example if some other pass setup
     // failed validation before the BeginRenderPassCmd could be encoded.
+    // It is used to split the recorded commands to allow indirect draw validation to be
+    // inserted prior to BeginRenderPass.
     void WillBeginRenderPass();
 
-    // Functions to set current encoder state
-    void EnterPass(const ApiObjectBase* passEncoder);
+    // Method to notify of the end of a render / compute pass to insert some of the metadata and do
+    // handle inserting indirect draw validation. They call OnPassEnd internally.
     MaybeError ExitRenderPass(const ApiObjectBase* passEncoder,
                               RenderPassResourceUsageTracker usageTracker,
                               CommandEncoder* commandEncoder,
                               IndirectDrawMetadata indirectDrawMetadata);
     void ExitComputePass(const ApiObjectBase* passEncoder, ComputePassResourceUsage usages);
-    MaybeError Finish();
 
-    // Called when a pass encoder is deleted. Provides an opportunity to clean up if it's the
-    // mCurrentEncoder.
-    void EnsurePassExited(const ApiObjectBase* passEncoder);
+    MaybeError Finish();
 
     const RenderPassUsages& GetRenderPassUsages() const;
     const ComputePassUsages& GetComputePassUsages() const;
     RenderPassUsages AcquireRenderPassUsages();
     ComputePassUsages AcquireComputePassUsages();
     std::vector<IndirectDrawMetadata> AcquireIndirectDrawMetadata();
+    CommandIterator AcquireCommands();
 
     void PushDebugGroupLabel(std::string_view groupLabel);
     void PopDebugGroupLabel();
