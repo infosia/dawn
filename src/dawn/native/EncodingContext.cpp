@@ -110,12 +110,56 @@ void EncodingContext::HandleError(std::unique_ptr<ErrorData> error) {
     CloseWithStatus(Status::ErrorInRecording);
 }
 
+void EncodingContext::OnPassBegin(const ApiObjectBase* passEncoder) {
+    DAWN_ASSERT(passEncoder != nullptr);
+
+    // We cannot do anything for an entered pass if we are no longer encoding (the EncodingContext
+    // cannot be used anymore, or the top level encoder was an error).
+    if (mTopLevelEncoder == nullptr) {
+        return;
+    }
+
+    // A pass is valid to encode on only when we are encoding on the top level encoder and when the
+    // pass itself is valid (meaning there was no validation error in Begin*Pass).
+    if (mCurrentEncoder == mTopLevelEncoder && !passEncoder->IsError()) {
+        mCurrentEncoder = passEncoder;
+    }
+}
+
+void EncodingContext::OnPassDestroyed(const ApiObjectBase* passEncoder) {
+    DAWN_ASSERT(passEncoder != nullptr);
+
+    // The current pass being destroyed prevents ending the pass, which should prevent all future
+    // command recording on this EncodingContext (and result in an error on Finish()).
+    if (mCurrentEncoder == passEncoder) {
+        HandleError(
+            DAWN_VALIDATION_ERROR("%s was destroyed before End() was called.", passEncoder));
+        mCurrentEncoder = nullptr;
+    }
+}
+
+void EncodingContext::OnPassEnd(const ApiObjectBase* passEncoder) {
+    DAWN_ASSERT(passEncoder != nullptr);
+
+    // Don't do anything if we don't have a top level encoder to encode on again (the
+    // EncodingContext cannot be used anymore, or the top level encoder was an error).
+    if (mTopLevelEncoder == nullptr) {
+        return;
+    }
+
+    // When the current pass is ended, the commands can start being recorded again in the top-level
+    // CommandEncoder again.
+    if (mCurrentEncoder == passEncoder) {
+        mCurrentEncoder = mTopLevelEncoder;
+    }
+}
+
 void EncodingContext::WillBeginRenderPass() {
     DAWN_ASSERT(mCurrentEncoder == mTopLevelEncoder);
     if (mDevice->IsValidationEnabled() || mDevice->MayRequireDuplicationOfIndirectParameters()) {
         // When validation is enabled or indirect parameters require duplication, we are going
         // to want to capture all commands encoded between and including BeginRenderPassCmd and
-        // EndRenderPassCmd, and defer their sequencing util after we have a chance to insert
+        // EndRenderPassCmd, and defer their sequencing until after we have a chance to insert
         // any necessary validation or duplication commands. To support this we commit any
         // current commands now, so that the impending BeginRenderPassCmd starts in a fresh
         // CommandAllocator.
@@ -123,22 +167,11 @@ void EncodingContext::WillBeginRenderPass() {
     }
 }
 
-void EncodingContext::EnterPass(const ApiObjectBase* passEncoder) {
-    // Assert we're at the top level.
-    DAWN_ASSERT(mCurrentEncoder == mTopLevelEncoder);
-    DAWN_ASSERT(passEncoder != nullptr);
-
-    mCurrentEncoder = passEncoder;
-}
-
 MaybeError EncodingContext::ExitRenderPass(const ApiObjectBase* passEncoder,
                                            RenderPassResourceUsageTracker usageTracker,
                                            CommandEncoder* commandEncoder,
                                            IndirectDrawMetadata indirectDrawMetadata) {
-    DAWN_ASSERT(mCurrentEncoder != mTopLevelEncoder);
-    DAWN_ASSERT(mCurrentEncoder == passEncoder);
-
-    mCurrentEncoder = mTopLevelEncoder;
+    OnPassEnd(passEncoder);
 
     if (mDevice->IsValidationEnabled() || mDevice->MayRequireDuplicationOfIndirectParameters()) {
         // With validation enabled, commands were committed just before BeginRenderPassCmd was
@@ -175,20 +208,8 @@ MaybeError EncodingContext::ExitRenderPass(const ApiObjectBase* passEncoder,
 
 void EncodingContext::ExitComputePass(const ApiObjectBase* passEncoder,
                                       ComputePassResourceUsage usages) {
-    DAWN_ASSERT(mCurrentEncoder != mTopLevelEncoder);
-    DAWN_ASSERT(mCurrentEncoder == passEncoder);
-
-    mCurrentEncoder = mTopLevelEncoder;
+    OnPassEnd(passEncoder);
     mComputePassUsages.push_back(std::move(usages));
-}
-
-void EncodingContext::EnsurePassExited(const ApiObjectBase* passEncoder) {
-    if (mCurrentEncoder != mTopLevelEncoder && mCurrentEncoder == passEncoder) {
-        // The current pass encoder is being deleted. Implicitly end the pass with an error.
-        mCurrentEncoder = mTopLevelEncoder;
-        HandleError(DAWN_VALIDATION_ERROR("Command buffer recording ended before %s was ended.",
-                                          passEncoder));
-    }
 }
 
 const RenderPassUsages& EncodingContext::GetRenderPassUsages() const {

@@ -1304,7 +1304,7 @@ Ref<ComputePassEncoder> CommandEncoder::BeginComputePass(const ComputePassDescri
 
         Ref<ComputePassEncoder> passEncoder =
             ComputePassEncoder::Create(device, descriptor, this, &mEncodingContext);
-        mEncodingContext.EnterPass(passEncoder.Get());
+        mEncodingContext.OnPassBegin(passEncoder.Get());
         return passEncoder;
     }
 
@@ -1553,7 +1553,7 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
             std::move(attachmentState), validationState.GetRenderWidth(),
             validationState.GetRenderHeight(), depthReadOnly, stencilReadOnly, passEndCallback);
 
-        mEncodingContext.EnterPass(passEncoder.Get());
+        mEncodingContext.OnPassBegin(passEncoder.Get());
 
         auto error = [&]() -> MaybeError {
             // clearWithDrawHelper.Apply() applies clear with draw if clear_color_with_draw or

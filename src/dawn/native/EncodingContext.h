@@ -48,8 +48,11 @@ class CommandEncoder;
 class DeviceBase;
 class ApiObjectBase;
 
-// Base class for allocating/iterating commands.
-// It performs error tracking as well as encoding state for render/compute passes.
+// Helper class for top level encoders (CommandEncoder and RenderBundleEncoder).
+// It handles the validation that the current encoder (top level or for a pass) is the one allowed
+// to encode commands at the moment. When an error occurs, the EncodingContext determines if the
+// error should be deferred until Finish() or if it should bubble up to the device immediately. It
+// also stores metadata and usage scopes for the finished passes.
 class EncodingContext {
   public:
     EncodingContext(DeviceBase* device, const ApiObjectBase* initialEncoder);
@@ -59,8 +62,6 @@ class EncodingContext {
     // Marks the encoding context as destroyed so that any future encodes will fail, and all
     // encoded commands are released.
     void Destroy();
-
-    CommandIterator AcquireCommands();
 
     template <typename EncodeFunction>
     inline bool TryEncode(const ApiObjectBase* encoder, EncodeFunction&& encodeFunction) {
@@ -83,29 +84,37 @@ class EncodingContext {
         return !ConsumedError(encodeFunction(&mPendingCommands), formatStr, args...);
     }
 
+    // Notifications that must be called to let the encoding context know of the passes' lifetimes.
+    // This must be called for all pass objects derived from this encoding context, even error pass,
+    // those created after Finish() etc. From all these signals, encoding context will determine
+    // which passes are valid to encode on and which ones can have errors deferred.
+    void OnPassBegin(const ApiObjectBase* passEncoder);
+    void OnPassEnd(const ApiObjectBase* passEncoder);  // Called inside Exit*Pass
+    void OnPassDestroyed(const ApiObjectBase* passEncoder);
+
     // Must be called prior to encoding a BeginRenderPassCmd. Note that it's OK to call this
     // and then not actually call EnterPass+ExitRenderPass, for example if some other pass setup
     // failed validation before the BeginRenderPassCmd could be encoded.
+    // It is used to split the recorded commands to allow indirect draw validation to be
+    // inserted prior to BeginRenderPass.
     void WillBeginRenderPass();
 
-    // Functions to set current encoder state
-    void EnterPass(const ApiObjectBase* passEncoder);
+    // Method to notify of the end of a render / compute pass to insert some of the metadata and do
+    // handle inserting indirect draw validation. They call OnPassEnd internally.
     MaybeError ExitRenderPass(const ApiObjectBase* passEncoder,
                               RenderPassResourceUsageTracker usageTracker,
                               CommandEncoder* commandEncoder,
                               IndirectDrawMetadata indirectDrawMetadata);
     void ExitComputePass(const ApiObjectBase* passEncoder, ComputePassResourceUsage usages);
-    MaybeError Finish();
 
-    // Called when a pass encoder is deleted. Provides an opportunity to clean up if it's the
-    // mCurrentEncoder.
-    void EnsurePassExited(const ApiObjectBase* passEncoder);
+    MaybeError Finish();
 
     const RenderPassUsages& GetRenderPassUsages() const;
     const ComputePassUsages& GetComputePassUsages() const;
     RenderPassUsages AcquireRenderPassUsages();
     ComputePassUsages AcquireComputePassUsages();
     std::vector<IndirectDrawMetadata> AcquireIndirectDrawMetadata();
+    CommandIterator AcquireCommands();
 
     void PushDebugGroupLabel(std::string_view groupLabel);
     void PopDebugGroupLabel();
