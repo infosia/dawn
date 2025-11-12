@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70eabed5_b73ca1c2",
+        "filename": "tools/src/cmd/git-stats/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-12T23:40:26Z",
+      "side": 1,
+      "message": "Non-test change to fix an issue caught by the tests.",
+      "range": {
+        "startLine": 89,
+        "startChar": 3,
+        "endLine": 91,
+        "endChar": 4
+      },
+      "revId": "4b257d4fc5867ef80b9c21fdf16598c6abe366f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
