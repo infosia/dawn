@@ -440,6 +440,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fc61cca_730b9f52",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-12T15:45:59Z",
+      "side": 1,
+      "message": "Nm, talked to David and my understanding is wrong. I though Dawn knew, but Dawn knows the vertex inputs, but not necessarily what\u0027s being passed between vertex and fragment.",
+      "parentUuid": "debe9ba4_2a8c93d1",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0a8e527_5b16acda",
