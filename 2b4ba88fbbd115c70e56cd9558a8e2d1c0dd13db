@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2a0e1e90_ab4af8c9",
+        "filename": "src/dawn/node/binding/Converter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1982,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-12T13:54:15Z",
+      "side": 1,
+      "message": "nit: probably because most of this code was written by Ben, but node code uses snake case rather than camel case.",
+      "range": {
+        "startLine": 1982,
+        "startChar": 50,
+        "endLine": 1982,
+        "endChar": 68
+      },
+      "revId": "2b4ba88fbbd115c70e56cd9558a8e2d1c0dd13db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "adf56818_aef3c09b",
         "filename": "src/dawn/node/binding/Converter.cpp",
         "patchSetId": 4
