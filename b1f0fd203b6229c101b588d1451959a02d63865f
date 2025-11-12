@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cb60178_f0212705",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-12T22:38:09Z",
+      "side": 1,
+      "message": "PTAL! Effectively a copy of https://dawn-review.googlesource.com/c/dawn/+/271535 and, as one would expect, it exhibits exactly the same performance changes.",
+      "revId": "b1f0fd203b6229c101b588d1451959a02d63865f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
