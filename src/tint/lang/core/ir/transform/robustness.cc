@@ -165,9 +165,8 @@ struct State {
         switch (ptr->AddressSpace()) {
             case AddressSpace::kFunction:
             case AddressSpace::kPrivate:
-                return true;
             case AddressSpace::kImmediate:
-                return config.clamp_immediate_data;
+                return true;
             case AddressSpace::kStorage:
                 return config.clamp_storage && !IsRootVarIgnored(value);
             case AddressSpace::kUniform:

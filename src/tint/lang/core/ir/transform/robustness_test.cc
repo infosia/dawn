@@ -863,7 +863,7 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, ImmediateData_LoadVectorElement) {
+TEST_F(IR_RobustnessDefaultTest, ImmediateData_LoadVectorElement) {
     auto* vec = b.Var("vec", ty.ptr(immediate, ty.vec4<u32>()));
     mod.root_block->Append(vec);
 
@@ -904,13 +904,12 @@ $B1: {  # root
 )";
 
     RobustnessConfig cfg;
-    cfg.clamp_immediate_data = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect : src, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, ImmediateData_Access) {
+TEST_F(IR_RobustnessDefaultTest, ImmediateData_Access) {
     auto* arr = b.Var("arr", ty.ptr(immediate, ty.array<u32, 4>()));
     mod.root_block->Append(arr);
 
@@ -954,10 +953,9 @@ $B1: {  # root
 )";
 
     RobustnessConfig cfg;
-    cfg.clamp_immediate_data = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect : src, str());
+    EXPECT_EQ(expect, str());
 }
 
 TEST_P(IR_BindingVariableRobustnessTest, Storage_LoadVectorElement) {
