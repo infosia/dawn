@@ -424,6 +424,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "debe9ba4_2a8c93d1",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-12T15:41:27Z",
+      "side": 1,
+      "message": "Right but what if another transform wants to add one as well. It is a question of coordination. Why do we need this information to come from the inspector if we can derive it in each transform.",
+      "parentUuid": "1fd37139_ca7d21dc",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d0a8e527_5b16acda",
         "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
         "patchSetId": 37
