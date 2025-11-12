@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b78cae82_5f906cbd",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-12T21:51:48Z",
+      "side": 1,
+      "message": "Here are the devices impacted\n\nhttps://vulkan.gpuinfo.org/listreports.php?limit\u003dmaxVertexOutputComponents\u0026value\u003d68\u0026platform\u003dall\n\nhttps://vulkan.gpuinfo.org/listreports.php?limit\u003dmaxFragmentInputComponents\u0026value\u003d68\u0026platform\u003dall",
+      "parentUuid": "327ede21_212c7c8a",
+      "revId": "9e0a2909e9907d8309b6631003af31b87a71c0e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7e05867c_c77c491f",
         "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
         "patchSetId": 40
