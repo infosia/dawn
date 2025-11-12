@@ -16,6 +16,29 @@
       "message": "PTAL! Effectively a copy of https://dawn-review.googlesource.com/c/dawn/+/271535 and, as one would expect, it exhibits exactly the same performance changes.",
       "revId": "b1f0fd203b6229c101b588d1451959a02d63865f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4b8eab5_190f2cc6",
+        "filename": "src/dawn/wire/server/ServerQueue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-12T23:42:01Z",
+      "side": 1,
+      "message": "You need to handle the fallback case for the tests until you implement the fix to make `GetSourceData` work even in the non-chromium case.",
+      "range": {
+        "startLine": 130,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 5
+      },
+      "revId": "b1f0fd203b6229c101b588d1451959a02d63865f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
