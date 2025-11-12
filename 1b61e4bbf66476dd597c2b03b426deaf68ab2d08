@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "73b17d49_db7d993f",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-12T13:37:39Z",
+      "side": 1,
+      "message": "It is a real shame we have to deal with raw pointers like this. I am guessing there is no way around it because this is the API surfaces of dawn (native).",
+      "range": {
+        "startLine": 1492,
+        "startChar": 8,
+        "endLine": 1492,
+        "endChar": 72
+      },
+      "revId": "1b61e4bbf66476dd597c2b03b426deaf68ab2d08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "98d9784c_7d7d54ce",
         "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
         "patchSetId": 2
