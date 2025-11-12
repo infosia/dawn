@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76de72f1_7d811187",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-12T18:59:21Z",
+      "side": 1,
+      "message": "LGTM, but aren\u0027t these converters all internal? Does the compiler not just trim all the unused functions when compiling the C++ code into libraries that I assume Kotlin calls into?",
+      "revId": "66a3ae0c9deaa29b5f8fd94cb2d753de46743dfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
