@@ -94,6 +94,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "58d89012_40230656",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-12T21:34:32Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "14ab51bb_2a728e1f",
+      "range": {
+        "startLine": 366,
+        "startChar": 9,
+        "endLine": 366,
+        "endChar": 18
+      },
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dea0038d_ab476ab2",
@@ -329,6 +353,24 @@
       "side": 1,
       "message": "Feeding an optional should be fine even if this isn\u0027t optional. Removing the `std::optional` makes it clearer that it always adds.",
       "parentUuid": "41b80e8b_4140dcd7",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c73be5c_fbe25829",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-12T21:34:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c23ce69_cfb4a073",
       "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
