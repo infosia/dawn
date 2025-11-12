@@ -69,6 +69,24 @@
       "parentUuid": "923bbe67_9a5ea4c0",
       "revId": "bc23debe71a7111dbb679b971cf127f68f40a94b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d385e48_39c16296",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-12T13:53:04Z",
+      "side": 1,
+      "message": "Ah, because graphite runs with robustness disabled? Interesting, so in theory just landing this would show up in finch because it\u0027s no longer being disabled, no?\n\nI think my plan, if we want to add a metal-disable-vertex-pulling flag would be:\n\n* land this CL to make it decoupled from robustness\n* add the metal_disable_vertex_pulling (default false) toggle and remove metal_enable_vertex_pulling\n\nOnce this one lands we can wait a bit to see if there are any metrics changes from Graphite  (tho, I guess that does mean that you can\u0027t turn it off once this lands? The toggles are just`metal_enable_vertex_pulling` not `metal_enable_vertex_pulling\u003dtrue` yea?)",
+      "parentUuid": "335bd3d3_48b1ca83",
+      "revId": "bc23debe71a7111dbb679b971cf127f68f40a94b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
