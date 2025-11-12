@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ed9726d_0ac8b7e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-12T21:56:18Z",
+      "side": 1,
+      "message": "LGTM once this is rebased and uses the updated `FencedDeleter` stuff and any other modernizations needed.",
+      "revId": "2478513794034e7a9120289e7299523be07ad9a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
