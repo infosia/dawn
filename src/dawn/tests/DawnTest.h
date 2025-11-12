@@ -214,6 +214,9 @@ class DawnTestEnvironment : public testing::Environment {
     bool RunSuppressedTests() const;
     bool IsTestLauncherBotMode() const;
 
+    void InstanceLogging(wgpu::LoggingType type, wgpu::StringView message);
+    std::string_view GetLatestInstanceLoggingMessage() const;
+
   protected:
     std::unique_ptr<native::Instance> CreateInstance(platform::Platform* platform = nullptr);
     std::unique_ptr<native::Instance> mInstance;
@@ -247,6 +250,8 @@ class DawnTestEnvironment : public testing::Environment {
     std::vector<TestAdapterProperties> mAdapterProperties;
 
     std::unique_ptr<utils::PlatformDebugLogger> mPlatformDebugLogger;
+
+    std::string mLatestInstanceLoggingMessage;
 };
 
 class DawnTestBase {
