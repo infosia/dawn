@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bac82db_bed5f230",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-12T03:03:54Z",
+      "side": 1,
+      "message": "PTAL. I don\u0027t love this change but I couldn\u0027t see a way to do this without passing the adapter toggles to `PopulateBackendProperties`.",
+      "revId": "1b61e4bbf66476dd597c2b03b426deaf68ab2d08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98d9784c_7d7d54ce",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-12T03:03:54Z",
+      "side": 1,
+      "message": "Alternatively, we could just call this whole function during `PopulateBackendProperties` instead of pre-populating the configs and then filtering them later. That\u0027s probably cleaner, if we\u0027re OK with passing the the adapter toggles to `PopulateBackendProperties`.",
+      "revId": "1b61e4bbf66476dd597c2b03b426deaf68ab2d08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
