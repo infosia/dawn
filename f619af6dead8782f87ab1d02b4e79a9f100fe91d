@@ -16,6 +16,40 @@
       "message": "PTAL!",
       "revId": "f619af6dead8782f87ab1d02b4e79a9f100fe91d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b54ab8f_80bd4e3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-11-12T02:06:36Z",
+      "side": 1,
+      "message": "LGTM! Thanks!",
+      "revId": "f619af6dead8782f87ab1d02b4e79a9f100fe91d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f15a061_1f2e120e",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 3106,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-11-12T02:06:36Z",
+      "side": 1,
+      "message": "I\u0027m thinking about changing from \"size_t\" to uint64_t (In a seperate CL) to align with latest change https://github.com/gpuweb/gpuweb/pull/5423/files#diff-40cc3a1ba233cc3ca7b6d5873260da9676f6ae20bb897b62f7871c80d0bda4e9R10971",
+      "revId": "f619af6dead8782f87ab1d02b4e79a9f100fe91d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
