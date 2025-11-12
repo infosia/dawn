@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7fc3028e_78a02fc1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-12T10:37:41Z",
+      "side": 1,
+      "message": "Why do we need this? If it is for support running without FXC, why isn\u0027t adapter creation failing instead of device creation?",
+      "revId": "94cfd57598299a114c4c856fb1993d80463d984b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "445fc20f_966e04af",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
