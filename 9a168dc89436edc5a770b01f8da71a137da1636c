@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "9a168dc89436edc5a770b01f8da71a137da1636c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e67b8c6e_c99d5c08",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-12T17:08:14Z",
+      "side": 1,
+      "message": "LGTM but I think we also need to do this for LVE and SVE instructions.",
+      "revId": "9a168dc89436edc5a770b01f8da71a137da1636c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
