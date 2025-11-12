@@ -40,7 +40,8 @@ namespace dawn::native {
 EncodingContext::EncodingContext(DeviceBase* device, const ApiObjectBase* initialEncoder)
     : mDevice(device),
       mTopLevelEncoder(initialEncoder),
-      mCurrentEncoder(initialEncoder),
+      mValidToEncodeOn(initialEncoder),
+      mDeferErrorsFrom(initialEncoder),
       mStatus(Status::Open) {
     DAWN_ASSERT(!initialEncoder->IsError());
 }
@@ -48,7 +49,8 @@ EncodingContext::EncodingContext(DeviceBase* device, const ApiObjectBase* initia
 EncodingContext::EncodingContext(DeviceBase* device, ErrorMonad::ErrorTag tag)
     : mDevice(device),
       mTopLevelEncoder(nullptr),
-      mCurrentEncoder(nullptr),
+      mValidToEncodeOn(nullptr),
+      mDeferErrorsFrom(nullptr),
       mStatus(Status::ErrorAtCreation) {}
 
 EncodingContext::~EncodingContext() {
@@ -87,7 +89,10 @@ void EncodingContext::HandleError(const ApiObjectBase* encoder, std::unique_ptr<
         error->AppendDebugGroup(*iter);
     }
 
-    bool deferErrors = mStatus != Status::Finished;
+    // Not that when the encoder is finished, both mTopLevelEncoder and mDeferErrorsFrom will be
+    // nullptr which will make errors handled immediately.
+    bool deferBecauseTopLevelEncoder = encoder == mTopLevelEncoder;
+    bool deferErrors = deferBecauseTopLevelEncoder || encoder == mDeferErrorsFrom;
     if (mDevice->IsImmediateErrorHandlingEnabled()) {
         deferErrors = false;
     }
@@ -119,10 +124,17 @@ void EncodingContext::OnPassBegin(const ApiObjectBase* passEncoder) {
         return;
     }
 
+    // Defer errors on the newly began pass to match the requirements from the WebGPU spec where
+    // error deferral only looks at the stream of Begin/End to know which pass should defer errors,
+    // and not whether the pass themselves are valid.
+    if (mDeferErrorsFrom == mTopLevelEncoder) {
+        mDeferErrorsFrom = passEncoder;
+    }
+
     // A pass is valid to encode on only when we are encoding on the top level encoder and when the
     // pass itself is valid (meaning there was no validation error in Begin*Pass).
-    if (mCurrentEncoder == mTopLevelEncoder && !passEncoder->IsError()) {
-        mCurrentEncoder = passEncoder;
+    if (mValidToEncodeOn == mTopLevelEncoder && !passEncoder->IsError()) {
+        mValidToEncodeOn = passEncoder;
     }
 }
 
@@ -131,10 +143,15 @@ void EncodingContext::OnPassDestroyed(const ApiObjectBase* passEncoder) {
 
     // The current pass being destroyed prevents ending the pass, which should prevent all future
     // command recording on this EncodingContext (and result in an error on Finish()).
-    if (mCurrentEncoder == passEncoder) {
+    if (mValidToEncodeOn == passEncoder) {
         HandleError(passEncoder, DAWN_VALIDATION_ERROR("%s was destroyed before End() was called.",
                                                        passEncoder));
-        mCurrentEncoder = nullptr;
+        mValidToEncodeOn = nullptr;
+    }
+
+    // Clear mDeferErrorsFrom if needed to avoid a dangling raw_ptr ASSERT.
+    if (mDeferErrorsFrom == passEncoder) {
+        mDeferErrorsFrom = nullptr;
     }
 }
 
@@ -148,14 +165,19 @@ void EncodingContext::OnPassEnd(const ApiObjectBase* passEncoder) {
     }
 
     // When the current pass is ended, the commands can start being recorded again in the top-level
-    // CommandEncoder again.
-    if (mCurrentEncoder == passEncoder) {
-        mCurrentEncoder = mTopLevelEncoder;
+    // CommandEncoder.
+    if (mValidToEncodeOn == passEncoder) {
+        mValidToEncodeOn = mTopLevelEncoder;
+    }
+
+    // No longer defer errors from a pass after End().
+    if (mDeferErrorsFrom == passEncoder) {
+        mDeferErrorsFrom = nullptr;
     }
 }
 
 void EncodingContext::WillBeginRenderPass() {
-    DAWN_ASSERT(mCurrentEncoder == mTopLevelEncoder);
+    DAWN_ASSERT(mValidToEncodeOn == mTopLevelEncoder);
     if (mDevice->IsValidationEnabled() || mDevice->MayRequireDuplicationOfIndirectParameters()) {
         // When validation is enabled or indirect parameters require duplication, we are going
         // to want to capture all commands encoded between and including BeginRenderPassCmd and
@@ -263,7 +285,7 @@ MaybeError EncodingContext::Finish() {
         case Status::Open:
             break;
     }
-    const ApiObjectBase* currentEncoder = mCurrentEncoder;
+    const ApiObjectBase* currentEncoder = mValidToEncodeOn;
     const ApiObjectBase* topLevelEncoder = mTopLevelEncoder;
 
     // Even if finish validation fails, it is now invalid to call any encoding commands.
@@ -300,6 +322,8 @@ void EncodingContext::CloseWithStatus(Status status) {
             if (mStatus == Status::ErrorInRecording || mStatus == Status::Open) {
                 mStatus = status;
             }
+            mTopLevelEncoder = nullptr;
+            mDeferErrorsFrom = nullptr;
             break;
 
         case Status::ErrorInRecording:
@@ -309,8 +333,7 @@ void EncodingContext::CloseWithStatus(Status status) {
             break;
     }
 
-    mTopLevelEncoder = nullptr;
-    mCurrentEncoder = nullptr;
+    mValidToEncodeOn = nullptr;
 }
 
 }  // namespace dawn::native
