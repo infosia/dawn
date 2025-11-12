@@ -388,6 +388,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f5e653b4_22f4b695",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-12T15:20:16Z",
+      "side": 1,
+      "message": "I feel like we would want that only if we required that communication. For the sampling check we require the communication. Can the out vert/ in frag have different \u0027location\u0027 interpolants? I would think this would be an error.",
+      "parentUuid": "ff755094_3f282fc2",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d0a8e527_5b16acda",
         "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
         "patchSetId": 37
