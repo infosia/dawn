@@ -111,14 +111,10 @@ void EncodingContext::HandleError(const ApiObjectBase* encoder, std::unique_ptr<
 }
 
 void EncodingContext::OnPassBegin(const ApiObjectBase* passEncoder) {
-    // Assert we're at the top level.
-    if (mCurrentEncoder == mTopLevelEncoder) {
-        DAWN_ASSERT(passEncoder != nullptr);
-        mCurrentEncoder = passEncoder;
+    DAWN_ASSERT(passEncoder != nullptr);
 
-        if (!passEncoder->IsError()) {
-            mCurrentEncoder = passEncoder;
-        }
+    if (mCurrentEncoder == mTopLevelEncoder) {
+        mCurrentEncoder = passEncoder;
     }
 }
 
@@ -156,9 +152,6 @@ MaybeError EncodingContext::ExitRenderPass(const ApiObjectBase* passEncoder,
                                            RenderPassResourceUsageTracker usageTracker,
                                            CommandEncoder* commandEncoder,
                                            IndirectDrawMetadata indirectDrawMetadata) {
-    DAWN_ASSERT(mCurrentEncoder != mTopLevelEncoder);
-    DAWN_ASSERT(mCurrentEncoder == passEncoder);
-
     OnPassEnd(passEncoder);
 
     if (mDevice->IsValidationEnabled() || mDevice->MayRequireDuplicationOfIndirectParameters()) {
