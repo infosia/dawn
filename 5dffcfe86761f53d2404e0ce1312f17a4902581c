@@ -16,6 +16,24 @@
       "message": "James, this changed with your CL. Can you look into it, or let me know if this was expected?",
       "revId": "5dffcfe86761f53d2404e0ce1312f17a4902581c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e4786de_b92a8d7a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-12T03:49:02Z",
+      "side": 1,
+      "message": "Actually it seems like it ONLY affected the TSAN bot and not the regular ones.\ne.g. https://ci.chromium.org/ui/p/chromium/builders/try/dawn-linux-x64-deps-rel/74029/overview\nhttps://luci-milo.appspot.com/ui/inv/task-chromium-swarm.appspot.com-748ea2bd88c7ac11/test-results?q\u003dexhaustive\n\nThey have different OS and driver versions.\n- `Dawn Linux TSAN Release`: `Ubuntu-18.04` `10de:2184-440.100`\n- `dawn-linux-x64-deps-rel`: `Ubuntu-22.04` `10de:2184-535.183.01`\n\nWhich means we need two expectation lines for the two alternates. Updated the CL.\n\nMaybe this is an expected change since subgroups requires f16? Doesn\u0027t seem obviously intentional, but maybe the new result is more correct.",
+      "parentUuid": "21a6e02a_ec6115b2",
+      "revId": "5dffcfe86761f53d2404e0ce1312f17a4902581c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
