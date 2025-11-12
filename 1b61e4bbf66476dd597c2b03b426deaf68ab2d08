@@ -33,6 +33,24 @@
       "message": "Alternatively, we could just call this whole function during `PopulateBackendProperties` instead of pre-populating the configs and then filtering them later. That\u0027s probably cleaner, if we\u0027re OK with passing the the adapter toggles to `PopulateBackendProperties`.",
       "revId": "1b61e4bbf66476dd597c2b03b426deaf68ab2d08",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71403882_1a3f550d",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-12T09:27:29Z",
+      "side": 1,
+      "message": "I think that\u0027d work better yes!",
+      "parentUuid": "98d9784c_7d7d54ce",
+      "revId": "1b61e4bbf66476dd597c2b03b426deaf68ab2d08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
