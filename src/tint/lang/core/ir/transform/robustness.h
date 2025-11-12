@@ -54,9 +54,6 @@ struct RobustnessConfig {
     /// Should texture accesses be clamped?
     bool clamp_texture = true;
 
-    /// Should accesses to pointers with the 'workgroup' address space be clamped?
-    bool clamp_workgroup = true;
-
     /// Should subgroup matrix builtins be predicated?
     /// Note that the stride parameter will still be clamped if predication is disabled.
     bool predicate_subgroup_matrix = true;
@@ -73,7 +70,6 @@ struct RobustnessConfig {
     /// Reflection for this class
     TINT_REFLECT(RobustnessConfig,
                  clamp_texture,
-                 clamp_workgroup,
                  predicate_subgroup_matrix,
                  bindings_ignored,
                  disable_runtime_sized_array_index_clamping,

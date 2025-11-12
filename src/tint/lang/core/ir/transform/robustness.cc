@@ -166,12 +166,11 @@ struct State {
             case AddressSpace::kFunction:
             case AddressSpace::kPrivate:
             case AddressSpace::kImmediate:
+            case AddressSpace::kWorkgroup:
                 return true;
             case AddressSpace::kStorage:
             case AddressSpace::kUniform:
                 return !IsRootVarIgnored(value);
-            case AddressSpace::kWorkgroup:
-                return config.clamp_workgroup;
             case AddressSpace::kUndefined:
             case AddressSpace::kPixelLocal:
             case AddressSpace::kHandle:
