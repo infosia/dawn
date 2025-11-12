@@ -168,6 +168,30 @@
       },
       "revId": "97a7a9cd6262fc39e9df82b8117c5c47454edcbb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cb20703_5b6f919b",
+        "filename": "generator/templates/art/structures.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-12T12:33:29Z",
+      "side": 1,
+      "message": "Oh, I see. OK.",
+      "parentUuid": "353ba1a9_17ceb303",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 32
+      },
+      "revId": "97a7a9cd6262fc39e9df82b8117c5c47454edcbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
