@@ -34,6 +34,24 @@
       "parentUuid": "21a6e02a_ec6115b2",
       "revId": "5dffcfe86761f53d2404e0ce1312f17a4902581c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f5a6c12_a1be09bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-12T04:02:17Z",
+      "side": 1,
+      "message": "So unfortunately this particular config falls into the small population of devices that support both f16 and subgroups, but do not support f16 subgroup ops, and therefore it does not get subgroups at all. It was a conscious choice from a WGSL spec perspective because we expected this to be a rare occurrence.\n\nAFAICT the NVIDIA drivers that fall into this gap are 4+ years old, so I think we should just accept this as an unfortunate regression for these older machines.",
+      "parentUuid": "21a6e02a_ec6115b2",
+      "revId": "5dffcfe86761f53d2404e0ce1312f17a4902581c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
