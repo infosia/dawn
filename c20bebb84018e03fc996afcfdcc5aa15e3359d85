@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e827411d_97c79bda",
+        "filename": "generator/dawn_version_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-12T09:24:20Z",
+      "side": 1,
+      "message": "What might the version string be when it is not 40 characters long? Can we assert that it is these values in these cases so we know to update the code in the future if needed if hashes change? (there were discussions a few years back about mixed hash function in git)",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 39
+      },
+      "revId": "c20bebb84018e03fc996afcfdcc5aa15e3359d85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
