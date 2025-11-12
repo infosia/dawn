@@ -317,6 +317,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8c23ce69_cfb4a073",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-12T13:39:42Z",
+      "side": 1,
+      "message": "Feeding an optional should be fine even if this isn\u0027t optional. Removing the `std::optional` makes it clearer that it always adds.",
+      "parentUuid": "41b80e8b_4140dcd7",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f124730d_df6ca423",
         "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
         "patchSetId": 37
@@ -346,6 +364,24 @@
       "side": 1,
       "message": "What is the advantage of dawn knowing about the location of this emulated position?",
       "parentUuid": "f124730d_df6ca423",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff755094_3f282fc2",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-12T13:39:42Z",
+      "side": 1,
+      "message": "Because Dawn, in theory, has information on all the other locations and can easily tell us where to put it. Usually when we need things like this we get Dawn to tell us.",
+      "parentUuid": "3b46e641_084e6cda",
       "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -387,6 +423,30 @@
       "side": 1,
       "message": "Tried it and got \u0027Mixture of designated and non-designated initializers in the same initializer list is a C99 extension\u0027\n\nSo sadly not possible",
       "parentUuid": "d0a8e527_5b16acda",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 60
+      },
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76407120_450028d9",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-12T13:39:42Z",
+      "side": 1,
+      "message": "That error .... doesn\u0027t make sense? There are only 2 members to the `Interpolation` struct and you\u0027re setting both of them. The `IOAttributes` struct you\u0027re in is also using designated initializers.\n\nSo, what\u0027s the mixture?",
+      "parentUuid": "000ebd0d_3953da49",
       "range": {
         "startLine": 109,
         "startChar": 0,
@@ -510,6 +570,24 @@
       "side": 1,
       "message": "The dawn/inspector coordinates about if we will add this position emulation. This is of course because we have 2 shaders (ps and vs). But not it is not always applied",
       "parentUuid": "eb8e0fdc_3d53e842",
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41fc95a5_76f976b4",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-12T13:39:42Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8e16d6b6_54ce7b0f",
       "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
