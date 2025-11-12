@@ -178,7 +178,13 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
                                              IID_PPV_ARGS(&mDrawIndexedIndirectSignature));
 
     DAWN_TRY(DeviceBase::Initialize(descriptor, std::move(queue)));
-    DAWN_TRY(EnsureCompilerLibraries());
+
+    auto compilerLoadingResult = EnsureCompilerLibraries();
+    if (compilerLoadingResult.IsError()) {
+        auto error = compilerLoadingResult.AcquireError();
+        error->AppendBackendMessage("D3D12 shader compiler libraries unavailable.");
+        return std::move(error);
+    }
 
     // Set up shader profile for DXC.
     if (IsToggleEnabled(Toggle::UseDXC)) {
