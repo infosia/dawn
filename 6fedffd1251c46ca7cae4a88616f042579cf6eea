@@ -571,6 +571,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f3c074c_ad9f7c65",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-12T22:12:09Z",
+      "side": 1,
+      "message": "I was mixing it. I fixed it.",
+      "parentUuid": "76407120_450028d9",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 60
+      },
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e673e981_d910bd67",
