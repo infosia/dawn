@@ -75,8 +75,7 @@ TEST_F(InternalUsageValidationDisabledTest, CommandEncoderDescriptorRequiresFeat
     ASSERT_DEVICE_ERROR(wgpu::CommandEncoder encoder = device.CreateCommandEncoder(&encoderDesc));
 
     // Check that the encoder records that it is invalid, and not any other errors.
-    encoder.InjectValidationError("injected error");
-    ASSERT_DEVICE_ERROR(encoder.Finish(),
+    ASSERT_DEVICE_ERROR(encoder.InjectValidationError("injected error"),
                         testing::HasSubstr("[Invalid CommandEncoder (unlabeled)]"));
 }
 

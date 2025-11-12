@@ -193,7 +193,7 @@ TEST_F(CommandBufferValidationTest, BeginComputePassBeforeEndPreviousPass) {
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
         wgpu::RenderPassEncoder renderPass = encoder.BeginRenderPass(&placeholderRenderPass);
         wgpu::ComputePassEncoder computePass = encoder.BeginComputePass();
-        computePass.End();
+        ASSERT_DEVICE_ERROR(computePass.End());
         renderPass.End();
         ASSERT_DEVICE_ERROR(encoder.Finish());
     }
@@ -203,7 +203,7 @@ TEST_F(CommandBufferValidationTest, BeginComputePassBeforeEndPreviousPass) {
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
         wgpu::ComputePassEncoder computePass1 = encoder.BeginComputePass();
         wgpu::ComputePassEncoder computePass2 = encoder.BeginComputePass();
-        computePass2.End();
+        ASSERT_DEVICE_ERROR(computePass2.End());
         computePass1.End();
         ASSERT_DEVICE_ERROR(encoder.Finish());
     }
@@ -218,7 +218,7 @@ TEST_F(CommandBufferValidationTest, BeginRenderPassBeforeEndPreviousPass) {
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
         wgpu::RenderPassEncoder renderPass1 = encoder.BeginRenderPass(&placeholderRenderPass);
         wgpu::RenderPassEncoder renderPass2 = encoder.BeginRenderPass(&placeholderRenderPass);
-        renderPass2.End();
+        ASSERT_DEVICE_ERROR(renderPass2.End());
         renderPass1.End();
         ASSERT_DEVICE_ERROR(encoder.Finish());
     }
@@ -228,7 +228,7 @@ TEST_F(CommandBufferValidationTest, BeginRenderPassBeforeEndPreviousPass) {
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
         wgpu::ComputePassEncoder computePass = encoder.BeginComputePass();
         wgpu::RenderPassEncoder renderPass = encoder.BeginRenderPass(&placeholderRenderPass);
-        renderPass.End();
+        ASSERT_DEVICE_ERROR(renderPass.End());
         computePass.End();
         ASSERT_DEVICE_ERROR(encoder.Finish());
     }
@@ -307,7 +307,7 @@ TEST_F(CommandBufferValidationTest, PassDereferenced) {
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
         encoder.BeginRenderPass(&placeholderRenderPass);
         wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
-        pass.End();
+        ASSERT_DEVICE_ERROR(pass.End());
         ASSERT_DEVICE_ERROR(
             encoder.Finish(),
             HasSubstr("[RenderPassEncoder (unlabeled)] was destroyed before End() was called."));
@@ -447,8 +447,7 @@ TEST_F(CommandBufferValidationTest, EncodeAfterEndingPass) {
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
     wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
     pass.End();
-    pass.PushDebugGroup("Foo");
-    ASSERT_DEVICE_ERROR(encoder.Finish());
+    ASSERT_DEVICE_ERROR(pass.PushDebugGroup("Foo"));
 }
 
 }  // anonymous namespace
