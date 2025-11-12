@@ -782,10 +782,10 @@ DawnTestBase::DawnTestBase(const AdapterTestParam& param) : mParam(param) {
         DAWN_ASSERT(callbackInfo.mode == WGPUCallbackMode_AllowSpontaneous);
 
         // Use the required toggles of test case when creating adapter.
-        ParamTogglesHelper deviceTogglesHelper(gCurrentTest->mParam, native::ToggleStage::Adapter);
+        ParamTogglesHelper adapterTogglesHelper(gCurrentTest->mParam, native::ToggleStage::Adapter);
 
         wgpu::RequestAdapterOptions adapterOptions;
-        adapterOptions.nextInChain = &deviceTogglesHelper.togglesDesc;
+        adapterOptions.nextInChain = &adapterTogglesHelper.togglesDesc;
         adapterOptions.featureLevel = gCurrentTest->mParam.adapterProperties.compatibilityMode
                                           ? wgpu::FeatureLevel::Compatibility
                                           : wgpu::FeatureLevel::Core;
@@ -845,11 +845,16 @@ DawnTestBase::DawnTestBase(const AdapterTestParam& param) : mParam(param) {
             gCurrentTest->mNextIsolationKeyQueue.pop();
         }
         WGPUDevice cDevice = gCurrentTest->CreateDeviceImpl(std::move(isolationKey), descriptor);
-        DAWN_ASSERT(cDevice != nullptr);
 
-        gCurrentTest->mLastCreatedBackendDevice = cDevice;
-        callbackInfo.callback(WGPURequestDeviceStatus_Success, cDevice, kEmptyOutputStringView,
-                              callbackInfo.userdata1, callbackInfo.userdata2);
+        // Device creation might be failed, and in this case the test should be skipped.
+        if (cDevice == nullptr) {
+            callbackInfo.callback(WGPURequestDeviceStatus_Error, nullptr, kEmptyOutputStringView,
+                                  callbackInfo.userdata1, callbackInfo.userdata2);
+        } else {
+            gCurrentTest->mLastCreatedBackendDevice = cDevice;
+            callbackInfo.callback(WGPURequestDeviceStatus_Success, cDevice, kEmptyOutputStringView,
+                                  callbackInfo.userdata1, callbackInfo.userdata2);
+        }
 
         // Returning a placeholder future that we should never be waiting on.
         return {0};
@@ -1284,35 +1289,43 @@ wgpu::Device DawnTestBase::CreateDevice(std::string isolationKey) {
     deviceDesc.SetUncapturedErrorCallback(mDeviceErrorCallback.TemplatedCallback(),
                                           mDeviceErrorCallback.TemplatedCallbackUserdata());
 
+    // Allows for device creation failure without failing the test. In that case, the test should be
+    // skipped.
+    EXPECT_CALL(mDeviceLostCallback, Call(_, wgpu::DeviceLostReason::FailedCreation, _))
+        .Times(AtMost(1))
+        .RetiresOnSaturation();
+
     adapter.RequestDevice(&deviceDesc, wgpu::CallbackMode::AllowSpontaneous,
                           [&apiDevice](wgpu::RequestDeviceStatus, wgpu::Device result,
                                        wgpu::StringView) { apiDevice = std::move(result); });
     FlushWire();
-    DAWN_ASSERT(apiDevice);
 
-    // The loss of the device is expected to happen at the end of the test so add it directly.
-    // We don't know if the device will be dropped or Destroy()ed, so we can't check device=null.
-    EXPECT_CALL(mDeviceLostCallback, Call(_, wgpu::DeviceLostReason::Destroyed, _))
-        .Times(AtMost(1))
-        .RetiresOnSaturation();
+    if (apiDevice) {
+        // The loss of the device is expected to happen at the end of the test so add it directly.
+        // We don't know if the device will be dropped or Destroy()ed, so we can't check
+        // device=null.
+        EXPECT_CALL(mDeviceLostCallback, Call(_, wgpu::DeviceLostReason::Destroyed, _))
+            .Times(AtMost(1))
+            .RetiresOnSaturation();
 
-    apiDevice.SetLoggingCallback([](wgpu::LoggingType type, wgpu::StringView message) {
-        std::string_view view = {message.data, message.length};
-        switch (type) {
-            case wgpu::LoggingType::Verbose:
-                DebugLog() << view;
-                break;
-            case wgpu::LoggingType::Warning:
-                WarningLog() << view;
-                break;
-            case wgpu::LoggingType::Error:
-                ErrorLog() << view;
-                break;
-            default:
-                InfoLog() << view;
-                break;
-        }
-    });
+        apiDevice.SetLoggingCallback([](wgpu::LoggingType type, wgpu::StringView message) {
+            std::string_view view = {message.data, message.length};
+            switch (type) {
+                case wgpu::LoggingType::Verbose:
+                    DebugLog() << view;
+                    break;
+                case wgpu::LoggingType::Warning:
+                    WarningLog() << view;
+                    break;
+                case wgpu::LoggingType::Error:
+                    ErrorLog() << view;
+                    break;
+                default:
+                    InfoLog() << view;
+                    break;
+            }
+        });
+    }
 
     return apiDevice;
 }
@@ -1358,6 +1371,9 @@ void DawnTestBase::SetUp() {
     adapter.GetLimits(adapterLimits.GetLinked());
 
     device = CreateDevice();
+    // Skip the test if device creation failed.
+    DAWN_SKIP_TEST_IF_BASE(!device, "unsupported", "Device creation failed.");
+
     backendDevice = mLastCreatedBackendDevice;
     DAWN_ASSERT(backendDevice);
     DAWN_ASSERT(device);

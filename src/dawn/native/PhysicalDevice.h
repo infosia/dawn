@@ -108,7 +108,7 @@ class PhysicalDeviceBase : public RefCounted {
     virtual bool SupportsFeatureLevel(wgpu::FeatureLevel featureLevel,
                                       InstanceBase* instance) const = 0;
 
-    // Backend-specific force-setting and defaulting device toggles
+    // Backend-specific force-setting and defaulting adapter toggles
     virtual void SetupBackendAdapterToggles(dawn::platform::Platform* platform,
                                             TogglesState* adapterToggles) const = 0;
     // Backend-specific force-setting and defaulting device toggles
