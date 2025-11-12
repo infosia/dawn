@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8da2b88a_7e7343ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-12T10:41:31Z",
+      "side": 1,
+      "message": "We can change it, maybe in the way of https://dawn-review.googlesource.com/c/dawn/+/273074/comments/445fc20f_966e04af, but that might be a little complex I think?",
+      "parentUuid": "4ee2236e_bf935acb",
+      "revId": "94cfd57598299a114c4c856fb1993d80463d984b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "445fc20f_966e04af",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
