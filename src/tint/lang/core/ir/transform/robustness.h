@@ -54,10 +54,6 @@ struct RobustnessConfig {
     /// Should texture accesses be clamped?
     bool clamp_texture = true;
 
-    /// Should subgroup matrix builtins be predicated?
-    /// Note that the stride parameter will still be clamped if predication is disabled.
-    bool predicate_subgroup_matrix = true;
-
     /// Bindings that should always be ignored.
     std::unordered_set<tint::BindingPoint> bindings_ignored;
 
@@ -70,7 +66,6 @@ struct RobustnessConfig {
     /// Reflection for this class
     TINT_REFLECT(RobustnessConfig,
                  clamp_texture,
-                 predicate_subgroup_matrix,
                  bindings_ignored,
                  disable_runtime_sized_array_index_clamping,
                  use_integer_range_analysis);

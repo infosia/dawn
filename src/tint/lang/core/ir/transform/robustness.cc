@@ -442,11 +442,6 @@ struct State {
         }
         call->SetArg(stride_index, stride);
 
-        // If we are not predicating, then clamping the stride is all we need to do.
-        if (!config.predicate_subgroup_matrix) {
-            return;
-        }
-
         // Some matrix components types are packed together into a single array element.
         // Take that into account here by scaling the array length to number of components.
         uint32_t components_per_element = 0;

@@ -3273,7 +3273,7 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixLoad_StorageRuntimeArray_ConstStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixLoad_StorageRuntimeArray_ConstStride_ColMajor) {
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<f32>()));
     arr->SetBindingPoint(0, 0);
     mod.root_block->Append(arr);
@@ -3302,7 +3302,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<f32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -3328,27 +3328,13 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<f32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func():subgroup_matrix_result<f32, 8, 4> {
-  $B2: {
-    %3:subgroup_matrix_result<f32, 8, 4> = subgroupMatrixLoad<subgroup_matrix_result<f32, 8, 4>> %arr, 0u, true, 4u
-    ret %3
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixLoad_i8_StorageRuntimeArray_ConstStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixLoad_i8_StorageRuntimeArray_ConstStride_ColMajor) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<i32>()));
@@ -3379,7 +3365,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -3406,27 +3392,13 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func():subgroup_matrix_result<i8, 8, 4> {
-  $B2: {
-    %3:subgroup_matrix_result<i8, 8, 4> = subgroupMatrixLoad<subgroup_matrix_result<i8, 8, 4>> %arr, 0u, true, 4u
-    ret %3
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixLoad_u8_StorageRuntimeArray_ConstStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixLoad_u8_StorageRuntimeArray_ConstStride_ColMajor) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<u32>()));
@@ -3457,7 +3429,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<u32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -3484,27 +3456,13 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<u32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func():subgroup_matrix_result<u8, 8, 4> {
-  $B2: {
-    %3:subgroup_matrix_result<u8, 8, 4> = subgroupMatrixLoad<subgroup_matrix_result<u8, 8, 4>> %arr, 0u, true, 4u
-    ret %3
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixLoad_StorageRuntimeArray_DynamicStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixLoad_StorageRuntimeArray_DynamicStride_ColMajor) {
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<f32>()));
     arr->SetBindingPoint(0, 0);
     mod.root_block->Append(arr);
@@ -3535,7 +3493,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<f32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -3562,28 +3520,13 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<f32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func(%stride:u32):subgroup_matrix_result<f32, 8, 4> {
-  $B2: {
-    %4:u32 = max %stride, 4u
-    %5:subgroup_matrix_result<f32, 8, 4> = subgroupMatrixLoad<subgroup_matrix_result<f32, 8, 4>> %arr, 0u, true, %4
-    ret %5
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixLoad_i8_StorageRuntimeArray_DynamicStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixLoad_i8_StorageRuntimeArray_DynamicStride_ColMajor) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<i32>()));
@@ -3616,7 +3559,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -3644,28 +3587,13 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func(%stride:u32):subgroup_matrix_result<i8, 8, 4> {
-  $B2: {
-    %4:u32 = max %stride, 4u
-    %5:subgroup_matrix_result<i8, 8, 4> = subgroupMatrixLoad<subgroup_matrix_result<i8, 8, 4>> %arr, 0u, true, %4
-    ret %5
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixLoad_u8_StorageRuntimeArray_DynamicStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixLoad_u8_StorageRuntimeArray_DynamicStride_ColMajor) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<u32>()));
@@ -3698,7 +3626,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<u32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -3726,28 +3654,13 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<u32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func(%stride:u32):subgroup_matrix_result<u8, 8, 4> {
-  $B2: {
-    %4:u32 = max %stride, 4u
-    %5:subgroup_matrix_result<u8, 8, 4> = subgroupMatrixLoad<subgroup_matrix_result<u8, 8, 4>> %arr, 0u, true, %4
-    ret %5
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixLoad_StorageRuntimeArray_DynamicStride_RowMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixLoad_StorageRuntimeArray_DynamicStride_RowMajor) {
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<f32>()));
     arr->SetBindingPoint(0, 0);
     mod.root_block->Append(arr);
@@ -3778,7 +3691,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<f32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -3805,28 +3718,13 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<f32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func(%stride:u32):subgroup_matrix_result<f32, 8, 4> {
-  $B2: {
-    %4:u32 = max %stride, 8u
-    %5:subgroup_matrix_result<f32, 8, 4> = subgroupMatrixLoad<subgroup_matrix_result<f32, 8, 4>> %arr, 0u, false, %4
-    ret %5
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixLoad_i8_StorageRuntimeArray_DynamicStride_RowMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixLoad_i8_StorageRuntimeArray_DynamicStride_RowMajor) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<i32>()));
@@ -3859,7 +3757,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -3887,28 +3785,13 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func(%stride:u32):subgroup_matrix_result<i8, 8, 4> {
-  $B2: {
-    %4:u32 = max %stride, 8u
-    %5:subgroup_matrix_result<i8, 8, 4> = subgroupMatrixLoad<subgroup_matrix_result<i8, 8, 4>> %arr, 0u, false, %4
-    ret %5
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixLoad_u8_StorageRuntimeArray_DynamicStride_RowMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixLoad_u8_StorageRuntimeArray_DynamicStride_RowMajor) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<u32>()));
@@ -3941,7 +3824,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<u32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -3969,28 +3852,13 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<u32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func(%stride:u32):subgroup_matrix_result<u8, 8, 4> {
-  $B2: {
-    %4:u32 = max %stride, 8u
-    %5:subgroup_matrix_result<u8, 8, 4> = subgroupMatrixLoad<subgroup_matrix_result<u8, 8, 4>> %arr, 0u, false, %4
-    ret %5
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixLoad_WorkgroupFixedArray_DynamicStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixLoad_WorkgroupFixedArray_DynamicStride_ColMajor) {
     auto* arr = b.Var("arr", ty.ptr(workgroup, ty.array<f32, 1024>()));
     mod.root_block->Append(arr);
 
@@ -4020,7 +3888,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<workgroup, array<f32, 1024>, read_write> = var undef
 }
@@ -4046,28 +3914,13 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<workgroup, array<f32, 1024>, read_write> = var undef
-}
-
-%foo = func(%stride:u32):subgroup_matrix_result<f32, 8, 4> {
-  $B2: {
-    %4:u32 = max %stride, 4u
-    %5:subgroup_matrix_result<f32, 8, 4> = subgroupMatrixLoad<subgroup_matrix_result<f32, 8, 4>> %arr, 0u, true, %4
-    ret %5
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixLoad_i8_WorkgroupFixedArray_DynamicStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixLoad_i8_WorkgroupFixedArray_DynamicStride_ColMajor) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(workgroup, ty.array<i32, 1024>()));
@@ -4099,7 +3952,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<workgroup, array<i32, 1024>, read_write> = var undef
 }
@@ -4125,28 +3978,13 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<workgroup, array<i32, 1024>, read_write> = var undef
-}
-
-%foo = func(%stride:u32):subgroup_matrix_result<i8, 8, 4> {
-  $B2: {
-    %4:u32 = max %stride, 4u
-    %5:subgroup_matrix_result<i8, 8, 4> = subgroupMatrixLoad<subgroup_matrix_result<i8, 8, 4>> %arr, 0u, true, %4
-    ret %5
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixLoad_u8_WorkgroupFixedArray_DynamicStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixLoad_u8_WorkgroupFixedArray_DynamicStride_ColMajor) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(workgroup, ty.array<u32, 1024>()));
@@ -4178,7 +4016,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<workgroup, array<u32, 1024>, read_write> = var undef
 }
@@ -4204,30 +4042,15 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<workgroup, array<u32, 1024>, read_write> = var undef
-}
-
-%foo = func(%stride:u32):subgroup_matrix_result<u8, 8, 4> {
-  $B2: {
-    %4:u32 = max %stride, 4u
-    %5:subgroup_matrix_result<u8, 8, 4> = subgroupMatrixLoad<subgroup_matrix_result<u8, 8, 4>> %arr, 0u, true, %4
-    ret %5
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
 // Test that we avoid any predication and clamping for fixed size arrays when all parameters are
 // constant and in-bounds.
-TEST_P(IR_RobustnessTest, SubgroupMatrixLoad_WorkgroupFixedArray_ConstStrideAndOffset) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixLoad_WorkgroupFixedArray_ConstStrideAndOffset) {
     auto* arr = b.Var("arr", ty.ptr(workgroup, ty.array<f32, 1024>()));
     mod.root_block->Append(arr);
 
@@ -4259,13 +4082,12 @@ $B1: {  # root
     auto* expect = src;
 
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
     EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixLoad_i8_WorkgroupFixedArray_ConstStrideAndOffset) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixLoad_i8_WorkgroupFixedArray_ConstStrideAndOffset) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(workgroup, ty.array<i32, 1024>()));
@@ -4299,13 +4121,12 @@ $B1: {  # root
     auto* expect = src;
 
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
     EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixLoad_u8_WorkgroupFixedArray_ConstStrideAndOffset) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixLoad_u8_WorkgroupFixedArray_ConstStrideAndOffset) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(workgroup, ty.array<u32, 1024>()));
@@ -4339,13 +4160,12 @@ $B1: {  # root
     auto* expect = src;
 
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
     EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixStore_StorageRuntimeArray_ConstStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixStore_StorageRuntimeArray_ConstStride_ColMajor) {
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<f32>()));
     arr->SetBindingPoint(0, 0);
     mod.root_block->Append(arr);
@@ -4375,7 +4195,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<f32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -4398,27 +4218,13 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<f32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func(%value:subgroup_matrix_result<f32, 8, 4>):void {
-  $B2: {
-    %4:void = subgroupMatrixStore %arr, 0u, %value, true, 4u
-    ret
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixStore_i8_StorageRuntimeArray_ConstStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixStore_i8_StorageRuntimeArray_ConstStride_ColMajor) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<i32>()));
@@ -4450,7 +4256,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -4474,27 +4280,13 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func(%value:subgroup_matrix_result<i8, 8, 4>):void {
-  $B2: {
-    %4:void = subgroupMatrixStore %arr, 0u, %value, true, 4u
-    ret
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixStore_u8_StorageRuntimeArray_ConstStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixStore_u8_StorageRuntimeArray_ConstStride_ColMajor) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<u32>()));
@@ -4526,7 +4318,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<u32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -4550,27 +4342,13 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<u32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func(%value:subgroup_matrix_result<u8, 8, 4>):void {
-  $B2: {
-    %4:void = subgroupMatrixStore %arr, 0u, %value, true, 4u
-    ret
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixStore_StorageRuntimeArray_DynamicStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixStore_StorageRuntimeArray_DynamicStride_ColMajor) {
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<f32>()));
     arr->SetBindingPoint(0, 0);
     mod.root_block->Append(arr);
@@ -4602,7 +4380,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<f32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -4626,28 +4404,14 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<f32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func(%value:subgroup_matrix_result<f32, 8, 4>, %stride:u32):void {
-  $B2: {
-    %5:u32 = max %stride, 4u
-    %6:void = subgroupMatrixStore %arr, 0u, %value, true, %5
-    ret
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixStore_i8_StorageRuntimeArray_DynamicStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest,
+       SubgroupMatrixStore_i8_StorageRuntimeArray_DynamicStride_ColMajor) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<i32>()));
@@ -4681,7 +4445,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -4706,28 +4470,14 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func(%value:subgroup_matrix_result<i8, 8, 4>, %stride:u32):void {
-  $B2: {
-    %5:u32 = max %stride, 4u
-    %6:void = subgroupMatrixStore %arr, 0u, %value, true, %5
-    ret
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixStore_u8_StorageRuntimeArray_DynamicStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest,
+       SubgroupMatrixStore_u8_StorageRuntimeArray_DynamicStride_ColMajor) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<u32>()));
@@ -4761,7 +4511,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<u32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -4786,28 +4536,13 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<u32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func(%value:subgroup_matrix_result<u8, 8, 4>, %stride:u32):void {
-  $B2: {
-    %5:u32 = max %stride, 4u
-    %6:void = subgroupMatrixStore %arr, 0u, %value, true, %5
-    ret
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixStore_StorageRuntimeArray_DynamicStride_RowMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixStore_StorageRuntimeArray_DynamicStride_RowMajor) {
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<f32>()));
     arr->SetBindingPoint(0, 0);
     mod.root_block->Append(arr);
@@ -4839,7 +4574,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<f32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -4863,28 +4598,14 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<f32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func(%value:subgroup_matrix_result<f32, 8, 4>, %stride:u32):void {
-  $B2: {
-    %5:u32 = max %stride, 8u
-    %6:void = subgroupMatrixStore %arr, 0u, %value, false, %5
-    ret
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixStore_i8_StorageRuntimeArray_DynamicStride_RowMajor) {
+TEST_F(IR_RobustnessDefaultTest,
+       SubgroupMatrixStore_i8_StorageRuntimeArray_DynamicStride_RowMajor) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<i32>()));
@@ -4918,7 +4639,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -4943,28 +4664,14 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func(%value:subgroup_matrix_result<i8, 8, 4>, %stride:u32):void {
-  $B2: {
-    %5:u32 = max %stride, 8u
-    %6:void = subgroupMatrixStore %arr, 0u, %value, false, %5
-    ret
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixStore_u8_StorageRuntimeArray_DynamicStride_RowMajor) {
+TEST_F(IR_RobustnessDefaultTest,
+       SubgroupMatrixStore_u8_StorageRuntimeArray_DynamicStride_RowMajor) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<u32>()));
@@ -4998,7 +4705,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<storage, array<u32>, read_write> = var undef @binding_point(0, 0)
 }
@@ -5023,28 +4730,13 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<storage, array<u32>, read_write> = var undef @binding_point(0, 0)
-}
-
-%foo = func(%value:subgroup_matrix_result<u8, 8, 4>, %stride:u32):void {
-  $B2: {
-    %5:u32 = max %stride, 8u
-    %6:void = subgroupMatrixStore %arr, 0u, %value, false, %5
-    ret
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixStore_WorkgroupFixedArray_DynamicStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixStore_WorkgroupFixedArray_DynamicStride_ColMajor) {
     auto* arr = b.Var("arr", ty.ptr(workgroup, ty.array<f32, 1024>()));
     mod.root_block->Append(arr);
 
@@ -5075,7 +4767,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<workgroup, array<f32, 1024>, read_write> = var undef
 }
@@ -5098,28 +4790,14 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<workgroup, array<f32, 1024>, read_write> = var undef
-}
-
-%foo = func(%value:subgroup_matrix_result<f32, 8, 4>, %stride:u32):void {
-  $B2: {
-    %5:u32 = max %stride, 4u
-    %6:void = subgroupMatrixStore %arr, 0u, %value, true, %5
-    ret
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixStore_i8_WorkgroupFixedArray_DynamicStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest,
+       SubgroupMatrixStore_i8_WorkgroupFixedArray_DynamicStride_ColMajor) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(workgroup, ty.array<i32, 1024>()));
@@ -5152,7 +4830,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<workgroup, array<i32, 1024>, read_write> = var undef
 }
@@ -5175,28 +4853,14 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<workgroup, array<i32, 1024>, read_write> = var undef
-}
-
-%foo = func(%value:subgroup_matrix_result<i8, 8, 4>, %stride:u32):void {
-  $B2: {
-    %5:u32 = max %stride, 4u
-    %6:void = subgroupMatrixStore %arr, 0u, %value, true, %5
-    ret
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixStore_u8_WorkgroupFixedArray_DynamicStride_ColMajor) {
+TEST_F(IR_RobustnessDefaultTest,
+       SubgroupMatrixStore_u8_WorkgroupFixedArray_DynamicStride_ColMajor) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(workgroup, ty.array<u32, 1024>()));
@@ -5229,7 +4893,7 @@ $B1: {  # root
 )";
     EXPECT_EQ(src, str());
 
-    auto* expect_with_predication = R"(
+    auto* expect = R"(
 $B1: {  # root
   %arr:ptr<workgroup, array<u32, 1024>, read_write> = var undef
 }
@@ -5252,30 +4916,15 @@ $B1: {  # root
 }
 )";
 
-    auto* expect_without_predication = R"(
-$B1: {  # root
-  %arr:ptr<workgroup, array<u32, 1024>, read_write> = var undef
-}
-
-%foo = func(%value:subgroup_matrix_result<u8, 8, 4>, %stride:u32):void {
-  $B2: {
-    %5:u32 = max %stride, 4u
-    %6:void = subgroupMatrixStore %arr, 0u, %value, true, %5
-    ret
-  }
-}
-)";
-
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+    EXPECT_EQ(expect, str());
 }
 
 // Test that we avoid any predication and clamping for fixed size arrays when all parameters are
 // constant and in-bounds.
-TEST_P(IR_RobustnessTest, SubgroupMatrixStore_WorkgroupFixedArray_ConstStrideAndOffset) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixStore_WorkgroupFixedArray_ConstStrideAndOffset) {
     auto* arr = b.Var("arr", ty.ptr(workgroup, ty.array<f32, 1024>()));
     mod.root_block->Append(arr);
 
@@ -5308,13 +4957,12 @@ $B1: {  # root
     auto* expect = src;
 
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
     EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixStore_i8_WorkgroupFixedArray_ConstStrideAndOffset) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixStore_i8_WorkgroupFixedArray_ConstStrideAndOffset) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(workgroup, ty.array<i32, 1024>()));
@@ -5349,13 +4997,12 @@ $B1: {  # root
     auto* expect = src;
 
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
     EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_RobustnessTest, SubgroupMatrixStore_u8_WorkgroupFixedArray_ConstStrideAndOffset) {
+TEST_F(IR_RobustnessDefaultTest, SubgroupMatrixStore_u8_WorkgroupFixedArray_ConstStrideAndOffset) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 
     auto* arr = b.Var("arr", ty.ptr(workgroup, ty.array<u32, 1024>()));
@@ -5390,7 +5037,6 @@ $B1: {  # root
     auto* expect = src;
 
     RobustnessConfig cfg;
-    cfg.predicate_subgroup_matrix = GetParam();
     Run(Robustness, cfg);
 
     EXPECT_EQ(expect, str());
