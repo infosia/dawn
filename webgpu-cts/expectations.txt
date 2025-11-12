@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-11-05 12:46:49PM
+# Last rolled: 2025-11-12 02:42:01AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -486,9 +486,6 @@ crbug.com/42251283 [ intel-0x3e9b ] webgpu:shader,execution,expression,call,buil
 # crbug.com/360916910:
 crbug.com/360916910 [ intel-0x9bc5 linux mesa_ge_23.2 no-clang-coverage ] webgpu:api,operation,storage_texture,read_only:basic:format="rgba8snorm";* [ Failure ]
 crbug.com/360916910 [ intel-0x9bc5 linux mesa_ge_23.2 no-clang-coverage ] webgpu:api,operation,storage_texture,read_only:basic:format="rgba8unorm";* [ Failure ]
-
-crbug.com/407076121 [ android-14 ] webgpu:shader,execution,limits:const_array_elements: [ Failure ]
-crbug.com/407076121 [ android-t ] webgpu:shader,execution,limits:const_array_elements: [ Failure ]
 
 crbug.com/42241269 [ intel-0x3e9b mac ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ Failure ]
 crbug.com/42241269 [ amd mac ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ Failure ]
