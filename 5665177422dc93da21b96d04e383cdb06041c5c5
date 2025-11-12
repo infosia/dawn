@@ -52,6 +52,24 @@
       "parentUuid": "dadc1fd4_b546ccb4",
       "revId": "5665177422dc93da21b96d04e383cdb06041c5c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2476e3c0_56ecda78",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-12T14:37:17Z",
+      "side": 1,
+      "message": "Thanks!\n\nHow does `ReturnAttributes()` relate to `Params()` and `Builtin()`?\n\n`BuiltinToAttribute(builtin.value(), /* depth_mode */)` is called on `param-\u003eBuiltin()`, not returned attribute right? Which depth_mode value shall I pass to  `BuiltinToAttribute()`?",
+      "parentUuid": "431a0730_a53051fc",
+      "revId": "5665177422dc93da21b96d04e383cdb06041c5c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
