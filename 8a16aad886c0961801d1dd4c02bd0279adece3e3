@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dab63e3_04a3f5e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-12T07:52:43Z",
+      "side": 1,
+      "message": "lgtm but I assume Corentin might have some thoughts on whether or not RenderBundleEncoderWGPU is needed or if maybe you could call some method on device to create an backend specific encoder.",
+      "revId": "8a16aad886c0961801d1dd4c02bd0279adece3e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
