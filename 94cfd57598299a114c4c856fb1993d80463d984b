@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4ee2236e_bf935acb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-12T10:39:59Z",
+      "side": 1,
+      "message": "Yeah currently adapter creation will not fail at all since the actual DXC/FXC loading happens in the device initialization https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/DeviceD3D12.cpp;l\u003d181;drc\u003ddce6bb944aa5c46b37a8cc4a314e2357cbfeab6d;bpv\u003d0;bpt\u003d1",
+      "parentUuid": "7fc3028e_78a02fc1",
+      "revId": "94cfd57598299a114c4c856fb1993d80463d984b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "445fc20f_966e04af",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
