@@ -1,0 +1,243 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c42befc_616d4f07",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 40
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-12T03:43:19Z",
+      "side": 1,
+      "message": "Link to bug?",
+      "revId": "9e0a2909e9907d8309b6631003af31b87a71c0e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "432f24c5_114de2d6",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-12T03:43:19Z",
+      "side": 1,
+      "message": "Have we verified that this does not drop any devices from having WebGPU support?\n(or if it does, that we are comfortable with that change)",
+      "revId": "9e0a2909e9907d8309b6631003af31b87a71c0e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e05867c_c77c491f",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-12T03:43:19Z",
+      "side": 1,
+      "message": "Is this polyfill likely to be more expensive than doing it natively? Should we limit the polyfill to just the devices that we know need it?\n(and if so, can we only bump the interchange variable requirement if we are on one of those devices?)",
+      "revId": "9e0a2909e9907d8309b6631003af31b87a71c0e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1011ff8_e81379da",
+        "filename": "src/dawn/tests/end2end/MultisampledInterpolationTests.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-12T03:43:19Z",
+      "side": 1,
+      "message": "If you don\u0027t use the uniform buffer can we just get rid of it?",
+      "revId": "9e0a2909e9907d8309b6631003af31b87a71c0e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "338d3126_e189c0e1",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-12T03:43:19Z",
+      "side": 1,
+      "message": "ubernit: You don\u0027t really need two optionals since only one of vertex/fragment will be processed at a time.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 48
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "e161d6e7_464ee66f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+              "range": {
+                "startLine": 67,
+                "startChar": 0,
+                "endLine": 72,
+                "endChar": 0
+              },
+              "replacement": "    // IO index for center position emulation interpolant\n    std::optional\u003cuint32_t\u003e center_pos_idx;\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+              "range": {
+                "startLine": 132,
+                "startChar": 0,
+                "endLine": 134,
+                "endChar": 0
+              },
+              "replacement": "            center_pos_idx \u003d AddCenterPosInterpolant(entries, addrspace);\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+              "range": {
+                "startLine": 136,
+                "startChar": 0,
+                "endLine": 137,
+                "endChar": 0
+              },
+              "replacement": "            center_pos_idx \u003d AddCenterPosInterpolant(entries, addrspace);\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+              "range": {
+                "startLine": 212,
+                "startChar": 0,
+                "endLine": 214,
+                "endChar": 0
+              },
+              "replacement": "        if (inputs[idx].attributes.builtin \u003d\u003d core::BuiltinValue::kPosition \u0026\u0026 center_pos_idx.has_value()) {\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+              "range": {
+                "startLine": 223,
+                "startChar": 0,
+                "endLine": 224,
+                "endChar": 0
+              },
+              "replacement": "            auto* xyzw_from_user_center \u003d builder.Load(input_vars[center_pos_idx.value()]);\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+              "range": {
+                "startLine": 241,
+                "startChar": 0,
+                "endLine": 243,
+                "endChar": 0
+              },
+              "replacement": "        if (center_pos_idx.has_value()) {\n            SetOutput(builder, center_pos_idx.value(), inner_result);\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+              "range": {
+                "startLine": 262,
+                "startChar": 0,
+                "endLine": 263,
+                "endChar": 0
+              },
+              "replacement": "        if (center_pos_idx.has_value() \u0026\u0026 center_pos_idx \u003d\u003d idx) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "9e0a2909e9907d8309b6631003af31b87a71c0e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85bf4a41_93cf4260",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-12T03:43:19Z",
+      "side": 1,
+      "message": "Nit: Use `Splat` instead of `Construct` so we emit as a constant instead of creating an instruction.",
+      "fixSuggestions": [
+        {
+          "fixId": "f3155f51_80dc451f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+              "range": {
+                "startLine": 218,
+                "startChar": 0,
+                "endLine": 222,
+                "endChar": 0
+              },
+              "replacement": "            auto* plus_p5 \u003d builder.Add(ty.vec2f(), floor_xy, builder.Splat(ty.vec2f(), p5_const))\n                                -\u003eResult();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "9e0a2909e9907d8309b6631003af31b87a71c0e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2f35a91_15ee11a8",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-12T03:43:19Z",
+      "side": 1,
+      "message": "Nit: Prefer `TINT_IR_ASSERT(ir, ...)` in transforms now so that we `DumpWithoutCrashing` before crashing.",
+      "fixSuggestions": [
+        {
+          "fixId": "b172d1fa_44c05773",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+              "range": {
+                "startLine": 264,
+                "startChar": 0,
+                "endLine": 265,
+                "endChar": 0
+              },
+              "replacement": "            TINT_IR_ASSERT(ir, vert_out_position);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "9e0a2909e9907d8309b6631003af31b87a71c0e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
