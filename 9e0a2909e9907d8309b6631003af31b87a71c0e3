@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "557c5417_55f67ade",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-12T21:53:21Z",
+      "side": 1,
+      "message": "I have confirmed that Pixel 10 has 128 for each. So it will not fail out of webgpu support.",
+      "parentUuid": "b78cae82_5f906cbd",
+      "revId": "9e0a2909e9907d8309b6631003af31b87a71c0e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7e05867c_c77c491f",
         "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
         "patchSetId": 40
