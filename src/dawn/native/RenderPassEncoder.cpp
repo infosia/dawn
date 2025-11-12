@@ -139,9 +139,7 @@ void RenderPassEncoder::DestroyImpl() {
     mCommandBufferState.End();
 
     RenderEncoderBase::DestroyImpl();
-    // Ensure that the pass has exited. This is done for passes only since validation requires
-    // they exit before destruction while bundles do not.
-    mEncodingContext->EnsurePassExited(this);
+    mEncodingContext->OnPassDestroyed(this);
 }
 
 ObjectType RenderPassEncoder::GetType() const {
