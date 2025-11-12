@@ -51,6 +51,24 @@
       "parentUuid": "bfc35032_0933bb3a",
       "revId": "bc23debe71a7111dbb679b971cf127f68f40a94b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "335bd3d3_48b1ca83",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-12T13:45:36Z",
+      "side": 1,
+      "message": "The polyfill doesn\u0027t add a lot compared to what the driver already does: on AMD and Apple GPUs the driver does that polyfill already and left is Intel / Nvidia. But thinking more about it, I guess we could invert and do a Finch trial for Graphite later to check that on Intel it doesn\u0027t regress performance.",
+      "parentUuid": "923bbe67_9a5ea4c0",
+      "revId": "bc23debe71a7111dbb679b971cf127f68f40a94b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
