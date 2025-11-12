@@ -16,6 +16,24 @@
       "message": "Keeping this thread open to prevent submission until all CLs are ready",
       "revId": "d8028f9160c3bc13b8751d0530298d0abd40a252",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99838212_376b0399",
+        "filename": "infra/config/global/generated/luci/cr-buildbucket.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3810252
+      },
+      "writtenOn": "2025-11-12T22:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13f93b0d_45340f82",
+      "revId": "d8028f9160c3bc13b8751d0530298d0abd40a252",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
