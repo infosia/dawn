@@ -1179,7 +1179,20 @@ class Printer {
         if (ty->Is<core::type::Pointer>()) {
             // Use OpAccessChain for accesses into pointer types.
             for (auto* idx : access->Indices()) {
-                operands.push_back(Value(idx));
+                uint32_t spv_id = 0;
+
+                // If the index isn't a unsigned value, then bitcast it to unsigned. A negative
+                // value is never allowed as a constant access index in SPIR-V. This cast fixes that
+                // potential issue.
+                if (!idx->Type()->Is<core::type::U32>()) {
+                    spv_id = module_.NextId();
+                    current_function_.PushInst(spv::Op::OpBitcast,
+                                               {Type(ir_.Types().u32()), spv_id, Value(idx)});
+                } else {
+                    spv_id = Value(idx);
+                }
+
+                operands.push_back(spv_id);
             }
             current_function_.PushInst(spv::Op::OpAccessChain, std::move(operands));
             return;

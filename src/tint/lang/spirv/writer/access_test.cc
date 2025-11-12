@@ -53,6 +53,32 @@ TEST_F(SpirvWriterTest, Access_Array_Value_ConstantIndex) {
     EXPECT_INST("%result = OpCompositeExtract %int %arr 1");
 }
 
+TEST_F(SpirvWriterTest, Access_Array_Value_Index_Negative) {
+    auto* arr_val = b.FunctionParam("arr", ty.array(ty.i32(), 4));
+    auto* func = b.Function("foo", ty.i32());
+    func->SetParams({arr_val});
+    b.Append(func->Block(), [&] {
+        auto* l = b.Let("l", -1_i);
+        auto* result = b.Access(ty.i32(), arr_val, l);
+        b.Return(func, result);
+        mod.SetName(result, "result");
+    });
+
+    auto* eb = b.ComputeFunction("main");
+    b.Append(eb->Block(), [&] {
+        b.Let("x", b.Call(func, b.Zero(ty.array(ty.i32(), 4))));
+        b.Return(eb);
+    });
+
+    Options options{
+        .disable_robustness = true,
+    };
+    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    EXPECT_INST(
+        R"(%14 = OpBitcast %uint %l
+         %12 = OpAccessChain %_ptr_Function_int %9 %14)");
+}
+
 TEST_F(SpirvWriterTest, Access_Array_Pointer_ConstantIndex) {
     auto* func = b.Function("foo", ty.i32());
     b.Append(func->Block(), [&] {
