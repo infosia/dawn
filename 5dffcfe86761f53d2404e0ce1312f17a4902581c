@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21a6e02a_ec6115b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-12T03:35:24Z",
+      "side": 1,
+      "message": "James, this changed with your CL. Can you look into it, or let me know if this was expected?",
+      "revId": "5dffcfe86761f53d2404e0ce1312f17a4902581c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
