@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "01f8bb2f_6fd0ef9b",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-12T01:37:07Z",
+      "side": 1,
+      "message": "If 0 is still not an allowed (core) tier, then it doesn\u0027t really matter if it\u0027s before or after. If it\u0027s before, it relies on tiering to not touch values that are lower than the lowest tier; if it\u0027s after, then it overrides the tiering. I guess after makes for easier-to-read code?\n\nMore importantly though, since this is a temporary hack, it should have a TODO (in both adapter and device) pointing to the bug where we\u0027ll fix this. And here, also explaining it overrides the tiering.",
+      "parentUuid": "985c7817_399a0518",
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f768190d_796f8cc2",
         "filename": "src/dawn/native/Device.cpp",
         "patchSetId": 4
@@ -192,6 +210,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "5a0eea5f_4bad76d3",
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28e934cd_cbe49d3c",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-12T01:37:07Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "98ac1cd9_eaee2fea",
       "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
