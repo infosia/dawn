@@ -16,6 +16,40 @@
       "message": "lgtm but I assume Corentin might have some thoughts on whether or not RenderBundleEncoderWGPU is needed or if maybe you could call some method on device to create an backend specific encoder.",
       "revId": "8a16aad886c0961801d1dd4c02bd0279adece3e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98baec1d_645f1821",
+        "filename": "src/dawn/native/webgpu/RenderBundleEncoderWGPU.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-12T09:34:20Z",
+      "side": 1,
+      "message": "Like Gregg commented, we shouldn\u0027t need to have an implementation of the RenderBundleEncoder that\u0027s specific to the WebGPU backend. All it does is store some information from the descriptor and append commands to a CommandAllocator. If some parts of the descriptor aren\u0027t exposed that are needed by the WebGPU backend, we can add getters (but IIRC everything should already be in the AttachmentState that can be queried).\n\nInstead we should make something similar to [`DeviceBase::CreateCommandBuffer`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Device.h;drc\u003d52bffe130c43477290f35457c580e758162580e4;l\u003d163) that\u0027s called in `RenderBundleEncoderBase::Finish`.\n\nHaving concepts that stay pure frontend is useful because it reduces the overall complexity of the code since we know behavior cannot be changed by backends (so there is less context to remember).",
+      "revId": "8a16aad886c0961801d1dd4c02bd0279adece3e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1608a0f_b035e123",
+        "filename": "src/dawn/native/webgpu/RenderBundleWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-12T09:34:20Z",
+      "side": 1,
+      "message": "Why do we do this lazily on the first use instead of on creation?",
+      "revId": "8a16aad886c0961801d1dd4c02bd0279adece3e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
