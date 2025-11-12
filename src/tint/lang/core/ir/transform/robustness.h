@@ -54,10 +54,6 @@ struct RobustnessConfig {
     /// Should texture accesses be clamped?
     bool clamp_texture = true;
 
-    /// Should accesses to pointers with the 'storage' address space be clamped?
-    bool clamp_storage = true;
-    /// Should accesses to pointers with the 'uniform' address space be clamped?
-    bool clamp_uniform = true;
     /// Should accesses to pointers with the 'workgroup' address space be clamped?
     bool clamp_workgroup = true;
 
@@ -77,8 +73,6 @@ struct RobustnessConfig {
     /// Reflection for this class
     TINT_REFLECT(RobustnessConfig,
                  clamp_texture,
-                 clamp_storage,
-                 clamp_uniform,
                  clamp_workgroup,
                  predicate_subgroup_matrix,
                  bindings_ignored,

@@ -958,7 +958,7 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_P(IR_BindingVariableRobustnessTest, Storage_LoadVectorElement) {
+TEST_P(IR_RobustnessTest, Storage_LoadVectorElement) {
     auto* vec = b.Var("vec", ty.ptr(storage, ty.vec4<u32>()));
     vec->SetBindingPoint(0, 0);
     mod.root_block->Append(vec);
@@ -1000,16 +1000,15 @@ $B1: {  # root
 )";
 
     RobustnessConfig cfg;
-    cfg.clamp_storage = GetParam().enabled;
-    if (GetParam().ignore_bindings) {
+    if (GetParam()) {
         cfg.bindings_ignored = {{0, 0}};
     }
     Run(Robustness, cfg);
 
-    EXPECT_EQ((GetParam().enabled && !GetParam().ignore_bindings) ? expect : src, str());
+    EXPECT_EQ(!GetParam() ? expect : src, str());
 }
 
-TEST_P(IR_BindingVariableRobustnessTest, Storage_StoreVectorElement) {
+TEST_P(IR_RobustnessTest, Storage_StoreVectorElement) {
     auto* vec = b.Var("vec", ty.ptr(storage, ty.vec4<u32>()));
     vec->SetBindingPoint(0, 0);
     mod.root_block->Append(vec);
@@ -1051,16 +1050,15 @@ $B1: {  # root
 )";
 
     RobustnessConfig cfg;
-    cfg.clamp_storage = GetParam().enabled;
-    if (GetParam().ignore_bindings) {
+    if (GetParam()) {
         cfg.bindings_ignored = {{0, 0}};
     }
     Run(Robustness, cfg);
 
-    EXPECT_EQ((GetParam().enabled && !GetParam().ignore_bindings) ? expect : src, str());
+    EXPECT_EQ(!GetParam() ? expect : src, str());
 }
 
-TEST_P(IR_BindingVariableRobustnessTest, Storage_Access) {
+TEST_P(IR_RobustnessTest, Storage_Access) {
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<u32, 4>()));
     arr->SetBindingPoint(0, 0);
     mod.root_block->Append(arr);
@@ -1105,16 +1103,15 @@ $B1: {  # root
 )";
 
     RobustnessConfig cfg;
-    cfg.clamp_storage = GetParam().enabled;
-    if (GetParam().ignore_bindings) {
+    if (GetParam()) {
         cfg.bindings_ignored = {{0, 0}};
     }
     Run(Robustness, cfg);
 
-    EXPECT_EQ((GetParam().enabled && !GetParam().ignore_bindings) ? expect : src, str());
+    EXPECT_EQ(!GetParam() ? expect : src, str());
 }
 
-TEST_P(IR_BindingVariableRobustnessTest, Unifom_LoadVectorElement) {
+TEST_P(IR_RobustnessTest, Unifom_LoadVectorElement) {
     auto* vec = b.Var("vec", ty.ptr(uniform, ty.vec4<u32>()));
     vec->SetBindingPoint(0, 0);
     mod.root_block->Append(vec);
@@ -1156,16 +1153,15 @@ $B1: {  # root
 )";
 
     RobustnessConfig cfg;
-    cfg.clamp_uniform = GetParam().enabled;
-    if (GetParam().ignore_bindings) {
+    if (GetParam()) {
         cfg.bindings_ignored = {{0, 0}};
     }
     Run(Robustness, cfg);
 
-    EXPECT_EQ((GetParam().enabled && !GetParam().ignore_bindings) ? expect : src, str());
+    EXPECT_EQ(!GetParam() ? expect : src, str());
 }
 
-TEST_P(IR_BindingVariableRobustnessTest, Uniform_Access) {
+TEST_P(IR_RobustnessTest, Uniform_Access) {
     auto* arr = b.Var("arr", ty.ptr(uniform, ty.array<u32, 4>()));
     arr->SetBindingPoint(0, 0);
     mod.root_block->Append(arr);
@@ -1210,13 +1206,12 @@ $B1: {  # root
 )";
 
     RobustnessConfig cfg;
-    cfg.clamp_uniform = GetParam().enabled;
-    if (GetParam().ignore_bindings) {
+    if (GetParam()) {
         cfg.bindings_ignored = {{0, 0}};
     }
     Run(Robustness, cfg);
 
-    EXPECT_EQ((GetParam().enabled && !GetParam().ignore_bindings) ? expect : src, str());
+    EXPECT_EQ(!GetParam() ? expect : src, str());
 }
 
 TEST_P(IR_RobustnessTest, Workgroup_LoadVectorElement) {
@@ -1490,7 +1485,7 @@ TEST_F(IR_RobustnessDefaultTest, ParamValueArray_DynamicIndex) {
 // Test clamping runtime-sized arrays.
 ////////////////////////////////////////////////////////////////
 
-TEST_P(IR_BindingVariableRobustnessTest, RuntimeSizedArray_ConstIndex) {
+TEST_P(IR_RobustnessTest, RuntimeSizedArray_ConstIndex) {
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<u32>()));
     arr->SetBindingPoint(0, 0);
     mod.root_block->Append(arr);
@@ -1535,16 +1530,15 @@ $B1: {  # root
 )";
 
     RobustnessConfig cfg;
-    cfg.clamp_storage = GetParam().enabled;
-    if (GetParam().ignore_bindings) {
+    if (GetParam()) {
         cfg.bindings_ignored = {{0, 0}};
     }
     Run(Robustness, cfg);
 
-    EXPECT_EQ((GetParam().enabled && !GetParam().ignore_bindings) ? expect : src, str());
+    EXPECT_EQ(!GetParam() ? expect : src, str());
 }
 
-TEST_P(IR_BindingVariableRobustnessTest, RuntimeSizedArray_DynamicIndex) {
+TEST_P(IR_RobustnessTest, RuntimeSizedArray_DynamicIndex) {
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<u32>()));
     arr->SetBindingPoint(0, 0);
     mod.root_block->Append(arr);
@@ -1591,16 +1585,15 @@ $B1: {  # root
 )";
 
     RobustnessConfig cfg;
-    cfg.clamp_storage = GetParam().enabled;
-    if (GetParam().ignore_bindings) {
+    if (GetParam()) {
         cfg.bindings_ignored = {{0, 0}};
     }
     Run(Robustness, cfg);
 
-    EXPECT_EQ((GetParam().enabled && !GetParam().ignore_bindings) ? expect : src, str());
+    EXPECT_EQ(!GetParam() ? expect : src, str());
 }
 
-TEST_P(IR_BindingVariableRobustnessTest, RuntimeSizedArray_InStruct_ConstIndex) {
+TEST_P(IR_RobustnessTest, RuntimeSizedArray_InStruct_ConstIndex) {
     auto* structure = ty.Struct(mod.symbols.Register("structure"),
                                 {
                                     {mod.symbols.Register("arr"), ty.array<u32>()},
@@ -1659,16 +1652,15 @@ $B1: {  # root
 )";
 
     RobustnessConfig cfg;
-    cfg.clamp_storage = GetParam().enabled;
-    if (GetParam().ignore_bindings) {
+    if (GetParam()) {
         cfg.bindings_ignored = {{0, 0}};
     }
     Run(Robustness, cfg);
 
-    EXPECT_EQ((GetParam().enabled && !GetParam().ignore_bindings) ? expect : src, str());
+    EXPECT_EQ(!GetParam() ? expect : src, str());
 }
 
-TEST_P(IR_BindingVariableRobustnessTest, RuntimeSizedArray_InStruct_DynamicIndex) {
+TEST_P(IR_RobustnessTest, RuntimeSizedArray_InStruct_DynamicIndex) {
     auto* structure = ty.Struct(mod.symbols.Register("structure"),
                                 {
                                     {mod.symbols.Register("arr"), ty.array<u32>()},
@@ -1729,16 +1721,15 @@ $B1: {  # root
 )";
 
     RobustnessConfig cfg;
-    cfg.clamp_storage = GetParam().enabled;
-    if (GetParam().ignore_bindings) {
+    if (GetParam()) {
         cfg.bindings_ignored = {{0, 0}};
     }
     Run(Robustness, cfg);
 
-    EXPECT_EQ((GetParam().enabled && !GetParam().ignore_bindings) ? expect : src, str());
+    EXPECT_EQ(!GetParam() ? expect : src, str());
 }
 
-TEST_P(IR_BindingVariableRobustnessTest, RuntimeSizedArray_DisableClamping) {
+TEST_P(IR_RobustnessTest, RuntimeSizedArray_DisableClamping) {
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<u32>()));
     arr->SetBindingPoint(0, 0);
     mod.root_block->Append(arr);
@@ -1784,13 +1775,12 @@ $B1: {  # root
 }
 )";
     RobustnessConfig cfg;
-    cfg.clamp_storage = GetParam().enabled;
-    if (GetParam().ignore_bindings) {
+    if (GetParam()) {
         cfg.bindings_ignored = {{0, 0}};
     }
     Run(Robustness, cfg);
 
-    EXPECT_EQ((GetParam().enabled && !GetParam().ignore_bindings) ? expect : src, str());
+    EXPECT_EQ(!GetParam() ? expect : src, str());
 }
 
 ////////////////////////////////////////////////////////////////
@@ -3156,7 +3146,7 @@ $B1: {  # root
 }
 
 // Test that ignoring a subset of bindings works
-TEST_P(IR_RobustnessTest, BindingsIgnored_Subset) {
+TEST_F(IR_RobustnessDefaultTest, BindingsIgnored_Subset) {
     auto* vec1 = b.Var("vec1", ty.ptr(storage, ty.vec4<u32>()));
     auto* vec2 = b.Var("vec2", ty.ptr(storage, ty.vec4<u32>()));
     auto* arr1 = b.Var("arr1", ty.ptr(storage, ty.array<u32, 4>()));
@@ -3239,15 +3229,14 @@ $B1: {  # root
 )";
 
     RobustnessConfig cfg;
-    cfg.clamp_storage = GetParam();
     cfg.bindings_ignored = {{2, 3}, {6, 7}};
     Run(Robustness, cfg);
 
-    EXPECT_EQ(GetParam() ? expect : src, str());
+    EXPECT_EQ(expect, str());
 }
 
 // Test that bindings_ignored works via lets
-TEST_P(IR_RobustnessTest, BindingsIgnored_ViaLets) {
+TEST_F(IR_RobustnessDefaultTest, BindingsIgnored_ViaLets) {
     auto* arr = b.Var("arr", ty.ptr(storage, ty.array<u32, 4>()));
     arr->SetBindingPoint(0, 0);
     mod.root_block->Append(arr);
@@ -3281,7 +3270,6 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     RobustnessConfig cfg;
-    cfg.clamp_storage = GetParam();
     cfg.bindings_ignored = {{0, 0}};
     Run(Robustness, cfg);
 
@@ -6195,7 +6183,6 @@ $B1: {  # root
 )";
 
     RobustnessConfig cfg;
-    cfg.clamp_storage = true;
     cfg.use_integer_range_analysis = true;
     Run(Robustness, cfg);
 
@@ -6874,5 +6861,6 @@ INSTANTIATE_TEST_SUITE_P(,
                                          BindingVariableCase{false, false},
                                          BindingVariableCase{true, true},
                                          BindingVariableCase{false, false}));
+
 }  // namespace
 }  // namespace tint::core::ir::transform

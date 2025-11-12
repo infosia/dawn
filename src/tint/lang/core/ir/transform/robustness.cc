@@ -168,9 +168,8 @@ struct State {
             case AddressSpace::kImmediate:
                 return true;
             case AddressSpace::kStorage:
-                return config.clamp_storage && !IsRootVarIgnored(value);
             case AddressSpace::kUniform:
-                return config.clamp_uniform && !IsRootVarIgnored(value);
+                return !IsRootVarIgnored(value);
             case AddressSpace::kWorkgroup:
                 return config.clamp_workgroup;
             case AddressSpace::kUndefined:
