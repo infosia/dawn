@@ -70,6 +70,24 @@
       "parentUuid": "431a0730_a53051fc",
       "revId": "5665177422dc93da21b96d04e383cdb06041c5c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0eba0f5f_0c9ab49e",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-12T14:58:24Z",
+      "side": 1,
+      "message": "`Params()` is the function parameters, `Return*` is for the function return type. There is a `ReturnBuiltin` which returns the builtin associated to function return, similar to how `param-\u003eBuiltin()` returns it for he parameter.\n\nThe trick with MSL is that we don\u0027t emit the return builtins in the function signature (sorry, missed this earlier), they all get packed in to a return structure. So, we should have created the return structure with the attributes attached (they\u0027re then stripped from the function itself).\n\nSo, for the return this should all be bundled up into the return struct already. Which I\u0027d expect your change below in the `EmitStructType` to have emitted the depth, so either the attribute is not copying correct in the IOAttributes or something else is going wrong?",
+      "parentUuid": "2476e3c0_56ecda78",
+      "revId": "5665177422dc93da21b96d04e383cdb06041c5c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
