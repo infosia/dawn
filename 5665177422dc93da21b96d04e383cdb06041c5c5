@@ -34,6 +34,24 @@
       "parentUuid": "9b86c837_87fd708e",
       "revId": "5665177422dc93da21b96d04e383cdb06041c5c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "431a0730_a53051fc",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-12T13:47:55Z",
+      "side": 1,
+      "message": "A function has a set of `IOAttributes` for the return specifically, so this could would be for parameters.  For the return, they\u0027d need to be attached when we emit the return on line 358 (I\u0027m guessing) and you can get them by calling `func-\u003eReturnAttributes()`",
+      "parentUuid": "dadc1fd4_b546ccb4",
+      "revId": "5665177422dc93da21b96d04e383cdb06041c5c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
