@@ -125,6 +125,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ac7c1d9_ba3311c8",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-12T14:16:59Z",
+      "side": 1,
+      "message": "Moved it back to after the tiering code, and added TODOs to both places. Thanks!",
+      "parentUuid": "01f8bb2f_6fd0ef9b",
+      "revId": "5d26acb97f7b206fb97068aad97f40ad4909e216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f768190d_796f8cc2",
