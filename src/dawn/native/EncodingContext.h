@@ -65,11 +65,11 @@ class EncodingContext {
 
     template <typename EncodeFunction>
     inline bool TryEncode(const ApiObjectBase* encoder, EncodeFunction&& encodeFunction) {
-        if (ConsumedError(ValidateCanEncodeOn(encoder))) {
+        if (ConsumedError(encoder, ValidateCanEncodeOn(encoder))) {
             return false;
         }
         DAWN_ASSERT(!mWereCommandsAcquired);
-        return !ConsumedError(encodeFunction(&mPendingCommands));
+        return !ConsumedError(encoder, encodeFunction(&mPendingCommands));
     }
 
     template <typename EncodeFunction, typename... Args>
@@ -77,11 +77,11 @@ class EncodingContext {
                           EncodeFunction&& encodeFunction,
                           const char* formatStr,
                           const Args&... args) {
-        if (ConsumedError(ValidateCanEncodeOn(encoder), formatStr, args...)) {
+        if (ConsumedError(encoder, ValidateCanEncodeOn(encoder), formatStr, args...)) {
             return false;
         }
-        DAWN_ASSERT(!mWereCommandsAcquired);
-        return !ConsumedError(encodeFunction(&mPendingCommands), formatStr, args...);
+        DAWN_ASSERT(!mWereCommandsAcquired || encoder->IsError());
+        return !ConsumedError(encoder, encodeFunction(&mPendingCommands), formatStr, args...);
     }
 
     // Notifications that must be called to let the encoding context know of the passes' lifetimes.
@@ -121,18 +121,21 @@ class EncodingContext {
 
   private:
     // Functions to handle encoder errors
-    void HandleError(std::unique_ptr<ErrorData> error);
+    void HandleError(const ApiObjectBase* encoder, std::unique_ptr<ErrorData> error);
 
-    inline bool ConsumedError(MaybeError maybeError) {
+    inline bool ConsumedError(const ApiObjectBase* encoder, MaybeError maybeError) {
         if (maybeError.IsError()) [[unlikely]] {
-            HandleError(maybeError.AcquireError());
+            HandleError(encoder, maybeError.AcquireError());
             return true;
         }
         return false;
     }
 
     template <typename... Args>
-    inline bool ConsumedError(MaybeError maybeError, const char* formatStr, const Args&... args) {
+    inline bool ConsumedError(const ApiObjectBase* encoder,
+                              MaybeError maybeError,
+                              const char* formatStr,
+                              const Args&... args) {
         if (maybeError.IsError()) [[unlikely]] {
             std::unique_ptr<ErrorData> error = maybeError.AcquireError();
             if (error->GetType() == InternalErrorType::Validation) {
@@ -145,7 +148,7 @@ class EncodingContext {
                         absl::StrFormat("[Failed to format error message: \"%s\"].", formatStr));
                 }
             }
-            HandleError(std::move(error));
+            HandleError(encoder, std::move(error));
             return true;
         }
         return false;
