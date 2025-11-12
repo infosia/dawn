@@ -16,6 +16,24 @@
       "message": "@dsinclair@chromium.org, could it be the magic happening for IO structs you mentionned [earlier] doesn\u0027t work there?\n\nAs you can see in the new test files added, BuiltinToAttribute works well for structs, but not for basic (`fn any() -\u003e @builtin(frag_depth, any) f32 { return 1.0; }`. Any idea why by any chance?\n\n[earlier]: https://dawn-review.googlesource.com/c/dawn/+/271394/comments/d2dc94e3_82c1ec30",
       "revId": "5665177422dc93da21b96d04e383cdb06041c5c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dadc1fd4_b546ccb4",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-12T13:25:49Z",
+      "side": 1,
+      "message": "Note that I\u0027m confused as I\u0027m using `SetDepthMode()` for function params but depth mode applies to return attributes... but then it\u0027s not clear how to access an hypothetical `ReturnDepthMode()` in this code.",
+      "parentUuid": "9b86c837_87fd708e",
+      "revId": "5665177422dc93da21b96d04e383cdb06041c5c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
