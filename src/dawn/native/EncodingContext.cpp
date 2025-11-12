@@ -80,7 +80,7 @@ CommandIterator EncodingContext::AcquireCommands() {
     return commands;
 }
 
-void EncodingContext::HandleError(std::unique_ptr<ErrorData> error) {
+void EncodingContext::HandleError(const ApiObjectBase* encoder, std::unique_ptr<ErrorData> error) {
     // Append in reverse so that the most recently set debug group is printed first, like a
     // call stack.
     for (auto iter = mDebugGroupLabels.rbegin(); iter != mDebugGroupLabels.rend(); ++iter) {
@@ -122,8 +122,8 @@ void EncodingContext::OnPassDestroyed(const ApiObjectBase* passEncoder) {
     // The current pass being destroyed prevent ending the pass, which should prevent all future
     // command from being recorded on this EncodingContext (and result in an error on Finish()).
     if (mCurrentEncoder == passEncoder) {
-        HandleError(
-            DAWN_VALIDATION_ERROR("%s was destroyed before End() was called.", passEncoder));
+        HandleError(passEncoder, DAWN_VALIDATION_ERROR("%s was destroyed before End() was called.",
+                                                       passEncoder));
         mCurrentEncoder = nullptr;
     }
 }
