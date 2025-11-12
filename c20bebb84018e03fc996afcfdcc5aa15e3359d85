@@ -22,6 +22,30 @@
       },
       "revId": "c20bebb84018e03fc996afcfdcc5aa15e3359d85",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2633268_d27f2ee9",
+        "filename": "generator/dawn_version_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-11-12T10:05:31Z",
+      "side": 1,
+      "message": "Done. Added an assert if version is not 40 characters. We still allow empty version string though. That\u0027s existing behavior.",
+      "parentUuid": "e827411d_97c79bda",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 39
+      },
+      "revId": "c20bebb84018e03fc996afcfdcc5aa15e3359d85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
