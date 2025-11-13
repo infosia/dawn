@@ -178,6 +178,24 @@
       "parentUuid": "05678af9_7f79c71a",
       "revId": "5665177422dc93da21b96d04e383cdb06041c5c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70ce0611_8e5c8ef1",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-13T17:09:20Z",
+      "side": 1,
+      "message": "I\u0027ve managed to actually solve it without updating `ir/disassembler.cc`. Let me know if that looks good to you.",
+      "parentUuid": "4b17bc04_69a0a044",
+      "revId": "5665177422dc93da21b96d04e383cdb06041c5c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
