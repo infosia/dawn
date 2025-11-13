@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c62695f_f0f139b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-13T18:14:41Z",
+      "side": 1,
+      "message": "PTAL. This is a bit ... wonky. We don\u0027t return errors from Printers at this point, so this is really the first time we\u0027re doing it. I didn\u0027t want to pull in the full Diagnostic machinery, I\u0027m not actually sure if we have the right source information to use it nicely.\n\nThe other way we could do it is run a \"validate\" pass in the `Raise` method for MSL which does already return errors normally. Then validate would just check this one specific case for MSL. Not sure if that\u0027s better or worse.",
+      "revId": "f068c6a2d6fefcf8edf2371da30d0b1f75156356",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
