@@ -378,9 +378,9 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
         GetDefaultLimits(&mLimits, effectiveFeatureLevel);
     }
 
-    // If immediate data is not enabled, report a maxImmediateSize of 0
+    // If immediates are not enabled, report a maxImmediateSize of 0
     // TODO(crbug.com/366291600): Remove when immediates are implemented on all backends
-    if (!IsToggleEnabled(Toggle::EnableImmediateData)) {
+    if (!GetInstance()->HasFeature(wgpu::WGSLLanguageFeatureName::ImmediateAddressSpace)) {
         mLimits.v1.maxImmediateSize = 0;
     }
 
@@ -1810,8 +1810,6 @@ void DeviceBase::SetWGSLExtensionAllowList() {
         mWGSLAllowedFeatures.extensions.insert(
             tint::wgsl::Extension::kChromiumDisableUniformityAnalysis);
         mWGSLAllowedFeatures.extensions.insert(tint::wgsl::Extension::kChromiumInternalGraphite);
-        mWGSLAllowedFeatures.extensions.insert(
-            tint::wgsl::Extension::kChromiumExperimentalImmediate);
     }
     if (mEnabledFeatures.IsEnabled(Feature::DualSourceBlending)) {
         mWGSLAllowedFeatures.extensions.insert(tint::wgsl::Extension::kDualSourceBlending);
