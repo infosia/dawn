@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a980fbfd_db5e12b6",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-13T20:20:27Z",
+      "side": 1,
+      "message": "Filed https://crbug.com/460332167",
+      "parentUuid": "c1c6eab9_47fd90b2",
+      "revId": "b1f0fd203b6229c101b588d1451959a02d63865f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c4b8eab5_190f2cc6",
