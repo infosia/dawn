@@ -35,7 +35,7 @@ namespace dawn::native::vulkan {
 void CommandRecordingContext::CheckBufferNeedsEagerTransition(Buffer* buffer,
                                                               wgpu::BufferUsage usage) {
     if (!(usage & kMappableBufferUsages) && (buffer->GetInternalUsage() & kMappableBufferUsages)) {
-        mappableBuffersForEagerTransition.insert(buffer);
+        mappableBuffersForEagerTransition.insert({buffer, false});
     }
 }
 
