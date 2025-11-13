@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42edb3b7_800e4f3f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-13T21:51:33Z",
+      "side": 1,
+      "message": "LGTM on Tint side",
+      "revId": "861ae6cc27d56779a576eabec2b0e381b7d27de1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b5bd268_252fea75",
+        "filename": "src/dawn/tests/unittests/ToggleTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-13T21:51:33Z",
+      "side": 1,
+      "message": "Does this need to use a different toggle that is guarded by the unsafe APIs toggle to make the test useful again?",
+      "revId": "861ae6cc27d56779a576eabec2b0e381b7d27de1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82c4226f_3a27dbf0",
+        "filename": "src/dawn/tests/unittests/ToggleTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-13T21:51:33Z",
+      "side": 1,
+      "message": "Same question as above - presumably this test was specifically testing something about the immediates toggle.",
+      "revId": "861ae6cc27d56779a576eabec2b0e381b7d27de1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "934c4253_a28d0501",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3226,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-13T21:51:33Z",
+      "side": 1,
+      "message": "Nit: Can use `contains()` here",
+      "fixSuggestions": [
+        {
+          "fixId": "f64fc86b_ff530833",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/wgsl/resolver/validator.cc",
+              "range": {
+                "startLine": 3226,
+                "startChar": 0,
+                "endLine": 3228,
+                "endChar": 0
+              },
+              "replacement": "            if (DAWN_UNLIKELY(!allowed_features_.features.contains(\n                                  wgsl::LanguageFeature::kImmediateAddressSpace))) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "861ae6cc27d56779a576eabec2b0e381b7d27de1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
