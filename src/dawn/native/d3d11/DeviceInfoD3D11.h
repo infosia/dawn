@@ -51,6 +51,7 @@ struct DeviceInfo {
     bool supportsNonMonitoredFence;
     bool supportsMapNoOverwriteDynamicBuffers;
     bool supportsPartialConstantBufferUpdate;
+    bool supportsConcurrentCreates;
 };
 
 ResultOrError<DeviceInfo> GatherDeviceInfo(const ComPtr<IDXGIAdapter3>& adapter,
