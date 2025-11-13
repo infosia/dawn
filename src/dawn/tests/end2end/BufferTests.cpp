@@ -2061,5 +2061,107 @@ DAWN_INSTANTIATE_TEST(BufferMapExtendedUsagesTests,
                       VulkanBackend(),
                       WebGPUBackend());
 
+class BufferCtsTests : public DawnTest {
+  public:
+    wgpu::Buffer CreateBuffer(uint64_t size) {
+        wgpu::BufferDescriptor descriptor;
+        descriptor.size = size;
+        descriptor.mappedAtCreation = true;
+        descriptor.usage = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst |
+                           wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::Storage |
+                           wgpu::BufferUsage::Vertex | wgpu::BufferUsage::Index |
+                           wgpu::BufferUsage::Indirect;
+        return device.CreateBuffer(&descriptor);
+    }
+};
+
+// Reverse engineered from webgpu_cst
+// webgpu:api,operation,memory_sync,buffer,multiple_buffers:ww:boundary="queue-op";writeOps=["write-buffer","storage"];contexts=["queue","compute-pass-encoder"]
+// This test only uses a single buffer instead of 4 like webgpu_cts but it still fails locally.
+TEST_P(BufferCtsTests, Test) {
+    wgpu::Buffer buffer;
+    {
+        wgpu::BufferDescriptor descriptor;
+        descriptor.size = 4;
+        descriptor.mappedAtCreation = true;
+        descriptor.usage = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst |
+                           wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::Storage |
+                           wgpu::BufferUsage::Vertex | wgpu::BufferUsage::Index |
+                           wgpu::BufferUsage::Indirect;
+        buffer = device.CreateBuffer(&descriptor);
+    }
+    *reinterpret_cast<uint32_t*>(buffer.GetMappedRange()) = 0;
+    buffer.Unmap();
+
+    // CTS test waits on submitted work but it doesn't submit first? Adding a submit here makes it
+    // pass again.
+    // queue.Submit(0, nullptr);
+
+    bool done = false;
+    queue.OnSubmittedWorkDone(wgpu::CallbackMode::AllowSpontaneous,
+                              [&](wgpu::QueueWorkDoneStatus status, wgpu::StringView) {
+                                  ASSERT_EQ(status, wgpu::QueueWorkDoneStatus::Success);
+                                  done = true;
+                              });
+    do {
+        WaitABit();
+    } while (!done);
+
+    const uint32_t valueOne = 0x1;
+    constexpr size_t kValueSize = sizeof(valueOne);
+    queue.WriteBuffer(buffer, 0, &valueOne, kValueSize);
+
+    // CTS doesn't submit here but adding a submit causes the test to pass consistently.
+    // queue.Submit(0, nullptr);
+
+    wgpu::ComputePipeline pipeline;
+    {
+        wgpu::ComputePipelineDescriptor csDesc;
+        csDesc.compute.module = utils::CreateShaderModule(device, R"(
+            struct Data {
+                a : u32
+            };
+
+            @group(0) @binding(0) var<storage, read_write> data : Data;
+            @compute @workgroup_size(1) fn main() {
+                data.a = 2u;
+            })");
+        csDesc.compute.entryPoint = "main";
+
+        pipeline = device.CreateComputePipeline(&csDesc);
+        ASSERT_NE(nullptr, pipeline.Get());
+    }
+
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+
+        wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                         {
+                                                             {0, buffer},
+                                                         });
+        pass.SetBindGroup(0, bindGroup);
+        pass.SetPipeline(pipeline);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+
+        wgpu::CommandBuffer commands = encoder.Finish();
+
+        queue.Submit(1, &commands);
+    }
+
+    const uint32_t valueTwo = 0x2;
+    EXPECT_BUFFER_U32_RANGE_EQ(&valueTwo, buffer, 0, 1);
+}
+
+DAWN_INSTANTIATE_TEST(BufferCtsTests,
+                      D3D11Backend(),
+                      D3D12Backend(),
+                      MetalBackend(),
+                      OpenGLBackend(),
+                      OpenGLESBackend(),
+                      VulkanBackend(),
+                      WebGPUBackend());
+
 }  // anonymous namespace
 }  // namespace dawn
