@@ -92,10 +92,6 @@ IDXGIFactory4* Backend::GetFactory() const {
     return mFactory.Get();
 }
 
-MaybeError Backend::EnsureFXC() {
-    return mFunctions.get()->EnsureFXC(GetInstance()->GetRuntimeSearchPaths());
-}
-
 const PlatformFunctions* Backend::GetFunctions() const {
     return mFunctions.get();
 }

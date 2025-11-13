@@ -73,6 +73,14 @@ MaybeError Backend::Initialize() {
         }
     }
 
+    // Try to load FXC and DXC compilers, but don't fail unless none of them are available.
+    TryLoadingFXCLibrary();
+#ifdef DAWN_USE_BUILT_DXC
+    TryLoadingDXCLibrary();
+#endif
+    DAWN_INTERNAL_ERROR_IF(!IsFXCLibraryAvailable() && !IsDXCLibraryAvailable(),
+                           "No HLSL compiler (FXC or DXC) library could be found.");
+
     return {};
 }
 
@@ -80,39 +88,56 @@ const PlatformFunctions* Backend::GetFunctions() const {
     return static_cast<const PlatformFunctions*>(Base::GetFunctions());
 }
 
-MaybeError Backend::EnsureDXC() {
-#if DAWN_USE_BUILT_DXC
-    // If components are already loaded, return early
-    if (mDxcLibrary != nullptr) {
-        // Since all components are assigned atomically, if one is loaded, all should be loaded
-        DAWN_CHECK(mDxcCompiler);
-        DAWN_CHECK(mDxcValidator);
-        return {};
+void Backend::TryLoadingFXCLibrary() {
+    auto result = const_cast<PlatformFunctions*>(GetFunctions())
+                      ->EnsureFXC(GetInstance()->GetRuntimeSearchPaths());
+    if (result.IsSuccess()) {
+        mFXCLibraryAvailable = true;
+    } else {
+        result.AcquireError();
     }
+}
 
-    DAWN_TRY(const_cast<PlatformFunctions*>(GetFunctions())
-                 ->EnsureDXCLibraries(GetInstance()->GetRuntimeSearchPaths()));
+void Backend::TryLoadingDXCLibrary() {
+#ifdef DAWN_USE_BUILT_DXC
+    // This function should only get called at most once at the Backend initialization.
+    DAWN_CHECK(!mDxcLibrary);
+    DAWN_CHECK(!mDxcCompiler);
+    DAWN_CHECK(!mDxcValidator);
+    DAWN_CHECK(!mDXCLibraryAvailable);
 
-    ComPtr<IDxcLibrary> dxcLibrary;
-    DAWN_TRY(
-        CheckHRESULT(GetFunctions()->dxcCreateInstance(CLSID_DxcLibrary, IID_PPV_ARGS(&dxcLibrary)),
-                     "DXC create library"));
+    auto LoadDXC = [&]() -> MaybeError {
+        DAWN_TRY(const_cast<PlatformFunctions*>(GetFunctions())
+                     ->EnsureDXCLibraries(GetInstance()->GetRuntimeSearchPaths()));
 
-    ComPtr<IDxcCompiler3> dxcCompiler;
-    DAWN_TRY(CheckHRESULT(
-        GetFunctions()->dxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&dxcCompiler)),
-        "DXC create compiler"));
+        ComPtr<IDxcLibrary> dxcLibrary;
+        DAWN_TRY(CheckHRESULT(
+            GetFunctions()->dxcCreateInstance(CLSID_DxcLibrary, IID_PPV_ARGS(&dxcLibrary)),
+            "DXC create library"));
 
-    ComPtr<IDxcValidator> dxcValidator;
-    DAWN_TRY(CheckHRESULT(
-        GetFunctions()->dxcCreateInstance(CLSID_DxcValidator, IID_PPV_ARGS(&dxcValidator)),
-        "DXC create validator"));
+        ComPtr<IDxcCompiler3> dxcCompiler;
+        DAWN_TRY(CheckHRESULT(
+            GetFunctions()->dxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&dxcCompiler)),
+            "DXC create compiler"));
 
-    mDxcLibrary = std::move(dxcLibrary);
-    mDxcCompiler = std::move(dxcCompiler);
-    mDxcValidator = std::move(dxcValidator);
+        ComPtr<IDxcValidator> dxcValidator;
+        DAWN_TRY(CheckHRESULT(
+            GetFunctions()->dxcCreateInstance(CLSID_DxcValidator, IID_PPV_ARGS(&dxcValidator)),
+            "DXC create validator"));
 
-    return {};
+        mDxcLibrary = std::move(dxcLibrary);
+        mDxcCompiler = std::move(dxcCompiler);
+        mDxcValidator = std::move(dxcValidator);
+
+        return {};
+    };
+
+    auto result = LoadDXC();
+    if (result.IsSuccess()) {
+        mDXCLibraryAvailable = true;
+    } else {
+        result.AcquireError();
+    }
 #else
     DAWN_UNREACHABLE();
 #endif
@@ -131,6 +156,14 @@ ComPtr<IDxcCompiler3> Backend::GetDxcCompiler() const {
 ComPtr<IDxcValidator> Backend::GetDxcValidator() const {
     DAWN_ASSERT(mDxcValidator != nullptr);
     return mDxcValidator;
+}
+
+bool Backend::IsDXCLibraryAvailable() const {
+    return mDXCLibraryAvailable;
+}
+
+bool Backend::IsFXCLibraryAvailable() const {
+    return mFXCLibraryAvailable;
 }
 
 ResultOrError<Ref<PhysicalDeviceBase>> Backend::CreatePhysicalDeviceFromIDXGIAdapter(
