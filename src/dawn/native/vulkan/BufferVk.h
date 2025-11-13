@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_VULKAN_BUFFERVK_H_
 #define SRC_DAWN_NATIVE_VULKAN_BUFFERVK_H_
 
+#include "absl/container/flat_hash_map.h"
 #include "dawn/native/Buffer.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
@@ -81,9 +82,10 @@ class Buffer final : public BufferBase {
     // Dawn API
     void SetLabelImpl() override;
 
-    static void TransitionMappableBuffersEagerly(Device* device,
-                                                 CommandRecordingContext* recordingContext,
-                                                 const absl::flat_hash_set<Ref<Buffer>>& buffers);
+    static void TransitionMappableBuffersEagerly(
+        Device* device,
+        CommandRecordingContext* recordingContext,
+        const absl::flat_hash_map<Ref<Buffer>, bool>& buffers);
 
   private:
     ~Buffer() override;
@@ -125,7 +127,6 @@ class Buffer final : public BufferBase {
 
     bool mHostVisible : 1;
     bool mHostCoherent : 1;
-    bool mHasWriteTransitioned : 1;
 };
 
 }  // namespace dawn::native::vulkan

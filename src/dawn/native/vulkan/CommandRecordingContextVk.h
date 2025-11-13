@@ -29,6 +29,7 @@
 
 #include <vector>
 
+#include "absl/container/flat_hash_map.h"
 #include "absl/container/flat_hash_set.h"
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/vulkan/BufferVk.h"
@@ -70,8 +71,9 @@ struct CommandRecordingContext {
     absl::flat_hash_set<raw_ptr<Texture>> specialSyncTextures;
 
     // Mappable buffers which will be eagerly transitioned to usage MapRead or MapWrite after
-    // VkSubmit.
-    absl::flat_hash_set<Ref<Buffer>> mappableBuffersForEagerTransition;
+    // VkSubmit. If bool is true the buffer was used by Queue::WriteBuffer() last submit and should
+    // MapWrite usage even if the buffer wasn't created with that usage.
+    absl::flat_hash_map<Ref<Buffer>, bool> mappableBuffersForEagerTransition;
 
     // For Device state tracking only.
     VkCommandPool commandPool = VK_NULL_HANDLE;
