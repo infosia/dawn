@@ -180,6 +180,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "202e2764_eb046d29",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-13T17:38:50Z",
+      "side": 1,
+      "message": "I have tried to isolate the cost to when we are multisampling. Ideally we have correctly isolated it. Btw this is not the end. We will need to revisit this to fix the sample_mask failures. Not sure what is wrong there but this change does not fix these.",
+      "parentUuid": "64ba01b6_db68b9b9",
+      "revId": "9e0a2909e9907d8309b6631003af31b87a71c0e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d1011ff8_e81379da",
         "filename": "src/dawn/tests/end2end/MultisampledInterpolationTests.cpp",
         "patchSetId": 40

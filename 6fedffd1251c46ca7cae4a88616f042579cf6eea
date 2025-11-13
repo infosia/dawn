@@ -199,6 +199,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19390f0a_4a1b7b90",
+        "filename": "src/dawn/tests/end2end/MultisampledInterpolationTests.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-13T17:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d239110f_a3d60914",
+      "range": {
+        "startLine": 42,
+        "startChar": 25,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "6fedffd1251c46ca7cae4a88616f042579cf6eea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2b52226_0e54c14e",
