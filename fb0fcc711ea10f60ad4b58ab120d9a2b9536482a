@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26d77173_4fe7c986",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-13T14:10:25Z",
+      "side": 1,
+      "message": "PTAL! It should pass CQ after the next Skia roll.",
+      "revId": "fb0fcc711ea10f60ad4b58ab120d9a2b9536482a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
