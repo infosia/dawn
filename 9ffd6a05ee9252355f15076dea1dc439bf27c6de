@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28f3d63a_14f6ad7d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-13T18:23:24Z",
+      "side": 1,
+      "message": "Why? We\u0027ll have tonnes of these I think spread everywhere. This sounds like a bug in your editor if it\u0027s jumping to braces in strings?",
+      "revId": "9ffd6a05ee9252355f15076dea1dc439bf27c6de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
