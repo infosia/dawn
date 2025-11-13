@@ -16,6 +16,74 @@
       "message": "LGTM once this is rebased and uses the updated `FencedDeleter` stuff and any other modernizations needed.",
       "revId": "2478513794034e7a9120289e7299523be07ad9a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4639c29_aa0f9c0a",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-13T08:56:36Z",
+      "side": 1,
+      "message": "And readonly texel buffer here.",
+      "revId": "2478513794034e7a9120289e7299523be07ad9a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be01b71b_397ce304",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-13T08:56:36Z",
+      "side": 1,
+      "message": "This seems to be missing handling of `wgpu::BufferUsage::TexelBuffer`.",
+      "revId": "2478513794034e7a9120289e7299523be07ad9a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "351cf82a_9ebbffea",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-13T08:56:36Z",
+      "side": 1,
+      "message": "This can be folded in the condition above.",
+      "revId": "2478513794034e7a9120289e7299523be07ad9a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d91245a_ea3b9dc0",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-13T08:56:36Z",
+      "side": 1,
+      "message": "This should have a TODO to have a new binding type in the remapping instead of using `storage_texture`.",
+      "revId": "2478513794034e7a9120289e7299523be07ad9a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
