@@ -70,6 +70,30 @@
       },
       "revId": "50d47b728c961f7f3a4d2681d51701cbceb4303b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec1e01e7_7f41ed7a",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-13T17:54:16Z",
+      "side": 1,
+      "message": "I think we should this instrumentally but I dont think we should have the code in a invalid state. So I will hold off until we are sure that this will work.",
+      "parentUuid": "76561d7e_39657b69",
+      "range": {
+        "startLine": 727,
+        "startChar": 0,
+        "endLine": 746,
+        "endChar": 5
+      },
+      "revId": "50d47b728c961f7f3a4d2681d51701cbceb4303b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
