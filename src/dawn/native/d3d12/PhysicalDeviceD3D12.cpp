@@ -579,17 +579,30 @@ void PhysicalDevice::CleanUpDebugLayerFilters() {
 
 void PhysicalDevice::SetupBackendAdapterToggles(dawn::platform::Platform* platform,
                                                 TogglesState* adapterToggles) const {
+    if (!GetBackend()->IsFXCLibraryAvailable()) {
+        // If FXC is not available, we must use DXC.
 #ifdef DAWN_USE_BUILT_DXC
-    if (GetDeviceInfo().highestSupportedShaderModel < 60) {
-        // If shader model < 6.0, though, we must use FXC.
-        adapterToggles->ForceSet(Toggle::UseDXC, false);
-    }
-    const bool useDxc = platform->IsFeatureEnabled(dawn::platform::Features::kWebGPUUseDXC);
-    adapterToggles->Default(Toggle::UseDXC, useDxc);
+        DAWN_CHECK(GetBackend()->IsDXCLibraryAvailable());
+        adapterToggles->ForceSet(Toggle::UseDXC, true);
 #else
-    adapterToggles->ForceSet(Toggle::UseDXC, false);
-    adapterToggles->Default(Toggle::UseDXC, false);
+        DAWN_UNREACHABLE();
 #endif
+    } else {
+        // Use DXC if possible, and fallback to FXC otherwise which is available.
+#ifdef DAWN_USE_BUILT_DXC
+        if (!GetBackend()->IsFXCLibraryAvailable() ||
+            GetDeviceInfo().highestSupportedShaderModel < 60) {
+            // If DXC is not available or shader model < 6.0, though, we must use FXC.
+            adapterToggles->ForceSet(Toggle::UseDXC, false);
+        } else {
+            const bool useDxc = platform->IsFeatureEnabled(dawn::platform::Features::kWebGPUUseDXC);
+            adapterToggles->Default(Toggle::UseDXC, useDxc);
+        }
+#else
+        adapterToggles->ForceSet(Toggle::UseDXC, false);
+        adapterToggles->Default(Toggle::UseDXC, false);
+#endif
+    }
 
     const uint32_t deviceId = GetDeviceId();
     const uint32_t vendorId = GetVendorId();

@@ -73,6 +73,20 @@ MaybeError Backend::Initialize() {
         }
     }
 
+    // Try to load FXC and DXC compilers, but don't fail unless none of them are available.
+    MaybeError FXCResult = EnsureFXC();
+    if (FXCResult.IsError()) {
+        FXCResult.AcquireError();
+    }
+#ifdef DAWN_USE_BUILT_DXC
+    MaybeError DXCResult = EnsureDXC();
+    if (DXCResult.IsError()) {
+        DXCResult.AcquireError();
+    }
+#endif
+    DAWN_INVALID_IF(!IsFXCLibraryAvailable() && !IsDXCLibraryAvailable(),
+                    "No HLSL compiler (FXC or DXC) could be found.");
+
     return {};
 }
 
@@ -80,11 +94,20 @@ const PlatformFunctions* Backend::GetFunctions() const {
     return static_cast<const PlatformFunctions*>(Base::GetFunctions());
 }
 
+MaybeError Backend::EnsureFXC() {
+    auto result = const_cast<PlatformFunctions*>(GetFunctions())
+                      ->EnsureFXC(GetInstance()->GetRuntimeSearchPaths());
+    if (result.IsSuccess()) {
+        mFXCLibraryAvailable = true;
+    }
+    return result;
+}
+
 MaybeError Backend::EnsureDXC() {
 #if DAWN_USE_BUILT_DXC
     // If components are already loaded, return early
-    if (mDxcLibrary != nullptr) {
-        // Since all components are assigned atomically, if one is loaded, all should be loaded
+    if (mDXCLibraryAvailable) {
+        DAWN_CHECK(mDxcLibrary);
         DAWN_CHECK(mDxcCompiler);
         DAWN_CHECK(mDxcValidator);
         return {};
@@ -111,6 +134,7 @@ MaybeError Backend::EnsureDXC() {
     mDxcLibrary = std::move(dxcLibrary);
     mDxcCompiler = std::move(dxcCompiler);
     mDxcValidator = std::move(dxcValidator);
+    mDXCLibraryAvailable = true;
 
     return {};
 #else
@@ -131,6 +155,14 @@ ComPtr<IDxcCompiler3> Backend::GetDxcCompiler() const {
 ComPtr<IDxcValidator> Backend::GetDxcValidator() const {
     DAWN_ASSERT(mDxcValidator != nullptr);
     return mDxcValidator;
+}
+
+bool Backend::IsDXCLibraryAvailable() const {
+    return mDXCLibraryAvailable;
+}
+
+bool Backend::IsFXCLibraryAvailable() const {
+    return mFXCLibraryAvailable;
 }
 
 ResultOrError<Ref<PhysicalDeviceBase>> Backend::CreatePhysicalDeviceFromIDXGIAdapter(

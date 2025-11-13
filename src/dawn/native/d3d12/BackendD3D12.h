@@ -53,10 +53,11 @@ class Backend final : public d3d::Backend {
     explicit Backend(InstanceBase* instance);
 
     MaybeError Initialize();
-    MaybeError EnsureDXC();
     ComPtr<IDxcLibrary> GetDxcLibrary() const;
     ComPtr<IDxcCompiler3> GetDxcCompiler() const;
     ComPtr<IDxcValidator> GetDxcValidator() const;
+    bool IsDXCLibraryAvailable() const;
+    bool IsFXCLibraryAvailable() const;
 
     const PlatformFunctions* GetFunctions() const;
 
@@ -68,6 +69,10 @@ class Backend final : public d3d::Backend {
     ComPtr<IDxcLibrary> mDxcLibrary;
     ComPtr<IDxcCompiler3> mDxcCompiler;
     ComPtr<IDxcValidator> mDxcValidator;
+    bool mDXCLibraryAvailable = false;
+    bool mFXCLibraryAvailable = false;
+    MaybeError EnsureDXC();
+    MaybeError EnsureFXC();
 
     using Base = d3d::Backend;
 };
