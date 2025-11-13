@@ -118,6 +118,30 @@
       },
       "revId": "50d47b728c961f7f3a4d2681d51701cbceb4303b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4521e42_37c2ef7e",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-13T21:06:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "989cf7ec_d1c8585c",
+      "range": {
+        "startLine": 727,
+        "startChar": 0,
+        "endLine": 746,
+        "endChar": 5
+      },
+      "revId": "50d47b728c961f7f3a4d2681d51701cbceb4303b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
