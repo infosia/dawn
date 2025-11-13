@@ -60,9 +60,6 @@ Extension ParseExtension(std::string_view str) {
     if (str == "chromium_experimental_framebuffer_fetch") {
         return Extension::kChromiumExperimentalFramebufferFetch;
     }
-    if (str == "chromium_experimental_immediate") {
-        return Extension::kChromiumExperimentalImmediate;
-    }
     if (str == "chromium_experimental_pixel_local") {
         return Extension::kChromiumExperimentalPixelLocal;
     }
@@ -104,8 +101,6 @@ std::string_view ToString(Extension value) {
             return "chromium_experimental_dynamic_binding";
         case Extension::kChromiumExperimentalFramebufferFetch:
             return "chromium_experimental_framebuffer_fetch";
-        case Extension::kChromiumExperimentalImmediate:
-            return "chromium_experimental_immediate";
         case Extension::kChromiumExperimentalPixelLocal:
             return "chromium_experimental_pixel_local";
         case Extension::kChromiumExperimentalSubgroupMatrix:
@@ -201,6 +196,9 @@ LanguageFeature ParseLanguageFeature(std::string_view str) {
     if (str == "fragment_depth") {
         return LanguageFeature::kFragmentDepth;
     }
+    if (str == "immediate_address_space") {
+        return LanguageFeature::kImmediateAddressSpace;
+    }
     if (str == "packed_4x8_integer_dot_product") {
         return LanguageFeature::kPacked4X8IntegerDotProduct;
     }
@@ -245,6 +243,8 @@ std::string_view ToString(LanguageFeature value) {
             return "chromium_testing_unsafe_experimental";
         case LanguageFeature::kFragmentDepth:
             return "fragment_depth";
+        case LanguageFeature::kImmediateAddressSpace:
+            return "immediate_address_space";
         case LanguageFeature::kPacked4X8IntegerDotProduct:
             return "packed_4x8_integer_dot_product";
         case LanguageFeature::kPointerCompositeAccess:
