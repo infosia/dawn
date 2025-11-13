@@ -160,6 +160,24 @@
       "parentUuid": "25692449_3e4dbd1b",
       "revId": "5665177422dc93da21b96d04e383cdb06041c5c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b17bc04_69a0a044",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-13T14:42:08Z",
+      "side": 1,
+      "message": "In basic.wgsl the return type isn\u0027t a `struct` is it, it\u0027s just a value? If so, then it won\u0027t go through the `Structure` resolving. It\u0027s possible there are more places the resolver needs to set the extra IO information if it isn\u0027t set already.\n\nLooks like we need to update the ir/disassembler.cc to emit the depth value. There is an `EmitReturnAttributes` which does it for the return types and a `EmitStructDecl` which does it for structures.",
+      "parentUuid": "05678af9_7f79c71a",
+      "revId": "5665177422dc93da21b96d04e383cdb06041c5c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
