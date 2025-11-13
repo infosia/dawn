@@ -94,6 +94,30 @@
       },
       "revId": "50d47b728c961f7f3a4d2681d51701cbceb4303b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "989cf7ec_d1c8585c",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-13T19:00:23Z",
+      "side": 1,
+      "message": "I ran into a complex problem involving things getting cast to bool constants. I will resolve.",
+      "parentUuid": "ec1e01e7_7f41ed7a",
+      "range": {
+        "startLine": 727,
+        "startChar": 0,
+        "endLine": 746,
+        "endChar": 5
+      },
+      "revId": "50d47b728c961f7f3a4d2681d51701cbceb4303b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
