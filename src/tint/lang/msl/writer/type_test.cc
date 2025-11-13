@@ -1508,5 +1508,35 @@ kernel void entry() {
 )");
 }
 
+TEST_F(MslWriterTest, EmitType_SubgroupMatrix_i32) {
+    auto* func = b.ComputeFunction("entry");
+    b.Append(func->Block(), [&] {
+        b.Var("a", ty.ptr(core::AddressSpace::kFunction, ty.subgroup_matrix_left(ty.i32(), 8, 8)));
+        b.Return(func);
+    });
+
+    auto res = GenResult();
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(
+        "Invalid subgroup matrix configuration. Metal requires 8x8 subgroup matrices of type F16 "
+        "or F32",
+        res.Failure().reason);
+}
+
+TEST_F(MslWriterTest, EmitType_SubgroupMatrix_8x2) {
+    auto* func = b.ComputeFunction("entry");
+    b.Append(func->Block(), [&] {
+        b.Var("a", ty.ptr(core::AddressSpace::kFunction, ty.subgroup_matrix_left(ty.i32(), 8, 2)));
+        b.Return(func);
+    });
+
+    auto res = GenResult();
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(
+        "Invalid subgroup matrix configuration. Metal requires 8x8 subgroup matrices of type F16 "
+        "or F32",
+        res.Failure().reason);
+}
+
 }  // namespace
 }  // namespace tint::msl::writer

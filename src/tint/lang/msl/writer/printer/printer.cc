@@ -154,6 +154,10 @@ class Printer : public tint::TextGenerator {
             EmitFunction(func);
         }
 
+        if (!err_.empty()) {
+            return Failure{err_};
+        }
+
         StringStream ss;
         ss << preamble_buffer_.String() << main_buffer_.String();
         result_.msl = ss.str();
@@ -193,6 +197,11 @@ class Printer : public tint::TextGenerator {
 
     /// Block to emit for a continuing
     std::function<void()> emit_continuing_;
+
+    /// Error message generated during shader generation. This is really only designed for a single
+    /// error location, if we have more then subgroup matrix dimensions generating errors then this
+    /// should probably be a diagnostic.
+    std::string err_;
 
     /// @returns the name of the templated `tint_array` helper type, generating it if needed
     const std::string& ArrayTemplateName() {
@@ -1389,9 +1398,12 @@ class Printer : public tint::TextGenerator {
             },                                                 //
             [&](const msl::type::Level*) { out << "level"; },  //
             [&](const core::type::SubgroupMatrix* sm) {
-                TINT_IR_ASSERT(ir_, (sm->Type()->IsAnyOf<core::type::F32, core::type::F16>()));
-                TINT_IR_ASSERT(ir_, sm->Columns() == 8);
-                TINT_IR_ASSERT(ir_, sm->Rows() == 8);
+                if ((!sm->Type()->IsAnyOf<core::type::F32, core::type::F16>()) ||
+                    sm->Columns() != 8 || sm->Rows() != 8) {
+                    err_ =
+                        "Invalid subgroup matrix configuration. Metal requires 8x8 subgroup "
+                        "matrices of type F16 or F32";
+                }
 
                 out << "simdgroup_";
                 EmitType(out, sm->Type());

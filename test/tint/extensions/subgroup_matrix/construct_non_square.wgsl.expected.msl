@@ -1,0 +1,5 @@
+SKIP: FAILED
+
+the MSL backend only supports 8x8 subgroup matrices
+
+tint executable returned error: exit status 1
