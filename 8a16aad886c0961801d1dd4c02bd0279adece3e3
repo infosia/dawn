@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67184ce5_7f99bfc9",
+        "filename": "src/dawn/native/webgpu/RenderBundleEncoderWGPU.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-11-13T02:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98baec1d_645f1821",
+      "revId": "8a16aad886c0961801d1dd4c02bd0279adece3e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1608a0f_b035e123",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-11-12T09:34:20Z",
       "side": 1,
       "message": "Why do we do this lazily on the first use instead of on creation?",
+      "revId": "8a16aad886c0961801d1dd4c02bd0279adece3e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52fe2272_b045eb68",
+        "filename": "src/dawn/native/webgpu/RenderBundleWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-11-13T02:32:49Z",
+      "side": 1,
+      "message": "Creating the inner handle in creation fails DrawIndexedIndirectTest tests. The DrawIndirectCmd.indirectBuffer under some cases is not initialized until later stage. (I think is [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/RenderEncoderBase.cpp;l\u003d232;drc\u003dd17bdb0a681c95ac7bf943425e2297f1498ec4b4))",
+      "parentUuid": "e1608a0f_b035e123",
       "revId": "8a16aad886c0961801d1dd4c02bd0279adece3e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
