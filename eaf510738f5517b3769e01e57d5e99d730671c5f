@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e7bc5cb_cc81c3eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-13T20:22:16Z",
+      "side": 1,
+      "message": "Noticed on a previous CL that you were not a OWNER of Tint sources.",
+      "revId": "eaf510738f5517b3769e01e57d5e99d730671c5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
