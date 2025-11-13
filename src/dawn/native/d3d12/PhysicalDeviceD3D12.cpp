@@ -110,6 +110,19 @@ MaybeError PhysicalDevice::InitializeImpl() {
 
     DAWN_TRY_ASSIGN(mDeviceInfo, GatherDeviceInfo(*this));
 
+#ifdef DAWN_USE_BUILT_DXC
+    // DXC only support shader model 6.0 and higher, disable it if device doesn't support.
+    mDXCAvailable =
+        GetBackend()->IsDXCLibraryAvailable() && GetDeviceInfo().highestSupportedShaderModel >= 60;
+#else
+    mDXCAvailable = false;
+#endif
+    mFXCAvailable = GetBackend()->IsFXCLibraryAvailable();
+
+    if (!mDXCAvailable && !mFXCAvailable) {
+        return DAWN_INTERNAL_ERROR("No HLSL compiler (FXC or DXC) is available.");
+    }
+
     // Base::InitializeImpl() cannot distinguish between discrete and integrated GPUs, so we need to
     // overwrite it here.
     if (mAdapterType == wgpu::AdapterType::DiscreteGPU && mDeviceInfo.isUMA) {
@@ -579,17 +592,28 @@ void PhysicalDevice::CleanUpDebugLayerFilters() {
 
 void PhysicalDevice::SetupBackendAdapterToggles(dawn::platform::Platform* platform,
                                                 TogglesState* adapterToggles) const {
+    DAWN_CHECK(mDXCAvailable || mFXCAvailable);
+
+    if (!mFXCAvailable) {
+        // If FXC is not available, we must use DXC.
 #ifdef DAWN_USE_BUILT_DXC
-    if (GetDeviceInfo().highestSupportedShaderModel < 60) {
-        // If shader model < 6.0, though, we must use FXC.
-        adapterToggles->ForceSet(Toggle::UseDXC, false);
-    }
-    const bool useDxc = platform->IsFeatureEnabled(dawn::platform::Features::kWebGPUUseDXC);
-    adapterToggles->Default(Toggle::UseDXC, useDxc);
+        adapterToggles->ForceSet(Toggle::UseDXC, true);
 #else
-    adapterToggles->ForceSet(Toggle::UseDXC, false);
-    adapterToggles->Default(Toggle::UseDXC, false);
+        DAWN_UNREACHABLE();
 #endif
+    } else {
+        // Use DXC by default if available, and fallback to FXC otherwise.
+#ifdef DAWN_USE_BUILT_DXC
+        if (!mDXCAvailable) {
+            adapterToggles->ForceSet(Toggle::UseDXC, false);
+        } else {
+            const bool useDxc = platform->IsFeatureEnabled(dawn::platform::Features::kWebGPUUseDXC);
+            adapterToggles->Default(Toggle::UseDXC, useDxc);
+        }
+#else
+        adapterToggles->ForceSet(Toggle::UseDXC, false);
+#endif
+    }
 
     const uint32_t deviceId = GetDeviceId();
     const uint32_t vendorId = GetVendorId();
