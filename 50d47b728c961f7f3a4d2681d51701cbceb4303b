@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28aa8c4d_7d53ffca",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-13T17:40:35Z",
+      "side": 1,
+      "message": "Can we delete these two now?",
+      "range": {
+        "startLine": 727,
+        "startChar": 0,
+        "endLine": 746,
+        "endChar": 5
+      },
+      "revId": "50d47b728c961f7f3a4d2681d51701cbceb4303b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
