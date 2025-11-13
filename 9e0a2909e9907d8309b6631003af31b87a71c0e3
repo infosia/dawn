@@ -107,6 +107,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a946fa89_eae42793",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-13T14:45:30Z",
+      "side": 1,
+      "message": "Seems fine, just losing one PowerVR+Linux device:\n```\nRequirement \"maxVertexOutputComponents \u003e\u003d 72\" loses 1 (and partially loses 0) further deviceNames:\n  In ALL reports (1 deviceNames):\n    x PowerVR B-Series BXE-4-32: 1 of 1\n  In SOME reports (0 deviceNames):\n```",
+      "parentUuid": "557c5417_55f67ade",
+      "revId": "9e0a2909e9907d8309b6631003af31b87a71c0e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e05867c_c77c491f",
@@ -138,6 +156,24 @@
       "side": 1,
       "message": "It was not clear to me which devices need it. It appears that modern intel does not and ditto with NVIDIA.  If it was the inverse (older/weaker devices do not need emulation) I would put more effort into trying to make it more targeted.",
       "parentUuid": "7e05867c_c77c491f",
+      "revId": "9e0a2909e9907d8309b6631003af31b87a71c0e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64ba01b6_db68b9b9",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-13T14:45:30Z",
+      "side": 1,
+      "message": "Not sure I understand. If it\u0027s only older (legacy) devices that need it then it seems worth avoiding the polyfill for the devices that will hit the majority of users going forwards?\n\nBut I see that it\u0027s not just one IHV so starting with it on everywhere is probably fine for now. I just don\u0027t have a good sense of the cost of the polyfill.",
+      "parentUuid": "19a607ed_c698bb87",
       "revId": "9e0a2909e9907d8309b6631003af31b87a71c0e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -292,6 +328,30 @@
       "side": 1,
       "message": "Ok the truth is that we cannot check the \u0027func\u0027 to see if we are in the vertex or fragment later on in the transform. I think this is because we wrap the entry point.\n\nSo to implement what you suggest we would need to determine if the func was in in a vertex shader by a different mechanism",
       "parentUuid": "338d3126_e189c0e1",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 48
+      },
+      "revId": "9e0a2909e9907d8309b6631003af31b87a71c0e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "556a482c_318f05c4",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-13T14:45:30Z",
+      "side": 1,
+      "message": "Well, if you are dealing with a position input then it\u0027s a fragment shader, and if you\u0027re dealing with a position output then it\u0027s a vertex shader. I think that covers the places where you use these variables.\n\nBut it\u0027s up to you, it\u0027s also fine to leave it as is since it\u0027s just a couple of uint32_t optionals.",
+      "parentUuid": "7c947605_963b91e0",
       "range": {
         "startLine": 67,
         "startChar": 0,

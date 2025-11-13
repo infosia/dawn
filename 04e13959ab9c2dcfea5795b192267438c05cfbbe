@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1280bd87_930e0b22",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-13T14:45:30Z",
+      "side": 1,
+      "message": "Should be `72 \u003d ` now?",
+      "fixSuggestions": [
+        {
+          "fixId": "e1e99727_612d279a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+              "range": {
+                "startLine": 821,
+                "startChar": 0,
+                "endLine": 822,
+                "endChar": 0
+              },
+              "replacement": "    // `maxVertexOutputComponents` must be no less than 72 \u003d (16 * 4 + 8).\n"
+            }
+          ]
+        }
+      ],
+      "revId": "04e13959ab9c2dcfea5795b192267438c05cfbbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
