@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "671a1992_981196bc",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-13T09:13:07Z",
+      "side": 1,
+      "message": "Instead of passing these structures as arguments, can we add `AcquireFoo` like in `CommandEncoder.h`? It would avoid having to declare them here and would hide the concept that they are needed for render bundles from the rest of the code.",
+      "revId": "37c6df11c28ff5c584fb448eeace3a9802bf4d33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f981fa10_facab310",
+        "filename": "src/dawn/native/ToBackend.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-13T09:13:07Z",
+      "side": 1,
+      "message": "No longer needed.",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "37c6df11c28ff5c584fb448eeace3a9802bf4d33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
