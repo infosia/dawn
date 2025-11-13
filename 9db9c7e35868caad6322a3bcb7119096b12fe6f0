@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3560d85a_0b5f8bba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-13T21:41:29Z",
+      "side": 1,
+      "message": "PTAL",
+      "revId": "9db9c7e35868caad6322a3bcb7119096b12fe6f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7788af8f_a56ad27e",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-13T21:41:29Z",
+      "side": 1,
+      "message": "Perhaps this is an indication that my original splitting of this was misguided. At this point it might be better to remove all of the nested interfaces and put everything directly on the `OSWrapper` interface.",
+      "range": {
+        "startLine": 65,
+        "startChar": 35,
+        "endLine": 67,
+        "endChar": 66
+      },
+      "revId": "9db9c7e35868caad6322a3bcb7119096b12fe6f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
