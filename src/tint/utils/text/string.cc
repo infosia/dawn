@@ -67,13 +67,13 @@ void SuggestAlternatives(std::string_view got,
                          Slice<const std::string_view> strings,
                          StyledText& ss,
                          const SuggestAlternativeOptions& options /* = {} */) {
-    // If the string typed was within kSuggestionDistance of one of the possible enum values,
+    // If the string typed was within kSuggestionDistance2 of one of the possible enum values,
     // suggest that. Don't bother with suggestions if the string was extremely long.
     auto default_style = ss.Style();
-    constexpr size_t kSuggestionDistance = 5;
+    constexpr size_t kSuggestionDistance2 = 5;
     constexpr size_t kSuggestionMaxLength = 64;
     if (!got.empty() && got.size() < kSuggestionMaxLength) {
-        size_t candidate_dist = kSuggestionDistance;
+        size_t candidate_dist = kSuggestionDistance2;
         std::string_view candidate;
         for (auto str : strings) {
             auto dist = tint::Distance(str, got);
