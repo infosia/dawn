@@ -16,6 +16,98 @@
       "message": "PTAL!",
       "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9837f2c8_7a3f8eb4",
+        "filename": "src/dawn/native/EncodingContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-13T21:08:58Z",
+      "side": 1,
+      "message": "nit. prevents",
+      "range": {
+        "startLine": 122,
+        "startChar": 40,
+        "endLine": 122,
+        "endChar": 47
+      },
+      "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d37697c3_908eae86",
+        "filename": "src/dawn/native/EncodingContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-13T21:08:58Z",
+      "side": 1,
+      "message": "nit. recording",
+      "range": {
+        "startLine": 123,
+        "startChar": 15,
+        "endLine": 123,
+        "endChar": 34
+      },
+      "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4482478e_ae69b1c0",
+        "filename": "src/dawn/native/EncodingContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-13T21:08:58Z",
+      "side": 1,
+      "message": "nit. if",
+      "range": {
+        "startLine": 53,
+        "startChar": 90,
+        "endLine": 53,
+        "endChar": 92
+      },
+      "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ca1268e_18866afa",
+        "filename": "src/dawn/native/EncodingContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-13T21:08:58Z",
+      "side": 1,
+      "message": "Hmm... I don\u0027t feel too strongly about this, but I feel like usually we use the `On*` prefix to denote callbacks of sorts (here and in Chromium also). Would it make sense to call these just `BeginPass`, `EndPass`, and `DestroyPass` instead?",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
