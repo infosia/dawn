@@ -712,6 +712,19 @@ class Builder {
     }
 
     /// Creates an Equal operation
+    /// @param lhs the lhs of the add
+    /// @param rhs the rhs of the add
+    /// @returns the operation
+    template <typename LHS, typename RHS>
+    ir::CoreBinary* Equal(LHS&& lhs, RHS&& rhs) {
+        auto* lhs_value = Value(std::forward<LHS>(lhs));
+        auto* rhs_value = Value(std::forward<RHS>(rhs));
+        auto* type = ir.Types().MatchWidth(ir.Types().bool_(), lhs_value->Type());
+        return Append(ir.CreateInstruction<ir::CoreBinary>(InstructionResult(type),
+                                                           BinaryOp::kEqual, lhs_value, rhs_value));
+    }
+
+    /// Creates an Equal operation
     /// @param type the result type of the expression
     /// @param lhs the lhs of the add
     /// @param rhs the rhs of the add
