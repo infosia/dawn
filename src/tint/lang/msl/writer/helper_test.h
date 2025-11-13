@@ -97,6 +97,15 @@ class MslWriterTestHelperBase : public BASE {
         return Validate(msl_version);
     }
 
+    /// Run the writer on the IR module and validate the result.
+    /// @param options the writer options
+    /// @returns true if generation and validation succeeded
+    Result<Output> GenResult() {
+        Options options{};
+        options.entry_point_name = "entry";
+        return writer::Generate(mod, options);
+    }
+
     /// Run the printer on the MSL IR module and validate the result.
     /// @param options the writer options
     /// @returns true if generation and validation succeeded
