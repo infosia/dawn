@@ -326,7 +326,6 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
         device->GetDeviceInfo().memoryTypes[memoryType].propertyFlags;
     mHostVisible = IsSubset(VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT, memoryPropertyFlags);
     mHostCoherent = IsSubset(VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, memoryPropertyFlags);
-    mHasWriteTransitioned = false;
 
     SetLabelImpl();
 
@@ -417,7 +416,6 @@ MaybeError Buffer::InitializeHostMapped(const BufferHostMappedPointer* hostMappe
 
     mHostVisible = false;
     mHostCoherent = false;
-    mHasWriteTransitioned = false;
 
     SetLabelImpl();
 
@@ -708,16 +706,12 @@ MaybeError Buffer::UploadData(uint64_t bufferOffset, const void* data, size_t si
     // Write to scratch buffer and copy into final destination buffer.
     MaybeError error = BufferBase::UploadData(bufferOffset, data, size);
 
-    if (mHostVisible && !mHasWriteTransitioned) {
+    if (mHostVisible) {
         // Transition to MapWrite so the next time we try to upload data to this buffer, we can take
-        // the fast path. This avoids the issue where the first write will take the slow path due to
-        // zero initialization. Only attempt this once to avoid transitioning a buffer many times
-        // despite never getting the fast path.
+        // the fast path.
         CommandRecordingContext* recordingContext =
             ToBackend(device->GetQueue())->GetPendingRecordingContext();
-        TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapWrite);
-        device->GetQueue()->ForceEventualFlushOfCommands();
-        mHasWriteTransitioned = true;
+        recordingContext->mappableBuffersForEagerTransition[this] = true;
     }
 
     return error;
@@ -807,16 +801,21 @@ bool Buffer::EnsureDataInitializedAsDestination(CommandRecordingContext* recordi
 }
 
 // static
-void Buffer::TransitionMappableBuffersEagerly(Device* device,
-                                              CommandRecordingContext* recordingContext,
-                                              const absl::flat_hash_set<Ref<Buffer>>& buffers) {
+void Buffer::TransitionMappableBuffersEagerly(
+    Device* device,
+    CommandRecordingContext* recordingContext,
+    const absl::flat_hash_map<Ref<Buffer>, bool>& buffers) {
     DAWN_ASSERT(!buffers.empty());
 
     size_t originalBufferCount = buffers.size();
 
     BufferBarrier barrier;
-    for (const Ref<Buffer>& buffer : buffers) {
+    for (const auto& [buffer, queue_write] : buffers) {
         wgpu::BufferUsage mapUsage = buffer->GetInternalUsage() & kMappableBufferUsages;
+        if (queue_write) {
+            // This buffer was used by Queue::WriteBuffer() so transition usage to MapWrite.
+            mapUsage = mapUsage & wgpu::BufferUsage::MapWrite;
+        }
         barrier.Merge(buffer->TrackUsageAndGetResourceBarrier(mapUsage, wgpu::ShaderStage::None));
     }
     // TrackUsageAndGetResourceBarrier() should not modify recordingContext for map usages.
