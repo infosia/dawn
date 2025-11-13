@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18585589_ee7a9b4b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-13T17:16:29Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "b73eee9d95b09d1001c270fc95c0b41f8bbf2e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ca834c8_cd197f20",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-13T17:16:29Z",
+      "side": 1,
+      "message": "Since frag_depth is only an output we don\u0027t need to do this for parameters at all.",
+      "revId": "b73eee9d95b09d1001c270fc95c0b41f8bbf2e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
