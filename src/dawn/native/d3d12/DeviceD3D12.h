@@ -226,8 +226,6 @@ class Device final : public d3d::Device {
     ResultOrError<ComPtr<ID3D11On12Device>> GetOrCreateD3D11On12DeviceInternal();
     void Flush11On12DeviceToAvoidLeaks();
 
-    MaybeError EnsureCompilerLibraries();
-
     MaybeError CreateZeroBuffer();
 
     ComPtr<ID3D12Device> mD3d12Device;  // Device is owned by adapter and will not be outlived.

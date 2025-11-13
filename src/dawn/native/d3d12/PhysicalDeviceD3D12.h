@@ -92,6 +92,9 @@ class PhysicalDevice : public d3d::PhysicalDevice {
     ComPtr<ID3D12Device> mD3d12Device;
 
     D3D12DeviceInfo mDeviceInfo = {};
+
+    bool mDXCAvailable = false;
+    bool mFXCAvailable = false;
 };
 
 }  // namespace dawn::native::d3d12

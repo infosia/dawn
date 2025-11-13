@@ -178,7 +178,6 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
                                              IID_PPV_ARGS(&mDrawIndexedIndirectSignature));
 
     DAWN_TRY(DeviceBase::Initialize(descriptor, std::move(queue)));
-    DAWN_TRY(EnsureCompilerLibraries());
 
     // Set up shader profile for DXC.
     if (IsToggleEnabled(Toggle::UseDXC)) {
@@ -282,17 +281,6 @@ ComPtr<ID3D12CommandSignature> Device::GetDrawIndirectSignature() const {
 
 ComPtr<ID3D12CommandSignature> Device::GetDrawIndexedIndirectSignature() const {
     return mDrawIndexedIndirectSignature;
-}
-
-// Ensure DXC if use_dxc toggles are set and validated.
-MaybeError Device::EnsureCompilerLibraries() {
-    if (IsToggleEnabled(Toggle::UseDXC)) {
-        DAWN_TRY(ToBackend(GetPhysicalDevice())->GetBackend()->EnsureDXC());
-    } else {
-        DAWN_TRY(ToBackend(GetPhysicalDevice())->GetBackend()->EnsureFXC());
-    }
-
-    return {};
 }
 
 const PlatformFunctions* Device::GetFunctions() const {
