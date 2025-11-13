@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1c6eab9_47fd90b2",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-13T17:48:00Z",
+      "side": 1,
+      "message": "Just to confirm: Yes, this is no different than the previous codepath when it comes to potentially copying a lot of padding. I\u0027d definitely like to see what further optimizations could be done for things like that, but obviously that\u0027s material for follow-up CLs.",
+      "parentUuid": "d6f975e4_011d135f",
+      "revId": "b1f0fd203b6229c101b588d1451959a02d63865f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c4b8eab5_190f2cc6",
@@ -66,6 +84,30 @@
       "writtenOn": "2025-11-12T23:42:01Z",
       "side": 1,
       "message": "You need to handle the fallback case for the tests until you implement the fix to make `GetSourceData` work even in the non-chromium case.",
+      "range": {
+        "startLine": 130,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 5
+      },
+      "revId": "b1f0fd203b6229c101b588d1451959a02d63865f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "296541ed_de32dfc9",
+        "filename": "src/dawn/wire/server/ServerQueue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-13T17:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4b8eab5_190f2cc6",
       "range": {
         "startLine": 130,
         "startChar": 4,
