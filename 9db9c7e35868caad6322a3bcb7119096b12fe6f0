@@ -39,6 +39,30 @@
       },
       "revId": "9db9c7e35868caad6322a3bcb7119096b12fe6f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c34af909_8ad268a1",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-13T22:01:12Z",
+      "side": 1,
+      "message": "My gut feeling is that you are probably right, since just merging up the EnvironProvider up wouldn\u0027t exposed what we wanted (and that is what we kinda are already doing with the type/struct embedding), because the OSWrapper would know the details, but the Reader/Writer stills wouldn\u0027t.\n\nSince it looks like we are already using embedding for OSWrapper type we can keep the ability of callsites to specifying their usage to just just a subsection of the wrapper API for clarity.\n\nIt is just an implementation side detail that needs to change. Instead of having the implementations using struct embedding to have the same exact structure as the OSWrapper interface, just have all of the implementations be on the top-level struct (i.e. FSTestOSWrapper), and let Go\u0027s interface inference sort things outs. Obviously some things like data declarations will need to move too, but that is what want.",
+      "parentUuid": "7788af8f_a56ad27e",
+      "range": {
+        "startLine": 65,
+        "startChar": 35,
+        "endLine": 67,
+        "endChar": 66
+      },
+      "revId": "9db9c7e35868caad6322a3bcb7119096b12fe6f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
