@@ -196,6 +196,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "91af8a5f_b3540983",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-13T18:29:22Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "202e2764_eb046d29",
+      "revId": "9e0a2909e9907d8309b6631003af31b87a71c0e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1011ff8_e81379da",
@@ -370,6 +388,30 @@
       "side": 1,
       "message": "Well, if you are dealing with a position input then it\u0027s a fragment shader, and if you\u0027re dealing with a position output then it\u0027s a vertex shader. I think that covers the places where you use these variables.\n\nBut it\u0027s up to you, it\u0027s also fine to leave it as is since it\u0027s just a couple of uint32_t optionals.",
       "parentUuid": "7c947605_963b91e0",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 48
+      },
+      "revId": "9e0a2909e9907d8309b6631003af31b87a71c0e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edd410be_6ed2f33b",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-13T18:29:22Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "556a482c_318f05c4",
       "range": {
         "startLine": 67,
         "startChar": 0,
