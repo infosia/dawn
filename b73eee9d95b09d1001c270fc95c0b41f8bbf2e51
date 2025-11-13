@@ -51,6 +51,24 @@
       "parentUuid": "7ca834c8_cd197f20",
       "revId": "b73eee9d95b09d1001c270fc95c0b41f8bbf2e51",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fe18dad_bfa036ea",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-13T17:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ee2d10a_ca26b159",
+      "revId": "b73eee9d95b09d1001c270fc95c0b41f8bbf2e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
