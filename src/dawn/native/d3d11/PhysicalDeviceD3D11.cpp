@@ -361,6 +361,12 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     if (gpu_info::IsQualcommACPI(vendorId)) {
         deviceToggles->ForceSet(Toggle::D3D11DelayFlushToGPU, false);
     }
+
+    if (!mDeviceInfo.supportsConcurrentCreates) {
+        deviceToggles->ForceSet(Toggle::D3D11AsyncShaderCreations, false);
+    } else {
+        deviceToggles->Default(Toggle::D3D11AsyncShaderCreations, true);
+    }
 }
 
 ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(

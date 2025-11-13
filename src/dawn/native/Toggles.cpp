@@ -763,6 +763,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "use Instance.WaitAny() to wait for a GPU operation to finish. This toggle is intended to "
       "reduce the fixed overhead associated with each flushing.",
       "https://crbug.com/chromium/377716220", ToggleStage::Device}},
+    {Toggle::D3D11AsyncShaderCreations,
+     {"d3d11_async_shader_creations",
+      "When this toggle is enabled, D3D11 shader objects are created asynchronously to avoid "
+      "blocking command encoding. When commands using them are submitted, a wait is triggered for "
+      "the shaders to finish creation.",
+      "https://crbug.com/439845637", ToggleStage::Device}},
     {Toggle::IgnoreImportedAHardwareBufferVulkanImageSize,
      {"ignore_imported_ahardwarebuffer_vulkan_image_size",
       "Don't validate the required VkImage size against the size of the AHardwareBuffer on import. "
