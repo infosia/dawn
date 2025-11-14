@@ -113,6 +113,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3d9e9832_69ed1e24",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1820,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-14T20:40:22Z",
+      "side": 1,
+      "message": "Got it, that\u0027s what I suspected, that it would be able to run more tests with this change.\n\nI still think it\u0027s probably not supposed to be necessary, so it should be considered a temporary workaround for a Dawn bug, @lokokung@google.com WDYT?",
+      "parentUuid": "f2932939_4e918ad4",
+      "range": {
+        "startLine": 1820,
+        "startChar": 12,
+        "endLine": 1820,
+        "endChar": 22
+      },
+      "revId": "b01cd3e70b65f9bbca985afb924623387cb0f6ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b17d0a77_0342a622",
         "filename": "src/dawn/tests/DawnTest.cpp",
         "patchSetId": 1
