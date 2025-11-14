@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c37e2c2_47dc5d51",
+        "filename": "src/dawn/tests/unittests/ToggleTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-14T00:37:03Z",
+      "side": 1,
+      "message": "No, this is effectively a revert of what I did when I added the new toggle. The test is confusing, but basically `CreateAdapterAndValidateToggles`\u0027s first param are the toggles to set, and the 2nd param are the toggles we expect to be enabled as a result. In my change where I introduced `enable_immediate_data`, this toggle was enabled when `allow_unsafe_apis` was enabled, so I had to add this here.\n\nYou can see where I introduced the changes here: https://dawn-review.googlesource.com/c/dawn/+/272734",
+      "parentUuid": "5b5bd268_252fea75",
+      "revId": "861ae6cc27d56779a576eabec2b0e381b7d27de1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "82c4226f_3a27dbf0",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-11-13T21:51:33Z",
       "side": 1,
       "message": "Same question as above - presumably this test was specifically testing something about the immediates toggle.",
+      "revId": "861ae6cc27d56779a576eabec2b0e381b7d27de1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cdf5bb2_1827842c",
+        "filename": "src/dawn/tests/unittests/ToggleTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-14T00:37:03Z",
+      "side": 1,
+      "message": "See comment above.",
+      "parentUuid": "82c4226f_3a27dbf0",
       "revId": "861ae6cc27d56779a576eabec2b0e381b7d27de1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -83,6 +119,24 @@
           ]
         }
       ],
+      "revId": "861ae6cc27d56779a576eabec2b0e381b7d27de1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b5ebac9_84dc634c",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3226,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-14T00:37:03Z",
+      "side": 1,
+      "message": "Yes, now that we\u0027re using C++20 we can, but I decided to follow the examples in the rest of the file for now. We can change all the instances of `!count(...)` to `contains` in a later change.",
+      "parentUuid": "934c4253_a28d0501",
       "revId": "861ae6cc27d56779a576eabec2b0e381b7d27de1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
