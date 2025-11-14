@@ -1088,6 +1088,10 @@ crbug.com/459848489 [ android android-brya ] webgpu:web_platform,copyToTexture,c
 # Pixel 4 timeouts
 crbug.com/448716473 [ android-pixel-4 ] webgpu:api,validation,buffer,mapping:gc_behavior,mapAsync:* [ Skip ]
 crbug.com/448716479 [ android-pixel-4 ] webgpu:shader,validation,expression,call,builtin,quadSwap:*;op="quadSwapX";* [ Skip ]
+crbug.com/407076121 [ android-pixel-4 ] webgpu:shader,execution,limits:const_array_elements:sizeDivisor=1 [ Skip ]
+
+# Pixel 6 timeouts
+crbug.com/407076121 [ android-pixel-6 ] webgpu:shader,execution,limits:const_array_elements:sizeDivisor=1 [ Skip ]
 
 # textureLoad failures on mac AMD for depth2plus-stencil8 format
 crbug.com/448397616 [ amd-0x67ef mac ] webgpu:shader,execution,expression,call,builtin,textureLoad:arrayed:stage="f";format="depth24plus-stencil8";texture_type="texture_2d_array" [ Failure ]
@@ -1392,7 +1396,6 @@ crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,built
 crbug.com/0000 [ intel mac ] webgpu:shader,execution,expression,call,builtin,texture_utils:weights:stage="compute" [ Failure ]
 crbug.com/0000 [ android-t ] webgpu:shader,execution,expression,constructor,non_zero:concrete_matrix_elements:* [ Failure ]
 crbug.com/0000 [ intel win ] webgpu:shader,execution,expression,unary,af_arithmetic:negation:inputSource="const";vectorize="_undef_" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,limits:const_array_elements:sizeDivisor=1 [ Failure ]
 crbug.com/0000 [ dawn-no-backend-validation no-asan webgpu-dxc-disabled win ] webgpu:shader,execution,limits:struct_members: [ Failure ]
 crbug.com/0000 [ android-r qualcomm ] webgpu:shader,execution,memory_layout:write_layout:* [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage:nearFar=[0,1];sampleCount=4;interpolation={"type":"linear","sampling":"sample"} [ Failure ]
