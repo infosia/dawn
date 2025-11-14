@@ -85,6 +85,92 @@
       "message": "Just want to gently check in if there’s any update on the feedback? Thanks!",
       "revId": "5313d18b520723b180d844f69d1befdd967e8993",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69f327a7_aa84e810",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-14T20:09:50Z",
+      "side": 1,
+      "message": "Sorry for the delay! I chatted with Corentin and we have some consensus as detailed below. Sorry for the dramatic set of changes 😞. We felt like this change is in the right direction, but the main thing we want to get out of it is to be able to clearly see what each feature adds capabilities-wise, and the changes still don\u0027t make that super visible yet, so I added some suggestions.\n\nThanks for iterating!",
+      "revId": "5313d18b520723b180d844f69d1befdd967e8993",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e10b596a_64fe446c",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-14T20:09:50Z",
+      "side": 1,
+      "message": "We should move this into the header, and have the `Format` struct hold the value directly. We probably then want to have some helpers to check for these capabilities, i.e. `IsRenderable()`, `IsStorageReadWrite()`, etc.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 2
+      },
+      "revId": "5313d18b520723b180d844f69d1befdd967e8993",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eda43eb2_5151c88c",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-14T20:09:50Z",
+      "side": 1,
+      "message": "So generally, for this function, I think we are imagining something more on the line of:\n\n```\nauto AddCaps(std::span\u003cwgpu::TextureFormat\u003e formats, Cap caps,\n             Feature feature \u003d Feature::InvalidEnum) {\n  bool supported \u003d \n    feature \u003d\u003d Feature::InvalidEnum || device-\u003eHasFeature(feature);\n    \n  for (auto format : formats) {\n    Format\u0026 format \u003d /* look up from the table */ \n \n    if (supported) {\n      format.caps ||\u003d caps;\n      // Set unsupportedReason \u003d supported.\n    } else {\n      if (format.caps \u003d\u003d Cap::None) {\n        // Set unsupportedReason \u003d RequiresFeature{feature}.\n      }\n    }\n}\n\n// Add all format caps that apply in compat mode:\nAddCaps(kSomeFormatAlwaysSupported, Cap::A | Cap::B);\n\n// Handle additional core caps:\nif (core) {\n  AddCaps({kSomeFormatAlwaysSupported, kFormatCoreOnly}, Cap::A | Cap::C);\n} else {\n  ExplainUnsupported(kFormatCoreOnly, CompatibilityMode{});\n}\n\n// For each feature add the respective capabilities:\n\n// Feature::Float32Blendable\nAddCaps({wgpu::TextureFormat::R32Float,\n         wgpu::TextureFormat::RG32Float,\n         wgpu::TextureFormat::RGBA32Float},\n        Cap::Blendable,\n        Feature::Float32Blendable);\n...\n\n// Iterate all the formats and ensure that they have at least \n// one cap or an unsupported reason.\n```",
+      "range": {
+        "startLine": 256,
+        "startChar": 5,
+        "endLine": 256,
+        "endChar": 32
+      },
+      "revId": "5313d18b520723b180d844f69d1befdd967e8993",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbb4b59e_c0eb66fb",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-14T20:09:50Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need to use an additional map since we should just be able to index directly into the `FormatTable`.",
+      "range": {
+        "startLine": 258,
+        "startChar": 4,
+        "endLine": 258,
+        "endChar": 70
+      },
+      "revId": "5313d18b520723b180d844f69d1befdd967e8993",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
