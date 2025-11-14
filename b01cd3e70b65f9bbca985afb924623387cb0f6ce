@@ -20,6 +20,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "964011b7_0f255a16",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1801,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-14T18:48:20Z",
+      "side": 1,
+      "message": "[1] I think you can just replace this with:\n\n```\nauto mockCb \u003d std::make_shared\u003cMockCppCallback\u003cvoid(*)(wgpu::MapAsyncStatus, wgpu::StringView)\u003e\u003e()`\nEXPECT_CALL(*mockCb, Call(wgpu::MapAsyncStatus::Success, _)).Times(1);\n```",
+      "range": {
+        "startLine": 1800,
+        "startChar": 8,
+        "endLine": 1801,
+        "endChar": 77
+      },
+      "revId": "b01cd3e70b65f9bbca985afb924623387cb0f6ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e02154b7_b2bc076b",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1810,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-14T18:48:20Z",
+      "side": 1,
+      "message": "nit. You can capture the shared pointer in by value to cause it to be captured by value and then you don\u0027t need to explicitly use the userdata pointers or do anything of the casting.",
+      "range": {
+        "startLine": 1810,
+        "startChar": 16,
+        "endLine": 1810,
+        "endChar": 18
+      },
+      "revId": "b01cd3e70b65f9bbca985afb924623387cb0f6ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c2466643_dac7b363",
         "filename": "src/dawn/tests/DawnTest.cpp",
         "patchSetId": 1
@@ -60,6 +106,29 @@
         "startChar": 12,
         "endLine": 1820,
         "endChar": 22
+      },
+      "revId": "b01cd3e70b65f9bbca985afb924623387cb0f6ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b17d0a77_0342a622",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1823,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-14T18:48:20Z",
+      "side": 1,
+      "message": "I think here, you probably need to call `Mock::VerifyAndClearExpectations` on the callback because the expectations set at [1] are verified when the object is destructed. I think it doesn\u0027t matter in that the expecations will fail regardless if we time out here, but I think it would make the stack trace more sensible for the expectation to fail here instead of later.",
+      "range": {
+        "startLine": 1823,
+        "startChar": 8,
+        "endLine": 1823,
+        "endChar": 32
       },
       "revId": "b01cd3e70b65f9bbca985afb924623387cb0f6ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
