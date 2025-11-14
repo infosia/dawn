@@ -1,7 +1,34 @@
+SKIP: FAILED
+
+Error parsing GLSL shader:
+ERROR: 0:2: '#extension' : extension not supported: GL_EXT_conservative_depth
+ERROR: 0:2: '#extension' : extra tokens -- expected newline 
+ERROR: 0:2: '' : compilation terminated 
+ERROR: 3 compilation errors.  No code generated.
+
+
+
+Error parsing GLSL shader:
+ERROR: 0:2: '#extension' : extension not supported: GL_EXT_conservative_depth
+ERROR: 0:2: '#extension' : extra tokens -- expected newline 
+ERROR: 0:2: '' : compilation terminated 
+ERROR: 3 compilation errors.  No code generated.
+
+
+
+Error parsing GLSL shader:
+ERROR: 0:2: '#extension' : extension not supported: GL_EXT_conservative_depth
+ERROR: 0:2: '#extension' : extra tokens -- expected newline 
+ERROR: 0:2: '' : compilation terminated 
+ERROR: 3 compilation errors.  No code generated.
+
+
+
 //
 // any
 //
 #version 310 es
+#extension GL_EXT_conservative_depth: require
 precision highp float;
 precision highp int;
 
@@ -16,6 +43,7 @@ struct FragDepthAnyOutput {
 };
 
 layout(location = 0) uniform tint_immediate_struct tint_immediates;
+layout(depth_any) out float gl_FragDepth;
 FragDepthAnyOutput any_inner() {
   return FragDepthAnyOutput(1.0f);
 }
@@ -27,6 +55,7 @@ void main() {
 // less
 //
 #version 310 es
+#extension GL_EXT_conservative_depth: require
 precision highp float;
 precision highp int;
 
@@ -41,6 +70,7 @@ struct FragDepthLessOutput {
 };
 
 layout(location = 0) uniform tint_immediate_struct tint_immediates;
+layout(depth_less) out float gl_FragDepth;
 FragDepthLessOutput less_inner() {
   return FragDepthLessOutput(1.0f);
 }
@@ -52,6 +82,7 @@ void main() {
 // greater
 //
 #version 310 es
+#extension GL_EXT_conservative_depth: require
 precision highp float;
 precision highp int;
 
@@ -66,6 +97,7 @@ struct FragDepthGreaterOutput {
 };
 
 layout(location = 0) uniform tint_immediate_struct tint_immediates;
+layout(depth_greater) out float gl_FragDepth;
 FragDepthGreaterOutput greater_inner() {
   return FragDepthGreaterOutput(1.0f);
 }
@@ -73,3 +105,5 @@ void main() {
   float v = greater_inner().frag_depth;
   gl_FragDepth = clamp(v, tint_immediates.tint_frag_depth_min, tint_immediates.tint_frag_depth_max);
 }
+
+tint executable returned error: exit status 1

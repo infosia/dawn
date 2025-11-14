@@ -103,6 +103,7 @@ constexpr const char* kEXTBlendFuncExtended = "GL_EXT_blend_func_extended";
 constexpr const char* kEXTTextureShadowLod = "GL_EXT_texture_shadow_lod";
 constexpr const char* kEXTGeometryShader = "GL_EXT_geometry_shader";
 constexpr const char* kEXTFragmentShaderBarycentric = "GL_EXT_fragment_shader_barycentric";
+constexpr const char* kEXTConservativeDepth = "GL_EXT_conservative_depth";
 
 enum class LayoutFormat : uint8_t {
     kStd140,
@@ -1148,6 +1149,12 @@ class Printer : public tint::TextGenerator {
                 EmitExtension(kOESSampleVariables);
             }
 
+            if (attrs.builtin == tint::core::BuiltinValue::kFragDepth) {
+                EmitExtension(kEXTConservativeDepth);
+                auto out = Line();
+                EmitLocationFragDepth(out, attrs.depth_mode);
+            }
+
             // Do not emit builtin (gl_) variables, but register the GLSL builtin names so that they
             // are correct at the point of use.
             names_.Add(var->Result(), GLSLBuiltinToString(*attrs.builtin, addrspace));
@@ -1359,6 +1366,19 @@ class Printer : public tint::TextGenerator {
             }
         }
         out << ")";
+    }
+
+    void EmitLocationFragDepth(StringStream& out,
+                               const std::optional<core::BuiltinDepthMode> depth_mode) {
+        if (depth_mode == core::BuiltinDepthMode::kGreater) {
+            out << "layout(depth_greater) out float gl_FragDepth;";
+            return;
+        }
+        if (depth_mode == core::BuiltinDepthMode::kLess) {
+            out << "layout(depth_less) out float gl_FragDepth;";
+            return;
+        }
+        out << "layout(depth_any) out float gl_FragDepth;";
     }
 
     void EmitInterpolation(StringStream& out, const core::Interpolation& interp) {
