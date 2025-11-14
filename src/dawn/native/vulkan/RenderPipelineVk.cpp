@@ -365,6 +365,8 @@ MaybeError RenderPipeline::InitializeImpl() {
     // Gather list of internal immediate constants used by this pipeline
     bool isSampled = (GetSampleCount() > 1u) && UsesFragPosition() &&
                      (IsFragMultiSampled() || UsesSampleIndex());
+    // for testing
+    isSampled = true;
     if ((isSampled || UsesFragDepth()) && !HasUnclippedDepth()) {
         mImmediateMask |= GetImmediateConstantBlockBits(
             offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
