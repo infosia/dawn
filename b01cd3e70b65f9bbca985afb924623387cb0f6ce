@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2800850e_99a7ede5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-14T01:43:56Z",
+      "side": 1,
+      "message": "PTAL\n\nTested a couple of times as part of PS15 in https://dawn-review.googlesource.com/c/dawn/+/272794 and it seems to work as intended. A number of tests hit timeouts, but all of them complete normally instead of dying during global teardown.",
+      "revId": "b01cd3e70b65f9bbca985afb924623387cb0f6ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
