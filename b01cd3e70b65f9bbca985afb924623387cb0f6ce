@@ -137,6 +137,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "767a12f9_cf0f9fe9",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1820,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-14T20:57:35Z",
+      "side": 1,
+      "message": "Chatted with Loko, agreed this seems like a bug. I\u0027ve filed a bug. Can you add:\n```\n// TODO(crbug.com/460743383): This is a workaround for teardown causing WaitAny to\n// return without calling the callback. Remove this workaround when that is fixed.\n```",
+      "parentUuid": "3d9e9832_69ed1e24",
+      "range": {
+        "startLine": 1820,
+        "startChar": 12,
+        "endLine": 1820,
+        "endChar": 22
+      },
+      "revId": "b01cd3e70b65f9bbca985afb924623387cb0f6ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b17d0a77_0342a622",
         "filename": "src/dawn/tests/DawnTest.cpp",
         "patchSetId": 1
