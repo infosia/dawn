@@ -267,7 +267,7 @@ TEST_F(GlslWriter_BinaryPolyfillTest, RelationalNotEqualI32) {
     b.Append(func->Block(), [&] {
         auto* l = b.Let("left", b.Splat(ty.vec2<i32>(), 1_i));
         auto* r = b.Let("right", b.Splat(ty.vec2<i32>(), 2_i));
-        auto* bin = b.NotEqual(ty.vec2<bool>(), l, r);
+        auto* bin = b.NotEqual(l, r);
         b.Let("val", bin);
         b.Return(func);
     });

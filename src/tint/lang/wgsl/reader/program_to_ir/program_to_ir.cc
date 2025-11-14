@@ -1317,7 +1317,7 @@ class Impl {
             case core::BinaryOp::kEqual:
                 return builder_.Equal(lhs, rhs);
             case core::BinaryOp::kNotEqual:
-                return builder_.NotEqual(ty, lhs, rhs);
+                return builder_.NotEqual(lhs, rhs);
             case core::BinaryOp::kLessThan:
                 return builder_.LessThan(ty, lhs, rhs);
             case core::BinaryOp::kGreaterThan:

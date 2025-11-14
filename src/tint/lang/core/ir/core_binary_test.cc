@@ -128,7 +128,7 @@ TEST_F(IR_BinaryTest, CreateEqual) {
 }
 
 TEST_F(IR_BinaryTest, CreateNotEqual) {
-    auto* inst = b.NotEqual(mod.Types().bool_(), 4_i, 2_i);
+    auto* inst = b.NotEqual(4_i, 2_i);
 
     ASSERT_TRUE(inst->Is<Binary>());
     EXPECT_EQ(inst->Op(), BinaryOp::kNotEqual);
