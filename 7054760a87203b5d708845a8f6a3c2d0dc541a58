@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1f76aa5_d1c10013",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-14T14:59:48Z",
+      "side": 1,
+      "message": "Nice cleanup in the printer!  And maybe a slight speedup too, not having to recurse into types.",
+      "revId": "7054760a87203b5d708845a8f6a3c2d0dc541a58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
