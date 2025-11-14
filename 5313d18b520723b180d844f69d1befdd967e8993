@@ -68,6 +68,23 @@
       "message": "OK, thanks for your reply!",
       "revId": "5313d18b520723b180d844f69d1befdd967e8993",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad2319f9_663ce1f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-14T01:12:59Z",
+      "side": 1,
+      "message": "Just want to gently check in if there’s any update on the feedback? Thanks!",
+      "revId": "5313d18b520723b180d844f69d1befdd967e8993",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
