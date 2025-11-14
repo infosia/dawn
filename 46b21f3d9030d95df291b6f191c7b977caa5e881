@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f55e2d9e_f6474458",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-14T07:25:05Z",
+      "side": 1,
+      "message": "So this was option 3 from https://dawn-review.googlesource.com/c/dawn/+/272394  \n\nI started down option 1 (keep the user\u0027s original settings and update the backends). I did Metal and Vulkan but D3D12 looked a little more difficult and I decided it was easier to do this for now and just add a TODO.\n\nI only made 1 test. It fails without the changes to `CommandBufferWGPU.cpp` and passes with. I\u0027m hoping the other cases will be covered if we get the rest of the end2end tests running on capture/replay",
+      "revId": "46b21f3d9030d95df291b6f191c7b977caa5e881",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
