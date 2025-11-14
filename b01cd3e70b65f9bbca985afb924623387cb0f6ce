@@ -39,6 +39,30 @@
       },
       "revId": "b01cd3e70b65f9bbca985afb924623387cb0f6ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2932939_4e918ad4",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1820,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-14T18:27:07Z",
+      "side": 1,
+      "message": "This doesn\u0027t hide the timeout issues or anything like that. It just makes it so that if a timeout does somehow occur, it doesn\u0027t cause the test task to fall over later.\n\nCompare [this task](https://chromium-swarm.appspot.com/task?id\u003d7498cd7413e7e810) with the fix with [this task](https://chromium-swarm.appspot.com/task?id\u003d748e56fa17513510) without the fix. Without the fix, we get:\n\n```\n[ RUN      ] DepthCopyTests.PreserveBufferContent/D3D11_Qualcomm_R__Adreno_TM__X1_85_GPU_TextureFormat_TextureFormat__Depth16Unorm\n..\\..\\src\\dawn\\tests\\DawnTest.cpp(1807): error: Expected equality of these values:\n  instance.WaitAny(buffer.MapAsync(mapMode, offset, size, wgpu::CallbackMode::WaitAnyOnly, mockCb.Callback()), 0xffffffffffffffffui64)\n    Which is: WaitStatus::TimedOut\n  wgpu::WaitStatus::Success\n    Which is: WaitStatus::Success\n\n..\\..\\src\\dawn\\tests\\DawnTest.cpp(1801): error: Actual function call count doesn\u0027t match EXPECT_CALL(mockCb, Call(wgpu::MapAsyncStatus::Success, _))...\n         Expected: to be called once\n           Actual: never called - unsatisfied and active\n\nunknown file: error: SEH exception with code 0xc0000005 thrown in the test body.\nStack trace:\n\n\n[  FAILED  ] DepthCopyTests.PreserveBufferContent/D3D11_Qualcomm_R__Adreno_TM__X1_85_GPU_TextureFormat_TextureFormat__Depth16Unorm, where GetParam() \u003d D3D11 Qualcomm(R) Adreno(TM) X1-85 GPU_TextureFormat_TextureFormat::Depth16Unorm (17 ms)\n```\n\nbut then the process dies during teardown, which makes ResultDB unhappy:\n\n```\n[----------] Global test environment tear-down\nunknown file: error: SEH exception with code 0xc0000005 thrown in auxiliary test code (environments or event listeners).\nStack trace:\n\n\nresult_adapter: open result file: open C:\\b\\s\\w\\ion7j7isvd\\output.json: The system cannot find the file specified.\n```\n\nWith the fix, the timeout is still caught and reported:\n\n```\n[ RUN      ] StencilCopyTests.PreserveBufferContent/D3D11_Qualcomm_R__Adreno_TM__X1_85_GPU__e_use_packed_depth24_unorm_stencil8_format_TextureFormat_TextureFormat__Stencil8\nWarning: Sampling the stencil component is rather slow now.\n..\\..\\src\\dawn\\tests\\DawnTest.cpp(1824): error: Expected equality of these values:\n  status\n    Which is: WaitStatus::TimedOut\n  wgpu::WaitStatus::Success\n    Which is: WaitStatus::Success\n\n..\\..\\src\\dawn\\tests\\DawnTest.cpp(1801): error: Actual function call count doesn\u0027t match EXPECT_CALL(mockCb, Call(wgpu::MapAsyncStatus::Success, _))...\n         Expected: to be called once\n           Actual: never called - unsatisfied and active\n\nunknown file: error: SEH exception with code 0xc0000005 thrown in the test body.\nStack trace:\n\n\n[  FAILED  ] StencilCopyTests.PreserveBufferContent/D3D11_Qualcomm_R__Adreno_TM__X1_85_GPU__e_use_packed_depth24_unorm_stencil8_format_TextureFormat_TextureFormat__Stencil8, where GetParam() \u003d D3D11 Qualcomm(R) Adreno(TM) X1-85 GPU; e:use_packed_depth24_unorm_stencil8_format_TextureFormat_TextureFormat::Stencil8 (45 ms)\n```\n\nbut then the test process exits as expected:\n\n```\n[  FAILED  ] 1 test, listed below:\n[  FAILED  ] StencilCopyTests.PreserveBufferContent/D3D11_Qualcomm_R__Adreno_TM__X1_85_GPU__e_use_packed_depth24_unorm_stencil8_format_TextureFormat_TextureFormat__Stencil8, where GetParam() \u003d D3D11 Qualcomm(R) Adreno(TM) X1-85 GPU; e:use_packed_depth24_unorm_stencil8_format_TextureFormat_TextureFormat::Stencil8\n\n 1 FAILED TEST\nWarning: no \u0027\u003d\u0027 in invocation-link-artifacts pair: \"\", ignoring\n[W2025-11-13T17:32:34.933591-08:00 9288 0 cmd_stream.go:589] rdb-stream: test process exited with error: exit status 1\n```",
+      "parentUuid": "c2466643_dac7b363",
+      "range": {
+        "startLine": 1820,
+        "startChar": 12,
+        "endLine": 1820,
+        "endChar": 22
+      },
+      "revId": "b01cd3e70b65f9bbca985afb924623387cb0f6ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
