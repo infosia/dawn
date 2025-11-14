@@ -104,6 +104,24 @@
       "parentUuid": "52fe2272_b045eb68",
       "revId": "8a16aad886c0961801d1dd4c02bd0279adece3e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57487aa9_1c80423f",
+        "filename": "src/dawn/native/webgpu/RenderBundleWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-11-14T00:02:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9540eff_86abd132",
+      "revId": "8a16aad886c0961801d1dd4c02bd0279adece3e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
