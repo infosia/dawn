@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88a0f479_8d12da50",
+        "filename": "test/tint/extensions/fragment_depth/basic.wgsl.expected.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-14T11:02:01Z",
+      "side": 1,
+      "message": "I understand that `GL_EXT_conservative_depth` may not be available on my machine but I wonder if there\u0027s a way to prevent this to happen...",
+      "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
