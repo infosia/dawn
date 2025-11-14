@@ -33,6 +33,24 @@
       "message": "Get querySet from replay instead of using the one created for record? (use comment part)",
       "revId": "b7ecfacb007720a34b3e09b59cb25bd3f4685824",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19ae317d_0de5f00f",
+        "filename": "src/dawn/tests/white_box/CaptureAndReplayTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1628,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-14T23:50:07Z",
+      "side": 1,
+      "message": "doh! fixed",
+      "parentUuid": "f17b1f55_7a91cf8b",
+      "revId": "b7ecfacb007720a34b3e09b59cb25bd3f4685824",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
