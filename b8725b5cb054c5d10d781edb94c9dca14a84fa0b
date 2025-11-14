@@ -56,6 +56,30 @@
       },
       "revId": "b8725b5cb054c5d10d781edb94c9dca14a84fa0b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1e71dce_96dd2346",
+        "filename": "src/dawn/native/d3d12/BackendD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-11-14T19:38:12Z",
+      "side": 1,
+      "message": "You CL undoes the work of [Lazily load compiler DLLs](https://dawn-review.googlesource.com/c/dawn/+/252315), which is not what we want.\n\nI thought we were going to solve the problem by filtering out tests which load FXC?",
+      "parentUuid": "ef1a0814_b0fc932d",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 24
+      },
+      "revId": "b8725b5cb054c5d10d781edb94c9dca14a84fa0b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
