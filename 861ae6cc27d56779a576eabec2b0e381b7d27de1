@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2222e5ff_58815177",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-14T13:47:13Z",
+      "side": 1,
+      "message": "Corentin suggested I add this overload to make the code easier to read.",
+      "parentUuid": "271e9b6c_8ab138a0",
+      "range": {
+        "startLine": 383,
+        "startChar": 24,
+        "endLine": 383,
+        "endChar": 34
+      },
+      "revId": "861ae6cc27d56779a576eabec2b0e381b7d27de1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5b5bd268_252fea75",
         "filename": "src/dawn/tests/unittests/ToggleTests.cpp",
         "patchSetId": 7
@@ -160,6 +184,24 @@
       "writtenOn": "2025-11-14T00:53:51Z",
       "side": 1,
       "message": "If this fails it\u0027ll generate a validation error on the device, which I\u0027m pretty sure causes the test to fail",
+      "revId": "861ae6cc27d56779a576eabec2b0e381b7d27de1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "081c7571_f7cb9e3b",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-14T13:47:13Z",
+      "side": 1,
+      "message": "Yes, sorry, I had figured that out and forgot to remove my TODO 😊",
+      "parentUuid": "76bf4ba0_53a7974a",
       "revId": "861ae6cc27d56779a576eabec2b0e381b7d27de1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
