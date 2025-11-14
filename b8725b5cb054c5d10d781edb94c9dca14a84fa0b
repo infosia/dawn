@@ -33,6 +33,29 @@
       "message": "Adding Antonio to help review as well.",
       "revId": "b8725b5cb054c5d10d781edb94c9dca14a84fa0b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef1a0814_b0fc932d",
+        "filename": "src/dawn/native/d3d12/BackendD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-11-14T19:11:37Z",
+      "side": 1,
+      "message": "This code ends up loading FXC into the process unconditionally. We ONLY want to load it if we need it. If the D3D12 device we end up creating has shader model that doesn\u0027t require FXC and if the toggles don\u0027t force us to load it, we should avoid loading it.",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 24
+      },
+      "revId": "b8725b5cb054c5d10d781edb94c9dca14a84fa0b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
