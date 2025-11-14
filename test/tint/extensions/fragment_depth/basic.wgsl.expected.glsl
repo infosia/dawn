@@ -1,3 +1,17 @@
+SKIP: FAILED
+
+Error parsing GLSL shader:
+ERROR: 0:13: 'gl_FragDepth' : identifiers starting with "gl_" are reserved 
+ERROR: 1 compilation errors.  No code generated.
+
+
+
+Error parsing GLSL shader:
+ERROR: 0:13: 'gl_FragDepth' : identifiers starting with "gl_" are reserved 
+ERROR: 1 compilation errors.  No code generated.
+
+
+
 //
 // any
 //
@@ -23,6 +37,7 @@ void main() {
 // less
 //
 #version 310 es
+#extension GL_EXT_conservative_depth: require
 precision highp float;
 precision highp int;
 
@@ -33,6 +48,7 @@ struct tint_immediate_struct {
 };
 
 layout(location = 0) uniform tint_immediate_struct tint_immediates;
+layout(depth_less) out float gl_FragDepth;
 float less_inner() {
   return 1.0f;
 }
@@ -44,6 +60,7 @@ void main() {
 // greater
 //
 #version 310 es
+#extension GL_EXT_conservative_depth: require
 precision highp float;
 precision highp int;
 
@@ -54,6 +71,7 @@ struct tint_immediate_struct {
 };
 
 layout(location = 0) uniform tint_immediate_struct tint_immediates;
+layout(depth_greater) out float gl_FragDepth;
 float greater_inner() {
   return 1.0f;
 }
@@ -61,3 +79,5 @@ void main() {
   float v = greater_inner();
   gl_FragDepth = clamp(v, tint_immediates.tint_frag_depth_min, tint_immediates.tint_frag_depth_max);
 }
+
+tint executable returned error: exit status 1
