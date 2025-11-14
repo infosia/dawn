@@ -139,6 +139,16 @@ SpvStorageClass StorageClass(core::AddressSpace addrspace) {
     }
 }
 
+SpvExecutionMode ExecutionMode(std::optional<core::BuiltinDepthMode> depth_mode) {
+    if (depth_mode == core::BuiltinDepthMode::kGreater) {
+        return SpvExecutionModeDepthGreater;
+    }
+    if (depth_mode == core::BuiltinDepthMode::kLess) {
+        return SpvExecutionModeDepthLess;
+    }
+    return SpvExecutionModeDepthReplacing;
+}
+
 const core::type::Type* DedupType(const core::type::Type* ty, core::type::Manager& types) {
     return Switch(
         ty,
@@ -939,10 +949,10 @@ class Printer {
                 operands.push_back(Value(var));
             }
 
-            // Add the `DepthReplacing` execution mode if `frag_depth` is used.
             if (var->Attributes().builtin == core::BuiltinValue::kFragDepth) {
-                module_.PushExecutionMode(spv::Op::OpExecutionMode,
-                                          {id, U32Operand(SpvExecutionModeDepthReplacing)});
+                module_.PushExecutionMode(
+                    spv::Op::OpExecutionMode,
+                    {id, U32Operand(ExecutionMode(var->Attributes().depth_mode))});
             }
         }
 

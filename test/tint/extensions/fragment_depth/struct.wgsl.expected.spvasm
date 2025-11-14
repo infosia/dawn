@@ -1,3 +1,11 @@
+SKIP: FAILED
+
+1:1: [VUID-FragDepth-FragDepth-04216] Vulkan spec requires DepthReplacing execution mode to be declared when using BuiltIn FragDepth. ID <0> (OpStore) is referencing ID <5> (OpVariable) which is decorated with BuiltIn FragDepth in function <13>.
+  OpStore %less_frag_depth_Output %27 None
+
+1:1: [VUID-FragDepth-FragDepth-04216] Vulkan spec requires DepthReplacing execution mode to be declared when using BuiltIn FragDepth. ID <0> (OpStore) is referencing ID <5> (OpVariable) which is decorated with BuiltIn FragDepth in function <13>.
+  OpStore %greater_frag_depth_Output %27 None
+
 ;
 ; any
 ;
@@ -70,7 +78,7 @@
                OpMemoryModel Logical GLSL450
                OpEntryPoint Fragment %less "less" %less_frag_depth_Output
                OpExecutionMode %less OriginUpperLeft
-               OpExecutionMode %less DepthReplacing
+               OpExecutionMode %less DepthLess
                OpMemberName %tint_immediate_data_struct 0 "tint_frag_depth_min"
                OpMemberName %tint_immediate_data_struct 1 "tint_frag_depth_max"
                OpName %tint_immediate_data_struct "tint_immediate_data_struct"
@@ -129,7 +137,7 @@
                OpMemoryModel Logical GLSL450
                OpEntryPoint Fragment %greater "greater" %greater_frag_depth_Output
                OpExecutionMode %greater OriginUpperLeft
-               OpExecutionMode %greater DepthReplacing
+               OpExecutionMode %greater DepthGreater
                OpMemberName %tint_immediate_data_struct 0 "tint_frag_depth_min"
                OpMemberName %tint_immediate_data_struct 1 "tint_frag_depth_max"
                OpName %tint_immediate_data_struct "tint_immediate_data_struct"
@@ -175,3 +183,5 @@
                OpStore %greater_frag_depth_Output %27 None
                OpReturn
                OpFunctionEnd
+
+tint executable returned error: exit status 1
