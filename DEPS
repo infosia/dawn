@@ -307,7 +307,7 @@ deps = {
   },
 
   'third_party/glslang/src': {
-    'url': '{chromium_git}/external/github.com/KhronosGroup/glslang@4610b2dc55042777f29504020128051e087883fe',
+    'url': '{chromium_git}/external/github.com/KhronosGroup/glslang@8dd7112da56b00b2c352ed18aa0a355d5bdf4bdd',
     'condition': 'dawn_standalone',
   },
 
