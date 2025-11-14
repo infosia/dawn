@@ -1148,6 +1148,14 @@ class Printer : public tint::TextGenerator {
                 EmitExtension(kOESSampleVariables);
             }
 
+            if (attrs.builtin == tint::core::BuiltinValue::kFragDepth) {
+                if (attrs.depth_mode == core::BuiltinDepthMode::kGreater) {
+                    Line() << "layout(depth_greater) out float gl_FragDepth;";
+                } else if (attrs.depth_mode == core::BuiltinDepthMode::kLess) {
+                    Line() << "layout(depth_less) out float gl_FragDepth;";
+                }
+            }
+
             // Do not emit builtin (gl_) variables, but register the GLSL builtin names so that they
             // are correct at the point of use.
             names_.Add(var->Result(), GLSLBuiltinToString(*attrs.builtin, addrspace));

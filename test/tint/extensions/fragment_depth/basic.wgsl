@@ -1,3 +1,5 @@
+// flags: --glsl-desktop
+
 requires fragment_depth;
 
 @fragment
