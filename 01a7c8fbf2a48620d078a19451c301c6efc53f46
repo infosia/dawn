@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fb42fa7_fed5b493",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-14T23:13:53Z",
+      "side": 1,
+      "message": "These sound like they should probably go in `Permanent Skip Expectations`",
+      "revId": "01a7c8fbf2a48620d078a19451c301c6efc53f46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed1c5dcc_5f5d74f4",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-14T23:13:53Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "01a7c8fbf2a48620d078a19451c301c6efc53f46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
