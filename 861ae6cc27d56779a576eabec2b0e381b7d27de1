@@ -89,6 +89,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "97060e66_f9e17b34",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-14T20:26:56Z",
+      "side": 1,
+      "message": "Ah sorry, didn\u0027t read the review history.",
+      "parentUuid": "b0030b6a_3497b536",
+      "range": {
+        "startLine": 383,
+        "startChar": 24,
+        "endLine": 383,
+        "endChar": 34
+      },
+      "revId": "861ae6cc27d56779a576eabec2b0e381b7d27de1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5b5bd268_252fea75",
