@@ -65,6 +65,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0030b6a_3497b536",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-14T13:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2222e5ff_58815177",
+      "range": {
+        "startLine": 383,
+        "startChar": 24,
+        "endLine": 383,
+        "endChar": 34
+      },
+      "revId": "861ae6cc27d56779a576eabec2b0e381b7d27de1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5b5bd268_252fea75",
@@ -202,6 +226,24 @@
       "side": 1,
       "message": "Yes, sorry, I had figured that out and forgot to remove my TODO 😊",
       "parentUuid": "76bf4ba0_53a7974a",
+      "revId": "861ae6cc27d56779a576eabec2b0e381b7d27de1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1eb04676_ddb2c849",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-14T13:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "081c7571_f7cb9e3b",
       "revId": "861ae6cc27d56779a576eabec2b0e381b7d27de1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
