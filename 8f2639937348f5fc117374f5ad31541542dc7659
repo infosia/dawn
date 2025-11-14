@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce4a1a0e_d97d6824",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-14T03:19:33Z",
+      "side": 1,
+      "message": "this will need to wait for a CTS roll for https://github.com/gpuweb/cts/pull/4504",
+      "revId": "8f2639937348f5fc117374f5ad31541542dc7659",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
