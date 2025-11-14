@@ -16,6 +16,29 @@
       "message": "PTAL\n\nTested a couple of times as part of PS15 in https://dawn-review.googlesource.com/c/dawn/+/272794 and it seems to work as intended. A number of tests hit timeouts, but all of them complete normally instead of dying during global teardown.",
       "revId": "b01cd3e70b65f9bbca985afb924623387cb0f6ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2466643_dac7b363",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1820,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-14T05:00:09Z",
+      "side": 1,
+      "message": "Hmmm. I don\u0027t think `WaitAny(UINT64_MAX)` is ever supposed to be able to time out, even if the instance is destroyed on another thread or whatever is happening here. It seems like a bug, or at least an unintended consequence of the design, if this is the case. Code like this looks like it will work, and I think will be fairly common in applications, so we should make it work.\n\nIf we need to do this to get the tests running better then we can, but we should add a TODO to undo it when we fix the underlying issue.",
+      "range": {
+        "startLine": 1820,
+        "startChar": 12,
+        "endLine": 1820,
+        "endChar": 22
+      },
+      "revId": "b01cd3e70b65f9bbca985afb924623387cb0f6ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
