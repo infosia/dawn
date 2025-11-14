@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25b37803_4271632c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-14T07:04:39Z",
+      "side": 1,
+      "message": "Please take a look, thanks!\nThis CL make D3D12 backend try loading FXC/DXC compilers early and force set the UseDXC adapter toggle accordingly. As a result, this CL fix the issue that disabling UseDXC toggle on a device without FXC leading to error, because with this CL the UseDXC toggle will be force set to enabled (if DXC is available, otherwise Backend or PhysicalDevice will report internal error).",
+      "revId": "b8725b5cb054c5d10d781edb94c9dca14a84fa0b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
