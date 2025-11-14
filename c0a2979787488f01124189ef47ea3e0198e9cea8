@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24517070_7e07ee65",
+        "filename": "test/tint/extensions/fragment_depth/basic.wgsl.expected.spvasm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-14T10:47:02Z",
+      "side": 1,
+      "message": "Do you know how to go around this [VUID-FragDepth-FragDepth-04216 error](https://docs.vulkan.org/refpages/latest/refpages/source/FragDepth.html#VUID-FragDepth-FragDepth-04216)?\n\nI\u0027ve tried removing `OpDecorate %less_frag_depth_Output BuiltIn FragDepth` line but that triggered another error.",
+      "revId": "c0a2979787488f01124189ef47ea3e0198e9cea8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
