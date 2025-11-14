@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7b9fc68_f72e3e3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-14T07:31:00Z",
+      "side": 1,
+      "message": "This is just a simple queryset capture.\n\nIn another CL I\u0027ll try to add a harder case. The harder case is, make a QuerySet with say, 4 slots. Before capture, write to 2 slots, during capture write to the other 2 slots.\n\nSince QuerySets are read only we need to capture the queryset in a resolve buffer during capture.\n\nOn replay, we have to track every slot the user writes to. When they resolve, for every slot they did not write to, we have copy the result for that slot we captured in the resolve buffer during capture.\n\nThat seems like a lot of code so it seemed best to put it in another CL.",
+      "revId": "b7ecfacb007720a34b3e09b59cb25bd3f4685824",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
