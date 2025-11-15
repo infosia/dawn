@@ -297,7 +297,12 @@ bool ContextEGL::ContextState::operator!=(const ContextState& other) const {
 // ScopedMakeCurrent
 
 ContextEGL::ScopedMakeCurrent::ScopedMakeCurrent(ContextEGL* context)
-    : mContext(context), mLock(mContext->mExclusiveMakeCurrentMutex.Get()) {
+    : mContext(context),
+      mLock(mContext ? mContext->mExclusiveMakeCurrentMutex.Get()
+                     : nullptr /*if we already in scope make current, don't lock*/) {
+    if (!mContext) {
+        return;
+    }
     mPrevState.context = mContext->mDisplay->egl.GetCurrentContext();
     mPrevState.drawSurface = mContext->mDisplay->egl.GetCurrentSurface(EGL_DRAW);
     mPrevState.readSurface = mContext->mDisplay->egl.GetCurrentSurface(EGL_READ);
@@ -309,6 +314,10 @@ ContextEGL::ScopedMakeCurrent::ScopedMakeCurrent(ContextEGL* context)
 }
 
 ContextEGL::ScopedMakeCurrent::~ScopedMakeCurrent() {
+    if (!mContext) {
+        return;
+    }
+
     if (mContext->mAutoUnmakeCurrent && mPrevState != mContext->mState) {
         // Unmake current this context so that other threads can use it.
         MakeContextCurrent(mContext->mDisplay.Get(), mPrevState);
@@ -317,7 +326,7 @@ ContextEGL::ScopedMakeCurrent::~ScopedMakeCurrent() {
 }
 
 [[nodiscard]] ContextEGL::ScopedMakeCurrent ContextEGL::MakeCurrent() {
-    return ScopedMakeCurrent(this);
+    return ScopedMakeCurrent(IsInScopedMakeCurrent() ? nullptr : this);
 }
 
 }  // namespace dawn::native::opengl
