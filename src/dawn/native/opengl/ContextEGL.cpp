@@ -79,11 +79,12 @@ ResultOrError<std::unique_ptr<ContextEGL>> ContextEGL::Create(Ref<DisplayEGL> di
                                                               bool disableEGL15Robustness,
                                                               bool useANGLETextureSharing,
                                                               bool forceES31AndMinExtensions,
+                                                              bool allowMultiThreads,
                                                               EGLint angleVirtualizationGroup) {
     auto context = std::make_unique<ContextEGL>(std::move(display));
     DAWN_TRY(context->Initialize(backend, useRobustness, disableEGL15Robustness,
                                  useANGLETextureSharing, forceES31AndMinExtensions,
-                                 angleVirtualizationGroup));
+                                 allowMultiThreads, angleVirtualizationGroup));
     return std::move(context);
 }
 
@@ -106,8 +107,11 @@ MaybeError ContextEGL::Initialize(wgpu::BackendType backend,
                                   bool disableEGL15Robustness,
                                   bool useANGLETextureSharing,
                                   bool forceES31AndMinExtensions,
+                                  bool allowMultiThreads,
                                   EGLint angleVirtualizationGroup) {
     const EGLFunctions& egl = mDisplay->egl;
+
+    mAllowMultithreads = allowMultiThreads;
 
     // Unless EGL_KHR_no_config is present, we need to choose an EGLConfig on context creation that
     // will lock the EGLContext to be use with a single kind of color buffer. In that case the
@@ -301,7 +305,9 @@ ContextEGL::ScopedMakeCurrent::ScopedMakeCurrent(ContextEGL* context)
 }
 
 ContextEGL::ScopedMakeCurrent::~ScopedMakeCurrent() {
-    if (mPrevState != mContext->mState) {
+    if (mContext->mAllowMultithreads && mPrevState != mContext->mState) {
+        // if multiple threads are allowed, we need to unmake current this context so that other
+        // threads can use it.
         MakeContextCurrent(mContext->mDisplay.Get(), mPrevState);
     }
     gCurrentContextInScope = nullptr;
