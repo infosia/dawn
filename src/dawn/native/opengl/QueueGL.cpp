@@ -27,6 +27,8 @@
 
 #include "dawn/native/opengl/QueueGL.h"
 
+#include <vector>
+
 #include "dawn/native/BlitBufferToDepthStencil.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/CommandEncoder.h"
@@ -91,14 +93,24 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   uint64_t bufferOffset,
                                   const void* data,
                                   size_t size) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    Ref<Buffer> glBuffer = ToBackend(buffer);
 
-    DAWN_TRY(ToBackend(buffer)->EnsureDataInitializedAsDestination(bufferOffset, size));
+    std::vector<uint8_t> copyData(size);
+    memcpy(copyData.data(), data, size);
 
-    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, ToBackend(buffer)->GetHandle()));
-    DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, size, data));
-    buffer->MarkUsedInPendingCommands();
-    return {};
+    DAWN_TRY(glBuffer->EnsureDataInitializedAsDestination(bufferOffset, copyData.size()));
+
+    glBuffer->MarkUsedInPendingCommands();
+
+    return ToBackend(GetDevice())
+        ->AddGLWork([glBuffer, bufferOffset,
+                     copyData = std::move(copyData)](const OpenGLFunctions& gl) -> MaybeError {
+            DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, glBuffer->GetHandle()));
+            DAWN_GL_TRY(
+                gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, copyData.size(), copyData.data()));
+
+            return {};
+        });
 }
 
 MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
@@ -173,7 +185,7 @@ void Queue::OnGLUsed(SubmitMode submitMode) {
     if (submitMode == SubmitMode::Normal) {
         // Only set pending commands flag if submit mode is normal.
         // For passive mode, the commands will eventually be flushed in Submit()
-        mHasPendingCommands = true;
+        mHasPendingCommands.store(true, std::memory_order_release);
     }
 }
 
@@ -223,7 +235,7 @@ MaybeError Queue::SubmitFenceSync() {
     // Queue::SubmitImpl(), it's safe to create EGLSync using ExecuteSingleGLWork().
     return device->ExecuteSingleGLWork(
         [&](const OpenGLFunctions& gl) -> MaybeError {
-            if (!mHasPendingCommands) {
+            if (!HasPendingCommands()) {
                 return {};
             }
             Ref<WrappedEGLSync> sync;
@@ -238,7 +250,7 @@ MaybeError Queue::SubmitFenceSync() {
 
             IncrementLastSubmittedCommandSerial();
             mFencesInFlight->emplace_back(sync, GetLastSubmittedCommandSerial());
-            mHasPendingCommands = false;
+            mHasPendingCommands.store(false, std::memory_order_release);
 
             return {};
         },
@@ -297,7 +309,7 @@ ResultOrError<Ref<SharedFence>> Queue::GetOrCreateSharedFence(ExecutionSerial la
 }
 
 bool Queue::HasPendingCommands() const {
-    return mHasPendingCommands;
+    return mHasPendingCommands.load(std::memory_order_acquire);
 }
 
 MaybeError Queue::SubmitPendingCommandsImpl() {
@@ -348,7 +360,7 @@ MaybeError Queue::WaitForIdleForDestructionImpl() {
         DAWN_GL_TRY(gl, Finish());
         DAWN_TRY(CheckPassedSerials());
         DAWN_ASSERT(mFencesInFlight->empty());
-        mHasPendingCommands = false;
+        mHasPendingCommands.store(false, std::memory_order_release);
         return {};
     });
 }
