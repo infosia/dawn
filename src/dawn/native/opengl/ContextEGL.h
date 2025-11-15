@@ -50,6 +50,7 @@ class ContextEGL : NonMovable {
                                                              bool disableEGL15Robustness,
                                                              bool useANGLETextureSharing,
                                                              bool forceES31AndMinExtensions,
+                                                             bool allowMultiThreads,
                                                              EGLint angleVirtualizationGroup);
 
     explicit ContextEGL(Ref<DisplayEGL> display);
@@ -60,6 +61,7 @@ class ContextEGL : NonMovable {
                           bool useANGLETextureSharing,
                           bool disableEGL15Robustness,
                           bool forceES31AndMinExtensions,
+                          bool allowMultiThreads,
                           EGLint angleVirtualizationGroup);
     void RequestRequiredExtensionsExplicitly();
     bool IsInScopedMakeCurrent() const;
@@ -107,6 +109,11 @@ class ContextEGL : NonMovable {
     ContextState mState;
     EGLSurface mOffscreenSurface = EGL_NO_SURFACE;
     bool mForceES31AndMinExtensions = false;
+
+    // Flag to allow this context to be used on multiple threads. A GL context cannot be used on
+    // multiple threads at the same time. But if one thread locks the context, then unmake current
+    // it, that will allow the context to be used on another thread.
+    bool mAllowMultithreads = false;
 };
 
 }  // namespace dawn::native::opengl

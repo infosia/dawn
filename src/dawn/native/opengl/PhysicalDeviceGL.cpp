@@ -122,7 +122,7 @@ ResultOrError<Ref<PhysicalDevice>> PhysicalDevice::Create(wgpu::BackendType back
                                        /*disableEGL15Robustness */ false,
                                        /*useANGLETextureSharing*/ false,
                                        /*forceES31AndMinExtensions*/ forceES31AndMinExtensions,
-                                       angleVirtualizationGroup));
+                                       /*allowMultiThreads*/ false, angleVirtualizationGroup));
 
     auto scopedMakeCurrent = context->MakeCurrent();
     // Needed to request extensions here to initialize supported gl extensions set
@@ -531,12 +531,13 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
     // Use the pre-1.5 extension enum instead.
     bool disableEGL15Robustness = mVendorId == gpu_info::kVendorID_ImgTec;
     bool forceES31AndMinExtensions = deviceToggles.IsEnabled(Toggle::GLForceES31AndNoExtensions);
+    bool allowMultiThreads = deviceToggles.IsEnabled(Toggle::GLAllowContextOnMultiThreads);
 
     std::unique_ptr<ContextEGL> context;
-    DAWN_TRY_ASSIGN(context,
-                    ContextEGL::Create(mDisplay, GetBackendType(), useRobustness,
-                                       disableEGL15Robustness, useANGLETextureSharing,
-                                       forceES31AndMinExtensions, mAngleVirtualizationGroup));
+    DAWN_TRY_ASSIGN(context, ContextEGL::Create(mDisplay, GetBackendType(), useRobustness,
+                                                disableEGL15Robustness, useANGLETextureSharing,
+                                                forceES31AndMinExtensions, allowMultiThreads,
+                                                mAngleVirtualizationGroup));
 
     return Device::Create(adapter, descriptor, mFunctions, std::move(context), deviceToggles,
                           std::move(lostEvent));
