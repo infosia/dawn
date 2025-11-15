@@ -50,17 +50,11 @@ class ContextEGL : NonMovable {
                                                              bool disableEGL15Robustness,
                                                              bool useANGLETextureSharing,
                                                              bool forceES31AndMinExtensions,
+                                                             bool autoUnmakeCurrent,
                                                              EGLint angleVirtualizationGroup);
 
-    explicit ContextEGL(Ref<DisplayEGL> display);
     ~ContextEGL();
 
-    MaybeError Initialize(wgpu::BackendType backend,
-                          bool useRobustness,
-                          bool useANGLETextureSharing,
-                          bool disableEGL15Robustness,
-                          bool forceES31AndMinExtensions,
-                          EGLint angleVirtualizationGroup);
     void RequestRequiredExtensionsExplicitly();
     bool IsInScopedMakeCurrent() const;
 
@@ -100,6 +94,15 @@ class ContextEGL : NonMovable {
     [[nodiscard]] ScopedMakeCurrent MakeCurrent();
 
   private:
+    explicit ContextEGL(Ref<DisplayEGL> display, bool autoUnmakeCurrent);
+
+    MaybeError Initialize(wgpu::BackendType backend,
+                          bool useRobustness,
+                          bool useANGLETextureSharing,
+                          bool disableEGL15Robustness,
+                          bool forceES31AndMinExtensions,
+                          EGLint angleVirtualizationGroup);
+
     // This mutex is used to make sure only one thread can enter ScopedMakeCurrent at a time.
     Ref<Mutex> mExclusiveMakeCurrentMutex;
 
@@ -107,6 +110,11 @@ class ContextEGL : NonMovable {
     ContextState mState;
     EGLSurface mOffscreenSurface = EGL_NO_SURFACE;
     bool mForceES31AndMinExtensions = false;
+
+    // Flag to allow this context to be used on multiple threads. A GL context cannot be used on
+    // multiple threads at the same time. But if one thread locks the context, then unmake current
+    // it, that will allow the context to be used on another thread.
+    const bool mAutoUnmakeCurrent = false;
 };
 
 }  // namespace dawn::native::opengl

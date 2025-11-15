@@ -79,16 +79,20 @@ ResultOrError<std::unique_ptr<ContextEGL>> ContextEGL::Create(Ref<DisplayEGL> di
                                                               bool disableEGL15Robustness,
                                                               bool useANGLETextureSharing,
                                                               bool forceES31AndMinExtensions,
+                                                              bool autoUnmakeCurrent,
                                                               EGLint angleVirtualizationGroup) {
-    auto context = std::make_unique<ContextEGL>(std::move(display));
+    auto context =
+        std::unique_ptr<ContextEGL>(new ContextEGL(std::move(display), autoUnmakeCurrent));
     DAWN_TRY(context->Initialize(backend, useRobustness, disableEGL15Robustness,
                                  useANGLETextureSharing, forceES31AndMinExtensions,
                                  angleVirtualizationGroup));
     return std::move(context);
 }
 
-ContextEGL::ContextEGL(Ref<DisplayEGL> display)
-    : mExclusiveMakeCurrentMutex(AcquireRef(new Mutex())), mDisplay(std::move(display)) {}
+ContextEGL::ContextEGL(Ref<DisplayEGL> display, bool autoUnmakeCurrent)
+    : mExclusiveMakeCurrentMutex(AcquireRef(new Mutex())),
+      mDisplay(std::move(display)),
+      mAutoUnmakeCurrent(autoUnmakeCurrent) {}
 
 ContextEGL::~ContextEGL() {
     if (mOffscreenSurface != EGL_NO_SURFACE) {
@@ -301,7 +305,8 @@ ContextEGL::ScopedMakeCurrent::ScopedMakeCurrent(ContextEGL* context)
 }
 
 ContextEGL::ScopedMakeCurrent::~ScopedMakeCurrent() {
-    if (mPrevState != mContext->mState) {
+    if (mContext->mAutoUnmakeCurrent && mPrevState != mContext->mState) {
+        // Unmake current this context so that other threads can use it.
         MakeContextCurrent(mContext->mDisplay.Get(), mPrevState);
     }
     gCurrentContextInScope = nullptr;
