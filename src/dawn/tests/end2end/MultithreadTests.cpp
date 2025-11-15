@@ -234,8 +234,6 @@ TEST_P(MultithreadTests, Device_WaitForDroppedInAnotherThread) {
 // Test that multiple buffers being created and mapped on multiple threads won't interfere with
 // each other.
 TEST_P(MultithreadTests, Buffers_MapInParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     constexpr uint32_t kDataSize = 1000;
     std::vector<uint32_t> myData;
     for (uint32_t i = 0; i < kDataSize; ++i) {
@@ -1767,8 +1765,8 @@ DAWN_INSTANTIATE_TEST(MultithreadTests,
                       D3D11Backend({"d3d11_delay_flush_to_gpu"}),
                       D3D12Backend(),
                       MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
+                      OpenGLBackend({"gl_allow_context_on_multi_threads"}),
+                      OpenGLESBackend({"gl_allow_context_on_multi_threads"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -1778,8 +1776,8 @@ DAWN_INSTANTIATE_TEST(MultithreadCachingTests,
                       D3D11Backend({"d3d11_delay_flush_to_gpu"}),
                       D3D12Backend(),
                       MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
+                      OpenGLBackend({"gl_allow_context_on_multi_threads"}),
+                      OpenGLESBackend({"gl_allow_context_on_multi_threads"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -1791,8 +1789,8 @@ DAWN_INSTANTIATE_TEST(MultithreadEncodingTests,
                       D3D12Backend({"always_resolve_into_zero_level_and_layer"}),
                       MetalBackend(),
                       MetalBackend({"always_resolve_into_zero_level_and_layer"}),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
+                      OpenGLBackend({"gl_allow_context_on_multi_threads"}),
+                      OpenGLESBackend({"gl_allow_context_on_multi_threads"}),
                       VulkanBackend(),
                       VulkanBackend({"always_resolve_into_zero_level_and_layer"}),
                       WebGPUBackend());
@@ -1805,8 +1803,8 @@ DAWN_INSTANTIATE_TEST(
     MetalBackend({"use_blit_for_buffer_to_depth_texture_copy",
                   "use_blit_for_depth_texture_to_texture_copy_to_nonzero_subresource"}),
     MetalBackend({"use_blit_for_buffer_to_stencil_texture_copy"}),
-    OpenGLBackend(),
-    OpenGLESBackend(),
+    OpenGLBackend({"gl_allow_context_on_multi_threads"}),
+    OpenGLESBackend({"gl_allow_context_on_multi_threads"}),
     VulkanBackend(),
     WebGPUBackend());
 
@@ -1814,8 +1812,8 @@ DAWN_INSTANTIATE_TEST(MultithreadDrawIndexedIndirectTests,
                       D3D11Backend(),
                       D3D12Backend(),
                       MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
+                      OpenGLBackend({"gl_allow_context_on_multi_threads"}),
+                      OpenGLESBackend({"gl_allow_context_on_multi_threads"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -1824,8 +1822,8 @@ DAWN_INSTANTIATE_TEST(MultithreadTimestampQueryTests,
                       D3D11Backend(),
                       D3D12Backend(),
                       MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
+                      OpenGLBackend({"gl_allow_context_on_multi_threads"}),
+                      OpenGLESBackend({"gl_allow_context_on_multi_threads"}),
                       VulkanBackend());
 
 }  // anonymous namespace
