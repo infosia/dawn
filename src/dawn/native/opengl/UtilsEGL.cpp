@@ -27,6 +27,7 @@
 
 #include "dawn/native/opengl/UtilsEGL.h"
 
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -91,7 +92,12 @@ MaybeError CheckEGL(const EGLFunctions& egl, EGLBoolean result, const char* cont
         return {};
     }
     EGLint error = egl.GetError();
-    std::string message = std::string(context) + " failed with " + EGLErrorAsString(error);
+    auto eglDisplay = egl.GetCurrentDisplay();
+    auto eglContext = egl.GetCurrentContext();
+    std::ostringstream ss;
+    ss << context << " failed with " << EGLErrorAsString(error) << " current context=" << eglContext
+       << " current display=" << eglDisplay;
+    std::string message = ss.str();
     if (error == EGL_BAD_ALLOC) {
         return DAWN_OUT_OF_MEMORY_ERROR(message);
     } else if (error == EGL_CONTEXT_LOST) {
