@@ -518,12 +518,13 @@ void Device::DestroyImpl() {
     mArrayLengthBuffer = nullptr;
 }
 
-void Device::MarkGLUsed() {
-    ToBackend(GetQueue())->OnGLUsed();
-}
-
-bool Device::CanExecuteGLWorkImmediately() const {
-    return mContext->IsInScopedMakeCurrent();
+void Device::MarkGLUsed(ExecutionQueueBase::SubmitMode submitMode) const {
+    if (submitMode == ExecutionQueueBase::SubmitMode::Normal) {
+        // - Only need fence sync if submit mode is normal. So the commands will be flushed and a
+        // fence is inserted in next Tick().
+        // - For passive mode, the commands will eventually be flushed in Queue::Submit().
+        ToBackend(GetQueue())->SetNeedsFenceSync();
+    }
 }
 
 uint32_t Device::GetOptimalBytesPerRowAlignment() const {
@@ -561,7 +562,7 @@ const OpenGLFunctions& Device::GetGL(bool makeCurrent) const {
     if (makeCurrent) {
         mContext->DeprecatedMakeCurrent();
     }
-    ToBackend(GetQueue())->OnGLUsed();
+    MarkGLUsed(ExecutionQueueBase::SubmitMode::Normal);
     return mGL;
 }
 
@@ -572,7 +573,7 @@ int Device::GetMaxTextureMaxAnisotropy() const {
 const EGLFunctions& Device::GetEGL(bool makeCurrent) const {
     if (makeCurrent) {
         mContext->DeprecatedMakeCurrent();
-        ToBackend(GetQueue())->OnGLUsed();
+        MarkGLUsed(ExecutionQueueBase::SubmitMode::Normal);
     }
     return ToBackend(GetPhysicalDevice())->GetDisplay()->egl;
 }
