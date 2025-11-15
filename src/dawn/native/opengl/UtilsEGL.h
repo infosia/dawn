@@ -38,13 +38,15 @@
 namespace dawn::native::opengl {
 
 class Device;
+struct OpenGLFunctions;
 
 const char* EGLErrorAsString(EGLint error);
 MaybeError CheckEGL(const EGLFunctions& egl, EGLBoolean result, const char* context);
 
 class WrappedEGLSync : public RefCounted, NonMovable {
   public:
-    static ResultOrError<Ref<WrappedEGLSync>> Create(Device* device,
+    static ResultOrError<Ref<WrappedEGLSync>> Create(DisplayEGL* display,
+                                                     const OpenGLFunctions&,
                                                      EGLenum type,
                                                      const EGLint* attribs);
     static ResultOrError<Ref<WrappedEGLSync>> AcquireExternal(DisplayEGL* display, EGLSync sync);
