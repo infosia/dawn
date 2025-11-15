@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75ea7e85_89793eed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-15T00:25:02Z",
+      "side": 1,
+      "message": "TIL about Permanent Skip section   :-)",
+      "revId": "11c2989805bfd5f2fb4c6a0c658311923aa8a811",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
