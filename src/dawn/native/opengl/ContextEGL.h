@@ -34,8 +34,8 @@
 #include "dawn/common/Mutex.h"
 #include "dawn/common/NonMovable.h"
 #include "dawn/common/egl_platform.h"
-#include "dawn/native/opengl/DeviceGL.h"
 #include "dawn/native/opengl/EGLFunctions.h"
+#include "dawn/native/opengl/opengl_platform.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native::opengl {

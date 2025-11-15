@@ -522,10 +522,6 @@ void Device::MarkGLUsed() {
     ToBackend(GetQueue())->OnGLUsed();
 }
 
-bool Device::CanExecuteGLWorkImmediately() const {
-    return mContext->IsInScopedMakeCurrent();
-}
-
 uint32_t Device::GetOptimalBytesPerRowAlignment() const {
     return 1;
 }
