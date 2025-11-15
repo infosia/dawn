@@ -351,7 +351,9 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                 bindingInfo.bindingLayout,
                 [&](const BufferBindingInfo& layout) -> MaybeError {
                     BufferBinding binding = group->GetBindingAsBufferBinding(bindingIndex);
-                    GLuint buffer = ToBackend(binding.buffer)->GetHandle();
+                    Buffer* buffer = ToBackend(binding.buffer);
+                    buffer->TrackUsage();
+                    GLuint bufferHandle = buffer->GetHandle();
                     FlatBindingIndex index = indices[bindingIndex];
                     GLuint offset = binding.offset;
 
@@ -381,8 +383,8 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                             DAWN_UNREACHABLE();
                     }
 
-                    DAWN_GL_TRY(
-                        gl, BindBufferRange(target, GLuint(index), buffer, offset, binding.size));
+                    DAWN_GL_TRY(gl, BindBufferRange(target, GLuint(index), bufferHandle, offset,
+                                                    binding.size));
                     return {};
                 },
                 [&](const StaticSamplerBindingInfo& layout) -> MaybeError {
