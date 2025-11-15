@@ -80,6 +80,30 @@
       },
       "revId": "b8725b5cb054c5d10d781edb94c9dca14a84fa0b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1dcad0f0_7cff2959",
+        "filename": "src/dawn/native/d3d12/BackendD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-15T03:10:46Z",
+      "side": 1,
+      "message": "Oops.. Though, I think it should be the correct behavior that UseDXC toggle get force enbaled for adapter creation if the FXC is not available in the system. Is there a way that check if we have FXC without actually loading it?",
+      "parentUuid": "c1e71dce_96dd2346",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 24
+      },
+      "revId": "b8725b5cb054c5d10d781edb94c9dca14a84fa0b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
