@@ -27,6 +27,8 @@
 
 #include "dawn/native/opengl/QueueGL.h"
 
+#include <vector>
+
 #include "dawn/native/BlitBufferToDepthStencil.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/CommandEncoder.h"
@@ -91,14 +93,24 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   uint64_t bufferOffset,
                                   const void* data,
                                   size_t size) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    Ref<Buffer> glBuffer = ToBackend(buffer);
 
-    DAWN_TRY(ToBackend(buffer)->EnsureDataInitializedAsDestination(bufferOffset, size));
+    std::vector<uint8_t> copyData(size);
+    memcpy(copyData.data(), data, size);
 
-    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, ToBackend(buffer)->GetHandle()));
-    DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, size, data));
-    buffer->MarkUsedInPendingCommands();
-    return {};
+    DAWN_TRY(glBuffer->EnsureDataInitializedAsDestination(bufferOffset, copyData.size()));
+
+    glBuffer->MarkUsedInPendingCommands();
+
+    return ToBackend(GetDevice())
+        ->AddGLWork([glBuffer, bufferOffset,
+                     copyData = std::move(copyData)](const OpenGLFunctions& gl) -> MaybeError {
+            DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, glBuffer->GetHandle()));
+            DAWN_GL_TRY(
+                gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, copyData.size(), copyData.data()));
+
+            return {};
+        });
 }
 
 MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
@@ -208,12 +220,15 @@ ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial wai
 }
 
 MaybeError Queue::SubmitFenceSync() {
-    return mFencesInFlight.Use([&](auto fencesInFlight) -> MaybeError {
-        if (!mHasPendingCommands) {
-            return {};
-        }
-        Device* device = ToBackend(GetDevice());
-
+    // Need to check mHasPendingCommands before calling ExecuteGLWork().
+    // Since ExecuteGLWork() will trigger MarkGLUsed() which in turn always set mHasPendingCommands
+    // = true. We don't want that since it would lead to Device mistakenly seen as non-idle and
+    // ProcessEvents() would continue indefinitely:
+    if (!mHasPendingCommands) {
+        return {};
+    }
+    Device* device = ToBackend(GetDevice());
+    return device->ExecuteGLWork([&](const OpenGLFunctions&) -> MaybeError {
         Ref<WrappedEGLSync> sync;
         DAWN_TRY_ASSIGN(sync, WrappedEGLSync::Create(device, mEGLSyncType, nullptr));
 
@@ -224,8 +239,9 @@ MaybeError Queue::SubmitFenceSync() {
         }
 
         IncrementLastSubmittedCommandSerial();
-        fencesInFlight->emplace_back(sync, GetLastSubmittedCommandSerial());
+        mFencesInFlight->emplace_back(sync, GetLastSubmittedCommandSerial());
         mHasPendingCommands = false;
+
         return {};
     });
 }
