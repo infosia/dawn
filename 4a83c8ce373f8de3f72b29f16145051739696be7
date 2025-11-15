@@ -16,6 +16,24 @@
       "message": "I understand that `GL_EXT_conservative_depth` may not be available on my machine but I wonder if there\u0027s a way to prevent this to happen...",
       "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eabd7021_6dbe65a8",
+        "filename": "test/tint/extensions/fragment_depth/basic.wgsl.expected.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-15T03:07:54Z",
+      "side": 1,
+      "message": "We validate these E2E tests against glslang, so if glslang does not support the extension you need then unfortunately we are out of luck here and would have to rely on Dawn E2E testing via ANGLE instead.\n\nI couldn\u0027t see any mention of that extension string in the glslang codebase. There is some mention of the depth_less/depth_greater strings, but it might be just for the HLSL frontend.",
+      "parentUuid": "88a0f479_8d12da50",
+      "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
