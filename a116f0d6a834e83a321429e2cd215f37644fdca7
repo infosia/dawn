@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "68907836_b328862b",
+        "filename": "src/dawn/native/EncodingContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-15T06:51:42Z",
+      "side": 1,
+      "message": "Not entirely clear why this has become a condition instead of an ASSERT like before. Maybe brief comment about why both are valid (what each state means here).\n\nOr ignore me if this is about to change in the next CL and will become clearer.",
+      "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9837f2c8_7a3f8eb4",
         "filename": "src/dawn/native/EncodingContext.cpp",
         "patchSetId": 2
@@ -60,6 +77,23 @@
         "endLine": 123,
         "endChar": 34
       },
+      "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61d20682_b842622f",
+        "filename": "src/dawn/native/EncodingContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-15T06:51:42Z",
+      "side": 1,
+      "message": "Same, why not ASSERT",
       "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
