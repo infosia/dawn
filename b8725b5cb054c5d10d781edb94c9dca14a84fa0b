@@ -104,6 +104,30 @@
       },
       "revId": "b8725b5cb054c5d10d781edb94c9dca14a84fa0b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d272b60_b9f5d87c",
+        "filename": "src/dawn/native/d3d12/BackendD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-15T03:27:22Z",
+      "side": 1,
+      "message": "I will try moving the library checking and loading back to `SetupBackendAdapterToggles` of adapter creation (which can see the user required toggles), and it might be possible to only CheckAndLoadFXC if DXC is not required by user and not defaulted. In that way we might preserve the lazy loading.",
+      "parentUuid": "1dcad0f0_7cff2959",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 24
+      },
+      "revId": "b8725b5cb054c5d10d781edb94c9dca14a84fa0b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
