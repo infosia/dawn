@@ -448,7 +448,7 @@ MaybeError Buffer::Initialize(bool mappedAtCreation,
         } else {
             auto tmpCommandContext =
                 ToBackend(GetDevice()->GetQueue())
-                    ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Normal);
+                    ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Passive);
             DAWN_TRY(ClearInitialResource(&tmpCommandContext));
         }
     }
@@ -485,7 +485,7 @@ bool Buffer::IsCPUReadable() const {
 MaybeError Buffer::MapAtCreationImpl() {
     DAWN_ASSERT(IsCPUWritable());
     auto commandContext = ToBackend(GetDevice()->GetQueue())
-                              ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Normal);
+                              ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Passive);
     return MapInternal(&commandContext, wgpu::MapMode::Write);
 }
 
@@ -513,7 +513,7 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
         ToBackend(GetDevice()->GetQueue())->TrackPendingMapBuffer({this}, mode, mMapReadySerial);
     } else {
         auto commandContext = ToBackend(GetDevice()->GetQueue())
-                                  ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Normal);
+                                  ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Passive);
         DAWN_TRY(FinalizeMap(&commandContext, completedSerial, mode));
     }
 
@@ -549,7 +549,7 @@ void Buffer::UnmapImpl(BufferState oldState) {
     mMapReadySerial = kMaxExecutionSerial;
     if (mMappedData) {
         auto commandContext = ToBackend(GetDevice()->GetQueue())
-                                  ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Normal);
+                                  ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Passive);
         UnmapInternal(&commandContext);
     }
 }
