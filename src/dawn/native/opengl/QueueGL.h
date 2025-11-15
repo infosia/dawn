@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_OPENGL_QUEUEGL_H_
 #define SRC_DAWN_NATIVE_OPENGL_QUEUEGL_H_
 
+#include <atomic>
 #include <deque>
 #include <utility>
 
@@ -79,7 +80,7 @@ class Queue final : public QueueBase {
     MutexProtected<std::deque<std::pair<Ref<WrappedEGLSync>, ExecutionSerial>>> mFencesInFlight;
 
     // Has pending GL commands which are not associated with a fence.
-    bool mHasPendingCommands = false;
+    std::atomic_bool mHasPendingCommands = false;
 };
 
 }  // namespace dawn::native::opengl
