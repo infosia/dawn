@@ -39,6 +39,7 @@
 #include "dawn/common/Platform.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/QuerySet.h"
+#include "dawn/native/opengl/ContextEGL.h"
 #include "dawn/native/opengl/EGLFunctions.h"
 #include "dawn/native/opengl/Forward.h"
 #include "dawn/native/opengl/GLFormat.h"
@@ -49,8 +50,6 @@ class AHBFunctions;
 }  // namespace dawn::native
 
 namespace dawn::native::opengl {
-
-class ContextEGL;
 
 class Device final : public DeviceBase {
   public:
@@ -73,7 +72,7 @@ class Device final : public DeviceBase {
     template <typename Fn>
     MaybeError AddGLWork(Fn&& work) {
         MarkGLUsed();
-        if (CanExecuteGLWorkImmediately()) {
+        if (mContext->IsInScopedMakeCurrent()) {
             return work(GetGL(/*makeCurrent=*/false));
         }
         mPendingGLWorkList.Use([&](auto workList) { workList->push_back(std::forward<Fn>(work)); });
@@ -82,10 +81,20 @@ class Device final : public DeviceBase {
     MaybeError ExecutePendingGLWork();
 
     // Shortcut for AddGLWork + ExecutePendingGLWork.
+    // Note: this will flush any pending GL work before running the provided function.
     template <typename Fn>
-    MaybeError ExecuteGLWork(Fn&& work) {
+    MaybeError FlushPendingAndExecuteGLWork(Fn&& work) {
         DAWN_TRY(AddGLWork(std::forward<Fn>(work)));
         return ExecutePendingGLWork();
+    }
+
+    // Execute the GL work immediately without flushing pending tasks.
+    // This is used for tasks that don't depend on previous tasks such as resource creations.
+    template <typename Fn>
+    MaybeError ExecuteSingleGLWork(Fn&& work) {
+        auto scopedCurrent = mContext->MakeCurrent();
+        MarkGLUsed();
+        return work(GetGL(/*makeCurrent=*/false));
     }
 
     // TODO(451928481): remove this from public access once all places are updated to use
@@ -187,7 +196,6 @@ class Device final : public DeviceBase {
     void DestroyImpl() override;
 
     void MarkGLUsed();
-    bool CanExecuteGLWorkImmediately() const;
 
     const OpenGLFunctions mGL;
 

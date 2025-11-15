@@ -76,7 +76,7 @@ Queue::Queue(Device* device, const QueueDescriptor* descriptor) : QueueBase(devi
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
     Device* device = ToBackend(GetDevice());
-    return device->ExecuteGLWork(
+    return device->FlushPendingAndExecuteGLWork(
         [this, commandCount, commands](const OpenGLFunctions& gl) -> MaybeError {
             TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), Recording, "CommandBufferGL::Execute");
             for (uint32_t i = 0; i < commandCount; ++i) {
@@ -208,14 +208,20 @@ ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial wai
 }
 
 MaybeError Queue::SubmitFenceSync() {
-    return mFencesInFlight.Use([&](auto fencesInFlight) -> MaybeError {
-        if (!mHasPendingCommands) {
-            return {};
-        }
-        Device* device = ToBackend(GetDevice());
-
+    // Need to check mHasPendingCommands before calling ExecuteSingleGLWork().
+    // Since ExecuteSingleGLWork() will trigger MarkGLUsed() which in turn always set
+    // mHasPendingCommands = true. We don't want that since it would lead to Device mistakenly seen
+    // as non-idle and ProcessEvents() would continue indefinitely:
+    if (!mHasPendingCommands) {
+        return {};
+    }
+    Device* device = ToBackend(GetDevice());
+    // This function is called after all dependent GL commands have been flushed in
+    // Queue::SubmitImpl(), it's safe to create EGLSync using ExecuteSingleGLWork().
+    return device->ExecuteSingleGLWork([&](const OpenGLFunctions& gl) -> MaybeError {
         Ref<WrappedEGLSync> sync;
-        DAWN_TRY_ASSIGN(sync, WrappedEGLSync::Create(device, mEGLSyncType, nullptr));
+        DisplayEGL* display = ToBackend(device->GetPhysicalDevice())->GetDisplay();
+        DAWN_TRY_ASSIGN(sync, WrappedEGLSync::Create(display, gl, mEGLSyncType, nullptr));
 
         // Signal the sync if it is EGL_SYNC_REUSABLE_KHR. On the other hand,
         // EGL_SYNC_FENCE_KHR has its signal scheduled on creation.
@@ -224,8 +230,9 @@ MaybeError Queue::SubmitFenceSync() {
         }
 
         IncrementLastSubmittedCommandSerial();
-        fencesInFlight->emplace_back(sync, GetLastSubmittedCommandSerial());
+        mFencesInFlight->emplace_back(sync, GetLastSubmittedCommandSerial());
         mHasPendingCommands = false;
+
         return {};
     });
 }
@@ -255,7 +262,11 @@ ResultOrError<Ref<SharedFence>> Queue::GetOrCreateSharedFence(ExecutionSerial la
     Device* device = ToBackend(GetDevice());
 
     if (sync == nullptr) {
-        DAWN_TRY_ASSIGN(sync, WrappedEGLSync::Create(device, requestedSyncType, nullptr));
+        DAWN_TRY(device->ExecuteSingleGLWork([&](const OpenGLFunctions& gl) -> MaybeError {
+            DisplayEGL* display = ToBackend(device->GetPhysicalDevice())->GetDisplay();
+            DAWN_TRY_ASSIGN(sync, WrappedEGLSync::Create(display, gl, requestedSyncType, nullptr));
+            return {};
+        }));
     }
     DAWN_ASSERT(sync != nullptr);
 
@@ -312,12 +323,12 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
 }
 
 void Queue::ForceEventualFlushOfCommands() {
-    mHasPendingCommands = true;
+    OnGLUsed();
 }
 
 MaybeError Queue::WaitForIdleForDestructionImpl() {
     Device* device = ToBackend(GetDevice());
-    return device->ExecuteGLWork([this](const OpenGLFunctions& gl) -> MaybeError {
+    return device->FlushPendingAndExecuteGLWork([this](const OpenGLFunctions& gl) -> MaybeError {
         DAWN_GL_TRY(gl, Finish());
         DAWN_TRY(CheckPassedSerials());
         DAWN_ASSERT(mFencesInFlight->empty());
