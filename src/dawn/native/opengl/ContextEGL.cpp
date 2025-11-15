@@ -293,7 +293,10 @@ bool ContextEGL::ContextState::operator!=(const ContextState& other) const {
 // ScopedMakeCurrent
 
 ContextEGL::ScopedMakeCurrent::ScopedMakeCurrent(ContextEGL* context)
-    : mContext(context), mLock(mContext->mExclusiveMakeCurrentMutex.Get()) {
+    : mContext(context),
+      mLock(mContext->IsInScopedMakeCurrent()
+                ? nullptr /*if we already in scope make current, don't lock*/
+                : mContext->mExclusiveMakeCurrentMutex.Get()) {
     mPrevState.context = mContext->mDisplay->egl.GetCurrentContext();
     mPrevState.drawSurface = mContext->mDisplay->egl.GetCurrentSurface(EGL_DRAW);
     mPrevState.readSurface = mContext->mDisplay->egl.GetCurrentSurface(EGL_READ);

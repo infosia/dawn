@@ -44,7 +44,7 @@ class Queue final : public QueueBase {
   public:
     static ResultOrError<Ref<Queue>> Create(Device* device, const QueueDescriptor* descriptor);
 
-    void OnGLUsed();
+    void SetNeedsFenceSync();
     MaybeError SubmitFenceSync();
 
     // Returns a shared fence which represents work done up to lastUsageSerial. It may be a cached
