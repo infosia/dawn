@@ -30,6 +30,7 @@
 
 #include <functional>
 #include <memory>
+#include <type_traits>
 #include <utility>
 #include <vector>
 
@@ -38,7 +39,9 @@
 
 #include "dawn/common/Platform.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/ExecutionQueue.h"
 #include "dawn/native/QuerySet.h"
+#include "dawn/native/opengl/ContextEGL.h"
 #include "dawn/native/opengl/EGLFunctions.h"
 #include "dawn/native/opengl/Forward.h"
 #include "dawn/native/opengl/GLFormat.h"
@@ -49,8 +52,6 @@ class AHBFunctions;
 }  // namespace dawn::native
 
 namespace dawn::native::opengl {
-
-class ContextEGL;
 
 class Device final : public DeviceBase {
   public:
@@ -71,10 +72,12 @@ class Device final : public DeviceBase {
     // If the device is already executing GL works, the work will be executed immediately.
     // This can happen when a pending task indirectly creates temporary resources.
     template <typename Fn>
-    MaybeError AddGLWork(Fn&& work) {
-        MarkGLUsed();
-        if (CanExecuteGLWorkImmediately()) {
-            return work(GetGL(/*makeCurrent=*/false));
+    MaybeError AddGLWork(
+        Fn&& work,
+        ExecutionQueueBase::SubmitMode submitMode = ExecutionQueueBase::SubmitMode::Normal) {
+        MarkGLUsed(submitMode);
+        if (mContext->IsInScopedMakeCurrent()) {
+            return work(mGL);
         }
         mPendingGLWorkList.Use([&](auto workList) { workList->push_back(std::forward<Fn>(work)); });
         return {};
@@ -82,10 +85,32 @@ class Device final : public DeviceBase {
     MaybeError ExecutePendingGLWork();
 
     // Shortcut for AddGLWork + ExecutePendingGLWork.
+    // Note: this will flush any pending GL work before running the provided function.
     template <typename Fn>
-    MaybeError ExecuteGLWork(Fn&& work) {
-        DAWN_TRY(AddGLWork(std::forward<Fn>(work)));
+    MaybeError FlushPendingAndExecuteGLWork(
+        Fn&& work,
+        ExecutionQueueBase::SubmitMode submitMode = ExecutionQueueBase::SubmitMode::Normal) {
+        DAWN_TRY(AddGLWork(std::forward<Fn>(work), submitMode));
         return ExecutePendingGLWork();
+    }
+
+    // Execute the GL work immediately without flushing pending tasks.
+    // This is used for tasks that don't depend on previous tasks such as resource creations.
+    template <typename Fn>
+    auto ExecuteSingleGLWork(Fn&& work, ExecutionQueueBase::SubmitMode submitMode)
+        -> std::invoke_result_t<Fn, const OpenGLFunctions&> {
+        ContextEGL::ScopedMakeCurrent scopedCurrentContext;
+        DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
+
+        MarkGLUsed(submitMode);
+
+        auto result = work(mGL);
+        if (DAWN_UNLIKELY(result.IsError())) {
+            return std::move(result);
+        }
+
+        DAWN_TRY(scopedCurrentContext.End());
+        return std::move(result);
     }
 
     // TODO(451928481): remove this from public access once all places are updated to use
@@ -186,8 +211,7 @@ class Device final : public DeviceBase {
 
     void DestroyImpl() override;
 
-    void MarkGLUsed();
-    bool CanExecuteGLWorkImmediately() const;
+    void MarkGLUsed(ExecutionQueueBase::SubmitMode submitMode) const;
 
     const OpenGLFunctions mGL;
 
