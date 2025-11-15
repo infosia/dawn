@@ -87,6 +87,23 @@
       "parentUuid": "cb949c65_c4a006d8",
       "revId": "755cb958da6c6eb5437335bf692bd16797501daa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c064c55_191ada27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-15T05:08:22Z",
+      "side": 1,
+      "message": "Is this CL still active?  Or should it be abandonded?",
+      "revId": "755cb958da6c6eb5437335bf692bd16797501daa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
