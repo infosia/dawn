@@ -531,6 +531,8 @@ void BufferBase::FinalizeMap(BufferState newState) {
     DAWN_ASSERT((oldState == BufferState::PendingMap && newState == BufferState::Mapped) ||
                 (oldState == BufferState::Unmapped && newState == BufferState::MappedAtCreation));
 
+    FinalizeMapImpl(newState);
+
     if (mStagingBuffer) {
         mMappedPointer = mStagingBuffer->GetMappedPointerImpl();
     } else if (GetSize() == 0) {
@@ -538,8 +540,6 @@ void BufferBase::FinalizeMap(BufferState newState) {
     } else {
         mMappedPointer = GetMappedPointerImpl();
     }
-
-    FinalizeMapImpl(newState);
 
     mState.store(newState, std::memory_order::release);
 }
