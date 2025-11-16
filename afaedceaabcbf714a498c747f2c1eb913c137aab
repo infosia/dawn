@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b49eed86_cf7279b6",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-16T17:42:13Z",
+      "side": 1,
+      "message": "if this is an actual spec expectation i would like to say so.",
+      "range": {
+        "startLine": 110,
+        "startChar": 60,
+        "endLine": 110,
+        "endChar": 74
+      },
+      "revId": "afaedceaabcbf714a498c747f2c1eb913c137aab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0729c965_cd65c3fb",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-16T17:42:13Z",
+      "side": 1,
+      "message": "if this is an actual spec expectation i would like to say so.",
+      "range": {
+        "startLine": 133,
+        "startChar": 5,
+        "endLine": 133,
+        "endChar": 23
+      },
+      "revId": "afaedceaabcbf714a498c747f2c1eb913c137aab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
