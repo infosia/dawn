@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2a86591_c552467e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-16T10:11:27Z",
+      "side": 1,
+      "message": "Yeah getting the values from the query sets when capturing and then inserting them back will be annoying. Doing the simple thing first sounds good!",
+      "parentUuid": "f7b9fc68_f72e3e3b",
+      "revId": "b7ecfacb007720a34b3e09b59cb25bd3f4685824",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f17b1f55_7a91cf8b",
