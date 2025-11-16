@@ -169,7 +169,7 @@ MaybeError ValidateBufferBinding(const DeviceBase* device,
     return {};
 }
 
-MaybeError ValidateTextureBindGroupEntry(DeviceBase* device, const BindGroupEntry& entry) {
+MaybeError ValidateTextureBindGroupEntry(const DeviceBase* device, const BindGroupEntry& entry) {
     DAWN_INVALID_IF(entry.textureView == nullptr, "Binding entry textureView not set.");
 
     DAWN_INVALID_IF(entry.sampler != nullptr || entry.buffer != nullptr,
@@ -480,7 +480,29 @@ MaybeError ValidateStaticSamplersWithSampledTextures(
     return {};
 }
 
-MaybeError ValidateBindGroupDynamicBindingArray(DeviceBase* device,
+MaybeError ValidateDynamicBindingArrayEntry(const DeviceBase* device,
+                                            wgpu::DynamicBindingKind kind,
+                                            const BindGroupEntry& entry) {
+    switch (kind) {
+        case wgpu::DynamicBindingKind::SampledTexture: {
+            DAWN_TRY(ValidateTextureBindGroupEntry(device, entry));
+            TextureViewBase* view = entry.textureView;
+            DAWN_INVALID_IF(
+                (view->GetUsage() & kTextureViewOnlyUsages) != wgpu::TextureUsage::TextureBinding,
+                "%s's usages (%s) are not exactly %s.", view,
+                view->GetUsage() & kTextureViewOnlyUsages, wgpu::TextureUsage::TextureBinding);
+            DAWN_INVALID_IF(view->IsYCbCr(), "%s is YCbCr.", view);
+            break;
+        }
+
+        case wgpu::DynamicBindingKind::Undefined:
+            DAWN_UNREACHABLE();
+    }
+
+    return {};
+}
+
+MaybeError ValidateBindGroupDynamicBindingArray(const DeviceBase* device,
                                                 const UnpackedPtr<BindGroupDescriptor> descriptor,
                                                 UsageValidationMode mode) {
     auto* dynamic = descriptor.Get<BindGroupDynamicBindingArray>();
@@ -525,29 +547,39 @@ MaybeError ValidateBindGroupDynamicBindingArray(DeviceBase* device,
                         i, binding, dynamicArrayStart, dynamicArrayStart + dynamicArraySize);
 
         DAWN_INVALID_IF(dynamicBindingsSeen.contains(binding),
-                        "In entries[%u], binding index %u already used by a previous entry", i,
+                        "In entries[%u], binding index %u already used by a previous entry.", i,
                         binding);
         dynamicBindingsSeen.insert(binding);
 
-        switch (layout->GetDynamicArrayKind()) {
-            case wgpu::DynamicBindingKind::SampledTexture: {
-                DAWN_TRY(ValidateTextureBindGroupEntry(device, entry));
-                TextureViewBase* view = entry.textureView;
-                DAWN_INVALID_IF((view->GetUsage() & kTextureViewOnlyUsages) !=
-                                    wgpu::TextureUsage::TextureBinding,
-                                "In entries[%u], the %s's usages (%s) are not exactly %s.", i, view,
-                                view->GetUsage() & kTextureViewOnlyUsages,
-                                wgpu::TextureUsage::TextureBinding);
-                DAWN_INVALID_IF(view->IsYCbCr(), "In entries[%u], %s is YCbCr.", i, view);
-                break;
-            }
-
-            case wgpu::DynamicBindingKind::Undefined:
-                DAWN_UNREACHABLE();
-        }
+        DAWN_TRY_CONTEXT(
+            ValidateDynamicBindingArrayEntry(device, layout->GetDynamicArrayKind(), entry),
+            "validating that entries[%i] can be used in the dynamic binding array.", i);
     }
 
     return {};
+}
+
+BindGroupEntryContents ToBindGroupEntryContents(const BindGroupEntry& entry) {
+    return {
+        .nextInChain = entry.nextInChain,
+        .buffer = entry.buffer,
+        .offset = entry.offset,
+        .size = entry.size,
+        .sampler = entry.sampler,
+        .textureView = entry.textureView,
+    };
+}
+
+BindGroupEntry ToBindGroupEntry(BindingNumber number, const BindGroupEntryContents& contents) {
+    return {
+        .nextInChain = contents.nextInChain,
+        .binding = uint32_t(number),
+        .buffer = contents.buffer,
+        .offset = contents.offset,
+        .size = contents.size,
+        .sampler = contents.sampler,
+        .textureView = contents.textureView,
+    };
 }
 
 }  // anonymous namespace
@@ -904,8 +936,17 @@ void BindGroupBase::APIDestroy() {
 }
 
 wgpu::Status BindGroupBase::APIUpdate(const BindGroupEntry* entry) {
+    if (GetDevice()->IsValidationEnabled() &&
+        GetDevice()->ConsumedError(ValidateUpdate(entry), "validating %s.Update()", this)) {
+        // A validation error still returns a success because the error is propagated to
+        // Device::ConsumedError. This is important to make dawn::native and dawn::wire appear to
+        // have the same behavior.
+        // TODO(435317394): Should this still mark the entry as used?
+        return wgpu::Status::Success;
+    }
+
     // TODO(435317394): Implement bindless bindgroup updates.
-    DAWN_UNREACHABLE();
+    return wgpu::Status::Success;
 }
 
 uint32_t BindGroupBase::APIInsertBinding(const BindGroupEntryContents* contents) {
@@ -1033,6 +1074,39 @@ MaybeError BindGroupBase::ValidateDestroy() const {
     // validating for all bind groups would be too expensive. For that reason only allow dynamic
     // arrays to be destroyed early.
     DAWN_INVALID_IF(!HasDynamicArray(), "%s doesn't contain a dynamic array.", this);
+    return {};
+}
+
+MaybeError BindGroupBase::ValidateUpdate(const BindGroupEntry* entry) const {
+    DAWN_TRY(GetDevice()->ValidateObject(this));
+    DAWN_INVALID_IF(!HasDynamicArray(), "%s doesn't contain a dynamic array.", this);
+
+    DAWN_TRY(ValidateInDynamicArray(BindingNumber(entry->binding)));
+    return ValidateDynamicBindingArrayEntry(GetDevice(), mDynamicArray->GetKind(), *entry);
+}
+
+MaybeError BindGroupBase::ValidateInsertBinding(const BindGroupEntryContents* contents) const {
+    DAWN_TRY(GetDevice()->ValidateObject(this));
+    DAWN_INVALID_IF(!HasDynamicArray(), "%s doesn't contain a dynamic array.", this);
+
+    BindingNumber kPlaceholderNumber{0u};
+    BindGroupEntry entry = ToBindGroupEntry(kPlaceholderNumber, *contents);
+    return ValidateDynamicBindingArrayEntry(GetDevice(), mDynamicArray->GetKind(), entry);
+}
+
+MaybeError BindGroupBase::ValidateRemoveBinding(uint32_t binding) const {
+    DAWN_TRY(GetDevice()->ValidateObject(this));
+    DAWN_INVALID_IF(!HasDynamicArray(), "%s doesn't contain a dynamic array.", this);
+
+    return ValidateInDynamicArray(BindingNumber(binding));
+}
+
+MaybeError BindGroupBase::ValidateInDynamicArray(BindingNumber binding) const {
+    DAWN_INVALID_IF(
+        binding < GetLayout()->GetAPIDynamicArrayStart() ||
+            GetLayout()->GetDynamicBindingIndex(binding) >= mDynamicArray->GetAPISize(),
+        "binding (%i) is not in the dynamic binding array starting at %i and of size %i.", binding,
+        GetLayout()->GetAPIDynamicArrayStart(), mDynamicArray->GetAPISize());
     return {};
 }
 
