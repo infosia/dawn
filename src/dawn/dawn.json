@@ -346,6 +346,7 @@
             {
                 "name": "remove binding",
                 "tags": ["dawn"],
+                "returns": "status",
                 "args": [
                     {"name": "binding", "type": "uint32_t"}
                 ]

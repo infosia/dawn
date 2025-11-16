@@ -624,16 +624,30 @@ TEST_F(DynamicBindingArrayTests, DestroyDisallowedOnStaticOnlyBindGroup) {
     ASSERT_DEVICE_ERROR(bgStatic.Destroy());
 }
 
-// Test that it is an error to call .Destroy() on an error bind group. This is a regression test for
-// an issues where doing so was triggering an ASSERT.
+// Test that it is allowed to call .Destroy() on an error bind group, only if its layout had a
+// dynamic array.
 TEST_F(DynamicBindingArrayTests, DestroyOnErrorBindGroup) {
-    // Create an error bind group.
-    wgpu::BindGroupLayout layout = utils::MakeBindGroupLayout(
+    // Create an error bind group with a static layout, it is an error to destroy it.
+    wgpu::BindGroupLayout layoutStatic = utils::MakeBindGroupLayout(
         device, {{0, wgpu::ShaderStage::Fragment, wgpu::BufferBindingType::Uniform}});
-    wgpu::BindGroup bg;
-    ASSERT_DEVICE_ERROR(bg = utils::MakeBindGroup(device, layout, {}));
+    wgpu::BindGroup bgStatic;
+    ASSERT_DEVICE_ERROR(bgStatic = utils::MakeBindGroup(device, layoutStatic, {}));
+    ASSERT_DEVICE_ERROR(bgStatic.Destroy());
 
-    ASSERT_DEVICE_ERROR(bg.Destroy());
+    // Create an error bind group with a dynamic binding array layout, it is a allowed to destroy
+    // it.
+    wgpu::TextureDescriptor tDesc{
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {1, 1},
+        .format = wgpu::TextureFormat::R32Uint,
+    };
+    wgpu::Texture tex = device.CreateTexture(&tDesc);
+
+    wgpu::BindGroupLayout layoutDynamic =
+        MakeBindGroupLayout(wgpu::DynamicBindingKind::SampledTexture);
+    wgpu::BindGroup bgDynamic;
+    ASSERT_DEVICE_ERROR(bgDynamic = MakeBindGroup(layoutDynamic, 0, {{0, tex.CreateView()}}));
+    bgDynamic.Destroy();
 }
 
 // Test that using a destroyed dynamic binding array in a render pass in a submit is an error.
@@ -1583,6 +1597,18 @@ TEST_F(DynamicBindingArrayTests, PinValidationUsageRenderPass) {
         }
     }
 }
+
+// Test update:
+//   - Status Error on non dynamic array (error vs. not)
+//   - Status Error on binding before / after dynamic array (error vs. not, clamped size for error vs. not).
+//   - Device Error if on an error bindgroup.
+//   - Error if not a sampled texture + other stuff, copy other validation tests there.
+
+// Test RemoveBinding
+//   - Status Error on non dynamic array (error vs. not)
+//   - Status Error on binding before / after dynamic array (error vs. not, clamped size for error vs. not).
+//   - Device Error if on an error bindgroup.
+
 
 }  // anonymous namespace
 }  // namespace dawn
