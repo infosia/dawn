@@ -77,7 +77,7 @@ class DynamicArrayState : public RefCounted, public WeakRefSupport<DynamicArrayS
     // Methods that mutate the state of bindings in the dynamic array. They keep track of the
     // necessary metadata buffer updates required for dynamic type checks in the shader to match
     // what's in the binding array.
-    void Update(BindingIndex i, TextureViewBase* view);
+    wgpu::Status Update(BindingIndex i, const BindGroupEntryContents& contents);
     void OnPinned(BindingIndex i, TextureBase* texture);
     void OnUnpinned(BindingIndex i, TextureBase* texture);
 

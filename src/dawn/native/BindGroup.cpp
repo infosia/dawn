@@ -870,7 +870,9 @@ MaybeError BindGroupBase::Initialize(const UnpackedPtr<BindGroupDescriptor>& des
             if (binding < layout->GetAPIDynamicArrayStart()) {
                 continue;
             }
-            mDynamicArray->Update(layout->GetDynamicBindingIndex(binding), entry->textureView);
+
+            BindGroupEntryContents entryContents = ToBindGroupEntryContents(**entry);
+            mDynamicArray->Update(layout->GetDynamicBindingIndex(binding), entryContents);
         }
 
         // Add the metadata storage buffer in the static bindings.
@@ -945,8 +947,9 @@ wgpu::Status BindGroupBase::APIUpdate(const BindGroupEntry* entry) {
         return wgpu::Status::Success;
     }
 
-    // TODO(435317394): Implement bindless bindgroup updates.
-    return wgpu::Status::Success;
+    BindingIndex i = GetLayout()->GetDynamicBindingIndex(BindingNumber(entry->binding));
+    BindGroupEntryContents entryContents = ToBindGroupEntryContents(*entry);
+    return mDynamicArray->Update(i, entryContents);
 }
 
 uint32_t BindGroupBase::APIInsertBinding(const BindGroupEntryContents* contents) {

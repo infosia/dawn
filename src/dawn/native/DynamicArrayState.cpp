@@ -206,7 +206,10 @@ MaybeError DynamicArrayState::Initialize(DeviceBase* device) {
         device->GetDynamicArrayDefaultBindings()->GetOrCreateSampledTextureDefaults(device));
 
     for (auto [i, defaultBinding] : Enumerate(defaultBindings)) {
-        Update(mAPISize + i, defaultBinding.Get());
+        BindGroupEntryContents entryContents = {
+            .textureView = defaultBinding.Get(),
+        };
+        Update(mAPISize + i, entryContents);
     }
 
     // Create a storage buffer that will hold the shader-visible metadata for the dynamic array.
@@ -272,10 +275,16 @@ bool DynamicArrayState::IsDestroyed() const {
     return mDestroyed;
 }
 
-void DynamicArrayState::Update(BindingIndex i, TextureViewBase* view) {
+wgpu::Status DynamicArrayState::Update(BindingIndex i, const BindGroupEntryContents& contents) {
+    // TODO(435317394): Support bindings that aren't TextureViews
+
+    // TODO(435317394): Support bindings that aren't TextureViews
+    DAWN_ASSERT(contents.textureView != nullptr);
+    TextureViewBase* view = contents.textureView;
+
     DAWN_ASSERT(!mDestroyed);
     if (mBindings[i] == view) {
-        return;
+        return wgpu::Status::Success;
     }
 
     // Update the mBindings slot but also the mapping to the slot that are stored in the textures.
@@ -297,6 +306,8 @@ void DynamicArrayState::Update(BindingIndex i, TextureViewBase* view) {
         state.pinned = pinned;
         MarkStateDirty(i);
     }
+
+    return wgpu::Status::Success;
 }
 
 void DynamicArrayState::OnPinned(BindingIndex i, TextureBase* texture) {
