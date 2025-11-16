@@ -62,6 +62,20 @@ class FeatureArchInfoTest_MaxLimits : public FeatureArchInfoTestBase {
     }
 };
 
+class FeatureArchInfoTest_SubgroupMatrixTest : public FeatureArchInfoTestBase {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        std::vector<wgpu::FeatureName> features;
+        if (SupportsFeatures({wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix})) {
+            features.push_back(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix);
+        }
+        if (SupportsFeatures({wgpu::FeatureName::ShaderF16})) {
+            features.push_back(wgpu::FeatureName::ShaderF16);
+        }
+        return features;
+    }
+};
+
 TEST_P(FeatureArchInfoTest_MaxLimits, SubgroupsSupported) {
     const bool subgroupSupportExpected =
         // All Apple Silicon
@@ -82,6 +96,51 @@ TEST_P(FeatureArchInfoTest_MaxLimits, ShaderF16Supported) {
 
     DAWN_TEST_UNSUPPORTED_IF(!shaderF16SupportExpected);
     EXPECT_TRUE(this->SupportsFeatures({wgpu::FeatureName::ShaderF16}));
+}
+
+TEST_P(FeatureArchInfoTest_SubgroupMatrixTest, SubgroupMatrixF32Supported) {
+    // Currently the only device on the dawn farm that supports SubgroupMatrix is the Apple M2
+    DAWN_TEST_UNSUPPORTED_IF(
+        !adapter.HasFeature(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix));
+    wgpu::AdapterInfo info;
+    wgpu::AdapterPropertiesSubgroupMatrixConfigs subgroupMatrixConfigs;
+    info.nextInChain = &subgroupMatrixConfigs;
+    ASSERT_EQ(adapter.GetInfo(&info), wgpu::Status::Success);
+
+    // We expect if we have SubgroupMatrix we at least have 32 bit support.
+    bool found_f32 = false;
+    for (size_t i = 0; i < subgroupMatrixConfigs.configCount; i++) {
+        auto& config = subgroupMatrixConfigs.configs[i];
+        if (config.componentType == wgpu::SubgroupMatrixComponentType::F32) {
+            found_f32 = true;
+            break;
+        }
+    }
+
+    EXPECT_TRUE(found_f32);
+}
+
+TEST_P(FeatureArchInfoTest_SubgroupMatrixTest, SubgroupMatrixF16Supported) {
+    // Currently the only device on the dawn farm that supports SubgroupMatrix is the Apple M2
+    DAWN_TEST_UNSUPPORTED_IF(
+        !adapter.HasFeature(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix));
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::ShaderF16}));
+    wgpu::AdapterInfo info;
+    wgpu::AdapterPropertiesSubgroupMatrixConfigs subgroupMatrixConfigs;
+    info.nextInChain = &subgroupMatrixConfigs;
+    ASSERT_EQ(adapter.GetInfo(&info), wgpu::Status::Success);
+
+    // If we have both SubgroupMatrix and ShaderF16 then we should have a config that has f16.
+    bool found_f16 = false;
+    for (size_t i = 0; i < subgroupMatrixConfigs.configCount; i++) {
+        auto& config = subgroupMatrixConfigs.configs[i];
+        if (config.componentType == wgpu::SubgroupMatrixComponentType::F16) {
+            found_f16 = true;
+            break;
+        }
+    }
+
+    EXPECT_TRUE(found_f16);
 }
 
 TEST_P(FeatureArchInfoTest_MaxLimits, WorkgroupSizeMin1024Expected) {
@@ -161,6 +220,11 @@ DAWN_INSTANTIATE_TEST(FeatureArchInfoTest_TieredMaxLimits,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
+
+DAWN_INSTANTIATE_TEST(FeatureArchInfoTest_SubgroupMatrixTest,
+                      D3D12Backend(),
+                      MetalBackend(),
+                      VulkanBackend({"use_vulkan_memory_model"}));
 
 }  // anonymous namespace
 }  // namespace dawn
