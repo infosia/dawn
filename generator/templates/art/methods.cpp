@@ -33,7 +33,10 @@
 #include "JNIClasses.h"
 #include "JNIContext.h"
 #include "structures.h"
+#include <android/log.h>
 
+// Define a tag for your log messages
+#define LOG_TAG "WebGPU_JNI"
 // Converts every method call from the Kotlin-hosted version to the native version, performing
 // the necessary JNI calls to fetch data, and converting the data to the correct form.
 
@@ -63,13 +66,13 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
             littleEndian);
     return byteBuffer;
 }
-
+{% set coverage_calls = [] %}
 {% macro render_method(method, object) %}
     {% set ObjectName = kotlin_name(object) if object else "FunctionsKt" %}
     {% set FunctionSuffix = ObjectName + "_" +  method.name.camelCase() %}
     {% set KotlinRecord = FunctionSuffix + "KotlinRecord" %}
     {% set ArgsStruct = FunctionSuffix + "ArgsStruct" %}
-
+    {% do coverage_calls.append(FunctionSuffix) %}
     //* Define the helper structs to perform most of the conversion.
     struct {{KotlinRecord}} {
         {% for arg in kotlin_record_members(method.arguments) %}
@@ -97,6 +100,8 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
     {% endfor %}) {
 
     // * Helper context for the duration of this method call.
+    std::string name = "{{ FunctionSuffix }}";
+    __android_log_print(ANDROID_LOG_INFO, LOG_TAG, "coverage call: %s", name.c_str());
     JNIClasses* classes = JNIClasses::getInstance(env);
     JNIContext c(env);
 
@@ -213,3 +218,10 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
 {% endfor %}
 
 }  // namespace dawn::kotlin_api
+
+const char* kCoverageCalls[] = {
+        {% for call in coverage_calls %}
+        "{{ call }}",
+        {% endfor %}
+        nullptr // Null terminator
+};
