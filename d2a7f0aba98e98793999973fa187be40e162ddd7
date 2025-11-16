@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "71496b9d_7133c3fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-16T10:22:32Z",
+      "side": 1,
+      "message": "Kai PTAL again!",
+      "revId": "d2a7f0aba98e98793999973fa187be40e162ddd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f14b876_939d39ec",
@@ -14,6 +31,24 @@
       "writtenOn": "2025-11-08T03:05:10Z",
       "side": 1,
       "message": "Hmm. I guess we would need to upstream this. For API compatibility technically implementations will need to default this to 0.\n\nI\u0027d probably prefer to just have a new struct that doesn\u0027t have a `binding` in it.\n\n(Also then that could be tagged as \"dawn\".)",
+      "revId": "d2a7f0aba98e98793999973fa187be40e162ddd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed3b8775_1bbec898",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-16T10:22:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f14b876_939d39ec",
       "revId": "d2a7f0aba98e98793999973fa187be40e162ddd7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
