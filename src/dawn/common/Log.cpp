@@ -113,7 +113,19 @@ LogMessage::~LogMessage() {
 
 #if DAWN_PLATFORM_IS(ANDROID)
     android_LogPriority androidPriority = AndroidLogPriority(mSeverity);
-    __android_log_print(androidPriority, "Dawn", "%s: %s\n", severityName, fullMessage.c_str());
+    const char* tag = "Dawn"; // Assuming the tag is "Dawn"
+
+    // --- Refactored line-by-line printing logic ---
+    std::stringstream ss(fullMessage);
+    std::string line;
+
+    // Read the message line by line using stringstream and newline delimiter
+    while (std::getline(ss, line, '\n')) {
+        // For each line, call __android_log_print separately.
+        // Note: We remove the '\n' from the format string to prevent double newlines,
+        // as Logcat typically handles line formatting itself.
+        __android_log_print(androidPriority, tag, "%s: %s", severityName, line.c_str());
+    }
 #else  // DAWN_PLATFORM_IS(ANDROID)
     FILE* outputStream = stdout;
     if (mSeverity == LogSeverity::Warning || mSeverity == LogSeverity::Error) {

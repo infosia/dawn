@@ -945,6 +945,25 @@ dawn_test("dawn_end2end_tests") {
   }
 }
 
+shared_library("dawn_end2end_tests_jniLib") {
+  testonly = true
+  deps = [
+    ":end2end_tests_sources",
+    ":test_infra_sources",
+    ":white_box_tests_sources",
+    "${dawn_root}/src/utils/chromium_test_compat",
+  ]
+
+  sources = []
+  libs = []
+
+  sources += [ "End2EndTestsMainJNI.cpp" ]
+
+  if (is_chromeos || is_linux) {
+    libs += [ "gbm" ]
+  }
+}
+
 ###############################################################################
 # Dawn perf tests
 ###############################################################################

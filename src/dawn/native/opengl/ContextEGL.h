@@ -99,6 +99,8 @@ class ContextEGL : NonMovable {
     };
     [[nodiscard]] ScopedMakeCurrent MakeCurrent();
 
+    EGLContext GetRawContext() const { return mState.context; }
+
   private:
     // This mutex is used to make sure only one thread can enter ScopedMakeCurrent at a time.
     Ref<Mutex> mExclusiveMakeCurrentMutex;
