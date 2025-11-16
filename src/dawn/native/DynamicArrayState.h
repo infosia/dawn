@@ -69,6 +69,7 @@ class DynamicArrayState : public RefCounted, public WeakRefSupport<DynamicArrayS
     MaybeError Initialize(DeviceBase* device);
     void Destroy();
 
+    wgpu::DynamicBindingKind GetKind() const;
     ityp::span<BindingIndex, const Ref<TextureViewBase>> GetBindings() const;
     BufferBase* GetMetadataBuffer() const;
     bool IsDestroyed() const;
