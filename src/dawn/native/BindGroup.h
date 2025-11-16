@@ -61,7 +61,7 @@ struct BufferBinding {
 
 class BindGroupBase : public ApiObjectBase {
   public:
-    static Ref<BindGroupBase> MakeError(DeviceBase* device, StringView label);
+    static Ref<BindGroupBase> MakeError(DeviceBase* device, const BindGroupDescriptor* descriptor);
 
     MaybeError Initialize(const UnpackedPtr<BindGroupDescriptor>& descriptor);
 
@@ -71,7 +71,7 @@ class BindGroupBase : public ApiObjectBase {
     void APIDestroy();
     wgpu::Status APIUpdate(const BindGroupEntry* entry);
     uint32_t APIInsertBinding(const BindGroupEntryContents* contents);
-    void APIRemoveBinding(uint32_t binding);
+    wgpu::Status APIRemoveBinding(uint32_t binding);
 
     BindGroupLayoutBase* GetFrontendLayout();
     const BindGroupLayoutBase* GetFrontendLayout() const;
