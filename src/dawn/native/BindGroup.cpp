@@ -560,6 +560,17 @@ MaybeError ValidateBindGroupDynamicBindingArray(const DeviceBase* device,
     return {};
 }
 
+BindGroupEntryContents ToBindGroupEntryContents(const BindGroupEntry& entry) {
+    return {
+        .nextInChain = entry.nextInChain,
+        .buffer = entry.buffer,
+        .offset = entry.offset,
+        .size = entry.size,
+        .sampler = entry.sampler,
+        .textureView = entry.textureView,
+    };
+}
+
 }  // anonymous namespace
 
 ResultOrError<UnpackedPtr<BindGroupDescriptor>> ValidateBindGroupDescriptor(
@@ -837,9 +848,9 @@ MaybeError BindGroupBase::Initialize(const UnpackedPtr<BindGroupDescriptor>& des
 
     // Gather dynamic binding entries in a second loop to put the handling off the critical path.
     if (auto* dynamic = descriptor.Get<BindGroupDynamicBindingArray>()) {
-        mDynamicArray = AcquireRef(new DynamicArrayState(BindingIndex(dynamic->dynamicArraySize),
-                                                         layout->GetDynamicArrayKind()));
-        DAWN_TRY(mDynamicArray->Initialize(GetDevice()));
+        mDynamicArray = AcquireRef(new DynamicArrayState(
+            GetDevice(), BindingIndex(dynamic->dynamicArraySize), layout->GetDynamicArrayKind()));
+        DAWN_TRY(mDynamicArray->Initialize());
 
         for (uint32_t i = 0; i < descriptor->entryCount; ++i) {
             UnpackedPtr<BindGroupEntry> entry = Unpack(&descriptor->entries[i]);
@@ -848,7 +859,9 @@ MaybeError BindGroupBase::Initialize(const UnpackedPtr<BindGroupDescriptor>& des
             if (binding < layout->GetAPIDynamicArrayStart()) {
                 continue;
             }
-            mDynamicArray->Update(layout->GetDynamicBindingIndex(binding), entry->textureView);
+
+            BindGroupEntryContents entryContents = ToBindGroupEntryContents(**entry);
+            mDynamicArray->Update(layout->GetDynamicBindingIndex(binding), entryContents);
         }
 
         // Add the metadata storage buffer in the static bindings.
@@ -909,8 +922,8 @@ Ref<BindGroupBase> BindGroupBase::MakeError(DeviceBase* device,
                 }
 
                 mLayout = descriptor->layout;
-                mDynamicArray = AcquireRef(new DynamicArrayState(BindingIndex(dynamicArraySize),
-                                                                 layout->GetDynamicArrayKind()));
+                mDynamicArray = AcquireRef(new DynamicArrayState(
+                    device, BindingIndex(dynamicArraySize), layout->GetDynamicArrayKind()));
             }
         }
 
@@ -955,7 +968,9 @@ wgpu::Status BindGroupBase::APIUpdate(const BindGroupEntry* entry) {
         return wgpu::Status::Error;
     }
 
-    // TODO(435317394): Check if the slot is already in use and return a synchronous error.
+    if (!mDynamicArray->CanBeUpdated(slot)) {
+        return wgpu::Status::Error;
+    }
 
     if (GetDevice()->ConsumedError(  //
             ([&]() -> MaybeError {
@@ -964,11 +979,13 @@ wgpu::Status BindGroupBase::APIUpdate(const BindGroupEntry* entry) {
                                                         *entry);
             })(),
             "validating %s.Update()", this)) {
-        // TODO(435317394): Should this still mark the entry as used in the dynamic array.
-        return wgpu::Status::Success;
+        mDynamicArray->UpdateToInvalid(slot);
+    } else {
+        BindingIndex i = GetLayout()->GetDynamicBindingIndex(BindingNumber(entry->binding));
+        BindGroupEntryContents entryContents = ToBindGroupEntryContents(*entry);
+        mDynamicArray->Update(i, entryContents);
     }
 
-    // TODO(435317394): Implement bindless bindgroup updates.
     return wgpu::Status::Success;
 }
 
@@ -997,13 +1014,10 @@ wgpu::Status BindGroupBase::APIRemoveBinding(uint32_t binding) {
         return wgpu::Status::Error;
     }
 
-    if (GetDevice()->ConsumedError(GetDevice()->ValidateObject(this),
-                                   "validating %s.RemoveBinding(%u)", this, binding)) {
-        // TODO(435317394): Should this still mark the entry as unused in the dynamic array.
-        return wgpu::Status::Success;
-    }
+    mDynamicArray->Remove(slot);
 
-    // TODO(435317394): Implement bindless bindgroup removeBinding.
+    [[maybe_unused]] bool error = GetDevice()->ConsumedError(
+        GetDevice()->ValidateObject(this), "validating %s.RemoveBinding(%u)", this, binding);
     return wgpu::Status::Success;
 }
 
