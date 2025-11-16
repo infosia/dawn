@@ -1083,8 +1083,8 @@ MaybeError BindGroupBase::ValidateDestroy() const {
 MaybeError BindGroupBase::ValidateUpdate(const BindGroupEntry* entry) const {
     DAWN_TRY(GetDevice()->ValidateObject(this));
     DAWN_INVALID_IF(!HasDynamicArray(), "%s doesn't contain a dynamic array.", this);
-    // XXX validate in range
 
+    DAWN_TRY(ValidateInDynamicArray(BindingNumber(entry->binding)));
     return ValidateDynamicBindingArrayEntry(GetDevice(), mDynamicArray->GetKind(), *entry);
 }
 
@@ -1100,8 +1100,16 @@ MaybeError BindGroupBase::ValidateInsertBinding(const BindGroupEntryContents* co
 MaybeError BindGroupBase::ValidateRemoveBinding(uint32_t binding) const {
     DAWN_TRY(GetDevice()->ValidateObject(this));
     DAWN_INVALID_IF(!HasDynamicArray(), "%s doesn't contain a dynamic array.", this);
-    // XXX validate in range
 
+    return ValidateInDynamicArray(BindingNumber(binding));
+}
+
+MaybeError BindGroupBase::ValidateInDynamicArray(BindingNumber binding) const {
+    DAWN_INVALID_IF(
+        binding < GetLayout()->GetAPIDynamicArrayStart() ||
+            GetLayout()->GetDynamicBindingIndex(binding) >= mDynamicArray->GetAPISize(),
+        "binding (%i) is not in the dynamic binding array starting at %i and of size %i.", binding,
+        GetLayout()->GetAPIDynamicArrayStart(), mDynamicArray->GetAPISize());
     return {};
 }
 

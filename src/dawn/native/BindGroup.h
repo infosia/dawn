@@ -133,6 +133,7 @@ class BindGroupBase : public ApiObjectBase {
     MaybeError ValidateUpdate(const BindGroupEntry* entry) const;
     MaybeError ValidateInsertBinding(const BindGroupEntryContents* contents) const;
     MaybeError ValidateRemoveBinding(uint32_t binding) const;
+    MaybeError ValidateInDynamicArray(BindingNumber binding) const;
 
     Ref<BindGroupLayoutBase> mLayout;
     BindGroupLayoutInternalBase::BindingDataPointers mBindingData;
