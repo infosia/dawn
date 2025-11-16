@@ -280,7 +280,7 @@ bool DynamicArrayState::IsDestroyed() const {
 }
 
 wgpu::Status DynamicArrayState::Update(BindingIndex i, const BindGroupEntryContents& contents) {
-    // TODO(435317394): Support bindings that aren't TextureViews
+    // TODO(435317394): Validate the entry can be replaced.
 
     // TODO(435317394): Support bindings that aren't TextureViews
     DAWN_ASSERT(contents.textureView != nullptr);
