@@ -51,6 +51,24 @@
       "parentUuid": "df6d8162_fc1bb991",
       "revId": "037d0c3312b865b2b9a6ce0ae9c7934dbd663cba",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e89ef767_3dd82ee8",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-17T16:54:45Z",
+      "side": 1,
+      "message": "For `Unary` we do have test which test for a `nullptr` value, which end up crashing if you try to get the Type. Not sure if the same exists for binary.",
+      "parentUuid": "c7671e55_3c7f6200",
+      "revId": "037d0c3312b865b2b9a6ce0ae9c7934dbd663cba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
