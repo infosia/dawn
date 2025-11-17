@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "66a66f09_9488e9ab",
+        "filename": "src/dawn/native/EncodingContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-17T10:08:42Z",
+      "side": 1,
+      "message": "See comment at [1] for more context.",
+      "parentUuid": "68907836_b328862b",
+      "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9837f2c8_7a3f8eb4",
         "filename": "src/dawn/native/EncodingContext.cpp",
         "patchSetId": 2
@@ -48,6 +66,30 @@
       "writtenOn": "2025-11-13T21:08:58Z",
       "side": 1,
       "message": "nit. prevents",
+      "range": {
+        "startLine": 122,
+        "startChar": 40,
+        "endLine": 122,
+        "endChar": 47
+      },
+      "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c6970a0_ae1b9b98",
+        "filename": "src/dawn/native/EncodingContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-17T10:08:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9837f2c8_7a3f8eb4",
       "range": {
         "startLine": 122,
         "startChar": 40,
@@ -71,6 +113,30 @@
       "writtenOn": "2025-11-13T21:08:58Z",
       "side": 1,
       "message": "nit. recording",
+      "range": {
+        "startLine": 123,
+        "startChar": 15,
+        "endLine": 123,
+        "endChar": 34
+      },
+      "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5628db05_9a32bab2",
+        "filename": "src/dawn/native/EncodingContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-17T10:08:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d37697c3_908eae86",
       "range": {
         "startLine": 123,
         "startChar": 15,
@@ -121,6 +187,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c840136d_f9fc728e",
+        "filename": "src/dawn/native/EncodingContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-17T10:08:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4482478e_ae69b1c0",
+      "range": {
+        "startLine": 53,
+        "startChar": 90,
+        "endLine": 53,
+        "endChar": 92
+      },
+      "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9ca1268e_18866afa",
@@ -134,6 +224,30 @@
       "writtenOn": "2025-11-13T21:08:58Z",
       "side": 1,
       "message": "Hmm... I don\u0027t feel too strongly about this, but I feel like usually we use the `On*` prefix to denote callbacks of sorts (here and in Chromium also). Would it make sense to call these just `BeginPass`, `EndPass`, and `DestroyPass` instead?",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1efbe8fd_cd99cb1a",
+        "filename": "src/dawn/native/EncodingContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-17T10:08:42Z",
+      "side": 1,
+      "message": "For more context, these will be used later to notify the EncodingContext of all the lifetimes changes, including error passes and more. See for example https://dawn-review.googlesource.com/c/dawn/+/273118/2/src/dawn/native/CommandEncoder.cpp\n\nThis is needed to let it track both the current valid pass to encode to, and the current pass to defer errors for (which is the same in valid code, but can be an error pass in some other cases). So the idea is to let the EncodingContext know of all the changes and let it decide how it changes its internal state based on that. It\u0027s also why the ASSERTs turned into conditions because the EncodingContext will get called even for invalid passes started at the same time as another one, after finish, etc.\n\nThe latest patchset tries to make this more clear with additional comment and by moving logic found in later commits in the stack. PTAL!",
+      "parentUuid": "9ca1268e_18866afa",
       "range": {
         "startLine": 88,
         "startChar": 4,
