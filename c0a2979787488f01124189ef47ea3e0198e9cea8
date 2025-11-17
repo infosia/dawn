@@ -34,6 +34,24 @@
       "parentUuid": "24517070_7e07ee65",
       "revId": "c0a2979787488f01124189ef47ea3e0198e9cea8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19a10eac_92aa4552",
+        "filename": "test/tint/extensions/fragment_depth/basic.wgsl.expected.spvasm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-17T08:13:01Z",
+      "side": 1,
+      "message": "Oh I misread spec! Thank you James!",
+      "parentUuid": "3f71f0df_84b29dc1",
+      "revId": "c0a2979787488f01124189ef47ea3e0198e9cea8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
