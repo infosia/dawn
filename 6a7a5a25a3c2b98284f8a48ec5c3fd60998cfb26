@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "6a7a5a25a3c2b98284f8a48ec5c3fd60998cfb26",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c19b0647_2e655873",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-17T16:55:03Z",
+      "side": 1,
+      "message": "Subgroup matrix constants shouldn\u0027t exist at all in the module. Maybe we should just be rejecting any subgroup matrix type in the decoder instead?",
+      "revId": "6a7a5a25a3c2b98284f8a48ec5c3fd60998cfb26",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
