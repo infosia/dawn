@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73fb8829_3fc8efec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-17T21:03:26Z",
+      "side": 1,
+      "message": "Dang.  I meant to link to b/461471131  in the commit message, instead of listing the same bug twice",
+      "revId": "a20f3e9ab32f3e2c982165eafa361db499534c52",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
