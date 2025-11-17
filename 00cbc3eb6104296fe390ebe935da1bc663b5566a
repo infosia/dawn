@@ -134,6 +134,30 @@
       },
       "revId": "00cbc3eb6104296fe390ebe935da1bc663b5566a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55ae1e92_80c66b87",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-17T14:12:48Z",
+      "side": 1,
+      "message": "That is actually not the case unfortunately. FinalizeMap isn\u0027t something the user has any control over when it runs. As soon as state changes to unmapped then a new MapAsync() can start on another thread. For example,\n\n1. Thread A switches state to Unmapped.\n2. Thread B runs MapAsync() and switches state to PendingMap.\n3. Thread A runs FinalizeMapImpI() and then switches state to Mapped.\n\nThings are in a bad state after that point because two MapAsync() are moving forward. We can only update the state when the function is going to exit definitively so do something like:\n\n```\nDAWN_TRY_WITH_CLEANUP(FinalizeMapImpl(newState).\n                      {mState.store(BufferState::Unmapped, std::memory_order::release)});\n```",
+      "parentUuid": "351ecc6c_02ec3b9e",
+      "range": {
+        "startLine": 539,
+        "startChar": 0,
+        "endLine": 544,
+        "endChar": 0
+      },
+      "revId": "00cbc3eb6104296fe390ebe935da1bc663b5566a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
