@@ -178,6 +178,24 @@
       "parentUuid": "18f4d62c_6edac9b5",
       "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d0094e3_4fe04708",
+        "filename": "test/tint/extensions/fragment_depth/basic.wgsl.expected.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-17T15:14:15Z",
+      "side": 1,
+      "message": "I will do that.\n\nIf that helps, here\u0027s what happens locally:\n```\nfbeaufort-macbookpro:glslang fbeaufort$ more /tmp/foo.frag \n#version 300 es\n#extension GL_EXT_conservative_depth: require\nlayout (depth_any) out highp float gl_FragDepth;\nvoid main() {\n    gl_FragDepth \u003d 1.0;\n}\nfbeaufort-macbookpro:glslang fbeaufort$ ./install/bin/glslang /tmp/foo.frag \n/tmp/foo.frag\nERROR: 0:3: \u0027gl_FragDepth\u0027 : identifiers starting with \"gl_\" are reserved \nERROR: 1 compilation errors.  No code generated.\n```",
+      "parentUuid": "521a7ad8_6da2e521",
+      "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
