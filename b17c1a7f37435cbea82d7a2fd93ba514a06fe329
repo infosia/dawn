@@ -16,6 +16,98 @@
       "message": "PTAL.",
       "revId": "b17c1a7f37435cbea82d7a2fd93ba514a06fe329",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d35a7e6_bb9cdf7f",
+        "filename": "src/tint/lang/msl/writer/raise/validate_subgroup_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-17T20:49:50Z",
+      "side": 1,
+      "message": "This won\u0027t work for uses that are nested in control flow.\n\nI think you can just loop over `ir.Instructions()` instead, which will skip over dead instructions and therefore only cover instructions used inside a function that is part of the entry point.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 48
+      },
+      "revId": "b17c1a7f37435cbea82d7a2fd93ba514a06fe329",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "896bf5de_94a179d3",
+        "filename": "src/tint/lang/msl/writer/raise/validate_subgroup_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-17T20:49:50Z",
+      "side": 1,
+      "message": "We also need to check for subgroup matrices nested inside an array or structure.",
+      "revId": "b17c1a7f37435cbea82d7a2fd93ba514a06fe329",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a19237b_4d74cf68",
+        "filename": "src/tint/lang/msl/writer/raise/validate_subgroup_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-17T20:49:50Z",
+      "side": 1,
+      "message": "Nit: Since these errors are going to be surfaced on the API side during pipeline creation, maybe it\u0027s better to avoid referencing MSL (which might not mean much to a WebGPU developer), and instead just say something more generic like \"target WebGPU device\" or similar.",
+      "revId": "b17c1a7f37435cbea82d7a2fd93ba514a06fe329",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "869a1bf3_e14acbf6",
+        "filename": "src/tint/lang/msl/writer/raise/validate_subgroup_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-17T20:49:50Z",
+      "side": 1,
+      "message": "Nit: ValidateSubgroupMatrix",
+      "fixSuggestions": [
+        {
+          "fixId": "06054605_56646ce7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/msl/writer/raise/validate_subgroup_matrix.cc",
+              "range": {
+                "startLine": 82,
+                "startChar": 0,
+                "endLine": 83,
+                "endChar": 0
+              },
+              "replacement": "    auto result \u003d ValidateAndDumpIfNeeded(ir, \"msl.ValidateSubgroupMatrix\",\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b17c1a7f37435cbea82d7a2fd93ba514a06fe329",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
