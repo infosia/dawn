@@ -124,6 +124,24 @@
       "parentUuid": "2366e7be_f81f7db2",
       "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a08c0351_83a0b6d7",
+        "filename": "test/tint/extensions/fragment_depth/basic.wgsl.expected.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-17T14:12:07Z",
+      "side": 1,
+      "message": "I\u0027m not sure how adding `GL_EXT_spirv_intrinsics` fixes the issue where it doesn\u0027t recognize `gl_FragDepth`? They should be unrelated.",
+      "parentUuid": "240fbdac_7c4c7703",
+      "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
