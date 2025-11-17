@@ -16,6 +16,24 @@
       "message": "LOL, was that really all it was?",
       "revId": "fc85507dd14c3fc0418c6ebc2d8d85ed8df6b6da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d02c895c_4619731f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-11-17T10:50:46Z",
+      "side": 1,
+      "message": "Yes, it was!\n\nIt was just a direct swap to the non-deprecated integer-based constructor signature.",
+      "parentUuid": "74341396_95d5784a",
+      "revId": "fc85507dd14c3fc0418c6ebc2d8d85ed8df6b6da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
