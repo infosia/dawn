@@ -45,6 +45,8 @@ if (tint_build_unittests || tint_build_benchmarks) {
 
 libtint_source_set("raise") {
   sources = [
+    "array_offset_from_immediate.cc",
+    "array_offset_from_immediate.h",
     "array_offset_from_uniform.cc",
     "array_offset_from_uniform.h",
     "binary_polyfill.cc",
