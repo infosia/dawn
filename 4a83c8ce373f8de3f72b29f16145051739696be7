@@ -34,6 +34,24 @@
       "parentUuid": "88a0f479_8d12da50",
       "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f82bb08_6ca5ad4e",
+        "filename": "test/tint/extensions/fragment_depth/basic.wgsl.expected.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-17T08:42:58Z",
+      "side": 1,
+      "message": "https://github.com/KhronosGroup/glslang/commit/d1888f83f6038004d62c67bc19b2b2f180c0219c seems to be adding conservative depth layout qualifiers support to glslang without `GL_EXT_conservative_depth` since it\u0027s using `#version 420 core`.\nI\u0027ve forced generating `#version 420 core` GLSL shaders (instead of `#version 310 es`) but I now got the following error:\n\n```\nError parsing GLSL shader:\nERROR: 0:11: \u0027location qualifier on uniform or buffer\u0027 : not supported for this version or the enabled extensions \nERROR: 1 compilation errors.  No code generated.\n```\n\nDoes that I mean I\u0027m out of luck for this kind of tests like you suggested?\n\n@cwallez@chromium.org Any thoughts on this?",
+      "parentUuid": "eabd7021_6dbe65a8",
+      "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
