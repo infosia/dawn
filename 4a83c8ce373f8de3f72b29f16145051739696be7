@@ -52,6 +52,24 @@
       "parentUuid": "eabd7021_6dbe65a8",
       "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ef8678d_57d05d7b",
+        "filename": "test/tint/extensions/fragment_depth/basic.wgsl.expected.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-17T10:01:04Z",
+      "side": 1,
+      "message": "FYI I\u0027ve filed https://github.com/KhronosGroup/glslang/issues/4095",
+      "parentUuid": "4f82bb08_6ca5ad4e",
+      "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
