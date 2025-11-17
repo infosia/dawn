@@ -70,6 +70,24 @@
       "parentUuid": "8b1e842e_600295f6",
       "revId": "6b747aabc11a2aa6ca8b5db12497de5652cb75f9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6de0ba7e_4f3b6ca5",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-17T23:32:14Z",
+      "side": 1,
+      "message": "Seems like a good idea. I logged https://buganizer.corp.google.com/issues/461577026",
+      "parentUuid": "853ac182_7fef9b25",
+      "revId": "6b747aabc11a2aa6ca8b5db12497de5652cb75f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
