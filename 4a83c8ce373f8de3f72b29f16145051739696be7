@@ -106,6 +106,24 @@
       "parentUuid": "d1a081cb_d9e15e0c",
       "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "240fbdac_7c4c7703",
+        "filename": "test/tint/extensions/fragment_depth/basic.wgsl.expected.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-17T14:06:51Z",
+      "side": 1,
+      "message": "We can also generate desktop GL, using the `// flags: --glsl-desktop` as a comment at the top of the e2e test file.\n\nThis doesn\u0027t help with compat, but may allow the test to pass regardless of what glslang does.",
+      "parentUuid": "2366e7be_f81f7db2",
+      "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
