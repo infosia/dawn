@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b0c6a26_eb82c5fb",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-17T20:00:05Z",
+      "side": 1,
+      "message": "Can these be designated initializers like:\n\n```suggestion\n    .kind \u003d IOAttributeKind::kInvariant,\n```",
+      "range": {
+        "startLine": 593,
+        "startChar": 1,
+        "endLine": 593,
+        "endChar": 43
+      },
+      "revId": "6a88a368bc3168800aa6fe643936fb4a67bfd697",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cbf9064_5a2ca545",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-17T20:00:05Z",
+      "side": 1,
+      "message": "```suggestion\n/// location/blend_src they need to be sequenced correctly to initialize shared context\n```",
+      "revId": "6a88a368bc3168800aa6fe643936fb4a67bfd697",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6aebe758_0bfac985",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2632,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-17T20:00:05Z",
+      "side": 1,
+      "message": "This might be easier to read at the callsites if this is `IODirection` instead of `bool`?",
+      "revId": "6a88a368bc3168800aa6fe643936fb4a67bfd697",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
