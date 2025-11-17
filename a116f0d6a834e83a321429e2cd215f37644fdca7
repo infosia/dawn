@@ -256,6 +256,30 @@
       },
       "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8c2a49e_25c49bfe",
+        "filename": "src/dawn/native/EncodingContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-17T21:21:26Z",
+      "side": 1,
+      "message": "Again, I don\u0027t feel TOO strongly about this, but even after reading through the follow up PS, I still don\u0027t see why we couldn\u0027t just call these `BeginPass`, `EndPass` and `DestroyPass`. Given that the argument to the functions are also the passes, it just feels more declarative to say what we are doing with the argument.",
+      "parentUuid": "1efbe8fd_cd99cb1a",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
