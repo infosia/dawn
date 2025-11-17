@@ -16,6 +16,24 @@
       "message": "I thought we were going to do this check much earlier in Raise, just after `SubstituteOverrides`? Otherwise we have to carry the bad matrices all the way through the transform pipeline. I don\u0027t know how this gets through the builtin polyfill right now for example, where it would have to generate overloads for intrinsics that don\u0027t exist.",
       "revId": "8ab5ae1a8cd284d8fffa44ccbd3adb8861bb4b4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63c449d1_3dbeea0b",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-17T14:30:27Z",
+      "side": 1,
+      "message": "Yea, that\u0027s the other way I mentioned in my initial message. This way seemed easier as a first pass but needed up kinda bleh. I\u0027ll drop this one and just do a transform.",
+      "parentUuid": "9be98abd_d97dadfb",
+      "revId": "8ab5ae1a8cd284d8fffa44ccbd3adb8861bb4b4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
