@@ -1336,6 +1336,8 @@ struct Decoder {
             return b.InvalidConstant()->Value();
         }
 
+        printf("%s\n", type->FriendlyName().c_str());
+
         uint32_t num_elements = type->Elements().count;
         if (DAWN_UNLIKELY(num_elements == 0)) {
             err_ << "cannot create a splat of type " << type->FriendlyName() << "\n";
