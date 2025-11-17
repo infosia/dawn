@@ -16,6 +16,29 @@
       "message": "Yuly, how did you get this to work in ANGLE? Not including the `.gitmodules` change causes presubmit to fail (and I suspect forcing this through will cause any future DEPS changes to also complain).",
       "revId": "9c803db236af203fe859d1d8fdcdd11b8f1f1481",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "642cbd65_f2297224",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-17T14:14:45Z",
+      "side": 1,
+      "message": "It looks like we have a presubmit exception for dummy_chromium specifically:\nhttps://source.chromium.org/chromium/chromium/tools/depot_tools/+/main:presubmit_canned_checks.py;l\u003d2139;drc\u003d8257337edcdc88858d83455a5c616f917e89fc8a",
+      "range": {
+        "startLine": 604,
+        "startChar": 15,
+        "endLine": 604,
+        "endChar": 28
+      },
+      "revId": "9c803db236af203fe859d1d8fdcdd11b8f1f1481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
