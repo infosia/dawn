@@ -39,6 +39,30 @@
       },
       "revId": "9c803db236af203fe859d1d8fdcdd11b8f1f1481",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b58c88a5_7529c0b4",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-17T23:13:17Z",
+      "side": 1,
+      "message": "Renamed to `dummy_chromium` to pick this up. I\u0027ll also update the depot_tools comment to note that there are two instances of this for the same reason.",
+      "parentUuid": "642cbd65_f2297224",
+      "range": {
+        "startLine": 604,
+        "startChar": 15,
+        "endLine": 604,
+        "endChar": 28
+      },
+      "revId": "9c803db236af203fe859d1d8fdcdd11b8f1f1481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
