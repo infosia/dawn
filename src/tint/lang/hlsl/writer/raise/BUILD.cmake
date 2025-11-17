@@ -39,6 +39,8 @@
 # Kind:      lib
 ################################################################################
 tint_add_target(tint_lang_hlsl_writer_raise lib
+  lang/hlsl/writer/raise/array_offset_from_immediate.cc
+  lang/hlsl/writer/raise/array_offset_from_immediate.h
   lang/hlsl/writer/raise/array_offset_from_uniform.cc
   lang/hlsl/writer/raise/array_offset_from_uniform.h
   lang/hlsl/writer/raise/binary_polyfill.cc
