@@ -88,6 +88,24 @@
       "parentUuid": "6ef8678d_57d05d7b",
       "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2366e7be_f81f7db2",
+        "filename": "test/tint/extensions/fragment_depth/basic.wgsl.expected.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-17T10:57:20Z",
+      "side": 1,
+      "message": "Let\u0027s try with https://github.com/KhronosGroup/glslang/pull/4096 and see how people react to it. Note that with this patch, the following code is now valid:\n\n```\n#version 300 es\n#extension GL_EXT_spirv_intrinsics: require\n#extension GL_EXT_conservative_depth: require\nlayout (depth_any) out highp float gl_FragDepth;\nvoid main() {\n    gl_FragDepth \u003d 1.0;\n}\n```\n\nNote that I had to enable also `GL_EXT_spirv_intrinsics` to avoid the following error. I wonder if that\u0027s okay...\n\n```\nERROR: 0:3: \u0027gl_FragDepth\u0027 : identifiers starting with \"gl_\" are reserved \nERROR: 1 compilation errors.  No code generated.\n```",
+      "parentUuid": "d1a081cb_d9e15e0c",
+      "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
