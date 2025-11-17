@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "665be146_e7bee0b5",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-17T15:42:43Z",
+      "side": 1,
+      "message": "Do you think we should be outputting a warning if we have partial parameter coverage?",
+      "revId": "6b747aabc11a2aa6ca8b5db12497de5652cb75f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
