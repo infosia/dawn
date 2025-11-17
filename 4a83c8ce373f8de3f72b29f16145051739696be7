@@ -70,6 +70,24 @@
       "parentUuid": "4f82bb08_6ca5ad4e",
       "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1a081cb_d9e15e0c",
+        "filename": "test/tint/extensions/fragment_depth/basic.wgsl.expected.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-17T10:05:27Z",
+      "side": 1,
+      "message": "It seems that we\u0027ll have to rely on dawn_end2end_tests to test GLSL\u0027s translation yes (unless the bug you filed gets fixed).",
+      "parentUuid": "6ef8678d_57d05d7b",
+      "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
