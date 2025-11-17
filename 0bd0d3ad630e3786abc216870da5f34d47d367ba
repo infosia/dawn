@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41447877_a893d11d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-17T18:41:14Z",
+      "side": 1,
+      "message": "compat expectations already skips:\n\npixel-6 textureSampleGrad  on sampled_2d_coords and sampled_3d_coords\n\ntextureSampleCompareLevel does not appear",
+      "revId": "0bd0d3ad630e3786abc216870da5f34d47d367ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
