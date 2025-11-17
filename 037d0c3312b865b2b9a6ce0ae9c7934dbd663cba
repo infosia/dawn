@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afa6d5e4_38735641",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-17T14:19:49Z",
+      "side": 1,
+      "message": "```suggestion\nChanged: NotEqual, LessThan, GreaterThan, LessThanEq, GreaterThanEq\n```",
+      "revId": "037d0c3312b865b2b9a6ce0ae9c7934dbd663cba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
