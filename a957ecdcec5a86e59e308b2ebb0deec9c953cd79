@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a5d0568_8a1ee47e",
+        "filename": "infra/config/global/gn_standalone_try.star",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-17T14:20:40Z",
+      "side": 1,
+      "message": "I am not sure that there is enough capacity for CQ even after the KVM connectivity issue is resolved.",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 253,
+        "endChar": 20
+      },
+      "revId": "a957ecdcec5a86e59e308b2ebb0deec9c953cd79",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
