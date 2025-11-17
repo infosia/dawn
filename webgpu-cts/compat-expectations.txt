@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-11-14 10:12:19AM
+# Last rolled: 2025-11-17 05:13:14AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -125,7 +125,6 @@ crbug.com/42241110 webgpu:api,validation,error_scope:simple:errorType="out-of-me
 crbug.com/407076121 [ android-pixel-4 ] webgpu:shader,execution,limits:const_array_elements:sizeDivisor=1 [ Skip ]
 crbug.com/407076121 [ android-pixel-6 ] webgpu:shader,execution,limits:const_array_elements:sizeDivisor=1 [ Skip ]
 crbug.com/407076121 [ linux nvidia ] webgpu:shader,execution,limits:const_array_elements:sizeDivisor=1 [ Skip ]
-
 
 ################################################################################
 # Temporary Skip Expectations
@@ -657,7 +656,6 @@ crbug.com/42241359 [ android-14 arm ] webgpu:shader,execution,expression,call,bu
 crbug.com/42241359 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAnd:and_workgroup:workgroupSize=2;dispatchSize=4;mapId="remap";scalarType="u32" [ Failure ]
 crbug.com/42241359 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAnd:and_workgroup:workgroupSize=2;dispatchSize=8;mapId="remap";scalarType="i32" [ Failure ]
 crbug.com/42241359 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,atomics,atomicAnd:and_workgroup:workgroupSize=2;dispatchSize=8;mapId="remap";scalarType="u32" [ Failure ]
-
 
 # image_copy of depth/stencil flaky on Pixel 6
 crbug.com/384676198 [ android-pixel-6 android-t ] webgpu:api,operation,command_buffer,image_copy:rowsPerImage_and_bytesPerRow_depth_stencil:* [ RetryOnFailure ]

@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-11-14 10:12:19AM
+# Last rolled: 2025-11-17 05:13:14AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -345,7 +345,6 @@ crbug.com/42240657 [ intel release renderer-skia-gl ] webgpu:api,operation,comma
 
 # Occlusion query with alpha to coverage failing on Android Qualcomm (Pixel 4)
 crbug.com/42240847 [ qualcomm ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:* [ Failure ]
-
 
 # Failures due to Windows/NVIDIA driver upgrade
 crbug.com/42241352 [ nvidia-0x2184 nvidia_ge_31.0.15.4601 win10 ] webgpu:api,operation,command_buffer,image_copy:offsets_and_sizes:initMethod="WriteTexture";checkMethod="PartialCopyT2B";* [ Failure ]
@@ -1046,7 +1045,6 @@ crbug.com/432291885 [ dawn-no-backend-validation intel-0x3e9b sequoia ] webgpu:s
 
 crbug.com/432291885 [ dawn-no-backend-validation intel-0x3e9b sequoia ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_3d_coords:* [ Failure ]
 crbug.com/432291885 [ dawn-no-backend-validation intel-0x3e9b sequoia ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:* [ Failure ]
-
 
 # Failures on brya devices running Android Desktop.
 crbug.com/445230380 [ android android-brya ] webgpu:api,operation,rendering,basic:large_draw:* [ Failure ]
