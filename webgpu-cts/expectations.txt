@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-11-14 10:12:19AM
+# Last rolled: 2025-11-17 08:37:40AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -345,7 +345,6 @@ crbug.com/42240657 [ intel release renderer-skia-gl ] webgpu:api,operation,comma
 
 # Occlusion query with alpha to coverage failing on Android Qualcomm (Pixel 4)
 crbug.com/42240847 [ qualcomm ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:* [ Failure ]
-
 
 # Failures due to Windows/NVIDIA driver upgrade
 crbug.com/42241352 [ nvidia-0x2184 nvidia_ge_31.0.15.4601 win10 ] webgpu:api,operation,command_buffer,image_copy:offsets_and_sizes:initMethod="WriteTexture";checkMethod="PartialCopyT2B";* [ Failure ]
@@ -1047,7 +1046,6 @@ crbug.com/432291885 [ dawn-no-backend-validation intel-0x3e9b sequoia ] webgpu:s
 crbug.com/432291885 [ dawn-no-backend-validation intel-0x3e9b sequoia ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_3d_coords:* [ Failure ]
 crbug.com/432291885 [ dawn-no-backend-validation intel-0x3e9b sequoia ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:* [ Failure ]
 
-
 # Failures on brya devices running Android Desktop.
 crbug.com/445230380 [ android android-brya ] webgpu:api,operation,rendering,basic:large_draw:* [ Failure ]
 crbug.com/445232714 [ android android-brya webgpu-no-worker ] webgpu:api,operation,storage_texture,read_only:basic:format="rgb10a2unorm";* [ Failure ]
@@ -1113,38 +1111,6 @@ crbug.com/0000 [ android-pixel-4 ] webgpu:api,operation,rendering,stencil:stenci
 crbug.com/0000 [ android-pixel-4 ] webgpu:api,operation,rendering,stencil:stencil_accumulation:format="depth32float-stencil8" [ Failure ]
 crbug.com/0000 [ amd mac ] webgpu:api,operation,resource_init,texture_zero:uninitialized_texture_is_zero:dimension="2d";readMethod="DepthTest";format="depth16unorm" [ Failure ]
 crbug.com/0000 [ amd-0x7340 dawn-no-backend-validation mac ] webgpu:api,operation,resource_init,texture_zero:uninitialized_texture_is_zero:dimension="2d";readMethod="StencilTest";format="depth32float-stencil8" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth16unorm";func="textureGatherCompare" [ Failure ]
-crbug.com/0000 [ intel win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth16unorm";func="textureGatherCompare" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth16unorm";func="textureSampleCompare" [ Failure ]
-crbug.com/0000 [ intel win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth16unorm";func="textureSampleCompare" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth16unorm";func="textureSampleCompareLevel" [ Failure ]
-crbug.com/0000 [ intel win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth16unorm";func="textureSampleCompareLevel" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth24plus";func="textureGatherCompare" [ Failure ]
-crbug.com/0000 [ intel win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth24plus";func="textureGatherCompare" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth24plus";func="textureSampleCompare" [ Failure ]
-crbug.com/0000 [ intel win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth24plus";func="textureSampleCompare" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth24plus";func="textureSampleCompareLevel" [ Failure ]
-crbug.com/0000 [ intel win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth24plus";func="textureSampleCompareLevel" [ Failure ]
-crbug.com/0000 [ amd-0x7340 mac ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth24plus-stencil8";func="textureGather" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth24plus-stencil8";func="textureGatherCompare" [ Failure ]
-crbug.com/0000 [ intel win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth24plus-stencil8";func="textureGatherCompare" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth24plus-stencil8";func="textureSampleCompare" [ Failure ]
-crbug.com/0000 [ intel win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth24plus-stencil8";func="textureSampleCompare" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth24plus-stencil8";func="textureSampleCompareLevel" [ Failure ]
-crbug.com/0000 [ intel win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth24plus-stencil8";func="textureSampleCompareLevel" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth32float";func="textureGatherCompare" [ Failure ]
-crbug.com/0000 [ intel win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth32float";func="textureGatherCompare" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth32float";func="textureSampleCompare" [ Failure ]
-crbug.com/0000 [ intel win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth32float";func="textureSampleCompare" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth32float";func="textureSampleCompareLevel" [ Failure ]
-crbug.com/0000 [ intel win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth32float";func="textureSampleCompareLevel" [ Failure ]
-crbug.com/0000 [ amd-0x7340 mac ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth32float-stencil8";func="textureGather" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth32float-stencil8";func="textureGatherCompare" [ Failure ]
-crbug.com/0000 [ intel win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth32float-stencil8";func="textureGatherCompare" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth32float-stencil8";func="textureSampleCompare" [ Failure ]
-crbug.com/0000 [ intel win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth32float-stencil8";func="textureSampleCompare" [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth32float-stencil8";func="textureSampleCompareLevel" [ Failure ]
-crbug.com/0000 [ intel win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="depth32float-stencil8";func="textureSampleCompareLevel" [ Failure ]
 crbug.com/0000 [ amd-0x7340 mac ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="r16sint";func="textureGather" [ Failure ]
 crbug.com/0000 [ amd-0x7340 mac ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="r16uint";func="textureGather" [ Failure ]
 crbug.com/0000 [ amd-0x7340 mac ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="r32sint";func="textureGather" [ Failure ]
@@ -1165,9 +1131,7 @@ crbug.com/0000 [ amd-0x7340 mac ] webgpu:api,operation,texture_view,texture_comp
 crbug.com/0000 [ amd-0x7340 mac ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="rgba8sint";func="textureGather" [ Failure ]
 crbug.com/0000 [ amd-0x7340 mac ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="rgba8uint";func="textureGather" [ Failure ]
 crbug.com/0000 [ amd-0x7340 mac ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="stencil8";func="textureGather" [ Failure ]
-crbug.com/0000 [ nvidia win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="stencil8";func="textureGather" [ Failure ]
 crbug.com/0000 [ amd mac ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="stencil8";func="textureLoad" [ Failure ]
-crbug.com/0000 [ nvidia win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="stencil8";func="textureLoad" [ Failure ]
 crbug.com/0000 [ android-pixel-4 ] webgpu:api,validation,buffer,create:limit: [ Failure ]
 crbug.com/0000 [ android-pixel-6 android-t ] webgpu:api,validation,buffer,create:limit: [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,buffer,create:limit: [ Failure ]
