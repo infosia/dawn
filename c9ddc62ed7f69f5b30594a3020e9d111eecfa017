@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "daaf9202_1aa062f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-17T23:45:35Z",
+      "side": 1,
+      "message": "PS2 still seems to work as expected. https://chromium-swarm.appspot.com/task?id\u003d74ace98cbf6c3f10 hit a timeout issue that failed the test as expected but there was no issue during teardown.",
+      "revId": "c9ddc62ed7f69f5b30594a3020e9d111eecfa017",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
