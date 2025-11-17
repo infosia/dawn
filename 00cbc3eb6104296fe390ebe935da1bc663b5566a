@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c1d748a5_e93a3352",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-17T14:07:35Z",
+      "side": 1,
+      "message": "If the mapping fails it is an unrecoverable error and we need to handle it. Async pipeline compilation is different because WebGPU explicitly calls out that \"internal\" errors are possible (like failing to do register allocation in the backend compiler). However mapAsync doesn\u0027t have cases like this: the error is either because of a device loss, or because of a WebGPU validation error, no spurious errors are allowed.",
+      "parentUuid": "51621ee3_638c9af2",
+      "revId": "00cbc3eb6104296fe390ebe935da1bc663b5566a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0e91d3ed_c721f6f7",
         "filename": "src/dawn/native/Buffer.cpp",
         "patchSetId": 8
