@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1a5fd03d_5a70cb85",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-17T18:10:33Z",
+      "side": 1,
+      "message": "I was hoping we could do something more like the ArchTierLimits feature tests, where we\u0027d have a set of subgroup matrix configs that we\u0027d expect to see for each device that supports subgroup matrix.\n\nThere won\u0027t be many devices on the farm that support it (unfortunately), so it\u0027d hopefully be a relative short list.\n\nBut something like:\n```\ndevice_map[\"Apple_M2\"] \u003d {\n  {f32, f32, 8, 8, 8},\n  {f16, f16, 8, 8, 8},\n};\ndevice_map[\"NVIDIA_blah\"] \u003d {\n  {f16, f32, 16, 8, 8},\n  {u8, u32, 16, 16, 8},\n  // etc\n};\n```",
+      "revId": "afaedceaabcbf714a498c747f2c1eb913c137aab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b49eed86_cf7279b6",
         "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
         "patchSetId": 10
@@ -26,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "02972d1c_fdde5509",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-17T18:10:33Z",
+      "side": 1,
+      "message": "This is not a spec requirement. Maybe it\u0027s true in practice right now, but I don\u0027t know that it always will be.",
+      "parentUuid": "b49eed86_cf7279b6",
+      "range": {
+        "startLine": 110,
+        "startChar": 60,
+        "endLine": 110,
+        "endChar": 74
+      },
+      "revId": "afaedceaabcbf714a498c747f2c1eb913c137aab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0729c965_cd65c3fb",
         "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
         "patchSetId": 10
@@ -37,6 +78,30 @@
       "writtenOn": "2025-11-16T17:42:13Z",
       "side": 1,
       "message": "if this is an actual spec expectation i would like to say so.",
+      "range": {
+        "startLine": 133,
+        "startChar": 5,
+        "endLine": 133,
+        "endChar": 23
+      },
+      "revId": "afaedceaabcbf714a498c747f2c1eb913c137aab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b43133af_55550a71",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-17T18:10:33Z",
+      "side": 1,
+      "message": "Likewise, this isn\u0027t guaranteed in practice. Older Mesa drivers didn\u0027t expose f16 subgroup matrix support for example.",
+      "parentUuid": "0729c965_cd65c3fb",
       "range": {
         "startLine": 133,
         "startChar": 5,
