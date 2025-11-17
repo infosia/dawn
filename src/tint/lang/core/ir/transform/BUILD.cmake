@@ -43,6 +43,8 @@ tint_add_target(tint_lang_core_ir_transform lib
   lang/core/ir/transform/array_length_from_immediate.h
   lang/core/ir/transform/array_length_from_uniform.cc
   lang/core/ir/transform/array_length_from_uniform.h
+  lang/core/ir/transform/array_offset_from_immediate.cc
+  lang/core/ir/transform/array_offset_from_immediate.h
   lang/core/ir/transform/bgra8unorm_polyfill.cc
   lang/core/ir/transform/bgra8unorm_polyfill.h
   lang/core/ir/transform/binary_polyfill.cc
@@ -121,6 +123,9 @@ tint_target_add_dependencies(tint_lang_core_ir_transform lib
   tint_lang_core_ir_analysis
   tint_lang_core_ir_type
   tint_lang_core_type
+  tint_lang_hlsl
+  tint_lang_hlsl_intrinsic
+  tint_lang_hlsl_ir
   tint_utils
   tint_utils_containers
   tint_utils_diagnostic
