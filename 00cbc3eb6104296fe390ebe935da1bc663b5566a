@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13ca2d4f_ca390bf0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-17T09:42:14Z",
+      "side": 1,
+      "message": "nit: Maybe mention why? (I assume it is to call glMapBuffer while we have the context current?)",
+      "revId": "00cbc3eb6104296fe390ebe935da1bc663b5566a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9243b78a_4a3760bd",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-17T09:42:14Z",
+      "side": 1,
+      "message": "I\u0027m concerned that the error is swallowed here and not bubbled up to the device. All errors that happen in FinalizeMap should be fatal and cause a device loss. (we can ASSERT that this isn\u0027t a validation error maybe).",
+      "revId": "00cbc3eb6104296fe390ebe935da1bc663b5566a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e91d3ed_c721f6f7",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-17T09:42:14Z",
+      "side": 1,
+      "message": "I believe that with the multithreading guarantees (that no two calls mutating the state of the buffer are allowed concurrently), this should work:\n\n```\n// Leave the buffer in an unmapped state if finalizing the mapping fails. We\u0027ll have a device loss anyway.\nmState.store(BufferState::Unmapped, std::memory_order::release);\nDAWN_TRY(FinalizeMapImpl(newState));\n\n    if (mStagingBuffer) {\n        mMappedPointer \u003d mStagingBuffer-\u003eGetMappedPointerImpl();\n    } else if (GetSize() \u003d\u003d 0) {\n        mMappedPointer \u003d static_cast\u003cvoid*\u003e(\u0026sZeroSizedMappingData);\n    } else {\n        mMappedPointer \u003d GetMappedPointerImpl();\n    }\n\n    mState.store(newState, std::memory_order::release);\n    return {};\n```",
+      "range": {
+        "startLine": 539,
+        "startChar": 0,
+        "endLine": 544,
+        "endChar": 0
+      },
+      "revId": "00cbc3eb6104296fe390ebe935da1bc663b5566a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
