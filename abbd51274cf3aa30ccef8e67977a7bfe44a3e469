@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c157ecc4_df6b0620",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-11-17T23:29:54Z",
+      "side": 1,
+      "message": "LGTM with naming nit",
+      "revId": "abbd51274cf3aa30ccef8e67977a7bfe44a3e469",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e59aac9_e03d2c5c",
+        "filename": "src/dawn/native/opengl/ContextEGL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-11-17T23:29:54Z",
+      "side": 1,
+      "message": "Naming nit: suggest \"autoRestoreContext\"",
+      "range": {
+        "startLine": 53,
+        "startChar": 66,
+        "endLine": 53,
+        "endChar": 83
+      },
+      "revId": "abbd51274cf3aa30ccef8e67977a7bfe44a3e469",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
