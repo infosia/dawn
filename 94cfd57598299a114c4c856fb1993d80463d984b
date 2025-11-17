@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "28576e1e_32bbde01",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-17T16:25:14Z",
+      "side": 1,
+      "message": "+CC Rafael\n\nYeaaah I\u0027m sorry, turns out because DXC/FXC are loaded only in the device, not in the adapter, this solution doesn\u0027t work great.\n\nI guess the `--gtest_filter\u003d-*_d_use_dxc_*` might be the less hacky thing to do.",
+      "parentUuid": "8da2b88a_7e7343ed",
+      "revId": "94cfd57598299a114c4c856fb1993d80463d984b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "445fc20f_966e04af",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
