@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a1f1250_9743da44",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-17T18:03:28Z",
+      "side": 1,
+      "message": "So should we be enabling `GL_EXT_conservative_depth` when we\u0027re targeting ES now?",
+      "range": {
+        "startLine": 1152,
+        "startChar": 0,
+        "endLine": 1156,
+        "endChar": 17
+      },
+      "revId": "8cd8e2187d2b9ecefd27828c4480509ca6aa2190",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
