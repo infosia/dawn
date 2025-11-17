@@ -16,6 +16,52 @@
       "message": "This is what the stack was building towards!",
       "revId": "2b779735e4c096d019bde44fdfbc6312f9e4fbc1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec6cfb67_31566147",
+        "filename": "src/dawn/native/EncodingContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-17T21:19:58Z",
+      "side": 1,
+      "message": "nit. Note",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 92,
+        "endChar": 10
+      },
+      "revId": "2b779735e4c096d019bde44fdfbc6312f9e4fbc1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b126354_a87beb49",
+        "filename": "src/dawn/tests/unittests/validation/RenderPipelineValidationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2073,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-17T21:19:58Z",
+      "side": 1,
+      "message": "Is this comment outdated now?",
+      "range": {
+        "startLine": 2072,
+        "startChar": 4,
+        "endLine": 2073,
+        "endChar": 40
+      },
+      "revId": "2b779735e4c096d019bde44fdfbc6312f9e4fbc1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
