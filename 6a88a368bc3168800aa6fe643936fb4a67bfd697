@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db98719d_fe28083c",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-17T21:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b0c6a26_eb82c5fb",
+      "range": {
+        "startLine": 593,
+        "startChar": 1,
+        "endLine": 593,
+        "endChar": 43
+      },
+      "revId": "6a88a368bc3168800aa6fe643936fb4a67bfd697",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4cbf9064_5a2ca545",
@@ -41,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7718864e_57aa40ff",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-17T21:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cbf9064_5a2ca545",
+      "revId": "6a88a368bc3168800aa6fe643936fb4a67bfd697",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6aebe758_0bfac985",
@@ -54,6 +96,24 @@
       "writtenOn": "2025-11-17T20:00:05Z",
       "side": 1,
       "message": "This might be easier to read at the callsites if this is `IODirection` instead of `bool`?",
+      "revId": "6a88a368bc3168800aa6fe643936fb4a67bfd697",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "321aeb57_08bdeb90",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2632,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-17T21:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aebe758_0bfac985",
       "revId": "6a88a368bc3168800aa6fe643936fb4a67bfd697",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
