@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "439ad182_cc7924b6",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-17T14:05:06Z",
+      "side": 1,
+      "message": "This is a very long function and doesn\u0027t have any comments to help me understand what is being set up and what\u0027s supposed to happen. Could you add some comments please?",
+      "revId": "52294d1140023eb417d2ddc5f3243de5ffaeb8a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eff94c6c_13beb2da",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-17T14:05:06Z",
+      "side": 1,
+      "message": "Could we have a control test (something where result \u003d\u003d 0)?",
+      "range": {
+        "startLine": 351,
+        "startChar": 3,
+        "endLine": 351,
+        "endChar": 24
+      },
+      "revId": "52294d1140023eb417d2ddc5f3243de5ffaeb8a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
