@@ -1,0 +1,21 @@
+# Dawn in 60 seconds
+
+- Layers:
+  - API & headers from `dawn.json` → codegen produces `webgpu.h`, C++ wrapper, procs.
+  - dawn_native: frontend validation + state; backends: D3D12/Metal/Vulkan translation.
+  - dawn_wire: client/server serialization with minimal client state.
+  - dawn_proc: static proc table forwarding WebGPU calls.
+- Shader pipeline:
+  - WGSL → Tint IR → backend shaders (HLSL/MSL/SPIR-V). SPIR-V validated via spirv-val.
+- Command path:
+  - App calls API → frontend validates → command encoding (CommandEncoder→CommandBuffer) → queue submit → backend API.
+- Resources:
+  - Buffer/Texture/Sampler/Views; BindGroup & PipelineLayout define binding interface.
+- Validation & errors:
+  - Use DAWN_INVALID_IF/DAWN_VALIDATION_ERROR with context via DAWN_TRY_CONTEXT; clear, present-tense messages.
+- Testing:
+  - Unit, end2end, perf; CTS integration to ensure spec conformance.
+- Debugging:
+  - Toggles (dump_shaders, disable_symbol_renaming, emit_hlsl_debug_symbols), env vars (DAWN_DEBUG_BREAK_ON_ERROR), tracing hooks.
+- Build:
+  - GN + Ninja; codegen and compile driven by `gn gen` and `ninja -C out/active`.

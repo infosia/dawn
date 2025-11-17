@@ -1,0 +1,22 @@
+# Validation playbook (first pass)
+
+- Where to validate
+  - Object creation descriptors (sizes, formats, usage flags, feature/limit gates).
+  - Encode-time checks (state compatibility, layouts, resource usages, barriers).
+  - Submit-time checks (queue state, fence/timestamp constraints).
+- Patterns & helpers
+  - Prefer DAWN_INVALID_IF + clear messages; add DAWN_TRY_CONTEXT for call context.
+  - Factor reusable checks into Validate* helpers near object code.
+  - Early-return on errors; keep happy path fast (DAWN_UNLIKELY guards).
+  - Examples:
+    - `ValidateBindGroupLayoutEntry` and `ValidateBindGroupLayoutDescriptor` (BindGroupLayoutInternal.cpp).
+    - `ValidateBufferDescriptor` (Buffer.{h,cpp}); `ValidateSamplerDescriptor` (Sampler.{h,cpp}).
+    - Command-level checks in `CommandEncoder.cpp`: texture copy ranges, sampleCount, depth-stencil restrictions.
+- Error messaging
+  - Full sentences, present tense, include given and expected values, enums as strings.
+- Testing
+  - Add unittests for validation helpers; add end2end for encoded misuse; note CTS coverage.
+  - Use `PushErrorScope`/`PopErrorScope` in tests to assert validation errors are captured (see `DeviceLifetimeTests.cpp`, `MultithreadTests.cpp`).
+- Backends
+  - Keep frontend validation consistent; backend-specific checks only where required by native API.
+  - D3D12 root signature compatibility is enforced via pipeline layout creation; Vulkan immediate constants affect `VkPipelineLayout` ranges.
