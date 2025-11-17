@@ -52,6 +52,24 @@
       "parentUuid": "8f770398_a0750d37",
       "revId": "6b747aabc11a2aa6ca8b5db12497de5652cb75f9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "853ac182_7fef9b25",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2025-11-17T21:12:51Z",
+      "side": 1,
+      "message": "If that would encourage the author to include a fix then sgtm",
+      "parentUuid": "8b1e842e_600295f6",
+      "revId": "6b747aabc11a2aa6ca8b5db12497de5652cb75f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
