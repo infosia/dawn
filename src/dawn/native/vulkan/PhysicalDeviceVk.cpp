@@ -764,6 +764,10 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
     }
     limits->v1.maxUniformBufferBindingSize = maxUniformBufferSize;
 
+    // Vulkan has no such limit; set it to 16 (the byte width of the largest format) multiplied by
+    // the maximum number of attachments in order to make it a no-op.
+    limits->v1.maxColorAttachmentBytesPerSample = 16 * vkLimits.maxColorAttachments;
+
     // Validate against maxFragmentCombinedOutputResources, tightening the limits when necessary.
     const uint32_t minFragmentCombinedOutputResources =
         baseLimits.v1.maxStorageBuffersPerShaderStage +
@@ -777,6 +781,7 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
     bool readjustFragmentCombinedOutputResources =
         vkLimits.maxFragmentCombinedOutputResources > minFragmentCombinedOutputResources &&
         uint64_t(vkLimits.maxFragmentCombinedOutputResources) < maxFragmentCombinedOutputResources;
+
     if (readjustFragmentCombinedOutputResources) {
         // Split extra resources across the three other limits instead of using the default values
         // since it would overflow.
@@ -794,6 +799,7 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
             std::min(baseLimits.v1.maxStorageBuffersPerShaderStage + extraResources,
                      vkLimits.maxPerStageDescriptorStorageBuffers);
     }
+
     limits->compat.maxStorageTexturesInFragmentStage = limits->v1.maxStorageTexturesPerShaderStage;
     limits->compat.maxStorageBuffersInFragmentStage = limits->v1.maxStorageBuffersPerShaderStage;
     limits->compat.maxStorageTexturesInVertexStage = limits->v1.maxStorageTexturesPerShaderStage;
