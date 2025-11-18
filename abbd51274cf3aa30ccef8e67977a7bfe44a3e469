@@ -39,6 +39,30 @@
       },
       "revId": "abbd51274cf3aa30ccef8e67977a7bfe44a3e469",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06bec030_ad2c7833",
+        "filename": "src/dawn/native/opengl/ContextEGL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-11-18T09:29:59Z",
+      "side": 1,
+      "message": "I am not sure that name is better suited either.\nHow about `unbindAfterScopedMakeCurrent`",
+      "parentUuid": "7e59aac9_e03d2c5c",
+      "range": {
+        "startLine": 53,
+        "startChar": 66,
+        "endLine": 53,
+        "endChar": 83
+      },
+      "revId": "abbd51274cf3aa30ccef8e67977a7bfe44a3e469",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
