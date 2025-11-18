@@ -88,6 +88,24 @@
       "parentUuid": "853ac182_7fef9b25",
       "revId": "6b747aabc11a2aa6ca8b5db12497de5652cb75f9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35dd77de_b69cca1a",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-11-18T09:09:08Z",
+      "side": 1,
+      "message": "As per b/461463426, we wont generate KDocs if any of the arguments have incomplete documentation. Therefore, there will ideally not be any text output to this new log file, since the KDocs will not be generated for such classes. \n\nIf we were to add such a log file, we should do it in the Python script, which would give output like https://paste.googleplex.com/5255688332902400. However, it seems redundant, as we already know the documentation is incomplete.\n\nThoughts?",
+      "parentUuid": "6de0ba7e_4f3b6ca5",
+      "revId": "6b747aabc11a2aa6ca8b5db12497de5652cb75f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
