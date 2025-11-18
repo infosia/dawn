@@ -69,6 +69,24 @@
       "parentUuid": "a2b22809_0e67d128",
       "revId": "b7abbe056feb058af2941c9819ebc083c2c586e8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03832b51_73e2bdbd",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-11-18T18:37:31Z",
+      "side": 1,
+      "message": "Actually I couldn\u0027t find a 32-bit-per-component format in D3D12 (no 256 to be found here https://learn.microsoft.com/en-us/windows/win32/direct3ddxgi/hardware-support-for-direct3d-12-1-formats), so I\u0027ve left it alone. Let me know if I missed it.\n\nVulkan has VK_FORMAT_R64G64B64A64_SFLOAT and friends, though, so I\u0027ve upped it.",
+      "parentUuid": "585d2ef8_facb6725",
+      "revId": "b7abbe056feb058af2941c9819ebc083c2c586e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
