@@ -535,6 +535,14 @@ source_set("test_infra_sources") {
     "${dawn_root}/src/dawn/wire",
   ]
 
+  if (dawn_enable_webgpu_on_webgpu) {
+    deps += [ "${dawn_root}/src/dawn/replay" ]
+    if (!defined(defines)) {
+      defines = []
+    }
+    defines += [ "DAWN_ENABLE_CAPTURE_REPLAY" ]
+  }
+
   public = [
     "AdapterTestConfig.h",
     "DawnTest.h",

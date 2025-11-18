@@ -69,7 +69,7 @@ MaybeError Deserialize(ReadHead& s, bool* v) {
 
 MaybeError Deserialize(ReadHead& s, std::string* v) {
     size_t size = 0;
-    DAWN_TRY(Deserialize(s, &size));
+    DAWN_REPLAY_TRY(Deserialize(s, &size));
     v->resize(size);
     return ReadBytes(s, v->data(), size);
 }
