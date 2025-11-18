@@ -18,6 +18,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2b69a20_0be17923",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-11-18T17:19:23Z",
+      "side": 1,
+      "message": "Agree, I have added some comments, thanks!",
+      "parentUuid": "439ad182_cc7924b6",
+      "revId": "52294d1140023eb417d2ddc5f3243de5ffaeb8a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0a911f6_64a6ba30",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-11-18T17:19:23Z",
+      "side": 1,
+      "message": "Agreed,",
+      "parentUuid": "439ad182_cc7924b6",
+      "revId": "52294d1140023eb417d2ddc5f3243de5ffaeb8a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eff94c6c_13beb2da",
@@ -31,6 +67,30 @@
       "writtenOn": "2025-11-17T14:05:06Z",
       "side": 1,
       "message": "Could we have a control test (something where result \u003d\u003d 0)?",
+      "range": {
+        "startLine": 351,
+        "startChar": 3,
+        "endLine": 351,
+        "endChar": 24
+      },
+      "revId": "52294d1140023eb417d2ddc5f3243de5ffaeb8a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68bf1657_842d2d9f",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-11-18T17:19:23Z",
+      "side": 1,
+      "message": "Sure, I have added tests for both cases!",
+      "parentUuid": "eff94c6c_13beb2da",
       "range": {
         "startLine": 351,
         "startChar": 3,
