@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e6b7ddd_a44bb320",
+        "filename": "src/dawn/tests/unittests/validation/CompatValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-18T01:44:44Z",
+      "side": 1,
+      "message": "very optional nit: if either of these is std::string then you can use `!\u003d` which is easier to tell is correct. I would make `builtins` an array of `std::string` probably",
+      "range": {
+        "startLine": 248,
+        "startChar": 13,
+        "endLine": 248,
+        "endChar": 19
+      },
+      "revId": "6e5261a6d7a4deb911cbd531528b6c0c9ecdfdad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
