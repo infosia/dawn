@@ -55,6 +55,7 @@ TEST_P(BasicTests, BackendType) {
 // basic test possible, and tests the test harness
 TEST_P(BasicTests, QueueWriteBuffer) {
     wgpu::BufferDescriptor descriptor;
+    descriptor.label = "test";
     descriptor.size = 4;
     descriptor.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
     wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
@@ -136,6 +137,7 @@ DAWN_INSTANTIATE_TEST(BasicTests,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
+//   WebGPUBackend({"enable_for_check_capture_replay"}));
 
 }  // anonymous namespace
 }  // namespace dawn
