@@ -16,6 +16,46 @@
       "message": "PTAL",
       "revId": "8ed243eff00e6315eaf536c47c9c4ce73c753e54",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "111c1096_487fe828",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-18T14:35:25Z",
+      "side": 1,
+      "message": "```suggestion\n  \u0027checkout_placeholder_chromium\u0027: False,\n```",
+      "revId": "8ed243eff00e6315eaf536c47c9c4ce73c753e54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac9fd146_30d2a68a",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-18T14:35:25Z",
+      "side": 1,
+      "message": "```suggestion\n  \u0027third_party/dummy_chromium\u0027: {\n    \u0027url\u0027: \u0027{chromium_git}/chromium/src.git\u0027 + \u0027@\u0027 + Var(\u0027chromium_revision\u0027),\n    \u0027condition\u0027: \u0027checkout_placeholder_chromium\u0027,\n  },\n```\n\nI see the third_party folder is hard coded into the depot tools file, it would be nice if that was updated to something like placeholder as well.",
+      "range": {
+        "startLine": 606,
+        "startChar": 0,
+        "endLine": 609,
+        "endChar": 4
+      },
+      "revId": "8ed243eff00e6315eaf536c47c9c4ce73c753e54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
