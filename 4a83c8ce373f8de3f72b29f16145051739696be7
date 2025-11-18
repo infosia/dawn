@@ -232,6 +232,24 @@
       "parentUuid": "34ec49aa_1c643a8b",
       "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4d99b60_5a8bcdfa",
+        "filename": "test/tint/extensions/fragment_depth/basic.wgsl.expected.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-18T14:31:18Z",
+      "side": 1,
+      "message": "I believe compat is targeting `#version 310 es`, so we can\u0027t go to `320` but if we\u0027re targeting `300` then I think we can make it `310` (But we should confirm with the compat folks)",
+      "parentUuid": "eef8dd0a_d0b12913",
+      "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
