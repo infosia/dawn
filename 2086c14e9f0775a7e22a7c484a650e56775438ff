@@ -135,6 +135,30 @@
       },
       "revId": "2086c14e9f0775a7e22a7c484a650e56775438ff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edfc4f4e_0069587b",
+        "filename": "src/dawn/native/metal/ComputePipelineMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-18T21:29:39Z",
+      "side": 1,
+      "message": "From discussion on the gpuweb issue (https://github.com/gpuweb/gpuweb/issues/5315), it sounds like there is indeed the potential for performance impact here (either positive or negative). That said, we\u0027re providing the MSL compiler with strictly more information about how we\u0027re going to launch the pipeline, so after some discussion in the Tint team we think it\u0027s a reasonable change to make, and we can report performance regressions to Apple driver team if we hit them.\n\nI\u0027m abandoning this change in favor of https://dawn-review.googlesource.com/c/dawn/+/274855 which does this in Tint instead, and has now been tested more thoroughly.",
+      "parentUuid": "ac8f8a77_6b246c50",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 42
+      },
+      "revId": "2086c14e9f0775a7e22a7c484a650e56775438ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
