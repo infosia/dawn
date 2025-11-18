@@ -29,10 +29,12 @@
 #include <jni.h>
 #include <stdlib.h>
 #include <webgpu/webgpu.h>
+#include <iomanip>
 
 #include "JNIClasses.h"
 #include "JNIContext.h"
 #include "structures.h"
+#include "dawn/common/Log.h"
 
 // Converts every method call from the Kotlin-hosted version to the native version, performing
 // the necessary JNI calls to fetch data, and converting the data to the correct form.
@@ -40,6 +42,15 @@
 #define DEFAULT __attribute__((visibility("default")))
 
 namespace dawn::kotlin_api {
+
+#define NANOS_IN_MILLIS 1000000LL
+#define MILLIS_IN_SECONDS 1000000000LL
+
+static int64_t get_monotonic_time_nanos() {
+    struct timespec now;
+    clock_gettime(CLOCK_MONOTONIC, &now);
+    return (int64_t)now.tv_sec * (NANOS_IN_MILLIS * MILLIS_IN_SECONDS) + now.tv_nsec;
+}
 
 jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
     if (!address) {
@@ -100,6 +111,8 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
     JNIClasses* classes = JNIClasses::getInstance(env);
     JNIContext c(env);
 
+    int64_t start_time = get_monotonic_time_nanos();
+
     //* Perform the conversion of arguments.
     {{KotlinRecord}} kotlinRecord;
     {% for arg in kotlin_record_members(method.arguments) %}
@@ -107,6 +120,12 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
     {% endfor %}
     {{ArgsStruct}} args;
     ConvertInternal(&c, kotlinRecord, &args);
+
+    int64_t end_time = get_monotonic_time_nanos();
+
+    dawn::InfoLog() << "jim$ converted {{KotlinRecord}} in "
+                  << std::fixed << std::setprecision(8) << (double)(end_time - start_time) / NANOS_IN_MILLIS
+                  << " ms";
 
     {% if object %}
         jclass memberClass = classes->{{ object.name.camelCase() }};
