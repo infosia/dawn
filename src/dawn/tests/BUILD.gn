@@ -933,6 +933,10 @@ dawn_test("dawn_end2end_tests") {
   sources = []
   libs = []
 
+  if (dawn_enable_webgpu_on_webgpu) {
+    deps += [ "${dawn_root}/src/dawn/replay" ]
+  }
+
   # When building inside Chromium, use their gtest main function because it is
   # needed to run in swarming correctly.
   if (build_with_chromium) {

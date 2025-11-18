@@ -45,4 +45,10 @@ void EndCapture(WGPUDevice device) {
     backendDevice->EndCapture();
 }
 
+// temp
+void SetCaptureState(WGPUDevice device, bool on) {
+    Device* backendDevice = ToBackend(FromAPI(device));
+    backendDevice->SetCaptureState(on);
+}
+
 }  // namespace dawn::native::webgpu
