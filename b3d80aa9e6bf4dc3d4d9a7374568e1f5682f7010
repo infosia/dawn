@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "524875e8_9002b83a",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-18T11:07:56Z",
+      "side": 1,
+      "message": "nit: usually we use DAWN_UNREACHABLE for that because it has more semantic, but it only happens on DEBUG (though in this case I believe compilers will emit an ill instruction on release as well).",
+      "revId": "b3d80aa9e6bf4dc3d4d9a7374568e1f5682f7010",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73cd315a_2995988e",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-18T11:07:56Z",
+      "side": 1,
+      "message": "SetIndexBuffer as well? and we need to add the buffers in there to used resources?",
+      "revId": "b3d80aa9e6bf4dc3d4d9a7374568e1f5682f7010",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7740fe5_6c755fdb",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-18T11:07:56Z",
+      "side": 1,
+      "message": "Is that still the case? I thought we made all the bindgroups explicit.",
+      "revId": "b3d80aa9e6bf4dc3d4d9a7374568e1f5682f7010",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16a97ad3_cdb526b3",
+        "filename": "src/dawn/native/webgpu/RenderBundleWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-18T11:07:56Z",
+      "side": 1,
+      "message": "I believe that this should already be handled by the iteration code below.",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 0
+      },
+      "revId": "b3d80aa9e6bf4dc3d4d9a7374568e1f5682f7010",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
