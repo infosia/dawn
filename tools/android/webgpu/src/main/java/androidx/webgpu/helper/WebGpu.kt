@@ -13,6 +13,7 @@ import androidx.webgpu.DeviceLostCallback
 import androidx.webgpu.DeviceLostException
 import androidx.webgpu.DeviceLostReason
 import androidx.webgpu.ErrorType
+import androidx.webgpu.FeatureLevel
 import androidx.webgpu.GPUInstance
 import androidx.webgpu.InstanceDescriptor
 import androidx.webgpu.InternalException
@@ -101,7 +102,15 @@ private suspend fun requestAdapter(
     instance: GPUInstance,
     options: RequestAdapterOptions = RequestAdapterOptions(backendType = BackendType.Vulkan),
 ): GPUAdapter {
-    return instance.requestAdapter(options)
+  val options2 =    options.let {
+    RequestAdapterOptions(featureLevel = FeatureLevel.Companion.Compatibility,
+                          powerPreference = it.powerPreference,
+                          forceFallbackAdapter = it.forceFallbackAdapter,
+                          backendType = BackendType.Companion.OpenGLES,
+                          compatibleSurface = it.compatibleSurface,
+                          requestAdapterWebXROptions = it.requestAdapterWebXROptions)
+  }
+  return instance.requestAdapter(options2)
 }
 
 private suspend inline fun requestDevice(
