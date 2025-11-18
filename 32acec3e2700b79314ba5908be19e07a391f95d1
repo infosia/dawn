@@ -39,6 +39,24 @@
       "message": "Looks like this changed all the device names for the other tests. This toggle should now be on by default so you shouldn\u0027t need to pass it any more.",
       "revId": "32acec3e2700b79314ba5908be19e07a391f95d1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9eafcef_fbb1cf62",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-18T22:09:07Z",
+      "side": 1,
+      "message": "Uh oh, it\u0027s on by default in Chrome but not in Dawn apparently...",
+      "parentUuid": "5a49758c_f5f55a3f",
+      "revId": "32acec3e2700b79314ba5908be19e07a391f95d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
