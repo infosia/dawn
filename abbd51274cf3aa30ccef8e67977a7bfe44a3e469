@@ -63,6 +63,30 @@
       },
       "revId": "abbd51274cf3aa30ccef8e67977a7bfe44a3e469",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c5cb2cd_18835f06",
+        "filename": "src/dawn/native/opengl/ContextEGL.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-11-18T20:09:00Z",
+      "side": 1,
+      "message": "`bindContextOnlyDuringUse`?",
+      "parentUuid": "06bec030_ad2c7833",
+      "range": {
+        "startLine": 53,
+        "startChar": 66,
+        "endLine": 53,
+        "endChar": 83
+      },
+      "revId": "abbd51274cf3aa30ccef8e67977a7bfe44a3e469",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
