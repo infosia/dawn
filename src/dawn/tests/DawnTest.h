@@ -188,6 +188,8 @@ class WireClient;
 class WireServer;
 }  // namespace wire
 
+class Recorder;
+
 class DawnTestEnvironment : public testing::Environment {
   public:
     DawnTestEnvironment(int argc, char** argv);
@@ -204,6 +206,7 @@ class DawnTestEnvironment : public testing::Environment {
 
     bool UsesWire() const;
     bool IsImplicitDeviceSyncEnabled() const;
+    bool IsCaptureReplayCheckingEnabled() const;
     native::BackendValidationLevel GetBackendValidationLevel() const;
     native::Instance* GetInstance() const;
     bool HasVendorIdFilter() const;
@@ -235,6 +238,7 @@ class DawnTestEnvironment : public testing::Environment {
     bool ValidateToggles(native::Instance* instance) const;
 
     bool mUseWire = false;
+    bool mCheckCaptureReplay = false;
     bool mEnableImplicitDeviceSync = false;
     native::BackendValidationLevel mBackendValidationLevel =
         native::BackendValidationLevel::Disabled;
@@ -320,6 +324,8 @@ class DawnTestBase {
 
     bool IsDXC() const;
 
+    bool IsCaptureReplayCheckingEnabled() const;
+
     static bool IsAsan();
     static bool IsTsan();
 
@@ -390,6 +396,8 @@ class DawnTestBase {
         mDeviceLostCallback;
     uint32_t mDeviceLostCallbackFailedCreationAllowedCount = 0;
     uint32_t mDeviceLostCallbackFailedCreationCalledCount = 0;
+
+    bool mCheckCaptureReplay = false;
 
     // Helper methods to implement the EXPECT_ macros
     std::ostringstream& AddBufferExpectation(const char* file,
@@ -764,6 +772,7 @@ class DawnTestBase {
         wgpu::Device device;
         wgpu::Buffer buffer;
         uint64_t bufferSize;
+        std::string label;
         raw_ptr<const void> mappedData = nullptr;
     };
     std::vector<ReadbackSlot> mReadbackSlots;
@@ -778,8 +787,21 @@ class DawnTestBase {
         wgpu::Buffer buffer;
         size_t slot;
         uint64_t offset;
+        std::string label;
     };
     ReadbackReservation ReserveReadback(wgpu::Device targetDevice, uint64_t readbackSize);
+
+    // Used for --check-capture-replay flag for expectations of the replayed readback buffers.
+    struct ReplayReadbackInfo {
+        size_t originalExpectationIndex;
+        size_t replayReadbackSlotIndex;
+    };
+    std::unordered_map<std::string, ReplayReadbackInfo> mReplayReadbacks;
+    std::unique_ptr<Recorder> mRecorder;
+    void ReplayCaptureAndAddNewReadbacks();
+    void AddReadbackForReplay(ReadbackReservation readback,
+                              size_t originalDeferredExpectationIndex);
+    void ResolveReplayExpectations();
 
     struct DeferredExpectation {
         const char* file;
