@@ -692,8 +692,12 @@ MaybeError ValidateCanUseAs(const TextureViewBase* textureView,
 
 MaybeError ValidateCanUseAs(const BufferBase* buffer, wgpu::BufferUsage usage) {
     DAWN_ASSERT(wgpu::HasZeroOrOneBits(usage));
-    DAWN_INVALID_IF(!(buffer->GetUsage() & usage), "%s usage (%s) doesn't include %s.", buffer,
-                    buffer->GetUsage(), usage);
+    // DAWN_INVALID_IF(!(buffer->GetUsage() & usage), "%s usage (%s) doesn't include %s.", buffer,
+    //                 buffer->GetUsage(), usage);
+    if (!(buffer->GetUsage() & usage)) {
+        DAWN_INVALID_IF(!(buffer->GetUsage() & usage), "%s usage (%s) doesn't include %s.", buffer,
+                        buffer->GetUsage(), usage);
+    }
     return {};
 }
 
