@@ -438,6 +438,9 @@ void Buffer::TransitionUsageNow(CommandRecordingContext* recordingContext,
     recordingContext->CheckBufferNeedsEagerTransition(this, usage);
     BufferBarrier barrier = TrackUsageAndGetResourceBarrier(usage, shaderStage);
     recordingContext->EmitBufferBarrierIfNecessary(ToBackend(GetDevice()), barrier);
+    TrackUsageAndGetResourceBarrier(recordingContext, usage, shaderStage);
+    recordingContext->EmitBufferBarriers(ToBackend(GetDevice()));
+    recordingContext->UpdateBarrierSyncId(this);
 }
 
 BufferBarrier Buffer::TrackUsageAndGetResourceBarrier(wgpu::BufferUsage usage,
@@ -541,6 +544,9 @@ BufferBarrier Buffer::TrackUsageAndGetResourceBarrier(wgpu::BufferUsage usage,
                          .dstAccessMask = VulkanAccessFlags(usage),
                          .srcStages = srcStage,
                          .dstStages = VulkanPipelineStage(usage, shaderStage)};
+    recordingContext->AddBufferBarrier(
+        srcAccess, /* dstAccess */ VulkanAccessFlags(usage), srcStage,
+        /* dstStage */ VulkanPipelineStage(usage, shaderStage), GetImplicitBarrierSyncId());
 }
 
 bool Buffer::IsCPUWritableAtCreation() const {
@@ -823,6 +829,10 @@ void Buffer::TransitionMappableBuffersEagerly(Device* device,
     DAWN_ASSERT(buffers.size() == originalBufferCount);
 
     recordingContext->EmitBufferBarrierIfNecessary(device, barrier);
+    recordingContext->EmitBufferBarriers(device);
+    for (const Ref<Buffer>& buffer : buffers) {
+        recordingContext->UpdateBarrierSyncId(buffer.Get());
+    }
 }
 
 void Buffer::SetLabelImpl() {

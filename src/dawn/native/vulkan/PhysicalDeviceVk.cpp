@@ -999,6 +999,8 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         // crbug.com/443906252: Polyfill for case switch with large ranges.
         deviceToggles->Default(Toggle::VulkanPolyfillSwitchWithIf, true);
     }
+    // TEMP for testing
+    deviceToggles->Default(Toggle::VulkanAvoidRedundantBufferBarriers, true);
 
     if (IsAndroidARM()) {
         // dawn:1550: Resolving multiple color targets in a single pass fails on ARM GPUs. To
