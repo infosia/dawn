@@ -16,6 +16,23 @@
       "message": "PTAL. Thanks!",
       "revId": "b7abbe056feb058af2941c9819ebc083c2c586e8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba564f9e_dc4ac68a",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-18T15:24:56Z",
+      "side": 1,
+      "message": "nit: can we do 32 because we might support 64 bit texture format in some future feature.",
+      "revId": "b7abbe056feb058af2941c9819ebc083c2c586e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
