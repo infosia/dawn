@@ -124,6 +124,24 @@
       "parentUuid": "35dd77de_b69cca1a",
       "revId": "6b747aabc11a2aa6ca8b5db12497de5652cb75f9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9cb184d_da1fbb79",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-11-18T13:57:45Z",
+      "side": 1,
+      "message": "Understood. I\u0027ll spin up a function within the python script to flag all such documentations which are incomplete.",
+      "parentUuid": "96a33dd6_2c5adb1e",
+      "revId": "6b747aabc11a2aa6ca8b5db12497de5652cb75f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
