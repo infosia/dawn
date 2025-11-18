@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "86e46c8c_d5ca2434",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-18T20:54:16Z",
+      "side": 1,
+      "message": "Ya it also doesnt work in terms of intel. On intel i am seeing F32 not supported!",
+      "parentUuid": "ebf47155_f08c9b39",
+      "revId": "afaedceaabcbf714a498c747f2c1eb913c137aab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b49eed86_cf7279b6",
         "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
         "patchSetId": 10
