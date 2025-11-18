@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15954198_f774f25e",
+        "filename": "src/tint/lang/msl/writer/raise/validate_subgroup_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-18T15:55:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d35a7e6_bb9cdf7f",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 48
+      },
+      "revId": "b17c1a7f37435cbea82d7a2fd93ba514a06fe329",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "896bf5de_94a179d3",
@@ -58,6 +82,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af73cb10_c3b8dede",
+        "filename": "src/tint/lang/msl/writer/raise/validate_subgroup_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-18T15:55:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "896bf5de_94a179d3",
+      "revId": "b17c1a7f37435cbea82d7a2fd93ba514a06fe329",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a19237b_4d74cf68",
@@ -71,6 +113,24 @@
       "writtenOn": "2025-11-17T20:49:50Z",
       "side": 1,
       "message": "Nit: Since these errors are going to be surfaced on the API side during pipeline creation, maybe it\u0027s better to avoid referencing MSL (which might not mean much to a WebGPU developer), and instead just say something more generic like \"target WebGPU device\" or similar.",
+      "revId": "b17c1a7f37435cbea82d7a2fd93ba514a06fe329",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6552a05_8302814a",
+        "filename": "src/tint/lang/msl/writer/raise/validate_subgroup_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-18T15:55:24Z",
+      "side": 1,
+      "message": "Changed to drop the `MSL`.",
+      "parentUuid": "3a19237b_4d74cf68",
       "revId": "b17c1a7f37435cbea82d7a2fd93ba514a06fe329",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -106,6 +166,24 @@
           ]
         }
       ],
+      "revId": "b17c1a7f37435cbea82d7a2fd93ba514a06fe329",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9a20b20_dd4db739",
+        "filename": "src/tint/lang/msl/writer/raise/validate_subgroup_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-18T15:55:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "869a1bf3_e14acbf6",
       "revId": "b17c1a7f37435cbea82d7a2fd93ba514a06fe329",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
