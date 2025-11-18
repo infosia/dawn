@@ -118,6 +118,30 @@
       },
       "revId": "2f1e05f859bdd91f1b567c732bcc41b8395fb9c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4175ddab_0e66ec4a",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-18T20:51:22Z",
+      "side": 1,
+      "message": "Want to land this as is for now?",
+      "parentUuid": "9495a105_d39e6c45",
+      "range": {
+        "startLine": 317,
+        "startChar": 8,
+        "endLine": 318,
+        "endChar": 52
+      },
+      "revId": "2f1e05f859bdd91f1b567c732bcc41b8395fb9c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
