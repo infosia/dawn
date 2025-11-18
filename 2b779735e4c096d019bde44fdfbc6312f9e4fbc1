@@ -43,6 +43,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "af23fb3f_d46f7620",
+        "filename": "src/dawn/tests/unittests/validation/CommandBufferValidationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-18T01:42:39Z",
+      "side": 1,
+      "message": "I don\u0027t think this should produce an error, `computePass` is `\"open\"` despite being invalid. (opening `computePass` invalidates both `computePass` and `encoder` but doesn\u0027t change their states)",
+      "revId": "2b779735e4c096d019bde44fdfbc6312f9e4fbc1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2b126354_a87beb49",
         "filename": "src/dawn/tests/unittests/validation/RenderPipelineValidationTests.cpp",
         "patchSetId": 4
