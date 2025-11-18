@@ -35,67 +35,67 @@ import java.util.concurrent.Executor
 private const val POLLING_DELAY_MS = 100L
 
 public abstract class WebGpu : AutoCloseable {
-    public abstract val instance: GPUInstance
-    public abstract val webgpuSurface: GPUSurface
-    public abstract val device: GPUDevice
+  public abstract val instance: GPUInstance
+  public abstract val webgpuSurface: GPUSurface
+  public abstract val device: GPUDevice
 }
 
 public suspend fun createWebGpu(
-    surface: Surface? = null,
-    instanceDescriptor: InstanceDescriptor = InstanceDescriptor(),
-    requestAdapterOptions: RequestAdapterOptions = RequestAdapterOptions(featureLevel = FeatureLevel.Companion.Compatibility),
-    deviceDescriptor: DeviceDescriptor = DeviceDescriptor(
-        deviceLostCallback = defaultDeviceLostCallback,
-        deviceLostCallbackExecutor = Executor(Runnable::run),
-        uncapturedErrorCallback = defaultUncapturedErrorCallback,
-        uncapturedErrorCallbackExecutor = Executor(Runnable::run)
-    ),
+  surface: Surface? = null,
+  instanceDescriptor: InstanceDescriptor = InstanceDescriptor(),
+  requestAdapterOptions: RequestAdapterOptions = RequestAdapterOptions(featureLevel = FeatureLevel.Companion.Compatibility),
+  deviceDescriptor: DeviceDescriptor = DeviceDescriptor(
+    deviceLostCallback = defaultDeviceLostCallback,
+    deviceLostCallbackExecutor = Executor(Runnable::run),
+    uncapturedErrorCallback = defaultUncapturedErrorCallback,
+    uncapturedErrorCallbackExecutor = Executor(Runnable::run)
+  ),
 ): WebGpu {
-    initLibrary()
+  initLibrary()
 
-    val instance = createInstance(instanceDescriptor)
-    val webgpuSurface =
-        surface?.let {
-            instance.createSurface(
-                SurfaceDescriptor(
-                    surfaceSourceAndroidNativeWindow =
-                        SurfaceSourceAndroidNativeWindow(windowFromSurface(it))
-                )
-            )
-        }
-
-    val adapter = requestAdapter(instance, requestAdapterOptions)
-    val device = requestDevice(adapter, deviceDescriptor)
-
-    var isClosing = false
-    // Long-running event poller for async methods. Can be removed when
-    // https://issues.chromium.org/issues/323983633 is fixed.
-    val handler = Handler(Looper.getMainLooper())
-    fun nextProcess() {
-        handler.postDelayed({
-            if (isClosing) {
-                return@postDelayed
-            }
-            instance.processEvents()
-            nextProcess()
-        }, POLLING_DELAY_MS)
+  val instance = createInstance(instanceDescriptor)
+  val webgpuSurface =
+    surface?.let {
+      instance.createSurface(
+        SurfaceDescriptor(
+          surfaceSourceAndroidNativeWindow =
+            SurfaceSourceAndroidNativeWindow(windowFromSurface(it))
+        )
+      )
     }
-    nextProcess()
 
-    return object : WebGpu() {
-        override val instance = instance
-        override val webgpuSurface
-            get() = checkNotNull(webgpuSurface)
-        override val device = device
+  val adapter = requestAdapter(instance, requestAdapterOptions)
+  val device = requestDevice(adapter, deviceDescriptor)
 
-        override fun close() {
-            isClosing = true
-            //device.close() // TODO(b/428866400): Uncomment when fixed.
-            webgpuSurface?.close()
-            instance.close()
-            adapter.close()
-        }
+  var isClosing = false
+  // Long-running event poller for async methods. Can be removed when
+  // https://issues.chromium.org/issues/323983633 is fixed.
+  val handler = Handler(Looper.getMainLooper())
+  fun nextProcess() {
+    handler.postDelayed({
+                          if (isClosing) {
+                            return@postDelayed
+                          }
+                          instance.processEvents()
+                          nextProcess()
+                        }, POLLING_DELAY_MS)
+  }
+  nextProcess()
+
+  return object : WebGpu() {
+    override val instance = instance
+    override val webgpuSurface
+      get() = checkNotNull(webgpuSurface)
+    override val device = device
+
+    override fun close() {
+      isClosing = true
+      //device.close() // TODO(b/428866400): Uncomment when fixed.
+      webgpuSurface?.close()
+      instance.close()
+      adapter.close()
     }
+  }
 }
 
 private suspend fun requestAdapter(
@@ -106,33 +106,33 @@ private suspend fun requestAdapter(
 }
 
 private suspend inline fun requestDevice(
-    adapter: GPUAdapter,
-    deviceDescriptor: DeviceDescriptor,
+  adapter: GPUAdapter,
+  deviceDescriptor: DeviceDescriptor,
 ): GPUDevice {
-    if (deviceDescriptor.deviceLostCallback == null) {
-        deviceDescriptor.deviceLostCallback = defaultDeviceLostCallback
-    }
+  if (deviceDescriptor.deviceLostCallback == null) {
+    deviceDescriptor.deviceLostCallback = defaultDeviceLostCallback
+  }
 
-    if (deviceDescriptor.uncapturedErrorCallback == null) {
-        deviceDescriptor.uncapturedErrorCallback = defaultUncapturedErrorCallback
-    }
-    return adapter.requestDevice(deviceDescriptor)
+  if (deviceDescriptor.uncapturedErrorCallback == null) {
+    deviceDescriptor.uncapturedErrorCallback = defaultUncapturedErrorCallback
+  }
+  return adapter.requestDevice(deviceDescriptor)
 }
 
 private val defaultUncapturedErrorCallback
-    get(): UncapturedErrorCallback {
-        return UncapturedErrorCallback { _, type, message ->
-            throw getException(type, message)
-        }
+  get(): UncapturedErrorCallback {
+    return UncapturedErrorCallback { _, type, message ->
+      throw getException(type, message)
     }
+  }
 
 private val defaultDeviceLostCallback get(): DeviceLostCallback {
-    return DeviceLostCallback { device, reason, message ->
-        throw DeviceLostException(device, reason, message)
-    }
+  return DeviceLostCallback { device, reason, message ->
+    throw DeviceLostException(device, reason, message)
+  }
 }
 
 /** Initializes the native library. This method should be called before making and WebGPU calls. */
 public fun initLibrary() {
-    System.loadLibrary("webgpu_c_bundled")
+  System.loadLibrary("webgpu_c_bundled")
 }
