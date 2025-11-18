@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4e0cd6d_94194099",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-18T21:46:43Z",
+      "side": 1,
+      "message": "uNit: Maybe s/Other/Resource/ ?\n\nIn WGSL terminology \"resource\" covers handles and buffers, which I think covers everything that the \"Other\" bucket is going to be used for:\nhttps://gpuweb.github.io/gpuweb/wgsl/#resource-interface",
+      "revId": "84644fae6a9c71d0594c15e0d0a85b1c5ccaf580",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
