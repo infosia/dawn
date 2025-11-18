@@ -33,6 +33,23 @@
       "message": "Geoff PTAL",
       "revId": "51ada0db5f893330a74896ec1a39f0c03d970080",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f805429_3b2ce19c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-11-18T20:04:55Z",
+      "side": 1,
+      "message": "I think this way to solve it works. The other option is to add an explicit SetLostEvent which is called after initialization succeeds but both are fairly equivalent to me.",
+      "revId": "51ada0db5f893330a74896ec1a39f0c03d970080",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
