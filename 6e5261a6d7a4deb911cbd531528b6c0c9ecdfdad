@@ -22,6 +22,30 @@
       },
       "revId": "6e5261a6d7a4deb911cbd531528b6c0c9ecdfdad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55a7210d_416f9f04",
+        "filename": "src/dawn/tests/unittests/validation/CompatValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-18T01:45:34Z",
+      "side": 1,
+      "message": "I mean `\u003d\u003d`. (evidence of me not being able to read what strcmp does, lol)",
+      "parentUuid": "5e6b7ddd_a44bb320",
+      "range": {
+        "startLine": 248,
+        "startChar": 13,
+        "endLine": 248,
+        "endChar": 19
+      },
+      "revId": "6e5261a6d7a4deb911cbd531528b6c0c9ecdfdad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
