@@ -1693,7 +1693,7 @@ TEST_P(BufferMapExtendedUsagesTests, MapWriteQueryBufferThenDrawThenMapWrite) {
         queryBuffer.Unmap();
     }
 
-    class NonZeroExpectation : public detail::Expectation {
+    class NonZeroExpectation : public detail::CloneableExpectation<NonZeroExpectation> {
       public:
         testing::AssertionResult Check(const void* data, size_t size) override {
             DAWN_ASSERT(size % sizeof(uint64_t) == 0);

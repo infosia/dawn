@@ -225,7 +225,8 @@ fn main(
         return utils::CreateShaderModule(device, code.str().c_str());
     }
 
-    class ExpectReadSubgroupSizeOutput : public dawn::detail::Expectation {
+    class ExpectReadSubgroupSizeOutput
+        : public dawn::detail::CloneableExpectation<ExpectReadSubgroupSizeOutput> {
       public:
         explicit ExpectReadSubgroupSizeOutput(uint32_t workgroupSize)
             : mWorkgroupSize(workgroupSize) {}
@@ -359,7 +360,8 @@ class SubgroupsShaderTestsFragment : public SubgroupsTestsBase<AdapterTestParam>
     }
 
   private:
-    class ExpectReadSubgroupSizeOutput : public dawn::detail::Expectation {
+    class ExpectReadSubgroupSizeOutput
+        : public dawn::detail::CloneableExpectation<ExpectReadSubgroupSizeOutput> {
       public:
         ExpectReadSubgroupSizeOutput() {}
         testing::AssertionResult Check(const void* data, size_t size) override {
@@ -612,7 +614,8 @@ fn main(
         return utils::CreateShaderModule(device, code.str().c_str());
     }
 
-    class ExpectBroadcastSubgroupSizeOutput : public dawn::detail::Expectation {
+    class ExpectBroadcastSubgroupSizeOutput
+        : public dawn::detail::CloneableExpectation<ExpectBroadcastSubgroupSizeOutput> {
       public:
         explicit ExpectBroadcastSubgroupSizeOutput(uint32_t workgroupSize)
             : mWorkgroupSize(workgroupSize) {}
@@ -845,7 +848,8 @@ fn main(
         return utils::CreateShaderModule(device, code.str().c_str());
     }
 
-    class ExpectReadSubgroupSizeOutput : public dawn::detail::Expectation {
+    class ExpectReadSubgroupSizeOutput
+        : public dawn::detail::CloneableExpectation<ExpectReadSubgroupSizeOutput> {
       public:
         explicit ExpectReadSubgroupSizeOutput(uint32_t workgroupSize)
             : mWorkgroupSize(workgroupSize) {}
