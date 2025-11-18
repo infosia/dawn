@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "16264b27_a8b8a702",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-18T16:42:28Z",
+      "side": 1,
+      "message": "Ah ok. bit more effort but I can get it done.\nDid you want to submit this with only enable on mac? We do this for a few other tests in this file (aka nvidia etc)",
+      "parentUuid": "1a5fd03d_5a70cb85",
+      "revId": "afaedceaabcbf714a498c747f2c1eb913c137aab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b49eed86_cf7279b6",
         "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
         "patchSetId": 10
@@ -55,6 +73,30 @@
       "side": 1,
       "message": "This is not a spec requirement. Maybe it\u0027s true in practice right now, but I don\u0027t know that it always will be.",
       "parentUuid": "b49eed86_cf7279b6",
+      "range": {
+        "startLine": 110,
+        "startChar": 60,
+        "endLine": 110,
+        "endChar": 74
+      },
+      "revId": "afaedceaabcbf714a498c747f2c1eb913c137aab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bf6eacc_01340c7c",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-18T16:42:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "02972d1c_fdde5509",
       "range": {
         "startLine": 110,
         "startChar": 60,
@@ -102,6 +144,30 @@
       "side": 1,
       "message": "Likewise, this isn\u0027t guaranteed in practice. Older Mesa drivers didn\u0027t expose f16 subgroup matrix support for example.",
       "parentUuid": "0729c965_cd65c3fb",
+      "range": {
+        "startLine": 133,
+        "startChar": 5,
+        "endLine": 133,
+        "endChar": 23
+      },
+      "revId": "afaedceaabcbf714a498c747f2c1eb913c137aab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba5fbc5b_1eed266b",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-18T16:42:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b43133af_55550a71",
       "range": {
         "startLine": 133,
         "startChar": 5,
