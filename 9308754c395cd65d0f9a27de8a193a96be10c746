@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1e50e8c_4c9d71fa",
+        "filename": "src/dawn/replay/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-18T01:38:16Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c16c3ef8_10c0a7e8",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 43
+      },
+      "revId": "9308754c395cd65d0f9a27de8a193a96be10c746",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7cd2a808_4a6b00c7",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-10-02T20:16:38Z",
       "side": 1,
       "message": "This is currently only valid because of [1]. This will break for Dawn-\u003eg3 rolls because we are more strict there that the end2end tests do not have direct access to `native` there. I think that if this is necessary, we should probably put this in under the white_box tests for now until this is resolved.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 38
+      },
+      "revId": "9308754c395cd65d0f9a27de8a193a96be10c746",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e174671_839eb243",
+        "filename": "src/dawn/tests/end2end/CaptureAndReplayTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-18T01:38:16Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7cd2a808_4a6b00c7",
       "range": {
         "startLine": 33,
         "startChar": 0,
