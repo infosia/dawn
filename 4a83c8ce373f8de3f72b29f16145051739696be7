@@ -214,6 +214,24 @@
       "parentUuid": "3d0094e3_4fe04708",
       "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eef8dd0a_d0b12913",
+        "filename": "test/tint/extensions/fragment_depth/basic.wgsl.expected.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-18T08:46:32Z",
+      "side": 1,
+      "message": "Oh that\u0027s because of `#version 300 es`! When I switched manually to `#version 320 es`, it works without `GL_EXT_spirv_intrinsics`. Since all of Tint GLSL files currently use `#version 310 es`, I think this will still be a problem right?",
+      "parentUuid": "34ec49aa_1c643a8b",
+      "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

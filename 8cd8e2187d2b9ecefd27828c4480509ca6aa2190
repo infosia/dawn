@@ -22,6 +22,30 @@
       },
       "revId": "8cd8e2187d2b9ecefd27828c4480509ca6aa2190",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95171e10_d4b1f54d",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-18T08:46:32Z",
+      "side": 1,
+      "message": "We\u0027re not targeting ES for now. I believe we should though we add support for ES later. Does that make sense?",
+      "parentUuid": "1a1f1250_9743da44",
+      "range": {
+        "startLine": 1152,
+        "startChar": 0,
+        "endLine": 1156,
+        "endChar": 17
+      },
+      "revId": "8cd8e2187d2b9ecefd27828c4480509ca6aa2190",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
