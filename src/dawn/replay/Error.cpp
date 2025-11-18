@@ -39,7 +39,7 @@ std::unique_ptr<ErrorData> ErrorData::Create(InternalErrorType type,
                                              int line) {
     std::unique_ptr<ErrorData> error = std::make_unique<ErrorData>(type, std::move(message));
 
-    auto [var, present] = GetEnvironmentVar("DAWN_DEBUG_BREAK_ON_ERROR");
+    auto [var, present] = GetEnvironmentVar("DAWN_RRR_DEBUG_BREAK_ON_ERROR");
     if (present && !var.empty() && var != "0") {
         ErrorLog() << error->GetMessage();
         BreakPoint();
