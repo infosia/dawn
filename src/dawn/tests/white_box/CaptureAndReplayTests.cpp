@@ -49,6 +49,9 @@ class CaptureAndReplayTests : public DawnTest {
     void SetUp() override {
         DawnTest::SetUp();
 
+        // This test is already testing capture and replay, we don't need to wrap it and test again.
+        DAWN_TEST_UNSUPPORTED_IF(IsCaptureReplayCheckingEnabled());
+
         // TODO(crbug.com/452924800): Remove once these tests work properly with
         // the WebGPU on WebGPU backend with wire.
         DAWN_SUPPRESS_TEST_IF(IsWebGPUOn(wgpu::BackendType::Metal) && UsesWire());
@@ -1543,11 +1546,9 @@ TEST_P(CaptureAndReplayTests, CaptureDepthRenderPass) {
 }
 
 constexpr static uint64_t kSentinelValue = ~uint64_t(0u);
-class OcclusionExpectation : public detail::Expectation {
+class OcclusionExpectation : public detail::CloneableExpectation<OcclusionExpectation> {
   public:
     enum class Result { Zero, NonZero };
-
-    ~OcclusionExpectation() override = default;
 
     explicit OcclusionExpectation(const std::vector<Result> expected) { mExpected = expected; }
 
