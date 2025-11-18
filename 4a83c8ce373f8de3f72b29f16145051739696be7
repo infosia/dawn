@@ -268,6 +268,24 @@
       "parentUuid": "e4d99b60_5a8bcdfa",
       "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e9de0e7_d1a7da73",
+        "filename": "test/tint/extensions/fragment_depth/basic.wgsl.expected.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-11-18T22:49:51Z",
+      "side": 1,
+      "message": "Nit:\n\n`#extension GL_EXT_conservative_depth: enable`\n\nshouldn\u0027t this be \n\n`#extension GL_EXT_conservative_depth: require`\n\nMaybe it was going to give you a warning with the \"enable\" but hit the error and aborted? Changing it \"require\" might error out before it hits the problematic line. Anyway I know this is just your local test and not what\u0027s in the CL, I\u0027m just trying to catch up.\n\nAll that said, does the above work with your glslang patch landed?",
+      "parentUuid": "a6557419_b56cc14f",
+      "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
