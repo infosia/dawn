@@ -76,6 +76,8 @@ class Device final : public DeviceBase, public ObjectWGPU<WGPUDevice> {
         }
     }
 
+    void SetCaptureState(bool on);
+
     const DawnProcTable& wgpu;
 
   private:
