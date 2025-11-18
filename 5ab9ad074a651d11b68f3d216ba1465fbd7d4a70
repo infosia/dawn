@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7640f51a_b6486e91",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-11-18T20:21:45Z",
+      "side": 1,
+      "message": "more naming nits, sorry.\n\nMaybe we use the words \u0027Enqueue\u0027/\u0027Flush\u0027 for talking about mPendingGLWorkList operations and \u0027Immediate\u0027 for this kind of work?\n\nI would call this `ExecuteImmediateGLWork`. The others could be `EnqueueGLWork` and `EnqueueAndFlushGLWork`. If you want to avoid renaming more things, `AddGLWork`/`AddAndFlushGLWork` are okay too.",
+      "range": {
+        "startLine": 100,
+        "startChar": 9,
+        "endLine": 100,
+        "endChar": 28
+      },
+      "revId": "5ab9ad074a651d11b68f3d216ba1465fbd7d4a70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
