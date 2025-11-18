@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "958070fc_7d028ebc",
+        "filename": "src/dawn/native/EncodingContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-18T01:41:45Z",
+      "side": 1,
+      "message": "I don\u0027t see [1] but I think I understand now.",
+      "parentUuid": "66a66f09_9488e9ab",
+      "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9837f2c8_7a3f8eb4",
@@ -160,6 +178,24 @@
       "writtenOn": "2025-11-15T06:51:42Z",
       "side": 1,
       "message": "Same, why not ASSERT",
+      "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3479860_cc504878",
+        "filename": "src/dawn/native/EncodingContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-18T01:41:45Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "61d20682_b842622f",
       "revId": "a116f0d6a834e83a321429e2cd215f37644fdca7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
