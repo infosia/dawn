@@ -177,6 +177,24 @@
       "parentUuid": "a7d4ec6f_8ddcccdd",
       "revId": "037d0c3312b865b2b9a6ce0ae9c7934dbd663cba",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24ce7bf0_3429e6e5",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-18T17:07:53Z",
+      "side": 1,
+      "message": "Instad of doing the `?:` you could just:\n\n```\nTINT_ASSERT(lhs_value);\nTINT_ASSERT(rhs_value);\n```\n\nwhich removes the ternary and removes the ability to pass a `nullptr` into the api. Passing `nullptr` isn\u0027t part of the API, but the fuzzer will still do it.",
+      "parentUuid": "f29e3277_abe2f72f",
+      "revId": "037d0c3312b865b2b9a6ce0ae9c7934dbd663cba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
