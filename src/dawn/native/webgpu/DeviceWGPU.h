@@ -65,6 +65,8 @@ class Device final : public DeviceBase, public ObjectWGPU<WGPUDevice> {
     void StartCapture(CaptureStream& commandStream, CaptureStream& contentStream);
     void EndCapture();
 
+    void SetCaptureState(bool on);
+
     const DawnProcTable& wgpu;
 
   private:
