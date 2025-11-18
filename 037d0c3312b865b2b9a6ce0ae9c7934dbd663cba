@@ -159,6 +159,24 @@
       "parentUuid": "827418c2_3d2481aa",
       "revId": "037d0c3312b865b2b9a6ce0ae9c7934dbd663cba",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f29e3277_abe2f72f",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-18T16:32:11Z",
+      "side": 1,
+      "message": "I think I do? It is about if passing nullptr is part of the API.",
+      "parentUuid": "a7d4ec6f_8ddcccdd",
+      "revId": "037d0c3312b865b2b9a6ce0ae9c7934dbd663cba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
