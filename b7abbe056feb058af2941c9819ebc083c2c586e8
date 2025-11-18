@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5f4e6d95_e859c7b7",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-11-18T20:04:48Z",
+      "side": 1,
+      "message": "Yikes, this is totally wrong. It should be maxColorAttachments.\n\nWhich suggests to me these tests aren\u0027t running on GLES. :(",
+      "revId": "b7abbe056feb058af2941c9819ebc083c2c586e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ba564f9e_dc4ac68a",
         "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
         "patchSetId": 5
