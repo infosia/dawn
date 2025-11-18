@@ -254,16 +254,24 @@ MaybeError Queue::WaitForIdleForDestructionImpl() {
 }
 
 bool Queue::IsCapturing() const {
-    return mCaptureContext != nullptr;
+    return mIsCaptureOn && mCaptureContext != nullptr;
+}
+
+MaybeError Queue::SetCaptureState(bool on) {
+    DAWN_INVALID_IF(!mCaptureContext, "No capture is in progress.");
+    mIsCaptureOn = on;
+    return {};
 }
 
 MaybeError Queue::SetCaptureContext(std::unique_ptr<CaptureContext> captureContext) {
     if (captureContext) {
         DAWN_INVALID_IF(mCaptureContext != nullptr, "A capture is already in progress.");
         mCaptureContext = std::move(captureContext);
+        mIsCaptureOn = true;
     } else {
         DAWN_INVALID_IF(!mCaptureContext, "No capture is in progress.");
         mCaptureContext.reset();
+        mIsCaptureOn = false;
     }
     return {};
 }

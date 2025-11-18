@@ -188,6 +188,8 @@ class WireClient;
 class WireServer;
 }  // namespace wire
 
+class Recorder;
+
 class DawnTestEnvironment : public testing::Environment {
   public:
     DawnTestEnvironment(int argc, char** argv);
@@ -204,6 +206,7 @@ class DawnTestEnvironment : public testing::Environment {
 
     bool UsesWire() const;
     bool IsImplicitDeviceSyncEnabled() const;
+    bool IsCaptureReplayCheckingEnabled() const;
     native::BackendValidationLevel GetBackendValidationLevel() const;
     native::Instance* GetInstance() const;
     bool HasVendorIdFilter() const;
@@ -235,6 +238,7 @@ class DawnTestEnvironment : public testing::Environment {
     bool ValidateToggles(native::Instance* instance) const;
 
     bool mUseWire = false;
+    bool mCheckCaptureReplay = false;
     bool mEnableImplicitDeviceSync = false;
     native::BackendValidationLevel mBackendValidationLevel =
         native::BackendValidationLevel::Disabled;
@@ -320,6 +324,8 @@ class DawnTestBase {
 
     bool IsDXC() const;
 
+    bool IsCaptureReplayCheckingEnabled() const;
+
     static bool IsAsan();
     static bool IsTsan();
 
@@ -390,6 +396,8 @@ class DawnTestBase {
         mDeviceLostCallback;
     uint32_t mDeviceLostCallbackFailedCreationAllowedCount = 0;
     uint32_t mDeviceLostCallbackFailedCreationCalledCount = 0;
+
+    bool mCheckCaptureReplay = false;
 
     // Helper methods to implement the EXPECT_ macros
     std::ostringstream& AddBufferExpectation(const char* file,
@@ -764,6 +772,7 @@ class DawnTestBase {
         wgpu::Device device;
         wgpu::Buffer buffer;
         uint64_t bufferSize;
+        std::string label;
         raw_ptr<const void> mappedData = nullptr;
     };
     std::vector<ReadbackSlot> mReadbackSlots;
@@ -771,6 +780,12 @@ class DawnTestBase {
     // Maps all the buffers and fill ReadbackSlot::mappedData
     void MapSlotsSynchronously();
     std::atomic<size_t> mNumPendingMapOperations = 0;
+
+    // Map used for --check-capture-replay flag for expectations of the replayed version readback
+    // buffers . <label, id in mDeferredExpectations>
+    std::unordered_map<std::string, size_t> mReplayDeferredExpectations;
+    std::unique_ptr<Recorder> mRecorder;
+    void ReplayCaptureAndAddNewExpectations();
 
     // Reserve space where the data for an expectation can be copied
     struct ReadbackReservation {
@@ -926,14 +941,31 @@ std::vector<AdapterTestParam> GetAvailableAdapterTestParamsForBackends(
 // All classes used to implement the deferred expectations should inherit from this.
 class Expectation {
   public:
+    Expectation() = default;
+    Expectation(const Expectation&) = default;
+    Expectation& operator=(const Expectation&) = default;
     virtual ~Expectation() = default;
 
     // Will be called with the buffer or texture data the expectation should check.
     virtual testing::AssertionResult Check(const void* data, size_t size) = 0;
+
+    // Create a cloned Expectation, this is used when check the readback of the capture and replay.
+    virtual std::unique_ptr<Expectation> Clone() const = 0;
+};
+
+// CRTP Helper of Expectation
+// Derived - child class of Expectation (e.g. ExpectEq)
+// Base - Specify if inheriting an intermediate abstract base class (e.g. CustomTextureExpectation)
+template <typename Derived, typename Base = Expectation>
+class CloneableExpectation : public Base {
+  public:
+    std::unique_ptr<Expectation> Clone() const override {
+        return std::make_unique<Derived>(static_cast<const Derived&>(*this));
+    }
 };
 
 template <typename T>
-class ExpectConstant : public Expectation {
+class ExpectConstant : public CloneableExpectation<ExpectConstant<T>> {
   public:
     explicit ExpectConstant(T constant);
     uint32_t DataSize();
@@ -950,7 +982,7 @@ extern template class ExpectConstant<float>;
 // U - actual value Type (defaults = T)
 // This is expanded for float16 mostly where T=float, U=uint16_t
 template <typename T, typename U>
-class ExpectEq : public Expectation {
+class ExpectEq : public CloneableExpectation<ExpectEq<T, U>> {
   public:
     explicit ExpectEq(T singleValue, T tolerance = {});
     ExpectEq(const T* values, const unsigned int count, T tolerance = {});
@@ -971,7 +1003,7 @@ extern template class ExpectEq<float>;
 extern template class ExpectEq<float, uint16_t>;
 
 template <typename T>
-class ExpectBetweenColors : public Expectation {
+class ExpectBetweenColors : public CloneableExpectation<ExpectBetweenColors<T>> {
   public:
     // Inclusive for now
     ExpectBetweenColors(T value0, T value1);
@@ -991,7 +1023,8 @@ class ExpectBetweenColors : public Expectation {
 extern template class ExpectBetweenColors<utils::RGBA8>;
 
 template <typename T>
-class ExpectBetweenSnormTextureBounds : public Expectation {
+class ExpectBetweenSnormTextureBounds
+    : public CloneableExpectation<ExpectBetweenSnormTextureBounds<T>> {
   public:
     // Inclusive for now
     ExpectBetweenSnormTextureBounds(const std::vector<T>& expectedL,
@@ -1012,7 +1045,6 @@ extern template class ExpectBetweenSnormTextureBounds<uint16_t>;
 
 class CustomTextureExpectation : public Expectation {
   public:
-    ~CustomTextureExpectation() override = default;
     virtual uint32_t DataSize() = 0;
 };
 

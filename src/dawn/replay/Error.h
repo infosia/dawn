@@ -25,8 +25,8 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_DAWN_REPLAY_ERROR_H_
-#define SRC_DAWN_REPLAY_ERROR_H_
+#ifndef SRC_DAWN_ERROR_H_
+#define SRC_DAWN_ERROR_H_
 
 #include <cstdint>
 #include <memory>
@@ -88,7 +88,7 @@ using ResultOrError = Result<T, ErrorData>;
 #define DAWN_INTERNAL_ERROR(...) \
     DAWN_MAKE_ERROR(InternalErrorType::Internal, absl::StrFormat(__VA_ARGS__))
 
-#define DAWN_FORMAT_INTERNAL_ERROR(...) \
+#define DAWN_REPLAY_FORMAT_INTERNAL_ERROR(...) \
     DAWN_MAKE_ERROR(InternalErrorType::Internal, absl::StrFormat(__VA_ARGS__))
 
 #define DAWN_INTERNAL_ERROR_IF(EXPR, ...)                                                  \
@@ -101,9 +101,9 @@ using ResultOrError = Result<T, ErrorData>;
 #define DAWN_UNIMPLEMENTED_ERROR(MESSAGE) \
     DAWN_MAKE_ERROR(InternalErrorType::Internal, std::string("Unimplemented: ") + MESSAGE)
 
-// DAWN_OUT_OF_MEMORY_ERROR means we ran out of memory. It may be used as a signal internally in
-// Dawn to free up unused resources. Or, it may bubble up to the application to signal an allocation
-// was too large or they should free some existing resources.
+// DAWN_OUT_OF_MEMORY_ERROR means we ran out of memory. It may be used as a signal internally
+// in Dawn to free up unused resources. Or, it may bubble up to the application to signal an
+// allocation was too large or they should free some existing resources.
 #define DAWN_OUT_OF_MEMORY_ERROR(MESSAGE) DAWN_MAKE_ERROR(InternalErrorType::OutOfMemory, MESSAGE)
 
 #define DAWN_CONCAT1(x, y) x##y
@@ -129,8 +129,8 @@ using ResultOrError = Result<T, ErrorData>;
     for (;;)                                                                    \
     break
 
-// DAWN_TRY_ASSIGN is the same as DAWN_TRY for ResultOrError and assigns the success value, if
-// any, to VAR.
+// DAWN_TRY_ASSIGN is the same as DAWN_TRY for ResultOrError and assigns the success
+// value, if any, to VAR.
 #define DAWN_TRY_ASSIGN(VAR, EXPR) DAWN_TRY_ASSIGN_WITH_CLEANUP(VAR, EXPR, {})
 #define DAWN_TRY_ASSIGN_CONTEXT(VAR, EXPR, ...) \
     DAWN_TRY_ASSIGN_WITH_CLEANUP(               \
@@ -138,7 +138,7 @@ using ResultOrError = Result<T, ErrorData>;
 
 // Argument helpers are used to determine which macro implementations should be called when
 // overloading with different number of variables.
-#define DAWN_ERROR_UNIMPLEMENTED_MACRO_(...) DAWN_UNREACHABLE()
+#define DAWN_ERROR_UNIMPLEMENTED_MACRO_(...) DAWN_REPLAY_UNREACHABLE()
 #define DAWN_ERROR_GET_5TH_ARG_HELPER_(_1, _2, _3, _4, NAME, ...) NAME
 #define DAWN_ERROR_GET_5TH_ARG_(args) DAWN_ERROR_GET_5TH_ARG_HELPER_ args
 
@@ -192,4 +192,4 @@ using ResultOrError = Result<T, ErrorData>;
 
 }  // namespace dawn::replay
 
-#endif  // SRC_DAWN_REPLAY_ERROR_H_
+#endif  // SRC_DAWN_ERROR_H_
