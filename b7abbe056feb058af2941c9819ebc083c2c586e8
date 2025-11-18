@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb5f2385_c0eeb776",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-11-18T23:11:42Z",
+      "side": 1,
+      "message": "Fixed. This is still probably going to fail the Vulkan bots.\n\nFor some reason, the Vulkan tests seem to be picking up the OpenGLES results (128 instead of 256). That\u0027s my current theory, anyway. I\u0027m guessing it\u0027s a test bug.",
+      "parentUuid": "5f4e6d95_e859c7b7",
+      "revId": "b7abbe056feb058af2941c9819ebc083c2c586e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ba564f9e_dc4ac68a",
