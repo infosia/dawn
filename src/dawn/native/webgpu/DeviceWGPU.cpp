@@ -326,4 +326,10 @@ void Device::EndCapture() {
         ConsumedError(std::move(result), "calling %s.EndCapture()", this);
 }
 
+void Device::SetCaptureState(bool on) {
+    MaybeError result = ToBackend(GetQueue())->SetCaptureState(on);
+    [[maybe_unused]] bool hadError =
+        ConsumedError(std::move(result), "calling %s.SetCaptureState(%v)", this, on);
+}
+
 }  // namespace dawn::native::webgpu

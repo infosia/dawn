@@ -49,6 +49,8 @@ class Queue final : public QueueBase, public ObjectWGPU<WGPUQueue> {
     MaybeError SetCaptureContext(std::unique_ptr<CaptureContext> captureContext);
     CaptureContext* GetCaptureContext() const;
 
+    MaybeError SetCaptureState(bool on);
+
   private:
     Queue(Device* device, const QueueDescriptor* descriptor);
     MaybeError SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) override;
@@ -74,6 +76,8 @@ class Queue final : public QueueBase, public ObjectWGPU<WGPUQueue> {
     bool mHasPendingCommands = false;
 
     std::unique_ptr<CaptureContext> mCaptureContext;
+
+    bool mIsCaptureOn = false;
 };
 
 }  // namespace dawn::native::webgpu
