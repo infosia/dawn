@@ -74,8 +74,13 @@ CaptureContext::~CaptureContext() {
 WGPUBuffer CaptureContext::GetCopyBuffer() {
     if (!mCopyBuffer) {
         WGPUBufferDescriptor desc = {};
+        // Add a label to the copy buffer for better debugging experience.
+        desc.label = ToOutputStringView("Capture Copy Buffer");
         desc.size = kCopyBufferSize;
         desc.usage = WGPUBufferUsage_CopyDst | WGPUBufferUsage_MapRead;
+
+        // invalid
+        // desc.usage = WGPUBufferUsage_CopySrc | WGPUBufferUsage_CopyDst | WGPUBufferUsage_MapRead;
         mCopyBuffer = mDevice->wgpu.deviceCreateBuffer(mDevice->GetInnerHandle(), &desc);
     }
     return mCopyBuffer;
@@ -86,6 +91,9 @@ void CaptureContext::WriteContentBytes(const void* data, size_t size) {
 }
 
 void CaptureContext::WriteCommandBytes(const void* data, size_t size) {
+    // std::cout << "Stream Address: " << &mCommandStream << std::endl;
+    // DAWN_ASSERT(mCommandStream.good());
+
     mCommandStream.write(reinterpret_cast<const char*>(data), size);
     mCommandBytesWritten += size;
 }
