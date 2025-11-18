@@ -17,27 +17,44 @@ import org.junit.runner.RunWith
 @SmallTest
 class AdapterTest {
   private lateinit var instance: GPUInstance
-  private lateinit var adapter: GPUAdapter
+  private lateinit var coreAdapter: GPUAdapter
+  private lateinit var compatAdapter: GPUAdapter
 
   @Before
   fun setup() = runBlocking {
     initLibrary()
     instance = createInstance()
-    adapter = instance.requestAdapter()
+
+    //Request the default/Core adapter (Vulkan).
+    coreAdapter = instance.requestAdapter(RequestAdapterOptions(featureLevel = FeatureLevel.Core))
+
+    /**
+     * Request the Compatibility adapter (GLES/etc.).
+     * This adapter is explicitly constrained to the less-capable Compatibility feature set.
+     * We explicitly specify BackendType.OpenGLES to force the adapter to use the GLES driver path
+     */
+    compatAdapter =
+      instance.requestAdapter(
+        RequestAdapterOptions(
+          featureLevel = FeatureLevel.Compatibility,
+          backendType = BackendType.OpenGLES,
+        )
+      )
   }
 
   @After
   fun teardown() {
-    adapter.close()
+    coreAdapter.close()
+    compatAdapter.close()
     instance.close()
   }
 
   /**
-   * Helper map for default limit values as defined by the WebGPU spec.
-   * A full implementation would have all limits.
+   * Helper map for **Core** default limit values as defined by the WebGPU spec.
+   * This set of limits is expected when requesting a device from the Core (Vulkan) adapter.
    */
   companion object {
-    private val kDefaultLimits = mapOf(
+    private val kCoreLimits = mapOf(
       "maxTextureDimension2D" to 8192,
       "maxBindGroups" to 4,
       "minUniformBufferOffsetAlignment" to 256
@@ -45,15 +62,25 @@ class AdapterTest {
   }
 
   @Test
-  fun adapterBackendTest() {
-    val adapterInfo = adapter.getInfo()
+  fun coreAdapterBackendTest() {
+    val adapterInfo = coreAdapter.getInfo()
     assertEquals(
       "The backend type should be Vulkan",
       BackendType.Vulkan, adapterInfo.backendType
     )
   }
 
+  @Test
+  fun compatAdapterBackendTest() {
+    val adapterInfo = compatAdapter.getInfo()
+    assertEquals(
+      "The backend type should be OpenGLES",
+      BackendType.OpenGLES, adapterInfo.backendType
+    )
+  }
+
   private suspend fun requestTestDevice(
+    adapter: GPUAdapter,
     featureToTest: IntArray = intArrayOf(),
     limits: Limits = Limits(),
   ): GPUDevice {
@@ -73,15 +100,33 @@ class AdapterTest {
   }
 
   /**
-   * Verifies that requesting a device with default parameters returns a device
+   * Verifies that requesting a device from the **Core Adapter** with default parameters returns a device
    * with Core features enabled.
    */
   @Test
-  fun requestDeviceWithDefaultParametersEnablesCoreFeatures() {
-    val device = runBlocking { adapter.requestDevice() }
+  fun requestDeviceWithDefaultParametersEnablesCoreFeatures_CoreAdapter() {
+    val device = runBlocking { coreAdapter.requestDevice() }
     try {
       val features = device.getFeatures().features
+      // In Core mode, the baseline feature set is explicitly listed.
       assertArrayEquals(intArrayOf(FeatureName.CoreFeaturesAndLimits), features)
+    } finally {
+      device.destroy()
+    }
+  }
+
+  /**
+   * Verifies that requesting a device from the Compatibility Adapter
+   * returns a device with an empty features list, as it relies on the GLES backend
+   * and does not explicitly advertise the Core feature set.
+   */
+  @Test
+  fun requestDeviceWithDefaultParametersEnablesCoreFeatures_CompatibilityAdapter() {
+    val device = runBlocking { compatAdapter.requestDevice() }
+    try {
+      val features = device.getFeatures().features
+      // In Compatibility mode, no distinct core feature flag is expected.
+      assertArrayEquals(intArrayOf(), features)
     } finally {
       device.destroy()
     }
@@ -93,17 +138,17 @@ class AdapterTest {
    */
   @Test
   fun requestDeviceWithDefaultParametersReturnsDefaultLimits() {
-    val device = runBlocking { adapter.requestDevice() }
+    val device = runBlocking { coreAdapter.requestDevice() }
     try {
       val limits = device.getLimits()
       assertEquals(
         "maxTextureDimension2D should be the default value",
-        kDefaultLimits["maxTextureDimension2D"],
+        kCoreLimits["maxTextureDimension2D"],
         limits.maxTextureDimension2D
       )
       assertEquals(
         "maxBindGroups should be the default value",
-        kDefaultLimits["maxBindGroups"],
+        kCoreLimits["maxBindGroups"],
         limits.maxBindGroups
       )
     } finally {
@@ -119,13 +164,13 @@ class AdapterTest {
    */
   @Test
   fun requestDeviceFailsAfterSuccessfulRequest() {
-    val device = runBlocking { adapter.requestDevice() }
+    val device = runBlocking { coreAdapter.requestDevice() }
     device.destroy()
     assertThrows(
       "Adapter should be consumed after one device request", WebGpuException::class.java
     ) {
       runBlocking {
-        val secondDeviceStatus = runBlocking { adapter.requestDevice() }
+        val secondDeviceStatus = runBlocking { coreAdapter.requestDevice() }
       }
     }
   }
@@ -139,7 +184,7 @@ class AdapterTest {
   @Test
   fun requestDeviceWithSupportedFeatureSucceeds() {
     val featureToTest = FeatureName.CoreFeaturesAndLimits
-    val device = runBlocking { requestTestDevice(intArrayOf(featureToTest)) }
+    val device = runBlocking { requestTestDevice(coreAdapter, intArrayOf(featureToTest)) }
     val deviceFeatures = device.getFeatures()
     assert(deviceFeatures.features.contains(featureToTest)) {
       "Device should have the requested feature: $featureToTest"
@@ -157,11 +202,11 @@ class AdapterTest {
    */
   @Test
   fun requestDeviceWithBetterThanSupportedLimitFails() {
-    val adapterLimits = adapter.getLimits()
+    val adapterLimits = coreAdapter.getLimits()
     val betterLimit = adapterLimits.maxBindGroups + 1
     assertThrows("Requesting a better limit should fail", DeviceLostException::class.java) {
       runBlocking {
-        requestTestDevice(limits = Limits(maxBindGroups = betterLimit))
+        requestTestDevice(coreAdapter, limits = Limits(maxBindGroups = betterLimit))
       }
     }
   }
@@ -175,13 +220,14 @@ class AdapterTest {
   @Test
   fun requestDeviceWithWorseThanDefaultLimitClamps() {
     runBlocking {
-      val worseLimit = kDefaultLimits.getValue("maxBindGroups") - 1
+      val worseLimit = kCoreLimits.getValue("maxBindGroups") - 1
       assert(worseLimit > 0) // Ensure the value is still valid, just worse.
-      val device = runBlocking { requestTestDevice(limits = Limits(maxBindGroups = worseLimit)) }
+      val device =
+        runBlocking { requestTestDevice(coreAdapter, limits = Limits(maxBindGroups = worseLimit)) }
       val deviceLimits = device.getLimits()
       assertEquals(
         "Device limit should be clamped to the default",
-        kDefaultLimits.getValue("maxBindGroups"),
+        kCoreLimits.getValue("maxBindGroups"),
         deviceLimits.maxBindGroups
       )
       runCatching { device.destroy() }
@@ -204,6 +250,7 @@ class AdapterTest {
     ) {
       runBlocking {
         requestTestDevice(
+          coreAdapter,
           limits = Limits(
             minUniformBufferOffsetAlignment = invalidAlignment
           )

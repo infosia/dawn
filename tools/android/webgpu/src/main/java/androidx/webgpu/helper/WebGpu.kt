@@ -102,7 +102,7 @@ private suspend fun requestAdapter(
   instance: GPUInstance,
   options: RequestAdapterOptions = RequestAdapterOptions(backendType = BackendType.Companion.OpenGLES, featureLevel = FeatureLevel.Companion.Compatibility),
 ): GPUAdapter {
-    return instance.requestAdapter(options)
+  return instance.requestAdapter(options)
 }
 
 private suspend inline fun requestDevice(
