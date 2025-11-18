@@ -195,6 +195,24 @@
       "parentUuid": "f29e3277_abe2f72f",
       "revId": "037d0c3312b865b2b9a6ce0ae9c7934dbd663cba",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e587b784_f0388cd1",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-18T21:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24ce7bf0_3429e6e5",
+      "revId": "037d0c3312b865b2b9a6ce0ae9c7934dbd663cba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
