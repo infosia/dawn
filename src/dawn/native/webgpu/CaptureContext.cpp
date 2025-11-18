@@ -86,6 +86,9 @@ void CaptureContext::WriteContentBytes(const void* data, size_t size) {
 }
 
 void CaptureContext::WriteCommandBytes(const void* data, size_t size) {
+    // std::cout << "Stream Address: " << &mCommandStream << std::endl;
+    // DAWN_ASSERT(mCommandStream.good());
+
     mCommandStream.write(reinterpret_cast<const char*>(data), size);
     mCommandBytesWritten += size;
 }
