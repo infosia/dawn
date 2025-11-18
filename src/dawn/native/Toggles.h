@@ -191,6 +191,9 @@ enum class Toggle {
     IgnoreImportedAHardwareBufferVulkanImageSize,
     GLAllowContextOnMultiThreads,
 
+    // Once WebGPU backend is fully implemented we can remove this toggle and related logic.
+    WebGPUEnableForCheckCaptureReplay,
+
     EnumCount,
     InvalidEnum = EnumCount,
 };
