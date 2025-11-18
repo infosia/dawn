@@ -54,6 +54,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eb714dad_b8a4ab59",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-11-18T19:17:58Z",
+      "side": 1,
+      "message": "nit: remove extra white lines\n\nAnd because of this I take a look at license texts in other files. And there are some files using a different text and apache license (e.g. `src/dawn/serialization/Schema.h`), is there a special reasons for them? (Or are they just some ai gen template leftover :) )",
+      "revId": "b3d80aa9e6bf4dc3d4d9a7374568e1f5682f7010",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "16a97ad3_cdb526b3",
         "filename": "src/dawn/native/webgpu/RenderBundleWGPU.cpp",
         "patchSetId": 3
