@@ -160,7 +160,10 @@ void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
     if (IsMappedState(oldState) && MapMode() == wgpu::MapMode::Write &&
         newState != BufferState::Destroyed) {
         CaptureContext* captureContext = ToBackend(GetDevice()->GetQueue())->GetCaptureContext();
-        if (captureContext != nullptr) {
+        // If the buffer is being destroyed (ref count is 0), we cannot capture it
+        // because capturing requires taking a reference.
+        // (Exposed by BufferTests.BufferMappedAtCreationOOM)
+        if (captureContext != nullptr && GetRefCountForTesting() != 0) {
             [[maybe_unused]] auto result =
                 captureContext->CaptureUnmapBuffer(this, MapOffset(), mMappedData, MapSize());
         }
