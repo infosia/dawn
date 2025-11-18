@@ -188,6 +188,8 @@ class WireClient;
 class WireServer;
 }  // namespace wire
 
+class Recorder;
+
 class DawnTestEnvironment : public testing::Environment {
   public:
     DawnTestEnvironment(int argc, char** argv);
@@ -204,6 +206,7 @@ class DawnTestEnvironment : public testing::Environment {
 
     bool UsesWire() const;
     bool IsImplicitDeviceSyncEnabled() const;
+    bool IsCheckCaptureReplayEnabled() const;
     native::BackendValidationLevel GetBackendValidationLevel() const;
     native::Instance* GetInstance() const;
     bool HasVendorIdFilter() const;
@@ -235,6 +238,7 @@ class DawnTestEnvironment : public testing::Environment {
     bool ValidateToggles(native::Instance* instance) const;
 
     bool mUseWire = false;
+    bool mCheckCaptureReplay = false;
     bool mEnableImplicitDeviceSync = false;
     native::BackendValidationLevel mBackendValidationLevel =
         native::BackendValidationLevel::Disabled;
@@ -316,6 +320,8 @@ class DawnTestBase {
 
     bool IsDXC() const;
 
+    bool IsCheckCaptureReplayEnabled() const;
+
     static bool IsAsan();
     static bool IsTsan();
 
@@ -383,6 +389,8 @@ class DawnTestBase {
         mDeviceLostCallback;
     uint32_t mDeviceLostCallbackFailedCreationAllowedCount = 0;
     uint32_t mDeviceLostCallbackFailedCreationCalledCount = 0;
+
+    bool mCheckCaptureReplay = false;
 
     // Helper methods to implement the EXPECT_ macros
     std::ostringstream& AddBufferExpectation(const char* file,
@@ -757,6 +765,7 @@ class DawnTestBase {
         wgpu::Device device;
         wgpu::Buffer buffer;
         uint64_t bufferSize;
+        std::string label;
         raw_ptr<const void> mappedData = nullptr;
     };
     std::vector<ReadbackSlot> mReadbackSlots;
@@ -764,6 +773,9 @@ class DawnTestBase {
     // Maps all the buffers and fill ReadbackSlot::mappedData
     void MapSlotsSynchronously();
     std::atomic<size_t> mNumPendingMapOperations = 0;
+
+    std::unordered_map<std::string, std::vector<uint8_t>> mReadbackBufferContents;
+    std::unique_ptr<Recorder> mRecorder;
 
     // Reserve space where the data for an expectation can be copied
     struct ReadbackReservation {
