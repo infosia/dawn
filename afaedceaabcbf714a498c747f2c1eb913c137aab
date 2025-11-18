@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ebf47155_f08c9b39",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-18T20:53:28Z",
+      "side": 1,
+      "message": "We could do, but it\u0027s not super interesting for Mac and it\u0027d be obsoleted by the more comprehensive ArchTierLimits testing anyway.",
+      "parentUuid": "16264b27_a8b8a702",
+      "revId": "afaedceaabcbf714a498c747f2c1eb913c137aab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b49eed86_cf7279b6",
         "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
         "patchSetId": 10
