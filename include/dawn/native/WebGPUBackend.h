@@ -44,6 +44,9 @@ DAWN_NATIVE_EXPORT void StartCapture(WGPUDevice device,
 // Ends a capture on the given device.
 DAWN_NATIVE_EXPORT void EndCapture(WGPUDevice device);
 
+// Temp
+DAWN_NATIVE_EXPORT void SetCaptureState(WGPUDevice device, bool on);
+
 }  // namespace dawn::native::webgpu
 
 #endif  // INCLUDE_DAWN_NATIVE_WEBGPUBACKEND_H_
