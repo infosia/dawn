@@ -52,8 +52,8 @@ MaybeError ComputePipeline::InitializeImpl() {
                           /* usesFragDepth */ false, /* bgraSwizzleAttributes */ {});
 }
 
-MaybeError ComputePipeline::ApplyNow() {
-    DAWN_TRY(PipelineGL::ApplyNow(ToBackend(GetDevice())->GetGL().gl, ToBackend(GetLayout())));
+MaybeError ComputePipeline::ApplyNow(const OpenGLFunctions& gl) {
+    DAWN_TRY(PipelineGL::ApplyNow(gl, ToBackend(GetLayout())));
     return {};
 }
 

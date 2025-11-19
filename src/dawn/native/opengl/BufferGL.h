@@ -36,6 +36,7 @@
 namespace dawn::native::opengl {
 
 class Device;
+struct OpenGLFunctions;
 
 class Buffer final : public BufferBase {
   public:
@@ -47,11 +48,14 @@ class Buffer final : public BufferBase {
 
     GLuint GetHandle() const;
 
-    MaybeError EnsureDataInitialized(bool* outDidDataInitialization = nullptr);
-    MaybeError EnsureDataInitializedAsDestination(uint64_t offset,
+    MaybeError EnsureDataInitialized(const OpenGLFunctions& gl,
+                                     bool* outDidDataInitialization = nullptr);
+    MaybeError EnsureDataInitializedAsDestination(const OpenGLFunctions& gl,
+                                                  uint64_t offset,
                                                   uint64_t size,
                                                   bool* outDidDataInitialization = nullptr);
-    MaybeError EnsureDataInitializedAsDestination(const CopyTextureToBufferCmd* copy,
+    MaybeError EnsureDataInitializedAsDestination(const OpenGLFunctions& gl,
+                                                  const CopyTextureToBufferCmd* copy,
                                                   bool* outDidDataInitialization = nullptr);
 
     void TrackUsage() { MarkUsedInPendingCommands(); }
@@ -67,7 +71,7 @@ class Buffer final : public BufferBase {
     MaybeError MapAtCreationImpl() override;
     void* GetMappedPointerImpl() override;
 
-    MaybeError InitializeToZero();
+    MaybeError InitializeToZero(const OpenGLFunctions& gl);
 
     GLuint mBuffer = 0;
     raw_ptr<void> mMappedData = nullptr;

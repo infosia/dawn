@@ -94,7 +94,7 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
     auto lock = ToBackend(GetDevice())->GetGL();
     const OpenGLFunctions& gl = lock.gl;
 
-    DAWN_TRY(ToBackend(buffer)->EnsureDataInitializedAsDestination(bufferOffset, size));
+    DAWN_TRY(ToBackend(buffer)->EnsureDataInitializedAsDestination(gl, bufferOffset, size));
 
     DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, ToBackend(buffer)->GetHandle()));
     DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, size, data));

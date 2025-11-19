@@ -109,7 +109,8 @@ GLuint Buffer::GetHandle() const {
     return mBuffer;
 }
 
-MaybeError Buffer::EnsureDataInitialized(bool* outDidDataInitialization) {
+MaybeError Buffer::EnsureDataInitialized(const OpenGLFunctions& gl,
+                                         bool* outDidDataInitialization) {
     if (!NeedsInitialization()) {
         if (outDidDataInitialization) {
             *outDidDataInitialization = false;
@@ -117,14 +118,15 @@ MaybeError Buffer::EnsureDataInitialized(bool* outDidDataInitialization) {
         return {};
     }
 
-    DAWN_TRY(InitializeToZero());
+    DAWN_TRY(InitializeToZero(gl));
     if (outDidDataInitialization) {
         *outDidDataInitialization = true;
     }
     return {};
 }
 
-MaybeError Buffer::EnsureDataInitializedAsDestination(uint64_t offset,
+MaybeError Buffer::EnsureDataInitializedAsDestination(const OpenGLFunctions& gl,
+                                                      uint64_t offset,
                                                       uint64_t size,
                                                       bool* outDidDataInitialization) {
     if (!NeedsInitialization()) {
@@ -142,14 +144,15 @@ MaybeError Buffer::EnsureDataInitializedAsDestination(uint64_t offset,
         return {};
     }
 
-    DAWN_TRY(InitializeToZero());
+    DAWN_TRY(InitializeToZero(gl));
     if (outDidDataInitialization) {
         *outDidDataInitialization = true;
     }
     return {};
 }
 
-MaybeError Buffer::EnsureDataInitializedAsDestination(const CopyTextureToBufferCmd* copy,
+MaybeError Buffer::EnsureDataInitializedAsDestination(const OpenGLFunctions& gl,
+                                                      const CopyTextureToBufferCmd* copy,
                                                       bool* outDidDataInitialization) {
     if (!NeedsInitialization()) {
         if (outDidDataInitialization) {
@@ -166,20 +169,18 @@ MaybeError Buffer::EnsureDataInitializedAsDestination(const CopyTextureToBufferC
         return {};
     }
 
-    DAWN_TRY(InitializeToZero());
+    DAWN_TRY(InitializeToZero(gl));
     if (outDidDataInitialization) {
         *outDidDataInitialization = true;
     }
     return {};
 }
 
-MaybeError Buffer::InitializeToZero() {
+MaybeError Buffer::InitializeToZero(const OpenGLFunctions& gl) {
     DAWN_ASSERT(NeedsInitialization());
 
     const uint64_t size = GetAllocatedSize();
     Device* device = ToBackend(GetDevice());
-    auto lock = device->GetGL();
-    const OpenGLFunctions& gl = lock.gl;
 
     const std::vector<uint8_t> clearValues(size, 0u);
     DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, mBuffer));
@@ -219,7 +220,7 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
         size = 4;
     }
 
-    DAWN_TRY(EnsureDataInitialized());
+    DAWN_TRY(EnsureDataInitialized(gl));
 
     // This does GPU->CPU synchronization, we could require a high
     // version of OpenGL that would let us map the buffer unsynchronized.
