@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27ca9fcc_72e7c577",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-19T22:17:05Z",
+      "side": 1,
+      "message": "includes bad data for linux due to b/462094847\n\nThere was a bug in Vulkan Validation Layers that caused crashes",
+      "revId": "6674c6d5a02aced49acfd35f9e48bd6d996d7048",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
