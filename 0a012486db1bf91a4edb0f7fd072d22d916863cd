@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8df6416_918c5f75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-19T20:54:05Z",
+      "side": 1,
+      "message": "Very nice to see the pattern will be consistent by default!",
+      "revId": "0a012486db1bf91a4edb0f7fd072d22d916863cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d621a3d6_5adb255e",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-19T20:54:05Z",
+      "side": 1,
+      "message": "it\u0027s very nice to see the pattern will be consistent by default!",
+      "revId": "0a012486db1bf91a4edb0f7fd072d22d916863cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
