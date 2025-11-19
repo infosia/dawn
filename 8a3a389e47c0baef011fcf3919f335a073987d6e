@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ea26bf1_eaa16d00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-19T00:50:58Z",
+      "side": 1,
+      "message": "Stamp should work once https://dawn-review.googlesource.com/c/dawn/+/274955 lands.",
+      "revId": "8a3a389e47c0baef011fcf3919f335a073987d6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
