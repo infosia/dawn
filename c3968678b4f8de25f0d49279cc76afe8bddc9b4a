@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c5900a6_ea604f25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-19T21:47:12Z",
+      "side": 1,
+      "message": "Looks good overall, with a couple of comments.",
+      "revId": "c3968678b4f8de25f0d49279cc76afe8bddc9b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6eda7079_7917ddda",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-19T21:47:12Z",
+      "side": 1,
+      "message": "Non-blocking nit: Given that we know a memcpy will follow this, we don\u0027t have to initialize the whole range. Could just initialize the range before and after the memcpy, though I\u0027m guessing that doing two separate fills may negate any benefits depending on the size. Could also adjust the clear range if we see that the upload region is at the beginning or end of the allocation.\n\nBut that\u0027s a relatively minor thing that can be looked at later. I\u0027m glad we skip the fill if the upload covers the full range, in any case.",
+      "revId": "c3968678b4f8de25f0d49279cc76afe8bddc9b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de046acb_94b81acd",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-19T21:47:12Z",
+      "side": 1,
+      "message": "Comment was copied from previous location but doesn\u0027t make sense here. Haven\u0027t necessarily verified that buffer is not in use. Would make sense to add a CHECK for that, though.",
+      "revId": "c3968678b4f8de25f0d49279cc76afe8bddc9b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
