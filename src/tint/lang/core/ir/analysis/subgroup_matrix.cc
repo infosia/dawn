@@ -47,18 +47,17 @@
 namespace std {
 
 template <>
-class hash<tint::core::ir::analysis::SubgroupMatrixMultiply> {
+class hash<tint::SubgroupMatrixMultiply> {
   public:
-    inline std::size_t operator()(
-        const tint::core::ir::analysis::SubgroupMatrixMultiply& sm) const {
+    inline std::size_t operator()(const tint::SubgroupMatrixMultiply& sm) const {
         return tint::Hash(sm.M, sm.N, sm.K, sm.input_type, sm.output_type);
     }
 };
 
 template <>
-class hash<tint::core::ir::analysis::SubgroupMatrixConfig> {
+class hash<tint::SubgroupMatrixConfig> {
   public:
-    inline std::size_t operator()(const tint::core::ir::analysis::SubgroupMatrixConfig sm) const {
+    inline std::size_t operator()(const tint::SubgroupMatrixConfig sm) const {
         return tint::Hash(sm.columns, sm.rows, sm.type, sm.direction);
     }
 };
