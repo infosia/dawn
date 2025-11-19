@@ -114,6 +114,7 @@ tint_add_target(tint_lang_msl_writer_raise_test test
   lang/msl/writer/raise/packed_vec3_test.cc
   lang/msl/writer/raise/shader_io_test.cc
   lang/msl/writer/raise/simd_ballot_test.cc
+  lang/msl/writer/raise/validate_subgroup_matrix_test.cc
 )
 
 tint_target_add_dependencies(tint_lang_msl_writer_raise_test test
