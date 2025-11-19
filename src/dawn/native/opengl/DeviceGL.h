@@ -39,6 +39,7 @@
 #include "dawn/common/Platform.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/QuerySet.h"
+#include "dawn/native/opengl/ContextEGL.h"
 #include "dawn/native/opengl/EGLFunctions.h"
 #include "dawn/native/opengl/Forward.h"
 #include "dawn/native/opengl/GLFormat.h"
@@ -50,7 +51,16 @@ class AHBFunctions;
 
 namespace dawn::native::opengl {
 
-class ContextEGL;
+class DisplayEGL;
+
+class GLLock {
+  public:
+    GLLock(ContextEGL::ScopedMakeCurrent&& scopedMakeCurrent, const OpenGLFunctions& gl);
+    const OpenGLFunctions& gl;
+
+  private:
+    ContextEGL::ScopedMakeCurrent mScopedMakeCurrent;
+};
 
 class Device final : public DeviceBase {
   public:
@@ -74,7 +84,8 @@ class Device final : public DeviceBase {
     MaybeError AddGLWork(Fn&& work) {
         MarkGLUsed();
         if (CanExecuteGLWorkImmediately()) {
-            return work(GetGL(/*makeCurrent=*/false));
+            auto lock = GetGL(/*makeCurrent=*/false);
+            return work(lock.gl);
         }
         mPendingGLWorkList.Use([&](auto workList) { workList->push_back(std::forward<Fn>(work)); });
         return {};
@@ -91,7 +102,7 @@ class Device final : public DeviceBase {
     // TODO(451928481): remove this from public access once all places are updated to use
     // AddGLWork().
     // Returns all the OpenGL entry points and ensures that the associated GL context is current.
-    const OpenGLFunctions& GetGL(bool makeCurrent = true) const;
+    GLLock GetGL(bool makeCurrent = true) const;
 
     // Helper functions to get access to relevant EGL objects.
     const EGLFunctions& GetEGL(bool makeCurrent) const;
