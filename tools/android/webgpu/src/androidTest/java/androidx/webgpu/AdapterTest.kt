@@ -10,6 +10,7 @@ import org.junit.After
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertThrows
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -18,6 +19,9 @@ import org.junit.runner.RunWith
 class AdapterTest {
   private lateinit var instance: GPUInstance
   private lateinit var adapter: GPUAdapter
+
+  @get:Rule
+  val apiSkipRule = ApiLevelSkipRule()
 
   @Before
   fun setup() = runBlocking {
@@ -45,6 +49,7 @@ class AdapterTest {
   }
 
   @Test
+  @ApiRequirement(minApi = 35, onlySkipOnEmulator = true)
   fun adapterBackendTest() {
     val adapterInfo = adapter.getInfo()
     assertEquals(
