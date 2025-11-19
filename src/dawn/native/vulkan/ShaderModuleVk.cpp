@@ -69,7 +69,9 @@
 
 namespace dawn::native::vulkan {
 
-#define COMPILED_SPIRV_MEMBERS(X) X(std::vector<uint32_t>, spirv)
+#define COMPILED_SPIRV_MEMBERS(X)   \
+    X(std::vector<uint32_t>, spirv) \
+    X(tint::SubgroupMatrixInfo, subgroupMatrixInfo)
 
 // Represents the result and metadata for a SPIR-V compilation.
 // clang-format off
@@ -324,6 +326,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
 
             CompiledSpirv result;
             result.spirv = std::move(tintResult.Get().spirv);
+            result.subgroupMatrixInfo = std::move(tintResult.Get().subgroup_matrix_info);
             return result;
         },
         "Vulkan.CompileShaderToSPIRV");
@@ -337,6 +340,85 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         DumpSpirv(GetDevice(), compilation->spirv.data(), compilation->spirv.size());
     }
 #endif
+
+    // TODO(dsinclair): Is there a better way to get this? The information is in the AdapterInfo but
+    // I don't see how to get access to the AdapterInfo from here?
+    auto subgroupMatrixConfig =
+        ToBackend(GetDevice()->GetPhysicalDevice())
+            ->EnumerateSubgroupMatrixConfigs(GetDevice()->GetAdapter()->GetTogglesState());
+    if (!subgroupMatrixConfig.empty()) {
+        auto compare = [](wgpu::SubgroupMatrixComponentType wgpu_type,
+                          tint::SubgroupMatrixType tint_type) -> bool {
+            return (wgpu_type == wgpu::SubgroupMatrixComponentType::F16 &&
+                    tint_type == tint::SubgroupMatrixType::kF16) ||
+                   (wgpu_type == wgpu::SubgroupMatrixComponentType::F32 &&
+                    tint_type == tint::SubgroupMatrixType::kF32) ||
+                   (wgpu_type == wgpu::SubgroupMatrixComponentType::I8 &&
+                    tint_type == tint::SubgroupMatrixType::kI8) ||
+                   (wgpu_type == wgpu::SubgroupMatrixComponentType::U8 &&
+                    tint_type == tint::SubgroupMatrixType::kU8) ||
+                   (wgpu_type == wgpu::SubgroupMatrixComponentType::I32 &&
+                    tint_type == tint::SubgroupMatrixType::kI32) ||
+                   (wgpu_type == wgpu::SubgroupMatrixComponentType::U32 &&
+                    tint_type == tint::SubgroupMatrixType::kU32);
+        };
+
+        auto SubgroupTypeToString = [](tint::SubgroupMatrixType type) -> std::string {
+            switch (type) {
+                case tint::SubgroupMatrixType::kF16:
+                    return "f16";
+                case tint::SubgroupMatrixType::kF32:
+                    return "f32";
+                case tint::SubgroupMatrixType::kI8:
+                    return "i8";
+                case tint::SubgroupMatrixType::kU8:
+                    return "u8";
+                case tint::SubgroupMatrixType::kI32:
+                    return "i32";
+                case tint::SubgroupMatrixType::kU32:
+                    return "u32";
+            }
+        };
+
+        for (auto& cfg : compilation->subgroupMatrixInfo.configs) {
+            bool found = false;
+            for (const auto& config : subgroupMatrixConfig) {
+                if (config.M == cfg.columns && config.N == cfg.rows &&
+                            cfg.direction == tint::SubgroupMatrixDirection::kInput
+                        ? compare(config.componentType, cfg.type)
+                        : compare(config.resultComponentType, cfg.type)) {
+                    found = true;
+                    break;
+                }
+            }
+            DAWN_INVALID_IF(!found,
+                            "Subgroup matrix usage found which is not supported by the device.\n"
+                            "Unknown configuration is %zux%zu %s",
+                            cfg.columns, cfg.rows, SubgroupTypeToString(cfg.type));
+        }
+
+        for (auto& cfg : compilation->subgroupMatrixInfo.multiplies) {
+            bool found = false;
+            for (const auto& config : subgroupMatrixConfig) {
+                if (config.M == cfg.M && config.N == cfg.N && config.K == cfg.K &&
+                    compare(config.resultComponentType, cfg.output_type) &&
+                    compare(config.componentType, cfg.input_type)) {
+                    found = true;
+                    break;
+                }
+                DAWN_INVALID_IF(
+                    !found,
+                    "Subgroup matrix multiplication found which is not supported by the device.\n"
+                    "Unknown configuration is M(%zu) N(%zu) K(%zu) InputType(%s) OutputType(%s).",
+                    config.M, config.N, config.K, SubgroupTypeToString(cfg.input_type),
+                    SubgroupTypeToString(cfg.output_type));
+            }
+        }
+    } else {
+        DAWN_INVALID_IF(!compilation->subgroupMatrixInfo.configs.empty(),
+                        "Shader uses a subgroup matrix, but no subgroup matrix configuration "
+                        "found for the device");
+    }
 
     VkShaderModuleCreateInfo createInfo;
     createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
