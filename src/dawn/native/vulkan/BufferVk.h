@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_VULKAN_BUFFERVK_H_
 #define SRC_DAWN_NATIVE_VULKAN_BUFFERVK_H_
 
+#include "absl/functional/function_ref.h"
 #include "dawn/native/Buffer.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
@@ -96,6 +97,11 @@ class Buffer final : public BufferBase {
                      uint32_t clearValue,
                      uint64_t offset = 0,
                      uint64_t size = 0);
+    MaybeError MapMemoryForOperation(
+        uint64_t bufferOffset,
+        size_t size,
+        bool alwaysMapFullBuffer,
+        absl::FunctionRef<void(uint8_t* dst, size_t dstOffset, size_t dstSize)> op);
 
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override;
     MaybeError FinalizeMapImpl(BufferState newState) override;
@@ -123,9 +129,8 @@ class Buffer final : public BufferBase {
     wgpu::BufferUsage mReadUsage = wgpu::BufferUsage::None;
     wgpu::ShaderStage mReadShaderStages = wgpu::ShaderStage::None;
 
-    bool mHostVisible : 1;
-    bool mHostCoherent : 1;
-    bool mHasWriteTransitioned : 1;
+    bool mHostVisible : 1 = false;
+    bool mHostCoherent : 1 = false;
 };
 
 }  // namespace dawn::native::vulkan
