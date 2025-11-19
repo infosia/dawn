@@ -31,56 +31,14 @@
 #include <cstdint>
 #include <vector>
 
+#include "src/tint/api/common/subgroup_matrix.h"
+
 // Forward declarations.
 namespace tint::core::ir {
 class Module;
 }  // namespace tint::core::ir
 
 namespace tint::core::ir::analysis {
-
-enum class SubgroupMatrixType : uint8_t {
-    kF16 = 0,
-    kF32,
-    kU8,
-    kI8,
-    kU32,
-    kI32,
-};
-
-struct SubgroupMatrixMultiply {
-    uint32_t M;
-    uint32_t N;
-    uint32_t K;
-
-    SubgroupMatrixType input_type;
-    SubgroupMatrixType output_type;
-
-    bool operator==(const SubgroupMatrixMultiply& o) const {
-        return M == o.M && N == o.N && K == o.K && input_type == o.input_type &&
-               output_type == o.output_type;
-    }
-};
-
-enum class SubgroupMatrixDirection : uint8_t {
-    kInput,
-    kResult,
-};
-
-struct SubgroupMatrixConfig {
-    uint32_t columns;
-    uint32_t rows;
-    SubgroupMatrixType type;
-    SubgroupMatrixDirection direction;
-
-    bool operator==(const SubgroupMatrixConfig& o) const {
-        return columns == o.columns && rows == o.rows && type == o.type && direction == o.direction;
-    }
-};
-
-struct SubgroupMatrixInfo {
-    std::vector<SubgroupMatrixMultiply> multiplies;
-    std::vector<SubgroupMatrixConfig> configs;
-};
 
 /// Gathers information about the subgroup matrix configurations used in the module.
 ///
