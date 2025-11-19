@@ -92,6 +92,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b89f7ab4_c92d5300",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-19T09:19:29Z",
+      "side": 1,
+      "message": "Or, another much more simpler proposal: We don\u0027t allow compiler falling back due to compiler library unavailable at all (neither DXC-\u003eFXC nor FXC-\u003eDXC), and just fail the device creation if the compiler required by device `UseDXC` toggle is unavailable. Dawn E2E tests still need to handle only the device creation failure, possibly with the whitelist.\n\nIn this way the adapter toggle validation is still incomplete in my opinion, but the code change would be minimized.",
+      "parentUuid": "573f3426_d91c90b3",
+      "revId": "94cfd57598299a114c4c856fb1993d80463d984b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "445fc20f_966e04af",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
