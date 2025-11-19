@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55721c15_e9696005",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2724,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-19T21:38:04Z",
+      "side": 1,
+      "message": "Should this `failed.Add(checker)` for consistency?",
+      "revId": "a322917e248944c872f9f7984cd234f407cdd87f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
