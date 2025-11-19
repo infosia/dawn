@@ -107,6 +107,7 @@ cc_library(
     "packed_vec3_test.cc",
     "shader_io_test.cc",
     "simd_ballot_test.cc",
+    "validate_subgroup_matrix_test.cc",
   ],
   deps = [
     "//src/tint/api/common",
