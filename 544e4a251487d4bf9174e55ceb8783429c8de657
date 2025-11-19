@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbad9940_56a78968",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-19T21:31:50Z",
+      "side": 1,
+      "message": "I put this into `COMPILED_SPIRV_MEMBERS ` instead of into the `SPIRV_COMIPLATION_REQUEST_MEMBERS` because I can see how to add the reflection info to the tint struct, but don\u0027t know how/if it\u0027s possible to add to the wgpu::SubgroupMatrixConfig",
+      "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f803b99b_8cf860ec",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-19T21:31:50Z",
+      "side": 1,
+      "message": "This seems wrong (and is why I exposed the method in the header). I\u0027m not seeing an way to get the AdapterInfo to pull this out?  Is there a better way to pull this?",
+      "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "887d5560_e990a6de",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-19T21:31:50Z",
+      "side": 1,
+      "message": "As a first pass, I double looped these to at least get something working. The other option would be to loop over one of them and convert into a `unordered_set` and then do a key lookup instead of a loop. Not sure if it\u0027s worth the effort as I assume these will be a small number of elements?",
+      "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
