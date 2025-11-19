@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e55da500_98ff3ad5",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-19T14:34:26Z",
+      "side": 1,
+      "message": "Is ES always required? This works in desktop in non-es. Is ES only required in order to put the extension line in?",
+      "revId": "8017a12eeb96357734b4b19c58e01a4013949db1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ef92c62_a94fd86b",
+        "filename": "third_party/glslang/README.chromium",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-19T14:34:26Z",
+      "side": 1,
+      "message": "Why did this change? It should be deps no?",
+      "revId": "8017a12eeb96357734b4b19c58e01a4013949db1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

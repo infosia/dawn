@@ -146,6 +146,30 @@
       },
       "revId": "8cd8e2187d2b9ecefd27828c4480509ca6aa2190",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e4405f8_7510ed42",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-19T14:34:26Z",
+      "side": 1,
+      "message": "Yea, we typically do that, but GLSLang had a bug that\u0027s been fixed so this didn\u0027t pass at all in ES when run through GLSLang.",
+      "parentUuid": "177a4587_6a8947c2",
+      "range": {
+        "startLine": 1152,
+        "startChar": 0,
+        "endLine": 1156,
+        "endChar": 17
+      },
+      "revId": "8cd8e2187d2b9ecefd27828c4480509ca6aa2190",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
