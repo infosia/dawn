@@ -685,12 +685,12 @@ MaybeError ResolveMultisampledRenderTargets(const OpenGLFunctions& gl,
             TextureView* colorView = ToBackend(renderPass->colorAttachments[i].view.Get());
 
             DAWN_GL_TRY(gl, BindFramebuffer(GL_READ_FRAMEBUFFER, readFbo));
-            DAWN_TRY(colorView->BindToFramebuffer(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0));
+            DAWN_TRY(colorView->BindToFramebuffer(gl, GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0));
 
             TextureView* resolveView =
                 ToBackend(renderPass->colorAttachments[i].resolveTarget.Get());
             DAWN_GL_TRY(gl, BindFramebuffer(GL_DRAW_FRAMEBUFFER, writeFbo));
-            DAWN_TRY(resolveView->BindToFramebuffer(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0));
+            DAWN_TRY(resolveView->BindToFramebuffer(gl, GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0));
             DAWN_GL_TRY(gl, BlitFramebuffer(0, 0, renderPass->width, renderPass->height, 0, 0,
                                             renderPass->width, renderPass->height,
                                             GL_COLOR_BUFFER_BIT, GL_NEAREST));
@@ -1227,7 +1227,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
             GLenum glAttachment = GL_COLOR_ATTACHMENT0 + static_cast<uint8_t>(i);
 
             // Attach color buffers.
-            DAWN_TRY(textureView->BindToFramebuffer(GL_DRAW_FRAMEBUFFER, glAttachment,
+            DAWN_TRY(textureView->BindToFramebuffer(gl, GL_DRAW_FRAMEBUFFER, glAttachment,
                                                     renderPass->colorAttachments[i].depthSlice));
             drawBuffers[i] = glAttachment;
             attachmentCount = ityp::PlusOne(i);
@@ -1250,7 +1250,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 DAWN_UNREACHABLE();
             }
 
-            DAWN_TRY(textureView->BindToFramebuffer(GL_DRAW_FRAMEBUFFER, glAttachment));
+            DAWN_TRY(textureView->BindToFramebuffer(gl, GL_DRAW_FRAMEBUFFER, glAttachment));
         }
     }
 
@@ -1452,7 +1452,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
             case Command::SetRenderPipeline: {
                 SetRenderPipelineCmd* cmd = iter->NextCommand<SetRenderPipelineCmd>();
                 lastPipeline = ToBackend(cmd->pipeline).Get();
-                DAWN_TRY(lastPipeline->ApplyNow(persistentPipelineState));
+                DAWN_TRY(lastPipeline->ApplyNow(gl, persistentPipelineState));
 
                 vertexStateBufferBindingTracker.OnSetPipeline(lastPipeline);
                 bindGroupTracker.OnSetPipeline(lastPipeline);

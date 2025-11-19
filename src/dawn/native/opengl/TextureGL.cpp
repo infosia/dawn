@@ -686,11 +686,12 @@ GLenum TextureView::GetGLTarget() const {
     return mTarget;
 }
 
-MaybeError TextureView::BindToFramebuffer(GLenum target, GLenum attachment, GLuint depthSlice) {
+MaybeError TextureView::BindToFramebuffer(const OpenGLFunctions& gl,
+                                          GLenum target,
+                                          GLenum attachment,
+                                          GLuint depthSlice) {
     DAWN_ASSERT(depthSlice <
                 static_cast<GLuint>(GetSingleSubresourceVirtualSize().depthOrArrayLayers));
-
-    auto lock = ToBackend(GetDevice())->GetGL();
 
     // Use the base texture where possible to minimize the amount of copying required on GLES.
     bool useOwnView = GetFormat().format != GetTexture()->GetFormat().format &&
@@ -720,7 +721,7 @@ MaybeError TextureView::BindToFramebuffer(GLenum target, GLenum attachment, GLui
 
     DAWN_ASSERT(textureHandle != 0);
 
-    return FramebufferTextureHelper(lock.gl, textarget, target, attachment, textureHandle, mipLevel,
+    return FramebufferTextureHelper(gl, textarget, target, attachment, textureHandle, mipLevel,
                                     arrayLayer);
 }
 

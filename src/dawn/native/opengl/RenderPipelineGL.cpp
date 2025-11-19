@@ -230,7 +230,7 @@ MaybeError RenderPipeline::InitializeImpl() {
     auto lock = ToBackend(GetDevice())->GetGL();
     DAWN_TRY(InitializeBase(lock.gl, ToBackend(GetLayout()), GetAllStages(), UsesVertexIndex(),
                             UsesInstanceIndex(), UsesFragDepth(), bgraSwizzleAttributes));
-    DAWN_TRY(CreateVAOForVertexState());
+    DAWN_TRY(CreateVAOForVertexState(lock.gl));
     return {};
 }
 
@@ -254,10 +254,7 @@ VertexAttributeMask RenderPipeline::GetAttributesUsingVertexBuffer(VertexBufferS
     return mAttributesUsingVertexBuffer[slot];
 }
 
-MaybeError RenderPipeline::CreateVAOForVertexState() {
-    auto lock = ToBackend(GetDevice())->GetGL();
-    const OpenGLFunctions& gl = lock.gl;
-
+MaybeError RenderPipeline::CreateVAOForVertexState(const OpenGLFunctions& gl) {
     DAWN_GL_TRY(gl, GenVertexArrays(1, &mVertexArrayObject));
     DAWN_GL_TRY(gl, BindVertexArray(mVertexArrayObject));
 
@@ -289,9 +286,8 @@ MaybeError RenderPipeline::CreateVAOForVertexState() {
     return {};
 }
 
-MaybeError RenderPipeline::ApplyNow(PersistentPipelineState& persistentPipelineState) {
-    auto lock = ToBackend(GetDevice())->GetGL();
-    const OpenGLFunctions& gl = lock.gl;
+MaybeError RenderPipeline::ApplyNow(const OpenGLFunctions& gl,
+                                    PersistentPipelineState& persistentPipelineState) {
     DAWN_TRY(PipelineGL::ApplyNow(gl, ToBackend(GetLayout())));
 
     DAWN_ASSERT(mVertexArrayObject);

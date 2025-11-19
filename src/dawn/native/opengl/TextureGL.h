@@ -36,6 +36,7 @@ namespace dawn::native::opengl {
 
 class Device;
 struct GLFormat;
+struct OpenGLFunctions;
 class SharedTextureMemory;
 
 enum class OwnsHandle : uint8_t {
@@ -83,7 +84,10 @@ class TextureView final : public TextureViewBase {
 
     GLuint GetHandle() const;
     GLenum GetGLTarget() const;
-    MaybeError BindToFramebuffer(GLenum target, GLenum attachment, GLuint depthLayer = 0);
+    MaybeError BindToFramebuffer(const OpenGLFunctions& gl,
+                                 GLenum target,
+                                 GLenum attachment,
+                                 GLuint depthLayer = 0);
 
   private:
     TextureView(TextureBase* texture,
