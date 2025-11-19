@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2e14397_ed8e6fb4",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-19T15:43:30Z",
+      "side": 1,
+      "message": "Okay. Let\u0027s add Desktop GL then and test files to catch this.",
+      "parentUuid": "e55da500_98ff3ad5",
+      "revId": "8017a12eeb96357734b4b19c58e01a4013949db1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ef92c62_a94fd86b",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-11-19T14:34:26Z",
       "side": 1,
       "message": "Why did this change? It should be deps no?",
+      "revId": "8017a12eeb96357734b4b19c58e01a4013949db1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "acb6fbfe_e7fc3e1b",
+        "filename": "third_party/glslang/README.chromium",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-19T15:43:30Z",
+      "side": 1,
+      "message": "It happened when I called `roll-dep`. I\u0027ll revert this line change.",
+      "parentUuid": "2ef92c62_a94fd86b",
       "revId": "8017a12eeb96357734b4b19c58e01a4013949db1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
