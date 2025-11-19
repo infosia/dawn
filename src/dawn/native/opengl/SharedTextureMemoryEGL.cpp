@@ -98,7 +98,8 @@ void SharedTextureMemoryEGL::DestroyImpl() {
 
 ResultOrError<GLuint> SharedTextureMemoryEGL::GenerateGLTexture() {
     Device* device = ToBackend(GetDevice());
-    const OpenGLFunctions& gl = device->GetGL();
+    auto lock = device->GetGL();
+    const OpenGLFunctions& gl = lock.gl;
 
     GLuint tex;
     DAWN_GL_TRY(gl, GenTextures(1, &tex));

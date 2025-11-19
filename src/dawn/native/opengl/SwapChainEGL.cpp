@@ -112,7 +112,8 @@ MaybeError SwapChainEGL::PresentImpl() {
         DAWN_TRY(CheckEGL(egl, egl.QuerySurface(display, mEGLSurface, EGL_HEIGHT, &surfaceHeight),
                           "getting surface height"));
 
-        const OpenGLFunctions& gl = device->GetGL();
+        auto lock = device->GetGL();
+        const OpenGLFunctions& gl = lock.gl;
 
         GLuint readFbo = 0;
         DAWN_GL_TRY(gl, GenFramebuffers(1, &readFbo));

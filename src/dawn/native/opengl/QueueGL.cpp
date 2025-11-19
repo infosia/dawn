@@ -91,7 +91,8 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   uint64_t bufferOffset,
                                   const void* data,
                                   size_t size) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    auto lock = ToBackend(GetDevice())->GetGL();
+    const OpenGLFunctions& gl = lock.gl;
 
     DAWN_TRY(ToBackend(buffer)->EnsureDataInitializedAsDestination(bufferOffset, size));
 
@@ -165,7 +166,7 @@ MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
     } else {
         DAWN_TRY(ToBackend(destination.texture)->EnsureSubresourceContentInitialized(range));
     }
-    return DoTexSubImage(ToBackend(GetDevice())->GetGL(), textureCopy, data, dataLayout,
+    return DoTexSubImage(ToBackend(GetDevice())->GetGL().gl, textureCopy, data, dataLayout,
                          writeSizePixel);
 }
 
@@ -262,8 +263,8 @@ ResultOrError<Ref<SharedFence>> Queue::GetOrCreateSharedFence(ExecutionSerial la
     // If we are sharing this sync externally, make sure to flush all commands.
     // The FD cannot be queried before the flush and clients may hang if they try to wait on the
     // sync.
-    const OpenGLFunctions& gl = device->GetGL();
-    DAWN_GL_TRY(gl, Flush());
+    auto lock = device->GetGL();
+    DAWN_GL_TRY(lock.gl, Flush());
 
     SystemHandle handle;
     if (type == wgpu::SharedFenceType::SyncFD) {
