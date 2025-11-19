@@ -97,7 +97,8 @@ class GLTextureTestBase : public DawnTest {
                                     GLenum format,
                                     GLenum type,
                                     void* data) {
-        const native::opengl::OpenGLFunctions& gl = mSecondDeviceGL->GetGL();
+        auto lock = mSecondDeviceGL->GetGL();
+        const native::opengl::OpenGLFunctions& gl = lock.gl;
         GLuint tex;
         gl.GenTextures(1, &tex);
         gl.BindTexture(GL_TEXTURE_2D, tex);
@@ -254,7 +255,8 @@ class GLTextureUsageTests : public GLTextureTestBase {
                      GLenum glType,
                      void* data,
                      size_t dataSize) {
-        const native::opengl::OpenGLFunctions& gl = mSecondDeviceGL->GetGL();
+        auto lock = mSecondDeviceGL->GetGL();
+        const native::opengl::OpenGLFunctions& gl = lock.gl;
 
         // Get a texture view for the GL texture.
         wgpu::TextureDescriptor textureDescriptor;

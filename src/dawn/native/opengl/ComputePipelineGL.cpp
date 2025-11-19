@@ -42,17 +42,18 @@ ComputePipeline::~ComputePipeline() = default;
 
 void ComputePipeline::DestroyImpl() {
     ComputePipelineBase::DestroyImpl();
-    DeleteProgram(ToBackend(GetDevice())->GetGL());
+    DeleteProgram(ToBackend(GetDevice())->GetGL().gl);
 }
 
 MaybeError ComputePipeline::InitializeImpl() {
-    return InitializeBase(ToBackend(GetDevice())->GetGL(), ToBackend(GetLayout()), GetAllStages(),
+    return InitializeBase(ToBackend(GetDevice())->GetGL().gl, ToBackend(GetLayout()),
+                          GetAllStages(),
                           /* usesVertexIndex */ false, /* usesInstanceIndex */ false,
                           /* usesFragDepth */ false, /* bgraSwizzleAttributes */ {});
 }
 
 MaybeError ComputePipeline::ApplyNow() {
-    DAWN_TRY(PipelineGL::ApplyNow(ToBackend(GetDevice())->GetGL(), ToBackend(GetLayout())));
+    DAWN_TRY(PipelineGL::ApplyNow(ToBackend(GetDevice())->GetGL().gl, ToBackend(GetLayout())));
     return {};
 }
 

@@ -57,6 +57,7 @@ SwapChainEGL::~SwapChainEGL() = default;
 
 MaybeError SwapChainEGL::Initialize(SwapChainBase* previousSwapChain) {
     const Device* device = ToBackend(GetDevice());
+    auto lock = device->GetGL();
 
     if (previousSwapChain != nullptr) {
         // TODO(crbug.com/dawn/269): figure out what should happen when surfaces are used by
@@ -112,7 +113,8 @@ MaybeError SwapChainEGL::PresentImpl() {
         DAWN_TRY(CheckEGL(egl, egl.QuerySurface(display, mEGLSurface, EGL_HEIGHT, &surfaceHeight),
                           "getting surface height"));
 
-        const OpenGLFunctions& gl = device->GetGL();
+        auto lock = device->GetGL();
+        const OpenGLFunctions& gl = lock.gl;
 
         GLuint readFbo = 0;
         DAWN_GL_TRY(gl, GenFramebuffers(1, &readFbo));
@@ -126,9 +128,8 @@ MaybeError SwapChainEGL::PresentImpl() {
                                         surfaceWidth, 0, GL_COLOR_BUFFER_BIT, GL_LINEAR));
 
         DAWN_GL_TRY(gl, DeleteFramebuffers(1, &readFbo));
+        egl.SwapBuffers(display, mEGLSurface);
     }
-
-    egl.SwapBuffers(display, mEGLSurface);
 
     mTexture->APIDestroy();
     mTexture = nullptr;
