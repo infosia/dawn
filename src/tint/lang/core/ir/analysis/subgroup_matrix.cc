@@ -74,8 +74,8 @@ struct State {
 
     SubgroupMatrixInfo info{};
 
-    std::unordered_set<SubgroupMatrixMultiply> seen_multiplies;
-    std::unordered_set<SubgroupMatrixConfig> seen_configs;
+    std::unordered_set<SubgroupMatrixMultiply> seen_multiplies{};
+    std::unordered_set<SubgroupMatrixConfig> seen_configs{};
 
     /// Process the module.
     SubgroupMatrixInfo Process() {
