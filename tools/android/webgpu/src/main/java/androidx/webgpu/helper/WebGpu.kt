@@ -13,6 +13,7 @@ import androidx.webgpu.DeviceLostCallback
 import androidx.webgpu.DeviceLostException
 import androidx.webgpu.DeviceLostReason
 import androidx.webgpu.ErrorType
+import androidx.webgpu.FeatureLevel
 import androidx.webgpu.GPUInstance
 import androidx.webgpu.InstanceDescriptor
 import androidx.webgpu.InternalException
@@ -42,7 +43,7 @@ public abstract class WebGpu : AutoCloseable {
 public suspend fun createWebGpu(
     surface: Surface? = null,
     instanceDescriptor: InstanceDescriptor = InstanceDescriptor(),
-    requestAdapterOptions: RequestAdapterOptions = RequestAdapterOptions(),
+    requestAdapterOptions: RequestAdapterOptions = RequestAdapterOptions(featureLevel = FeatureLevel.Companion.Compatibility),
     deviceDescriptor: DeviceDescriptor = DeviceDescriptor(
         deviceLostCallback = defaultDeviceLostCallback,
         deviceLostCallbackExecutor = Executor(Runnable::run),
@@ -98,8 +99,8 @@ public suspend fun createWebGpu(
 }
 
 private suspend fun requestAdapter(
-    instance: GPUInstance,
-    options: RequestAdapterOptions = RequestAdapterOptions(backendType = BackendType.Vulkan),
+  instance: GPUInstance,
+  options: RequestAdapterOptions = RequestAdapterOptions(backendType = BackendType.Companion.OpenGLES, featureLevel = FeatureLevel.Companion.Compatibility),
 ): GPUAdapter {
     return instance.requestAdapter(options)
 }
