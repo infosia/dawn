@@ -13,11 +13,14 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
+import org.junit.Rule
 
 @Suppress("UNUSED_VARIABLE")
 class BufferTest {
   private lateinit var device: GPUDevice
   private lateinit var webGpu: WebGpu
+  @get:Rule
+  val apiSkipRule = ApiLevelSkipRule()
 
   @Before
   fun setup() = runBlocking {
@@ -118,6 +121,7 @@ class BufferTest {
    */
   @MediumTest
   @Test
+  @ApiRequirement(minApi = 35, onlySkipOnEmulator = true)
   fun testWriteAndReadBuffer() {
     val queue = device.getQueue()
 

@@ -12,6 +12,7 @@ import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 @Suppress("UNUSED_VARIABLE")
@@ -20,7 +21,8 @@ class CommandEncoderTest {
 
   private lateinit var device: GPUDevice
   private lateinit var webGpu: WebGpu
-
+  @get:Rule
+  val apiSkipRule = ApiLevelSkipRule()
   @Before
   fun setup() = runBlocking {
     webGpu = createWebGpu()
@@ -140,6 +142,7 @@ class CommandEncoderTest {
    * Verifies that a render pass with `LoadOp.Clear` correctly clears a texture to a specific color.
    */
   @Test
+  @ApiRequirement(minApi = 35, onlySkipOnEmulator = true)
   fun testBeginRenderPass_clearsTextureCorrectly() {
     val queue = device.getQueue()
 
