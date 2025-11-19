@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44a02b00_d15e617c",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-19T07:18:25Z",
+      "side": 1,
+      "message": "changed",
+      "parentUuid": "524875e8_9002b83a",
+      "revId": "b3d80aa9e6bf4dc3d4d9a7374568e1f5682f7010",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "73cd315a_2995988e",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-11-18T11:07:56Z",
       "side": 1,
       "message": "SetIndexBuffer as well? and we need to add the buffers in there to used resources?",
+      "revId": "b3d80aa9e6bf4dc3d4d9a7374568e1f5682f7010",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25d733db_3d7cd3aa",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-19T07:18:25Z",
+      "side": 1,
+      "message": "Added, AFAIK, no don\u0027t need to be be added because the front end already tracks those via `GetResourceUsage` and we add those resources.",
+      "parentUuid": "73cd315a_2995988e",
       "revId": "b3d80aa9e6bf4dc3d4d9a7374568e1f5682f7010",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9e8b106_ba31fe1d",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-19T07:18:25Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "b7740fe5_6c755fdb",
+      "revId": "b3d80aa9e6bf4dc3d4d9a7374568e1f5682f7010",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb714dad_b8a4ab59",
@@ -69,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5ecc709_48bc8bb9",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-19T07:18:25Z",
+      "side": 1,
+      "message": "this is strange. There are no extra lines in my local version of this file. I\u0027ll upload again. As for the apache thing, I have no idea where that came from. Maybe it did come from AI :P",
+      "parentUuid": "eb714dad_b8a4ab59",
+      "revId": "b3d80aa9e6bf4dc3d4d9a7374568e1f5682f7010",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "16a97ad3_cdb526b3",
@@ -82,6 +154,30 @@
       "writtenOn": "2025-11-18T11:07:56Z",
       "side": 1,
       "message": "I believe that this should already be handled by the iteration code below.",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 0
+      },
+      "revId": "b3d80aa9e6bf4dc3d4d9a7374568e1f5682f7010",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe77a6c8_0e8d825a",
+        "filename": "src/dawn/native/webgpu/RenderBundleWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-19T07:18:25Z",
+      "side": 1,
+      "message": "no, the iteration code is only adding resources that were not already tracked. Those include bindGroups, textureViews, renderBundles, pipelines. The rest is tracked by the front end and returned via `GetResourceUsage`  Is that fine?",
+      "parentUuid": "16a97ad3_cdb526b3",
       "range": {
         "startLine": 232,
         "startChar": 0,
