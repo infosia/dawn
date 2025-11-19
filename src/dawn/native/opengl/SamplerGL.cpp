@@ -105,13 +105,14 @@ Sampler::~Sampler() = default;
 
 void Sampler::DestroyImpl() {
     SamplerBase::DestroyImpl();
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-    DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteSamplers(1, &mHandle));
+    auto lock = ToBackend(GetDevice())->GetGL();
+    DAWN_GL_TRY_IGNORE_ERRORS(lock.gl, DeleteSamplers(1, &mHandle));
 }
 
 MaybeError Sampler::Initialize(const SamplerDescriptor* descriptor) {
     Device* device = ToBackend(GetDevice());
-    const OpenGLFunctions& gl = device->GetGL();
+    auto lock = device->GetGL();
+    const OpenGLFunctions& gl = lock.gl;
 
     DAWN_GL_TRY(gl, GenSamplers(1, &mHandle));
 

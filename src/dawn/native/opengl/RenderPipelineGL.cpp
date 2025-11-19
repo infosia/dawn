@@ -227,9 +227,9 @@ MaybeError RenderPipeline::InitializeImpl() {
         bgraSwizzleAttributes.set(i, GetAttribute(i).format == wgpu::VertexFormat::Unorm8x4BGRA);
     }
 
-    DAWN_TRY(InitializeBase(ToBackend(GetDevice())->GetGL(), ToBackend(GetLayout()), GetAllStages(),
-                            UsesVertexIndex(), UsesInstanceIndex(), UsesFragDepth(),
-                            bgraSwizzleAttributes));
+    auto lock = ToBackend(GetDevice())->GetGL();
+    DAWN_TRY(InitializeBase(lock.gl, ToBackend(GetLayout()), GetAllStages(), UsesVertexIndex(),
+                            UsesInstanceIndex(), UsesFragDepth(), bgraSwizzleAttributes));
     DAWN_TRY(CreateVAOForVertexState());
     return {};
 }
@@ -238,7 +238,8 @@ RenderPipeline::~RenderPipeline() = default;
 
 void RenderPipeline::DestroyImpl() {
     RenderPipelineBase::DestroyImpl();
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    auto lock = ToBackend(GetDevice())->GetGL();
+    const OpenGLFunctions& gl = lock.gl;
     DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteVertexArrays(1, &mVertexArrayObject));
     DAWN_GL_TRY_IGNORE_ERRORS(gl, BindVertexArray(0));
     DeleteProgram(gl);
@@ -254,7 +255,8 @@ VertexAttributeMask RenderPipeline::GetAttributesUsingVertexBuffer(VertexBufferS
 }
 
 MaybeError RenderPipeline::CreateVAOForVertexState() {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    auto lock = ToBackend(GetDevice())->GetGL();
+    const OpenGLFunctions& gl = lock.gl;
 
     DAWN_GL_TRY(gl, GenVertexArrays(1, &mVertexArrayObject));
     DAWN_GL_TRY(gl, BindVertexArray(mVertexArrayObject));
@@ -288,7 +290,8 @@ MaybeError RenderPipeline::CreateVAOForVertexState() {
 }
 
 MaybeError RenderPipeline::ApplyNow(PersistentPipelineState& persistentPipelineState) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    auto lock = ToBackend(GetDevice())->GetGL();
+    const OpenGLFunctions& gl = lock.gl;
     DAWN_TRY(PipelineGL::ApplyNow(gl, ToBackend(GetLayout())));
 
     DAWN_ASSERT(mVertexArrayObject);
