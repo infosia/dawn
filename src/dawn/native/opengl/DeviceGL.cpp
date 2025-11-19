@@ -127,6 +127,20 @@ void KHRONOS_APIENTRY OnGLDebugMessage(GLenum source,
 
 namespace dawn::native::opengl {
 
+GLLock::GLLock(const OpenGLFunctions& functions,
+               std::unique_lock<std::mutex> lock,
+               DisplayEGL* display)
+    : gl(functions), mLock(std::move(lock)), mDisplay(display) {}
+
+GLLock::GLLock(GLLock&& other)
+    : gl(other.gl), mLock(std::move(other.mLock)), mDisplay(other.mDisplay) {}
+
+GLLock::~GLLock() {
+    mDisplay->egl.MakeCurrent(mDisplay->GetDisplay(), EGL_NO_SURFACE, EGL_NO_SURFACE,
+                              EGL_NO_CONTEXT);
+    mLock.unlock();
+}
+
 // static
 ResultOrError<Ref<Device>> Device::Create(AdapterBase* adapter,
                                           const UnpackedPtr<DeviceDescriptor>& descriptor,
@@ -384,7 +398,8 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingEGLImageImpl(
     // deleted after this method returns. In the future, we should deprecate this method and
     // require clients to use SharedTextureMemory for better lifetime management.
     auto scopedCurrentContext = mContext->MakeCurrent();
-    const OpenGLFunctions& gl = GetGL(/*makeCurrent=*/false);
+    auto lock = GetGL(/*makeCurrent=*/false);
+    const OpenGLFunctions& gl = lock.gl;
 
     TextureDescriptor reifiedDescriptor =
         FromAPI(descriptor->cTextureDescriptor)->WithTrivialFrontendDefaults();
@@ -442,7 +457,8 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingGLTextureImpl(
     // deleted after this method returns. In the future, we should deprecate this method and
     // require clients to use SharedTextureMemory for better lifetime management.
     auto scopedCurrentContext = mContext->MakeCurrent();
-    const OpenGLFunctions& gl = GetGL(/*makeCurrent=*/false);
+    auto lock = GetGL(/*makeCurrent=*/false);
+    const OpenGLFunctions& gl = lock.gl;
 
     TextureDescriptor reifiedDescriptor =
         FromAPI(descriptor->cTextureDescriptor)->WithTrivialFrontendDefaults();
@@ -488,7 +504,8 @@ MaybeError Device::ExecutePendingGLWork() {
     }
 
     auto scopedCurrentContext = mContext->MakeCurrent();
-    const OpenGLFunctions& gl = GetGL(/*makeCurrent=*/false);
+    auto lock = GetGL(/*makeCurrent=*/false);
+    const OpenGLFunctions& gl = lock.gl;
     for (auto& work : workList) {
         DAWN_TRY(work(gl));
     }
@@ -557,12 +574,14 @@ const AHBFunctions* Device::GetOrLoadAHBFunctions() {
 #endif  // DAWN_PLATFORM_IS(ANDROID)
 }
 
-const OpenGLFunctions& Device::GetGL(bool makeCurrent) const {
+GLLock Device::GetGL(bool makeCurrent) const {
+    std::unique_lock<std::mutex> lock(mGLMutex);
     if (makeCurrent) {
         mContext->DeprecatedMakeCurrent();
     }
     ToBackend(GetQueue())->OnGLUsed();
-    return mGL;
+    auto display = ToBackend(GetPhysicalDevice())->GetDisplay();
+    return GLLock(mGL, std::move(lock), display);
 }
 
 int Device::GetMaxTextureMaxAnisotropy() const {
