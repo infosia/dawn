@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c7f7d5a2_d93ca593",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-19T07:30:29Z",
+      "side": 1,
+      "message": "Actually, Kai told me to change it to `DAWN_CHECK(false)` in a previous CL. I chained it ot DAWN_UNIMPLEMENTED_ERROR()`. Is it fine or you want `DAWN_UNREACHABLE()`?\n\nHere\u0027s Kai\u0027s comment: https://dawn-review.googlesource.com/c/dawn/+/265318/24..27/src/dawn/native/webgpu/BindGroupLayoutWGPU.cpp#b120",
+      "parentUuid": "44a02b00_d15e617c",
+      "revId": "b3d80aa9e6bf4dc3d4d9a7374568e1f5682f7010",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "73cd315a_2995988e",
         "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
         "patchSetId": 3
