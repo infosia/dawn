@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "085a4b23_c4219494",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-19T21:42:49Z",
+      "side": 1,
+      "message": "This looks good to me, I assume we\u0027re just waiting for the fix so it will work in 310es in GLSLang?",
+      "revId": "077b9515268b1ab0cfcafb26a8246652c5b7547c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
