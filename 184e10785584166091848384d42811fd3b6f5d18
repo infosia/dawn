@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1587b61f_7bf57cfa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-19T19:38:24Z",
+      "side": 1,
+      "message": "PTAL\n\nSample generated roll CL: https://dawn-review.googlesource.com/c/dawn/+/275214",
+      "revId": "184e10785584166091848384d42811fd3b6f5d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
