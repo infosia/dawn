@@ -286,6 +286,24 @@
       "parentUuid": "a6557419_b56cc14f",
       "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6466336_74c2c5f8",
+        "filename": "test/tint/extensions/fragment_depth/basic.wgsl.expected.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-19T10:15:43Z",
+      "side": 1,
+      "message": "It works with Open GL ES 3.20 but not for Open GL ES 3.10 and below ;(\n\nI\u0027ve filed https://github.com/KhronosGroup/glslang/issues/4100 for this.",
+      "parentUuid": "2e9de0e7_d1a7da73",
+      "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a000178a_f0690b10",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1151,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-19T10:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7b8548b_8b82d561",
+      "revId": "8cd8e2187d2b9ecefd27828c4480509ca6aa2190",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a1f1250_9743da44",
