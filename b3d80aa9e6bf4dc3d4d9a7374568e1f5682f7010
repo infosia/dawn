@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1f9b683_bc7c7c3a",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-19T13:24:15Z",
+      "side": 1,
+      "message": "Interesting, maybe we should add a DAWN_UNIMPLEMENTED() at some point to make it easy to be consistent. Current version LGTM, that was just a nit.",
+      "parentUuid": "c7f7d5a2_d93ca593",
+      "revId": "b3d80aa9e6bf4dc3d4d9a7374568e1f5682f7010",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "73cd315a_2995988e",
@@ -196,6 +214,30 @@
       "side": 1,
       "message": "no, the iteration code is only adding resources that were not already tracked. Those include bindGroups, textureViews, renderBundles, pipelines. The rest is tracked by the front end and returned via `GetResourceUsage`  Is that fine?",
       "parentUuid": "16a97ad3_cdb526b3",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 0
+      },
+      "revId": "b3d80aa9e6bf4dc3d4d9a7374568e1f5682f7010",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a1ddbd4_5d5b3f0e",
+        "filename": "src/dawn/native/webgpu/RenderBundleWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-19T13:24:15Z",
+      "side": 1,
+      "message": "That\u0027s correct, just a bit surprising and redundant: all the texture views should already be handled transitively at [1] and most buffers as well (except vertex/index/indirect). It\u0027s a bit surprising also that the source of the referenced objects are coming from two different places, when one of the places (the ResourceUsageTracker) is already derived and a subset of the information from the other place (the list of commands).",
+      "parentUuid": "fe77a6c8_0e8d825a",
       "range": {
         "startLine": 232,
         "startChar": 0,
