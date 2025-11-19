@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "573f3426_d91c90b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-19T09:05:47Z",
+      "side": 1,
+      "message": "Things become tricky after I look through the `UseDXC` toggle again.\n1. `UseDXC` toggle is currently an adapter toggle, but it doesn\u0027t get completely validated or take effect until device creation.\n  1.1. It is reasonable that `UseDXC` keep being an adapter toggle, because some adapter supported features like `shader-f16` and `subgroups` rely on DXC ([example](https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/third_party/dawn/src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp;drc\u003d9a6e465a38f1b60d7e28f6b5353c43d35b570183;l\u003d422)), and we expect adapters report supporting them only if `UseDXC` toggle is enabled AND **DXC compiler is actually available** (the later condition is currently missing). (Should we?)\n  1.2. However currently, we don\u0027t conduct full validation of `UseDXC` toggle during the adapter creation. We only check the `DAWN_USE_BUILT_DXC` build flag and D3D12 supported shader model version ([1]), but don\u0027t check the availability of DXC (or FXC) compiler until device creation ([`EnsureCompilerLibraries`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/DeviceD3D12.cpp;drc\u003d75c2faba60b078aaa0886f11ec6e284ee08b49e1;l\u003d288) called by [`Device::Initialize`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/DeviceD3D12.cpp;l\u003d181;drc\u003d0fe57d75274de3140505b20e948a6d9fca1ffb68;bpv\u003d1;bpt\u003d1)). I think we should also **validate (by trying to load) the required compiler when creating the adapter**. (Should we?)\n  1.3. Further, currently creating an adapter will never fail as long as the physical device is available ([2]). Adding validation for adapter creation require some refactor like introducing `PhysicalDevice::CreateAdapter` and `virtual PhysicalDevice::CreateAdapterImpl`, which are not complex.\n  1.4. Beside, currently device toggles can override adapter toggles, meaning that the user can require a device with `UseDXC` disabled from an adapter with `UseDXC` enabled and vice versa. It means that we have to validate the availability of device\u0027s chosen compiler during its creation, even if we add the validation in the adapter creation.\n2. Therefore, **I once suggested to make `UseDXC` a device toggle, but that seems incorrect**. I propose that we should **keep `UseDXC` an adapter toggle, and validate it in both adapter creation and device creation**.\n  2.1. **Lazy loading of compiler library can be preserved**. During the validation of adapters and devices, we could first try loading the required compiler, and only try the other if loading failed and we decide to fall back. Effectively, this will move the actual loading from device creation to adapter creation, but we still would load at most one compiler library if users only require one.\n  2.2. No matter if we decide to allow falling back to DXC if `UseDXC` is disabled but FXC is unavailable (see [issue](https://issues.chromium.org/issues/461303821)), **adapter and device creation will be possible to fail the validation** under this proposal.\n  2.3. **Dawn E2E tests should properly handle such adapter or device creation failure**. A possible way is that instead of asserting both creation succeed, we allow them fail and catch the error if any. We than have a whitelist of failure reason that make the tests skip (e.g. skip if no available compiler), and fail the tests otherwise so that we don\u0027t miss any potential bug.\n   \n[1]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/third_party/dawn/src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp;l\u003d582?q\u003dUseDXC\u0026ss\u003dchromium%2Fchromium%2Fsrc\n[2]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Instance.cpp;l\u003d349",
+      "parentUuid": "28576e1e_32bbde01",
+      "revId": "94cfd57598299a114c4c856fb1993d80463d984b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "445fc20f_966e04af",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
