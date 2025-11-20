@@ -127,18 +127,13 @@ void KHRONOS_APIENTRY OnGLDebugMessage(GLenum source,
 
 namespace dawn::native::opengl {
 
-GLLock::GLLock(const OpenGLFunctions& functions,
-               std::unique_lock<std::mutex> lock,
-               DisplayEGL* display)
-    : gl(functions), mLock(std::move(lock)), mDisplay(display) {}
-
-GLLock::GLLock(GLLock&& other)
-    : gl(other.gl), mLock(std::move(other.mLock)), mDisplay(other.mDisplay) {}
+GLLock::GLLock(const Device* device, const OpenGLFunctions& functions, bool makeCurrent)
+    : gl(functions), mDevice(device), mMakeCurrent(makeCurrent) {
+    mDevice->LockGL(makeCurrent);
+}
 
 GLLock::~GLLock() {
-    mDisplay->egl.MakeCurrent(mDisplay->GetDisplay(), EGL_NO_SURFACE, EGL_NO_SURFACE,
-                              EGL_NO_CONTEXT);
-    mLock.unlock();
+    mDevice->UnlockGL(mMakeCurrent);
 }
 
 // static
@@ -585,13 +580,30 @@ const AHBFunctions* Device::GetOrLoadAHBFunctions() {
 }
 
 GLLock Device::GetGL(bool makeCurrent) const {
-    std::unique_lock<std::mutex> lock(mGLMutex);
-    if (makeCurrent) {
-        mContext->DeprecatedMakeCurrent();
+    return GLLock(this, mGL, makeCurrent);
+}
+
+void Device::LockGL(bool makeCurrent) const {
+    if (mGLLockCount == 0) {
+        mGLMutex.lock();
+        if (makeCurrent) {
+            mContext->DeprecatedMakeCurrent();
+        }
+        ToBackend(GetQueue())->OnGLUsed();
     }
-    ToBackend(GetQueue())->OnGLUsed();
-    auto display = ToBackend(GetPhysicalDevice())->GetDisplay();
-    return GLLock(mGL, std::move(lock), display);
+    mGLLockCount++;
+}
+
+void Device::UnlockGL(bool makeCurrent) const {
+    --mGLLockCount;
+    if (mGLLockCount == 0) {
+        if (makeCurrent) {
+            auto display = ToBackend(GetPhysicalDevice())->GetDisplay();
+            display->egl.MakeCurrent(display->GetDisplay(), EGL_NO_SURFACE, EGL_NO_SURFACE,
+                                     EGL_NO_CONTEXT);
+        }
+        mGLMutex.unlock();
+    }
 }
 
 int Device::GetMaxTextureMaxAnisotropy() const {

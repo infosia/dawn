@@ -56,14 +56,12 @@ class DisplayEGL;
 
 class GLLock {
   public:
-    GLLock(const OpenGLFunctions& gl, std::unique_lock<std::mutex> lock, DisplayEGL* display);
-    GLLock(GLLock&& other);
+    GLLock(const Device* device, const OpenGLFunctions& gl, bool makeCurrent);
     ~GLLock();
     const OpenGLFunctions& gl;
-
   private:
-    std::unique_lock<std::mutex> mLock;
-    DisplayEGL* mDisplay;
+    const Device* mDevice;
+    bool          mMakeCurrent;
 };
 
 class Device final : public DeviceBase {
@@ -107,6 +105,9 @@ class Device final : public DeviceBase {
     // AddGLWork().
     // Returns all the OpenGL entry points and ensures that the associated GL context is current.
     GLLock GetGL(bool makeCurrent = true) const;
+
+    void LockGL(bool makeCurrent) const;
+    void UnlockGL(bool makeCurrent) const;
 
     // Helper functions to get access to relevant EGL objects.
     const EGLFunctions& GetEGL(bool makeCurrent) const;
@@ -223,6 +224,7 @@ class Device final : public DeviceBase {
     std::unique_ptr<AHBFunctions> mAHBFunctions;
 #endif  // DAWN_PLATFORM_IS(ANDROID)
     mutable std::mutex mGLMutex;
+    mutable uint32_t   mGLLockCount;
 };
 
 }  // namespace dawn::native::opengl
