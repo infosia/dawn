@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a04a1b8_400e18aa",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-20T19:23:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ca9a337_84de0def",
+      "range": {
+        "startLine": 343,
+        "startChar": 0,
+        "endLine": 348,
+        "endChar": 0
+      },
+      "revId": "928accaabe165d4c56374089b38e1b0b11015b80",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8217bfff_9c0ac403",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-11-20T15:43:01Z",
       "side": 1,
       "message": "Since we shouldn\u0027t have any at the moment, perhaps move this near the end?",
+      "range": {
+        "startLine": 815,
+        "startChar": 32,
+        "endLine": 815,
+        "endChar": 59
+      },
+      "revId": "928accaabe165d4c56374089b38e1b0b11015b80",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc890b85_d8fae9aa",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-20T19:23:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8217bfff_9c0ac403",
       "range": {
         "startLine": 815,
         "startChar": 32,
@@ -70,6 +118,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "443ff2dc_6106a17a",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-20T19:23:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9fa99fd_6ee63bdd",
+      "range": {
+        "startLine": 821,
+        "startChar": 32,
+        "endLine": 821,
+        "endChar": 54
+      },
+      "revId": "928accaabe165d4c56374089b38e1b0b11015b80",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c998892_1405df48",
@@ -83,6 +155,30 @@
       "writtenOn": "2025-11-20T15:43:01Z",
       "side": 1,
       "message": "I don\u0027t see this empty line in https://dawn-review.googlesource.com/c/dawn/+/275214, maybe you need \\n here?",
+      "range": {
+        "startLine": 847,
+        "startChar": 0,
+        "endLine": 847,
+        "endChar": 12
+      },
+      "revId": "928accaabe165d4c56374089b38e1b0b11015b80",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68ec245c_6deb2b68",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-20T19:23:59Z",
+      "side": 1,
+      "message": "I added it after creating the roll CL when I noticed that we needed another line break.",
+      "parentUuid": "8c998892_1405df48",
       "range": {
         "startLine": 847,
         "startChar": 0,
