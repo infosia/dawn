@@ -50,7 +50,51 @@ An example of a known-working command line is:
 ./content/test/gpu/run_gpu_integration_test.py webgpu_cts --show-stdout --browser=android-chromium --stable-jobs --jobs=1 --extra-browser-args="--enable-logging=stderr --js-flags=--expose-gc"
 ```
 
+For Compat tests, run `webgpu_compat_cts` instead.
+
 Be aware that running the tests locally on Android is *SLOW*. Expect it to take 4 hrs+.
+
+### Running on WebView
+
+Similar to above, except:
+
+To test the default WebView configuration, follow the steps above, except:
+
+1. Build `telemetry_gpu_integration_test_android_webview`.
+1. Use the `run_gpu_integration_test` command above, except with the browser set to
+    `--browser=android-webview-instrumentation` instead.
+
+If you need an interactive WebView shell, build `system_webview_shell_apk` and install it
+using `bin/system_webview_shell_apk` or from `apks/SystemWebViewShell.apk`.
+
+For [mixed-bitness WebView](https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/architecture.md#bitness):
+
+1. Use a device that supports both 32-bit and 64-bit binaries, like Pixel < 7.
+1. Set GN args `target_cpu = "arm64"` and `enable_android_secondary_abi = true`.
+1. Build `telemetry_gpu_integration_test_android_webview`.
+1. To test a 64-bit host/browser/GPU process with a 32-bit renderer process:
+
+    1. Build the additional `system_webview_shell_apk` and `trichrome_webview_32_64_bundle` targets.
+    1.
+        ```sh
+        adb install --abi arm64-v8a out/${BUILD_TYPE}/apks/SystemWebViewShell.apk
+        out/${BUILD_TYPE}/bin/trichrome_webview_32_64_bundle install
+        out/${BUILD_TYPE}/bin/trichrome_webview_32_64_bundle set-webview-provider
+        ```
+
+    To test a 32-bit host/browser/GPU process with a 64-bit renderer process:
+
+    1. Build the additional `system_webview_shell_apk` and `trichrome_webview_64_32_bundle` targets.
+    1.
+        ```sh
+        adb install --abi armeabi-v7a out/${BUILD_TYPE}/apks/SystemWebViewShell.apk
+        out/${BUILD_TYPE}/bin/trichrome_webview_64_32_bundle install
+        out/${BUILD_TYPE}/bin/trichrome_webview_64_32_bundle set-webview-provider
+        ```
+    1. Be sure to uninstall the WebView Shell app before running other tests if you want to go back to a 64-bit host.
+
+1. Use the `run_gpu_integration_test` command above, except with the browser set to
+    `--browser=android-webview --assume-browser-already-installed` instead.
 
 ### Running without root
 
@@ -66,7 +110,15 @@ When running the tests on Android devices with the above commands, some devices 
 build/android/adb_chrome_public_command_line ""
 ```
 
+Similarly for WebView and WebViewInstrumentation:
+
+```sh
+build/android/adb_system_webview_command_line ""
+out/Release/bin/webview_instrumentation_apk argv --args ""
+```
+
 # Running a local CTS build on Swarming
+
 Often, it's useful to test changes on Chrome's infrastructure if it's difficult to reproduce a bug locally. To do that, we can package our local build as an "isolate" and upload it to Swarming to run there. This is often much faster than uploading your CL to Gerrit and triggering tryjobs.
 
 Note that since you're doing a local build, you need to be on the same type of machine as the job you'd like to trigger in swarming. To run a job on a Windows bot, you need to build the isolate on Windows.
