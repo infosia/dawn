@@ -246,6 +246,30 @@
       },
       "revId": "b3d80aa9e6bf4dc3d4d9a7374568e1f5682f7010",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec37b6ad_cb143e7f",
+        "filename": "src/dawn/native/webgpu/RenderBundleWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-20T04:51:21Z",
+      "side": 1,
+      "message": "removed. You\u0027re right, these don\u0027t need to be captured here. A renderbundle can\u0027t be captured outside of submit so these resources will already be accounted for",
+      "parentUuid": "9a1ddbd4_5d5b3f0e",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 0
+      },
+      "revId": "b3d80aa9e6bf4dc3d4d9a7374568e1f5682f7010",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
