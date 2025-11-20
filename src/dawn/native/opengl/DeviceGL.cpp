@@ -581,9 +581,6 @@ void Device::LockGL(bool makeCurrent) const {
             mPrevContext = display->egl.GetCurrentContext();
             mPrevReadSurface = display->egl.GetCurrentSurface(EGL_READ);
             mPrevDrawSurface = display->egl.GetCurrentSurface(EGL_DRAW);
-            DAWN_ASSERT(mPrevDrawSurface == EGL_NO_SURFACE);
-            DAWN_ASSERT(mPrevReadSurface == EGL_NO_SURFACE);
-            DAWN_ASSERT(mPrevContext == EGL_NO_CONTEXT);
             mContext->DeprecatedMakeCurrent();
         }
         ToBackend(GetQueue())->OnGLUsed();

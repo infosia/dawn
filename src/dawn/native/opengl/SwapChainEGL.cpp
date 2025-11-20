@@ -128,9 +128,8 @@ MaybeError SwapChainEGL::PresentImpl() {
                                         surfaceWidth, 0, GL_COLOR_BUFFER_BIT, GL_LINEAR));
 
         DAWN_GL_TRY(gl, DeleteFramebuffers(1, &readFbo));
+        egl.SwapBuffers(display, mEGLSurface);
     }
-
-    egl.SwapBuffers(display, mEGLSurface);
 
     mTexture->APIDestroy();
     mTexture = nullptr;
