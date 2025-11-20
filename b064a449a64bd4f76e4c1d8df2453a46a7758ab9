@@ -16,6 +16,75 @@
       "message": "PTAL",
       "revId": "b064a449a64bd4f76e4c1d8df2453a46a7758ab9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c799713_a1b58169",
+        "filename": "infra/config/global/legacy_builders.star",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-20T15:59:06Z",
+      "side": 1,
+      "message": "I think it will be confusing if these bots are separate from the manually triggered ones. E.g. the misunderstanding with mac arm64.",
+      "range": {
+        "startLine": 538,
+        "startChar": 0,
+        "endLine": 544,
+        "endChar": 40
+      },
+      "revId": "b064a449a64bd4f76e4c1d8df2453a46a7758ab9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31e18dfe_3afec60c",
+        "filename": "infra/config/global/mirrored_chromium_try.star",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-20T15:59:06Z",
+      "side": 1,
+      "message": "I think of `mirror` as a Trybot that mirrors a CI bot.\nHere we do not define new builders, we allow existing builders that are defined Chromium-side to be available for Dawn project use (on Dawn CQ or manually triggered).",
+      "range": {
+        "startLine": 28,
+        "startChar": 26,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "b064a449a64bd4f76e4c1d8df2453a46a7758ab9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a61e88e_67c99db1",
+        "filename": "infra/config/global/mirrored_chromium_try.star",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-20T15:59:06Z",
+      "side": 1,
+      "message": "We already have dawn-mac-arm64-deps-rel added here: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/infra/config/global/legacy_builders.star;l\u003d540;drc\u003dfaa1f045abbcb48c620c76cb37b5f0bf5e8181ed\nI don\u0027t think this is needed.",
+      "range": {
+        "startLine": 73,
+        "startChar": 56,
+        "endLine": 73,
+        "endChar": 83
+      },
+      "revId": "b064a449a64bd4f76e4c1d8df2453a46a7758ab9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
