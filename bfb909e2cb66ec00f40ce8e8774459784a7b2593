@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b56f656_8961ad31",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-20T08:32:22Z",
+      "side": 1,
+      "message": "I assume we\u0027ll add support for vertex/index/indirect buffers in the future?",
+      "revId": "bfb909e2cb66ec00f40ce8e8774459784a7b2593",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
