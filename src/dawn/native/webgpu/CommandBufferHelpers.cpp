@@ -40,6 +40,65 @@
 
 namespace dawn::native::webgpu {
 
+// Returns true if command was handled
+bool CaptureDebugCommand(CaptureContext& captureContext, CommandIterator& commands, Command type) {
+    switch (type) {
+        case Command::PushDebugGroup: {
+            const auto& cmd = *commands.NextCommand<PushDebugGroupCmd>();
+            const char* label = commands.NextData<char>(cmd.length + 1);
+            schema::CommandBufferCommandPushDebugGroupCmd data{{
+                .data = {{
+                    .groupLabel = label,
+                }},
+            }};
+            Serialize(captureContext, data);
+            break;
+        }
+        case Command::PopDebugGroup: {
+            commands.NextCommand<PopDebugGroupCmd>();
+            Serialize(captureContext, schema::CommandBufferCommand::PopDebugGroup);
+            break;
+        }
+        case Command::InsertDebugMarker: {
+            const auto& cmd = *commands.NextCommand<InsertDebugMarkerCmd>();
+            const char* label = commands.NextData<char>(cmd.length + 1);
+            schema::CommandBufferCommandInsertDebugMarkerCmd data{{
+                .data = {{
+                    .markerLabel = label,
+                }},
+            }};
+            Serialize(captureContext, data);
+            break;
+        }
+        default: {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool SkipDebugCommand(CommandIterator& commands, Command type) {
+    switch (type) {
+        case Command::PushDebugGroup: {
+            const auto& cmd = *commands.NextCommand<PushDebugGroupCmd>();
+            commands.NextData<char>(cmd.length + 1);
+            break;
+        }
+        case Command::PopDebugGroup: {
+            commands.NextCommand<PopDebugGroupCmd>();
+            break;
+        }
+        case Command::InsertDebugMarker: {
+            const auto& cmd = *commands.NextCommand<InsertDebugMarkerCmd>();
+            commands.NextData<char>(cmd.length + 1);
+            break;
+        }
+        default:
+            return false;
+    }
+    return true;
+}
+
 // Captures commands common to a render pass and a render bundle
 MaybeError CaptureRenderCommand(CaptureContext& captureContext,
                                 CommandIterator& commands,
@@ -97,8 +156,12 @@ MaybeError CaptureRenderCommand(CaptureContext& captureContext,
             Serialize(captureContext, data);
             break;
         }
-        default:
-            return DAWN_UNIMPLEMENTED_ERROR("Unimplemented command");
+        default: {
+            if (!CaptureDebugCommand(captureContext, commands, type)) {
+                return DAWN_UNIMPLEMENTED_ERROR("Unimplemented command");
+            }
+            break;
+        }
     }
 
     return {};
@@ -134,15 +197,15 @@ MaybeError GatherReferencedResourcesFromRenderCommand(CaptureContext& captureCon
             DAWN_SKIP_COMMAND(DrawIndexed)
             DAWN_SKIP_COMMAND(DrawIndirect)
             DAWN_SKIP_COMMAND(DrawIndexedIndirect)
-            DAWN_SKIP_COMMAND(InsertDebugMarker)
-            DAWN_SKIP_COMMAND(PopDebugGroup)
-            DAWN_SKIP_COMMAND(PushDebugGroup)
             DAWN_SKIP_COMMAND(WriteTimestamp)
             DAWN_SKIP_COMMAND(SetImmediates)
             DAWN_SKIP_COMMAND(SetIndexBuffer)
             DAWN_SKIP_COMMAND(SetVertexBuffer)
         default: {
-            return DAWN_UNIMPLEMENTED_ERROR("Unimplemented command");
+            if (!SkipDebugCommand(commands, type)) {
+                return DAWN_UNIMPLEMENTED_ERROR("Unimplemented command");
+            }
+            break;
         }
     }
     return {};
