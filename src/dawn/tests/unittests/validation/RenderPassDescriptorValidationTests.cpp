@@ -2308,5 +2308,106 @@ TEST_F(DawnPartialLoadResolveTextureValidationTest, ResolveRectInvalidSizeAndOff
     AssertBeginRenderPassError(&renderPass);
 }
 
+class TransientAttachmentRenderPassDescriptorValidationTest
+    : public RenderPassDescriptorValidationTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::TransientAttachments};
+    }
+
+    wgpu::Texture CreateTexture(wgpu::TextureUsage textureUsage, wgpu::TextureFormat format) {
+        wgpu::TextureDescriptor textureDescriptor;
+        textureDescriptor.usage = textureUsage;
+        textureDescriptor.format = format;
+        textureDescriptor.size.width = 4;
+        textureDescriptor.size.height = 4;
+        return device.CreateTexture(&textureDescriptor);
+    }
+};
+
+// Test color attachment load and store ops with transient attachments.
+TEST_F(TransientAttachmentRenderPassDescriptorValidationTest, ColorAttachment) {
+    wgpu::Texture transientTexture = CreateTexture(
+        wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TransientAttachment,
+        wgpu::TextureFormat::RGBA8Unorm);
+    utils::ComboRenderPassDescriptor renderPassDescriptor({transientTexture.CreateView()});
+
+    {
+        renderPassDescriptor.cColorAttachments[0].storeOp = wgpu::StoreOp::Discard;
+        renderPassDescriptor.cColorAttachments[0].loadOp = wgpu::LoadOp::Clear;
+        AssertBeginRenderPassSuccess(&renderPassDescriptor);
+    }
+    {
+        renderPassDescriptor.cColorAttachments[0].storeOp = wgpu::StoreOp::Store;
+        renderPassDescriptor.cColorAttachments[0].loadOp = wgpu::LoadOp::Clear;
+        AssertBeginRenderPassError(&renderPassDescriptor);
+    }
+    {
+        renderPassDescriptor.cColorAttachments[0].storeOp = wgpu::StoreOp::Discard;
+        renderPassDescriptor.cColorAttachments[0].loadOp = wgpu::LoadOp::Load;
+        AssertBeginRenderPassError(&renderPassDescriptor);
+    }
+}
+
+// Test depth attachment load and store ops with transient attachments.
+TEST_F(TransientAttachmentRenderPassDescriptorValidationTest, DepthAttachment) {
+    wgpu::Texture texture =
+        CreateTexture(wgpu::TextureUsage::RenderAttachment, wgpu::TextureFormat::RGBA8Unorm);
+    wgpu::Texture depthStencilTransientTexture = CreateTexture(
+        wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TransientAttachment,
+        wgpu::TextureFormat::Depth24PlusStencil8);
+    utils::ComboRenderPassDescriptor renderPassDescriptor(
+        {texture.CreateView()}, depthStencilTransientTexture.CreateView());
+
+    renderPassDescriptor.cDepthStencilAttachmentInfo.stencilLoadOp = wgpu::LoadOp::Clear;
+    renderPassDescriptor.cDepthStencilAttachmentInfo.stencilStoreOp = wgpu::StoreOp::Discard;
+
+    {
+        renderPassDescriptor.cDepthStencilAttachmentInfo.depthLoadOp = wgpu::LoadOp::Clear;
+        renderPassDescriptor.cDepthStencilAttachmentInfo.depthStoreOp = wgpu::StoreOp::Discard;
+        AssertBeginRenderPassSuccess(&renderPassDescriptor);
+    }
+    {
+        renderPassDescriptor.cDepthStencilAttachmentInfo.depthLoadOp = wgpu::LoadOp::Load;
+        renderPassDescriptor.cDepthStencilAttachmentInfo.depthStoreOp = wgpu::StoreOp::Discard;
+        AssertBeginRenderPassError(&renderPassDescriptor);
+    }
+    {
+        renderPassDescriptor.cDepthStencilAttachmentInfo.depthLoadOp = wgpu::LoadOp::Clear;
+        renderPassDescriptor.cDepthStencilAttachmentInfo.depthStoreOp = wgpu::StoreOp::Store;
+        AssertBeginRenderPassError(&renderPassDescriptor);
+    }
+}
+
+// Test stencil attachment load and store ops with transient attachments.
+TEST_F(TransientAttachmentRenderPassDescriptorValidationTest, StencilAttachment) {
+    wgpu::Texture texture =
+        CreateTexture(wgpu::TextureUsage::RenderAttachment, wgpu::TextureFormat::RGBA8Unorm);
+    wgpu::Texture depthStencilTransientTexture = CreateTexture(
+        wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TransientAttachment,
+        wgpu::TextureFormat::Depth24PlusStencil8);
+    utils::ComboRenderPassDescriptor renderPassDescriptor(
+        {texture.CreateView()}, depthStencilTransientTexture.CreateView());
+
+    renderPassDescriptor.cDepthStencilAttachmentInfo.depthLoadOp = wgpu::LoadOp::Clear;
+    renderPassDescriptor.cDepthStencilAttachmentInfo.depthStoreOp = wgpu::StoreOp::Discard;
+
+    {
+        renderPassDescriptor.cDepthStencilAttachmentInfo.stencilLoadOp = wgpu::LoadOp::Clear;
+        renderPassDescriptor.cDepthStencilAttachmentInfo.stencilStoreOp = wgpu::StoreOp::Discard;
+        AssertBeginRenderPassSuccess(&renderPassDescriptor);
+    }
+    {
+        renderPassDescriptor.cDepthStencilAttachmentInfo.stencilLoadOp = wgpu::LoadOp::Load;
+        renderPassDescriptor.cDepthStencilAttachmentInfo.stencilStoreOp = wgpu::StoreOp::Discard;
+        AssertBeginRenderPassError(&renderPassDescriptor);
+    }
+    {
+        renderPassDescriptor.cDepthStencilAttachmentInfo.stencilLoadOp = wgpu::LoadOp::Clear;
+        renderPassDescriptor.cDepthStencilAttachmentInfo.stencilStoreOp = wgpu::StoreOp::Store;
+        AssertBeginRenderPassError(&renderPassDescriptor);
+    }
+}
+
 }  // anonymous namespace
 }  // namespace dawn
