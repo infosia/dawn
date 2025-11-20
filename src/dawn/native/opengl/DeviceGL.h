@@ -59,9 +59,10 @@ class GLLock {
     GLLock(const Device* device, const OpenGLFunctions& gl, bool makeCurrent);
     ~GLLock();
     const OpenGLFunctions& gl;
+
   private:
     const Device* mDevice;
-    bool          mMakeCurrent;
+    bool mMakeCurrent;
 };
 
 class Device final : public DeviceBase {
@@ -223,11 +224,11 @@ class Device final : public DeviceBase {
 #if DAWN_PLATFORM_IS(ANDROID)
     std::unique_ptr<AHBFunctions> mAHBFunctions;
 #endif  // DAWN_PLATFORM_IS(ANDROID)
-    mutable std::mutex  mGLMutex;
-    mutable uint32_t    mGLLockCount = 0u;
-    mutable EGLContext  mPrevContext = EGL_NO_CONTEXT;
-    mutable EGLSurface  mPrevDrawSurface = EGL_NO_SURFACE;
-    mutable EGLSurface  mPrevReadSurface = EGL_NO_SURFACE;
+    mutable std::mutex mGLMutex;
+    mutable uint32_t mGLLockCount = 0u;
+    mutable EGLContext mPrevContext = EGL_NO_CONTEXT;
+    mutable EGLSurface mPrevDrawSurface = EGL_NO_SURFACE;
+    mutable EGLSurface mPrevReadSurface = EGL_NO_SURFACE;
 };
 
 }  // namespace dawn::native::opengl
