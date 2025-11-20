@@ -393,9 +393,7 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingEGLImageImpl(
     // TODO(451928481): We cannot defer the GL work here because the external texture may be
     // deleted after this method returns. In the future, we should deprecate this method and
     // require clients to use SharedTextureMemory for better lifetime management.
-    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
-    DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
-    auto lock = GetGL(/*makeCurrent=*/false);
+    auto lock = GetGL(true);
     const OpenGLFunctions& gl = lock.gl;
 
     TextureDescriptor reifiedDescriptor =
@@ -435,8 +433,6 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingEGLImageImpl(
     result->SetIsSubresourceContentInitialized(descriptor->isInitialized,
                                                result->GetAllSubresources());
 
-    DAWN_TRY(scopedCurrentContext.End());
-
     return result;
 }
 
@@ -456,9 +452,7 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingGLTextureImpl(
     // TODO(451928481): We cannot defer the GL work here because the external texture may be
     // deleted after this method returns. In the future, we should deprecate this method and
     // require clients to use SharedTextureMemory for better lifetime management.
-    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
-    DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
-    auto lock = GetGL(/*makeCurrent=*/false);
+    auto lock = GetGL(true);
     const OpenGLFunctions& gl = lock.gl;
 
     TextureDescriptor reifiedDescriptor =
@@ -489,8 +483,6 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingGLTextureImpl(
     result->SetIsSubresourceContentInitialized(descriptor->isInitialized,
                                                result->GetAllSubresources());
 
-    DAWN_TRY(scopedCurrentContext.End());
-
     return result;
 }
 
@@ -507,14 +499,12 @@ MaybeError Device::ExecutePendingGLWork() {
         return {};
     }
 
-    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
-    DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
-    auto lock = GetGL(/*makeCurrent=*/false);
+    auto lock = GetGL(true);
     const OpenGLFunctions& gl = lock.gl;
     for (auto& work : workList) {
         DAWN_TRY(work(gl));
     }
-    return scopedCurrentContext.End();
+    return {};
 }
 
 MaybeError Device::CopyFromStagingToBuffer(BufferBase* source,
@@ -598,9 +588,9 @@ void Device::UnlockGL(bool makeCurrent) const {
     --mGLLockCount;
     if (mGLLockCount == 0) {
         if (makeCurrent) {
-            auto display = ToBackend(GetPhysicalDevice())->GetDisplay();
-            display->egl.MakeCurrent(display->GetDisplay(), EGL_NO_SURFACE, EGL_NO_SURFACE,
-                                     EGL_NO_CONTEXT);
+//            auto display = ToBackend(GetPhysicalDevice())->GetDisplay();
+//            display->egl.MakeCurrent(display->GetDisplay(), EGL_NO_SURFACE, EGL_NO_SURFACE,
+//                                     EGL_NO_CONTEXT);
         }
         mGLMutex.unlock();
     }

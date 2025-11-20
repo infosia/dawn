@@ -224,7 +224,7 @@ class Device final : public DeviceBase {
     std::unique_ptr<AHBFunctions> mAHBFunctions;
 #endif  // DAWN_PLATFORM_IS(ANDROID)
     mutable std::mutex mGLMutex;
-    mutable uint32_t   mGLLockCount;
+    mutable uint32_t   mGLLockCount = 0u;
 };
 
 }  // namespace dawn::native::opengl

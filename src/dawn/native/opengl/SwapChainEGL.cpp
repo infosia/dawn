@@ -57,6 +57,7 @@ SwapChainEGL::~SwapChainEGL() = default;
 
 MaybeError SwapChainEGL::Initialize(SwapChainBase* previousSwapChain) {
     const Device* device = ToBackend(GetDevice());
+    auto lock = device->GetGL();
 
     if (previousSwapChain != nullptr) {
         // TODO(crbug.com/dawn/269): figure out what should happen when surfaces are used by
