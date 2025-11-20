@@ -423,6 +423,34 @@ ResultOrError<wgpu::QuerySet> CreateQuerySet(const Replay& replay,
 }
 
 template <typename T>
+ResultOrError<bool> ProcessDebugCommands(T pass,
+                                         schema::CommandBufferCommand cmd,
+                                         ReadHead& readHead) {
+    switch (cmd) {
+        case schema::CommandBufferCommand::PushDebugGroup: {
+            schema::CommandBufferCommandPushDebugGroupCmdData data;
+            DAWN_TRY(Deserialize(readHead, &data));
+            pass.PushDebugGroup(wgpu::StringView(data.groupLabel));
+            break;
+        }
+        case schema::CommandBufferCommand::InsertDebugMarker: {
+            schema::CommandBufferCommandInsertDebugMarkerCmdData data;
+            DAWN_TRY(Deserialize(readHead, &data));
+            pass.InsertDebugMarker(wgpu::StringView(data.markerLabel));
+            break;
+        }
+        case schema::CommandBufferCommand::PopDebugGroup: {
+            // PopDebugGroup has no data
+            pass.PopDebugGroup();
+            break;
+        }
+        default:
+            return {false};
+    }
+    return {true};
+}
+
+template <typename T>
 MaybeError ProcessRenderCommand(const Replay& replay,
                                 ReadHead& readHead,
                                 wgpu::Device device,
@@ -455,8 +483,14 @@ MaybeError ProcessRenderCommand(const Replay& replay,
             pass.Draw(data.vertexCount, data.instanceCount, data.firstVertex, data.firstInstance);
             break;
         }
-        default:
-            return DAWN_INTERNAL_ERROR("Render Pass/Bundle Command not implemented");
+        default: {
+            bool cmdProcessed;
+            DAWN_TRY_ASSIGN(cmdProcessed, ProcessDebugCommands(pass, cmd, readHead));
+            if (!cmdProcessed) {
+                return DAWN_INTERNAL_ERROR("Render Pass/Bundle Command not implemented");
+            }
+            break;
+        }
     }
     return {};
 }
@@ -729,8 +763,14 @@ MaybeError ProcessComputePassCommands(const Replay& replay,
                 pass.DispatchWorkgroups(data.x, data.y, data.z);
                 break;
             }
-            default:
-                return DAWN_INTERNAL_ERROR("Compute Pass Command not implemented");
+            default: {
+                bool cmdProcessed;
+                DAWN_TRY_ASSIGN(cmdProcessed, ProcessDebugCommands(pass, cmd, readHead));
+                if (!cmdProcessed) {
+                    return DAWN_INTERNAL_ERROR("Compute Pass Command not implemented");
+                }
+                break;
+            }
         }
     }
     return DAWN_INTERNAL_ERROR("Missing ComputePass End command");
@@ -892,8 +932,14 @@ MaybeError ProcessEncoderCommands(const Replay& replay,
                                         data.destinationOffset);
                 break;
             }
-            default:
-                return DAWN_INTERNAL_ERROR("Encoder Command not implemented");
+            default: {
+                bool cmdProcessed;
+                DAWN_TRY_ASSIGN(cmdProcessed, ProcessDebugCommands(encoder, cmd, readHead));
+                if (!cmdProcessed) {
+                    return DAWN_INTERNAL_ERROR("Encoder Command not implemented");
+                }
+                break;
+            }
         }
     }
     return DAWN_INTERNAL_ERROR("Missing End command");

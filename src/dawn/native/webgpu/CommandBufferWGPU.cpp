@@ -441,13 +441,12 @@ MaybeError GatherReferencedResourcesFromComputePass(CaptureContext& captureConte
             }
                 DAWN_SKIP_COMMAND(Dispatch)
                 DAWN_SKIP_COMMAND(DispatchIndirect)
-                DAWN_SKIP_COMMAND(InsertDebugMarker)
-                DAWN_SKIP_COMMAND(PopDebugGroup)
-                DAWN_SKIP_COMMAND(PushDebugGroup)
                 DAWN_SKIP_COMMAND(WriteTimestamp)
                 DAWN_SKIP_COMMAND(SetImmediates)
             default: {
-                DAWN_CHECK(false);
+                if (!SkipDebugCommand(commands, type)) {
+                    return DAWN_UNIMPLEMENTED_ERROR("Unimplemented command");
+                }
                 break;
             }
         }
@@ -535,8 +534,12 @@ MaybeError CaptureComputePass(CaptureContext& captureContext, CommandIterator& c
                 Serialize(captureContext, data);
                 break;
             }
-            default:
-                DAWN_CHECK(false);
+            default: {
+                if (!CaptureDebugCommand(captureContext, commands, type)) {
+                    return DAWN_UNIMPLEMENTED_ERROR("Unimplemented command");
+                }
+                break;
+            }
         }
     }
     return {};
@@ -689,8 +692,12 @@ MaybeError CommandBuffer::AddReferenced(CaptureContext& captureContext) {
                 DAWN_SKIP_COMMAND(CopyBufferToTexture)
                 DAWN_SKIP_COMMAND(CopyTextureToBuffer)
                 DAWN_SKIP_COMMAND(CopyTextureToTexture)
-            default:
-                DAWN_CHECK(false);
+            default: {
+                if (!SkipDebugCommand(commands, type)) {
+                    return DAWN_UNIMPLEMENTED_ERROR("Unimplemented command");
+                }
+                break;
+            }
         }
     }
 
@@ -854,8 +861,12 @@ MaybeError CommandBuffer::CaptureCreationParameters(CaptureContext& captureConte
                 Serialize(captureContext, data);
                 break;
             }
-            default:
-                DAWN_CHECK(false);
+            default: {
+                if (!CaptureDebugCommand(captureContext, commands, type)) {
+                    return DAWN_UNIMPLEMENTED_ERROR("Unimplemented command");
+                }
+                break;
+            }
         }
     }
     Serialize(captureContext, schema::CommandBufferCommand::End);
