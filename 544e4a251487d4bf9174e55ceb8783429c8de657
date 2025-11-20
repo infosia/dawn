@@ -122,6 +122,24 @@
       "parentUuid": "ec39deac_7d4bdef1",
       "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc2f4c4b_9e271806",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-20T17:24:55Z",
+      "side": 1,
+      "message": "Do you realistically think that we\u0027ll add override support for the matrix sizes? That seems extremely unlikely so I\u0027d mildly rather have it on the device, and it can be a shader module compilation error instead of a pipeline error (unless the WGSL WG ruled against that)?\n\nUnfortunately there isn\u0027t a much better way to access the subgroup matrix sizes at the moment. We should probably add a getter on the DeviceBase for that. (eventually all these const getters with no params should really be in a \"Device Properties\" struct).",
+      "parentUuid": "1ce5fa87_6359882b",
+      "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
