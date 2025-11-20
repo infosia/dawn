@@ -2377,20 +2377,22 @@ class RenderPipelineTransientAttachmentValidationTest : public RenderPipelineVal
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         return {wgpu::FeatureName::ShaderF16, wgpu::FeatureName::TransientAttachments};
     }
+
+    wgpu::Texture CreateTexture(wgpu::TextureUsage textureUsage, wgpu::TextureFormat format) {
+        wgpu::TextureDescriptor textureDescriptor;
+        textureDescriptor.usage = textureUsage;
+        textureDescriptor.format = format;
+        textureDescriptor.size.width = 4;
+        textureDescriptor.size.height = 4;
+        return device.CreateTexture(&textureDescriptor);
+    }
 };
 
 // Test case where creation should succeed.
 TEST_F(RenderPipelineTransientAttachmentValidationTest, CreationSuccess) {
-    constexpr wgpu::TextureFormat kColorFormat = wgpu::TextureFormat::RGBA8Unorm;
-
-    wgpu::TextureDescriptor textureDescriptor;
-    textureDescriptor.usage =
-        wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TransientAttachment;
-    textureDescriptor.format = kColorFormat;
-    textureDescriptor.size.width = 4;
-    textureDescriptor.size.height = 4;
-
-    wgpu::Texture transientTexture = device.CreateTexture(&textureDescriptor);
+    wgpu::Texture transientTexture = CreateTexture(
+        wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TransientAttachment,
+        wgpu::TextureFormat::RGBA8Unorm);
     utils::ComboRenderPassDescriptor renderPassDescriptor({transientTexture.CreateView()});
 
     // Set load and store ops to supported values with transient attachments.
@@ -2414,16 +2416,9 @@ TEST_F(RenderPipelineTransientAttachmentValidationTest, CreationSuccess) {
 // Creation of a pipeline that stores into a transient attachment should cause
 // an error.
 TEST_F(RenderPipelineTransientAttachmentValidationTest, StoreCausesError) {
-    constexpr wgpu::TextureFormat kColorFormat = wgpu::TextureFormat::RGBA8Unorm;
-
-    wgpu::TextureDescriptor textureDescriptor;
-    textureDescriptor.usage =
-        wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TransientAttachment;
-    textureDescriptor.format = kColorFormat;
-    textureDescriptor.size.width = 4;
-    textureDescriptor.size.height = 4;
-
-    wgpu::Texture transientTexture = device.CreateTexture(&textureDescriptor);
+    wgpu::Texture transientTexture = CreateTexture(
+        wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TransientAttachment,
+        wgpu::TextureFormat::RGBA8Unorm);
     utils::ComboRenderPassDescriptor renderPassDescriptor({transientTexture.CreateView()});
 
     renderPassDescriptor.cColorAttachments[0].storeOp = wgpu::StoreOp::Store;
@@ -2446,16 +2441,9 @@ TEST_F(RenderPipelineTransientAttachmentValidationTest, StoreCausesError) {
 // Creation of a pipeline that loads from a transient attachment should cause
 // an error.
 TEST_F(RenderPipelineTransientAttachmentValidationTest, LoadCausesError) {
-    constexpr wgpu::TextureFormat kColorFormat = wgpu::TextureFormat::RGBA8Unorm;
-
-    wgpu::TextureDescriptor textureDescriptor;
-    textureDescriptor.usage =
-        wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TransientAttachment;
-    textureDescriptor.format = kColorFormat;
-    textureDescriptor.size.width = 4;
-    textureDescriptor.size.height = 4;
-
-    wgpu::Texture transientTexture = device.CreateTexture(&textureDescriptor);
+    wgpu::Texture transientTexture = CreateTexture(
+        wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TransientAttachment,
+        wgpu::TextureFormat::RGBA8Unorm);
     utils::ComboRenderPassDescriptor renderPassDescriptor({transientTexture.CreateView()});
 
     renderPassDescriptor.cColorAttachments[0].storeOp = wgpu::StoreOp::Discard;
@@ -2473,6 +2461,132 @@ TEST_F(RenderPipelineTransientAttachmentValidationTest, LoadCausesError) {
     renderPass.End();
 
     ASSERT_DEVICE_ERROR(encoder.Finish());
+}
+
+// Creation of a pipeline that loads from a transient depth attachment should cause
+// an error.
+TEST_F(RenderPipelineTransientAttachmentValidationTest, DepthLoadCausesError) {
+    wgpu::Texture texture =
+        CreateTexture(wgpu::TextureUsage::RenderAttachment, wgpu::TextureFormat::RGBA8Unorm);
+    wgpu::Texture depthStencilTransientTexture = CreateTexture(
+        wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TransientAttachment,
+        wgpu::TextureFormat::Depth24PlusStencil8);
+    utils::ComboRenderPassDescriptor renderPassDescriptor(
+        {texture.CreateView()}, depthStencilTransientTexture.CreateView());
+
+    renderPassDescriptor.cDepthStencilAttachmentInfo.depthLoadOp = wgpu::LoadOp::Load;
+    renderPassDescriptor.cDepthStencilAttachmentInfo.depthStoreOp = wgpu::StoreOp::Discard;
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::RenderPassEncoder renderPass = encoder.BeginRenderPass(&renderPassDescriptor);
+
+    utils::ComboRenderPipelineDescriptor pipelineDescriptor;
+    pipelineDescriptor.vertex.module = vsModule;
+    pipelineDescriptor.cFragment.module = fsModule;
+    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pipelineDescriptor);
+
+    renderPass.SetPipeline(pipeline);
+    renderPass.End();
+
+    ASSERT_DEVICE_ERROR(
+        encoder.Finish(),
+        testing::HasSubstr("depthLoadOp (LoadOp::Load) must be set to LoadOp::Clear"));
+}
+
+// Creation of a pipeline that stores from a transient depth attachment should cause
+// an error.
+TEST_F(RenderPipelineTransientAttachmentValidationTest, DepthStoreCausesError) {
+    wgpu::Texture texture =
+        CreateTexture(wgpu::TextureUsage::RenderAttachment, wgpu::TextureFormat::RGBA8Unorm);
+    wgpu::Texture depthStencilTransientTexture = CreateTexture(
+        wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TransientAttachment,
+        wgpu::TextureFormat::Depth24PlusStencil8);
+    utils::ComboRenderPassDescriptor renderPassDescriptor(
+        {texture.CreateView()}, depthStencilTransientTexture.CreateView());
+
+    renderPassDescriptor.cDepthStencilAttachmentInfo.depthLoadOp = wgpu::LoadOp::Clear;
+    renderPassDescriptor.cDepthStencilAttachmentInfo.depthStoreOp = wgpu::StoreOp::Store;
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::RenderPassEncoder renderPass = encoder.BeginRenderPass(&renderPassDescriptor);
+
+    utils::ComboRenderPipelineDescriptor pipelineDescriptor;
+    pipelineDescriptor.vertex.module = vsModule;
+    pipelineDescriptor.cFragment.module = fsModule;
+    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pipelineDescriptor);
+
+    renderPass.SetPipeline(pipeline);
+    renderPass.End();
+
+    ASSERT_DEVICE_ERROR(
+        encoder.Finish(),
+        testing::HasSubstr("depthStoreOp (StoreOp::Store) must be set to StoreOp::Discard"));
+}
+
+// Creation of a pipeline that loads from a transient stencil attachment should cause
+// an error.
+TEST_F(RenderPipelineTransientAttachmentValidationTest, StencilLoadCausesError) {
+    wgpu::Texture texture =
+        CreateTexture(wgpu::TextureUsage::RenderAttachment, wgpu::TextureFormat::RGBA8Unorm);
+    wgpu::Texture depthStencilTransientTexture = CreateTexture(
+        wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TransientAttachment,
+        wgpu::TextureFormat::Depth24PlusStencil8);
+    utils::ComboRenderPassDescriptor renderPassDescriptor(
+        {texture.CreateView()}, depthStencilTransientTexture.CreateView());
+
+    renderPassDescriptor.cDepthStencilAttachmentInfo.depthLoadOp = wgpu::LoadOp::Clear;
+    renderPassDescriptor.cDepthStencilAttachmentInfo.depthStoreOp = wgpu::StoreOp::Discard;
+
+    renderPassDescriptor.cDepthStencilAttachmentInfo.stencilLoadOp = wgpu::LoadOp::Load;
+    renderPassDescriptor.cDepthStencilAttachmentInfo.stencilStoreOp = wgpu::StoreOp::Discard;
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::RenderPassEncoder renderPass = encoder.BeginRenderPass(&renderPassDescriptor);
+
+    utils::ComboRenderPipelineDescriptor pipelineDescriptor;
+    pipelineDescriptor.vertex.module = vsModule;
+    pipelineDescriptor.cFragment.module = fsModule;
+    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pipelineDescriptor);
+
+    renderPass.SetPipeline(pipeline);
+    renderPass.End();
+
+    ASSERT_DEVICE_ERROR(
+        encoder.Finish(),
+        testing::HasSubstr("stencilLoadOp (LoadOp::Load) must be set to LoadOp::Clear"));
+}
+
+// Creation of a pipeline that stores from a transient stencil attachment should cause
+// an error.
+TEST_F(RenderPipelineTransientAttachmentValidationTest, StencilStoreCausesError) {
+    wgpu::Texture texture =
+        CreateTexture(wgpu::TextureUsage::RenderAttachment, wgpu::TextureFormat::RGBA8Unorm);
+    wgpu::Texture depthStencilTransientTexture = CreateTexture(
+        wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TransientAttachment,
+        wgpu::TextureFormat::Depth24PlusStencil8);
+    utils::ComboRenderPassDescriptor renderPassDescriptor(
+        {texture.CreateView()}, depthStencilTransientTexture.CreateView());
+
+    renderPassDescriptor.cDepthStencilAttachmentInfo.depthLoadOp = wgpu::LoadOp::Clear;
+    renderPassDescriptor.cDepthStencilAttachmentInfo.depthStoreOp = wgpu::StoreOp::Discard;
+
+    renderPassDescriptor.cDepthStencilAttachmentInfo.stencilLoadOp = wgpu::LoadOp::Clear;
+    renderPassDescriptor.cDepthStencilAttachmentInfo.stencilStoreOp = wgpu::StoreOp::Store;
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::RenderPassEncoder renderPass = encoder.BeginRenderPass(&renderPassDescriptor);
+
+    utils::ComboRenderPipelineDescriptor pipelineDescriptor;
+    pipelineDescriptor.vertex.module = vsModule;
+    pipelineDescriptor.cFragment.module = fsModule;
+    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pipelineDescriptor);
+
+    renderPass.SetPipeline(pipeline);
+    renderPass.End();
+
+    ASSERT_DEVICE_ERROR(
+        encoder.Finish(),
+        testing::HasSubstr("stencilStoreOp (StoreOp::Store) must be set to StoreOp::Discard"));
 }
 
 class LoadResolveTexturePipelineDescriptorValidationTest : public RenderPipelineValidationTest {
