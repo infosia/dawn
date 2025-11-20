@@ -757,6 +757,28 @@ MaybeError ValidateRenderPassDepthStencilAttachment(
                         unpacked->stencilLoadOp, unpacked->stencilStoreOp, attachment,
                         unpacked->stencilReadOnly);
     }
+    if (attachment->GetUsage() & wgpu::TextureUsage::TransientAttachment) {
+        DAWN_INVALID_IF(unpacked->depthLoadOp != wgpu::LoadOp::Clear,
+                        "depthLoadOp (%s) must be set to %s if the attachment (%s) usage (%s) "
+                        "has the transient attachment bit set.",
+                        unpacked->depthLoadOp, wgpu::LoadOp::Clear, attachment,
+                        attachment->GetUsage());
+        DAWN_INVALID_IF(unpacked->stencilLoadOp != wgpu::LoadOp::Clear,
+                        "stencilLoadOp (%s) must be set to %s if the attachment (%s) usage (%s) "
+                        "has the transient attachment bit set.",
+                        unpacked->stencilLoadOp, wgpu::LoadOp::Clear, attachment,
+                        attachment->GetUsage());
+        DAWN_INVALID_IF(unpacked->depthStoreOp != wgpu::StoreOp::Discard,
+                        "depthStoreOp (%s) must be set to %s if the attachment (%s) usage (%s) "
+                        "has the transient attachment bit set.",
+                        unpacked->depthStoreOp, wgpu::StoreOp::Discard, attachment,
+                        attachment->GetUsage());
+        DAWN_INVALID_IF(unpacked->stencilStoreOp != wgpu::StoreOp::Discard,
+                        "stencilStoreOp (%s) must be set to %s if the attachment (%s) usage (%s) "
+                        "has the transient attachment bit set.",
+                        unpacked->stencilStoreOp, wgpu::StoreOp::Discard, attachment,
+                        attachment->GetUsage());
+    }
 
     if (unpacked->depthLoadOp == wgpu::LoadOp::Clear &&
         IsSubset(Aspect::Depth, attachment->GetAspects())) {
