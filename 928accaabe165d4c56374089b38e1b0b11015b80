@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ca9a337_84de0def",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-20T15:43:01Z",
+      "side": 1,
+      "message": "I don\u0027t find this useful.\nWDYT about reporting old list of `object_name` vs the new one?\n\nBut frankly, even that won\u0027t be so useful.\nFor git repos, the link is clickable directly, which saves some time.\nBut for GCS and CIPD even if you have the hashes in commit message, it doesn\u0027t really help to understand what changed.\nAnd one can look in DEPS file if they really need to see the hash.\n\nI\u0027d probably just report the list of changed GCS and CIPD entries, but no additional information.",
+      "range": {
+        "startLine": 343,
+        "startChar": 0,
+        "endLine": 348,
+        "endChar": 0
+      },
+      "revId": "928accaabe165d4c56374089b38e1b0b11015b80",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8217bfff_9c0ac403",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-20T15:43:01Z",
+      "side": 1,
+      "message": "Since we shouldn\u0027t have any at the moment, perhaps move this near the end?",
+      "range": {
+        "startLine": 815,
+        "startChar": 32,
+        "endLine": 815,
+        "endChar": 59
+      },
+      "revId": "928accaabe165d4c56374089b38e1b0b11015b80",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9fa99fd_6ee63bdd",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-20T15:43:01Z",
+      "side": 1,
+      "message": "This seems to be most useful, can we move it to the top?",
+      "range": {
+        "startLine": 821,
+        "startChar": 32,
+        "endLine": 821,
+        "endChar": 54
+      },
+      "revId": "928accaabe165d4c56374089b38e1b0b11015b80",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c998892_1405df48",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-20T15:43:01Z",
+      "side": 1,
+      "message": "I don\u0027t see this empty line in https://dawn-review.googlesource.com/c/dawn/+/275214, maybe you need \\n here?",
+      "range": {
+        "startLine": 847,
+        "startChar": 0,
+        "endLine": 847,
+        "endChar": 12
+      },
+      "revId": "928accaabe165d4c56374089b38e1b0b11015b80",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
