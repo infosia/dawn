@@ -85,6 +85,29 @@
       },
       "revId": "b064a449a64bd4f76e4c1d8df2453a46a7758ab9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75adf3cc_fb524b7e",
+        "filename": "infra/config/global/mirrored_chromium_try.star",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-20T16:42:34Z",
+      "side": 1,
+      "message": "I think the intention in https://dawn-review.googlesource.com/c/dawn/+/132272 was to make it available to be manually included on Dawn branch CLs, but I don\u0027t think it was ever used in practice.\nIn M142 and M143 branches I only saw it triggered on Chromium CLs.\nI doubt Dawn devs are aware of its existence.\n\nI think it useful to keep it, though, because the CI bots that it mirrors are also branched, and it would be useful to have a trybot which allows to investigate failures on CI.\nBut please add a comment explaining how this works.",
+      "range": {
+        "startLine": 76,
+        "startChar": 56,
+        "endLine": 76,
+        "endChar": 79
+      },
+      "revId": "b064a449a64bd4f76e4c1d8df2453a46a7758ab9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
