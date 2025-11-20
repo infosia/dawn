@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "c0120a13_e875b887",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-20T15:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e5c544d_c988a64a",
+      "revId": "c3968678b4f8de25f0d49279cc76afe8bddc9b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "6eda7079_7917ddda",
         "filename": "src/dawn/native/vulkan/BufferVk.cpp",
         "patchSetId": 5
@@ -69,6 +87,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "034b59a0_a2f18feb",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-20T15:01:20Z",
+      "side": 1,
+      "message": "Removed comment and added an assert.",
+      "parentUuid": "de046acb_94b81acd",
+      "revId": "c3968678b4f8de25f0d49279cc76afe8bddc9b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c20e20d4_e6a43287",
@@ -82,6 +118,24 @@
       "writtenOn": "2025-11-20T09:44:37Z",
       "side": 1,
       "message": "nit: we could make this templated on the functor type to avoid passing in the absl machinery. The definition would be in BufferVk.cpp and visible to all callsites.",
+      "revId": "c3968678b4f8de25f0d49279cc76afe8bddc9b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7968040_8c174101",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-20T15:01:20Z",
+      "side": 1,
+      "message": "What is your concern with using absl::FunctionRef here exactly? My understanding of absl::FunctionRef is that it exists for this type of situation, eg. you want the caller to provide a function to run as part of function execution and do so in a lightweight and typesafe way. Have you run into problems with FunctionRef in the past?\n\nFWIW it\u0027s possible to make this templated and defined in the source but then pMemoryAndPerformOperation() is a non-member function. It would need an additional parameter to pass in device, hostVisible, lastUsageSerial, memoryAllocation and allocatedSized. I guess could do something with inner class defined in the source file so only the buffer object has to be passed as an extra parameter.",
+      "parentUuid": "c20e20d4_e6a43287",
       "revId": "c3968678b4f8de25f0d49279cc76afe8bddc9b4a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
