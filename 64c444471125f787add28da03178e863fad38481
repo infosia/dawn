@@ -54,6 +54,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f159882b_e0639f72",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-20T17:38:04Z",
+      "side": 1,
+      "message": "[2] nit. We could add an `ASSERT` in this function that `caps !\u003d Cap::None`.",
+      "range": {
+        "startLine": 221,
+        "startChar": 75,
+        "endLine": 221,
+        "endChar": 83
+      },
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "01d68ef6_14ab5758",
         "filename": "src/dawn/native/Format.cpp",
         "patchSetId": 16
@@ -71,6 +94,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "901d52c1_6138f1fd",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-20T17:38:04Z",
+      "side": 1,
+      "message": "This was my idea (see https://dawn-review.googlesource.com/c/dawn/+/271875/comment/eda43eb2_5151c88c/). The main reason I suggested this is because if you look through the code, the only time we ever really need `ExplainUnsupported` is for 1 format for compat mode. And IMO, it\u0027s quite cumbersome to use for feature supported formats.\n\nRight now, a format becomes supported when capabilities are added for it. In order for us to correctly set the unsupported reason though, we need to know which feature added the first capabilities to a format, so I think we need the feature as an argument to `AddCaps` and the `HasFeature` check inside as well.\n\nI do agree, however, that the if-clause helps consolidate blocks for a single feature given that we can\u0027t always do it the updates in a single `AddCaps` call. An alternative would be something like:\n```\n// Float32Blendable\n{\n  AddCaps(...);\n  AddCaps(...);\n}\n```",
+      "parentUuid": "01d68ef6_14ab5758",
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "11fdc607_a64481fa",
         "filename": "src/dawn/native/Format.cpp",
         "patchSetId": 16
@@ -82,6 +123,24 @@
       "writtenOn": "2025-11-20T13:31:54Z",
       "side": 1,
       "message": "There\u0027s no harm in marking a format supported multiple times, so we shouldn\u0027t need that condition.",
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf003471_90dffea6",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-20T17:38:04Z",
+      "side": 1,
+      "message": "Agreed, especially if we do [2], then I think we can just unconditionally set to supported.",
+      "parentUuid": "11fdc607_a64481fa",
       "revId": "64c444471125f787add28da03178e863fad38481",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -111,6 +170,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1e252a0a_455f5489",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-20T17:38:04Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "2198b21c_1b1ed8e2",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 25
+      },
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "97995474_f6fcd4a2",
         "filename": "src/dawn/native/Format.cpp",
         "patchSetId": 16
@@ -122,6 +205,24 @@
       "writtenOn": "2025-11-20T13:31:54Z",
       "side": 1,
       "message": "Other idea: maybe we can mark all formats as supported by default, run through this function that AddCaps and ExplainUnsupported(), then at the end of the function ASSERT that all formats with Caps::None are marked unsupported.",
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2c2e072_488bd397",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-20T17:38:04Z",
+      "side": 1,
+      "message": "If you did it that way, then it would be hard to specify the feature that enables support for the format.",
+      "parentUuid": "97995474_f6fcd4a2",
       "revId": "64c444471125f787add28da03178e863fad38481",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -230,6 +331,24 @@
       "writtenOn": "2025-11-20T13:31:54Z",
       "side": 1,
       "message": "nit: can we have a TODO to later replace all the `supportsX` and `isBlendable/Renderable` with getters that look up in `caps` instead? It would remove the need for `SetFormatFlagsFromCapabilities`.",
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d360125_0a66080b",
+        "filename": "src/dawn/native/Format.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-20T17:38:04Z",
+      "side": 1,
+      "message": "Honestly, if possible, I think it would be better to do that in this change together, given that otherwise it\u0027s fairly confusing for someone looking at it.",
+      "parentUuid": "d81f09cc_ac7bd0dd",
       "revId": "64c444471125f787add28da03178e863fad38481",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
