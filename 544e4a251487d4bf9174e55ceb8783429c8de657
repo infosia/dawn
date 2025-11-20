@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "31458e70_0b1fc33f",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-20T13:39:53Z",
+      "side": 1,
+      "message": "We have https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/generator/templates/dawn/native/api_StreamImpl.cpp;l\u003d122?q\u003dgenerator%2Ftemplates%2Fdawn%2Fnative%2Fapi_StreamImpl.cpp\u0026ss\u003dchromium%2Fchromium%2Fsrc so you can make it also generate code for `SubgroupMatrixConfig`. (I noticed that file with `git grep Stream\\\u003c`) and IMHO we should pass them in https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/ShaderModuleParseRequest.h;drc\u003de9cfa262db36400a579cac3f2720dd51233c8a8e;l\u003d60",
+      "parentUuid": "dbad9940_56a78968",
+      "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f803b99b_8cf860ec",
         "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2025-11-19T21:31:50Z",
       "side": 1,
       "message": "As a first pass, I double looped these to at least get something working. The other option would be to loop over one of them and convert into a `unordered_set` and then do a key lookup instead of a loop. Not sure if it\u0027s worth the effort as I assume these will be a small number of elements?",
+      "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec39deac_7d4bdef1",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-20T13:39:53Z",
+      "side": 1,
+      "message": "The n2 check seems fine because of the low number of elements. Otherwise it should be simple-ish to convert the subgroupMatrixInfo to a tuple and hash that? Maybe?\n\nAlso don\u0027t we want to do this validation on all backends so it would be in the frontend somehow?",
+      "parentUuid": "887d5560_e990a6de",
       "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
