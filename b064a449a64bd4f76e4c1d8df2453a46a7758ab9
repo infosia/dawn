@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ea95934_8212020d",
+        "filename": "infra/config/global/legacy_builders.star",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-20T20:42:10Z",
+      "side": 1,
+      "message": "They\u0027re in separate files for now since I want to migrate things in chunks. When I start moving CQ builders over to the new file, I can see about putting everything in the same section.",
+      "parentUuid": "6c799713_a1b58169",
+      "range": {
+        "startLine": 538,
+        "startChar": 0,
+        "endLine": 544,
+        "endChar": 40
+      },
+      "revId": "b064a449a64bd4f76e4c1d8df2453a46a7758ab9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "31e18dfe_3afec60c",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-11-20T15:59:06Z",
       "side": 1,
       "message": "I think of `mirror` as a Trybot that mirrors a CI bot.\nHere we do not define new builders, we allow existing builders that are defined Chromium-side to be available for Dawn project use (on Dawn CQ or manually triggered).",
+      "range": {
+        "startLine": 28,
+        "startChar": 26,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "b064a449a64bd4f76e4c1d8df2453a46a7758ab9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3fa42a5_7a515b63",
+        "filename": "infra/config/global/mirrored_chromium_try.star",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-20T20:42:10Z",
+      "side": 1,
+      "message": "Updated the file name and comment.",
+      "parentUuid": "31e18dfe_3afec60c",
       "range": {
         "startLine": 28,
         "startChar": 26,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "43dd469c_6553274c",
+        "filename": "infra/config/global/mirrored_chromium_try.star",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-20T20:42:10Z",
+      "side": 1,
+      "message": "Done. I think the Chromium builder used for manual-only should probably be renamed. Currently, it looks very similar to the one used for the CQ, but the intention is that the CQ one runs tests on all Mac/ARM64 configs while the manual-only one is M2-specific.",
+      "parentUuid": "7a61e88e_67c99db1",
+      "range": {
+        "startLine": 73,
+        "startChar": 56,
+        "endLine": 73,
+        "endChar": 83
+      },
+      "revId": "b064a449a64bd4f76e4c1d8df2453a46a7758ab9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "75adf3cc_fb524b7e",
@@ -100,6 +172,30 @@
       "writtenOn": "2025-11-20T16:42:34Z",
       "side": 1,
       "message": "I think the intention in https://dawn-review.googlesource.com/c/dawn/+/132272 was to make it available to be manually included on Dawn branch CLs, but I don\u0027t think it was ever used in practice.\nIn M142 and M143 branches I only saw it triggered on Chromium CLs.\nI doubt Dawn devs are aware of its existence.\n\nI think it useful to keep it, though, because the CI bots that it mirrors are also branched, and it would be useful to have a trybot which allows to investigate failures on CI.\nBut please add a comment explaining how this works.",
+      "range": {
+        "startLine": 76,
+        "startChar": 56,
+        "endLine": 76,
+        "endChar": 79
+      },
+      "revId": "b064a449a64bd4f76e4c1d8df2453a46a7758ab9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07540869_23969aaf",
+        "filename": "infra/config/global/mirrored_chromium_try.star",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-20T20:42:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75adf3cc_fb524b7e",
       "range": {
         "startLine": 76,
         "startChar": 56,
