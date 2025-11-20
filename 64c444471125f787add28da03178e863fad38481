@@ -112,6 +112,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e534a2fa_e60ee20f",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-20T18:13:27Z",
+      "side": 1,
+      "message": "The problem is that right now the code doesn\u0027t differentiate between the AddCaps for the initial support of the texture format and the AddCaps for the additions to formats that may or may not be added by a previous extension.\n\nAlso with Feature::CoreFeatureAndLimits we don\u0027t need to special-case core.\n\nMaybe this?\n\n```\nAddCaps(formats, caps) {\n  for each format\n     if !format.supported {continue}\n     format.caps |\u003d caps\n}\n\nkAlwaysSupported \u003d 0xFFFFFFFF\nInitialCapsAddedBy(feature, formats, caps) {\n   if (feature \u003d\u003d kAlwaysSupported || device-\u003eHas(feature)) {\n       AddCaps(format, caps)\n   } else {\n       for (each format) {format.unsupportedReason\u003d RequiresFeatures(feature)}\n   }\n}\n\n// Set all formats to RequiresFeatures(InvalidEnum)\n\nAddInitialCaps(kAlwaysSupported, ...)\n\nAddIntialCaps(CoreFeatureAndLimits, BGRA8UnormSrgb, ...)\nif (device-\u003eHas(CoreFeatureAndLimits)) {\n   AddCaps ... \n}\n\n// Check no feature has RequiresFeatures(InvalidEnum)\n```\n\nWhat I\u0027m most trying to get is making it very explicit in the code below which feature makes a format supported (or not supported) in the first place. But if there\u0027s no nice way to do it, the current approach is workable.",
+      "parentUuid": "901d52c1_6138f1fd",
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "11fdc607_a64481fa",
         "filename": "src/dawn/native/Format.cpp",
         "patchSetId": 16
@@ -141,6 +159,23 @@
       "side": 1,
       "message": "Agreed, especially if we do [2], then I think we can just unconditionally set to supported.",
       "parentUuid": "11fdc607_a64481fa",
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "917cbe9f_dc8f2780",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-20T18:13:27Z",
+      "side": 1,
+      "message": "This conversion can be done once after we handled adding all the caps.",
       "revId": "64c444471125f787add28da03178e863fad38481",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
