@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a36e2fd1_23814954",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-20T15:15:53Z",
+      "side": 1,
+      "message": "This has been rebased on a different CL now and has lost +2. Otherwise it\u0027s unchanged.",
+      "revId": "0d41a54b08a4f189c965a805afdc0790dc278088",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11ed9861_4b1408e6",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-20T15:15:53Z",
+      "side": 1,
+      "message": "This added CHECK will go away in next CL but it makes sense here for verify nothing is broken.",
+      "range": {
+        "startLine": 566,
+        "startChar": 0,
+        "endLine": 573,
+        "endChar": 35
+      },
+      "revId": "0d41a54b08a4f189c965a805afdc0790dc278088",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
