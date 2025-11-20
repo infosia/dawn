@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc9ea8da_aba26cf1",
+        "filename": "webgpu-cts/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-20T17:59:34Z",
+      "side": 1,
+      "message": "It should be possible (and hopefully pretty trivial) to add compile targets for the tests which build and install this automatically. There is already a target for using `trichrome_chrome_64_32_bundle` https://source.chromium.org/chromium/chromium/src/+/main:tools/perf/chrome_telemetry_build/BUILD.gn;l\u003d164",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 100
+      },
+      "revId": "3eaa8a6c820fd4242435d828b045b31d92f9017c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
