@@ -32,6 +32,7 @@
 #include "partition_alloc/pointers/raw_ptr.h"
 
 #include "absl/container/flat_hash_set.h"
+#include "absl/functional/function_ref.h"
 #include "dawn/common/SerialQueue.h"
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/ResourceMemoryAllocation.h"
@@ -97,6 +98,14 @@ class Buffer final : public BufferBase {
                      uint64_t offset = 0,
                      uint64_t size = 0);
 
+    // Maps buffer memory to perform some operation, eg. initialization or upload. The memory will
+    // be mapped/invalidated if necessary, `op` function will run and then memory will
+    // unmapped/flushed if necessary. The op function receives a span of exactly the requested
+    // size.
+    MaybeError MapMemoryAndPerformOperation(uint64_t requestedOffset,
+                                            size_t requestedSize,
+                                            absl::FunctionRef<void(std::span<uint8_t>)> op);
+
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override;
     MaybeError FinalizeMapImpl(BufferState newState) override;
     void UnmapImpl(BufferState oldState) override;
@@ -123,9 +132,8 @@ class Buffer final : public BufferBase {
     wgpu::BufferUsage mReadUsage = wgpu::BufferUsage::None;
     wgpu::ShaderStage mReadShaderStages = wgpu::ShaderStage::None;
 
-    bool mHostVisible : 1;
-    bool mHostCoherent : 1;
-    bool mHasWriteTransitioned : 1;
+    bool mHostVisible : 1 = false;
+    bool mHostCoherent : 1 = false;
 };
 
 }  // namespace dawn::native::vulkan
