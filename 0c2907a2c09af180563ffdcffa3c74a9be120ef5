@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3174ce6d_2d67b2a0",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-20T09:05:46Z",
+      "side": 1,
+      "message": "We have https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Commands.h;drc\u003df2e4dc6875133290ef670eb022fb62d1d475e40a;l\u003d436 ! I should have remembered earlier when we added `DAWN_SKIP_COMMAND`, sry.",
+      "revId": "0c2907a2c09af180563ffdcffa3c74a9be120ef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f6ced7c_d74e34aa",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-20T09:05:46Z",
+      "side": 1,
+      "message": "nit: WDYT of explicitly listing the commands that go to `CaptureDebugCommand` like so:\n\n\n```suggestion\n\n        case Command::PushDebugGroup:\n        case Command::InsertDebugMarker:\n        case Command::PopDebugGroup:\n            CaptureDebugCommand(captureContext, commands, type); // this can assert only debug commands are passed.\n            break;\n        \n        default:\n             return DAWN_UNIMPLEMENTED_ERROR(\"Unimplemented command\");\n```",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 9
+      },
+      "revId": "0c2907a2c09af180563ffdcffa3c74a9be120ef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc980d71_34ea8858",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-20T09:05:46Z",
+      "side": 1,
+      "message": "nit: Ditto about explicitly listing the cases that go to `ProcessDebugCommands`.",
+      "revId": "0c2907a2c09af180563ffdcffa3c74a9be120ef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
