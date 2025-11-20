@@ -16,6 +16,24 @@
       "message": "I assume we\u0027ll add support for vertex/index/indirect buffers in the future?",
       "revId": "bfb909e2cb66ec00f40ce8e8774459784a7b2593",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9640c237_b99f3750",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-20T08:44:32Z",
+      "side": 1,
+      "message": "yes. In the interest of keeping these CLs as small as possible I didn\u0027t add `DrawIndexed`, `DrawIndirect`, `DrawIndexedIndirect`, `SetIndexBuffer`, `DispatchIndirect` yet. I was kind of hoping Shrek\u0027s work on getting the end2end tests running on top of capture-and-replay would save the time of having to write tests for those. Once it\u0027s possible to do that then adding every detail will be easier as we\u0027ll have a test we need to make pass.\n\nThat said, there is nothing to do in this particular part of the code. Buffers and Textures are already collected and have been since the first few commits. The only things that need to be done for each is (1) define the schema for a specific command (2) write the capture code - that\u0027s not here, it\u0027s in `CaptureRenderCommand` and `CaptureComputePass`, and (3) write the replay code",
+      "parentUuid": "1b56f656_8961ad31",
+      "revId": "bfb909e2cb66ec00f40ce8e8774459784a7b2593",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
