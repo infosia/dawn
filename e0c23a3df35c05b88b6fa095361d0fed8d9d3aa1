@@ -16,6 +16,57 @@
       "message": "PTAL, thanks!",
       "revId": "e0c23a3df35c05b88b6fa095361d0fed8d9d3aa1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "914f1258_8a4dd09b",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-20T09:07:31Z",
+      "side": 1,
+      "message": "Maybe mention that it is just for testing purposes because the comment at [1] sounds like the bit is necessary for the correctness of the subgroup implementation.",
+      "revId": "e0c23a3df35c05b88b6fa095361d0fed8d9d3aa1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0dd935a_de308d29",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-20T09:07:31Z",
+      "side": 1,
+      "message": "```suggestion\n    VulkanDisallowVaryingSubgroupSize,\n```",
+      "revId": "e0c23a3df35c05b88b6fa095361d0fed8d9d3aa1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1764b9a8_d02c440d",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-20T09:07:31Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "e0c23a3df35c05b88b6fa095361d0fed8d9d3aa1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
