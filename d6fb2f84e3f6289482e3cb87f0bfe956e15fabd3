@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32937cf2_e20dc0ae",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-20T15:37:45Z",
+      "side": 1,
+      "message": "This is more readable with newlines",
+      "range": {
+        "startLine": 489,
+        "startChar": 78,
+        "endLine": 489,
+        "endChar": 79
+      },
+      "revId": "d6fb2f84e3f6289482e3cb87f0bfe956e15fabd3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
