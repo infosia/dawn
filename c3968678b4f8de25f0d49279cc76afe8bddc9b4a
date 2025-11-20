@@ -138,6 +138,24 @@
       "parentUuid": "c20e20d4_e6a43287",
       "revId": "c3968678b4f8de25f0d49279cc76afe8bddc9b4a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c611876a_df7c69af",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-20T15:28:30Z",
+      "side": 1,
+      "message": "I meant that absl::FunctionRef is overkill here when we can monomorphize on the two call sites:\n\n```\ntemplate\u003ctypename F\u003e\n   MaybeError MapMemoryAndPerformOperation(uint64_t requestedOffset,\n                                            size_t requestedSize,\n                                            F\u0026\u0026 op);\n```",
+      "parentUuid": "c7968040_8c174101",
+      "revId": "c3968678b4f8de25f0d49279cc76afe8bddc9b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
