@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "75456a1f_a6723b5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-20T20:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdc87143_abfe0bcc",
+      "range": {
+        "startLine": 9,
+        "startChar": 44,
+        "endLine": 9,
+        "endChar": 50
+      },
+      "revId": "917a57b316dff55e2b67a09a6bd7a94936a72aa0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b2834c4f_9ee19338",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4c83e10_b0c87506",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-20T20:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2834c4f_9ee19338",
+      "range": {
+        "startLine": 11,
+        "startChar": 31,
+        "endLine": 11,
+        "endChar": 45
+      },
+      "revId": "917a57b316dff55e2b67a09a6bd7a94936a72aa0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1aac3d29_7ddda522",
@@ -60,6 +108,30 @@
       "writtenOn": "2025-11-20T20:25:35Z",
       "side": 1,
       "message": "nit:\n\n\n\n```suggestion\n        if (mv \u003d\u003d nullptr) {\n            continue;\n        }\n        if (mv-\u003eAddressSpace() \u003d\u003d AddressSpace::kIn ||\n            mv-\u003eAddressSpace() \u003d\u003d AddressSpace::kOut ||\n            mv-\u003eAddressSpace() \u003d\u003d AddressSpace::kHandle) {\n            tasks.Push({var, mv-\u003eStoreType(), var-\u003eAttributes(),\n                        IODirectionFor(mv-\u003eAddressSpace()), ShaderIOKind::kModuleScopeVar});\n        }\n```",
+      "range": {
+        "startLine": 2678,
+        "startChar": 1,
+        "endLine": 2685,
+        "endChar": 9
+      },
+      "revId": "917a57b316dff55e2b67a09a6bd7a94936a72aa0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "142c247f_7e4df18d",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2685,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-20T20:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aac3d29_7ddda522",
       "range": {
         "startLine": 2678,
         "startChar": 1,
