@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff161d59_993c5022",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-20T16:36:53Z",
+      "side": 1,
+      "message": "Ohh, missed that bit of templated magic. Yea, I\u0027d put them in the shader create request previously but failed to get them to stream.\n\nDone.",
+      "parentUuid": "31458e70_0b1fc33f",
+      "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f803b99b_8cf860ec",
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "The n2 check seems fine because of the low number of elements. Otherwise it should be simple-ish to convert the subgroupMatrixInfo to a tuple and hash that? Maybe?\n\nAlso don\u0027t we want to do this validation on all backends so it would be in the frontend somehow?",
       "parentUuid": "887d5560_e990a6de",
+      "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ce5fa87_6359882b",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-20T16:36:53Z",
+      "side": 1,
+      "message": "There was discussion around making the matrix allow override-params which means it couldn\u0027t be done before backend gen. We\u0027ve currently decided to make it const-expression, but it could be expanded in the future to override-expression.\n\nThis matches what we do for WorkgroupInfo which currently allows override check.\n\nThe MSL backend doesn\u0027t need this because we validate it directly in the MSL generator because it can only be f32/f16 and 8x8. So reject it immediately as we don\u0027t want to emit invalid MSL.\n\nHLSL doesn\u0027t support subgroup matrix at this point ... we\u0027ll do something similar when it is supported.\n\nI did move the validation logic to ShaderModule.{h|cpp} to make sharing easier (and cleanup this method)",
+      "parentUuid": "ec39deac_7d4bdef1",
       "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

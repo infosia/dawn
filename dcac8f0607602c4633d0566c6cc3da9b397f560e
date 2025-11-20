@@ -33,6 +33,24 @@
       "message": "wgpu types should have absl formatters alraedy generated in https://source.chromium.org/chromium/chromium/src/+/main:out/mac-Debug/gen/third_party/dawn/src/dawn/native/webgpu_absl_format_autogen.h?q\u003d%22dawn%2Fnative%2Fwebgpu_absl_format_autogen.h%22\u0026ss\u003dchromium%2Fchromium%2Fsrc included from https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/webgpu_absl_format.h",
       "revId": "dcac8f0607602c4633d0566c6cc3da9b397f560e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2450685a_eb160a11",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-20T16:36:53Z",
+      "side": 1,
+      "message": "These need to print off the Tint type, not the WGPU type.",
+      "parentUuid": "bb8f3014_7ca84b07",
+      "revId": "dcac8f0607602c4633d0566c6cc3da9b397f560e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
