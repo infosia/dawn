@@ -577,6 +577,13 @@ void Device::LockGL(bool makeCurrent) const {
     if (mGLLockCount == 0) {
         mGLMutex.lock();
         if (makeCurrent) {
+            auto display = ToBackend(GetPhysicalDevice())->GetDisplay();
+            mPrevContext = display->egl.GetCurrentContext();
+            mPrevReadSurface = display->egl.GetCurrentSurface(EGL_READ);
+            mPrevDrawSurface = display->egl.GetCurrentSurface(EGL_DRAW);
+            DAWN_ASSERT(mPrevDrawSurface == EGL_NO_SURFACE);
+            DAWN_ASSERT(mPrevReadSurface == EGL_NO_SURFACE);
+            DAWN_ASSERT(mPrevContext == EGL_NO_CONTEXT);
             mContext->DeprecatedMakeCurrent();
         }
         ToBackend(GetQueue())->OnGLUsed();
@@ -588,9 +595,8 @@ void Device::UnlockGL(bool makeCurrent) const {
     --mGLLockCount;
     if (mGLLockCount == 0) {
         if (makeCurrent) {
-//            auto display = ToBackend(GetPhysicalDevice())->GetDisplay();
-//            display->egl.MakeCurrent(display->GetDisplay(), EGL_NO_SURFACE, EGL_NO_SURFACE,
-//                                     EGL_NO_CONTEXT);
+            auto display = ToBackend(GetPhysicalDevice())->GetDisplay();
+            display->egl.MakeCurrent(display->GetDisplay(), mPrevDrawSurface, mPrevReadSurface, mPrevContext);
         }
         mGLMutex.unlock();
     }
