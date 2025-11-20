@@ -715,6 +715,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Enables RenderDoc process injection. If RenderDoc is used to inject into the GPU process, "
       "send RenderDoc frame capture info.",
       "https://crbug.com/449708316", ToggleStage::Device}},
+    {Toggle::VulkanUnsetAllowVaryingSubgroupSizeBit,
+     {"vulkan_unset_allow_varying_subgroup_size_bit",
+      "Never set VK_PIPELINE_SHADER_STAGE_CREATE_ALLOW_VARYING_SUBGROUP_SIZE_BIT when creating"
+      "compute pipeline on Vulkan backend as using this flag may cause performance issues on some"
+      "platforms.",
+      "https://crbug.com/410595996", ToggleStage::Device}},
     {Toggle::WaitIsThreadSafe,
      {"wait_is_thread_safe",
       "WaitFor* functions are thread-safe and can be called without the device-lock if implicit "
