@@ -140,6 +140,24 @@
       "parentUuid": "1ce5fa87_6359882b",
       "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f263949e_e93906e1",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-20T18:25:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure, @jrprice thoughts on this? I\u0027m happy to open an issue on the gpuweb tracker to ask the question if we can push the validation forward on this one.",
+      "parentUuid": "dc2f4c4b_9e271806",
+      "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

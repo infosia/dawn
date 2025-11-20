@@ -56,6 +56,24 @@
       "message": "These seem no longer needed.",
       "revId": "b6b9570fd62bc6fcb791e73007863073acfe2391",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82e39244_c15cbf8a",
+        "filename": "src/tint/api/common/subgroup_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-20T18:25:54Z",
+      "side": 1,
+      "message": "Techincally no, but we do usually add these to all our interface things, so no harm in keeping I think.",
+      "parentUuid": "f270a9c9_c75887d2",
+      "revId": "b6b9570fd62bc6fcb791e73007863073acfe2391",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
