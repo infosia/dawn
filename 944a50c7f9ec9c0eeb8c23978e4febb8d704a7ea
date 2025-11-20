@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f7e65c4_fc5a02f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-20T15:41:05Z",
+      "side": 1,
+      "message": "Adding you as a reviewer as an experiment. \nThis is WIP;  I want to know if it shows up in your attention list at all: either through a notification or in your Gerrit dashboard.",
+      "revId": "944a50c7f9ec9c0eeb8c23978e4febb8d704a7ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
