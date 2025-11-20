@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e5c544d_c988a64a",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-20T09:44:37Z",
+      "side": 1,
+      "message": "nit: it might be nice to early out on the simple case where this condition is false\n\n```\nif (isInUse || hasPendingWrites || !mHostVisible) {\n    return BufferBase::UploadData(bufferOffset, data, size);\n}\n```",
+      "revId": "c3968678b4f8de25f0d49279cc76afe8bddc9b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "6eda7079_7917ddda",
@@ -48,6 +65,23 @@
       "writtenOn": "2025-11-19T21:47:12Z",
       "side": 1,
       "message": "Comment was copied from previous location but doesn\u0027t make sense here. Haven\u0027t necessarily verified that buffer is not in use. Would make sense to add a CHECK for that, though.",
+      "revId": "c3968678b4f8de25f0d49279cc76afe8bddc9b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c20e20d4_e6a43287",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-20T09:44:37Z",
+      "side": 1,
+      "message": "nit: we could make this templated on the functor type to avoid passing in the absl machinery. The definition would be in BufferVk.cpp and visible to all callsites.",
       "revId": "c3968678b4f8de25f0d49279cc76afe8bddc9b4a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
