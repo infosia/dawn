@@ -30,6 +30,8 @@
 
 #include <vector>
 
+#include "src/tint/utils/reflection.h"
+
 namespace tint {
 
 enum class SubgroupMatrixType : uint8_t {
@@ -40,6 +42,7 @@ enum class SubgroupMatrixType : uint8_t {
     kU32,
     kI32,
 };
+TINT_REFLECT_ENUM_RANGE(tint::SubgroupMatrixType, kF16, kI32);
 
 struct SubgroupMatrixMultiply {
     uint32_t M;
@@ -49,16 +52,16 @@ struct SubgroupMatrixMultiply {
     SubgroupMatrixType input_type;
     SubgroupMatrixType output_type;
 
-    bool operator==(const SubgroupMatrixMultiply& o) const {
-        return M == o.M && N == o.N && K == o.K && input_type == o.input_type &&
-               output_type == o.output_type;
-    }
+    TINT_REFLECT(SubgroupMatrixMultiply, M, N, K, input_type, output_type);
+    TINT_REFLECT_EQUALS(SubgroupMatrixMultiply);
+    TINT_REFLECT_HASH_CODE(SubgroupMatrixMultiply);
 };
 
 enum class SubgroupMatrixDirection : uint8_t {
     kInput,
     kResult,
 };
+TINT_REFLECT_ENUM_RANGE(tint::SubgroupMatrixDirection, kInput, kResult);
 
 struct SubgroupMatrixConfig {
     uint32_t columns;
@@ -66,14 +69,18 @@ struct SubgroupMatrixConfig {
     SubgroupMatrixType type;
     SubgroupMatrixDirection direction;
 
-    bool operator==(const SubgroupMatrixConfig& o) const {
-        return columns == o.columns && rows == o.rows && type == o.type && direction == o.direction;
-    }
+    TINT_REFLECT(SubgroupMatrixConfig, columns, rows, type, direction);
+    TINT_REFLECT_EQUALS(SubgroupMatrixConfig);
+    TINT_REFLECT_HASH_CODE(SubgroupMatrixConfig);
 };
 
 struct SubgroupMatrixInfo {
     std::vector<SubgroupMatrixMultiply> multiplies;
     std::vector<SubgroupMatrixConfig> configs;
+
+    TINT_REFLECT(SubgroupMatrixInfo, multiplies, configs);
+    TINT_REFLECT_EQUALS(SubgroupMatrixInfo);
+    TINT_REFLECT_HASH_CODE(SubgroupMatrixInfo);
 };
 
 }  // namespace tint
