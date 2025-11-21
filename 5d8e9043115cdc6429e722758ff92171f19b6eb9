@@ -16,6 +16,91 @@
       "message": "Please take a look, thanks!\nThe latest patchset now make E2E tests handle possible device creation failure instead of asserting it succeed, and if device creation failed, only skip the test on D3D12 backend with `UseDXC` disabled, otherwise the tests are treated as failed.",
       "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64bc0d39_4082570c",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-21T09:36:17Z",
+      "side": 1,
+      "message": "This change is no longer needed.",
+      "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0abb20fd_a860fcf9",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-21T09:36:17Z",
+      "side": 1,
+      "message": "Maybe add \"This is to avoid expensive loading of DLLs that we will not use immediately (or at all).\"",
+      "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a577606_16c05cc3",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1292,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-21T09:36:17Z",
+      "side": 1,
+      "message": "```suggestion\n    // Allow the mock to notice failure to create the device as that case is handled explicitly later during initialization of the fixture.\n```",
+      "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd9e52ef_5295713f",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-21T09:36:17Z",
+      "side": 1,
+      "message": "nit: this could be an early out instead.",
+      "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50c261bb_f1ddc427",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-21T09:36:17Z",
+      "side": 1,
+      "message": "Could we separate this logic to its own function to avoid doing too much logic at the top level SetUp?\n\n```\nif (device \u003d\u003d nullptr) {\n    HandleDeviceCreationFailure();\n    ASSERT(gtest status is skipped or error) // I believe there is an API to do this\n    return;\n}\n```\n\nAnd it would be nice to make the logic a bit more general, maybe with a list of toggles to check and the reason of why it does a skip? Or at least a TODO to do expand when we add more reasons to make device creation failure a skip.",
+      "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
