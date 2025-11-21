@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b387edc9_e135f083",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-21T11:05:13Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "00ae80df36963ca9417082abfd4622a49ccddbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b312f1b_b7ec5b47",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-21T11:05:13Z",
+      "side": 1,
+      "message": "Maybe I\u0027m missing something but why do we need to do the static cast to the base type here and why can\u0027t GetLabel be called in `CaptureSetLabel` (either on the CaptureContext or the Device)?\n\nRemoving both would make the function\u0027s body even simple and IMHO remove the need to have a macro for this.",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 5
+      },
+      "revId": "00ae80df36963ca9417082abfd4622a49ccddbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bcfc554_9a2e5176",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-21T11:05:13Z",
+      "side": 1,
+      "message": "They still have SetLabel so maybe we can support it in the capture/replay? Eventually in Dawn we should have support in some object to track all the labels that are used to refer to them.",
+      "revId": "00ae80df36963ca9417082abfd4622a49ccddbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
