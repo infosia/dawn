@@ -69,7 +69,7 @@ struct State {
                 continue;
             }
             auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
-            if (ptr->AddressSpace() != core::AddressSpace::kImmediate) {
+            if (!ptr || ptr->AddressSpace() != core::AddressSpace::kImmediate) {
                 continue;
             }
 
