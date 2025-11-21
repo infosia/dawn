@@ -235,8 +235,8 @@ MaybeError RecordCopyTextureWithTemporaryBuffer(CommandRecordingContext* recordi
     BufferCopy bufferCopy;
     bufferCopy.buffer = tempBuffer;
     bufferCopy.offset = 0;
-    bufferCopy.bytesPerRow = bytesPerRow;
-    bufferCopy.rowsPerImage = rowsPerImage;
+    bufferCopy.blocksPerRow = blockInfo.BytesToBlocks(bytesPerRow);
+    bufferCopy.rowsPerImage = BlockCount{rowsPerImage};
 
     // Copy from source texture into tempBuffer
     tempBuffer->TrackUsageAndTransitionNow(recordingContext, wgpu::BufferUsage::CopyDst);
@@ -280,9 +280,8 @@ MaybeError RecordBufferTextureCopyWithTemporaryBuffer(CommandRecordingContext* r
     // Create tempBuffer
     // The size of temporary buffer isn't needed to be a multiple of 4 because we don't
     // need to set mappedAtCreation to be true.
-    auto tempBufferSize = ComputeRequiredBytesInCopy(
-        blockInfo.ToTexelBlockInfo(), blockInfo.ToTexel(copySize).ToExtent3D(),
-        bufferCopy.bytesPerRow, bufferCopy.rowsPerImage);
+    auto tempBufferSize = ComputeRequiredBytesInCopy(blockInfo, copySize, bufferCopy.blocksPerRow,
+                                                     bufferCopy.rowsPerImage);
 
     BufferDescriptor tempBufferDescriptor;
     tempBufferDescriptor.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
@@ -298,7 +297,7 @@ MaybeError RecordBufferTextureCopyWithTemporaryBuffer(CommandRecordingContext* r
     BufferCopy tempBufferCopy;
     tempBufferCopy.buffer = tempBuffer;
     tempBufferCopy.offset = 0;
-    tempBufferCopy.bytesPerRow = bufferCopy.bytesPerRow;
+    tempBufferCopy.blocksPerRow = bufferCopy.blocksPerRow;
     tempBufferCopy.rowsPerImage = bufferCopy.rowsPerImage;
 
     tempBuffer->TrackUsageAndTransitionNow(recordingContext, wgpu::BufferUsage::CopyDst);
