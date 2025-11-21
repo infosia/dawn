@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "725aa9a8_77a2b9c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-21T08:41:10Z",
+      "side": 1,
+      "message": "Please take a look, thanks!\nThe latest patchset now make E2E tests handle possible device creation failure instead of asserting it succeed, and if device creation failed, only skip the test on D3D12 backend with `UseDXC` disabled, otherwise the tests are treated as failed.",
+      "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
