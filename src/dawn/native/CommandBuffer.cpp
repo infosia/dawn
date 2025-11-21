@@ -274,28 +274,28 @@ bool IsFullBufferOverwrittenInTextureToBufferCopy(const CopyTextureToBufferCmd* 
                                                         copy->copySize);
 }
 
-bool IsFullBufferOverwrittenInTextureToBufferCopy(const TextureCopy& source,
-                                                  const BufferCopy& destination,
-                                                  const Extent3D& copySize) {
+bool IsFullBufferOverwrittenInTextureToBufferCopy(
+    const TextureCopy& source,
+    const BufferCopy& destination,
+    const Extent3D& copySize_in  // TODO: BlockExtent3D
+) {
     if (destination.offset > 0) {
         // The copy doesn't touch the start of the buffer.
         return false;
     }
 
     const TextureBase* texture = source.texture.Get();
-    const TexelBlockInfo& blockInfo = texture->GetFormat().GetAspectInfo(source.aspect).block;
-    const uint64_t widthInBlocks = copySize.width / blockInfo.width;
-    const uint64_t heightInBlocks = copySize.height / blockInfo.height;
-    const bool multiSlice = copySize.depthOrArrayLayers > 1;
-    const bool multiRow = multiSlice || heightInBlocks > 1;
+    const TypedTexelBlockInfo& blockInfo = texture->GetFormat().GetAspectInfo(source.aspect).block;
+    BlockExtent3D copySize = blockInfo.ToBlock(copySize_in);
+    const bool multiSlice = copySize.depthOrArrayLayers > BlockCount{1};
+    const bool multiRow = multiSlice || copySize.height > BlockCount{1};
 
-    if (multiSlice && destination.rowsPerImage > heightInBlocks) {
+    if (multiSlice && destination.rowsPerImage > copySize.height) {
         // There are gaps between slices that aren't overwritten
         return false;
     }
 
-    const uint64_t copyTextureDataSizePerRow = widthInBlocks * blockInfo.byteSize;
-    if (multiRow && destination.bytesPerRow > copyTextureDataSizePerRow) {
+    if (multiRow && destination.blocksPerRow > copySize.width) {
         // There are gaps between rows that aren't overwritten
         return false;
     }
@@ -303,7 +303,7 @@ bool IsFullBufferOverwrittenInTextureToBufferCopy(const TextureCopy& source,
     // After the above checks, we're sure the copy has no gaps.
     // Now, compute the total number of bytes written.
     const uint64_t writtenBytes =
-        ComputeRequiredBytesInCopy(blockInfo, copySize, destination.bytesPerRow,
+        ComputeRequiredBytesInCopy(blockInfo, copySize, destination.blocksPerRow,
                                    destination.rowsPerImage)
             .AcquireSuccess();
     if (!destination.buffer->IsFullBufferRange(destination.offset, writtenBytes)) {

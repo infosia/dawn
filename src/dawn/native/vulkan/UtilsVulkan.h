@@ -121,10 +121,11 @@ VkImageAspectFlags VulkanAspectMask(const Aspect& aspects);
 
 Extent3D ComputeTextureCopyExtent(const TextureCopy& textureCopy, const Extent3D& copySize);
 
-VkBufferImageCopy ComputeBufferImageCopyRegion(const BufferCopy& bufferCopy,
+VkBufferImageCopy ComputeBufferImageCopyRegion(const TexelCopyBufferLayout& dataLayout,
                                                const TextureCopy& textureCopy,
                                                const Extent3D& copySize);
-VkBufferImageCopy ComputeBufferImageCopyRegion(const TexelCopyBufferLayout& dataLayout,
+// Note: bufferCopy.buffer is ignored
+VkBufferImageCopy ComputeBufferImageCopyRegion(const BufferCopy& bufferCopy,
                                                const TextureCopy& textureCopy,
                                                const Extent3D& copySize);
 
