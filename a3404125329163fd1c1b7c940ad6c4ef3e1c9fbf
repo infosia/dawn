@@ -16,6 +16,47 @@
       "message": "@bajones@chromium.org and @cwallez@chromium.org, PTAL.",
       "revId": "a3404125329163fd1c1b7c940ad6c4ef3e1c9fbf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b92b5b8_8ce40776",
+        "filename": "src/dawn/native/d3d12/BufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-21T14:25:44Z",
+      "side": 1,
+      "message": "Maybe `NULL` instead of `0` and a comment like \"If hEvent is NULL, the call will return when fence is reached\".",
+      "range": {
+        "startLine": 646,
+        "startChar": 68,
+        "endLine": 646,
+        "endChar": 69
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "ea394c12_0575f485",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/d3d12/BufferD3D12.cpp",
+              "range": {
+                "startLine": 646,
+                "startChar": 0,
+                "endLine": 647,
+                "endChar": 0
+              },
+              "replacement": "                // If hEvent is NULL, the call will return when fence is reached.\n                d3dFence-\u003eSetEventOnCompletion(fence.signaledValue, NULL);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a3404125329163fd1c1b7c940ad6c4ef3e1c9fbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
