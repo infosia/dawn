@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b12dc26_9126aa9e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-11-21T22:01:12Z",
+      "side": 1,
+      "message": "LGTM2. Thanks!\n\n(BTW, you can use the RubberStamper for expectations changes.)",
+      "revId": "1ebbbfbfe43aa41f669f76678521e8ad94182baf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
