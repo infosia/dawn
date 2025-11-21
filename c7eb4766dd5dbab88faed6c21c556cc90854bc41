@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08fddd99_92099bee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-11-21T21:57:49Z",
+      "side": 1,
+      "message": "@cwallez@chromium.org and @amaiorano@google.com, my attempt to add RAII handle management to dawn_end2end tests snowballed into a larger change than I had originally anticipated. \n\nPTAL and let me know what you think. There is definitely an opportunity to split the change to minimize risk:\n* Fix double close bug in the SharedTextureMemory test\n* Move SystemHandle from dawn::native to dawn::util\n* Add SystemHandle to existing end2end tests.",
+      "revId": "c7eb4766dd5dbab88faed6c21c556cc90854bc41",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
