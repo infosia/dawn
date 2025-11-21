@@ -159,29 +159,35 @@ Extent3D ComputeTextureCopyExtent(const TextureCopy& textureCopy, const Extent3D
     return validTextureCopyExtent;
 }
 
-VkBufferImageCopy ComputeBufferImageCopyRegion(const BufferCopy& bufferCopy,
+VkBufferImageCopy ComputeBufferImageCopyRegion(const TexelCopyBufferLayout& dataLayout,
                                                const TextureCopy& textureCopy,
                                                const Extent3D& copySize) {
-    TexelCopyBufferLayout passDataLayout;
-    passDataLayout.offset = bufferCopy.offset;
-    passDataLayout.rowsPerImage = bufferCopy.rowsPerImage;
-    passDataLayout.bytesPerRow = bufferCopy.bytesPerRow;
-    return ComputeBufferImageCopyRegion(passDataLayout, textureCopy, copySize);
+    const Texture* texture = ToBackend(textureCopy.texture.Get());
+    const TypedTexelBlockInfo& blockInfo =
+        texture->GetFormat().GetAspectInfo(textureCopy.aspect).block;
+
+    BufferCopy bufferCopy;
+    bufferCopy.offset = dataLayout.offset;
+    bufferCopy.rowsPerImage = BlockCount{dataLayout.rowsPerImage};
+    bufferCopy.blocksPerRow = blockInfo.BytesToBlocks(dataLayout.bytesPerRow);
+
+    return ComputeBufferImageCopyRegion(bufferCopy, textureCopy, copySize);
 }
 
-VkBufferImageCopy ComputeBufferImageCopyRegion(const TexelCopyBufferLayout& dataLayout,
+VkBufferImageCopy ComputeBufferImageCopyRegion(const BufferCopy& bufferCopy,
                                                const TextureCopy& textureCopy,
                                                const Extent3D& copySize) {
     const Texture* texture = ToBackend(textureCopy.texture.Get());
 
     VkBufferImageCopy region;
 
-    region.bufferOffset = dataLayout.offset;
-    // In Vulkan the row length is in texels while it is in bytes for Dawn
-    const TexelBlockInfo& blockInfo = texture->GetFormat().GetAspectInfo(textureCopy.aspect).block;
-    DAWN_ASSERT(dataLayout.bytesPerRow % blockInfo.byteSize == 0);
-    region.bufferRowLength = dataLayout.bytesPerRow / blockInfo.byteSize * blockInfo.width;
-    region.bufferImageHeight = dataLayout.rowsPerImage * blockInfo.height;
+    region.bufferOffset = bufferCopy.offset;
+    // In Vulkan the row length is in texels while it is in blocks for Dawn
+    const TypedTexelBlockInfo& blockInfo =
+        texture->GetFormat().GetAspectInfo(textureCopy.aspect).block;
+    region.bufferRowLength = static_cast<uint32_t>(blockInfo.ToTexelWidth(bufferCopy.blocksPerRow));
+    region.bufferImageHeight =
+        static_cast<uint32_t>(blockInfo.ToTexelHeight(bufferCopy.rowsPerImage));
 
     region.imageSubresource.aspectMask = VulkanAspectMask(textureCopy.aspect);
     region.imageSubresource.mipLevel = textureCopy.mipLevel;
