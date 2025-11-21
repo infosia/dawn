@@ -72,6 +72,8 @@ PipelineLayout::PipelineLayout(Device* device,
     DAWN_ASSERT(mInnerHandle);
 }
 
+DAWN_CAPTURE_SET_LABEL(PipelineLayout)
+
 MaybeError PipelineLayout::AddReferenced(CaptureContext& captureContext) {
     for (BindGroupIndex groupIndex : GetBindGroupLayoutsMask()) {
         auto frontendLayout = GetFrontendBindGroupLayout(groupIndex);

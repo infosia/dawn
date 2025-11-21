@@ -77,6 +77,8 @@ MaybeError ComputePipeline::InitializeImpl() {
     return {};
 }
 
+DAWN_CAPTURE_SET_LABEL(ComputePipeline)
+
 MaybeError ComputePipeline::AddReferenced(CaptureContext& captureContext) {
     DAWN_TRY(captureContext.AddResource(GetStage(SingleShaderStage::Compute).module.Get()));
     DAWN_TRY(captureContext.AddResource(GetLayout()));
