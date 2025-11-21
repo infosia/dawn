@@ -98,6 +98,11 @@ MaybeError BindGroupLayout::AddReferenced(CaptureContext& captureContext) {
     return {};
 }
 
+void BindGroupLayout::SetLabelImpl() {
+    ToBackend(GetDevice())
+        ->CaptureSetLabel(static_cast<BindGroupLayoutInternalBase*>(this), GetLabel());
+}
+
 MaybeError BindGroupLayout::CaptureCreationParameters(CaptureContext& captureContext) {
     const auto& bindingMap = GetBindingMap();
 
