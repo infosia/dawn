@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "22043c03_e99a2c62",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-21T16:17:13Z",
+      "side": 1,
+      "message": "We could set up the default toggles based on what compiler is available but we chose to not do that because it would make expensive stuff happen at Chrome startup earlier than we would like.",
+      "parentUuid": "f12a2d49_80e07764",
+      "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0a577606_16c05cc3",
         "filename": "src/dawn/tests/DawnTest.cpp",
         "patchSetId": 8
@@ -189,6 +207,24 @@
       "side": 1,
       "message": "We do have `Test::HasFatalFailure()` (\u003d [`testing::internal::GetUnitTestImpl()-\u003ecurrent_test_result()-\u003eHasFatalFailure()`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/third_party/googletest/googletest/src/gtest.cc;l\u003d2759)) and `Test::IsSkipped()` checked in `Test::Run()` after calling the `SetUp` ([1]), but they are member of `testing::Test`, and currently `DawnTestBase` don\u0027t have reference to `testing::Test` (we use both `DawnTestBase` and `::testing::TestWithParam` as the base of `DawnTestWithParams`) so maybe we have to add a pointer of `testing::Test` in `DawnTestBase`.\n\n[1]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/third_party/googletest/googletest/src/gtest.cc;l\u003d2744",
       "parentUuid": "50c261bb_f1ddc427",
+      "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b72fda1_2e7f807e",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-21T16:17:13Z",
+      "side": 1,
+      "message": "Uh nevermind then, let\u0027s skip adding the `ASSERT` then.",
+      "parentUuid": "f4efd1ec_36bcf50b",
       "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
