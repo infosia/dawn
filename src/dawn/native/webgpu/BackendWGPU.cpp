@@ -80,6 +80,10 @@ std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
     // Pass through all of the core options. Note if backendType=WebGPU,
     // RequestAdapter will return null since it's not enabled by default.
     WGPURequestAdapterOptions innerAdapterOption = *ToAPI(*options);
+    if (const auto* webgpuOptions = options.Get<RequestAdapterWebGPUBackendOptions>()) {
+        innerAdapterOption.backendType = ToAPI(webgpuOptions->innerBackendType);
+        innerAdapterOption.forceFallbackAdapter = webgpuOptions->innerForceFallbackAdapter;
+    }
     // Get rid of the request adapter WebGPU backend options extension.
     innerAdapterOption.nextInChain = nullptr;
     // Keep DawnTogglesDescriptor.

@@ -92,7 +92,10 @@
         "chained": "in",
         "chain roots": ["request adapter options"],
         "tags": ["dawn", "native"],
-        "members": []
+        "members": [
+            {"name": "inner backend type", "type": "backend type", "default": "undefined"},
+            {"name": "inner force fallback adapter", "type": "bool", "default": "false"}
+        ]
     },
     "request adapter callback": {
         "category": "callback function",
