@@ -159,6 +159,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0d5bf98_46dd4361",
+        "filename": "infra/config/global/mirrored_chromium_try.star",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-21T14:13:26Z",
+      "side": 1,
+      "message": "Agreed.",
+      "parentUuid": "43dd469c_6553274c",
+      "range": {
+        "startLine": 73,
+        "startChar": 56,
+        "endLine": 73,
+        "endChar": 83
+      },
+      "revId": "b064a449a64bd4f76e4c1d8df2453a46a7758ab9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "75adf3cc_fb524b7e",

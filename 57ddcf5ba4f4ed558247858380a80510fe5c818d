@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a89f899_d4a0dc17",
+        "filename": "infra/config/global/chromium_try.star",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-21T14:13:26Z",
+      "side": 1,
+      "message": "exposed? made available?\n\nPlease also change in the code, I don\u0027t want to create a misunderstanding that we define new bots here. Per the definition of mirroring in https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/infra/new_builder.md",
+      "range": {
+        "startLine": 28,
+        "startChar": 29,
+        "endLine": 28,
+        "endChar": 38
+      },
+      "revId": "57ddcf5ba4f4ed558247858380a80510fe5c818d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dacd9c54_e1096c16",
+        "filename": "infra/config/global/chromium_try.star",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-21T14:13:26Z",
+      "side": 1,
+      "message": "Normally, only DEPS variants of Dawn ToT CQ bots are branched.\nDue to limited capacity, the ToT dawn-try-win10-x86-rel is not a part of Dawn CQ.\nHowever, Dawn Win10 x86 CI bots are branched.\nSo, dawn-win10-x86-deps-rel is made available to be manually triggered on branches,\nin order to facilitate investigating regressions on the branch CI builders.\n\nAlso move the comment to be on top of dawn-win10-x86-deps-rel, not dawn-try-win10-x86-rel.",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 0
+      },
+      "revId": "57ddcf5ba4f4ed558247858380a80510fe5c818d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
