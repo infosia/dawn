@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "0c0827cd395b4153c96698c64b970b45e62f8186",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c95d12dc_d2db39c4",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-21T09:40:40Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure that this is correct: there are other ways to compute the subgroup size without using the builtin so IDK that the Vulkan backend will follow the spec if we do this. TBH I don\u0027t understand why we enable the flag and say that\u0027s to make SubgroupSize uniform across the dispatch, since this flag says that it makes it varying.\n\nJames PTAL",
+      "revId": "0c0827cd395b4153c96698c64b970b45e62f8186",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
