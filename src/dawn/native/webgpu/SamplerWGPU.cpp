@@ -90,6 +90,8 @@ MaybeError Sampler::Initialize() {
     return {};
 }
 
+DAWN_CAPTURE_SET_LABEL(Sampler)
+
 MaybeError Sampler::AddReferenced(CaptureContext& captureContext) {
     // Samplers don't reference anything
     return {};
