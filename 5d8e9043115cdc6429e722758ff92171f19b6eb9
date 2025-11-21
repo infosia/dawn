@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80616252_58dd26eb",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-21T10:45:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64bc0d39_4082570c",
+      "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0abb20fd_a860fcf9",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-11-21T09:36:17Z",
       "side": 1,
       "message": "Maybe add \"This is to avoid expensive loading of DLLs that we will not use immediately (or at all).\"",
+      "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f12a2d49_80e07764",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-21T10:45:47Z",
+      "side": 1,
+      "message": "I think this is actually because currently adapter creation can not fail, but checking compiler libraries should be able to fail?",
+      "parentUuid": "0abb20fd_a860fcf9",
       "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a12ba116_a1baf91c",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1292,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-21T10:45:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a577606_16c05cc3",
+      "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd9e52ef_5295713f",
@@ -86,6 +140,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "abbe2ca8_822c4757",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-21T10:45:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd9e52ef_5295713f",
+      "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "50c261bb_f1ddc427",
@@ -99,6 +171,24 @@
       "writtenOn": "2025-11-21T09:36:17Z",
       "side": 1,
       "message": "Could we separate this logic to its own function to avoid doing too much logic at the top level SetUp?\n\n```\nif (device \u003d\u003d nullptr) {\n    HandleDeviceCreationFailure();\n    ASSERT(gtest status is skipped or error) // I believe there is an API to do this\n    return;\n}\n```\n\nAnd it would be nice to make the logic a bit more general, maybe with a list of toggles to check and the reason of why it does a skip? Or at least a TODO to do expand when we add more reasons to make device creation failure a skip.",
+      "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4efd1ec_36bcf50b",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-21T10:45:47Z",
+      "side": 1,
+      "message": "We do have `Test::HasFatalFailure()` (\u003d [`testing::internal::GetUnitTestImpl()-\u003ecurrent_test_result()-\u003eHasFatalFailure()`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/third_party/googletest/googletest/src/gtest.cc;l\u003d2759)) and `Test::IsSkipped()` checked in `Test::Run()` after calling the `SetUp` ([1]), but they are member of `testing::Test`, and currently `DawnTestBase` don\u0027t have reference to `testing::Test` (we use both `DawnTestBase` and `::testing::TestWithParam` as the base of `DawnTestWithParams`) so maybe we have to add a pointer of `testing::Test` in `DawnTestBase`.\n\n[1]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/third_party/googletest/googletest/src/gtest.cc;l\u003d2744",
+      "parentUuid": "50c261bb_f1ddc427",
       "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
