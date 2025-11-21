@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bdd11d8_60e0c7ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-11-21T03:14:41Z",
+      "side": 1,
+      "message": "`--webgpu-inner-backend\u003dfallback` should give you webgpu on vulkan swiftshader",
+      "revId": "5c8a4dff1c46b1bb87dd0942a4d7b075a2fff750",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
