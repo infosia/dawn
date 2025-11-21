@@ -16,6 +16,29 @@
       "message": "PTAL\n\nAn alternative would be to update the macros to use `__LINE__` instead of `__COUNTER__`. This appears to work at a glance and should be functionally equivalent unless two of these macros are ever used on the same line in the same file, which seems like it should never happen.\n\n[Macros in question](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/platform/metrics/HistogramMacros.h;l\u003d157)",
       "revId": "f288c82a25c17899dc21f4f4d5fba29798ffd07e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b383f988_f90c2533",
+        "filename": "src/dawn/common/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-21T21:16:04Z",
+      "side": 1,
+      "message": "From this comment it seems like this block should only enable warnings. For disabling a warning, use the block just above?",
+      "range": {
+        "startLine": 146,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 38
+      },
+      "revId": "f288c82a25c17899dc21f4f4d5fba29798ffd07e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
