@@ -74,6 +74,24 @@
       "parentUuid": "f270a9c9_c75887d2",
       "revId": "b6b9570fd62bc6fcb791e73007863073acfe2391",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13274fa4_ef2a3572",
+        "filename": "src/tint/api/common/subgroup_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-21T09:41:46Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "82e39244_c15cbf8a",
+      "revId": "b6b9570fd62bc6fcb791e73007863073acfe2391",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
