@@ -177,6 +177,8 @@ void Buffer::DestroyImpl() {
     wgpu.bufferDestroy(mInnerHandle);
 }
 
+DAWN_CAPTURE_SET_LABEL(Buffer)
+
 MaybeError Buffer::AddReferenced(CaptureContext& captureContext) {
     // Buffers do not reference other objects.
     return {};

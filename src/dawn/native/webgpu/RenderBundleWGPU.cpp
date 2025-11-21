@@ -228,6 +228,8 @@ void RenderBundle::DestroyImpl() {
     mInnerHandle = nullptr;
 }
 
+DAWN_CAPTURE_SET_LABEL(RenderBundle)
+
 MaybeError RenderBundle::AddReferenced(CaptureContext& captureContext) {
     CommandBufferResourceUsages usedResources;
     CommandIterator& commands = *GetCommands();

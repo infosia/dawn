@@ -33,15 +33,17 @@
 #include <string>
 #include <utility>
 
-#include "absl/container/flat_hash_set.h"
+#include "absl/container/flat_hash_map.h"
+#include "dawn/common/Assert.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/ObjectBase.h"
-#include "dawn/native/webgpu/DeviceWGPU.h"
+#include "dawn/native/webgpu/Forward.h"
 #include "dawn/native/webgpu/Serialization.h"
 
 namespace dawn::native {
 
 class BufferBase;
+class DeviceBase;
 struct Color;
 struct Origin3D;
 struct Extent3D;
@@ -54,7 +56,7 @@ struct TimestampWrites;
 
 namespace dawn::native::webgpu {
 
-class CaptureContext;
+class Device;
 class RecordableObject;
 
 class CaptureContext {
@@ -70,24 +72,28 @@ class CaptureContext {
     // description if it has not already been captured which is effectively
     // capturing an implicit call to createXXX.
     template <typename T>
-    ResultOrError<schema::ObjectId> AddResourceAndGetId(T* object) {
-        assert(object != nullptr);
-        const auto backendObject = ToBackend(object);
+    ResultOrError<schema::ObjectId> AddResourceAndGetId_AlreadyBackend(T* object) {
+        DAWN_ASSERT(object != nullptr);
         schema::ObjectId id;
         Ref<ApiObjectBase> ref(object);
         auto it = mObjectIds.find(ref);
         bool newResource = it == mObjectIds.end();
         if (newResource) {
-            DAWN_TRY(backendObject->AddReferenced(*this));
+            DAWN_TRY(object->AddReferenced(*this));
 
             id = mNextObjectId++;
             mObjectIds[std::move(ref)] = id;
-            DAWN_TRY(CaptureCreation(id, object->GetLabel(), backendObject));
+            DAWN_TRY(CaptureCreation(id, object->GetLabel(), object));
         } else {
             id = it->second;
         }
-        DAWN_TRY(backendObject->CaptureContentIfNeeded(*this, id, newResource));
+        DAWN_TRY(object->CaptureContentIfNeeded(*this, id, newResource));
         return {id};
+    }
+
+    template <typename T>
+    ResultOrError<schema::ObjectId> AddResourceAndGetId(T* object) {
+        return AddResourceAndGetId_AlreadyBackend(ToBackend(object));
     }
 
     template <typename T>
@@ -125,6 +131,35 @@ class CaptureContext {
         return mObjectIds.find(Ref<ApiObjectBase>(object)) != mObjectIds.end();
     }
 
+    template <typename T>
+    void CaptureSetLabel(T* object) {
+        auto result = AddResourceAndGetId_AlreadyBackend(object);
+        if (result.IsSuccess()) {
+            schema::RootCommandSetLabelCmd data{{
+                .data{{
+                    .id = result.AcquireSuccess(),
+                    .type = object->GetObjectType(),
+                    .label = object->GetLabel(),
+                }},
+            }};
+            Serialize(*this, data);
+        }
+    }
+
+    // Special case for Device as it's not a RecordableObject
+    // so we don't want to call AddResourceAndGetId on it.
+    // template <>
+    // void CaptureSetLabel(DeviceBase* object) {
+    //     schema::RootCommandSetLabelCmd data{{
+    //         .data{{
+    //             .id = schema::kDeviceId,
+    //             .type = schema::ObjectType::Device,
+    //             .label = object->GetLabel(),
+    //         }},
+    //     }};
+    //     Serialize(*this, data);
+    // }
+
     void WriteCommandBytes(const void* data, size_t size);
     void WriteContentBytes(const void* data, size_t size);
 
@@ -160,7 +195,7 @@ class CaptureContext {
     std::ostream& mCommandStream;
     std::ostream& mContentStream;
     absl::flat_hash_map<Ref<ApiObjectBase>, schema::ObjectId> mObjectIds;
-    schema::ObjectId mNextObjectId = 1;
+    schema::ObjectId mNextObjectId = 2;  // 1 = the device itself.
 
     WGPUBuffer mCopyBuffer = nullptr;
 };
@@ -179,6 +214,12 @@ schema::TexelCopyTextureInfo ToSchema(CaptureContext& captureContext,
                                       const TexelCopyTextureInfo& info);
 schema::TimestampWrites ToSchema(CaptureContext& captureContext,
                                  const TimestampWrites& timestampWrites);
+
+#define DAWN_CAPTURE_SET_LABEL(type)                                                         \
+    void type::SetLabelImpl() {                                                              \
+        ToBackend(GetDevice())                                                               \
+            ->CaptureSetLabel(this);                                                   \
+    }
 
 }  // namespace dawn::native::webgpu
 

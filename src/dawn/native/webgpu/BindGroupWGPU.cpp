@@ -116,6 +116,8 @@ void BindGroup::DeleteThis() {
     layout->DeallocateBindGroup(this);
 }
 
+DAWN_CAPTURE_SET_LABEL(BindGroup)
+
 MaybeError BindGroup::AddReferenced(CaptureContext& captureContext) {
     // We have to include any referenced bound textures views as the front end does
     // not track texture views.

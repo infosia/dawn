@@ -61,6 +61,8 @@ void QuerySet::DestroyImpl() {
     QuerySetBase::DestroyImpl();
 }
 
+DAWN_CAPTURE_SET_LABEL(QuerySet)
+
 MaybeError QuerySet::AddReferenced(CaptureContext& captureContext) {
     // QuerySet do not reference other objects.
     return {};

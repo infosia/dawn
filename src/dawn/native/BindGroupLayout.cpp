@@ -74,4 +74,10 @@ bool BindGroupLayoutBase::IsLayoutEqual(const BindGroupLayoutBase* other,
 
 void BindGroupLayoutBase::DestroyImpl() {}
 
+void BindGroupLayoutBase::SetLabelImpl() {
+    // Note: Internal BindGroups are deduplicated so if a user
+    // has 2 matching bindgroups one will get the wrong label
+    GetInternalBindGroupLayout()->SetLabel(GetLabel());
+}
+
 }  // namespace dawn::native
