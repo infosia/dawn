@@ -95,13 +95,6 @@ MaybeError ComputePipeline::InitializeImpl() {
     createInfo.stage.pName = device->GetIsolatedEntryPointName().data();
     createInfo.stage.pSpecializationInfo = nullptr;
 
-    // This is required to ensure SubgroupSize is reported as the actual size of the subgroups
-    // (even if some invocations may be disabled), and that the subgroup size will be uniform
-    // across the entire dispatch. This becomes unnecessary with SPIR-V 1.6.
-    if (!device->IsToggleEnabled(Toggle::VulkanDisallowVaryingSubgroupSize)) {
-        createInfo.flags |= VK_PIPELINE_SHADER_STAGE_CREATE_ALLOW_VARYING_SUBGROUP_SIZE_BIT;
-    }
-
     // If the shader stage uses subgroup matrix types, we need to enable full subgroups to guarantee
     // that all shader invocations are active. This becomes unnecessary with SPIR-V 1.6.
     if (computeStage.metadata->usesSubgroupMatrix) {
@@ -111,13 +104,20 @@ MaybeError ComputePipeline::InitializeImpl() {
     VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXT subgroupSizeInfo = {};
     PNextChainBuilder stageExtChain(&createInfo.stage);
 
-    uint32_t computeSubgroupSize = device->GetComputeSubgroupSize();
-    if (computeSubgroupSize != 0u) {
-        DAWN_ASSERT(device->GetDeviceInfo().HasExt(DeviceExt::SubgroupSizeControl));
-        subgroupSizeInfo.requiredSubgroupSize = computeSubgroupSize;
-        stageExtChain.Add(
-            &subgroupSizeInfo,
-            VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO_EXT);
+    if (computeStage.metadata->usesSubgroupSize) {
+        // This is required to ensure SubgroupSize is reported as the actual size of the subgroups
+        // (even if some invocations may be disabled), and that the subgroup size will be uniform
+        // across the entire dispatch. This becomes unnecessary with SPIR-V 1.6.
+        createInfo.flags |= VK_PIPELINE_SHADER_STAGE_CREATE_ALLOW_VARYING_SUBGROUP_SIZE_BIT;
+
+        uint32_t computeSubgroupSize = device->GetComputeSubgroupSize();
+        if (computeSubgroupSize != 0u) {
+            DAWN_ASSERT(device->GetDeviceInfo().HasExt(DeviceExt::SubgroupSizeControl));
+            subgroupSizeInfo.requiredSubgroupSize = computeSubgroupSize;
+            stageExtChain.Add(
+                &subgroupSizeInfo,
+                VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO_EXT);
+        }
     }
 
     if (buildCacheKey) {

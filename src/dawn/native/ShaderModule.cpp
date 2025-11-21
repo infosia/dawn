@@ -880,6 +880,10 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
     if (metadata->stage == SingleShaderStage::Compute) {
         metadata->usesNumWorkgroups = entryPoint.num_workgroups_used;
     }
+    if (metadata->stage == SingleShaderStage::Compute ||
+        metadata->stage == SingleShaderStage::Fragment) {
+        metadata->usesSubgroupSize = entryPoint.subgroup_size_used;
+    }
 
     metadata->usesTextureLoadWithDepthTexture = entryPoint.has_texture_load_with_depth_texture;
     metadata->usesDepthTextureWithNonComparisonSampler =
