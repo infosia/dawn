@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a169960_db792767",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-21T23:32:41Z",
+      "side": 1,
+      "message": "PTAL\n\nPresubmit is going to be unhappy until https://dawn-review.googlesource.com/c/dawn/+/275754 lands",
+      "revId": "728988fd2aa386569d9b412b730eca9a56f4d1ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
