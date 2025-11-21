@@ -45,6 +45,7 @@ class ComputePipeline final : public ComputePipelineBase,
         const UnpackedPtr<ComputePipelineDescriptor>& descriptor);
 
     MaybeError InitializeImpl() override;
+    void SetLabelImpl() override;
 
     MaybeError AddReferenced(CaptureContext& captureContext) override;
     MaybeError CaptureCreationParameters(CaptureContext& context) override;

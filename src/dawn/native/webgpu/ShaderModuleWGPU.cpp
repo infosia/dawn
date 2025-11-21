@@ -66,6 +66,8 @@ ShaderModule::ShaderModule(Device* device,
     }
 }
 
+DAWN_CAPTURE_SET_LABEL(ShaderModule)
+
 MaybeError ShaderModule::AddReferenced(CaptureContext& captureContext) {
     return {};
 }

@@ -186,6 +186,8 @@ MaybeError RenderPipeline::InitializeImpl() {
     return {};
 }
 
+DAWN_CAPTURE_SET_LABEL(RenderPipeline)
+
 MaybeError RenderPipeline::AddReferenced(CaptureContext& captureContext) {
     DAWN_TRY(captureContext.AddResource(GetStage(SingleShaderStage::Vertex).module.Get()));
     if (HasStage(SingleShaderStage::Fragment)) {

@@ -98,6 +98,8 @@ void Texture::DestroyImpl() {
     wgpu.textureDestroy(mInnerHandle);
 }
 
+DAWN_CAPTURE_SET_LABEL(Texture)
+
 // TextureView
 
 // static
@@ -282,6 +284,8 @@ MaybeError Texture::CaptureContentIfNeeded(CaptureContext& captureContext,
     }
     return {};
 }
+
+DAWN_CAPTURE_SET_LABEL(TextureView)
 
 MaybeError TextureView::AddReferenced(CaptureContext& captureContext) {
     return captureContext.AddResource(GetTexture());
