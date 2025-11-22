@@ -63,6 +63,30 @@
       },
       "revId": "3eaa8a6c820fd4242435d828b045b31d92f9017c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d519579_88c286e6",
+        "filename": "webgpu-cts/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-22T03:30:25Z",
+      "side": 1,
+      "message": "\u003e I assume you mean an alternative to telemetry_gpu_integration_test_android_webview? (and thus bin/run_telemetry_gpu_integration_test_android_webview which I hadn\u0027t considered at all, I don\u0027t know what it does)\n\nYes, the suffix on `telemetry_gpu_integration_test` just specifies which Chrome binary to build. Years ago, Android used `telemetry_gpu_integration_test` (without a suffix) like desktop did, which built every browser binary, but we found that this had a significant impact on Swarming overhead since each task was downloading ~15 GB of uncacheable data.\n\n\u003e What we would really want is like, --host-abi\u003d32 --renderer-abi\u003d64 or something so we can test all configurations explicitly.\n\nForwarding that information on to the code that does the installation shouldn\u0027t be too difficult, but it doesn\u0027t look like there\u0027s any relevant code at the moment.",
+      "parentUuid": "34c1f032_c0ff6838",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 100
+      },
+      "revId": "3eaa8a6c820fd4242435d828b045b31d92f9017c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

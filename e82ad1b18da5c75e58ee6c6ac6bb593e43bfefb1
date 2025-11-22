@@ -22,6 +22,30 @@
       },
       "revId": "e82ad1b18da5c75e58ee6c6ac6bb593e43bfefb1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59f858bb_25f8f446",
+        "filename": "webgpu-cts/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-22T03:30:25Z",
+      "side": 1,
+      "message": "One of the other `WebviewBackendSettings` in https://source.chromium.org/chromium/chromium/src/+/main:third_party/catapult/telemetry/telemetry/internal/backends/android_browser_backend_settings.py might do the trick, but I\u0027m pretty unfamiliar with Webview as a whole so I can\u0027t point to a specific one.\n\n\u003e Also, is it a problem to run with android-webview instead of android-webview-instrumentation?\n\nIt looks like it affects some things (the definition for `android-webview-instrumentation` in the above file is more complicated), but I don\u0027t think there should be any fundamental issues with using any particular browser backend. The tests *should* work in any of them since they really just require the ability to load pages and set up a websocket. Some other GPU tests will be pickier due to necessary features that aren\u0027t supported in all cases, e.g. tabs, but I think the WebGPU CTS should be fine.",
+      "parentUuid": "baeef891_e1f7384f",
+      "range": {
+        "startLine": 97,
+        "startChar": 15,
+        "endLine": 97,
+        "endChar": 30
+      },
+      "revId": "e82ad1b18da5c75e58ee6c6ac6bb593e43bfefb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

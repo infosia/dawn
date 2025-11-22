@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7109834_3819e3d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-22T03:30:25Z",
+      "side": 1,
+      "message": "LGTM as a starting point. If we\u0027re going to want smoke tests using an actual Webview, we\u0027ll need to figure out the right incantation to build and install the correct target in one go.",
+      "revId": "fa894fd322226eda1c388da95a6b113977dd7547",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
