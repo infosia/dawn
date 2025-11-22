@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9fe5d3d6_acd28fc5",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-22T01:31:50Z",
+      "side": 1,
+      "message": "Removing the cast means that `ToBackend` fails because it\u0027s already the backend object. `Device::CaptureSetLabel` calls `CaptureContext::CaptureSetLabel` which calls `CaptureContext::AddResourceAndGetId` which expects `XXXBase` and calls `ToBackend` which fails. \n\n```\n../../src/dawn/native/webgpu/CaptureContext.h:136:29: error: no matching function for call to \u0027ToBackend\u0027\n  136 |                     .type \u003d ToBackend(object)-\u003eGetObjectType(),\n      |                             ^~~~~~~~~\n../../src/dawn/native/webgpu/DeviceWGPU.h:75:37: note: in instantiation of function template specialization \u0027dawn::native::webgpu::CaptureContext::CaptureSetLabel\u003cdawn::native::webgpu::QuerySet\u003e\u0027 requested here\n   75 |             q-\u003eGetCaptureContext()-\u003eCaptureSetLabel(object, label);\n      |                                     ^\n../../src/dawn/native/webgpu/QuerySetWGPU.cpp:64:1: note: in instantiation of function template specialization \u0027dawn::native::webgpu::Device::CaptureSetLabel\u003cdawn::native::webgpu::QuerySet\u003e\u0027 requested here\n   64 | DAWN_CAPTURE_SET_LABEL(QuerySet)\n      | ^\n../../src/dawn/native/webgpu/CaptureContext.h:217:15: note: expanded from macro \u0027DAWN_CAPTURE_SET_LABEL\u0027\n  217 |             -\u003eCaptureSetLabel(this, \\\n      |               ^\n../../src/dawn/native/webgpu/Forward.h:75:6: note: candidate template ignored: substitution failure [with T \u003d dawn::native::webgpu::QuerySet *\u0026]: no matching function for call to \u0027ToBackendBase\u0027\n   75 | auto ToBackend(T\u0026\u0026 common) -\u003e decltype(ToBackendBase\u003cWebGPUBackendTraits\u003e(common)) {\n      |      ^                                 ~~~~~~~~~~~~~\nIn file included from ../../src/dawn/native/webgpu/QuerySetWGPU.cpp:33:\nIn file included from ../../src/dawn/native/webgpu/DeviceWGPU.h:38:\n../../src/dawn/native/webgpu/CaptureContext.h:76:36: error: no matching function for call to \u0027ToBackend\u0027\n   76 |         const auto backendObject \u003d ToBackend(object);\n      |                                    ^~~~~~~~~\n../../src/dawn/native/webgpu/CaptureContext.h:131:23: note: in instantiation of function template specialization \u0027dawn::native::webgpu::CaptureContext::AddResourceAndGetId\u003cdawn::native::webgpu::QuerySet\u003e\u0027 requested here\n  131 |         auto result \u003d AddResourceAndGetId(object);\n      |                       ^\n../../src/dawn/native/webgpu/DeviceWGPU.h:75:37: note: in instantiation of function template specialization \u0027dawn::native::webgpu::CaptureContext::CaptureSetLabel\u003cdawn::native::webgpu::QuerySet\u003e\u0027 requested here\n   75 |             q-\u003eGetCaptureContext()-\u003eCaptureSetLabel(object, label);\n      |                                     ^\n../../src/dawn/native/webgpu/QuerySetWGPU.cpp:64:1: note: in instantiation of function template specialization \u0027dawn::native::webgpu::Device::CaptureSetLabel\u003cdawn::native::webgpu::QuerySet\u003e\u0027 requested here\n   64 | DAWN_CAPTURE_SET_LABEL(QuerySet)\n      | ^\n../../src/dawn/native/webgpu/CaptureContext.h:217:15: note: expanded from macro \u0027DAWN_CAPTURE_SET_LABEL\u0027\n  217 |             -\u003eCaptureSetLabel(this, \\\n      |               ^\n../../src/dawn/native/webgpu/Forward.h:75:6: note: candidate template ignored: substitution failure [with T \u003d dawn::native::webgpu::QuerySet *\u0026]: no matching function for call to \u0027ToBackendBase\u0027\n   75 | auto ToBackend(T\u0026\u0026 common) -\u003e decltype(ToBackendBase\u003cWebGPUBackendTraits\u003e(common)) {\n      |      ^                                 ~~~~~~~~~~~~~\n2 errors generated.\n```\n\nIs there a generic way to go from `XXX` back to `XXXBase`?",
+      "parentUuid": "8b312f1b_b7ec5b47",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 5
+      },
+      "revId": "00ae80df36963ca9417082abfd4622a49ccddbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2bcfc554_9a2e5176",
         "filename": "src/dawn/replay/Replay.cpp",
         "patchSetId": 2
@@ -54,6 +78,24 @@
       "writtenOn": "2025-11-21T11:05:13Z",
       "side": 1,
       "message": "They still have SetLabel so maybe we can support it in the capture/replay? Eventually in Dawn we should have support in some object to track all the labels that are used to refer to them.",
+      "revId": "00ae80df36963ca9417082abfd4622a49ccddbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edc0d186_be1bdf89",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-22T01:31:50Z",
+      "side": 1,
+      "message": "done. PTAL though in BindGroupLayout.h I had to wire up `BindGroupLayout::SetLabelImpl` to call `BindGroupLayoutInternal::SetLabel`",
+      "parentUuid": "2bcfc554_9a2e5176",
       "revId": "00ae80df36963ca9417082abfd4622a49ccddbab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
