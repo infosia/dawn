@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "71fab8f1_29f5bc01",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-22T13:17:15Z",
+      "side": 1,
+      "message": "nit: removes redundant include(.*) location filter from main CQ bots and applies missing exclude(\\\\.github/.+) location filter to branch CQs.",
+      "range": {
+        "startLine": 11,
+        "startChar": 19,
+        "endLine": 11,
+        "endChar": 53
+      },
+      "revId": "f5ce577f3266283b34b525006bc05ba8cead5b5d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "6a0d35db_d7b8c1ec",
