@@ -66,18 +66,18 @@ MaybeError CheckError(const OpenGLFunctions& gl,
                       unsigned int line);
 
 #define DAWN_GL_TRY_ALWAYS_CHECK(gl, call)                      \
-    (ClearErrors(gl, __FILE__, __func__, __LINE__), (gl.call)); \
+    (ClearErrors(gl, __FILE__, __func__, __LINE__), (((const OpenGLFunctions&)gl).call)); \
     DAWN_TRY(CheckError(gl, "gl" #call, __FILE__, __func__, __LINE__))
 #define DAWN_GL_TRY_ALWAYS_CHECK_IGNORE_ERRORS(gl, call)        \
-    (ClearErrors(gl, __FILE__, __func__, __LINE__), (gl.call)); \
+    (ClearErrors(gl, __FILE__, __func__, __LINE__), (((const OpenGLFunctions&)gl).call)); \
     IgnoreErrors(CheckError(gl, "gl" #call, __FILE__, __func__, __LINE__))
 
 #if defined(DAWN_ENABLE_ASSERTS)
 #define DAWN_GL_TRY(gl, call) DAWN_GL_TRY_ALWAYS_CHECK(gl, call)
 #define DAWN_GL_TRY_IGNORE_ERRORS(gl, call) DAWN_GL_TRY_ALWAYS_CHECK_IGNORE_ERRORS(gl, call)
 #else
-#define DAWN_GL_TRY(gl, call) (gl.call)
-#define DAWN_GL_TRY_IGNORE_ERRORS(gl, call) (gl.call)
+#define DAWN_GL_TRY(gl, call) (((const OpenGLFunctions&)gl).call)
+#define DAWN_GL_TRY_IGNORE_ERRORS(gl, call) (((const OpenGLFunctions&)gl).call)
 #endif
 
 }  // namespace dawn::native::opengl

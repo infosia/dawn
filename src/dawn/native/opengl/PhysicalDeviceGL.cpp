@@ -534,7 +534,7 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
     // Use the pre-1.5 extension enum instead.
     bool disableEGL15Robustness = mVendorId == gpu_info::kVendorID_ImgTec;
     bool forceES31AndMinExtensions = deviceToggles.IsEnabled(Toggle::GLForceES31AndNoExtensions);
-    bool bindContextOnlyDuringUse = deviceToggles.IsEnabled(Toggle::GLAllowContextOnMultiThreads);
+    bool bindContextOnlyDuringUse = true; // deviceToggles.IsEnabled(Toggle::GLAllowContextOnMultiThreads);
 
     std::unique_ptr<ContextEGL> context;
     DAWN_TRY_ASSIGN(context, ContextEGL::Create(mDisplay, GetBackendType(), useRobustness,

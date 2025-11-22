@@ -258,7 +258,7 @@ MaybeError FramebufferTextureHelper(const OpenGLFunctions& gl,
 // static
 ResultOrError<Ref<Texture>> Texture::Create(Device* device,
                                             const UnpackedPtr<TextureDescriptor>& descriptor) {
-    const OpenGLFunctions& gl = device->GetGL();
+    auto gl = device->GetGL();
 
     GLuint handle = 0;
     DAWN_GL_TRY(gl, GenTextures(1, &handle));
@@ -313,7 +313,7 @@ Texture::~Texture() {}
 void Texture::DestroyImpl() {
     TextureBase::DestroyImpl();
     if (mOwnsHandle == OwnsHandle::Yes) {
-        const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+        auto gl = ToBackend(GetDevice())->GetGL();
         DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteTextures(1, &mHandle));
         mHandle = 0;
     }
@@ -334,7 +334,7 @@ const GLFormat& Texture::GetGLFormat() const {
 MaybeError Texture::ClearTexture(const SubresourceRange& range,
                                  TextureBase::ClearValue clearValue) {
     Device* device = ToBackend(GetDevice());
-    const OpenGLFunctions& gl = device->GetGL();
+    auto gl = device->GetGL();
 
     uint8_t clearColor = (clearValue == TextureBase::ClearValue::Zero) ? 0 : 1;
     float fClearColor = (clearValue == TextureBase::ClearValue::Zero) ? 0.f : 1.f;
@@ -445,7 +445,7 @@ MaybeError Texture::ClearTexture(const SubresourceRange& range,
                         // Skip lazy clears if already initialized.
                         continue;
                     }
-                    if (gl.IsAtLeastGL(4, 4)) {
+                    if (gl->IsAtLeastGL(4, 4)) {
                         DAWN_GL_TRY(gl, ClearTexSubImage(mHandle, static_cast<GLint>(level), 0, 0,
                                                          static_cast<GLint>(layer), mipSize.width,
                                                          mipSize.height, mipSize.depthOrArrayLayers,
@@ -625,7 +625,7 @@ MaybeError Texture::SynchronizeTextureBeforeUse() {
 ResultOrError<Ref<TextureView>> TextureView::Create(
     TextureBase* texture,
     const UnpackedPtr<TextureViewDescriptor>& descriptor) {
-    const OpenGLFunctions& gl = ToBackend(texture->GetDevice())->GetGL();
+    auto gl = ToBackend(texture->GetDevice())->GetGL();
     GLuint handle = 0;
     OwnsHandle ownsHandle = OwnsHandle::No;
 
@@ -635,7 +635,7 @@ ResultOrError<Ref<TextureView>> TextureView::Create(
     } else if (!RequiresCreatingNewTextureView(texture, descriptor)) {
         handle = ToBackend(texture)->GetHandle();
     } else {
-        if (gl.IsAtLeastGL(4, 3)) {
+        if (gl->IsAtLeastGL(4, 3)) {
             DAWN_GL_TRY(gl, GenTextures(1, &handle));
             ownsHandle = OwnsHandle::Yes;
         } else {
@@ -669,7 +669,7 @@ TextureView::~TextureView() {}
 void TextureView::DestroyImpl() {
     TextureViewBase::DestroyImpl();
     if (mOwnsHandle == OwnsHandle::Yes) {
-        const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+        auto gl = ToBackend(GetDevice())->GetGL();
         DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteTextures(1, &mHandle));
     }
 }
@@ -687,7 +687,7 @@ MaybeError TextureView::BindToFramebuffer(GLenum target, GLenum attachment, GLui
     DAWN_ASSERT(depthSlice <
                 static_cast<GLuint>(GetSingleSubresourceVirtualSize().depthOrArrayLayers));
 
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    auto gl = ToBackend(GetDevice())->GetGL();
 
     // Use the base texture where possible to minimize the amount of copying required on GLES.
     bool useOwnView = GetFormat().format != GetTexture()->GetFormat().format &&

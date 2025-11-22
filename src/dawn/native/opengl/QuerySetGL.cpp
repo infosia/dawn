@@ -40,7 +40,7 @@ ResultOrError<Ref<QuerySet>> QuerySet::Create(Device* device,
     Ref<QuerySet> querySet = AcquireRef(new QuerySet(device, descriptor));
 
     if (querySet->mQueries.size() > 0) {
-        const OpenGLFunctions& gl = device->GetGL();
+        auto gl = device->GetGL();
         DAWN_GL_TRY(gl, GenQueries(descriptor->count, querySet->mQueries.data()));
     }
 
@@ -53,7 +53,7 @@ QuerySet::QuerySet(Device* device, const QuerySetDescriptor* descriptor)
 QuerySet::~QuerySet() = default;
 
 void QuerySet::DestroyImpl() {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    auto gl = ToBackend(GetDevice())->GetGL();
     if (mQueries.size() > 0) {
         DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteQueries(mQueries.size(), mQueries.data()));
     }

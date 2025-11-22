@@ -386,7 +386,7 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingEGLImageImpl(
     // require clients to use SharedTextureMemory for better lifetime management.
     ContextEGL::ScopedMakeCurrent scopedCurrentContext;
     DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
-    const OpenGLFunctions& gl = GetGL(/*makeCurrent=*/false);
+    auto gl = GetGL();
 
     TextureDescriptor reifiedDescriptor =
         FromAPI(descriptor->cTextureDescriptor)->WithTrivialFrontendDefaults();
@@ -448,7 +448,7 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingGLTextureImpl(
     // require clients to use SharedTextureMemory for better lifetime management.
     ContextEGL::ScopedMakeCurrent scopedCurrentContext;
     DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
-    const OpenGLFunctions& gl = GetGL(/*makeCurrent=*/false);
+    auto gl = GetGL();
 
     TextureDescriptor reifiedDescriptor =
         FromAPI(descriptor->cTextureDescriptor)->WithTrivialFrontendDefaults();
@@ -498,7 +498,7 @@ MaybeError Device::ExecutePendingGLWork() {
 
     ContextEGL::ScopedMakeCurrent scopedCurrentContext;
     DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
-    const OpenGLFunctions& gl = GetGL(/*makeCurrent=*/false);
+    auto gl = GetGL();
     for (auto& work : workList) {
         DAWN_TRY(work(gl));
     }
@@ -567,12 +567,23 @@ const AHBFunctions* Device::GetOrLoadAHBFunctions() {
 #endif  // DAWN_PLATFORM_IS(ANDROID)
 }
 
-const OpenGLFunctions& Device::GetGL(bool makeCurrent) const {
-    if (makeCurrent) {
-        mContext->DeprecatedMakeCurrent();
+Device::OpenGLFunctionsWrapper Device::GetGL() {
+    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
+#if 1
+    auto result = mContext->MakeCurrent();
+    if (result.IsError()) {
+        ErrorLog() << result.AcquireError()->GetFormattedMessage();
+    } else {
+        scopedCurrentContext = result.AcquireSuccess();
     }
+#else
+    if (ConsumedError(mContext->MakeCurrent(), &scopedCurrentContext)) {
+        return OpenGLFunctionsWrapper(std::move(scopedCurrentContext), mGL);
+    }
+#endif
+
     ToBackend(GetQueue())->OnGLUsed();
-    return mGL;
+    return OpenGLFunctionsWrapper(std::move(scopedCurrentContext), mGL);
 }
 
 int Device::GetMaxTextureMaxAnisotropy() const {

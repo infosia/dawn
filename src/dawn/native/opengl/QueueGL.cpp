@@ -91,7 +91,7 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   uint64_t bufferOffset,
                                   const void* data,
                                   size_t size) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    auto gl = ToBackend(GetDevice())->GetGL();
 
     DAWN_TRY(ToBackend(buffer)->EnsureDataInitializedAsDestination(bufferOffset, size));
 
@@ -175,6 +175,8 @@ void Queue::OnGLUsed() {
 
 ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial waitSerial,
                                                              Nanoseconds timeout) {
+    Device* device = ToBackend(GetDevice());
+    auto gl = device->GetGL();
     // Search for the first fence >= serial.
     return mFencesInFlight.Use([&](auto fencesInFlight) -> ResultOrError<ExecutionSerial> {
         Ref<WrappedEGLSync> sync;
@@ -194,7 +196,7 @@ ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial wai
 
         // Wait for the fence sync.
         GLenum result;
-        DAWN_TRY_ASSIGN(result, sync->ClientWait(EGL_SYNC_FLUSH_COMMANDS_BIT, timeout));
+        DAWN_TRY_ASSIGN(result, sync->ClientWait(gl, EGL_SYNC_FLUSH_COMMANDS_BIT, timeout));
 
         switch (result) {
             case EGL_TIMEOUT_EXPIRED:
@@ -208,6 +210,8 @@ ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial wai
 }
 
 MaybeError Queue::SubmitFenceSync() {
+    Device* device = ToBackend(GetDevice());
+    auto gl = device->GetGL();
     return mFencesInFlight.Use([&](auto fencesInFlight) -> MaybeError {
         if (!mHasPendingCommands) {
             return {};
@@ -215,12 +219,13 @@ MaybeError Queue::SubmitFenceSync() {
         Device* device = ToBackend(GetDevice());
 
         Ref<WrappedEGLSync> sync;
-        DAWN_TRY_ASSIGN(sync, WrappedEGLSync::Create(device, mEGLSyncType, nullptr));
+        DisplayEGL* display = ToBackend(device->GetPhysicalDevice())->GetDisplay();
+        DAWN_TRY_ASSIGN(sync, WrappedEGLSync::Create(display, gl, mEGLSyncType, nullptr));
 
         // Signal the sync if it is EGL_SYNC_REUSABLE_KHR. On the other hand,
         // EGL_SYNC_FENCE_KHR has its signal scheduled on creation.
         if (mEGLSyncType == EGL_SYNC_REUSABLE_KHR) {
-            DAWN_TRY(sync->Signal(EGL_SIGNALED));
+            DAWN_TRY(sync->Signal(gl, EGL_SIGNALED));
         }
 
         IncrementLastSubmittedCommandSerial();
@@ -232,6 +237,8 @@ MaybeError Queue::SubmitFenceSync() {
 
 ResultOrError<Ref<SharedFence>> Queue::GetOrCreateSharedFence(ExecutionSerial lastUsageSerial,
                                                               wgpu::SharedFenceType type) {
+    Device* device = ToBackend(GetDevice());
+    auto gl = device->GetGL();
     Ref<WrappedEGLSync> sync;
 
     EGLenum requestedSyncType = EGLSyncTypeFromSharedFenceType(type);
@@ -252,23 +259,21 @@ ResultOrError<Ref<SharedFence>> Queue::GetOrCreateSharedFence(ExecutionSerial la
         });
     }
 
-    Device* device = ToBackend(GetDevice());
-
     if (sync == nullptr) {
-        DAWN_TRY_ASSIGN(sync, WrappedEGLSync::Create(device, requestedSyncType, nullptr));
+        DisplayEGL* display = ToBackend(device->GetPhysicalDevice())->GetDisplay();
+        DAWN_TRY_ASSIGN(sync, WrappedEGLSync::Create(display, gl, requestedSyncType, nullptr));
     }
     DAWN_ASSERT(sync != nullptr);
 
     // If we are sharing this sync externally, make sure to flush all commands.
     // The FD cannot be queried before the flush and clients may hang if they try to wait on the
     // sync.
-    const OpenGLFunctions& gl = device->GetGL();
     DAWN_GL_TRY(gl, Flush());
 
     SystemHandle handle;
     if (type == wgpu::SharedFenceType::SyncFD) {
         EGLint fd;
-        DAWN_TRY_ASSIGN(fd, sync->DupFD());
+        DAWN_TRY_ASSIGN(fd, sync->DupFD(gl));
 
         handle = SystemHandle::Acquire(fd);
     }
@@ -290,6 +295,9 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
     // TODO(crbug.com/40643114): Revisit whether this lock is needed for this backend.
     auto deviceGuard = GetDevice()->GetGuard();
 
+    Device* device = ToBackend(GetDevice());
+    auto gl = device->GetGL();
+
     return mFencesInFlight.Use([&](auto fencesInFlight) -> ResultOrError<ExecutionSerial> {
         ExecutionSerial fenceSerial{0};
         while (!fencesInFlight->empty()) {
@@ -298,7 +306,7 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
             // Fence are added in order, so we can stop searching as soon
             // as we see one that's not ready.
             GLenum result;
-            DAWN_TRY_ASSIGN(result, sync->ClientWait(EGL_SYNC_FLUSH_COMMANDS_BIT, Nanoseconds(0)));
+            DAWN_TRY_ASSIGN(result, sync->ClientWait(gl, EGL_SYNC_FLUSH_COMMANDS_BIT, Nanoseconds(0)));
             if (result == EGL_TIMEOUT_EXPIRED) {
                 return fenceSerial;
             }

@@ -62,7 +62,7 @@ ResultOrError<Ref<Buffer>> Buffer::CreateInternalBuffer(Device* device,
 // static
 ResultOrError<Ref<Buffer>> Buffer::Create(Device* device,
                                           const UnpackedPtr<BufferDescriptor>& descriptor) {
-    const OpenGLFunctions& gl = device->GetGL();
+    auto gl = device->GetGL();
 
     GLuint handle = 0;
     DAWN_GL_TRY(gl, GenBuffers(1, &handle));
@@ -177,7 +177,7 @@ MaybeError Buffer::InitializeToZero() {
 
     const uint64_t size = GetAllocatedSize();
     Device* device = ToBackend(GetDevice());
-    const OpenGLFunctions& gl = device->GetGL();
+    auto gl = device->GetGL();
 
     const std::vector<uint8_t> clearValues(size, 0u);
     DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, mBuffer));
@@ -196,7 +196,7 @@ bool Buffer::IsCPUWritableAtCreation() const {
 }
 
 MaybeError Buffer::MapAtCreationImpl() {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    auto gl = ToBackend(GetDevice())->GetGL();
     DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, mBuffer));
     mMappedData = DAWN_GL_TRY_ALWAYS_CHECK(
         gl, MapBufferRange(GL_ARRAY_BUFFER, 0, GetSize(), GL_MAP_WRITE_BIT));
@@ -204,7 +204,7 @@ MaybeError Buffer::MapAtCreationImpl() {
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    auto gl = ToBackend(GetDevice())->GetGL();
 
     // It is an error to map an empty range in OpenGL. We always have at least a 4-byte buffer
     // so we extend the range to be 4 bytes.
@@ -247,7 +247,7 @@ void* Buffer::GetMappedPointerImpl() {
 }
 
 void Buffer::UnmapImpl(BufferState oldState) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    auto gl = ToBackend(GetDevice())->GetGL();
 
     DAWN_GL_TRY_IGNORE_ERRORS(gl, BindBuffer(GL_ARRAY_BUFFER, mBuffer));
     DAWN_GL_TRY_IGNORE_ERRORS(gl, UnmapBuffer(GL_ARRAY_BUFFER));
@@ -255,7 +255,7 @@ void Buffer::UnmapImpl(BufferState oldState) {
 }
 
 void Buffer::DestroyImpl() {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    auto gl = ToBackend(GetDevice())->GetGL();
 
     BufferBase::DestroyImpl();
     DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteBuffers(1, &mBuffer));

@@ -238,7 +238,7 @@ RenderPipeline::~RenderPipeline() = default;
 
 void RenderPipeline::DestroyImpl() {
     RenderPipelineBase::DestroyImpl();
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    auto gl = ToBackend(GetDevice())->GetGL();
     DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteVertexArrays(1, &mVertexArrayObject));
     DAWN_GL_TRY_IGNORE_ERRORS(gl, BindVertexArray(0));
     DeleteProgram(gl);
@@ -254,7 +254,7 @@ VertexAttributeMask RenderPipeline::GetAttributesUsingVertexBuffer(VertexBufferS
 }
 
 MaybeError RenderPipeline::CreateVAOForVertexState() {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    auto gl = ToBackend(GetDevice())->GetGL();
 
     DAWN_GL_TRY(gl, GenVertexArrays(1, &mVertexArrayObject));
     DAWN_GL_TRY(gl, BindVertexArray(mVertexArrayObject));
@@ -288,7 +288,7 @@ MaybeError RenderPipeline::CreateVAOForVertexState() {
 }
 
 MaybeError RenderPipeline::ApplyNow(PersistentPipelineState& persistentPipelineState) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    auto gl = ToBackend(GetDevice())->GetGL();
     DAWN_TRY(PipelineGL::ApplyNow(gl, ToBackend(GetLayout())));
 
     DAWN_ASSERT(mVertexArrayObject);
@@ -319,7 +319,7 @@ MaybeError RenderPipeline::ApplyNow(PersistentPipelineState& persistentPipelineS
             depthBias *= 0.5f;
         }
         float slopeScale = GetDepthBiasSlopeScale();
-        if (gl.PolygonOffsetClamp != nullptr) {
+        if (gl->PolygonOffsetClamp != nullptr) {
             DAWN_GL_TRY(gl, PolygonOffsetClamp(slopeScale, depthBias, GetDepthBiasClamp()));
         } else {
             DAWN_GL_TRY(gl, PolygonOffset(slopeScale, depthBias));

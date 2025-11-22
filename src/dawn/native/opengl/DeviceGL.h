@@ -39,6 +39,7 @@
 #include "dawn/common/Platform.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/QuerySet.h"
+#include "dawn/native/opengl/ContextEGL.h"
 #include "dawn/native/opengl/EGLFunctions.h"
 #include "dawn/native/opengl/Forward.h"
 #include "dawn/native/opengl/GLFormat.h"
@@ -49,8 +50,6 @@ class AHBFunctions;
 }  // namespace dawn::native
 
 namespace dawn::native::opengl {
-
-class ContextEGL;
 
 class Device final : public DeviceBase {
   public:
@@ -74,7 +73,7 @@ class Device final : public DeviceBase {
     MaybeError AddGLWork(Fn&& work) {
         MarkGLUsed();
         if (CanExecuteGLWorkImmediately()) {
-            return work(GetGL(/*makeCurrent=*/false));
+            return work(mGL);
         }
         mPendingGLWorkList.Use([&](auto workList) { workList->push_back(std::forward<Fn>(work)); });
         return {};
@@ -88,10 +87,24 @@ class Device final : public DeviceBase {
         return ExecutePendingGLWork();
     }
 
+    struct OpenGLFunctionsWrapper {
+    public:
+        OpenGLFunctionsWrapper(ContextEGL::ScopedMakeCurrent&& scopedCurrent, const OpenGLFunctions& gl)
+        : mScopedContextCurrent(std::move(scopedCurrent)), mGL(gl) 
+        {}
+
+        operator const OpenGLFunctions&() const { return mGL; }
+
+        const OpenGLFunctions* operator->() const { return &mGL; }
+    private:
+        ContextEGL::ScopedMakeCurrent mScopedContextCurrent;
+        const OpenGLFunctions& mGL;
+    };
+
     // TODO(451928481): remove this from public access once all places are updated to use
     // AddGLWork().
     // Returns all the OpenGL entry points and ensures that the associated GL context is current.
-    const OpenGLFunctions& GetGL(bool makeCurrent = true) const;
+    OpenGLFunctionsWrapper GetGL();
 
     // Helper functions to get access to relevant EGL objects.
     const EGLFunctions& GetEGL(bool makeCurrent) const;

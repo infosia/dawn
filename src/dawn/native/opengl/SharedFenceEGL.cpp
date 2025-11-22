@@ -53,17 +53,23 @@ ResultOrError<Ref<SharedFence>> SharedFenceEGL::Create(
         EGL_NONE,
     };
 
+    DisplayEGL* display = ToBackend(device->GetPhysicalDevice())->GetDisplay();
     Ref<WrappedEGLSync> sync;
-    DAWN_TRY_ASSIGN(sync, WrappedEGLSync::Create(device, EGL_SYNC_NATIVE_FENCE_ANDROID, attribs));
+    EGLint fdForSharedFence;
+
+    auto gl = device->GetGL();
+
+    DAWN_TRY_ASSIGN(
+        sync, WrappedEGLSync::Create(display, gl, EGL_SYNC_NATIVE_FENCE_ANDROID, attribs));
 
     // If EGLSync creation succeeded, the sync now owns the handle.
     handleForSyncCreation.Detach();
 
-    EGLint fdForSharedFence;
-    DAWN_TRY_ASSIGN(fdForSharedFence, sync->DupFD());
+    DAWN_TRY_ASSIGN(fdForSharedFence, sync->DupFD(gl));
 
-    auto fence = AcquireRef(new SharedFenceEGL(device, label, wgpu::SharedFenceType::SyncFD,
-                                               SystemHandle::Acquire(fdForSharedFence), sync));
+    auto fence =
+        AcquireRef(new SharedFenceEGL(device, label, wgpu::SharedFenceType::SyncFD,
+                                        SystemHandle::Acquire(fdForSharedFence), sync));
     return fence;
 #else
     DAWN_UNREACHABLE();
@@ -97,7 +103,8 @@ MaybeError SharedFenceEGL::ServerWait(uint64_t signaledValue) {
     // All GL sync objects are binary, this should be validated at SharedTextureMemory::BeginAccess.
     DAWN_ASSERT(signaledValue == 1);
 
-    DAWN_TRY(mSync->Wait());
+    Device* device = ToBackend(GetDevice());
+    DAWN_TRY(mSync->Wait(device->GetGL()));
     return {};
 }
 
