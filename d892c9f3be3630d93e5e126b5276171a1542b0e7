@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20e0779e_d0f17de8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-22T13:26:00Z",
+      "side": 1,
+      "message": "This reminds me that ANGLE\u0027s rolling of Chromium\u0027s DEPS also auto-regenerates these via https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/scripts/run_code_generation.py;l\u003d139;drc\u003d1443a4519597325536f9598b3837830302bb8f11\nSomething that Chromium-\u003eDawn autoroll will need to do as well.",
+      "revId": "d892c9f3be3630d93e5e126b5276171a1542b0e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
