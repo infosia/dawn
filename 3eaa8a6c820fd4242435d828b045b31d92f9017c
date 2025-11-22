@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d3bedf7_05a75cc8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-22T02:36:08Z",
+      "side": 1,
+      "message": "OK, pretty confident these instructions work now. Have been able to run a significant amount of tests in both 32/64 and 64/32 configurations.\n\nBTW @senorblanco@chromium.org you might be interested in some of these flags that make things run faster on Android.",
+      "revId": "3eaa8a6c820fd4242435d828b045b31d92f9017c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc9ea8da_aba26cf1",
@@ -14,6 +31,30 @@
       "writtenOn": "2025-11-20T17:59:34Z",
       "side": 1,
       "message": "It should be possible (and hopefully pretty trivial) to add compile targets for the tests which build and install this automatically. There is already a target for using `trichrome_chrome_64_32_bundle` https://source.chromium.org/chromium/chromium/src/+/main:tools/perf/chrome_telemetry_build/BUILD.gn;l\u003d164",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 100
+      },
+      "revId": "3eaa8a6c820fd4242435d828b045b31d92f9017c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34c1f032_c0ff6838",
+        "filename": "webgpu-cts/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-22T02:36:08Z",
+      "side": 1,
+      "message": "I assume you mean an alternative to `telemetry_gpu_integration_test_android_webview`? (and thus `bin/run_telemetry_gpu_integration_test_android_webview` which I hadn\u0027t considered at all, I don\u0027t know what it does)\n\nI guess that would make the install slightly easier but unfortunately it\u0027s more complicated than that. The 64_32 and 32_64 don\u0027t specify the bitness of the GPU and renderer, but rather the first one is the \"primary\" bitness (which is used by the renderer), and the secondary one just says \"host apps of both bitnesses are supported\" (the host app runs the GPU process code). So the `adb install --abi` is critical here and I\u0027m not sure how much work it would be to include that part too.\n\nWhat we would really want is like, `--host-abi\u003d32 --renderer-abi\u003d64` or something so we can test all configurations explicitly.",
+      "parentUuid": "bc9ea8da_aba26cf1",
       "range": {
         "startLine": 77,
         "startChar": 7,

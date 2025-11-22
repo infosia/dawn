@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "baeef891_e1f7384f",
+        "filename": "webgpu-cts/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-22T02:36:08Z",
+      "side": 1,
+      "message": "android-webview-instrumentation does not seem to use the system webview. I wonder if there is there a way to change which webview configuration it uses? It would be lovely if we could use a \"webview\" test app that didn\u0027t rely on system state (the current system webview provider).\n\nAlso, is it a problem to run with android-webview instead of android-webview-instrumentation? I don\u0027t know what it does, but that\u0027s what all the GPU tests use, apparently.",
+      "range": {
+        "startLine": 97,
+        "startChar": 15,
+        "endLine": 97,
+        "endChar": 30
+      },
+      "revId": "e82ad1b18da5c75e58ee6c6ac6bb593e43bfefb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
