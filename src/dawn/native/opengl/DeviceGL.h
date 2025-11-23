@@ -88,15 +88,16 @@ class Device final : public DeviceBase {
     }
 
     struct OpenGLFunctionsWrapper {
-    public:
-        OpenGLFunctionsWrapper(ContextEGL::ScopedMakeCurrent&& scopedCurrent, const OpenGLFunctions& gl)
-        : mScopedContextCurrent(std::move(scopedCurrent)), mGL(gl) 
-        {}
+      public:
+        OpenGLFunctionsWrapper(ContextEGL::ScopedMakeCurrent&& scopedCurrent,
+                               const OpenGLFunctions& gl)
+            : mScopedContextCurrent(std::move(scopedCurrent)), mGL(gl) {}
 
         operator const OpenGLFunctions&() const { return mGL; }
 
         const OpenGLFunctions* operator->() const { return &mGL; }
-    private:
+
+      private:
         ContextEGL::ScopedMakeCurrent mScopedContextCurrent;
         const OpenGLFunctions& mGL;
     };
@@ -145,6 +146,10 @@ class Device final : public DeviceBase {
 
     bool MayRequireDuplicationOfIndirectParameters() const override;
     bool ShouldApplyIndexBufferOffsetToFirstIndex() const override;
+
+    bool CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage storageUsage,
+                                                      wgpu::BufferUsage originalUsage,
+                                                      size_t bufferSize) const override;
 
     const AHBFunctions* GetOrLoadAHBFunctions();
 
