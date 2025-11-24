@@ -161,10 +161,8 @@ Device::~Device() {
 MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     // Directly set the context current and use mGL instead of calling GetGL as GetGL will notify
     // the (yet inexistent) queue that GL was used.
-    printf("Device initialize\n");
     ContextEGL::ScopedMakeCurrent scopedCurrentContext;
     DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
-
     mContext->RequestRequiredExtensionsExplicitly();
 
     const OpenGLFunctions& gl = mGL;

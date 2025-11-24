@@ -104,7 +104,6 @@ ContextEGL::~ContextEGL() {
     }
     if (mState.context != EGL_NO_CONTEXT) {
         if (mState.context == mDisplay->egl.GetCurrentContext()) {
-            fprintf(stderr, "thread %08lx ContextEGL::~ContextEGL unmaking current context\n", pthread_self());
             mDisplay->egl.MakeCurrent(mDisplay->GetDisplay(), EGL_NO_SURFACE, EGL_NO_SURFACE,
                                       EGL_NO_CONTEXT);
         }
@@ -265,7 +264,6 @@ bool ContextEGL::IsInScopedMakeCurrent() const {
 }
 
 void ContextEGL::DeprecatedMakeCurrent() {
-    fprintf(stderr, "thread %08lx DeprecatedMakeCurrent, context %p\n", pthread_self(), mState.context);
     IgnoreErrors(MakeContextCurrent(mDisplay.Get(), mState));
 }
 
@@ -307,7 +305,6 @@ ContextEGL::ScopedMakeCurrent::ScopedMakeCurrent(ScopedMakeCurrent&& src)
     : mContext(std::move(src.mContext)),
       mPrevState(std::move(src.mPrevState)),
       mLock(std::move(src.mLock)) {
-    fprintf(stderr, "move-constructing ScopedMakeCurrent %p from %p\n", this, &src);
     src.mContext = nullptr;
 }
 
@@ -315,7 +312,6 @@ ContextEGL::ScopedMakeCurrent& ContextEGL::ScopedMakeCurrent::operator=(ScopedMa
     if (&src == this) {
         return *this;
     }
-    fprintf(stderr, "assign-constructing ScopedMakeCurrent %p from %p\n", this, &src);
     mContext = std::move(src.mContext);
     src.mContext = nullptr;
     mPrevState = std::move(src.mPrevState);
@@ -340,10 +336,8 @@ MaybeError ContextEGL::ScopedMakeCurrent::Initialize() {
     mPrevState.readSurface = mContext->mDisplay->egl.GetCurrentSurface(EGL_READ);
 
     if (mPrevState != mContext->mState) {
-        fprintf(stderr, "thread %08lx ScopedMakeCurrent %p Initialize making %p current\n", pthread_self(), this, mContext->mState.context);
         auto result = MakeContextCurrent(mContext->mDisplay.Get(), mContext->mState);
         if (DAWN_UNLIKELY(result.IsError())) {
-            fprintf(stderr, "*** MakeContextCurrent failed!\n");
             mContext = nullptr;
             return result;
         }
@@ -360,13 +354,10 @@ MaybeError ContextEGL::ScopedMakeCurrent::End() {
     MaybeError result;
     if (mContext->mBindContextOnlyDuringUse && mPrevState != mContext->mState) {
         // Unmake current this context so that other threads can use it.
-        fprintf(stderr, "thread %08lx ScopedMakeCurrent %p End making nil current\n", pthread_self(), this);
-//        fprintf(stderr, "thread %08lx ScopedMakeCurrent %p End making %p current\n", pthread_self(), this, mPrevState.context);
         auto display = mContext->mDisplay.Get();
         display->egl.MakeCurrent(display->GetDisplay(), EGL_NO_SURFACE, EGL_NO_SURFACE,
                                       EGL_NO_CONTEXT);
         result = {};
-//        result = MakeContextCurrent(mContext->mDisplay.Get(), mPrevState);
     }
     gCurrentContextInScope = nullptr;
     mContext = nullptr;
