@@ -35,6 +35,7 @@
 #include "dawn/native/RenderBundle.h"
 #include "dawn/native/RenderPipeline.h"
 #include "dawn/native/Texture.h"
+#include "dawn/native/wgpu_structs_autogen.h"
 
 namespace dawn::native {
 
@@ -466,6 +467,14 @@ TextureCopy::TextureCopy() = default;
 TextureCopy::TextureCopy(const TextureCopy&) = default;
 TextureCopy& TextureCopy::operator=(const TextureCopy&) = default;
 TextureCopy::~TextureCopy() = default;
+
+const TexelBlockInfo& GetBlockInfo(const TextureCopy& t) {
+    return t.texture->GetFormat().GetAspectInfo(t.aspect).block;
+}
+
+const TexelBlockInfo& GetBlockInfo(const TexelCopyTextureInfo& t) {
+    return t.texture->GetFormat().GetAspectInfo(t.aspect).block;
+}
 
 CopyBufferToBufferCmd::CopyBufferToBufferCmd() = default;
 CopyBufferToBufferCmd::~CopyBufferToBufferCmd() = default;
