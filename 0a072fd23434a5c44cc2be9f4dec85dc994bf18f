@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84622016_0b1a2096",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-24T19:36:00Z",
+      "side": 1,
+      "message": "As discussed offline, I added TODOs on the conversion functions from strong to weak types to remove these conversion functions, otherwise we will end up with too many TODOs peppered throughout the codebase. In order to remove these strong-to-weak conversion functions, we will have to address instances like this so that they use strong types - and that usually means working in blocks.",
+      "parentUuid": "208d2d63_34187d68",
+      "revId": "0a072fd23434a5c44cc2be9f4dec85dc994bf18f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dcb56c92_92f36b05",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-11-24T10:03:05Z",
       "side": 1,
       "message": "Are all of these ToTexelBlockInfo temporary until `ValidateLinearTextureCopyOffset` and friends take a TypedBlockInfo?",
+      "revId": "0a072fd23434a5c44cc2be9f4dec85dc994bf18f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87fec556_d2cf1152",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1705,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-24T19:36:00Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "dcb56c92_92f36b05",
       "revId": "0a072fd23434a5c44cc2be9f4dec85dc994bf18f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "86aef889_7810a431",
+        "filename": "src/dawn/native/CommandValidation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-24T19:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeaead33_3a1eeec6",
+      "revId": "0a072fd23434a5c44cc2be9f4dec85dc994bf18f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ea3b18c_72843d63",
@@ -65,6 +119,30 @@
       "writtenOn": "2025-11-24T10:03:05Z",
       "side": 1,
       "message": "Do we have a TODO to convert `GetMipLevelSingleSubresourcePhysicalSize` to return a number of blocks?",
+      "range": {
+        "startLine": 1274,
+        "startChar": 24,
+        "endLine": 1274,
+        "endChar": 64
+      },
+      "revId": "0a072fd23434a5c44cc2be9f4dec85dc994bf18f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "003669aa_de97834e",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-24T19:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ea3b18c_72843d63",
       "range": {
         "startLine": 1274,
         "startChar": 24,
@@ -111,6 +189,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f5d32dfb_4357d263",
+        "filename": "src/dawn/native/vulkan/UtilsVulkan.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-24T19:36:00Z",
+      "side": 1,
+      "message": "Yeah, I see what you mean. We could do this as follow-up. I added a TODO in the code.\n\nI will say that the only thing that bothers me about using `BufferCopy` in cases like [1] is that we don\u0027t populate the `buffer` member because we only need the offset, blocksPerRow, and rowsPerImage. I don\u0027t know if we want to split that out as `BufferCopyInfo` or something.",
+      "parentUuid": "ee3e23eb_1e28efe0",
+      "revId": "0a072fd23434a5c44cc2be9f4dec85dc994bf18f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "18e1df9f_11ac0682",
         "filename": "src/dawn/native/vulkan/UtilsVulkan.h",
         "patchSetId": 4
@@ -122,6 +218,30 @@
       "writtenOn": "2025-11-24T10:03:05Z",
       "side": 1,
       "message": "It could be worth making these TexelExtent3D to make it clear that Vulkan requires a number of texels. Or we do the conversion inside the function such that callers pass blocks and the detail that Vulkan expects texels is hidden inside the function. (the latter is probably better)",
+      "range": {
+        "startLine": 130,
+        "startChar": 53,
+        "endLine": 130,
+        "endChar": 61
+      },
+      "revId": "0a072fd23434a5c44cc2be9f4dec85dc994bf18f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "143c188a_e7cab1be",
+        "filename": "src/dawn/native/vulkan/UtilsVulkan.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-24T19:36:00Z",
+      "side": 1,
+      "message": "I went with making it `BlockExtent3D` and updated call sites.",
+      "parentUuid": "18e1df9f_11ac0682",
       "range": {
         "startLine": 130,
         "startChar": 53,
