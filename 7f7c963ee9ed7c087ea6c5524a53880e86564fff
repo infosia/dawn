@@ -105,6 +105,24 @@
       "parentUuid": "622cbc1e_3e589e52",
       "revId": "7f7c963ee9ed7c087ea6c5524a53880e86564fff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01f88a2e_b4a32d15",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2354,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-24T12:34:18Z",
+      "side": 1,
+      "message": "FYI I\u0027ve tried it locally in the CTS and here\u0027s the error I get indeed: \n```\nEXCEPTION: Error: Unexpected validation error occurred: \n  depthLoadOp (LoadOp::Undefined) must be set to LoadOp::Clear if the attachment\n  ([TextureView of Texture (unlabeled 1x1 px, TextureFormat::Stencil8)]) usage\n  (TextureUsage::(RenderAttachment|TransientAttachment)) has the transient\n  attachment bit set.\n```",
+      "parentUuid": "d0fed651_dd38cd44",
+      "revId": "7f7c963ee9ed7c087ea6c5524a53880e86564fff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
