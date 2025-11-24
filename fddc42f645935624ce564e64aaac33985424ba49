@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "825529bd_90ec7cff",
+        "filename": "tools/src/gerrit/gerrit.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-24T20:49:12Z",
+      "side": 1,
+      "message": "Needs to be changed to `GerritInterface`?",
+      "range": {
+        "startLine": 48,
+        "startChar": 16,
+        "endLine": 48,
+        "endChar": 29
+      },
+      "revId": "fddc42f645935624ce564e64aaac33985424ba49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fca6374e_8be8ebf3",
+        "filename": "tools/src/gerrit/gerrit.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-24T20:49:12Z",
+      "side": 1,
+      "message": "Should be returning a `GerritInterface` in order for dependency injection to work, not a concrete `gerrit.Client`",
+      "range": {
+        "startLine": 119,
+        "startChar": 63,
+        "endLine": 119,
+        "endChar": 76
+      },
+      "revId": "fddc42f645935624ce564e64aaac33985424ba49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39ec0c17_87b8d60a",
+        "filename": "tools/src/gerrit/gerrit.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-24T20:49:12Z",
+      "side": 1,
+      "message": "`GerritInterfaceFactory` or `GerritFactory` ?",
+      "range": {
+        "startLine": 119,
+        "startChar": 5,
+        "endLine": 119,
+        "endChar": 18
+      },
+      "revId": "fddc42f645935624ce564e64aaac33985424ba49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c9bdcc5_876cab2f",
+        "filename": "tools/src/gerrit/gerrit.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-24T20:49:12Z",
+      "side": 1,
+      "message": "Nit: Define this directly via `func DefaultClientFactory`. We don\u0027t plan on using moneky patching in tests, so it should not be needed to be stored in a variable.",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 3
+      },
+      "revId": "fddc42f645935624ce564e64aaac33985424ba49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40ecb36c_79dcecf1",
+        "filename": "tools/src/gerrit/gerrit.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-24T20:49:12Z",
+      "side": 1,
+      "message": "Nit: `RealClientFactory` to stay consistent with other dependency injection we have in this codebase.",
+      "range": {
+        "startLine": 122,
+        "startChar": 4,
+        "endLine": 122,
+        "endChar": 24
+      },
+      "revId": "fddc42f645935624ce564e64aaac33985424ba49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d20d274e_dcf104ae",
+        "filename": "tools/src/gerrit/gerrit.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-24T20:49:12Z",
+      "side": 1,
+      "message": "`CreateGerrit` ?",
+      "range": {
+        "startLine": 384,
+        "startChar": 5,
+        "endLine": 384,
+        "endChar": 15
+      },
+      "revId": "fddc42f645935624ce564e64aaac33985424ba49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfc54787_376d2430",
+        "filename": "tools/src/gerrit/gerrit.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-24T20:49:12Z",
+      "side": 1,
+      "message": "Ideally this would be an implementation detail of the real implementation so that we don\u0027t have to care about it for testing.\n\nI believe this should be doable by making the factory for the `Gerrit` struct instead of the underlying client. This will require changing some other code so that the factory for the real implementation is provided when actually using these tools.\n\nThis is typically done by passing in the real version from `main()`, either [directly](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/tools/src/cmd/tests/main.go;l\u003d102) or as part of a [config struct](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/tools/src/cmd/run-cts/main.go;l\u003d48).",
+      "range": {
+        "startLine": 385,
+        "startChar": 1,
+        "endLine": 385,
+        "endChar": 78
+      },
+      "revId": "fddc42f645935624ce564e64aaac33985424ba49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
