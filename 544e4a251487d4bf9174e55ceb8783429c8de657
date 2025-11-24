@@ -176,6 +176,24 @@
       "parentUuid": "f263949e_e93906e1",
       "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fd93227_48d8ba70",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-11-24T16:25:24Z",
+      "side": 1,
+      "message": "It\u0027s not just for override or not. It is meant to match other decisions we have made along similar lines like image formats and compat errors. Any shader module should be able to be compiled, but the pipeline creation fails if the device doesn\u0027t support the required features. So a user could create a module with many entry points and then only use the ones that are supported.",
+      "parentUuid": "59729413_1598044d",
+      "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
