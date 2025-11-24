@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94dd8d24_827997e5",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2337,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T11:04:25Z",
+      "side": 1,
+      "message": "nit: usually we put load first and store second since that\u0027s the order they happen in the render pass. Also a comment before each block noting what changes would help.",
+      "revId": "7f7c963ee9ed7c087ea6c5524a53880e86564fff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e027a00_c844299d",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2354,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T11:04:25Z",
+      "side": 1,
+      "message": "Does this reflect the changes in https://github.com/gpuweb/gpuweb/pull/5454?",
+      "revId": "7f7c963ee9ed7c087ea6c5524a53880e86564fff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
