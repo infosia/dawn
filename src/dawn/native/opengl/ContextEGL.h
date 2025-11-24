@@ -106,6 +106,9 @@ class ContextEGL : NonMovable {
 
     ResultOrError<ScopedMakeCurrent> MakeCurrent();
 
+    void Lock();
+    void Unlock();
+
   private:
     explicit ContextEGL(Ref<DisplayEGL> display, bool bindContextOnlyDuringUse);
 

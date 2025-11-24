@@ -224,7 +224,6 @@ class Device final : public DeviceBase {
 #if DAWN_PLATFORM_IS(ANDROID)
     std::unique_ptr<AHBFunctions> mAHBFunctions;
 #endif  // DAWN_PLATFORM_IS(ANDROID)
-    mutable std::mutex mGLMutex;
     mutable uint32_t mGLLockCount = 0u;
     mutable EGLContext mPrevContext = EGL_NO_CONTEXT;
     mutable EGLSurface mPrevDrawSurface = EGL_NO_SURFACE;

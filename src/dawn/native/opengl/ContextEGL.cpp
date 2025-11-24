@@ -366,4 +366,14 @@ ResultOrError<ContextEGL::ScopedMakeCurrent> ContextEGL::MakeCurrent() {
     return std::move(scopedMakeCurrent);
 }
 
+void ContextEGL::Lock() {
+    printf("thread %lu locking in ContextEGL::Lock()\n", pthread_self());
+    mExclusiveMakeCurrentMutex.lock();
+}
+
+void ContextEGL::Unlock() {
+    printf("thread %lu unlocking in ContextEGL::Unlock()\n", pthread_self());
+    mExclusiveMakeCurrentMutex.unlock();
+}
+
 }  // namespace dawn::native::opengl

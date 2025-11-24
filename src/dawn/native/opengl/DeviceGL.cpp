@@ -575,7 +575,7 @@ GLLock Device::GetGL(bool makeCurrent) const {
 
 void Device::LockGL(bool makeCurrent) const {
     if (mGLLockCount == 0) {
-        mGLMutex.lock();
+        mContext->Lock();
         if (makeCurrent) {
             auto display = ToBackend(GetPhysicalDevice())->GetDisplay();
             mPrevContext = display->egl.GetCurrentContext();
@@ -596,7 +596,7 @@ void Device::UnlockGL(bool makeCurrent) const {
             display->egl.MakeCurrent(display->GetDisplay(), mPrevDrawSurface, mPrevReadSurface,
                                      mPrevContext);
         }
-        mGLMutex.unlock();
+        mContext->Lock();
     }
 }
 
