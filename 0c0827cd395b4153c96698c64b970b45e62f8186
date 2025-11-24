@@ -69,6 +69,24 @@
       "parentUuid": "3c9abb41_62e2da91",
       "revId": "0c0827cd395b4153c96698c64b970b45e62f8186",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fc3d5a8_258e7286",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-11-24T16:01:02Z",
+      "side": 1,
+      "message": "The flags allows the implementation to choose the size, but requires it to make it consistent. Without this, the implementation can report a bogus size (which Intel driver would) based on the solely on the limit in the spec. It is varying as opposed to a specific size and different from requiring full subgroups.",
+      "parentUuid": "64d5f112_fbf1c8f9",
+      "revId": "0c0827cd395b4153c96698c64b970b45e62f8186",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
