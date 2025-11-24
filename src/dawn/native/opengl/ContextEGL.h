@@ -127,7 +127,7 @@ class ContextEGL : NonMovable {
     // Flag to allow this context to be used on multiple threads. A GL context cannot be used on
     // multiple threads at the same time. But if one thread locks the context, then unbinds it, that
     // will allow the context to be used on another thread.
-    const bool mBindContextOnlyDuringUse = false;
+    const bool mBindContextOnlyDuringUse = true;
 };
 
 }  // namespace dawn::native::opengl

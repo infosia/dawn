@@ -569,7 +569,6 @@ const AHBFunctions* Device::GetOrLoadAHBFunctions() {
 GLLock Device::GetGL(bool makeCurrent) const {
     ContextEGL::ScopedMakeCurrent scopedCurrentContext;
     auto result = mContext->MakeCurrent();
-    DAWN_ASSERT(!result.IsError());
     scopedCurrentContext = result.AcquireSuccess();
 
     return GLLock(std::move(scopedCurrentContext), mGL);
