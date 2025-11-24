@@ -1076,6 +1076,7 @@ def compute_kotlin_params(loaded_json, kotlin_json, webgpu_json_data=None):
         'language': 'kotlin',
         'kdocs_blocklist': kotlin_json['kdocs_blocklist'],
         'kdocs_replacements': kotlin_json['kdocs_replacements'],
+        'toggle_kdoc_warn_logs': kotlin_json['toggle_kdoc_warn_logs'],
     }
     params_kotlin['kdocs'] = build_doc_map(by_category=by_category,
                                            json_data=webgpu_json_data,

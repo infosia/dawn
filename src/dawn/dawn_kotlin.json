@@ -117,5 +117,6 @@
                 "omitted": true
             }
         }
-    }
+    },
+    "toggle_kdoc_warn_logs": true
 }
