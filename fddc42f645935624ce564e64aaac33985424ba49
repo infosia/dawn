@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "54c771e8_b0b40cfb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-24T21:37:34Z",
+      "side": 1,
+      "message": "I don\u0027t know if this works correctly when submitting via GitHub, but if possible, please add `Bug: 460178080` to the CL description so that the CL gets associated with the bug once it\u0027s submitted.",
+      "revId": "fddc42f645935624ce564e64aaac33985424ba49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "825529bd_90ec7cff",
         "filename": "tools/src/gerrit/gerrit.go",
         "patchSetId": 1
