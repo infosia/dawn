@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e4cafc7_06c60e0e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-24T16:44:04Z",
+      "side": 1,
+      "message": "This is landed now, yea?",
+      "revId": "8c105bf7fc967a0f9d2116d364033618e85cc0e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f262e3fd_c24a5ddf",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-24T16:44:04Z",
+      "side": 1,
+      "message": "Hm, this loop doesn\u0027t quite seem correct? We reset encountered_error to false at the top of the loop. So, if we had 2 configs for the device, where the second config has a different `configCount` and the first config has an error. We\u0027d encounter the error, continue, reset to false, continue again, and exit. Failing to report the error?",
+      "range": {
+        "startLine": 620,
+        "startChar": 0,
+        "endLine": 620,
+        "endChar": 38
+      },
+      "revId": "8c105bf7fc967a0f9d2116d364033618e85cc0e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b2f38fc_75721908",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-24T16:44:04Z",
+      "side": 1,
+      "message": "Isn\u0027t it possible for two drivers of the same device to have configs of the same size but the configs differ? Like, they both have 3 items but one is 8, 8, 32 and another is 16, 16, 32 or something?",
+      "revId": "8c105bf7fc967a0f9d2116d364033618e85cc0e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a837cd8_0f6007fc",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-24T16:44:04Z",
+      "side": 1,
+      "message": "```suggestion\n            // If there was no error then all of the configs for this device match.\n            // We\u0027re done, and can break out at this point. In the case of a config\n            // error we keep looking at any other configs for this device.\n            if (!encountered_error) {\n                // A device with a matching matrix config.\n```",
+      "range": {
+        "startLine": 639,
+        "startChar": 0,
+        "endLine": 640,
+        "endChar": 58
+      },
+      "revId": "8c105bf7fc967a0f9d2116d364033618e85cc0e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

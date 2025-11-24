@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f54bebe6_b33382c1",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-24T16:44:04Z",
+      "side": 0,
+      "message": "Unrelated?",
+      "revId": "026bc053ee69caf59c9767756415560327cd4169",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
