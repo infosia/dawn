@@ -35,6 +35,46 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8a47bcb_7f2399e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-24T18:26:25Z",
+      "side": 1,
+      "message": "LGTM from me.  I\u0027d like Geoff to weigh in for the ANGLE aspect.",
+      "revId": "728988fd2aa386569d9b412b730eca9a56f4d1ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71745956_4d997d00",
+        "filename": "infra/specs/ci.json",
+        "patchSetId": 19
+      },
+      "lineNbr": 2450,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-24T18:26:25Z",
+      "side": 1,
+      "message": "Microsoft tells us the driver version 31.0.121.1 is good.\n\n(Email Oct 17, Yang sent email to chrome-webgraphics@chromium.org, saying ..121.1 is released to the public.  Earlier email said anything from 117 onward is good.)",
+      "range": {
+        "startLine": 2450,
+        "startChar": 30,
+        "endLine": 2450,
+        "endChar": 41
+      },
+      "revId": "728988fd2aa386569d9b412b730eca9a56f4d1ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1b4aeb1_b30c8763",
@@ -48,6 +88,30 @@
       "writtenOn": "2025-11-24T17:35:23Z",
       "side": 1,
       "message": "Note that this effectively limits the testing to D3D11 and D3D12 backends, removing Vulkan and OpenGLES_ANGLE testing, which I had mostly passing during the UAT, e.g. in https://ci.chromium.org/ui/p/chromium/builders/try.shadow/gpu-fyi-try-win11-qualcomm-rel-64/40/overview.\n\nI\u0027d like Dawn and ANGLE folks to sign this off.\n@dneto@google.com as you were involved in Microsoft/Qualcomm discussions\n@senorblanco@chromium.org for OpenGLES (compat)\n@geofflang@chromium.org for additional ANGLE coverage",
+      "range": {
+        "startLine": 119,
+        "startChar": 51,
+        "endLine": 119,
+        "endChar": 83
+      },
+      "revId": "728988fd2aa386569d9b412b730eca9a56f4d1ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16a1bcb4_58b815b3",
+        "filename": "infra/specs/mixins.pyl",
+        "patchSetId": 19
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-24T18:26:25Z",
+      "side": 1,
+      "message": "Vulkan is not a supported backend on Windows Chrome.\nCompat for D3D11 is a whole separate project not yet started for real.",
+      "parentUuid": "d1b4aeb1_b30c8763",
       "range": {
         "startLine": 119,
         "startChar": 51,
