@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6762a26f_1f2f3822",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-24T18:27:06Z",
+      "side": 1,
+      "message": "Can there be multiple chained `BindingGroupDynamicBindingArray` items?\n\nIf yes, we\u0027ll get the smallest of all of them, is that what\u0027s expected?\n\nIf no, the `if` on 908 can break after calculating dynamicArraySize so we don\u0027t iterate the whole list for no reason.",
+      "revId": "c10cd8f584b34a88c36d2a06e1b33eeee5ef86e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5721284d_09d93ad7",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-24T18:27:06Z",
+      "side": 1,
+      "message": "The size is the binding index?",
+      "revId": "c10cd8f584b34a88c36d2a06e1b33eeee5ef86e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f686bbd2_03725a6a",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-24T18:27:06Z",
+      "side": 1,
+      "message": "The checks in here some almost a duplicate of the APIUpdate checks. Any benefit to combining them so they stay in sync or are they expected to have differences in the future that make combining problematic?",
+      "revId": "c10cd8f584b34a88c36d2a06e1b33eeee5ef86e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
