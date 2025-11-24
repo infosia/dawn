@@ -123,6 +123,24 @@
       "parentUuid": "d0fed651_dd38cd44",
       "revId": "7f7c963ee9ed7c087ea6c5524a53880e86564fff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b2e4a98_fe38b874",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2354,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-24T13:40:37Z",
+      "side": 1,
+      "message": "I\u0027ve updated this CL (behaviour+tests) and https://github.com/gpuweb/cts/pull/4508 with your feedback.",
+      "parentUuid": "01f88a2e_b4a32d15",
+      "revId": "7f7c963ee9ed7c087ea6c5524a53880e86564fff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
