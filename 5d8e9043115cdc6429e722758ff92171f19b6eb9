@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "367db20e_8ef1c085",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-24T09:36:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22043c03_e99a2c62",
+      "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a577606_16c05cc3",
@@ -225,6 +243,24 @@
       "side": 1,
       "message": "Uh nevermind then, let\u0027s skip adding the `ASSERT` then.",
       "parentUuid": "f4efd1ec_36bcf50b",
+      "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ddaf7fa_e86e83ec",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-24T09:36:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b72fda1_2e7f807e",
       "revId": "5d8e9043115cdc6429e722758ff92171f19b6eb9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

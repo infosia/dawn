@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "54be3681_1477be19",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-24T09:36:59Z",
+      "side": 1,
+      "message": "Actually we don\u0027t have a string to provide here, since `WGPUDevice DawnTestBase::CreateDeviceImpl` (and further `WGPUDevice dawn::native::Adapter::CreateDevice`) only return a pointer but no message string. \n\nIn the [previous patchset](https://dawn-review.googlesource.com/c/dawn/+/273074/6) I tried to hook the logging callback of instance to get such messages provided through `InstanceBase::ConsumedError`, but it might not be worthy to do that since we don\u0027t need to parse that message now.",
+      "parentUuid": "33bbbd9a_187d2f51",
+      "range": {
+        "startLine": 851,
+        "startChar": 74,
+        "endLine": 851,
+        "endChar": 96
+      },
+      "revId": "4eeffb214f5d5e5b9887caacf9e25ac5db43e53b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "023eb695_feccb0ff",
         "filename": "src/dawn/tests/DawnTest.cpp",
         "patchSetId": 9
@@ -37,6 +61,30 @@
       "writtenOn": "2025-11-21T18:46:04Z",
       "side": 1,
       "message": "I think we should move this to be conditional inside the callback below, i.e something like:\n\n```\nadapter.RequestDevice(\n  \u0026deviceDesc,\n  wgpu::CallbackMode::AllowSpontaneous,\n  [\u0026apiDevice](wgpu::RequestDeviceStatus status,\n               wgpu::Device result,\n               wgpu::StringView) { \n                 if (status \u003d\u003d wgpu::RequestDeviceStatus::Succcess) {\n                   apiDevice \u003d std::move(result);\n                 } else {\n                   EXPECT_CALL(\n                     mDeviceLostCallback,\n                     Call(_, wgpu::DeviceLostReason::FailedCreation, _))\n                   .Times(AtMost(1))\n                   .RetiresOnSaturation();\n                 }\n               }\n);\n```",
+      "range": {
+        "startLine": 1292,
+        "startChar": 4,
+        "endLine": 1296,
+        "endChar": 31
+      },
+      "revId": "4eeffb214f5d5e5b9887caacf9e25ac5db43e53b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d365221b_307f6d37",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-11-24T09:36:59Z",
+      "side": 1,
+      "message": "Unfortunately the expectation of `mDeviceLostCallback` with `DeviceLostReason::FailedCreation` have to go before the `adapter.RequestDevice`, because if device creation failed the device lost callback will be called before the RequestDevice callback.\n\nMeanwhile, I have move the following logic into the RequestDevice callback, and also assert the calling count of `mDeviceLostCallback(_, wgpu::DeviceLostReason::FailedCreation, _)` in that callback.",
+      "parentUuid": "023eb695_feccb0ff",
       "range": {
         "startLine": 1292,
         "startChar": 4,
