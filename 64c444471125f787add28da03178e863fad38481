@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7715c43b_355d7677",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-24T12:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46452e4d_574703bc",
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f159882b_e0639f72",
@@ -65,6 +83,30 @@
       "writtenOn": "2025-11-20T17:38:04Z",
       "side": 1,
       "message": "[2] nit. We could add an `ASSERT` in this function that `caps !\u003d Cap::None`.",
+      "range": {
+        "startLine": 221,
+        "startChar": 75,
+        "endLine": 221,
+        "endChar": 83
+      },
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "276ac1c0_5cf174e0",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-24T12:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f159882b_e0639f72",
       "range": {
         "startLine": 221,
         "startChar": 75,
@@ -128,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e19ebb43_be247a27",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-24T12:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e534a2fa_e60ee20f",
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11fdc607_a64481fa",
@@ -163,6 +223,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7b540b2_06bd8b67",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-24T12:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf003471_90dffea6",
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "917cbe9f_dc8f2780",
@@ -176,6 +254,24 @@
       "writtenOn": "2025-11-20T18:13:27Z",
       "side": 1,
       "message": "This conversion can be done once after we handled adding all the caps.",
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81f08099_73afa48d",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-24T12:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "917cbe9f_dc8f2780",
       "revId": "64c444471125f787add28da03178e863fad38481",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -229,6 +325,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3e8fbbf1_1767ae79",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-24T12:29:26Z",
+      "side": 1,
+      "message": "In the original Format.cpp, R8Snorm, RG8Snorm, RG11B10Ufloat, and RGB9E5Ufloat are always considered supported — even with Cap::None capabilities (no features enabled).",
+      "parentUuid": "1e252a0a_455f5489",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 25
+      },
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "97995474_f6fcd4a2",
         "filename": "src/dawn/native/Format.cpp",
         "patchSetId": 16
@@ -264,6 +384,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f33c7db8_d961c743",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-24T12:29:26Z",
+      "side": 1,
+      "message": "As I mention before, R8Snorm、 RG8Snorm、RG11B10Ufloat and RGB9E5Ufloat are always considered supported even if their capabilities are Cap::None. Therefore, I think that we can\u0027t ASSERT that all formats with Caps::None are marked unsupported at the end of the function.",
+      "parentUuid": "e2c2e072_488bd397",
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d2590ec5_4bebcd8f",
         "filename": "src/dawn/native/Format.cpp",
         "patchSetId": 16
@@ -275,6 +413,24 @@
       "writtenOn": "2025-11-20T13:31:54Z",
       "side": 1,
       "message": "We shouldn\u0027t be adding Caps for formats that are not supported. Are there places where this condition is not true at the moment?",
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8715eab4_a4b0b482",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-24T12:29:26Z",
+      "side": 1,
+      "message": "You\u0027re right, this if statement shouldn\u0027t exist.",
+      "parentUuid": "d2590ec5_4bebcd8f",
       "revId": "64c444471125f787add28da03178e863fad38481",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -313,6 +469,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "09e40a45_6eade9ac",
+        "filename": "src/dawn/native/Format.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-24T12:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ccd08a6_448b259d",
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05dc6861_5dd005d0",
@@ -336,6 +510,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5e7a336_c3206013",
+        "filename": "src/dawn/native/Format.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-24T12:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05dc6861_5dd005d0",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 57
+      },
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56e928a0_6d0f1821",
@@ -349,6 +547,24 @@
       "writtenOn": "2025-11-20T13:31:54Z",
       "side": 1,
       "message": "nit: instead of just \u003d\u003d, we can use defaulting of `operator \u003c\u003d\u003e` in the structs directly. (or operator \u003d\u003d if that \u003c\u003d\u003e fails for some reason)",
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28dfb160_16bf44a5",
+        "filename": "src/dawn/native/Format.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-24T12:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56e928a0_6d0f1821",
       "revId": "64c444471125f787add28da03178e863fad38481",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -384,6 +600,24 @@
       "side": 1,
       "message": "Honestly, if possible, I think it would be better to do that in this change together, given that otherwise it\u0027s fairly confusing for someone looking at it.",
       "parentUuid": "d81f09cc_ac7bd0dd",
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7383530c_2640f902",
+        "filename": "src/dawn/native/Format.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-24T12:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d360125_0a66080b",
       "revId": "64c444471125f787add28da03178e863fad38481",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
