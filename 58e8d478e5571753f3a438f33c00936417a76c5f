@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37788d7c_5a2540ae",
+        "filename": "src/dawn/tests/unittests/validation/RenderPipelineValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2375,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-24T10:44:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "133bb757_7f29916d",
+      "revId": "58e8d478e5571753f3a438f33c00936417a76c5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b9288921_cab54952",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-11-21T11:16:45Z",
       "side": 1,
       "message": "Instead of checking the error message (which risks changing over time), can we have both a control case and an error case in the same test?",
+      "revId": "58e8d478e5571753f3a438f33c00936417a76c5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3c9962f_f12a95d7",
+        "filename": "src/dawn/tests/unittests/validation/RenderPipelineValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2493,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-24T10:44:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9288921_cab54952",
       "revId": "58e8d478e5571753f3a438f33c00936417a76c5f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
