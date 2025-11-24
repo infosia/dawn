@@ -16,6 +16,23 @@
       "message": "Still LGTM",
       "revId": "93963825caf0006150627a5f09473dd89911e4e4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ecda046_5d1ce5b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T16:52:56Z",
+      "side": 1,
+      "message": "PTAL Loko, for some reason the review enforcement failed.",
+      "revId": "93963825caf0006150627a5f09473dd89911e4e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
