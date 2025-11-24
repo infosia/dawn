@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9260bef_02b8080c",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-24T13:31:30Z",
+      "side": 1,
+      "message": "Is it actually possible for there to be camelCase names in method_docs? Doesn\u0027t this derive directly from dawn.json which is camel_case only?",
+      "range": {
+        "startLine": 516,
+        "startChar": 46,
+        "endLine": 517,
+        "endChar": 45
+      },
+      "revId": "98b9d6b84633dd414b76645802604884cd00db84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
