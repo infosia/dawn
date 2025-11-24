@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5895970b_8d588496",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T10:14:35Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "8217f32c591dfaf9d563b040b6057c897111eb1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c4022ff_d01a316c",
+        "filename": "src/dawn/native/SystemEvent.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T10:14:35Z",
+      "side": 1,
+      "message": "ditto in `dawn::native`, we shouldn\u0027t need to write `dawn::`",
+      "revId": "8217f32c591dfaf9d563b040b6057c897111eb1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea6fae89_4850537d",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T10:14:35Z",
+      "side": 1,
+      "message": "This seems incorrect and no longer needed in the latest patch?",
+      "revId": "8217f32c591dfaf9d563b040b6057c897111eb1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e196803_9d9c0a75",
+        "filename": "src/dawn/tests/end2end/VideoViewsTests_win.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T10:14:35Z",
+      "side": 1,
+      "message": "note: `dawn::` is unnecessary here and in other test files.",
+      "revId": "8217f32c591dfaf9d563b040b6057c897111eb1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4db40e8a_569b1fa5",
+        "filename": "src/dawn/utils/SystemHandle.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T10:14:35Z",
+      "side": 1,
+      "message": "This SGTM. If we start to have situation where we need to handle errors in Duplicate or Close, we can always add an optional argument that swallows the error in a boolean instead of CHECKing.",
+      "revId": "8217f32c591dfaf9d563b040b6057c897111eb1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc224866_1e18df2e",
+        "filename": "src/dawn/utils/WindowsDebugLogger.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T10:14:35Z",
+      "side": 1,
+      "message": "Why is this type alias required? We already are in the `dawn::utils` namespace.",
+      "revId": "8217f32c591dfaf9d563b040b6057c897111eb1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
