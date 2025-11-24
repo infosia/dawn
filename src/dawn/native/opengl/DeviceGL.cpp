@@ -128,8 +128,7 @@ void KHRONOS_APIENTRY OnGLDebugMessage(GLenum source,
 namespace dawn::native::opengl {
 
 GLLock::GLLock(ContextEGL::ScopedMakeCurrent&& scopedMakeCurrent, const OpenGLFunctions& functions)
-    : gl(functions), mScopedMakeCurrent(std::move(scopedMakeCurrent)) {
-}
+    : gl(functions), mScopedMakeCurrent(std::move(scopedMakeCurrent)) {}
 
 // static
 ResultOrError<Ref<Device>> Device::Create(AdapterBase* adapter,

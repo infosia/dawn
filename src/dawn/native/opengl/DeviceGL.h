@@ -104,7 +104,6 @@ class Device final : public DeviceBase {
     // Returns all the OpenGL entry points and ensures that the associated GL context is current.
     GLLock GetGL(bool makeCurrent = true) const;
 
-
     // Helper functions to get access to relevant EGL objects.
     const EGLFunctions& GetEGL(bool makeCurrent) const;
     EGLDisplay GetEGLDisplay() const;

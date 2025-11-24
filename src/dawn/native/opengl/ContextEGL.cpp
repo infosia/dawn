@@ -32,9 +32,9 @@
 #include <utility>
 #include <vector>
 
-#include "dawn/native/opengl/opengl_platform.h"
 #include "dawn/native/opengl/DisplayEGL.h"
 #include "dawn/native/opengl/UtilsEGL.h"
+#include "dawn/native/opengl/opengl_platform.h"
 
 #ifndef EGL_DISPLAY_TEXTURE_SHARE_GROUP_ANGLE
 #define EGL_DISPLAY_TEXTURE_SHARE_GROUP_ANGLE 0x33AF
@@ -356,7 +356,7 @@ MaybeError ContextEGL::ScopedMakeCurrent::End() {
         // Unmake current this context so that other threads can use it.
         auto display = mContext->mDisplay.Get();
         display->egl.MakeCurrent(display->GetDisplay(), EGL_NO_SURFACE, EGL_NO_SURFACE,
-                                      EGL_NO_CONTEXT);
+                                 EGL_NO_CONTEXT);
         result = {};
     }
     gCurrentContextInScope = nullptr;
