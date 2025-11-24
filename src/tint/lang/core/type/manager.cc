@@ -358,6 +358,10 @@ const core::type::ResourceBinding* Manager::resource_binding() {
     return Get<core::type::ResourceBinding>();
 }
 
+const core::type::ResourceTable* Manager::resource_table() {
+    return Get<core::type::ResourceTable>();
+}
+
 const core::type::BindingArray* Manager::binding_array(const core::type::Type* elem_ty,
                                                        uint32_t count) {
     return Get<core::type::BindingArray>(elem_ty, Get<ConstantArrayCount>(count));

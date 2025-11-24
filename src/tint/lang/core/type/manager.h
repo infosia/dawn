@@ -40,6 +40,7 @@
 #include "src/tint/lang/core/type/input_attachment.h"
 #include "src/tint/lang/core/type/multisampled_texture.h"
 #include "src/tint/lang/core/type/resource_binding.h"
+#include "src/tint/lang/core/type/resource_table.h"
 #include "src/tint/lang/core/type/sampler.h"
 #include "src/tint/lang/core/type/string.h"
 #include "src/tint/lang/core/type/struct.h"
@@ -597,6 +598,9 @@ class Manager final {
 
     /// @returns the resource binding type
     const core::type::ResourceBinding* resource_binding();
+
+    /// @returns the resource table type
+    const core::type::ResourceTable* resource_table();
 
     /// @param elem_ty the array element type
     /// @param count the array element count
