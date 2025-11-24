@@ -33,8 +33,8 @@
 #include <utility>
 
 #include "dawn/common/NonMovable.h"
+#include "dawn/common/Ref.h"
 #include "dawn/common/egl_platform.h"
-#include "dawn/native/opengl/DeviceGL.h"
 #include "dawn/native/opengl/EGLFunctions.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
@@ -105,9 +105,6 @@ class ContextEGL : NonMovable {
     };
 
     ResultOrError<ScopedMakeCurrent> MakeCurrent();
-
-    void Lock();
-    void Unlock();
 
   private:
     explicit ContextEGL(Ref<DisplayEGL> display, bool bindContextOnlyDuringUse);

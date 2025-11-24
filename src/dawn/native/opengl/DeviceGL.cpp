@@ -127,13 +127,8 @@ void KHRONOS_APIENTRY OnGLDebugMessage(GLenum source,
 
 namespace dawn::native::opengl {
 
-GLLock::GLLock(const Device* device, const OpenGLFunctions& functions, bool makeCurrent)
-    : gl(functions), mDevice(device), mMakeCurrent(makeCurrent) {
-    mDevice->LockGL(makeCurrent);
-}
-
-GLLock::~GLLock() {
-    mDevice->UnlockGL(mMakeCurrent);
+GLLock::GLLock(ContextEGL::ScopedMakeCurrent&& scopedMakeCurrent, const OpenGLFunctions& functions)
+    : gl(functions), mScopedMakeCurrent(std::move(scopedMakeCurrent)) {
 }
 
 // static
@@ -167,18 +162,8 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     // Directly set the context current and use mGL instead of calling GetGL as GetGL will notify
     // the (yet inexistent) queue that GL was used.
     printf("Device initialize\n");
-//    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
-//    DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
-
-    // Do everything LockGL() does except mark the context used
-    DAWN_ASSERT(mGLLockCount == 0);
-    mContext->Lock();
-    auto display = ToBackend(GetPhysicalDevice())->GetDisplay();
-    mPrevContext = display->egl.GetCurrentContext();
-    mPrevReadSurface = display->egl.GetCurrentSurface(EGL_READ);
-    mPrevDrawSurface = display->egl.GetCurrentSurface(EGL_DRAW);
-    mContext->DeprecatedMakeCurrent();
-    mGLLockCount++;
+    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
+    DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
 
     mContext->RequestRequiredExtensionsExplicitly();
 
@@ -258,13 +243,7 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
         mArrayLengthBuffer = ToBackend(std::move(buffer));
     }
 
-//    return scopedCurrentContext.End();
-    printf("Device::Initialize calling eglMakeCurrent\n");
-    display->egl.MakeCurrent(display->GetDisplay(), mPrevDrawSurface, mPrevReadSurface,
-                             mPrevContext);
-    mContext->Unlock();
-    mGLLockCount--;
-    return {};
+    return scopedCurrentContext.End();
 }
 
 const GLFormat& Device::GetGLFormat(const Format& format) {
@@ -588,39 +567,12 @@ const AHBFunctions* Device::GetOrLoadAHBFunctions() {
 }
 
 GLLock Device::GetGL(bool makeCurrent) const {
-    return GLLock(this, mGL, makeCurrent);
-}
+    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
+    auto result = mContext->MakeCurrent();
+    DAWN_ASSERT(!result.IsError());
+    scopedCurrentContext = result.AcquireSuccess();
 
-void Device::LockGL(bool makeCurrent) const {
-    if (mGLLockCount == 0) {
-        mContext->Lock();
-        if (makeCurrent) {
-            auto display = ToBackend(GetPhysicalDevice())->GetDisplay();
-            mPrevContext = display->egl.GetCurrentContext();
-            mPrevReadSurface = display->egl.GetCurrentSurface(EGL_READ);
-            mPrevDrawSurface = display->egl.GetCurrentSurface(EGL_DRAW);
-            mContext->DeprecatedMakeCurrent();
-        }
-        ToBackend(GetQueue())->OnGLUsed();
-    }
-    mGLLockCount++;
-}
-
-void Device::UnlockGL(bool makeCurrent) const {
-    --mGLLockCount;
-    if (mGLLockCount == 0) {
-        if (makeCurrent) {
-            auto display = ToBackend(GetPhysicalDevice())->GetDisplay();
-            if (display->egl.GetCurrentSurface(EGL_DRAW) != mPrevDrawSurface ||
-                display->egl.GetCurrentSurface(EGL_READ) != mPrevReadSurface ||
-                display->egl.GetCurrentContext() != mPrevContext) {
-                printf("thread %08lx Device::Unlock calling eglMakeCurrent\n", pthread_self());
-                display->egl.MakeCurrent(display->GetDisplay(), mPrevDrawSurface, mPrevReadSurface,
-                                         mPrevContext);
-            }
-        }
-        mContext->Unlock();
-    }
+    return GLLock(std::move(scopedCurrentContext), mGL);
 }
 
 int Device::GetMaxTextureMaxAnisotropy() const {

@@ -30,7 +30,6 @@
 
 #include <functional>
 #include <memory>
-#include <mutex>
 #include <utility>
 #include <vector>
 
@@ -40,6 +39,7 @@
 #include "dawn/common/Platform.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/QuerySet.h"
+#include "dawn/native/opengl/ContextEGL.h"
 #include "dawn/native/opengl/EGLFunctions.h"
 #include "dawn/native/opengl/Forward.h"
 #include "dawn/native/opengl/GLFormat.h"
@@ -51,18 +51,15 @@ class AHBFunctions;
 
 namespace dawn::native::opengl {
 
-class ContextEGL;
 class DisplayEGL;
 
 class GLLock {
   public:
-    GLLock(const Device* device, const OpenGLFunctions& gl, bool makeCurrent);
-    ~GLLock();
+    GLLock(ContextEGL::ScopedMakeCurrent&& scopedMakeCurrent, const OpenGLFunctions& gl);
     const OpenGLFunctions& gl;
 
   private:
-    const Device* mDevice;
-    bool mMakeCurrent;
+    ContextEGL::ScopedMakeCurrent mScopedMakeCurrent;
 };
 
 class Device final : public DeviceBase {
@@ -107,8 +104,6 @@ class Device final : public DeviceBase {
     // Returns all the OpenGL entry points and ensures that the associated GL context is current.
     GLLock GetGL(bool makeCurrent = true) const;
 
-    void LockGL(bool makeCurrent) const;
-    void UnlockGL(bool makeCurrent) const;
 
     // Helper functions to get access to relevant EGL objects.
     const EGLFunctions& GetEGL(bool makeCurrent) const;
@@ -224,10 +219,6 @@ class Device final : public DeviceBase {
 #if DAWN_PLATFORM_IS(ANDROID)
     std::unique_ptr<AHBFunctions> mAHBFunctions;
 #endif  // DAWN_PLATFORM_IS(ANDROID)
-    mutable uint32_t mGLLockCount = 0u;
-    mutable EGLContext mPrevContext = EGL_NO_CONTEXT;
-    mutable EGLSurface mPrevDrawSurface = EGL_NO_SURFACE;
-    mutable EGLSurface mPrevReadSurface = EGL_NO_SURFACE;
 };
 
 }  // namespace dawn::native::opengl

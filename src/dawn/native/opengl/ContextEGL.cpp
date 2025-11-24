@@ -32,6 +32,7 @@
 #include <utility>
 #include <vector>
 
+#include "dawn/native/opengl/opengl_platform.h"
 #include "dawn/native/opengl/DisplayEGL.h"
 #include "dawn/native/opengl/UtilsEGL.h"
 
@@ -366,16 +367,6 @@ ResultOrError<ContextEGL::ScopedMakeCurrent> ContextEGL::MakeCurrent() {
     ScopedMakeCurrent scopedMakeCurrent(IsInScopedMakeCurrent() ? nullptr : this);
     DAWN_TRY(scopedMakeCurrent.Initialize());
     return std::move(scopedMakeCurrent);
-}
-
-void ContextEGL::Lock() {
-    printf("thread %08lx locking in ContextEGL::Lock()\n", pthread_self());
-    mExclusiveMakeCurrentMutex.lock();
-}
-
-void ContextEGL::Unlock() {
-    printf("thread %08lx unlocking in ContextEGL::Unlock()\n", pthread_self());
-    mExclusiveMakeCurrentMutex.unlock();
 }
 
 }  // namespace dawn::native::opengl
