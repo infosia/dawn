@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "208d2d63_34187d68",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T10:03:05Z",
+      "side": 1,
+      "message": "This function can also get a TODO to work in blocks I think.",
+      "revId": "0a072fd23434a5c44cc2be9f4dec85dc994bf18f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcb56c92_92f36b05",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1705,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T10:03:05Z",
+      "side": 1,
+      "message": "Are all of these ToTexelBlockInfo temporary until `ValidateLinearTextureCopyOffset` and friends take a TypedBlockInfo?",
+      "revId": "0a072fd23434a5c44cc2be9f4dec85dc994bf18f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eeaead33_3a1eeec6",
+        "filename": "src/dawn/native/CommandValidation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T10:03:05Z",
+      "side": 1,
+      "message": "This overload shouldn\u0027t need to use a ResultOrError because we know that all copies from the user are in bounds, and copies created inside Dawn should always be valid and in bounds. So we should be able to just return an uint64_t and ASSERT inside the function (if we want to be safe)",
+      "revId": "0a072fd23434a5c44cc2be9f4dec85dc994bf18f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ea3b18c_72843d63",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T10:03:05Z",
+      "side": 1,
+      "message": "Do we have a TODO to convert `GetMipLevelSingleSubresourcePhysicalSize` to return a number of blocks?",
+      "range": {
+        "startLine": 1274,
+        "startChar": 24,
+        "endLine": 1274,
+        "endChar": 64
+      },
+      "revId": "0a072fd23434a5c44cc2be9f4dec85dc994bf18f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c00a9edd_96382db3",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1285,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T10:03:05Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "0a072fd23434a5c44cc2be9f4dec85dc994bf18f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee3e23eb_1e28efe0",
+        "filename": "src/dawn/native/vulkan/UtilsVulkan.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T10:03:05Z",
+      "side": 1,
+      "message": "Interestingly this overload seems to exist because  `DeviceBase::CopyFromStagingToTexture` used to take `StagingBuffer*` before we merged them into `BufferBase*` Maybe it should be taking a BufferCopy now, which would with the change at [1] removes the need for this overload.",
+      "revId": "0a072fd23434a5c44cc2be9f4dec85dc994bf18f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18e1df9f_11ac0682",
+        "filename": "src/dawn/native/vulkan/UtilsVulkan.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T10:03:05Z",
+      "side": 1,
+      "message": "It could be worth making these TexelExtent3D to make it clear that Vulkan requires a number of texels. Or we do the conversion inside the function such that callers pass blocks and the detail that Vulkan expects texels is hidden inside the function. (the latter is probably better)",
+      "range": {
+        "startLine": 130,
+        "startChar": 53,
+        "endLine": 130,
+        "endChar": 61
+      },
+      "revId": "0a072fd23434a5c44cc2be9f4dec85dc994bf18f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
