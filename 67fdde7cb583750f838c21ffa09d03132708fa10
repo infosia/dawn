@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72a53cb8_7ad5320a",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-24T14:10:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3e487e4_e4279820",
+      "range": {
+        "startLine": 764,
+        "startChar": 25,
+        "endLine": 765,
+        "endChar": 95
+      },
+      "revId": "67fdde7cb583750f838c21ffa09d03132708fa10",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a0a068f_f9046ee7",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-11-24T13:46:45Z",
       "side": 1,
       "message": "And now can we have a test for a combined DS that checks both? After that I believe that we should be good.",
+      "revId": "67fdde7cb583750f838c21ffa09d03132708fa10",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34d0b3f6_941d2300",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2389,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-24T14:10:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a0a068f_f9046ee7",
       "revId": "67fdde7cb583750f838c21ffa09d03132708fa10",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
