@@ -69,6 +69,24 @@
       "parentUuid": "2e027a00_c844299d",
       "revId": "7f7c963ee9ed7c087ea6c5524a53880e86564fff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "622cbc1e_3e589e52",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2354,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T11:28:43Z",
+      "side": 1,
+      "message": "I\u0027m concerned that this might prevent using stencil-only or depth-only transient attachments because IIRC the load/StoreOps of the aspect that\u0027s not present must be undefined. Maybe we should have remove only the check for \"depth/stencilReadonly\" in that PR but not the missing aspect check. Sry for not catching it then.",
+      "parentUuid": "1e7531ee_a4efeb10",
+      "revId": "7f7c963ee9ed7c087ea6c5524a53880e86564fff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
