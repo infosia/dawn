@@ -46,6 +46,30 @@
       },
       "revId": "e82ad1b18da5c75e58ee6c6ac6bb593e43bfefb1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfce9ef2_fce1f747",
+        "filename": "webgpu-cts/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-24T23:25:35Z",
+      "side": 1,
+      "message": "Thanks! May revisit depending on torne@\u0027s answer.",
+      "parentUuid": "59f858bb_25f8f446",
+      "range": {
+        "startLine": 97,
+        "startChar": 15,
+        "endLine": 97,
+        "endChar": 30
+      },
+      "revId": "e82ad1b18da5c75e58ee6c6ac6bb593e43bfefb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

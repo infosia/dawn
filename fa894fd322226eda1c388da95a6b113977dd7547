@@ -16,6 +16,24 @@
       "message": "LGTM as a starting point. If we\u0027re going to want smoke tests using an actual Webview, we\u0027ll need to figure out the right incantation to build and install the correct target in one go.",
       "revId": "fa894fd322226eda1c388da95a6b113977dd7547",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bef771bd_bc486ef4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-24T23:25:35Z",
+      "side": 1,
+      "message": "Once torne@ is back I\u0027ll try to get pointers on existing automated testing that hopefully we can add to.",
+      "parentUuid": "a7109834_3819e3d9",
+      "revId": "fa894fd322226eda1c388da95a6b113977dd7547",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
