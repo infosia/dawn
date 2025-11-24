@@ -61,6 +61,7 @@
 #include "dawn/native/ValidationUtils.h"
 #include "dawn/native/ValidationUtils_autogen.h"
 #include "dawn/native/dawn_platform.h"
+#include "dawn/native/dawn_structs.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
@@ -1698,8 +1699,7 @@ void CommandEncoder::APICopyBufferToTexture(const TexelCopyBufferInfo* source,
                 // checked in validating texture copy range.
                 DAWN_TRY(ValidateTextureCopyRange(GetDevice(), destination, *copySize));
             }
-            const TypedTexelBlockInfo& blockInfo =
-                destination.texture->GetFormat().GetAspectInfo(destination.aspect).block;
+            const TypedTexelBlockInfo& blockInfo = GetBlockInfo(destination);
             if (GetDevice()->IsValidationEnabled()) {
                 DAWN_TRY(ValidateLinearTextureCopyOffset(
                     source->layout, blockInfo.ToTexelBlockInfo(),
@@ -1805,8 +1805,7 @@ void CommandEncoder::APICopyTextureToBuffer(const TexelCopyTextureInfo* sourceOr
                         source.texture));
                 }
             }
-            const TypedTexelBlockInfo& blockInfo =
-                source.texture->GetFormat().GetAspectInfo(source.aspect).block;
+            const TypedTexelBlockInfo& blockInfo = GetBlockInfo(source);
             if (GetDevice()->IsValidationEnabled()) {
                 DAWN_TRY(ValidateLinearTextureCopyOffset(
                     destination->layout, blockInfo.ToTexelBlockInfo(),
@@ -1934,8 +1933,7 @@ void CommandEncoder::APICopyTextureToTexture(const TexelCopyTextureInfo* sourceO
             if (ShouldUseT2B2TForT2T(GetDevice(), src.texture->GetFormat(),
                                      dst.texture->GetFormat())) {
                 // Calculate needed buffer size to hold copied texel data.
-                const TexelBlockInfo& blockInfo =
-                    source.texture->GetFormat().GetAspectInfo(aspect).block;
+                const TexelBlockInfo& blockInfo = GetBlockInfo(source);
                 const uint32_t bytesPerRow =
                     Align(4 * copySize->width, kTextureBytesPerRowAlignment);
                 const uint32_t rowsPerImage = copySize->height;

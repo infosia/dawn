@@ -403,6 +403,8 @@ source_set("sources") {
     "WaitListEvent.cpp",
     "WaitListEvent.h",
     "dawn_platform.h",
+    "dawn_structs.cpp",
+    "dawn_structs.h",
     "stream/BlobSource.cpp",
     "stream/BlobSource.h",
     "stream/ByteVectorSink.cpp",

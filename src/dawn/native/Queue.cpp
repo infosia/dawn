@@ -59,6 +59,7 @@
 #include "dawn/native/RenderPassEncoder.h"
 #include "dawn/native/RenderPipeline.h"
 #include "dawn/native/Texture.h"
+#include "dawn/native/dawn_structs.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
 #include "partition_alloc/pointers/raw_ptr.h"
@@ -368,8 +369,7 @@ MaybeError QueueBase::WriteTextureInternal(const TexelCopyTextureInfo* destinati
         return {};
     }
 
-    const TexelBlockInfo& blockInfo =
-        destination.texture->GetFormat().GetAspectInfo(destination.aspect).block;
+    const TexelBlockInfo& blockInfo = GetBlockInfo(destination);
     TexelCopyBufferLayout layout = dataLayout;
     ApplyDefaultTexelCopyBufferLayoutOptions(&layout, blockInfo, *writeSize);
     return WriteTextureImpl(destination, data, dataSize, layout, *writeSize);
@@ -380,8 +380,7 @@ MaybeError QueueBase::WriteTextureImpl(const TexelCopyTextureInfo& destination,
                                        size_t dataSize,
                                        const TexelCopyBufferLayout& dataLayout,
                                        const Extent3D& writeSizePixel) {
-    const Format& format = destination.texture->GetFormat();
-    const TypedTexelBlockInfo& blockInfo = format.GetAspectInfo(destination.aspect).block;
+    const TypedTexelBlockInfo& blockInfo = GetBlockInfo(destination);
     BlockExtent3D writeSize = blockInfo.ToBlock(writeSizePixel);
 
     // We are only copying the part of the data that will appear in the texture.
@@ -403,6 +402,7 @@ MaybeError QueueBase::WriteTextureImpl(const TexelCopyTextureInfo& destination,
         uint64_t(blockInfo.byteSize), GetDevice()->GetOptimalBufferToTextureCopyOffsetAlignment());
 
     // Buffer offset alignments must follow additional restrictions for depth stencil formats.
+    const Format& format = destination.texture->GetFormat();
     if (format.HasDepthOrStencil()) {
         offsetAlignment =
             std::max(offsetAlignment, GetDevice()->GetBufferCopyOffsetAlignmentForDepthStencil());
@@ -625,8 +625,7 @@ MaybeError QueueBase::ValidateWriteTexture(const TexelCopyTextureInfo* destinati
     // checked in validating texture copy range.
     DAWN_TRY(ValidateTextureCopyRange(GetDevice(), *destination, *writeSize));
 
-    const TexelBlockInfo& blockInfo =
-        destination->texture->GetFormat().GetAspectInfo(destination->aspect).block;
+    const TexelBlockInfo& blockInfo = GetBlockInfo(*destination);
 
     DAWN_TRY(ValidateLinearTextureData(dataLayout, dataSize, blockInfo, *writeSize));
 

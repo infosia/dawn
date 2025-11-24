@@ -203,6 +203,7 @@ set(sources
     "ComputePipeline.cpp"
     "CopyTextureForBrowserHelper.cpp"
     "CreatePipelineAsyncEvent.cpp"
+    "dawn_structs.cpp"
     "Device.cpp"
     "DeviceGuard.cpp"
     "DynamicArrayState.cpp"
