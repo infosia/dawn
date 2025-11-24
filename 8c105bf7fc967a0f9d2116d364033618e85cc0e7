@@ -109,6 +109,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0768927f_3526747c",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-24T18:59:26Z",
+      "side": 1,
+      "message": "If the sum total of the config does not match then we say it is not a match and therefore an error. However we can get to try again to find a perfect match.",
+      "parentUuid": "da7853a7_a5a12a8b",
+      "range": {
+        "startLine": 620,
+        "startChar": 0,
+        "endLine": 620,
+        "endChar": 38
+      },
+      "revId": "8c105bf7fc967a0f9d2116d364033618e85cc0e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8b2f38fc_75721908",
         "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
         "patchSetId": 17
