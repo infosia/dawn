@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d84f2c2_2664468f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-24T22:28:26Z",
+      "side": 1,
+      "message": "PTAL\n\nThe Mac/CMake trybots that were unhappy with https://dawn-review.googlesource.com/c/dawn/+/276094 are now passing with this in place.",
+      "revId": "d1c55441a11d6a809d7c1d44c26491e8145803bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
