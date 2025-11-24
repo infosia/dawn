@@ -1,7 +1,12 @@
 # Chromium Experimental Dynamic Binding
 
-The `chromium_experimental_dynamic_binding` is an experimental extension that allows using a new
-`resource_binding` type. This provides the needed basis for dynamic binding (a.k.a. bind-less).
+The `chromium_experimental_dynamic_binding` is an experimental extension that provides different
+prototype options to support the WebGPU bindless prototypes.
+
+There are currently two different prototypes included in this extension:
+
+* A `resource_binding` type.
+* A `resource_table` type
 
 # Status
 
@@ -64,15 +69,70 @@ returned. If the item at `index` is not of type `T` then a default texture of ty
 ```
 @must_use fn arrayLength(a: resource_binding) -> u32
 ```
-
 Returns the length of the array.
+
+## `resource_table`
+
+* A new `resource_table` type is added
+* A `resource_table` cannot be passed as a function parameter. This is because there is no way
+  in WGSL to currently write the needed pointer type (e.g. `ptr<handle, resource_table, write>`).
+* A `resource_table` can not be accessed with the usual array subscript operators. e.g. the following
+  is disallowed:
+* A `resource_table` can not be assigned to a `let` or into `var`.
+* A `resource_table` does not have a `@group` or `@binding` attribute
+* A single `resource_table` var can be in an entry points interface
+* Two helper methods `getBinding` and `hasBinding` are provided for accessing a `resource_table`.
+
+### `hasBinding`
+```
+@must_use fn hasBinding<T>(a: resource_table, index: I) -> bool
+```
+* `I` is an `i32` or `u32`
+* `T` is a format-less storage texture (e.g. `texture_storage_2d<f32>`), sampled texture, multisampled
+  texture, or depth texture.
+
+`hasBinding` returns true if the item a `index` of the array is of type `T`.
+
+### `getBinding`
+```
+@must_use fn getBinding<T>(a: resource_table, index: I) -> T
+```
+* `I` is an `i32` or `u32`
+* `T` is a format-less storage texture (e.g. `texture_storage_2d<f32>`), sampled texture, multisampled
+  texture, or depth texture.
+
+`getBinding` returns the value at `index` of type `T`.
+
+If `index` is outside the bounds of the binding array then a default texture of type `T` will be
+returned. If the item at `index` is not of type `T` then a default texture of type `T` is returned.
+
+### `arrayLength`
+```
+@must_use fn arrayLength(a: resource_table) -> u32
+```
+Returns the length of the table.
+
 
 # Example usage
 
+## `resource_binding`
 ```
 enable chromium_experimental_dynamic_binding;
 
 @group(0) @binding(0) var textures : resource_binding;
+
+@fragment fn fs() {
+    if (hasBinding<texture_2d<f32>>(textures, 0)) {
+        let tex = textureLoad(getBinding<texture_2d<f32>>(textures, 0));
+    }
+}
+```
+
+## `resource_table`
+```
+enable chromium_experimental_dynamic_binding;
+
+var textures : resource_table;
 
 @fragment fn fs() {
     if (hasBinding<texture_2d<f32>>(textures, 0)) {
