@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e9343a8_9b4d45ff",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-24T22:12:10Z",
+      "side": 1,
+      "message": "I initially added a member function to `TextureCopy` above; but then realized we needed the same thing for `TexelCopyTextureInfo`; but I wasn\u0027t sure I should be modifying `generator\\templates\\dawn\\native\\api_structs.h/cpp` to add a helper. So I went for two free functions instead. Not sure they should be here - or at least the `TexelCopyTextureInfo` overload.",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 66
+      },
+      "revId": "e7200258521989dfbd60bf573d001f2f6e523e39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
