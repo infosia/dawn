@@ -166,8 +166,20 @@ Device::~Device() {
 MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     // Directly set the context current and use mGL instead of calling GetGL as GetGL will notify
     // the (yet inexistent) queue that GL was used.
-    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
-    DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
+    printf("Device initialize\n");
+//    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
+//    DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
+
+    // Do everything LockGL() does except mark the context used
+    DAWN_ASSERT(mGLLockCount == 0);
+    mContext->Lock();
+    auto display = ToBackend(GetPhysicalDevice())->GetDisplay();
+    mPrevContext = display->egl.GetCurrentContext();
+    mPrevReadSurface = display->egl.GetCurrentSurface(EGL_READ);
+    mPrevDrawSurface = display->egl.GetCurrentSurface(EGL_DRAW);
+    mContext->DeprecatedMakeCurrent();
+    mGLLockCount++;
+
     mContext->RequestRequiredExtensionsExplicitly();
 
     const OpenGLFunctions& gl = mGL;
@@ -245,8 +257,14 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
         DAWN_TRY_ASSIGN(buffer, Buffer::CreateInternalBuffer(this, &desc, false));
         mArrayLengthBuffer = ToBackend(std::move(buffer));
     }
+    printf("Device initialize done\n");
 
-    return scopedCurrentContext.End();
+//    return scopedCurrentContext.End();
+    display->egl.MakeCurrent(display->GetDisplay(), mPrevDrawSurface, mPrevReadSurface,
+                             mPrevContext);
+    mContext->Unlock();
+    mGLLockCount--;
+    return {};
 }
 
 const GLFormat& Device::GetGLFormat(const Format& format) {
@@ -596,7 +614,7 @@ void Device::UnlockGL(bool makeCurrent) const {
             display->egl.MakeCurrent(display->GetDisplay(), mPrevDrawSurface, mPrevReadSurface,
                                      mPrevContext);
         }
-        mContext->Lock();
+        mContext->Unlock();
     }
 }
 

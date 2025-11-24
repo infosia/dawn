@@ -124,16 +124,24 @@ ResultOrError<Ref<PhysicalDevice>> PhysicalDevice::Create(wgpu::BackendType back
                                     /*forceES31AndMinExtensions*/ forceES31AndMinExtensions,
                                     /*bindContextOnlyDuringUse*/ true, angleVirtualizationGroup));
 
-    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
-    DAWN_TRY_ASSIGN(scopedCurrentContext, context->MakeCurrent());
+//    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
+//    DAWN_TRY_ASSIGN(scopedCurrentContext, context->MakeCurrent());
+    auto prevContext = display->egl.GetCurrentContext();
+    auto prevReadSurface = display->egl.GetCurrentSurface(EGL_READ);
+    auto prevDrawSurface = display->egl.GetCurrentSurface(EGL_DRAW);
+    context->DeprecatedMakeCurrent();
+
     // Needed to request extensions here to initialize supported gl extensions set
     context->RequestRequiredExtensionsExplicitly();
 
+    auto egl = display->egl;
+    auto eglDisplay = display->GetDisplay();
     Ref<PhysicalDevice> physicalDevice =
         AcquireRef(new PhysicalDevice(backendType, std::move(display), angleVirtualizationGroup));
     DAWN_TRY(physicalDevice->Initialize());
 
-    DAWN_TRY(scopedCurrentContext.End());
+    egl.MakeCurrent(eglDisplay, prevDrawSurface, prevReadSurface, prevContext);
+//    DAWN_TRY(scopedCurrentContext.End());
 
     return physicalDevice;
 }
