@@ -105,6 +105,24 @@
       "parentUuid": "8fc3d5a8_258e7286",
       "revId": "0c0827cd395b4153c96698c64b970b45e62f8186",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fc2ba9a_3ebf79bd",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-11-24T19:28:25Z",
+      "side": 1,
+      "message": "Agreed with Corentin. If we need to set a specific size, we should instead make an experimental feature for that.",
+      "parentUuid": "38b1f0e3_45198545",
+      "revId": "0c0827cd395b4153c96698c64b970b45e62f8186",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
