@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3e487e4_e4279820",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T13:46:45Z",
+      "side": 1,
+      "message": "nit: the validation messages in this function don\u0027t seem to follow the convention which asks to state what the issue was, not what must happen.\n\n\"stencilLoadOp (%s) is not %s when the attachment (%s) has a depth aspect and its usage (%s) contains %s.\"",
+      "range": {
+        "startLine": 764,
+        "startChar": 25,
+        "endLine": 765,
+        "endChar": 95
+      },
+      "revId": "67fdde7cb583750f838c21ffa09d03132708fa10",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a0a068f_f9046ee7",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2389,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T13:46:45Z",
+      "side": 1,
+      "message": "And now can we have a test for a combined DS that checks both? After that I believe that we should be good.",
+      "revId": "67fdde7cb583750f838c21ffa09d03132708fa10",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
