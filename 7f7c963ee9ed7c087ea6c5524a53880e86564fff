@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d25dce5c_33a6c925",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2337,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-24T11:22:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94dd8d24_827997e5",
+      "revId": "7f7c963ee9ed7c087ea6c5524a53880e86564fff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e027a00_c844299d",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-11-24T11:04:25Z",
       "side": 1,
       "message": "Does this reflect the changes in https://github.com/gpuweb/gpuweb/pull/5454?",
+      "revId": "7f7c963ee9ed7c087ea6c5524a53880e86564fff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e7531ee_a4efeb10",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2354,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-24T11:22:45Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "2e027a00_c844299d",
       "revId": "7f7c963ee9ed7c087ea6c5524a53880e86564fff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
