@@ -16,6 +16,46 @@
       "message": "PTAL\n\nPresubmit is going to be unhappy until https://dawn-review.googlesource.com/c/dawn/+/275754 lands",
       "revId": "728988fd2aa386569d9b412b730eca9a56f4d1ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb209036_7ca27fad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-24T17:35:23Z",
+      "side": 1,
+      "message": "Yang, FYI, this is going to add end2end test coverage for Win ARM64 Qualcomm you were interested in.\nWebGPU CTS will be enabled separately.",
+      "revId": "728988fd2aa386569d9b412b730eca9a56f4d1ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1b4aeb1_b30c8763",
+        "filename": "infra/specs/mixins.pyl",
+        "patchSetId": 19
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-24T17:35:23Z",
+      "side": 1,
+      "message": "Note that this effectively limits the testing to D3D11 and D3D12 backends, removing Vulkan and OpenGLES_ANGLE testing, which I had mostly passing during the UAT, e.g. in https://ci.chromium.org/ui/p/chromium/builders/try.shadow/gpu-fyi-try-win11-qualcomm-rel-64/40/overview.\n\nI\u0027d like Dawn and ANGLE folks to sign this off.\n@dneto@google.com as you were involved in Microsoft/Qualcomm discussions\n@senorblanco@chromium.org for OpenGLES (compat)\n@geofflang@chromium.org for additional ANGLE coverage",
+      "range": {
+        "startLine": 119,
+        "startChar": 51,
+        "endLine": 119,
+        "endChar": 83
+      },
+      "revId": "728988fd2aa386569d9b412b730eca9a56f4d1ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
