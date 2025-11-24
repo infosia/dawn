@@ -33,6 +33,24 @@
       "message": "I\u0027m not 100% sure that this is correct: there are other ways to compute the subgroup size without using the builtin so IDK that the Vulkan backend will follow the spec if we do this. TBH I don\u0027t understand why we enable the flag and say that\u0027s to make SubgroupSize uniform across the dispatch, since this flag says that it makes it varying.\n\nJames PTAL",
       "revId": "0c0827cd395b4153c96698c64b970b45e62f8186",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c9abb41_62e2da91",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-11-24T08:22:09Z",
+      "side": 1,
+      "message": "\u003e  TBH I don\u0027t understand why we enable the flag and say that\u0027s to make SubgroupSize uniform across the dispatch, since this flag says that it makes it varying.\n\nYes Corentin you are right. Now I don\u0027t think we should do that.\n\nActually using `VK_PIPELINE_SHADER_STAGE_CREATE_ALLOW_VARYING_SUBGROUP_SIZE_BIT` and `VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO_EXT` violates the Vulkan Validation Layer:\n\n\"if a `VkPipelineShaderStageRequiredSubgroupSizeCreateInfo` structure is included in the pNext chain, flags must not have the `VK_PIPELINE_SHADER_STAGE_CREATE_ALLOW_VARYING_SUBGROUP_SIZE_BIT` flag set\"\n\n(https://registry.khronos.org/VulkanSC/specs/1.0-extensions/man/html/VkPipelineShaderStageCreateInfo.html#VUID-VkPipelineShaderStageCreateInfo-pNext-02754)",
+      "parentUuid": "c95d12dc_d2db39c4",
+      "revId": "0c0827cd395b4153c96698c64b970b45e62f8186",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
