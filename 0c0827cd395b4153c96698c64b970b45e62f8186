@@ -87,6 +87,24 @@
       "parentUuid": "64d5f112_fbf1c8f9",
       "revId": "0c0827cd395b4153c96698c64b970b45e62f8186",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38b1f0e3_45198545",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T16:43:27Z",
+      "side": 1,
+      "message": "I finally read https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#interfaces-builtin-variables-sgs and ... that enum name is supremely confusing. However I still have a concern that skipping `VK_PIPELINE_SHADER_STAGE_CREATE_ALLOW_VARYING_SUBGROUP_SIZE_BIT` will cause issues because I can imagine how a shader might inadvertently rely on the subgroup size to be uniform in a dispatch, even without using the builtin. And AFAIK WGSL requires the subgroups to all be the same size in a single dispatch, even if subgroup size isn\u0027t used.",
+      "parentUuid": "8fc3d5a8_258e7286",
+      "revId": "0c0827cd395b4153c96698c64b970b45e62f8186",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
