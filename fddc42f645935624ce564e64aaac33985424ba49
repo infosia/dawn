@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a2980252_ef982406",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-24T21:40:17Z",
+      "side": 1,
+      "message": "I\u0027ve added it to the GitHub PR description to see if it shows up here. I\u0027m not sure if that gets re-synced though.",
+      "parentUuid": "54c771e8_b0b40cfb",
+      "revId": "fddc42f645935624ce564e64aaac33985424ba49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "825529bd_90ec7cff",
         "filename": "tools/src/gerrit/gerrit.go",
         "patchSetId": 1
