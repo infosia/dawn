@@ -157,7 +157,7 @@ $B1: {  # root
     EXPECT_EQ(immediate_data, Success);
 
     std::unordered_map<BindingPoint, uint32_t> bindpoint_to_offset_index;
-    Run(ArrayOffsetFromImmediates, immediate_data.Get(), 0, 1, bindpoint_to_offset_index);
+    Run(ArrayOffsetFromImmediates, immediate_data.Get(), 0u, 1u, bindpoint_to_offset_index);
 
     EXPECT_EQ(expect, str());
 }
@@ -218,7 +218,7 @@ $B1: {  # root
 
     std::unordered_map<BindingPoint, uint32_t> bindpoint_to_offset_index;
     bindpoint_to_offset_index[{0, 1}] = 20;  // Doesn't match binding point
-    Run(ArrayOffsetFromImmediates, immediate_data.Get(), 0, 6, bindpoint_to_offset_index);
+    Run(ArrayOffsetFromImmediates, immediate_data.Get(), 0u, 6u, bindpoint_to_offset_index);
 
     EXPECT_EQ(expect, str());
 }
@@ -281,7 +281,7 @@ $B1: {  # root
 
     std::unordered_map<BindingPoint, uint32_t> bindpoint_to_offset_index;
     bindpoint_to_offset_index[{0, 0}] = 20;
-    Run(ArrayOffsetFromImmediates, immediate_data.Get(), 0, 6, bindpoint_to_offset_index);
+    Run(ArrayOffsetFromImmediates, immediate_data.Get(), 0u, 6u, bindpoint_to_offset_index);
 
     EXPECT_EQ(expect, str());
 }
@@ -412,7 +412,7 @@ $B1: {  # root
     std::unordered_map<BindingPoint, uint32_t> bindpoint_to_offset_index;
     bindpoint_to_offset_index[{5, 6}] = 26;
     bindpoint_to_offset_index[{7, 8}] = 57;
-    Run(ArrayOffsetFromImmediates, immediate_data.Get(), 0, 15, bindpoint_to_offset_index);
+    Run(ArrayOffsetFromImmediates, immediate_data.Get(), 0u, 15u, bindpoint_to_offset_index);
 
     EXPECT_EQ(expect, str());
 }
@@ -459,7 +459,7 @@ TEST_F(IR_ArrayOffsetFromImmediateTest, AllAtomicOps) {
 
     std::unordered_map<BindingPoint, uint32_t> bindpoint_to_offset_index;
     bindpoint_to_offset_index[{0, 0}] = 7;
-    Run(ArrayOffsetFromImmediates, immediate_data.Get(), 0, 3, bindpoint_to_offset_index);
+    Run(ArrayOffsetFromImmediates, immediate_data.Get(), 0u, 3u, bindpoint_to_offset_index);
 
     // Just verify it doesn't crash - detailed output checking would be very long
     EXPECT_NE(str(), "");
@@ -553,7 +553,7 @@ $B1: {  # root
     bindpoint_to_offset_index[{0, 0}] = 1;  // vec4[0].y
     bindpoint_to_offset_index[{0, 1}] = 5;  // vec4[1].y
     bindpoint_to_offset_index[{0, 2}] = 9;  // vec4[2].y
-    Run(ArrayOffsetFromImmediates, immediate_data.Get(), 0, 3, bindpoint_to_offset_index);
+    Run(ArrayOffsetFromImmediates, immediate_data.Get(), 0u, 3u, bindpoint_to_offset_index);
 
     EXPECT_EQ(expect, str());
 }
