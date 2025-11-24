@@ -140,6 +140,7 @@ ResultOrError<Ref<PhysicalDevice>> PhysicalDevice::Create(wgpu::BackendType back
         AcquireRef(new PhysicalDevice(backendType, std::move(display), angleVirtualizationGroup));
     DAWN_TRY(physicalDevice->Initialize());
 
+    printf("PhysicalDevice::Create calling eglMakeCurrent\n");
     egl.MakeCurrent(eglDisplay, prevDrawSurface, prevReadSurface, prevContext);
 //    DAWN_TRY(scopedCurrentContext.End());
 

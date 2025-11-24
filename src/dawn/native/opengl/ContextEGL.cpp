@@ -64,6 +64,7 @@ MaybeError MakeContextCurrent(DisplayEGL* display, const ContextEGL::ContextStat
     if (display->egl.GetCurrentContext() != state.context ||
         display->egl.GetCurrentSurface(EGL_DRAW) != state.drawSurface ||
         display->egl.GetCurrentSurface(EGL_READ) != state.readSurface) {
+        printf("thread %08lx MakeContextCurrent helper calling eglMakeCurrent\n", pthread_self());
         EGLBoolean success = display->egl.MakeCurrent(display->GetDisplay(), state.drawSurface,
 
                                                       state.readSurface, state.context);
@@ -103,6 +104,7 @@ ContextEGL::~ContextEGL() {
     }
     if (mState.context != EGL_NO_CONTEXT) {
         if (mState.context == mDisplay->egl.GetCurrentContext()) {
+            printf("ContextEGL destructor calling eglMakeCurrent\n");
             mDisplay->egl.MakeCurrent(mDisplay->GetDisplay(), EGL_NO_SURFACE, EGL_NO_SURFACE,
                                       EGL_NO_CONTEXT);
         }
@@ -367,12 +369,12 @@ ResultOrError<ContextEGL::ScopedMakeCurrent> ContextEGL::MakeCurrent() {
 }
 
 void ContextEGL::Lock() {
-    printf("thread %lu locking in ContextEGL::Lock()\n", pthread_self());
+    printf("thread %08lx locking in ContextEGL::Lock()\n", pthread_self());
     mExclusiveMakeCurrentMutex.lock();
 }
 
 void ContextEGL::Unlock() {
-    printf("thread %lu unlocking in ContextEGL::Unlock()\n", pthread_self());
+    printf("thread %08lx unlocking in ContextEGL::Unlock()\n", pthread_self());
     mExclusiveMakeCurrentMutex.unlock();
 }
 

@@ -257,9 +257,9 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
         DAWN_TRY_ASSIGN(buffer, Buffer::CreateInternalBuffer(this, &desc, false));
         mArrayLengthBuffer = ToBackend(std::move(buffer));
     }
-    printf("Device initialize done\n");
 
 //    return scopedCurrentContext.End();
+    printf("Device::Initialize calling eglMakeCurrent\n");
     display->egl.MakeCurrent(display->GetDisplay(), mPrevDrawSurface, mPrevReadSurface,
                              mPrevContext);
     mContext->Unlock();
@@ -611,8 +611,13 @@ void Device::UnlockGL(bool makeCurrent) const {
     if (mGLLockCount == 0) {
         if (makeCurrent) {
             auto display = ToBackend(GetPhysicalDevice())->GetDisplay();
-            display->egl.MakeCurrent(display->GetDisplay(), mPrevDrawSurface, mPrevReadSurface,
-                                     mPrevContext);
+            if (display->egl.GetCurrentSurface(EGL_DRAW) != mPrevDrawSurface ||
+                display->egl.GetCurrentSurface(EGL_READ) != mPrevReadSurface ||
+                display->egl.GetCurrentContext() != mPrevContext) {
+                printf("thread %08lx Device::Unlock calling eglMakeCurrent\n", pthread_self());
+                display->egl.MakeCurrent(display->GetDisplay(), mPrevDrawSurface, mPrevReadSurface,
+                                         mPrevContext);
+            }
         }
         mContext->Unlock();
     }
