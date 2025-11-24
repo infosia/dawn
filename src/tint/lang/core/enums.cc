@@ -631,6 +631,9 @@ BuiltinType ParseBuiltinType(std::string_view str) {
     if (str == "resource_binding") {
         return BuiltinType::kResourceBinding;
     }
+    if (str == "resource_table") {
+        return BuiltinType::kResourceTable;
+    }
     if (str == "sampler") {
         return BuiltinType::kSampler;
     }
@@ -885,6 +888,8 @@ std::string_view ToString(BuiltinType value) {
             return "ptr";
         case BuiltinType::kResourceBinding:
             return "resource_binding";
+        case BuiltinType::kResourceTable:
+            return "resource_table";
         case BuiltinType::kSampler:
             return "sampler";
         case BuiltinType::kSamplerComparison:

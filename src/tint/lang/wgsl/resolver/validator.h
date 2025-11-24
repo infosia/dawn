@@ -460,6 +460,12 @@ class Validator {
     /// @returns true on success, false otherwise
     bool ResourceBinding(const core::type::ResourceBinding* t, const Source& source) const;
 
+    /// Validates a resource table type
+    /// @param t the resource table to validate
+    /// @param source the source of the resource table type
+    /// @returns true on success, false otherwise
+    bool ResourceTable(const core::type::ResourceTable* t, const Source& source) const;
+
     /// Validates a binding array type
     /// @param t the binding array to validate
     /// @param source the source of the binding array type

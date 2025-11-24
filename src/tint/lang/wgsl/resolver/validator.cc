@@ -50,6 +50,7 @@
 #include "src/tint/lang/core/type/u8.h"
 #include "src/tint/lang/wgsl/ast/alias.h"
 #include "src/tint/lang/wgsl/ast/assignment_statement.h"
+#include "src/tint/lang/wgsl/ast/attribute.h"
 #include "src/tint/lang/wgsl/ast/blend_src_attribute.h"
 #include "src/tint/lang/wgsl/ast/call_statement.h"
 #include "src/tint/lang/wgsl/ast/for_loop_statement.h"
@@ -230,8 +231,9 @@ bool Validator::IsPlain(const core::type::Type* type) const {
 
 // https://gpuweb.github.io/gpuweb/wgsl.html#storable-types
 bool Validator::IsStorable(const core::type::Type* type) const {
-    return IsPlain(type) || type->IsAnyOf<core::type::BindingArray, core::type::ResourceBinding,
-                                          core::type::Texture, core::type::Sampler>();
+    return IsPlain(type) ||
+           type->IsAnyOf<core::type::BindingArray, core::type::ResourceBinding,
+                         core::type::ResourceTable, core::type::Texture, core::type::Sampler>();
 }
 
 const ast::Statement* Validator::ClosestContinuing(bool stop_at_loop,
@@ -451,6 +453,18 @@ bool Validator::ResourceBinding([[maybe_unused]] const core::type::ResourceBindi
                                 const Source& source) const {
     if (!enabled_extensions_.Contains(wgsl::Extension::kChromiumExperimentalDynamicBinding)) {
         AddError(source) << "use of a " << style::Attribute("resource_binding")
+                         << " requires enabling extension "
+                         << style::Code("chromium_experimental_dynamic_binding");
+        return false;
+    }
+
+    return true;
+}
+
+bool Validator::ResourceTable([[maybe_unused]] const core::type::ResourceTable* t,
+                              const Source& source) const {
+    if (!enabled_extensions_.Contains(wgsl::Extension::kChromiumExperimentalDynamicBinding)) {
+        AddError(source) << "use of a " << style::Attribute("resource_table")
                          << " requires enabling extension "
                          << style::Code("chromium_experimental_dynamic_binding");
         return false;
@@ -806,13 +820,26 @@ bool Validator::GlobalVariable(
         case core::AddressSpace::kUniform:
         case core::AddressSpace::kStorage:
         case core::AddressSpace::kHandle: {
-            // https://gpuweb.github.io/gpuweb/wgsl/#resource-interface
-            // Each resource variable must be declared with both group and binding attributes.
-            if (!decl->HasBindingPoint()) {
-                AddError(decl->source)
-                    << "resource variables require " << style::Attribute("@group") << " and "
-                    << style::Attribute("@binding") << " attributes";
-                return false;
+            if (global->Type()->UnwrapRef()->Is<core::type::ResourceTable>()) {
+                // Note, we check these individually instead of HasBindingPoint because
+                // HasBIndingPoint is only true if both are set but we need to detect if either is
+                // set.
+                if (HasAttribute<ast::BindingAttribute>(decl->attributes) ||
+                    HasAttribute<ast::GroupAttribute>(decl->attributes)) {
+                    AddError(decl->source) << style::Type("resource_table") << " does not have "
+                                           << style::Attribute("@group") << " and "
+                                           << style::Attribute("@binding") << " attributes";
+                    return false;
+                }
+            } else {
+                // https://gpuweb.github.io/gpuweb/wgsl/#resource-interface
+                // Each resource variable must be declared with both group and binding attributes.
+                if (!decl->HasBindingPoint()) {
+                    AddError(decl->source)
+                        << "resource variables require " << style::Attribute("@group") << " and "
+                        << style::Attribute("@binding") << " attributes";
+                    return false;
+                }
             }
             if (global->Type()->UnwrapRef()->Is<core::type::InputAttachment>() &&
                 !input_attachment_index_attr) {
@@ -985,7 +1012,8 @@ bool Validator::Parameter(const sem::Variable* var) const {
             AddError(decl->type->source) << "type of function parameter must be constructible";
             return false;
         }
-    } else if (var->Type()->Is<core::type::ResourceBinding>() || is_runtime_binding_array ||
+    } else if (var->Type()->Is<core::type::ResourceBinding>() ||
+               var->Type()->Is<core::type::ResourceTable>() || is_runtime_binding_array ||
                (!var->Type()->Is<core::type::Pointer>() && !var->Type()->IsHandle())) {
         AddError(decl->source) << "type of function parameter cannot be "
                                << sem_.TypeNameOf(var->Type());
@@ -1669,11 +1697,26 @@ bool Validator::EntryPoint(const sem::Function* func, ast::PipelineStage stage) 
 
     // Validate there are no resource variable binding collisions
     Hashmap<BindingPoint, const ast::Variable*, 8> binding_points;
+    std::optional<Source> resource_table_seen = std::nullopt;
     for (auto* global : func->TransitivelyReferencedGlobals()) {
         auto* var_decl = global->Declaration()->As<ast::Var>();
         if (!var_decl) {
             continue;
         }
+
+        if (global->Type()->UnwrapRef()->Is<core::type::ResourceTable>()) {
+            if (resource_table_seen.has_value()) {
+                auto func_name = decl->name->symbol.NameView();
+                AddError(var_decl->source) << "entry point " << style::Function(func_name)
+                                           << " references multiple variables that use the "
+                                           << style::Type("resource_binding") << " type";
+                AddNote(resource_table_seen.value())
+                    << "first " << style::Type("resource_table") << " usage declared here";
+                return false;
+            }
+            resource_table_seen = var_decl->source;
+        }
+
         auto bp = global->Attributes().binding_point;
         if (!bp) {
             continue;
@@ -2998,7 +3041,7 @@ bool Validator::Assignment(const ast::Statement* a, const core::type::Type* rhs_
         auto* ty = rhs_ty->UnwrapRef();
         if (!ty->IsConstructible() &&
             !ty->IsAnyOf<core::type::Pointer, core::type::Texture, core::type::Sampler,
-                         core::type::AbstractNumeric>()) {
+                         core::type::ResourceTable, core::type::AbstractNumeric>()) {
             AddError(rhs->source)
                 << "cannot assign " << style::Type(sem_.TypeNameOf(rhs_ty)) << " to "
                 << style::Code("_") << ". " << style::Code("_")

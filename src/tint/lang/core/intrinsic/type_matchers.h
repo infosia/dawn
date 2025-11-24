@@ -52,6 +52,7 @@
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/core/type/reference.h"
 #include "src/tint/lang/core/type/resource_binding.h"
+#include "src/tint/lang/core/type/resource_table.h"
 #include "src/tint/lang/core/type/sampled_texture.h"
 #include "src/tint/lang/core/type/storage_texture.h"
 #include "src/tint/lang/core/type/string.h"
@@ -370,6 +371,22 @@ inline bool MatchResourceBinding(intrinsic::MatchState&, const type::Type* ty) {
     }
 
     if (ty->Is<type::ResourceBinding>()) {
+        return true;
+    }
+    return false;
+}
+
+inline const type::ResourceTable* BuildResourceTable(intrinsic::MatchState& state,
+                                                     const type::Type*) {
+    return state.types.resource_table();
+}
+
+inline bool MatchResourceTable(intrinsic::MatchState&, const type::Type* ty) {
+    if (ty->Is<intrinsic::Any>()) {
+        return true;
+    }
+
+    if (ty->Is<type::ResourceTable>()) {
         return true;
     }
     return false;

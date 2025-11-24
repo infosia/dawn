@@ -399,6 +399,7 @@ func validate(fqn sem.FullyQualifiedName, uses *sem.StageUses) bool {
 			strings.Contains(elTyName, "sampler"),
 			strings.Contains(elTyName, "texture"),
 			strings.Contains(elTyName, "resource_binding"),
+			strings.Contains(elTyName, "resource_table"),
 			IsAbstract(DeepestElementType(elTy)):
 			return false
 		}

@@ -128,5 +128,10 @@ TEST_F(ValidatorIsStorableTest, ResourceBinding) {
     EXPECT_TRUE(v()->IsStorable(arr));
 }
 
+TEST_F(ValidatorIsStorableTest, ResourceTable) {
+    auto* arr = create<core::type::ResourceTable>();
+    EXPECT_TRUE(v()->IsStorable(arr));
+}
+
 }  // namespace
 }  // namespace tint::resolver

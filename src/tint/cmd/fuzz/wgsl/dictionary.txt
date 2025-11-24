@@ -376,6 +376,7 @@
 "refz"
 "requires"
 "resource_binding"
+"resource_table"
 "result"
 "return"
 "reverseBits"

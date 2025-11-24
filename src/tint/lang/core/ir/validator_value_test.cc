@@ -863,6 +863,21 @@ TEST_F(IR_ValidatorTest, Var_ResourceBinding_NonHandleAddressSpace) {
 )")) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, Var_ResourceTable_NonHandleAddressSpace) {
+    auto* v = b.Var(ty.ptr(AddressSpace::kPrivate, ty.resource_table(), read));
+    mod.root_block->Append(v);
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr(
+            R"(:2:3 error: var: handle types can only be declared in the 'handle' address space
+  %1:ptr<private, resource_table, read> = var undef
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+)")) << res.Failure();
+}
+
 TEST_F(IR_ValidatorTest, Var_InputAttachementIndex_NonHandle) {
     auto* v = b.Var(ty.ptr(AddressSpace::kPrivate, ty.f32(), read_write));
     v->SetInputAttachmentIndex(0);
