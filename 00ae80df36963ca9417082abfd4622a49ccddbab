@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "abb1cea2_eb7ad943",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-24T10:59:41Z",
+      "side": 1,
+      "message": "We don\u0027t really have a way to do this because usually the implicit conversion of pointer happens because of the inheritance. Here the issue is that ToBackend doesn\u0027t have an overload for already backend objects pointers (I don\u0027t think we should add it). The proper solutions seems like it would be to add ToBackend prior to the call to `AddResourceAndGetId` and `AddResource` because they should expect to work only on backend object. There ~30 spots that would need to get a ToBackend(), it\u0027s not great but not terrible.\n\nAnother alternative is something like https://dawn-review.googlesource.com/c/dawn/+/275954/1..2 but it\u0027s a bit ugly as well. Also is there any way to make the device go through the normal `AddResourceAndGetId` like other resources? We could CHECK that it always gets ID 1.",
+      "parentUuid": "9fe5d3d6_acd28fc5",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 5
+      },
+      "revId": "00ae80df36963ca9417082abfd4622a49ccddbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2bcfc554_9a2e5176",
         "filename": "src/dawn/replay/Replay.cpp",
         "patchSetId": 2
