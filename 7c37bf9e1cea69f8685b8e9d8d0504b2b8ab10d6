@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ae391e55_7dd61c86",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-24T20:03:16Z",
+      "side": 1,
+      "message": "Can you move the `Feature::CoreFeaturesAndLimits` and `Feature::TextureFormatsTier1` calls closer to the if-clauses below so that it\u0027s more obvious that it\u0027s a part of the same feature?",
+      "range": {
+        "startLine": 289,
+        "startChar": 4,
+        "endLine": 299,
+        "endChar": 46
+      },
+      "revId": "7c37bf9e1cea69f8685b8e9d8d0504b2b8ab10d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c55b96b9_e0549e69",
         "filename": "src/dawn/native/vulkan/TextureVk.cpp",
         "patchSetId": 17

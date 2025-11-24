@@ -349,6 +349,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "79a13120_ad594947",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-24T20:03:16Z",
+      "side": 1,
+      "message": "Huh.. I wonder if that was a bug then?... Intuitively, it doesn\u0027t really make sense that the formats are supported if they have no capabilities? O.o...",
+      "parentUuid": "3e8fbbf1_1767ae79",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 25
+      },
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "97995474_f6fcd4a2",
         "filename": "src/dawn/native/Format.cpp",
         "patchSetId": 16
