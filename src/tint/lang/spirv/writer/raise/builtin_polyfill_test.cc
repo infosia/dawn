@@ -4646,7 +4646,7 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupMatrixMultiply_F32) {
     auto* src = R"(
 %foo = func(%left:subgroup_matrix_left<f32, 4, 8>, %right:subgroup_matrix_right<f32, 8, 4>):subgroup_matrix_result<f32, 8, 8> {
   $B1: {
-    %4:subgroup_matrix_result<f32, 8, 8> = subgroupMatrixMultiply<f32> %left, %right
+    %4:subgroup_matrix_result<f32, 8, 8> = subgroupMatrixMultiply %left, %right
     ret %4
   }
 }
@@ -4684,7 +4684,7 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupMatrixMultiply_I32_U32) {
     auto* src = R"(
 %foo = func(%left:subgroup_matrix_left<i32, 8, 4>, %right:subgroup_matrix_right<i32, 2, 8>):subgroup_matrix_result<u32, 2, 4> {
   $B1: {
-    %4:subgroup_matrix_result<u32, 2, 4> = subgroupMatrixMultiply<u32> %left, %right
+    %4:subgroup_matrix_result<u32, 2, 4> = subgroupMatrixMultiply %left, %right
     ret %4
   }
 }
@@ -4722,7 +4722,7 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupMatrixMultiply_U32_I32) {
     auto* src = R"(
 %foo = func(%left:subgroup_matrix_left<u32, 8, 4>, %right:subgroup_matrix_right<u32, 2, 8>):subgroup_matrix_result<i32, 2, 4> {
   $B1: {
-    %4:subgroup_matrix_result<i32, 2, 4> = subgroupMatrixMultiply<i32> %left, %right
+    %4:subgroup_matrix_result<i32, 2, 4> = subgroupMatrixMultiply %left, %right
     ret %4
   }
 }
@@ -4760,7 +4760,7 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupMatrixMultiply_I32_I32) {
     auto* src = R"(
 %foo = func(%left:subgroup_matrix_left<i32, 8, 4>, %right:subgroup_matrix_right<i32, 2, 8>):subgroup_matrix_result<i32, 2, 4> {
   $B1: {
-    %4:subgroup_matrix_result<i32, 2, 4> = subgroupMatrixMultiply<i32> %left, %right
+    %4:subgroup_matrix_result<i32, 2, 4> = subgroupMatrixMultiply %left, %right
     ret %4
   }
 }
@@ -4800,7 +4800,7 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupMatrixMultiply_I8_I32) {
     auto* src = R"(
 %foo = func(%left:subgroup_matrix_left<i8, 8, 4>, %right:subgroup_matrix_right<i8, 2, 8>):subgroup_matrix_result<i32, 2, 4> {
   $B1: {
-    %4:subgroup_matrix_result<i32, 2, 4> = subgroupMatrixMultiply<i32> %left, %right
+    %4:subgroup_matrix_result<i32, 2, 4> = subgroupMatrixMultiply %left, %right
     ret %4
   }
 }
@@ -4840,7 +4840,7 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupMatrixMultiply_U8_U32) {
     auto* src = R"(
 %foo = func(%left:subgroup_matrix_left<u8, 8, 4>, %right:subgroup_matrix_right<u8, 2, 8>):subgroup_matrix_result<u32, 2, 4> {
   $B1: {
-    %4:subgroup_matrix_result<u32, 2, 4> = subgroupMatrixMultiply<u32> %left, %right
+    %4:subgroup_matrix_result<u32, 2, 4> = subgroupMatrixMultiply %left, %right
     ret %4
   }
 }

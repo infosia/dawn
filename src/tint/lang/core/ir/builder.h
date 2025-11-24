@@ -907,14 +907,20 @@ class Builder {
     }
 
     /// Creates an Multiply operation
-    /// @tparam TYPE the result type of the expression
     /// @param lhs the lhs of the add
     /// @param rhs the rhs of the add
     /// @returns the operation
-    template <typename TYPE, typename LHS, typename RHS>
+    template <typename LHS, typename RHS>
     ir::CoreBinary* Multiply(LHS&& lhs, RHS&& rhs) {
-        auto* type = ir.Types().Get<TYPE>();
-        return Multiply(type, std::forward<LHS>(lhs), std::forward<RHS>(rhs));
+        auto* lhs_value = Value(std::forward<LHS>(lhs));
+        auto* rhs_value = Value(std::forward<RHS>(rhs));
+        TINT_ASSERT(lhs_value);
+        TINT_ASSERT(rhs_value);
+        // Support vector * scalar
+        TINT_ASSERT(lhs_value->Type()->DeepestElement()== rhs_value->Type());
+        auto* type = lhs_value->Type();
+        return Append(ir.CreateInstruction<ir::CoreBinary>(
+            InstructionResult(type), BinaryOp::kMultiply, lhs_value, rhs_value));
     }
 
     /// Creates an Divide operation

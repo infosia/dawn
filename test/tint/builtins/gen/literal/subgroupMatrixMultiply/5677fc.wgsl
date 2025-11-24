@@ -46,7 +46,7 @@ enable f16;
 
 // fn subgroupMatrixMultiply<TR: f32>(subgroup_matrix<left, f16, 8, 8>, subgroup_matrix<right, f16, 8, 8>) -> subgroup_matrix<result, f32, 8, 8>
 fn subgroupMatrixMultiply_5677fc() -> subgroup_matrix_result<f32, 8, 8>{
-  var res: subgroup_matrix_result<f32, 8, 8> = subgroupMatrixMultiply<f32>(subgroup_matrix_left<f16, 8, 8>(), subgroup_matrix_right<f16, 8, 8>());
+  var res: subgroup_matrix_result<f32, 8, 8> = subgroupMatrixMultiply(subgroup_matrix_left<f16, 8, 8>(), subgroup_matrix_right<f16, 8, 8>());
   return res;
 }
 @compute @workgroup_size(1)

@@ -44,7 +44,7 @@ enable chromium_experimental_subgroup_matrix;
 
 // fn subgroupMatrixMultiply<TR: u32>(subgroup_matrix<left, u8, 8, 8>, subgroup_matrix<right, u8, 8, 8>) -> subgroup_matrix<result, u32, 8, 8>
 fn subgroupMatrixMultiply_c9c73b() -> subgroup_matrix_result<u32, 8, 8>{
-  var res: subgroup_matrix_result<u32, 8, 8> = subgroupMatrixMultiply<u32>(subgroup_matrix_left<u8, 8, 8>(), subgroup_matrix_right<u8, 8, 8>());
+  var res: subgroup_matrix_result<u32, 8, 8> = subgroupMatrixMultiply(subgroup_matrix_left<u8, 8, 8>(), subgroup_matrix_right<u8, 8, 8>());
   return res;
 }
 @compute @workgroup_size(1)

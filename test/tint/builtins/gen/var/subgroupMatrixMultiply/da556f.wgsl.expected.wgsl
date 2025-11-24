@@ -5,7 +5,7 @@ enable chromium_experimental_subgroup_matrix;
 fn subgroupMatrixMultiply_da556f() -> subgroup_matrix_result<u32, 8, 8> {
   var arg_0 = subgroup_matrix_left<u32, 8, 8>();
   var arg_1 = subgroup_matrix_right<u32, 8, 8>();
-  var res : subgroup_matrix_result<u32, 8, 8> = subgroupMatrixMultiply<u32>(arg_0, arg_1);
+  var res : subgroup_matrix_result<u32, 8, 8> = subgroupMatrixMultiply(arg_0, arg_1);
   return res;
 }
 

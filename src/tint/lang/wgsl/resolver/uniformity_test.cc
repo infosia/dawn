@@ -322,7 +322,7 @@ class BasicTest : public UniformityAnalysisTestBase,
                 return "subgroupMatrixStore(&subgroup_matrix_data, 0, "
                        "subgroup_matrix_right_zero, false, 4)";
             case kSubgroupMatrixMultiply:
-                return "_ = subgroupMatrixMultiply<f32>("
+                return "_ = subgroupMatrixMultiply("
                        "subgroup_matrix_left_zero, subgroup_matrix_right_zero)";
             case kSubgroupMatrixMultiplyAccumulate:
                 return "_ = subgroupMatrixMultiplyAccumulate(subgroup_matrix_left_zero, "
@@ -10515,18 +10515,18 @@ fn bar() -> subgroup_matrix_left<f32, 8, 8> {
 
 fn foo() {
   let rhs = subgroup_matrix_right<f32, 8, 8>();
-  _ = subgroupMatrixMultiply<f32>(bar(), rhs);
+  _ = subgroupMatrixMultiply(bar(), rhs);
 }
 )";
 
     RunTest(src, false);
     EXPECT_EQ(error_,
               R"(test:20:35 error: 'subgroupMatrixMultiply' requires argument 0 to be uniform
-  _ = subgroupMatrixMultiply<f32>(bar(), rhs);
+  _ = subgroupMatrixMultiply(bar(), rhs);
                                   ^^^^^
 
 test:20:35 note: return value of 'bar' may be non-uniform
-  _ = subgroupMatrixMultiply<f32>(bar(), rhs);
+  _ = subgroupMatrixMultiply(bar(), rhs);
                                   ^^^^^
 )");
 }
@@ -10551,18 +10551,18 @@ fn bar() -> subgroup_matrix_right<f32, 8, 8> {
 
 fn foo() {
   let lhs = subgroup_matrix_left<f32, 8, 8>();
-  _ = subgroupMatrixMultiply<f32>(lhs, bar());
+  _ = subgroupMatrixMultiply(lhs, bar());
 }
 )";
 
     RunTest(src, false);
     EXPECT_EQ(error_,
               R"(test:20:40 error: 'subgroupMatrixMultiply' requires argument 1 to be uniform
-  _ = subgroupMatrixMultiply<f32>(lhs, bar());
+  _ = subgroupMatrixMultiply(lhs, bar());
                                        ^^^^^
 
 test:20:40 note: return value of 'bar' may be non-uniform
-  _ = subgroupMatrixMultiply<f32>(lhs, bar());
+  _ = subgroupMatrixMultiply(lhs, bar());
                                        ^^^^^
 )");
 }
