@@ -398,6 +398,9 @@ struct Encoder {
                 [&](const core::type::ResourceBinding* a) {
                     TypeResourceBinding(*type_out.mutable_resource_binding(), a);
                 },
+                [&](const core::type::ResourceTable* a) {
+                    TypeResourceTable(*type_out.mutable_resource_table(), a);
+                },
                 [&](const core::type::DepthTexture* t) {
                     TypeDepthTexture(*type_out.mutable_depth_texture(), t);
                 },
@@ -529,6 +532,8 @@ struct Encoder {
     }
 
     void TypeResourceBinding(pb::TypeResourceBinding&, const core::type::ResourceBinding*) {}
+
+    void TypeResourceTable(pb::TypeResourceTable&, const core::type::ResourceTable*) {}
 
     void TypeDepthTexture(pb::TypeDepthTexture& texture_out,
                           const core::type::DepthTexture* texture_in) {

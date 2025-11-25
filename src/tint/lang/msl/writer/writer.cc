@@ -62,6 +62,9 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
         if (ty->Is<core::type::ResourceBinding>()) {
             return Failure("resource_binding not supported by the MSL backend");
         }
+        if (ty->Is<core::type::ResourceTable>()) {
+            return Failure("resource_table not supported by the MSL backend");
+        }
         if (ty->Is<core::type::InputAttachment>()) {
             return Failure("input_attachment not supported by the MSL backend");
         }

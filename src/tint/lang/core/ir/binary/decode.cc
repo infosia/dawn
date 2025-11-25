@@ -706,6 +706,8 @@ struct Decoder {
                 return CreateTypeBindingArray(type_in.binding_array());
             case pb::Type::KindCase::kResourceBinding:
                 return CreateTypeResourceBinding(type_in.resource_binding());
+            case pb::Type::KindCase::kResourceTable:
+                return CreateTypeResourceTable(type_in.resource_table());
             case pb::Type::KindCase::kTexelBuffer:
                 return CreateTypeTexelBuffer(type_in.texel_buffer());
             case pb::Type::KindCase::kDepthTexture:
@@ -937,6 +939,10 @@ struct Decoder {
 
     const type::ResourceBinding* CreateTypeResourceBinding(const pb::TypeResourceBinding&) {
         return mod_out_.Types().resource_binding();
+    }
+
+    const type::ResourceTable* CreateTypeResourceTable(const pb::TypeResourceTable&) {
+        return mod_out_.Types().resource_table();
     }
 
     const type::Type* CreateTypeDepthTexture(const pb::TypeDepthTexture& texture_in) {

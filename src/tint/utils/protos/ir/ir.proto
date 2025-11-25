@@ -65,6 +65,7 @@ message Type {
         TypeBindingArray binding_array = 20;
         TypeTexelBuffer texel_buffer = 21;
         TypeResourceBinding resource_binding = 22;
+        TypeResourceTable resource_table = 23;
     }
 }
 
@@ -151,6 +152,8 @@ message TypeStorageTexture {
 }
 
 message TypeResourceBinding {}
+
+message TypeResourceTable {}
 
 message TypeExternalTexture {}
 
