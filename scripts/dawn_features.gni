@@ -129,6 +129,9 @@ declare_args() {
   # Disable SPIR-V validation on Android because it adds a significant amount
   # to the binary size, and Tint's output should be well-formed.
   dawn_enable_spirv_validation = dawn_enable_vulkan && !is_android
+
+  # These backends can make use of RenderDoc's API
+  dawn_enable_renderdoc = dawn_enable_d3d12 || dawn_enable_vulkan
 }
 
 # UWP only supports CoreWindow for windowing
