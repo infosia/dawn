@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0be0b87_c73f0d0e",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1788,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-25T18:55:50Z",
+      "side": 1,
+      "message": "This isn\u0027t quite right (and wrongly fails on the Pixel 9). I think you actually need to know left vs right vs result, instead of just input vs output.\n\nThe checks should be:\n- left:   info.columns \u003d\u003d config.K \u0026\u0026 info.rows \u003d\u003d config.M\n- right:  info.columns \u003d\u003d config.N \u0026\u0026 info.rows \u003d\u003d config.K\n- result: info.columns \u003d\u003d config.N \u0026\u0026 info.rows \u003d\u003d config.M",
+      "revId": "6d73fd69a56b9807094fcdf0eebf2c4556e29e61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d61aa80_6a180e1c",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-25T18:55:50Z",
+      "side": 1,
+      "message": "This fails to compile for me locally - missing include for tint::SubgroupMatrixInfo.",
+      "revId": "6d73fd69a56b9807094fcdf0eebf2c4556e29e61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

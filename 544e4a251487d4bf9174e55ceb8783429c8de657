@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a4d7873d_ef5d7ac4",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-25T18:55:50Z",
+      "side": 1,
+      "message": "Yeah this is awkard. Corentin\u0027s comment in the other thread was:\n\n\u003e We should probably add a getter on the DeviceBase for that. (eventually all these const getters with no params should really be in a \"Device Properties\" struct).\n\nFWIW we used to precompute the configs and cache them which would avoid having to re-enumerate them here, but had to change that because of NVIDIA\u0027s f16 issues. Maybe in the future when NVIDIA can support f16 properly we can go back to that approach.",
+      "parentUuid": "f803b99b_8cf860ec",
+      "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "887d5560_e990a6de",
         "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
         "patchSetId": 1
@@ -192,6 +210,24 @@
       "side": 1,
       "message": "It\u0027s not just for override or not. It is meant to match other decisions we have made along similar lines like image formats and compat errors. Any shader module should be able to be compiled, but the pipeline creation fails if the device doesn\u0027t support the required features. So a user could create a module with many entry points and then only use the ones that are supported.",
       "parentUuid": "59729413_1598044d",
+      "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d091f3e1_3a2573ae",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-25T18:55:50Z",
+      "side": 1,
+      "message": "I could go either way TBH. Alan\u0027s point was my first thought too, although given the nature of the subgroup matrix configs it doesn\u0027t seem super likely that people will want to pre-generate all the various configurations that might exist and then pick out a single entry point, because the number of possibilities is huge.\n\nThere\u0027s not a significant complexity different between doing it at shader module vs pipeline time (essentially just the Tint reflection stuff moves earlier), so doing it as late as possible seems OK.",
+      "parentUuid": "4fd93227_48d8ba70",
       "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
