@@ -436,11 +436,6 @@ MaybeError ValidateTextureUsageConstraints(
     const auto kTransientAttachment = wgpu::TextureUsage::TransientAttachment;
     if (usage & kTransientAttachment) {
         DAWN_INVALID_IF(
-            !device->HasFeature(Feature::TransientAttachments),
-            "The texture usage (%s) includes %s, which requires the %s feature to be set", usage,
-            kTransientAttachment, ToAPI(Feature::TransientAttachments));
-
-        DAWN_INVALID_IF(
             usage == kTransientAttachment,
             "The texture usage is only %s (which always requires another attachment usage).",
             kTransientAttachment);
