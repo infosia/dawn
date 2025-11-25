@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0590d62_4172152b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-25T19:45:14Z",
+      "side": 1,
+      "message": "+dsinclair to stamp since there aren\u0027t specific owners for the go.* files. Perhaps we should add per-file owners for those pointing to //tools/src/OWNERS",
+      "revId": "80bf77c60e2e447fce988b101bd4b83e5a28efd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
