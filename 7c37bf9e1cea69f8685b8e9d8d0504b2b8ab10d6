@@ -43,6 +43,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "14cedbc2_5ffd3ee5",
+        "filename": "src/dawn/native/Format.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T11:19:53Z",
+      "side": 1,
+      "message": "Can we keep this type alias only inside Format.cpp and refer to it as FormatCapability in `Format`?",
+      "revId": "7c37bf9e1cea69f8685b8e9d8d0504b2b8ab10d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c55b96b9_e0549e69",
         "filename": "src/dawn/native/vulkan/TextureVk.cpp",
         "patchSetId": 17
@@ -54,6 +71,24 @@
       "writtenOn": "2025-11-24T12:29:26Z",
       "side": 1,
       "message": "Please fix this WARNING reported by ClangTidy: warning: clang-tidy failed on this file; no diagnostics will be issued.\n\n(Lint o...\n\nwarning: clang-tidy failed on this file; no diagnostics will be issued.\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel` or `mac-clang-tidy-rel`)",
+      "revId": "7c37bf9e1cea69f8685b8e9d8d0504b2b8ab10d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "077a716f_c2658184",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T11:19:53Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c55b96b9_e0549e69",
       "revId": "7c37bf9e1cea69f8685b8e9d8d0504b2b8ab10d6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
