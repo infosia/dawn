@@ -140,6 +140,30 @@
       },
       "revId": "9edee8054959d6eba971531b02349348e30fb57d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a9b71a3_8b68a4bb",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-25T17:52:25Z",
+      "side": 1,
+      "message": "What about existing Adreno 8xx though?\n\nGenerally for checks like this I would like to say \"\u003c first working version\" instead of \"\u003c\u003d last broken version\" but if we can\u0027t, that\u0027s OK.",
+      "parentUuid": "842efb03_238f0c86",
+      "range": {
+        "startLine": 282,
+        "startChar": 8,
+        "endLine": 283,
+        "endChar": 49
+      },
+      "revId": "9edee8054959d6eba971531b02349348e30fb57d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
