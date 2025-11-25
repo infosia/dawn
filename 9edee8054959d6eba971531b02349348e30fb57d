@@ -16,6 +16,24 @@
       "message": "Isn\u0027t the Adreno X1 a Gen 7Xx which would go in the `kAssumedMaxBufferSize` here?",
       "revId": "9edee8054959d6eba971531b02349348e30fb57d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "995c6409_e299b071",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-11-25T11:42:49Z",
+      "side": 1,
+      "message": "All the existing QC Windows devices, including Adreno X1 and all the previous devices, have hardware limitation, so the max storage buffer binding size has to be 2^28. Please see the D3D12 implementation at https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp;l\u003d380?q\u003dphysicaldeviced3d12.cpp\u0026ss\u003dchromium%2Fchromium%2Fsrc:third_party%2Fdawn%2F",
+      "parentUuid": "a895e21f_1a142cc2",
+      "revId": "9edee8054959d6eba971531b02349348e30fb57d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
