@@ -57,6 +57,30 @@
       },
       "revId": "9edee8054959d6eba971531b02349348e30fb57d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aad120bc_dcd666ab",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-11-25T14:49:36Z",
+      "side": 1,
+      "message": "Adreno X1 has architecture Adreno7xx, and it also has this problem (on this side of check). Qualcomm told us the next gen Adreno X2 (architecture AdrenoXxx, not Adreno8xx), which will be released in 2026, solves this issue.",
+      "parentUuid": "9bbc3e1b_956c4a07",
+      "range": {
+        "startLine": 282,
+        "startChar": 8,
+        "endLine": 283,
+        "endChar": 49
+      },
+      "revId": "9edee8054959d6eba971531b02349348e30fb57d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
