@@ -144,6 +144,30 @@
       },
       "revId": "728988fd2aa386569d9b412b730eca9a56f4d1ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cd6849c_1f8dd858",
+        "filename": "infra/specs/mixins.pyl",
+        "patchSetId": 19
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-25T00:08:01Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5e29ef33_34d2bc79",
+      "range": {
+        "startLine": 119,
+        "startChar": 51,
+        "endLine": 119,
+        "endChar": 83
+      },
+      "revId": "728988fd2aa386569d9b412b730eca9a56f4d1ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
