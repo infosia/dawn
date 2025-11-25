@@ -70,6 +70,30 @@
       },
       "revId": "5f2f288e64a77430078837568896765bfbb2f6bb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "982328aa_7bff23d5",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T15:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "600ab141_e7d7ff9a",
+      "range": {
+        "startLine": 897,
+        "startChar": 0,
+        "endLine": 919,
+        "endChar": 13
+      },
+      "revId": "5f2f288e64a77430078837568896765bfbb2f6bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
