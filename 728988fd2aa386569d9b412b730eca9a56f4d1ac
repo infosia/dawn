@@ -54,6 +54,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "53e86fa3_ad4f45fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-11-25T08:48:29Z",
+      "side": 1,
+      "message": "I have been waiting for this for a while. This will ensure future CLs related to QC have more test coverage. Thank you for doing this and look forward to WebGPU CTS enablement.",
+      "parentUuid": "eb209036_7ca27fad",
+      "revId": "728988fd2aa386569d9b412b730eca9a56f4d1ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "71745956_4d997d00",
         "filename": "infra/specs/ci.json",
         "patchSetId": 19
