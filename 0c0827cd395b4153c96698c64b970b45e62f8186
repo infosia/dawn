@@ -141,6 +141,24 @@
       "parentUuid": "6fc2ba9a_3ebf79bd",
       "revId": "0c0827cd395b4153c96698c64b970b45e62f8186",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c961b78b_6ded7ca8",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-11-25T04:21:40Z",
+      "side": 1,
+      "message": "The varying bit and required sizes are alternatives. Both consistent subgroup sizes. So I can see a couple cases:\n1. Behind the scenes on specific HW we want a specific size. In this case don\u0027t set the varying bit, but add the required subgroup size.\n2. Allow users to specify a subgroup size between min and max from the adapter. This would be an experimental extension. It could be implemented on D3D12 and Vulkan (not Metal though).",
+      "parentUuid": "1534bde5_ff5b7644",
+      "revId": "0c0827cd395b4153c96698c64b970b45e62f8186",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
