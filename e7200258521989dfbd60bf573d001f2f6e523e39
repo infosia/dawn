@@ -63,6 +63,30 @@
       },
       "revId": "e7200258521989dfbd60bf573d001f2f6e523e39",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93313d8f_8e4d94fe",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-25T15:33:48Z",
+      "side": 1,
+      "message": "I added a new file, dawn_structs.h/cpp that includes `dawn/native/wgpu_structs_autogen.h` and allows us to augment types from there (similar to how dawn_platform.h does that with `dawn/native/dawn_platform_autogen.h`). Let me know if you like this, otherwise I\u0027ll revert back to what I had before.",
+      "parentUuid": "bf5df755_019d4015",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 66
+      },
+      "revId": "e7200258521989dfbd60bf573d001f2f6e523e39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
