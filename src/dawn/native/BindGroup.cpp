@@ -571,6 +571,18 @@ BindGroupEntryContents ToBindGroupEntryContents(const BindGroupEntry& entry) {
     };
 }
 
+BindGroupEntry ToBindGroupEntry(BindingNumber binding, const BindGroupEntryContents& contents) {
+    return {
+        .nextInChain = contents.nextInChain,
+        .binding = uint32_t(binding),
+        .buffer = contents.buffer,
+        .offset = contents.offset,
+        .size = contents.size,
+        .sampler = contents.sampler,
+        .textureView = contents.textureView,
+    };
+}
+
 }  // anonymous namespace
 
 ResultOrError<UnpackedPtr<BindGroupDescriptor>> ValidateBindGroupDescriptor(
@@ -991,8 +1003,19 @@ uint32_t BindGroupBase::APIInsertBinding(const BindGroupEntryContents* contents)
         return wgpu::kInvalidBinding;
     }
 
-    // TODO(435317394): Implement bindless bindgroup updates.
-    DAWN_UNREACHABLE();
+    std::optional<BindingIndex> freeSlot = mDynamicArray->GetFreeSlot();
+    if (!freeSlot.has_value()) {
+        return wgpu::kInvalidBinding;
+    }
+
+    BindingNumber binding =
+        GetLayout()->GetAPIDynamicArrayStart() + BindingNumber(uint32_t(freeSlot.value()));
+
+    BindGroupEntry entry = ToBindGroupEntry(binding, *contents);
+    wgpu::Status updateStatus = APIUpdate(&entry);
+    DAWN_ASSERT(updateStatus == wgpu::Status::Success);
+
+    return uint32_t(binding);
 }
 
 wgpu::Status BindGroupBase::APIRemoveBinding(uint32_t binding) {
