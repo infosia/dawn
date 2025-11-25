@@ -47,6 +47,7 @@ class DeviceMock : public DeviceBase {
     // Exposes some protected functions for testing purposes.
     using DeviceBase::DestroyObjects;
     using DeviceBase::ForceEnableFeatureForTesting;
+    using DeviceBase::ForceEnableToggleForTesting;
 
     // TODO(chromium:42240655): Implement AdapterMock and use it in the constructor of DeviceMock
     DeviceMock(AdapterBase* adapter,

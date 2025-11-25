@@ -482,6 +482,7 @@ class DeviceBase : public ErrorSink,
     // Constructor used only for mocking and testing.
     DeviceBase();
 
+    void ForceEnableToggleForTesting(Toggle toggle);
     void ForceEnableFeatureForTesting(Feature feature);
 
     MaybeError Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor,
