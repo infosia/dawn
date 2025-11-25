@@ -123,6 +123,24 @@
       "parentUuid": "38b1f0e3_45198545",
       "revId": "0c0827cd395b4153c96698c64b970b45e62f8186",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1534bde5_ff5b7644",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-11-25T03:12:50Z",
+      "side": 1,
+      "message": "Do you think we can have an extension to specify the required subgroup size now? We can also support it on D3D12 with Shader Model 6.6 (https://microsoft.github.io/DirectX-Specs/d3d/HLSL_SM_6_6_WaveSize.html).\n\nAt least we should fix the implementation here as it violates Vulkan SPEC. When we use `subgroupSizeInfo.requiredSubgroupSize` we shouldn\u0027t set `VK_PIPELINE_SHADER_STAGE_CREATE_ALLOW_VARYING_SUBGROUP_SIZE_BIT`. What do you think?",
+      "parentUuid": "6fc2ba9a_3ebf79bd",
+      "revId": "0c0827cd395b4153c96698c64b970b45e62f8186",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
