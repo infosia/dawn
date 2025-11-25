@@ -106,6 +106,8 @@ class ContextEGL : NonMovable {
 
     ResultOrError<ScopedMakeCurrent> MakeCurrent();
 
+    EGLContext GetEGLContext() { return mState.context; }
+
   private:
     explicit ContextEGL(Ref<DisplayEGL> display, bool bindContextOnlyDuringUse);
 

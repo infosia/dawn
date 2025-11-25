@@ -39,11 +39,13 @@
 #include "dawn/native/EnumMaskIterator.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/opengl/BufferGL.h"
+#include "dawn/native/opengl/ContextEGL.h"
 #include "dawn/native/opengl/CommandBufferGL.h"
 #include "dawn/native/opengl/DeviceGL.h"
 #include "dawn/native/opengl/SharedFenceGL.h"
 #include "dawn/native/opengl/SharedTextureMemoryGL.h"
 #include "dawn/native/opengl/UtilsGL.h"
+#include "dawn/native/utils/RenderDoc.h"
 
 namespace dawn::native::opengl {
 
@@ -618,6 +620,37 @@ MaybeError Texture::SynchronizeTextureBeforeUse() {
 
     mLastSharedTextureMemoryUsageSerial = GetDevice()->GetQueue()->GetPendingCommandSerial();
     return {};
+}
+
+void Texture::NotifySwapChainPresent() {
+    // When using an external swap chain texture, there's no way to determine frame boundaries since
+    // Dawn isn't managing the OpenGL swap chains. In this mode, external tools like RenderDoc
+    // will wait forever for a present that never happens. We handle this by using tool-specific
+    // hooks to inform them of the "presented" texture so it can determine frame
+    // boundaries and use its contents for the UI.
+    if (!mIsExternalSwapChainTexture) {
+        return;
+    }
+
+    Device* device = ToBackend(GetDevice());
+
+#if defined(DAWN_ENABLE_RENDERDOC)
+    // For RenderDoc, we expect the user to enable and use process injection to inject RenderDoc
+    // into the GPU process at startup. We start capturing all frames right away. The user has
+    // to kill the process or stop it from rendering (e.g. close or change tabs in Chrome).
+    if (auto renderDocApi = dawn::native::utils::GetRenderDocApi(device)) {
+        auto renderDocDevicePtr = device->GetContext()->GetEGLContext();
+
+        // We signal the end of the current frame and the start of the next.
+        // This means we miss capturing the very first frame.
+        renderDocApi->EndFrameCapture(renderDocDevicePtr, NULL);
+        renderDocApi->StartFrameCapture(renderDocDevicePtr, NULL);
+    }
+#endif
+}
+
+void Texture::SetIsExternalSwapchainTexture(bool isSwapChainTexture) {
+    mIsExternalSwapChainTexture = isSwapChainTexture;
 }
 
 // TextureView

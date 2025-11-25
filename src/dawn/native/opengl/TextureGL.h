@@ -66,6 +66,9 @@ class Texture final : public TextureBase {
 
     MaybeError SynchronizeTextureBeforeUse();
 
+    void NotifySwapChainPresent();
+    void SetIsExternalSwapchainTexture(bool isSwapChainTexture);
+
   private:
     ~Texture() override;
 
@@ -77,6 +80,7 @@ class Texture final : public TextureBase {
     GLuint mHandle;
     OwnsHandle mOwnsHandle = OwnsHandle::No;
     GLenum mTarget;
+    bool mIsExternalSwapChainTexture = false;
 };
 
 class TextureView final : public TextureViewBase {

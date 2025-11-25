@@ -739,6 +739,9 @@ if (DAWN_ENABLE_OPENGL)
 endif()
 
 if (DAWN_ENABLE_VULKAN)
+    list(APPEND conditional_private_depends
+        RenderDocApi
+    )
     list(APPEND headers
         "${DAWN_INCLUDE_DIR}/dawn/native/VulkanBackend.h"
     )
@@ -856,6 +859,11 @@ if (DAWN_ENABLE_VULKAN)
             "vulkan/external_semaphore/SemaphoreServiceImplementationFD.cpp"
         )
     endif()
+endif()
+
+if (DAWN_ENABLE_D3D12 OR DAWN_ENABLE_VULKAN)
+    list(APPEND private_headers "utils/RenderDoc.h")
+    list(APPEND sources "utils/RenderDoc.cpp")
 endif()
 
 set(dawn_component_srcs)
