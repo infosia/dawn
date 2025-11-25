@@ -22,6 +22,30 @@
       },
       "revId": "5f2f288e64a77430078837568896765bfbb2f6bb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08c4cc68_8f24aef1",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T14:41:51Z",
+      "side": 1,
+      "message": "Sorry I\u0027m not sure how you envision this set method used. Is it that an `ErrorBindGroup` would be created in `MakeError`, and it is `MakeError` that would iterate the chain and set the dynamic array in the bindgroup afterwards?",
+      "parentUuid": "b5bd581c_1a97f212",
+      "range": {
+        "startLine": 897,
+        "startChar": 0,
+        "endLine": 919,
+        "endChar": 13
+      },
+      "revId": "5f2f288e64a77430078837568896765bfbb2f6bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -22,6 +22,30 @@
       },
       "revId": "08991a0b0a6f0ea46febbccb517ad0cb0ffbef22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a503a947_0d161679",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T14:41:51Z",
+      "side": 0,
+      "message": "I checked and in `dawn.json` this is not marked as optional, so the user must pass a valid pointer to a `BindGroupDescriptor`. The previous code was overly defensive (or was for historical reasons).",
+      "parentUuid": "5a651a10_632131f4",
+      "range": {
+        "startLine": 1277,
+        "startChar": 43,
+        "endLine": 1277,
+        "endChar": 83
+      },
+      "revId": "08991a0b0a6f0ea46febbccb517ad0cb0ffbef22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
