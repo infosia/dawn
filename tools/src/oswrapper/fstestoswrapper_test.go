@@ -1260,6 +1260,131 @@ func TestFSTestOSWrapper_ReadDir(t *testing.T) {
 	}
 }
 
+func TestFSTestOSWrapper_Mkdir_Symlinks(t *testing.T) {
+	root := getTestRoot()
+	tests := []struct {
+		name     string
+		setup    unittestSetup
+		symlinks map[string]string
+		path     string
+		verify   func(t *testing.T, wrapper oswrapper.FSTestOSWrapper)
+		expectedError
+	}{
+		{
+			name: "Mkdir in symlinked directory",
+			path: filepath.Join(root, "link", "newdir"),
+			setup: unittestSetup{
+				initialDirs: []string{filepath.Join(root, "target")},
+			},
+			symlinks: map[string]string{
+				"target": filepath.Join(root, "link"),
+			},
+			verify: func(t *testing.T, wrapper oswrapper.FSTestOSWrapper) {
+				// Verify it was created in target
+				info, err := wrapper.Stat(filepath.Join(root, "target", "newdir"))
+				require.NoError(t, err)
+				require.True(t, info.IsDir())
+			},
+		},
+		{
+			name: "Mkdir fails if parent is symlink to file",
+			path: filepath.Join(root, "link", "newdir"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{filepath.Join(root, "file.txt"): ""},
+			},
+			symlinks: map[string]string{
+				"file.txt": filepath.Join(root, "link"),
+			},
+			expectedError: expectedError{
+				wantErrMsg: "not a directory",
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			wrapper := tc.setup.setup(t)
+			for oldname, newname := range tc.symlinks {
+				require.NoError(t, wrapper.Symlink(oldname, newname))
+			}
+
+			err := wrapper.Mkdir(tc.path, 0755)
+
+			if tc.expectedError.Check(t, err) {
+				return
+			}
+
+			require.NoError(t, err)
+			if tc.verify != nil {
+				tc.verify(t, wrapper)
+			}
+		})
+	}
+}
+
+func TestFSTestOSWrapper_MkdirAll_Symlinks(t *testing.T) {
+	root := getTestRoot()
+	tests := []struct {
+		name     string
+		setup    unittestSetup
+		symlinks map[string]string
+		path     string
+		verify   func(t *testing.T, wrapper oswrapper.FSTestOSWrapper)
+		expectedError
+	}{
+		{
+			name: "MkdirAll through symlink",
+			path: filepath.Join(root, "link", "a", "b"),
+			setup: unittestSetup{
+				initialDirs: []string{filepath.Join(root, "target")},
+			},
+			symlinks: map[string]string{
+				"target": filepath.Join(root, "link"),
+			},
+			verify: func(t *testing.T, wrapper oswrapper.FSTestOSWrapper) {
+				info, err := wrapper.Stat(filepath.Join(root, "target", "a", "b"))
+				require.NoError(t, err)
+				require.True(t, info.IsDir())
+			},
+		},
+		{
+			name: "MkdirAll when symlink exists to directory",
+			path: filepath.Join(root, "link", "subdir"),
+			setup: unittestSetup{
+				initialDirs: []string{filepath.Join(root, "target", "subdir")},
+			},
+			symlinks: map[string]string{
+				"target": filepath.Join(root, "link"),
+			},
+			verify: func(t *testing.T, wrapper oswrapper.FSTestOSWrapper) {
+				info, err := wrapper.Stat(filepath.Join(root, "target", "subdir"))
+				require.NoError(t, err)
+				require.True(t, info.IsDir())
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			wrapper := tc.setup.setup(t)
+			for oldname, newname := range tc.symlinks {
+				require.NoError(t, wrapper.Symlink(oldname, newname))
+			}
+
+			err := wrapper.MkdirAll(tc.path, 0755)
+
+			if tc.expectedError.Check(t, err) {
+				return
+			}
+
+			require.NoError(t, err)
+			if tc.verify != nil {
+				tc.verify(t, wrapper)
+			}
+		})
+	}
+}
+
 func TestFSTestOSWrapper_ReadDir_MatchesReal(t *testing.T) {
 	tests := []struct {
 		name  string
@@ -2941,6 +3066,635 @@ func TestFSTestOSWrapper_WriteFile_MatchesReal(t *testing.T) {
 			requireErrorsMatch(t, realErr, testErr)
 			if realErr == nil {
 				requireFileSystemsMatch(t, realRoot, testFS)
+			}
+		})
+	}
+}
+
+func TestFSTestOSWrapper_Symlink(t *testing.T) {
+	root := getTestRoot()
+	tests := []struct {
+		name    string
+		setup   unittestSetup
+		oldname string
+		newname string
+		verify  func(t *testing.T, fs oswrapper.FSTestOSWrapper)
+		expectedError
+	}{
+		{
+			name:    "Create symlink",
+			oldname: "target.txt",
+			newname: filepath.Join(root, "link.txt"),
+			verify: func(t *testing.T, fs oswrapper.FSTestOSWrapper) {
+				// Verify directly in the map
+				p := fs.CleanPath(filepath.Join(root, "link.txt"))
+				entry, ok := fs.FS[p]
+				require.True(t, ok, "symlink entry should exist in map")
+				require.Equal(t, os.ModeSymlink, entry.Mode&os.ModeSymlink)
+				require.Equal(t, "target.txt", string(entry.Data))
+			},
+		},
+		{
+			name:    "Create symlink in existing directory",
+			oldname: "../target.txt",
+			newname: filepath.Join(root, "dir", "link.txt"),
+			setup: unittestSetup{
+				initialDirs: []string{filepath.Join(root, "dir")},
+			},
+			verify: func(t *testing.T, fs oswrapper.FSTestOSWrapper) {
+				p := fs.CleanPath(filepath.Join(root, "dir", "link.txt"))
+				entry, ok := fs.FS[p]
+				require.True(t, ok)
+				require.Equal(t, "../target.txt", string(entry.Data))
+			},
+		},
+		{
+			name:    "Fail if link name exists",
+			oldname: "target",
+			newname: filepath.Join(root, "existing.txt"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{filepath.Join(root, "existing.txt"): "content"},
+			},
+			expectedError: expectedError{
+				wantErrIs: os.ErrExist,
+			},
+		},
+		{
+			name:    "Fail if parent directory missing",
+			oldname: "target",
+			newname: filepath.Join(root, "missing", "link"),
+			expectedError: expectedError{
+				wantErrIs: os.ErrNotExist,
+			},
+		},
+		{
+			name:    "Fail if parent is file",
+			oldname: "target",
+			newname: filepath.Join(root, "file.txt", "link"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{filepath.Join(root, "file.txt"): ""},
+			},
+			expectedError: expectedError{
+				wantErrMsg: "not a directory",
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			wrapper := tc.setup.setup(t)
+			err := wrapper.Symlink(tc.oldname, tc.newname)
+
+			if tc.expectedError.Check(t, err) {
+				return
+			}
+
+			require.NoError(t, err)
+			if tc.verify != nil {
+				tc.verify(t, wrapper)
+			}
+		})
+	}
+}
+
+func TestFSTestOSWrapper_Stat_Symlinks(t *testing.T) {
+	root := getTestRoot()
+	tests := []struct {
+		name     string
+		setup    unittestSetup
+		symlinks map[string]string // oldname -> newname
+		path     string
+		verify   func(t *testing.T, info os.FileInfo)
+		expectedError
+	}{
+		{
+			name: "Stat symlink to file",
+			path: filepath.Join(root, "link"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{filepath.Join(root, "target.txt"): "content"},
+			},
+			symlinks: map[string]string{
+				"target.txt": filepath.Join(root, "link"),
+			},
+			verify: func(t *testing.T, info os.FileInfo) {
+				require.False(t, info.IsDir())
+				require.Equal(t, "target.txt", info.Name())
+				require.Equal(t, int64(7), info.Size())
+			},
+		},
+		{
+			name: "Stat symlink to directory",
+			path: filepath.Join(root, "linkdir"),
+			setup: unittestSetup{
+				initialDirs: []string{filepath.Join(root, "targetdir")},
+			},
+			symlinks: map[string]string{
+				"targetdir": filepath.Join(root, "linkdir"),
+			},
+			verify: func(t *testing.T, info os.FileInfo) {
+				require.True(t, info.IsDir())
+				require.Equal(t, "targetdir", info.Name())
+			},
+		},
+		{
+			name: "Stat broken symlink",
+			path: filepath.Join(root, "broken"),
+			symlinks: map[string]string{
+				"missing": filepath.Join(root, "broken"),
+			},
+			expectedError: expectedError{
+				wantErrIs: os.ErrNotExist,
+			},
+		},
+		{
+			name: "Stat loop",
+			path: filepath.Join(root, "loop1"),
+			symlinks: map[string]string{
+				"loop2": filepath.Join(root, "loop1"),
+				"loop1": filepath.Join(root, "loop2"),
+			},
+			expectedError: expectedError{
+				wantErrIs: syscall.ELOOP,
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			wrapper := tc.setup.setup(t)
+
+			for oldname, newname := range tc.symlinks {
+				require.NoError(t, wrapper.Symlink(oldname, newname))
+			}
+
+			info, err := wrapper.Stat(tc.path)
+
+			if tc.expectedError.Check(t, err) {
+				return
+			}
+
+			if tc.verify != nil {
+				tc.verify(t, info)
+			}
+		})
+	}
+}
+
+func TestFSTestOSWrapper_OpenFile_Symlinks(t *testing.T) {
+	root := getTestRoot()
+	tests := []struct {
+		name     string
+		setup    unittestSetup
+		symlinks map[string]string
+		path     string
+		flag     int
+		verify   func(t *testing.T, file oswrapper.File, wrapper oswrapper.FSTestOSWrapper)
+		expectedError
+	}{
+		{
+			name: "Open symlink to file",
+			path: filepath.Join(root, "link"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{filepath.Join(root, "target.txt"): "content"},
+			},
+			symlinks: map[string]string{
+				"target.txt": filepath.Join(root, "link"),
+			},
+			flag: os.O_RDONLY,
+			verify: func(t *testing.T, file oswrapper.File, wrapper oswrapper.FSTestOSWrapper) {
+				data, err := io.ReadAll(file)
+				require.NoError(t, err)
+				require.Equal(t, "content", string(data))
+			},
+		},
+		{
+			name: "Write to symlink",
+			path: filepath.Join(root, "link"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{filepath.Join(root, "target.txt"): "initial"},
+			},
+			symlinks: map[string]string{
+				"target.txt": filepath.Join(root, "link"),
+			},
+			flag: os.O_WRONLY,
+			verify: func(t *testing.T, file oswrapper.File, wrapper oswrapper.FSTestOSWrapper) {
+				_, err := file.Write([]byte("updated"))
+				require.NoError(t, err)
+				file.Close()
+				// Verify target was updated
+				content, err := wrapper.ReadFile(filepath.Join(root, "target.txt"))
+				require.NoError(t, err)
+				require.Equal(t, "updated", string(content))
+			},
+		},
+		{
+			name: "Create file via broken symlink",
+			path: filepath.Join(root, "link"),
+			symlinks: map[string]string{
+				"target.txt": filepath.Join(root, "link"),
+			},
+			flag: os.O_CREATE | os.O_WRONLY,
+			verify: func(t *testing.T, file oswrapper.File, wrapper oswrapper.FSTestOSWrapper) {
+				_, err := file.Write([]byte("created"))
+				require.NoError(t, err)
+				file.Close()
+				// Verify target was created
+				content, err := wrapper.ReadFile(filepath.Join(root, "target.txt"))
+				require.NoError(t, err)
+				require.Equal(t, "created", string(content))
+			},
+		},
+		{
+			name: "O_EXCL fails if symlink exists",
+			path: filepath.Join(root, "link"),
+			symlinks: map[string]string{
+				"target.txt": filepath.Join(root, "link"),
+			},
+			flag: os.O_CREATE | os.O_EXCL,
+			expectedError: expectedError{
+				wantErrIs: os.ErrExist,
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			wrapper := tc.setup.setup(t)
+			for oldname, newname := range tc.symlinks {
+				require.NoError(t, wrapper.Symlink(oldname, newname))
+			}
+
+			file, err := wrapper.OpenFile(tc.path, tc.flag, 0666)
+
+			if tc.expectedError.Check(t, err) {
+				return
+			}
+
+			require.NotNil(t, file)
+			defer file.Close()
+
+			if tc.verify != nil {
+				tc.verify(t, file, wrapper)
+			}
+		})
+	}
+}
+
+func TestFSTestOSWrapper_ReadFile_Symlinks(t *testing.T) {
+	root := getTestRoot()
+	tests := []struct {
+		name         string
+		setup        unittestSetup
+		symlinks     map[string]string
+		path         string
+		expectedData []byte
+		expectedError
+	}{
+		{
+			name: "Read symlink to file",
+			path: filepath.Join(root, "link"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{filepath.Join(root, "target.txt"): "content"},
+			},
+			symlinks: map[string]string{
+				"target.txt": filepath.Join(root, "link"),
+			},
+			expectedData: []byte("content"),
+		},
+		{
+			name: "Read nested symlinks",
+			path: filepath.Join(root, "link1"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{filepath.Join(root, "target.txt"): "deep content"},
+			},
+			symlinks: map[string]string{
+				"link2":      filepath.Join(root, "link1"),
+				"target.txt": filepath.Join(root, "link2"),
+			},
+			expectedData: []byte("deep content"),
+		},
+		{
+			name: "Read symlink to directory",
+			path: filepath.Join(root, "linkdir"),
+			setup: unittestSetup{
+				initialDirs: []string{filepath.Join(root, "targetdir")},
+			},
+			symlinks: map[string]string{
+				"targetdir": filepath.Join(root, "linkdir"),
+			},
+			expectedError: expectedError{
+				wantErrMsg: "is a directory",
+			},
+		},
+		{
+			name: "Read broken symlink",
+			path: filepath.Join(root, "broken"),
+			symlinks: map[string]string{
+				"missing": filepath.Join(root, "broken"),
+			},
+			expectedError: expectedError{
+				wantErrIs: os.ErrNotExist,
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			wrapper := tc.setup.setup(t)
+			for oldname, newname := range tc.symlinks {
+				require.NoError(t, wrapper.Symlink(oldname, newname))
+			}
+
+			data, err := wrapper.ReadFile(tc.path)
+
+			if tc.expectedError.Check(t, err) {
+				return
+			}
+
+			require.Equal(t, tc.expectedData, data)
+		})
+	}
+}
+
+func TestFSTestOSWrapper_ReadDir_Symlinks(t *testing.T) {
+	root := getTestRoot()
+	tests := []struct {
+		name            string
+		setup           unittestSetup
+		symlinks        map[string]string
+		path            string
+		expectedEntries []string
+		expectedError
+	}{
+		{
+			name: "Read symlink to directory",
+			path: filepath.Join(root, "linkdir"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{filepath.Join(root, "targetdir", "file.txt"): "content"},
+				initialDirs:  []string{filepath.Join(root, "targetdir")},
+			},
+			symlinks: map[string]string{
+				"targetdir": filepath.Join(root, "linkdir"),
+			},
+			expectedEntries: []string{"file.txt"},
+		},
+		{
+			name: "Read symlink to file",
+			path: filepath.Join(root, "link"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{filepath.Join(root, "target.txt"): "content"},
+			},
+			symlinks: map[string]string{
+				"target.txt": filepath.Join(root, "link"),
+			},
+			expectedError: expectedError{
+				wantErrMsg: "not a directory",
+			},
+		},
+		{
+			name: "Read broken symlink",
+			path: filepath.Join(root, "broken"),
+			symlinks: map[string]string{
+				"missing": filepath.Join(root, "broken"),
+			},
+			expectedError: expectedError{
+				wantErrIs: os.ErrNotExist,
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			wrapper := tc.setup.setup(t)
+			for oldname, newname := range tc.symlinks {
+				require.NoError(t, wrapper.Symlink(oldname, newname))
+			}
+
+			entries, err := wrapper.ReadDir(tc.path)
+
+			if tc.expectedError.Check(t, err) {
+				return
+			}
+
+			entryNames := make([]string, len(entries))
+			for i, e := range entries {
+				entryNames[i] = e.Name()
+			}
+			require.ElementsMatch(t, tc.expectedEntries, entryNames)
+		})
+	}
+}
+
+func TestFSTestOSWrapper_WriteFile_Symlinks(t *testing.T) {
+	root := getTestRoot()
+	tests := []struct {
+		name     string
+		setup    unittestSetup
+		symlinks map[string]string
+		path     string
+		content  []byte
+		verify   func(t *testing.T, wrapper oswrapper.FSTestOSWrapper)
+		expectedError
+	}{
+		{
+			name: "Write to symlink to file",
+			path: filepath.Join(root, "link"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{filepath.Join(root, "target.txt"): "initial"},
+			},
+			symlinks: map[string]string{
+				"target.txt": filepath.Join(root, "link"),
+			},
+			content: []byte("updated"),
+			verify: func(t *testing.T, wrapper oswrapper.FSTestOSWrapper) {
+				content, err := wrapper.ReadFile(filepath.Join(root, "target.txt"))
+				require.NoError(t, err)
+				require.Equal(t, "updated", string(content))
+			},
+		},
+		{
+			name: "Create file via broken symlink",
+			path: filepath.Join(root, "link"),
+			symlinks: map[string]string{
+				"target.txt": filepath.Join(root, "link"),
+			},
+			content: []byte("created"),
+			verify: func(t *testing.T, wrapper oswrapper.FSTestOSWrapper) {
+				content, err := wrapper.ReadFile(filepath.Join(root, "target.txt"))
+				require.NoError(t, err)
+				require.Equal(t, "created", string(content))
+			},
+		},
+		{
+			name: "Write to symlink to directory",
+			path: filepath.Join(root, "linkdir"),
+			setup: unittestSetup{
+				initialDirs: []string{filepath.Join(root, "targetdir")},
+			},
+			symlinks: map[string]string{
+				"targetdir": filepath.Join(root, "linkdir"),
+			},
+			content: []byte("data"),
+			expectedError: expectedError{
+				wantErrMsg: "is a directory",
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			wrapper := tc.setup.setup(t)
+			for oldname, newname := range tc.symlinks {
+				require.NoError(t, wrapper.Symlink(oldname, newname))
+			}
+
+			err := wrapper.WriteFile(tc.path, tc.content, 0666)
+
+			if tc.expectedError.Check(t, err) {
+				return
+			}
+
+			require.NoError(t, err)
+			if tc.verify != nil {
+				tc.verify(t, wrapper)
+			}
+		})
+	}
+}
+
+func TestFSTestOSWrapper_Remove_Symlinks(t *testing.T) {
+	root := getTestRoot()
+	tests := []struct {
+		name     string
+		setup    unittestSetup
+		symlinks map[string]string
+		path     string
+		verify   func(t *testing.T, wrapper oswrapper.FSTestOSWrapper)
+		expectedError
+	}{
+		{
+			name: "Remove symlink itself",
+			path: filepath.Join(root, "link"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{filepath.Join(root, "target.txt"): "content"},
+			},
+			symlinks: map[string]string{
+				"target.txt": filepath.Join(root, "link"),
+			},
+			verify: func(t *testing.T, wrapper oswrapper.FSTestOSWrapper) {
+				// Symlink should be gone
+				_, err := wrapper.Stat(filepath.Join(root, "link"))
+				require.Error(t, err)
+				require.True(t, os.IsNotExist(err))
+
+				// Target should exist
+				content, err := wrapper.ReadFile(filepath.Join(root, "target.txt"))
+				require.NoError(t, err)
+				require.Equal(t, "content", string(content))
+			},
+		},
+		{
+			name: "Remove file inside symlinked directory",
+			path: filepath.Join(root, "link", "file.txt"),
+			setup: unittestSetup{
+				initialFiles: map[string]string{filepath.Join(root, "target", "file.txt"): "content"},
+				initialDirs:  []string{filepath.Join(root, "target")},
+			},
+			symlinks: map[string]string{
+				"target": filepath.Join(root, "link"),
+			},
+			verify: func(t *testing.T, wrapper oswrapper.FSTestOSWrapper) {
+				_, err := wrapper.Stat(filepath.Join(root, "target", "file.txt"))
+				require.Error(t, err)
+				require.True(t, os.IsNotExist(err))
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			wrapper := tc.setup.setup(t)
+			for oldname, newname := range tc.symlinks {
+				require.NoError(t, wrapper.Symlink(oldname, newname))
+			}
+
+			err := wrapper.Remove(tc.path)
+
+			if tc.expectedError.Check(t, err) {
+				return
+			}
+
+			require.NoError(t, err)
+			if tc.verify != nil {
+				tc.verify(t, wrapper)
+			}
+		})
+	}
+}
+
+func TestFSTestOSWrapper_RemoveAll_Symlinks(t *testing.T) {
+	root := getTestRoot()
+	tests := []struct {
+		name     string
+		setup    unittestSetup
+		symlinks map[string]string
+		path     string
+		verify   func(t *testing.T, wrapper oswrapper.FSTestOSWrapper)
+		expectedError
+	}{
+		{
+			name: "RemoveAll symlink itself",
+			path: filepath.Join(root, "link"),
+			setup: unittestSetup{
+				initialDirs: []string{filepath.Join(root, "target")},
+			},
+			symlinks: map[string]string{
+				"target": filepath.Join(root, "link"),
+			},
+			verify: func(t *testing.T, wrapper oswrapper.FSTestOSWrapper) {
+				// Symlink gone
+				_, err := wrapper.Stat(filepath.Join(root, "link"))
+				require.Error(t, err)
+
+				// Target directory still there
+				info, err := wrapper.Stat(filepath.Join(root, "target"))
+				require.NoError(t, err)
+				require.True(t, info.IsDir())
+			},
+		},
+		{
+			name: "RemoveAll inside symlinked directory",
+			path: filepath.Join(root, "link", "subdir"),
+			setup: unittestSetup{
+				initialDirs: []string{filepath.Join(root, "target", "subdir")},
+			},
+			symlinks: map[string]string{
+				"target": filepath.Join(root, "link"),
+			},
+			verify: func(t *testing.T, wrapper oswrapper.FSTestOSWrapper) {
+				_, err := wrapper.Stat(filepath.Join(root, "target", "subdir"))
+				require.Error(t, err)
+				require.True(t, os.IsNotExist(err))
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			wrapper := tc.setup.setup(t)
+			for oldname, newname := range tc.symlinks {
+				require.NoError(t, wrapper.Symlink(oldname, newname))
+			}
+
+			err := wrapper.RemoveAll(tc.path)
+
+			if tc.expectedError.Check(t, err) {
+				return
+			}
+
+			require.NoError(t, err)
+			if tc.verify != nil {
+				tc.verify(t, wrapper)
 			}
 		})
 	}
