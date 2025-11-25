@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6eaf60df_ae8a4994",
+        "filename": "src/dawn/native/SystemEvent.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T10:43:26Z",
+      "side": 1,
+      "message": "Ah interesting that there\u0027s a conflict with dawn::native::utils. I never really liked the name of that namespace. Maybe one day we\u0027ll rename. Current patchset LGTM.",
+      "parentUuid": "7ccf6e15_b8a5cb92",
+      "revId": "8217f32c591dfaf9d563b040b6057c897111eb1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ea6fae89_4850537d",
