@@ -205,6 +205,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "398f3370_9a15971f",
+        "filename": "src/dawn/native/vulkan/UtilsVulkan.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T10:38:32Z",
+      "side": 1,
+      "message": "Yeah it\u0027s a bit unnecessary but I\u0027m not super concerned about it, a new `BufferCopyInfo` would need conversion functions etc so it\u0027s not small either. Either way would be fine IMHO.",
+      "parentUuid": "f5d32dfb_4357d263",
+      "revId": "0a072fd23434a5c44cc2be9f4dec85dc994bf18f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18e1df9f_11ac0682",

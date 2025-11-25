@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51ef6a42_0f4023b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T10:38:32Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "cc4079f50e55129bda99cb6000885714dcebf0dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b40a37be_1a5523a2",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T10:38:32Z",
+      "side": 1,
+      "message": "nit: the virtual sizes will be in texels, but the physical sizes will be in blocks.",
+      "revId": "cc4079f50e55129bda99cb6000885714dcebf0dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
