@@ -16,6 +16,24 @@
       "message": "```suggestion\n    // has 2 matching bindgroups one will get the wrong label\n    // TODO(https://issues.chromium.org/42240220): This can be fixed by keeping a list of labels per deduplicated object.\n```",
       "revId": "423a7ca444354b2ca1e0eb21e8c7cb59bd14e574",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cc0d6d4_061055df",
+        "filename": "src/dawn/native/BindGroupLayout.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-25T17:19:46Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "8483fbb8_3f9c2e87",
+      "revId": "423a7ca444354b2ca1e0eb21e8c7cb59bd14e574",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
