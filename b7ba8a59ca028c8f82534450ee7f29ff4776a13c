@@ -51,6 +51,24 @@
       "parentUuid": "e1586ce3_78cae8a9",
       "revId": "b7ba8a59ca028c8f82534450ee7f29ff4776a13c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9bb683b_aa8f2053",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T17:38:41Z",
+      "side": 1,
+      "message": "Skia must be setting AllowUnsafeAPIs because they use a lot of experimental extension. The reason why gating on the Blink side is not sufficient is that we want to killswitch on the GPU process side in case the renderer process is compromised.",
+      "parentUuid": "cc849dce_38b07d57",
+      "revId": "b7ba8a59ca028c8f82534450ee7f29ff4776a13c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
