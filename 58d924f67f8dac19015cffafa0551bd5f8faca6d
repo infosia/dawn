@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1228fe2_a0bca4ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-11-25T21:01:35Z",
+      "side": 1,
+      "message": "Dawn roll fails on fushia: https://chromium-review.googlesource.com/c/chromium/src/+/7205050?tab\u003dchecks\n\nhttps://ci.chromium.org/ui/p/chromium/builders/try/fuchsia-binary-size/1354491/overview\n\n```\n[516/14618] CXX obj/third_party/dawn/src/dawn/utils/system_utils/SystemHandle.o\n../../third_party/llvm-build/Release+Asserts/bin/clang++ -MMD -MF obj/third_party/dawn/src/dawn/utils/system_utils/SystemHandle.o.d -D__STDC_C...(too long)\nIn file included from ../../third_party/dawn/src/dawn/utils/SystemHandle.cpp:28:\n../../third_party/dawn/src/dawn/utils/SystemHandle.h:45:20: error: declaration of \u0027uint32_t\u0027 must be imported from module \u0027_Builtin_stdint\u0027 before it is required\n   45 |     using Handle \u003d uint32_t;\n      |                    ^\n../../third_party/llvm-build/Release+Asserts/lib/clang/22/include/stdint.h:202:25: note: declaration here is not visible\n  202 | typedef __UINT32_TYPE__ uint32_t;\n      |                         ^\n1 error generated.\n```\n\nShall we revert? Or do we have some simple fix?",
+      "revId": "58d924f67f8dac19015cffafa0551bd5f8faca6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
