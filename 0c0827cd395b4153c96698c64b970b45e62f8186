@@ -159,6 +159,24 @@
       "parentUuid": "1534bde5_ff5b7644",
       "revId": "0c0827cd395b4153c96698c64b970b45e62f8186",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a17f10a0_66c63166",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-11-25T07:26:42Z",
+      "side": 1,
+      "message": "Now I don\u0027t set `VK_PIPELINE_SHADER_STAGE_CREATE_ALLOW_VARYING_SUBGROUP_SIZE_BIT` when `VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXT` is enabled.",
+      "parentUuid": "c961b78b_6ded7ca8",
+      "revId": "0c0827cd395b4153c96698c64b970b45e62f8186",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
