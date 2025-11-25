@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "b7ba8a59ca028c8f82534450ee7f29ff4776a13c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1586ce3_78cae8a9",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T15:33:54Z",
+      "side": 1,
+      "message": "This enables the feature by default. We need to keep this behind a killswitch, either AllowUnsafeAPIs for now, or a new toggle that\u0027s turned on when unsafeAPIs is on.",
+      "revId": "b7ba8a59ca028c8f82534450ee7f29ff4776a13c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
