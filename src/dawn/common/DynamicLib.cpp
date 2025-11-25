@@ -105,6 +105,27 @@ bool DynamicLib::Open(const std::string& filename, std::string* error) {
     return mHandle != nullptr;
 }
 
+// Opens a dynamic library that has already been loaded into the process.
+bool DynamicLib::OpenLoaded(const std::string& filename, std::string* error) {
+#if DAWN_PLATFORM_IS(WINDOWS)
+    mHandle = GetModuleHandleA(filename.c_str());
+    if (mHandle == nullptr && error != nullptr) {
+        *error =
+            "DynamicLib.Open: " + filename + " Windows Error: " + std::to_string(GetLastError());
+    }
+#elif DAWN_PLATFORM_IS(POSIX)
+    mHandle = dlopen(filename.c_str(), RTLD_NOW | RTLD_NOLOAD);
+
+    if (mHandle == nullptr && error != nullptr) {
+        *error = dlerror();
+    }
+#else
+#error "Unsupported platform for DynamicLib"
+#endif
+
+    return mHandle != nullptr;
+}
+
 bool DynamicLib::Open(const std::string& filename,
                       std::span<const std::string> searchPaths,
                       std::string* error) {
