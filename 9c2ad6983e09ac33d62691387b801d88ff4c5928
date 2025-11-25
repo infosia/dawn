@@ -16,6 +16,57 @@
       "message": "PTAL.",
       "revId": "9c2ad6983e09ac33d62691387b801d88ff4c5928",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "084229c1_db076c12",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-25T22:38:14Z",
+      "side": 1,
+      "message": "This seems unimportant for what you\u0027re doing here?",
+      "revId": "9c2ad6983e09ac33d62691387b801d88ff4c5928",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9109d97_7e696621",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-25T22:38:14Z",
+      "side": 1,
+      "message": "Nit: Could just use `DirectlyCalledBuiltins` here and then we don\u0027t need the nested tint::Switch.",
+      "revId": "9c2ad6983e09ac33d62691387b801d88ff4c5928",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc20ff82_9aaa8501",
+        "filename": "src/tint/lang/wgsl/inspector/inspector_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3067,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-25T22:38:14Z",
+      "side": 1,
+      "message": "Would be good to add a test that has a use via a nested function call as well.",
+      "revId": "9c2ad6983e09ac33d62691387b801d88ff4c5928",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
