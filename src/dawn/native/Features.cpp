@@ -170,12 +170,6 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
       "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
       "implicit_device_synchronization.md",
       FeatureInfo::FeatureState::Stable}},
-    {Feature::TransientAttachments,
-     {"Support transient attachments that allow render pass operations to stay in tile memory, "
-      "avoiding VRAM traffic and potentially avoiding VRAM allocation for the textures.",
-      "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
-      "transient_attachments.md",
-      FeatureInfo::FeatureState::Stable}},
     {Feature::MSAARenderToSingleSampled,
      {"Support multisampled rendering on single-sampled attachments efficiently.",
       "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
