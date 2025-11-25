@@ -745,7 +745,7 @@ constexpr IOAttributeChecker kInputAttachmentIndexChecker{
     .check = [](const core::type::Type*, const IOAttributes&, const Capabilities&, IOAttributeUsage)
         -> Result<SuccessType, std::string> { return Success; }};
 
-// kBlendSrcChecker + kLocationChecker are intentionally not implemented
+// kBlendSrcChecker, kLocationChecker, and kInterpolation are intentionally not implemented
 
 /// @returns all the appropriate IOAttributeCheckers for @p attr
 Vector<const IOAttributeChecker*, 4> IOAttributeCheckersFor(const IOAttributes& attr,
@@ -763,8 +763,8 @@ Vector<const IOAttributeChecker*, 4> IOAttributeCheckersFor(const IOAttributes& 
     if (attr.input_attachment_index.has_value()) {
         checkers.Push(&kInputAttachmentIndexChecker);
     }
-    // attr.blend_src and attr.location are intentionally skipped, because their rules are not
-    // amendable to implementing via IOAttributeChecker.
+    // attr.blend_src, attr.location, and attr.interpolation are intentionally skipped, because
+    // their rules are not amenable to implementation via IOAttributeChecker.
 
     // TODO(455376684): Implement all the other checkers
     return checkers;
@@ -1190,7 +1190,7 @@ class Validator {
                            const core::type::Type* ty,
                            const IOAttributes& attr);
 
-    /// Validates location annotations on entry point IO.
+    /// Validates location attributes on entry point IO.
     /// @param locations the map of locations used so far for the current IO direction.
     /// @param target the object that has the location attribute.
     /// @param attr the IO attributes for the object.
@@ -1203,6 +1203,14 @@ class Validator {
                        Function::PipelineStage stage,
                        const core::type::Type* type,
                        IODirection dir);
+
+    /// Validates interpolation attributes on entry point IO.
+    /// @param anchor where to attach error messages to.
+    /// @param ty the type of the IO object
+    /// @param attr the IO attributes of the object.
+    void CheckInterpolation(const CastableBase* anchor,
+                            const core::type::Type* ty,
+                            const IOAttributes& attr);
 
     /// Validates the given let
     /// @param l the let to validate
@@ -2682,11 +2690,11 @@ void Validator::ValidateIOAttributes(const Function* func) {
         }
     }
 
-    // Shared context for blend_src and location validation
-    BlendSrcContext input_ctx{func->Stage(), {}, {}, nullptr, IODirection::kInput};
-    BlendSrcContext output_ctx{func->Stage(), {}, {}, nullptr, IODirection::kOutput};
-
     if (stage != Function::PipelineStage::kUndefined) {
+        // Shared context for blend_src and location validation
+        BlendSrcContext input_ctx{func->Stage(), {}, {}, nullptr, IODirection::kInput};
+        BlendSrcContext output_ctx{func->Stage(), {}, {}, nullptr, IODirection::kOutput};
+
         // First pass: pre-populate location hashes for blend_src.
         for (const auto& task : tasks) {
             auto& ctx = task.dir == IODirection::kInput ? input_ctx : output_ctx;
@@ -2722,6 +2730,11 @@ void Validator::ValidateIOAttributes(const Function* func) {
                               task.type, task.dir);
             }
         }
+    }
+
+    // Validate all the interpolation usages.
+    for (const auto& task : tasks) {
+        CheckInterpolation(task.anchor, task.type, task.attr);
     }
 
     // Validate all remaining attributes on IO objects
@@ -3368,6 +3381,46 @@ void Validator::CheckLocation(Hashmap<uint32_t, const CastableBase*, 4>& locatio
                     context.locations.Add(loc, context.target);
                 }
             }
+        });
+}
+
+void Validator::CheckInterpolation(const CastableBase* anchor,
+                                   const core::type::Type* ty,
+                                   const IOAttributes& attr) {
+    bool ctx = false;
+
+    WalkTypeAndMembers(
+        ctx, ty, attr,
+        [this, anchor](bool& in_location_composite, const core::type::Type* t,
+                       const IOAttributes& a) {
+            if (a.interpolation.has_value()) {
+                if (!capabilities_.Contains(Capability::kAllowLocationForNumericElements) &&
+                    t->As<core::type::Struct>()) {
+                    AddError(anchor) << "interpolation cannot be applied to a struct without "
+                                        "'kAllowLocationForNumericElements' capability";
+                }
+
+                bool has_location = a.location.has_value() || in_location_composite;
+                if (!has_location) {
+                    if (auto* str = t->As<core::type::Struct>()) {
+                        has_location |= str->Members().All(
+                            [](const auto* mem) { return mem->Attributes().location.has_value(); });
+                    }
+                }
+                has_location |= (capabilities_.Contains(Capability::kLoosenValidationForShaderIO) &&
+                                 a.builtin.has_value());
+
+                if (!has_location) {
+                    if (!capabilities_.Contains(Capability::kLoosenValidationForShaderIO)) {
+                        AddError(anchor) << "interpolation attribute requires a location attribute";
+                    } else {
+                        AddError(anchor) << "interpolation attribute requires a location attribute "
+                                            "(or location-like shader I/O annotation)";
+                    }
+                }
+            }
+
+            in_location_composite |= a.location.has_value();
         });
 }
 
