@@ -673,15 +673,13 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::MultiPlanarFormatNv16);
     EnableFeature(Feature::MultiPlanarFormatNv24);
 
-    // Memoryless storage mode and programmable blending are available only from the Apple2
-    // family of GPUs on.
+    // Programmable blending is available only from the Apple2 family of GPUs on.
     if ([*mDevice supportsFamily:MTLGPUFamilyApple2]) {
         // Programmable blending doesn't seem to work as expected on the iOS simulator.
         // NOTE: TARGET_OS_SIMULATOR can be defined but set to false for MacOS builds.
 #if !defined(TARGET_OS_SIMULATOR) || !TARGET_OS_SIMULATOR
         EnableFeature(Feature::FramebufferFetch);
 #endif
-        EnableFeature(Feature::TransientAttachments);
     }
 
     // TODO(crbug.com/356461286): Intel and AMD GPUs support the indirect command buffer and
