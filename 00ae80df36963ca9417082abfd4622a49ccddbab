@@ -113,6 +113,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78a87a1c_2f81f882",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T10:48:51Z",
+      "side": 1,
+      "message": "Thank you for the pre-CL to use ToBackend and the explanation for why the device is more difficult to handle. Yeah let\u0027s care about multi-device recording later, it doesn\u0027t seem quite immediately useful ^^",
+      "parentUuid": "3e6e18bd_b0e540b6",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 5
+      },
+      "revId": "00ae80df36963ca9417082abfd4622a49ccddbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2bcfc554_9a2e5176",
@@ -144,6 +168,24 @@
       "side": 1,
       "message": "done. PTAL though in BindGroupLayout.h I had to wire up `BindGroupLayout::SetLabelImpl` to call `BindGroupLayoutInternal::SetLabel`",
       "parentUuid": "2bcfc554_9a2e5176",
+      "revId": "00ae80df36963ca9417082abfd4622a49ccddbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d07d9db_7dc5b917",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T10:48:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "edc0d186_be1bdf89",
       "revId": "00ae80df36963ca9417082abfd4622a49ccddbab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
