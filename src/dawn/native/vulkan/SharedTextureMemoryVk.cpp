@@ -713,12 +713,12 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
                         "type bits (%u).",
                         memoryRequirements.memoryTypeBits, bufferProperties.memoryTypeBits);
 
-        if (!device->IsToggleEnabled(Toggle::IgnoreImportedAHardwareBufferVulkanImageSize)) {
+        /*if (!device->IsToggleEnabled(Toggle::IgnoreImportedAHardwareBufferVulkanImageSize)) {
             DAWN_INVALID_IF(memoryRequirements.size > bufferProperties.allocationSize,
                             "Required texture memory size (%u) is larger than the AHardwareBuffer "
                             "allocation size (%u).",
                             memoryRequirements.size, bufferProperties.allocationSize);
-        }
+        }*/
     }
     return sharedTextureMemory;
 #else
@@ -1012,6 +1012,10 @@ MaybeError SharedTextureMemory::BeginAccessImpl(
     static_cast<SharedTexture*>(texture)->SetPendingAcquire(
         static_cast<VkImageLayout>(vkLayoutBeginState->oldLayout),
         static_cast<VkImageLayout>(vkLayoutBeginState->newLayout));
+
+    // TODO: Can we differentiate between textures used as a swapchain and not?
+    ToBackend(texture)->SetIsExternalSwapchainTexture(true);
+
     return {};
 }
 
@@ -1081,6 +1085,8 @@ ResultOrError<FenceAndSignalValue> SharedTextureMemory::EndAccessImpl(
                         SharedFence::Create(ToBackend(GetDevice()), "Internal VkSemaphore", &desc));
     }
 #endif
+    ToBackend(texture)->NotifySwapChainPresent();
+
     // All semaphores are binary semaphores.
     return FenceAndSignalValue{std::move(fence), 1};
 }

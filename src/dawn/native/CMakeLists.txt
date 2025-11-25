@@ -740,6 +740,9 @@ if (DAWN_ENABLE_OPENGL)
 endif()
 
 if (DAWN_ENABLE_VULKAN)
+    list(APPEND conditional_private_depends
+        RenderDocApi
+    )
     list(APPEND headers
         "${DAWN_INCLUDE_DIR}/dawn/native/VulkanBackend.h"
     )
