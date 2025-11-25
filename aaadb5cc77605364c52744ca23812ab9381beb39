@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b4d5d25_1289acb9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-11-25T21:49:34Z",
+      "side": 1,
+      "message": "(fuchsia-x64-cast-receiver-rel seems to be chromium bot cannot verify here on dawn cl)",
+      "revId": "aaadb5cc77605364c52744ca23812ab9381beb39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
