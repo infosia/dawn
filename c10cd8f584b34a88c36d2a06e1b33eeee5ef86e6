@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8eb14a01_94a9c993",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T12:54:44Z",
+      "side": 1,
+      "message": "We shouldn\u0027t have more than one. This is also code that should disappear later with GPUResourceTable. Added the `break`.",
+      "parentUuid": "6762a26f_1f2f3822",
+      "revId": "c10cd8f584b34a88c36d2a06e1b33eeee5ef86e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5721284d_09d93ad7",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4010be5c_cc114820",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T12:54:44Z",
+      "side": 1,
+      "message": "`BindingIndex` is also used to type the indices in the DynamicArrayState because with \"dynamic binding arrays\" they are a subrange of the BindingIndex space of the whole bindgroup. With GPUResourceTable they would be a different typed integer though.",
+      "parentUuid": "5721284d_09d93ad7",
+      "revId": "c10cd8f584b34a88c36d2a06e1b33eeee5ef86e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f686bbd2_03725a6a",
@@ -48,6 +84,24 @@
       "writtenOn": "2025-11-24T18:27:06Z",
       "side": 1,
       "message": "The checks in here some almost a duplicate of the APIUpdate checks. Any benefit to combining them so they stay in sync or are they expected to have differences in the future that make combining problematic?",
+      "revId": "c10cd8f584b34a88c36d2a06e1b33eeee5ef86e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f42bc5a0_4ce13d18",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T12:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f686bbd2_03725a6a",
       "revId": "c10cd8f584b34a88c36d2a06e1b33eeee5ef86e6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
