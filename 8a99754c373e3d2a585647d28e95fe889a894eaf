@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "038dda99_44255aa3",
+        "filename": "src/dawn/native/dawn_structs.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T15:38:04Z",
+      "side": 1,
+      "message": "We don\u0027t need to add an include to this header, it\u0027s already part of dawn_platform_autogen.h (I know autogen code makes the transitive dependencies very mysterious) https://source.chromium.org/chromium/chromium/src/+/main:out/win-Debug/gen/third_party/dawn/src/dawn/native/dawn_platform_autogen.h;l\u003d10\n\nThat\u0027s why I think it\u0027s fine to add in dawn_platform.h directly as it is part of the dawn_platform and in the manually written code.",
+      "revId": "8a99754c373e3d2a585647d28e95fe889a894eaf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
