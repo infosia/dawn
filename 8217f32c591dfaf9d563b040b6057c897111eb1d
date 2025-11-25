@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ccf6e15_b8a5cb92",
+        "filename": "src/dawn/native/SystemEvent.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-11-25T03:06:38Z",
+      "side": 1,
+      "message": "I tried this locally and received the following error:  \n\n```\nIn file included from ../../src/dawn/tests/unittests/native/DestroyObjectTests.cpp:41:\nIn file included from ../../src/dawn/tests/unittests/native\\mocks/BindGroupLayoutMock.h:34:\nIn file included from ../../src\\dawn/tests/unittests/native/mocks/DeviceMock.h:34:\nIn file included from ../../src\\dawn/native/Device.h:51:\nIn file included from ../../src\\dawn/native/CreatePipelineAsyncEvent.h:40:\nIn file included from ../../src\\dawn/native/EventManager.h:47:\n../../src\\dawn/native/SystemEvent.h(62,11): error: no type named \u0027SystemHandle\u0027 in namespace \u0027dawn::native::utils\u0027; did you mean \u0027::dawn::utils::SystemHandle\u0027?\n   62 |     const utils::SystemHandle\u0026 GetPrimitive() const;\n      |           ^~~~~~~~~~~~~~~~~~~\n      |           ::dawn::utils::SystemHandle\n../../src\\dawn/utils/SystemHandle.h(39,7): note: \u0027::dawn::utils::SystemHandle\u0027 declared here\n   39 | class SystemHandle : public NonCopyable {\n      |       ^\n```\n\nAll of the other places I changed to use `utils::SystemHandle` worked except for this one. I decided to solve it for this file with more locally scoped using statements and fully qualified declarations.",
+      "parentUuid": "8c4022ff_d01a316c",
+      "revId": "8217f32c591dfaf9d563b040b6057c897111eb1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ea6fae89_4850537d",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34166beb_f52f3162",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-11-25T03:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea6fae89_4850537d",
+      "revId": "8217f32c591dfaf9d563b040b6057c897111eb1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e196803_9d9c0a75",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-11-24T10:14:35Z",
       "side": 1,
       "message": "note: `dawn::` is unnecessary here and in other test files.",
+      "revId": "8217f32c591dfaf9d563b040b6057c897111eb1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "543dbab8_80e9b30a",
+        "filename": "src/dawn/tests/end2end/VideoViewsTests_win.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-11-25T03:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e196803_9d9c0a75",
       "revId": "8217f32c591dfaf9d563b040b6057c897111eb1d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -99,6 +153,24 @@
       "writtenOn": "2025-11-24T10:14:35Z",
       "side": 1,
       "message": "Why is this type alias required? We already are in the `dawn::utils` namespace.",
+      "revId": "8217f32c591dfaf9d563b040b6057c897111eb1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b0f6c4a_f8412585",
+        "filename": "src/dawn/utils/WindowsDebugLogger.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-11-25T03:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc224866_1e18df2e",
       "revId": "8217f32c591dfaf9d563b040b6057c897111eb1d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
