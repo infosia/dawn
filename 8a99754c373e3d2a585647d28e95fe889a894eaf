@@ -34,6 +34,24 @@
       "parentUuid": "038dda99_44255aa3",
       "revId": "8a99754c373e3d2a585647d28e95fe889a894eaf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65782808_d669940b",
+        "filename": "src/dawn/native/dawn_structs.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-25T15:50:52Z",
+      "side": 1,
+      "message": "Alright, I\u0027ll move ths function to dawn_platform.h, and add the explanatory comment at the top. I\u0027ll be adding a dawn_platform.cpp file as well.",
+      "parentUuid": "b77183d3_9ef69f5f",
+      "revId": "8a99754c373e3d2a585647d28e95fe889a894eaf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
