@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a651a10_632131f4",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-11-25T14:31:23Z",
+      "side": 0,
+      "message": "This implies that `descriptor` can sometimes be null but the `ErrorBindGroupBase` constructor dereferences it without checking.",
+      "range": {
+        "startLine": 1277,
+        "startChar": 43,
+        "endLine": 1277,
+        "endChar": 83
+      },
+      "revId": "08991a0b0a6f0ea46febbccb517ad0cb0ffbef22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

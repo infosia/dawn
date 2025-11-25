@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5bd581c_1a97f212",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-11-25T14:31:23Z",
+      "side": 1,
+      "message": "nit: Seems like a good candidate for a helper method `setErrorDynamicArrayState` or something instead of of an early-return in a constructor.",
+      "range": {
+        "startLine": 897,
+        "startChar": 0,
+        "endLine": 919,
+        "endChar": 13
+      },
+      "revId": "5f2f288e64a77430078837568896765bfbb2f6bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
