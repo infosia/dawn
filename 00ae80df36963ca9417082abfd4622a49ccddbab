@@ -91,6 +91,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3e6e18bd_b0e540b6",
+        "filename": "src/dawn/native/webgpu/CaptureContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-25T04:46:09Z",
+      "side": 1,
+      "message": "Refectored AddResource... here: https://dawn-review.googlesource.com/c/dawn/+/276215\n\n\u003e l. Also is there any way to make the device go through the normal AddResourceAndGetId like other resources? We could CHECK that it always gets ID 1.\n\nI don\u0027t see an easy way. Device is not a RecordableObject. I tried making it one but then it\u0027s not an ApiBaseObject. It\u0027s not clear what the common ancestor is for the object-\u003eid map. I could make it an std::variant I guess but ew. \n\nI also thought about trying to make a device creation cmd get recorded. I\u0027m not sure that\u0027s a good or bad idea. The good part is, theoretically you could capture 2 or more devices. Add a setCurrentDevice command to the command stream to switch which device to use on replay. The bad part is device creation is not a simple as other object. In any case. I feel like refactoring device can happen later?",
+      "parentUuid": "abb1cea2_eb7ad943",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 5
+      },
+      "revId": "00ae80df36963ca9417082abfd4622a49ccddbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2bcfc554_9a2e5176",
         "filename": "src/dawn/replay/Replay.cpp",
         "patchSetId": 2
