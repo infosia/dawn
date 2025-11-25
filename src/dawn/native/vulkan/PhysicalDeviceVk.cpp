@@ -465,7 +465,6 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::MultiPlanarFormatExtendedUsages);
     }
 
-    EnableFeature(Feature::TransientAttachments);
     EnableFeature(Feature::AdapterPropertiesVk);
     EnableFeature(Feature::DawnLoadResolveTexture);
 

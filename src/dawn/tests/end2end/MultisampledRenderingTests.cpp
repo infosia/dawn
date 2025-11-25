@@ -1369,7 +1369,29 @@ TEST_P(MultisampledRenderingTest, ResolveInto2DTextureWithScissor) {
     VerifyResolveTarget(kGreen, mResolveTexture, 0, 0, kMSAACoverage, kGreenX, kGreenY);
 }
 
+<<<<<<< PATCH SET (617d381f5bee443b9290816444f3aa3125ff7ddb WIP)
+class MultisampledRenderingWithTransientAttachmentTest : public MultisampledRenderingTest {
+};
+||||||| BASE      (881ef6e184f5ce4aec73de9b9baaa3a83e6540f8 Move TransientAttachment to only be under UnsafeAPIs)
+class MultisampledRenderingWithTransientAttachmentTest : public MultisampledRenderingTest {
+    void SetUp() override {
+        MultisampledRenderingTest::SetUp();
+
+        // Skip all tests if the transient attachments feature is not supported.
+        DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::TransientAttachments}));
+    }
+
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        std::vector<wgpu::FeatureName> requiredFeatures = {};
+        if (SupportsFeatures({wgpu::FeatureName::TransientAttachments})) {
+            requiredFeatures.push_back(wgpu::FeatureName::TransientAttachments);
+        }
+        return requiredFeatures;
+    }
+};
+=======
 class MultisampledRenderingWithTransientAttachmentTest : public MultisampledRenderingTest {};
+>>>>>>> BASE      (34d13351a1f40dd0aac4253989f2a2ab5db0f46d Move TransientAttachment to only be under UnsafeAPIs)
 
 // Test using one multisampled color transient attachment with resolve target can render correctly.
 TEST_P(MultisampledRenderingWithTransientAttachmentTest, ResolveTransientAttachmentInto2DTexture) {
@@ -1600,9 +1622,6 @@ class DawnLoadResolveTextureTest : public MultisampledRenderingTest {
         }
         if (SupportsFeatures({wgpu::FeatureName::DawnPartialLoadResolveTexture})) {
             requiredFeatures.push_back(wgpu::FeatureName::DawnPartialLoadResolveTexture);
-        }
-        if (SupportsFeatures({wgpu::FeatureName::TransientAttachments})) {
-            requiredFeatures.push_back(wgpu::FeatureName::TransientAttachments);
         }
         return requiredFeatures;
     }
@@ -1856,10 +1875,9 @@ class DawnLoadResolveTextureTest : public MultisampledRenderingTest {
 // LoadOp::ExpandResolveTexture. The resolve texture will have its content preserved between
 // passes.
 TEST_P(DawnLoadResolveTextureTest, DrawThenLoad) {
-    auto multiSampledTexture = CreateTextureForRenderAttachment(
-        kColorFormat, 4, 1, 1,
-        /*transientAttachment=*/device.HasFeature(wgpu::FeatureName::TransientAttachments),
-        /*supportsTextureBinding=*/false);
+    auto multiSampledTexture = CreateTextureForRenderAttachment(kColorFormat, 4, 1, 1,
+                                                                /*transientAttachment=*/true,
+                                                                /*supportsTextureBinding=*/false);
     auto multiSampledTextureView = multiSampledTexture.CreateView();
 
     auto singleSampledTexture =
@@ -1904,10 +1922,9 @@ TEST_P(DawnLoadResolveTextureTest, DrawThenLoad) {
 
 // Test using ExpandResolveTexture load op for non-zero indexed attachment.
 TEST_P(DawnLoadResolveTextureTest, DrawThenLoadNonZeroIndexedAttachment) {
-    auto multiSampledTexture = CreateTextureForRenderAttachment(
-        kColorFormat, 4, 1, 1,
-        /*transientAttachment=*/device.HasFeature(wgpu::FeatureName::TransientAttachments),
-        /*supportsTextureBinding=*/false);
+    auto multiSampledTexture = CreateTextureForRenderAttachment(kColorFormat, 4, 1, 1,
+                                                                /*transientAttachment=*/true,
+                                                                /*supportsTextureBinding=*/false);
     auto multiSampledTextureView = multiSampledTexture.CreateView();
 
     auto singleSampledTexture =
@@ -2190,10 +2207,9 @@ TEST_P(DawnLoadResolveTextureTest, TwoOutputsDrawThenLoadColor0AndColor1) {
 
 // Test ExpandResolveTexture load op rendering with depth test works correctly.
 TEST_P(DawnLoadResolveTextureTest, DrawWithDepthTest) {
-    auto multiSampledTexture = CreateTextureForRenderAttachment(
-        kColorFormat, 4, 1, 1,
-        /*transientAttachment=*/device.HasFeature(wgpu::FeatureName::TransientAttachments),
-        /*supportsTextureBinding=*/false);
+    auto multiSampledTexture = CreateTextureForRenderAttachment(kColorFormat, 4, 1, 1,
+                                                                /*transientAttachment=*/true,
+                                                                /*supportsTextureBinding=*/false);
     auto multiSampledTextureView = multiSampledTexture.CreateView();
 
     auto singleSampledTexture =
