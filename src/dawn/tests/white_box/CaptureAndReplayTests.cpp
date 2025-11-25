@@ -1906,6 +1906,93 @@ TEST_P(CaptureAndReplayTests, CaptureSetLabel) {
     EXPECT_TRUE(replay->GetObjectByLabel<wgpu::TextureView>("viewB") != nullptr);
 }
 
+// Capture DrawIndexed, DrawIndirect, DrawIndexedIndirect
+TEST_P(CaptureAndReplayTests, CaptureDrawCommands) {
+    wgpu::Texture dstTexture = CreateTexture("dstTexture", {3}, wgpu::TextureFormat::RGBA8Uint,
+                                             wgpu::TextureUsage::RenderAttachment);
+
+    const char* shader = R"(
+        struct VOut {
+            @builtin(position) pos: vec4f,
+            @location(0) @interpolate(flat, either) params: vec4u,
+        };
+
+        @vertex fn vs(
+            @builtin(vertex_index) vNdx: u32,
+            @builtin(instance_index) iNdx: u32) -> VOut
+        {
+            // iNdx needs to be 20, 30, 40 to write to texels 0, 1, 2
+            let tx = (iNdx / 10) - 10;
+            let ux = (f32(tx) + 0.5) / 3.0;
+            let cx = ux * 2.0 - 1.0;
+            return VOut(
+                vec4f(cx, 0.0, 0.0, 1.0),
+                vec4u(vNdx, iNdx, 0x33, 0x44));
+        }
+
+        @fragment fn fs(v: VOut) -> @location(0) vec4u {
+            return v.params;
+        }
+    )";
+    auto module = utils::CreateShaderModule(device, shader);
+
+    utils::ComboRenderPipelineDescriptor desc;
+    desc.vertex.module = module;
+    desc.cFragment.module = module;
+    desc.cFragment.targetCount = 1;
+    desc.cTargets[0].format = wgpu::TextureFormat::RGBA8Uint;
+    desc.primitive.topology = wgpu::PrimitiveTopology::PointList;
+    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&desc);
+
+    uint16_t indices[] = {10, 20, 30, 40};
+    wgpu::Buffer indexBuffer = CreateBuffer("index", sizeof(indices),
+                                            wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Index);
+    queue.WriteBuffer(indexBuffer, 0, indices, sizeof(indices));
+
+    uint32_t indirect[] = {1, 1, 21, 30};
+    wgpu::Buffer indirectBuffer = CreateBuffer(
+        "indirect", sizeof(indirect), wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Indirect);
+    queue.WriteBuffer(indirectBuffer, 0, indirect, sizeof(indirect));
+
+    uint32_t indirectIndexed[] = {1, 1, 22, 40, 0};
+    wgpu::Buffer indirectIndexedBuffer =
+        CreateBuffer("indirectIndexed", sizeof(indirectIndexed),
+                     wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Indirect);
+    queue.WriteBuffer(indirectIndexedBuffer, 0, indirectIndexed, sizeof(indirectIndexed));
+
+    wgpu::CommandBuffer commands;
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+
+        utils::ComboRenderPassDescriptor passDescriptor({dstTexture.CreateView()});
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&passDescriptor);
+        pass.SetPipeline(pipeline);
+        pass.SetIndexBuffer(indexBuffer, wgpu::IndexFormat::Uint16);
+        pass.DrawIndexed(2, 1, 1, 1);
+        pass.DrawIndirect(indirectBuffer, 0);
+        pass.DrawIndexedIndirect(indirectIndexedBuffer, 0);
+        pass.End();
+
+        commands = encoder.Finish();
+    }
+
+    // --- capture ---
+    auto recorder = Recorder::CreateAndStart(device);
+
+    queue.Submit(1, &commands);
+
+    // --- replay ---
+    auto capture = recorder.Finish();
+    auto replay = capture.Replay(device);
+
+    uint8_t expected[] = {
+        0x20, 0x20, 0x33, 0x44,  //
+        0x21, 0x30, 0x33, 0x44,  //
+        0x22, 0x40, 0x33, 0x44,  //
+    };
+    ExpectTextureEQ(replay.get(), "dstTexture", {3}, expected);
+}
+
 DAWN_INSTANTIATE_TEST(CaptureAndReplayTests, WebGPUBackend());
 
 }  // anonymous namespace
