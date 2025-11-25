@@ -33,6 +33,24 @@
       "message": "This enables the feature by default. We need to keep this behind a killswitch, either AllowUnsafeAPIs for now, or a new toggle that\u0027s turned on when unsafeAPIs is on.",
       "revId": "b7ba8a59ca028c8f82534450ee7f29ff4776a13c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc849dce_38b07d57",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-25T17:19:42Z",
+      "side": 1,
+      "message": "I thought we would enable it by default on Dawn native, and keep it under experimental in WebGPU. If we move it behind AllowUnsafeAPIs though, I won\u0027t work in Chrome and Skia right? Shall I create a toggle instead (not tied to unsafeAPIs) and enable it from Skia and Chrome so that it still works for them and remove it after?",
+      "parentUuid": "e1586ce3_78cae8a9",
+      "revId": "b7ba8a59ca028c8f82534450ee7f29ff4776a13c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
