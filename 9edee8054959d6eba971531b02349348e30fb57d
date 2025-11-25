@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a895e21f_1a142cc2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-25T10:31:50Z",
+      "side": 1,
+      "message": "Isn\u0027t the Adreno X1 a Gen 7Xx which would go in the `kAssumedMaxBufferSize` here?",
+      "revId": "9edee8054959d6eba971531b02349348e30fb57d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
