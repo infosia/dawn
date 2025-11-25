@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8afd2194_ff933b13",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-25T18:07:21Z",
+      "side": 1,
+      "message": "Looks like it did pull in the updated CL description, but there\u0027s an auto-generated line between `Bug:` and the other CL footers. I suspect that it won\u0027t be parsed properly after submission because of that. Oh well.",
+      "parentUuid": "a2980252_ef982406",
+      "revId": "fddc42f645935624ce564e64aaac33985424ba49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "825529bd_90ec7cff",
