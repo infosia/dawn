@@ -184,7 +184,12 @@ TEST_F(MemoryInstrumentationTest, DumpMemoryStatistics) {
                                           MemoryDump::kUnitsBytes, /*size=*/0));
 
     // Create a transient attachment (memoryless) texture and check that its size is not counted.
+<<<<<<< PATCH SET (dd9ffe475c7a3fe58ae6a6c0862238af9093ae71 WIP)
+||||||| BASE      (b7ba8a59ca028c8f82534450ee7f29ff4776a13c Remove check for TransientAttachments feature in createTextu)
+    mDeviceMock->ForceEnableFeatureForTesting(Feature::TransientAttachments);
+=======
     mDeviceMock->ForceEnableToggleForTesting(Toggle::AllowUnsafeAPIs);
+>>>>>>> BASE      (881ef6e184f5ce4aec73de9b9baaa3a83e6540f8 Move TransientAttachment to only be under UnsafeAPIs)
     const wgpu::TextureDescriptor kTransientAttachmentTextureDesc = {
         .usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TransientAttachment,
         .size = {.width = 30, .height = 20},
