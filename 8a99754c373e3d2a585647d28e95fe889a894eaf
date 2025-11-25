@@ -52,6 +52,24 @@
       "parentUuid": "b77183d3_9ef69f5f",
       "revId": "8a99754c373e3d2a585647d28e95fe889a894eaf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5a9ba24_a99248e9",
+        "filename": "src/dawn/native/dawn_structs.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-25T15:56:48Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "65782808_d669940b",
+      "revId": "8a99754c373e3d2a585647d28e95fe889a894eaf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
