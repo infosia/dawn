@@ -33,6 +33,24 @@
       "message": "```suggestion\n            // No HOST-\u003eGPU barriers are required. For MapRead vkQueueSubmit happens-after all CPU reads are complete. For MapWrite, the writes are made available to the \"Host domain\" with vkFlushMappedMemory (or buffers are coherent) and there is an implicit \"Host domain\" -\u003e \"Device domain\" barrier in vkQueueSubmit.\n```",
       "revId": "85b7a52630f4834e41dc3f48c27263fec914cf74",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff66640a_15050bc9",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-25T15:03:10Z",
+      "side": 1,
+      "message": "Done. I split the comment so MapRead and MapWrite parts were in the appropriate code branch here.",
+      "parentUuid": "b2b07f21_a3e9e6c8",
+      "revId": "85b7a52630f4834e41dc3f48c27263fec914cf74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
