@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "710cf2f1_e7bc07df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-25T21:02:18Z",
+      "side": 1,
+      "message": "Let me know if you want a second reviwer on this one.",
+      "revId": "992792f0d2ed439434497116d8d72e2f5c353fd5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae0ca764_f0837332",
+        "filename": "src/dawn/tests/unittests/native/BufferBaseTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-25T21:02:18Z",
+      "side": 1,
+      "message": "This test doesn\u0027t exactly fit with the existing BufferValidationTest since they need to construct a native::BufferMock before converting wgpu::Buffer and running test logic. Some of the other unit tests in native/ are similar so I figured a new test file here was the right choice. I\u0027m not sure if there is somewhere more appropriate.",
+      "revId": "992792f0d2ed439434497116d8d72e2f5c353fd5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
