@@ -16,6 +16,23 @@
       "message": "Woops, I somehow completely missed this CL. Sorry for the delay.",
       "revId": "fda692065b329ab94d08ca0d1ce8dad166415a95",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a03aedb_f5b23cf1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-25T18:37:34Z",
+      "side": 1,
+      "message": "Looks like we need another Dawn committer to +2. +dsinclair for that.",
+      "revId": "fda692065b329ab94d08ca0d1ce8dad166415a95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
