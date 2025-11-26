@@ -111,6 +111,7 @@ ShaderModule::~ShaderModule() = default;
     X(UnsafeUnserializedValue<LimitsForCompilationRequest>, adapterSupportedLimits)  \
     X(uint32_t, maxSubgroupSize)                                                     \
     X(bool, usesSubgroupMatrix)                                                      \
+    X(std::vector<SubgroupMatrixConfig>, subgroupMatrixConfig)                       \
     X(tint::spirv::writer::Options, tintOptions)                                     \
     X(UnsafeUnserializedValue<dawn::platform::Platform*>, platform)
 
@@ -199,6 +200,12 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     req.inputProgram = UnsafeUnserializedValue(UseTintProgram());
     req.platform = UnsafeUnserializedValue(GetDevice()->GetPlatform());
     req.usesSubgroupMatrix = programmableStage.metadata->usesSubgroupMatrix;
+
+    // TODO(dsinclair): Is there a better way to get this? The information is in the AdapterInfo but
+    // I don't see how to get access to the AdapterInfo from here?
+    req.subgroupMatrixConfig =
+        ToBackend(GetDevice()->GetPhysicalDevice())
+            ->EnumerateSubgroupMatrixConfigs(GetDevice()->GetAdapter()->GetTogglesState());
 
     req.tintOptions.entry_point_name = programmableStage.entryPoint;
     req.tintOptions.remapped_entry_point_name = GetDevice()->GetIsolatedEntryPointName();
@@ -321,6 +328,9 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
                            r.usesSubgroupMatrix, r.maxSubgroupSize, r.limits,
                            r.adapterSupportedLimits.UnsafeGetValue()));
             }
+
+            DAWN_TRY(ValidateSubgroupMatrixConfiguration(tintResult->subgroup_matrix_info,
+                                                         r.subgroupMatrixConfig));
 
             CompiledSpirv result;
             result.spirv = std::move(tintResult.Get().spirv);
