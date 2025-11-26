@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "eab429e4_17146ca2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-26T19:57:44Z",
+      "side": 1,
+      "message": "Glad the fix ended up being simple!",
+      "revId": "24d8125f6bdb95fb1b1f9950a78120001b2a8846",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "00f7476b_380f3a12",
         "filename": "src/tint/lang/wgsl/resolver/uniformity.cc",
         "patchSetId": 1
