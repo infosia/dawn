@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3555f41_d36d05e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-26T22:54:10Z",
+      "side": 1,
+      "message": "Gemini says:\n\"\"\"\nThe commit message body (\"This exciting change was brought to use by Gemini 3.0 pro\") is unprofessional and should be updated. The body of a commit message should explain the motivation for the change. Why is it necessary to support up to 64 arguments? Please provide context on what code requires this extension.\n\"\"\"",
+      "revId": "1316a95238c70d3418c0fb647d1a2dba71e05a77",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4bc56ce2_41906343",
+        "filename": "src/tint/utils/macros/foreach.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-26T22:54:10Z",
+      "side": 1,
+      "message": "Can we add another test to make sure it works for 64?",
+      "fixSuggestions": [
+        {
+          "fixId": "b0736016_f39b082c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/utils/macros/foreach.h",
+              "range": {
+                "startLine": 59,
+                "startChar": 0,
+                "endLine": 59,
+                "endChar": 0
+              },
+              "replacement": "static_assert(64 \u003d\u003d TINT_COUNT_ARGUMENTS( \\\n    a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, \\\n    a2, b2, c2, d2, e2, f2, g2, h2, i2, j2, k2, l2, m2, n2, o2, p2, q2, r2, s2, t2, \\\n    u2, v2, w2, x2, y2, z2, a3, b3, c3, d3, e3, f3, g3, h3, i3, j3, k3, l3), \"TINT_COUNT_ARGUMENTS broken\");\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1316a95238c70d3418c0fb647d1a2dba71e05a77",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
