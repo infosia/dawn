@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cca2e13_69e34aef",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-26T05:15:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae391e55_7dd61c86",
+      "range": {
+        "startLine": 289,
+        "startChar": 4,
+        "endLine": 299,
+        "endChar": 46
+      },
+      "revId": "7c37bf9e1cea69f8685b8e9d8d0504b2b8ab10d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "14cedbc2_5ffd3ee5",
@@ -54,6 +78,24 @@
       "writtenOn": "2025-11-25T11:19:53Z",
       "side": 1,
       "message": "Can we keep this type alias only inside Format.cpp and refer to it as FormatCapability in `Format`?",
+      "revId": "7c37bf9e1cea69f8685b8e9d8d0504b2b8ab10d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "499f0c14_4dea2268",
+        "filename": "src/dawn/native/Format.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-26T05:15:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14cedbc2_5ffd3ee5",
       "revId": "7c37bf9e1cea69f8685b8e9d8d0504b2b8ab10d6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

@@ -373,6 +373,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "923c3aca_e0777176",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-26T05:15:07Z",
+      "side": 1,
+      "message": "Sorry for the unclear expression - actually they support usages COPY_SRC, COPY_DST, and TEXTURE_BINDING, but do not support rendering or other caps without feature.",
+      "parentUuid": "79a13120_ad594947",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 25
+      },
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "97995474_f6fcd4a2",
         "filename": "src/dawn/native/Format.cpp",
         "patchSetId": 16
@@ -420,6 +444,24 @@
       "side": 1,
       "message": "As I mention before, R8Snorm、 RG8Snorm、RG11B10Ufloat and RGB9E5Ufloat are always considered supported even if their capabilities are Cap::None. Therefore, I think that we can\u0027t ASSERT that all formats with Caps::None are marked unsupported at the end of the function.",
       "parentUuid": "e2c2e072_488bd397",
+      "revId": "64c444471125f787add28da03178e863fad38481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bda4353_80472399",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-11-26T05:15:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f33c7db8_d961c743",
       "revId": "64c444471125f787add28da03178e863fad38481",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
