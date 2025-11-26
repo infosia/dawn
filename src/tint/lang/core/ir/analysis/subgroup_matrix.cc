@@ -27,7 +27,6 @@
 
 #include "src/tint/lang/core/ir/analysis/subgroup_matrix.h"
 
-#include <cstdint>
 #include <unordered_set>
 #include <utility>
 
@@ -48,10 +47,9 @@
 namespace std {
 
 template <>
-class hash<tint::core::ir::analysis::SubgroupMatrixMultiply> {
+class hash<tint::SubgroupMatrixMultiply> {
   public:
-    inline std::size_t operator()(
-        const tint::core::ir::analysis::SubgroupMatrixMultiply& sm) const {
+    inline std::size_t operator()(const tint::SubgroupMatrixMultiply& sm) const {
         return tint::Hash(sm.M, sm.N, sm.K, sm.input_type, sm.output_type);
     }
 };
