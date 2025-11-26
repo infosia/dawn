@@ -95,6 +95,24 @@
       ],
       "revId": "1756422d539319e424bf21f8b3e5463e60b285fd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a0cd25a_463d2cd1",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ApiLevelSkipRule.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-11-26T07:49:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83faeebd_26f82265",
+      "revId": "1756422d539319e424bf21f8b3e5463e60b285fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
