@@ -111,6 +111,9 @@ struct TexelExtent3D {
         return {static_cast<uint32_t>(width), static_cast<uint32_t>(height),
                 static_cast<uint32_t>(depthOrArrayLayers)};
     }
+
+    // Comparison operator
+    constexpr bool operator==(const TexelExtent3D&) const = default;
 };
 
 // Stores an extent in block space
