@@ -88,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3b6875f_455e57be",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-26T16:09:22Z",
+      "side": 1,
+      "message": "I see. Ideally we\u0027d just store the explicit template parameters in the CallTarget or make it easily retrievable from the Overload, but that requires extra work.",
+      "parentUuid": "b8442efa_ac1f852a",
+      "revId": "9c2ad6983e09ac33d62691387b801d88ff4c5928",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc20ff82_9aaa8501",
