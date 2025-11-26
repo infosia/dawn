@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60172ecd_1d03dbc4",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-26T19:04:10Z",
+      "side": 1,
+      "message": "This is fine, I think this is correct, it just took me a while to read through and understand the looping logic.\n\nI probably would have written it differently, basically as a while loop `for len(parts) \u003e 0 {` and treated `parts` as a task queue/stack instead of manipulating the index value `i`, since you have to mutate `parts` anyway.\n\n(Or probably more likely I would have written some tail recursive non-sense that would have forced the compiler to optimize it, and still missed some corner cases)",
+      "revId": "9c9b27eb4a00c696581a8bf65c2c862670ecc0ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
