@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "043fc276_9e2617c2",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-26T10:02:55Z",
+      "side": 1,
+      "message": "Note that before shipping we\u0027ll want to move this behind its own special toggle that can be used as a killswitch.",
+      "revId": "881ef6e184f5ce4aec73de9b9baaa3a83e6540f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bd49f80_39c6c3d1",
+        "filename": "src/dawn/tests/unittests/native/MemoryInstrumentationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-26T10:02:55Z",
+      "side": 1,
+      "message": "Slight preference for instead enabling unsafe APIs for all mock tests [here] to match DawnTest that enables it by default. (this removes the need for `ForceEnableToggleForTesting`)",
+      "revId": "881ef6e184f5ce4aec73de9b9baaa3a83e6540f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
