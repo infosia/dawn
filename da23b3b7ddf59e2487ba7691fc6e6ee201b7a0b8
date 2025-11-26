@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d10c692_97b1e5b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-26T21:06:21Z",
+      "side": 1,
+      "message": "Another batch of CLs to review at your leisure. Still not complete, but Gemini seems much happier after the test file split, so remaining changes should be coming before too long, after which I\u0027ll add additional CLs to address comments in previous CLs.\n\nAs a note, the test file split was performed manually instead of using Gemini, so we shouldn\u0027t have to worry about test coverage being dropped.",
+      "revId": "da23b3b7ddf59e2487ba7691fc6e6ee201b7a0b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
