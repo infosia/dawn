@@ -33,6 +33,47 @@
       "message": "This test doesn\u0027t exactly fit with the existing BufferValidationTest since they need to construct a native::BufferMock before converting wgpu::Buffer and running test logic. Some of the other unit tests in native/ are similar so I figured a new test file here was the right choice. I\u0027m not sure if there is somewhere more appropriate.",
       "revId": "992792f0d2ed439434497116d8d72e2f5c353fd5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdcef6d4_6f2669fd",
+        "filename": "src/dawn/tests/unittests/native/BufferBaseTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-26T00:49:45Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ae0ca764_f0837332",
+      "revId": "992792f0d2ed439434497116d8d72e2f5c353fd5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0260a66e_5e140e73",
+        "filename": "src/dawn/tests/unittests/native/BufferBaseTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-26T00:49:45Z",
+      "side": 1,
+      "message": "nit. Does spontaneous not work here? (If it does, we could potentially remove the `ProcessEvents()` call below.",
+      "range": {
+        "startLine": 73,
+        "startChar": 80,
+        "endLine": 73,
+        "endChar": 98
+      },
+      "revId": "992792f0d2ed439434497116d8d72e2f5c353fd5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
