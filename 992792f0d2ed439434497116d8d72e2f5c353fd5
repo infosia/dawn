@@ -74,6 +74,30 @@
       },
       "revId": "992792f0d2ed439434497116d8d72e2f5c353fd5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d8f4de7_535bfb50",
+        "filename": "src/dawn/tests/unittests/native/BufferBaseTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-11-26T14:12:11Z",
+      "side": 1,
+      "message": "Yep that works.",
+      "parentUuid": "0260a66e_5e140e73",
+      "range": {
+        "startLine": 73,
+        "startChar": 80,
+        "endLine": 73,
+        "endChar": 98
+      },
+      "revId": "992792f0d2ed439434497116d8d72e2f5c353fd5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
