@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdaa1479_5f8615ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-26T13:19:17Z",
+      "side": 1,
+      "message": "Really good stuff. Heads up that may need an additional review before landing to AndroidX.",
+      "revId": "6a3f59bcfbfe8949425f7bb46ff82888fe60f70e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
