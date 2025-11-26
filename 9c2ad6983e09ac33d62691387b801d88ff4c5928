@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aeb5420a_5ea0928d",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-26T14:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "084229c1_db076c12",
+      "revId": "9c2ad6983e09ac33d62691387b801d88ff4c5928",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d9109d97_7e696621",
@@ -54,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b8442efa_ac1f852a",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-26T14:12:58Z",
+      "side": 1,
+      "message": "We need the `call` in order to get the identifier below to extract the templated type. If we just get the builtin calls, we get `sem::CallTarget` subclasses which don\u0027t give me the identifier at the call site.",
+      "parentUuid": "d9109d97_7e696621",
+      "revId": "9c2ad6983e09ac33d62691387b801d88ff4c5928",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bc20ff82_9aaa8501",
         "filename": "src/tint/lang/wgsl/inspector/inspector_test.cc",
         "patchSetId": 1
@@ -65,6 +101,24 @@
       "writtenOn": "2025-11-25T22:38:14Z",
       "side": 1,
       "message": "Would be good to add a test that has a use via a nested function call as well.",
+      "revId": "9c2ad6983e09ac33d62691387b801d88ff4c5928",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15b428d4_51b20c9e",
+        "filename": "src/tint/lang/wgsl/inspector/inspector_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3067,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-26T14:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc20ff82_9aaa8501",
       "revId": "9c2ad6983e09ac33d62691387b801d88ff4c5928",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
