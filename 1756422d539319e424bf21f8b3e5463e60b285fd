@@ -52,6 +52,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "10503f2b_e3e13cc5",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/AdapterTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-11-26T12:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acb86b48_2f0ec9d6",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 57
+      },
+      "revId": "1756422d539319e424bf21f8b3e5463e60b285fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "83faeebd_26f82265",
