@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e7d9d61_e1ae6357",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-26T22:00:08Z",
+      "side": 1,
+      "message": "Your upload is missing \"ReAuth\", so to land this CL, I think you can try to CR+2 your own change to satisfy \"Review-Enforcement\". (Or re-upload, or wait for a second reviewer.)",
+      "revId": "38e834d50a4abf0de9b1b7878ce5ed75e2b489e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
