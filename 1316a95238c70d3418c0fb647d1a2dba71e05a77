@@ -51,6 +51,24 @@
       ],
       "revId": "1316a95238c70d3418c0fb647d1a2dba71e05a77",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13cb3ea4_3d2bf82f",
+        "filename": "src/tint/utils/macros/foreach.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-26T23:03:26Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "4bc56ce2_41906343",
+      "revId": "1316a95238c70d3418c0fb647d1a2dba71e05a77",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
