@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10ec1ddd_2cd89f62",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-11-26T23:07:16Z",
+      "side": 1,
+      "message": "PTAL! Confirmed that this does not break D3D12 capture and does technically enable Vulkan capture on Android, though there will need to be a follow-up CL to fix some still-unidentified pattern in the Vulkan code that is causing RenderDoc to fail to open the captures. Mostly I want to get the shared RenderDoc loading bits reviewed.",
+      "revId": "c35e1f25392e10484bedb31a7b51f7cd1c283d92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
