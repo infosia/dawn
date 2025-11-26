@@ -1,0 +1,100 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acb86b48_2f0ec9d6",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/AdapterTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-11-26T05:59:50Z",
+      "side": 1,
+      "message": "Can we create a constant for minApi like TestConstants.ANDROID_15_API and use it across all test cases?",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 57
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d39603c5_29fc2105",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/AdapterTest.kt",
+              "range": {
+                "startLine": 5,
+                "startChar": 0,
+                "endLine": 5,
+                "endChar": 0
+              },
+              "replacement": "import androidx.webgpu.helper.TestConstants\n"
+            },
+            {
+              "path": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/AdapterTest.kt",
+              "range": {
+                "startLine": 52,
+                "startChar": 0,
+                "endLine": 53,
+                "endChar": 0
+              },
+              "replacement": "  @ApiRequirement(minApi \u003d TestConstants.ANDROID_15_API, onlySkipOnEmulator \u003d true)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1756422d539319e424bf21f8b3e5463e60b285fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83faeebd_26f82265",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ApiLevelSkipRule.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-11-26T05:59:50Z",
+      "side": 1,
+      "message": "We can simplify the nested `if` conditions by returning early.",
+      "fixSuggestions": [
+        {
+          "fixId": "6826dacc_80fd90af",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ApiLevelSkipRule.kt",
+              "range": {
+                "startLine": 11,
+                "startChar": 0,
+                "endLine": 28,
+                "endChar": 0
+              },
+              "replacement": "    val annotation \u003d getAnnotation(description) ?: return base\n\n    val minApi \u003d annotation.minApi\n    if (Build.VERSION.SDK_INT \u003e\u003d minApi) {\n      return base // API level is sufficient, do not skip.\n    }\n\n    // API level is less than minApi. Check if we should still run.\n    if (annotation.onlySkipOnEmulator \u0026\u0026 !EmulatorUtils.isEmulator) {\n      return base // Don\u0027t skip if onlySkipOnEmulator is true and we are not on an emulator.\n    }\n\n    // Otherwise, skip the test.\n    return object : Statement() {\n      override fun evaluate() {\n        Assume.assumeTrue(\n          \"Skipping test due to API level requirement: \" +\n            \"minApi\u003d${minApi}, deviceApi\u003d${Build.VERSION.SDK_INT}\",\n          false,\n        )\n"
+            },
+            {
+              "path": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ApiLevelSkipRule.kt",
+              "range": {
+                "startLine": 30,
+                "startChar": 0,
+                "endLine": 32,
+                "endChar": 0
+              },
+              "replacement": "        }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1756422d539319e424bf21f8b3e5463e60b285fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
