@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc5c8021_d1e68953",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-26T02:51:12Z",
+      "side": 1,
+      "message": "This seems like a behavior change that snuck in, but the tests didn\u0027t fail? We have tests for cases where an existing file is overwritten, including checking the mode...",
+      "range": {
+        "startLine": 706,
+        "startChar": 2,
+        "endLine": 706,
+        "endChar": 46
+      },
+      "revId": "ab97b8f01c30f6e2197066efc95e75f6d8ffc2db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
