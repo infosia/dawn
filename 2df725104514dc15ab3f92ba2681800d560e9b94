@@ -68,6 +68,24 @@
       ],
       "revId": "2df725104514dc15ab3f92ba2681800d560e9b94",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33213563_7a71a55d",
+        "filename": "src/tint/lang/hlsl/writer/raise/array_offset_from_immediate.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-11-26T01:28:57Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "4130a1fb_f591c2e4",
+      "revId": "2df725104514dc15ab3f92ba2681800d560e9b94",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
