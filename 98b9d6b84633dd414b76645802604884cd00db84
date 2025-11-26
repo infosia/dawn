@@ -22,6 +22,30 @@
       },
       "revId": "98b9d6b84633dd414b76645802604884cd00db84",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cb832cd_1760bcc3",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-11-26T04:18:54Z",
+      "side": 1,
+      "message": "Thanks for pointing out! removed the use of camelCase",
+      "parentUuid": "b9260bef_02b8080c",
+      "range": {
+        "startLine": 516,
+        "startChar": 46,
+        "endLine": 517,
+        "endChar": 45
+      },
+      "revId": "98b9d6b84633dd414b76645802604884cd00db84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
