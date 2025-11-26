@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80387ea1_dac4faa9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-26T23:54:53Z",
+      "side": 1,
+      "message": "This last batch of CLS starting from here should make the symlink implementation complete % any changes requested in CL comments. I\u0027ll get around to addressing those in another CL or two next week when I\u0027m back.",
+      "revId": "c204cc565610642da6a5460dc821337ce4b3d29b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
