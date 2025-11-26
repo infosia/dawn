@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1df413ee_923dbdbd",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-26T21:18:20Z",
+      "side": 1,
+      "message": "I will have to fix this. I dont know why this is doing this yet.",
+      "range": {
+        "startLine": 925,
+        "startChar": 36,
+        "endLine": 925,
+        "endChar": 44
+      },
+      "revId": "17cf0860f45261217134491c7fb424e388824b37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
