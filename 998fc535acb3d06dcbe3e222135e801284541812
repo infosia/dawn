@@ -16,6 +16,24 @@
       "message": "Looks like tabs were converted to two spaces, presumably something somewhere disagrees on tabs v spaces with the Go style guide.",
       "revId": "998fc535acb3d06dcbe3e222135e801284541812",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fed7c5f5_86fb19fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-11-26T21:46:48Z",
+      "side": 1,
+      "message": "I suspect it\u0027s some default setting for Sublime Text when creating new files. In any case, I\u0027ve switched to using `gofmt -w ./tools/src/ \u0026\u0026 go test ./tools/src/...` to run my tests, so this should be avoided in the future.\n\n(FWIW I prefer spaces, but I think that ship has long sailed in this code base)",
+      "parentUuid": "9842a6f0_2a311610",
+      "revId": "998fc535acb3d06dcbe3e222135e801284541812",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
