@@ -126,7 +126,7 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
 
     core::ir::transform::BinaryPolyfillConfig binary_polyfills;
     binary_polyfills.bitshift_modulo = true;
-    binary_polyfills.int_div_mod = !options.disable_polyfill_integer_div_mod;
+    binary_polyfills.int_div_mod = !options.polyfill.disable_integer_div_mod;
     RUN_TRANSFORM(core::ir::transform::BinaryPolyfill, module, binary_polyfills);
 
     core::ir::transform::BuiltinPolyfillConfig core_polyfills;
@@ -139,12 +139,12 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     core_polyfills.insert_bits = core::ir::transform::BuiltinPolyfillLevel::kClampOrRangeCheck;
     core_polyfills.saturate = true;
     core_polyfills.texture_sample_base_clamp_to_edge_2d_f32 = true;
-    core_polyfills.dot_4x8_packed = options.polyfill_dot_4x8_packed;
+    core_polyfills.dot_4x8_packed = options.polyfill.dot_4x8_packed;
     core_polyfills.pack_unpack_4x8 = true;
     core_polyfills.pack_4xu8_clamp = true;
-    core_polyfills.pack_unpack_4x8_norm = options.polyfill_pack_unpack_4x8_norm;
+    core_polyfills.pack_unpack_4x8_norm = options.polyfill.pack_unpack_4x8_norm;
     core_polyfills.abs_signed_int = true;
-    core_polyfills.subgroup_broadcast_f16 = options.polyfill_subgroup_broadcast_f16;
+    core_polyfills.subgroup_broadcast_f16 = options.polyfill.subgroup_broadcast_f16;
     RUN_TRANSFORM(core::ir::transform::BuiltinPolyfill, module, core_polyfills);
 
     core::ir::transform::ConversionPolyfillConfig conversion_polyfills;
@@ -206,9 +206,10 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
         RUN_TRANSFORM(core::ir::transform::DemoteToHelper, module);
     }
 
-    raise::PolyfillConfig config = {.use_vulkan_memory_model = options.use_vulkan_memory_model,
-                                    .version = options.spirv_version,
-                                    .subgroup_shuffle_clamped = options.subgroup_shuffle_clamped};
+    raise::PolyfillConfig config = {
+        .use_vulkan_memory_model = options.use_vulkan_memory_model,
+        .version = options.spirv_version,
+        .subgroup_shuffle_clamped = options.polyfill.subgroup_shuffle_clamped};
     RUN_TRANSFORM(raise::BuiltinPolyfill, module, config);
     RUN_TRANSFORM(raise::ExpandImplicitSplats, module);
 
@@ -225,7 +226,7 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     // kAllowAnyInputAttachmentIndexType required after ExpandImplicitSplats
     RUN_TRANSFORM(raise::HandleMatrixArithmetic, module);
     RUN_TRANSFORM(raise::MergeReturn, module);
-    if (options.polyfill_case_switch) {
+    if (options.polyfill.case_switch) {
         RUN_TRANSFORM(raise::CaseSwitchToIfElse, module);
     }
     RUN_TRANSFORM(raise::RemoveUnreachableInLoopContinuing, module);
@@ -233,7 +234,7 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
         raise::ShaderIO, module,
         raise::ShaderIOConfig{immediate_data_layout.Get(), options.emit_vertex_point_size,
                               !options.use_storage_input_output_16,
-                              options.apply_pixel_center_polyfill, options.depth_range_offsets});
+                              options.polyfill.apply_pixel_center, options.depth_range_offsets});
 
     // ForkExplicitLayoutTypes must come after DecomposeUniformAccess, since it rewrites
     // host-shareable array types to use the explicitly laid array type defined by the SPIR-V

@@ -231,19 +231,19 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     // transform as unsized arrays can only be declared on storage address space.
     req.tintOptions.disable_runtime_sized_array_index_clamping =
         GetDevice()->IsToggleEnabled(Toggle::VulkanUseBufferRobustAccess2);
-    req.tintOptions.polyfill_dot_4x8_packed =
+    req.tintOptions.polyfill.dot_4x8_packed =
         GetDevice()->IsToggleEnabled(Toggle::PolyFillPacked4x8DotProduct);
-    req.tintOptions.polyfill_pack_unpack_4x8_norm =
+    req.tintOptions.polyfill.pack_unpack_4x8_norm =
         GetDevice()->IsToggleEnabled(Toggle::PolyfillPackUnpack4x8Norm);
-    req.tintOptions.polyfill_case_switch =
+    req.tintOptions.polyfill.case_switch =
         GetDevice()->IsToggleEnabled(Toggle::VulkanPolyfillSwitchWithIf);
-    req.tintOptions.polyfill_subgroup_broadcast_f16 =
+    req.tintOptions.polyfill.subgroup_broadcast_f16 =
         GetDevice()->IsToggleEnabled(Toggle::EnableSubgroupsIntelGen9);
-    req.tintOptions.disable_polyfill_integer_div_mod =
+    req.tintOptions.polyfill.disable_integer_div_mod =
         GetDevice()->IsToggleEnabled(Toggle::DisablePolyfillsOnIntegerDivisonAndModulo);
     req.tintOptions.scalarize_max_min_clamp =
         GetDevice()->IsToggleEnabled(Toggle::ScalarizeMaxMinClamp);
-    req.tintOptions.subgroup_shuffle_clamped =
+    req.tintOptions.polyfill.subgroup_shuffle_clamped =
         GetDevice()->IsToggleEnabled(Toggle::SubgroupShuffleClamped);
     req.tintOptions.use_vulkan_memory_model =
         GetDevice()->IsToggleEnabled(Toggle::UseVulkanMemoryModel);
@@ -268,7 +268,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
             offsetStartBytes, offsetStartBytes + kImmediateConstantElementByteSize};
     }
 
-    req.tintOptions.apply_pixel_center_polyfill = isSampled;
+    req.tintOptions.polyfill.apply_pixel_center = isSampled;
 
     req.tintOptions.enable_integer_range_analysis =
         GetDevice()->IsToggleEnabled(Toggle::EnableIntegerRangeAnalysisInRobustness);

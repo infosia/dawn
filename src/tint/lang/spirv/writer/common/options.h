@@ -55,6 +55,40 @@ enum class SpvVersion : uint32_t {
 
 /// Configuration options used for generating SPIR-V.
 struct Options {
+    struct Polyfills {
+        /// Set to `true` to generate polyfill for `dot4I8Packed` and `dot4U8Packed` builtins
+        bool dot_4x8_packed = false;
+
+        /// Set to `true` to apply builtin 'position' pixel center emulation.
+        bool apply_pixel_center = false;
+
+        /// Set to `true` to generate polyfill for `pack4x8snorm`, `pack4x8unorm`, `unpack4x8snorm`
+        /// and `unpack4x8unorm` builtins
+        bool pack_unpack_4x8_norm = false;
+
+        /// Set to `true` to generate a polyfill for switch statements using if/else statements.
+        bool case_switch = false;
+
+        /// Set to `true` to generate a polyfill clamp of `id` param of subgroupShuffle to within
+        /// the spec max subgroup size.
+        bool subgroup_shuffle_clamped = false;
+
+        /// Set to `true` to generate polyfill for `subgroupBroadcast(f16)`
+        bool subgroup_broadcast_f16 = false;
+
+        /// Set to `true` to disable the polyfills on integer division and modulo.
+        bool disable_integer_div_mod = false;
+
+        TINT_REFLECT(Polyfills,
+                     dot_4x8_packed,
+                     apply_pixel_center,
+                     pack_unpack_4x8_norm,
+                     case_switch,
+                     subgroup_shuffle_clamped,
+                     subgroup_broadcast_f16,
+                     disable_integer_div_mod);
+    };
+
     struct RangeOffsets {
         /// The offset of the min_depth immediate data
         uint32_t min = 0;
@@ -115,28 +149,6 @@ struct Options {
     /// Set to `true` to always pass matrices to user functions by pointer instead of by value.
     bool pass_matrix_by_pointer = false;
 
-    /// Set to `true` to apply builtin 'position' pixel center emulation.
-    bool apply_pixel_center_polyfill = false;
-
-    /// Set to `true` to generate polyfill for `dot4I8Packed` and `dot4U8Packed` builtins
-    bool polyfill_dot_4x8_packed = false;
-
-    /// Set to `true` to generate polyfill for `pack4x8snorm`, `pack4x8unorm`, `unpack4x8snorm` and
-    /// `unpack4x8unorm` builtins
-    bool polyfill_pack_unpack_4x8_norm = false;
-
-    /// Set to `true` to generate a polyfill for switch statements using if/else statements.
-    bool polyfill_case_switch = false;
-
-    /// Set to `true` to generate a polyfill clamp of `id` param of subgroupShuffle to within the
-    /// spec max subgroup size.
-    bool subgroup_shuffle_clamped = false;
-    /// Set to `true` to generate polyfill for `subgroupBroadcast(f16)`
-    bool polyfill_subgroup_broadcast_f16 = false;
-
-    /// Set to `true` to disable the polyfills on integer division and modulo.
-    bool disable_polyfill_integer_div_mod = false;
-
     /// Set to `true` to scalarize max min and clamp builtins.
     bool scalarize_max_min_clamp = false;
 
@@ -161,6 +173,9 @@ struct Options {
     // Configuration for substitute overrides
     SubstituteOverridesConfig substitute_overrides_config = {};
 
+    // Polyfill flags
+    Polyfills polyfill;
+
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(Options,
                  entry_point_name,
@@ -178,13 +193,6 @@ struct Options {
                  use_storage_input_output_16,
                  emit_vertex_point_size,
                  pass_matrix_by_pointer,
-                 apply_pixel_center_polyfill,
-                 polyfill_dot_4x8_packed,
-                 polyfill_pack_unpack_4x8_norm,
-                 polyfill_case_switch,
-                 subgroup_shuffle_clamped,
-                 polyfill_subgroup_broadcast_f16,
-                 disable_polyfill_integer_div_mod,
                  scalarize_max_min_clamp,
                  use_vulkan_memory_model,
                  dva_transform_handle,
@@ -192,7 +200,8 @@ struct Options {
                  depth_range_offsets,
                  spirv_version,
                  resource_binding,
-                 substitute_overrides_config);
+                 substitute_overrides_config,
+                 polyfill);
 };
 
 }  // namespace tint::spirv::writer
