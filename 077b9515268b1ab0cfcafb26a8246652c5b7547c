@@ -34,6 +34,23 @@
       "parentUuid": "085a4b23_c4219494",
       "revId": "077b9515268b1ab0cfcafb26a8246652c5b7547c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2af238e_e5695e64",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-26T20:21:04Z",
+      "side": 1,
+      "message": "LGTM, I think we can move on without glslang validation for ES for now.",
+      "revId": "077b9515268b1ab0cfcafb26a8246652c5b7547c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
