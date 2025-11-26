@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "483e7502_bf9755b8",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-26T15:35:54Z",
+      "side": 1,
+      "message": "Yes it will be at the device level and will require a specific test for that toggle as well. We can do it as a follow up I guess.",
+      "parentUuid": "f32426a3_fd8a60f1",
+      "revId": "881ef6e184f5ce4aec73de9b9baaa3a83e6540f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6bd49f80_39c6c3d1",
         "filename": "src/dawn/tests/unittests/native/MemoryInstrumentationTests.cpp",
         "patchSetId": 6
