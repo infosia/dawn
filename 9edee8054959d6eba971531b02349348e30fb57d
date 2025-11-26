@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aae0cdb5_85bf36db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-11-26T07:01:10Z",
+      "side": 1,
+      "message": "Ah, yes, the related expectation in dawn_end2end_tests needs to be changed accordingly. Thanks for enabling the bots to catch this!",
+      "parentUuid": "0b2c91a8_95ea1995",
+      "revId": "9edee8054959d6eba971531b02349348e30fb57d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9bbc3e1b_956c4a07",
@@ -156,6 +174,30 @@
       "side": 1,
       "message": "What about existing Adreno 8xx though?\n\nGenerally for checks like this I would like to say \"\u003c first working version\" instead of \"\u003c\u003d last broken version\" but if we can\u0027t, that\u0027s OK.",
       "parentUuid": "842efb03_238f0c86",
+      "range": {
+        "startLine": 282,
+        "startChar": 8,
+        "endLine": 283,
+        "endChar": 49
+      },
+      "revId": "9edee8054959d6eba971531b02349348e30fb57d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40017384_c74a9579",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-11-26T07:01:10Z",
+      "side": 1,
+      "message": "I\u0027m talking about Windows (QualcommACPI instead of QualcommPCI), and the latest device on Windows is Adreno X1, which is based on Adreno 7xx. More details can be found at https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/third_party/dawn/src/dawn/gpu_info.json;l\u003d268?q\u003dthird_party%2Fdawn%20qualcommacpi.\nI was asked not to make the future QC device info public (like in Chromium\u0027s code base), so I didn\u0027t put them in dawn/src/dawn/gpu_info.json.",
+      "parentUuid": "6a9b71a3_8b68a4bb",
       "range": {
         "startLine": 282,
         "startChar": 8,
