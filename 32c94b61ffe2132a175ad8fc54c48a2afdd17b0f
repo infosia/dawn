@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11253ab0_6539e283",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-11-26T20:21:49Z",
+      "side": 1,
+      "message": "nit. I think the default should be to not log anything, and then we can provide an additional flag when we call the generator to generate the logs to the specified file.",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "32c94b61ffe2132a175ad8fc54c48a2afdd17b0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
