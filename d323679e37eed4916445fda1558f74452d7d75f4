@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80583a10_06b806ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-26T19:28:46Z",
+      "side": 1,
+      "message": "lgtm\n\nstyle uber-nit: I am not a huge fan of using \u0027we\u0027 in comments, since often it either can be removed entirely or it makes the comment ambigious. But then again I also tend to write technical prose using the passive voice which others don\u0027t like, so my style taste isn\u0027t universal 😊",
+      "revId": "d323679e37eed4916445fda1558f74452d7d75f4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
