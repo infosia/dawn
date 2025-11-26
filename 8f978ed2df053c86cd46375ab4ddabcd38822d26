@@ -16,6 +16,24 @@
       "message": "I am a bit annoyed with the spec here, because it is inconsistent about being explicit about things. For location it has language about what types it is allow for, where as interpolate does not have language like that in its attribute description. If you read the section discussng interpolation as a concept, it only ever discusses scalars and vectors, but it mute on every other type.\n\nCombining the location description and the interpolation discussion, you can infer that interpolation is only valid for scalars and vectors, but the interpolation description also has non-functional language about interpolation not being significant outside of certain circumstances, which kinda muddy the waters for me.\n\nI think I just need a minute to step back and review the relevant parts of the spec/what is going on for specific Tint backends before fully responding, because my immediate reaction is that I disagree with the comments raised, but also acknowledge that is likely due to me being mentally sticky to my original reading of the spec language vs a legitment disagreement with them.\n\n(I also appreciate that there is a tension in writing a spec like this between making every rule locally parseable, not wanting to repeat language between rules incase it gets out of sync over time, and having prose that is actually human readable. If I have suggestions for how to clarify the text here I will send them up)",
       "revId": "8f978ed2df053c86cd46375ab4ddabcd38822d26",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2a9925e_6d33f136",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-26T20:14:09Z",
+      "side": 1,
+      "message": "I reviewed some Go CLs and calmed down",
+      "parentUuid": "af05054f_669df4d7",
+      "revId": "8f978ed2df053c86cd46375ab4ddabcd38822d26",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

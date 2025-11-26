@@ -42,6 +42,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "638f1237_f367ebc0",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3400,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-26T20:14:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bef90b3_741608f6",
+      "range": {
+        "startLine": 3397,
+        "startChar": 0,
+        "endLine": 3400,
+        "endChar": 44
+      },
+      "revId": "555675333902de5bcd79ad5203a04e4cddf7b2ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "73b9f1e0_4cb37c14",
@@ -59,6 +83,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ba01c2a_3bb334fa",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3402,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-26T20:14:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73b9f1e0_4cb37c14",
+      "revId": "555675333902de5bcd79ad5203a04e4cddf7b2ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5b8610d_6dc57882",
@@ -72,6 +114,24 @@
       "writtenOn": "2025-11-26T16:43:45Z",
       "side": 1,
       "message": "Is the `!kAllowLocationForNumericElements` check needed here? Even if that capability is enabled, we still need a location (or builtin with the other capability) to be present, which is why you use it to do the above checks for location.",
+      "revId": "555675333902de5bcd79ad5203a04e4cddf7b2ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5267cb9_47ab2e69",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3412,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-26T20:14:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5b8610d_6dc57882",
       "revId": "555675333902de5bcd79ad5203a04e4cddf7b2ed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
