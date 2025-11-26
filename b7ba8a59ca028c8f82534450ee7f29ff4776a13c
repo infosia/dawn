@@ -69,6 +69,24 @@
       "parentUuid": "cc849dce_38b07d57",
       "revId": "b7ba8a59ca028c8f82534450ee7f29ff4776a13c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30519929_c0c20f20",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-26T08:45:50Z",
+      "side": 1,
+      "message": "Oh you\u0027re right! I didn\u0027t realize Skia used AllowUnsafeAPIs.",
+      "parentUuid": "f9bb683b_aa8f2053",
+      "revId": "b7ba8a59ca028c8f82534450ee7f29ff4776a13c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
