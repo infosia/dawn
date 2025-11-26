@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00f7476b_380f3a12",
+        "filename": "src/tint/lang/wgsl/resolver/uniformity.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-26T19:50:05Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a functional change, but it seems cleaner to actually hook things up according to control flow.\nIf I don\u0027t make this change then cf_init_end becomes dead (!)",
+      "revId": "24d8125f6bdb95fb1b1f9950a78120001b2a8846",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
