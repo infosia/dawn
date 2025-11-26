@@ -16,6 +16,23 @@
       "message": "PTAL\n\nNot on a Chromium CQ/optional trybot, but the Dawn standalone tests are lightweight enough and the config is not currently heavily loaded, so this should be fine.",
       "revId": "0ad39e5590b6d0c0ec5124bd43824fd29ade0d1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f7c91ce_57919840",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-11-26T12:24:09Z",
+      "side": 1,
+      "message": "Since https://ci.chromium.org/ui/p/dawn/builders/luci.dawn.ci/dawn-mac-x64-amd-555x-rel had 42 green builds (i.e. the config looks stable) and `Total runtime: 14m 28s` (i.e. not significant load) I\u0027ll approve, even though I didn\u0027t plan to have these machines on CQ.\nI think the best use of capacity would be to have WebGPU CTS roller running on them (but we need to make sure the expectations won\u0027t conflict with the 16\" bot).",
+      "revId": "0ad39e5590b6d0c0ec5124bd43824fd29ade0d1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
