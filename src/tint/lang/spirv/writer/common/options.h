@@ -134,6 +134,12 @@ struct Options {
     /// Set to `true` to generate polyfill for `subgroupBroadcast(f16)`
     bool polyfill_subgroup_broadcast_f16 = false;
 
+    /// Set to `true` to generate polyfill for f32 negation.
+    bool polyfill_unary_f32_negation = false;
+
+    /// Set to `true` to generate polyfill for f32 abs.
+    bool polyfill_f32_abs = false;
+
     /// Set to `true` to disable the polyfills on integer division and modulo.
     bool disable_polyfill_integer_div_mod = false;
 
@@ -184,6 +190,8 @@ struct Options {
                  polyfill_case_switch,
                  subgroup_shuffle_clamped,
                  polyfill_subgroup_broadcast_f16,
+                 polyfill_unary_f32_negation,
+                 polyfill_f32_abs,
                  disable_polyfill_integer_div_mod,
                  scalarize_max_min_clamp,
                  use_vulkan_memory_model,
