@@ -1,0 +1,79 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bef90b3_741608f6",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3400,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-26T16:43:45Z",
+      "side": 1,
+      "message": "Nit: Can we just drop the capability guard here? If `in_location_composite \u003d\u003d true`, then we know that `kAllowLocationForNumericElements` must be true since that is a requirement that is validated separately.\n\nSo I think you can just:\n```\nbool has_location \u003d a.location.has_value() || in_location_composite;\n```",
+      "range": {
+        "startLine": 3397,
+        "startChar": 0,
+        "endLine": 3400,
+        "endChar": 44
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "6633c5fd_bbe09a0b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 3397,
+                "startChar": 0,
+                "endLine": 3401,
+                "endChar": 0
+              },
+              "replacement": "                bool has_location \u003d a.location.has_value() || in_location_composite;\n\n"
+            }
+          ]
+        }
+      ],
+      "revId": "555675333902de5bcd79ad5203a04e4cddf7b2ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73b9f1e0_4cb37c14",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3402,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-26T16:43:45Z",
+      "side": 1,
+      "message": "Unless I\u0027m missing it elsewhere, we also need to check that the type is not a composite if the capability is *not* enabled.",
+      "revId": "555675333902de5bcd79ad5203a04e4cddf7b2ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5b8610d_6dc57882",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3412,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-26T16:43:45Z",
+      "side": 1,
+      "message": "Is the `!kAllowLocationForNumericElements` check needed here? Even if that capability is enabled, we still need a location (or builtin with the other capability) to be present, which is why you use it to do the above checks for location.",
+      "revId": "555675333902de5bcd79ad5203a04e4cddf7b2ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
