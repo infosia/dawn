@@ -33,6 +33,23 @@
       "message": "This fails to compile for me locally - missing include for tint::SubgroupMatrixInfo.",
       "revId": "6d73fd69a56b9807094fcdf0eebf2c4556e29e61",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7350c880_67ae52ff",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-26T13:25:07Z",
+      "side": 1,
+      "message": "nit: Maybe open an issue with elements from the conversation on this CL and use the issue number here?",
+      "revId": "6d73fd69a56b9807094fcdf0eebf2c4556e29e61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

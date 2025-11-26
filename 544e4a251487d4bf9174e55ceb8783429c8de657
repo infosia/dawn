@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8ba3209a_4e5873e1",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-26T13:25:07Z",
+      "side": 1,
+      "message": "Ugh I remember now, that\u0027s very annoying. Let\u0027s keep things as is I guess.",
+      "parentUuid": "a4d7873d_ef5d7ac4",
+      "revId": "544e4a251487d4bf9174e55ceb8783429c8de657",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "887d5560_e990a6de",
         "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
         "patchSetId": 1
