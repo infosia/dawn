@@ -165,19 +165,19 @@ wgpu::TextureAspect ToDawn(const Aspect aspect) {
     }
 }
 
-schema::Origin3D ToSchema(const Origin3D& origin) {
+schema::Origin3D ToSchema(const TexelOrigin3D& origin) {
     return {{
-        .x = origin.x,
-        .y = origin.y,
-        .z = origin.z,
+        .x = static_cast<uint32_t>(origin.x),
+        .y = static_cast<uint32_t>(origin.y),
+        .z = static_cast<uint32_t>(origin.z),
     }};
 }
 
-schema::Extent3D ToSchema(const Extent3D& extent) {
+schema::Extent3D ToSchema(const TexelExtent3D& extent) {
     return {{
-        .width = extent.width,
-        .height = extent.height,
-        .depthOrArrayLayers = extent.depthOrArrayLayers,
+        .width = static_cast<uint32_t>(extent.width),
+        .height = static_cast<uint32_t>(extent.height),
+        .depthOrArrayLayers = static_cast<uint32_t>(extent.depthOrArrayLayers),
     }};
 }
 
