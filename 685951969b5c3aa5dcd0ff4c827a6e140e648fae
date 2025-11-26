@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "50a5635c_b7212da2",
+        "filename": "src/tint/lang/core/ir/analysis/subgroup_matrix.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-26T15:50:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9eb6980_170e16b6",
+      "revId": "685951969b5c3aa5dcd0ff4c827a6e140e648fae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b016b6bd_81c4bf26",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-11-25T17:54:13Z",
       "side": 1,
       "message": "Any reason not to just use `unordered_set` so that the de-duplication is more explicit, and so that we do not have to use an extra set when building these lists?",
+      "revId": "685951969b5c3aa5dcd0ff4c827a6e140e648fae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "523a0bb2_1fad7b2b",
+        "filename": "src/tint/lang/core/ir/analysis/subgroup_matrix.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-26T15:50:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b016b6bd_81c4bf26",
       "revId": "685951969b5c3aa5dcd0ff4c827a6e140e648fae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
