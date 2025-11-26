@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f32426a3_fd8a60f1",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-26T10:11:53Z",
+      "side": 1,
+      "message": "And this special toggle will be at device stage right, unlike allowUnsafeAPIs? Will it require other changes (test?)",
+      "parentUuid": "043fc276_9e2617c2",
+      "revId": "881ef6e184f5ce4aec73de9b9baaa3a83e6540f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6bd49f80_39c6c3d1",
         "filename": "src/dawn/tests/unittests/native/MemoryInstrumentationTests.cpp",
         "patchSetId": 6
@@ -31,6 +49,24 @@
       "writtenOn": "2025-11-26T10:02:55Z",
       "side": 1,
       "message": "Slight preference for instead enabling unsafe APIs for all mock tests [here] to match DawnTest that enables it by default. (this removes the need for `ForceEnableToggleForTesting`)",
+      "revId": "881ef6e184f5ce4aec73de9b9baaa3a83e6540f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "200ec7a8_6b4df768",
+        "filename": "src/dawn/tests/unittests/native/MemoryInstrumentationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-11-26T10:11:53Z",
+      "side": 1,
+      "message": "`[here]` is missing link.\n\nFWIW Before this, I\u0027ve passed `allow_unsafe_apis` when creating instance in https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/unittests/native/mocks/DawnMockTest.cpp;l\u003d44;drc\u003dbe90a8f836d3a41eae2d8a5152f24b54d7469599 but that didn\u0027t work. I still got tests failing. Any idea why?",
+      "parentUuid": "6bd49f80_39c6c3d1",
       "revId": "881ef6e184f5ce4aec73de9b9baaa3a83e6540f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
