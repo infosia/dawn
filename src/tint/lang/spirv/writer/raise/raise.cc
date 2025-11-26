@@ -65,6 +65,7 @@
 #include "src/tint/lang/spirv/writer/raise/remove_unreachable_in_loop_continuing.h"
 #include "src/tint/lang/spirv/writer/raise/resource_binding.h"
 #include "src/tint/lang/spirv/writer/raise/shader_io.h"
+#include "src/tint/lang/spirv/writer/raise/unary_polyfill.h"
 #include "src/tint/lang/spirv/writer/raise/var_for_dynamic_index.h"
 
 namespace tint::spirv::writer {
@@ -221,6 +222,11 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     core::ir::transform::SignedIntegerPolyfillConfig signed_integer_cfg{
         .signed_negation = true, .signed_arithmetic = true, .signed_shiftleft = true};
     RUN_TRANSFORM(core::ir::transform::SignedIntegerPolyfill, module, signed_integer_cfg);
+
+    raise::UnaryPolyfillConfig unary_polyfill_cfg;
+    unary_polyfill_cfg.polyfill_f32_negation = options.polyfill_unary_f32_negation;
+    unary_polyfill_cfg.polyfill_f32_abs = options.polyfill_f32_abs;
+    RUN_TRANSFORM(raise::UnaryPolyfill, module, unary_polyfill_cfg);
 
     // kAllowAnyInputAttachmentIndexType required after ExpandImplicitSplats
     RUN_TRANSFORM(raise::HandleMatrixArithmetic, module);

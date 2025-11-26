@@ -104,6 +104,8 @@ enum class Toggle {
     MetalKeepMultisubresourceDepthStencilTexturesInitialized,
     MetalPolyfillUnpack2x16snorm,
     MetalPolyfillUnpack2x16unorm,
+    SpirvPolyfillF32Negation,
+    SpirvPolyfillF32Abs,
     MetalFillEmptyOcclusionQueriesWithZero,
     UseBlitForBufferToDepthTextureCopy,
     UseBlitForBufferToStencilTextureCopy,
