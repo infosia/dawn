@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd94da40_572fc65d",
+        "filename": "tools/src/oswrapper/fstestoswrapper.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-26T19:17:11Z",
+      "side": 1,
+      "message": "Being able to do this in Go, due to how interfaces behave, without a bunch of class hiearchies and other code needing to know the internal details of this file makes me happy.",
+      "revId": "1f73ac979e9e768f140d0a718519f4a6484841dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
