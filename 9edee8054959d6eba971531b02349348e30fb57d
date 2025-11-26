@@ -206,6 +206,30 @@
       },
       "revId": "9edee8054959d6eba971531b02349348e30fb57d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22a7471f_8485457e",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-26T21:57:39Z",
+      "side": 1,
+      "message": "Ahh I see. I just assumed there would be Adreno 8xx Windows devices since 8xx has been out for a while now. Double checked with https://en.wikipedia.org/wiki/List_of_Qualcomm_Snapdragon_systems_on_chips and https://learn.microsoft.com/en-us/windows-hardware/design/minimum/supported/windows-11-supported-qualcomm-processors though and I agree, there don\u0027t seem to be any (officially-supported) SoCs for Win11 with Adreno 8xx.\n\nThis looks fine as long as you\u0027re reasonably certain this problem is fixed on any hypothetical future device that will register here as \"Adreno8xx\", if any (regardless of what SoC it is). Otherwise, there\u0027s risk we\u0027ll lift this restriction on devices that can\u0027t support it.",
+      "parentUuid": "40017384_c74a9579",
+      "range": {
+        "startLine": 282,
+        "startChar": 8,
+        "endLine": 283,
+        "endChar": 49
+      },
+      "revId": "9edee8054959d6eba971531b02349348e30fb57d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
