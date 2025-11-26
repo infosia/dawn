@@ -63,6 +63,24 @@
       "message": "Add a test to check perm mode preserving behaviour matches.",
       "revId": "ab97b8f01c30f6e2197066efc95e75f6d8ffc2db",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b747619_b5907b98",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 3357,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-26T21:57:36Z",
+      "side": 1,
+      "message": "I think this can be done in a follow CL, instead of rework this CL and disrupting your working stack of patches",
+      "parentUuid": "7cceabcd_85ee200a",
+      "revId": "ab97b8f01c30f6e2197066efc95e75f6d8ffc2db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
