@@ -998,6 +998,10 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::VulkanPolyfillSwitchWithIf, true);
     }
 
+    // force all vulkan for now
+    deviceToggles->Default(Toggle::SpirvPolyfillF32Abs, true);
+    deviceToggles->Default(Toggle::SpirvPolyfillF32Negation, true);
+
     if (IsAndroidARM()) {
         // dawn:1550: Resolving multiple color targets in a single pass fails on ARM GPUs. To
         // work around the issue, passes that resolve to multiple color targets will instead be
