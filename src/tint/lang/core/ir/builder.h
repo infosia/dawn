@@ -907,14 +907,43 @@ class Builder {
     }
 
     /// Creates an Multiply operation
-    /// @tparam TYPE the result type of the expression
     /// @param lhs the lhs of the add
     /// @param rhs the rhs of the add
     /// @returns the operation
-    template <typename TYPE, typename LHS, typename RHS>
+    template <typename LHS, typename RHS>
     ir::CoreBinary* Multiply(LHS&& lhs, RHS&& rhs) {
-        auto* type = ir.Types().Get<TYPE>();
-        return Multiply(type, std::forward<LHS>(lhs), std::forward<RHS>(rhs));
+        auto* lhs_value = Value(std::forward<LHS>(lhs));
+        auto* rhs_value = Value(std::forward<RHS>(rhs));
+        TINT_ASSERT(lhs_value);
+        TINT_ASSERT(rhs_value);
+
+        auto* lhs_type = lhs_value->Type();
+        auto* rhs_type = rhs_value->Type();
+
+        const core::type::Type* result_type = nullptr;
+        if (auto* l = lhs_type->template As<core::type::Matrix>()) {
+            if (auto* r = rhs_type->template As<core::type::Matrix>()) {
+                result_type = ir.Types().mat(l->DeepestElement(), r->Columns(), l->Rows());
+            } else if (rhs_type->template Is<core::type::Vector>()) {
+                result_type = ir.Types().vec(l->DeepestElement(), l->Rows());
+            } else {
+                result_type = lhs_type;
+            }
+        } else if (lhs_type->template Is<core::type::Vector>()) {
+            if (auto* r = rhs_type->template As<core::type::Matrix>()) {
+                result_type = ir.Types().vec(r->DeepestElement(), r->Columns());
+            } else {
+                result_type = lhs_type;
+            }
+        } else if (rhs_type->template Is<core::type::Matrix>() ||
+                   rhs_type->template Is<core::type::Vector>()) {
+            result_type = rhs_type;
+        } else {
+            result_type = lhs_type;
+        }
+
+        return Append(ir.CreateInstruction<ir::CoreBinary>(
+            InstructionResult(result_type), BinaryOp::kMultiply, lhs_value, rhs_value));
     }
 
     /// Creates an Divide operation

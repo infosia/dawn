@@ -1855,7 +1855,7 @@ TEST_F(SpirvReader_ShaderIOTest, Output_LoadAndStore) {
     b.Append(ep->Block(), [&] {  //
         b.Store(color, b.Splat<vec4<f32>>(1_f));
         auto* load = b.Load(color);
-        auto* mul = b.Multiply<vec4<f32>>(load, 2_f);
+        auto* mul = b.Multiply(load, 2_f);
         b.Store(color, mul);
         b.Return(ep);
     });
@@ -1915,7 +1915,7 @@ TEST_F(SpirvReader_ShaderIOTest, Output_LoadVectorElementAndStoreVectorElement) 
     b.Append(ep->Block(), [&] {  //
         b.Store(color, b.Splat<vec4<f32>>(1_f));
         auto* load = b.LoadVectorElement(color, 2_u);
-        auto* mul = b.Multiply<f32>(load, 2_f);
+        auto* mul = b.Multiply(load, 2_f);
         b.StoreVectorElement(color, 2_u, mul);
         b.Return(ep);
     });

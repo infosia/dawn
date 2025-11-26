@@ -556,7 +556,7 @@ struct State {
                 TINT_IR_ASSERT(ir, count);
 
                 b.LoopRange(0_u, u32(count->value), 1_u, [&](core::ir::Value* idx) {
-                    auto* stride = b.Multiply<u32>(idx, u32(arr->ImplicitStride()))->Result();
+                    auto* stride = b.Multiply(idx, u32(arr->ImplicitStride()))->Result();
                     OffsetData od{0, {start_byte_offset, stride}};
                     auto* byte_idx = OffsetToValue(od);
                     auto* access = b.Access(ty.ptr<function>(arr->ElemType()), result_arr, idx);
