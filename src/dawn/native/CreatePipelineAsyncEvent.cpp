@@ -134,7 +134,8 @@ CreatePipelineAsyncEvent<PipelineType,
 
 template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
 void CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::InitializeImpl(
-    bool isAsync) {
+    bool isAsync,
+    int threadId) {
     DeviceBase* device = mPipeline->GetDevice();
     const char* eventLabel = utils::GetLabelForTrace(mPipeline->GetLabel());
     if (isAsync) {
@@ -142,8 +143,8 @@ void CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::In
                               "CreatePipelineAsyncEvent::InitializeAsync", this, "label",
                               eventLabel);
     }
-    TRACE_EVENT1(device->GetPlatform(), General, "CreatePipelineAsyncEvent::InitializeImpl",
-                 "label", eventLabel);
+    TRACE_EVENT2(device->GetPlatform(), General, "CreatePipelineAsyncEvent::InitializeImpl",
+                 "label", eventLabel, "threadId", threadId);
 
     MaybeError maybeError;
     {
@@ -163,7 +164,7 @@ void CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::In
 
 template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
 void CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::InitializeSync() {
-    InitializeImpl(false);
+    InitializeImpl(false, gettid());
 }
 
 template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
@@ -173,7 +174,10 @@ void CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::In
     TRACE_EVENT_FLOW_BEGIN1(device->GetPlatform(), General,
                             "CreatePipelineAsyncEvent::InitializeAsync", this, "label", eventLabel);
 
-    auto asyncTask = [event = Ref<CreatePipelineAsyncEvent>(this)] { event->InitializeImpl(true); };
+    auto threadId = gettid();
+    auto asyncTask = [event = Ref<CreatePipelineAsyncEvent>(this), threadId] {
+        event->InitializeImpl(true, threadId);
+    };
     device->GetAsyncTaskManager()->PostTask<AsyncTask>(std::move(asyncTask));
 }
 

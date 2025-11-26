@@ -89,7 +89,7 @@ class CreatePipelineAsyncEvent final : public EventManager::TrackedEvent {
 
     // Body of pipeline initialization, called synchronously, or wrapped in an AsyncTask run by
     // AsyncTaskManager.
-    void InitializeImpl(bool isAsync);
+    void InitializeImpl(bool isAsync, int threadId);
 
     CallbackType mCallback;
     raw_ptr<void> mUserdata1;

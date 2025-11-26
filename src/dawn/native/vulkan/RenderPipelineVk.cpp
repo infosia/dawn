@@ -44,6 +44,7 @@
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
 #include "dawn/platform/metrics/HistogramMacros.h"
+#include "dawn/platform/tracing/TraceEvent.h"
 
 namespace dawn::native::vulkan {
 
@@ -642,10 +643,13 @@ MaybeError RenderPipeline::InitializeImpl() {
     // Try to see if we have anything in the blob cache.
     platform::metrics::DawnHistogramTimer cacheTimer(GetDevice()->GetPlatform());
     Ref<PipelineCache> cache = ToBackend(GetDevice()->GetOrCreatePipelineCache(GetCacheKey()));
-    DAWN_TRY(
-        CheckVkSuccess(device->fn.CreateGraphicsPipelines(device->GetVkDevice(), cache->GetHandle(),
-                                                          1, &createInfo, nullptr, &*mHandle),
-                       "CreateGraphicsPipelines"));
+    {
+        TRACE_EVENT0(device->GetPlatform(), General, "vkCreateGraphicsPipeline");
+        DAWN_TRY(CheckVkSuccess(
+            device->fn.CreateGraphicsPipelines(device->GetVkDevice(), cache->GetHandle(), 1,
+                                               &createInfo, nullptr, &*mHandle),
+            "CreateGraphicsPipelines"));
+    }
     cacheTimer.RecordMicroseconds(cache->CacheHit() ? "Vulkan.CreateGraphicsPipelines.CacheHit"
                                                     : "Vulkan.CreateGraphicsPipelines.CacheMiss");
 

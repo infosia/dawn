@@ -126,7 +126,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     bool emitPointSize,
     bool isSampled,
     const ImmediateConstantMask& pipelineImmediateMask) {
-    TRACE_EVENT0(GetDevice()->GetPlatform(), General, "ShaderModuleVk::GetHandleAndSpirv");
+    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "ShaderModuleVk::GetHandleAndSpirv", "wgsl",
+                 GetWGSL());
 
 #if TINT_BUILD_SPV_WRITER
     // Creation of module and spirv is deferred to this point when using tint generator
