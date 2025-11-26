@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee403b34_9d6727eb",
+        "filename": "src/tint/lang/spirv/writer/var_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-26T21:30:17Z",
+      "side": 0,
+      "message": "I think we want to keep this part of the tests?",
+      "revId": "be9603341920842592bb92884df663c7f3148763",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
