@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "164cec02_a49df7a3",
+        "filename": "src/tint/lang/core/ir/analysis/subgroup_matrix.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-26T16:14:10Z",
+      "side": 1,
+      "message": "Why not unordered_set here too?",
+      "revId": "6adf3ae530ba941526b852cd061bfd63c542608a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
