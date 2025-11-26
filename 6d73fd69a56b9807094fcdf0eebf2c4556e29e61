@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bc9e0a0_c3ce47c0",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-26T18:55:32Z",
+      "side": 1,
+      "message": "Added it to tint/tint.h",
+      "parentUuid": "4d61aa80_6a180e1c",
+      "revId": "6d73fd69a56b9807094fcdf0eebf2c4556e29e61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7350c880_67ae52ff",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-11-26T13:25:07Z",
       "side": 1,
       "message": "nit: Maybe open an issue with elements from the conversation on this CL and use the issue number here?",
+      "revId": "6d73fd69a56b9807094fcdf0eebf2c4556e29e61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a980e57d_329af6ba",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-26T18:55:32Z",
+      "side": 1,
+      "message": "Done. I\u0027d actually just put this in here to make sure we talked about it on the code review, but sounds like there is cleanup that can be done so moved to a bug and fixed the comment.",
+      "parentUuid": "7350c880_67ae52ff",
       "revId": "6d73fd69a56b9807094fcdf0eebf2c4556e29e61",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
