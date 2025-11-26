@@ -34,6 +34,24 @@
       "parentUuid": "9842a6f0_2a311610",
       "revId": "998fc535acb3d06dcbe3e222135e801284541812",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34624f8e_10010e36",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-26T21:51:35Z",
+      "side": 1,
+      "message": "I generally prefer spaces for code too, but I will say Go is the one place I don\u0027t mind tabs, because gofmt makes them so ubiquitous in Go code, that I can depend on just tuning my editor\u0027s tab size to get the look I prefer.\n\n(I probably prefer tabs in theory, it is the inconsistency of their use that annoys me in most languages)",
+      "parentUuid": "fed7c5f5_86fb19fd",
+      "revId": "998fc535acb3d06dcbe3e222135e801284541812",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
