@@ -16,6 +16,24 @@
       "message": "Possibly worth adding cases that cover trying to read non-existent paths via a working symlink, i.e. foo/ exists, and sym points to foo/, but then trying to read sym/bar and sym/baz.txt.",
       "revId": "db66d8402a800c2d61f519661a332bbddd245b95",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfafe772_f5acbf88",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1460,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-11-26T21:57:17Z",
+      "side": 1,
+      "message": "I think this can be done in a follow CL, instead of rework this CL and disrupting your working stack of patches",
+      "parentUuid": "2b65d2e0_28b24980",
+      "revId": "db66d8402a800c2d61f519661a332bbddd245b95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
