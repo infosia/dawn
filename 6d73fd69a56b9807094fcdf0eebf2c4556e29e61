@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be55ae16_1a355c3b",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1788,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-27T19:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0be0b87_c73f0d0e",
+      "revId": "6d73fd69a56b9807094fcdf0eebf2c4556e29e61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d61aa80_6a180e1c",
