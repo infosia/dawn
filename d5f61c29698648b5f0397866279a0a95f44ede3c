@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06e05412_a6a49c99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-27T05:18:43Z",
+      "side": 1,
+      "message": "I\u0027ve yet to figure out how to get my local build into the same setup as that bot. I wish I could get it to tell me this locally so I didn\u0027t have to wait for the bots to complain.",
+      "parentUuid": "634ee3b9_0d53ca6f",
+      "revId": "d5f61c29698648b5f0397866279a0a95f44ede3c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6893af2b_903db741",
@@ -83,6 +101,24 @@
       "writtenOn": "2025-11-27T04:38:41Z",
       "side": 1,
       "message": "This is not a workaround, this is more like `disable_robustness` where someone may want to turn this off to get better performance.",
+      "revId": "d5f61c29698648b5f0397866279a0a95f44ede3c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96bf7fb3_626badd2",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-27T05:18:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3135a41a_ce3ab087",
       "revId": "d5f61c29698648b5f0397866279a0a95f44ede3c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
