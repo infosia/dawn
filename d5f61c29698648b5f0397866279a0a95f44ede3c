@@ -88,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37429131_3d51558d",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-27T19:12:03Z",
+      "side": 1,
+      "message": "Yeah I was misremembering the details of this one.",
+      "parentUuid": "671b2ec6_40416248",
+      "revId": "d5f61c29698648b5f0397866279a0a95f44ede3c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3135a41a_ce3ab087",
