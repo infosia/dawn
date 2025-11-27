@@ -387,6 +387,13 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
      {"metal_polyfill_unpack_2x16_unorm",
       "Polyfill unpack2x16unorm for MSL due to CTS failures on Mac M3+ devices.",
       "https://crbug.com/449576833", ToggleStage::Device}},
+    {Toggle::SpirvPolyfillF32Negation,
+     {"spirv_polyfill_f32_negation",
+      "Polyfill f32 negation with bit manipulation in SPIR-V writer.",
+      "https://crbug.com/dawn/2502", ToggleStage::Device}},
+    {Toggle::SpirvPolyfillF32Abs,
+     {"spirv_polyfill_f32_abs", "Polyfill f32 abs with sign() * x in SPIR-V writer.",
+      "https://crbug.com/dawn/2502", ToggleStage::Device}},
     {Toggle::MetalFillEmptyOcclusionQueriesWithZero,
      {"metal_fill_empty_occlusion_queries_with_zero",
       "Apple GPUs leave stale results in the visibility result buffer instead of writing zero if "
