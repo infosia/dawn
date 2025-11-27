@@ -16,6 +16,40 @@
       "message": "PTAL.",
       "revId": "d5f61c29698648b5f0397866279a0a95f44ede3c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6893af2b_903db741",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-27T04:38:41Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a driver issue, this is more a \"WGSL and SPIR-V specs have different semantics so we have to polyfill\" thing.",
+      "revId": "d5f61c29698648b5f0397866279a0a95f44ede3c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3135a41a_ce3ab087",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-27T04:38:41Z",
+      "side": 1,
+      "message": "This is not a workaround, this is more like `disable_robustness` where someone may want to turn this off to get better performance.",
+      "revId": "d5f61c29698648b5f0397866279a0a95f44ede3c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
