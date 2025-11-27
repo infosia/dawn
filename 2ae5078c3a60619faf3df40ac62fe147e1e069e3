@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "329bc31b_46f0a160",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-27T09:13:04Z",
+      "side": 1,
+      "message": "ditto for the indirect buffer",
+      "revId": "2ae5078c3a60619faf3df40ac62fe147e1e069e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aba9a192_9c13b691",
         "filename": "src/dawn/tests/white_box/CaptureAndReplayTests.cpp",
         "patchSetId": 2
