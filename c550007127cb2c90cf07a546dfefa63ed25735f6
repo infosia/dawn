@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69673221_a7756a2f",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-27T09:09:47Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the index buffer be added here?",
+      "revId": "c550007127cb2c90cf07a546dfefa63ed25735f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
