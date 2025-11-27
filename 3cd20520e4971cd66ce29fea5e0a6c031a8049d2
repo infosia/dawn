@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3265704b_b8d83334",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-27T02:20:54Z",
+      "side": 1,
+      "message": "Tested against CQ to prove that this will work on all device. Now I will enable only for mesa amd",
+      "revId": "3cd20520e4971cd66ce29fea5e0a6c031a8049d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
