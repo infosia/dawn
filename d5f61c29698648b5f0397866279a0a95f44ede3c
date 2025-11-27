@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "671b2ec6_40416248",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-27T04:41:49Z",
+      "side": 1,
+      "message": "We only default it to true on `IntelMesa`, so seems driver specific?",
+      "parentUuid": "6893af2b_903db741",
+      "revId": "d5f61c29698648b5f0397866279a0a95f44ede3c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3135a41a_ce3ab087",
         "filename": "src/tint/lang/spirv/writer/common/options.h",
         "patchSetId": 1
