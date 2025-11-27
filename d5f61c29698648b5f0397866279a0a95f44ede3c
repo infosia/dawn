@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "634ee3b9_0d53ca6f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-27T05:16:07Z",
+      "side": 1,
+      "message": "Minor build errors\n\n/Volumes/Work/s/w/ir/cache/uncached/dawn/src/tint/lang/spirv/writer/access_test.cc\n/Volumes/Work/s/w/ir/cache/uncached/dawn/src/tint/lang/spirv/writer/access_test.cc:76:5: error: missing field \u0027workarounds\u0027 initializer [-Werror,-Wmissing-designated-field-initializers]\n   76 |     };",
+      "revId": "d5f61c29698648b5f0397866279a0a95f44ede3c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6893af2b_903db741",
         "filename": "src/tint/lang/spirv/writer/common/options.h",
         "patchSetId": 1
