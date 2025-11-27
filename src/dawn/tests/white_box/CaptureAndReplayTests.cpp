@@ -1906,6 +1906,71 @@ TEST_P(CaptureAndReplayTests, CaptureSetLabel) {
     EXPECT_TRUE(replay->GetObjectByLabel<wgpu::TextureView>("viewB") != nullptr);
 }
 
+// Capture SetBlendConstant.
+TEST_P(CaptureAndReplayTests, CaptureSetBlendConstant) {
+    wgpu::Texture dstTexture = CreateTexture("dstTexture", {1}, wgpu::TextureFormat::RGBA8Unorm,
+                                             wgpu::TextureUsage::RenderAttachment);
+
+    const char* shader = R"(
+        struct VOut {
+            @builtin(position) pos: vec4f,
+            @location(0) @interpolate(flat, either) params: vec4u,
+        };
+
+        @vertex fn vs() -> @builtin(position) vec4f
+        {
+            return vec4f(0, 0, 0, 1);
+        }
+
+        @fragment fn fs() -> @location(0) vec4f {
+            return vec4f(0.1, 0.2, 0.3, 0.4);
+        }
+    )";
+    auto module = utils::CreateShaderModule(device, shader);
+
+    utils::ComboRenderPipelineDescriptor desc;
+    desc.vertex.module = module;
+    desc.cFragment.module = module;
+    desc.cFragment.targetCount = 1;
+    desc.cTargets[0].format = wgpu::TextureFormat::RGBA8Unorm;
+    desc.cTargets[0].blend = &desc.cBlends[0];
+    desc.cBlends[0].color.operation = wgpu::BlendOperation::Add;
+    desc.cBlends[0].color.srcFactor = wgpu::BlendFactor::Src;
+    desc.cBlends[0].color.dstFactor = wgpu::BlendFactor::Constant;
+    desc.cBlends[0].alpha.operation = wgpu::BlendOperation::Add;
+    desc.cBlends[0].alpha.srcFactor = wgpu::BlendFactor::SrcAlpha;
+    desc.cBlends[0].alpha.dstFactor = wgpu::BlendFactor::Constant;
+    desc.primitive.topology = wgpu::PrimitiveTopology::PointList;
+    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&desc);
+
+    wgpu::CommandBuffer commands;
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+
+        utils::ComboRenderPassDescriptor passDescriptor({dstTexture.CreateView()});
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&passDescriptor);
+        pass.SetPipeline(pipeline);
+        wgpu::Color color = {0.7, 0.5, 0.3, 0.1};
+        pass.SetBlendConstant(&color);
+        pass.Draw(1);
+        pass.End();
+
+        commands = encoder.Finish();
+    }
+
+    // --- capture ---
+    auto recorder = Recorder::CreateAndStart(device);
+
+    queue.Submit(1, &commands);
+
+    // --- replay ---
+    auto capture = recorder.Finish();
+    auto replay = capture.Replay(device);
+
+    uint8_t expected[] = {0x03, 0x05, 0x07, 0x09};
+    ExpectTextureEQ(replay.get(), "dstTexture", {1}, expected);
+}
+
 DAWN_INSTANTIATE_TEST(CaptureAndReplayTests, WebGPUBackend());
 
 class CaptureAndReplayDrawTests : public CaptureAndReplayTests {
