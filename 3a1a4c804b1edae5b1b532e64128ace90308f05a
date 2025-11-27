@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bd2a84b_eaa5dcfc",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-27T09:15:50Z",
+      "side": 1,
+      "message": "ditto for the indirect buffer. Also we are missing handling for `SetVertexBuffer` as well.",
+      "revId": "3a1a4c804b1edae5b1b532e64128ace90308f05a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16fa939a_ed70e524",
+        "filename": "src/dawn/tests/white_box/CaptureAndReplayTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2030,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-27T09:15:50Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be 23? `indices[firstIndex] + baseVertex`?",
+      "range": {
+        "startLine": 2030,
+        "startChar": 26,
+        "endLine": 2030,
+        "endChar": 29
+      },
+      "revId": "3a1a4c804b1edae5b1b532e64128ace90308f05a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
