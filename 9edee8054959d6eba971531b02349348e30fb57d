@@ -254,6 +254,30 @@
       },
       "revId": "9edee8054959d6eba971531b02349348e30fb57d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "434fb545_060e9a97",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-11-27T03:36:26Z",
+      "side": 1,
+      "message": "That\u0027s fine, please go ahead (once Review-Enforcement is happy as noted in my other comment).",
+      "parentUuid": "9518c1f7_6cbd7151",
+      "range": {
+        "startLine": 282,
+        "startChar": 8,
+        "endLine": 283,
+        "endChar": 49
+      },
+      "revId": "9edee8054959d6eba971531b02349348e30fb57d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
