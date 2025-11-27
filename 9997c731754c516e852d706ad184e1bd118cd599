@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "24d6be3a_a204ab09",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-27T19:22:57Z",
+      "side": 1,
+      "message": "Probably.",
+      "parentUuid": "3fa9404b_cc122f26",
+      "revId": "9997c731754c516e852d706ad184e1bd118cd599",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f2305b55_ef8c80dc",
         "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
         "patchSetId": 11
@@ -31,6 +49,24 @@
       "writtenOn": "2025-11-27T19:22:11Z",
       "side": 1,
       "message": "Once the other Cl lands, group these with the other `.workaround` entries.",
+      "revId": "9997c731754c516e852d706ad184e1bd118cd599",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0b9af00_826076f0",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-27T19:22:57Z",
+      "side": 1,
+      "message": "hehe i knew there would be conflicts",
+      "parentUuid": "f2305b55_ef8c80dc",
       "revId": "9997c731754c516e852d706ad184e1bd118cd599",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
