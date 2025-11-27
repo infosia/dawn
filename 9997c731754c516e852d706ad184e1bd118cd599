@@ -3,6 +3,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5e0e0dce_e8ad6366",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-27T19:30:39Z",
+      "side": 1,
+      "message": "Nit: You\u0027re also using bit manipulation for this one, not `sign() * x`.",
+      "fixSuggestions": [
+        {
+          "fixId": "eb6de5b2_d0ec43c8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Toggles.cpp",
+              "range": {
+                "startLine": 395,
+                "startChar": 0,
+                "endLine": 396,
+                "endChar": 0
+              },
+              "replacement": "     {\"spirv_polyfill_f32_abs\", \"Polyfill f32 abs with bit manipulation in SPIR-V writer.\",\n"
+            }
+          ]
+        }
+      ],
+      "revId": "9997c731754c516e852d706ad184e1bd118cd599",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3fa9404b_cc122f26",
         "filename": "src/dawn/native/Toggles.h",
         "patchSetId": 11
@@ -106,6 +141,52 @@
         "startChar": 0,
         "endLine": 238,
         "endChar": 67
+      },
+      "revId": "9997c731754c516e852d706ad184e1bd118cd599",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e76d123b_1d9494ed",
+        "filename": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-27T19:30:39Z",
+      "side": 1,
+      "message": "Nit: BitcastWithResult avoids creating the extra InstructionResult and then replacing.\n\n```suggestion\n            b.BitcastWithResult(unary-\u003eDetachResult(), xor_res);\n```",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 63
+      },
+      "revId": "9997c731754c516e852d706ad184e1bd118cd599",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "139736cb_eac7370f",
+        "filename": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-27T19:30:39Z",
+      "side": 1,
+      "message": "```suggestion\n            b.BitcastWithResult(builtin-\u003eDetachResult(), and_res);\n```",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 65
       },
       "revId": "9997c731754c516e852d706ad184e1bd118cd599",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
