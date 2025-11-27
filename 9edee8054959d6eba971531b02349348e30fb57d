@@ -230,6 +230,30 @@
       },
       "revId": "9edee8054959d6eba971531b02349348e30fb57d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9518c1f7_6cbd7151",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-11-27T02:53:26Z",
+      "side": 1,
+      "message": "We confirmed this via email with QC before, and Adreno X2, which is the next gen and will be released next year, has no limitation. I will check with internal team to see if I can have early access to the device to double check. \nI\u0027m afraid this is going to take a while so please let me land this now.",
+      "parentUuid": "22a7471f_8485457e",
+      "range": {
+        "startLine": 282,
+        "startChar": 8,
+        "endLine": 283,
+        "endChar": 49
+      },
+      "revId": "9edee8054959d6eba971531b02349348e30fb57d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
