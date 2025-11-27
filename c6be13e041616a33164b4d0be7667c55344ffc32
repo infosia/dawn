@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e69461fd_d38e8535",
+        "filename": "src/tint/cmd/info/main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-11-27T21:39:20Z",
+      "side": 0,
+      "message": "I don\u0027t know how important it was to have this in the `tint_info` command (I don\u0027t know who uses this). But in any case, it doesn\u0027t handle overrides right now anyway.",
+      "revId": "c6be13e041616a33164b4d0be7667c55344ffc32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
