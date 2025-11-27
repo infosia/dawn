@@ -22,6 +22,30 @@
       },
       "revId": "17cf0860f45261217134491c7fb424e388824b37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d35b5cb5_5ca290d0",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-11-27T04:09:19Z",
+      "side": 1,
+      "message": "You mean the `template` thing? It\u0027s because you\u0027re in a template calling a template method. C++ likes the extra word. We have it scattered around in a few places, I don\u0027t think you can get around it. It\u0027s just .... a weirdness with templates as far as I could tell.",
+      "parentUuid": "1df413ee_923dbdbd",
+      "range": {
+        "startLine": 925,
+        "startChar": 36,
+        "endLine": 925,
+        "endChar": 44
+      },
+      "revId": "17cf0860f45261217134491c7fb424e388824b37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
