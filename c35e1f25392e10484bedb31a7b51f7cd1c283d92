@@ -16,6 +16,46 @@
       "message": "PTAL! Confirmed that this does not break D3D12 capture and does technically enable Vulkan capture on Android, though there will need to be a follow-up CL to fix some still-unidentified pattern in the Vulkan code that is causing RenderDoc to fail to open the captures. Mostly I want to get the shared RenderDoc loading bits reviewed.",
       "revId": "c35e1f25392e10484bedb31a7b51f7cd1c283d92",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8706114e_1532d8a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-27T14:00:29Z",
+      "side": 1,
+      "message": "Looks great so far. Looks like the CMake build is unhappy.",
+      "revId": "c35e1f25392e10484bedb31a7b51f7cd1c283d92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e65deb0_691665fd",
+        "filename": "src/dawn/native/utils/RenderDoc.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-27T14:00:29Z",
+      "side": 1,
+      "message": "Is it okay that DynamicLib::Close will be called when this goes out of scope? This calls `::FreeLibrary` on Windows, and `dlclose` on non-Windows... does that potentially uninject the library from the process? Maybe we need to make this a static variable to keep it alive.",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 32
+      },
+      "revId": "c35e1f25392e10484bedb31a7b51f7cd1c283d92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
