@@ -138,6 +138,31 @@ TEST_P(ScissorTest, EmptyRect) {
     EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kZero, renderPass.color, 1, 0);
     EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kZero, renderPass.color, 1, 1);
 }
+
+// Test setting an all zero scissor
+TEST_P(ScissorTest, ZeroRect) {
+    utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 2, 2);
+    wgpu::RenderPipeline pipeline = CreateQuadPipeline(renderPass.colorFormat);
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    {
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
+        pass.SetPipeline(pipeline);
+        pass.SetScissorRect(0, 0, 0, 0);
+        pass.Draw(6);
+        pass.End();
+    }
+
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    // Test that no pixel was written.
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kZero, renderPass.color, 0, 0);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kZero, renderPass.color, 0, 1);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kZero, renderPass.color, 1, 0);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kZero, renderPass.color, 1, 1);
+}
+
 // Test that the scissor setting doesn't get inherited between renderpasses
 TEST_P(ScissorTest, NoInheritanceBetweenRenderPass) {
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 100, 100);
