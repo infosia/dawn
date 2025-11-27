@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44610554_47ef0eca",
+        "filename": "src/dawn/native/BlitBufferToTexture.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-27T18:43:36Z",
+      "side": 1,
+      "message": "Yes, and it\u0027s much better. Found other places and updated them.",
+      "parentUuid": "47b0548b_c5d4bc65",
+      "range": {
+        "startLine": 405,
+        "startChar": 17,
+        "endLine": 406,
+        "endChar": 61
+      },
+      "revId": "96e318e4705f929dff19ed9269c83ce715c586e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "24dc895e_40997f71",
@@ -41,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2d7628e_59a180e4",
+        "filename": "src/dawn/native/BlitDepthToDepth.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-27T18:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24dc895e_40997f71",
+      "revId": "96e318e4705f929dff19ed9269c83ce715c586e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3add763_f4f8945d",
@@ -54,6 +96,30 @@
       "writtenOn": "2025-11-27T10:46:04Z",
       "side": 1,
       "message": "note: `RangeIterator` can be used to turn this into `for (TexelCount z : Range(copyExtent.depthOrArrayLayers))`. I guess the \"range\" name is a very Python-like and the equivalent concept in C++ is `iota`.",
+      "range": {
+        "startLine": 142,
+        "startChar": 9,
+        "endLine": 142,
+        "endChar": 77
+      },
+      "revId": "96e318e4705f929dff19ed9269c83ce715c586e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4a1dccd_18444ffb",
+        "filename": "src/dawn/native/BlitDepthToDepth.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-27T18:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3add763_f4f8945d",
       "range": {
         "startLine": 142,
         "startChar": 9,
@@ -138,6 +204,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7598f37d_65098fb1",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1645,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-27T18:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f393494_07c68a58",
+      "revId": "96e318e4705f929dff19ed9269c83ce715c586e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "31b3b40e_3a049365",
@@ -151,6 +235,30 @@
       "writtenOn": "2025-11-27T10:46:04Z",
       "side": 1,
       "message": "note: We could make this a template operating on TypedIntegers as well.",
+      "range": {
+        "startLine": 870,
+        "startChar": 33,
+        "endLine": 870,
+        "endChar": 50
+      },
+      "revId": "96e318e4705f929dff19ed9269c83ce715c586e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00304e94_1d6c5728",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-27T18:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31b3b40e_3a049365",
       "range": {
         "startLine": 870,
         "startChar": 33,
