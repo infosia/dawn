@@ -46,6 +46,30 @@
       },
       "revId": "17cf0860f45261217134491c7fb424e388824b37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7f36804_e2159288",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-27T05:25:32Z",
+      "side": 1,
+      "message": "Ya but the these are in no way templates. These are well defined types (they must be values). so it is a bit odd.",
+      "parentUuid": "d35b5cb5_5ca290d0",
+      "range": {
+        "startLine": 925,
+        "startChar": 36,
+        "endLine": 925,
+        "endChar": 44
+      },
+      "revId": "17cf0860f45261217134491c7fb424e388824b37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
