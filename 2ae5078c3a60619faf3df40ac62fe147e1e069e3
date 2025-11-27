@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "735c3af5_7adf16f8",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-27T17:28:03Z",
+      "side": 1,
+      "message": "ditto for answer :P",
+      "parentUuid": "329bc31b_46f0a160",
+      "revId": "2ae5078c3a60619faf3df40ac62fe147e1e069e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aba9a192_9c13b691",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-11-27T00:01:42Z",
       "side": 1,
       "message": "Q: for the iNdx (0x20). I thought it\u0027d be 0x21 \u003d 0x22 - 1 (the last instance id)? Did I miss anything?",
+      "revId": "2ae5078c3a60619faf3df40ac62fe147e1e069e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6841a22_3cc70bc4",
+        "filename": "src/dawn/tests/white_box/CaptureAndReplayTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2007,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-27T17:28:03Z",
+      "side": 1,
+      "message": "good catch! I was using EXPECT_TEXTURE_EQ wrong and only the first byte was being checked. Fixed.",
+      "parentUuid": "aba9a192_9c13b691",
       "revId": "2ae5078c3a60619faf3df40ac62fe147e1e069e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
