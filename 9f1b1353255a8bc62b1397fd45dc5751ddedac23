@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5424aecd_bd5ef9eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-27T17:26:45Z",
+      "side": 1,
+      "message": "We should maybe consider adding a sizeof(element) \u003d\u003d texture.format.bytesPerBlock assert in some other CL.",
+      "revId": "9f1b1353255a8bc62b1397fd45dc5751ddedac23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
