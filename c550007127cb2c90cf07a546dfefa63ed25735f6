@@ -16,6 +16,24 @@
       "message": "Shouldn\u0027t the index buffer be added here?",
       "revId": "c550007127cb2c90cf07a546dfefa63ed25735f6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4a974c2_805c2e80",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-27T17:27:08Z",
+      "side": 1,
+      "message": "No, the index buffer is tracked by the front end like all buffers.",
+      "parentUuid": "69673221_a7756a2f",
+      "revId": "c550007127cb2c90cf07a546dfefa63ed25735f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
