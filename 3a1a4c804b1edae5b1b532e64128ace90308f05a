@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b11c8c0_a563aa66",
+        "filename": "src/dawn/native/webgpu/CommandBufferHelpers.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-27T17:28:42Z",
+      "side": 1,
+      "message": "no we are not. SetVertexBuffer and indirect buffer are already handled by the front end which is why the tests already work and why stuff using SetVertexBuffer was already working. As I mentioned before, we\u0027re only collecting things the frontend doesn\u0027t already collect.",
+      "parentUuid": "5bd2a84b_eaa5dcfc",
+      "revId": "3a1a4c804b1edae5b1b532e64128ace90308f05a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "16fa939a_ed70e524",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-11-27T09:15:50Z",
       "side": 1,
       "message": "Shouldn\u0027t this be 23? `indices[firstIndex] + baseVertex`?",
+      "range": {
+        "startLine": 2030,
+        "startChar": 26,
+        "endLine": 2030,
+        "endChar": 29
+      },
+      "revId": "3a1a4c804b1edae5b1b532e64128ace90308f05a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4248181d_823e48bb",
+        "filename": "src/dawn/tests/white_box/CaptureAndReplayTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2030,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-11-27T17:28:42Z",
+      "side": 1,
+      "message": "Fixed: I was using EXPECT_TEXTURE_EQ wrong",
+      "parentUuid": "16fa939a_ed70e524",
       "range": {
         "startLine": 2030,
         "startChar": 26,
