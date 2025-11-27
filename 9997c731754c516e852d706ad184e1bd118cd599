@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9fdc54a_5af628a9",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-27T23:15:26Z",
+      "side": 1,
+      "message": "i thought i fixed this but it got lost",
+      "parentUuid": "5e0e0dce_e8ad6366",
+      "revId": "9997c731754c516e852d706ad184e1bd118cd599",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3fa9404b_cc122f26",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "Probably.",
       "parentUuid": "3fa9404b_cc122f26",
+      "revId": "9997c731754c516e852d706ad184e1bd118cd599",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24fc2307_591c89e1",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-27T23:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24d6be3a_a204ab09",
       "revId": "9997c731754c516e852d706ad184e1bd118cd599",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -106,6 +142,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "82c377f9_118718ae",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-27T23:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0b9af00_826076f0",
+      "revId": "9997c731754c516e852d706ad184e1bd118cd599",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7137e6a7_1c3521d8",
@@ -123,6 +177,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8ce0b96_b121715e",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-27T23:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7137e6a7_1c3521d8",
+      "revId": "9997c731754c516e852d706ad184e1bd118cd599",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0b0d5df_5b152712",
@@ -136,6 +208,30 @@
       "writtenOn": "2025-11-27T19:22:11Z",
       "side": 1,
       "message": "```suggestion\n    raise::UnaryPolyfillConfig unary_polyfill_cfg{\n        .polyfill_f32_negation \u003d options.polyfill_unary_f32_negation,\n        .polyfill_f32_abs \u003d options.polyfill_f32_abs,\n    };\n```",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 67
+      },
+      "revId": "9997c731754c516e852d706ad184e1bd118cd599",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c238047c_c9fdfe2c",
+        "filename": "src/tint/lang/spirv/writer/raise/raise.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-27T23:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0b0d5df_5b152712",
       "range": {
         "startLine": 236,
         "startChar": 0,
@@ -169,6 +265,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc3e99a4_722234af",
+        "filename": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-27T23:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e76d123b_1d9494ed",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 63
+      },
+      "revId": "9997c731754c516e852d706ad184e1bd118cd599",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "139736cb_eac7370f",
@@ -182,6 +302,30 @@
       "writtenOn": "2025-11-27T19:30:39Z",
       "side": 1,
       "message": "```suggestion\n            b.BitcastWithResult(builtin-\u003eDetachResult(), and_res);\n```",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 65
+      },
+      "revId": "9997c731754c516e852d706ad184e1bd118cd599",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e1fb4af_a4e3e038",
+        "filename": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-27T23:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "139736cb_eac7370f",
       "range": {
         "startLine": 105,
         "startChar": 0,
