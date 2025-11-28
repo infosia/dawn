@@ -170,10 +170,6 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
     return {};
 }
 
-void PipelineGL::DeleteProgram(const OpenGLFunctions& gl) {
-    DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteProgram(mProgram));
-}
-
 const std::vector<TextureUnit>& PipelineGL::GetTextureUnitsForSampler(
     FlatBindingIndex index) const {
     DAWN_ASSERT(index < mUnitsForSamplers.size());

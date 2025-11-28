@@ -74,10 +74,12 @@ class Device final : public DeviceBase {
     template <typename Fn>
     MaybeError EnqueueGL(ExecutionQueueBase::SubmitMode submitMode, Fn&& work) {
         MarkGLUsed(submitMode);
-        if (mContext->IsInScopedMakeCurrent()) {
+        if (mDeferredMode && !mContext->IsInScopedMakeCurrent()) {
+            mPendingGLWorkList.Use(
+                [&](auto workList) { workList->push_back(std::forward<Fn>(work)); });
+        } else {
             return work(mGL);
         }
-        mPendingGLWorkList.Use([&](auto workList) { workList->push_back(std::forward<Fn>(work)); });
         return {};
     }
 
@@ -235,6 +237,7 @@ class Device final : public DeviceBase {
 
     // Maintain an internal uniform buffer to store extra array length information if needed.
     Ref<Buffer> mArrayLengthBuffer;
+    bool mDeferredMode = false;
 
 #if DAWN_PLATFORM_IS(ANDROID)
     std::unique_ptr<AHBFunctions> mAHBFunctions;
