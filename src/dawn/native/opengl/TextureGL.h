@@ -58,6 +58,7 @@ class Texture final : public TextureBase {
             OwnsHandle ownsHandle);
 
     GLuint GetHandle() const;
+    void SetHandle(GLuint handle);
     GLenum GetGLTarget() const;
     const GLFormat& GetGLFormat() const;
 
@@ -93,10 +94,7 @@ class TextureView final : public TextureViewBase {
                                  GLuint depthLayer = 0);
 
   private:
-    TextureView(TextureBase* texture,
-                const UnpackedPtr<TextureViewDescriptor>& descriptor,
-                GLuint handle,
-                OwnsHandle ownsHandle);
+    TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDescriptor>& descriptor);
 
     ~TextureView() override;
     void DestroyImpl() override;

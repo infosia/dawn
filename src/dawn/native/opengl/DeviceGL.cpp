@@ -502,9 +502,9 @@ MaybeError Device::FlushPendingGLCommands() {
 
     ContextEGL::ScopedMakeCurrent scopedCurrentContext;
     DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
-    const OpenGLFunctions& gl = GetGL(/*makeCurrent=*/false);
+    MarkGLUsed(ExecutionQueueBase::SubmitMode::Normal);
     for (auto& work : workList) {
-        DAWN_TRY(work(gl));
+        DAWN_TRY(work(mGL));
     }
     return scopedCurrentContext.End();
 }
