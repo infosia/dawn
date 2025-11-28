@@ -154,6 +154,7 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
     // The ApiObjectBase is considered alive if it is tracked in a respective linked list owned
     // by the owning device.
     bool IsAlive() const;
+    bool IsBeingDeleted() const;
 
     // This needs to be public because it can be called from the device owning the object.
     void Destroy();
@@ -192,6 +193,7 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
     friend class ApiObjectList;
 
     std::string mLabel;
+    bool mIsBeingDeleted = false;
 };
 
 template <typename T>
