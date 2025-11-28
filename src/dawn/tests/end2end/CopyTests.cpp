@@ -463,10 +463,6 @@ class CopyTests_T2B : public CopyTests_WithFormatParam {
 
         auto format = GetParam().mTextureFormat;
 
-        // TODO(dawn:2129): Fail for Win ANGLE D3D11
-        DAWN_SUPPRESS_TEST_IF((format == wgpu::TextureFormat::RGB9E5Ufloat) && IsANGLED3D11() &&
-                              IsWindows());
-
         // TODO(crbug.com/dawn/2294): diagnose BGRA T2B failures on Pixel 4 OpenGLES
         DAWN_SUPPRESS_TEST_IF(format == wgpu::TextureFormat::BGRA8Unorm && IsOpenGLES() &&
                               IsAndroid() && IsQualcomm());
@@ -491,6 +487,9 @@ class CopyTests_T2B : public CopyTests_WithFormatParam {
                                format == wgpu::TextureFormat::RGBA16Float ||
                                format == wgpu::TextureFormat::RG11B10Ufloat) &&
                               (IsD3D11() || IsOpenGLES()) && IsIntelGen12());
+
+        // TODO(crbug.com/463661449): Flaky on Snapdragon X Elite SoCs w/ D3D11.
+        DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
     }
 
     void DoTest(
@@ -970,10 +969,6 @@ class CopyTests_T2T : public CopyTests_T2TBase<DawnTestWithParams<CopyTextureFor
 
     void SetUp() override {
         DawnTestWithParams<CopyTextureFormatParams>::SetUp();
-
-        // TODO(dawn:2129): Fail for Win ANGLE D3D11
-        DAWN_SUPPRESS_TEST_IF((GetParam().mTextureFormat == wgpu::TextureFormat::RGB9E5Ufloat) &&
-                              IsANGLED3D11() && IsWindows());
     }
 };
 
@@ -2437,6 +2432,10 @@ TEST_P(CopyTests_B2T, OffsetBufferAligned) {
 
 // Test that copying without a 512-byte aligned buffer offset works
 TEST_P(CopyTests_B2T, OffsetBufferUnaligned) {
+    // TODO(crbug.com/459848482): Flaky on Win/Snapdragon X Elite w/ D3D11 and
+    // backend validation.
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11() && IsBackendValidationEnabled());
+
     constexpr uint32_t kWidth = 256;
     constexpr uint32_t kHeight = 128;
 
@@ -2457,6 +2456,10 @@ TEST_P(CopyTests_B2T, OffsetBufferUnaligned) {
 // Test that copying without a 512-byte aligned buffer offset that is greater than the bytes per row
 // works
 TEST_P(CopyTests_B2T, OffsetBufferUnalignedSmallBytesPerRow) {
+    // TODO(crbug.com/459848482): Flaky on Win/Snapdragon X Elite w/ D3D11 and
+    // backend validation.
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11() && IsBackendValidationEnabled());
+
     constexpr uint32_t kWidth = 32;
     constexpr uint32_t kHeight = 128;
 

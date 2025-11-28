@@ -256,8 +256,9 @@ NSRef<MTLTextureDescriptor> Texture::CreateMetalTextureDescriptor() const {
     // specified that this texture is for a transient attachment, in which case
     // the texture should be created in memoryless storage mode.
     mtlDesc.storageMode = MTLStorageModePrivate;
-    if (GetInternalUsage() & wgpu::TextureUsage::TransientAttachment) {
-            mtlDesc.storageMode = MTLStorageModeMemoryless;
+    if (GetInternalUsage() & wgpu::TextureUsage::TransientAttachment &&
+        [ToBackend(GetDevice())->GetMTLDevice() supportsFamily:MTLGPUFamilyApple2]) {
+        mtlDesc.storageMode = MTLStorageModeMemoryless;
     }
 
     // Choose the correct MTLTextureType and paper over differences in how the array layer count
@@ -524,7 +525,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
     const double dClearColor = (clearValue == TextureBase::ClearValue::Zero) ? 0.0 : 1.0;
 
     if ((mMtlUsage & MTLTextureUsageRenderTarget) != 0) {
-        DAWN_ASSERT(GetFormat().isRenderable);
+        DAWN_ASSERT(GetFormat().IsRenderable());
 
         // End the blit encoder if it is open.
         commandContext->EndBlit();

@@ -38,6 +38,7 @@
 
 #include "dawn/native/AttachmentState.h"
 #include "dawn/native/BindingInfo.h"
+#include "dawn/native/BlockInfo.h"
 #include "dawn/native/Texture.h"
 
 #include "dawn/native/dawn_platform.h"
@@ -45,6 +46,8 @@
 namespace dawn::native {
 
 class CommandAllocator;
+struct TexelBlockInfo;
+struct TexelCopyTextureInfo;
 
 // Definition of the commands that are present in the CommandIterator given by the
 // CommandBufferBuilder. There are not defined in CommandBuffer.h to break some header
@@ -191,8 +194,8 @@ struct BufferCopy {
 
     Ref<BufferBase> buffer;
     uint64_t offset;
-    uint32_t bytesPerRow;
-    uint32_t rowsPerImage;
+    BlockCount blocksPerRow;
+    BlockCount rowsPerImage;
 };
 
 struct TextureCopy {
@@ -206,6 +209,9 @@ struct TextureCopy {
     Origin3D origin;  // Texels / array layer
     Aspect aspect;
 };
+
+// Returns the TexelBlockInfo for t's texture and aspect
+const TexelBlockInfo& GetBlockInfo(const TextureCopy& t);
 
 struct CopyBufferToBufferCmd {
     CopyBufferToBufferCmd();

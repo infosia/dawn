@@ -202,7 +202,9 @@
         'mixins': [
           'mac_retina_amd_555x_gpu_stable',
         ],
-        'test_suites': {},
+        'test_suites': {
+          'gtest_tests': 'real_hardware_common_gtests',
+        },
       },
       'dawn-mac-x64-intel-uhd630-rel': {
         'os_type': 'mac',
@@ -242,8 +244,11 @@
         'os_type': 'win',
         'mixins': [
           'win11_qualcomm_snapdragon_x_elite_stable',
+          'win_snapdragon_x_elite_gtest_args',
         ],
-        'test_suites': {},
+        'test_suites': {
+          'gtest_tests': 'real_hardware_win_gtests',
+        },
       },
       'dawn-win-x64-builder-asan': {
         'additional_compile_targets': [

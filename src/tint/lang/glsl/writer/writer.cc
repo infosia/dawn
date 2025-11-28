@@ -60,6 +60,26 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
             if (ba->Count()->Is<core::type::RuntimeArrayCount>()) {
                 return Failure("runtime binding array not supported by the GLSL backend");
             }
+
+            // TODO(464058128): Add support for binding_array<texture_1d<*>, N> in the
+            // TexturePolyfill transform.
+            auto* tex = ba->ElemType()->As<core::type::Texture>();
+            if (tex && tex->Dim() == core::type::TextureDimension::k1d) {
+                return Failure(
+                    "1D textures inside binding arrays are not yet supported by the GLSL backend");
+            }
+        }
+    }
+
+    for (auto* i : ir.Instructions()) {
+        auto* call = i->As<core::ir::CoreBuiltinCall>();
+        if (!call) {
+            continue;
+        }
+
+        if (call->Func() == core::BuiltinFn::kGetResource ||
+            call->Func() == core::BuiltinFn::kHasResource) {
+            return Failure("resource tables not supported by the GLSL backend");
         }
     }
 
@@ -73,6 +93,7 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
             break;
         }
     }
+
     // No entrypoint, so no bindings needed
     if (!ep_func) {
         return Failure("entry point not found");

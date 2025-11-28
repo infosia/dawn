@@ -235,7 +235,7 @@ T Texture::GetD3D11TextureDesc() const {
 MaybeError Texture::InitializeAsInternalTexture() {
     Device* device = ToBackend(GetDevice());
 
-    if (GetFormat().isRenderable && mKind != Kind::Staging) {
+    if (GetFormat().IsRenderable() && mKind != Kind::Staging) {
         // If the texture format is renderable, we need to add the render attachment usage
         // internally, so the texture can be cleared with GPU.
         AddInternalUsage(wgpu::TextureUsage::RenderAttachment);
@@ -549,6 +549,7 @@ MaybeError Texture::ClearNonRenderable(const ScopedCommandRecordingContext* comm
 
         uint32_t rowsPerImage = writeSize.height;
         uint64_t byteLength;
+        // TODO(crbug.com/424536624): Call non-validating overload of ComputeRequiredBytesInCopy
         DAWN_TRY_ASSIGN(byteLength, ComputeRequiredBytesInCopy(blockInfo, writeSize, bytesPerRow,
                                                                rowsPerImage));
 
@@ -1108,6 +1109,7 @@ ResultOrError<ComPtr<ID3D11ShaderResourceView>> Texture::GetStencilSRV(
     uint32_t bytesPerRow = blockInfo.byteSize * size.width;
     uint32_t rowsPerImage = size.height;
     uint64_t byteLength;
+    // TODO(crbug.com/424536624): Call non-validating overload of ComputeRequiredBytesInCopy
     DAWN_TRY_ASSIGN(byteLength,
                     ComputeRequiredBytesInCopy(blockInfo, size, bytesPerRow, rowsPerImage));
 

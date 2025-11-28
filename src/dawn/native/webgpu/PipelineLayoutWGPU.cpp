@@ -72,10 +72,15 @@ PipelineLayout::PipelineLayout(Device* device,
     DAWN_ASSERT(mInnerHandle);
 }
 
+void PipelineLayout::SetLabelImpl() {
+    ToBackend(GetDevice())->CaptureSetLabel(this, GetLabel());
+}
+
 MaybeError PipelineLayout::AddReferenced(CaptureContext& captureContext) {
     for (BindGroupIndex groupIndex : GetBindGroupLayoutsMask()) {
         auto frontendLayout = GetFrontendBindGroupLayout(groupIndex);
-        DAWN_TRY(captureContext.AddResource(frontendLayout->GetInternalBindGroupLayout()));
+        DAWN_TRY(
+            captureContext.AddResource(ToBackend(frontendLayout->GetInternalBindGroupLayout())));
     }
     return {};
 }

@@ -150,7 +150,7 @@ TEST_F(SpirvWriterTest, Type_F16_WithoutDecomposeUniformBuffers) {
     });
 
     Options options;
-    options.decompose_uniform_buffers = false;
+    options.extensions.decompose_uniform_buffers = false;
 
     ASSERT_TRUE(Generate(options)) << Error() << output_;
     EXPECT_INST("OpCapability Float16");
@@ -402,7 +402,7 @@ TEST_F(SpirvWriterTest, Type_BindingArray_SampledTexture) {
 
     auto* eb = b.ComputeFunction("main");
     b.Append(eb->Block(), [&] {
-        b.Let("x", v);
+        b.Load(v);
         b.Return(eb);
     });
 
@@ -520,7 +520,7 @@ TEST_F(SpirvWriterTest, Type_Sampler) {
 
     auto* eb = b.ComputeFunction("main");
     b.Append(eb->Block(), [&] {
-        b.Let("x", v);
+        b.Load(v);
         b.Return(eb);
     });
 
@@ -537,7 +537,7 @@ TEST_F(SpirvWriterTest, Type_SamplerComparison) {
 
     auto* eb = b.ComputeFunction("main");
     b.Append(eb->Block(), [&] {
-        b.Let("x", v);
+        b.Load(v);
         b.Return(eb);
     });
 
@@ -557,8 +557,8 @@ TEST_F(SpirvWriterTest, Type_Samplers_Dedup) {
 
     auto* eb = b.ComputeFunction("main");
     b.Append(eb->Block(), [&] {
-        b.Let("x", v1);
-        b.Let("y", v2);
+        b.Load(v1);
+        b.Load(v2);
         b.Return(eb);
     });
 
@@ -586,8 +586,8 @@ TEST_F(SpirvWriterTest, Type_StorageTexture_Dedup) {
 
     auto* eb = b.ComputeFunction("main");
     b.Append(eb->Block(), [&] {
-        b.Let("x", v1);
-        b.Let("y", v2);
+        b.Load(v1);
+        b.Load(v2);
         b.Return(eb);
     });
 
@@ -618,7 +618,7 @@ TEST_P(Type_SampledTexture, Emit) {
 
     auto* eb = b.ComputeFunction("main");
     b.Append(eb->Block(), [&] {
-        b.Let("x", v);
+        b.Load(v);
         b.Return(eb);
     });
 
@@ -660,7 +660,7 @@ TEST_P(Type_MultisampledTexture, Emit) {
 
     auto* eb = b.ComputeFunction("main");
     b.Append(eb->Block(), [&] {
-        b.Let("x", v);
+        b.Load(v);
         b.Return(eb);
     });
 
@@ -685,7 +685,7 @@ TEST_P(Type_DepthTexture, Emit) {
 
     auto* eb = b.ComputeFunction("main");
     b.Append(eb->Block(), [&] {
-        b.Let("x", v);
+        b.Load(v);
         b.Return(eb);
     });
 
@@ -713,8 +713,8 @@ TEST_F(SpirvWriterTest, Type_DepthTexture_DedupWithSampledTexture) {
 
     auto* eb = b.ComputeFunction("main");
     b.Append(eb->Block(), [&] {
-        b.Let("x", v1);
-        b.Let("y", v2);
+        b.Load(v1);
+        b.Load(v2);
         b.Return(eb);
     });
 
@@ -740,7 +740,7 @@ TEST_F(SpirvWriterTest, Type_DepthMultiSampledTexture) {
 
     auto* eb = b.ComputeFunction("main");
     b.Append(eb->Block(), [&] {
-        b.Let("x", v);
+        b.Load(v);
         b.Return(eb);
     });
 
@@ -762,8 +762,8 @@ TEST_F(SpirvWriterTest, Type_DepthMultisampledTexture_DedupWithMultisampledTextu
 
     auto* eb = b.ComputeFunction("main");
     b.Append(eb->Block(), [&] {
-        b.Let("x", v1);
-        b.Let("y", v2);
+        b.Load(v1);
+        b.Load(v2);
         b.Return(eb);
     });
 
@@ -797,7 +797,7 @@ TEST_P(Type_StorageTexture, Emit) {
 
     auto* eb = b.ComputeFunction("main");
     b.Append(eb->Block(), [&] {
-        b.Let("x", v);
+        b.Load(v);
         b.Return(eb);
     });
 
@@ -872,7 +872,7 @@ TEST_P(Type_TexelBuffer, Emit) {
 
     auto* eb = b.ComputeFunction("main");
     b.Append(eb->Block(), [&] {
-        b.Let("x", v);
+        b.Load(v);
         b.Return(eb);
     });
 
@@ -927,13 +927,33 @@ TEST_F(SpirvWriterTest, Type_SubgroupMatrix) {
     });
 
     Options options;
-    options.use_vulkan_memory_model = true;
+    options.extensions.use_vulkan_memory_model = true;
     ASSERT_TRUE(Generate(options)) << Error() << output_;
     EXPECT_INST("OpCapability CooperativeMatrixKHR");
     EXPECT_INST("OpExtension \"SPV_KHR_cooperative_matrix\"");
     EXPECT_INST("%7 = OpTypeCooperativeMatrixKHR %float %uint_3 %uint_4 %uint_8 %uint_0");
     EXPECT_INST("%17 = OpTypeCooperativeMatrixKHR %uint %uint_3 %uint_8 %uint_4 %uint_1");
     EXPECT_INST("%22 = OpTypeCooperativeMatrixKHR %int %uint_3 %uint_2 %uint_2 %uint_2");
+}
+
+TEST_F(SpirvWriterTest, SubgroupMatrix_ConfigReturned) {
+    auto* fn = b.ComputeFunction("main");
+    b.Append(fn->Block(), [&] {
+        b.Var("left", ty.ptr<function>(ty.subgroup_matrix_left(ty.f32(), 8, 4)));
+        b.Var("right", ty.ptr<function>(ty.subgroup_matrix_right(ty.u32(), 4, 8)));
+        b.Var("result", ty.ptr<function>(ty.subgroup_matrix_result(ty.i32(), 2, 2)));
+        b.Return(fn);
+    });
+
+    Options options{
+        .entry_point_name = "main",
+        .extensions =
+            {
+                .use_vulkan_memory_model = true,
+            },
+    };
+    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    EXPECT_EQ(3u, subgroup_matrix_info.configs.size());
 }
 
 // Test that we can emit multiple types.

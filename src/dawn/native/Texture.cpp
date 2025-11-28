@@ -210,7 +210,7 @@ MaybeError ValidateSampleCount(const TextureDescriptor* descriptor,
                         "The depthOrArrayLayers (%u) of a multisampled texture is not 1.",
                         descriptor->size.depthOrArrayLayers);
 
-        DAWN_INVALID_IF(!format->supportsMultisample,
+        DAWN_INVALID_IF(!format->SupportsMultisample(),
                         "The texture format (%s) does not support multisampling.", format->format);
 
         // Compressed formats are not renderable. They cannot support multisample.
@@ -411,7 +411,7 @@ MaybeError ValidateTextureUsageConstraints(
         format->format);
 
     DAWN_INVALID_IF(
-        !format->isRenderable && (usage & wgpu::TextureUsage::RenderAttachment),
+        !format->IsRenderable() && (usage & wgpu::TextureUsage::RenderAttachment),
         "The texture usage (%s) includes %s, which is incompatible with the non-renderable "
         "format (%s).",
         usage, wgpu::TextureUsage::RenderAttachment, format->format);
@@ -423,22 +423,22 @@ MaybeError ValidateTextureUsageConstraints(
                     usage, wgpu::TextureUsage::RenderAttachment, textureDimension);
 
     DAWN_INVALID_IF(
-        !(format->supportsReadOnlyStorageUsage || format->supportsWriteOnlyStorageUsage) &&
+        !(format->SupportsReadOnlyStorageUsage() || format->SupportsWriteOnlyStorageUsage()) &&
             (usage & wgpu::TextureUsage::StorageBinding),
         "The texture usage (%s) includes %s, which is incompatible with the format (%s).", usage,
         wgpu::TextureUsage::StorageBinding, format->format);
 
     DAWN_INVALID_IF(
-        !format->supportsStorageAttachment && (usage & wgpu::TextureUsage::StorageAttachment),
+        !format->SupportsStorageAttachment() && (usage & wgpu::TextureUsage::StorageAttachment),
         "The texture usage (%s) includes %s, which is incompatible with the format (%s).", usage,
         wgpu::TextureUsage::StorageAttachment, format->format);
 
     const auto kTransientAttachment = wgpu::TextureUsage::TransientAttachment;
     if (usage & kTransientAttachment) {
         DAWN_INVALID_IF(
-            !device->HasFeature(Feature::TransientAttachments),
-            "The texture usage (%s) includes %s, which requires the %s feature to be set", usage,
-            kTransientAttachment, ToAPI(Feature::TransientAttachments));
+            !device->IsToggleEnabled(Toggle::AllowUnsafeAPIs),
+            "The texture usage (%s) includes %s, which requires enabling toggle allow_unsafe_apis",
+            usage, kTransientAttachment);
 
         DAWN_INVALID_IF(
             usage == kTransientAttachment,

@@ -2,6 +2,7 @@ package androidx.webgpu
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import androidx.webgpu.WebGpuTestConstants.EMULATOR_TESTS_MIN_API_LEVEL
 import androidx.webgpu.helper.initLibrary
 import java.util.concurrent.Executor
 import junit.framework.TestCase.assertEquals
@@ -10,6 +11,7 @@ import org.junit.After
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertThrows
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -18,6 +20,9 @@ import org.junit.runner.RunWith
 class AdapterTest {
   private lateinit var instance: GPUInstance
   private lateinit var adapter: GPUAdapter
+
+  @get:Rule
+  val apiSkipRule = ApiLevelSkipRule()
 
   @Before
   fun setup() = runBlocking {
@@ -45,6 +50,7 @@ class AdapterTest {
   }
 
   @Test
+  @ApiRequirement(minApi = EMULATOR_TESTS_MIN_API_LEVEL, onlySkipOnEmulator = true)
   fun adapterBackendTest() {
     val adapterInfo = adapter.getInfo()
     assertEquals(
@@ -125,7 +131,7 @@ class AdapterTest {
       "Adapter should be consumed after one device request", WebGpuException::class.java
     ) {
       runBlocking {
-        val secondDeviceStatus = runBlocking { adapter.requestDevice() }
+        val secondDeviceStatus = adapter.requestDevice()
       }
     }
   }
@@ -174,7 +180,6 @@ class AdapterTest {
    */
   @Test
   fun requestDeviceWithWorseThanDefaultLimitClamps() {
-    runBlocking {
       val worseLimit = kDefaultLimits.getValue("maxBindGroups") - 1
       assert(worseLimit > 0) // Ensure the value is still valid, just worse.
       val device = runBlocking { requestTestDevice(limits = Limits(maxBindGroups = worseLimit)) }
@@ -185,7 +190,6 @@ class AdapterTest {
         deviceLimits.maxBindGroups
       )
       runCatching { device.destroy() }
-    }
   }
 
   /**
