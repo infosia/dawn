@@ -44,6 +44,9 @@ namespace {
         } else {                                                                         \
             size_t lazyClearsBefore = native::GetLazyClearCountForTesting(device.Get()); \
             statement;                                                                   \
+            if (HasToggleEnabled("gl_defer")) {                                          \
+                queue.Submit(0, nullptr);                                                \
+            }                                                                            \
             size_t lazyClearsAfter = native::GetLazyClearCountForTesting(device.Get());  \
             EXPECT_EQ(N, lazyClearsAfter - lazyClearsBefore);                            \
         }                                                                                \
@@ -2000,6 +2003,7 @@ DAWN_INSTANTIATE_TEST(
     D3D12Backend({"nonzero_clear_resources_on_creation_for_testing"}, {"use_d3d12_render_pass"}),
     OpenGLBackend({"nonzero_clear_resources_on_creation_for_testing"}),
     OpenGLESBackend({"nonzero_clear_resources_on_creation_for_testing"}),
+    OpenGLESBackend({"gl_defer", "nonzero_clear_resources_on_creation_for_testing"}),
     MetalBackend({"nonzero_clear_resources_on_creation_for_testing",
                   "metal_keep_multisubresource_depth_stencil_textures_initialized"}),
     MetalBackend({"nonzero_clear_resources_on_creation_for_testing"},
@@ -2445,6 +2449,8 @@ DAWN_INSTANTIATE_TEST(CompressedTextureZeroInitTest,
                       MetalBackend({"nonzero_clear_resources_on_creation_for_testing"}),
                       OpenGLBackend({"nonzero_clear_resources_on_creation_for_testing"}),
                       OpenGLESBackend({"nonzero_clear_resources_on_creation_for_testing"}),
+                      OpenGLESBackend({"gl_defer",
+                                       "nonzero_clear_resources_on_creation_for_testing"}),
                       VulkanBackend({"nonzero_clear_resources_on_creation_for_testing"}));
 
 }  // anonymous namespace
