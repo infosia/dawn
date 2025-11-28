@@ -242,6 +242,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b53dde5f_0879879d",
+        "filename": "src/tint/lang/spirv/writer/raise/raise.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-28T02:33:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0b0d5df_5b152712",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 67
+      },
+      "revId": "9997c731754c516e852d706ad184e1bd118cd599",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e76d123b_1d9494ed",
