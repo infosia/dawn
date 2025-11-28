@@ -113,8 +113,6 @@ class MultithreadTests : public DawnTest {
 
 // Test that dropping a device's last ref on another thread won't crash Instance::ProcessEvents.
 TEST_P(MultithreadTests, Device_DroppedOnAnotherThread) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     // TODO(crbug.com/dawn/1779): This test seems to cause flakiness in other sampling tests on
     // NVIDIA.
     DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsNvidia());
@@ -152,8 +150,6 @@ TEST_P(MultithreadTests, Device_DroppedOnAnotherThread) {
 // Test that dropping a device's last ref inside a callback on another thread won't crash
 // Instance::ProcessEvents.
 TEST_P(MultithreadTests, Device_DroppedInCallback_OnAnotherThread) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     // TODO(crbug.com/dawn/1779): This test seems to cause flakiness in other sampling tests on
     // NVIDIA.
     DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsNvidia());
@@ -195,8 +191,6 @@ TEST_P(MultithreadTests, Device_DroppedInCallback_OnAnotherThread) {
 
 // Test that waiting for a device lost after it's lost does not block.
 TEST_P(MultithreadTests, Device_WaitForDroppedAfterDropped) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     auto future = device.GetLostFuture();
 
     LoseDeviceForTesting();
@@ -207,8 +201,6 @@ TEST_P(MultithreadTests, Device_WaitForDroppedAfterDropped) {
 
 // Test that we can wait for a device lost on another thread.
 TEST_P(MultithreadTests, Device_WaitForDroppedInAnotherThread) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     // TODO(crbug.com/dawn/1779): This test seems to cause flakiness in other sampling tests on
     // NVIDIA.
     DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsNvidia());
@@ -673,8 +665,6 @@ TEST_P(MultithreadTests, T2BThenMapInParallel) {
 
 // Test CreateShaderModule on multiple threads. Cache hits should share compilation warnings.
 TEST_P(MultithreadTests, CreateShaderModuleInParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     constexpr uint32_t kCacheHitFactor = 4;  // 4 threads will create the same shader module.
 
     std::vector<std::string> shaderSources(10);
@@ -716,8 +706,6 @@ TEST_P(MultithreadTests, CreateShaderModuleInParallel) {
 
 // Test CreateComputePipelineAsync on multiple threads.
 TEST_P(MultithreadTests, CreateComputePipelineAsyncInParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     // TODO(crbug.com/dawn/1766): TSAN reported race conditions in NVIDIA's vk driver.
     DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && IsTsan());
 
@@ -803,8 +791,6 @@ TEST_P(MultithreadTests, CreateComputePipelineAsyncInParallel) {
 
 // Test CreateComputePipeline on multiple threads.
 TEST_P(MultithreadTests, CreateComputePipelineInParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     // TODO(crbug.com/dawn/1766): TSAN reported race conditions in NVIDIA's vk driver.
     DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && IsTsan());
 
@@ -871,8 +857,6 @@ TEST_P(MultithreadTests, CreateComputePipelineInParallel) {
 
 // Test CreateRenderPipelineAsync on multiple threads.
 TEST_P(MultithreadTests, CreateRenderPipelineAsyncInParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     // TODO(crbug.com/dawn/1766): TSAN reported race conditions in NVIDIA's vk driver.
     DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && IsTsan());
 
@@ -972,8 +956,6 @@ TEST_P(MultithreadTests, CreateRenderPipelineAsyncInParallel) {
 
 // Test CreateRenderPipeline on multiple threads.
 TEST_P(MultithreadTests, CreateRenderPipelineInParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     // TODO(crbug.com/dawn/1766): TSAN reported race conditions in NVIDIA's vk driver.
     DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && IsTsan());
 
@@ -1056,8 +1038,6 @@ TEST_P(MultithreadTests, CreateRenderPipelineInParallel) {
 // Test that creating and destroying bind groups from the same bind group layout on multiple threads
 // won't race. The bind groups will all be allocated by same SlabAllocator.
 TEST_P(MultithreadTests, CreateAndDestroyBindGroupsInParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     wgpu::BindGroupLayout layout = utils::MakeBindGroupLayout(
         device, {
                     {0, wgpu::ShaderStage::Fragment, wgpu::BufferBindingType::Storage},
@@ -1079,8 +1059,6 @@ TEST_P(MultithreadTests, CreateAndDestroyBindGroupsInParallel) {
 // Test that destroying Texture and associated TextureViews simultaneously on different threads
 // works. These was a data race here previously, see https://crbug.com/396294899 for more details.
 TEST_P(MultithreadTests, DestroyTextureAndViewsAtSameTime) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     constexpr uint32_t kNumViews = 10;
     constexpr uint32_t kNumThreads = kNumViews + 1;
     constexpr wgpu::TextureFormat kTextureFormat = wgpu::TextureFormat::R8Unorm;
@@ -1165,8 +1143,6 @@ class MultithreadCachingTests : public MultithreadTests {
 // Test that creating a same shader module (which will return the cached shader module) and release
 // it on multiple threads won't race.
 TEST_P(MultithreadCachingTests, RefAndReleaseCachedShaderModulesInParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     utils::RunInParallel(100, [this](uint32_t) {
         wgpu::ShaderModule csModule = CreateComputeShaderModule();
         EXPECT_NE(nullptr, csModule.Get());
@@ -1176,8 +1152,6 @@ TEST_P(MultithreadCachingTests, RefAndReleaseCachedShaderModulesInParallel) {
 // Test that creating a same compute pipeline (which will return the cached pipeline) and release it
 // on multiple threads won't race.
 TEST_P(MultithreadCachingTests, RefAndReleaseCachedComputePipelinesInParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     wgpu::ShaderModule csModule = CreateComputeShaderModule();
     wgpu::BindGroupLayout bglayout = CreateComputeBindGroupLayout();
     wgpu::PipelineLayout pipelineLayout = utils::MakePipelineLayout(device, {bglayout});
@@ -1195,8 +1169,6 @@ TEST_P(MultithreadCachingTests, RefAndReleaseCachedComputePipelinesInParallel) {
 // Test that creating a same bind group layout (which will return the cached layout) and
 // release it on multiple threads won't race.
 TEST_P(MultithreadCachingTests, RefAndReleaseCachedBindGroupLayoutsInParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     utils::RunInParallel(100, [&, this](uint32_t) {
         wgpu::BindGroupLayout layout = CreateComputeBindGroupLayout();
         EXPECT_NE(nullptr, layout.Get());
@@ -1206,8 +1178,6 @@ TEST_P(MultithreadCachingTests, RefAndReleaseCachedBindGroupLayoutsInParallel) {
 // Test that creating a same pipeline layout (which will return the cached layout) and
 // release it on multiple threads won't race.
 TEST_P(MultithreadCachingTests, RefAndReleaseCachedPipelineLayoutsInParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     wgpu::BindGroupLayout bglayout = CreateComputeBindGroupLayout();
 
     utils::RunInParallel(100, [&, this](uint32_t) {
@@ -1219,8 +1189,6 @@ TEST_P(MultithreadCachingTests, RefAndReleaseCachedPipelineLayoutsInParallel) {
 // Test that creating a same render pipeline (which will return the cached pipeline) and release it
 // on multiple threads won't race.
 TEST_P(MultithreadCachingTests, RefAndReleaseCachedRenderPipelinesInParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     utils::ComboRenderPipelineDescriptor renderPipelineDescriptor;
     wgpu::ShaderModule vsModule = utils::CreateShaderModule(device, R"(
         @vertex fn main() -> @builtin(position) vec4f {
@@ -1244,8 +1212,6 @@ TEST_P(MultithreadCachingTests, RefAndReleaseCachedRenderPipelinesInParallel) {
 // Test that creating a same sampler pipeline (which will return the cached sampler) and release it
 // on multiple threads won't race.
 TEST_P(MultithreadCachingTests, RefAndReleaseCachedSamplersInParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     wgpu::SamplerDescriptor desc = {};
     utils::RunInParallel(100, [&, this](uint32_t) {
         wgpu::Sampler sampler = device.CreateSampler(&desc);
@@ -1257,9 +1223,6 @@ class MultithreadEncodingTests : public MultithreadTests {};
 
 // Test that encoding render passes in parallel should work
 TEST_P(MultithreadEncodingTests, RenderPassEncodersInParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
-
     // TODO(crbug.com/468047550): Fails on Win11/NVIDIA GTX 1660.
     DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsNvidia() && IsD3D12() && IsBackendValidationEnabled());
 
@@ -1308,9 +1271,6 @@ TEST_P(MultithreadEncodingTests, RenderPassEncodersInParallel) {
 
 // Test that encoding render passes that resolve to a mip level in parallel should work
 TEST_P(MultithreadEncodingTests, RenderPassEncoders_ResolveToMipLevelOne_InParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
-
     // TODO(crbug.com/468047550): Fails on Win11/NVIDIA GTX 1660.
     DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsNvidia() && IsD3D12() && IsBackendValidationEnabled());
 
@@ -1365,8 +1325,6 @@ TEST_P(MultithreadEncodingTests, RenderPassEncoders_ResolveToMipLevelOne_InParal
 
 // Test that encoding compute passes in parallel should work
 TEST_P(MultithreadEncodingTests, ComputePassEncodersInParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     constexpr uint32_t kNumThreads = 10;
     constexpr uint32_t kExpected = 0xFFFFFFFFu;
 
@@ -1484,8 +1442,6 @@ class MultithreadTextureCopyTests : public MultithreadTests {
 // CopyTextureToTexture() command might internally allocate resources and we need to make sure that
 // it won't race with other threads' works.
 TEST_P(MultithreadTextureCopyTests, CopyDepthToDepthNoRace) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     // TODO(crbug.com/dawn/1766): TSAN reported race conditions in NVIDIA's vk driver.
     DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && IsTsan());
 
@@ -1557,8 +1513,6 @@ TEST_P(MultithreadTextureCopyTests, CopyDepthToDepthNoRace) {
 // CopyBufferToTexture() command might internally allocate resources and we need to make sure that
 // it won't race with other threads' works.
 TEST_P(MultithreadTextureCopyTests, CopyBufferToDepthNoRace) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     enum class Step {
         Begin,
         WriteBuffer,
@@ -1628,8 +1582,6 @@ TEST_P(MultithreadTextureCopyTests, CopyBufferToDepthNoRace) {
 // CopyTextureToTexture() command might internally allocate resources and we need to make sure that
 // it won't race with other threads' works.
 TEST_P(MultithreadTextureCopyTests, CopyStencilToStencilNoRace) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     // TODO(crbug.com/dawn/1497): glReadPixels: GL error: HIGH: Invalid format and type
     // combination.
     DAWN_SUPPRESS_TEST_IF(IsANGLE());
@@ -1698,8 +1650,6 @@ TEST_P(MultithreadTextureCopyTests, CopyStencilToStencilNoRace) {
 // CopyBufferToTexture() command might internally allocate resources and we need to make sure that
 // it won't race with other threads' works.
 TEST_P(MultithreadTextureCopyTests, CopyBufferToStencilNoRace) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     enum class Step {
         Begin,
         WriteBuffer,
@@ -1758,7 +1708,6 @@ TEST_P(MultithreadTextureCopyTests, CopyBufferToStencilNoRace) {
 // This test is needed since CopyTextureForBrowser() command might internally allocate resources and
 // we need to make sure that it won't race with other threads' works.
 TEST_P(MultithreadTextureCopyTests, CopyTextureForBrowserNoRace) {
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     DAWN_SUPPRESS_TEST_IF(IsOpenGL() && IsLinux());
 
     enum class Step {
@@ -1826,8 +1775,6 @@ TEST_P(MultithreadTextureCopyTests, CopyTextureForBrowserNoRace) {
 
 // Test that error from CopyTextureForBrowser() won't cause deadlock.
 TEST_P(MultithreadTextureCopyTests, CopyTextureForBrowserErrorNoDeadLock) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     DAWN_SUPPRESS_TEST_IF(IsOpenGL() && IsLinux());
 
     DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("skip_validation"));
@@ -2010,8 +1957,6 @@ class MultithreadDrawIndexedIndirectTests : public MultithreadTests {
 
 // Test indirect draws with offsets on multiple threads.
 TEST_P(MultithreadDrawIndexedIndirectTests, IndirectOffsetInParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     // TODO(crbug.com/dawn/789): Test is failing after a roll on SwANGLE on Windows only.
     DAWN_SUPPRESS_TEST_IF(IsANGLE() && IsWindows());
 
@@ -2083,8 +2028,6 @@ class MultithreadTimestampQueryTests : public MultithreadTests {
 // Test resolving timestamp queries on multiple threads. ResolveQuerySet() will create temp
 // resources internally so we need to make sure they are thread safe.
 TEST_P(MultithreadTimestampQueryTests, ResolveQuerySets_InParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     DAWN_SUPPRESS_TEST_IF(IsWARP());  // Flaky on WARP
 
     // TODO(crbug.com/451389800): [Capture] implement query set.
@@ -2123,8 +2066,10 @@ DAWN_INSTANTIATE_TEST(MultithreadTests,
                       D3D11Backend({"auto_map_backend_buffer", "d3d11_disable_cpu_buffers"}),
                       D3D12Backend(),
                       MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
+                      OpenGLBackend({"gl_allow_context_on_multi_threads"}),
+                      OpenGLBackend({"gl_defer"}),
+                      OpenGLESBackend({"gl_allow_context_on_multi_threads"}),
+                      OpenGLESBackend({"gl_defer"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -2134,8 +2079,10 @@ DAWN_INSTANTIATE_TEST(MultithreadCachingTests,
                       D3D11Backend({"d3d11_delay_flush_to_gpu"}),
                       D3D12Backend(),
                       MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
+                      OpenGLBackend({"gl_allow_context_on_multi_threads"}),
+                      OpenGLBackend({"gl_defer"}),
+                      OpenGLESBackend({"gl_allow_context_on_multi_threads"}),
+                      OpenGLESBackend({"gl_defer"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -2147,8 +2094,10 @@ DAWN_INSTANTIATE_TEST(MultithreadEncodingTests,
                       D3D12Backend({"always_resolve_into_zero_level_and_layer"}),
                       MetalBackend(),
                       MetalBackend({"always_resolve_into_zero_level_and_layer"}),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
+                      OpenGLBackend({"gl_allow_context_on_multi_threads"}),
+                      OpenGLBackend({"gl_defer"}),
+                      OpenGLESBackend({"gl_allow_context_on_multi_threads"}),
+                      OpenGLESBackend({"gl_defer"}),
                       VulkanBackend(),
                       VulkanBackend({"always_resolve_into_zero_level_and_layer"}),
                       WebGPUBackend());
@@ -2161,8 +2110,10 @@ DAWN_INSTANTIATE_TEST(
     MetalBackend({"use_blit_for_buffer_to_depth_texture_copy",
                   "use_blit_for_depth_texture_to_texture_copy_to_nonzero_subresource"}),
     MetalBackend({"use_blit_for_buffer_to_stencil_texture_copy"}),
-    OpenGLBackend(),
-    OpenGLESBackend(),
+    OpenGLBackend({"gl_allow_context_on_multi_threads"}),
+    OpenGLBackend({"gl_defer"}),
+    OpenGLESBackend({"gl_allow_context_on_multi_threads"}),
+    OpenGLESBackend({"gl_defer"}),
     VulkanBackend(),
     WebGPUBackend());
 
@@ -2170,8 +2121,10 @@ DAWN_INSTANTIATE_TEST(MultithreadDrawIndexedIndirectTests,
                       D3D11Backend(),
                       D3D12Backend(),
                       MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
+                      OpenGLBackend({"gl_allow_context_on_multi_threads"}),
+                      OpenGLBackend({"gl_defer"}),
+                      OpenGLESBackend({"gl_allow_context_on_multi_threads"}),
+                      OpenGLESBackend({"gl_defer"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -2179,8 +2132,10 @@ DAWN_INSTANTIATE_TEST(MultithreadTimestampQueryTests,
                       D3D11Backend(),
                       D3D12Backend(),
                       MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
+                      OpenGLBackend({"gl_allow_context_on_multi_threads"}),
+                      OpenGLBackend({"gl_defer"}),
+                      OpenGLESBackend({"gl_allow_context_on_multi_threads"}),
+                      OpenGLESBackend({"gl_defer"}),
                       VulkanBackend(),
                       WebGPUBackend());
 

@@ -92,10 +92,7 @@ class TextureView final : public TextureViewBase {
                                  GLuint depthLayer = 0);
 
   private:
-    TextureView(TextureBase* texture,
-                const UnpackedPtr<TextureViewDescriptor>& descriptor,
-                GLuint handle,
-                OwnsHandle ownsHandle);
+    TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDescriptor>& descriptor);
 
     ~TextureView() override;
     void DestroyImpl(DestroyReason reason) override;

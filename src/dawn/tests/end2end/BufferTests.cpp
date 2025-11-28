@@ -725,7 +725,7 @@ DAWN_INSTANTIATE_TEST_P(BufferMappingTests,
                         {D3D11Backend(), D3D11Backend({"d3d11_disable_cpu_buffers"}),
                          D3D11Backend({"auto_map_backend_buffer", "d3d11_disable_cpu_buffers"}),
                          D3D12Backend(), MetalBackend(), OpenGLBackend(), OpenGLESBackend(),
-                         VulkanBackend(), WebGPUBackend()},
+                         OpenGLESBackend({"gl_defer"}), VulkanBackend(), WebGPUBackend()},
                         std::initializer_list<wgpu::CallbackMode>{
                             wgpu::CallbackMode::WaitAnyOnly, wgpu::CallbackMode::AllowProcessEvents,
                             wgpu::CallbackMode::AllowSpontaneous});
@@ -1163,6 +1163,7 @@ DAWN_INSTANTIATE_TEST(BufferMappedAtCreationTests,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
+                      OpenGLESBackend({"gl_defer"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -1316,6 +1317,38 @@ TEST_P(BufferTests, BufferMappedAtCreationOOM_Simulated) {
     }
 }
 
+// Test calling Queue.Submit() while a mappedAtCreation Buffer is still mapped.
+TEST_P(BufferTests, BufferMappedAtCreationSubmitBeforeUnmap) {
+    uint32_t size = sizeof(uint32_t);
+    wgpu::BufferDescriptor sourceDesc, destDesc;
+
+    sourceDesc.usage = wgpu::BufferUsage::MapWrite | wgpu::BufferUsage::CopySrc;
+    sourceDesc.size = size;
+    sourceDesc.mappedAtCreation = true;
+
+    destDesc.usage = wgpu::BufferUsage::MapRead | wgpu::BufferUsage::CopyDst;
+    destDesc.size = size;
+
+    wgpu::Buffer source = device.CreateBuffer(&sourceDesc);
+    wgpu::Buffer dest = device.CreateBuffer(&destDesc);
+
+    auto mappedPointer = static_cast<uint32_t*>(source.GetMappedRange());
+
+    queue.Submit(0, nullptr);
+
+    *mappedPointer = 42;
+
+    source.Unmap();
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    encoder.CopyBufferToBuffer(source, 0, dest, 0, size);
+    auto commands = encoder.Finish();
+    queue.Submit(1, &commands);
+    MapAsyncAndWait(dest, wgpu::MapMode::Read, 0, size);
+    auto result = static_cast<const uint32_t*>(dest.GetConstMappedRange());
+    ASSERT_EQ(result[0], 42u);
+}
+
 TEST_P(BufferTests, CreateErrorBuffer) {
     wgpu::BufferDescriptor desc{.usage = wgpu::BufferUsage::CopySrc, .size = 8};
     wgpu::Buffer buffer;
@@ -1395,6 +1428,7 @@ DAWN_INSTANTIATE_TEST(BufferTests,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
+                      OpenGLESBackend({"gl_defer"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -2171,6 +2205,7 @@ DAWN_INSTANTIATE_TEST(BufferMapExtendedUsagesTests,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
+                      OpenGLESBackend({"gl_defer"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
