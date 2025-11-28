@@ -33,6 +33,24 @@
       "message": "Ah, looks like we have CTS that emits that enable. I\u0027ll have to land a CTS change first before this one as well.",
       "revId": "1716084abd3f3afcf0611dc33d40d77bd94f5775",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "769821be_5d266db7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-28T18:42:16Z",
+      "side": 1,
+      "message": "Nope, that\u0027s not the problem. It\u0027s just that we need my Skia CL to land first so that Graphite loads properly. Will rerun bots once that happens (and Skia rolls into Chromium).",
+      "parentUuid": "710ec14e_f681a10c",
+      "revId": "1716084abd3f3afcf0611dc33d40d77bd94f5775",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
