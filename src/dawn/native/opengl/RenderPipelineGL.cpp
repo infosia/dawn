@@ -222,11 +222,6 @@ RenderPipeline::RenderPipeline(Device* device,
       mGlPrimitiveTopology(GLPrimitiveTopology(GetPrimitiveTopology())) {}
 
 MaybeError RenderPipeline::InitializeImpl() {
-    VertexAttributeMask bgraSwizzleAttributes = {};
-    for (VertexAttributeLocation i : GetAttributeLocationsUsed()) {
-        bgraSwizzleAttributes.set(i, GetAttribute(i).format == wgpu::VertexFormat::Unorm8x4BGRA);
-    }
-
     if (UsesVertexIndex()) {
         mImmediateMask |= GetImmediateConstantBlockBits(
             offsetof(RenderImmediateConstants, firstVertex), kImmediateConstantElementByteSize);
@@ -239,26 +234,53 @@ MaybeError RenderPipeline::InitializeImpl() {
         mImmediateMask |= GetImmediateConstantBlockBits(
             offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
     }
+    return ToBackend(GetDevice())
+        ->EnqueueGL(
+            [this, self = Ref<RenderPipeline>(this)](const OpenGLFunctions& gl) -> MaybeError {
+                VertexAttributeMask bgraSwizzleAttributes = {};
+                for (VertexAttributeLocation i : GetAttributeLocationsUsed()) {
+                    bgraSwizzleAttributes.set(
+                        i, GetAttribute(i).format == wgpu::VertexFormat::Unorm8x4BGRA);
+                }
 
-    auto gl = ToBackend(GetDevice())->GetGL();
-    DAWN_TRY(InitializeBase(gl, ToBackend(GetLayout()), GetAllStages(), mImmediateMask,
-                            bgraSwizzleAttributes));
-    DAWN_TRY(CreateVAOForVertexState(gl));
-    return {};
+                DAWN_TRY(InitializeBase(gl, ToBackend(GetLayout()), GetAllStages(), mImmediateMask,
+                                        bgraSwizzleAttributes));
+                DAWN_TRY(CreateVAOForVertexState(gl));
+                return {};
+            });
 }
 
 RenderPipeline::~RenderPipeline() = default;
 
 void RenderPipeline::DestroyImpl(DestroyReason reason) {
     RenderPipelineBase::DestroyImpl(reason);
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-    DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteVertexArrays(1, &mVertexArrayObject));
-    DAWN_GL_TRY_IGNORE_ERRORS(gl, BindVertexArray(0));
-    DeleteProgram(gl);
+    IgnoreErrors(ToBackend(GetDevice())
+                     ->EnqueueDestroyGL(this, &RenderPipeline::GetVertexArrayObject, reason,
+                                        [](const OpenGLFunctions& gl, GLuint vao) -> MaybeError {
+                                            DAWN_GL_TRY_IGNORE_ERRORS(gl,
+                                                                      DeleteVertexArrays(1, &vao));
+                                            DAWN_GL_TRY_IGNORE_ERRORS(gl, BindVertexArray(0));
+                                            return {};
+                                        }));
+    IgnoreErrors(
+        ToBackend(GetDevice())
+            ->EnqueueDestroyGL(this, &RenderPipeline::GetProgramHandle, reason,
+                               [](const OpenGLFunctions& gl, GLuint program) -> MaybeError {
+                                   DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteProgram(program));
+                                   return {};
+                               }));
 }
 
 GLenum RenderPipeline::GetGLPrimitiveTopology() const {
     return mGlPrimitiveTopology;
+}
+
+GLuint RenderPipeline::GetProgramHandle() const {
+    return mProgram;
+}
+
+GLuint RenderPipeline::GetVertexArrayObject() const {
+    return mVertexArrayObject;
 }
 
 VertexAttributeMask RenderPipeline::GetAttributesUsingVertexBuffer(VertexBufferSlot slot) const {
