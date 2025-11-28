@@ -40,8 +40,11 @@ ResultOrError<Ref<QuerySet>> QuerySet::Create(Device* device,
     Ref<QuerySet> querySet = AcquireRef(new QuerySet(device, descriptor));
 
     if (querySet->mQueries.size() > 0) {
-        const OpenGLFunctions& gl = device->GetGL();
-        DAWN_GL_TRY(gl, GenQueries(descriptor->count, querySet->mQueries.data()));
+        DAWN_TRY(device->EnqueueGL(
+            [querySet, count = descriptor->count](const OpenGLFunctions& gl) -> MaybeError {
+                DAWN_GL_TRY(gl, GenQueries(count, querySet->mQueries.data()));
+                return {};
+            }));
     }
 
     return std::move(querySet);
@@ -53,9 +56,14 @@ QuerySet::QuerySet(Device* device, const QuerySetDescriptor* descriptor)
 QuerySet::~QuerySet() = default;
 
 void QuerySet::DestroyImpl() {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
     if (mQueries.size() > 0) {
-        DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteQueries(mQueries.size(), mQueries.data()));
+        // FIXME: this is incurring a copy of the queries
+        auto ignoredResult =
+            ToBackend(GetDevice())
+                ->EnqueueGL([queries = mQueries](const OpenGLFunctions& gl) -> MaybeError {
+                    DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteQueries(queries.size(), queries.data()));
+                    return {};
+                });
     }
     QuerySetBase::DestroyImpl();
 }
