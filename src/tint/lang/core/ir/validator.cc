@@ -201,7 +201,29 @@ bool IsPositionPresent(const IOAttributes& attr, const core::type::Type* ty) {
     return attr.builtin == BuiltinValue::kPosition;
 }
 
-/// Helper for walking a type that maybe a struct, calling a impl function for the type and each of
+/// Helper that walks the members of a struct, called from WalkTypeAndMembers and its helpers
+/// @param ctx a context object to pass to the impl function
+/// @param str the struct to walk the members of
+/// @param impl an impl function to be run, see WalkTypeAndMembers for details
+template <typename CTX, typename IMPL>
+void WalkStructMembers(CTX& ctx, const core::type::Struct* str, IMPL&& impl) {
+    for (auto* member : str->Members()) {
+        WalkTypeAndMembers(ctx, member->Type(), member->Attributes(), impl);
+    }
+}
+
+/// Helper that walks an array's element type, called from WalkTypeAndMembers and its helpers
+/// @param ctx a context object to pass to the impl function
+/// @param arr the array to walk the element type of
+/// @param impl an impl function to be run, see WalkTypeAndMembers for details
+template <typename CTX, typename IMPL>
+void WalkArrayElements(CTX& ctx, const core::type::Array* arr, IMPL&& impl) {
+    tint::Switch(
+        arr->ElemType(), [&](const core::type::Struct* s) { WalkStructMembers(ctx, s, impl); },
+        [&](const core::type::Array* a) { WalkArrayElements(ctx, a, impl); });
+}
+
+/// Helper for walking a type that maybe a struct, calling an impl function for the type and each of
 /// its members.
 /// @param ctx a context object to pass to the implementation function
 /// @param type the type to walk
@@ -214,11 +236,9 @@ void WalkTypeAndMembers(CTX& ctx,
                         const IOAttributes& attr,
                         IMPL&& impl) {
     impl(ctx, type, attr);
-    if (auto* str = type->As<core::type::Struct>()) {
-        for (auto* member : str->Members()) {
-            WalkTypeAndMembers(ctx, member->Type(), member->Attributes(), impl);
-        }
-    }
+    tint::Switch(
+        type, [&](const core::type::Struct* s) { WalkStructMembers(ctx, s, impl); },
+        [&](const core::type::Array* a) { WalkArrayElements(ctx, a, impl); });
 }
 
 /// The IO direction of an operation.
@@ -400,6 +420,11 @@ struct BuiltInChecker {
     /// What combination of stage and IO direction is this builtin legal for
     EnumSet<IOAttributeUsage> valid_usages;
 
+    /// What values for depth_mode are valid for this builtin.
+    /// Currently, kUndefined is the only valid option for non-frag_depth
+    EnumSet<BuiltinDepthMode> valid_depth_modes =
+        EnumSet<BuiltinDepthMode>{BuiltinDepthMode::kUndefined};
+
     /// Implements logic for checking if the given type is valid or not. Is not a data entry (i.e. a
     /// type or set of types), because types are part of the IR module and created at runtime.
     using TypeCheckFn = bool(const core::type::Type* type);
@@ -454,6 +479,9 @@ constexpr BuiltInChecker kCullDistanceChecker{
 
 constexpr BuiltInChecker kFragDepthChecker{
     .valid_usages = EnumSet<IOAttributeUsage>{IOAttributeUsage::kFragmentOutputUsage},
+    .valid_depth_modes =
+        EnumSet<BuiltinDepthMode>{BuiltinDepthMode::kUndefined, BuiltinDepthMode::kAny,
+                                  BuiltinDepthMode::kGreater, BuiltinDepthMode::kLess},
     .type_check = [](const core::type::Type* ty) -> bool { return ty->Is<core::type::F32>(); },
     .type_error = "frag_depth must be a f32",
 };
@@ -706,6 +734,21 @@ constexpr IOAttributeChecker kBuiltinChecker{
         if (!checker.type_check(ty)) {
             return std::string(checker.type_error);
         }
+
+        const auto depth_mode = attr.depth_mode.value_or(BuiltinDepthMode::kUndefined);
+        if (!checker.valid_depth_modes.Contains(depth_mode)) {
+            std::stringstream msg;
+            msg << ToString(builtin) << " cannot have a depth mode of " << ToString(depth_mode)
+                << ". ";
+            if (checker.valid_depth_modes.Size() == 1) {
+                const auto v = *checker.valid_depth_modes.begin();
+                msg << "It can only be " << ToString(v) << ".";
+            } else {
+                msg << "It must be one of " << ToString(checker.valid_depth_modes);
+            }
+            return msg.str();
+        }
+
         return Success;
     },
 };
@@ -725,9 +768,25 @@ constexpr IOAttributeChecker kInputAttachmentIndexChecker{
     .check = [](const core::type::Type*, const IOAttributes&, const Capabilities&, IOAttributeUsage)
         -> Result<SuccessType, std::string> { return Success; }};
 
+constexpr IOAttributeChecker kDepthModeChecker{
+    .kind = IOAttributeKind::kDepthMode,
+    .valid_usages = kBuiltinChecker.valid_usages,
+    .valid_io_kinds = kBuiltinChecker.valid_io_kinds,
+    .check = [](const core::type::Type*,
+                const IOAttributes& attr,
+                const Capabilities&,
+                IOAttributeUsage) -> Result<SuccessType, std::string> {
+        if (!attr.builtin.has_value()) {
+            return {"cannot have a depth_mode without a builtin"};
+        }
+        return Success;  // kBuiltInChecker does the checking of the depth_mode value for the
+                         // specific builtin.
+    }};
+
+// kBlendSrcChecker, kLocationChecker, kInterpolationChecker, and kBindingPointChecker are
+// intentionally not implemented
+
 /// @returns all the appropriate IOAttributeCheckers for @p attr
-/// Note: The ordering of the vector is the order that the checkers will be run in, so for
-/// location/blend_src they need to be sequenced correctly to initialize their shared context
 Vector<const IOAttributeChecker*, 4> IOAttributeCheckersFor(const IOAttributes& attr,
                                                             bool skip_builtin) {
     Vector<const IOAttributeChecker*, 4> checkers{};
@@ -743,7 +802,12 @@ Vector<const IOAttributeChecker*, 4> IOAttributeCheckersFor(const IOAttributes& 
     if (attr.input_attachment_index.has_value()) {
         checkers.Push(&kInputAttachmentIndexChecker);
     }
-    // TODO(455376684): Implement all the other checkers
+    if (attr.depth_mode.has_value()) {
+        checkers.Push(&kDepthModeChecker);
+    }
+
+    // attr.blend_src, attr.location, attr.interpolation, and attr.binding_point are intentionally
+    // skipped, because their rules are not amenable to implementation via IOAttributeChecker.
     return checkers;
 }
 
@@ -1123,17 +1187,6 @@ class Validator {
     /// @param var the var to validate
     void CheckVar(const Var* var);
 
-    /// Validates binding_point usage for pointers
-    /// @param binding_point the binding information associated with pointer
-    /// @param address_space the address space of pointer
-    /// @param target_str string to insert in error message describing what has a binding_point,
-    /// defaults to 'variable'
-    /// @returns Success if a valid usage, or reason for invalidity in Failure
-    Result<SuccessType, std::string> ValidateBindingPoint(
-        const std::optional<struct BindingPoint>& binding_point,
-        AddressSpace address_space,
-        const std::string& target_str = "variable");
-
     /// Validates annotations related to shader IO
     /// @param ty type of the value under test
     /// @param binding_point the binding information associated with the value
@@ -1146,18 +1199,8 @@ class Validator {
         const core::IOAttributes& attr,
         ShaderIOKind kind);
 
-    /// Pre-populates the location hash with values that have a blend_src attribute.
-    /// @param ctx the blend_src context.
-    /// @param target the object that has the struct ty.
-    /// @param ty the ty to validate.
-    /// @param attr the IO attributes for the object.
-    void PrePopulateBlendSrcLocations(BlendSrcContext& ctx,
-                                      const CastableBase* target,
-                                      const core::type::Type* ty,
-                                      const IOAttributes& attr);
-
-    /// Validates the blend_src annotations for a ty.
-    /// Note: Assumes that it is being called on a non-struct member
+    /// Validates the blend_src attribute for a given type, responsible for traversal of inner types
+    /// and checking rules that span across a multiple attribute instances.
     /// @param ctx the blend_src context.
     /// @param target the object that has the struct ty.
     /// @param ty the ty to validate.
@@ -1167,33 +1210,17 @@ class Validator {
                        const core::type::Type* ty,
                        const IOAttributes& attr);
 
-    /// Validates blend_src annotations on a single IO object.
+    /// Validates the details of a single attribute instance.
     /// @param ctx the blend_src context.
     /// @param target the object that has the struct type.
     /// @param ty the type to validate.
     /// @param attr the IO attributes for the object.
-    void CheckBlendSrcAnnotation(BlendSrcContext& ctx,
-                                 const CastableBase* target,
-                                 const core::type::Type* ty,
-                                 const IOAttributes& attr);
+    void CheckBlendSrcImpl(BlendSrcContext& ctx,
+                           const CastableBase* target,
+                           const core::type::Type* ty,
+                           const IOAttributes& attr);
 
-    /// Rejects any blend_src annotations found within a type hierarchy for struct members.
-    /// @param ctx the blend_src context.
-    /// @param target the object that has the type.
-    /// @param str the struct type with members to be validated.
-    void RejectBlendSrcAnnotationOnStructMembers(BlendSrcContext& ctx,
-                                                 const CastableBase* target,
-                                                 const core::type::Struct* str);
-
-    /// Rejects any blend_src annotations found within a type hierarchy for an array element.
-    /// @param ctx the blend_src context.
-    /// @param target the object that has the type.
-    /// @param arr the array type for elements to be validated.
-    void RejectBlendSrcAnnotationOnArrayElement(BlendSrcContext& ctx,
-                                                const CastableBase* target,
-                                                const core::type::Array* arr);
-
-    /// Validates location annotations on entry point IO.
+    /// Validates location attributes on entry point IO.
     /// @param locations the map of locations used so far for the current IO direction.
     /// @param target the object that has the location attribute.
     /// @param attr the IO attributes for the object.
@@ -1206,6 +1233,22 @@ class Validator {
                        Function::PipelineStage stage,
                        const core::type::Type* type,
                        IODirection dir);
+
+    /// Validates interpolation attributes on entry point IO.
+    /// @param anchor where to attach error messages to.
+    /// @param ty the type of the IO object
+    /// @param attr the IO attributes of the object.
+    void CheckInterpolation(const CastableBase* anchor,
+                            const core::type::Type* ty,
+                            const IOAttributes& attr);
+
+    /// Validates binding_point attributes on entry point IO.
+    /// @param anchor where to attach error messages to.
+    /// @param ty the type of the IO object
+    /// @param attr the IO attributes of the object.
+    void CheckBindingPoint(const CastableBase* anchor,
+                           const core::type::Type* ty,
+                           const IOAttributes& attr);
 
     /// Validates the given let
     /// @param l the let to validate
@@ -2527,13 +2570,6 @@ void Validator::CheckFunction(const Function* func) {
                     AddError(param) << result.Failure();
                 }
             }
-            {
-                auto result =
-                    ValidateBindingPoint(param->BindingPoint(), address_space, "input param");
-                if (result != Success) {
-                    AddError(param) << result.Failure();
-                }
-            }
         } else {
             if (param->BindingPoint().has_value()) {
                 AddError(param)
@@ -2685,26 +2721,27 @@ void Validator::ValidateIOAttributes(const Function* func) {
         }
     }
 
-    BlendSrcContext input_ctx{func->Stage(), {}, {}, nullptr, IODirection::kInput};
-    BlendSrcContext output_ctx{func->Stage(), {}, {}, nullptr, IODirection::kOutput};
-
     if (stage != Function::PipelineStage::kUndefined) {
+        // Shared context for blend_src and location validation
+        BlendSrcContext input_ctx{func->Stage(), {}, {}, nullptr, IODirection::kInput};
+        BlendSrcContext output_ctx{func->Stage(), {}, {}, nullptr, IODirection::kOutput};
+
         // First pass: pre-populate location hashes for blend_src.
         for (const auto& task : tasks) {
-            if (task.dir == IODirection::kInput) {
-                PrePopulateBlendSrcLocations(input_ctx, task.anchor, task.type, task.attr);
-            } else if (task.dir == IODirection::kOutput) {
-                PrePopulateBlendSrcLocations(output_ctx, task.anchor, task.type, task.attr);
-            }
+            auto& ctx = task.dir == IODirection::kInput ? input_ctx : output_ctx;
+            WalkTypeAndMembers(
+                ctx, task.type, task.attr,
+                [task](BlendSrcContext& c, const core::type::Type*, const IOAttributes& a) {
+                    if (a.blend_src.has_value() && a.location.has_value()) {
+                        c.locations.Add(a.location.value(), task.anchor);
+                    }
+                });
         }
 
-        // Second pass: validates blend_src usages.
+        // Second pass: validate blend_src usages.
         for (const auto& task : tasks) {
-            if (task.dir == IODirection::kInput) {
-                CheckBlendSrc(input_ctx, task.anchor, task.type, task.attr);
-            } else if (task.dir == IODirection::kOutput) {
-                CheckBlendSrc(output_ctx, task.anchor, task.type, task.attr);
-            }
+            auto& ctx = task.dir == IODirection::kInput ? input_ctx : output_ctx;
+            CheckBlendSrc(ctx, task.anchor, task.type, task.attr);
         }
 
         if (!output_ctx.blend_srcs.IsEmpty()) {
@@ -2714,7 +2751,7 @@ void Validator::ValidateIOAttributes(const Function* func) {
             }
         }
 
-        // Third pass: validates all non-blend_src usages.
+        // Third pass: validate all non-blend_src location usages.
         for (const auto& task : tasks) {
             if (task.dir == IODirection::kInput) {
                 CheckLocation(input_ctx.locations, task.anchor, task.attr, func->Stage(), task.type,
@@ -2726,7 +2763,20 @@ void Validator::ValidateIOAttributes(const Function* func) {
         }
     }
 
-    // Validate attributes on IO objects
+    // Validate all the interpolation usages.
+    for (const auto& task : tasks) {
+        CheckInterpolation(task.anchor, task.type, task.attr);
+    }
+
+    if (stage != Function::PipelineStage::kUndefined) {
+        // Validate all the binding_point usages, and ensure things that require binding_point have
+        // them.
+        for (const auto& task : tasks) {
+            CheckBindingPoint(task.anchor, task.type, task.attr);
+        }
+    }
+
+    // Validate all remaining attributes on IO objects
     for (const auto& task : tasks) {
         ValidateIOAttributesImpl(task.anchor, task.type, task.attr, stage, task.dir, task.io_kind);
     }
@@ -3135,20 +3185,10 @@ void Validator::CheckVar(const Var* var) {
         }
     }
 
-    if (auto result = ValidateBindingPoint(var->BindingPoint(), mv->AddressSpace());
-        result != Success) {
-        AddError(var) << result.Failure();
-        return;
-    }
+    CheckBindingPoint(var, var->Result(0)->Type(), var->Attributes());
 
     if (var->Block() == mod_.root_block && mv->AddressSpace() == AddressSpace::kFunction) {
         AddError(var) << "vars in the 'function' address space must be in a function scope";
-        return;
-    }
-
-    if (auto result = ValidateBindingPoint(var->BindingPoint(), mv->AddressSpace());
-        result != Success) {
-        AddError(var) << result.Failure();
         return;
     }
 
@@ -3216,53 +3256,6 @@ void Validator::CheckVar(const Var* var) {
     }
 }
 
-Result<SuccessType, std::string> Validator::ValidateBindingPoint(
-    const std::optional<struct BindingPoint>& binding_point,
-    AddressSpace address_space,
-    const std::string& target_str) {
-    switch (address_space) {
-        case AddressSpace::kHandle:
-            if (!capabilities_.Contains(Capability::kAllowHandleVarsWithoutBindings)) {
-                if (!binding_point.has_value()) {
-                    return "a resource " + target_str + " is missing binding point";
-                }
-            }
-            break;
-        case AddressSpace::kStorage:
-        case AddressSpace::kUniform:
-            if (!binding_point.has_value()) {
-                return "a resource " + target_str + " is missing binding point";
-            }
-            break;
-        default:
-            if (binding_point.has_value()) {
-                return "a non-resource " + target_str + " has binding point";
-            }
-            break;
-    }
-    return Success;
-}
-
-void Validator::PrePopulateBlendSrcLocations(BlendSrcContext& ctx,
-                                             const CastableBase* target,
-                                             const core::type::Type* ty,
-                                             const IOAttributes& attr) {
-    if (attr.blend_src.has_value() && attr.location.has_value()) {
-        ctx.locations.Add(attr.location.value(), target);
-    }
-
-    if (auto* s = ty->As<core::type::Struct>()) {
-        if (s->Members().Any([](auto* m) { return m->Attributes().blend_src.has_value(); })) {
-            for (const auto* mem : s->Members()) {
-                if (mem->Attributes().blend_src.has_value() &&
-                    mem->Attributes().location.has_value()) {
-                    ctx.locations.Add(mem->Attributes().location.value(), target);
-                }
-            }
-        }
-    }
-}
-
 void Validator::CheckBlendSrc(BlendSrcContext& ctx,
                               const CastableBase* target,
                               const core::type::Type* ty,
@@ -3271,39 +3264,46 @@ void Validator::CheckBlendSrc(BlendSrcContext& ctx,
         if (!capabilities_.Contains(Capability::kLoosenValidationForShaderIO)) {
             AddError(target) << "blend_src cannot be used on non-struct-member types";
         }
-        CheckBlendSrcAnnotation(ctx, target, ty, attr);
+        CheckBlendSrcImpl(ctx, target, ty, attr);
     }
 
-    tint::Switch(
-        ty,
-        [&](const core::type::Struct* s) {
-            if (s->Members().Any([](auto* m) { return m->Attributes().blend_src.has_value(); })) {
-                auto location_count = 0u;
-                for (const auto* mem : s->Members()) {
-                    auto& mem_attr = mem->Attributes();
-                    if (mem_attr.location.has_value()) {
-                        location_count++;
-                    }
-                    CheckBlendSrcAnnotation(ctx, target, mem->Type(), mem_attr);
+    if (auto* s = ty->As<core::type::Struct>()) {
+        if (s->Members().Any([](auto* m) { return m->Attributes().blend_src.has_value(); })) {
+            auto location_count = 0u;
+            for (const auto* mem : s->Members()) {
+                auto& mem_attr = mem->Attributes();
+                if (mem_attr.location.has_value()) {
+                    location_count++;
                 }
-
-                if (location_count != 2) {
-                    AddError(target)
-                        << "structs with blend_src members must have exactly 2 members with "
-                           "location annotations";
-                }
-            } else {
-                RejectBlendSrcAnnotationOnStructMembers(ctx, target, s);
+                CheckBlendSrcImpl(ctx, target, mem->Type(), mem_attr);
             }
-        },
-        [&](const core::type::Array* a) { RejectBlendSrcAnnotationOnArrayElement(ctx, target, a); },
-        [&](Default) {});
+
+            if (location_count != 2) {
+                AddError(target)
+                    << "structs with blend_src members must have exactly 2 members with "
+                       "location annotations";
+            }
+            return;
+        }
+    }
+
+    // Reject blend_src on nested members
+    if (!capabilities_.Contains(Capability::kLoosenValidationForShaderIO)) {
+        WalkTypeAndMembers(
+            ctx, ty, attr,
+            [&target, this](BlendSrcContext&, const core::type::Type*, const IOAttributes& a) {
+                if (a.blend_src.has_value()) {
+                    AddError(target)
+                        << "blend_src cannot be used on members of non-top level structs";
+                }
+            });
+    }
 }
 
-void Validator::CheckBlendSrcAnnotation(BlendSrcContext& ctx,
-                                        const CastableBase* target,
-                                        const core::type::Type* ty,
-                                        const IOAttributes& attr) {
+void Validator::CheckBlendSrcImpl(BlendSrcContext& ctx,
+                                  const CastableBase* target,
+                                  const core::type::Type* ty,
+                                  const IOAttributes& attr) {
     if (!attr.blend_src.has_value()) {
         return;
     }
@@ -3336,38 +3336,6 @@ void Validator::CheckBlendSrcAnnotation(BlendSrcContext& ctx,
                          << " does not match other blend_src type "
                          << ctx.blend_src_type->FriendlyName();
     }
-}
-
-void Validator::RejectBlendSrcAnnotationOnStructMembers(BlendSrcContext& ctx,
-                                                        const CastableBase* target,
-                                                        const core::type::Struct* str) {
-    for (const auto* mem : str->Members()) {
-        auto mem_attr = mem->Attributes();
-        if (mem_attr.blend_src.has_value()) {
-            AddError(target) << "blend_src cannot be used on members of non-top level structs";
-        }
-        tint::Switch(
-            mem->Type(),  //
-            [&](const core::type::Struct* s) {
-                RejectBlendSrcAnnotationOnStructMembers(ctx, target, s);
-            },
-            [&](const core::type::Array* a) {
-                RejectBlendSrcAnnotationOnArrayElement(ctx, target, a);
-            },
-            [&](Default) {});
-    }
-}
-
-void Validator::RejectBlendSrcAnnotationOnArrayElement(BlendSrcContext& ctx,
-                                                       const CastableBase* target,
-                                                       const core::type::Array* arr) {
-    tint::Switch(
-        arr->ElemType(),  //
-        [&](const core::type::Struct* s) {
-            RejectBlendSrcAnnotationOnStructMembers(ctx, target, s);
-        },
-        [&](const core::type::Array* a) { RejectBlendSrcAnnotationOnArrayElement(ctx, target, a); },
-        [&](Default) {});
 }
 
 void Validator::CheckLocation(Hashmap<uint32_t, const CastableBase*, 4>& locations,
@@ -3416,6 +3384,85 @@ void Validator::CheckLocation(Hashmap<uint32_t, const CastableBase*, 4>& locatio
                 }
             }
         });
+}
+
+void Validator::CheckInterpolation(const CastableBase* anchor,
+                                   const core::type::Type* ty,
+                                   const IOAttributes& attr) {
+    bool ctx = false;
+
+    WalkTypeAndMembers(
+        ctx, ty, attr,
+        [this, anchor](bool& in_location_composite, const core::type::Type* t,
+                       const IOAttributes& a) {
+            if (a.interpolation.has_value()) {
+                if (!capabilities_.Contains(Capability::kAllowLocationForNumericElements) &&
+                    t->As<core::type::Struct>()) {
+                    AddError(anchor) << "interpolation cannot be applied to a struct without "
+                                        "'kAllowLocationForNumericElements' capability";
+                }
+
+                bool has_location = a.location.has_value() || in_location_composite;
+                if (!has_location) {
+                    if (auto* str = t->As<core::type::Struct>()) {
+                        has_location |= str->Members().All(
+                            [](const auto* mem) { return mem->Attributes().location.has_value(); });
+                    }
+                }
+                has_location |= (capabilities_.Contains(Capability::kLoosenValidationForShaderIO) &&
+                                 a.builtin.has_value());
+
+                if (!has_location) {
+                    if (!capabilities_.Contains(Capability::kLoosenValidationForShaderIO)) {
+                        AddError(anchor) << "interpolation attribute requires a location attribute";
+                    } else {
+                        AddError(anchor) << "interpolation attribute requires a location attribute "
+                                            "(or location-like shader I/O annotation)";
+                    }
+                }
+            }
+
+            in_location_composite |= a.location.has_value();
+        });
+}
+
+void Validator::CheckBindingPoint(const CastableBase* anchor,
+                                  const core::type::Type* ty,
+                                  const IOAttributes& attr) {
+    const auto& binding_point = attr.binding_point;
+    auto address_space = AddressSpace::kUndefined;
+    if (const auto* mv = ty->As<core::type::MemoryView>()) {
+        address_space = mv->AddressSpace();
+    } else {
+        // ModuleScopeVars transform in MSL backends unwraps pointers to handles
+        if (ty->IsHandle()) {
+            address_space = AddressSpace::kHandle;
+        }
+    }
+
+    switch (address_space) {
+        case AddressSpace::kHandle:
+            if (!capabilities_.Contains(Capability::kAllowHandleVarsWithoutBindings)) {
+                if (!binding_point.has_value()) {
+                    AddError(anchor)
+                        << "a " << ToString(address_space) << " resource requires a binding point";
+                }
+            }
+            break;
+        case AddressSpace::kStorage:
+        case AddressSpace::kUniform:
+            if (!binding_point.has_value()) {
+                AddError(anchor) << "a " << ToString(address_space)
+                                 << " resource requires a binding point";
+            }
+            break;
+        default:
+            if (binding_point.has_value()) {
+                AddError(anchor) << "a " << ToString(address_space)
+                                 << " non-resource cannot have a binding point";
+            }
+            break;
+    }
 }
 
 Result<SuccessType, std::string> Validator::ValidateShaderIOAnnotations(
@@ -3567,7 +3614,12 @@ void Validator::CheckLet(const Let* l) {
 
     auto* result_ty = l->Result()->Type();
     if (!capabilities_.Contains(Capability::kAllowAnyLetType)) {
-        if (!result_ty->IsConstructible() && !result_ty->Is<core::type::Pointer>()) {
+        if (auto* ptr = result_ty->As<core::type::Pointer>()) {
+            if (ptr->AddressSpace() == AddressSpace::kHandle &&
+                !capabilities_.Contains(Capability::kAllowPointerToHandle)) {
+                AddError(l) << "handle pointer cannot be captured in a let";
+            }
+        } else if (!result_ty->IsConstructible()) {
             AddError(l) << "result type, " << NameOf(result_ty)
                         << ", must be concrete constructible type or a pointer type";
         }

@@ -685,12 +685,12 @@ MaybeError ResolveMultisampledRenderTargets(const OpenGLFunctions& gl,
             TextureView* colorView = ToBackend(renderPass->colorAttachments[i].view.Get());
 
             DAWN_GL_TRY(gl, BindFramebuffer(GL_READ_FRAMEBUFFER, readFbo));
-            DAWN_TRY(colorView->BindToFramebuffer(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0));
+            DAWN_TRY(colorView->BindToFramebuffer(gl, GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0));
 
             TextureView* resolveView =
                 ToBackend(renderPass->colorAttachments[i].resolveTarget.Get());
             DAWN_GL_TRY(gl, BindFramebuffer(GL_DRAW_FRAMEBUFFER, writeFbo));
-            DAWN_TRY(resolveView->BindToFramebuffer(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0));
+            DAWN_TRY(resolveView->BindToFramebuffer(gl, GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0));
             DAWN_GL_TRY(gl, BlitFramebuffer(0, 0, renderPass->width, renderPass->height, 0, 0,
                                             renderPass->width, renderPass->height,
                                             GL_COLOR_BUFFER_BIT, GL_NEAREST));
@@ -732,7 +732,7 @@ CommandBuffer::CommandBuffer(CommandEncoder* encoder, const CommandBufferDescrip
     : CommandBufferBase(encoder, descriptor) {}
 
 MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
-    auto LazyClearSyncScope = [](const SyncScopeResourceUsage& scope) -> MaybeError {
+    auto LazyClearSyncScope = [gl](const SyncScopeResourceUsage& scope) -> MaybeError {
         for (size_t i = 0; i < scope.textures.size(); i++) {
             Texture* texture = ToBackend(scope.textures[i]);
 
@@ -742,7 +742,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
             DAWN_TRY(scope.textureSyncInfos[i].Iterate(
                 [&](const SubresourceRange& range, const TextureSyncInfo& syncInfo) -> MaybeError {
                     if (syncInfo.usage & ~wgpu::TextureUsage::RenderAttachment) {
-                        DAWN_TRY(texture->EnsureSubresourceContentInitialized(range));
+                        DAWN_TRY(texture->EnsureSubresourceContentInitialized(gl, range));
                     }
                     return {};
                 }));
@@ -839,15 +839,17 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                                                   dst.aspect)) {
                     texture->SetIsSubresourceContentInitialized(true, range);
                 } else {
-                    DAWN_TRY(texture->EnsureSubresourceContentInitialized(range));
+                    DAWN_TRY(texture->EnsureSubresourceContentInitialized(gl, range));
                 }
 
                 DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, buffer->GetHandle()));
 
+                // TODO(crbug.com/424536624): Replace TexelCopyBufferLayout with BufferCopy
+                const TypedTexelBlockInfo& blockInfo = GetBlockInfo(dst);
                 TexelCopyBufferLayout dataLayout;
                 dataLayout.offset = 0;
-                dataLayout.bytesPerRow = src.bytesPerRow;
-                dataLayout.rowsPerImage = src.rowsPerImage;
+                dataLayout.bytesPerRow = blockInfo.ToBytes(src.blocksPerRow);
+                dataLayout.rowsPerImage = static_cast<uint32_t>(src.rowsPerImage);
 
                 DAWN_TRY(DoTexSubImage(gl, dst, reinterpret_cast<void*>(src.offset), dataLayout,
                                        copy->copySize));
@@ -881,7 +883,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                 DAWN_TRY(texture->SynchronizeTextureBeforeUse());
 
                 SubresourceRange subresources = GetSubresourcesAffectedByCopy(src, copy->copySize);
-                DAWN_TRY(texture->EnsureSubresourceContentInitialized(subresources));
+                DAWN_TRY(texture->EnsureSubresourceContentInitialized(gl, subresources));
                 // The only way to move data from a texture to a buffer in GL is via
                 // glReadPixels with a pack buffer. Create a temporary FBO for the copy.
                 DAWN_GL_TRY(gl, BindTexture(target, texture->GetHandle()));
@@ -890,12 +892,12 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                 DAWN_GL_TRY(gl, GenFramebuffers(1, &readFBO));
                 DAWN_GL_TRY(gl, BindFramebuffer(GL_READ_FRAMEBUFFER, readFBO));
 
-                const TexelBlockInfo& blockInfo = formatInfo.GetAspectInfo(src.aspect).block;
+                const TypedTexelBlockInfo& blockInfo = GetBlockInfo(src);
 
                 DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_PACK_BUFFER, buffer->GetHandle()));
                 DAWN_GL_TRY(gl, PixelStorei(GL_PACK_ALIGNMENT, std::min(8u, blockInfo.byteSize)));
-                DAWN_GL_TRY(gl,
-                            PixelStorei(GL_PACK_ROW_LENGTH, dst.bytesPerRow / blockInfo.byteSize));
+                DAWN_GL_TRY(
+                    gl, PixelStorei(GL_PACK_ROW_LENGTH, static_cast<uint32_t>(dst.blocksPerRow)));
 
                 GLenum glAttachment;
                 GLenum glFormat;
@@ -941,7 +943,8 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                             break;
                         } else if (target == GL_TEXTURE_CUBE_MAP) {
                             DAWN_ASSERT(texture->GetArrayLayers() == 6);
-                            const uint64_t bytesPerImage = dst.bytesPerRow * dst.rowsPerImage;
+                            const uint64_t bytesPerImage =
+                                blockInfo.ToBytes(dst.blocksPerRow * dst.rowsPerImage);
                             for (uint32_t z = 0; z < copySize.depthOrArrayLayers; ++z) {
                                 GLenum cubeMapTarget =
                                     GL_TEXTURE_CUBE_MAP_POSITIVE_X + z + src.origin.z;
@@ -961,7 +964,8 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                     }
 
                     case wgpu::TextureDimension::e3D: {
-                        const uint64_t bytesPerImage = dst.bytesPerRow * dst.rowsPerImage;
+                        const uint64_t bytesPerImage =
+                            blockInfo.ToBytes(dst.blocksPerRow * dst.rowsPerImage);
                         for (uint32_t z = 0; z < copySize.depthOrArrayLayers; ++z) {
                             DAWN_GL_TRY(gl,
                                         FramebufferTextureLayer(GL_READ_FRAMEBUFFER, glAttachment,
@@ -1009,11 +1013,11 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                 SubresourceRange srcRange = GetSubresourcesAffectedByCopy(src, copy->copySize);
                 SubresourceRange dstRange = GetSubresourcesAffectedByCopy(dst, copy->copySize);
 
-                DAWN_TRY(srcTexture->EnsureSubresourceContentInitialized(srcRange));
+                DAWN_TRY(srcTexture->EnsureSubresourceContentInitialized(gl, srcRange));
                 if (IsCompleteSubresourceCopiedTo(dstTexture, copySize, dst.mipLevel, dst.aspect)) {
                     dstTexture->SetIsSubresourceContentInitialized(true, dstRange);
                 } else {
-                    DAWN_TRY(dstTexture->EnsureSubresourceContentInitialized(dstRange));
+                    DAWN_TRY(dstTexture->EnsureSubresourceContentInitialized(gl, dstRange));
                 }
                 DAWN_TRY(CopyImageSubData(gl, src.aspect, srcTexture->GetHandle(),
                                           srcTexture->GetGLTarget(), src.mipLevel, src.origin,
@@ -1156,7 +1160,7 @@ MaybeError CommandBuffer::ExecuteComputePass(const OpenGLFunctions& gl) {
             case Command::SetComputePipeline: {
                 SetComputePipelineCmd* cmd = mCommands.NextCommand<SetComputePipelineCmd>();
                 lastPipeline = ToBackend(cmd->pipeline).Get();
-                DAWN_TRY(lastPipeline->ApplyNow());
+                DAWN_TRY(lastPipeline->ApplyNow(gl));
 
                 bindGroupTracker.OnSetPipeline(lastPipeline);
                 break;
@@ -1227,7 +1231,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
             GLenum glAttachment = GL_COLOR_ATTACHMENT0 + static_cast<uint8_t>(i);
 
             // Attach color buffers.
-            DAWN_TRY(textureView->BindToFramebuffer(GL_DRAW_FRAMEBUFFER, glAttachment,
+            DAWN_TRY(textureView->BindToFramebuffer(gl, GL_DRAW_FRAMEBUFFER, glAttachment,
                                                     renderPass->colorAttachments[i].depthSlice));
             drawBuffers[i] = glAttachment;
             attachmentCount = ityp::PlusOne(i);
@@ -1250,7 +1254,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 DAWN_UNREACHABLE();
             }
 
-            DAWN_TRY(textureView->BindToFramebuffer(GL_DRAW_FRAMEBUFFER, glAttachment));
+            DAWN_TRY(textureView->BindToFramebuffer(gl, GL_DRAW_FRAMEBUFFER, glAttachment));
         }
     }
 
@@ -1452,7 +1456,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
             case Command::SetRenderPipeline: {
                 SetRenderPipelineCmd* cmd = iter->NextCommand<SetRenderPipelineCmd>();
                 lastPipeline = ToBackend(cmd->pipeline).Get();
-                DAWN_TRY(lastPipeline->ApplyNow(persistentPipelineState));
+                DAWN_TRY(lastPipeline->ApplyNow(gl, persistentPipelineState));
 
                 vertexStateBufferBindingTracker.OnSetPipeline(lastPipeline);
                 bindGroupTracker.OnSetPipeline(lastPipeline);
@@ -1616,7 +1620,8 @@ MaybeError DoTexSubImage(const OpenGLFunctions& gl,
     data = static_cast<const uint8_t*>(data) + dataLayout.offset;
     DAWN_GL_TRY(gl, ActiveTexture(GL_TEXTURE0));
     DAWN_GL_TRY(gl, BindTexture(target, texture->GetHandle()));
-    const TexelBlockInfo& blockInfo = texture->GetFormat().GetAspectInfo(destination.aspect).block;
+    // TODO(crbug.com/424536624): TypedTexelBlockInfo and rework code below
+    const TexelBlockInfo& blockInfo = GetBlockInfo(destination);
 
     uint32_t x = destination.origin.x;
     uint32_t y = destination.origin.y;

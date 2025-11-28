@@ -290,7 +290,6 @@ class DawnTestBase {
     bool IsSwiftshader() const;
     bool IsANGLE() const;
     bool IsANGLESwiftShader() const;
-    bool IsANGLED3D11() const;
     bool IsWARP() const;
     bool IsMesaSoftware() const;
 
@@ -382,6 +381,8 @@ class DawnTestBase {
         mDeviceErrorCallback;
     testing::StrictMock<testing::MockCppCallback<wgpu::DeviceLostCallback<void>*>>
         mDeviceLostCallback;
+    uint32_t mDeviceLostCallbackFailedCreationAllowedCount = 0;
+    uint32_t mDeviceLostCallbackFailedCreationCalledCount = 0;
 
     // Helper methods to implement the EXPECT_ macros
     std::ostringstream& AddBufferExpectation(const char* file,
@@ -790,6 +791,8 @@ class DawnTestBase {
 
     // Assuming the data is mapped, checks all expectations
     void ResolveExpectations();
+
+    void HandleDeviceCreationFailure();
 
     bool mRequireUseTieredLimits = false;
     native::Adapter mBackendAdapter;

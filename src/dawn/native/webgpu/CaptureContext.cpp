@@ -31,12 +31,13 @@
 #include <vector>
 
 #include "dawn/common/StringViewUtils.h"
+#include "dawn/native/BlockInfo.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/Commands.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/webgpu/BufferWGPU.h"
-#include "dawn/native/webgpu/Forward.h"
+#include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/QuerySetWGPU.h"
 #include "dawn/native/webgpu/QueueWGPU.h"
 #include "dawn/native/webgpu/Serialization.h"
@@ -90,7 +91,7 @@ void CaptureContext::WriteCommandBytes(const void* data, size_t size) {
     mCommandBytesWritten += size;
 }
 
-MaybeError CaptureContext::CaptureQueueWriteBuffer(BufferBase* buffer,
+MaybeError CaptureContext::CaptureQueueWriteBuffer(Buffer* buffer,
                                                    uint64_t bufferOffset,
                                                    const void* data,
                                                    size_t size) {
@@ -109,7 +110,7 @@ MaybeError CaptureContext::CaptureQueueWriteBuffer(BufferBase* buffer,
     return {};
 }
 
-MaybeError CaptureContext::CaptureUnmapBuffer(BufferBase* buffer,
+MaybeError CaptureContext::CaptureUnmapBuffer(Buffer* buffer,
                                               uint64_t bufferOffset,
                                               const void* data,
                                               size_t size) {
@@ -133,7 +134,7 @@ MaybeError CaptureContext::CaptureQueueWriteTexture(const TexelCopyTextureInfo& 
                                                     size_t dataSize,
                                                     const TexelCopyBufferLayout& dataLayout,
                                                     const Extent3D& writeSizePixel) {
-    DAWN_TRY(AddResource(destination.texture));
+    DAWN_TRY(AddResource(ToBackend(destination.texture)));
     schema::RootCommandWriteTextureCmd cmd{{
         .data = {{
             .destination = ToSchema(*this, destination),
@@ -189,18 +190,21 @@ schema::Color ToSchema(const Color& color) {
     }};
 }
 
-schema::TexelCopyBufferLayout ToSchema(const BufferCopy& bufferCopy) {
+schema::TexelCopyBufferLayout ToSchema(const BufferCopy& bufferCopy,
+                                       const TypedTexelBlockInfo& blockInfo) {
     return {{
         .offset = bufferCopy.offset,
-        .bytesPerRow = bufferCopy.bytesPerRow,
-        .rowsPerImage = bufferCopy.rowsPerImage,
+        .bytesPerRow = static_cast<uint32_t>(blockInfo.ToBytes(bufferCopy.blocksPerRow)),
+        .rowsPerImage = static_cast<uint32_t>(bufferCopy.rowsPerImage),
     }};
 }
 
-schema::TexelCopyBufferInfo ToSchema(CaptureContext& captureContext, const BufferCopy& bufferCopy) {
+schema::TexelCopyBufferInfo ToSchema(CaptureContext& captureContext,
+                                     const BufferCopy& bufferCopy,
+                                     const TypedTexelBlockInfo& blockInfo) {
     return {{
         .bufferId = captureContext.GetId(bufferCopy.buffer),
-        .layout = ToSchema(bufferCopy),
+        .layout = ToSchema(bufferCopy, blockInfo),
     }};
 }
 

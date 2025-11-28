@@ -31,17 +31,17 @@
 #include <utility>
 #include <vector>
 
+#include "src/tint/lang/core/ir/analysis/subgroup_matrix.h"
 #include "src/tint/lang/core/ir/referenced_module_vars.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/ir/var.h"
-#include "src/tint/lang/core/type/binding_array.h"
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/spirv/writer/common/option_helpers.h"
 #include "src/tint/lang/spirv/writer/printer/printer.h"
 #include "src/tint/lang/spirv/writer/raise/raise.h"
 
 // Included by 'ast_printer.h', included again here for './tools/run gen' track the dependency.
-#include "spirv/unified1/spirv.h"
+#include "spirv/unified1/spirv.h"  // IWYU pragma: export
 
 namespace tint::spirv::writer {
 
@@ -59,7 +59,7 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
     // Check optionally supported types against their required options.
     for (auto* ty : ir.Types()) {
         if (ty->Is<core::type::SubgroupMatrix>()) {
-            if (!options.use_vulkan_memory_model) {
+            if (!options.extensions.use_vulkan_memory_model) {
                 return Failure("using subgroup matrices requires the Vulkan Memory Model");
             }
         }
@@ -95,6 +95,7 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
             break;
         }
     }
+
     // No entrypoint, so no bindings needed
     if (!ep_func) {
         return Failure("entry point not found");
@@ -147,7 +148,14 @@ Result<Output> Generate(core::ir::Module& ir, const Options& options) {
         return std::move(res.Failure());
     }
 
-    return Print(ir, options);
+    auto res = Print(ir, options);
+    if (res != Success) {
+        return res;
+    }
+
+    res->subgroup_matrix_info = core::ir::analysis::GatherSubgroupMatrixInfo(ir);
+
+    return res;
 }
 
 }  // namespace tint::spirv::writer

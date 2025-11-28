@@ -56,6 +56,10 @@ Ref<CommandBuffer> CommandBuffer::Create(CommandEncoder* encoder,
 CommandBuffer::CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor)
     : CommandBufferBase(encoder, descriptor), RecordableObject(schema::ObjectType::CommandBuffer) {}
 
+void CommandBuffer::SetLabelImpl() {
+    ToBackend(GetDevice())->CaptureSetLabel(this, GetLabel());
+}
+
 namespace {
 
 void EncodeComputePass(const DawnProcTable& wgpu,
@@ -591,10 +595,10 @@ MaybeError AddReferencedPassResourceUsages(CaptureContext& captureContext,
                                            const std::vector<T>& syncScopeResourceUsages) {
     for (const auto& usages : syncScopeResourceUsages) {
         for (auto buffer : usages.buffers) {
-            DAWN_TRY(captureContext.AddResource(buffer));
+            DAWN_TRY(captureContext.AddResource(ToBackend(buffer)));
         }
         for (auto texture : usages.textures) {
-            DAWN_TRY(captureContext.AddResource(texture));
+            DAWN_TRY(captureContext.AddResource(ToBackend(texture)));
         }
     }
     return {};
@@ -605,10 +609,10 @@ MaybeError AddReferencedPassResourceUsages(CaptureContext& captureContext,
 MaybeError CommandBuffer::AddReferenced(CaptureContext& captureContext) {
     const auto& resourceUsages = GetResourceUsages();
     for (auto buffer : resourceUsages.topLevelBuffers) {
-        DAWN_TRY(captureContext.AddResource(buffer));
+        DAWN_TRY(captureContext.AddResource(ToBackend(buffer)));
     }
     for (auto texture : resourceUsages.topLevelTextures) {
-        DAWN_TRY(captureContext.AddResource(texture));
+        DAWN_TRY(captureContext.AddResource(ToBackend(texture)));
     }
     DAWN_TRY(AddReferencedPassResourceUsages(captureContext, resourceUsages.renderPasses));
     for (const auto& pass : resourceUsages.computePasses) {
@@ -624,7 +628,8 @@ MaybeError CommandBuffer::AddReferenced(CaptureContext& captureContext) {
             case Command::BeginComputePass: {
                 const auto& cmd = *commands.NextCommand<BeginComputePassCmd>();
                 if (cmd.timestampWrites.querySet != nullptr) {
-                    DAWN_TRY(captureContext.AddResource(cmd.timestampWrites.querySet.Get()));
+                    DAWN_TRY(
+                        captureContext.AddResource(ToBackend(cmd.timestampWrites.querySet.Get())));
                 }
                 DAWN_TRY(GatherReferencedResourcesFromComputePass(captureContext, commands,
                                                                   usedResources));
@@ -634,20 +639,23 @@ MaybeError CommandBuffer::AddReferenced(CaptureContext& captureContext) {
                 const auto& cmd = *commands.NextCommand<BeginRenderPassCmd>();
                 for (const auto& attachment : cmd.colorAttachments) {
                     if (attachment.view != nullptr) {
-                        DAWN_TRY(captureContext.AddResource(attachment.view.Get()));
+                        DAWN_TRY(captureContext.AddResource(ToBackend(attachment.view.Get())));
                     }
                     if (attachment.resolveTarget != nullptr) {
-                        DAWN_TRY(captureContext.AddResource(attachment.resolveTarget.Get()));
+                        DAWN_TRY(
+                            captureContext.AddResource(ToBackend(attachment.resolveTarget.Get())));
                     }
                 }
                 if (cmd.depthStencilAttachment.view != nullptr) {
-                    DAWN_TRY(captureContext.AddResource(cmd.depthStencilAttachment.view.Get()));
+                    DAWN_TRY(captureContext.AddResource(
+                        ToBackend(cmd.depthStencilAttachment.view.Get())));
                 }
                 if (cmd.timestampWrites.querySet != nullptr) {
-                    DAWN_TRY(captureContext.AddResource(cmd.timestampWrites.querySet.Get()));
+                    DAWN_TRY(
+                        captureContext.AddResource(ToBackend(cmd.timestampWrites.querySet.Get())));
                 }
                 if (cmd.occlusionQuerySet != nullptr) {
-                    DAWN_TRY(captureContext.AddResource(cmd.occlusionQuerySet.Get()));
+                    DAWN_TRY(captureContext.AddResource(ToBackend(cmd.occlusionQuerySet.Get())));
                 }
                 DAWN_TRY(GatherReferencedResourcesFromRenderPass(captureContext, commands,
                                                                  usedResources));
@@ -746,9 +754,10 @@ MaybeError CommandBuffer::CaptureCreationParameters(CaptureContext& captureConte
             }
             case Command::CopyBufferToTexture: {
                 const auto& cmd = *commands.NextCommand<CopyBufferToTextureCmd>();
+                const TypedTexelBlockInfo& blockInfo = GetBlockInfo(cmd.destination);
                 schema::CommandBufferCommandCopyBufferToTextureCmd data{{
                     .data = {{
-                        .source = ToSchema(captureContext, cmd.source),
+                        .source = ToSchema(captureContext, cmd.source, blockInfo),
                         .destination = ToSchema(captureContext, cmd.destination),
                         .copySize = ToSchema(cmd.copySize),
                     }},
@@ -758,10 +767,11 @@ MaybeError CommandBuffer::CaptureCreationParameters(CaptureContext& captureConte
             }
             case Command::CopyTextureToBuffer: {
                 const auto& cmd = *commands.NextCommand<CopyTextureToBufferCmd>();
+                const TypedTexelBlockInfo& blockInfo = GetBlockInfo(cmd.source);
                 schema::CommandBufferCommandCopyTextureToBufferCmd data{{
                     .data = {{
                         .source = ToSchema(captureContext, cmd.source),
-                        .destination = ToSchema(captureContext, cmd.destination),
+                        .destination = ToSchema(captureContext, cmd.destination, blockInfo),
                         .copySize = ToSchema(cmd.copySize),
                     }},
                 }};
@@ -874,7 +884,8 @@ WGPUCommandBuffer CommandBuffer::Encode() {
             }
             case Command::CopyBufferToTexture: {
                 auto cmd = mCommands.NextCommand<CopyBufferToTextureCmd>();
-                WGPUTexelCopyBufferInfo source = ToWGPU(cmd->source);
+                const TypedTexelBlockInfo& blockInfo = GetBlockInfo(cmd->destination);
+                WGPUTexelCopyBufferInfo source = ToWGPU(cmd->source, blockInfo);
                 WGPUTexelCopyTextureInfo destination = ToWGPU(cmd->destination);
                 WGPUExtent3D size = ToWGPU(cmd->copySize);
                 wgpu.commandEncoderCopyBufferToTexture(innerEncoder, &source, &destination, &size);
@@ -883,8 +894,9 @@ WGPUCommandBuffer CommandBuffer::Encode() {
             }
             case Command::CopyTextureToBuffer: {
                 auto cmd = mCommands.NextCommand<CopyTextureToBufferCmd>();
+                const TypedTexelBlockInfo& blockInfo = GetBlockInfo(cmd->source);
                 WGPUTexelCopyTextureInfo source = ToWGPU(cmd->source);
-                WGPUTexelCopyBufferInfo destination = ToWGPU(cmd->destination);
+                WGPUTexelCopyBufferInfo destination = ToWGPU(cmd->destination, blockInfo);
                 WGPUExtent3D size = ToWGPU(cmd->copySize);
                 wgpu.commandEncoderCopyTextureToBuffer(innerEncoder, &source, &destination, &size);
                 break;
