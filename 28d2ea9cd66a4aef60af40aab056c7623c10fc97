@@ -16,6 +16,24 @@
       "message": "We expect GLES to be less performant and featureful than Vulkan. What\u0027s the reasoning behind using it by default?",
       "revId": "28d2ea9cd66a4aef60af40aab056c7623c10fc97",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8f385b5_d98d9ffa",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-11-28T08:32:24Z",
+      "side": 1,
+      "message": "This CL is strictly for diagnostic testing purposes: it enables GLES only to run test cases and identify GLES-specific failures.\n\nVulkan remains the default backend.",
+      "parentUuid": "2af4e16a_6e1971da",
+      "revId": "28d2ea9cd66a4aef60af40aab056c7623c10fc97",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
