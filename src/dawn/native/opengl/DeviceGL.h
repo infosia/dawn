@@ -105,6 +105,32 @@ class Device final : public DeviceBase {
         return {};
     }
 
+    template <typename T, typename Fn, typename Data>
+    MaybeError EnqueueGL(T* self, Data (T::*GetData)() const, Fn work) {
+        if (!IsToggleEnabled(Toggle::GLDefer)) {
+            MarkGLUsed(ExecutionQueueBase::SubmitMode::Normal);
+
+            // Execute immediately
+            ContextEGL::ScopedMakeCurrent scopedCurrentContext;
+            DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
+
+            return work(mGL, (self->*GetData)());
+        }
+        if (self->IsBeingDeleted()) {
+            // “self” is being destroyed; capture data
+            return EnqueueGL(
+                [data = (self->*GetData)(), work](const OpenGLFunctions& gl) -> MaybeError {
+                    return work(gl, data);
+                });
+        } else {
+            // “self” is not being destroyed; capture a reference to “self”
+            return EnqueueGL(
+                [self = Ref<T>(self), work, GetData](const OpenGLFunctions& gl) -> MaybeError {
+                    return work(gl, (self.Get()->*GetData)());
+                });
+        }
+    }
+
     template <typename Fn>
     MaybeError EnqueueGL(Fn&& work) {
         return EnqueueGL(ExecutionQueueBase::SubmitMode::Normal, std::forward<Fn>(work));

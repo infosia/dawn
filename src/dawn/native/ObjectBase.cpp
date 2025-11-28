@@ -192,6 +192,10 @@ bool ApiObjectBase::IsAlive() const {
     return IsInList();
 }
 
+bool ApiObjectBase::IsBeingDeleted() const {
+    return mIsBeingDeleted;
+}
+
 void ApiObjectBase::DeleteThis() {
     Destroy(DestroyReason::CppDestructor);
     RefCounted::DeleteThis();
