@@ -16,6 +16,23 @@
       "message": "Maybe webgpu_glfw.h will also be needed at some point?\n\nhttps://dawn-review.googlesource.com/c/dawn/+/276939/3/src/emdawnwebgpu/CMakeLists.txt#47",
       "revId": "8ae243d0496421e7858ed9a9d6cc175e15316ae7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebe92c65_45fbf227",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-28T19:32:01Z",
+      "side": 1,
+      "message": "the try job uses dawn_wasm\u003dtrue in the client which should have invoked the wasm flow.  I don\u0027t see that activity though.  It passed on the bot, and passed locally for me too.",
+      "revId": "8ae243d0496421e7858ed9a9d6cc175e15316ae7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
