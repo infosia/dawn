@@ -227,10 +227,10 @@ MaybeError RenderPipeline::InitializeImpl() {
         bgraSwizzleAttributes.set(i, GetAttribute(i).format == wgpu::VertexFormat::Unorm8x4BGRA);
     }
 
-    auto gl = ToBackend(GetDevice())->GetGL();
-    DAWN_TRY(InitializeBase(gl, ToBackend(GetLayout()), GetAllStages(), UsesVertexIndex(),
-                            UsesInstanceIndex(), UsesFragDepth(), bgraSwizzleAttributes));
-    DAWN_TRY(CreateVAOForVertexState(gl));
+    DAWN_TRY(InitializeBase(ToBackend(GetDevice()), ToBackend(GetLayout()), GetAllStages(),
+                            UsesVertexIndex(), UsesInstanceIndex(), UsesFragDepth(),
+                            bgraSwizzleAttributes));
+    DAWN_TRY(CreateVAOForVertexState());
     return {};
 }
 
@@ -238,10 +238,13 @@ RenderPipeline::~RenderPipeline() = default;
 
 void RenderPipeline::DestroyImpl() {
     RenderPipelineBase::DestroyImpl();
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-    DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteVertexArrays(1, &mVertexArrayObject));
-    DAWN_GL_TRY_IGNORE_ERRORS(gl, BindVertexArray(0));
-    DeleteProgram(gl);
+    auto ignoredResult =
+        ToBackend(GetDevice())->EnqueueGL([this](const OpenGLFunctions& gl) -> MaybeError {
+            DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteVertexArrays(1, &mVertexArrayObject));
+            DAWN_GL_TRY_IGNORE_ERRORS(gl, BindVertexArray(0));
+            DeleteProgram(gl);
+            return {};
+        });
 }
 
 GLenum RenderPipeline::GetGLPrimitiveTopology() const {
@@ -253,36 +256,37 @@ VertexAttributeMask RenderPipeline::GetAttributesUsingVertexBuffer(VertexBufferS
     return mAttributesUsingVertexBuffer[slot];
 }
 
-MaybeError RenderPipeline::CreateVAOForVertexState(const OpenGLFunctions& gl) {
-    DAWN_GL_TRY(gl, GenVertexArrays(1, &mVertexArrayObject));
-    DAWN_GL_TRY(gl, BindVertexArray(mVertexArrayObject));
+MaybeError RenderPipeline::CreateVAOForVertexState() {
+    return ToBackend(GetDevice())->EnqueueGL([&](const OpenGLFunctions& gl) -> MaybeError {
+        DAWN_GL_TRY(gl, GenVertexArrays(1, &mVertexArrayObject));
+        DAWN_GL_TRY(gl, BindVertexArray(mVertexArrayObject));
 
-    for (VertexAttributeLocation location : GetAttributeLocationsUsed()) {
-        const auto& attribute = GetAttribute(location);
-        GLuint glAttrib = static_cast<GLuint>(static_cast<uint8_t>(location));
-        DAWN_GL_TRY(gl, EnableVertexAttribArray(glAttrib));
+        for (VertexAttributeLocation location : GetAttributeLocationsUsed()) {
+            const auto& attribute = GetAttribute(location);
+            GLuint glAttrib = static_cast<GLuint>(static_cast<uint8_t>(location));
+            DAWN_GL_TRY(gl, EnableVertexAttribArray(glAttrib));
 
-        mAttributesUsingVertexBuffer[attribute.vertexBufferSlot][location] = true;
-        const VertexBufferInfo& vertexBuffer = GetVertexBuffer(attribute.vertexBufferSlot);
+            mAttributesUsingVertexBuffer[attribute.vertexBufferSlot][location] = true;
+            const VertexBufferInfo& vertexBuffer = GetVertexBuffer(attribute.vertexBufferSlot);
 
-        if (vertexBuffer.arrayStride == 0) {
-            // Emulate a stride of zero (constant vertex attribute) by
-            // setting the attribute instance divisor to a huge number.
-            DAWN_GL_TRY(gl, VertexAttribDivisor(glAttrib, 0xffffffff));
-        } else {
-            switch (vertexBuffer.stepMode) {
-                case wgpu::VertexStepMode::Vertex:
-                    break;
-                case wgpu::VertexStepMode::Instance:
-                    DAWN_GL_TRY(gl, VertexAttribDivisor(glAttrib, 1));
-                    break;
-                case wgpu::VertexStepMode::Undefined:
-                    DAWN_UNREACHABLE();
+            if (vertexBuffer.arrayStride == 0) {
+                // Emulate a stride of zero (constant vertex attribute) by
+                // setting the attribute instance divisor to a huge number.
+                DAWN_GL_TRY(gl, VertexAttribDivisor(glAttrib, 0xffffffff));
+            } else {
+                switch (vertexBuffer.stepMode) {
+                    case wgpu::VertexStepMode::Vertex:
+                        break;
+                    case wgpu::VertexStepMode::Instance:
+                        DAWN_GL_TRY(gl, VertexAttribDivisor(glAttrib, 1));
+                        break;
+                    case wgpu::VertexStepMode::Undefined:
+                        DAWN_UNREACHABLE();
+                }
             }
         }
-    }
-
-    return {};
+        return {};
+    });
 }
 
 MaybeError RenderPipeline::ApplyNow(const OpenGLFunctions& gl,

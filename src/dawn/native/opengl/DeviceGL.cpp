@@ -381,12 +381,6 @@ Ref<TextureBase> Device::CreateTextureWrappingEGLImage(const ExternalImageDescri
 ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingEGLImageImpl(
     const ExternalImageDescriptor* descriptor,
     ::EGLImage image) {
-    // TODO(451928481): We cannot defer the GL work here because the external texture may be
-    // deleted after this method returns. In the future, we should deprecate this method and
-    // require clients to use SharedTextureMemory for better lifetime management.
-    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
-    DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
-    const OpenGLFunctions& gl = GetGL(/*makeCurrent=*/false);
 
     TextureDescriptor reifiedDescriptor =
         FromAPI(descriptor->cTextureDescriptor)->WithTrivialFrontendDefaults();
@@ -394,39 +388,42 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingEGLImageImpl(
     DAWN_TRY_ASSIGN(textureDescriptor, ValidateAndUnpack(&reifiedDescriptor));
     DAWN_TRY(ValidateTextureDescriptor(this, textureDescriptor));
     DAWN_TRY(ValidateTextureCanBeWrapped(textureDescriptor));
+
+    // TODO(dawn:803): Validate the OpenGL texture format from the EGLImage against the format
+    // in the passed-in TextureDescriptor.
+    auto result = AcquireRef(new Texture(this, textureDescriptor, OwnsHandle::No));
+
     // The EGLImage was created from outside of Dawn so it must be on the same display that was
     // provided to create the device. The best check we can do is that we indeed have
     // EGL_KHR_image_base.
     DAWN_ASSERT(GetEGL(false).HasExt(EGLExt::ImageBase));
 
-    GLuint tex;
-    DAWN_GL_TRY(gl, GenTextures(1, &tex));
-    DAWN_GL_TRY(gl, BindTexture(GL_TEXTURE_2D, tex));
-    DAWN_GL_TRY(gl, EGLImageTargetTexture2DOES(GL_TEXTURE_2D, image));
-    DAWN_GL_TRY(gl, TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0));
+    DAWN_TRY(EnqueueGL([&](const OpenGLFunctions& gl) -> MaybeError {
+        GLuint tex = 0;
+        DAWN_GL_TRY(gl, GenTextures(1, &tex));
+        result->SetHandle(tex);
+        DAWN_GL_TRY(gl, BindTexture(GL_TEXTURE_2D, tex));
+        DAWN_GL_TRY(gl, EGLImageTargetTexture2DOES(GL_TEXTURE_2D, image));
+        DAWN_GL_TRY(gl, TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0));
 
-    GLint width, height;
-    DAWN_GL_TRY(gl, GetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width));
-    DAWN_GL_TRY(gl, GetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height));
+        GLint width, height;
+        DAWN_GL_TRY(gl, GetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width));
+        DAWN_GL_TRY(gl, GetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height));
 
-    if (textureDescriptor->size.width != static_cast<uint32_t>(width) ||
-        textureDescriptor->size.height != static_cast<uint32_t>(height) ||
-        textureDescriptor->size.depthOrArrayLayers != 1) {
-        DAWN_GL_TRY(gl, DeleteTextures(1, &tex));
+        if (textureDescriptor->size.width != static_cast<uint32_t>(width) ||
+            textureDescriptor->size.height != static_cast<uint32_t>(height) ||
+            textureDescriptor->size.depthOrArrayLayers != 1) {
+            DAWN_GL_TRY(gl, DeleteTextures(1, &tex));
 
-        return DAWN_VALIDATION_ERROR(
-            "EGLImage size (width: %u, height: %u, depth: 1) doesn't match descriptor size %s.",
-            width, height, &textureDescriptor->size);
-    }
+            return DAWN_VALIDATION_ERROR(
+                "EGLImage size (width: %u, height: %u, depth: 1) doesn't match descriptor size %s.",
+                width, height, &textureDescriptor->size);
+        }
 
-    // TODO(dawn:803): Validate the OpenGL texture format from the EGLImage against the format
-    // in the passed-in TextureDescriptor.
-    auto result = AcquireRef(new Texture(this, textureDescriptor, tex, OwnsHandle::No));
-    result->SetIsSubresourceContentInitialized(descriptor->isInitialized,
-                                               result->GetAllSubresources());
-
-    DAWN_TRY(scopedCurrentContext.End());
-
+        result->SetIsSubresourceContentInitialized(descriptor->isInitialized,
+                                                   result->GetAllSubresources());
+        return {};
+    }));
     return result;
 }
 
@@ -443,12 +440,6 @@ Ref<TextureBase> Device::CreateTextureWrappingGLTexture(const ExternalImageDescr
 ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingGLTextureImpl(
     const ExternalImageDescriptor* descriptor,
     GLuint texture) {
-    // TODO(451928481): We cannot defer the GL work here because the external texture may be
-    // deleted after this method returns. In the future, we should deprecate this method and
-    // require clients to use SharedTextureMemory for better lifetime management.
-    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
-    DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
-    const OpenGLFunctions& gl = GetGL(/*makeCurrent=*/false);
 
     TextureDescriptor reifiedDescriptor =
         FromAPI(descriptor->cTextureDescriptor)->WithTrivialFrontendDefaults();
@@ -459,27 +450,29 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingGLTextureImpl(
         return DAWN_VALIDATION_ERROR("Device does not support ANGLE GL texture sharing.");
     }
     DAWN_TRY(ValidateTextureCanBeWrapped(textureDescriptor));
+    auto result = AcquireRef(new Texture(this, textureDescriptor, OwnsHandle::No));
+    result->SetHandle(texture);
 
-    DAWN_GL_TRY(gl, BindTexture(GL_TEXTURE_2D, texture));
+    DAWN_TRY(EnqueueGL([&](const OpenGLFunctions& gl) -> MaybeError {
+        DAWN_GL_TRY(gl, BindTexture(GL_TEXTURE_2D, texture));
 
-    GLint width, height;
-    DAWN_GL_TRY(gl, GetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width));
-    DAWN_GL_TRY(gl, GetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height));
+        GLint width, height;
+        DAWN_GL_TRY(gl, GetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width));
+        DAWN_GL_TRY(gl, GetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height));
 
-    if (textureDescriptor->size.width != static_cast<uint32_t>(width) ||
-        textureDescriptor->size.height != static_cast<uint32_t>(height) ||
-        textureDescriptor->size.depthOrArrayLayers != 1) {
-        return DAWN_VALIDATION_ERROR(
-            "GL texture size (width: %u, height: %u, depth: 1) doesn't match descriptor size %s.",
-            width, height, &textureDescriptor->size);
-    }
+        if (textureDescriptor->size.width != static_cast<uint32_t>(width) ||
+            textureDescriptor->size.height != static_cast<uint32_t>(height) ||
+            textureDescriptor->size.depthOrArrayLayers != 1) {
+            return DAWN_VALIDATION_ERROR(
+                "GL texture size (width: %u, height: %u, depth: 1) doesn't match descriptor size "
+                "%s.",
+                width, height, &textureDescriptor->size);
+        }
 
-    auto result = AcquireRef(new Texture(this, textureDescriptor, texture, OwnsHandle::No));
-    result->SetIsSubresourceContentInitialized(descriptor->isInitialized,
-                                               result->GetAllSubresources());
-
-    DAWN_TRY(scopedCurrentContext.End());
-
+        result->SetIsSubresourceContentInitialized(descriptor->isInitialized,
+                                                   result->GetAllSubresources());
+        return {};
+    }));
     return result;
 }
 
@@ -498,9 +491,9 @@ MaybeError Device::FlushPendingGLCommands() {
 
     ContextEGL::ScopedMakeCurrent scopedCurrentContext;
     DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
-    const OpenGLFunctions& gl = GetGL(/*makeCurrent=*/false);
+    MarkGLUsed(ExecutionQueueBase::SubmitMode::Normal);
     for (auto& work : workList) {
-        DAWN_TRY(work(gl));
+        DAWN_TRY(work(mGL));
     }
     return scopedCurrentContext.End();
 }

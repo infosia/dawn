@@ -42,11 +42,15 @@ ComputePipeline::~ComputePipeline() = default;
 
 void ComputePipeline::DestroyImpl() {
     ComputePipelineBase::DestroyImpl();
-    DeleteProgram(ToBackend(GetDevice())->GetGL());
+    auto ignoredResult =
+        ToBackend(GetDevice())->EnqueueGL([this](const OpenGLFunctions& gl) -> MaybeError {
+            DeleteProgram(gl);
+            return {};
+        });
 }
 
 MaybeError ComputePipeline::InitializeImpl() {
-    return InitializeBase(ToBackend(GetDevice())->GetGL(), ToBackend(GetLayout()), GetAllStages(),
+    return InitializeBase(ToBackend(GetDevice()), ToBackend(GetLayout()), GetAllStages(),
                           /* usesVertexIndex */ false, /* usesInstanceIndex */ false,
                           /* usesFragDepth */ false, /* bgraSwizzleAttributes */ {});
 }

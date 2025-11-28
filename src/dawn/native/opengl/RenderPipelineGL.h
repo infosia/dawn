@@ -59,7 +59,7 @@ class RenderPipeline final : public RenderPipelineBase, public PipelineGL {
     ~RenderPipeline() override;
     void DestroyImpl() override;
 
-    MaybeError CreateVAOForVertexState(const OpenGLFunctions& gl);
+    MaybeError CreateVAOForVertexState();
 
     MaybeError ApplyDepthStencilState(const OpenGLFunctions& gl,
                                       PersistentPipelineState* persistentPipelineState);

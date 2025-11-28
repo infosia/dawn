@@ -47,6 +47,7 @@ namespace dawn::native::opengl {
 
 struct OpenGLFunctions;
 class Buffer;
+class Device;
 class PipelineLayout;
 class Sampler;
 class TextureView;
@@ -92,7 +93,7 @@ class PipelineGL {
 
   protected:
     MaybeError ApplyNow(const OpenGLFunctions& gl, const PipelineLayout* layout);
-    MaybeError InitializeBase(const OpenGLFunctions& gl,
+    MaybeError InitializeBase(Device* device,
                               const PipelineLayout* layout,
                               const PerStage<ProgrammableStage>& stages,
                               bool usesVertexIndex,
