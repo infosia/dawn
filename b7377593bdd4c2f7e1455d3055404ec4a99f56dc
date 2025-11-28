@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e492d459_0a4c52ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-28T21:31:27Z",
+      "side": 1,
+      "message": "CQ failures should be fixed when https://dawn-review.googlesource.com/c/dawn/+/277335 lands",
+      "revId": "b7377593bdd4c2f7e1455d3055404ec4a99f56dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b267a2d2_ddb35c79",
         "filename": "src/dawn/native/Limits.cpp",
         "patchSetId": 1
