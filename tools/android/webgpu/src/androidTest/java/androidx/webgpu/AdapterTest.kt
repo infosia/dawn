@@ -27,7 +27,7 @@ class AdapterTest {
   @Before
   fun setup() = runBlocking {
     initLibrary()
-    instance = createInstance()
+    instance = GPU.createInstance()
     adapter = instance.requestAdapter()
   }
 
