@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c18f135_580c9d24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-28T15:24:27Z",
+      "side": 1,
+      "message": "This can only land once the following Skia change lands and rolls into Chromium: https://skia-review.googlesource.com/c/skia/+/1112616",
+      "revId": "1716084abd3f3afcf0611dc33d40d77bd94f5775",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
