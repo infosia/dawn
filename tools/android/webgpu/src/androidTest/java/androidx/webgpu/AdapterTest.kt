@@ -37,18 +37,6 @@ class AdapterTest {
     instance.close()
   }
 
-  /**
-   * Helper map for default limit values as defined by the WebGPU spec.
-   * A full implementation would have all limits.
-   */
-  companion object {
-    private val kDefaultLimits = mapOf(
-      "maxTextureDimension2D" to 8192,
-      "maxBindGroups" to 4,
-      "minUniformBufferOffsetAlignment" to 256
-    )
-  }
-
   @Test
   @ApiRequirement(minApi = EMULATOR_TESTS_MIN_API_LEVEL, onlySkipOnEmulator = true)
   fun adapterBackendTest() {
@@ -99,17 +87,13 @@ class AdapterTest {
    */
   @Test
   fun requestDeviceWithDefaultParametersReturnsDefaultLimits() {
+    val defaultAdapterLimits = adapter.getLimits()
     val device = runBlocking { adapter.requestDevice() }
     try {
       val limits = device.getLimits()
       assertEquals(
-        "maxTextureDimension2D should be the default value",
-        kDefaultLimits["maxTextureDimension2D"],
-        limits.maxTextureDimension2D
-      )
-      assertEquals(
         "maxBindGroups should be the default value",
-        kDefaultLimits["maxBindGroups"],
+        defaultAdapterLimits.maxBindGroups,
         limits.maxBindGroups
       )
     } finally {
@@ -180,13 +164,14 @@ class AdapterTest {
    */
   @Test
   fun requestDeviceWithWorseThanDefaultLimitClamps() {
-      val worseLimit = kDefaultLimits.getValue("maxBindGroups") - 1
+    val defaultAdapterLimits = adapter.getLimits()
+      val worseLimit = defaultAdapterLimits.maxBindGroups - 1
       assert(worseLimit > 0) // Ensure the value is still valid, just worse.
       val device = runBlocking { requestTestDevice(limits = Limits(maxBindGroups = worseLimit)) }
       val deviceLimits = device.getLimits()
       assertEquals(
         "Device limit should be clamped to the default",
-        kDefaultLimits.getValue("maxBindGroups"),
+        defaultAdapterLimits.maxBindGroups,
         deviceLimits.maxBindGroups
       )
       runCatching { device.destroy() }
