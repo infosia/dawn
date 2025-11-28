@@ -177,10 +177,6 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
     return {};
 }
 
-void PipelineGL::DeleteProgram(const OpenGLFunctions& gl) {
-    DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteProgram(mProgram));
-}
-
 const std::vector<TextureUnit>& PipelineGL::GetTextureUnitsForSampler(
     FlatBindingIndex index) const {
     DAWN_ASSERT(index < mUnitsForSamplers.size());
@@ -191,10 +187,6 @@ const std::vector<TextureUnit>& PipelineGL::GetTextureUnitsForTextureView(
     FlatBindingIndex index) const {
     DAWN_ASSERT(index < mUnitsForTextures.size());
     return mUnitsForTextures[index];
-}
-
-GLuint PipelineGL::GetProgramHandle() const {
-    return mProgram;
 }
 
 MaybeError PipelineGL::ApplyNow(const OpenGLFunctions& gl, const PipelineLayout* layout) {

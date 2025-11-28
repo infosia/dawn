@@ -46,6 +46,9 @@ class RenderPipeline final : public RenderPipelineBase, public PipelineGL {
         const UnpackedPtr<RenderPipelineDescriptor>& descriptor);
 
     GLenum GetGLPrimitiveTopology() const;
+    GLuint GetVertexArrayObject() const;
+    GLuint GetProgramHandle() const;
+
     VertexAttributeMask GetAttributesUsingVertexBuffer(VertexBufferSlot slot) const;
 
     MaybeError ApplyNow(const OpenGLFunctions& gl,
