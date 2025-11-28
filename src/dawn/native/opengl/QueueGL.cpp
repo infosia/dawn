@@ -91,14 +91,16 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   uint64_t bufferOffset,
                                   const void* data,
                                   size_t size) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    return ToBackend(GetDevice())
+        ->EnqueueAndFlushGL([buffer, bufferOffset, size, data, self = Ref<BufferBase>(buffer)](
+                                const OpenGLFunctions& gl) -> MaybeError {
+            DAWN_TRY(ToBackend(buffer)->EnsureDataInitializedAsDestination(bufferOffset, size));
 
-    DAWN_TRY(ToBackend(buffer)->EnsureDataInitializedAsDestination(bufferOffset, size));
-
-    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, ToBackend(buffer)->GetHandle()));
-    DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, size, data));
-    buffer->MarkUsedInPendingCommands();
-    return {};
+            DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, ToBackend(buffer)->GetHandle()));
+            DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, size, data));
+            buffer->MarkUsedInPendingCommands();
+            return {};
+        });
 }
 
 MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
@@ -158,15 +160,25 @@ MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
         return {};
     }
 
-    auto gl = ToBackend(GetDevice())->GetGL();
     SubresourceRange range = GetSubresourcesAffectedByCopy(textureCopy, writeSizePixel);
+    bool ensureInitialized = false;
     if (IsCompleteSubresourceCopiedTo(destination.texture, writeSizePixel, destination.mipLevel,
                                       destination.aspect)) {
         destination.texture->SetIsSubresourceContentInitialized(true, range);
     } else {
-        DAWN_TRY(ToBackend(destination.texture)->EnsureSubresourceContentInitialized(gl, range));
+        ensureInitialized = true;
     }
-    return DoTexSubImage(gl, textureCopy, data, dataLayout, writeSizePixel);
+    Ref<Texture> dest(ToBackend(destination.texture));
+
+    // FIXME: this is hanging on to data ptr unsafely
+    return ToBackend(device)->EnqueueGL([ensureInitialized, dest, range, textureCopy, data,
+                                         dataLayout,
+                                         writeSizePixel](const OpenGLFunctions& gl) -> MaybeError {
+        if (ensureInitialized) {
+            DAWN_TRY(dest->EnsureSubresourceContentInitialized(gl, range));
+        }
+        return DoTexSubImage(gl, textureCopy, data, dataLayout, writeSizePixel);
+    });
 }
 
 void Queue::SetNeedsFenceSync() {
