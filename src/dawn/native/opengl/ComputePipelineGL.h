@@ -48,6 +48,8 @@ class ComputePipeline final : public ComputePipelineBase, public PipelineGL {
 
     MaybeError InitializeImpl() override;
 
+    GLuint GetProgramHandle() const;
+
   private:
     using ComputePipelineBase::ComputePipelineBase;
     ~ComputePipeline() override;
