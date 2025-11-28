@@ -27,6 +27,8 @@
 
 #include "dawn/native/opengl/QueueGL.h"
 
+#include <vector>
+
 #include "dawn/native/BlitBufferToDepthStencil.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/CommandEncoder.h"
@@ -91,13 +93,27 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   uint64_t bufferOffset,
                                   const void* data,
                                   size_t size) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-
     DAWN_TRY(ToBackend(buffer)->EnsureDataInitializedAsDestination(bufferOffset, size));
+    buffer->MarkUsedInPendingCommands();
+    if (GetDevice()->IsToggleEnabled(Toggle::GLDefer)) {
+        auto* d = static_cast<const char*>(data);
+        auto b = Ref<Buffer>(ToBackend(buffer));
+        return ToBackend(GetDevice())
+            ->EnqueueGL([buffer = b, bufferOffset, data = std::vector<char>(d, d + size)](
+                            const OpenGLFunctions& gl) -> MaybeError {
+                DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, buffer->GetHandle()));
+                DAWN_GL_TRY(gl,
+                            BufferSubData(GL_ARRAY_BUFFER, bufferOffset, data.size(), data.data()));
+                return {};
+            });
+    }
+    auto device = ToBackend(GetDevice());
+    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
+    DAWN_TRY_ASSIGN(scopedCurrentContext, device->GetContext()->MakeCurrent());
+    const OpenGLFunctions& gl = device->GetGL();
 
     DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, ToBackend(buffer)->GetHandle()));
     DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, size, data));
-    buffer->MarkUsedInPendingCommands();
     return {};
 }
 
@@ -112,7 +128,7 @@ MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
     textureCopy.origin = destination.origin;
     textureCopy.aspect = SelectFormatAspects(destination.texture->GetFormat(), destination.aspect);
 
-    DeviceBase* device = GetDevice();
+    Device* device = ToBackend(GetDevice());
     if (textureCopy.aspect == Aspect::Stencil &&
         (textureCopy.texture->GetFormat().aspects & Aspect::Depth ||
          device->IsToggleEnabled(Toggle::UseBlitForStencilTextureWrite))) {
@@ -158,12 +174,35 @@ MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
         return {};
     }
 
-    auto gl = ToBackend(GetDevice())->GetGL();
     SubresourceRange range = GetSubresourcesAffectedByCopy(textureCopy, writeSizePixel);
+    bool ensureInitialized = false;
     if (IsCompleteSubresourceCopiedTo(destination.texture, writeSizePixel, destination.mipLevel,
                                       destination.aspect)) {
         destination.texture->SetIsSubresourceContentInitialized(true, range);
     } else {
+        ensureInitialized = true;
+    }
+
+    if (device->IsToggleEnabled(Toggle::GLDefer)) {
+        auto* d = static_cast<const char*>(data);
+        return device->EnqueueGL(
+            [ensureInitialized, dest = Ref<Texture>(ToBackend(destination.texture)), range,
+             textureCopy = TextureCopy(textureCopy), data = std::vector<char>(d, d + dataSize),
+             dataLayout = TexelCopyBufferLayout(dataLayout),
+             writeSizePixel = Extent3D(writeSizePixel)](const OpenGLFunctions& gl) -> MaybeError {
+                if (ensureInitialized) {
+                    DAWN_TRY(dest->EnsureSubresourceContentInitialized(gl, range));
+                }
+                return DoTexSubImage(gl, textureCopy, data.data(), dataLayout, writeSizePixel);
+            });
+    }
+
+    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
+    DAWN_TRY_ASSIGN(scopedCurrentContext, device->GetContext()->MakeCurrent());
+
+    const OpenGLFunctions& gl = device->GetGL();
+
+    if (ensureInitialized) {
         DAWN_TRY(ToBackend(destination.texture)->EnsureSubresourceContentInitialized(gl, range));
     }
     return DoTexSubImage(gl, textureCopy, data, dataLayout, writeSizePixel);

@@ -105,46 +105,55 @@ Sampler::~Sampler() = default;
 
 void Sampler::DestroyImpl(DestroyReason reason) {
     SamplerBase::DestroyImpl(reason);
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-    DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteSamplers(1, &mHandle));
+    IgnoreErrors(ToBackend(GetDevice())
+                     ->EnqueueDestroyGL(this, &Sampler::GetHandle, reason,
+                                        [](const OpenGLFunctions& gl, GLuint handle) -> MaybeError {
+                                            DAWN_GL_TRY_IGNORE_ERRORS(gl,
+                                                                      DeleteSamplers(1, &handle));
+                                            return {};
+                                        }));
 }
 
 MaybeError Sampler::Initialize(const SamplerDescriptor* descriptor) {
     Device* device = ToBackend(GetDevice());
-    const OpenGLFunctions& gl = device->GetGL();
+    auto maxAnisotropy =
+        std::min<uint16_t>(GetMaxAnisotropy(), device->GetMaxTextureMaxAnisotropy());
+    // Chained structs are not supported by the copying capture below.
+    DAWN_ASSERT(descriptor->nextInChain == nullptr);
 
-    DAWN_GL_TRY(gl, GenSamplers(1, &mHandle));
+    return device->EnqueueGL([this, descriptor = *descriptor, maxAnisotropy,
+                              self = Ref<Sampler>(this)](const OpenGLFunctions& gl) -> MaybeError {
+        DAWN_GL_TRY(gl, GenSamplers(1, &mHandle));
 
-    DAWN_GL_TRY(gl, SamplerParameteri(mHandle, GL_TEXTURE_MAG_FILTER,
-                                      MagFilterMode(descriptor->magFilter)));
-    DAWN_GL_TRY(gl,
-                SamplerParameteri(mHandle, GL_TEXTURE_MIN_FILTER,
-                                  MinFilterMode(descriptor->minFilter, descriptor->mipmapFilter)));
+        DAWN_GL_TRY(gl, SamplerParameteri(mHandle, GL_TEXTURE_MAG_FILTER,
+                                          MagFilterMode(descriptor.magFilter)));
+        DAWN_GL_TRY(
+            gl, SamplerParameteri(mHandle, GL_TEXTURE_MIN_FILTER,
+                                  MinFilterMode(descriptor.minFilter, descriptor.mipmapFilter)));
 
-    DAWN_GL_TRY(gl,
-                SamplerParameteri(mHandle, GL_TEXTURE_WRAP_R, WrapMode(descriptor->addressModeW)));
-    DAWN_GL_TRY(gl,
-                SamplerParameteri(mHandle, GL_TEXTURE_WRAP_S, WrapMode(descriptor->addressModeU)));
-    DAWN_GL_TRY(gl,
-                SamplerParameteri(mHandle, GL_TEXTURE_WRAP_T, WrapMode(descriptor->addressModeV)));
+        DAWN_GL_TRY(
+            gl, SamplerParameteri(mHandle, GL_TEXTURE_WRAP_R, WrapMode(descriptor.addressModeW)));
+        DAWN_GL_TRY(
+            gl, SamplerParameteri(mHandle, GL_TEXTURE_WRAP_S, WrapMode(descriptor.addressModeU)));
+        DAWN_GL_TRY(
+            gl, SamplerParameteri(mHandle, GL_TEXTURE_WRAP_T, WrapMode(descriptor.addressModeV)));
 
-    DAWN_GL_TRY(gl, SamplerParameterf(mHandle, GL_TEXTURE_MIN_LOD, descriptor->lodMinClamp));
-    DAWN_GL_TRY(gl, SamplerParameterf(mHandle, GL_TEXTURE_MAX_LOD, descriptor->lodMaxClamp));
+        DAWN_GL_TRY(gl, SamplerParameterf(mHandle, GL_TEXTURE_MIN_LOD, descriptor.lodMinClamp));
+        DAWN_GL_TRY(gl, SamplerParameterf(mHandle, GL_TEXTURE_MAX_LOD, descriptor.lodMaxClamp));
 
-    if (descriptor->compare != wgpu::CompareFunction::Undefined) {
-        DAWN_GL_TRY(gl,
-                    SamplerParameteri(mHandle, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE));
-        DAWN_GL_TRY(gl, SamplerParameteri(mHandle, GL_TEXTURE_COMPARE_FUNC,
-                                          ToOpenGLCompareFunction(descriptor->compare)));
-    }
+        if (descriptor.compare != wgpu::CompareFunction::Undefined) {
+            DAWN_GL_TRY(
+                gl, SamplerParameteri(mHandle, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE));
+            DAWN_GL_TRY(gl, SamplerParameteri(mHandle, GL_TEXTURE_COMPARE_FUNC,
+                                              ToOpenGLCompareFunction(descriptor.compare)));
+        }
 
-    if (HasAnisotropicFiltering(gl)) {
-        uint16_t value =
-            std::min<uint16_t>(GetMaxAnisotropy(), device->GetMaxTextureMaxAnisotropy());
-        DAWN_GL_TRY(gl, SamplerParameteri(mHandle, GL_TEXTURE_MAX_ANISOTROPY, value));
-    }
+        if (HasAnisotropicFiltering(gl)) {
+            DAWN_GL_TRY(gl, SamplerParameteri(mHandle, GL_TEXTURE_MAX_ANISOTROPY, maxAnisotropy));
+        }
 
-    return {};
+        return {};
+    });
 }
 
 GLuint Sampler::GetHandle() const {
