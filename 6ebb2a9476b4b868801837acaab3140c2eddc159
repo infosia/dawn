@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8794b3bc_ed4d8015",
+        "filename": "src/dawn/dawn_kotlin.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-28T12:30:09Z",
+      "side": 1,
+      "message": "I don\u0027t think \u0027toggle\u0027 is the right word. My understanding of \u0027toggle\u0027 is to flip the state; if it was on, turn it off, and vice-versa. \u0027enable_kdoc_warn_logs\u0027 would be the correct name.",
+      "revId": "6ebb2a9476b4b868801837acaab3140c2eddc159",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
