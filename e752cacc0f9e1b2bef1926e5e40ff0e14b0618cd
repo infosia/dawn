@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd2eecea_70df57d3",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ObjectTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-28T11:43:51Z",
+      "side": 1,
+      "message": "Is there a way to use \u0027import\u0027 so that createInstance() can be called without explicitly qualifying it with GPU.createInstance()?",
+      "revId": "e752cacc0f9e1b2bef1926e5e40ff0e14b0618cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
