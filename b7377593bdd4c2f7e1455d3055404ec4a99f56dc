@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b267a2d2_ddb35c79",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-28T21:22:32Z",
+      "side": 1,
+      "message": "I suppose eventually we\u0027ll automatically enable this feature if the future \"HeterogenousResourceTable\" feature is enabled.",
+      "range": {
+        "startLine": 584,
+        "startChar": 63,
+        "endLine": 584,
+        "endChar": 71
+      },
+      "revId": "b7377593bdd4c2f7e1455d3055404ec4a99f56dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
