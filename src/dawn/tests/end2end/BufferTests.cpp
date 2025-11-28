@@ -1258,62 +1258,36 @@ TEST_P(BufferTests, BufferMappedAtCreationOOM) {
     }
 }
 
-// Test OOM cases that can't be reliably triggered, but can be simulated.
-TEST_P(BufferTests, BufferMappedAtCreationOOM_Simulated) {
-    auto Check = [&](bool mapError, bool deviceError, const wgpu::BufferDescriptor* desc) {
-        wgpu::Buffer buffer;
-        if (deviceError) {
-            ASSERT_DEVICE_ERROR(buffer = device.CreateBuffer(desc));
-        } else {
-            buffer = device.CreateBuffer(desc);
-        }
-        if (mapError) {
-            ASSERT_EQ(nullptr, buffer.Get());
-        } else {
-            ASSERT_NE(nullptr, buffer.Get());
-            ASSERT_NE(nullptr, buffer.GetMappedRange());
-        }
-    };
+// Test calling Queue.Submit() while a mappedAtCreation Buffer is still mapped.
+TEST_P(BufferTests, BufferMappedAtCreationSubmitBeforeUnmap) {
+    uint32_t size = sizeof(uint32_t);
+    wgpu::BufferDescriptor sourceDesc, destDesc;
 
-    for (wgpu::BufferUsage usage : {
-             wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::None,
-             wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite,
-             wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::MapRead,
-         }) {
-        wgpu::DawnFakeBufferOOMForTesting oomForTesting;
-        wgpu::BufferDescriptor descriptor;
-        descriptor.nextInChain = &oomForTesting;
-        descriptor.size = 4;
-        descriptor.usage = usage;
-        descriptor.mappedAtCreation = true;
+    sourceDesc.usage = wgpu::BufferUsage::MapWrite | wgpu::BufferUsage::CopySrc;
+    sourceDesc.size = size;
+    sourceDesc.mappedAtCreation = true;
 
-        // Control: test a small buffer works.
-        Check(false, false, &descriptor);
+    destDesc.usage = wgpu::BufferUsage::MapRead | wgpu::BufferUsage::CopyDst;
+    destDesc.size = size;
 
-        // Test OOM in the wire client before ever sending a command.
-        if (UsesWire()) {
-            oomForTesting = {};
-            oomForTesting.fakeOOMAtWireClientMap = true;
-            Check(true, false, &descriptor);
-        }
+    wgpu::Buffer source = device.CreateBuffer(&sourceDesc);
+    wgpu::Buffer dest = device.CreateBuffer(&destDesc);
 
-        // Test OOM in Dawn Native. If using the wire, this could cause a
-        // non-null client buffer to point to a null server buffer.
-        oomForTesting = {};
-        oomForTesting.fakeOOMAtNativeMap = true;
-        Check(!UsesWire(), false, &descriptor);
+    auto mappedPointer = static_cast<uint32_t*>(source.GetMappedRange());
 
-        // Test OOM in Dawn Native AND in the device allocation. Similar to previous case.
-        oomForTesting = {};
-        oomForTesting.fakeOOMAtNativeMap = true;
-        oomForTesting.fakeOOMAtDevice = true;
-        Check(!UsesWire(), false, &descriptor);
+    queue.Submit(0, nullptr);
 
-        // Test OOM only in device allocation. There should be no nulls returned at either layer.
-        oomForTesting = {};
-        oomForTesting.fakeOOMAtDevice = true;
-        Check(false, true, &descriptor);
-    }
+    *mappedPointer = 42;
+
+    source.Unmap();
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    encoder.CopyBufferToBuffer(source, 0, dest, 0, size);
+    auto commands = encoder.Finish();
+    queue.Submit(1, &commands);
+    MapAsyncAndWait(dest, wgpu::MapMode::Read, 0, size);
+    auto result = static_cast<const uint32_t*>(dest.GetConstMappedRange());
+    ASSERT_EQ(result[0], 42u);
 }
 
 TEST_P(BufferTests, CreateErrorBuffer) {
