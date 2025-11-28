@@ -44,6 +44,9 @@ namespace {
         } else {                                                                         \
             size_t lazyClearsBefore = native::GetLazyClearCountForTesting(device.Get()); \
             statement;                                                                   \
+            if (HasToggleEnabled("gl_defer")) {                                          \
+                queue.Submit(0, nullptr);                                                \
+            }                                                                            \
             size_t lazyClearsAfter = native::GetLazyClearCountForTesting(device.Get());  \
             EXPECT_EQ(N, lazyClearsAfter - lazyClearsBefore);                            \
         }                                                                                \
