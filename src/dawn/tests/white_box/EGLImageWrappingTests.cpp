@@ -316,7 +316,6 @@ class EGLImageUsageTests : public EGLImageTestBase {
                      size_t dataSize) {
         native::opengl::Device* openglDevice =
             native::opengl::ToBackend(native::FromAPI(device.Get()));
-        const native::opengl::OpenGLFunctions& gl = openglDevice->GetGL();
 
         // Get a texture view for the eglImage
         wgpu::TextureDescriptor textureDescriptor;
@@ -349,16 +348,23 @@ class EGLImageUsageTests : public EGLImageTestBase {
         wgpu::CommandBuffer commands = encoder.Finish();
         queue.Submit(1, &commands);
 
-        // Check the correct data was written
         std::vector<uint8_t> result(dataSize);
-        GLuint fbo;
-        gl.GenFramebuffers(1, &fbo);
-        gl.BindFramebuffer(GL_FRAMEBUFFER, fbo);
-        gl.FramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture,
-                                0);
-        gl.ReadPixels(0, 0, 1, 1, glFormat, glType, result.data());
-        gl.BindFramebuffer(GL_FRAMEBUFFER, 0);
-        gl.DeleteFramebuffers(1, &fbo);
+
+        auto ignoreResult = openglDevice->ExecuteGL(
+            native::ExecutionQueueBase::SubmitMode::Passive,
+            [texture, &result, glFormat,
+             glType](const native::opengl::OpenGLFunctions& gl) -> native::MaybeError {
+                // Check the correct data was written
+                GLuint fbo;
+                gl.GenFramebuffers(1, &fbo);
+                gl.BindFramebuffer(GL_FRAMEBUFFER, fbo);
+                gl.FramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+                                        texture, 0);
+                gl.ReadPixels(0, 0, 1, 1, glFormat, glType, result.data());
+                gl.BindFramebuffer(GL_FRAMEBUFFER, 0);
+                gl.DeleteFramebuffers(1, &fbo);
+                return {};
+            });
         ASSERT_EQ(0, memcmp(result.data(), data, dataSize));
     }
 
