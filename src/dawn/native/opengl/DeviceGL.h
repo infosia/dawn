@@ -74,10 +74,12 @@ class Device final : public DeviceBase {
     template <typename Fn>
     MaybeError EnqueueGL(ExecutionQueueBase::SubmitMode submitMode, Fn&& work) {
         MarkGLUsed(submitMode);
-        if (mContext->IsInScopedMakeCurrent()) {
+        if (IsToggleEnabled(Toggle::GLDefer) && !mContext->IsInScopedMakeCurrent()) {
+            mPendingGLWorkList.Use(
+                [&](auto workList) { workList->push_back(std::forward<Fn>(work)); });
+        } else {
             return work(mGL);
         }
-        mPendingGLWorkList.Use([&](auto workList) { workList->push_back(std::forward<Fn>(work)); });
         return {};
     }
 

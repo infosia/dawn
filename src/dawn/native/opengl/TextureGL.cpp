@@ -258,30 +258,32 @@ MaybeError FramebufferTextureHelper(const OpenGLFunctions& gl,
 // static
 ResultOrError<Ref<Texture>> Texture::Create(Device* device,
                                             const UnpackedPtr<TextureDescriptor>& descriptor) {
-    const OpenGLFunctions& gl = device->GetGL();
-
-    GLuint handle = 0;
-    DAWN_GL_TRY(gl, GenTextures(1, &handle));
-
     // Wrap the handle in a Texture class early so that it is deleted if initialization fails
-    Ref<Texture> texture = AcquireRef(new Texture(device, descriptor, handle, OwnsHandle::Yes));
+    Ref<Texture> texture = AcquireRef(new Texture(device, descriptor, OwnsHandle::Yes));
 
-    GLenum target = texture->GetGLTarget();
-    uint32_t levels = descriptor->mipLevelCount;
-    const GLFormat& glFormat = texture->GetGLFormat();
+    bool clear = device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting);
+    DAWN_TRY(device->EnqueueGL([texture, clear, descriptor = TextureDescriptor(**descriptor)](
+                                   const OpenGLFunctions& gl) -> MaybeError {
+        DAWN_GL_TRY(gl, GenTextures(1, &texture->mHandle));
 
-    DAWN_GL_TRY(gl, BindTexture(target, handle));
-    DAWN_TRY(
-        AllocateTexture(gl, target, descriptor->sampleCount, levels, glFormat, descriptor->size));
+        GLenum target = texture->GetGLTarget();
+        uint32_t levels = descriptor.mipLevelCount;
+        const GLFormat& glFormat = texture->GetGLFormat();
 
-    // The texture is not complete if it uses mipmapping and not all levels up to
-    // MAX_LEVEL have been defined.
-    DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_MAX_LEVEL, levels - 1));
+        DAWN_GL_TRY(gl, BindTexture(target, texture->mHandle));
+        DAWN_TRY(
+            AllocateTexture(gl, target, descriptor.sampleCount, levels, glFormat, descriptor.size));
 
-    if (device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting)) {
-        DAWN_TRY(texture->ClearTexture(gl, texture->GetAllSubresources(),
-                                       TextureBase::ClearValue::NonZero));
-    }
+        // The texture is not complete if it uses mipmapping and not all levels up to
+        // MAX_LEVEL have been defined.
+        DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_MAX_LEVEL, levels - 1));
+
+        if (clear) {
+            DAWN_TRY(texture->ClearTexture(gl, texture->GetAllSubresources(),
+                                           TextureBase::ClearValue::NonZero));
+        }
+        return {};
+    }));
     return std::move(texture);
 }
 
@@ -291,19 +293,21 @@ ResultOrError<Ref<Texture>> Texture::CreateFromSharedTextureMemory(
     const UnpackedPtr<TextureDescriptor>& descriptor) {
     Device* device = ToBackend(memory->GetDevice());
 
-    GLuint textureId = 0;
-    DAWN_TRY_ASSIGN(textureId, memory->GenerateGLTexture());
+    Ref<Texture> texture = AcquireRef(new Texture(device, descriptor, OwnsHandle::Yes));
+    DAWN_TRY(device->EnqueueGL([texture, memory = Ref<SharedTextureMemory>(memory)](
+                                   const OpenGLFunctions& gl) -> MaybeError {
+        DAWN_TRY_ASSIGN(texture->mHandle, memory->GenerateGLTexture(gl));
+        return {};
+    }));
 
-    Ref<Texture> texture = AcquireRef(new Texture(device, descriptor, textureId, OwnsHandle::Yes));
     texture->mSharedResourceMemoryContents = memory->GetContents();
     return texture;
 }
 
 Texture::Texture(Device* device,
                  const UnpackedPtr<TextureDescriptor>& descriptor,
-                 GLuint handle,
                  OwnsHandle ownsHandle)
-    : TextureBase(device, descriptor), mHandle(handle), mOwnsHandle(ownsHandle) {
+    : TextureBase(device, descriptor), mOwnsHandle(ownsHandle) {
     mTarget = TargetForTextureViewDimension(GetCompatibilityTextureBindingViewDimension(),
                                             descriptor->sampleCount);
 }
@@ -313,14 +317,22 @@ Texture::~Texture() {}
 void Texture::DestroyImpl() {
     TextureBase::DestroyImpl();
     if (mOwnsHandle == OwnsHandle::Yes) {
-        const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-        DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteTextures(1, &mHandle));
+        auto ignoreResult =
+            ToBackend(GetDevice())
+                ->EnqueueGL([handle = mHandle](const OpenGLFunctions& gl) -> MaybeError {
+                    DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteTextures(1, &handle));
+                    return {};
+                });
         mHandle = 0;
     }
 }
 
 GLuint Texture::GetHandle() const {
     return mHandle;
+}
+
+void Texture::SetHandle(GLuint handle) {
+    mHandle = handle;
 }
 
 GLenum Texture::GetGLTarget() const {
@@ -626,42 +638,37 @@ MaybeError Texture::SynchronizeTextureBeforeUse() {
 ResultOrError<Ref<TextureView>> TextureView::Create(
     TextureBase* texture,
     const UnpackedPtr<TextureViewDescriptor>& descriptor) {
-    const OpenGLFunctions& gl = ToBackend(texture->GetDevice())->GetGL();
-    GLuint handle = 0;
-    OwnsHandle ownsHandle = OwnsHandle::No;
+    // Wrap the handle in a TextureView class early so that it is deleted if initialization fails
+    Ref<TextureView> view = AcquireRef(new TextureView(texture, descriptor));
+
+    GLuint textureHandle = ToBackend(texture)->GetHandle();
 
     // Texture could be destroyed by the time we make a view.
     if (texture->IsDestroyed()) {
-        handle = 0;
     } else if (!RequiresCreatingNewTextureView(texture, descriptor)) {
-        handle = ToBackend(texture)->GetHandle();
+        view->SetHandle(textureHandle, OwnsHandle::No);
     } else {
-        if (gl.IsAtLeastGL(4, 3)) {
-            DAWN_GL_TRY(gl, GenTextures(1, &handle));
-            ownsHandle = OwnsHandle::Yes;
-        } else {
-            handle = 0;
-        }
-    }
-
-    // Wrap the handle in a TextureView class early so that it is deleted if initialization fails
-    Ref<TextureView> view = AcquireRef(new TextureView(texture, descriptor, handle, ownsHandle));
-
-    if (ownsHandle == OwnsHandle::Yes) {
-        DAWN_GL_TRY(gl, TextureView(handle, view->GetGLTarget(), ToBackend(texture)->GetHandle(),
-                                    view->GetInternalFormat(), descriptor->baseMipLevel,
-                                    descriptor->mipLevelCount, descriptor->baseArrayLayer,
-                                    descriptor->arrayLayerCount));
+        DAWN_TRY(
+            ToBackend(texture->GetDevice())
+                ->EnqueueGL([view, textureHandle, descriptor = TextureViewDescriptor(**descriptor)](
+                                const OpenGLFunctions& gl) -> MaybeError {
+                    GLuint handle = 0;
+                    DAWN_ASSERT(gl.IsAtLeastGL(4, 3));
+                    DAWN_GL_TRY(gl, GenTextures(1, &handle));
+                    DAWN_GL_TRY(gl, TextureView(handle, view->GetGLTarget(), textureHandle,
+                                                view->GetInternalFormat(), descriptor.baseMipLevel,
+                                                descriptor.mipLevelCount, descriptor.baseArrayLayer,
+                                                descriptor.arrayLayerCount));
+                    view->SetHandle(handle, OwnsHandle::Yes);
+                    return {};
+                }));
     }
 
     return view;
 }
 
-TextureView::TextureView(TextureBase* texture,
-                         const UnpackedPtr<TextureViewDescriptor>& descriptor,
-                         GLuint handle,
-                         OwnsHandle ownsHandle)
-    : TextureViewBase(texture, descriptor), mHandle(handle), mOwnsHandle(ownsHandle) {
+TextureView::TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDescriptor>& descriptor)
+    : TextureViewBase(texture, descriptor) {
     mTarget = TargetForTextureViewDimension(descriptor->dimension, texture->GetSampleCount());
 }
 
@@ -670,14 +677,24 @@ TextureView::~TextureView() {}
 void TextureView::DestroyImpl() {
     TextureViewBase::DestroyImpl();
     if (mOwnsHandle == OwnsHandle::Yes) {
-        const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-        DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteTextures(1, &mHandle));
+        auto ignoreResult =
+            ToBackend(GetDevice())
+                ->EnqueueGL([handle = mHandle](const OpenGLFunctions& gl) -> MaybeError {
+                    DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteTextures(1, &handle));
+                    return {};
+                });
+        mHandle = 0;
     }
 }
 
 GLuint TextureView::GetHandle() const {
     DAWN_ASSERT(mHandle != 0);
     return mHandle;
+}
+
+void TextureView::SetHandle(GLuint handle, OwnsHandle ownsHandle) {
+    mHandle = handle;
+    mOwnsHandle = ownsHandle;
 }
 
 GLenum TextureView::GetGLTarget() const {
