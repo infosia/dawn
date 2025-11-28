@@ -4,15 +4,15 @@
 //* modification, are permitted provided that the following conditions are met:
 //*
 //* 1. Redistributions of source code must retain the above copyright notice, this
-//*    list of conditions and the following disclaimer.
+//* list of conditions and the following disclaimer.
 //*
 //* 2. Redistributions in binary form must reproduce the above copyright notice,
-//*    this list of conditions and the following disclaimer in the documentation
-//*    and/or other materials provided with the distribution.
+//* this list of conditions and the following disclaimer in the documentation
+//* and/or other materials provided with the distribution.
 //*
 //* 3. Neither the name of the copyright holder nor the names of its
-//*    contributors may be used to endorse or promote products derived from
-//*    this software without specific prior written permission.
+//* contributors may be used to endorse or promote products derived from
+//* this software without specific prior written permission.
 //*
 //* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 //* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -59,13 +59,14 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
 
     env->CallObjectMethod(
             byteBuffer, env->GetMethodID(byteBufferClass, "order",
-                                         "(Ljava/nio/ByteOrder;)Ljava/nio/ByteBuffer;"),
+                                     "(Ljava/nio/ByteOrder;)Ljava/nio/ByteBuffer;"),
             littleEndian);
     return byteBuffer;
 }
 
 {% macro render_method(method, object) %}
-    {% set ObjectName = kotlin_name(object) if object else "Functions" %}
+    //* UPDATED: If object is None, default to "GPU" to match the Kotlin object
+    {% set ObjectName = kotlin_name(object) if object else "GPU" %}
     {% set FunctionSuffix = ObjectName + "_" +  method.name.camelCase() %}
     {% set KotlinRecord = FunctionSuffix + "KotlinRecord" %}
     {% set ArgsStruct = FunctionSuffix + "ArgsStruct" %}
@@ -85,7 +86,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
     {{ define_kotlin_to_struct_conversion("ConvertInternal", KotlinRecord, ArgsStruct, method.arguments)}}
 
     {% set _kotlin_return = kotlin_return(method) %}
-    //*  A JNI-external method is built with the JNI signature expected to match the host Kotlin.
+    //* A JNI-external method is built with the JNI signature expected to match the host Kotlin.
     DEFAULT extern "C"
     {{ arg_to_jni_type(_kotlin_return) }}
     Java_{{ kotlin_package.replace('.', '_') }}_{{ FunctionSuffix }}
