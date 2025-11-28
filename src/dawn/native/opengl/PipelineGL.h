@@ -83,7 +83,6 @@ class PipelineGL {
 
     const std::vector<TextureUnit>& GetTextureUnitsForSampler(FlatBindingIndex index) const;
     const std::vector<TextureUnit>& GetTextureUnitsForTextureView(FlatBindingIndex index) const;
-    GLuint GetProgramHandle() const;
 
     const EmulatedTextureBuiltinInfo& GetEmulatedTextureBuiltinInfo() const;
     bool NeedsTextureBuiltinUniformBuffer() const;
@@ -97,10 +96,11 @@ class PipelineGL {
                               const PerStage<ProgrammableStage>& stages,
                               ImmediateConstantMask& pipelineImmediateMask,
                               VertexAttributeMask bgraSwizzleAttributes);
-    void DeleteProgram(const OpenGLFunctions& gl);
+
+  protected:
+    GLuint mProgram;
 
   private:
-    GLuint mProgram;
     ityp::vector<FlatBindingIndex, std::vector<TextureUnit>> mUnitsForSamplers;
     ityp::vector<FlatBindingIndex, std::vector<TextureUnit>> mUnitsForTextures;
     std::vector<TextureUnit> mPlaceholderSamplerUnits;
