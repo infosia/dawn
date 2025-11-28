@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e482f03_d6a32665",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-11-28T19:24:45Z",
+      "side": 1,
+      "message": "Maybe webgpu_glfw.h will also be needed at some point?\n\nhttps://dawn-review.googlesource.com/c/dawn/+/276939/3/src/emdawnwebgpu/CMakeLists.txt#47",
+      "revId": "8ae243d0496421e7858ed9a9d6cc175e15316ae7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
