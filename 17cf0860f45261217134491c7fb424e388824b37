@@ -94,6 +94,30 @@
       },
       "revId": "17cf0860f45261217134491c7fb424e388824b37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a615b7e8_fd775034",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-11-28T03:46:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae54089c_26da1f45",
+      "range": {
+        "startLine": 925,
+        "startChar": 36,
+        "endLine": 925,
+        "endChar": 44
+      },
+      "revId": "17cf0860f45261217134491c7fb424e388824b37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
