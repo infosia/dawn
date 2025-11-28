@@ -222,26 +222,34 @@ RenderPipeline::RenderPipeline(Device* device,
       mGlPrimitiveTopology(GLPrimitiveTopology(GetPrimitiveTopology())) {}
 
 MaybeError RenderPipeline::InitializeImpl() {
-    VertexAttributeMask bgraSwizzleAttributes = {};
-    for (VertexAttributeLocation i : GetAttributeLocationsUsed()) {
-        bgraSwizzleAttributes.set(i, GetAttribute(i).format == wgpu::VertexFormat::Unorm8x4BGRA);
-    }
+    return ToBackend(GetDevice())
+        ->EnqueueGL([this,
+                     self = Ref<RenderPipeline>(this)](const OpenGLFunctions& gl) -> MaybeError {
+            VertexAttributeMask bgraSwizzleAttributes = {};
+            for (VertexAttributeLocation i : GetAttributeLocationsUsed()) {
+                bgraSwizzleAttributes.set(
+                    i, GetAttribute(i).format == wgpu::VertexFormat::Unorm8x4BGRA);
+            }
 
-    auto gl = ToBackend(GetDevice())->GetGL();
-    DAWN_TRY(InitializeBase(gl, ToBackend(GetLayout()), GetAllStages(), UsesVertexIndex(),
-                            UsesInstanceIndex(), UsesFragDepth(), bgraSwizzleAttributes));
-    DAWN_TRY(CreateVAOForVertexState(gl));
-    return {};
+            DAWN_TRY(InitializeBase(gl, ToBackend(GetLayout()), GetAllStages(), UsesVertexIndex(),
+                                    UsesInstanceIndex(), UsesFragDepth(), bgraSwizzleAttributes));
+            DAWN_TRY(CreateVAOForVertexState(gl));
+            return {};
+        });
 }
 
 RenderPipeline::~RenderPipeline() = default;
 
 void RenderPipeline::DestroyImpl() {
     RenderPipelineBase::DestroyImpl();
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-    DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteVertexArrays(1, &mVertexArrayObject));
-    DAWN_GL_TRY_IGNORE_ERRORS(gl, BindVertexArray(0));
-    DeleteProgram(gl);
+    auto ignoredResult = ToBackend(GetDevice())
+                             ->EnqueueGL([vao = mVertexArrayObject, program = GetProgramHandle()](
+                                             const OpenGLFunctions& gl) -> MaybeError {
+                                 DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteVertexArrays(1, &vao));
+                                 DAWN_GL_TRY_IGNORE_ERRORS(gl, BindVertexArray(0));
+                                 DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteProgram(program));
+                                 return {};
+                             });
 }
 
 GLenum RenderPipeline::GetGLPrimitiveTopology() const {
