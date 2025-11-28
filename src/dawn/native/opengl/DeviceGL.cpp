@@ -425,7 +425,8 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingEGLImageImpl(
 
     // TODO(dawn:803): Validate the OpenGL texture format from the EGLImage against the format
     // in the passed-in TextureDescriptor.
-    auto result = AcquireRef(new Texture(this, textureDescriptor, tex, OwnsHandle::No));
+    auto result = AcquireRef(new Texture(this, textureDescriptor, OwnsHandle::No));
+    result->SetHandle(tex);
     result->SetIsSubresourceContentInitialized(descriptor->isInitialized,
                                                result->GetAllSubresources());
 
@@ -478,7 +479,8 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingGLTextureImpl(
             width, height, &textureDescriptor->size);
     }
 
-    auto result = AcquireRef(new Texture(this, textureDescriptor, texture, OwnsHandle::No));
+    auto result = AcquireRef(new Texture(this, textureDescriptor, OwnsHandle::No));
+    result->SetHandle(texture);
     result->SetIsSubresourceContentInitialized(descriptor->isInitialized,
                                                result->GetAllSubresources());
 
@@ -502,9 +504,9 @@ MaybeError Device::FlushPendingGLCommands() {
 
     ContextEGL::ScopedMakeCurrent scopedCurrentContext;
     DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
-    const OpenGLFunctions& gl = GetGL(/*makeCurrent=*/false);
+    MarkGLUsed(ExecutionQueueBase::SubmitMode::Normal);
     for (auto& work : workList) {
-        DAWN_TRY(work(gl));
+        DAWN_TRY(work(mGL));
     }
     return scopedCurrentContext.End();
 }
