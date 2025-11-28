@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0f54d4b_dbfc0f83",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-28T15:26:45Z",
+      "side": 1,
+      "message": "LGTM. Please make sure you do the copybara import (and fixes) promptly when this lands.",
+      "revId": "6f0eeee32b3218d18a690a00598635fb4fa67308",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "211dfaa6_8dafb5f3",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/AsyncHelperTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-11-28T15:26:45Z",
+      "side": 1,
+      "message": "Nit: now exceeds max column count.",
+      "revId": "6f0eeee32b3218d18a690a00598635fb4fa67308",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
