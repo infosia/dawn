@@ -770,6 +770,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Allows GL backend to use GL context on multiple threads. This will add certain "
       "synchronizations' overheads.",
       "https://crbug.com/dawn/451928481", ToggleStage::Device}},
+    {Toggle::GLDefer,
+     {"gl_defer",
+      "Defer all OpenGL calls until Queue.Submit(). This also defers object creation errors, and "
+      "may cause some copies (e.g., for Buffers that are mapped-at-creation, WriteBuffer, "
+      "WriteTexture).",
+      "https://crbug.com/dawn/451928481", ToggleStage::Device}},
     // Comment to separate the }} so it is clearer what to copy-paste to add a toggle.
 }};
 
