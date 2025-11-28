@@ -22,6 +22,30 @@
       },
       "revId": "32c94b61ffe2132a175ad8fc54c48a2afdd17b0f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cad70f73_9c6ea71d",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-11-28T06:32:16Z",
+      "side": 1,
+      "message": "Agreed! Added a `toggle_kdoc_warn_logs` to decide whether to log warnings or not",
+      "parentUuid": "11253ab0_6539e283",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "32c94b61ffe2132a175ad8fc54c48a2afdd17b0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
