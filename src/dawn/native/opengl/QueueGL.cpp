@@ -27,6 +27,8 @@
 
 #include "dawn/native/opengl/QueueGL.h"
 
+#include <vector>
+
 #include "dawn/native/BlitBufferToDepthStencil.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/CommandEncoder.h"
@@ -91,14 +93,30 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   uint64_t bufferOffset,
                                   const void* data,
                                   size_t size) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    if (GetDevice()->IsToggleEnabled(Toggle::GLDefer)) {
+        auto* d = static_cast<const char*>(data);
+        return ToBackend(GetDevice())
+            ->EnqueueGL([bufferOffset, data = std::vector<char>(d, d + size), size,
+                         buffer = Ref<Buffer>(ToBackend(buffer))](
+                            const OpenGLFunctions& gl) -> MaybeError {
+                DAWN_TRY(buffer->EnsureDataInitializedAsDestination(bufferOffset, size));
+                DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, buffer->GetHandle()));
+                DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, size, data.data()));
+                buffer->MarkUsedInPendingCommands();
+                return {};
+            });
+    } else {
+        return ToBackend(GetDevice())
+            ->EnqueueAndFlushGL([buffer, bufferOffset, size, data, self = Ref<BufferBase>(buffer)](
+                                    const OpenGLFunctions& gl) -> MaybeError {
+                DAWN_TRY(ToBackend(buffer)->EnsureDataInitializedAsDestination(bufferOffset, size));
 
-    DAWN_TRY(ToBackend(buffer)->EnsureDataInitializedAsDestination(bufferOffset, size));
-
-    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, ToBackend(buffer)->GetHandle()));
-    DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, size, data));
-    buffer->MarkUsedInPendingCommands();
-    return {};
+                DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, ToBackend(buffer)->GetHandle()));
+                DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, size, data));
+                buffer->MarkUsedInPendingCommands();
+                return {};
+            });
+    }
 }
 
 MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
@@ -158,15 +176,24 @@ MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
         return {};
     }
 
-    auto gl = ToBackend(GetDevice())->GetGL();
     SubresourceRange range = GetSubresourcesAffectedByCopy(textureCopy, writeSizePixel);
+    bool ensureInitialized = false;
     if (IsCompleteSubresourceCopiedTo(destination.texture, writeSizePixel, destination.mipLevel,
                                       destination.aspect)) {
         destination.texture->SetIsSubresourceContentInitialized(true, range);
     } else {
-        DAWN_TRY(ToBackend(destination.texture)->EnsureSubresourceContentInitialized(gl, range));
+        ensureInitialized = true;
     }
-    return DoTexSubImage(gl, textureCopy, data, dataLayout, writeSizePixel);
+    Ref<Texture> dest(ToBackend(destination.texture));
+
+    return ToBackend(device)->EnqueueAndFlushGL(
+        [ensureInitialized, dest, range, textureCopy, data, dataLayout,
+         writeSizePixel](const OpenGLFunctions& gl) -> MaybeError {
+            if (ensureInitialized) {
+                DAWN_TRY(dest->EnsureSubresourceContentInitialized(gl, range));
+            }
+            return DoTexSubImage(gl, textureCopy, data, dataLayout, writeSizePixel);
+        });
 }
 
 void Queue::SetNeedsFenceSync() {
@@ -302,6 +329,9 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
     Device* device = ToBackend(GetDevice());
     // This function is called after all dependent GL commands have been flushed in
     // Queue::SubmitImpl(), it's safe to use ExecuteGL().
+
+    DAWN_TRY(device->FlushPendingGLCommands());
+
     return device->ExecuteGL(SubmitMode::Passive, [&](const OpenGLFunctions& gl) -> auto {
         return mFencesInFlight.Use([&](auto fencesInFlight) -> ResultOrError<ExecutionSerial> {
             ExecutionSerial fenceSerial{0};
