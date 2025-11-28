@@ -99,7 +99,6 @@ class PipelineGL {
                               bool usesInstanceIndex,
                               bool usesFragDepth,
                               VertexAttributeMask bgraSwizzleAttributes);
-    void DeleteProgram(const OpenGLFunctions& gl);
 
   private:
     GLuint mProgram;
