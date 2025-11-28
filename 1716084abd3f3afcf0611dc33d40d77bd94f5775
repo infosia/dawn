@@ -16,6 +16,23 @@
       "message": "This can only land once the following Skia change lands and rolls into Chromium: https://skia-review.googlesource.com/c/skia/+/1112616",
       "revId": "1716084abd3f3afcf0611dc33d40d77bd94f5775",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "710ec14e_f681a10c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-11-28T18:32:40Z",
+      "side": 1,
+      "message": "Ah, looks like we have CTS that emits that enable. I\u0027ll have to land a CTS change first before this one as well.",
+      "revId": "1716084abd3f3afcf0611dc33d40d77bd94f5775",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
