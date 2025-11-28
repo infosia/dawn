@@ -28,6 +28,7 @@
 #include "dawn/native/opengl/ComputePipelineGL.h"
 
 #include "dawn/native/opengl/DeviceGL.h"
+#include "dawn/native/opengl/UtilsGL.h"
 
 namespace dawn::native::opengl {
 
@@ -42,17 +43,31 @@ ComputePipeline::~ComputePipeline() = default;
 
 void ComputePipeline::DestroyImpl(DestroyReason reason) {
     ComputePipelineBase::DestroyImpl(reason);
-    DeleteProgram(ToBackend(GetDevice())->GetGL());
+    IgnoreErrors(
+        ToBackend(GetDevice())
+            ->EnqueueDestroyGL(this, &ComputePipeline::GetProgramHandle, reason,
+                               [](const OpenGLFunctions& gl, GLuint program) -> MaybeError {
+                                   DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteProgram(program));
+                                   return {};
+                               }));
 }
 
 MaybeError ComputePipeline::InitializeImpl() {
-    return InitializeBase(ToBackend(GetDevice())->GetGL(), ToBackend(GetLayout()), GetAllStages(),
-                          mImmediateMask, /* bgraSwizzleAttributes */ {});
+    return ToBackend(GetDevice())
+        ->EnqueueGL(
+            [this, self = Ref<ComputePipeline>(this)](const OpenGLFunctions& gl) -> MaybeError {
+                return InitializeBase(gl, ToBackend(GetLayout()), GetAllStages(), mImmediateMask,
+                                      /* bgraSwizzleAttributes */ {});
+            });
 }
 
 MaybeError ComputePipeline::ApplyNow(const OpenGLFunctions& gl) {
     DAWN_TRY(PipelineGL::ApplyNow(gl, ToBackend(GetLayout())));
     return {};
+}
+
+GLuint ComputePipeline::GetProgramHandle() const {
+    return mProgram;
 }
 
 }  // namespace dawn::native::opengl
