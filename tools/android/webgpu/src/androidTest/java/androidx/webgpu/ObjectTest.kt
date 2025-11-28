@@ -15,7 +15,7 @@ class ObjectTest {
 
     @Test
     fun sameObjectCompare() {
-        val surface = createInstance().createSurface(SurfaceDescriptor(
+        val surface = GPU.createInstance().createSurface(SurfaceDescriptor(
             surfaceSourceAndroidNativeWindow =
                 SurfaceSourceAndroidNativeWindow(0)
         ))
@@ -35,7 +35,7 @@ class ObjectTest {
 
     @Test
     fun differentObjectCompare() {
-        val instance = createInstance()
+        val instance = GPU.createInstance()
 
         val surfaceDescriptor = SurfaceDescriptor(
             surfaceSourceAndroidNativeWindow =
