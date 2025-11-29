@@ -326,5 +326,83 @@ TEST_F(IR_BuiltinScalarizeTest, Min_VectorOperands_LeaveVectorized) {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(IR_BuiltinScalarizeTest, Saturate_VectorOperands_Scalarize) {
+    auto* x = b.FunctionParam("x", ty.vec4<f16>());
+    auto* func = b.Function("foo", ty.vec4<f16>());
+    func->SetParams({x});
+
+    b.Append(func->Block(), [&] {
+        auto* result = b.Call(ty.vec4<f16>(), core::BuiltinFn::kSaturate, x);
+        b.Return(func, result);
+    });
+
+    auto* src = R"(
+%foo = func(%x:vec4<f16>):vec4<f16> {
+  $B1: {
+    %3:vec4<f16> = saturate %x
+    ret %3
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%x:vec4<f16>):vec4<f16> {
+  $B1: {
+    %3:f16 = access %x, 0u
+    %4:f16 = saturate %3
+    %5:f16 = access %x, 1u
+    %6:f16 = saturate %5
+    %7:f16 = access %x, 2u
+    %8:f16 = saturate %7
+    %9:f16 = access %x, 3u
+    %10:f16 = saturate %9
+    %11:vec4<f16> = construct %4, %6, %8, %10
+    ret %11
+  }
+}
+)";
+
+    BuiltinScalarizeConfig config{.scalarize_saturate_f16 = true};
+    Run(BuiltinScalarize, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinScalarizeTest, Saturate_VectorOperands_LeaveVectorized) {
+    auto* x = b.FunctionParam("x", ty.vec4<f16>());
+    auto* func = b.Function("foo", ty.vec4<f16>());
+    func->SetParams({x});
+
+    b.Append(func->Block(), [&] {
+        auto* result = b.Call(ty.vec4<f16>(), core::BuiltinFn::kSaturate, x);
+        b.Return(func, result);
+    });
+
+    auto* src = R"(
+%foo = func(%x:vec4<f16>):vec4<f16> {
+  $B1: {
+    %3:vec4<f16> = saturate %x
+    ret %3
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%x:vec4<f16>):vec4<f16> {
+  $B1: {
+    %3:vec4<f16> = saturate %x
+    ret %3
+  }
+}
+)";
+
+    BuiltinScalarizeConfig config;
+    Run(BuiltinScalarize, config);
+
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 }  // namespace tint::core::ir::transform

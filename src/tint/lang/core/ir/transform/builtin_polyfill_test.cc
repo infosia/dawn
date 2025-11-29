@@ -188,6 +188,114 @@ TEST_F(IR_BuiltinPolyfillTest, Saturate_Vec4F16) {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(IR_BuiltinPolyfillTest, Saturate_Vec3F32) {
+    Build(core::BuiltinFn::kSaturate, ty.vec3<f32>(), Vector{ty.vec3<f32>()});
+    auto* src = R"(
+%foo = func(%arg:vec3<f32>):vec3<f32> {
+  $B1: {
+    %result:vec3<f32> = saturate %arg
+    ret %result
+  }
+}
+)";
+    auto* expect = R"(
+%foo = func(%arg:vec3<f32>):vec3<f32> {
+  $B1: {
+    %result:vec3<f32> = clamp %arg, vec3<f32>(0.0f), vec3<f32>(1.0f)
+    ret %result
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.saturate = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, Saturate_Vec4F32) {
+    Build(core::BuiltinFn::kSaturate, ty.vec4<f32>(), Vector{ty.vec4<f32>()});
+    auto* src = R"(
+%foo = func(%arg:vec4<f32>):vec4<f32> {
+  $B1: {
+    %result:vec4<f32> = saturate %arg
+    ret %result
+  }
+}
+)";
+    auto* expect = R"(
+%foo = func(%arg:vec4<f32>):vec4<f32> {
+  $B1: {
+    %result:vec4<f32> = clamp %arg, vec4<f32>(0.0f), vec4<f32>(1.0f)
+    ret %result
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.saturate = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, Saturate_Vec2F16) {
+    Build(core::BuiltinFn::kSaturate, ty.vec2<f16>(), Vector{ty.vec2<f16>()});
+    auto* src = R"(
+%foo = func(%arg:vec2<f16>):vec2<f16> {
+  $B1: {
+    %result:vec2<f16> = saturate %arg
+    ret %result
+  }
+}
+)";
+    auto* expect = R"(
+%foo = func(%arg:vec2<f16>):vec2<f16> {
+  $B1: {
+    %result:vec2<f16> = clamp %arg, vec2<f16>(0.0h), vec2<f16>(1.0h)
+    ret %result
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.saturate = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, Saturate_Vec3F16) {
+    Build(core::BuiltinFn::kSaturate, ty.vec3<f16>(), Vector{ty.vec3<f16>()});
+    auto* src = R"(
+%foo = func(%arg:vec3<f16>):vec3<f16> {
+  $B1: {
+    %result:vec3<f16> = saturate %arg
+    ret %result
+  }
+}
+)";
+    auto* expect = R"(
+%foo = func(%arg:vec3<f16>):vec3<f16> {
+  $B1: {
+    %result:vec3<f16> = clamp %arg, vec3<f16>(0.0h), vec3<f16>(1.0h)
+    ret %result
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.saturate = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
 TEST_F(IR_BuiltinPolyfillTest, Clamp_NoPolyfill_Float) {
     Build(core::BuiltinFn::kClamp, ty.f32(), Vector{ty.f32(), ty.f32(), ty.f32()});
     auto* src = R"(
