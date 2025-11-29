@@ -91,6 +91,9 @@ struct Options {
         /// Set to `true` to always pass matrices to user functions by pointer instead of by value.
         bool pass_matrix_by_pointer = false;
 
+        // Set to true to scalarize saturate f16
+        bool scalarize_saturate_f16 = false;
+
         TINT_REFLECT(Workarounds,
                      polyfill_case_switch,
                      scalarize_max_min_clamp,
@@ -98,7 +101,8 @@ struct Options {
                      polyfill_pack_unpack_4x8_norm,
                      subgroup_shuffle_clamped,
                      polyfill_subgroup_broadcast_f16,
-                     pass_matrix_by_pointer);
+                     pass_matrix_by_pointer,
+                     scalarize_saturate_f16);
     };
 
     /// Any options which are controlled by the presence/absence of a vulkan extension.

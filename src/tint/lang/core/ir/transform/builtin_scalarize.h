@@ -67,8 +67,15 @@ struct BuiltinScalarizeConfig {
     // Set to true to scalarize min builtin
     bool scalarize_min = false;
 
+    // Set to true to scalarize saturate f16
+    bool scalarize_saturate_f16 = false;
+
     /// Reflection for this class
-    TINT_REFLECT(BuiltinScalarizeConfig, scalarize_clamp, scalarize_max, scalarize_min);
+    TINT_REFLECT(BuiltinScalarizeConfig,
+                 scalarize_clamp,
+                 scalarize_max,
+                 scalarize_min,
+                 scalarize_saturate_f16);
 };
 
 /// BuiltinScalarize is a transform that replaces calls to builtin vector functions with scalar
