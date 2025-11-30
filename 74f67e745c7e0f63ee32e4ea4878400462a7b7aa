@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f51c878_90e0f3e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-30T21:21:45Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "74f67e745c7e0f63ee32e4ea4878400462a7b7aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "128c4424_6da0510f",
+        "filename": "src/dawn/tests/end2end/ScissorTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-30T21:21:45Z",
+      "side": 1,
+      "message": "```suggestion\n    DAWN_SUPPRESS_TEST_IF(IsMetal() \u0026\u0026 IsIntel());\n```",
+      "revId": "74f67e745c7e0f63ee32e4ea4878400462a7b7aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
