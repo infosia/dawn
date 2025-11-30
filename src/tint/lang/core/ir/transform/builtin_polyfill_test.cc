@@ -94,7 +94,8 @@ TEST_F(IR_BuiltinPolyfillTest, Saturate_F32) {
     auto* expect = R"(
 %foo = func(%arg:f32):f32 {
   $B1: {
-    %result:f32 = clamp %arg, 0.0f, 1.0f
+    %3:f32 = max %arg, 0.0f
+    %result:f32 = min %3, 1.0f
     ret %result
   }
 }
@@ -121,7 +122,8 @@ TEST_F(IR_BuiltinPolyfillTest, Saturate_F16) {
     auto* expect = R"(
 %foo = func(%arg:f16):f16 {
   $B1: {
-    %result:f16 = clamp %arg, 0.0h, 1.0h
+    %3:f16 = max %arg, 0.0h
+    %result:f16 = min %3, 1.0h
     ret %result
   }
 }
@@ -147,7 +149,8 @@ TEST_F(IR_BuiltinPolyfillTest, Saturate_Vec2F32) {
     auto* expect = R"(
 %foo = func(%arg:vec2<f32>):vec2<f32> {
   $B1: {
-    %result:vec2<f32> = clamp %arg, vec2<f32>(0.0f), vec2<f32>(1.0f)
+    %3:vec2<f32> = max %arg, vec2<f32>(0.0f)
+    %result:vec2<f32> = min %3, vec2<f32>(1.0f)
     ret %result
   }
 }
@@ -174,7 +177,120 @@ TEST_F(IR_BuiltinPolyfillTest, Saturate_Vec4F16) {
     auto* expect = R"(
 %foo = func(%arg:vec4<f16>):vec4<f16> {
   $B1: {
-    %result:vec4<f16> = clamp %arg, vec4<f16>(0.0h), vec4<f16>(1.0h)
+    %3:vec4<f16> = max %arg, vec4<f16>(0.0h)
+    %result:vec4<f16> = min %3, vec4<f16>(1.0h)
+    ret %result
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.saturate = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, Saturate_Vec3F32) {
+    Build(core::BuiltinFn::kSaturate, ty.vec3<f32>(), Vector{ty.vec3<f32>()});
+    auto* src = R"(
+%foo = func(%arg:vec3<f32>):vec3<f32> {
+  $B1: {
+    %result:vec3<f32> = saturate %arg
+    ret %result
+  }
+}
+)";
+    auto* expect = R"(
+%foo = func(%arg:vec3<f32>):vec3<f32> {
+  $B1: {
+    %3:vec3<f32> = max %arg, vec3<f32>(0.0f)
+    %result:vec3<f32> = min %3, vec3<f32>(1.0f)
+    ret %result
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.saturate = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, Saturate_Vec4F32) {
+    Build(core::BuiltinFn::kSaturate, ty.vec4<f32>(), Vector{ty.vec4<f32>()});
+    auto* src = R"(
+%foo = func(%arg:vec4<f32>):vec4<f32> {
+  $B1: {
+    %result:vec4<f32> = saturate %arg
+    ret %result
+  }
+}
+)";
+    auto* expect = R"(
+%foo = func(%arg:vec4<f32>):vec4<f32> {
+  $B1: {
+    %3:vec4<f32> = max %arg, vec4<f32>(0.0f)
+    %result:vec4<f32> = min %3, vec4<f32>(1.0f)
+    ret %result
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.saturate = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, Saturate_Vec2F16) {
+    Build(core::BuiltinFn::kSaturate, ty.vec2<f16>(), Vector{ty.vec2<f16>()});
+    auto* src = R"(
+%foo = func(%arg:vec2<f16>):vec2<f16> {
+  $B1: {
+    %result:vec2<f16> = saturate %arg
+    ret %result
+  }
+}
+)";
+    auto* expect = R"(
+%foo = func(%arg:vec2<f16>):vec2<f16> {
+  $B1: {
+    %3:vec2<f16> = max %arg, vec2<f16>(0.0h)
+    %result:vec2<f16> = min %3, vec2<f16>(1.0h)
+    ret %result
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.saturate = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, Saturate_Vec3F16) {
+    Build(core::BuiltinFn::kSaturate, ty.vec3<f16>(), Vector{ty.vec3<f16>()});
+    auto* src = R"(
+%foo = func(%arg:vec3<f16>):vec3<f16> {
+  $B1: {
+    %result:vec3<f16> = saturate %arg
+    ret %result
+  }
+}
+)";
+    auto* expect = R"(
+%foo = func(%arg:vec3<f16>):vec3<f16> {
+  $B1: {
+    %3:vec3<f16> = max %arg, vec3<f16>(0.0h)
+    %result:vec3<f16> = min %3, vec3<f16>(1.0h)
     ret %result
   }
 }
