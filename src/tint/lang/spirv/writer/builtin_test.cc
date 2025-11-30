@@ -1445,7 +1445,8 @@ TEST_F(SpirvWriterTest, Builtin_Saturate_F32) {
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
-    EXPECT_INST("%result = OpExtInst %float %7 NClamp %arg %float_0 %float_1");
+    EXPECT_INST(R"(%6 = OpExtInst %float %7 NMax %arg %float_0)");
+    EXPECT_INST(R"(%result = OpExtInst %float %7 NMin %6 %float_1)");
 }
 
 TEST_F(SpirvWriterTest, Builtin_Saturate_Vec4h) {
@@ -1467,8 +1468,37 @@ TEST_F(SpirvWriterTest, Builtin_Saturate_Vec4h) {
     ASSERT_TRUE(Generate()) << Error() << output_;
     EXPECT_INST("%9 = OpConstantNull %v4half");
     EXPECT_INST(
-        "%10 = OpConstantComposite %v4half %half_0x1p_0 %half_0x1p_0 %half_0x1p_0 %half_0x1p_0");
-    EXPECT_INST("%result = OpExtInst %v4half %8 NClamp %arg %9 %10");
+        R"(OpConstantComposite %v4half %half_0x1p_0 %half_0x1p_0 %half_0x1p_0 %half_0x1p_0)");
+    EXPECT_INST(R"(%result "result"              ; id %10
+               OpName %main "main"                  ; id %13
+               OpName %x "x"                        ; id %17
+
+               ; Types, variables and constants
+       %half = OpTypeFloat 16
+     %v4half = OpTypeVector %half 4
+          %5 = OpTypeFunction %v4half %v4half
+          %9 = OpConstantNull %v4half
+%half_0x1p_0 = OpConstant %half 0x1p+0
+         %11 = OpConstantComposite %v4half %half_0x1p_0 %half_0x1p_0 %half_0x1p_0 %half_0x1p_0
+       %void = OpTypeVoid
+         %15 = OpTypeFunction %void
+
+               ; Function foo
+        %foo = OpFunction %v4half None %5
+        %arg = OpFunctionParameter %v4half
+          %6 = OpLabel
+          %7 = OpExtInst %v4half %8 NMax %arg %9
+     %result = OpExtInst %v4half %8 NMin %7 %11
+               OpReturnValue %result
+               OpFunctionEnd
+
+               ; Function main
+       %main = OpFunction %void None %15
+         %16 = OpLabel
+          %x = OpFunctionCall %v4half %foo %9
+               OpReturn
+               OpFunctionEnd
+)");
 }
 
 // Tests for builtins with the signature: T = func(T, T)

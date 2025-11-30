@@ -935,9 +935,13 @@ struct State {
             zero = b.MatchWidth(0_h, type);
             one = b.MatchWidth(1_h, type);
         }
-        auto* clamp = b.CallWithResult(call->DetachResult(), core::BuiltinFn::kClamp,
-                                       Vector{call->Args()[0], zero, one});
-        clamp->InsertBefore(call);
+
+        b.InsertBefore(call, [&] {
+            auto* max_val = b.Call(type, core::BuiltinFn::kMax, Vector{call->Args()[0], zero});
+            b.CallWithResult(call->DetachResult(), core::BuiltinFn::kMin,
+                             Vector{max_val->Result(), one});
+        });
+
         call->Destroy();
     }
 
