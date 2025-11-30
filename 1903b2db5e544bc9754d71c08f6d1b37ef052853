@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc2e5752_94648827",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2495,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-11-30T21:40:46Z",
+      "side": 1,
+      "message": "```suggestion\n            {\"value\": 62, \"name\": \"chromium experimental sampling resource table\", \"tags\": [\"dawn\"]}\n```\n\nThe tags are a bit of a mess, but native means in part that the values shouldn\u0027t be supported by the wire. While an enum is just passed through, we still want to mark bindless as allowed for the wire.",
+      "revId": "1903b2db5e544bc9754d71c08f6d1b37ef052853",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
