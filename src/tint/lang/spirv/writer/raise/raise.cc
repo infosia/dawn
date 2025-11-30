@@ -223,7 +223,8 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     core::ir::transform::BuiltinScalarizeConfig scalarize_config{
         .scalarize_clamp = options.workarounds.scalarize_max_min_clamp,
         .scalarize_max = options.workarounds.scalarize_max_min_clamp,
-        .scalarize_min = options.workarounds.scalarize_max_min_clamp};
+        .scalarize_min = options.workarounds.scalarize_max_min_clamp,
+        .scalarize_saturate_f16 = options.workarounds.scalarize_saturate_f16};
     RUN_TRANSFORM(core::ir::transform::BuiltinScalarize, module, scalarize_config);
 
     core::ir::transform::SignedIntegerPolyfillConfig signed_integer_cfg{

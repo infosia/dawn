@@ -76,6 +76,8 @@ struct State {
                 return config.scalarize_max;
             case core::BuiltinFn::kMin:
                 return config.scalarize_min;
+            case core::BuiltinFn::kSaturate:
+                return config.scalarize_saturate_f16;
             default:
                 return false;
         }
