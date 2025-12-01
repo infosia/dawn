@@ -16,6 +16,29 @@
       "message": "PTAL!",
       "revId": "b5c684cb7fc094b4a60533b4e6f03d26fca17006",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62cf27b7_92ddeea4",
+        "filename": "src/dawn/utils/ScopedIgnoreValidationErrors.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-01T15:03:25Z",
+      "side": 1,
+      "message": "You should be able to just set these to `\u003d default;` and rely on the compiler to generate them, since `wgpu::Device` has move well-defined for it.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 82
+      },
+      "revId": "b5c684cb7fc094b4a60533b4e6f03d26fca17006",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
