@@ -56,6 +56,30 @@
       },
       "revId": "c35e1f25392e10484bedb31a7b51f7cd1c283d92",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7c1519b_dcb376aa",
+        "filename": "src/dawn/native/utils/RenderDoc.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-01T22:23:50Z",
+      "side": 1,
+      "message": "Good catch! I think that the fact that we\u0027re only opening an already-injected library here means that the proc address lives on beyond the DynamicLib\u0027s lifetime, but that\u0027s not behavior we want to rely on. Made it static as you suggested.",
+      "parentUuid": "7e65deb0_691665fd",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 32
+      },
+      "revId": "c35e1f25392e10484bedb31a7b51f7cd1c283d92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
