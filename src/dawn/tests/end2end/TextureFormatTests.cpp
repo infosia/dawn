@@ -472,9 +472,6 @@ class TextureFormatTest : public DawnTest {
         DAWN_ASSERT(sizeof(T) * formatInfo.componentCount == formatInfo.texelByteSize);
         DAWN_ASSERT(formatInfo.type == TextureComponentType::Float);
 
-        DAWN_TEST_UNSUPPORTED_IF((utils::IsSnorm16TextureFormat(formatInfo.format)) &&
-                                 !IsSnorm16TextureFormatsSupported());
-
         T maxValue = std::numeric_limits<T>::max();
         T minValue = std::numeric_limits<T>::min();
         std::vector<T> textureData = {0, 1, -1, maxValue, minValue, T(minValue + 1), 0, 0};
@@ -554,21 +551,15 @@ class TextureFormatTest : public DawnTest {
             mIsUnorm16TextureFormatsSupported = true;
             requiredFeatures.push_back(wgpu::FeatureName::Unorm16TextureFormats);
         }
-        if (SupportsFeatures({wgpu::FeatureName::Snorm16TextureFormats})) {
-            mIsSnorm16TextureFormatsSupported = true;
-            requiredFeatures.push_back(wgpu::FeatureName::Snorm16TextureFormats);
-        }
         return requiredFeatures;
     }
 
     bool IsRG11B10UfloatRenderableSupported() { return mIsRG11B10UfloatRenderableSupported; }
     bool IsUnorm16TextureFormatsSupported() { return mIsUnorm16TextureFormatsSupported; }
-    bool IsSnorm16TextureFormatsSupported() { return mIsSnorm16TextureFormatsSupported; }
 
   private:
     bool mIsRG11B10UfloatRenderableSupported = false;
     bool mIsUnorm16TextureFormatsSupported = false;
-    bool mIsSnorm16TextureFormatsSupported = false;
 };
 
 // Test the R8Unorm format
@@ -632,21 +623,6 @@ TEST_P(TextureFormatTest, RG8Snorm) {
 // Test the RGBA8Snorm format
 TEST_P(TextureFormatTest, RGBA8Snorm) {
     DoSnormTest<int8_t>({wgpu::TextureFormat::RGBA8Snorm, 4, TextureComponentType::Float, 4});
-}
-
-// Test the R16Snorm format
-TEST_P(TextureFormatTest, R16Snorm) {
-    DoSnormTest<int16_t>({wgpu::TextureFormat::R16Snorm, 2, TextureComponentType::Float, 1});
-}
-
-// Test the RG16Snorm format
-TEST_P(TextureFormatTest, RG16Snorm) {
-    DoSnormTest<int16_t>({wgpu::TextureFormat::RG16Snorm, 4, TextureComponentType::Float, 2});
-}
-
-// Test the RGBA16Snorm format
-TEST_P(TextureFormatTest, RGBA16Snorm) {
-    DoSnormTest<int16_t>({wgpu::TextureFormat::RGBA16Snorm, 8, TextureComponentType::Float, 4});
 }
 
 // Test the R8Uint format
