@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "18949b3377f87defe6e436aeffca9ab62c8a7b1d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6627a136_768785cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-01T21:57:16Z",
+      "side": 1,
+      "message": "Turns out the most visible CL chain submission button in Gerrit might not be what I wanted. There\u0027s an option in the overflow menu that looks like it submits everything at once instead of one at a time.",
+      "revId": "18949b3377f87defe6e436aeffca9ab62c8a7b1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
