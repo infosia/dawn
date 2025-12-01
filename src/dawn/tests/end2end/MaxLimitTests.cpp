@@ -123,7 +123,6 @@ TEST_P(MaxLimitTests, MaxBufferBindingSize) {
     // TODO(crbug.com/dawn/1217): Remove this suppression.
     DAWN_SUPPRESS_TEST_IF(IsWindows() && IsVulkan() && IsNvidia());
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsNvidia());
-    DAWN_SUPPRESS_TEST_IF(IsWebGPUOn(wgpu::BackendType::Vulkan));
 
     // TODO(crbug.com/dawn/1705): Use a zero buffer to clear buffers. Otherwise, the test
     // OOMs.
@@ -135,6 +134,9 @@ TEST_P(MaxLimitTests, MaxBufferBindingSize) {
     // TODO(crbug.com/dawn/2426): Fails on Pixel 6 devices with Android U.
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsVulkan() && IsARM());
 
+    // TODO(465167909): Fails on Metal in debug build.
+    DAWN_SUPPRESS_TEST_IF(IsMetal());
+
     for (wgpu::BufferUsage usage : {wgpu::BufferUsage::Storage, wgpu::BufferUsage::Uniform}) {
         uint64_t maxBufferBindingSize;
         std::string shader;
@@ -143,6 +145,7 @@ TEST_P(MaxLimitTests, MaxBufferBindingSize) {
                 maxBufferBindingSize = GetSupportedLimits().maxStorageBufferBindingSize;
                 // TODO(crbug.com/dawn/1160): Usually can't actually allocate a buffer this large
                 // because allocating the buffer for zero-initialization fails.
+                std::cerr << "maxBBS: " << maxBufferBindingSize << "\n";
                 maxBufferBindingSize =
                     std::min(maxBufferBindingSize, uint64_t(2) * 1024 * 1024 * 1024);
                 // With WARP or on 32-bit platforms, such large buffer allocations often fail.
