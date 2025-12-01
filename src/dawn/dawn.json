@@ -3610,7 +3610,6 @@
             {"name": "alpha", "type": "blend component"}
         ]
     },
-
     "render pipeline descriptor": {
         "category": "structure",
         "extensible": "in",
@@ -3624,7 +3623,24 @@
             {"name": "fragment", "type": "fragment state", "annotation": "const*", "optional": true}
         ]
     },
-
+    "resource table descriptor": {
+        "category": "structure",
+        "tags": ["dawn"],
+        "extensible": "in",
+        "members": [
+            {"name": "label", "type": "string view", "optional": true},
+            {"name": "size", "type": "uint64_t", "default": "whole size"}
+        ]
+    },
+    "resource table": {
+        "category": "object",
+        "tags": ["dawn"],
+        "methods": [
+            {
+                "name": "destroy"
+            }
+        ]
+    },
     "sampler": {
         "category": "object",
         "methods": [
