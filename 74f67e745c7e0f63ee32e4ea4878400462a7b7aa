@@ -33,6 +33,24 @@
       "message": "```suggestion\n    DAWN_SUPPRESS_TEST_IF(IsMetal() \u0026\u0026 IsIntel());\n```",
       "revId": "74f67e745c7e0f63ee32e4ea4878400462a7b7aa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc81ee88_020b4032",
+        "filename": "src/dawn/tests/end2end/ScissorTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-01T17:16:28Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "128c4424_6da0510f",
+      "revId": "74f67e745c7e0f63ee32e4ea4878400462a7b7aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
