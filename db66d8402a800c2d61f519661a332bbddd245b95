@@ -34,6 +34,24 @@
       "parentUuid": "2b65d2e0_28b24980",
       "revId": "db66d8402a800c2d61f519661a332bbddd245b95",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b912c6c_2ce8e81f",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1460,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-01T19:43:25Z",
+      "side": 1,
+      "message": "Added in CL#48.",
+      "parentUuid": "dfafe772_f5acbf88",
+      "revId": "db66d8402a800c2d61f519661a332bbddd245b95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
