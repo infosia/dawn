@@ -303,11 +303,6 @@ void ComputeFormatCapabilities(const DeviceBase* device, FormatTable& table) {
                         wgpu::TextureFormat::RGBA16Unorm},
                        Cap::Renderable | Cap::Multisample | Cap::Resolve);
 
-    InitialCapsAddedBy(Feature::Snorm16TextureFormats,
-                       {wgpu::TextureFormat::R16Snorm, wgpu::TextureFormat::RG16Snorm,
-                        wgpu::TextureFormat::RGBA16Snorm},
-                       Cap::Renderable | Cap::Multisample | Cap::Resolve);
-
     InitialCapsAddedBy(Feature::CoreFeaturesAndLimits, {wgpu::TextureFormat::BGRA8UnormSrgb},
                        Cap::Renderable | Cap::Multisample | Cap::Resolve | Cap::Blendable);
 
