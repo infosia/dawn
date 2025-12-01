@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d6dd028_34606282",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-01T21:47:12Z",
+      "side": 1,
+      "message": "The proposal doc says we want the size to be \"unsigned long\", so uint64_t, but we\u0027re using BindingIndex for the size in DynamicArray. I know we\u0027re going to eventually fold DynamicArray into this class, but do we want the size to be 32-bit or 64-bit ultimately?",
+      "range": {
+        "startLine": 40,
+        "startChar": 20,
+        "endLine": 40,
+        "endChar": 71
+      },
+      "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
