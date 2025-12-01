@@ -46,6 +46,30 @@
       },
       "revId": "32c94b61ffe2132a175ad8fc54c48a2afdd17b0f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "697fb4b2_e98bd20f",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-12-01T19:25:00Z",
+      "side": 1,
+      "message": "Sorry, to clarify a bit more, I was imagining adding the flag at [1] which is a filepath and then plumb that through such that we pass it when we call `build_doc_map`.",
+      "parentUuid": "cad70f73_9c6ea71d",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "32c94b61ffe2132a175ad8fc54c48a2afdd17b0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c427f08f_b7d15f41",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 1414,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-12-01T19:25:00Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "2b91a74ee4c2553da6b9c001f90a014f40ebf455",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4611e51_2575b8af",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-12-01T19:25:00Z",
+      "side": 1,
+      "message": "nit. This doesn\u0027t seem to be set anywhere? I feel like we could probably assume that the files don\u0027t exist and generate them? Appending seems odd since that means the generation won\u0027t be hermetic.",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 29
+      },
+      "revId": "2b91a74ee4c2553da6b9c001f90a014f40ebf455",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2daa702c_22167425",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-12-01T19:25:00Z",
+      "side": 1,
+      "message": "nit. Remove the default file path, and explicitly pass it in from the flag. Or alternatively, in `check_and_log_incomplete_docs` we define the function inside (as a function inside the function scope) given the filepath so that we don\u0027t need to pass it in multiple places.",
+      "range": {
+        "startLine": 87,
+        "startChar": 35,
+        "endLine": 87,
+        "endChar": 60
+      },
+      "revId": "2b91a74ee4c2553da6b9c001f90a014f40ebf455",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
