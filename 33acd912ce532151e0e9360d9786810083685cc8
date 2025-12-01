@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4602b44_0e054d96",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-01T16:24:39Z",
+      "side": 1,
+      "message": "Where is it used? Can we remove it?",
+      "revId": "33acd912ce532151e0e9360d9786810083685cc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ddf32a6_64cd4495",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-01T16:24:39Z",
+      "side": 1,
+      "message": "Do we have a tracking bug?",
+      "revId": "33acd912ce532151e0e9360d9786810083685cc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c5edf419_aeb209a3",
