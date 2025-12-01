@@ -44,6 +44,169 @@ namespace tint::core::ir {
 using namespace tint::core::fluent_types;     // NOLINT
 using namespace tint::core::number_suffixes;  // NOLINT
 
+TEST_F(IR_ValidatorTest, Builtin_Duplicate) {
+    auto* f = VertexEntryPoint();
+    AddBuiltinParam(f, "vtx_1", BuiltinValue::kVertexIndex, ty.u32());
+    AddBuiltinParam(f, "vtx_2", BuiltinValue::kVertexIndex, ty.u32());
+
+    b.Append(f->Block(), [&] { b.Unreachable(); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr(
+            R"(:1:47 error: duplicate instance of builtin 'vertex_index', must be unique per entry point
+%f = @vertex func(%vtx_1:u32 [@vertex_index], %vtx_2:u32 [@vertex_index]):vec4<f32> [@position] {
+                                              ^^^^^^^^^^
+)")) << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, Builtin_ClipDistance_Duplicate) {
+    auto* cd1 = b.Var("cd1", AddressSpace::kOut, ty.array<f32, 2>());
+    cd1->SetBuiltin(BuiltinValue::kClipDistances);
+    mod.root_block->Append(cd1);
+
+    auto* cd2 = b.Var("cd2", AddressSpace::kOut, ty.array<f32, 2>());
+    cd2->SetBuiltin(BuiltinValue::kClipDistances);
+    mod.root_block->Append(cd2);
+
+    auto* f = VertexEntryPoint();
+
+    b.Append(f->Block(), [&] {
+        b.Store(b.Access(ty.ptr(AddressSpace::kOut, ty.f32()), cd1, 0_u), 0_f);
+        b.Store(b.Access(ty.ptr(AddressSpace::kOut, ty.f32()), cd2, 0_u), 0_f);
+        b.Unreachable();
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr(
+            R"(:3:48 error: var: duplicate instance of builtin 'clip_distances', must be unique per entry point
+  %cd2:ptr<__out, array<f32, 2>, read_write> = var undef @builtin(clip_distances)
+                                               ^^^
+)")) << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, Builtin_ClipDistance_Duplicate_WithCapability) {
+    auto* cd1 = b.Var("cd1", AddressSpace::kOut, ty.array<f32, 2>());
+    cd1->SetBuiltin(BuiltinValue::kClipDistances);
+    mod.root_block->Append(cd1);
+
+    auto* cd2 = b.Var("cd2", AddressSpace::kOut, ty.array<f32, 2>());
+    cd2->SetBuiltin(BuiltinValue::kClipDistances);
+    mod.root_block->Append(cd2);
+
+    auto* f = VertexEntryPoint();
+
+    b.Append(f->Block(), [&] {
+        b.Store(b.Access(ty.ptr(AddressSpace::kOut, ty.f32()), cd1, 0_u), 0_f);
+        b.Store(b.Access(ty.ptr(AddressSpace::kOut, ty.f32()), cd2, 0_u), 0_f);
+        b.Unreachable();
+    });
+
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowClipDistancesOnF32ScalarAndVector});
+    ASSERT_EQ(res, Success) << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, Builtin_ClipDistance_Triple_WithCapability) {
+    auto* cd1 = b.Var("cd1", AddressSpace::kOut, ty.array<f32, 2>());
+    cd1->SetBuiltin(BuiltinValue::kClipDistances);
+    mod.root_block->Append(cd1);
+
+    auto* cd2 = b.Var("cd2", AddressSpace::kOut, ty.array<f32, 2>());
+    cd2->SetBuiltin(BuiltinValue::kClipDistances);
+    mod.root_block->Append(cd2);
+
+    auto* cd3 = b.Var("cd3", AddressSpace::kOut, ty.array<f32, 2>());
+    cd3->SetBuiltin(BuiltinValue::kClipDistances);
+    mod.root_block->Append(cd3);
+
+    auto* f = VertexEntryPoint();
+
+    b.Append(f->Block(), [&] {
+        b.Store(b.Access(ty.ptr(AddressSpace::kOut, ty.f32()), cd1, 0_u), 0_f);
+        b.Store(b.Access(ty.ptr(AddressSpace::kOut, ty.f32()), cd2, 0_u), 0_f);
+        b.Store(b.Access(ty.ptr(AddressSpace::kOut, ty.f32()), cd3, 0_u), 0_f);
+        b.Unreachable();
+    });
+
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowClipDistancesOnF32ScalarAndVector});
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr(
+            R"(:4:48 error: var: too many instances of builtin 'clip_distances', only two allowed with 'kAllowClipDistancesOnF32ScalarAndVector' capability enabled
+  %cd3:ptr<__out, array<f32, 2>, read_write> = var undef @builtin(clip_distances)
+                                               ^^^
+)")) << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, Builtin_SampleMask_DuplicateInput) {
+    auto* f = FragmentEntryPoint();
+    AddBuiltinParam(f, "sm1", BuiltinValue::kSampleMask, ty.u32());
+    AddBuiltinParam(f, "sm2", BuiltinValue::kSampleMask, ty.u32());
+
+    b.Append(f->Block(), [&] { b.Unreachable(); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr(
+            R"(:1:46 error: duplicate instance of builtin 'sample_mask' on inputs, must be unique per entry point
+%f = @fragment func(%sm1:u32 [@sample_mask], %sm2:u32 [@sample_mask]):void {
+                                             ^^^^^^^^
+)")) << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, Builtin_SampleMask_DuplicateOutput) {
+    auto* sm1 = b.Var("sm1", AddressSpace::kOut, ty.u32());
+    sm1->SetBuiltin(BuiltinValue::kSampleMask);
+    mod.root_block->Append(sm1);
+
+    auto* sm2 = b.Var("sm2", AddressSpace::kOut, ty.u32());
+    sm2->SetBuiltin(BuiltinValue::kSampleMask);
+    mod.root_block->Append(sm2);
+
+    auto* f = FragmentEntryPoint();
+
+    b.Append(f->Block(), [&] {
+        b.Store(sm1, 0_u);
+        b.Store(sm2, 0_u);
+        b.Unreachable();
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr(
+            R"(:3:38 error: var: duplicate instance of builtin 'sample_mask' on outputs, must be unique per entry point
+  %sm2:ptr<__out, u32, read_write> = var undef @builtin(sample_mask)
+                                     ^^^
+)")) << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, Builtin_SampleMask_InputOutput) {
+    auto* sm_out = b.Var("sm_out", AddressSpace::kOut, ty.u32());
+    sm_out->SetBuiltin(BuiltinValue::kSampleMask);
+    mod.root_block->Append(sm_out);
+
+    auto* f = FragmentEntryPoint();
+    AddBuiltinParam(f, "sm_in", BuiltinValue::kSampleMask, ty.u32());
+
+    b.Append(f->Block(), [&] {
+        b.Store(sm_out, 0_u);
+        b.Unreachable();
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_EQ(res, Success);
+}
+
 TEST_F(IR_ValidatorTest, Builtin_PointSize_WrongStage) {
     auto* f = FragmentEntryPoint();
     AddBuiltinReturn(f, "size", BuiltinValue::kPointSize, ty.f32());
