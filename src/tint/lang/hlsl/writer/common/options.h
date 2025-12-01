@@ -132,6 +132,35 @@ struct Options {
         kDXC,
     };
 
+    /// The set of options to work around driver issues
+    struct Workarounds {
+        /// Set to `true` to scalarize max, min, and clamp builtins.
+        bool scalarize_max_min_clamp = false;
+
+        /// Set to `true` to generate polyfill for `reflect` builtin for vec2<f32>
+        bool polyfill_reflect_vec2_f32 = false;
+
+        /// Set to `true` to generate polyfill for `subgroupBroadcast(f16)`
+        bool polyfill_subgroup_broadcast_f16 = false;
+
+        TINT_REFLECT(Workarounds,
+                     scalarize_max_min_clamp,
+                     polyfill_reflect_vec2_f32,
+                     polyfill_subgroup_broadcast_f16);
+    };
+
+    /// The set of options for things which are only available in certain shader models
+    struct Extensions {
+        /// Set to `true` to generate polyfill for `dot4I8Packed` and `dot4U8Packed` builtins
+        bool polyfill_dot_4x8_packed = false;
+
+        /// Set to `true` to generate polyfill for `pack4xI8`, `pack4xU8`, `pack4xI8Clamp`,
+        /// `unpack4xI8` and `unpack4xU8` builtins
+        bool polyfill_pack_unpack_4x8 = false;
+
+        TINT_REFLECT(Extensions, polyfill_dot_4x8_packed, polyfill_pack_unpack_4x8);
+    };
+
     /// Constructor
     Options();
     /// Destructor
@@ -163,24 +192,14 @@ struct Options {
     /// Set to `true` to run the TruncateInterstageVariables transform.
     bool truncate_interstage_variables = false;
 
-    /// Set to `true` to generate polyfill for `reflect` builtin for vec2<f32>
-    bool polyfill_reflect_vec2_f32 = false;
-
-    /// Set to `true` to generate polyfill for `dot4I8Packed` and `dot4U8Packed` builtins
-    bool polyfill_dot_4x8_packed = false;
-
     /// Set to `true` to disable the polyfills on integer division and modulo.
     bool disable_polyfill_integer_div_mod = false;
 
-    /// Set to `true` to scalarize max, min, and clamp builtins.
-    bool scalarize_max_min_clamp = false;
+    /// Any enabled workarounds
+    Workarounds workarounds{};
 
-    /// Set to `true` to generate polyfill for `pack4xI8`, `pack4xU8`, `pack4xI8Clamp`,
-    /// `unpack4xI8` and `unpack4xU8` builtins
-    bool polyfill_pack_unpack_4x8 = false;
-
-    /// Set to `true` to generate polyfill for `subgroupBroadcast(f16)`
-    bool polyfill_subgroup_broadcast_f16 = false;
+    /// Any enabled extensions
+    Extensions extensions{};
 
     /// The downstream compiler which will be used
     Compiler compiler = Compiler::kDXC;
@@ -235,12 +254,7 @@ struct Options {
                  enable_integer_range_analysis,
                  disable_workgroup_init,
                  truncate_interstage_variables,
-                 polyfill_reflect_vec2_f32,
-                 polyfill_dot_4x8_packed,
                  disable_polyfill_integer_div_mod,
-                 scalarize_max_min_clamp,
-                 polyfill_pack_unpack_4x8,
-                 polyfill_subgroup_broadcast_f16,
                  compiler,
                  array_length_from_uniform,
                  array_offset_from_uniform,
