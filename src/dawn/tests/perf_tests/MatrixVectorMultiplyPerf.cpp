@@ -93,8 +93,8 @@ class MatrixVectorMultiplyPerf : public DawnPerfTestWithParams<MatrixVectorMulti
         : DawnPerfTestWithParams(kNumDisptaches, /* allow many steps in flight */ 100) {}
     ~MatrixVectorMultiplyPerf() override = default;
 
-    void SetUp() override;
 
+    void SetUp() override;
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         mUsingF16 = false;
         mUsingSubgroups = false;
