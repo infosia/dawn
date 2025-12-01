@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8adebe1a_f8748987",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3637,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-01T22:33:16Z",
+      "side": 1,
+      "message": "In my next CL, it looks like we don\u0027t want this tag, otherwise I can\u0027t add \"set resource table\" on the Queue.",
+      "range": {
+        "startLine": 3637,
+        "startChar": 8,
+        "endLine": 3637,
+        "endChar": 25
+      },
+      "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5d6dd028_34606282",
         "filename": "src/dawn/native/ResourceTable.cpp",
         "patchSetId": 2
