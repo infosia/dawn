@@ -81,6 +81,24 @@
       "parentUuid": "7cceabcd_85ee200a",
       "revId": "ab97b8f01c30f6e2197066efc95e75f6d8ffc2db",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dca4cc18_73cfecb2",
+        "filename": "tools/src/oswrapper/fstestoswrapper_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 3357,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-01T19:43:45Z",
+      "side": 1,
+      "message": "It looks like this will take more work than simply adding test coverage. When adding a check in _MatchesReal tests that file permissions match, a bunch of tests fail due to slightly different permissions (666 vs. 644). This appears to be due to the real filesystem having a umask, whereas the mock filesystem does not not currently understand the concept of a umask.\n\nI\u0027ve added a TODO to track adding umask support for now.",
+      "parentUuid": "5b747619_b5907b98",
+      "revId": "ab97b8f01c30f6e2197066efc95e75f6d8ffc2db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
