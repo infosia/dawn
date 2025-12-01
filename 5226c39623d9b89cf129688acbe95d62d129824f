@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "645060d7_a72de8a0",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-01T21:19:45Z",
+      "side": 1,
+      "message": "Note, these links will only be useful for googlers, it would be better to use crbug.com/463925499 for any open source issues so external folks can follow the links as well.",
+      "revId": "5226c39623d9b89cf129688acbe95d62d129824f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
