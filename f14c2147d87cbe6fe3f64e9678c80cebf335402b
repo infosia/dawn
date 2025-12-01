@@ -59,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "494cd2fb_4321117e",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-01T16:45:30Z",
+      "side": 1,
+      "message": "Done. (I have mild preference, like 1% for not using the shorthands, but also I know that\u0027s just me ^^)",
+      "parentUuid": "44fa7793_e6fce011",
+      "range": {
+        "startLine": 1013,
+        "startChar": 8,
+        "endLine": 1013,
+        "endChar": 29
+      },
+      "revId": "f14c2147d87cbe6fe3f64e9678c80cebf335402b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3291230_14d33350",
@@ -96,6 +120,30 @@
           ]
         }
       ],
+      "revId": "f14c2147d87cbe6fe3f64e9678c80cebf335402b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35cc45fd_734aa835",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-01T16:45:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3291230_14d33350",
+      "range": {
+        "startLine": 1018,
+        "startChar": 72,
+        "endLine": 1018,
+        "endChar": 88
+      },
       "revId": "f14c2147d87cbe6fe3f64e9678c80cebf335402b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -141,6 +189,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "722581f8_d300fedf",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2026,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-01T16:45:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "251ba569_ee0098b9",
+      "range": {
+        "startLine": 2026,
+        "startChar": 19,
+        "endLine": 2026,
+        "endChar": 70
+      },
+      "revId": "f14c2147d87cbe6fe3f64e9678c80cebf335402b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6333804e_319b6f68",
@@ -182,6 +254,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cffa17b_994c67df",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2033,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-01T16:45:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6333804e_319b6f68",
+      "range": {
+        "startLine": 2033,
+        "startChar": 28,
+        "endLine": 2033,
+        "endChar": 58
+      },
+      "revId": "f14c2147d87cbe6fe3f64e9678c80cebf335402b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "adbefe0c_d8ca5da1",
@@ -195,6 +291,30 @@
       "writtenOn": "2025-12-01T16:30:28Z",
       "side": 1,
       "message": "destroyed",
+      "range": {
+        "startLine": 2081,
+        "startChar": 42,
+        "endLine": 2081,
+        "endChar": 51
+      },
+      "revId": "f14c2147d87cbe6fe3f64e9678c80cebf335402b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6edef153_793adf46",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2081,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-01T16:45:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adbefe0c_d8ca5da1",
       "range": {
         "startLine": 2081,
         "startChar": 42,
@@ -223,6 +343,53 @@
         "startChar": 8,
         "endLine": 2158,
         "endChar": 65
+      },
+      "revId": "f14c2147d87cbe6fe3f64e9678c80cebf335402b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee369c3e_48e8a4c2",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2158,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-01T16:45:30Z",
+      "side": 1,
+      "message": "Added support for that by passing nullptr to ignoreErrors. This modifies the previous CL for that.",
+      "parentUuid": "a34a468b_109bded6",
+      "range": {
+        "startLine": 2158,
+        "startChar": 8,
+        "endLine": 2158,
+        "endChar": 65
+      },
+      "revId": "f14c2147d87cbe6fe3f64e9678c80cebf335402b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a27c982_b467614d",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2177,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-01T16:45:30Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"unvailable\" is a possible misspelling of \"unavailable\".\n\nTo bypass Spellchecker...\n\n\"unvailable\" is a possible misspelling of \"unavailable\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 2177,
+        "startChar": 45,
+        "endLine": 2177,
+        "endChar": 55
       },
       "revId": "f14c2147d87cbe6fe3f64e9678c80cebf335402b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
@@ -265,6 +432,30 @@
           ]
         }
       ],
+      "revId": "f14c2147d87cbe6fe3f64e9678c80cebf335402b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ecf5576_ce6932af",
+        "filename": "src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2217,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-01T16:45:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54d82d8c_f10ca283",
+      "range": {
+        "startLine": 2217,
+        "startChar": 41,
+        "endLine": 2217,
+        "endChar": 89
+      },
       "revId": "f14c2147d87cbe6fe3f64e9678c80cebf335402b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
