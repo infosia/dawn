@@ -51,6 +51,24 @@
       "parentUuid": "710ec14e_f681a10c",
       "revId": "1716084abd3f3afcf0611dc33d40d77bd94f5775",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0eae28d1_048bd561",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-01T19:56:15Z",
+      "side": 1,
+      "message": "The CL has landed and rolled into Chromium: https://chromium-review.googlesource.com/c/chromium/src/+/7213899",
+      "parentUuid": "8c18f135_580c9d24",
+      "revId": "1716084abd3f3afcf0611dc33d40d77bd94f5775",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
