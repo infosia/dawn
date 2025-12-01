@@ -16,6 +16,24 @@
       "message": "Testing locally - there are never any multiplies for Vulkan. This is because you run the analysis after the printer, by which time the SPIR-V backend has replaced all the subgroup matrix builtin calls with `spirv.*` intrinsics. So we need to run the analysis earlier in Raise.",
       "revId": "8526453ee52a179f66a9d7cb0cc4b96844c01dfb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "335abfd4_611e7d23",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1808,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-01T15:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61a046bb_7844f32f",
+      "revId": "8526453ee52a179f66a9d7cb0cc4b96844c01dfb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
