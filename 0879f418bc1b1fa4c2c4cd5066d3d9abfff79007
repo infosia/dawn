@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c601ba6_8b14eb27",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-01T23:05:03Z",
+      "side": 1,
+      "message": "Nit: It\u0027s actually all of the languages, but maybe we only had tests that did this for those two.\n\nAlso, sample mask just happens to be the only builtin that can appear as both an input and output, but the uniqueness rule is separate for inputs and outputs for all builtins. So you could generalize that idea instead of having a special-case for sample mask, if that makes things nicer (just ignore this if it doesn\u0027t).",
+      "revId": "0879f418bc1b1fa4c2c4cd5066d3d9abfff79007",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a24cce0_af1e9555",
+        "filename": "src/tint/lang/core/ir/validator_builtin_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-01T23:05:03Z",
+      "side": 1,
+      "message": "Nit: It probably doesn\u0027t really matter, but just FYI the HLSL capability for `ClipDistance` will never be used in conjunction with the `var\u003cout\u003e` form of shader IO (which is only used by SPIR-V and GLSL). So the use case we care more about for this capability is with the builtins in structures.\n\nI know that you\u0027ve made the validation logic more generic so it shouldn\u0027t matter where the builtins are declared, so feel free to ignore this comment.",
+      "revId": "0879f418bc1b1fa4c2c4cd5066d3d9abfff79007",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
