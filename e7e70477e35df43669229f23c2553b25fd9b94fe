@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ab40c4c_4b79aa2e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-02T19:22:03Z",
+      "side": 1,
+      "message": "Too bad these are preinstalled so we have to delete them. Looks great though, thank you!",
+      "revId": "e7e70477e35df43669229f23c2553b25fd9b94fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
