@@ -16,6 +16,24 @@
       "message": "This is actually just wrong and probably needs to be fixed in this CL. If DestroyImpl() is being called after last ref was dropped it shouldn\u0027t be possible to hit this case so it\u0027s fine. If explicit destroy API happens another thread can be attempting a concurrent operation.\n\nWe can\u0027t really not destroy the buffer and throw a validation error. This is called from Buffer::DestroyImpl() which is going to do platform specific destroy work regardless of what happens here. Also DestroyImpl() will never be called again.\n\nReally what this needs is an atomic wait for the other thread to end the concurrent operation. It also requires compare_exchange() + loop for the state change to destroyed which adds a bunch of complexity. I\u0027m open to suggestions or I can upload what waiting for other concurrent operations to finish looks like.\n\nThere is a commented out test that is related.",
       "revId": "712502b79612b765e79b0a05baf6ed4f42aed5f7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc1b965d_04144ceb",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-12-02T20:45:52Z",
+      "side": 1,
+      "message": "Hmm, one alternative I can think of is to make it such that the `Destroy` actually takes priority and the in-flight operation fails instead? I\u0027m not actually sure how feasible that would be since that would effectively allow racing in the backend impls which could result in UB... Though maybe that\u0027s tolerable since anyone calling `Destroy` on different threads are probably required to do external synchronization anyways?\n\nI\u0027m imagining that functions that cause a transition form state A-\u003eInsideOp via an atomic exchange would also then need to do a transition from InsideOp-\u003eB with another atomic exchange which could fail (and maybe do a cleanup?)\n\nTo be fair though, I\u0027m also not sure if that\u0027s easier than just the atomic wait for the previous operation to finish before destroying. From briefly looking at the code, I feel like doing the wait might actually be easier?",
+      "parentUuid": "a2ceba6d_54d98eef",
+      "revId": "712502b79612b765e79b0a05baf6ed4f42aed5f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
