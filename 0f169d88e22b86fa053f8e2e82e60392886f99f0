@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6305e98e_d77d1887",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-02T23:42:33Z",
+      "side": 1,
+      "message": "More dependency injection CLs for you to review. Same notes about the code being AI generated and how comments will be addressed as last time, but at least this time it\u0027s much smaller.",
+      "revId": "0f169d88e22b86fa053f8e2e82e60392886f99f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
