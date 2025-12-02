@@ -46,6 +46,30 @@
       },
       "revId": "3fd0c655dae319f17cde8842029ef86b142b3c30",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84d8d98e_558a2b69",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-02T22:28:51Z",
+      "side": 1,
+      "message": "No worries, that\u0027s what I suspected.\n\nThe default state for revert CLs is different between chromium-review and dawn-review for some reason.",
+      "parentUuid": "c0937cb5_d64eca95",
+      "range": {
+        "startLine": 11,
+        "startChar": 19,
+        "endLine": 11,
+        "endChar": 57
+      },
+      "revId": "3fd0c655dae319f17cde8842029ef86b142b3c30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
