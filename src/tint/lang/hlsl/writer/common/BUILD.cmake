@@ -41,7 +41,6 @@
 tint_add_target(tint_lang_hlsl_writer_common lib
   lang/hlsl/writer/common/option_helpers.cc
   lang/hlsl/writer/common/option_helpers.h
-  lang/hlsl/writer/common/options.cc
   lang/hlsl/writer/common/options.h
   lang/hlsl/writer/common/output.cc
   lang/hlsl/writer/common/output.h
