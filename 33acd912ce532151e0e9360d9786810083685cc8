@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ef626ee_1de22ff8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-12-02T13:16:35Z",
+      "side": 1,
+      "message": "Done in https://issues.chromium.org/issues/465390508",
+      "parentUuid": "22fb3e01_99765a38",
+      "revId": "33acd912ce532151e0e9360d9786810083685cc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5ddf32a6_64cd4495",
