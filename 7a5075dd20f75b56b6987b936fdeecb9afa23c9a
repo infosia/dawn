@@ -22,6 +22,30 @@
       },
       "revId": "7a5075dd20f75b56b6987b936fdeecb9afa23c9a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0eb5af0_8bcded0c",
+        "filename": "src/dawn/tests/end2end/TextureFormatTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-12-02T10:00:05Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f7920ae9_c64f97c2",
+      "range": {
+        "startLine": 637,
+        "startChar": 0,
+        "endLine": 651,
+        "endChar": 0
+      },
+      "revId": "7a5075dd20f75b56b6987b936fdeecb9afa23c9a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
