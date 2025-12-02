@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91d0820d_6475f442",
+        "filename": "tools/src/cmd/gen/templates/templates_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-02T23:42:50Z",
+      "side": 1,
+      "message": "This and other uses of \"we\" removed in a later CL.",
+      "range": {
+        "startLine": 18,
+        "startChar": 36,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "60b054240f4f65ac0ad7af1540ee47035d1a33cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
