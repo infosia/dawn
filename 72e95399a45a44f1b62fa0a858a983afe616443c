@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51bd68c4_0bb17364",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 2444,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-02T13:05:49Z",
+      "side": 1,
+      "message": "We should really have a special case with `\"value\": \"++\"` or something to avoid having to compact the range every time.\n\nOr we could leave the range sparse.",
+      "revId": "72e95399a45a44f1b62fa0a858a983afe616443c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

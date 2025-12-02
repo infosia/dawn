@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "22fb3e01_99765a38",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-02T13:05:49Z",
+      "side": 1,
+      "message": "Can you file a bug on skia to stop using that extension and instead use the texture format tier extensions if possible?",
+      "parentUuid": "b73d842e_67ea6765",
+      "revId": "33acd912ce532151e0e9360d9786810083685cc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5ddf32a6_64cd4495",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
