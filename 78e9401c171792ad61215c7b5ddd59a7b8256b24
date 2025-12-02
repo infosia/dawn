@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e66cf9ce_61697846",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3632,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-02T18:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de67ba6b_a0db835d",
+      "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8adebe1a_f8748987",
@@ -89,6 +107,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed8f5d5f_511fd417",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3637,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-02T18:57:48Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "59016283_5af069d0",
+      "range": {
+        "startLine": 3637,
+        "startChar": 8,
+        "endLine": 3637,
+        "endChar": 25
+      },
+      "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "917c5563_0ca15f24",
@@ -102,6 +144,24 @@
       "writtenOn": "2025-12-02T08:53:07Z",
       "side": 1,
       "message": "Can we add it to ToBackend.h while we\u0027re at it?",
+      "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "618e173d_a74e4378",
+        "filename": "src/dawn/native/Forward.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-02T18:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "917c5563_0ca15f24",
       "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -123,6 +183,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e46bbe5_931257c4",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-02T18:57:48Z",
+      "side": 1,
+      "message": "Issue was that DynamicArrayState needed a defined destructor in its cpp file because of `Ref\u003cBufferBase\u003e`. I added it to the CL and removed useless headers.",
+      "parentUuid": "4f96c4c6_d354aa59",
+      "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "67a206d5_c0da2286",
@@ -136,6 +214,24 @@
       "writtenOn": "2025-12-02T08:53:07Z",
       "side": 1,
       "message": "We are going to need an error constructor as well like for all other objects.",
+      "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dcc0d1f_dae18b45",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-02T18:57:48Z",
+      "side": 1,
+      "message": "Will add in the future.",
+      "parentUuid": "67a206d5_c0da2286",
       "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -163,6 +259,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64bcb255_9b6cbabd",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-02T18:57:48Z",
+      "side": 1,
+      "message": "Using uint32_t now.",
+      "parentUuid": "5d6dd028_34606282",
+      "range": {
+        "startLine": 40,
+        "startChar": 20,
+        "endLine": 40,
+        "endChar": 71
+      },
+      "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7451c82e_c129ea54",
@@ -176,6 +296,24 @@
       "writtenOn": "2025-12-02T08:53:07Z",
       "side": 1,
       "message": "nit: in a pre-CL or follow-up, can we add an DAWN_UNIMPLEMENTED to Assert.h? We keep needing one and still don\u0027t have it xD",
+      "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ea31bbd_7d8c1b8b",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-02T18:57:48Z",
+      "side": 1,
+      "message": "Will follow up.",
+      "parentUuid": "7451c82e_c129ea54",
       "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
