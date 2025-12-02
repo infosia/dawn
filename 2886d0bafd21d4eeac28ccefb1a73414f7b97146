@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee2a2c03_ddb276b7",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-02T18:43:21Z",
+      "side": 1,
+      "message": "Can you just call `utf8::SequenceLength()` directly here, or does this need to handle potentially zero-length strings?\n\nAlso `s/uncode/unicode/`",
+      "range": {
+        "startLine": 328,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 0
+      },
+      "revId": "2886d0bafd21d4eeac28ccefb1a73414f7b97146",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
