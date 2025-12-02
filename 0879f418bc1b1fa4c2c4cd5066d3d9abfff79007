@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7d8ae95_fd63ef5a",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-12-02T18:20:12Z",
+      "side": 1,
+      "message": "Reworking this I think ended up with cleaner code. (Technically less space efficient, but I think I was trying to be overly cute in using a EnumSet)",
+      "parentUuid": "2c601ba6_8b14eb27",
+      "revId": "0879f418bc1b1fa4c2c4cd5066d3d9abfff79007",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9a24cce0_af1e9555",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-12-01T23:05:03Z",
       "side": 1,
       "message": "Nit: It probably doesn\u0027t really matter, but just FYI the HLSL capability for `ClipDistance` will never be used in conjunction with the `var\u003cout\u003e` form of shader IO (which is only used by SPIR-V and GLSL). So the use case we care more about for this capability is with the builtins in structures.\n\nI know that you\u0027ve made the validation logic more generic so it shouldn\u0027t matter where the builtins are declared, so feel free to ignore this comment.",
+      "revId": "0879f418bc1b1fa4c2c4cd5066d3d9abfff79007",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1a9118a_3798edf5",
+        "filename": "src/tint/lang/core/ir/validator_builtin_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-12-02T18:20:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a24cce0_af1e9555",
       "revId": "0879f418bc1b1fa4c2c4cd5066d3d9abfff79007",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
