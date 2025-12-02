@@ -34,6 +34,24 @@
       "parentUuid": "a2ceba6d_54d98eef",
       "revId": "712502b79612b765e79b0a05baf6ed4f42aed5f7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93257681_84e8cf2d",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-12-02T21:37:37Z",
+      "side": 1,
+      "message": "Making the in flight operation abort does seems complex. If another thread is in Unmap() already when Destroy() is called we kind of just want to let unmap finish since it\u0027s required before the buffer can be destroyed. If another thread is in MapAsync() I guess we don\u0027t care if it completes but aborting sounds more complex than just waiting for it finish. \n\n\u003e To be fair though, I\u0027m also not sure if that\u0027s easier than just the atomic wait for the previous operation to finish before destroying. From briefly looking at the code, I feel like doing the wait might actually be easier?\n\nI uploaded what I think is correct in https://dawn-review.googlesource.com/c/dawn/+/277937 for reference. I\u0027ve never run that against CQ so doing that now to see if anything explodes. I\u0027d merge it back to this CL if needed.",
+      "parentUuid": "bc1b965d_04144ceb",
+      "revId": "712502b79612b765e79b0a05baf6ed4f42aed5f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
