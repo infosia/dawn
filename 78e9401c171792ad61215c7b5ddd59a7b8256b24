@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "de67ba6b_a0db835d",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3632,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-02T08:53:07Z",
+      "side": 1,
+      "message": "It turns out that in WebIDL `unsigned long` is 32 bit: https://webidl.spec.whatwg.org/#idl-unsigned-long\n\nAlso I\u0027ll change the PR do use GPUSize32 to be more explicit.\n\nAnd there\u0027s not good default for the size, `whole size` doesn\u0027t mean anything for an object that hasn\u0027t been created yet.\n\n```suggestion\n            {\"name\": \"size\", \"type\": \"uint32_t\"}\n```",
+      "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8adebe1a_f8748987",
         "filename": "src/dawn/dawn.json",
         "patchSetId": 2
@@ -50,6 +67,81 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "59016283_5af069d0",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3637,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-02T08:53:07Z",
+      "side": 1,
+      "message": "You\u0027d need to tag the method with `\"dawn\"` as well to avoid trying to use an unknown type when generating the upstream webgpu.h for example. Unless there\u0027s some other issue I\u0027m missing?",
+      "parentUuid": "7d81f2f9_a6f5edfe",
+      "range": {
+        "startLine": 3637,
+        "startChar": 8,
+        "endLine": 3637,
+        "endChar": 25
+      },
+      "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "917c5563_0ca15f24",
+        "filename": "src/dawn/native/Forward.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-02T08:53:07Z",
+      "side": 1,
+      "message": "Can we add it to ToBackend.h while we\u0027re at it?",
+      "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f96c4c6_d354aa59",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-02T08:53:07Z",
+      "side": 1,
+      "message": "nit: a bunch of these are not needed. Also ResourceTable can be in its own block first (so there\u0027s a missing newline).",
+      "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67a206d5_c0da2286",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-02T08:53:07Z",
+      "side": 1,
+      "message": "We are going to need an error constructor as well like for all other objects.",
+      "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5d6dd028_34606282",
         "filename": "src/dawn/native/ResourceTable.cpp",
         "patchSetId": 2
@@ -67,6 +159,23 @@
         "endLine": 40,
         "endChar": 71
       },
+      "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7451c82e_c129ea54",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-02T08:53:07Z",
+      "side": 1,
+      "message": "nit: in a pre-CL or follow-up, can we add an DAWN_UNIMPLEMENTED to Assert.h? We keep needing one and still don\u0027t have it xD",
       "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
