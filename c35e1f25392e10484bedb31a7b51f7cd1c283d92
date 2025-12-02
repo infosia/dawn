@@ -106,6 +106,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "48793134_5e9f45ca",
+        "filename": "src/dawn/native/utils/RenderDoc.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-02T22:54:47Z",
+      "side": 1,
+      "message": "Hm, I see what you mean. After tossing around a few different approaches I feel like having DynamicLib track what kind of open was used internally and use that to determine if close methods should be called was cleanest, but I\u0027m happy to discuss further if you still feel like this isn\u0027t the right abstraction.",
+      "parentUuid": "796b4f52_82f21d91",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 32
+      },
+      "revId": "c35e1f25392e10484bedb31a7b51f7cd1c283d92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a45522f9_4ec04509",
@@ -119,6 +143,24 @@
       "writtenOn": "2025-12-02T01:32:26Z",
       "side": 1,
       "message": "Leftover?",
+      "revId": "c35e1f25392e10484bedb31a7b51f7cd1c283d92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8487d69_78c82130",
+        "filename": "src/dawn/native/vulkan/SharedTextureMemoryVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-02T22:54:47Z",
+      "side": 1,
+      "message": "Oh, right. This was an assert that was firing on my Android device whenever RenderDoc was hooked into it. Need to figure out how to properly address this, but it can be handled in a follow up. Reverted.",
+      "parentUuid": "a45522f9_4ec04509",
       "revId": "c35e1f25392e10484bedb31a7b51f7cd1c283d92",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
