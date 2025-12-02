@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13f5a35f_d179de4c",
+        "filename": "src/dawn/native/CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-02T01:32:26Z",
+      "side": 1,
+      "message": "nit: can you append conditional_private_depends here too (instead of twice in the two backend blocks) to keep things together and keep it more similar to GN?",
+      "revId": "db05ea1f09d21fab93a0de0f18ec392a857409d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2fbb17f_dd01efbe",
+        "filename": "src/dawn/native/utils/RenderDoc.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-02T01:32:26Z",
+      "side": 1,
+      "message": "nit: Put this in the header so they can be next to each other?",
+      "revId": "db05ea1f09d21fab93a0de0f18ec392a857409d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
