@@ -238,6 +238,7 @@ if (tint_build_unittests) {
       "user_call_test.cc",
       "validator_access_test.cc",
       "validator_builtin_test.cc",
+      "validator_bug_test.cc",
       "validator_call_test.cc",
       "validator_flow_control_test.cc",
       "validator_function_test.cc",
