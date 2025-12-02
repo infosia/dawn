@@ -325,11 +325,20 @@ std::optional<Token> Lexer::skip_blankspace_and_comments() {
 }
 
 std::optional<Token> Lexer::skip_comment() {
+    auto is_valid_utf8 = [](std::string_view str, size_t i) {
+        auto* utf8 = reinterpret_cast<const uint8_t*>(&str[i]);
+        auto [_, n] = tint::utf8::Decode(utf8, str.size() - i);
+        return n != 0;
+    };
+
     if (matches(pos(), "//")) {
         // Line comment: ignore everything until the end of line.
         while (!is_eol()) {
             if (is_null()) {
                 return Token{Token::Type::kError, begin_source(), "null character found"};
+            }
+            if (!is_valid_utf8(line(), pos())) {
+                return Token{Token::Type::kError, begin_source(), "invalid UTF-8"};
             }
             advance();
         }
@@ -360,6 +369,8 @@ std::optional<Token> Lexer::skip_comment() {
                 advance_line();
             } else if (is_null()) {
                 return Token{Token::Type::kError, begin_source(), "null character found"};
+            } else if (!is_valid_utf8(line(), pos())) {
+                return Token{Token::Type::kError, begin_source(), "invalid UTF-8"};
             } else {
                 // Anything else: skip and update source location.
                 advance();
