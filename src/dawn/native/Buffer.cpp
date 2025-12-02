@@ -39,6 +39,7 @@
 #include "dawn/common/Alloc.h"
 #include "dawn/common/Assert.h"
 #include "dawn/common/Constants.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/CallbackTaskManager.h"
@@ -461,32 +462,45 @@ BufferBase::~BufferBase() {
 }
 
 void BufferBase::DestroyImpl() {
-    bool needsUnmap = false;
-    switch (mState.load(std::memory_order::acquire)) {
-        case BufferState::Mapped:
-        case BufferState::PendingMap: {
-            needsUnmap = true;
-            break;
-        }
-        case BufferState::MappedAtCreation: {
-            if (mStagingBuffer != nullptr) {
-                mStagingBuffer = nullptr;
-            } else if (mSize != 0) {
+    // If the initial state is Unmapped the compared_exchange() should be successful. If not the
+    // loop body handles getting the actual state.
+    BufferState state = BufferState::Unmapped;
+    if (!mState.compare_exchange_weak(state, BufferState::Destroyed, std::memory_order_acq_rel)) {
+        bool needsUnmap = false;
+        state = mState.load(std::memory_order_acquire);
+        switch (state) {
+            case BufferState::Mapped:
+            case BufferState::PendingMap: {
                 needsUnmap = true;
+                break;
             }
-            break;
+            case BufferState::MappedAtCreation: {
+                if (mStagingBuffer != nullptr) {
+                    if (mState.compare_exchange_strong(state, BufferState::InsideOperation,
+                                                       std::memory_order_acq_rel)) {
+                        mStagingBuffer = nullptr;
+                        mState.store(BufferState::Unmapped, std::memory_order_release);
+                        state = BufferState::Unmapped;
+                    }
+                } else if (mSize != 0) {
+                    needsUnmap = true;
+                }
+                break;
+            }
+            case BufferState::InsideOperation: {
+                mState.wait(BufferState::InsideOperation, std::memory_order_acquire);
+                break;
+            }
+            default:
+                break;
         }
-        case BufferState::InsideOperation:
-            DAWN_UNREACHABLE();
-        default:
-            break;
+        if (needsUnmap) {
+            [[maybe_unused]] bool hadError = GetDevice()->ConsumedError(
+                UnmapInternal("Buffer was destroyed before mapping was resolved."),
+                "calling %s.Destroy().", this);
+            state = mState.load(std::memory_order_acquire);
+        }
     }
-    if (needsUnmap) {
-        [[maybe_unused]] bool hadError = GetDevice()->ConsumedError(
-            UnmapInternal("Buffer was destroyed before mapping was resolved."),
-            "calling %s.Destroy().", this);
-    }
-    mState.store(BufferState::Destroyed, std::memory_order::release);
 
     mTexelBufferViews.Destroy();
 }
