@@ -1021,6 +1021,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
 
         // Other fragment metadata
         metadata->usesSampleMaskOutput = entryPoint.output_sample_mask_used;
+        metadata->usesSampleMaskInput = entryPoint.input_sample_mask_used;
         metadata->usesSampleIndex = entryPoint.sample_index_used;
         if (entryPoint.front_facing_used || entryPoint.input_sample_mask_used ||
             entryPoint.sample_index_used) {
