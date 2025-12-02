@@ -195,6 +195,8 @@ struct Options {
     /// Set to `true` to disable the polyfills on integer division and modulo.
     bool disable_polyfill_integer_div_mod = false;
 
+    bool polyfill_sample_mask = false;
+
     /// Any enabled workarounds
     Workarounds workarounds{};
 
@@ -253,8 +255,10 @@ struct Options {
                  disable_workgroup_init,
                  truncate_interstage_variables,
                  disable_polyfill_integer_div_mod,
+                 polyfill_sample_mask,
                  workarounds,
                  extensions,
+
                  compiler,
                  array_length_from_uniform,
                  array_offset_from_uniform,

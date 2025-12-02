@@ -1279,6 +1279,11 @@ bool RenderPipelineBase::UsesFragDepth() const {
     return mUsesFragDepth;
 }
 
+bool RenderPipelineBase::UsesSampleMaskInput() const {
+    DAWN_ASSERT(!IsError());
+    return mUsesSampleMaskInput;
+}
+
 bool RenderPipelineBase::UsesSampleIndex() const {
     DAWN_ASSERT(!IsError());
     return mUsesSampleIndex;
