@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2ceba6d_54d98eef",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-12-02T19:54:07Z",
+      "side": 1,
+      "message": "This is actually just wrong and probably needs to be fixed in this CL. If DestroyImpl() is being called after last ref was dropped it shouldn\u0027t be possible to hit this case so it\u0027s fine. If explicit destroy API happens another thread can be attempting a concurrent operation.\n\nWe can\u0027t really not destroy the buffer and throw a validation error. This is called from Buffer::DestroyImpl() which is going to do platform specific destroy work regardless of what happens here. Also DestroyImpl() will never be called again.\n\nReally what this needs is an atomic wait for the other thread to end the concurrent operation. It also requires compare_exchange() + loop for the state change to destroyed which adds a bunch of complexity. I\u0027m open to suggestions or I can upload what waiting for other concurrent operations to finish looks like.\n\nThere is a commented out test that is related.",
+      "revId": "712502b79612b765e79b0a05baf6ed4f42aed5f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
