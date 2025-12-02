@@ -41,6 +41,10 @@ namespace {
 
 // Fuzzed options used to init tint::hlsl::writer::Options
 struct FuzzedOptions {
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // NOTE: These options should not be reordered or removed as it will change the operation of //
+    // pre-existing fuzzer cases. Always append new options to the end of the list.              //
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     bool strip_all_names;
     bool disable_robustness;
     bool enable_integer_range_analysis;
@@ -50,6 +54,10 @@ struct FuzzedOptions {
     bool disable_polyfill_integer_div_mod;
     bool polyfill_pack_unpack_4x8;
     bool compiler_is_dxc;
+    bool scalarize_max_min_clamp;
+    bool polyfill_subgroup_broadcast_f16;
+    bool truncate_interstage_variables;
+    std::bitset<kMaxInterStageLocations> interstage_locations;
 
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(FuzzedOptions,
@@ -94,11 +102,16 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     options.enable_integer_range_analysis = fuzzed_options.enable_integer_range_analysis;
     options.disable_workgroup_init = fuzzed_options.disable_workgroup_init;
     options.workarounds.polyfill_reflect_vec2_f32 = fuzzed_options.polyfill_reflect_vec2_f32;
+    options.workarounds.polyfill_subgroup_broadcast_f16 =
+        fuzzed_options.polyfill_subgroup_broadcast_f16;
     options.extensions.polyfill_dot_4x8_packed = fuzzed_options.polyfill_dot_4x8_packed;
+    options.workarounds.scalarize_max_min_clamp = fuzzed_options.scalarize_max_min_clamp;
     options.disable_polyfill_integer_div_mod = fuzzed_options.disable_polyfill_integer_div_mod;
     options.extensions.polyfill_pack_unpack_4x8 = fuzzed_options.polyfill_pack_unpack_4x8;
     options.compiler =
         fuzzed_options.compiler_is_dxc ? Options::Compiler::kDXC : Options::Compiler::kFXC;
+    options.truncate_interstage_variables = fuzzed_options.truncate_interstage_variables;
+    options.interstage_locations = fuzzed_options.interstage_locations;
 
     options.bindings = GenerateBindings(module, ep_name, false, false);
     options.array_length_from_uniform.ubo_binding = {30, 0};
