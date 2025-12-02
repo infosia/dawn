@@ -22,6 +22,30 @@
       },
       "revId": "3ccc0d09454f6d287eec4eef99b680812746e1bb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a48edcc0_ce511646",
+        "filename": "src/dawn/native/DynamicArrayState.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-02T09:04:35Z",
+      "side": 1,
+      "message": "Filed https://github.com/gpuweb/gpuweb/issues/5466",
+      "parentUuid": "ceb66280_0e7c5e8c",
+      "range": {
+        "startLine": 292,
+        "startChar": 82,
+        "endLine": 293,
+        "endChar": 72
+      },
+      "revId": "3ccc0d09454f6d287eec4eef99b680812746e1bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
