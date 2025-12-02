@@ -157,6 +157,7 @@ void MatrixVectorMultiplyPerf::SetUp() {
                           GetParam().mStoreType == StoreType::F32);
 
     DawnPerfTestWithParams<MatrixVectorMultiplyParams>::SetUp();
+    DAWN_SUPPRESS_TEST_IF(IsCPU());
 
     // Unoptimized variant too slow for bots.
     // Unskip locally with flag --run-suppressed-tests.

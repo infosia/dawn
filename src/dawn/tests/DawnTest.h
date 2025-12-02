@@ -269,12 +269,14 @@ class DawnTestBase {
     void SetUp();
     void TearDown();
 
+    bool IsBackend(wgpu::BackendType backend) const;
     bool IsD3D11() const;
     bool IsD3D12() const;
     bool IsMetal() const;
     bool IsNull() const;
     bool IsWebGPUOnWebGPU() const;
     bool IsWebGPUOn(wgpu::BackendType backend) const;
+    bool isBackend(wgpu::BackendType backend) const;
     bool IsWebGPUOnSwiftshader() const;
     bool IsOpenGL() const;
     bool IsOpenGLES() const;
@@ -362,6 +364,7 @@ class DawnTestBase {
   protected:
     wgpu::Instance instance;
     wgpu::Adapter adapter;
+    std::unique_ptr<wgpu::AdapterInfo> mAdapterInfo;
     dawn::utils::ComboLimits adapterLimits;
     wgpu::Device device;
     dawn::utils::ComboLimits deviceLimits;
