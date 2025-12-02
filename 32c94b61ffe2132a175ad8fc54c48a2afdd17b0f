@@ -70,6 +70,30 @@
       },
       "revId": "32c94b61ffe2132a175ad8fc54c48a2afdd17b0f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20b2d244_888ca022",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-12-02T08:37:40Z",
+      "side": 1,
+      "message": "Added a new flag to send the file path if we want to log warnings.",
+      "parentUuid": "697fb4b2_e98bd20f",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "32c94b61ffe2132a175ad8fc54c48a2afdd17b0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

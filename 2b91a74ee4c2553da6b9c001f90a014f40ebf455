@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2cdeeae_8c1b2d36",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 1414,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-12-02T08:37:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c427f08f_b7d15f41",
+      "revId": "2b91a74ee4c2553da6b9c001f90a014f40ebf455",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c4611e51_2575b8af",
@@ -41,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "29b613ac_d4995c05",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-12-02T08:37:40Z",
+      "side": 1,
+      "message": "Thanks for pointing that out. The earlier logic required this variable because the function was opening the file every time a warning was logged. Instead, we will now open the file in `w` mode and pass the same handler, which ensures that when a new file is generated.",
+      "parentUuid": "c4611e51_2575b8af",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 29
+      },
+      "revId": "2b91a74ee4c2553da6b9c001f90a014f40ebf455",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2daa702c_22167425",
@@ -54,6 +96,30 @@
       "writtenOn": "2025-12-01T19:25:00Z",
       "side": 1,
       "message": "nit. Remove the default file path, and explicitly pass it in from the flag. Or alternatively, in `check_and_log_incomplete_docs` we define the function inside (as a function inside the function scope) given the filepath so that we don\u0027t need to pass it in multiple places.",
+      "range": {
+        "startLine": 87,
+        "startChar": 35,
+        "endLine": 87,
+        "endChar": 60
+      },
+      "revId": "2b91a74ee4c2553da6b9c001f90a014f40ebf455",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a85590f_7f4ff26a",
+        "filename": "generator/webgpu_json_utility.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2025-12-02T08:37:40Z",
+      "side": 1,
+      "message": "Added filepath as a parameter",
+      "parentUuid": "2daa702c_22167425",
       "range": {
         "startLine": 87,
         "startChar": 35,
