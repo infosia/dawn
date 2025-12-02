@@ -22,6 +22,30 @@
       },
       "revId": "2886d0bafd21d4eeac28ccefb1a73414f7b97146",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49fa441e_2a09a642",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-02T19:18:05Z",
+      "side": 1,
+      "message": "`SequenceLength` doesn\u0027t really look at the bytes, it just decodes the length from the first character. We want to look at each byte to make sure it\u0027s valid instead of just the first byte having the correct format.",
+      "parentUuid": "ee2a2c03_ddb276b7",
+      "range": {
+        "startLine": 328,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 0
+      },
+      "revId": "2886d0bafd21d4eeac28ccefb1a73414f7b97146",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
