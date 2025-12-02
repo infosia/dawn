@@ -47,7 +47,6 @@ if (tint_build_msl_writer) {
     sources = [
       "option_helpers.cc",
       "option_helpers.h",
-      "options.cc",
       "options.h",
       "output.cc",
       "output.h",
