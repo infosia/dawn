@@ -16,6 +16,81 @@
       "message": "Tested against https://github.com/gpuweb/cts/pull/4516",
       "revId": "422e593aac1a9ac248b344485716a061b4576c87",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8c03874_70d062c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-03T22:57:20Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "422e593aac1a9ac248b344485716a061b4576c87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4820a7f2_694b3eda",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-03T22:57:20Z",
+      "side": 1,
+      "message": "Also tested against https://dawn-review.googlesource.com/c/dawn/+/278336",
+      "parentUuid": "6a4bd529_a3e5eda2",
+      "revId": "422e593aac1a9ac248b344485716a061b4576c87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05888432_49ac6c2b",
+        "filename": "src/tint/lang/wgsl/resolver/uniformity.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2333,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-03T22:57:20Z",
+      "side": 1,
+      "message": "When we drop the feature guard I\u0027d be tempted to change the analysis to avoid building the graph twice (by adding a couple of extra nodes and doing the traversal twice instead), but this seems fine for now.",
+      "range": {
+        "startLine": 2328,
+        "startChar": 0,
+        "endLine": 2333,
+        "endChar": 53
+      },
+      "revId": "422e593aac1a9ac248b344485716a061b4576c87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ed740cb_388a5c81",
+        "filename": "src/tint/lang/wgsl/resolver/uniformity_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13508,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-03T22:57:20Z",
+      "side": 1,
+      "message": "Nit: Maybe it\u0027d be nice if these errors said \"from subgroup uniform control flow\" when the feature is enabled?",
+      "revId": "422e593aac1a9ac248b344485716a061b4576c87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
