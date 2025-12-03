@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32e8d044_008d957e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-03T13:48:03Z",
+      "side": 1,
+      "message": "```suggestion\nAdds passing in the msg_anchor, so that it can call AddError itself instead of\n```",
+      "revId": "48611bc454fadb33ea981ce77bb766b78c18ce68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
