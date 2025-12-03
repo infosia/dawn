@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "f69ac1365c8f3d77aff3d3f31d324be65b07cd1d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94ccd755_f8fdb8f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-03T19:28:31Z",
+      "side": 1,
+      "message": "Seems like it works on Swiftshader on ARM64 but not x86/x64. Great :/",
+      "revId": "f69ac1365c8f3d77aff3d3f31d324be65b07cd1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
