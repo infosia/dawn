@@ -478,11 +478,13 @@ MaybeError RenderPipeline::InitializeShaders() {
             additionalCompileFlags |= D3DCOMPILE_IEEE_STRICTNESS;
         }
 
-        DAWN_TRY_ASSIGN(compiledShader[SingleShaderStage::Vertex],
-                        ToBackend(programmableStage.module)
-                            ->Compile(programmableStage, SingleShaderStage::Vertex,
-                                      ToBackend(GetLayout()), compileFlags | additionalCompileFlags,
-                                      GetImmediateMask(), usedInterstageVariables));
+        const bool kIsSampleShading = false;
+        DAWN_TRY_ASSIGN(
+            compiledShader[SingleShaderStage::Vertex],
+            ToBackend(programmableStage.module)
+                ->Compile(programmableStage, SingleShaderStage::Vertex, ToBackend(GetLayout()),
+                          compileFlags | additionalCompileFlags, GetImmediateMask(),
+                          kIsSampleShading, usedInterstageVariables));
         const Blob& shaderBlob = compiledShader[SingleShaderStage::Vertex].shaderBlob;
         {
             TRACE_EVENT0(device->GetPlatform(), General, "RenderPipelineD3D11::CreateVertexShader");
@@ -548,12 +550,17 @@ MaybeError RenderPipeline::InitializeShaders() {
             additionalCompileFlags |= D3DCOMPILE_IEEE_STRICTNESS;
         }
 
+        // This must be accurate in determining when Sample Shading is active.
+        // It cannot be conservatively correct because the polyfill changes behavior.
+        bool applySampleMaskPolyfill = (stage == SingleShaderStage::Fragment) &&
+                                       (GetSampleCount() > 1) && UsesSampleMaskInput() &&
+                                       (IsFragMultiSampled() || UsesSampleIndex());
         DAWN_TRY_ASSIGN(
             compiledShader[SingleShaderStage::Fragment],
             ToBackend(programmableStage.module)
                 ->Compile(programmableStage, SingleShaderStage::Fragment, ToBackend(GetLayout()),
                           compileFlags | additionalCompileFlags, GetImmediateMask(),
-                          usedInterstageVariables, pixelLocalOptions));
+                          applySampleMaskPolyfill, usedInterstageVariables, pixelLocalOptions));
         {
             TRACE_EVENT0(device->GetPlatform(), General, "RenderPipelineD3D11::CreatePixelShader");
             SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(device->GetPlatform(), "D3D11.CreatePixelShaderUs");

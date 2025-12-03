@@ -282,7 +282,7 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
             .first_index_offset = options.first_index_offset,
             .first_instance_offset = options.first_instance_offset,
             .num_workgroups_start_offset = options.num_workgroups_start_offset,
-        };
+            .polyfill_sample_mask = options.extensions.polyfill_sample_mask};
 
         RUN_TRANSFORM(raise::ShaderIO, module, config);
     }
