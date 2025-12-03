@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c802b20_9864db1a",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-03T13:45:29Z",
+      "side": 1,
+      "message": "```suggestion\n    Options options{\n        .entry_point_name \u003d ep_name,\n        .strip_all_names \u003d fuzzed_options.strip_all_names,\n        .disable_robustness \u003d fuzzed_options.disable_robustness,\n        .disable_workgroup_init \u003d fuzzed_options.disable_workgroup_init,\n        .disable_polyfill_integer_div_mod \u003d fuzzed_options.disable_polyfill_integer_div_mod,\n        .enable_integer_range_analysis \u003d fuzzed_options.enable_integer_range_analysis,\n        .emit_vertex_point_size \u003d fuzzed_options.emit_vertex_point_size,\n        .apply_pixel_center_polyfill \u003d fuzzed_options.apply_pixel_center_polyfill,\n        .workarounds.polyfill_case_switch \u003d fuzzed_options.polyfill_case_switch,\n        .workarounds.scalarize_max_min_clamp \u003d fuzzed_options.scalarize_max_min_clamp,\n        .workarounds.dva_transform_handle \u003d fuzzed_options.dva_transform_handle,\n        .workarounds.polyfill_pack_unpack_4x8_norm \u003d\n        fuzzed_options.polyfill_pack_unpack_4x8_norm,\n        .workarounds.subgroup_shuffle_clamped \u003d fuzzed_options.subgroup_shuffle_clamped,\n        .workarounds.polyfill_subgroup_broadcast_f16 \u003d fuzzed_options.polyfill_subgroup_broadcast_f1,\n        .workarounds.pass_matrix_by_pointer \u003d fuzzed_options.pass_matrix_by_pointer,\n        .workarounds.polyfill_unary_f32_negation \u003d fuzzed_options.polyfill_unary_f32_negation,\n        .workarounds.polyfill_f32_abs \u003d fuzzed_options.polyfill_f32_abs,\n        .extensions.use_demote_to_helper_invocation \u003d fuzzed_options.use_demote_to_helper_invocation,\n        .extensions.use_storage_input_output_16 \u003d fuzzed_options.use_storage_input_output_16,\n        .extensions.use_zero_initialize_workgroup_memory \u003d fuzzed_options.use_zero_initialize_workgroup_memory,\n        .extensions.use_vulkan_memory_model \u003d fuzzed_options.use_vulkan_memory_model,\n        .extensions.disable_image_robustness \u003d fuzzed_options.disable_image_robustness,\n        .extensions.disable_runtime_sized_array_index_clamping \u003d\n        fuzzed_options.disable_runtime_sized_array_index_clamping,\n        .extensions.dot_4x8_packed \u003d fuzzed_options.dot_4x8_packed;\n        .depth_range_offsets \u003d fuzzed_options.depth_range_offsets,\n        .spirv_version \u003d fuzzed_options.spirv_version,\n        .substitute_overrides_config \u003d fuzzed_options.substitute_overrides_config,\n    };\n```",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 85
+      },
+      "revId": "91c71296d2ff5ac7e5d795fd92c9703db42f1dfd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
