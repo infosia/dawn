@@ -16,6 +16,24 @@
       "message": "Submitting CL chain.",
       "revId": "442329dac1fc43545de25bf391184069ca06bd2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c41ee248_16686774",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-03T18:03:39Z",
+      "side": 1,
+      "message": "Oh... \"Submit including parents\" just bypasses the CQ. That doesn\u0027t seem like something we typically want to use then.",
+      "parentUuid": "ce54a29d_8dd0556c",
+      "revId": "442329dac1fc43545de25bf391184069ca06bd2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
