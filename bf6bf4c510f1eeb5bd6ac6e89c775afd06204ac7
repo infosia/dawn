@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cef81f9_b522dd44",
+        "filename": "src/tint/lang/msl/writer/writer_fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-03T13:41:56Z",
+      "side": 1,
+      "message": "```suggestion\n    Options options{\n        .entry_point_name \u003d ep_name,\n        .strip_all_names \u003d fuzzed_options.strip_all_names,\n        .disable_robustness \u003d fuzzed_options.disable_robustness,\n        .enable_integer_range_analysis \u003d fuzzed_options.enable_integer_range_analysis,\n        .disable_workgroup_init \u003d fuzzed_options.disable_workgroup_init,\n        .emit_vertex_point_size \u003d fuzzed_options.emit_vertex_point_size,\n        .disable_polyfill_integer_div_mod \u003d fuzzed_options.disable_polyfill_integer_div_mod,\n        .use_argument_buffers \u003d fuzzed_options.use_argument_buffers,\n        .workarounds.scalarize_max_min_clamp \u003d fuzzed_options.scalarize_max_min_clamp,\n        .workarounds.disable_module_constant_f16 \u003d fuzzed_options.disable_module_constant_f16,\n        .workarounds.polyfill_subgroup_broadcast_f16 \u003d\n        fuzzed_options.polyfill_subgroup_broadcast_f16,\n        .workarounds.polyfill_clamp_float \u003d fuzzed_options.polyfill_clamp_float,\n        .workarounds.polyfill_unpack_2x16_snorm \u003d fuzzed_options.polyfill_unpack_2x16_snorm,\n        .workarounds.polyfill_unpack_2x16_unorm \u003d fuzzed_options.polyfill_unpack_2x16_unorm,\n        .extensions.disable_demote_to_helper \u003d fuzzed_options.disable_demote_to_helper,\n        .fixed_sample_mask \u003d fuzzed_options.fixed_sample_mask,\n        .pixel_local_attachments \u003d fuzzed_options.pixel_local_attachments,\n        .vertex_pulling_config \u003d fuzzed_options.vertex_pulling_config,\n        .immediate_binding_point \u003d fuzzed_options.immediate_binding_point,\n        .group_to_argument_buffer_info \u003d fuzzed_options.group_to_argument_buffer_info,\n        .substitute_overrides_config \u003d fuzzed_options.substitute_overrides_config,\n\n        .bindings \u003d GenerateBindings(module, ep_name, false, false),\n        .array_length_from_constants.ubo_binding \u003d 30,\n    };\n```",
+      "range": {
+        "startLine": 115,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 57
+      },
+      "revId": "bf6bf4c510f1eeb5bd6ac6e89c775afd06204ac7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
