@@ -16,6 +16,86 @@
       "message": "PTAL.",
       "revId": "0a2efc16afb5407b2c5cf853664173c49593c386",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d2c2b1f_cee99fbc",
+        "filename": "docs/tint/extensions/chromium_experimental_resource_table.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-03T18:37:13Z",
+      "side": 1,
+      "message": "Nit: chromium_experimental_resource_table",
+      "fixSuggestions": [
+        {
+          "fixId": "51e98f88_84e35e9b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "docs/tint/extensions/chromium_experimental_resource_table.md",
+              "range": {
+                "startLine": 20,
+                "startChar": 0,
+                "endLine": 21,
+                "endChar": 0
+              },
+              "replacement": "extension it would be `enable chromium_experimental_resource_table`.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0a2efc16afb5407b2c5cf853664173c49593c386",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "305a355e_b92374c3",
+        "filename": "docs/tint/extensions/chromium_experimental_resource_table.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-03T18:37:13Z",
+      "side": 1,
+      "message": "Nit: chromium_experimental_resource_table",
+      "fixSuggestions": [
+        {
+          "fixId": "d7109e75_0e5bdac8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "docs/tint/extensions/chromium_experimental_resource_table.md",
+              "range": {
+                "startLine": 20,
+                "startChar": 0,
+                "endLine": 21,
+                "endChar": 0
+              },
+              "replacement": "extension it would be `enable chromium_experimental_resource_table`.\n"
+            },
+            {
+              "path": "docs/tint/extensions/chromium_experimental_resource_table.md",
+              "range": {
+                "startLine": 58,
+                "startChar": 0,
+                "endLine": 59,
+                "endChar": 0
+              },
+              "replacement": "enable chromium_experimental_resource_table;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0a2efc16afb5407b2c5cf853664173c49593c386",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
