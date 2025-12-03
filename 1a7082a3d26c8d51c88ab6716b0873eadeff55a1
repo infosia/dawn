@@ -16,6 +16,40 @@
       "message": "PTAL!",
       "revId": "1a7082a3d26c8d51c88ab6716b0873eadeff55a1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0fa1aed_5a61bf12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-03T15:39:16Z",
+      "side": 1,
+      "message": "lgtm w/ question",
+      "revId": "1a7082a3d26c8d51c88ab6716b0873eadeff55a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28ffc09b_63a3422d",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-03T15:39:16Z",
+      "side": 1,
+      "message": "Does dawn early exit typically?\n\n```\nif (updates.metadataUpdates.empty()) {\n   return {};\n}\n```",
+      "revId": "1a7082a3d26c8d51c88ab6716b0873eadeff55a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
