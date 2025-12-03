@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efe68b0d_be8d8a73",
+        "filename": "src/tint/lang/wgsl/resolver/uniformity.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-03T15:20:03Z",
+      "side": 1,
+      "message": "```suggestion\nenum class UniformityScope : uint8_t {\n```",
+      "revId": "da40dd71ccd0dba2fd1d415ff7317288e56d9b70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
