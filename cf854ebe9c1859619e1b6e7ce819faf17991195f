@@ -139,6 +139,24 @@
       "parentUuid": "a149acbe_a72277d2",
       "revId": "cf854ebe9c1859619e1b6e7ce819faf17991195f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f59c7b1_2b0a30ef",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-03T17:07:38Z",
+      "side": 1,
+      "message": "I think the external code signaling Dawn\u0027s fence would lead to undefined behaviors. Right now, Dawn assumes that only it signals its own fence with incremental values.\nLet\u0027s say Dawn signaled value `N`, then external code signaled `N+2`, or even `N+1`. then in the next Submit, Dawn attempted to signal the value `N+1`, this would result in no-op because the fence already passes `N+1`",
+      "parentUuid": "460596c9_fff7c497",
+      "revId": "cf854ebe9c1859619e1b6e7ce819faf17991195f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
