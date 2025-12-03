@@ -520,6 +520,18 @@ MaybeError CaptureComputePass(CaptureContext& captureContext, CommandIterator& c
                 Serialize(captureContext, data);
                 break;
             }
+            case Command::SetImmediates: {
+                const auto& cmd = *commands.NextCommand<SetImmediatesCmd>();
+                const uint8_t* values = commands.NextData<uint8_t>(cmd.size);
+                schema::CommandBufferCommandSetImmediatesCmd data{{
+                    .data = {{
+                        .offset = cmd.offset,
+                        .data = std::vector<uint8_t>(values, values + cmd.size),
+                    }},
+                }};
+                Serialize(captureContext, data);
+                break;
+            }
             case Command::Dispatch: {
                 const auto& cmd = *commands.NextCommand<DispatchCmd>();
                 schema::CommandBufferCommandDispatchCmd data{{

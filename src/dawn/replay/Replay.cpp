@@ -783,6 +783,12 @@ MaybeError ProcessComputePassCommands(const Replay& replay,
                                   data.dynamicOffsets.size(), data.dynamicOffsets.data());
                 break;
             }
+            case schema::CommandBufferCommand::SetImmediates: {
+                schema::CommandBufferCommandSetImmediatesCmdData data;
+                DAWN_TRY(Deserialize(readHead, &data));
+                pass.SetImmediates(data.offset, data.data.data(), data.data.size());
+                break;
+            }
             case schema::CommandBufferCommand::Dispatch: {
                 schema::CommandBufferCommandDispatchCmdData data;
                 DAWN_TRY(Deserialize(readHead, &data));
