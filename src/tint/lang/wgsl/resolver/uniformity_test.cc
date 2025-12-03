@@ -118,6 +118,8 @@ class BasicTest : public UniformityAnalysisTestBase,
         kFuncVarNonUniform,
         kFuncNonUniformRetVal,
         kRWStorageBuffer,
+        // Scope-dependent conditions:
+        kSubgroupId,
         // End of range marker:
         kEndOfConditionRange,
     };
@@ -135,6 +137,7 @@ class BasicTest : public UniformityAnalysisTestBase,
         kStorageBarrier,
         kTextureBarrier,
         kWorkgroupUniformLoad,
+        kLastNonFragmentFunction = kWorkgroupUniformLoad,
         kTextureSample,
         kTextureSampleBias,
         kTextureSampleCompare,
@@ -147,6 +150,7 @@ class BasicTest : public UniformityAnalysisTestBase,
         kFwidth,
         kFwidthCoarse,
         kFwidthFine,
+        kLastNonSubgroupFunction = kFwidthFine,
         // Subgroup functions:
         kSubgroupBallot,
         kSubgroupElect,
@@ -217,6 +221,8 @@ class BasicTest : public UniformityAnalysisTestBase,
                 return "func_nonuniform_retval() == 0";
             case kRWStorageBuffer:
                 return "rw == 0";
+            case kSubgroupId:
+                return "subgroup_id == 0";
             case kEndOfConditionRange:
                 return "<invalid>";
         }
@@ -343,10 +349,19 @@ class BasicTest : public UniformityAnalysisTestBase,
     }
 
     /// @returns true if `c` is a condition that may be non-uniform.
-    static bool MayBeNonUniform(Condition c) { return c > kLastUniformCondition; }
+    static bool MayBeNonUniform(Condition c, Function f) {
+        if (c == kSubgroupId && f > kLastNonSubgroupFunction) {
+            return false;
+        }
+        return c > kLastUniformCondition;
+    }
 
     /// @returns true if `f` is a function call that is required to be uniform.
     static bool RequiredToBeUniform(Function f) { return f > kLastNoRestrictionFunction; }
+
+    static bool ShouldSkip(Function f, Condition c) {
+        return c == kSubgroupId && (f > kLastNonFragmentFunction && f <= kLastNonSubgroupFunction);
+    }
 
     /// Convert a test parameter pair of condition+function to a string that can be used as part of
     /// a test name.
@@ -374,6 +389,7 @@ class BasicTest : public UniformityAnalysisTestBase,
             CASE(kFuncVarNonUniform);
             CASE(kFuncNonUniformRetVal);
             CASE(kRWStorageBuffer);
+            CASE(kSubgroupId);
             case kEndOfConditionRange:
                 break;
         }
@@ -445,6 +461,23 @@ class BasicTest : public UniformityAnalysisTestBase,
 TEST_P(BasicTest, ConditionalFunctionCall) {
     auto condition = static_cast<Condition>(std::get<0>(GetParam()));
     auto function = static_cast<Function>(std::get<1>(GetParam()));
+
+    if (ShouldSkip(function, condition)) {
+        return;
+    }
+
+    std::string function_decl;
+    if (condition == kSubgroupId) {
+        function_decl = R"(
+@compute @workgroup_size(16)
+fn foo(@builtin(subgroup_id) subgroup_id : u32) {
+)";
+    } else {
+        function_decl = R"(
+fn foo() {
+)";
+    }
+
     std::string src = R"(
 enable subgroups;
 enable chromium_experimental_subgroup_matrix;
@@ -471,7 +504,7 @@ fn user_required_to_be_uniform() { workgroupBarrier(); }
 fn func_uniform_retval() -> i32 { return u; }
 fn func_nonuniform_retval() -> i32 { return rw; }
 
-fn foo() {
+)" + function_decl + R"(
   let let_uniform_rhs = 7;
   let let_nonuniform_rhs = rw;
 
@@ -491,7 +524,7 @@ fn foo() {
 }
 )";
 
-    bool should_pass = !(MayBeNonUniform(condition) && RequiredToBeUniform(function));
+    bool should_pass = !(MayBeNonUniform(condition, function) && RequiredToBeUniform(function));
     RunTest(src, should_pass);
     if (!should_pass) {
         EXPECT_THAT(error_, ::testing::HasSubstr("must only be called from uniform control flow"));
@@ -504,6 +537,8 @@ INSTANTIATE_TEST_SUITE_P(
     ::testing::Combine(::testing::Range<int>(0, BasicTest::kEndOfConditionRange),
                        ::testing::Range<int>(0, BasicTest::kEndOfFunctionRange)),
     BasicTest::ParamsToName);
+
+TEST_P(BasicTest, SubgroupUniformity_Workgroup) {}
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Test specific function and parameter tags that are not tested above.
