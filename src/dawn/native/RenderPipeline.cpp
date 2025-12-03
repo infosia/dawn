@@ -1066,6 +1066,7 @@ RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
         mUsesFragDepth = GetStage(SingleShaderStage::Fragment).metadata->usesFragDepth;
         mUsesFragPosition = GetStage(SingleShaderStage::Fragment).metadata->usesFragPosition;
         mIsFragMultiSampled = GetStage(SingleShaderStage::Fragment).metadata->isFragMultiSampled;
+        mUsesSampleMaskInput = GetStage(SingleShaderStage::Fragment).metadata->usesSampleMaskInput;
         mUsesSampleIndex = GetStage(SingleShaderStage::Fragment).metadata->usesSampleIndex;
     }
 
@@ -1277,6 +1278,11 @@ bool RenderPipelineBase::WritesStencil() const {
 bool RenderPipelineBase::UsesFragDepth() const {
     DAWN_ASSERT(!IsError());
     return mUsesFragDepth;
+}
+
+bool RenderPipelineBase::UsesSampleMaskInput() const {
+    DAWN_ASSERT(!IsError());
+    return mUsesSampleMaskInput;
 }
 
 bool RenderPipelineBase::UsesSampleIndex() const {
