@@ -16,6 +16,24 @@
       "message": "```suggestion\nAdds passing in the msg_anchor, so that it can call AddError itself instead of\n```",
       "revId": "48611bc454fadb33ea981ce77bb766b78c18ce68",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc1ee0b3_5e9c7195",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-12-03T15:30:33Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "32e8d044_008d957e",
+      "revId": "48611bc454fadb33ea981ce77bb766b78c18ce68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
