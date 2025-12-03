@@ -116,7 +116,7 @@ class WorkgroupAtomicPerf : public DawnPerfTestWithParams<WorkgroupAtomicParams>
     WorkgroupAtomicPerf() : DawnPerfTestWithParams(kNumIterations, 1) {}
     ~WorkgroupAtomicPerf() override = default;
 
-    void SetUp() override;
+    void SetUpPerfTest() override;
 
   protected:
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
@@ -138,9 +138,7 @@ class WorkgroupAtomicPerf : public DawnPerfTestWithParams<WorkgroupAtomicParams>
 
 uint32_t kNumDispatch = 1024;
 
-void WorkgroupAtomicPerf::SetUp() {
-    DawnPerfTestWithParams<WorkgroupAtomicParams>::SetUp();
-
+void WorkgroupAtomicPerf::SetUpPerfTest() {
     uint64_t byteDstSize = sizeof(uint32_t) * kNumDispatch * kWorkgroupSize;
     wgpu::BufferDescriptor desc = {};
     desc.usage = wgpu::BufferUsage::Storage;
