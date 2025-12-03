@@ -37,16 +37,6 @@
 
 namespace dawn::native::d3d11 {
 
-namespace {
-bool IsSameHandle(DeviceBase* device, HANDLE handle, HANDLE other) {
-    if (handle == other) {
-        return true;
-    }
-
-    return ::CompareObjectHandles(handle, other);
-}
-}  // namespace
-
 // static
 ResultOrError<Ref<SharedFence>> SharedFence::Create(
     Device* device,
@@ -58,7 +48,7 @@ ResultOrError<Ref<SharedFence>> SharedFence::Create(
 
     const auto& queueFence = ToBackend(device->GetQueue())->GetSharedFence();
     if (queueFence &&
-        IsSameHandle(device, queueFence->GetSystemHandle().Get(), descriptor->handle)) {
+        ::CompareObjectHandles(queueFence->GetSystemHandle().Get(), descriptor->handle)) {
         return queueFence;
     }
 
