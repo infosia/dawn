@@ -137,46 +137,39 @@ TEST_F(BufferBaseThreadedTest, ConcurrentUnmap) {
     });
 }
 
-// TEST_F(BufferBaseThreadedTest, ConcurrentUnmapDestroy) {
-//     BufferDescriptor desc = {};
-//     desc.size = 16;
-//     desc.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite;
+TEST_F(BufferBaseThreadedTest, ConcurrentUnmapDestroy) {
+    BufferDescriptor desc = {};
+    desc.size = 16;
+    desc.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite;
 
-//     Ref<BufferMock> bufferMock = AcquireRef(new BufferMock(mDeviceMock, &desc));
+    Ref<BufferMock> bufferMock = AcquireRef(new BufferMock(mDeviceMock, &desc));
 
-//     WaitableEvent unmapEvent;
-//     WaitableEvent destroyEvent;
-//     EXPECT_CALL(*bufferMock.Get(), MapAsyncImpl);
-//     EXPECT_CALL(*bufferMock.Get(), UnmapImpl).WillOnce([&]() {
-//         destroyEvent.Signal();
-//         unmapEvent.Wait();
-//     });
+    WaitableEvent destroyEvent;
+    EXPECT_CALL(*bufferMock.Get(), MapAsyncImpl);
+    EXPECT_CALL(*bufferMock.Get(), UnmapImpl).WillOnce([&]() {
+        destroyEvent.Signal();
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    });
 
-//     EXPECT_CALL(mDeviceErrorCallback,
-//                 Call(_, wgpu::ErrorType::Validation,
-//                      testing::HasSubstr("Concurrent buffer operations are not allowed")))
-//         .Times(1);
+    EXPECT_CALL(*mDeviceMock, CreateBufferImpl).WillOnce(Return(ByMove(std::move(bufferMock))));
+    wgpu::Buffer buffer = device.CreateBuffer(ToCppAPI(&desc));
 
-//     EXPECT_CALL(*mDeviceMock, CreateBufferImpl).WillOnce(Return(ByMove(std::move(bufferMock))));
-//     wgpu::Buffer buffer = device.CreateBuffer(ToCppAPI(&desc));
+    MockMapAsyncCallback cb;
+    EXPECT_CALL(cb, Call(Eq(wgpu::MapAsyncStatus::Success), _));
+    buffer.MapAsync(wgpu::MapMode::Write, 0, desc.size, wgpu::CallbackMode::AllowSpontaneous,
+                    cb.Callback());
 
-//     MockMapAsyncCallback cb;
-//     EXPECT_CALL(cb, Call(Eq(wgpu::MapAsyncStatus::Success), _));
-//     buffer.MapAsync(wgpu::MapMode::Write, 0, desc.size, wgpu::CallbackMode::AllowSpontaneous,
-//                     cb.Callback());
-
-//     // Two threads will run APIUnmap(). The first thread blocks UnmapImpl() so the second thread
-//     // will attempt a concurrent unmap operation.
-//     utils::RunInParallel(2, [&](uint32_t index) {
-//         if (index == 0) {
-//             buffer.Unmap();
-//         } else {
-//             destroyEvent.Wait();
-//             buffer.Destroy();
-//             unmapEvent.Signal();
-//         }
-//     });
-// }
+    // Two threads will run APIUnmap(). The first thread blocks UnmapImpl() so the second thread
+    // will attempt a concurrent unmap operation.
+    utils::RunInParallel(2, [&](uint32_t index) {
+        if (index == 0) {
+            buffer.Unmap();
+        } else {
+            destroyEvent.Wait();
+            buffer.Destroy();
+        }
+    });
+}
 
 }  // namespace
 }  // namespace dawn::native
