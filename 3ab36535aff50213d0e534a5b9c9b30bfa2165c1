@@ -52,6 +52,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c417080_36805269",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-03T15:02:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a0a575f_98b6dc9c",
+      "revId": "3ab36535aff50213d0e534a5b9c9b30bfa2165c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0533678d_8eeb7479",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-03T15:02:05Z",
+      "side": 1,
+      "message": "Okay, I\u0027ll remove it.",
+      "parentUuid": "015b5310_2eccfd1e",
+      "revId": "3ab36535aff50213d0e534a5b9c9b30bfa2165c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee724f80_6ed40133",
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "71d121b8_b7317b27",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-03T15:02:05Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ee724f80_6ed40133",
+      "revId": "3ab36535aff50213d0e534a5b9c9b30bfa2165c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a1089a2d_c1c2d23c",
@@ -82,6 +136,24 @@
       "writtenOn": "2025-12-03T08:24:03Z",
       "side": 1,
       "message": "nit: we usually add a comment before the test to say what it does. While for simple tests like these it might be redundant, for more complex ones it gives much needed context.",
+      "revId": "3ab36535aff50213d0e534a5b9c9b30bfa2165c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "828c6d87_1ca6eb34",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-03T15:02:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1089a2d_c1c2d23c",
       "revId": "3ab36535aff50213d0e534a5b9c9b30bfa2165c1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
