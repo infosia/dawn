@@ -1801,6 +1801,9 @@ bool Converter::Convert(wgpu::WGSLLanguageFeatureName& out, interop::WGSLLanguag
         case interop::WGSLLanguageFeatureName::kSubgroupId:
             out = wgpu::WGSLLanguageFeatureName::SubgroupId;
             return true;
+        case interop::WGSLLanguageFeatureName::kSubgroupUniformity:
+            out = wgpu::WGSLLanguageFeatureName::SubgroupUniformity;
+            return true;
     }
     return false;
 }
@@ -1839,6 +1842,9 @@ bool Converter::Convert(interop::WGSLLanguageFeatureName& out, wgpu::WGSLLanguag
             return true;
         case wgpu::WGSLLanguageFeatureName::SubgroupId:
             out = interop::WGSLLanguageFeatureName::kSubgroupId;
+            return true;
+        case wgpu::WGSLLanguageFeatureName::SubgroupUniformity:
+            out = interop::WGSLLanguageFeatureName::kSubgroupUniformity;
             return true;
 
         case wgpu::WGSLLanguageFeatureName::ChromiumTestingUnimplemented:
