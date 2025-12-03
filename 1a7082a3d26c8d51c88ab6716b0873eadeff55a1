@@ -50,6 +50,24 @@
       "message": "Does dawn early exit typically?\n\n```\nif (updates.metadataUpdates.empty()) {\n   return {};\n}\n```",
       "revId": "1a7082a3d26c8d51c88ab6716b0873eadeff55a1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1bf8d2e_7a22de5a",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-03T15:45:10Z",
+      "side": 1,
+      "message": "We do but in the next CL there are two blocks checking for empty, so it looked more symmetric. Let me know if you\u0027d still like an early return with this patch https://dawn-review.googlesource.com/c/dawn/+/278136/2/src/dawn/native/vulkan/CommandBufferVk.cpp",
+      "parentUuid": "28ffc09b_63a3422d",
+      "revId": "1a7082a3d26c8d51c88ab6716b0873eadeff55a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
