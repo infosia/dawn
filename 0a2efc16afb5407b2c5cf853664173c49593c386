@@ -53,6 +53,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06296ad8_6c4c7bf9",
+        "filename": "docs/tint/extensions/chromium_experimental_resource_table.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-03T18:38:48Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "6d2c2b1f_cee99fbc",
+      "revId": "0a2efc16afb5407b2c5cf853664173c49593c386",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4731c9c_b7e11d9f",
+        "filename": "docs/tint/extensions/chromium_experimental_resource_table.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-03T18:38:48Z",
+      "side": 1,
+      "message": "Marked as resolved.",
+      "parentUuid": "6d2c2b1f_cee99fbc",
+      "revId": "0a2efc16afb5407b2c5cf853664173c49593c386",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "305a355e_b92374c3",
@@ -94,6 +130,24 @@
           ]
         }
       ],
+      "revId": "0a2efc16afb5407b2c5cf853664173c49593c386",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2186f7a6_ab99cfc8",
+        "filename": "docs/tint/extensions/chromium_experimental_resource_table.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-03T18:38:48Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "305a355e_b92374c3",
       "revId": "0a2efc16afb5407b2c5cf853664173c49593c386",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
