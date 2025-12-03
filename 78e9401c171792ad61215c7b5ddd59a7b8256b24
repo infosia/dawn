@@ -316,6 +316,24 @@
       "parentUuid": "7451c82e_c129ea54",
       "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cffcf543_a98eb34e",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-03T08:24:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7ea31bbd_7d8c1b8b",
+      "revId": "78e9401c171792ad61215c7b5ddd59a7b8256b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

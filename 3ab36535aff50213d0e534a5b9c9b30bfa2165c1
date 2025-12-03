@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3547bcd9_f9e154b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-03T08:24:03Z",
+      "side": 1,
+      "message": "LGTM overall!",
+      "revId": "3ab36535aff50213d0e534a5b9c9b30bfa2165c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "015b5310_2eccfd1e",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-03T08:24:03Z",
+      "side": 1,
+      "message": "nit: Validation errors are written to say what the error is, and not what must happen. It can be a bit contrived but the consistency is nice. https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/errors.md#error-message-formatting\n\n```suggestion\n    DAWN_INVALID_IF(descriptor-\u003esize \u003d\u003d 0, \"Resource table size is zero.\");\n```\n\nThough maybe we should allow that? I don\u0027t have this validation error in the proposal at the moment.",
+      "revId": "3ab36535aff50213d0e534a5b9c9b30bfa2165c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a0a575f_98b6dc9c",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-03T08:24:03Z",
+      "side": 1,
+      "message": "We should have a check for the feature being enabled on the device. This is what prevents a compromised renderer process because the feature is marked as experimental, and all the logic will be gated on the extension being present. In the tests we should check a validation error happens when the extension is not present.",
+      "revId": "3ab36535aff50213d0e534a5b9c9b30bfa2165c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee724f80_6ed40133",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-03T08:24:03Z",
+      "side": 1,
+      "message": "This will need to explicitly enable the extension, like so: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/unittests/validation/DynamicBindingArrayValidationTests.cpp;drc\u003dfa54d1eaf3f0184b44aa243972dbbc2aac6ee02d;l\u003d41",
+      "revId": "3ab36535aff50213d0e534a5b9c9b30bfa2165c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1089a2d_c1c2d23c",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-03T08:24:03Z",
+      "side": 1,
+      "message": "nit: we usually add a comment before the test to say what it does. While for simple tests like these it might be redundant, for more complex ones it gives much needed context.",
+      "revId": "3ab36535aff50213d0e534a5b9c9b30bfa2165c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
