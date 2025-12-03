@@ -1832,6 +1832,10 @@ void DeviceBase::SetWGSLExtensionAllowList() {
         mWGSLAllowedFeatures.extensions.insert(
             tint::wgsl::Extension::kChromiumExperimentalDynamicBinding);
     }
+    if (mEnabledFeatures.IsEnabled(Feature::ChromiumExperimentalSamplingResourceTable)) {
+        mWGSLAllowedFeatures.extensions.insert(
+            tint::wgsl::Extension::kChromiumExperimentalResourceTable);
+    }
 
     // Language features are enabled instance-wide.
     const auto& allowedFeatures = GetInstance()->GetAllowedWGSLLanguageFeatures();
