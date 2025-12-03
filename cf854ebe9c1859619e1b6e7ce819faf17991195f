@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a663726_8acc3a84",
+        "filename": "src/dawn/native/d3d12/SharedFenceD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-03T10:36:14Z",
+      "side": 1,
+      "message": "Done. Actually I think we can just use `::CompareObjectHandles`.",
+      "parentUuid": "75c82586_3ef6c4c2",
+      "revId": "cf854ebe9c1859619e1b6e7ce819faf17991195f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "583a5736_210ee9a1",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89514f76_ef947279",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-03T10:36:14Z",
+      "side": 1,
+      "message": "Done adding the same thing to `Buffer::SynchronizeBufferBeforeUseOnGPU`.\nI won\u0027t change `Buffer::SynchronizeBufferBeforeMapping()` because the wait on CPU might still be needed and intentional.\n\nThe wait on GPU is unnecessary because every commands we encoded in the same queue should already be ordered (by barriers).",
+      "parentUuid": "583a5736_210ee9a1",
+      "revId": "cf854ebe9c1859619e1b6e7ce819faf17991195f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "50aea114_56785087",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-12-03T08:29:57Z",
       "side": 1,
       "message": "Maybe this assert should be a runtime check if we think there are cases where some outside code could signal on the same fence.",
+      "revId": "cf854ebe9c1859619e1b6e7ce819faf17991195f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a149acbe_a72277d2",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-03T10:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50aea114_56785087",
       "revId": "cf854ebe9c1859619e1b6e7ce819faf17991195f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
