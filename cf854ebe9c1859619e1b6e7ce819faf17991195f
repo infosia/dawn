@@ -121,6 +121,24 @@
       "parentUuid": "50aea114_56785087",
       "revId": "cf854ebe9c1859619e1b6e7ce819faf17991195f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "460596c9_fff7c497",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-03T12:12:41Z",
+      "side": 1,
+      "message": "Ah I meant that we should still add a `wait` is the signaledValue is past what we know was submitted on the fence. I guess a DAWN_CHECK is fine and we can make the code more robust if it triggers.",
+      "parentUuid": "a149acbe_a72277d2",
+      "revId": "cf854ebe9c1859619e1b6e7ce819faf17991195f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
