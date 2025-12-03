@@ -29,6 +29,7 @@
 #include <memory>
 #include <sstream>
 #include <string>
+#include <tuple>
 #include <utility>
 #include <vector>
 
@@ -864,38 +865,49 @@ struct WGSLExtensionInfo {
     const char* wgslName;
     // Is this WGSL extension experimental, i.e. guarded by AllowUnsafeAPIs toggle
     bool isExperimental;
-    // The WebGPU features that required to enable this extension, set to empty if no feature
+    // The WebGPU features required to enable this extension, set to empty if no feature
     // required.
-    const std::vector<const char*> requiredFeatureNames;
-    // The WGSL extensions dependency that required to enable this extension, set to empty if no
+    const std::vector<wgpu::FeatureName> requiredFeatureNames;
+    // The WGSL extensions dependency required to enable this extension, set to empty if no
     // dependency.
     const std::vector<const char*> dependingExtensionNames;
 };
 
-const struct WGSLExtensionInfo kExtensions[] = {
-    {"f16", false, {"shader-f16"}, {}},
-    {"clip_distances", false, {"clip-distances"}, {}},
-    {"dual_source_blending", false, {"dual-source-blending"}, {}},
-    {"subgroups", false, {"subgroups"}, {}},
-    {"primitive_index", false, {"primitive-index"}, {}},
-    {"chromium_experimental_pixel_local", true, {"pixel-local-storage-coherent"}, {}},
+// clang-format off
+const WGSLExtensionInfo kExtensions[] = {
+    {"f16", false, {wgpu::FeatureName::ShaderF16}, {}},
+    {"clip_distances", false, {wgpu::FeatureName::ClipDistances}, {}},
+    {"dual_source_blending", false, {wgpu::FeatureName::DualSourceBlending}, {}},
+    {"subgroups", false, {wgpu::FeatureName::Subgroups}, {}},
+    {"primitive_index", false, {wgpu::FeatureName::PrimitiveIndex}, {}},
+    {"chromium_experimental_pixel_local", true, {wgpu::FeatureName::PixelLocalStorageCoherent}, {}},
     {"chromium_disable_uniformity_analysis", true, {}, {}},
     {"chromium_internal_graphite", true, {}, {}},
-    {"chromium_experimental_framebuffer_fetch", true, {"framebuffer-fetch"}, {}},
-    {"chromium_experimental_subgroup_matrix", true, {"chromium-experimental-subgroup-matrix"}, {}},
-    {"chromium_experimental_dynamic_binding", true, {"chromium-experimental-bindless"}, {}}
+    {"chromium_experimental_framebuffer_fetch", true, {wgpu::FeatureName::FramebufferFetch}, {}},
+    {"chromium_experimental_subgroup_matrix", true, {wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix}, {}},
+    {"chromium_experimental_dynamic_binding", true, {wgpu::FeatureName::ChromiumExperimentalBindless}, {}}
 
     // Currently the following WGSL extensions are not enabled under any situation.
     /*
     {"chromium_internal_relaxed_uniform_layout", true, {}},
     */
 };
+// clang-format on
 
-std::string EnableDependingWGSLExtensions(const WGSLExtensionInfo& extension) {
+std::ostream& operator<<(std::ostream& os, const WGSLExtensionInfo& info) {
+    return os << "WGSLExtensionInfo{wgslName: " << info.wgslName
+              << ", isExperimental: " << info.isExperimental
+              << ", requiredFeatureNames: " << info.requiredFeatureNames.size()
+              << ", dependingExtensionNames: " << info.dependingExtensionNames.size() << "}";
+}
+
+std::string EnabledExtensionsShader(const WGSLExtensionInfo& extension) {
     std::stringstream s;
     for (const char* dependency : extension.dependingExtensionNames) {
         s << "enable " << dependency << ";\n";
     }
+    s << "enable " << extension.wgslName << ";\n";
+    s << "@compute @workgroup_size(1) fn main() {}";
     return s.str();
 }
 
@@ -919,7 +931,11 @@ class ShaderModuleExtensionValidationTestBase : public ValidationTest {
     }
 };
 
-// Test validating WGSL extension on safe device with no feature required.
+template <typename T>
+class ShaderModuleExtensionValidationTestWithParams
+    : public ValidationTestWithParam<T, ShaderModuleExtensionValidationTestBase> {};
+
+// Test validating WGSL extension on safe device with no required features.
 class ShaderModuleExtensionValidationTestSafeNoFeature
     : public ShaderModuleExtensionValidationTestBase {
   protected:
@@ -930,10 +946,7 @@ class ShaderModuleExtensionValidationTestSafeNoFeature
 TEST_F(ShaderModuleExtensionValidationTestSafeNoFeature,
        OnlyStableExtensionsRequiringNoFeatureAllowed) {
     for (auto& extension : kExtensions) {
-        std::string wgsl = EnableDependingWGSLExtensions(extension) + std::string("enable ") +
-                           extension.wgslName + R"(;
-
-@compute @workgroup_size(1) fn main() {})";
+        std::string wgsl = EnabledExtensionsShader(extension);
 
         // On a safe device with no feature required, only stable extensions requiring no features
         // are allowed.
@@ -945,7 +958,7 @@ TEST_F(ShaderModuleExtensionValidationTestSafeNoFeature,
     }
 }
 
-// Test validating WGSL extension on unsafe device with no feature required.
+// Test validating WGSL extension on unsafe device with no required features.
 class ShaderModuleExtensionValidationTestUnsafeNoFeature
     : public ShaderModuleExtensionValidationTestBase {
   protected:
@@ -955,10 +968,7 @@ class ShaderModuleExtensionValidationTestUnsafeNoFeature
 TEST_F(ShaderModuleExtensionValidationTestUnsafeNoFeature,
        OnlyExtensionsRequiringNoFeatureAllowed) {
     for (auto& extension : kExtensions) {
-        std::string wgsl = EnableDependingWGSLExtensions(extension) + std::string("enable ") +
-                           extension.wgslName + R"(;
-
-@compute @workgroup_size(1) fn main() {})";
+        std::string wgsl = EnabledExtensionsShader(extension);
 
         // On an unsafe device with no feature required, only extensions requiring no features are
         // allowed.
@@ -970,7 +980,7 @@ TEST_F(ShaderModuleExtensionValidationTestUnsafeNoFeature,
     }
 }
 
-// Test validating WGSL extension on safe device with all features required.
+// Test validating WGSL extension on safe device with required features set to all.
 class ShaderModuleExtensionValidationTestSafeAllFeatures
     : public ShaderModuleExtensionValidationTestBase {
   protected:
@@ -980,10 +990,7 @@ class ShaderModuleExtensionValidationTestSafeAllFeatures
 
 TEST_F(ShaderModuleExtensionValidationTestSafeAllFeatures, OnlyStableExtensionsAllowed) {
     for (auto& extension : kExtensions) {
-        std::string wgsl = EnableDependingWGSLExtensions(extension) + std::string("enable ") +
-                           extension.wgslName + R"(;
-
-@compute @workgroup_size(1) fn main() {})";
+        std::string wgsl = EnabledExtensionsShader(extension);
 
         // On a safe device with all feature required, only stable extensions are allowed.
         if (!extension.isExperimental) {
@@ -994,7 +1001,7 @@ TEST_F(ShaderModuleExtensionValidationTestSafeAllFeatures, OnlyStableExtensionsA
     }
 }
 
-// Test validating WGSL extension on unsafe device with all features required.
+// Test validating WGSL extension on unsafe device with required features set to all.
 class ShaderModuleExtensionValidationTestUnsafeAllFeatures
     : public ShaderModuleExtensionValidationTestBase {
   protected:
@@ -1003,10 +1010,7 @@ class ShaderModuleExtensionValidationTestUnsafeAllFeatures
 
 TEST_F(ShaderModuleExtensionValidationTestUnsafeAllFeatures, AllExtensionsAllowed) {
     for (auto& extension : kExtensions) {
-        std::string wgsl = EnableDependingWGSLExtensions(extension) + std::string("enable ") +
-                           extension.wgslName + R"(;
-
-@compute @workgroup_size(1) fn main() {})";
+        std::string wgsl = EnabledExtensionsShader(extension);
 
         // On an unsafe device with all feature required, all extensions are allowed.
         utils::CreateShaderModule(device, wgsl.c_str());
@@ -1029,6 +1033,39 @@ TEST_F(ShaderModuleExtensionValidationTestUnsafeAllFeatures, ShaderModuleCompila
     compilationOptions.strictMath = true;
     device.CreateShaderModule(&desc);
 }
+
+// Test that each WGSL language extension requires a specific feature to be enabled
+class ShaderModuleExtensionValidationTestUnsafeOnlyRequiredFeatures
+    : public ShaderModuleExtensionValidationTestWithParams<std::tuple<WGSLExtensionInfo, bool>> {
+  public:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        auto [extension, enabled] = GetParam();
+        if (enabled) {
+            return extension.requiredFeatureNames;
+        }
+        return {};
+    }
+};
+
+TEST_P(ShaderModuleExtensionValidationTestUnsafeOnlyRequiredFeatures,
+       RequiredExtensionsMustBeEnabled) {
+    auto [extension, enabled] = GetParam();
+    std::string wgsl = EnabledExtensionsShader(extension);
+
+    if (enabled || extension.requiredFeatureNames.empty()) {
+        // On an unsafe device with the required feature enabled, or if it doesn't require one, the
+        // wgsl extension should be valid
+        utils::CreateShaderModule(device, wgsl.c_str());
+    } else {
+        // On an unsafe device with the required feature not enabled, the wgsl extension should be
+        // invalid
+        ASSERT_DEVICE_ERROR(utils::CreateShaderModule(device, wgsl.c_str()));
+    }
+}
+INSTANTIATE_TEST_SUITE_P(,
+                         ShaderModuleExtensionValidationTestUnsafeOnlyRequiredFeatures,
+                         ::testing::Combine(::testing::ValuesIn(kExtensions),
+                                            ::testing::Values(true, false)));
 
 }  // anonymous namespace
 }  // namespace dawn
