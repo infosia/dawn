@@ -74,6 +74,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     const PipelineLayout* layout,
     uint32_t compileFlags,
     const ImmediateConstantMask& pipelineImmediateMask,
+    bool applySampleMaskPolyfill,
     const std::optional<dawn::native::d3d::InterStageShaderVariablesMask>& usedInterstageVariables,
     const std::optional<tint::hlsl::writer::PixelLocalOptions>& pixelLocalOptions) {
     Device* device = ToBackend(GetDevice());
@@ -134,9 +135,9 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     req.hlsl.tintOptions.disable_workgroup_init =
         device->IsToggleEnabled(Toggle::DisableWorkgroupInit);
     req.hlsl.tintOptions.bindings = std::move(bindings);
-
-    req.hlsl.tintOptions.immediate_binding_point =
-        tint::BindingPoint{0, PipelineLayout::kReservedConstantBufferSlot};
+    req.hlsl.tintOptions.extensions.polyfill_sample_mask =
+        applySampleMaskPolyfill req.hlsl.tintOptions.immediate_binding_point =
+            tint::BindingPoint{0, PipelineLayout::kReservedConstantBufferSlot};
     if (stage == SingleShaderStage::Compute) {
         req.hlsl.tintOptions.num_workgroups_start_offset = GetImmediateByteOffsetInPipelineIfAny(
             &ComputeImmediateConstants::numWorkgroups, pipelineImmediateMask);
