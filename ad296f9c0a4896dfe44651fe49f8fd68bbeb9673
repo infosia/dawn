@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bec469f0_3cd39552",
+        "filename": "tools/src/cmd/cts/common/results.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 4401357
+      },
+      "writtenOn": "2025-12-03T20:45:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1092fbc_4bcc10f1",
+      "range": {
+        "startLine": 344,
+        "startChar": 2,
+        "endLine": 350,
+        "endChar": 3
+      },
+      "revId": "ad296f9c0a4896dfe44651fe49f8fd68bbeb9673",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4bc9833f_a946c3e7",
@@ -71,6 +95,30 @@
       "writtenOn": "2025-12-02T21:59:11Z",
       "side": 1,
       "message": "Ditto regarding the code deduplication.",
+      "range": {
+        "startLine": 362,
+        "startChar": 4,
+        "endLine": 373,
+        "endChar": 5
+      },
+      "revId": "ad296f9c0a4896dfe44651fe49f8fd68bbeb9673",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a7acab5_a8a85b12",
+        "filename": "tools/src/cmd/cts/common/results.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 4401357
+      },
+      "writtenOn": "2025-12-03T20:45:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bc9833f_a946c3e7",
       "range": {
         "startLine": 362,
         "startChar": 4,
