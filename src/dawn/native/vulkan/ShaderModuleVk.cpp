@@ -257,6 +257,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
 
     req.tintOptions.workarounds.subgroup_shuffle_clamped =
         GetDevice()->IsToggleEnabled(Toggle::SubgroupShuffleClamped);
+    req.tintOptions.workarounds.texture_sample_compare_to_sample_and_compare =
+        GetDevice()->IsToggleEnabled(Toggle::SubgroupShuffleClamped);
     req.tintOptions.workarounds.polyfill_pack_unpack_4x8_norm =
         GetDevice()->IsToggleEnabled(Toggle::PolyfillPackUnpack4x8Norm);
     req.tintOptions.workarounds.polyfill_case_switch =
