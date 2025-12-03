@@ -93,8 +93,13 @@ class DynamicArrayState : public RefCounted, public WeakRefSupport<DynamicArrayS
         uint32_t offset;
         uint32_t data;
     };
+    struct ResourceUpdate {
+        BindingIndex slot;
+        TextureViewBase* textureView = nullptr;
+    };
     struct BindingUpdates {
         std::vector<MetadataUpdate> metadataUpdates;
+        std::vector<ResourceUpdate> resourceUpdates;
     };
     BindingUpdates AcquireDirtyBindingUpdates();
 
@@ -119,6 +124,7 @@ class DynamicArrayState : public RefCounted, public WeakRefSupport<DynamicArrayS
         tint::ResourceType typeId = tint::ResourceType(0);
         ExecutionSerial availableAfter = kBeginningOfGPUTime;
         bool dirty = false;
+        bool resourceDirty = false;  // resourceDirty implies dirty.
         bool pinned = false;
     };
     ityp::vector<BindingIndex, BindingState> mBindingState;
