@@ -558,6 +558,12 @@ DAWN_REPLAY_MAKE_COMMAND_BUFFER_CMD_AND_CMD_DATA(SetComputePipeline,
 
 DAWN_REPLAY_MAKE_COMMAND_BUFFER_CMD_AND_CMD_DATA(SetBindGroup, SET_BIND_GROUP_CMD_DATA_MEMBER){};
 
+#define SET_IMMEDIATES_CMD_DATA_MEMBER(X) \
+    X(uint32_t, offset)                   \
+    X(std::vector<uint8_t>, data)
+
+DAWN_REPLAY_MAKE_COMMAND_BUFFER_CMD_AND_CMD_DATA(SetImmediates, SET_IMMEDIATES_CMD_DATA_MEMBER){};
+
 #define SET_CLEAR_BUFFER_CMD_DATA_MEMBER(X) \
     X(ObjectId, bufferId)                   \
     X(uint64_t, offset)                     \
