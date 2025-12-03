@@ -68,6 +68,24 @@
       "parentUuid": "28ffc09b_63a3422d",
       "revId": "1a7082a3d26c8d51c88ab6716b0873eadeff55a1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4d4acd3_bc33b712",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-03T15:46:19Z",
+      "side": 1,
+      "message": "I think you\u0027re right, with the next CL it makes more sense to not early exit I think.",
+      "parentUuid": "a1bf8d2e_7a22de5a",
+      "revId": "1a7082a3d26c8d51c88ab6716b0873eadeff55a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
