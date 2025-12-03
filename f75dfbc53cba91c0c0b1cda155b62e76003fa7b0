@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b85e730_996bfe9f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-03T19:15:27Z",
+      "side": 1,
+      "message": "Note: This same problem exists in DawnTest/DawnTestWithParams in that those SetUp methods can fail but derived SetUp methods don\u0027t check for failure and will continue to try to use a null device etc.... I\u0027d like to refactor that too if you agree it should be refactored.",
+      "revId": "f75dfbc53cba91c0c0b1cda155b62e76003fa7b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
