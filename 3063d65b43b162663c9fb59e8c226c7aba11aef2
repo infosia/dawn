@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32f9f3c8_803fc110",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2025-12-03T01:19:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure what\u0027s going on here. I\u0027m getting the error\n\n\u003e ErrorType::Validation, The entry-point uses more bytes of immediate data (4) than the reserved amount (0) in [PipelineLayout \"immediatePipelineLayout\"].\n - While validating compute stage ([ShaderModule (unlabeled)], entryPoint: \"main\").\n - While calling [Device].CreateComputePipeline([ComputePipelineDescriptor \"\"immediatePipeline\"\"]).\n\nBut I\u0027m setting `plDesc.immediateSize \u003d 4;`. I tried stepping through the code and it seemed to be passing `4` into the backend. I\u0027ll keep digging but if you have any ideas that\u0027d be great. Looking at `ImmediateDataTests.cpp` I don\u0027t see anything different. It\u0027s not asking for any features or WGSL extensions or maybe I missed it.",
+      "revId": "3063d65b43b162663c9fb59e8c226c7aba11aef2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
