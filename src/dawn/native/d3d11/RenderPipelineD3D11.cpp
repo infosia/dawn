@@ -548,12 +548,17 @@ MaybeError RenderPipeline::InitializeShaders() {
             additionalCompileFlags |= D3DCOMPILE_IEEE_STRICTNESS;
         }
 
+        // This must be accurate in determining when Sample Shading is active.
+        // It cannot be conservatively correct because the polyfill changes behavior.
+        bool applySampleMaskPolyfill = (stage == SingleShaderStage::Fragment) &&
+                                       (GetSampleCount() > 1) && UsesSampleMaskInput() &&
+                                       (IsFragMultiSampled() || UsesSampleIndex());
         DAWN_TRY_ASSIGN(
             compiledShader[SingleShaderStage::Fragment],
             ToBackend(programmableStage.module)
                 ->Compile(programmableStage, SingleShaderStage::Fragment, ToBackend(GetLayout()),
                           compileFlags | additionalCompileFlags, GetImmediateMask(),
-                          usedInterstageVariables, pixelLocalOptions));
+                          applySampleMaskPolyfill, usedInterstageVariables, pixelLocalOptions));
         {
             TRACE_EVENT0(device->GetPlatform(), General, "RenderPipelineD3D11::CreatePixelShader");
             SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(device->GetPlatform(), "D3D11.CreatePixelShaderUs");
