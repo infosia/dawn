@@ -132,11 +132,10 @@ class DawnPerfTestBase {
 
 template <typename Params = AdapterTestParam>
 class DawnPerfTestWithParams : public DawnTestWithParams<Params>, public DawnPerfTestBase {
-  protected:
-    DawnPerfTestWithParams(unsigned int iterationsPerStep, unsigned int maxStepsInFlight)
-        : DawnTestWithParams<Params>(),
-          DawnPerfTestBase(this, iterationsPerStep, maxStepsInFlight) {}
-    void SetUp() override {
+  private:
+    // Since this function might fail but has no way to signal that it failed
+    // we must not allow it to be called directl.
+    void SetUp() final {
         DawnTestWithParams<Params>::SetUp();
 
         DAWN_TEST_UNSUPPORTED_IF(this->IsCPU());
@@ -144,8 +143,17 @@ class DawnPerfTestWithParams : public DawnTestWithParams<Params>, public DawnPer
         if (mSupportsTimestampQuery) {
             InitializeGPUTimer();
         }
+
+        SetUpPerfTest();
     }
+
+  protected:
+    DawnPerfTestWithParams(unsigned int iterationsPerStep, unsigned int maxStepsInFlight)
+        : DawnTestWithParams<Params>(),
+          DawnPerfTestBase(this, iterationsPerStep, maxStepsInFlight) {}
     ~DawnPerfTestWithParams() override = default;
+
+    virtual void SetUpPerfTest() {}
 
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         std::vector<wgpu::FeatureName> requiredFeatures = {wgpu::FeatureName::TimestampQuery};

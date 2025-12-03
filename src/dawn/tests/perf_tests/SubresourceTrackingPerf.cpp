@@ -62,8 +62,7 @@ class SubresourceTrackingPerf : public DawnPerfTestWithParams<SubresourceTrackin
     SubresourceTrackingPerf() : DawnPerfTestWithParams(kNumIterations, 1) {}
     ~SubresourceTrackingPerf() override = default;
 
-    void SetUp() override {
-        DawnPerfTestWithParams<SubresourceTrackingParams>::SetUp();
+    void SetUpPerfTest() override {
         const SubresourceTrackingParams& params = GetParam();
 
         wgpu::TextureDescriptor materialDesc;
