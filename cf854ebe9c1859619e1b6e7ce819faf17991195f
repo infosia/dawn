@@ -16,6 +16,57 @@
       "message": "Looks okay, but I\u0027ll defer to Corentin.",
       "revId": "cf854ebe9c1859619e1b6e7ce819faf17991195f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75c82586_3ef6c4c2",
+        "filename": "src/dawn/native/d3d12/SharedFenceD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-03T08:29:57Z",
+      "side": 1,
+      "message": "nit: this is the same as https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d11/SharedFenceD3D11.cpp;drc\u003d58d924f67f8dac19015cffafa0551bd5f8faca6d;l\u003d41 which could be extracted to a common utility file.",
+      "revId": "cf854ebe9c1859619e1b6e7ce819faf17991195f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "583a5736_210ee9a1",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-03T08:29:57Z",
+      "side": 1,
+      "message": "We should do the same in https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/BufferD3D12.cpp;drc\u003d55b06bdf8876eedec42fa90888b9dd251cce9378;l\u003d640 and https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/BufferD3D12.cpp;drc\u003d55b06bdf8876eedec42fa90888b9dd251cce9378;l\u003d659 ?",
+      "revId": "cf854ebe9c1859619e1b6e7ce819faf17991195f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50aea114_56785087",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-03T08:29:57Z",
+      "side": 1,
+      "message": "Maybe this assert should be a runtime check if we think there are cases where some outside code could signal on the same fence.",
+      "revId": "cf854ebe9c1859619e1b6e7ce819faf17991195f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
