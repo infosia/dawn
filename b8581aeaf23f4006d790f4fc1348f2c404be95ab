@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c26cee1a_a970e322",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2025-12-03T01:14:25Z",
+      "side": 1,
+      "message": "This looks bigger than it was because I renamed `NeedsIndirectDrawGPUValidation` to `NeedsIndirectGPUValidation`",
+      "revId": "b8581aeaf23f4006d790f4fc1348f2c404be95ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
