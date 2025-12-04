@@ -91,6 +91,24 @@
       "message": "Nit: Maybe it\u0027d be nice if these errors said \"from subgroup uniform control flow\" when the feature is enabled?",
       "revId": "422e593aac1a9ac248b344485716a061b4576c87",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "040a5c7e_bc07de88",
+        "filename": "src/tint/lang/wgsl/resolver/uniformity_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13508,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-12-04T00:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ed740cb_388a5c81",
+      "revId": "422e593aac1a9ac248b344485716a061b4576c87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
