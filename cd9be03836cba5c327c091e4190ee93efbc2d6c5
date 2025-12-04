@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f525b031_0de845de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-04T19:54:24Z",
+      "side": 1,
+      "message": "Future note you can use \"Fixed:\" here to automatically close the bug when it lands.",
+      "revId": "cd9be03836cba5c327c091e4190ee93efbc2d6c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce4d520b_f3d90c77",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-04T19:54:24Z",
+      "side": 1,
+      "message": "Thank you!",
+      "revId": "cd9be03836cba5c327c091e4190ee93efbc2d6c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
