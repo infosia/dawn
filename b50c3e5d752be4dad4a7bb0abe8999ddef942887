@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eaceabea_2f4029ce",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-04T00:24:17Z",
+      "side": 1,
+      "message": "We use ::testing::Combine in Tint, and we had to disable this warning in our CMake build. The reason we need this for the Dawn GN build is that `config(\"internal_config\")` explicitly enables `\"-Wdeprecated-copy-dtor\"`. Adding the \"no\" version here will override the previous one because of the order of configs (not awesome, but this is what is often done in GN builds as I learned when doing the DXC GN build).",
+      "range": {
+        "startLine": 90,
+        "startChar": 6,
+        "endLine": 90,
+        "endChar": 33
+      },
+      "revId": "b50c3e5d752be4dad4a7bb0abe8999ddef942887",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "47d03c68_84abfa7c",
         "filename": "src/dawn/tests/unittests/validation/ShaderModuleValidationTests.cpp",
         "patchSetId": 2
