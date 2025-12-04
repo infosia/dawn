@@ -2408,6 +2408,7 @@ ResultOrError<Ref<TexelBufferViewBase>> DeviceBase::CreateTexelBufferView(
     const TexelBufferViewDescriptor* descriptor) {
     DAWN_TRY(ValidateIsAlive());
     DAWN_TRY(ValidateObject(buffer));
+    DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
 
     UnpackedPtr<TexelBufferViewDescriptor> unpacked;
     if (IsValidationEnabled()) {
