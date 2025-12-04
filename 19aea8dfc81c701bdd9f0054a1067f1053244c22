@@ -34,6 +34,24 @@
       "parentUuid": "35266d5b_219df7ec",
       "revId": "19aea8dfc81c701bdd9f0054a1067f1053244c22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1661285_bbba9d5d",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-04T19:29:48Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "dadf22f9_6709c27f",
+      "revId": "19aea8dfc81c701bdd9f0054a1067f1053244c22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
