@@ -119,6 +119,10 @@ VkFilter ToVulkanSamplerFilter(wgpu::FilterMode filter);
 
 VkImageAspectFlags VulkanAspectMask(const Aspect& aspects);
 
+VkAttachmentLoadOp ToVulkanAttachmentLoadOp(wgpu::LoadOp op);
+
+VkAttachmentStoreOp ToVulkanAttachmentStoreOp(wgpu::StoreOp op);
+
 TexelExtent3D ComputeTextureCopyExtent(const TextureCopy& textureCopy,
                                        const TexelExtent3D& copySize);
 

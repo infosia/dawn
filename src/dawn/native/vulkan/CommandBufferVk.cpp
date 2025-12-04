@@ -484,11 +484,131 @@ void RecordResolveQuerySetCmd(VkCommandBuffer commands,
     }
 }
 
+VkClearValue ToVkClearValue(dawn::native::Color clearColor, TextureComponentType baseType) {
+    VkClearValue clearValue;
+    switch (baseType) {
+        case TextureComponentType::Float: {
+            const std::array<float, 4> appliedClearColor = ConvertToFloatColor(clearColor);
+            for (uint32_t j = 0; j < 4; ++j) {
+                clearValue.color.float32[j] = appliedClearColor[j];
+            }
+            break;
+        }
+        case TextureComponentType::Uint: {
+            const std::array<uint32_t, 4> appliedClearColor =
+                ConvertToUnsignedIntegerColor(clearColor);
+            for (uint32_t j = 0; j < 4; ++j) {
+                clearValue.color.uint32[j] = appliedClearColor[j];
+            }
+            break;
+        }
+        case TextureComponentType::Sint: {
+            const std::array<int32_t, 4> appliedClearColor =
+                ConvertToSignedIntegerColor(clearColor);
+            for (uint32_t j = 0; j < 4; ++j) {
+                clearValue.color.int32[j] = appliedClearColor[j];
+            }
+            break;
+        }
+    }
+    return clearValue;
+}
+
 }  // anonymous namespace
+
+MaybeError RecordBeginDynamicRenderPass(CommandRecordingContext* recordingContext,
+                                        Device* device,
+                                        BeginRenderPassCmd* renderPass) {
+    VkCommandBuffer commands = recordingContext->commandBuffer;
+
+    VkRenderingInfoKHR renderInfo;
+    renderInfo.sType = VK_STRUCTURE_TYPE_RENDERING_INFO_KHR;
+    renderInfo.pNext = nullptr;
+    renderInfo.flags = 0;
+    renderInfo.renderArea.offset.x = 0;
+    renderInfo.renderArea.offset.y = 0;
+    renderInfo.renderArea.extent.width = renderPass->width;
+    renderInfo.renderArea.extent.height = renderPass->height;
+    renderInfo.layerCount = 1;
+    renderInfo.viewMask = 0;
+    renderInfo.colorAttachmentCount = 0;
+
+    PerColorAttachment<VkRenderingAttachmentInfoKHR> colorAttachments;
+    for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
+        auto& attachmentInfo = renderPass->colorAttachments[i];
+        TextureView* view = ToBackend(attachmentInfo.view.Get());
+        if (view == nullptr) {
+            continue;
+        }
+
+        auto& colorAttachment = colorAttachments[renderInfo.colorAttachmentCount];
+        colorAttachment.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO_KHR;
+        colorAttachment.pNext = nullptr;
+
+        if (view->GetDimension() == wgpu::TextureViewDimension::e3D) {
+            VkImageView handleFor2DViewOn3D;
+            DAWN_TRY_ASSIGN(handleFor2DViewOn3D,
+                            view->GetOrCreate2DViewOn3D(attachmentInfo.depthSlice));
+            colorAttachment.imageView = handleFor2DViewOn3D;
+        } else {
+            colorAttachment.imageView = view->GetHandle();
+        }
+
+        colorAttachment.imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+        colorAttachment.loadOp = ToVulkanAttachmentLoadOp(attachmentInfo.loadOp);
+        colorAttachment.storeOp = ToVulkanAttachmentStoreOp(attachmentInfo.storeOp);
+        colorAttachment.clearValue = ToVkClearValue(
+            attachmentInfo.clearColor, view->GetFormat().GetAspectInfo(Aspect::Color).baseType);
+
+        renderInfo.colorAttachmentCount++;
+    }
+
+    renderInfo.pColorAttachments = colorAttachments.data();
+
+    VkRenderingAttachmentInfoKHR depthAttachment;
+    VkRenderingAttachmentInfoKHR stencilAttachment;
+    if (renderPass->attachmentState->HasDepthStencilAttachment()) {
+        const auto& attachmentInfo = renderPass->depthStencilAttachment;
+        TextureView* view = ToBackend(attachmentInfo.view.Get());
+        DAWN_ASSERT(view);
+
+        const Format& dsFormat =
+            device->GetValidInternalFormat(view->GetTexture()->GetFormat().format);
+        VkImageLayout imageLayout = VulkanImageLayoutForDepthStencilAttachment(
+            dsFormat, attachmentInfo.depthReadOnly, attachmentInfo.stencilReadOnly);
+
+        depthAttachment.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO_KHR;
+        depthAttachment.pNext = nullptr;
+        depthAttachment.imageView = view->GetHandle();
+        depthAttachment.imageLayout = imageLayout;
+        depthAttachment.loadOp = ToVulkanAttachmentLoadOp(attachmentInfo.depthLoadOp);
+        depthAttachment.storeOp = ToVulkanAttachmentStoreOp(attachmentInfo.depthStoreOp);
+        depthAttachment.clearValue.depthStencil.depth = attachmentInfo.clearDepth;
+
+        stencilAttachment.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO_KHR;
+        stencilAttachment.pNext = nullptr;
+        stencilAttachment.imageView = view->GetHandle();
+        stencilAttachment.imageLayout = imageLayout;
+        stencilAttachment.loadOp = ToVulkanAttachmentLoadOp(attachmentInfo.stencilLoadOp);
+        stencilAttachment.storeOp = ToVulkanAttachmentStoreOp(attachmentInfo.stencilStoreOp);
+        stencilAttachment.clearValue.depthStencil.stencil = attachmentInfo.clearStencil;
+
+        renderInfo.pDepthAttachment = &depthAttachment;
+        renderInfo.pStencilAttachment = &stencilAttachment;
+    }
+
+    device->fn.CmdBeginRenderingKHR(commands, &renderInfo);
+
+    return {};
+}
 
 MaybeError RecordBeginRenderPass(CommandRecordingContext* recordingContext,
                                  Device* device,
                                  BeginRenderPassCmd* renderPass) {
+    if (device->IsToggleEnabled(Toggle::VulkanUseDynamicRendering)) {
+        return RecordBeginDynamicRenderPass(recordingContext, device, renderPass);
+    }
+
     VkCommandBuffer commands = recordingContext->commandBuffer;
 
     // Query a VkRenderPass from the cache
@@ -1560,7 +1680,11 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                     device->fn.CmdEndQuery(commands, ToBackend(querySet)->GetHandle(), 0);
                 }
 
-                device->fn.CmdEndRenderPass(commands);
+                if (device->IsToggleEnabled(Toggle::VulkanUseDynamicRendering)) {
+                    device->fn.CmdEndRenderingKHR(commands);
+                } else {
+                    device->fn.CmdEndRenderPass(commands);
+                }
 
                 // Write timestamp at the end of render pass if it's set.
                 // We've observed that this must be called after the render pass ends or the

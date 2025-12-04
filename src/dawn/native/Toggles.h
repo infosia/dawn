@@ -191,6 +191,8 @@ enum class Toggle {
     IgnoreImportedAHardwareBufferVulkanImageSize,
     GLAllowContextOnMultiThreads,
 
+    VulkanUseDynamicRendering,
+
     EnumCount,
     InvalidEnum = EnumCount,
 };
