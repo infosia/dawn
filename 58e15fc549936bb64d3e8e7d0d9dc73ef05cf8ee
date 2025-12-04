@@ -63,6 +63,30 @@
       },
       "revId": "58e15fc549936bb64d3e8e7d0d9dc73ef05cf8ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b3c358d_cc019db3",
+        "filename": "tools/src/tint/intrinsic/parser/parser.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-12-04T15:50:52Z",
+      "side": 1,
+      "message": "I apparently wasn\u0027t reading/looking correctly...\n\nYour fix is the correct one. the log error should be t.Source, not p.tokens[0], since p.tokens[0] would be the token after import and path string, which may not exist, and definitely not relavent to the error message, cause it is either the pre-existing following token, or the first token of the imported thing.",
+      "parentUuid": "5a1fb744_7efeb350",
+      "range": {
+        "startLine": 185,
+        "startChar": 1,
+        "endLine": 185,
+        "endChar": 5
+      },
+      "revId": "58e15fc549936bb64d3e8e7d0d9dc73ef05cf8ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
