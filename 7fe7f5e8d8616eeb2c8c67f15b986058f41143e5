@@ -71,6 +71,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d9a2e3af_cbc5be86",
+        "filename": "docs/tint/extensions/chromium_experimental_subgroup_size_control.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-12-04T05:09:54Z",
+      "side": 1,
+      "message": "`[WaveSize]` is only supported in compute shader entry points in HLSL:\n\n\nA new attribute may be specified on compute shader entry points, to indicate that the function is only compatible with a specific wave size[1].\n\n[1] https://microsoft.github.io/DirectX-Specs/d3d/HLSL_SM_6_6_WaveSize.html#hlsl-attribute",
+      "parentUuid": "5db20b8d_89b694bb",
+      "revId": "7fe7f5e8d8616eeb2c8c67f15b986058f41143e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "75b100f8_bc1481bd",
         "filename": "docs/tint/extensions/chromium_experimental_subgroup_size_control.md",
         "patchSetId": 3
@@ -82,6 +100,24 @@
       "writtenOn": "2025-12-03T16:10:53Z",
       "side": 1,
       "message": "Should we try to fold computeFullSubgroups into this or expose that as a separate feature? I\u0027m not sure whether D3D12 supports full subgroups.",
+      "revId": "7fe7f5e8d8616eeb2c8c67f15b986058f41143e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7a20ce9_8cc691e1",
+        "filename": "docs/tint/extensions/chromium_experimental_subgroup_size_control.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-12-04T05:09:54Z",
+      "side": 1,
+      "message": "I just see below in the HLSL wave size Spec:\n\nThis also enables additional compile-time validation for cases such as wave_matrix, where the thread group size must be a multiple of the wave size.\n\nhttps://microsoft.github.io/DirectX-Specs/d3d/HLSL_SM_6_6_WaveSize.html#hlsl-attribute\n\nHowever there is no `wave_matrix` now so I am not sure if there is still such check. I wonder maybe we should also require the subgroup sizes must be launched with all invocations active for `cooperative matrix` in the future?",
+      "parentUuid": "75b100f8_bc1481bd",
       "revId": "7fe7f5e8d8616eeb2c8c67f15b986058f41143e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
