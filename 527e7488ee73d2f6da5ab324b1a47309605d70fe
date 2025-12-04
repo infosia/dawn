@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc8c01b9_ea60cf08",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-12-04T19:22:53Z",
+      "side": 1,
+      "message": "I think it would make sense (if possible) to do it before the wait.",
+      "range": {
+        "startLine": 486,
+        "startChar": 16,
+        "endLine": 486,
+        "endChar": 97
+      },
+      "revId": "527e7488ee73d2f6da5ab324b1a47309605d70fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
