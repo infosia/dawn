@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7744e87c_fa4bf3c1",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-04T14:33:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaceabea_2f4029ce",
+      "range": {
+        "startLine": 90,
+        "startChar": 6,
+        "endLine": 90,
+        "endChar": 33
+      },
+      "revId": "b50c3e5d752be4dad4a7bb0abe8999ddef942887",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "47d03c68_84abfa7c",
@@ -61,6 +85,30 @@
           ]
         }
       ],
+      "revId": "b50c3e5d752be4dad4a7bb0abe8999ddef942887",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb2b132e_60ebf84a",
+        "filename": "src/dawn/tests/unittests/validation/ShaderModuleValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-04T14:33:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47d03c68_84abfa7c",
+      "range": {
+        "startLine": 1067,
+        "startChar": 68,
+        "endLine": 1067,
+        "endChar": 73
+      },
       "revId": "b50c3e5d752be4dad4a7bb0abe8999ddef942887",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
