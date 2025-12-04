@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04c60461_1f24b83c",
+        "filename": "docs/tint/extensions/chromium_experimental_subgroup_size_control.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-04T18:16:10Z",
+      "side": 1,
+      "message": "Should we make it `override-expression` so that it can be controlled from the API if needed too?",
+      "revId": "4809904569efc6db153357642734f2d2c041f029",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48fd3c76_dfc7d900",
+        "filename": "docs/tint/extensions/chromium_experimental_subgroup_size_control.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-04T18:16:10Z",
+      "side": 1,
+      "message": "Nit: Can we just say \"must be a power-of-two\" (which is also what Vulkan says)? When combined with the requirement for it to be \u003cmax and \u003emin that amounts to the same thing for HLSL I think.",
+      "revId": "4809904569efc6db153357642734f2d2c041f029",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53f31daa_25524a4e",
+        "filename": "docs/tint/extensions/chromium_experimental_subgroup_size_control.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-04T18:16:10Z",
+      "side": 1,
+      "message": "Vulkan also requires that number of subgroups in a workgroup is \u003c\u003d `maxComputeWorkgroupSubgroups` when a required subgroup size is specified. Do we need to add a validation rule for this to WGSL, and potentially another query too?",
+      "revId": "4809904569efc6db153357642734f2d2c041f029",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
