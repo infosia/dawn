@@ -16,6 +16,24 @@
       "message": "Could technically be a problem to change existing devices... should we keep Albiorix for those?",
       "revId": "19aea8dfc81c701bdd9f0054a1067f1053244c22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dadf22f9_6709c27f",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-04T19:07:11Z",
+      "side": 0,
+      "message": "Turns out that those devices weren\u0027t even Albiorix (Series A). They should have been labeled Series B, so this correction was going to change things no matter what the names were.\n\nAlso, the codenames for these devices are REALLY hard to find once they started categorizing them as Series A, B, C, etc, so it felt more appropriate to use the more common names.",
+      "parentUuid": "35266d5b_219df7ec",
+      "revId": "19aea8dfc81c701bdd9f0054a1067f1053244c22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
