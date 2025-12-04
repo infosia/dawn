@@ -27,12 +27,52 @@
 
 #include "dawn/replay/Replay.h"
 
+#include <webgpu/webgpu_cpp.h>
 #include <algorithm>
+#include <iostream>
+#include <memory>
+#include <ranges>
+#include <string>
+#include <utility>
+#include <variant>
+#include <vector>
 
+#include "absl/container/flat_hash_map.h"
 #include "dawn/common/Constants.h"
+#include "dawn/replay/Capture.h"
 #include "dawn/replay/Deserialization.h"
+#include "src/dawn/replay/ReplayImpl.h"
 
 namespace dawn::replay {
+
+Replay::~Replay() = default;
+
+template <typename T>
+T Replay::GetObjectByLabel(const char* label) const {
+    if (auto* impl = static_cast<const ReplayImpl*>(this)) {
+        return impl->GetObjectByLabel<T>(label);
+    }
+    return nullptr;
+}
+
+template wgpu::BindGroup Replay::GetObjectByLabel<wgpu::BindGroup>(const char* label) const;
+template wgpu::BindGroupLayout Replay::GetObjectByLabel<wgpu::BindGroupLayout>(
+    const char* label) const;
+template wgpu::Buffer Replay::GetObjectByLabel<wgpu::Buffer>(const char* label) const;
+template wgpu::CommandBuffer Replay::GetObjectByLabel<wgpu::CommandBuffer>(const char* label) const;
+template wgpu::ComputePipeline Replay::GetObjectByLabel<wgpu::ComputePipeline>(
+    const char* label) const;
+template wgpu::Device Replay::GetObjectByLabel<wgpu::Device>(const char* label) const;
+template wgpu::PipelineLayout Replay::GetObjectByLabel<wgpu::PipelineLayout>(
+    const char* label) const;
+template wgpu::QuerySet Replay::GetObjectByLabel<wgpu::QuerySet>(const char* label) const;
+template wgpu::RenderBundle Replay::GetObjectByLabel<wgpu::RenderBundle>(const char* label) const;
+template wgpu::RenderPipeline Replay::GetObjectByLabel<wgpu::RenderPipeline>(
+    const char* label) const;
+template wgpu::Sampler Replay::GetObjectByLabel<wgpu::Sampler>(const char* label) const;
+template wgpu::ShaderModule Replay::GetObjectByLabel<wgpu::ShaderModule>(const char* label) const;
+template wgpu::Texture Replay::GetObjectByLabel<wgpu::Texture>(const char* label) const;
+template wgpu::TextureView Replay::GetObjectByLabel<wgpu::TextureView>(const char* label) const;
 
 namespace {
 
@@ -61,7 +101,7 @@ wgpu::Color ToWGPU(const schema::Color& color) {
     };
 }
 
-wgpu::PassTimestampWrites ToWGPU(const Replay& replay, const schema::TimestampWrites& writes) {
+wgpu::PassTimestampWrites ToWGPU(const ReplayImpl& replay, const schema::TimestampWrites& writes) {
     return wgpu::PassTimestampWrites{
         .nextInChain = nullptr,
         .querySet = replay.GetObjectById<wgpu::QuerySet>(writes.querySetId),
@@ -91,14 +131,16 @@ wgpu::TexelCopyBufferLayout ToWGPU(const schema::TexelCopyBufferLayout& info) {
     };
 }
 
-wgpu::TexelCopyBufferInfo ToWGPU(const Replay& replay, const schema::TexelCopyBufferInfo& info) {
+wgpu::TexelCopyBufferInfo ToWGPU(const ReplayImpl& replay,
+                                 const schema::TexelCopyBufferInfo& info) {
     return wgpu::TexelCopyBufferInfo{
         .layout = ToWGPU(info.layout),
         .buffer = replay.GetObjectById<wgpu::Buffer>(info.bufferId),
     };
 }
 
-wgpu::TexelCopyTextureInfo ToWGPU(const Replay& replay, const schema::TexelCopyTextureInfo& info) {
+wgpu::TexelCopyTextureInfo ToWGPU(const ReplayImpl& replay,
+                                  const schema::TexelCopyTextureInfo& info) {
     return wgpu::TexelCopyTextureInfo{
         .texture = replay.GetObjectById<wgpu::Texture>(info.textureId),
         .mipLevel = info.mipLevel,
@@ -162,14 +204,14 @@ MaybeError MapContentIntoBuffer(ReadHead& readHead,
     DAWN_TRY_ASSIGN(data, readHead.GetData(size));
 
     // Note: We could call MapAsync here, wait for it to map, put in the data, then unmap.
-    // To do so we'd have to change the code in Replay::CreateBuffer to leave the buffer
+    // To do so we'd have to change the code in ReplayImpl::CreateBuffer to leave the buffer
     // as MapWrite|CopySrc. That would be more inline with what the user actually did
     // though it might be slower as it would be synchronous.
     device.GetQueue().WriteBuffer(buffer, bufferOffset, data, size);
     return {};
 }
 
-MaybeError ReadContentIntoTexture(const Replay& replay,
+MaybeError ReadContentIntoTexture(const ReplayImpl& replay,
                                   ReadHead& readHead,
                                   wgpu::Device device,
                                   const schema::RootCommandWriteTextureCmdData& cmdData) {
@@ -183,7 +225,7 @@ MaybeError ReadContentIntoTexture(const Replay& replay,
     return {};
 }
 
-ResultOrError<wgpu::BindGroup> CreateBindGroup(const Replay& replay,
+ResultOrError<wgpu::BindGroup> CreateBindGroup(const ReplayImpl& replay,
                                                wgpu::Device device,
                                                ReadHead& readHead,
                                                const std::string& label) {
@@ -242,7 +284,7 @@ ResultOrError<wgpu::BindGroup> CreateBindGroup(const Replay& replay,
     return {bindGroup};
 }
 
-ResultOrError<wgpu::BindGroupLayout> CreateBindGroupLayout(const Replay& replay,
+ResultOrError<wgpu::BindGroupLayout> CreateBindGroupLayout(const ReplayImpl& replay,
                                                            wgpu::Device device,
                                                            ReadHead& readHead,
                                                            const std::string& label) {
@@ -362,7 +404,7 @@ ResultOrError<wgpu::Buffer> CreateBuffer(wgpu::Device device,
     return {buffer};
 }
 
-ResultOrError<wgpu::ComputePipeline> CreateComputePipeline(const Replay& replay,
+ResultOrError<wgpu::ComputePipeline> CreateComputePipeline(const ReplayImpl& replay,
                                                            wgpu::Device device,
                                                            ReadHead& readHead,
                                                            const std::string& label) {
@@ -386,7 +428,7 @@ ResultOrError<wgpu::ComputePipeline> CreateComputePipeline(const Replay& replay,
     return {computePipeline};
 }
 
-ResultOrError<wgpu::PipelineLayout> CreatePipelineLayout(const Replay& replay,
+ResultOrError<wgpu::PipelineLayout> CreatePipelineLayout(const ReplayImpl& replay,
                                                          wgpu::Device device,
                                                          ReadHead& readHead,
                                                          const std::string& label) {
@@ -408,7 +450,7 @@ ResultOrError<wgpu::PipelineLayout> CreatePipelineLayout(const Replay& replay,
     return {pipelineLayout};
 }
 
-ResultOrError<wgpu::QuerySet> CreateQuerySet(const Replay& replay,
+ResultOrError<wgpu::QuerySet> CreateQuerySet(const ReplayImpl& replay,
                                              wgpu::Device device,
                                              ReadHead& readHead,
                                              const std::string& label) {
@@ -425,7 +467,7 @@ ResultOrError<wgpu::QuerySet> CreateQuerySet(const Replay& replay,
 }
 
 template <typename T>
-MaybeError ProcessSharedCommands(const Replay& replay,
+MaybeError ProcessSharedCommands(const ReplayImpl& replay,
                                  T pass,
                                  schema::CommandBufferCommand cmd,
                                  ReadHead& readHead) {
@@ -476,7 +518,7 @@ MaybeError ProcessDebugCommands(T pass, schema::CommandBufferCommand cmd, ReadHe
 }
 
 template <typename T>
-MaybeError ProcessRenderCommand(const Replay& replay,
+MaybeError ProcessRenderCommand(const ReplayImpl& replay,
                                 ReadHead& readHead,
                                 wgpu::Device device,
                                 schema::CommandBufferCommand cmd,
@@ -544,7 +586,7 @@ MaybeError ProcessRenderCommand(const Replay& replay,
     return {};
 }
 
-MaybeError ProcessRenderBundleCommands(const Replay& replay,
+MaybeError ProcessRenderBundleCommands(const ReplayImpl& replay,
                                        ReadHead& readHead,
                                        wgpu::Device device,
                                        wgpu::RenderBundleEncoder pass) {
@@ -564,7 +606,7 @@ MaybeError ProcessRenderBundleCommands(const Replay& replay,
     return DAWN_INTERNAL_ERROR("Missing RenderBundle End command");
 }
 
-ResultOrError<wgpu::RenderBundle> CreateRenderBundle(const Replay& replay,
+ResultOrError<wgpu::RenderBundle> CreateRenderBundle(const ReplayImpl& replay,
                                                      wgpu::Device device,
                                                      ReadHead& readHead,
                                                      const std::string& label) {
@@ -589,7 +631,7 @@ ResultOrError<wgpu::RenderBundle> CreateRenderBundle(const Replay& replay,
     return {renderBundle};
 }
 
-ResultOrError<wgpu::RenderPipeline> CreateRenderPipeline(const Replay& replay,
+ResultOrError<wgpu::RenderPipeline> CreateRenderPipeline(const ReplayImpl& replay,
                                                          wgpu::Device device,
                                                          ReadHead& readHead,
                                                          const std::string& label) {
@@ -757,7 +799,7 @@ ResultOrError<wgpu::Texture> CreateTexture(wgpu::Device device,
     return {texture};
 }
 
-ResultOrError<wgpu::TextureView> CreateTextureView(const Replay& replay,
+ResultOrError<wgpu::TextureView> CreateTextureView(const ReplayImpl& replay,
                                                    ReadHead& readHead,
                                                    const std::string& label) {
     schema::TextureView view;
@@ -779,7 +821,7 @@ ResultOrError<wgpu::TextureView> CreateTextureView(const Replay& replay,
     return {textureView};
 }
 
-MaybeError ProcessComputePassCommands(const Replay& replay,
+MaybeError ProcessComputePassCommands(const ReplayImpl& replay,
                                       ReadHead& readHead,
                                       wgpu::Device device,
                                       wgpu::ComputePassEncoder pass) {
@@ -827,7 +869,7 @@ MaybeError ProcessComputePassCommands(const Replay& replay,
     return DAWN_INTERNAL_ERROR("Missing ComputePass End command");
 }
 
-MaybeError ProcessRenderPassCommands(const Replay& replay,
+MaybeError ProcessRenderPassCommands(const ReplayImpl& replay,
                                      ReadHead& readHead,
                                      wgpu::Device device,
                                      wgpu::RenderPassEncoder pass) {
@@ -894,7 +936,7 @@ MaybeError ProcessRenderPassCommands(const Replay& replay,
     return DAWN_INTERNAL_ERROR("Missing RenderPass End command");
 }
 
-MaybeError ProcessEncoderCommands(const Replay& replay,
+MaybeError ProcessEncoderCommands(const ReplayImpl& replay,
                                   ReadHead& readHead,
                                   wgpu::Device device,
                                   wgpu::CommandEncoder encoder) {
@@ -1028,7 +1070,7 @@ MaybeError ProcessEncoderCommands(const Replay& replay,
     return DAWN_INTERNAL_ERROR("Missing End command");
 }
 
-ResultOrError<wgpu::CommandBuffer> CreateCommandBuffer(const Replay& replay,
+ResultOrError<wgpu::CommandBuffer> CreateCommandBuffer(const ReplayImpl& replay,
                                                        wgpu::Device device,
                                                        ReadHead& readHead,
                                                        const std::string& label) {
@@ -1042,15 +1084,17 @@ ResultOrError<wgpu::CommandBuffer> CreateCommandBuffer(const Replay& replay,
 
 }  // anonymous namespace
 
-std::unique_ptr<Replay> Replay::Create(wgpu::Device device, const Capture* capture) {
-    return std::unique_ptr<Replay>(new Replay(device, capture));
+std::unique_ptr<ReplayImpl> ReplayImpl::Create(wgpu::Device device,
+                                               std::unique_ptr<Capture> capture) {
+    return std::unique_ptr<ReplayImpl>(new ReplayImpl(device, std::move(capture)));
 }
 
-Replay::Replay(wgpu::Device device, const Capture* capture) : mDevice(device), mCapture(capture) {
+ReplayImpl::ReplayImpl(wgpu::Device device, std::unique_ptr<Capture> capture)
+    : mDevice(device), mCapture(std::move(capture)) {
     mResources.insert({schema::kDeviceId, {"", device}});
 }
 
-MaybeError Replay::CreateResource(wgpu::Device device, ReadHead& readHead) {
+MaybeError ReplayImpl::CreateResource(wgpu::Device device, ReadHead& readHead) {
     schema::LabeledResource resource;
     DAWN_TRY(Deserialize(readHead, &resource));
 
@@ -1161,9 +1205,9 @@ MaybeError Replay::CreateResource(wgpu::Device device, ReadHead& readHead) {
     }
 }
 
-MaybeError Replay::SetLabel(schema::ObjectId id,
-                            schema::ObjectType type,
-                            const std::string& label) {
+MaybeError ReplayImpl::SetLabel(schema::ObjectId id,
+                                schema::ObjectType type,
+                                const std::string& label) {
 // We update both the object's label and our own copy of the label
 // as there is no API to get an object's label from WebGPU
 #define DAWN_SET_LABEL(type)                                                                \
@@ -1195,7 +1239,7 @@ MaybeError Replay::SetLabel(schema::ObjectId id,
     return {};
 }
 
-MaybeError Replay::Play() {
+MaybeError ReplayImpl::Play() {
     auto readHead = mCapture->GetCommandReadHead();
     auto contentReadHead = mCapture->GetContentReadHead();
     schema::RootCommand cmd;
@@ -1256,6 +1300,26 @@ MaybeError Replay::Play() {
     }
 
     return {};
+}
+
+std::unique_ptr<Replay> ReplayCapture(wgpu::Device device,
+                                      ReplayStream& commandStream,
+                                      ReplayStream& contentStream) {
+    commandStream.seekg(0, std::ios::end);
+    size_t commandSize = commandStream.tellg();
+    commandStream.seekg(0, std::ios::beg);
+
+    contentStream.seekg(0, std::ios::end);
+    size_t contentSize = contentStream.tellg();
+    contentStream.seekg(0, std::ios::beg);
+
+    std::unique_ptr<Capture> capture =
+        Capture::Create(commandStream, commandSize, contentStream, contentSize);
+    auto replay = ReplayImpl::Create(device, std::move(capture));
+    if (replay->Play().IsError()) {
+        return nullptr;
+    }
+    return replay;
 }
 
 }  // namespace dawn::replay
