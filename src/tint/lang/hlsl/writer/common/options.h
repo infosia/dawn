@@ -167,7 +167,12 @@ struct Options {
         /// `unpack4xI8` and `unpack4xU8` builtins
         bool polyfill_pack_unpack_4x8 = false;
 
-        TINT_REFLECT(Extensions, polyfill_dot_4x8_packed, polyfill_pack_unpack_4x8);
+        bool polyfill_sample_mask = false;
+
+        TINT_REFLECT(Extensions,
+                     polyfill_dot_4x8_packed,
+                     polyfill_pack_unpack_4x8,
+                     polyfill_sample_mask);
         TINT_REFLECT_EQUALS(Extensions);
     };
 
