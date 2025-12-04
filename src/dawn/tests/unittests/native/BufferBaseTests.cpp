@@ -25,10 +25,14 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <condition_variable>
+#include <mutex>
+#include <thread>
 #include <utility>
 
 #include "dawn/common/Log.h"
 #include "dawn/common/Ref.h"
+#include "dawn/utils/TestUtils.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "mocks/BufferMock.h"
@@ -41,6 +45,26 @@ using testing::Return;
 
 namespace dawn::native {
 namespace {
+
+class WaitableEvent {
+  public:
+    void Signal() {
+        std::scoped_lock lock(mMutex);
+        mSignaled = true;
+        mCv.notify_all();
+    }
+    void Wait() {
+        std::unique_lock<std::mutex> lock(mMutex);
+        while (!mSignaled) {
+            mCv.wait(lock);
+        }
+    }
+
+  private:
+    std::mutex mMutex;
+    std::condition_variable mCv;
+    bool mSignaled = false;
+};
 
 using MockMapAsyncCallback =
     testing::StrictMock<testing::MockCppCallback<void (*)(wgpu::MapAsyncStatus, wgpu::StringView)>>;
@@ -73,6 +97,82 @@ TEST_F(BufferBaseTest, MapAsyncImplError) {
         buffer.MapAsync(wgpu::MapMode::Write, 0, desc.size, wgpu::CallbackMode::AllowSpontaneous,
                         cb.Callback());
     }
+}
+class BufferBaseThreadedTest : public DawnMockTest {
+  public:
+    BufferBaseThreadedTest() : DawnMockTest() {
+        mRequiredFeatures.push_back(wgpu::FeatureName::ImplicitDeviceSynchronization);
+    }
+};
+
+TEST_F(BufferBaseThreadedTest, ConcurrentUnmap) {
+    BufferDescriptor desc = {};
+    desc.size = 16;
+    desc.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite;
+
+    Ref<BufferMock> bufferMock = AcquireRef(new BufferMock(mDeviceMock, &desc));
+
+    WaitableEvent event;
+    EXPECT_CALL(*bufferMock.Get(), MapAsyncImpl);
+    EXPECT_CALL(*bufferMock.Get(), UnmapImpl).WillOnce([&]() { event.Wait(); });
+
+    EXPECT_CALL(mDeviceErrorCallback,
+                Call(_, wgpu::ErrorType::Validation,
+                     testing::HasSubstr("Concurrent buffer operations are not allowed")))
+        .Times(1);
+
+    EXPECT_CALL(*mDeviceMock, CreateBufferImpl).WillOnce(Return(ByMove(std::move(bufferMock))));
+    wgpu::Buffer buffer = device.CreateBuffer(ToCppAPI(&desc));
+
+    MockMapAsyncCallback cb;
+    EXPECT_CALL(cb, Call(Eq(wgpu::MapAsyncStatus::Success), _));
+    buffer.MapAsync(wgpu::MapMode::Write, 0, desc.size, wgpu::CallbackMode::AllowSpontaneous,
+                    cb.Callback());
+
+    // Two threads will run Unmap(). The first thread blocks UnmapImpl() so the second thread
+    // will attempt a concurrent unmap operation.
+    utils::RunInParallel(2, [&](uint32_t) {
+        buffer.Unmap();
+        event.Signal();
+    });
+}
+
+TEST_F(BufferBaseThreadedTest, ConcurrentUnmapDestroy) {
+    BufferDescriptor desc = {};
+    desc.size = 16;
+    desc.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite;
+
+    Ref<BufferMock> bufferMock = AcquireRef(new BufferMock(mDeviceMock, &desc));
+
+    WaitableEvent destroyEvent;
+    WaitableEvent errorEvent;
+    EXPECT_CALL(*bufferMock.Get(), UnmapImpl).WillOnce([&]() {
+        destroyEvent.Signal();
+        errorEvent.Wait();
+    });
+    EXPECT_CALL(mDeviceErrorCallback,
+                Call(_, wgpu::ErrorType::Validation,
+                     testing::HasSubstr("Concurrent buffer operations are not allowed")))
+        .WillOnce([&]() { errorEvent.Signal(); });
+
+    EXPECT_CALL(*mDeviceMock, CreateBufferImpl).WillOnce(Return(ByMove(std::move(bufferMock))));
+    wgpu::Buffer buffer = device.CreateBuffer(ToCppAPI(&desc));
+
+    MockMapAsyncCallback cb;
+    EXPECT_CALL(cb, Call(Eq(wgpu::MapAsyncStatus::Success), _));
+    buffer.MapAsync(wgpu::MapMode::Write, 0, desc.size, wgpu::CallbackMode::AllowSpontaneous,
+                    cb.Callback());
+
+    // One thread will Unmap() while another thread calls Destroy(). Destroy() produce a validation
+    // error and then wait for Unmap() to return.
+    utils::RunInParallel(2, [&](uint32_t index) {
+        if (index == 0) {
+            buffer.Unmap();
+        } else {
+            destroyEvent.Wait();
+            buffer.Destroy();
+        }
+    });
 }
 
 }  // namespace
