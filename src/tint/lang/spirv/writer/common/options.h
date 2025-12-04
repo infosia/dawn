@@ -85,6 +85,8 @@ struct Options {
         /// the spec max subgroup size.
         bool subgroup_shuffle_clamped = false;
 
+        bool texture_sample_compare_to_sample_and_compare = false;
+
         /// Set to `true` to generate polyfill for `subgroupBroadcast(f16)`
         bool polyfill_subgroup_broadcast_f16 = false;
 
