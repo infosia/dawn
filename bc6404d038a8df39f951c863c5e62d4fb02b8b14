@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9beea2a3_17109fb0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-04T00:10:41Z",
+      "side": 1,
+      "message": "I don\u0027t understand how this ever ran. It doesn\u0027t run locally, before this change on ToT it gets\n\n```\n[ RUN      ] MatrixVectorMultiplyPerf.Run/Vulkan_llvmpipe__LLVM_19_1_7__256_bits___e_disable_robustness_Rows_32768_Cols_2048_StoreType_F32_AccType_F32_Impl_Naive_Swizzle_0\nWarning: maxDynamicUniformBuffersPerPipelineLayout artificially reduced from 1000000 to 16 to fit dynamic offset allocation limit.\nWarning: maxDynamicStorageBuffersPerPipelineLayout artificially reduced from 1000000 to 16 to fit dynamic offset allocation limit.\nError: Required limit (268435456) is greater than the supported limit (134217728).\n - While validating maxStorageBufferBindingSize\n - While validating required limits\n\n../../src/dawn/tests/DawnTest.cpp:1444: Failure\nDevice creation failed.\n\nInfo: Test unsupported: this-\u003eIsCPU()\n../../src/dawn/tests/perf_tests/DawnPerfTest.h:142: Skipped\n\n\n[1]    705029 segmentation fault (core dumped)  ./out/Debug/dawn_perf_tests \n```\n\nAnd you can see it failing here too\n\nhttps://dawn-review.googlesource.com/c/dawn/+/278255?checksPatchset\u003d3\u0026tab\u003dchecks\n\nBut somehow this code is making it through the CQ normally? Confused how that\u0027s happening",
+      "revId": "bc6404d038a8df39f951c863c5e62d4fb02b8b14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
