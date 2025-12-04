@@ -176,7 +176,7 @@ TEST_P(MaxLimitTests, MaxBufferBindingSize) {
                   }
               )";
                 break;
-            case wgpu::BufferUsage::Uniform:
+            case wgpu::BufferUsage::Uniform: {
                 maxBufferBindingSize = GetSupportedLimits().maxUniformBufferBindingSize;
 
                 // Clamp to not exceed the maximum i32 value for the WGSL @size(x) annotation.
@@ -184,6 +184,9 @@ TEST_P(MaxLimitTests, MaxBufferBindingSize) {
                                                 uint64_t(std::numeric_limits<int32_t>::max()) + 8);
                 maxBufferBindingSize = Align(maxBufferBindingSize - 3u, 4);
 
+                // A @size attribute maximum size in tint. This is not specified in WGSL.
+                constexpr uint64_t kMaxStructMemberPadding = 10 * 1024 * 1024;
+                maxBufferBindingSize = std::min(kMaxStructMemberPadding, maxBufferBindingSize);
                 shader = R"(
                   struct Buf {
                       value0 : u32,
@@ -207,11 +210,12 @@ TEST_P(MaxLimitTests, MaxBufferBindingSize) {
                       result.value1 = buf.value1;
                   }
               )";
-                break;
+            } break;
             default:
                 DAWN_UNREACHABLE();
         }
 
+        // internal_limits::kMaxStructMemberPadding
         device.PushErrorScope(wgpu::ErrorFilter::OutOfMemory);
 
         wgpu::BufferDescriptor bufDesc;
