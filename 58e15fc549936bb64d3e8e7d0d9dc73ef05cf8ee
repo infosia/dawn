@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "330d08f9_a7eac99f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-04T01:44:04Z",
+      "side": 1,
+      "message": "PTAL",
+      "revId": "58e15fc549936bb64d3e8e7d0d9dc73ef05cf8ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c3817bb_81f4ba42",
+        "filename": "tools/src/tint/intrinsic/parser/parser.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-04T01:44:04Z",
+      "side": 1,
+      "message": "Apparently this was necessary because the error tests panicking due to `p.tokens` being empty, so `p.tokens[0]` ran into an out of bounds error.\n\nNo idea if this is was a legitimate issue or a side effect of the tests not setting something up properly.",
+      "range": {
+        "startLine": 185,
+        "startChar": 1,
+        "endLine": 185,
+        "endChar": 5
+      },
+      "revId": "58e15fc549936bb64d3e8e7d0d9dc73ef05cf8ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
