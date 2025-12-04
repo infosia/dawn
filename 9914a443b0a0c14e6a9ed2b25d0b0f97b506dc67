@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6abf29e6_facc0247",
+        "filename": "tools/android/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-04T23:40:17Z",
+      "side": 1,
+      "message": "@jimblackler@google.com I think these objects are not usable in Kotlin - the constructor for GPUExternalTexture is \"dawn\" tagged which I think means it won\u0027t exist in Kotlin.\n\nWe put this object in Core because various implementations can have their own extensions to create GPUExternalTexture. For example in Wasm we can do this by creating it in JS, then importing the object to Wasm. In Kotlin, in theory an app could create the object in C/C++ and then import it to Kotlin, but I don\u0027t know if you have a way to import native objects into Kotlin.\n\nMy question is, assuming these are not usable in Kotlin, should we avoid generating these Kotlin objects? Or just leave them as-is so it matches webgpu.h despite that? It looks doable in dawn_kotlin.json, just need to add generator support for \"omitted\" on objects.",
+      "revId": "9914a443b0a0c14e6a9ed2b25d0b0f97b506dc67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
