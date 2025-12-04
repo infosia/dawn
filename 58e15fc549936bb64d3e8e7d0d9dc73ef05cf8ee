@@ -39,6 +39,30 @@
       },
       "revId": "58e15fc549936bb64d3e8e7d0d9dc73ef05cf8ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a1fb744_7efeb350",
+        "filename": "tools/src/tint/intrinsic/parser/parser.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-12-04T15:32:38Z",
+      "side": 1,
+      "message": "I am not super familiar with this code, but scanning through the Parser implementation, this feels like a bug somewhere.\n\nIt isn\u0027t obvious to me how an out of bounds on p.tokens[0] would be occuring in this call. To get to this call I believe there is a peek confirming the next tokwn is a importDecl, then here the importDecl is consumed then a string is popped. If there is no tokens at that point p.string() should be getting a tok.Invalid, which it will try to get the Runes of and returning that. So if anything would be erroring I would expect extracting the Runes, but that is done after popping the token, so it shouldn\u0027t be an out of bounds on p.tokens.\n\nI am going to pull this patch in and see what the error actually looks like to understand what is going on.",
+      "parentUuid": "9c3817bb_81f4ba42",
+      "range": {
+        "startLine": 185,
+        "startChar": 1,
+        "endLine": 185,
+        "endChar": 5
+      },
+      "revId": "58e15fc549936bb64d3e8e7d0d9dc73ef05cf8ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
