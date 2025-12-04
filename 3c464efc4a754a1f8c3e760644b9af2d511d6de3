@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "268e392d_f901023c",
+        "filename": "src/dawn/tests/end2end/MaxLimitTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-04T20:55:49Z",
+      "side": 1,
+      "message": "This was the original from inside tint. It cannot be accessed from dawn.",
+      "range": {
+        "startLine": 218,
+        "startChar": 7,
+        "endLine": 218,
+        "endChar": 51
+      },
+      "revId": "3c464efc4a754a1f8c3e760644b9af2d511d6de3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
