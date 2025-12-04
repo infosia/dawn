@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47d03c68_84abfa7c",
+        "filename": "src/dawn/tests/unittests/validation/ShaderModuleValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-04T00:15:32Z",
+      "side": 1,
+      "message": "This should make it unnecessary to write tests like the one in https://dawn-review.googlesource.com/c/dawn/+/258994",
+      "range": {
+        "startLine": 1067,
+        "startChar": 68,
+        "endLine": 1067,
+        "endChar": 73
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "2f4e26af_fb9fc405",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/unittests/validation/ShaderModuleValidationTests.cpp",
+              "range": {
+                "startLine": 1067,
+                "startChar": 0,
+                "endLine": 1068,
+                "endChar": 0
+              },
+              "replacement": "                                            ::testing::Values(true)));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b50c3e5d752be4dad4a7bb0abe8999ddef942887",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
