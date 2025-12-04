@@ -156,6 +156,9 @@ crbug.com/409266267 [ amd mac ] webgpu:shader,execution,expression,call,builtin,
 # point.
 ################################################################################
 
+# Must skip on HLSL backends while we change behavior of CTS
+crbug.com/407144390 [ win ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,sample_mask:nearFar=*;sampleCount=4;interpolation={"type":"*","sampling":"sample"} [ Failure ]
+
 # SharedImage interop failures on Linux
 # Skipped instead of just Crash because of the number of failures
 crbug.com/40782602 [ linux ] webgpu:web_platform,canvas,readbackFromWebGPUCanvas:* [ Skip ]
