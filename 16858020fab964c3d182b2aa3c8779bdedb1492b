@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4aa7d979_69aaeceb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-04T18:09:55Z",
+      "side": 1,
+      "message": "PTAL. Includes the device ID for the Pixel 10, which spurred this change.",
+      "revId": "16858020fab964c3d182b2aa3c8779bdedb1492b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
