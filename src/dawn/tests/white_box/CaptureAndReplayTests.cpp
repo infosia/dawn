@@ -64,12 +64,10 @@ class CaptureAndReplayTests : public DawnTest {
             std::istringstream commandIStream(mCommandData);
             std::istringstream contentIStream(mContentData);
 
-            std::unique_ptr<replay::Capture> capture = replay::Capture::Create(
-                commandIStream, mCommandData.size(), contentIStream, mContentData.size());
-            std::unique_ptr<replay::Replay> replay = replay::Replay::Create(device, capture.get());
+            std::unique_ptr<replay::Replay> replay =
+                replay::ReplayCapture(device, commandIStream, contentIStream);
 
-            auto result = replay->Play();
-            EXPECT_TRUE(result.IsSuccess());
+            EXPECT_TRUE(replay != nullptr);
             return replay;
         }
 
@@ -139,7 +137,7 @@ class CaptureAndReplayTests : public DawnTest {
     template <typename T>
     void ExpectBufferEQ(replay::Replay* replay, const char* label, const T& expected) {
         ASSERT_TRUE(sizeof(expected) > 0);
-        wgpu::Buffer buffer = replay->GetObjectByLabel<wgpu::Buffer>(label);
+        wgpu::Buffer buffer = dawn::replay::GetObjectByLabel<wgpu::Buffer>(replay, label);
         ASSERT_NE(buffer, nullptr);
 
         EXPECT_BUFFER_U8_RANGE_EQ(expected, buffer, 0, sizeof(expected));
@@ -150,7 +148,7 @@ class CaptureAndReplayTests : public DawnTest {
                          const char* label,
                          const wgpu::Extent3D& size,
                          const T& expected) {
-        wgpu::Texture texture = replay->GetObjectByLabel<wgpu::Texture>(label);
+        wgpu::Texture texture = GetObjectByLabel<wgpu::Texture>(replay, label);
         ASSERT_NE(texture, nullptr);
         ASSERT_TRUE(size.width > 0 && size.height > 0 && size.depthOrArrayLayers > 0);
         EXPECT_TEXTURE_EQ(&expected[0], texture, {0, 0}, size, 0, wgpu::TextureAspect::All);
@@ -1626,7 +1624,7 @@ TEST_P(CaptureAndReplayTests, CaptureQuerySetBasic) {
     auto replay = capture.Replay(device);
 
     {
-        auto qs = replay->GetObjectByLabel<wgpu::QuerySet>("myQuerySet");
+        auto qs = replay::GetObjectByLabel<wgpu::QuerySet>(replay.get(), "myQuerySet");
         ASSERT_TRUE(qs);
 
         uint64_t size = sizeof(uint64_t) * kNumQueries;
@@ -1862,48 +1860,48 @@ TEST_P(CaptureAndReplayTests, CaptureSetLabel) {
     auto capture = recorder.Finish();
     auto replay = capture.Replay(device);
 
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::BindGroup>("bgA") == nullptr);
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::BindGroup>("bgB") != nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::BindGroup>(replay.get(), "bgA") == nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::BindGroup>(replay.get(), "bgB") != nullptr);
 
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::Buffer>("buf") == nullptr);
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::Buffer>("bufA") == nullptr);
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::Buffer>("bufB") != nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::Buffer>(replay.get(), "buf") == nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::Buffer>(replay.get(), "bufA") == nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::Buffer>(replay.get(), "bufB") != nullptr);
 
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::CommandBuffer>("cbA") == nullptr);
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::CommandBuffer>("cbB") != nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::CommandBuffer>(replay.get(), "cbA") == nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::CommandBuffer>(replay.get(), "cbB") != nullptr);
 
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::ComputePipeline>("cpA") == nullptr);
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::ComputePipeline>("cpB") != nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::ComputePipeline>(replay.get(), "cpA") == nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::ComputePipeline>(replay.get(), "cpB") != nullptr);
 
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::Device>("devA") == nullptr);
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::Device>("devB") != nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::Device>(replay.get(), "devA") == nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::Device>(replay.get(), "devB") != nullptr);
 
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::BindGroupLayout>("loA") == nullptr);
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::BindGroupLayout>("loB") != nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::BindGroupLayout>(replay.get(), "loA") == nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::BindGroupLayout>(replay.get(), "loB") != nullptr);
 
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::PipelineLayout>("plA") == nullptr);
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::PipelineLayout>("plB") != nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::PipelineLayout>(replay.get(), "plA") == nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::PipelineLayout>(replay.get(), "plB") != nullptr);
 
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::RenderBundle>("rbA") == nullptr);
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::RenderBundle>("rbB") != nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::RenderBundle>(replay.get(), "rbA") == nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::RenderBundle>(replay.get(), "rbB") != nullptr);
 
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::RenderPipeline>("rpA") == nullptr);
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::RenderPipeline>("rpB") != nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::RenderPipeline>(replay.get(), "rpA") == nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::RenderPipeline>(replay.get(), "rpB") != nullptr);
 
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::QuerySet>("qsA") == nullptr);
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::QuerySet>("qsB") != nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::QuerySet>(replay.get(), "qsA") == nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::QuerySet>(replay.get(), "qsB") != nullptr);
 
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::Sampler>("smpA") == nullptr);
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::Sampler>("smpB") != nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::Sampler>(replay.get(), "smpA") == nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::Sampler>(replay.get(), "smpB") != nullptr);
 
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::ShaderModule>("modA") == nullptr);
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::ShaderModule>("modB") != nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::ShaderModule>(replay.get(), "modA") == nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::ShaderModule>(replay.get(), "modB") != nullptr);
 
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::Texture>("texA") == nullptr);
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::Texture>("texB") != nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::Texture>(replay.get(), "texA") == nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::Texture>(replay.get(), "texB") != nullptr);
 
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::TextureView>("viewA") == nullptr);
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::TextureView>("viewB") != nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::TextureView>(replay.get(), "viewA") == nullptr);
+    EXPECT_TRUE(replay::GetObjectByLabel<wgpu::TextureView>(replay.get(), "viewB") != nullptr);
 }
 
 // Capture SetBlendConstant.
