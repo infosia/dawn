@@ -30,6 +30,7 @@
 
 #include <memory>
 
+#include "absl/container/flat_hash_set.h"
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
 #include "dawn/common/WeakRefSupport.h"
@@ -140,8 +141,7 @@ class QueueBase : public ExecutionQueueBase, public WeakRefSupport<QueueBase> {
                                                      const TexelCopyTextureInfo* destination,
                                                      const Extent3D* copySize,
                                                      const CopyTextureForBrowserOptions* options);
-
-    MaybeError ValidateSubmit(uint32_t commandCount, CommandBufferBase* const* commands) const;
+    MaybeError ValidateSubmit(uint32_t commandCount, CommandBufferBase* const* commands);
     MaybeError ValidateOnSubmittedWorkDone() const;
     MaybeError ValidateWriteTexture(const TexelCopyTextureInfo* destination,
                                     size_t dataSize,
@@ -151,6 +151,8 @@ class QueueBase : public ExecutionQueueBase, public WeakRefSupport<QueueBase> {
     MaybeError SubmitInternal(uint32_t commandCount, CommandBufferBase* const* commands);
 
     MutexProtected<SerialMap<ExecutionSerial, std::unique_ptr<TrackTaskCallback>>> mTasksInFlight;
+
+    absl::flat_hash_set<BufferBase*> mBuffersUsedInSubmit;
 };
 
 }  // namespace dawn::native

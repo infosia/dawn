@@ -426,8 +426,8 @@ BufferBase::BufferBase(DeviceBase* device, const UnpackedPtr<BufferDescriptor>& 
       mSize(descriptor->size),
       mUsage(descriptor->usage),
       mInternalUsage(ComputeInternalBufferUsages(device, descriptor->usage, descriptor->size)),
-      mState(descriptor.Has<BufferHostMappedPointer>() ? BufferState::HostMappedPersistent
-                                                       : BufferState::Unmapped) {
+      mIsHostMapped(descriptor.Has<BufferHostMappedPointer>()),
+      mState(mIsHostMapped ? BufferState::HostMappedPersistent : BufferState::Unmapped) {
     GetObjectTrackingList()->Track(this);
 }
 
@@ -656,10 +656,10 @@ size_t BufferBase::MapSize() const {
     return mMapSize;
 }
 
-MaybeError BufferBase::ValidateCanUseOnQueueNow() const {
+MaybeError BufferBase::ValidateCanUseOnQueueNow() {
     DAWN_ASSERT(!IsError());
 
-    switch (mState.load(std::memory_order::acquire)) {
+    switch (BufferState state = mState.load(std::memory_order::acquire)) {
         case BufferState::Destroyed:
             return DAWN_VALIDATION_ERROR("%s used in submit while destroyed.", this);
         case BufferState::Mapped:
@@ -673,9 +673,16 @@ MaybeError BufferBase::ValidateCanUseOnQueueNow() const {
             return ConcurrentUseError();
         case BufferState::HostMappedPersistent:
         case BufferState::Unmapped:
-            return {};
+            return TransitionState(state, BufferState::InsideOperation);
     }
     DAWN_UNREACHABLE();
+}
+
+void BufferBase::FinishUseOnQueue() {
+    BufferState fromState =
+        mState.exchange(mIsHostMapped ? BufferState::HostMappedPersistent : BufferState::Unmapped,
+                        std::memory_order_acq_rel);
+    DAWN_CHECK(fromState == BufferState::InsideOperation);
 }
 
 Future BufferBase::APIMapAsync(wgpu::MapMode mode,
@@ -688,8 +695,6 @@ Future BufferBase::APIMapAsync(wgpu::MapMode mode,
 
     Ref<MapAsyncEvent> event;
     {
-        auto deviceGuard = GetDevice()->GetGuard();
-
         // Handle the defaulting of size required by WebGPU, even if in webgpu_cpp.h it is not
         // possible to default the function argument (because there is the callback later in the
         // argument list)
