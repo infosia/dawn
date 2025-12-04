@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35266d5b_219df7ec",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-04T18:58:43Z",
+      "side": 0,
+      "message": "Could technically be a problem to change existing devices... should we keep Albiorix for those?",
+      "revId": "19aea8dfc81c701bdd9f0054a1067f1053244c22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
