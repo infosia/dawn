@@ -138,6 +138,24 @@
       "parentUuid": "75b100f8_bc1481bd",
       "revId": "7fe7f5e8d8616eeb2c8c67f15b986058f41143e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2aa0c45f_ea0ea63d",
+        "filename": "docs/tint/extensions/chromium_experimental_subgroup_size_control.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-12-04T15:02:10Z",
+      "side": 1,
+      "message": "Ok, yes, let\u0027s defer. I wonder if we should raise an issue in https://github.com/microsoft/hlsl-specs/issues about full waves.",
+      "parentUuid": "b7a20ce9_8cc691e1",
+      "revId": "7fe7f5e8d8616eeb2c8c67f15b986058f41143e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
