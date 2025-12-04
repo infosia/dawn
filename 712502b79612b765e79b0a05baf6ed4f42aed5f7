@@ -52,6 +52,24 @@
       "parentUuid": "bc1b965d_04144ceb",
       "revId": "712502b79612b765e79b0a05baf6ed4f42aed5f7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cee3076_a306e924",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-12-04T18:19:36Z",
+      "side": 1,
+      "message": "I addressed the comments from the destroy CL and merged most of the change into this CL. I didn\u0027t make Buffer::Destroy() no autolock here because that requires changing implementation to not need mutex or to lock it. I\u0027ll see if CQ is happy with the current state of things..",
+      "parentUuid": "93257681_84e8cf2d",
+      "revId": "712502b79612b765e79b0a05baf6ed4f42aed5f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
