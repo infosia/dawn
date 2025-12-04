@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c568ec09_117b8d25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-04T19:59:21Z",
+      "side": 1,
+      "message": "PTAL. Updated so that the RenderDoc hooks are not attempted on Fuchsia.",
+      "revId": "55f68c2d29c7ce28b959cd51d0303ac833e3cbfe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
