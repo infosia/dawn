@@ -64,12 +64,10 @@ class CaptureAndReplayTests : public DawnTest {
             std::istringstream commandIStream(mCommandData);
             std::istringstream contentIStream(mContentData);
 
-            std::unique_ptr<replay::Capture> capture = replay::Capture::Create(
-                commandIStream, mCommandData.size(), contentIStream, mContentData.size());
-            std::unique_ptr<replay::Replay> replay = replay::Replay::Create(device, capture.get());
+            std::unique_ptr<replay::Replay> replay =
+                replay::ReplayCapture(device, commandIStream, contentIStream);
 
-            auto result = replay->Play();
-            EXPECT_TRUE(result.IsSuccess());
+            EXPECT_TRUE(replay != nullptr);
             return replay;
         }
 
