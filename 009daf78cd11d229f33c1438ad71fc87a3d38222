@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a27c09f_4ade76ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-04T15:21:48Z",
+      "side": 1,
+      "message": "I like the tests!",
+      "revId": "009daf78cd11d229f33c1438ad71fc87a3d38222",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bceea1b0_f53bf06a",
+        "filename": "src/dawn/native/DynamicArrayState.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-04T15:21:48Z",
+      "side": 1,
+      "message": "nit: I don\u0027t recommend using `i` for anything but loop indices (same for \u0027j\u0027 and \u0027k\u0027). I\u0027ve not reviewed this class, and I see that it\u0027s used for multiple member function args, but perhaps in a future CL we can rename.",
+      "range": {
+        "startLine": 304,
+        "startChar": 44,
+        "endLine": 304,
+        "endChar": 45
+      },
+      "revId": "009daf78cd11d229f33c1438ad71fc87a3d38222",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "530431d1_29a345d6",
+        "filename": "src/dawn/native/DynamicArrayState.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-04T15:21:48Z",
+      "side": 1,
+      "message": "Just to make sure I understand, by `nullptr` you mean `contents.textureView` is nullptr here, right? Somewhat related, but maybe we should do:\n`SetEntry(i, {})` to make it more evident.",
+      "range": {
+        "startLine": 316,
+        "startChar": 24,
+        "endLine": 316,
+        "endChar": 31
+      },
+      "revId": "009daf78cd11d229f33c1438ad71fc87a3d38222",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
