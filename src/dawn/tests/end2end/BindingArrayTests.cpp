@@ -28,6 +28,7 @@
 #include <string>
 #include <unordered_set>
 #include <vector>
+#include <ranges>
 
 #include "dawn/common/Enumerator.h"
 #include "dawn/tests/DawnTest.h"
@@ -864,12 +865,17 @@ class DynamicBindingArrayTests : public DawnTest {
         device.GetQueue().Submit(1, &commands);
 
         // Check we have the expected results.
-        std::vector<uint32_t> expectedU32;
-        for (auto optValue : expected) {
-            expectedU32.push_back(optValue ? *optValue : 0xBEEFu);
-        }
+        // std::vector<uint32_t> expectedU32;
+        // for (auto optValue : expected) {
+        //     expectedU32.push_back(optValue ? *optValue : 0xBEEFu);
+        // }
+        auto expectedU32 = expected
+            | std::views::transform([](std::optional<uint8_t> optValue) {
+                return optValue ? *optValue : 0xBEEFu;
+            })
+            | std::views::common;
 
-        EXPECT_BUFFER_U32_RANGE_EQ(expectedU32.data(), resultBuffer, 0, expectedU32.size());
+        EXPECT_BUFFER_U32_RANGE_EQ(expectedU32, resultBuffer, 0, expectedU32.size());
     }
 };
 

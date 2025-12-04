@@ -2147,11 +2147,11 @@ ExpectEq<T, U>::ExpectEq(T singleValue, T tolerance) : mTolerance(tolerance) {
     mExpected.push_back(singleValue);
 }
 
-template <typename T, typename U>
-ExpectEq<T, U>::ExpectEq(const T* values, const unsigned int count, T tolerance)
-    : mTolerance(tolerance) {
-    mExpected.assign(values, values + count);
-}
+// template <typename T, typename U>
+// ExpectEq<T, U>::ExpectEq(const T* values, const unsigned int count, T tolerance)
+//     : mTolerance(tolerance) {
+//     mExpected.assign(values, values + count);
+// }
 
 namespace {
 

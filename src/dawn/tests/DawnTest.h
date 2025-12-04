@@ -71,46 +71,46 @@
     this->AddBufferExpectation(__FILE__, __LINE__, buffer, offset, size, expectation)
 
 #define EXPECT_BUFFER_U8_EQ(expected, buffer, offset) \
-    EXPECT_BUFFER(buffer, offset, sizeof(uint8_t), new ::dawn::detail::ExpectEq<uint8_t>(expected))
+    EXPECT_BUFFER(buffer, offset, sizeof(uint8_t), new ::dawn::detail::ExpectEq<uint8_t>(std::span(&expected, 1)))
 
 #define EXPECT_BUFFER_U8_RANGE_EQ(expected, buffer, offset, count) \
     EXPECT_BUFFER(buffer, offset, sizeof(uint8_t) * (count),       \
-                  new ::dawn::detail::ExpectEq<uint8_t>(expected, count))
+                  new ::dawn::detail::ExpectEq<uint8_t>(std::span(expected, count)))
 
 #define EXPECT_BUFFER_U16_EQ(expected, buffer, offset) \
     EXPECT_BUFFER(buffer, offset, sizeof(uint16_t),    \
-                  new ::dawn::detail::ExpectEq<uint16_t>(expected))
+                  new ::dawn::detail::ExpectEq<uint16_t>(std::span(&expected, 1)))
 
 #define EXPECT_BUFFER_U16_RANGE_EQ(expected, buffer, offset, count) \
     EXPECT_BUFFER(buffer, offset, sizeof(uint16_t) * (count),       \
-                  new ::dawn::detail::ExpectEq<uint16_t>(expected, count))
+                  new ::dawn::detail::ExpectEq<uint16_t>(std::span(expected, count)))
 
 #define EXPECT_BUFFER_U32_EQ(expected, buffer, offset) \
     EXPECT_BUFFER(buffer, offset, sizeof(uint32_t),    \
-                  new ::dawn::detail::ExpectEq<uint32_t>(expected))
+                  new ::dawn::detail::ExpectEq<uint32_t>(std::span(&expected, 1)))
 
 #define EXPECT_BUFFER_U32_RANGE_EQ(expected, buffer, offset, count) \
     EXPECT_BUFFER(buffer, offset, sizeof(uint32_t) * (count),       \
-                  new ::dawn::detail::ExpectEq<uint32_t>(expected, count))
+                  new ::dawn::detail::ExpectEq<uint32_t>(std::span(expected, count)))
 
 #define EXPECT_BUFFER_U64_EQ(expected, buffer, offset) \
     EXPECT_BUFFER(buffer, offset, sizeof(uint64_t),    \
-                  new ::dawn::detail::ExpectEq<uint64_t>(expected))
+                  new ::dawn::detail::ExpectEq<uint64_t>(std::span(&expected, 1)))
 
 #define EXPECT_BUFFER_U64_RANGE_EQ(expected, buffer, offset, count) \
     EXPECT_BUFFER(buffer, offset, sizeof(uint64_t) * (count),       \
-                  new ::dawn::detail::ExpectEq<uint64_t>(expected, count))
+                  new ::dawn::detail::ExpectEq<uint64_t>(std::span(expected, count)))
 
 #define EXPECT_BUFFER_FLOAT_EQ(expected, buffer, offset) \
-    EXPECT_BUFFER(buffer, offset, sizeof(float), new ::dawn::detail::ExpectEq<float>(expected))
+    EXPECT_BUFFER(buffer, offset, sizeof(float), new ::dawn::detail::ExpectEq<float>(std::span(&expected, 1)))
 
 #define EXPECT_BUFFER_FLOAT_RANGE_EQ(expected, buffer, offset, count) \
     EXPECT_BUFFER(buffer, offset, sizeof(float) * (count),            \
-                  new ::dawn::detail::ExpectEq<float>(expected, count))
+                  new ::dawn::detail::ExpectEq<float>(std::span(expected, count)))
 
 #define EXPECT_BUFFER_FLOAT_RANGE_TOLERANCE_EQ(expected, buffer, offset, count, tolerance) \
     EXPECT_BUFFER(buffer, offset, sizeof(float) * (count),                                 \
-                  new ::dawn::detail::ExpectEq<float>(expected, count, tolerance))
+                  new ::dawn::detail::ExpectEq<float>(std::span(expected, count), tolerance))
 
 // Test a pixel of the mip level 0 of a 2D texture.
 #define EXPECT_PIXEL_RGBA8_EQ(expected, texture, x, y) \
@@ -467,7 +467,7 @@ class DawnTestBase {
         return AddTextureExpectationImpl(
             file, line, std::move(targetDevice),
             new detail::ExpectEq<T, U>(
-                expectedData, extent.width * extent.height * extent.depthOrArrayLayers, tolerance),
+                std::span(expectedData, extent.width * extent.height * extent.depthOrArrayLayers), tolerance),
             texture, origin, extent, level, aspect, sizeof(U), bytesPerRow);
     }
 
@@ -496,7 +496,7 @@ class DawnTestBase {
                                               wgpu::TextureAspect aspect = wgpu::TextureAspect::All,
                                               uint32_t bytesPerRow = 0) {
         return AddTextureExpectationImpl(file, line, std::move(targetDevice),
-                                         new detail::ExpectEq<T, U>(expectedData), texture, origin,
+                                         new detail::ExpectEq<T, U>(std::span(&expectedData, 1)), texture, origin,
                                          {1, 1}, level, aspect, sizeof(U), bytesPerRow);
     }
 
@@ -938,6 +938,10 @@ class ExpectConstant : public Expectation {
 
 extern template class ExpectConstant<float>;
 
+template <class T>
+concept Pointer = std::is_pointer_v<T> && !std::is_array_v<T>;
+
+
 // Expectation that checks the data is equal to some expected values.
 // T - expected value Type
 // U - actual value Type (defaults = T)
@@ -945,8 +949,24 @@ extern template class ExpectConstant<float>;
 template <typename T, typename U>
 class ExpectEq : public Expectation {
   public:
-    explicit ExpectEq(T singleValue, T tolerance = {});
-    ExpectEq(const T* values, const unsigned int count, T tolerance = {});
+    // explicit ExpectEq(T singleValue, T tolerance = {});
+
+    explicit ExpectEq(std::span<T const> values, T tolerance = {}) : mTolerance(tolerance) {
+        mExpected.assign(values.begin(), values.end());
+    }
+    
+    // template <Pointer P>
+    // ExpectEq(const P values, const unsigned int count, T tolerance = {})
+    //     : mTolerance(tolerance) {
+    //      mExpected.assign(values, values + count);
+    // }
+    // // ExpectEq(const T* values, const unsigned int count, T tolerance = {});
+    
+    // template<std::ranges::range R>
+    // explicit ExpectEq(R&& range, T tolerance = {}) 
+    //     : mTolerance(tolerance) {
+    //      std::ranges::copy(range, std::back_inserter(mExpected));
+    // }
 
     testing::AssertionResult Check(const void* data, size_t size) override;
 

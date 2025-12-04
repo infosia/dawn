@@ -437,7 +437,7 @@ class DepthStencilSamplingTest : public DawnTestWithParams<DepthStencilSamplingT
         DoSamplingTestImpl(aspectAndSamplerType, pipeline, format, textureValues, 1,
                            [this, tolerance](T expected, wgpu::Buffer buffer) {
                                EXPECT_BUFFER(buffer, 0, sizeof(T),
-                                             new ::dawn::detail::ExpectEq<T>(expected, tolerance));
+                                             new ::dawn::detail::ExpectEq<T>(std::span(&expected, 1), tolerance));
                            });
     }
 
@@ -450,7 +450,7 @@ class DepthStencilSamplingTest : public DawnTestWithParams<DepthStencilSamplingT
         DoSamplingTestImpl(aspectAndSamplerType, pipeline, format, textureValues, 1,
                            [this, tolerance](T expected, wgpu::Buffer buffer) {
                                EXPECT_BUFFER(buffer, 0, sizeof(T),
-                                             new ::dawn::detail::ExpectEq<T>(expected, tolerance));
+                                             new ::dawn::detail::ExpectEq<T>(std::span(&expected, 1), tolerance));
                            });
     }
 
@@ -859,7 +859,7 @@ TEST_P(DepthStencilSamplingTest, SampleDepthAndStencilRender) {
         memcpy(&expectedDepth, &passDescriptor.cDepthStencilAttachmentInfo.depthClearValue,
                sizeof(float));
         EXPECT_BUFFER(depthOutput, 0, sizeof(float),
-                      new ::dawn::detail::ExpectEq<float>(expectedDepth, tolerance));
+                      new ::dawn::detail::ExpectEq<float>(std::span(&expectedDepth, 1), tolerance));
 
         uint8_t expectedStencil = 0;
         memcpy(&expectedStencil, &passDescriptor.cDepthStencilAttachmentInfo.stencilClearValue,
@@ -909,7 +909,7 @@ TEST_P(DepthStencilSamplingTest, SampleDepthAndStencilRender) {
         memcpy(&expectedDepth, &passDescriptor.cDepthStencilAttachmentInfo.depthClearValue,
                sizeof(float));
         EXPECT_BUFFER(depthOutput, 0, sizeof(float),
-                      new ::dawn::detail::ExpectEq<float>(expectedDepth, tolerance));
+                      new ::dawn::detail::ExpectEq<float>(std::span(&expectedDepth, 1), tolerance));
 
         uint8_t expectedStencil = 0;
         memcpy(&expectedStencil, &passDescriptor.cDepthStencilAttachmentInfo.stencilClearValue,
