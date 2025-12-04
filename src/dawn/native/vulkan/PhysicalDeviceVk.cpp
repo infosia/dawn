@@ -1019,7 +1019,7 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::VulkanDirectVariableAccessTransformHandle, true);
     }
 
-    if (IsIntelMesa()) {
+    {
         // Polyfill a clamp of `id` param in subgroupShuffle to follow spec limitations.
         // See crbug.com/435246627
         deviceToggles->Default(Toggle::SubgroupShuffleClamped, true);

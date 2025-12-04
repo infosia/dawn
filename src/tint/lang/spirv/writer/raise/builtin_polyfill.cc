@@ -746,9 +746,16 @@ struct State {
             coords = AppendArrayIndex(coords, array_idx, builtin);
         }
 
+        const bool is_depth_3d_cube_array =
+            texture_ty->GetArrayed() == type::Arrayed::kArrayed &&
+            texture_ty->GetDepth() == type::Depth::kDepth &&
+            (texture_ty->GetDim() == type::Dim::kCube || texture_ty->GetDim() == type::Dim::kD3);
+        const bool polyfill_depth_cube_array =
+            config.texture_sample_compare_to_sample_and_compare && is_depth_3d_cube_array;
         // Determine which SPIR-V function to use and which optional image operands are needed.
         enum spirv::BuiltinFn function = BuiltinFn::kNone;
         core::ir::Value* depth = nullptr;
+        core::ir::Value* depth_ref_for_polyfill = nullptr;
         ImageOperands operands;
         switch (builtin->Func()) {
             case core::BuiltinFn::kTextureSample:
@@ -761,13 +768,23 @@ struct State {
                 operands.offset = next_arg();
                 break;
             case core::BuiltinFn::kTextureSampleCompare:
-                function = spirv::BuiltinFn::kImageSampleDrefImplicitLod;
-                depth = next_arg();
+                if (polyfill_depth_cube_array) {
+                    function = spirv::BuiltinFn::kImageSampleImplicitLod;
+                    depth_ref_for_polyfill = next_arg();
+                } else {
+                    function = spirv::BuiltinFn::kImageSampleDrefImplicitLod;
+                    depth = next_arg();
+                }
                 operands.offset = next_arg();
                 break;
             case core::BuiltinFn::kTextureSampleCompareLevel:
-                function = spirv::BuiltinFn::kImageSampleDrefExplicitLod;
-                depth = next_arg();
+                if (polyfill_depth_cube_array) {
+                    function = spirv::BuiltinFn::kImageSampleExplicitLod;
+                    depth_ref_for_polyfill = next_arg();
+                } else {
+                    function = spirv::BuiltinFn::kImageSampleDrefExplicitLod;
+                    depth = next_arg();
+                }
                 operands.lod = b.Constant(0_f);
                 operands.offset = next_arg();
                 break;
@@ -811,6 +828,19 @@ struct State {
         if (!depth && texture_ty->GetDepth() == type::Depth::kDepth) {
             result = b.Access(ty.f32(), result, 0_u);
             result->InsertBefore(builtin);
+        }
+
+        if (depth_ref_for_polyfill) {
+            b.InsertAfter(builtin, [&] {
+                auto* cmp = b.LessThanEqual(depth_ref_for_polyfill, result->Result());
+                // Argument order is different in SPIR-V: (condition, true_operand, false_operand).
+                Vector<core::ir::Value*, 4> args = {cmp->Result(), b.Constant(1.0_f),
+                                                    b.Constant(0.0_f)};
+                auto* call = b.Call<spirv::ir::BuiltinCall>(ty.f32(), spirv::BuiltinFn::kSelect,
+                                                            std::move(args));
+                auto* fake_result = b.Add(b.Constant(1.0_f), b.Multiply(call, b.Constant(0.01_f)));
+                result = fake_result;
+            });
         }
 
         result->SetResult(builtin->DetachResult());
