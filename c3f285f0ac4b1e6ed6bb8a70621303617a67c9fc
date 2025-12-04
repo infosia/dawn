@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d0ea967_a5f1f2ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-04T06:23:42Z",
+      "side": 1,
+      "message": "The previous CL caused compiling errors on Fuchsia. I think it would be easy to fix. But revert it for now to let other changes land.\n\nPlease fix in the reland.",
+      "revId": "c3f285f0ac4b1e6ed6bb8a70621303617a67c9fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
