@@ -81,10 +81,11 @@ MaybeError ComputePipeline::InitializeImpl() {
     }
 
     d3d::CompiledShader compiledShader;
-    DAWN_TRY_ASSIGN(compiledShader,
-                    ToBackend(programmableStage.module)
-                        ->Compile(programmableStage, SingleShaderStage::Compute,
-                                  ToBackend(GetLayout()), compileFlags, GetImmediateMask()));
+    const bool kIsSampleShading = false;
+    DAWN_TRY_ASSIGN(compiledShader, ToBackend(programmableStage.module)
+                                        ->Compile(programmableStage, SingleShaderStage::Compute,
+                                                  ToBackend(GetLayout()), compileFlags,
+                                                  GetImmediateMask(), kIsSampleShading));
     {
         TRACE_EVENT0(device->GetPlatform(), General, "ComputePipelineD3D11::CreateComputeShader");
         SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(device->GetPlatform(), "D3D11.CreateComputeShaderUs");
