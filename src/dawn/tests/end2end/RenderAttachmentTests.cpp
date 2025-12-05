@@ -99,6 +99,7 @@ DAWN_INSTANTIATE_TEST(RenderAttachmentTest,
                       OpenGLBackend(),
                       OpenGLESBackend(),
                       VulkanBackend(),
+                      VulkanBackend({"vulkan_use_dynamic_rendering"}),
                       WebGPUBackend());
 
 }  // anonymous namespace
