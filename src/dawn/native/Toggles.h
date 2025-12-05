@@ -192,6 +192,8 @@ enum class Toggle {
     GLAllowContextOnMultiThreads,
     GLDefer,
 
+    VulkanUseDynamicRendering,
+
     EnumCount,
     InvalidEnum = EnumCount,
 };
