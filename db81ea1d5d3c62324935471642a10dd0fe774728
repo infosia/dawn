@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "826c2b9a_48b5ca58",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1285,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-05T19:54:48Z",
+      "side": 1,
+      "message": "I would not expect Replay to play anything on creation. I\u0027d expect it only to play when I ask it to play. Further. Eventually I\u0027d expect to be able to pass some kind of position and effectively say \"play from where you are to \u0027position\u0027\". I had not added a position yet (a function overload to be added later) because we\u0027re not at that point. But just replaying the entire thing in one function doesn\u0027t seem that useful to me.\n\nthoughts?",
+      "revId": "db81ea1d5d3c62324935471642a10dd0fe774728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

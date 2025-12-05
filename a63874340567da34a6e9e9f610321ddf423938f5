@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2af72997_c796312c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-05T19:54:48Z",
+      "side": 1,
+      "message": "Just to make sure we\u0027re on the same page. In my head Replay is not part of Dawn. It\u0027s a library that happens to use Dawn. Maybe it should be moved to `src/Replay`? At the moment, at a glance, it\u0027s only dependency on anything internal to dawn is dawn/common/Constants.h for `kMaxVertexAttributes` which could just be defined locally or changed to use `device.limits.maxVertexAttributes`\n\nI\u0027m not sure that changes anything in this CL though. Just trying to see what we\u0027re all thinking.",
+      "revId": "a63874340567da34a6e9e9f610321ddf423938f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
