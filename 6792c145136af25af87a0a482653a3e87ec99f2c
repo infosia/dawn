@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9db2f9c4_7ccd6234",
+        "filename": "src/dawn/native/d3d11/RenderPipelineD3D11.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-05T15:32:21Z",
+      "side": 1,
+      "message": "Usage of shader_index will force sample shading!",
+      "range": {
+        "startLine": 554,
+        "startChar": 47,
+        "endLine": 554,
+        "endChar": 85
+      },
+      "revId": "6792c145136af25af87a0a482653a3e87ec99f2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee76aae2_2be57190",
+        "filename": "src/tint/lang/hlsl/writer/common/options.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-05T15:32:21Z",
+      "side": 1,
+      "message": "Need a comment",
+      "range": {
+        "startLine": 170,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 42
+      },
+      "revId": "6792c145136af25af87a0a482653a3e87ec99f2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
