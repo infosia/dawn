@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c38580b1_4e35bd07",
+        "filename": "src/dawn/native/DynamicArrayState.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-05T12:06:31Z",
+      "side": 1,
+      "message": "I\u0027ll do the rename in a followup.",
+      "parentUuid": "bceea1b0_f53bf06a",
+      "range": {
+        "startLine": 304,
+        "startChar": 44,
+        "endLine": 304,
+        "endChar": 45
+      },
+      "revId": "009daf78cd11d229f33c1438ad71fc87a3d38222",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "530431d1_29a345d6",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-12-04T15:21:48Z",
       "side": 1,
       "message": "Just to make sure I understand, by `nullptr` you mean `contents.textureView` is nullptr here, right? Somewhat related, but maybe we should do:\n`SetEntry(i, {})` to make it more evident.",
+      "range": {
+        "startLine": 316,
+        "startChar": 24,
+        "endLine": 316,
+        "endChar": 31
+      },
+      "revId": "009daf78cd11d229f33c1438ad71fc87a3d38222",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "086c7b39_e5b536d2",
+        "filename": "src/dawn/native/DynamicArrayState.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-05T12:06:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "530431d1_29a345d6",
       "range": {
         "startLine": 316,
         "startChar": 24,
