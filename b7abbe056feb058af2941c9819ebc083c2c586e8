@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af0dac0a_94c73f9c",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-05T18:43:27Z",
+      "side": 1,
+      "message": "Followup: this is not a test bug. The limits are bucketed to 32, 32, 64, and 128. So all GL and Vulkan devices are falling into the 128 bucket (except SwiftShader, which has only 6 maxColorAttachments, for some reason, so its limit is 6 * 16 \u003d 96, bucketed to 64).",
+      "parentUuid": "bb5f2385_c0eeb776",
+      "revId": "b7abbe056feb058af2941c9819ebc083c2c586e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ba564f9e_dc4ac68a",
