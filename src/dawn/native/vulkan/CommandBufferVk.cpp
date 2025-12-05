@@ -32,6 +32,7 @@
 #include <vector>
 
 #include "dawn/common/Enumerator.h"
+#include "dawn/common/Range.h"
 #include "dawn/native/BindGroupTracker.h"
 #include "dawn/native/CommandEncoder.h"
 #include "dawn/native/CommandValidation.h"
@@ -484,11 +485,162 @@ void RecordResolveQuerySetCmd(VkCommandBuffer commands,
     }
 }
 
+VkClearValue ToVkClearValue(dawn::native::Color clearColor, TextureComponentType baseType) {
+    VkClearValue clearValue;
+    switch (baseType) {
+        case TextureComponentType::Float: {
+            const std::array<float, 4> appliedClearColor = ConvertToFloatColor(clearColor);
+            for (uint32_t j = 0; j < 4; ++j) {
+                clearValue.color.float32[j] = appliedClearColor[j];
+            }
+            break;
+        }
+        case TextureComponentType::Uint: {
+            const std::array<uint32_t, 4> appliedClearColor =
+                ConvertToUnsignedIntegerColor(clearColor);
+            for (uint32_t j = 0; j < 4; ++j) {
+                clearValue.color.uint32[j] = appliedClearColor[j];
+            }
+            break;
+        }
+        case TextureComponentType::Sint: {
+            const std::array<int32_t, 4> appliedClearColor =
+                ConvertToSignedIntegerColor(clearColor);
+            for (uint32_t j = 0; j < 4; ++j) {
+                clearValue.color.int32[j] = appliedClearColor[j];
+            }
+            break;
+        }
+    }
+    return clearValue;
+}
+
 }  // anonymous namespace
+
+MaybeError RecordBeginDynamicRenderPass(CommandRecordingContext* recordingContext,
+                                        Device* device,
+                                        BeginRenderPassCmd* renderPass) {
+    VkRenderingInfoKHR renderInfo;
+    renderInfo.sType = VK_STRUCTURE_TYPE_RENDERING_INFO_KHR;
+    renderInfo.pNext = nullptr;
+    renderInfo.flags = 0;
+    renderInfo.renderArea.offset.x = 0;
+    renderInfo.renderArea.offset.y = 0;
+    renderInfo.renderArea.extent.width = renderPass->width;
+    renderInfo.renderArea.extent.height = renderPass->height;
+    renderInfo.layerCount = 1;
+    renderInfo.viewMask = 0;
+    renderInfo.colorAttachmentCount = 0;
+
+    PerColorAttachment<VkRenderingAttachmentInfoKHR> colorAttachments;
+
+    VkImageView nullImageView = VK_NULL_HANDLE;
+
+    // Initialize all potential color attachments with null/default values, which allows the
+    // attachments to be sparse.
+    for (auto i : Range(kMaxColorAttachmentsTyped)) {
+        auto& colorAttachment = colorAttachments[i];
+        colorAttachment.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO_KHR;
+        colorAttachment.pNext = nullptr;
+        colorAttachment.imageView = nullImageView;
+        colorAttachment.imageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+        colorAttachment.resolveMode = VK_RESOLVE_MODE_NONE;
+        colorAttachment.resolveImageView = nullImageView;
+        colorAttachment.resolveImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+        colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_LOAD;
+        colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+    }
+
+    // Set the color attachments used by this pass. May be sparse.
+    for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
+        auto& attachmentInfo = renderPass->colorAttachments[i];
+        TextureView* view = ToBackend(attachmentInfo.view.Get());
+        if (view == nullptr) {
+            continue;
+        }
+
+        auto& colorAttachment = colorAttachments[i];
+        if (view->GetDimension() == wgpu::TextureViewDimension::e3D) {
+            VkImageView handleFor2DViewOn3D;
+            DAWN_TRY_ASSIGN(handleFor2DViewOn3D,
+                            view->GetOrCreate2DViewOn3D(attachmentInfo.depthSlice));
+            colorAttachment.imageView = handleFor2DViewOn3D;
+        } else {
+            colorAttachment.imageView = view->GetHandle();
+        }
+
+        if (attachmentInfo.resolveTarget != nullptr) {
+            TextureView* resolveView = ToBackend(attachmentInfo.resolveTarget.Get());
+            colorAttachment.resolveMode = VK_RESOLVE_MODE_AVERAGE_BIT;
+            colorAttachment.resolveImageView = resolveView->GetHandle();
+        }
+
+        colorAttachment.loadOp = VulkanAttachmentLoadOp(attachmentInfo.loadOp);
+        colorAttachment.storeOp = VulkanAttachmentStoreOp(attachmentInfo.storeOp);
+        colorAttachment.clearValue = ToVkClearValue(
+            attachmentInfo.clearColor, view->GetFormat().GetAspectInfo(Aspect::Color).baseType);
+
+        renderInfo.colorAttachmentCount = static_cast<uint32_t>(i) + 1u;
+    }
+
+    // Set the attachment count to one more than the highest attachment index.
+    renderInfo.colorAttachmentCount++;
+    renderInfo.pColorAttachments = colorAttachments.data();
+
+    // Set the depth/stencil attachment used by this pass.
+    VkRenderingAttachmentInfoKHR depthAttachment;
+    VkRenderingAttachmentInfoKHR stencilAttachment;
+    if (renderPass->attachmentState->HasDepthStencilAttachment()) {
+        const auto& attachmentInfo = renderPass->depthStencilAttachment;
+        TextureView* view = ToBackend(attachmentInfo.view.Get());
+        DAWN_ASSERT(view);
+
+        const Format& dsFormat =
+            device->GetValidInternalFormat(view->GetTexture()->GetFormat().format);
+        VkImageLayout imageLayout = VulkanImageLayoutForDepthStencilAttachment(
+            dsFormat, attachmentInfo.depthReadOnly, attachmentInfo.stencilReadOnly);
+
+        depthAttachment.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO_KHR;
+        depthAttachment.pNext = nullptr;
+        depthAttachment.imageView = view->GetHandle();
+        depthAttachment.imageLayout = imageLayout;
+        depthAttachment.resolveMode = VK_RESOLVE_MODE_NONE;
+        depthAttachment.resolveImageView = nullImageView;
+        depthAttachment.resolveImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+        depthAttachment.loadOp = VulkanAttachmentLoadOp(attachmentInfo.depthLoadOp);
+        depthAttachment.storeOp = VulkanAttachmentStoreOp(attachmentInfo.depthStoreOp);
+        depthAttachment.clearValue.depthStencil.depth = attachmentInfo.clearDepth;
+
+        stencilAttachment.sType = VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO_KHR;
+        stencilAttachment.pNext = nullptr;
+        stencilAttachment.imageView = view->GetHandle();
+        stencilAttachment.imageLayout = imageLayout;
+        stencilAttachment.resolveMode = VK_RESOLVE_MODE_NONE;
+        stencilAttachment.resolveImageView = nullImageView;
+        stencilAttachment.resolveImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+        stencilAttachment.loadOp = VulkanAttachmentLoadOp(attachmentInfo.stencilLoadOp);
+        stencilAttachment.storeOp = VulkanAttachmentStoreOp(attachmentInfo.stencilStoreOp);
+        stencilAttachment.clearValue.depthStencil.stencil = attachmentInfo.clearStencil;
+
+        renderInfo.pDepthAttachment = &depthAttachment;
+        renderInfo.pStencilAttachment = &stencilAttachment;
+    } else {
+        renderInfo.pDepthAttachment = nullptr;
+        renderInfo.pStencilAttachment = nullptr;
+    }
+
+    device->fn.CmdBeginRenderingKHR(recordingContext->commandBuffer, &renderInfo);
+
+    return {};
+}
 
 MaybeError RecordBeginRenderPass(CommandRecordingContext* recordingContext,
                                  Device* device,
                                  BeginRenderPassCmd* renderPass) {
+    if (device->IsToggleEnabled(Toggle::VulkanUseDynamicRendering)) {
+        return RecordBeginDynamicRenderPass(recordingContext, device, renderPass);
+    }
+
     VkCommandBuffer commands = recordingContext->commandBuffer;
 
     // Query a VkRenderPass from the cache
@@ -537,34 +689,8 @@ MaybeError RecordBeginRenderPass(CommandRecordingContext* recordingContext,
                 continue;
             }
 
-            VkClearValue clearValue;
-            switch (view->GetFormat().GetAspectInfo(Aspect::Color).baseType) {
-                case TextureComponentType::Float: {
-                    const std::array<float, 4> appliedClearColor =
-                        ConvertToFloatColor(attachmentInfo.clearColor);
-                    for (uint32_t j = 0; j < 4; ++j) {
-                        clearValue.color.float32[j] = appliedClearColor[j];
-                    }
-                    break;
-                }
-                case TextureComponentType::Uint: {
-                    const std::array<uint32_t, 4> appliedClearColor =
-                        ConvertToUnsignedIntegerColor(attachmentInfo.clearColor);
-                    for (uint32_t j = 0; j < 4; ++j) {
-                        clearValue.color.uint32[j] = appliedClearColor[j];
-                    }
-                    break;
-                }
-                case TextureComponentType::Sint: {
-                    const std::array<int32_t, 4> appliedClearColor =
-                        ConvertToSignedIntegerColor(attachmentInfo.clearColor);
-                    for (uint32_t j = 0; j < 4; ++j) {
-                        clearValue.color.int32[j] = appliedClearColor[j];
-                    }
-                    break;
-                }
-            }
-
+            VkClearValue clearValue = ToVkClearValue(
+                attachmentInfo.clearColor, view->GetFormat().GetAspectInfo(Aspect::Color).baseType);
             uint32_t depthSlice = view->GetDimension() == wgpu::TextureViewDimension::e3D
                                       ? attachmentInfo.depthSlice
                                       : 0;
@@ -1560,7 +1686,11 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                     device->fn.CmdEndQuery(commands, ToBackend(querySet)->GetHandle(), 0);
                 }
 
-                device->fn.CmdEndRenderPass(commands);
+                if (device->IsToggleEnabled(Toggle::VulkanUseDynamicRendering)) {
+                    device->fn.CmdEndRenderingKHR(commands);
+                } else {
+                    device->fn.CmdEndRenderPass(commands);
+                }
 
                 // Write timestamp at the end of render pass if it's set.
                 // We've observed that this must be called after the render pass ends or the
