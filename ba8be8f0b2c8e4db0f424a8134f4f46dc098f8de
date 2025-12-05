@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c09508ee_a178ff6c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-12-05T21:18:40Z",
+      "side": 1,
+      "message": "FYI for those who come later.\nThis is needed by internal users of Dawn.\ne.g. see failures from cl/840823187",
+      "revId": "ba8be8f0b2c8e4db0f424a8134f4f46dc098f8de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
