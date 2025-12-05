@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00108725_2b8bdec2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-05T17:08:04Z",
+      "side": 1,
+      "message": "LGTM w/nits (and please ensure the test failures are unrelated)",
+      "revId": "8630b7eace6d90cd426107c5d0a0ba5cdba0e491",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44633b36_d41b371e",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-05T17:08:04Z",
+      "side": 1,
+      "message": "Nit: could we just call it \"GLDefer\"? \"Allow\" seems superfluous.",
+      "revId": "8630b7eace6d90cd426107c5d0a0ba5cdba0e491",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6b91138_8d5589a9",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-05T17:08:04Z",
+      "side": 1,
+      "message": "```suggestion\n      \"Allows the GL backend to defer GL commands until Queue::Submit is called. This includes backend \"\n```",
+      "revId": "8630b7eace6d90cd426107c5d0a0ba5cdba0e491",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "206a82ce_3acd9230",
+        "filename": "src/dawn/native/opengl/DeviceGL.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-05T17:08:04Z",
+      "side": 1,
+      "message": "Nit: this might be clearer if we inverted the logic, something like:\n\n```\nbool Device::ShouldDeferGL() const {\n  return IsToggleEnabled(Toggle::GLAllowDefer) \u0026\u0026 !mContext-\u003eIsInScopedMakeCurrent();\n}\n```\n\nThen swap the logic at the callsite. WDYT?",
+      "revId": "8630b7eace6d90cd426107c5d0a0ba5cdba0e491",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
