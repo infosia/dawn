@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "959875b2_37424852",
+        "filename": "docs/tint/extensions/chromium_experimental_subgroup_size_control.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-12-05T03:44:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04c60461_1f24b83c",
+      "revId": "4809904569efc6db153357642734f2d2c041f029",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48fd3c76_dfc7d900",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45a57632_6fe0a6fa",
+        "filename": "docs/tint/extensions/chromium_experimental_subgroup_size_control.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-12-05T03:44:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48fd3c76_dfc7d900",
+      "revId": "4809904569efc6db153357642734f2d2c041f029",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "53f31daa_25524a4e",
@@ -48,6 +84,24 @@
       "writtenOn": "2025-12-04T18:16:10Z",
       "side": 1,
       "message": "Vulkan also requires that number of subgroups in a workgroup is \u003c\u003d `maxComputeWorkgroupSubgroups` when a required subgroup size is specified. Do we need to add a validation rule for this to WGSL, and potentially another query too?",
+      "revId": "4809904569efc6db153357642734f2d2c041f029",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7045469a_220febea",
+        "filename": "docs/tint/extensions/chromium_experimental_subgroup_size_control.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-12-05T03:44:19Z",
+      "side": 1,
+      "message": "Yes we should add a new limit `maxComputeWorkgroupSubgroups` for Vulkan.\n\nOn D3D12 there is no such limitation so we can choose a value that works on all D3D12 (e.g. we can choose 128 on D3D12 (128 \u003d 1024 / 8, 1024 \u003d D3D12_CS_THREAD_GROUP_MAX_THREADS_PER_GROUP).",
+      "parentUuid": "53f31daa_25524a4e",
       "revId": "4809904569efc6db153357642734f2d2c041f029",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

@@ -156,6 +156,24 @@
       "parentUuid": "b7a20ce9_8cc691e1",
       "revId": "7fe7f5e8d8616eeb2c8c67f15b986058f41143e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dc751c3_abb06cda",
+        "filename": "docs/tint/extensions/chromium_experimental_subgroup_size_control.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-12-05T03:44:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2aa0c45f_ea0ea63d",
+      "revId": "7fe7f5e8d8616eeb2c8c67f15b986058f41143e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
