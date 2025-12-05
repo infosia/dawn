@@ -41,7 +41,7 @@
     };
 {% endmacro %}
 
-{% macro define_kotlin_to_struct_conversion(function_name, kotlin_name, struct_name, members) %}
+{% macro define_kotlin_to_struct_conversion(function_name, kotlin_name, struct_name, members,is_structure_converter=False) %}
     inline void {{function_name}}(JNIContext* c, const {{kotlin_name}}& inStruct, {{struct_name}}* outStruct) {
         JNIEnv* env = c->env;
         JNIClasses* classes = JNIClasses::getInstance(env);
@@ -89,37 +89,111 @@
                                 return;
                             }
                             JNIClasses* classes = JNIClasses::getInstance(env);
-
+                            {% set runnableNamespace = namespace(runnable_class='gpuCallbackRunnable',signature='(Landroidx/webgpu/GPURequestCallback;ILjava/lang/String;Ljava/lang/Object;)V') %}
+                            {% set ns = namespace(hasErrorType=false,hasUnitType=true) %}
                             {% for callbackArg in kotlin_record_members(member.type.arguments) -%}
                                 {{ convert_to_kotlin(callbackArg.name.camelCase(),
                                                       '_' + callbackArg.name.camelCase(),
                                                       'input->' + callbackArg.length.name.camelCase() if callbackArg.length.name,
                                                       callbackArg) }}
+                                {%- if callbackArg.type.name.get() == 'error type' -%}
+                                    {% set ns.hasErrorType = true %}
+                                {%- endif -%}
+                                {%- if callbackArg.name.camelCase() not in ['status','message'] -%}
+                                    {% set ns.hasUnitType = false %}
+                                {%- endif -%}
                             {% endfor %}
 
+
+                            {# Determine Runnable Class and Signature #}
+                            {% set runnableNamespace = namespace(runnable_class=none,signature=none) %}
+                            {% if is_structure_converter %}
+                                {# Specific Persistent Callback (Descriptor) #}
+                                {% set runnableNamespace.runnable_class = member.type.name.camelCase() + 'Runnable' %}
+
+                                {# Build Signature dynamically: (LSpecificCallback; + Args...)V #}
+                                {% set sig_ns = namespace(val='(L' + jni_name(member.type) + ';') %}
+                                {% for callbackArg in kotlin_record_members(member.type.arguments) -%}
+                                    {% set sig_ns.val = sig_ns.val + jni_signature(callbackArg) %}
+                                {%- endfor %}
+                                {% set runnableNamespace.signature = sig_ns.val + ')V' %}
+                                {% elif ns.hasErrorType %}
+                                    {# Generic Request with ErrorType (Int result) #}
+                                    {% set runnableNamespace.runnable_class = 'gpuCallbackErrorTypeRunnable' %}
+                                    {% set runnableNamespace.signature = '(Landroidx/webgpu/GPURequestCallback;IILjava/lang/String;)V' %}
+                            {% else %}
+                                {# Generic Request Standard (Object result) #}
+                                {% set runnableNamespace.runnable_class = 'gpuCallbackRunnable' %}
+                                {% set runnableNamespace.signature = '(Landroidx/webgpu/GPURequestCallback;ILjava/lang/String;Ljava/lang/Object;)V' %}
+                            {% endif %}
                             jclass executorClass = env->FindClass("java/util/concurrent/Executor");
                             jmethodID executeMethodID = env->GetMethodID(executorClass,
                                                                          "execute",
                                                                          "(Ljava/lang/Runnable;)V");
                             jmethodID methodId = env->GetMethodID(
-                                classes->{{ member.type.name.camelCase() }}Runnable,
-                                "<init>", "(L{{ jni_name(member.type, member.category) }};
-                              {%- for callbackArg in kotlin_record_members(member.type.arguments) -%}
-                                  {{- jni_signature(callbackArg) -}}
-                              {%- endfor %})V");
+                                classes->{{ runnableNamespace.runnable_class }},
+                                "<init>", "{{ runnableNamespace.signature }}");
+                            {% set unit = namespace(value=none) %}
 
-                            jobject runnable =
-                                env->NewObject(classes->{{ member.type.name.camelCase() }}Runnable,
+                            {% set joined_args = namespace(value='') %}
+                            {% if not is_structure_converter %}
+                                {% set args_ns = namespace(status=none, message=none, payload=none,type=none) %}
+                                {%- for callbackArg in kotlin_record_members(member.type.arguments) %}
+                                    {%- if member.type.category == 'kotlin type' -%}
+                                        {{ unreachable_code() }}
+                                    {%- else -%}
+                                        {% if callbackArg.name.get() == 'message' %}
+                                            {% set args_ns.message = '_' + callbackArg.name.camelCase() %}
+                                        {% elif callbackArg.name.get() == 'status' %}
+                                            {% set args_ns.status = '_' + callbackArg.name.camelCase() %}
+                                        {% elif callbackArg.name.get() == 'type' %}
+                                            {% set args_ns.type = '_' + callbackArg.name.camelCase() %}
+                                        {% else %}
+                                            {% set args_ns.payload = '_' + callbackArg.name.camelCase() %}
+                                        {% endif %}
+                                    {%- endif -%}
+                                {%- endfor %}
+                                {% if args_ns.status != none %}
+                                {% set joined_args.value = joined_args.value + ', ' + args_ns.status %}
+                                {% endif %}
+
+                                {% if ns.hasErrorType %}
+                                    {% if args_ns.type != none %}
+                                        {% set joined_args.value = joined_args.value + ', ' + args_ns.type %}
+                                    {% endif %}
+                                    {% if args_ns.message != none %}
+                                        {% set joined_args.value = joined_args.value + ', ' + args_ns.message %}
+                                    {% endif %}
+                                {% else %}
+                                    {% if args_ns.message != none %}
+                                        {% set joined_args.value = joined_args.value + ', ' + args_ns.message %}
+                                    {% else %}
+                                        WGPUStringView empty_msg_view = {"NULL", 4};
+                                        jstring empty_msg_kotlin = env->NewStringUTF("NULL");
+                                        {% set joined_args.value = joined_args.value + ', empty_msg_kotlin' %}
+                                    {% endif %}
+                                    {% if args_ns.payload != none %}
+                                        {% set joined_args.value = joined_args.value + ', ' + args_ns.payload %}
+                                    {% else %}
+                                        jclass unitClass = env->FindClass("kotlin/Unit");
+                                        jfieldID instanceField = env->GetStaticFieldID(unitClass, "INSTANCE", "Lkotlin/Unit;");
+                                        jobject _unit_instance = env->GetStaticObjectField(unitClass, instanceField);
+                                        {% set joined_args.value = joined_args.value + ', _unit_instance' %}
+                                    {% endif %}
+                                {% endif %}
+                            {% else %}
+                                {%- for callbackArg in kotlin_record_members(member.type.arguments) %}
+                                    {%- if member.type.category == 'kotlin type' -%}
+                                        {{ unreachable_code() }}
+                                    {%- else -%}
+                                        {%- set joined_args.value = joined_args.value ~ ', _' ~ callbackArg.name.camelCase() -%}
+                                    {%- endif -%}
+                                {%- endfor %}
+                            {% endif %}
+                                  jobject runnable =
+                                env->NewObject(classes->{{ runnableNamespace.runnable_class }},
                                                 methodId,
-                                                userData1->callback
-                                                {%- for callbackArg in kotlin_record_members(member.type.arguments) %}
-                                                    {{- ', ' }}
-                                                    {%- if member.type.category == 'kotlin type' -%}
-                                                        {{ unreachable_code() }}
-                                                    {%- else -%}
-                                                        _{{ callbackArg.name.camelCase() }}
-                                                    {%- endif -%}
-                                                {%- endfor %});
+                                                userData1->callback{{joined_args.value}});
 
                             env->CallVoidMethod(userData1->executor, executeMethodID, runnable);
                         };
