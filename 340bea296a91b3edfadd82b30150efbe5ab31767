@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36c72612_30f7c49e",
+        "filename": "src/tint/lang/hlsl/writer/common/options.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-05T20:00:30Z",
+      "side": 1,
+      "message": "Why is this considered an extension? Does the behavior change in a different shader model?\n\nAlso, please add the option to `FuzzedOptions` in writer_fuzz.cc as per the comment above.",
+      "revId": "340bea296a91b3edfadd82b30150efbe5ab31767",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "108ddc9a_377c4715",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-05T20:00:30Z",
+      "side": 1,
+      "message": "I think it\u0027s always a `u32` so we don\u0027t need the construct here (and if it\u0027s not we should be using `convert` instead)?",
+      "revId": "340bea296a91b3edfadd82b30150efbe5ab31767",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
