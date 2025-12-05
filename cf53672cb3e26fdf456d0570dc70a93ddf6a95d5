@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03b697d9_a2806cfb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-05T23:40:09Z",
+      "side": 1,
+      "message": "For whatever reason, this doesn\u0027t get an error in release build, only in debug build. Also, not sure where the 10 meg limit comes from (I see it in `internal_limits.h`) but I didn\u0027t see it in the spec.",
+      "revId": "cf53672cb3e26fdf456d0570dc70a93ddf6a95d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
