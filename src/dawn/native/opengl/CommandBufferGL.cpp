@@ -750,7 +750,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
         }
 
         for (BufferBase* bufferBase : scope.buffers) {
-            DAWN_TRY(ToBackend(bufferBase)->EnsureDataInitialized());
+            DAWN_TRY(ToBackend(bufferBase)->EnsureDataInitialized(gl));
         }
         return {};
     };
@@ -799,10 +799,10 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                     break;
                 }
 
-                DAWN_TRY(ToBackend(copy->source)->EnsureDataInitialized());
-                DAWN_TRY(
-                    ToBackend(copy->destination)
-                        ->EnsureDataInitializedAsDestination(copy->destinationOffset, copy->size));
+                DAWN_TRY(ToBackend(copy->source)->EnsureDataInitialized(gl));
+                DAWN_TRY(ToBackend(copy->destination)
+                             ->EnsureDataInitializedAsDestination(gl, copy->destinationOffset,
+                                                                  copy->size));
 
                 DAWN_GL_TRY(gl,
                             BindBuffer(GL_PIXEL_PACK_BUFFER, ToBackend(copy->source)->GetHandle()));
@@ -833,7 +833,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
 
                 DAWN_TRY(texture->SynchronizeTextureBeforeUse());
 
-                DAWN_TRY(buffer->EnsureDataInitialized());
+                DAWN_TRY(buffer->EnsureDataInitialized(gl));
                 SubresourceRange range =
                     GetSubresourcesAffectedByCopy(dst, copy->copySize.ToExtent3D());
                 if (IsCompleteSubresourceCopiedTo(texture, copy->copySize.ToExtent3D(),
@@ -879,7 +879,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                     DAWN_UNREACHABLE();
                 }
 
-                DAWN_TRY(buffer->EnsureDataInitializedAsDestination(copy));
+                DAWN_TRY(buffer->EnsureDataInitializedAsDestination(gl, copy));
                 DAWN_TRY(texture->SynchronizeTextureBeforeUse());
 
                 SubresourceRange subresources =
@@ -1047,7 +1047,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                 Buffer* dstBuffer = ToBackend(cmd->buffer.Get());
 
                 bool clearedToZero = false;
-                DAWN_TRY(dstBuffer->EnsureDataInitializedAsDestination(cmd->offset, cmd->size,
+                DAWN_TRY(dstBuffer->EnsureDataInitializedAsDestination(gl, cmd->offset, cmd->size,
                                                                        &clearedToZero));
 
                 if (!clearedToZero) {
@@ -1067,8 +1067,8 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                 Buffer* destination = ToBackend(cmd->destination.Get());
 
                 size_t size = cmd->queryCount * sizeof(uint64_t);
-                DAWN_TRY(
-                    destination->EnsureDataInitializedAsDestination(cmd->destinationOffset, size));
+                DAWN_TRY(destination->EnsureDataInitializedAsDestination(gl, cmd->destinationOffset,
+                                                                         size));
 
                 std::vector<uint64_t> values(cmd->queryCount);
                 auto availability = querySet->GetQueryAvailability();
@@ -1114,7 +1114,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
 
                 Buffer* dstBuffer = ToBackend(write->buffer.Get());
                 uint8_t* data = mCommands.NextData<uint8_t>(size);
-                DAWN_TRY(dstBuffer->EnsureDataInitializedAsDestination(offset, size));
+                DAWN_TRY(dstBuffer->EnsureDataInitializedAsDestination(gl, offset, size));
 
                 DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, dstBuffer->GetHandle()));
                 DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, offset, size, data));

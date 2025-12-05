@@ -28,13 +28,17 @@
 #ifndef SRC_DAWN_NATIVE_OPENGL_BUFFERGL_H_
 #define SRC_DAWN_NATIVE_OPENGL_BUFFERGL_H_
 
+#include <vector>
+
 #include "dawn/native/Buffer.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
+#include "dawn/native/opengl/FutureHandle.h"
 #include "dawn/native/opengl/opengl_platform.h"
 
 namespace dawn::native::opengl {
 
+struct OpenGLFunctions;
 class Device;
 
 class Buffer final : public BufferBase {
@@ -45,31 +49,41 @@ class Buffer final : public BufferBase {
     static ResultOrError<Ref<Buffer>> Create(Device* device,
                                              const UnpackedPtr<BufferDescriptor>& descriptor);
 
-    GLuint GetHandle() const;
+    const FutureHandle& GetHandle() const;
 
-    MaybeError EnsureDataInitialized(bool* outDidDataInitialization = nullptr);
-    MaybeError EnsureDataInitializedAsDestination(uint64_t offset,
+    MaybeError EnsureDataInitialized(const OpenGLFunctions& gl,
+                                     bool* outDidDataInitialization = nullptr);
+    MaybeError EnsureDataInitializedAsDestination(const OpenGLFunctions& gl,
+                                                  uint64_t offset,
                                                   uint64_t size,
                                                   bool* outDidDataInitialization = nullptr);
-    MaybeError EnsureDataInitializedAsDestination(const CopyTextureToBufferCmd* copy,
+    MaybeError EnsureDataInitializedAsDestination(const OpenGLFunctions& gl,
+                                                  const CopyTextureToBufferCmd* copy,
                                                   bool* outDidDataInitialization = nullptr);
 
     void TrackUsage() { MarkUsedInPendingCommands(); }
 
   private:
-    Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor, GLuint handle);
+    Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor);
     ~Buffer() override;
+
+    void DestroyImpl() override;
+
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override;
     MaybeError FinalizeMapImpl(BufferState newState) override;
     void UnmapImpl(BufferState oldState) override;
-    void DestroyImpl() override;
     bool IsCPUWritableAtCreation() const override;
     MaybeError MapAtCreationImpl() override;
     void* GetMappedPointerImpl() override;
 
-    MaybeError InitializeToZero();
+    MaybeError Initialize(bool shouldLazyClear, bool isMappedAtCreation);
+    MaybeError InitializeGLBuffer(std::vector<uint8_t> initialData);
+    MaybeError InitializeToZero(const OpenGLFunctions& gl);
+    void DoGLUnmapIfNeeded(const OpenGLFunctions& gl);
 
-    GLuint mBuffer = 0;
+    Ref<FutureHandle> mHandle;
+    std::vector<uint8_t> mShadowCopy;
+    bool mGLBufferIsMapped = false;
     raw_ptr<void> mMappedData = nullptr;
 };
 
