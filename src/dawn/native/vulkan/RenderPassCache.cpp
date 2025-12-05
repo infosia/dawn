@@ -33,41 +33,12 @@
 #include "dawn/common/Range.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/TextureVk.h"
+#include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
 
 namespace dawn::native::vulkan {
 
 namespace {
-VkAttachmentLoadOp VulkanAttachmentLoadOp(wgpu::LoadOp op) {
-    switch (op) {
-        case wgpu::LoadOp::Load:
-            return VK_ATTACHMENT_LOAD_OP_LOAD;
-        case wgpu::LoadOp::Clear:
-            return VK_ATTACHMENT_LOAD_OP_CLEAR;
-        case wgpu::LoadOp::ExpandResolveTexture:
-            return VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-        case wgpu::LoadOp::Undefined:
-            DAWN_UNREACHABLE();
-            break;
-    }
-    DAWN_UNREACHABLE();
-}
-
-VkAttachmentStoreOp VulkanAttachmentStoreOp(wgpu::StoreOp op) {
-    // TODO(crbug.com/dawn/485): return STORE_OP_STORE_NONE_QCOM if the device has required
-    // extension.
-    switch (op) {
-        case wgpu::StoreOp::Store:
-            return VK_ATTACHMENT_STORE_OP_STORE;
-        case wgpu::StoreOp::Discard:
-            return VK_ATTACHMENT_STORE_OP_DONT_CARE;
-        case wgpu::StoreOp::Undefined:
-            DAWN_UNREACHABLE();
-            break;
-    }
-    DAWN_UNREACHABLE();
-}
-
 void InitializeLoadResolveSubpassDependencies(
     absl::InlinedVector<VkSubpassDependency, 2>* subpassDependenciesOut) {
     VkSubpassDependency dependencies[2];
@@ -198,8 +169,8 @@ ResultOrError<RenderPassCache::RenderPassInfo> RenderPassCache::CreateRenderPass
         attachmentDesc.flags = 0;
         attachmentDesc.format = VulkanImageFormat(mDevice, query.colorFormats[i]);
         attachmentDesc.samples = vkSampleCount;
-        attachmentDesc.loadOp = VulkanAttachmentLoadOp(query.colorLoadOp[i]);
-        attachmentDesc.storeOp = VulkanAttachmentStoreOp(query.colorStoreOp[i]);
+        attachmentDesc.loadOp = ToVulkanAttachmentLoadOp(query.colorLoadOp[i]);
+        attachmentDesc.storeOp = ToVulkanAttachmentStoreOp(query.colorStoreOp[i]);
         attachmentDesc.initialLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
         attachmentDesc.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
@@ -223,10 +194,10 @@ ResultOrError<RenderPassCache::RenderPassInfo> RenderPassCache::CreateRenderPass
         attachmentDesc.format = VulkanImageFormat(mDevice, dsFormat.format);
         attachmentDesc.samples = vkSampleCount;
 
-        attachmentDesc.loadOp = VulkanAttachmentLoadOp(query.depthLoadOp);
-        attachmentDesc.storeOp = VulkanAttachmentStoreOp(query.depthStoreOp);
-        attachmentDesc.stencilLoadOp = VulkanAttachmentLoadOp(query.stencilLoadOp);
-        attachmentDesc.stencilStoreOp = VulkanAttachmentStoreOp(query.stencilStoreOp);
+        attachmentDesc.loadOp = ToVulkanAttachmentLoadOp(query.depthLoadOp);
+        attachmentDesc.storeOp = ToVulkanAttachmentStoreOp(query.depthStoreOp);
+        attachmentDesc.stencilLoadOp = ToVulkanAttachmentLoadOp(query.stencilLoadOp);
+        attachmentDesc.stencilStoreOp = ToVulkanAttachmentStoreOp(query.stencilStoreOp);
 
         // There is only one subpass, so it is safe to set both initialLayout and finalLayout to
         // the only subpass's layout.
