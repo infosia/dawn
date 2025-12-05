@@ -41,7 +41,7 @@
     };
 {% endmacro %}
 
-{% macro define_kotlin_to_struct_conversion(function_name, kotlin_name, struct_name, members) %}
+{% macro define_kotlin_to_struct_conversion(function_name, kotlin_name, struct_name, members,is_structure_converter=False) %}
     inline void {{function_name}}(JNIContext* c, const {{kotlin_name}}& inStruct, {{struct_name}}* outStruct) {
         JNIEnv* env = c->env;
         JNIClasses* classes = JNIClasses::getInstance(env);
@@ -90,36 +90,114 @@
                             }
                             JNIClasses* classes = JNIClasses::getInstance(env);
 
-                            {% for callbackArg in kotlin_record_members(member.type.arguments) -%}
+                            {# Determine the type of Runnable we are building (Structure vs Generic)     #}
+
+                            {%- set run_info = namespace(class='', sig='', mode='generic', has_error_type=false) -%}
+
+                            {# Check for ErrorType to determine Generic Mode #}
+                            {%- for arg in kotlin_record_members(member.type.arguments) -%}
+                                {%- if arg.type.name.get() == 'error type' -%}
+                                    {%- set run_info.has_error_type = true -%}
+                                {%- endif -%}
+                            {%- endfor -%}
+
+                            {# Determine Class Name and Signature #}
+                            {%- if is_structure_converter -%}
+                                {# MODE: Specific Structure Callback (e.g. DeviceLost) #}
+                                {%- set run_info.mode = 'structure' -%}
+                                {%- set run_info.class = member.type.name.camelCase() + 'Runnable' -%}
+
+                                {# Build Signature: (LCallback; + Args...)V #}
+                                {%- set sig_builder = namespace(val='(L' + jni_name(member.type) + ';') -%}
+                                {%- for arg in kotlin_record_members(member.type.arguments) -%}
+                                    {%- set sig_builder.val = sig_builder.val + jni_signature(arg) -%}
+                                {%- endfor %}
+                                {%- set run_info.sig = sig_builder.val + ')V' -%}
+
+                            {%- elif run_info.has_error_type -%}
+                                {# MODE: Generic Error Type (Int Result) #}
+                                {%- set run_info.mode = 'error' -%}
+                                {%- set run_info.class = 'gpuCallbackErrorTypeRunnable' -%}
+                                {%- set run_info.sig = '(Landroidx/webgpu/GPURequestCallback;IILjava/lang/String;)V' -%}
+
+                            {%- else -%}
+                                {# MODE: Generic Standard (Object Result) #}
+                                {%- set run_info.mode = 'standard' -%}
+                                {%- set run_info.class = 'gpuCallbackRunnable' -%}
+                                {%- set run_info.sig = '(Landroidx/webgpu/GPURequestCallback;ILjava/lang/String;Ljava/lang/Object;)V' -%}
+                            {%- endif -%}
+
+                            {# Generate the C++ variable conversions (e.g. _status, _message) #}
+
+                            {# We capture the variable names into a map for easy lookup later #}
+                            {%- set var_map = namespace(status='0', message=none, payload=none, type=none) -%}
+
+                            {%- for callbackArg in kotlin_record_members(member.type.arguments) -%}
+                                {# Generate the conversion C++ code #}
                                 {{ convert_to_kotlin(callbackArg.name.camelCase(),
-                                                      '_' + callbackArg.name.camelCase(),
-                                                      'input->' + callbackArg.length.name.camelCase() if callbackArg.length.name,
-                                                      callbackArg) }}
-                            {% endfor %}
+                                '_' + callbackArg.name.camelCase(),
+                                'input->' + callbackArg.length.name.camelCase() if callbackArg.length.name,
+                                callbackArg) }}
+
+                                {# Map the variable names for the Generic Logic #}
+                                {%- set argName = callbackArg.name.get() -%}
+                                {%- set varName = '_' + callbackArg.name.camelCase() -%}
+
+                                {%- if argName == 'status' %}   {% set var_map.status = varName -%}
+                                {%- elif argName == 'message' %}{% set var_map.message = varName -%}
+                                {%- elif argName == 'type' %}   {% set var_map.type = varName -%}
+                                {%- else %}                     {% set var_map.payload = varName -%}
+                                {%- endif -%}
+                            {%- endfor -%}
+
+
+                            {# Handle missing strings or Unit types for Generics #}
+
+                            {%- if run_info.mode != 'structure' -%}
+                                {# Handle Empty Message #}
+                                {%- if var_map.message is none -%}
+                                    jstring _empty_msg = env->NewStringUTF("");
+                                {%- set var_map.message = '_empty_msg' -%}
+                                {%- endif -%}
+
+                                {# Handle Unit/Void Payload #}
+                                {%- if run_info.mode == 'standard' and var_map.payload is none -%}
+                                    jclass _unitCls = env->FindClass("kotlin/Unit");
+                                    jfieldID _unitField = env->GetStaticFieldID(_unitCls, "INSTANCE", "Lkotlin/Unit;");
+                                    jobject _unit_inst = env->GetStaticObjectField(_unitCls, _unitField);
+                                    {%- set var_map.payload = '_unit_inst' -%}
+                                {%- endif -%}
+                            {%- endif -%}
+
 
                             jclass executorClass = env->FindClass("java/util/concurrent/Executor");
-                            jmethodID executeMethodID = env->GetMethodID(executorClass,
-                                                                         "execute",
-                                                                         "(Ljava/lang/Runnable;)V");
-                            jmethodID methodId = env->GetMethodID(
-                                classes->{{ member.type.name.camelCase() }}Runnable,
-                                "<init>", "(L{{ jni_name(member.type, member.category) }};
-                              {%- for callbackArg in kotlin_record_members(member.type.arguments) -%}
-                                  {{- jni_signature(callbackArg) -}}
-                              {%- endfor %})V");
+                            jmethodID executeMethodID = env->GetMethodID(executorClass, "execute", "(Ljava/lang/Runnable;)V");
 
-                            jobject runnable =
-                                env->NewObject(classes->{{ member.type.name.camelCase() }}Runnable,
-                                                methodId,
-                                                userData1->callback
-                                                {%- for callbackArg in kotlin_record_members(member.type.arguments) %}
-                                                    {{- ', ' }}
-                                                    {%- if member.type.category == 'kotlin type' -%}
-                                                        {{ unreachable_code() }}
-                                                    {%- else -%}
-                                                        _{{ callbackArg.name.camelCase() }}
-                                                    {%- endif -%}
-                                                {%- endfor %});
+                            jmethodID methodId = env->GetMethodID(classes->{{ run_info.class }}, "<init>", "{{ run_info.sig }}");
+
+                            jobject runnable = env->NewObject(
+                                classes->{{ run_info.class }},
+                            methodId,
+                            userData1->callback
+
+                            {# DYNAMIC ARGUMENT INJECTION #}
+                            {%- if run_info.mode == 'structure' -%}
+                                {# Case 1: Structure - Pass all arguments in order #}
+                                {%- for callbackArg in kotlin_record_members(member.type.arguments) -%}
+                                    {%- if member.type.category != 'kotlin type' -%}
+                                    , _{{ callbackArg.name.camelCase() }}
+                                    {%- endif -%}
+                                {%- endfor %}
+
+                            {%- elif run_info.mode == 'error' -%}
+                                {# Case 2: Error Type - (Status, Type, Message) #}
+                                , {{ var_map.status }}, {{ var_map.type }}, {{ var_map.message }}
+
+                            {%- else -%}
+                                {# Case 3: Standard - (Status, Message, Payload) #}
+                                , {{ var_map.status }}, {{ var_map.message }}, {{ var_map.payload }}
+                            {%- endif -%}
+                            );
 
                             env->CallVoidMethod(userData1->executor, executeMethodID, runnable);
                         };
