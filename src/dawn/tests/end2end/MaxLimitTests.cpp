@@ -176,7 +176,7 @@ TEST_P(MaxLimitTests, MaxBufferBindingSize) {
                   }
               )";
                 break;
-            case wgpu::BufferUsage::Uniform:
+            case wgpu::BufferUsage::Uniform: {
                 maxBufferBindingSize = GetSupportedLimits().maxUniformBufferBindingSize;
 
                 // Clamp to not exceed the maximum i32 value for the WGSL @size(x) annotation.
@@ -184,12 +184,27 @@ TEST_P(MaxLimitTests, MaxBufferBindingSize) {
                                                 uint64_t(std::numeric_limits<int32_t>::max()) + 8);
                 maxBufferBindingSize = Align(maxBufferBindingSize - 3u, 4);
 
+                // arbitrary tint limit?
+                const uint64_t kMaxStructMemberPadding = 10 * 1024 * 1024;
+                uint64_t paddingNeeded = maxBufferBindingSize - 8;
+                uint64_t numPaddingMembers =
+                    (paddingNeeded + kMaxStructMemberPadding - 1) / kMaxStructMemberPadding;
+                std::string paddingMembers;
+
+                for (uint64_t i = 0; i < numPaddingMembers; ++i) {
+                    uint64_t offset = i * kMaxStructMemberPadding;
+                    uint64_t remainingSize = paddingNeeded - offset;
+                    uint64_t memberSize = std::min(kMaxStructMemberPadding, remainingSize);
+                    paddingMembers +=
+                        absl::StrFormat("    @size(%v) padding%v : u32,\n", memberSize, i);
+                }
+
                 shader = R"(
                   struct Buf {
                       value0 : u32,
                       // padding such that value0 and value1 are the first and last bytes of the memory.
-                      @size()" +
-                         std::to_string(maxBufferBindingSize - 8) + R"() padding : u32,
+                      )" +
+                         paddingMembers + R"(
                       value1 : u32,
                   }
 
@@ -208,6 +223,7 @@ TEST_P(MaxLimitTests, MaxBufferBindingSize) {
                   }
               )";
                 break;
+            }
             default:
                 DAWN_UNREACHABLE();
         }
