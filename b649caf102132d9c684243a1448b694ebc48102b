@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0812bf00_e142c2da",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1328,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-05T16:46:13Z",
+      "side": 1,
+      "message": "Could we have a TODO to check that the list of uses of the resource table are 1) compatible with the bindless feature enabled (sampling vs. full) and 2) potentially that each type used is enabled by whatever feature enables it (for example texel buffers might require an extension)",
+      "revId": "b649caf102132d9c684243a1448b694ebc48102b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec22baf3_45d8fc62",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-05T16:46:13Z",
+      "side": 1,
+      "message": "```suggestion\n                    \"The entry-point uses the resource table but the pipeline layout doesn\u0027t specify `usesResourceTable`.\");\n```\n\nI\u0027m not sure how to make this message much clearer unfortunately. Maybe PLDesc::usesResourceTable should be renamed. We can see about that later in the WG.",
+      "range": {
+        "startLine": 1739,
+        "startChar": 0,
+        "endLine": 1740,
+        "endChar": 41
+      },
+      "revId": "b649caf102132d9c684243a1448b694ebc48102b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dff3ccba_c4823a15",
+        "filename": "src/dawn/tests/unittests/validation/PipelineValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-05T16:46:13Z",
+      "side": 1,
+      "message": "Any reason this is not in `ResourceTableValidationTests`?",
+      "revId": "b649caf102132d9c684243a1448b694ebc48102b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f94fc2ff_7866011b",
+        "filename": "src/dawn/tests/unittests/validation/PipelineValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-05T16:46:13Z",
+      "side": 1,
+      "message": "nit: unused",
+      "revId": "b649caf102132d9c684243a1448b694ebc48102b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de21e5fc_6c18b724",
+        "filename": "src/dawn/tests/unittests/validation/PipelineValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-05T16:46:13Z",
+      "side": 1,
+      "message": "is `hasResource` sufficient to require `usesResourceTable`?",
+      "revId": "b649caf102132d9c684243a1448b694ebc48102b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fd55faa_c318fbed",
+        "filename": "src/dawn/tests/unittests/validation/PipelineValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-05T16:46:13Z",
+      "side": 1,
+      "message": "nit: technically we don\u0027t need a BGL for these compatibility tests.",
+      "revId": "b649caf102132d9c684243a1448b694ebc48102b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
