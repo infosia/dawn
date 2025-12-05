@@ -16,6 +16,24 @@
       "message": "I\u0027m adding more tests in https://dawn-review.googlesource.com/c/dawn/+/278575. Although if there is anything missing let me know and I can add it here or in the follow up CL that handles MapAsync().",
       "revId": "be9d5c2c613faef82583ffc90ab3376c411bbfe2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87c50b2b_52fb26a9",
+        "filename": "src/dawn/tests/unittests/native/BufferBaseTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-05T15:51:43Z",
+      "side": 1,
+      "message": "Looking at that CL I\u0027m still 95% convinced that we should be able to minimize the locking needed in the queue wrt to mapAsync if we increment the pending serial earlier in queue::Submit. But we\u0027ll figure that out later as it\u0027s a bit subtle with the serials and I don\u0027t want to block Graphite on figuring that out.\n\nCould we have tests for `GetMappedRange` while in the middle of a mutating operation as well?",
+      "parentUuid": "9e86f16a_a42515a0",
+      "revId": "be9d5c2c613faef82583ffc90ab3376c411bbfe2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

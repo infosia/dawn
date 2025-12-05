@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f04da80_6227ca7f",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-05T15:51:43Z",
+      "side": 1,
+      "message": "The `InsideOperation` state works but eventually I\u0027d like to have a `ConcurrentAccesGuard\u003cT\u003e` that protects like a `MutexProtected\u003cT\u003e` and could be used in more objects. Can we have a TODO and an issue about designing something like that (we can get to it sometimes in 2026 when looking at fined-grained locking for all of Dawn)",
+      "revId": "d407e91f90e859f46b86a5701a264bf5258da33f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc6e39ae_fd5e07d0",
+        "filename": "src/dawn/tests/unittests/native/BufferBaseTests.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-05T15:51:43Z",
+      "side": 1,
+      "message": "nit: can we have a comment before these non-trivial tests that explains what they do?",
+      "revId": "d407e91f90e859f46b86a5701a264bf5258da33f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b32cbeee_b9bed937",
+        "filename": "src/dawn/tests/unittests/native/BufferBaseTests.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-05T15:51:43Z",
+      "side": 1,
+      "message": "Can we move this just after creating the bufferMock for mor clarity?, then the mapAsync, and finally the parallel unmap and their expectations? It\u0027s to make things a bit more readable to separate setup and the actual testing.",
+      "revId": "d407e91f90e859f46b86a5701a264bf5258da33f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "072d7c78_1ba8136b",
+        "filename": "src/dawn/tests/unittests/native/BufferBaseTests.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-05T15:51:43Z",
+      "side": 1,
+      "message": "optional nit: It might be worth having a test that check that doing one after the other is ok, like a success case.",
+      "revId": "d407e91f90e859f46b86a5701a264bf5258da33f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed09e053_aa606731",
+        "filename": "src/dawn/tests/unittests/native/BufferBaseTests.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-05T15:51:43Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "d407e91f90e859f46b86a5701a264bf5258da33f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
