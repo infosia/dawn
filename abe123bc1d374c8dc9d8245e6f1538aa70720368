@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83d7d73b_453ffdba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-05T02:14:09Z",
+      "side": 1,
+      "message": "Still failing msvc compilation... But PTAL at the public api.",
+      "revId": "abe123bc1d374c8dc9d8245e6f1538aa70720368",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
