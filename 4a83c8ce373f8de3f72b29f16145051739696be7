@@ -304,6 +304,24 @@
       "parentUuid": "2e9de0e7_d1a7da73",
       "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d078913d_cb4c8c72",
+        "filename": "test/tint/extensions/fragment_depth/basic.wgsl.expected.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-12-05T08:54:49Z",
+      "side": 1,
+      "message": "/me happy! I\u0027ve managed to https://github.com/KhronosGroup/glslang/pull/4116 merged which means GL_EXT_conservative_depth  is now working for OpenGL ES \u003c 3.2 in glslang. Yeah!",
+      "parentUuid": "e6466336_74c2c5f8",
+      "revId": "4a83c8ce373f8de3f72b29f16145051739696be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
