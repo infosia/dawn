@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb038457_36052546",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-12-05T13:08:54Z",
+      "side": 1,
+      "message": "Do you actually need to make a list here? Could you return True if `member.name.get() in function.name.get()`?",
+      "revId": "e11aae943bc46518bc2561040b396853e09a4bc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba2d6c4e_1246f714",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-12-05T13:08:54Z",
+      "side": 1,
+      "message": "If include_callback isn\u0027t used in the templates, is this line actually needed?",
+      "revId": "e11aae943bc46518bc2561040b396853e09a4bc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b4043eb_bfb597f2",
+        "filename": "generator/templates/art/JNIClasses.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-12-05T13:08:54Z",
+      "side": 1,
+      "message": "Which callbacks would include an error type?",
+      "range": {
+        "startLine": 45,
+        "startChar": 15,
+        "endLine": 45,
+        "endChar": 34
+      },
+      "revId": "e11aae943bc46518bc2561040b396853e09a4bc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47648ad7_051389b7",
+        "filename": "generator/templates/art/api_kotlin_callback.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-12-05T13:08:54Z",
+      "side": 1,
+      "message": "Am I missing something... is there a reason this can\u0027t be GpuRequestCallbackRunnable\u003c@ErrorType Int\u003e?",
+      "revId": "e11aae943bc46518bc2561040b396853e09a4bc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfa8db39_f3648425",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-12-05T13:08:54Z",
+      "side": 1,
+      "message": "It\u0027s a bit worrying to see so *much* new code here. Is there any way we can tame the complexity / break it up a bit?",
+      "revId": "e11aae943bc46518bc2561040b396853e09a4bc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
