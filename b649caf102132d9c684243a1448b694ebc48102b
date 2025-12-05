@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2073c95d_9aac5a73",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1328,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-05T18:22:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0812bf00_e142c2da",
+      "revId": "b649caf102132d9c684243a1448b694ebc48102b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ec22baf3_45d8fc62",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-12-05T16:46:13Z",
       "side": 1,
       "message": "```suggestion\n                    \"The entry-point uses the resource table but the pipeline layout doesn\u0027t specify `usesResourceTable`.\");\n```\n\nI\u0027m not sure how to make this message much clearer unfortunately. Maybe PLDesc::usesResourceTable should be renamed. We can see about that later in the WG.",
+      "range": {
+        "startLine": 1739,
+        "startChar": 0,
+        "endLine": 1740,
+        "endChar": 41
+      },
+      "revId": "b649caf102132d9c684243a1448b694ebc48102b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55db391a_56ea0ccf",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-05T18:22:45Z",
+      "side": 1,
+      "message": "Yeah, naming things is hard.",
+      "parentUuid": "ec22baf3_45d8fc62",
       "range": {
         "startLine": 1739,
         "startChar": 0,
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77ed95ff_b59fd609",
+        "filename": "src/dawn/tests/unittests/validation/PipelineValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-05T18:22:45Z",
+      "side": 1,
+      "message": "Moved all tests there, as discussed.",
+      "parentUuid": "dff3ccba_c4823a15",
+      "revId": "b649caf102132d9c684243a1448b694ebc48102b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f94fc2ff_7866011b",
@@ -71,6 +131,24 @@
       "writtenOn": "2025-12-05T16:46:13Z",
       "side": 1,
       "message": "nit: unused",
+      "revId": "b649caf102132d9c684243a1448b694ebc48102b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "795922a6_217564c6",
+        "filename": "src/dawn/tests/unittests/validation/PipelineValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-05T18:22:45Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f94fc2ff_7866011b",
       "revId": "b649caf102132d9c684243a1448b694ebc48102b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "81b2b08e_d19375fe",
+        "filename": "src/dawn/tests/unittests/validation/PipelineValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-05T18:22:45Z",
+      "side": 1,
+      "message": "Yes, removed the getResource call.",
+      "parentUuid": "de21e5fc_6c18b724",
+      "revId": "b649caf102132d9c684243a1448b694ebc48102b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7fd55faa_c318fbed",
@@ -105,6 +201,24 @@
       "writtenOn": "2025-12-05T16:46:13Z",
       "side": 1,
       "message": "nit: technically we don\u0027t need a BGL for these compatibility tests.",
+      "revId": "b649caf102132d9c684243a1448b694ebc48102b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b0b8e4d_78f3af68",
+        "filename": "src/dawn/tests/unittests/validation/PipelineValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-05T18:22:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fd55faa_c318fbed",
       "revId": "b649caf102132d9c684243a1448b694ebc48102b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
