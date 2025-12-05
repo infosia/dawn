@@ -394,6 +394,7 @@ DAWN_INSTANTIATE_TEST(RenderPassTest_RegressionDawn1389,
                       OpenGLBackend(),
                       OpenGLESBackend(),
                       VulkanBackend(),
+                      VulkanBackend({}, {"vulkan_use_dynamic_rendering"}),
                       WebGPUBackend());
 
 }  // anonymous namespace
