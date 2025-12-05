@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "367c786c_306675da",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 29
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-05T15:32:59Z",
+      "side": 1,
+      "message": "Bug and document",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 52
+      },
+      "revId": "6792c145136af25af87a0a482653a3e87ec99f2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9db2f9c4_7ccd6234",
         "filename": "src/dawn/native/d3d11/RenderPipelineD3D11.cpp",
         "patchSetId": 29
