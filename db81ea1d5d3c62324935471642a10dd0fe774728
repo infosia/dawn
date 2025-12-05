@@ -34,6 +34,24 @@
       "parentUuid": "826c2b9a_48b5ca58",
       "revId": "db81ea1d5d3c62324935471642a10dd0fe774728",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ed4ebd2_cee7f510",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1285,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-05T22:58:51Z",
+      "side": 1,
+      "message": "There\u0027s more to this. I\u0027d expect `Capture` to be a public API. `Capture` let\u0027s you get information about the capture, like how many commands there are and what they are. Of course that API doesn\u0027t exist yet but think the `Capture` object should be part of the public API.\n\nReplay, replays a Capture. Or at least that\u0027s what I was thinking when I wrote these. If you\u0027re trying to make RenderDoc, you load a `Capture`. You inspect it and present a UI showing all the commands, without running anything. You use `Replay` to replay it up to some point. Maybe you want to modify some commands in the capture before replay, etc...\n\nI feel like we shouldn\u0027t commit a function `ReplayCapture` as a public API, even if we plan to iterate more later. I get that things might change significantly in the future.\n\nwydt?",
+      "parentUuid": "ced95c50_e69e74fd",
+      "revId": "db81ea1d5d3c62324935471642a10dd0fe774728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
