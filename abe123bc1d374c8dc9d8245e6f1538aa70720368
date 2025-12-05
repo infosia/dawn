@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6afaf9f_cc379175",
+        "filename": "include/dawn/replay/Replay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-05T20:03:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4122f29_c7972e81",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "abe123bc1d374c8dc9d8245e6f1538aa70720368",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "738bf4a6_922a7643",
@@ -54,6 +78,24 @@
       "writtenOn": "2025-12-05T15:39:18Z",
       "side": 1,
       "message": "We are likely going some DAWN_REPLAY_EXPORT macro similar to other components.",
+      "revId": "abe123bc1d374c8dc9d8245e6f1538aa70720368",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f8f6082_a3ab7aa0",
+        "filename": "include/dawn/replay/Replay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-05T20:03:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "738bf4a6_922a7643",
       "revId": "abe123bc1d374c8dc9d8245e6f1538aa70720368",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -75,6 +117,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "931baf7b_f8f3d253",
+        "filename": "include/dawn/replay/Replay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-05T20:03:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90d6b0d5_013c16df",
+      "revId": "abe123bc1d374c8dc9d8245e6f1538aa70720368",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a85e9ee8_b462d0dd",
@@ -88,6 +148,24 @@
       "writtenOn": "2025-12-05T15:39:18Z",
       "side": 1,
       "message": "nit: the instantiations are not hard to read so the macro seems a bit unnecessary. However a comment explaining why we instantiate would help.",
+      "revId": "abe123bc1d374c8dc9d8245e6f1538aa70720368",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38706f4f_e7a1ba07",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-05T20:03:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a85e9ee8_b462d0dd",
       "revId": "abe123bc1d374c8dc9d8245e6f1538aa70720368",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -109,6 +187,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "598ffd63_fbb20e68",
+        "filename": "src/dawn/replay/Replay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-05T20:03:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9569c0d9_b30dffe0",
+      "revId": "abe123bc1d374c8dc9d8245e6f1538aa70720368",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55036618_f7f8fc0e",
@@ -122,6 +218,24 @@
       "writtenOn": "2025-12-05T15:39:18Z",
       "side": 1,
       "message": "Do these tests still need to be whitebox now, or can they be regular dawn end2end tests that use the new replay API?",
+      "revId": "abe123bc1d374c8dc9d8245e6f1538aa70720368",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a94c6978_42466b48",
+        "filename": "src/dawn/tests/white_box/CaptureAndReplayTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-05T20:03:50Z",
+      "side": 1,
+      "message": "Yep Likely they can be moved to end2end tests. Will do in a new CL (in case they need to be reverted).",
+      "parentUuid": "55036618_f7f8fc0e",
       "revId": "abe123bc1d374c8dc9d8245e6f1538aa70720368",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
