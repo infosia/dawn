@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8a9f713_6a619caf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 29
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-05T15:37:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "367c786c_306675da",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 52
+      },
+      "revId": "6792c145136af25af87a0a482653a3e87ec99f2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9db2f9c4_7ccd6234",
@@ -60,6 +84,30 @@
       "writtenOn": "2025-12-05T15:32:21Z",
       "side": 1,
       "message": "Need a comment",
+      "range": {
+        "startLine": 170,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 42
+      },
+      "revId": "6792c145136af25af87a0a482653a3e87ec99f2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a998ca74_639dd1d4",
+        "filename": "src/tint/lang/hlsl/writer/common/options.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-05T15:37:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee76aae2_2be57190",
       "range": {
         "startLine": 170,
         "startChar": 8,
