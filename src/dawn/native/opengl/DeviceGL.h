@@ -71,10 +71,11 @@ class Device final : public DeviceBase {
     // Queues up GL work to be executed later in FlushPendingGLCommands().
     // If the device is already executing GL works, the work will be executed immediately.
     // This can happen when a pending task indirectly creates temporary resources.
+    // Similarly, the work will also run immediately if GLAllowDefer toggle is disabled.
     template <typename Fn>
     MaybeError EnqueueGL(ExecutionQueueBase::SubmitMode submitMode, Fn&& work) {
         MarkGLUsed(submitMode);
-        if (mContext->IsInScopedMakeCurrent()) {
+        if (ShouldExecuteGLImmediately()) {
             return work(mGL);
         }
         mPendingGLWorkList.Use([&](auto workList) { workList->push_back(std::forward<Fn>(work)); });
@@ -219,6 +220,7 @@ class Device final : public DeviceBase {
 
     void DestroyImpl() override;
 
+    bool ShouldExecuteGLImmediately() const;
     void MarkGLUsed(ExecutionQueueBase::SubmitMode submitMode) const;
 
     const OpenGLFunctions mGL;

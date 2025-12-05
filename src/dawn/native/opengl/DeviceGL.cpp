@@ -528,6 +528,10 @@ void Device::DestroyImpl() {
     mArrayLengthBuffer = nullptr;
 }
 
+bool Device::ShouldExecuteGLImmediately() const {
+    return !IsToggleEnabled(Toggle::GLAllowDefer) || mContext->IsInScopedMakeCurrent();
+}
+
 void Device::MarkGLUsed(ExecutionQueueBase::SubmitMode submitMode) const {
     if (submitMode == ExecutionQueueBase::SubmitMode::Normal) {
         // - Only need fence sync if submit mode is normal. So the commands will be flushed and a
