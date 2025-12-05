@@ -1323,6 +1323,10 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
         }};
     }
 
+    // Resource table reflection.
+    auto resourceTableInfo = inspector->GetResourceTableInfo(entryPoint.name);
+    metadata->usesResourceTable = !resourceTableInfo.empty();
+
     // Sampler binding point placeholder for non-sampler texture usage. Make it
     // ToTint(EntryPointMetadata::nonSamplerBindingPoint), so that we have
     // FromTint(tintNonSamplerBindingPoint) == EntryPointMetadata::nonSamplerBindingPoint, and we
@@ -1729,6 +1733,11 @@ MaybeError ValidateCompatibilityWithPipelineLayout(DeviceBase* device,
                         "The layout contains a (non-empty) pixel local storage but the entry-point "
                         "doesn't use a `pixel local` block.");
     }
+
+    // Validate resource table usage
+    DAWN_INVALID_IF(entryPoint.usesResourceTable && !layout->UsesResourceTable(),
+                    "The entry-point uses a resource table but the pipeline layout doesn't enable "
+                    "`uses resource table`.");
 
     // Validate that immediate data used by programmable state are smaller than pipelineLayout
     // immediate data range bytes.
