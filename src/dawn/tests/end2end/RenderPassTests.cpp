@@ -191,7 +191,8 @@ DAWN_INSTANTIATE_TEST(RenderPassTest,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend(),
+                      VulkanBackend({"vulkan_use_dynamic_rendering"}, {}),
+                      VulkanBackend({}, {"vulkan_use_dynamic_rendering"}),
                       WebGPUBackend());
 
 // Test that clearing the lower mips of an R8Unorm texture works. This is a regression test for
