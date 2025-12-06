@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b78417f_191aa6eb",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-06T12:34:03Z",
+      "side": 1,
+      "message": "optional: WDYT of just caching the relevant info on DawnTest? IDK if it would be nicer.",
+      "revId": "dea611a3333660d7ecb9136fa9c5067584c9530f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40389834_65a3fce6",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-06T12:34:03Z",
+      "side": 1,
+      "message": "This is unimplemented it seems. Also looks like a leftover with bad casing?",
+      "revId": "dea611a3333660d7ecb9136fa9c5067584c9530f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "396ebbc5_47ab559b",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-06T12:34:03Z",
+      "side": 1,
+      "message": "nit: maybe explain why this needs to be a unique_ptr? It seems to be because the destructor implicitly uses the procs but that\u0027s non-trivial.",
+      "revId": "dea611a3333660d7ecb9136fa9c5067584c9530f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99cab1db_e4870877",
+        "filename": "src/dawn/tests/end2end/MaxLimitTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-06T12:34:03Z",
+      "side": 1,
+      "message": "leftover?",
+      "revId": "dea611a3333660d7ecb9136fa9c5067584c9530f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
