@@ -1297,6 +1297,675 @@ DAWN_INSTANTIATE_TEST(BufferTests,
                       VulkanBackend(),
                       WebGPUBackend());
 
+TEST_P(BufferTests, SkiaGraphiteShaderBug) {
+    // This test uses a shader derived from Skia's analytic rrect rendering.
+    // It is complex and uses a large number of vertex attributes.
+    // The vertex shader calculates the position and other data needed for the rounded rectangle.
+    // It takes many attributes (position, normal, radii, etc.) and outputs interpolated values for the fragment shader.
+    const char* vsModule = R"(
+diagnostic(off, derivative_uniformity);
+diagnostic(off, chromium.unreachable_code);
+
+struct VSIn {
+    @location(0) @interpolate(flat, either) cornerID: u32,
+    @location(1) R_position: vec2<f32>,
+    @location(2) normal: vec2<f32>,
+    @location(3) normalScale: f32,
+    @location(4) centerWeight: f32,
+    @location(5) xRadiiOrFlags: vec4<f32>,
+    @location(6) radiiOrQuadXs: vec4<f32>,
+    @location(7) ltrbOrQuadYs: vec4<f32>,
+    @location(8) R_center: vec4<f32>,
+    @location(9) depth: f32,
+    @location(10) @interpolate(flat, either) ssboIndex: u32,
+    @location(11) mat0: vec3<f32>,
+    @location(12) mat1: vec3<f32>,
+    @location(13) mat2: vec3<f32>,
+};
+
+struct VSOut {
+    @builtin(position) sk_Position: vec4<f32>,
+    @location(0) @interpolate(linear) SolidColor_0_Var: vec4<f32>,
+    @location(1) jacobian: vec4<f32>,
+    @location(2) edgeDistances: vec4<f32>,
+    @location(3) xRadii: vec4<f32>,
+    @location(4) yRadii: vec4<f32>,
+    @location(5) strokeParams: vec2<f32>,
+    @location(6) perPixelControl: vec2<f32>,
+};
+
+/* unsupported */ var<private> sk_PointSize: f32;
+
+struct CombinedUniforms {
+    combinedUniformData: array<CombinedUniformData>,
+};
+
+@group(0) @binding(1) var<storage, read> _storage0 : CombinedUniforms;
+
+struct IntrinsicUniforms {
+    @size(16) viewport: vec4<f32>,
+    dstReadBounds: vec4<f32>,
+};
+
+@group(0) @binding(0) var<uniform> _immediate1 : IntrinsicUniforms;
+
+fn mat3_inverse(m: mat3x3<f32>) -> mat3x3<f32> {
+    let a00 = m[0].x; let a01 = m[0].y; let a02 = m[0].z;
+    let a10 = m[1].x; let a11 = m[1].y; let a12 = m[1].z;
+    let a20 = m[2].x; let a21 = m[2].y; let a22 = m[2].z;
+    let b01 =  a22*a11 - a12*a21;
+    let b11 = -a22*a10 + a12*a20;
+    let b21 =  a21*a10 - a11*a20;
+    let det = a00*b01 + a01*b11 + a02*b21;
+    return mat3x3<f32>(b01, (-a22*a01 + a02*a21), ( a12*a01 - a02*a11),
+                      b11, ( a22*a00 - a02*a20), (-a12*a00 + a02*a10),
+                      b21, (-a21*a00 + a01*a20), ( a11*a00 - a01*a10)) * (1/det);
+}
+
+fn perp_f2f2(a: vec2<f32>) -> vec2<f32> {
+    {
+        return vec2<f32>(-a.y, a.x);
+    }
+}
+
+fn analytic_rrect_vertex_fn_f4If2f2fff4f4f4f4ff33f4f4f4f4f2f2f2(a: u32, b: vec2<f32>, c: vec2<f32>, d: f32, e: f32, f: vec4<f32>, g: vec4<f32>, h: vec4<f32>, i: vec4<f32>, j: f32, k: mat3x3<f32>, l: ptr<function, vec4<f32>>, m: ptr<function, vec4<f32>>, n: ptr<function, vec4<f32>>, o: ptr<function, vec4<f32>>, p: ptr<function, vec2<f32>>, q: ptr<function, vec2<f32>>, r: ptr<function, vec2<f32>>) -> vec4<f32> {
+    {
+        var w: f32 = 1.0;
+        let x: bool = i.z <= 0.0;
+        var y: bool = false;
+        var z: vec4<f32>;
+        var A: vec4<f32>;
+        var B: vec4<f32> = vec4<f32>(1.0);
+        var C: bool = false;
+
+        if f.x < -1.0 {
+            {
+                C = f.y > 0.0;
+                z = select(h.xzzx, h.xxzz, vec4<bool>(C));
+                A = h.yyww;
+                if f.y < 0.0 {
+                    {
+                        (*n) = -f - 2.0;
+                        (*o) = g;
+                        (*p) = vec2<f32>(0.0, 1.0);
+                    }
+                } else {
+                    {
+                        (*n) = g;
+                        (*o) = (*n);
+                        (*p) = f.zw;
+                        var _skTemp2: f32;
+                        if (*p).y < 0.0 {
+                            _skTemp2 = 0.414213568;
+                        } else {
+                            let _skTemp3 = sign((*p).y);
+                            _skTemp2 = _skTemp3;
+                        }
+                        w = _skTemp2;
+                    }
+                }
+            }
+        } else {
+            let _skTemp4 = any((f > vec4<f32>(0.0)));
+            if _skTemp4 {
+                {
+                    z = h.xzzx;
+                    A = h.yyww;
+                    (*n) = f;
+                    (*o) = g;
+                    (*p) = vec2<f32>(0.0, -1.0);
+                }
+            } else {
+                {
+                    z = g;
+                    A = h;
+                    B = -f;
+                    (*n) = vec4<f32>(0.0);
+                    (*o) = vec4<f32>(0.0);
+                    (*p) = vec2<f32>(0.0, 1.0);
+                    y = true;
+                }
+            }
+        }
+
+        var D: vec2<f32> = vec2<f32>((*n)[a], (*o)[a]);
+        if (a % 2u) != 0u {
+            D = D.yx;
+        }
+
+        var E: vec2<f32> = vec2<f32>(1.0);
+        let _skTemp5 = all((D > vec2<f32>(0.0)));
+        if _skTemp5 {
+            {
+                w = 0.414213568;
+                E = D.yx;
+            }
+        }
+
+        var F: vec4<f32> = z - z.wxyz;
+        var G: vec4<f32> = A - A.wxyz;
+        let _skTemp6 = abs(F);
+        let _skTemp7 = abs(G);
+        let _skTemp8 = max(_skTemp7, vec4<f32>(1.0));
+        let _skTemp9 = max(_skTemp6, _skTemp8);
+        let H: vec4<f32> = 1.0 / _skTemp9;
+        F = F * H;
+        G = G * H;
+        var I: vec4<f32> = F * F + G * G;
+        let _skTemp10 = sign(I);
+        let J: vec4<f32> = _skTemp10;
+        var K: vec4<f32> = vec4<f32>(0.0);
+        var L: vec2<f32> = vec2<f32>((*p).x);
+
+        let _skTemp11 = any(J == vec4<f32>(0.0));
+        if _skTemp11 {
+            let _skTemp12 = all(J == vec4<f32>(0.0));
+            if _skTemp12 {
+                {
+                    F = vec4<f32>(0.0, 1.0, 0.0, -1.0);
+                    G = vec4<f32>(-1.0, 0.0, 1.0, 0.0);
+                    I = vec4<f32>(1.0);
+                }
+            } else {
+                {
+                    let M: bool = (((J.x + J.y) + J.z) + J.w) > 2.5;
+                    let N: vec4<f32> = select(G.yzwx, F.yzwx, vec4<bool>(M));
+                    let O: vec4<f32> = select(-F.yzwx, G.yzwx, vec4<bool>(M));
+                    let _skTemp13 = mix(N, F, J);
+                    F = _skTemp13;
+                    let _skTemp14 = mix(O, G, J);
+                    G = _skTemp14;
+                    let _skTemp15 = mix(I.yzwx, I, J);
+                    I = _skTemp15;
+                    let _skTemp16 = mix(B.yzwx, B, J);
+                    B = _skTemp16;
+                    if (!M) && (w == 0.0) {
+                        {
+                            L = L * vec2<f32>(J[a], J.yzwx[a]);
+                            K = (J - 1.0) * (*p).x;
+                            (*p).y = 1.0;
+                            w = 1.0;
+                        }
+                    }
+                }
+            }
+        }
+
+        let _skTemp17 = inverseSqrt(I);
+        let M: vec4<f32> = _skTemp17;
+        F = F * M;
+        G = G * M;
+        let N: vec2<f32> = -vec2<f32>(F.yzwx[a], G.yzwx[a]);
+        let O: vec2<f32> = vec2<f32>(F[a], G[a]);
+        var P: vec2<f32>;
+        var Q: bool = false;
+
+        if d < 0.0 {
+            if (i.w < 0.0) || ((e * i.z) != 0.0) {
+                Q = true;
+            } else {
+                {
+                    let R: f32 = i.w;
+                    let S: vec2<f32> = D + (select(L, -L, vec2<bool>(x)));
+                    let _skTemp18 = any((S <= vec2<f32>(R)));
+                    if (w == 1.0) || _skTemp18 {
+                        P = S - R;
+                    } else {
+                        P = S * b - R * c;
+                    }
+                }
+            }
+        } else {
+            P = (D + L) * (b + w * b.yx);
+        }
+
+        if Q {
+            P = i.xy;
+        } else {
+            {
+                P = P - D;
+                P = (vec2<f32>(z[a], A[a]) + N * P.x) + O * P.y;
+            }
+        }
+
+        (*m) = (G * (z - P.x) - F * (A - P.y)) + K;
+        let _skTemp19 = mat3_inverse(k);
+        let R: mat3x3<f32> = _skTemp19;
+        var S: vec3<f32> = k * vec3<f32>(P, 1.0);
+        (*l) = vec4<f32>(R[0].xy - R[0].z * P, R[1].xy - R[1].z * P);
+
+        if y {
+            {
+                let T: vec4<f32> = -G * (R[0].x - R[0].z * z) + F * (R[0].y - R[0].z * A);
+                let U: vec4<f32> = -G * (R[1].x - R[1].z * z) + F * (R[1].y - R[1].z * A);
+                let _skTemp20 = inverseSqrt(T * T + U * U);
+                (*m) = (*m) * _skTemp20;
+                let _skTemp21 = abs(S.z);
+                (*m) = (*m) + (1.0 - B) * _skTemp21;
+                let _skTemp22 = abs(F * F.yzwx + G * G.yzwx);
+                let _skTemp23 = dot(_skTemp22, vec4<f32>(1.0));
+                let V: bool = all(B == vec4<f32>(1.0)) && (_skTemp23 < 0.00024);
+
+                if V {
+                    {
+                        let W: vec2<f32> = (*m).xy + (*m).zw;
+                        let _skTemp24 = min(W.x, W.y);
+                        let _skTemp25 = abs(S.z);
+                        let _skTemp26 = min(_skTemp24, _skTemp25);
+                        (*q).y = 1.0 + _skTemp26;
+                    }
+                } else {
+                    let _skTemp27 = abs(S.z);
+                    (*q).y = 1.0 + _skTemp27;
+                }
+            }
+        }
+
+        if (d > 0.0) && (S.z > 0.0) {
+            {
+                let T: mat2x2<f32> = mat2x2<f32>((*l)[0], (*l)[1], (*l)[2], (*l)[3]);
+                let U: vec2<f32> = vec2<f32>(B[a], B.yzwx[a]) * c;
+                let _skTemp28 = perp_f2f2(-O);
+                var V: vec2<f32> = ((E.x * U.x) * _skTemp28) * T;
+                let _skTemp29 = perp_f2f2(N);
+                var W: vec2<f32> = ((E.y * U.y) * _skTemp29) * T;
+                let _skTemp30 = all(U != vec2<f32>(0.0));
+                let X: bool = _skTemp30;
+
+                if (w == 1.0) && X {
+                    {
+                        let _skTemp31 = normalize(V);
+                        V = _skTemp31;
+                        let _skTemp32 = normalize(W);
+                        W = _skTemp32;
+                        let _skTemp33 = dot(V, W);
+                        if _skTemp33 < -0.8 {
+                            {
+                                let _skTemp34 = determinant(mat2x2<f32>(V[0], V[1], W[0], W[1]));
+                                let _skTemp35 = sign(_skTemp34);
+                                let Y: f32 = _skTemp35;
+                                let _skTemp36 = perp_f2f2(V);
+                                V = Y * _skTemp36;
+                                let _skTemp37 = perp_f2f2(W);
+                                W = -Y * _skTemp37;
+                            }
+                        }
+                    }
+                }
+
+                let _skTemp38 = normalize(V + W);
+                S = vec3<f32>((S.xy + S.z * _skTemp38), S.z);
+                if y {
+                    (*m) = (*m) - S.z;
+                } else {
+                    (*q).y = -S.z;
+                }
+            }
+        } else {
+            if !y {
+                (*q).y = 0.0;
+            }
+        }
+
+        var _skTemp39: f32;
+        if e != 0.0 {
+            _skTemp39 = 1.0;
+        } else {
+            _skTemp39 = select(0.0, -1.0, x);
+        }
+        (*q).x = f32(_skTemp39);
+
+        if C {
+            let _skTemp40 = (mat2x2<f32>(G.x, -G.y, -F.x, F.y) * mat2x2<f32>((*l)[0], (*l)[1], (*l)[2], (*l)[3]));
+            (*l) = vec4<f32>(_skTemp40[0], _skTemp40[1]);
+        }
+
+        (*r) = P;
+        return vec4<f32>(S.xy, S.z * j, S.z);
+    }
+}
+
+struct CombinedUniformData {
+    color_0: vec4<f32>,
+};
+
+fn _skslMain(_stageIn: VSIn, _stageOut: ptr<function, VSOut>) {
+    {
+        var stepLocalCoords: vec2<f32> = vec2<f32>(0.0);
+        let uniformSsboIndex: u32 = _stageIn.ssboIndex;
+        var _skTemp41: vec4<f32>;
+        var _skTemp42: vec4<f32>;
+        var _skTemp43: vec4<f32>;
+        var _skTemp44: vec4<f32>;
+        var _skTemp45: vec2<f32>;
+        var _skTemp46: vec2<f32>;
+        var _skTemp47: vec2<f32>;
+
+        let _skTemp48 = analytic_rrect_vertex_fn_f4If2f2fff4f4f4f4ff33f4f4f4f4f2f2f2(
+            _stageIn.cornerID,
+            _stageIn.R_position,
+            _stageIn.normal,
+            _stageIn.normalScale,
+            _stageIn.centerWeight,
+            _stageIn.xRadiiOrFlags,
+            _stageIn.radiiOrQuadXs,
+            _stageIn.ltrbOrQuadYs,
+            _stageIn.R_center,
+            _stageIn.depth,
+            mat3x3<f32>(_stageIn.mat0[0], _stageIn.mat0[1], _stageIn.mat0[2],
+                       _stageIn.mat1[0], _stageIn.mat1[1], _stageIn.mat1[2],
+                       _stageIn.mat2[0], _stageIn.mat2[1], _stageIn.mat2[2]),
+            &_skTemp41,
+            &_skTemp42,
+            &_skTemp43,
+            &_skTemp44,
+            &_skTemp45,
+            &_skTemp46,
+            &_skTemp47
+        );
+
+        (*_stageOut).jacobian = _skTemp41;
+        (*_stageOut).edgeDistances = _skTemp42;
+        (*_stageOut).xRadii = _skTemp43;
+        (*_stageOut).yRadii = _skTemp44;
+        (*_stageOut).strokeParams = _skTemp45;
+        (*_stageOut).perPixelControl = _skTemp46;
+        stepLocalCoords = _skTemp47;
+
+        let devPosition: vec4<f32> = _skTemp48;
+        let _skTemp49 = sign(_immediate1.viewport.zw);
+        (*_stageOut).sk_Position = vec4<f32>(_immediate1.viewport.zw * devPosition.xy - _skTemp49 * devPosition.ww, devPosition.zw);
+        (*_stageOut).SolidColor_0_Var = vec4<f32>(_storage0.combinedUniformData[uniformSsboIndex].color_0);
+    }
+}
+
+@vertex fn main(_stageIn: VSIn) -> VSOut {
+    var _stageOut: VSOut;
+    _skslMain(_stageIn, &_stageOut);
+    return _stageOut;
+}
+    )";
+
+
+    // The fragment shader receives interpolated data from the vertex shader.
+    // It writes the position (sk_Position) and other data to a storage buffer (outputBuffer).
+    // An atomic counter is used to determine the index in the storage buffer.
+    const char* fsModule = R"(
+struct FSIn {
+    @builtin(position) sk_Position: vec4<f32>,
+    @location(0) @interpolate(linear) color : vec4<f32>,
+    @location(1) jacobian: vec4<f32>,
+    @location(2) edgeDistances: vec4<f32>,
+    @location(3) xRadii: vec4<f32>,
+    @location(4) yRadii: vec4<f32>,
+    @location(5) strokeParams: vec2<f32>,
+    @location(6) perPixelControl: vec2<f32>,
+};
+
+struct OutputData {
+    sk_Position: vec4<f32>,
+    color: vec4<f32>,
+    jacobian: vec4<f32>,
+    edgeDistances: vec4<f32>,
+    xRadii: vec4<f32>,
+    yRadii: vec4<f32>,
+    strokeParams: vec2<f32>,
+    perPixelControl: vec2<f32>,
+};
+
+@group(0) @binding(2) var<storage, read_write> outputBuffer : array<OutputData>;
+@group(0) @binding(3) var<storage, read_write> atomicCounter : atomic<u32>;
+
+@fragment
+fn main(in : FSIn) -> @location(0) vec4f {
+    let index = atomicAdd(&atomicCounter, 1u);
+    outputBuffer[index].sk_Position = in.sk_Position;
+    outputBuffer[index].color = in.color;
+    outputBuffer[index].jacobian = in.jacobian;
+    outputBuffer[index].edgeDistances = in.edgeDistances;
+    outputBuffer[index].xRadii = in.xRadii;
+    outputBuffer[index].yRadii = in.yRadii;
+    outputBuffer[index].strokeParams = in.strokeParams;
+    outputBuffer[index].perPixelControl = in.perPixelControl;
+    return in.color;
+}
+    )";
+
+    utils::ComboRenderPipelineDescriptor pipelineDescriptor;
+    pipelineDescriptor.vertex.module = utils::CreateShaderModule(device, vsModule);
+    pipelineDescriptor.cFragment.module = utils::CreateShaderModule(device, fsModule);
+    pipelineDescriptor.cTargets[0].format = wgpu::TextureFormat::RGBA8Unorm;
+    pipelineDescriptor.primitive.topology = wgpu::PrimitiveTopology::PointList;
+
+    struct Vertex {
+        uint32_t cornerID;
+        float R_position[2];
+        float normal[2];
+        float normalScale;
+        float centerWeight;
+        float xRadiiOrFlags[4];
+        float radiiOrQuadXs[4];
+        float ltrbOrQuadYs[4];
+        float R_center[4];
+        float depth;
+        uint32_t ssboIndex;
+        float mat0[3];
+        float mat1[3];
+        float mat2[3];
+    };
+    static_assert(sizeof(Vertex) == 136, "");
+
+    std::vector<Vertex> vertexData = {
+        {/*cornerID*/ 0,
+         /*R_position*/ {1.00f, 0.00f},
+         /*normal*/ {0.70711f, 0.70711f},
+         /*normalScale*/ 0.00f,
+         /*centerWeight*/ 0.00f,
+         /*xRadiiOrFlags*/ {-2.00f, 1.00f, 0.50f, 0.00f},
+         /*radiiOrQuadXs*/ {0.00f, 0.00f, 0.00f, 0.00f},
+         /*ltrbOrQuadYs*/ {22.00f, 24.00f, 35.00f, 24.00f},
+         /*R_center*/ {28.50f, 24.00f, 1.00f, -1.00f},
+         /*depth*/ 0.99939f,
+         /*ssboIndex*/ 36,
+         /*mat0*/ {1.00f, 0.00f, 0.00f},
+         /*mat1*/ {0.00f, 1.00f, 0.00f},
+         /*mat2*/ {2388.75f, 0.00f, 1.00f}},
+        {/*cornerID*/ 0,
+         /*R_position*/ {1.00f, 0.00f},
+         /*normal*/ {0.70711f, 0.70711f},
+         /*normalScale*/ 1.00f,
+         /*centerWeight*/ 0.00f,
+         /*xRadiiOrFlags*/ {-2.00f, 1.00f, 0.50f, 0.00f},
+         /*radiiOrQuadXs*/ {0.00f, 0.00f, 0.00f, 0.00f},
+         /*ltrbOrQuadYs*/ {22.00f, 24.00f, 35.00f, 24.00f},
+         /*R_center*/ {28.50f, 24.00f, 1.00f, -1.00f},
+         /*depth*/ 0.99939f,
+         /*ssboIndex*/ 36,
+         /*mat0*/ {1.00f, 0.00f, 0.00f},
+         /*mat1*/ {0.00f, 1.00f, 0.00f},
+         /*mat2*/ {2388.75f, 0.00f, 1.00f}},
+        {/*cornerID*/ 0,
+         /*R_position*/ {0.00f, 1.00f},
+         /*normal*/ {0.70711f, 0.70711f},
+         /*normalScale*/ 0.00f,
+         /*centerWeight*/ 0.00f,
+         /*xRadiiOrFlags*/ {-2.00f, 1.00f, 0.50f, 0.00f},
+         /*radiiOrQuadXs*/ {0.00f, 0.00f, 0.00f, 0.00f},
+         /*ltrbOrQuadYs*/ {22.00f, 24.00f, 35.00f, 24.00f},
+         /*R_center*/ {28.50f, 24.00f, 1.00f, -1.00f},
+         /*depth*/ 0.99939f,
+         /*ssboIndex*/ 36,
+         /*mat0*/ {1.00f, 0.00f, 0.00f},
+         /*mat1*/ {0.00f, 1.00f, 0.00f},
+         /*mat2*/ {2388.75f, 0.00f, 1.00f}},
+    };
+
+    wgpu::Buffer vertexBuffer =
+        utils::CreateBufferFromData(device, vertexData.data(), sizeof(Vertex) * vertexData.size(),
+                                    wgpu::BufferUsage::Vertex);
+
+    pipelineDescriptor.vertex.bufferCount = 1;
+    pipelineDescriptor.cBuffers[0].arrayStride = sizeof(Vertex);
+    pipelineDescriptor.cBuffers[0].attributeCount = 14;
+
+    pipelineDescriptor.cAttributes[0].format = wgpu::VertexFormat::Uint32;
+    pipelineDescriptor.cAttributes[0].offset = 0;
+    pipelineDescriptor.cAttributes[0].shaderLocation = 0;
+
+    pipelineDescriptor.cAttributes[1].format = wgpu::VertexFormat::Float32x2;
+    pipelineDescriptor.cAttributes[1].offset = 4;
+    pipelineDescriptor.cAttributes[1].shaderLocation = 1;
+
+    pipelineDescriptor.cAttributes[2].format = wgpu::VertexFormat::Float32x2;
+    pipelineDescriptor.cAttributes[2].offset = 12;
+    pipelineDescriptor.cAttributes[2].shaderLocation = 2;
+
+    pipelineDescriptor.cAttributes[3].format = wgpu::VertexFormat::Float32;
+    pipelineDescriptor.cAttributes[3].offset = 20;
+    pipelineDescriptor.cAttributes[3].shaderLocation = 3;
+
+    pipelineDescriptor.cAttributes[4].format = wgpu::VertexFormat::Float32;
+    pipelineDescriptor.cAttributes[4].offset = 24;
+    pipelineDescriptor.cAttributes[4].shaderLocation = 4;
+
+    pipelineDescriptor.cAttributes[5].format = wgpu::VertexFormat::Float32x4;
+    pipelineDescriptor.cAttributes[5].offset = 28;
+    pipelineDescriptor.cAttributes[5].shaderLocation = 5;
+
+    pipelineDescriptor.cAttributes[6].format = wgpu::VertexFormat::Float32x4;
+    pipelineDescriptor.cAttributes[6].offset = 44;
+    pipelineDescriptor.cAttributes[6].shaderLocation = 6;
+
+    pipelineDescriptor.cAttributes[7].format = wgpu::VertexFormat::Float32x4;
+    pipelineDescriptor.cAttributes[7].offset = 60;
+    pipelineDescriptor.cAttributes[7].shaderLocation = 7;
+
+    pipelineDescriptor.cAttributes[8].format = wgpu::VertexFormat::Float32x4;
+    pipelineDescriptor.cAttributes[8].offset = 76;
+    pipelineDescriptor.cAttributes[8].shaderLocation = 8;
+
+    pipelineDescriptor.cAttributes[9].format = wgpu::VertexFormat::Float32;
+    pipelineDescriptor.cAttributes[9].offset = 92;
+    pipelineDescriptor.cAttributes[9].shaderLocation = 9;
+
+    pipelineDescriptor.cAttributes[10].format = wgpu::VertexFormat::Uint32;
+    pipelineDescriptor.cAttributes[10].offset = 96;
+    pipelineDescriptor.cAttributes[10].shaderLocation = 10;
+
+    pipelineDescriptor.cAttributes[11].format = wgpu::VertexFormat::Float32x3;
+    pipelineDescriptor.cAttributes[11].offset = 100;
+    pipelineDescriptor.cAttributes[11].shaderLocation = 11;
+
+    pipelineDescriptor.cAttributes[12].format = wgpu::VertexFormat::Float32x3;
+    pipelineDescriptor.cAttributes[12].offset = 112;
+    pipelineDescriptor.cAttributes[12].shaderLocation = 12;
+
+    pipelineDescriptor.cAttributes[13].format = wgpu::VertexFormat::Float32x3;
+    pipelineDescriptor.cAttributes[13].offset = 124;
+    pipelineDescriptor.cAttributes[13].shaderLocation = 13;
+
+    // intrinsic uniforms
+    struct IntrinsicUniforms {
+        float viewport[4];
+        float dstReadBounds[4];
+    };
+    IntrinsicUniforms intrinsics = {{0, 0, 0.00078125f, -0.00568182f}, {0.0f, 0.0f, 0.0f, 0.0f}};
+    wgpu::Buffer uniformBuffer = utils::CreateBufferFromData(
+        device, &intrinsics, sizeof(intrinsics), wgpu::BufferUsage::Uniform);
+
+    // Input SSBO contains colors
+    constexpr size_t kSSBOSize = 40;
+    std::vector<std::array<float, 4>> ssboData(kSSBOSize, {0.0f, 0.0f, 0.0f, 0.0f});
+    ssboData[36] = {0.0f, 1.0f, 0.0f, 1.0f};  // Green
+
+    wgpu::Buffer storageBuffer =
+        utils::CreateBufferFromData(device, ssboData.data(), sizeof(float) * 4 * kSSBOSize,
+                                    wgpu::BufferUsage::Storage);
+
+    // Output SSBO
+    struct OutputData {
+        std::array<float, 4> sk_Position;
+        std::array<float, 4> color;
+        std::array<float, 4> jacobian;
+        std::array<float, 4> edgeDistances;
+        std::array<float, 4> xRadii;
+        std::array<float, 4> yRadii;
+        std::array<float, 2> strokeParams;
+        std::array<float, 2> perPixelControl;
+    };
+    wgpu::BufferDescriptor outputBufferDesc;
+    outputBufferDesc.size = 3 * sizeof(OutputData);
+    outputBufferDesc.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc;
+    wgpu::Buffer outputBuffer = device.CreateBuffer(&outputBufferDesc);
+
+
+    // Atomic counter
+    uint32_t atomicValue = 0;
+    wgpu::Buffer atomicCounterBuffer = utils::CreateBufferFromData(
+        device, &atomicValue, sizeof(uint32_t),
+        wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst);
+
+    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pipelineDescriptor);
+
+    wgpu::BindGroup bindGroup =
+        utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                             {{0, uniformBuffer},
+                              {1, storageBuffer},
+                              {2, outputBuffer},
+                              {3, atomicCounterBuffer}});
+
+    // Draw 3 points
+    utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 1, 1);
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
+    pass.SetPipeline(pipeline);
+    pass.SetVertexBuffer(0, vertexBuffer);
+    pass.SetBindGroup(0, bindGroup);
+    pass.Draw(3);
+    pass.End();
+
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kGreen, renderPass.color, 0, 0);
+    EXPECT_BUFFER_U32_EQ(3, atomicCounterBuffer, 0);
+
+    // Verify the output SSBO
+    wgpu::BufferDescriptor readbackBufferDesc;
+    readbackBufferDesc.size = 3 * sizeof(OutputData);
+    readbackBufferDesc.usage = wgpu::BufferUsage::MapRead | wgpu::BufferUsage::CopyDst;
+    wgpu::Buffer readbackBuffer = device.CreateBuffer(&readbackBufferDesc);
+
+    wgpu::CommandEncoder encoder2 = device.CreateCommandEncoder();
+    encoder2.CopyBufferToBuffer(outputBuffer, 0, readbackBuffer, 0, 3 * sizeof(OutputData));
+    wgpu::CommandBuffer commands2 = encoder2.Finish();
+    queue.Submit(1, &commands2);
+
+    bool done = false;
+    readbackBuffer.MapAsync(wgpu::MapMode::Read, 0, 3 * sizeof(OutputData),
+                            wgpu::CallbackMode::AllowProcessEvents,
+                            [&done](wgpu::MapAsyncStatus status, wgpu::StringView) {
+                                EXPECT_EQ(status, wgpu::MapAsyncStatus::Success);
+                                done = true;
+                            });
+
+    while (!done) {
+        WaitABit();
+    }
+
+    const OutputData* data =
+        reinterpret_cast<const OutputData*>(readbackBuffer.GetConstMappedRange());
+    for (int i = 0; i < 3; ++i) {
+        EXPECT_GT(data[i].sk_Position[0], 0.0f);
+        EXPECT_LT(data[i].sk_Position[0], 1.0f);
+        EXPECT_GT(data[i].sk_Position[1], 0.0f);
+        EXPECT_LT(data[i].sk_Position[1], 1.0f);
+    }
+    readbackBuffer.Unmap();
+}
+
+
 class BufferNoSuballocationTests : public DawnTest {};
 
 // Regression test for crbug.com/1313172
