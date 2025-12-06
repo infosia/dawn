@@ -22,6 +22,30 @@
       },
       "revId": "ef6c8fb41025c58116f1042953a5e0212adaccf0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb398dce_391ba1cc",
+        "filename": "src/dawn/tests/end2end/QueryTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-06T12:41:20Z",
+      "side": 0,
+      "message": "Yeah that seems like it was a bug!",
+      "parentUuid": "721f8475_8ac7de69",
+      "range": {
+        "startLine": 1177,
+        "startChar": 8,
+        "endLine": 1177,
+        "endChar": 26
+      },
+      "revId": "ef6c8fb41025c58116f1042953a5e0212adaccf0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
