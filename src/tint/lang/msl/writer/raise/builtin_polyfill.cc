@@ -755,9 +755,7 @@ struct State {
                 const uint32_t kArrayIndex = 2;
                 auto* index_arg = builtin->Args()[kArrayIndex];
                 if (index_arg->Type()->IsSignedIntegerScalar()) {
-                    builtin->SetArg(kArrayIndex, b.Call(ty.i32(), core::BuiltinFn::kMax, index_arg,
-                                                        b.Zero<i32>())
-                                                     ->Result());
+                    builtin->SetArg(kArrayIndex, b.Max(index_arg, b.Zero<i32>())->Result());
                 }
             }
         });

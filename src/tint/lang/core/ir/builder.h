@@ -1028,6 +1028,36 @@ class Builder {
             InstructionResult(result_type), BinaryOp::kModulo, lhs_value, rhs_value));
     }
 
+    /// Creates a Min operation
+    /// @param lhs the lhs of the min
+    /// @param rhs the rhs of the min
+    /// @returns the operation
+    template <typename LHS, typename RHS>
+    ir::CoreBuiltinCall* Min(LHS&& lhs, RHS&& rhs) {
+        CheckForNonDeterministicEvaluation<LHS, RHS>();
+        auto* lhs_value = Value(std::forward<LHS>(lhs));
+        auto* rhs_value = Value(std::forward<RHS>(rhs));
+        TINT_ASSERT(lhs_value);
+        TINT_ASSERT(rhs_value);
+
+        return Call(lhs_value->Type(), core::BuiltinFn::kMin, lhs_value, rhs_value);
+    }
+
+    /// Creates a Max operation
+    /// @param lhs the lhs of the max
+    /// @param rhs the rhs of the max
+    /// @returns the operation
+    template <typename LHS, typename RHS>
+    ir::CoreBuiltinCall* Max(LHS&& lhs, RHS&& rhs) {
+        CheckForNonDeterministicEvaluation<LHS, RHS>();
+        auto* lhs_value = Value(std::forward<LHS>(lhs));
+        auto* rhs_value = Value(std::forward<RHS>(rhs));
+        TINT_ASSERT(lhs_value);
+        TINT_ASSERT(rhs_value);
+
+        return Call(lhs_value->Type(), core::BuiltinFn::kMax, lhs_value, rhs_value);
+    }
+
     /// Creates an op for `op val`
     /// @param op the unary operator
     /// @param val the value of the operation

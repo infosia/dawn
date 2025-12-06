@@ -381,7 +381,7 @@ struct State {
             v = b.ShiftRight(vec4i, v, b.Splat(vec4u, 24_u))->Result();
             v = b.Convert(vec4f, v)->Result();
             v = b.Divide(v, b.Splat(vec4f, 127_f))->Result();
-            v = b.Call(vec4f, core::BuiltinFn::kMax, v, b.Splat(vec4f, -1_f))->Result();
+            v = b.Max(v, b.Splat(vec4f, -1_f))->Result();
 
             call->Result()->ReplaceAllUsesWith(v);
         });
@@ -410,14 +410,13 @@ struct State {
     /// Polyfill a `clamp()` builtin call for integers and floats.
     /// @param call the builtin call instruction
     void Clamp(ir::CoreBuiltinCall* call) {
-        auto* type = call->Result()->Type();
         auto* e = call->Args()[0];
         auto* low = call->Args()[1];
         auto* high = call->Args()[2];
 
         b.InsertBefore(call, [&] {
-            auto* max = b.Call(type, core::BuiltinFn::kMax, e, low);
-            b.CallWithResult(call->DetachResult(), core::BuiltinFn::kMin, max, high);
+            auto* max = b.Max(e, low);
+            b.Min(max, high)->SetResult(call->DetachResult());
         });
         call->Destroy();
     }
@@ -426,9 +425,7 @@ struct State {
     /// @param call the builtin call instruction
     void AbsSignedInt(ir::CoreBuiltinCall* call) {
         auto* e = call->Args()[0];
-        b.InsertBefore(call, [&] {
-            b.CallWithResult(call->DetachResult(), core::BuiltinFn::kMax, e, b.Negation(e));
-        });
+        b.InsertBefore(call, [&] { b.Max(e, b.Negation(e))->SetResult(call->DetachResult()); });
         call->Destroy();
     }
 
@@ -618,8 +615,8 @@ struct State {
                     //    let o = min(offset, 32);
                     //    let c = min(count, w - o);
                     //    extractBits(e, o, c);
-                    auto* o = b.Call(ty.u32(), core::BuiltinFn::kMin, offset, 32_u);
-                    auto* c = b.Call(ty.u32(), core::BuiltinFn::kMin, count, b.Subtract(32_u, o));
+                    auto* o = b.Min(offset, 32_u);
+                    auto* c = b.Min(count, b.Subtract(32_u, o));
                     call->SetOperand(ir::CoreBuiltinCall::kArgsOperandOffset + 1, o->Result());
                     call->SetOperand(ir::CoreBuiltinCall::kArgsOperandOffset + 2, c->Result());
                 });
@@ -640,8 +637,8 @@ struct State {
                 auto* uint_ty = ty.MatchWidth(ty.u32(), result_ty);
                 auto V = [&](uint32_t u) { return b.MatchWidth(u32(u), result_ty); };
                 b.InsertBefore(call, [&] {
-                    auto* s = b.Call<u32>(core::BuiltinFn::kMin, offset, 32_u);
-                    auto* t = b.Call<u32>(core::BuiltinFn::kMin, 32_u, b.Add(s, count));
+                    auto* s = b.Min(offset, 32_u);
+                    auto* t = b.Min(32_u, b.Add(s, count));
                     auto* shl = b.Subtract(32_u, t);
                     auto* shr = b.Add(shl, s);
                     auto* f1 = b.Zero(result_ty);
@@ -810,8 +807,8 @@ struct State {
                     //    let o = min(offset, 32);
                     //    let c = min(count, w - o);
                     //    insertBits(e, newbits, o, c);
-                    auto* o = b.Call(ty.u32(), core::BuiltinFn::kMin, offset, 32_u);
-                    auto* c = b.Call(ty.u32(), core::BuiltinFn::kMin, count, b.Subtract(32_u, o));
+                    auto* o = b.Min(offset, 32_u);
+                    auto* c = b.Min(count, b.Subtract(32_u, o));
                     call->SetOperand(ir::CoreBuiltinCall::kArgsOperandOffset + 2, o->Result());
                     call->SetOperand(ir::CoreBuiltinCall::kArgsOperandOffset + 3, c->Result());
                 });

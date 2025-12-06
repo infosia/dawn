@@ -416,7 +416,7 @@ struct State {
             auto* apparent_size = b.Access(ty.vec2u(), params, 12_u);
             auto* plane1_coord_factor = b.Access(ty.vec2f(), params, 13_u);
 
-            auto* clamped_coords = b.Call(vec2u, core::BuiltinFn::kMin, coords, apparent_size);
+            auto* clamped_coords = b.Min(coords, apparent_size);
             auto* clamped_coords_f = b.Convert(vec2f, clamped_coords);
             auto* modified_coords =
                 b.Multiply(load_transform_matrix, b.Construct(vec3f, clamped_coords_f, 1_f));
