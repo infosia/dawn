@@ -799,6 +799,7 @@ source_set("sources") {
       "opengl/EGLFunctions.cpp",
       "opengl/EGLFunctions.h",
       "opengl/Forward.h",
+      "opengl/FutureHandle.h",
       "opengl/GLFormat.cpp",
       "opengl/GLFormat.h",
       "opengl/IntegerTypes.h",
