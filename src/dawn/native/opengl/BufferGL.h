@@ -28,13 +28,17 @@
 #ifndef SRC_DAWN_NATIVE_OPENGL_BUFFERGL_H_
 #define SRC_DAWN_NATIVE_OPENGL_BUFFERGL_H_
 
+#include <vector>
+
 #include "dawn/native/Buffer.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
+#include "dawn/native/opengl/FutureHandle.h"
 #include "dawn/native/opengl/opengl_platform.h"
 
 namespace dawn::native::opengl {
 
+struct OpenGLFunctions;
 class Device;
 
 class Buffer final : public BufferBase {
@@ -45,7 +49,7 @@ class Buffer final : public BufferBase {
     static ResultOrError<Ref<Buffer>> Create(Device* device,
                                              const UnpackedPtr<BufferDescriptor>& descriptor);
 
-    GLuint GetHandle() const;
+    const FutureHandle& GetHandle() const;
 
     MaybeError EnsureDataInitialized(bool* outDidDataInitialization = nullptr);
     MaybeError EnsureDataInitializedAsDestination(uint64_t offset,
@@ -57,19 +61,46 @@ class Buffer final : public BufferBase {
     void TrackUsage() { MarkUsedInPendingCommands(); }
 
   private:
-    Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor, GLuint handle);
+    Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor);
     ~Buffer() override;
+
+    void DestroyImpl() override;
+
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override;
     MaybeError FinalizeMapImpl(BufferState newState) override;
     void UnmapImpl(BufferState oldState) override;
-    void DestroyImpl() override;
     bool IsCPUWritableAtCreation() const override;
     MaybeError MapAtCreationImpl() override;
     void* GetMappedPointerImpl() override;
 
+    MaybeError Initialize(bool shouldLazyClear, bool isMappedAtCreation);
+    MaybeError InitializeGLBuffer(bool isMappedAtCreation);
     MaybeError InitializeToZero();
+    void DoGLUnmapIfNeeded(const OpenGLFunctions& gl);
 
-    GLuint mBuffer = 0;
+    // The mHandle is a future GLuint that will be updated when the buffer is created on the GL
+    // thread. This is necessary because the Buffer object can be created on one thread, but the
+    // actual GL handle is generated asynchronously on the GL thread.
+    //
+    // If we were to store a raw GLuint, we could run into a race condition during destruction.
+    // For example, if DestroyImpl() is called before the GL handle has been created, a lambda
+    // capturing the GLuint would capture an invalid handle (e.g., 0).
+    //
+    // Incorrect approach example:
+    //
+    //   // In DestroyImpl() on the main thread:
+    //   GLuint handleToDelete = mHandle; // mHandle might be 0 if creation hasn't happened yet.
+    //   device->EnqueueGL([handleToDelete](...) {
+    //       glDeleteBuffers(1, &handleToDelete); // Deletes buffer 0, leaking the real one.
+    //   });
+    //
+    // By using a Ref<FutureHandle>, we capture a reference to the handle container. The command
+    // queue ensures that the destruction task runs after the creation task. By the time the
+    // destruction lambda executes, the FutureHandle is guaranteed to have been set with the
+    // correct GLuint.
+    Ref<FutureHandle> mHandle;
+    // Shadow copy is used for MapAtCreation.
+    std::vector<uint8_t> mShadowCopy;
     raw_ptr<void> mMappedData = nullptr;
 };
 
