@@ -52,6 +52,24 @@
       "parentUuid": "ced95c50_e69e74fd",
       "revId": "db81ea1d5d3c62324935471642a10dd0fe774728",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4dcb8449_4b0e7b20",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1285,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-06T12:37:00Z",
+      "side": 1,
+      "message": "+1 to Gregg\u0027s suggestions, I was thinking we can always change the API later, but it\u0027s better to have the two concepts already, it will make future improvements clearer.",
+      "parentUuid": "6ed4ebd2_cee7f510",
+      "revId": "db81ea1d5d3c62324935471642a10dd0fe774728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
