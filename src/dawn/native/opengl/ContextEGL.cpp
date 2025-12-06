@@ -334,6 +334,12 @@ MaybeError ContextEGL::ScopedMakeCurrent::Initialize() {
     mPrevState.drawSurface = mContext->mDisplay->egl.GetCurrentSurface(EGL_DRAW);
     mPrevState.readSurface = mContext->mDisplay->egl.GetCurrentSurface(EGL_READ);
 
+#if defined(DAWN_ENABLE_ASSERTS)
+    // Assert that no other thread is holding the context as current context.
+    DAWN_ASSERT(mContext->mCurrentThread == std::thread::id() ||
+                mContext->mCurrentThread == std::this_thread::get_id());
+#endif
+
     if (mPrevState != mContext->mState) {
         auto result = MakeContextCurrent(mContext->mDisplay.Get(), mContext->mState);
         if (DAWN_UNLIKELY(result.IsError())) {
@@ -341,6 +347,11 @@ MaybeError ContextEGL::ScopedMakeCurrent::Initialize() {
             return result;
         }
     }
+
+#if defined(DAWN_ENABLE_ASSERTS)
+    mContext->mCurrentThread = std::this_thread::get_id();
+#endif
+
     gCurrentContextInScope = mContext;
     return {};
 }
@@ -354,6 +365,10 @@ MaybeError ContextEGL::ScopedMakeCurrent::End() {
     if (mContext->mBindContextOnlyDuringUse && mPrevState != mContext->mState) {
         // Unmake current this context so that other threads can use it.
         result = MakeContextCurrent(mContext->mDisplay.Get(), mPrevState);
+
+#if defined(DAWN_ENABLE_ASSERTS)
+        mContext->mCurrentThread = {};
+#endif
     }
     gCurrentContextInScope = nullptr;
     mContext = nullptr;
