@@ -1057,6 +1057,41 @@ TEST_P(MultithreadTests, WriteBufferInParallel) {
     }
 }
 
+// Test that WriteTexture in parallel should work.
+TEST_P(MultithreadTests, WriteTextureInParallel) {
+    constexpr uint32_t kWidth = 4;
+    constexpr uint32_t kHeight = 4;
+    constexpr uint32_t kNumThreads = 10;
+
+    std::vector<wgpu::Texture> textures(kNumThreads);
+    std::vector<utils::RGBA8> expectedColors(kNumThreads);
+
+    utils::RunInParallel(kNumThreads, [&](uint32_t index) {
+        textures[index] = CreateTexture(kWidth, kHeight, wgpu::TextureFormat::RGBA8Unorm,
+                                        wgpu::TextureUsage::CopyDst | wgpu::TextureUsage::CopySrc |
+                                            wgpu::TextureUsage::RenderAttachment);
+
+        uint8_t val = static_cast<uint8_t>(index * 20);
+        utils::RGBA8 color(val, val, val, 255);
+        expectedColors[index] = color;
+
+        wgpu::TexelCopyTextureInfo texelCopyTextureInfo = utils::CreateTexelCopyTextureInfo(
+            textures[index], 0, {0, 0, 0}, wgpu::TextureAspect::All);
+
+        std::vector<utils::RGBA8> data(kWidth * kHeight, color);
+        wgpu::TexelCopyBufferLayout texelCopyBufferLayout =
+            utils::CreateTexelCopyBufferLayout(0, kWidth * 4);
+        wgpu::Extent3D writeSize = {kWidth, kHeight, 1};
+
+        queue.WriteTexture(&texelCopyTextureInfo, data.data(), data.size() * sizeof(utils::RGBA8),
+                           &texelCopyBufferLayout, &writeSize);
+    });
+
+    for (uint32_t i = 0; i < kNumThreads; ++i) {
+        EXPECT_TEXTURE_EQ(expectedColors[i], textures[i], {0, 0});
+    }
+}
+
 class MultithreadCachingTests : public MultithreadTests {
   protected:
     wgpu::ShaderModule CreateComputeShaderModule() const {

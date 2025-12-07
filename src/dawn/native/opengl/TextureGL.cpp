@@ -258,31 +258,9 @@ MaybeError FramebufferTextureHelper(const OpenGLFunctions& gl,
 // static
 ResultOrError<Ref<Texture>> Texture::Create(Device* device,
                                             const UnpackedPtr<TextureDescriptor>& descriptor) {
-    const OpenGLFunctions& gl = device->GetGL();
-
-    GLuint handle = 0;
-    DAWN_GL_TRY(gl, GenTextures(1, &handle));
-
-    // Wrap the handle in a Texture class early so that it is deleted if initialization fails
-    Ref<Texture> texture = AcquireRef(new Texture(device, descriptor, handle, OwnsHandle::Yes));
-
-    GLenum target = texture->GetGLTarget();
-    uint32_t levels = descriptor->mipLevelCount;
-    const GLFormat& glFormat = texture->GetGLFormat();
-
-    DAWN_GL_TRY(gl, BindTexture(target, handle));
-    DAWN_TRY(
-        AllocateTexture(gl, target, descriptor->sampleCount, levels, glFormat, descriptor->size));
-
-    // The texture is not complete if it uses mipmapping and not all levels up to
-    // MAX_LEVEL have been defined.
-    DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_MAX_LEVEL, levels - 1));
-
-    if (device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting)) {
-        DAWN_TRY(texture->ClearTexture(gl, texture->GetAllSubresources(),
-                                       TextureBase::ClearValue::NonZero));
-    }
-    return std::move(texture);
+    Ref<Texture> texture = AcquireRef(new Texture(device, descriptor, OwnsHandle::Yes));
+    DAWN_TRY(texture->Initialize(descriptor));
+    return texture;
 }
 
 // static
@@ -291,35 +269,83 @@ ResultOrError<Ref<Texture>> Texture::CreateFromSharedTextureMemory(
     const UnpackedPtr<TextureDescriptor>& descriptor) {
     Device* device = ToBackend(memory->GetDevice());
 
-    GLuint textureId = 0;
-    DAWN_TRY_ASSIGN(textureId, memory->GenerateGLTexture());
+    Ref<FutureHandle> textureHandle;
+    DAWN_TRY_ASSIGN(textureHandle, memory->GenerateGLTexture());
 
-    Ref<Texture> texture = AcquireRef(new Texture(device, descriptor, textureId, OwnsHandle::Yes));
+    Ref<Texture> texture =
+        AcquireRef(new Texture(device, descriptor, std::move(textureHandle), OwnsHandle::Yes));
     texture->mSharedResourceMemoryContents = memory->GetContents();
     return texture;
 }
 
 Texture::Texture(Device* device,
                  const UnpackedPtr<TextureDescriptor>& descriptor,
-                 GLuint handle,
                  OwnsHandle ownsHandle)
-    : TextureBase(device, descriptor), mHandle(handle), mOwnsHandle(ownsHandle) {
+    : Texture(device, descriptor, /*handle=*/AcquireRef(new FutureHandle()), ownsHandle) {}
+
+Texture::Texture(Device* device,
+                 const UnpackedPtr<TextureDescriptor>& descriptor,
+                 Ref<FutureHandle> handle,
+                 OwnsHandle ownsHandle)
+    : TextureBase(device, descriptor), mHandle(std::move(handle)), mOwnsHandle(ownsHandle) {
     mTarget = TargetForTextureViewDimension(GetCompatibilityTextureBindingViewDimension(),
                                             descriptor->sampleCount);
 }
 
 Texture::~Texture() {}
 
+MaybeError Texture::Initialize(const UnpackedPtr<TextureDescriptor>& descriptor) {
+    Device* device = ToBackend(GetDevice());
+
+    const TextureDescriptor* descPtr = *descriptor;
+
+    Ref<Texture> self = this;
+    DAWN_TRY(device->EnqueueGL(
+        [self, device, descriptor = *descPtr](const auto& gl) mutable -> MaybeError {
+            GLuint handle = 0;
+            DAWN_GL_TRY(gl, GenTextures(1, &handle));
+            self->mHandle->Set(handle);
+
+            GLenum target = self->GetGLTarget();
+            uint32_t levels = descriptor.mipLevelCount;
+            const GLFormat& glFormat = self->GetGLFormat();
+
+            DAWN_GL_TRY(gl, BindTexture(target, handle));
+            DAWN_TRY(AllocateTexture(gl, target, descriptor.sampleCount, levels, glFormat,
+                                     descriptor.size));
+
+            DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_MAX_LEVEL, levels - 1));
+
+            if (device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting)) {
+                DAWN_TRY(self->ClearTexture(gl, self->GetAllSubresources(),
+                                            TextureBase::ClearValue::NonZero));
+            }
+            return {};
+        }));
+
+    return {};
+}
+
 void Texture::DestroyImpl() {
     TextureBase::DestroyImpl();
+
+    Device* device = ToBackend(GetDevice());
+
     if (mOwnsHandle == OwnsHandle::Yes) {
-        const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-        DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteTextures(1, &mHandle));
-        mHandle = 0;
+        Ref<FutureHandle> handle = mHandle;
+        IgnoreErrors(device->EnqueueGL([handle](const auto& gl) -> MaybeError {
+            GLuint glHandle = handle->GetOrDefault();
+            DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteTextures(1, &glHandle));
+            return {};
+        }));
     }
 }
 
 GLuint Texture::GetHandle() const {
+    return mHandle->Get();
+}
+
+Ref<FutureHandle> Texture::GetHandleRef() const {
     return mHandle;
 }
 
@@ -336,261 +362,263 @@ MaybeError Texture::ClearTexture(const OpenGLFunctions& gl,
                                  TextureBase::ClearValue clearValue) {
     Device* device = ToBackend(GetDevice());
 
-    uint8_t clearColor = (clearValue == TextureBase::ClearValue::Zero) ? 0 : 1;
-    float fClearColor = (clearValue == TextureBase::ClearValue::Zero) ? 0.f : 1.f;
+    Ref<Texture> self = this;
+    DAWN_TRY(device->EnqueueGL([self, device, range, clearValue](const auto& gl) -> MaybeError {
+        uint8_t clearColor = (clearValue == TextureBase::ClearValue::Zero) ? 0 : 1;
+        float fClearColor = (clearValue == TextureBase::ClearValue::Zero) ? 0.f : 1.f;
 
-    if (GetFormat().IsRenderable()) {
-        if (range.aspects & (Aspect::Depth | Aspect::Stencil)) {
-            GLfloat depth = fClearColor;
-            GLint stencil = clearColor;
-            if (range.aspects & Aspect::Depth) {
-                DAWN_GL_TRY(gl, DepthMask(GL_TRUE));
-            }
-            if (range.aspects & Aspect::Stencil) {
-                DAWN_GL_TRY(gl, StencilMask(GetStencilMaskFromStencilFormat(GetFormat().format)));
-            }
+        if (self->GetFormat().IsRenderable()) {
+            if (range.aspects & (Aspect::Depth | Aspect::Stencil)) {
+                GLfloat depth = fClearColor;
+                GLint stencil = clearColor;
+                if (range.aspects & Aspect::Depth) {
+                    DAWN_GL_TRY(gl, DepthMask(GL_TRUE));
+                }
+                if (range.aspects & Aspect::Stencil) {
+                    DAWN_GL_TRY(
+                        gl, StencilMask(GetStencilMaskFromStencilFormat(self->GetFormat().format)));
+                }
 
-            auto DoClear = [&](Aspect aspects) -> MaybeError {
-                if (aspects == (Aspect::Depth | Aspect::Stencil)) {
-                    DAWN_GL_TRY(gl, ClearBufferfi(GL_DEPTH_STENCIL, 0, depth, stencil));
-                } else if (aspects == Aspect::Depth) {
-                    DAWN_GL_TRY(gl, ClearBufferfv(GL_DEPTH, 0, &depth));
-                } else if (aspects == Aspect::Stencil) {
-                    DAWN_GL_TRY(gl, ClearBufferiv(GL_STENCIL, 0, &stencil));
+                auto DoClear = [&](Aspect aspects) -> MaybeError {
+                    if (aspects == (Aspect::Depth | Aspect::Stencil)) {
+                        DAWN_GL_TRY(gl, ClearBufferfi(GL_DEPTH_STENCIL, 0, depth, stencil));
+                    } else if (aspects == Aspect::Depth) {
+                        DAWN_GL_TRY(gl, ClearBufferfv(GL_DEPTH, 0, &depth));
+                    } else if (aspects == Aspect::Stencil) {
+                        DAWN_GL_TRY(gl, ClearBufferiv(GL_STENCIL, 0, &stencil));
+                    } else {
+                        DAWN_UNREACHABLE();
+                    }
+                    return {};
+                };
+
+                GLuint framebuffer = 0;
+                DAWN_GL_TRY(gl, GenFramebuffers(1, &framebuffer));
+                DAWN_GL_TRY(gl, BindFramebuffer(GL_DRAW_FRAMEBUFFER, framebuffer));
+                DAWN_GL_TRY(gl, Disable(GL_SCISSOR_TEST));
+
+                GLenum attachment;
+                if (range.aspects == (Aspect::Depth | Aspect::Stencil)) {
+                    attachment = GL_DEPTH_STENCIL_ATTACHMENT;
+                } else if (range.aspects == Aspect::Depth) {
+                    attachment = GL_DEPTH_ATTACHMENT;
+                } else if (range.aspects == Aspect::Stencil) {
+                    attachment = GL_STENCIL_ATTACHMENT;
                 } else {
                     DAWN_UNREACHABLE();
                 }
-                return {};
-            };
 
-            GLuint framebuffer = 0;
-            DAWN_GL_TRY(gl, GenFramebuffers(1, &framebuffer));
-            DAWN_GL_TRY(gl, BindFramebuffer(GL_DRAW_FRAMEBUFFER, framebuffer));
-            DAWN_GL_TRY(gl, Disable(GL_SCISSOR_TEST));
+                for (uint32_t level = range.baseMipLevel;
+                     level < range.baseMipLevel + range.levelCount; ++level) {
+                    for (uint32_t layer = range.baseArrayLayer;
+                         layer < range.baseArrayLayer + range.layerCount; ++layer) {
+                        Aspect aspectsToClear = Aspect::None;
+                        for (Aspect aspect : IterateEnumMask(range.aspects)) {
+                            if (clearValue == TextureBase::ClearValue::Zero &&
+                                self->IsSubresourceContentInitialized(
+                                    SubresourceRange::SingleMipAndLayer(level, layer, aspect))) {
+                                // Skip lazy clears if already initialized.
+                                continue;
+                            }
+                            aspectsToClear |= aspect;
+                        }
 
-            GLenum attachment;
-            if (range.aspects == (Aspect::Depth | Aspect::Stencil)) {
-                attachment = GL_DEPTH_STENCIL_ATTACHMENT;
-            } else if (range.aspects == Aspect::Depth) {
-                attachment = GL_DEPTH_ATTACHMENT;
-            } else if (range.aspects == Aspect::Stencil) {
-                attachment = GL_STENCIL_ATTACHMENT;
+                        if (aspectsToClear == Aspect::None) {
+                            continue;
+                        }
+                        DAWN_TRY(FramebufferTextureHelper(gl, self->mTarget, GL_DRAW_FRAMEBUFFER,
+                                                          attachment, self->GetHandle(), level,
+                                                          layer));
+                        DAWN_TRY(DoClear(aspectsToClear));
+                    }
+                }
+
+                DAWN_GL_TRY(gl, Enable(GL_SCISSOR_TEST));
+                DAWN_GL_TRY(gl, DeleteFramebuffers(1, &framebuffer));
             } else {
-                DAWN_UNREACHABLE();
-            }
+                DAWN_ASSERT(range.aspects == Aspect::Color);
 
-            for (uint32_t level = range.baseMipLevel; level < range.baseMipLevel + range.levelCount;
-                 ++level) {
-                for (uint32_t layer = range.baseArrayLayer;
-                     layer < range.baseArrayLayer + range.layerCount; ++layer) {
-                    Aspect aspectsToClear = Aspect::None;
-                    for (Aspect aspect : IterateEnumMask(range.aspects)) {
+                // For gl.ClearBufferiv/uiv calls
+                constexpr std::array<GLuint, 4> kClearColorDataUint0 = {0u, 0u, 0u, 0u};
+                constexpr std::array<GLuint, 4> kClearColorDataUint1 = {1u, 1u, 1u, 1u};
+                std::array<GLuint, 4> clearColorData;
+                clearColorData.fill((clearValue == TextureBase::ClearValue::Zero) ? 0u : 1u);
+
+                // For gl.ClearBufferfv calls
+                constexpr std::array<GLfloat, 4> kClearColorDataFloat0 = {0.f, 0.f, 0.f, 0.f};
+                constexpr std::array<GLfloat, 4> kClearColorDataFloat1 = {1.f, 1.f, 1.f, 1.f};
+                std::array<GLfloat, 4> fClearColorData;
+                fClearColorData.fill((clearValue == TextureBase::ClearValue::Zero) ? 0.f : 1.f);
+
+                static constexpr uint32_t MAX_TEXEL_SIZE = 16;
+                const TexelBlockInfo& blockInfo =
+                    self->GetFormat().GetAspectInfo(Aspect::Color).block;
+                DAWN_ASSERT(blockInfo.byteSize <= MAX_TEXEL_SIZE);
+
+                // For gl.ClearTexSubImage calls
+                constexpr std::array<GLbyte, MAX_TEXEL_SIZE> kClearColorDataBytes0 = {
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+                constexpr std::array<GLbyte, MAX_TEXEL_SIZE> kClearColorDataBytes255 = {
+                    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+
+                TextureComponentType baseType =
+                    self->GetFormat().GetAspectInfo(Aspect::Color).baseType;
+
+                const GLFormat& glFormat = self->GetGLFormat();
+                const auto dimension = self->GetDimension();
+                for (uint32_t level = range.baseMipLevel;
+                     level < range.baseMipLevel + range.levelCount; ++level) {
+                    Extent3D mipSize =
+                        self->GetMipLevelSingleSubresourcePhysicalSize(level, Aspect::Color);
+                    for (uint32_t layer = range.baseArrayLayer;
+                         layer < range.baseArrayLayer + range.layerCount; ++layer) {
                         if (clearValue == TextureBase::ClearValue::Zero &&
-                            IsSubresourceContentInitialized(
-                                SubresourceRange::SingleMipAndLayer(level, layer, aspect))) {
+                            self->IsSubresourceContentInitialized(
+                                SubresourceRange::SingleMipAndLayer(level, layer, Aspect::Color))) {
                             // Skip lazy clears if already initialized.
                             continue;
                         }
-                        aspectsToClear |= aspect;
-                    }
+                        if (gl.IsAtLeastGL(4, 4)) {
+                            DAWN_GL_TRY(
+                                gl, ClearTexSubImage(self->GetHandle(), static_cast<GLint>(level),
+                                                     0, 0, static_cast<GLint>(layer), mipSize.width,
+                                                     mipSize.height, mipSize.depthOrArrayLayers,
+                                                     glFormat.format, glFormat.type,
+                                                     clearValue == TextureBase::ClearValue::Zero
+                                                         ? kClearColorDataBytes0.data()
+                                                         : kClearColorDataBytes255.data()));
+                            continue;
+                        }
 
-                    if (aspectsToClear == Aspect::None) {
-                        continue;
-                    }
-                    DAWN_TRY(FramebufferTextureHelper(gl, mTarget, GL_DRAW_FRAMEBUFFER, attachment,
-                                                      GetHandle(), level, layer));
-                    DAWN_TRY(DoClear(aspectsToClear));
-                }
-            }
+                        GLuint framebuffer = 0;
+                        DAWN_GL_TRY(gl, GenFramebuffers(1, &framebuffer));
+                        DAWN_GL_TRY(gl, BindFramebuffer(GL_DRAW_FRAMEBUFFER, framebuffer));
 
-            DAWN_GL_TRY(gl, Enable(GL_SCISSOR_TEST));
-            DAWN_GL_TRY(gl, DeleteFramebuffers(1, &framebuffer));
-        } else {
-            DAWN_ASSERT(range.aspects == Aspect::Color);
+                        GLenum attachment = GL_COLOR_ATTACHMENT0;
+                        DAWN_GL_TRY(gl, DrawBuffers(1, &attachment));
 
-            // For gl.ClearBufferiv/uiv calls
-            constexpr std::array<GLuint, 4> kClearColorDataUint0 = {0u, 0u, 0u, 0u};
-            constexpr std::array<GLuint, 4> kClearColorDataUint1 = {1u, 1u, 1u, 1u};
-            std::array<GLuint, 4> clearColorData;
-            clearColorData.fill((clearValue == TextureBase::ClearValue::Zero) ? 0u : 1u);
+                        DAWN_GL_TRY(gl, Disable(GL_SCISSOR_TEST));
+                        DAWN_GL_TRY(gl, ColorMask(true, true, true, true));
 
-            // For gl.ClearBufferfv calls
-            constexpr std::array<GLfloat, 4> kClearColorDataFloat0 = {0.f, 0.f, 0.f, 0.f};
-            constexpr std::array<GLfloat, 4> kClearColorDataFloat1 = {1.f, 1.f, 1.f, 1.f};
-            std::array<GLfloat, 4> fClearColorData;
-            fClearColorData.fill((clearValue == TextureBase::ClearValue::Zero) ? 0.f : 1.f);
-
-            static constexpr uint32_t MAX_TEXEL_SIZE = 16;
-            const TexelBlockInfo& blockInfo = GetFormat().GetAspectInfo(Aspect::Color).block;
-            DAWN_ASSERT(blockInfo.byteSize <= MAX_TEXEL_SIZE);
-
-            // For gl.ClearTexSubImage calls
-            constexpr std::array<GLbyte, MAX_TEXEL_SIZE> kClearColorDataBytes0 = {
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-            constexpr std::array<GLbyte, MAX_TEXEL_SIZE> kClearColorDataBytes255 = {
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
-
-            TextureComponentType baseType = GetFormat().GetAspectInfo(Aspect::Color).baseType;
-
-            const GLFormat& glFormat = GetGLFormat();
-            const auto dimension = GetDimension();
-            for (uint32_t level = range.baseMipLevel; level < range.baseMipLevel + range.levelCount;
-                 ++level) {
-                Extent3D mipSize = GetMipLevelSingleSubresourcePhysicalSize(level, Aspect::Color);
-                for (uint32_t layer = range.baseArrayLayer;
-                     layer < range.baseArrayLayer + range.layerCount; ++layer) {
-                    if (clearValue == TextureBase::ClearValue::Zero &&
-                        IsSubresourceContentInitialized(
-                            SubresourceRange::SingleMipAndLayer(level, layer, Aspect::Color))) {
-                        // Skip lazy clears if already initialized.
-                        continue;
-                    }
-                    if (gl.IsAtLeastGL(4, 4)) {
-                        DAWN_GL_TRY(gl, ClearTexSubImage(mHandle, static_cast<GLint>(level), 0, 0,
-                                                         static_cast<GLint>(layer), mipSize.width,
-                                                         mipSize.height, mipSize.depthOrArrayLayers,
-                                                         glFormat.format, glFormat.type,
-                                                         clearValue == TextureBase::ClearValue::Zero
-                                                             ? kClearColorDataBytes0.data()
-                                                             : kClearColorDataBytes255.data()));
-                        continue;
-                    }
-
-                    GLuint framebuffer = 0;
-                    DAWN_GL_TRY(gl, GenFramebuffers(1, &framebuffer));
-                    DAWN_GL_TRY(gl, BindFramebuffer(GL_DRAW_FRAMEBUFFER, framebuffer));
-
-                    GLenum attachment = GL_COLOR_ATTACHMENT0;
-                    DAWN_GL_TRY(gl, DrawBuffers(1, &attachment));
-
-                    DAWN_GL_TRY(gl, Disable(GL_SCISSOR_TEST));
-                    DAWN_GL_TRY(gl, ColorMask(true, true, true, true));
-
-                    auto DoClear = [&]() -> MaybeError {
-                        switch (baseType) {
-                            case TextureComponentType::Float: {
-                                DAWN_GL_TRY(
-                                    gl, ClearBufferfv(GL_COLOR, 0,
-                                                      clearValue == TextureBase::ClearValue::Zero
-                                                          ? kClearColorDataFloat0.data()
-                                                          : kClearColorDataFloat1.data()));
-                                break;
-                            }
-                            case TextureComponentType::Uint: {
-                                DAWN_GL_TRY(
-                                    gl, ClearBufferuiv(GL_COLOR, 0,
-                                                       clearValue == TextureBase::ClearValue::Zero
-                                                           ? kClearColorDataUint0.data()
-                                                           : kClearColorDataUint1.data()));
-                                break;
-                            }
-                            case TextureComponentType::Sint: {
-                                DAWN_GL_TRY(gl, ClearBufferiv(
+                        auto DoClear = [&]() -> MaybeError {
+                            switch (baseType) {
+                                case TextureComponentType::Float: {
+                                    DAWN_GL_TRY(gl, ClearBufferfv(
+                                                        GL_COLOR, 0,
+                                                        clearValue == TextureBase::ClearValue::Zero
+                                                            ? kClearColorDataFloat0.data()
+                                                            : kClearColorDataFloat1.data()));
+                                    break;
+                                }
+                                case TextureComponentType::Uint: {
+                                    DAWN_GL_TRY(gl, ClearBufferuiv(
+                                                        GL_COLOR, 0,
+                                                        clearValue == TextureBase::ClearValue::Zero
+                                                            ? kClearColorDataUint0.data()
+                                                            : kClearColorDataUint1.data()));
+                                    break;
+                                }
+                                case TextureComponentType::Sint: {
+                                    DAWN_GL_TRY(gl,
+                                                ClearBufferiv(
                                                     GL_COLOR, 0,
                                                     reinterpret_cast<const GLint*>(
                                                         clearValue == TextureBase::ClearValue::Zero
                                                             ? kClearColorDataUint0.data()
                                                             : kClearColorDataUint1.data())));
-                                break;
+                                    break;
+                                }
                             }
-                        }
-                        return {};
-                    };
+                            return {};
+                        };
 
-                    if (dimension == wgpu::TextureDimension::e3D) {
-                        uint32_t depth =
-                            GetMipLevelSingleSubresourceVirtualSize(level, Aspect::Color)
-                                .depthOrArrayLayers;
-                        for (GLint z = 0; z < static_cast<GLint>(depth); ++z) {
-                            DAWN_GL_TRY(gl, FramebufferTextureLayer(GL_DRAW_FRAMEBUFFER, attachment,
-                                                                    GetHandle(), level, z));
+                        if (dimension == wgpu::TextureDimension::e3D) {
+                            uint32_t depth =
+                                self->GetMipLevelSingleSubresourceVirtualSize(level, Aspect::Color)
+                                    .depthOrArrayLayers;
+                            for (GLint z = 0; z < static_cast<GLint>(depth); ++z) {
+                                DAWN_GL_TRY(gl,
+                                            FramebufferTextureLayer(GL_DRAW_FRAMEBUFFER, attachment,
+                                                                    self->GetHandle(), level, z));
+                                DAWN_TRY(DoClear());
+                            }
+                        } else {
+                            DAWN_TRY(FramebufferTextureHelper(gl, self->mTarget,
+                                                              GL_DRAW_FRAMEBUFFER, attachment,
+                                                              self->GetHandle(), level, layer));
                             DAWN_TRY(DoClear());
                         }
-                    } else {
-                        DAWN_TRY(FramebufferTextureHelper(gl, mTarget, GL_DRAW_FRAMEBUFFER,
-                                                          attachment, GetHandle(), level, layer));
-                        DAWN_TRY(DoClear());
+
+                        DAWN_GL_TRY(gl, Enable(GL_SCISSOR_TEST));
+                        DAWN_GL_TRY(gl, DeleteFramebuffers(1, &framebuffer));
+                        DAWN_GL_TRY(gl, BindFramebuffer(GL_DRAW_FRAMEBUFFER, 0));
+                    }
+                }
+            }
+        } else {
+            DAWN_ASSERT(range.aspects == Aspect::Color);
+
+            // create temp buffer with clear color to copy to the texture image
+            const TexelBlockInfo& blockInfo = self->GetFormat().GetAspectInfo(Aspect::Color).block;
+            DAWN_ASSERT(kTextureBytesPerRowAlignment % blockInfo.byteSize == 0);
+
+            Extent3D largestMipSize =
+                self->GetMipLevelSingleSubresourcePhysicalSize(range.baseMipLevel, Aspect::Color);
+            uint32_t bytesPerRow =
+                Align((largestMipSize.width / blockInfo.width) * blockInfo.byteSize, 4);
+
+            // Make sure that we are not rounding
+            DAWN_ASSERT(bytesPerRow % blockInfo.byteSize == 0);
+            DAWN_ASSERT(largestMipSize.height % blockInfo.height == 0);
+
+            uint64_t bufferSize64 = static_cast<uint64_t>(bytesPerRow) *
+                                    (largestMipSize.height / blockInfo.height) *
+                                    largestMipSize.depthOrArrayLayers;
+            if (bufferSize64 > std::numeric_limits<size_t>::max()) {
+                return DAWN_OUT_OF_MEMORY_ERROR("Unable to allocate buffer.");
+            }
+            std::vector<uint8_t> clearData(static_cast<size_t>(bufferSize64), clearColor);
+
+            DAWN_GL_TRY_ALWAYS_CHECK(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, 0));
+
+            for (uint32_t level = range.baseMipLevel; level < range.baseMipLevel + range.levelCount;
+                 ++level) {
+                TextureCopy textureCopy;
+                textureCopy.texture = self.Get();
+                textureCopy.mipLevel = level;
+                textureCopy.origin = {};
+                textureCopy.aspect = Aspect::Color;
+
+                TexelCopyBufferLayout dataLayout;
+                dataLayout.offset = 0;
+                dataLayout.bytesPerRow = bytesPerRow;
+                dataLayout.rowsPerImage = largestMipSize.height / blockInfo.height;
+
+                Extent3D mipSize =
+                    self->GetMipLevelSingleSubresourcePhysicalSize(level, Aspect::Color);
+
+                for (uint32_t layer = range.baseArrayLayer;
+                     layer < range.baseArrayLayer + range.layerCount; ++layer) {
+                    if (clearValue == TextureBase::ClearValue::Zero &&
+                        self->IsSubresourceContentInitialized(
+                            SubresourceRange::SingleMipAndLayer(level, layer, Aspect::Color))) {
+                        // Skip lazy clears if already initialized.
+                        continue;
                     }
 
-                    DAWN_GL_TRY(gl, Enable(GL_SCISSOR_TEST));
-                    DAWN_GL_TRY(gl, DeleteFramebuffers(1, &framebuffer));
-                    DAWN_GL_TRY(gl, BindFramebuffer(GL_DRAW_FRAMEBUFFER, 0));
+                    textureCopy.origin.z = TexelCount{layer};
+                    DAWN_TRY(DoTexSubImage(gl, textureCopy, clearData.data(), dataLayout, mipSize));
                 }
             }
+            DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, 0));
         }
-    } else {
-        DAWN_ASSERT(range.aspects == Aspect::Color);
 
-        // create temp buffer with clear color to copy to the texture image
-        const TexelBlockInfo& blockInfo = GetFormat().GetAspectInfo(Aspect::Color).block;
-        DAWN_ASSERT(kTextureBytesPerRowAlignment % blockInfo.byteSize == 0);
-
-        Extent3D largestMipSize =
-            GetMipLevelSingleSubresourcePhysicalSize(range.baseMipLevel, Aspect::Color);
-        uint32_t bytesPerRow =
-            Align((largestMipSize.width / blockInfo.width) * blockInfo.byteSize, 4);
-
-        // Make sure that we are not rounding
-        DAWN_ASSERT(bytesPerRow % blockInfo.byteSize == 0);
-        DAWN_ASSERT(largestMipSize.height % blockInfo.height == 0);
-
-        uint64_t bufferSize64 = static_cast<uint64_t>(bytesPerRow) *
-                                (largestMipSize.height / blockInfo.height) *
-                                largestMipSize.depthOrArrayLayers;
-        if (bufferSize64 > std::numeric_limits<size_t>::max()) {
-            return DAWN_OUT_OF_MEMORY_ERROR("Unable to allocate buffer.");
+        if (clearValue == TextureBase::ClearValue::Zero) {
+            self->SetIsSubresourceContentInitialized(true, range);
+            device->IncrementLazyClearCountForTesting();
         }
-        size_t bufferSize = static_cast<size_t>(bufferSize64);
-
-        dawn::native::BufferDescriptor descriptor = {};
-        descriptor.mappedAtCreation = true;
-        descriptor.usage = wgpu::BufferUsage::CopySrc;
-        descriptor.size = bufferSize;
-
-        // We don't count the lazy clear of srcBuffer because it is an internal buffer.
-        // TODO(natlee@microsoft.com): use Dynamic Uploader here for temp buffer
-        Ref<Buffer> srcBuffer;
-        DAWN_TRY_ASSIGN(srcBuffer, Buffer::CreateInternalBuffer(device, &descriptor, false));
-
-        // Fill the buffer with clear color
-        memset(srcBuffer->GetMappedRange(0, bufferSize), clearColor, bufferSize);
-        DAWN_TRY(srcBuffer->Unmap());
-
-        DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, srcBuffer->GetHandle()));
-        for (uint32_t level = range.baseMipLevel; level < range.baseMipLevel + range.levelCount;
-             ++level) {
-            TextureCopy textureCopy;
-            textureCopy.texture = this;
-            textureCopy.mipLevel = level;
-            textureCopy.origin = {};
-            textureCopy.aspect = Aspect::Color;
-
-            TexelCopyBufferLayout dataLayout;
-            dataLayout.offset = 0;
-            dataLayout.bytesPerRow = bytesPerRow;
-            dataLayout.rowsPerImage = largestMipSize.height / blockInfo.height;
-
-            Extent3D mipSize = GetMipLevelSingleSubresourcePhysicalSize(level, Aspect::Color);
-
-            for (uint32_t layer = range.baseArrayLayer;
-                 layer < range.baseArrayLayer + range.layerCount; ++layer) {
-                if (clearValue == TextureBase::ClearValue::Zero &&
-                    IsSubresourceContentInitialized(
-                        SubresourceRange::SingleMipAndLayer(level, layer, Aspect::Color))) {
-                    // Skip lazy clears if already initialized.
-                    continue;
-                }
-
-                textureCopy.origin.z = TexelCount{layer};
-                DAWN_TRY(DoTexSubImage(gl, textureCopy, 0, dataLayout, mipSize));
-            }
-        }
-        DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, 0));
-    }
-    if (clearValue == TextureBase::ClearValue::Zero) {
-        SetIsSubresourceContentInitialized(true, range);
-        device->IncrementLazyClearCountForTesting();
-    }
+        return {};
+    }));
     return {};
 }
 
@@ -626,58 +654,72 @@ MaybeError Texture::SynchronizeTextureBeforeUse() {
 ResultOrError<Ref<TextureView>> TextureView::Create(
     TextureBase* texture,
     const UnpackedPtr<TextureViewDescriptor>& descriptor) {
-    const OpenGLFunctions& gl = ToBackend(texture->GetDevice())->GetGL();
-    GLuint handle = 0;
-    OwnsHandle ownsHandle = OwnsHandle::No;
-
-    // Texture could be destroyed by the time we make a view.
-    if (texture->IsDestroyed()) {
-        handle = 0;
-    } else if (!RequiresCreatingNewTextureView(texture, descriptor)) {
-        handle = ToBackend(texture)->GetHandle();
-    } else {
-        if (gl.IsAtLeastGL(4, 3)) {
-            DAWN_GL_TRY(gl, GenTextures(1, &handle));
-            ownsHandle = OwnsHandle::Yes;
-        } else {
-            handle = 0;
-        }
-    }
-
-    // Wrap the handle in a TextureView class early so that it is deleted if initialization fails
-    Ref<TextureView> view = AcquireRef(new TextureView(texture, descriptor, handle, ownsHandle));
-
-    if (ownsHandle == OwnsHandle::Yes) {
-        DAWN_GL_TRY(gl, TextureView(handle, view->GetGLTarget(), ToBackend(texture)->GetHandle(),
-                                    view->GetInternalFormat(), descriptor->baseMipLevel,
-                                    descriptor->mipLevelCount, descriptor->baseArrayLayer,
-                                    descriptor->arrayLayerCount));
-    }
+    Ref<TextureView> view = AcquireRef(new TextureView(texture, descriptor));
+    DAWN_TRY(view->Initialize(descriptor));
 
     return view;
 }
 
-TextureView::TextureView(TextureBase* texture,
-                         const UnpackedPtr<TextureViewDescriptor>& descriptor,
-                         GLuint handle,
-                         OwnsHandle ownsHandle)
-    : TextureViewBase(texture, descriptor), mHandle(handle), mOwnsHandle(ownsHandle) {
+TextureView::TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDescriptor>& descriptor)
+    : TextureViewBase(texture, descriptor) {
     mTarget = TargetForTextureViewDimension(descriptor->dimension, texture->GetSampleCount());
 }
 
-TextureView::~TextureView() {}
+MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& descriptor) {
+    Device* device = ToBackend(GetDevice());
+    if (GetTexture()->IsDestroyed()) {
+        mOwnsHandle = OwnsHandle::No;
+        mHandle = AcquireRef(new FutureHandle(0));
+        return {};
+    }
+
+    if (!RequiresCreatingNewTextureView(GetTexture(), descriptor)) {
+        mOwnsHandle = OwnsHandle::No;
+        mHandle = ToBackend(GetTexture())->GetHandleRef();
+    } else {
+        mHandle = AcquireRef(new FutureHandle());
+
+        Ref<TextureView> self = this;
+        DAWN_TRY(device->EnqueueGL([self](const auto& gl) mutable -> MaybeError {
+            if (gl.IsAtLeastGL(4, 3)) {
+                self->mOwnsHandle = OwnsHandle::Yes;
+                GLuint handle = 0;
+                DAWN_GL_TRY(gl, GenTextures(1, &handle));
+                self->mHandle->Set(handle);
+                DAWN_GL_TRY(gl, TextureView(handle, self->GetGLTarget(),
+                                            ToBackend(self->GetTexture())->GetHandle(),
+                                            self->GetInternalFormat(), self->GetBaseMipLevel(),
+                                            self->GetLevelCount(), self->GetBaseArrayLayer(),
+                                            self->GetLayerCount()));
+            } else {
+                self->mOwnsHandle = OwnsHandle::No;
+                self->mHandle->Set(0);
+            }
+            return {};
+        }));
+    }
+    return {};
+}
+
+TextureView::~TextureView() = default;
 
 void TextureView::DestroyImpl() {
     TextureViewBase::DestroyImpl();
-    if (mOwnsHandle == OwnsHandle::Yes) {
-        const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-        DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteTextures(1, &mHandle));
-    }
+    Device* device = ToBackend(GetDevice());
+    Ref<FutureHandle> handle = mHandle;
+    IgnoreErrors(device->EnqueueGL(
+        [handle = std::move(handle), ownsHandle = mOwnsHandle](const auto& gl) -> MaybeError {
+            if (ownsHandle == OwnsHandle::No) {
+                return {};
+            }
+            GLuint glHandle = handle->GetOrDefault();
+            DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteTextures(1, &glHandle));
+            return {};
+        }));
 }
 
 GLuint TextureView::GetHandle() const {
-    DAWN_ASSERT(mHandle != 0);
-    return mHandle;
+    return mHandle->Get();
 }
 
 GLenum TextureView::GetGLTarget() const {
@@ -696,7 +738,8 @@ MaybeError TextureView::BindToFramebuffer(const OpenGLFunctions& gl,
                       !GetTexture()->GetFormat().HasDepthOrStencil();
 
     GLenum textarget;
-    GLuint textureHandle, mipLevel, arrayLayer;
+    GLuint textureHandle;
+    GLuint mipLevel, arrayLayer;
     if (useOwnView) {
         // Use our own texture handle and target which points to a subset of the texture's
         // subresources.
