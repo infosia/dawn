@@ -124,7 +124,7 @@ MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
     textureCopy.origin = destination.origin;
     textureCopy.aspect = SelectFormatAspects(destination.texture->GetFormat(), destination.aspect);
 
-    DeviceBase* device = GetDevice();
+    Device* device = ToBackend(GetDevice());
     if (textureCopy.aspect == Aspect::Stencil &&
         (textureCopy.texture->GetFormat().aspects & Aspect::Depth ||
          device->IsToggleEnabled(Toggle::UseBlitForStencilTextureWrite))) {
@@ -170,15 +170,23 @@ MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
         return {};
     }
 
-    auto gl = ToBackend(GetDevice())->GetGL();
-    SubresourceRange range = GetSubresourcesAffectedByCopy(textureCopy, writeSizePixel);
-    if (IsCompleteSubresourceCopiedTo(destination.texture, writeSizePixel, destination.mipLevel,
-                                      destination.aspect)) {
-        destination.texture->SetIsSubresourceContentInitialized(true, range);
-    } else {
-        DAWN_TRY(ToBackend(destination.texture)->EnsureSubresourceContentInitialized(gl, range));
-    }
-    return DoTexSubImage(gl, textureCopy, data, dataLayout, writeSizePixel);
+    Ref<Texture> glTexture = ToBackend(destination.texture);
+
+    // The `data` ptr may be invalidated by the time the GL work is executed, so copy the data.
+    std::vector<uint8_t> copyData(dataSize);
+    memcpy(copyData.data(), data, dataSize);
+
+    return device->EnqueueGL([glTexture, copyData = std::move(copyData), textureCopy, dataLayout,
+                              writeSizePixel](const OpenGLFunctions& gl) -> MaybeError {
+        SubresourceRange range = GetSubresourcesAffectedByCopy(textureCopy, writeSizePixel);
+        if (IsCompleteSubresourceCopiedTo(glTexture.Get(), writeSizePixel, textureCopy.mipLevel,
+                                          textureCopy.aspect)) {
+            glTexture->SetIsSubresourceContentInitialized(true, range);
+        } else {
+            DAWN_TRY(glTexture->EnsureSubresourceContentInitialized(gl, range));
+        }
+        return DoTexSubImage(gl, textureCopy, copyData.data(), dataLayout, writeSizePixel);
+    });
 }
 
 void Queue::SetNeedsFenceSync() {

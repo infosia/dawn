@@ -28,8 +28,11 @@
 #ifndef SRC_DAWN_NATIVE_OPENGL_TEXTUREGL_H_
 #define SRC_DAWN_NATIVE_OPENGL_TEXTUREGL_H_
 
+#include <functional>
+
 #include "dawn/native/Texture.h"
 
+#include "dawn/native/opengl/FutureHandle.h"
 #include "dawn/native/opengl/opengl_platform.h"
 
 namespace dawn::native::opengl {
@@ -48,14 +51,13 @@ class Texture final : public TextureBase {
   public:
     static ResultOrError<Ref<Texture>> Create(Device* device,
                                               const UnpackedPtr<TextureDescriptor>& descriptor);
+    static ResultOrError<Ref<Texture>> CreateFromExistingHandle(
+        Device* device,
+        const UnpackedPtr<TextureDescriptor>& descriptor,
+        GLuint handle);
     static ResultOrError<Ref<Texture>> CreateFromSharedTextureMemory(
         SharedTextureMemory* memory,
         const UnpackedPtr<TextureDescriptor>& descriptor);
-
-    Texture(Device* device,
-            const UnpackedPtr<TextureDescriptor>& descriptor,
-            GLuint handle,
-            OwnsHandle ownsHandle);
 
     GLuint GetHandle() const;
     GLenum GetGLTarget() const;
@@ -67,14 +69,20 @@ class Texture final : public TextureBase {
     MaybeError SynchronizeTextureBeforeUse();
 
   private:
+    Texture(Device* device,
+            const UnpackedPtr<TextureDescriptor>& descriptor,
+            OwnsHandle ownsHandle);
     ~Texture() override;
+
+    using HandleGenerator = std::function<ResultOrError<GLuint>(const OpenGLFunctions&)>;
+    MaybeError InitializeHandle(const HandleGenerator& handleGenerator);
 
     void DestroyImpl() override;
     MaybeError ClearTexture(const OpenGLFunctions& gl,
                             const SubresourceRange& range,
                             TextureBase::ClearValue clearValue);
 
-    GLuint mHandle;
+    Ref<FutureHandle> mHandle;
     OwnsHandle mOwnsHandle = OwnsHandle::No;
     GLenum mTarget;
 };
@@ -95,15 +103,14 @@ class TextureView final : public TextureViewBase {
   private:
     TextureView(TextureBase* texture,
                 const UnpackedPtr<TextureViewDescriptor>& descriptor,
-                GLuint handle,
                 OwnsHandle ownsHandle);
 
     ~TextureView() override;
+
     void DestroyImpl() override;
     GLenum GetInternalFormat() const;
 
-    // TODO(crbug.com/dawn/1355): Delete this handle on texture destroy.
-    GLuint mHandle;
+    Ref<FutureHandle> mHandle;
     GLenum mTarget;
     OwnsHandle mOwnsHandle = OwnsHandle::No;
 };
