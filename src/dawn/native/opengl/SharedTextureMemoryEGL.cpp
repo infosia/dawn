@@ -89,17 +89,19 @@ SharedTextureMemoryEGL::SharedTextureMemoryEGL(Device* device,
 void SharedTextureMemoryEGL::DestroyImpl() {
     if (mEGLImage) {
         Device* device = ToBackend(GetDevice());
-        const EGLFunctions& egl = device->GetEGL(false);
-
-        egl.DestroyImage(device->GetEGLDisplay(), mEGLImage);
+        auto image = mEGLImage;
         mEGLImage = nullptr;
+
+        IgnoreErrors(device->EnqueueGL([device, image](const OpenGLFunctions& gl) -> MaybeError {
+            const EGLFunctions& egl = device->GetEGL(false);
+
+            egl.DestroyImage(device->GetEGLDisplay(), image);
+            return {};
+        }));
     }
 }
 
-ResultOrError<GLuint> SharedTextureMemoryEGL::GenerateGLTexture() {
-    Device* device = ToBackend(GetDevice());
-    const OpenGLFunctions& gl = device->GetGL();
-
+ResultOrError<GLuint> SharedTextureMemoryEGL::GenerateGLTexture(const OpenGLFunctions& gl) {
     GLuint tex;
     DAWN_GL_TRY(gl, GenTextures(1, &tex));
     DAWN_GL_TRY(gl, BindTexture(GL_TEXTURE_2D, tex));

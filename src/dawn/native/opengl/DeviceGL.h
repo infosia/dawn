@@ -44,6 +44,7 @@
 #include "dawn/native/opengl/ContextEGL.h"
 #include "dawn/native/opengl/EGLFunctions.h"
 #include "dawn/native/opengl/Forward.h"
+#include "dawn/native/opengl/FutureHandle.h"
 #include "dawn/native/opengl/GLFormat.h"
 #include "dawn/native/opengl/OpenGLFunctions.h"
 
@@ -143,6 +144,14 @@ class Device final : public DeviceBase {
 
         DAWN_TRY(scopedCurrentContext.End());
         return std::move(result);
+    }
+
+    template <typename Fn>
+    MaybeError EnqueueSetHandle(Ref<FutureHandle> futureHandle, Fn&& glHandleGenerator) {
+        return EnqueueGL(
+            [futureHandle, glHandleGenerator](const OpenGLFunctions& gl) -> MaybeError {
+                return futureHandle->TrySet(glHandleGenerator(gl));
+            });
     }
 
     // TODO(451928481): remove this from public access once all places are updated to use
