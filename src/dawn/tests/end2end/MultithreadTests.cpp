@@ -561,6 +561,58 @@ TEST_P(MultithreadTests, T2BThenMapInParallel) {
     }
 }
 
+// Test that encodes T2B on multiple threads, the textures are expected to be lazily cleared before
+// the copies.
+TEST_P(MultithreadTests, EncodeT2BWithLazyClearInParallel) {
+    constexpr uint32_t kTextureSize = 64;
+    constexpr uint32_t kBytesPerPixel = 4;
+    constexpr uint32_t kNumPixels = kTextureSize * kTextureSize;
+    constexpr uint64_t kBufferSize = kNumPixels * kBytesPerPixel;
+
+    constexpr uint32_t kNumThreads = 10;
+    std::vector<wgpu::Texture> textures(kNumThreads);
+    std::vector<wgpu::Buffer> buffers(kNumThreads);
+    std::vector<wgpu::CommandBuffer> cbs(kNumThreads);
+
+    const std::vector<uint32_t> nonZeros(kNumPixels, 1);
+
+    utils::RunInParallel(kNumThreads, [this, &textures, &buffers, &cbs, &nonZeros](uint32_t index) {
+        // Source texture
+        auto texture = CreateTexture(kTextureSize, kTextureSize, wgpu::TextureFormat::RGBA8Unorm,
+                                     wgpu::TextureUsage::CopyDst | wgpu::TextureUsage::CopySrc);
+        // Create a buffer with initial non-zero data.
+        wgpu::Buffer buffer =
+            utils::CreateBufferFromData(device, nonZeros.data(), kBufferSize,
+                                        wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst);
+
+        // Copy texture to buffer.
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::TexelCopyTextureInfo textureCopyView = utils::CreateTexelCopyTextureInfo(texture);
+        wgpu::Extent3D writeSize = {kTextureSize, kTextureSize, 1};
+        wgpu::TexelCopyBufferInfo bufferCopyView =
+            utils::CreateTexelCopyBufferInfo(buffer, 0, kTextureSize * kBytesPerPixel);
+        encoder.CopyTextureToBuffer(&textureCopyView, &bufferCopyView, &writeSize);
+
+        cbs[index] = encoder.Finish();
+        textures[index] = texture;
+        buffers[index] = buffer;
+    });
+
+    // Verify that buffers contain non-zeros before the copies.
+    for (auto& buffer : buffers) {
+        EXPECT_BUFFER_U32_RANGE_EQ(nonZeros.data(), buffer, 0, nonZeros.size());
+    }
+
+    // Submit the copies
+    queue.Submit(cbs.size(), cbs.data());
+
+    // Buffer should now contain zeros since textures are lazily cleared before the copies.
+    std::vector<uint32_t> zeros(kNumPixels);
+    for (auto& buffer : buffers) {
+        EXPECT_BUFFER_U32_RANGE_EQ(zeros.data(), buffer, 0, zeros.size());
+    }
+}
+
 // Test CreateShaderModule on multiple threads. Cache hits should share compilation warnings.
 TEST_P(MultithreadTests, CreateShaderModuleInParallel) {
     // TODO(451928481): multithread support in GL is incomplete
@@ -969,8 +1021,6 @@ TEST_P(MultithreadTests, CreateAndDestroyBindGroupsInParallel) {
 // Test that destroying Texture and associated TextureViews simultaneously on different threads
 // works. These was a data race here previously, see https://crbug.com/396294899 for more details.
 TEST_P(MultithreadTests, DestroyTextureAndViewsAtSameTime) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     constexpr uint32_t kNumViews = 10;
     constexpr uint32_t kNumThreads = kNumViews + 1;
     constexpr wgpu::TextureFormat kTextureFormat = wgpu::TextureFormat::R8Unorm;
@@ -1048,6 +1098,41 @@ TEST_P(MultithreadTests, WriteBufferInParallel) {
 
     for (uint32_t i = 0; i < kNumThreads; ++i) {
         EXPECT_BUFFER_U32_EQ(expectedData[i], buffers[i], 0);
+    }
+}
+
+// Test that WriteTexture in parallel should work.
+TEST_P(MultithreadTests, WriteTextureInParallel) {
+    constexpr uint32_t kWidth = 4;
+    constexpr uint32_t kHeight = 4;
+    constexpr uint32_t kNumThreads = 10;
+
+    std::vector<wgpu::Texture> textures(kNumThreads);
+    std::vector<utils::RGBA8> expectedColors(kNumThreads);
+
+    utils::RunInParallel(kNumThreads, [&](uint32_t index) {
+        textures[index] = CreateTexture(kWidth, kHeight, wgpu::TextureFormat::RGBA8Unorm,
+                                        wgpu::TextureUsage::CopyDst | wgpu::TextureUsage::CopySrc |
+                                            wgpu::TextureUsage::RenderAttachment);
+
+        uint8_t val = static_cast<uint8_t>(index * 20);
+        utils::RGBA8 color(val, val, val, 255);
+        expectedColors[index] = color;
+
+        wgpu::TexelCopyTextureInfo texelCopyTextureInfo = utils::CreateTexelCopyTextureInfo(
+            textures[index], 0, {0, 0, 0}, wgpu::TextureAspect::All);
+
+        std::vector<utils::RGBA8> data(kWidth * kHeight, color);
+        wgpu::TexelCopyBufferLayout texelCopyBufferLayout =
+            utils::CreateTexelCopyBufferLayout(0, kWidth * 4);
+        wgpu::Extent3D writeSize = {kWidth, kHeight, 1};
+
+        queue.WriteTexture(&texelCopyTextureInfo, data.data(), data.size() * sizeof(utils::RGBA8),
+                           &texelCopyBufferLayout, &writeSize);
+    });
+
+    for (uint32_t i = 0; i < kNumThreads; ++i) {
+        EXPECT_TEXTURE_EQ(expectedColors[i], textures[i], {0, 0});
     }
 }
 
@@ -1168,8 +1253,6 @@ class MultithreadEncodingTests : public MultithreadTests {};
 
 // Test that encoding render passes in parallel should work
 TEST_P(MultithreadEncodingTests, RenderPassEncodersInParallel) {
-    // TODO(451928481): multithread support in GL is incomplete
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     constexpr uint32_t kRTSize = 16;
     constexpr uint32_t kNumThreads = 10;
 

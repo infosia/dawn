@@ -421,7 +421,9 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingEGLImageImpl(
 
     // TODO(dawn:803): Validate the OpenGL texture format from the EGLImage against the format
     // in the passed-in TextureDescriptor.
-    auto result = AcquireRef(new Texture(this, textureDescriptor, tex, OwnsHandle::No));
+    Ref<Texture> result;
+    DAWN_TRY_ASSIGN(result, Texture::CreateFromExistingHandle(this, textureDescriptor, tex));
+
     result->SetIsSubresourceContentInitialized(descriptor->isInitialized,
                                                result->GetAllSubresources());
 
@@ -474,7 +476,8 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingGLTextureImpl(
             width, height, &textureDescriptor->size);
     }
 
-    auto result = AcquireRef(new Texture(this, textureDescriptor, texture, OwnsHandle::No));
+    Ref<Texture> result;
+    DAWN_TRY_ASSIGN(result, Texture::CreateFromExistingHandle(this, textureDescriptor, texture));
     result->SetIsSubresourceContentInitialized(descriptor->isInitialized,
                                                result->GetAllSubresources());
 
