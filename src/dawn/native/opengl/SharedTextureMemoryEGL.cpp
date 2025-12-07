@@ -89,24 +89,34 @@ SharedTextureMemoryEGL::SharedTextureMemoryEGL(Device* device,
 void SharedTextureMemoryEGL::DestroyImpl() {
     if (mEGLImage) {
         Device* device = ToBackend(GetDevice());
-        const EGLFunctions& egl = device->GetEGL(false);
-
-        egl.DestroyImage(device->GetEGLDisplay(), mEGLImage);
+        auto image = mEGLImage;
         mEGLImage = nullptr;
+
+        IgnoreErrors(device->EnqueueGL([device, image](const OpenGLFunctions& gl) -> MaybeError {
+            const EGLFunctions& egl = device->GetEGL(false);
+
+            egl.DestroyImage(device->GetEGLDisplay(), image);
+            return {};
+        }));
     }
 }
 
-ResultOrError<GLuint> SharedTextureMemoryEGL::GenerateGLTexture() {
+ResultOrError<Ref<FutureHandle>> SharedTextureMemoryEGL::GenerateGLTexture() {
     Device* device = ToBackend(GetDevice());
-    const OpenGLFunctions& gl = device->GetGL();
+    auto futureHandle = AcquireRef(new FutureHandle());
 
-    GLuint tex;
-    DAWN_GL_TRY(gl, GenTextures(1, &tex));
-    DAWN_GL_TRY(gl, BindTexture(GL_TEXTURE_2D, tex));
-    DAWN_GL_TRY(gl, EGLImageTargetTexture2DOES(GL_TEXTURE_2D, mEGLImage));
-    DAWN_GL_TRY(gl, TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0));
+    Ref<SharedTextureMemoryEGL> self = this;
+    DAWN_TRY(device->EnqueueGL([self, futureHandle](const auto& gl) mutable -> MaybeError {
+        GLuint tex;
+        DAWN_GL_TRY(gl, GenTextures(1, &tex));
+        futureHandle->Set(tex);
+        DAWN_GL_TRY(gl, BindTexture(GL_TEXTURE_2D, tex));
+        DAWN_GL_TRY(gl, EGLImageTargetTexture2DOES(GL_TEXTURE_2D, self->mEGLImage));
+        DAWN_GL_TRY(gl, TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0));
+        return {};
+    }));
 
-    return tex;
+    return futureHandle;
 }
 
 }  // namespace dawn::native::opengl
