@@ -44,14 +44,14 @@ using Wgslreader_LowerTest = core::ir::transform::TransformTest;
 TEST_F(Wgslreader_LowerTest, BuiltinConversion) {
     auto* f = b.Function("f", ty.void_());
     b.Append(f->Block(), [&] {  //
-        b.Call<wgsl::ir::BuiltinCall>(ty.i32(), wgsl::BuiltinFn::kMax, 1_i, 2_i);
+        b.Max(1_i, 2_i);
         b.Return(f);
     });
 
     auto* src = R"(
 %f = func():void {
   $B1: {
-    %2:i32 = wgsl.max 1i, 2i
+    %2:i32 = max 1i, 2i
     ret
   }
 }

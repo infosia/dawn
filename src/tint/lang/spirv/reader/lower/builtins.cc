@@ -732,7 +732,34 @@ struct State {
     void SMax(spirv::ir::BuiltinCall* call) { WrapSignedSpirvMethods(call, core::BuiltinFn::kMax); }
     void SMin(spirv::ir::BuiltinCall* call) { WrapSignedSpirvMethods(call, core::BuiltinFn::kMin); }
     void SClamp(spirv::ir::BuiltinCall* call) {
-        WrapSignedSpirvMethods(call, core::BuiltinFn::kClamp);
+        auto args = call->Args();
+        b.InsertBefore(call, [&] {
+            auto* result_ty = call->Result()->Type();
+            auto* e = args[0];
+            auto* low = args[1];
+            auto* high = args[2];
+
+            auto* i32_ty = ty.MatchWidth(ty.i32(), result_ty);
+            if (e->Type()->IsUnsignedIntegerScalarOrVector()) {
+                e = b.Bitcast(i32_ty, e)->Result();
+            }
+            if (low->Type()->IsUnsignedIntegerScalarOrVector()) {
+                low = b.Bitcast(i32_ty, low)->Result();
+            }
+            if (high->Type()->IsUnsignedIntegerScalarOrVector()) {
+                high = b.Bitcast(i32_ty, high)->Result();
+            }
+
+            auto* new_call = b.Clamp(e, low, high);
+
+            core::ir::Value* replacement = new_call->Result();
+            if (result_ty->DeepestElement() == ty.u32()) {
+                new_call->Result()->SetType(i32_ty);
+                replacement = b.Bitcast(result_ty, replacement)->Result();
+            }
+            call->Result()->ReplaceAllUsesWith(replacement);
+        });
+        call->Destroy();
     }
 
     void Ldexp(spirv::ir::BuiltinCall* call) {
@@ -779,7 +806,34 @@ struct State {
         WrapUnsignedSpirvMethods(call, core::BuiltinFn::kMin);
     }
     void UClamp(spirv::ir::BuiltinCall* call) {
-        WrapUnsignedSpirvMethods(call, core::BuiltinFn::kClamp);
+        auto args = call->Args();
+        b.InsertBefore(call, [&] {
+            auto* result_ty = call->Result()->Type();
+            auto* e = args[0];
+            auto* low = args[1];
+            auto* high = args[2];
+
+            auto* u32_ty = ty.MatchWidth(ty.u32(), result_ty);
+            if (e->Type()->IsSignedIntegerScalarOrVector()) {
+                e = b.Bitcast(u32_ty, e)->Result();
+            }
+            if (low->Type()->IsSignedIntegerScalarOrVector()) {
+                low = b.Bitcast(u32_ty, low)->Result();
+            }
+            if (high->Type()->IsSignedIntegerScalarOrVector()) {
+                high = b.Bitcast(u32_ty, high)->Result();
+            }
+
+            auto* new_call = b.Clamp(e, low, high);
+
+            core::ir::Value* replacement = new_call->Result();
+            if (result_ty->DeepestElement() == ty.i32()) {
+                new_call->Result()->SetType(u32_ty);
+                replacement = b.Bitcast(result_ty, replacement)->Result();
+            }
+            call->Result()->ReplaceAllUsesWith(replacement);
+        });
+        call->Destroy();
     }
     void FindUMsb(spirv::ir::BuiltinCall* call) {
         WrapUnsignedSpirvMethods(call, core::BuiltinFn::kFirstLeadingBit);
