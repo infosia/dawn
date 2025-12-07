@@ -30,6 +30,7 @@
 
 #include "dawn/native/Texture.h"
 
+#include "dawn/native/opengl/FutureHandle.h"
 #include "dawn/native/opengl/opengl_platform.h"
 
 namespace dawn::native::opengl {
@@ -54,10 +55,11 @@ class Texture final : public TextureBase {
 
     Texture(Device* device,
             const UnpackedPtr<TextureDescriptor>& descriptor,
-            GLuint handle,
+            Ref<FutureHandle> handle,
             OwnsHandle ownsHandle);
 
     GLuint GetHandle() const;
+    Ref<FutureHandle> GetHandleRef() const;
     GLenum GetGLTarget() const;
     const GLFormat& GetGLFormat() const;
 
@@ -67,14 +69,18 @@ class Texture final : public TextureBase {
     MaybeError SynchronizeTextureBeforeUse();
 
   private:
+    Texture(Device* device,
+            const UnpackedPtr<TextureDescriptor>& descriptor,
+            OwnsHandle ownsHandle);
     ~Texture() override;
 
+    MaybeError Initialize(const UnpackedPtr<TextureDescriptor>& descriptor);
     void DestroyImpl() override;
     MaybeError ClearTexture(const OpenGLFunctions& gl,
                             const SubresourceRange& range,
                             TextureBase::ClearValue clearValue);
 
-    GLuint mHandle;
+    Ref<FutureHandle> mHandle;
     OwnsHandle mOwnsHandle = OwnsHandle::No;
     GLenum mTarget;
 };
@@ -93,17 +99,15 @@ class TextureView final : public TextureViewBase {
                                  GLuint depthLayer = 0);
 
   private:
-    TextureView(TextureBase* texture,
-                const UnpackedPtr<TextureViewDescriptor>& descriptor,
-                GLuint handle,
-                OwnsHandle ownsHandle);
+    TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDescriptor>& descriptor);
 
     ~TextureView() override;
+
+    MaybeError Initialize(const UnpackedPtr<TextureViewDescriptor>& descriptor);
     void DestroyImpl() override;
     GLenum GetInternalFormat() const;
 
-    // TODO(crbug.com/dawn/1355): Delete this handle on texture destroy.
-    GLuint mHandle;
+    Ref<FutureHandle> mHandle;
     GLenum mTarget;
     OwnsHandle mOwnsHandle = OwnsHandle::No;
 };
