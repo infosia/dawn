@@ -35,6 +35,7 @@
 #include "dawn/common/Assert.h"
 #include "dawn/common/NonCopyable.h"
 #include "dawn/common/RefCounted.h"
+#include "dawn/common/Result.h"
 #include "dawn/native/opengl/opengl_platform.h"
 
 namespace dawn::native::opengl {
@@ -44,6 +45,20 @@ namespace dawn::native::opengl {
 class FutureHandle : public RefCounted, public NonCopyable {
   public:
     FutureHandle() = default;
+    explicit FutureHandle(GLuint value) : mValue(value), mIsSet(true) {}
+
+    // Try acquire a result. If it's an error, the zero value will be assigned and the error will be
+    // returned.
+    MaybeError TrySet(ResultOrError<GLuint> result) {
+        if (DAWN_UNLIKELY(result.IsError())) {
+            Set(0);
+            return result.AcquireError();
+        }
+
+        Set(result.AcquireSuccess());
+
+        return {};
+    }
 
     void Set(GLuint value) {
         mValue = std::move(value);
