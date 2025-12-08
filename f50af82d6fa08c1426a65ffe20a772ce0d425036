@@ -46,6 +46,30 @@
       },
       "revId": "f50af82d6fa08c1426a65ffe20a772ce0d425036",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "743bad62_ea848449",
+        "filename": "src/dawn/tests/end2end/MaxLimitTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-08T18:21:23Z",
+      "side": 1,
+      "message": "I can limit it to 65536 per padding and at least that gets rid of exposing the tint limit",
+      "parentUuid": "57401b4c_8c908cdb",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 17
+      },
+      "revId": "f50af82d6fa08c1426a65ffe20a772ce0d425036",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
