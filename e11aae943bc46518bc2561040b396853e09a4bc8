@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "81047a21_768a8788",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-12-08T10:52:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb038457_36052546",
+      "revId": "e11aae943bc46518bc2561040b396853e09a4bc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ba2d6c4e_1246f714",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-12-05T13:08:54Z",
       "side": 1,
       "message": "If include_callback isn\u0027t used in the templates, is this line actually needed?",
+      "revId": "e11aae943bc46518bc2561040b396853e09a4bc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b286275d_886ad2dc",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-12-08T10:52:05Z",
+      "side": 1,
+      "message": "This is used when rendering the callback Kotlin file in `MultiGeneratorFromDawnJSON.get_outputs`.",
+      "parentUuid": "ba2d6c4e_1246f714",
       "revId": "e11aae943bc46518bc2561040b396853e09a4bc8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +94,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a84d5bef_2b08d84f",
+        "filename": "generator/templates/art/JNIClasses.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-12-08T10:52:05Z",
+      "side": 1,
+      "message": "Here is the list of methods and runnable mapping: https://docs.google.com/document/d/1_1vJDyfvBelG_8xRcocZtAtbtKfMvLk0BdLygqDJka4/edit?resourcekey\u003d0-ov-AiIw7fyuX25dJ_NwdWA\u0026tab\u003dt.0#bookmark\u003did.dcy4idig638i",
+      "parentUuid": "9b4043eb_bfb597f2",
+      "range": {
+        "startLine": 45,
+        "startChar": 15,
+        "endLine": 45,
+        "endChar": 34
+      },
+      "revId": "e11aae943bc46518bc2561040b396853e09a4bc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "47648ad7_051389b7",
@@ -75,6 +135,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "04d50968_d2628645",
+        "filename": "generator/templates/art/api_kotlin_callback.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-12-08T10:52:05Z",
+      "side": 1,
+      "message": "`GPURequestCallbackRunnable\u003cT\u003e` treats `T` as a generic type, so it has no knowledge of the `@ErrorType` annotation due to type erasure. We cannot blindly check `result !\u003d ErrorType.NoError` because `T` could be any type. Even if `T` is an int, the generic class cannot distinguish between a valid numerical result and an error code.",
+      "parentUuid": "47648ad7_051389b7",
+      "revId": "e11aae943bc46518bc2561040b396853e09a4bc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cfa8db39_f3648425",
@@ -88,6 +166,24 @@
       "writtenOn": "2025-12-05T13:08:54Z",
       "side": 1,
       "message": "It\u0027s a bit worrying to see so *much* new code here. Is there any way we can tame the complexity / break it up a bit?",
+      "revId": "e11aae943bc46518bc2561040b396853e09a4bc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "951138cb_839aa43b",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-12-08T10:52:05Z",
+      "side": 1,
+      "message": "Done. I refactored the template to break it up a bit. Let me know if this looks better.",
+      "parentUuid": "cfa8db39_f3648425",
       "revId": "e11aae943bc46518bc2561040b396853e09a4bc8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
