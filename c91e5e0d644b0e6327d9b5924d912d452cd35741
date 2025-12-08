@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a476ae7b_6ab6906b",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-08T04:04:51Z",
+      "side": 1,
+      "message": "No tests for comments 😊",
+      "range": {
+        "startLine": 968,
+        "startChar": 34,
+        "endLine": 968,
+        "endChar": 40
+      },
+      "revId": "c91e5e0d644b0e6327d9b5924d912d452cd35741",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
