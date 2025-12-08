@@ -67,6 +67,16 @@ ADDITIONAL_MIXINS = {
             '--gtest_filter=-*WebGPU_WebGPU_backend_on*',
         ],
     },
+    'dawn_end2end_sws_tsan_gtest_common_args': {
+        'args': [
+            '--tsan=1',
+            # We are only want to run on SwiftShader for now. Since SwiftShader
+            # is only meant as a temporary solution, this should either be
+            # removed in favor of LLVMPipe or TSAN testing should run on
+            # real hardware.
+            '--adapter-vendor-id=0x1AE0',
+        ],
+    },
     'no_swarming': {
         'swarming': {
             'can_use_on_swarming_builders': False,
