@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "eecb9c58_ddd560c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3810252
+      },
+      "writtenOn": "2025-12-08T23:43:29Z",
+      "side": 1,
+      "message": "TODO: update CL description after re-rolling\n\nContext: crbug.com/467131073#comment2",
+      "revId": "02bafbba551f3b8c0eb2e5b1777b9b329163b6d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "83f5117a_6ea705db",
