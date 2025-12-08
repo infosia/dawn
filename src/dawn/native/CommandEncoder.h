@@ -101,6 +101,7 @@ class CommandEncoder final : public ApiObjectBase {
                             uint32_t queryCount,
                             BufferBase* destination,
                             uint64_t destinationOffset);
+    void APISetResourceTable(ResourceTableBase* table);
     void APIWriteBuffer(BufferBase* buffer,
                         uint64_t bufferOffset,
                         const uint8_t* data,
@@ -140,10 +141,13 @@ class CommandEncoder final : public ApiObjectBase {
 
     MaybeError ValidateFinish() const;
 
+    ResourceTableBase* mResourceTable = nullptr;
+
     EncodingContext mEncodingContext;
     absl::flat_hash_set<BufferBase*> mTopLevelBuffers;
     absl::flat_hash_set<TextureBase*> mTopLevelTextures;
     absl::flat_hash_set<QuerySetBase*> mUsedQuerySets;
+    absl::flat_hash_set<ResourceTableBase*> mUsedResourceTables;
 
     uint64_t mDebugGroupStackSize = 0;
 
