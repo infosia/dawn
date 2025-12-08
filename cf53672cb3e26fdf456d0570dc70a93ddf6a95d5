@@ -34,6 +34,24 @@
       "parentUuid": "03b697d9_a2806cfb",
       "revId": "cf53672cb3e26fdf456d0570dc70a93ddf6a95d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50b1504c_52e3794d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-08T18:19:08Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you\u0027re suggesting I do. The issue we have now is the test fails and then people have to go investigate why. Should I add `DAWN_TEST_UNSUPPORT_IF(IsTintValidationOn())` or something like that? Is there a flag for that?",
+      "parentUuid": "3365ae99_adebb491",
+      "revId": "cf53672cb3e26fdf456d0570dc70a93ddf6a95d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
