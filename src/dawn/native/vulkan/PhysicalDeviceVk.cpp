@@ -618,20 +618,15 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
                                 vkFeatures.descriptorBindingPartiallyBound &&
                                 vkFeatures.descriptorBindingVariableDescriptorCount;
 
-        // We need to check a dozen Vulkan limits against the WebGPU limit for dynamic binding
-        // arrays.
+        // We need to check all the limits for numbers of bindings related to bindless.
         constexpr uint32_t kRequiredLimit =
             kMaxDynamicBindingArraySize + kReservedDynamicBindingArrayEntries;
         bool hasLimit =
             vkProperties.maxPerStageDescriptorUpdateAfterBindSamplers >= kRequiredLimit &&
-            vkProperties.maxPerStageDescriptorUpdateAfterBindStorageBuffers >= kRequiredLimit &&
             vkProperties.maxPerStageDescriptorUpdateAfterBindSampledImages >= kRequiredLimit &&
-            vkProperties.maxPerStageDescriptorUpdateAfterBindStorageImages >= kRequiredLimit &&
             vkProperties.maxPerStageUpdateAfterBindResources >= kRequiredLimit &&
             vkProperties.maxDescriptorSetUpdateAfterBindSamplers >= kRequiredLimit &&
-            vkProperties.maxDescriptorSetUpdateAfterBindStorageBuffers >= kRequiredLimit &&
             vkProperties.maxDescriptorSetUpdateAfterBindSampledImages >= kRequiredLimit &&
-            vkProperties.maxDescriptorSetUpdateAfterBindStorageImages >= kRequiredLimit &&
             vkProperties.maxUpdateAfterBindDescriptorsInAllPools >= kRequiredLimit;
 
         // Drivers may not support robust buffer access with UpdateAfterBind (presumably because
@@ -653,8 +648,14 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
                                      mDeviceInfo.pipelineRobustnessFeatures.pipelineRobustness);
 
         if (hasUpdateAfterBind && hasOtherFeatures && hasLimit && canSupportRobustness) {
+            EnableFeature(Feature::ChromiumExperimentalSamplingResourceTable);
             EnableFeature(Feature::ChromiumExperimentalBindless);
         }
+
+        // TODO(https://issues.chromium.org/435317394): add support for heterogeneous bindless by
+        // checking both for storage buffers/images limits and some support for heterogeneous
+        // bindings via VK_EXT_mutable_descriptor_type, VK_EXT_descriptor_buffer or descriptor
+        // heaps.
     }
 }
 
