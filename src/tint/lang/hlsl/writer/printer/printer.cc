@@ -378,9 +378,9 @@ class Printer : public tint::TextGenerator {
             }
 
         } else {
-            out << "[";
+            out << ".yzwx[((";
             EmitValue(out, index);
-            out << "]";
+            out << ") + 3) % 4]";
         }
     }
 
