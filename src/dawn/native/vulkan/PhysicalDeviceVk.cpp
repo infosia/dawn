@@ -34,6 +34,7 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/GPUInfo.h"
+#include "dawn/common/GPUInfo_autogen.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/ImmediateConstantsLayout.h"
@@ -970,6 +971,12 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         // Qualcomm's shader compiler returns an internal error when binding_array<texture*> is
         // passed by argument to functions.
         deviceToggles->Default(Toggle::VulkanDirectVariableAccessTransformHandle, true);
+
+        // Qualcomm has compiler error on these generations.
+        if (gpu_info::IsQualcommPCIAdreno6xx(GetVendorId(), GetDeviceId()) ||
+            gpu_info::IsQualcommPCIAdreno7xx(GetVendorId(), GetDeviceId())) {
+            deviceToggles->Default(Toggle::VulkanSampleCompareDepthCubeArrayWorkaround, true);
+        }
     }
 
     if (IsPixel10()) {
