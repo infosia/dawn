@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61d7f7f0_88f7802e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-08T18:30:26Z",
+      "side": 1,
+      "message": "used `array\u003cu32, ...\u003e` and limited it to 65535 elements which is a known limit",
+      "revId": "aeb8ba9a60b7c41b6b35969cd19298a2ceb344bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
