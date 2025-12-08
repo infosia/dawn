@@ -65,6 +65,10 @@ ObjectType ResourceTableBase::GetType() const {
     return ObjectType::ResourceTable;
 }
 
+DynamicArrayState* ResourceTableBase::GetDynamicArrayState() {
+    return mDynamicArray.Get();
+}
+
 void ResourceTableBase::DestroyImpl() {
     if (mDynamicArray) {
         mDynamicArray->Destroy();

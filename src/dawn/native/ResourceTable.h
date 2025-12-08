@@ -50,10 +50,15 @@ class ResourceTableBase : public ApiObjectBase {
   protected:
     ResourceTableBase(DeviceBase* device, const ResourceTableDescriptor* descriptor);
 
-  private:
-    ResourceTableBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
     void DestroyImpl() override;
 
+    DynamicArrayState* GetDynamicArrayState();
+
+  private:
+    ResourceTableBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
+
+    // TODO(https://issues.chromium.org/463925499): Inline the functionality of DynamicArrayState in
+    // ResourceTable once bindless bindgroup support is removed.
     Ref<DynamicArrayState> mDynamicArray;
     bool mDestroyed = false;
 };
