@@ -16,6 +16,24 @@
       "message": "nit: can we also `resourceTable.nextInChain \u003d desc.nextInChain` before that so in the future if we add more to the chain, we automatically have the chain extended correctly (instead of stopping at resourceTable).",
       "revId": "4accd155d70e7516b1a68e6852e4c29e8890984a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cb77b27_893e338d",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-08T15:45:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3fa52763_a9cb536d",
+      "revId": "4accd155d70e7516b1a68e6852e4c29e8890984a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
