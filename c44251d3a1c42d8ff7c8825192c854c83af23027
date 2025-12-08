@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5a38037_4ce73556",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-08T15:18:10Z",
+      "side": 1,
+      "message": "LGTM, but I\u0027m pretty sure ANGLE does this for us:\n\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/src/libANGLE/validationEGL.cpp;l\u003d3613\n\nNo harm in double-validation, though.",
+      "revId": "c44251d3a1c42d8ff7c8825192c854c83af23027",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
