@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd50b3da_90bad741",
+        "filename": "src/tint/lang/hlsl/writer/common/options.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-08T15:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36c72612_30f7c49e",
+      "revId": "340bea296a91b3edfadd82b30150efbe5ab31767",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "108ddc9a_377c4715",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-12-05T20:00:30Z",
       "side": 1,
       "message": "I think it\u0027s always a `u32` so we don\u0027t need the construct here (and if it\u0027s not we should be using `convert` instead)?",
+      "revId": "340bea296a91b3edfadd82b30150efbe5ab31767",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f944af9f_2cd62a50",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-08T15:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "108ddc9a_377c4715",
       "revId": "340bea296a91b3edfadd82b30150efbe5ab31767",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
