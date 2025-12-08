@@ -58,6 +58,7 @@
 #include "dawn/native/RenderPassEncoder.h"
 #include "dawn/native/RenderPassWorkaroundsHelper.h"
 #include "dawn/native/RenderPipeline.h"
+#include "dawn/native/ResourceTable.h"
 #include "dawn/native/ValidationUtils.h"
 #include "dawn/native/ValidationUtils_autogen.h"
 #include "dawn/native/dawn_platform.h"
@@ -2172,6 +2173,38 @@ void CommandEncoder::APIResolveQuerySet(QuerySetBase* querySet,
         },
         "encoding %s.ResolveQuerySet(%s, %u, %u, %s, %u).", this, querySet, firstQuery, queryCount,
         destination, destinationOffset);
+}
+
+void CommandEncoder::APISetResourceTable(ResourceTableBase* table) {
+    mEncodingContext.TryEncode(
+        this,
+        [&](CommandAllocator* allocator) -> MaybeError {
+            if (GetDevice()->IsValidationEnabled()) {
+                // GetDevice()->ValidateObject(this)
+                if (table) {
+                    DAWN_TRY(GetDevice()->ValidateObject(table));
+                }
+            }
+            DAWN_INVALID_IF(
+                !GetDevice()->HasFeature(Feature::ChromiumExperimentalSamplingResourceTable),
+                "setResourceTable requires the %s feature enabled.",
+                wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable);
+
+            // TODO: Set this.[[resource_table]] to table (it is a state initially set to null).
+            mResourceTable = table;
+
+            // TODO: If table is not null, append it to this.[[resource_tables_used]].
+            if (!table) {
+                mResourceTablesUsed.insert(table);
+            }
+
+            // TODO (elsewhere): In the validation for dispatch* and draw* add a check that if
+            // pipeline.[[desc]].layout.[[desc]].usesResourceTable is true, then the
+            // GPUCommandEncoder's [[resource_table]] is not null.
+
+            return {};
+        },
+        "encoding %s.SetResourceTable(%s, %u).", this, table);
 }
 
 void CommandEncoder::APIWriteBuffer(BufferBase* buffer,
