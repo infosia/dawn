@@ -52,6 +52,24 @@
       "parentUuid": "3365ae99_adebb491",
       "revId": "cf53672cb3e26fdf456d0570dc70a93ddf6a95d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c71ea006_20fc7050",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-08T18:54:36Z",
+      "side": 1,
+      "message": "Sorry wasn\u0027t suggesting you do anything different that what this CL already does. Just wanted to provide context on why it happens in debug and not release, and why the limit exists at all.",
+      "parentUuid": "50b1504c_52e3794d",
+      "revId": "cf53672cb3e26fdf456d0570dc70a93ddf6a95d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

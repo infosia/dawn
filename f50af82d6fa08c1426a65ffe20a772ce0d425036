@@ -70,6 +70,30 @@
       },
       "revId": "f50af82d6fa08c1426a65ffe20a772ce0d425036",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "796d572e_65f8cd1b",
+        "filename": "src/dawn/tests/end2end/MaxLimitTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-08T18:54:36Z",
+      "side": 1,
+      "message": "Ah yes, I forgot about that limit. So many limits...\n\nArrays of up to 65536 SGTM.",
+      "parentUuid": "743bad62_ea848449",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 17
+      },
+      "revId": "f50af82d6fa08c1426a65ffe20a772ce0d425036",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
