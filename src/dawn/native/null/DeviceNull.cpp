@@ -234,6 +234,7 @@ Ref<RenderPipelineBase> Device::CreateUninitializedRenderPipelineImpl(
 }
 ResultOrError<Ref<ResourceTableBase>> Device::CreateResourceTableImpl(
     const ResourceTableDescriptor* descriptor) {
+    // XXX Initialize
     return AcquireRef(new ResourceTable(this, descriptor));
 }
 ResultOrError<Ref<SamplerBase>> Device::CreateSamplerImpl(const SamplerDescriptor* descriptor) {
