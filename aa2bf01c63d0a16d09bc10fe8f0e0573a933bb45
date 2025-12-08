@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e8dc42b_a53009bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 36
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-08T19:47:13Z",
+      "side": 1,
+      "message": "Dan is away. I will submit.",
+      "revId": "aa2bf01c63d0a16d09bc10fe8f0e0573a933bb45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
