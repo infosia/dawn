@@ -113,10 +113,6 @@ class Device final : public DeviceBase {
 
     MaybeError Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor);
 
-    ResultOrError<Ref<CommandBufferBase>> CreateCommandBuffer(
-        CommandEncoder* encoder,
-        const CommandBufferDescriptor* descriptor) override;
-
     MaybeError TickImpl() override;
 
     void AddPendingOperation(std::unique_ptr<PendingOperation> operation);
@@ -152,6 +148,9 @@ class Device final : public DeviceBase {
         const UnpackedPtr<BindGroupLayoutDescriptor>& descriptor) override;
     ResultOrError<Ref<BufferBase>> CreateBufferImpl(
         const UnpackedPtr<BufferDescriptor>& descriptor) override;
+    ResultOrError<Ref<CommandBufferBase>> CreateCommandBuffer(
+        CommandEncoder* encoder,
+        const CommandBufferDescriptor* descriptor) override;
     Ref<ComputePipelineBase> CreateUninitializedComputePipelineImpl(
         const UnpackedPtr<ComputePipelineDescriptor>& descriptor) override;
     ResultOrError<Ref<PipelineLayoutBase>> CreatePipelineLayoutImpl(

@@ -95,10 +95,6 @@ class Device final : public DeviceBase {
                                         ExternalImageExportInfoVk* info,
                                         std::vector<ExternalSemaphoreHandle>* semaphoreHandle);
 
-    ResultOrError<Ref<CommandBufferBase>> CreateCommandBuffer(
-        CommandEncoder* encoder,
-        const CommandBufferDescriptor* descriptor) override;
-
     MaybeError TickImpl() override;
 
     MaybeError CopyFromStagingToBuffer(BufferBase* source,
@@ -149,6 +145,9 @@ class Device final : public DeviceBase {
         const UnpackedPtr<BindGroupLayoutDescriptor>& descriptor) override;
     ResultOrError<Ref<BufferBase>> CreateBufferImpl(
         const UnpackedPtr<BufferDescriptor>& descriptor) override;
+    ResultOrError<Ref<CommandBufferBase>> CreateCommandBuffer(
+        CommandEncoder* encoder,
+        const CommandBufferDescriptor* descriptor) override;
     ResultOrError<Ref<PipelineLayoutBase>> CreatePipelineLayoutImpl(
         const UnpackedPtr<PipelineLayoutDescriptor>& descriptor) override;
     ResultOrError<Ref<QuerySetBase>> CreateQuerySetImpl(

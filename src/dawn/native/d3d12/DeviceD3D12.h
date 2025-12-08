@@ -65,10 +65,6 @@ class Device final : public d3d::Device {
 
     MaybeError Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor);
 
-    ResultOrError<Ref<CommandBufferBase>> CreateCommandBuffer(
-        CommandEncoder* encoder,
-        const CommandBufferDescriptor* descriptor) override;
-
     MaybeError TickImpl() override;
 
     ID3D12Device* GetD3D12Device() const;
@@ -186,6 +182,9 @@ class Device final : public d3d::Device {
         const UnpackedPtr<BindGroupLayoutDescriptor>& descriptor) override;
     ResultOrError<Ref<BufferBase>> CreateBufferImpl(
         const UnpackedPtr<BufferDescriptor>& descriptor) override;
+    ResultOrError<Ref<CommandBufferBase>> CreateCommandBuffer(
+        CommandEncoder* encoder,
+        const CommandBufferDescriptor* descriptor) override;
     ResultOrError<Ref<PipelineLayoutBase>> CreatePipelineLayoutImpl(
         const UnpackedPtr<PipelineLayoutDescriptor>& descriptor) override;
     ResultOrError<Ref<QuerySetBase>> CreateQuerySetImpl(
