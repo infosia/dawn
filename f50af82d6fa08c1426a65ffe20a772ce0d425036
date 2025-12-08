@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f97f858_1a689293",
+        "filename": "src/dawn/tests/end2end/MaxLimitTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-08T16:49:38Z",
+      "side": 1,
+      "message": "Now that uniform buffers have relaxed layout constraints, can we just declare the padding member as a single array of the right size?\n```\npadding: array\u003cu32, ${paddingNeeded / 4}\u003e,\n```\n\nKeeps it simpler and also removes the need to expose Tint\u0027s internal padding limit here.",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 17
+      },
+      "revId": "f50af82d6fa08c1426a65ffe20a772ce0d425036",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
