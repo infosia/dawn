@@ -58,6 +58,7 @@
 #include "dawn/native/vulkan/RenderPassCache.h"
 #include "dawn/native/vulkan/RenderPipelineVk.h"
 #include "dawn/native/vulkan/ResourceMemoryAllocatorVk.h"
+#include "dawn/native/vulkan/ResourceTableVk.h"
 #include "dawn/native/vulkan/SamplerVk.h"
 #include "dawn/native/vulkan/ShaderModuleVk.h"
 #include "dawn/native/vulkan/SharedFenceVk.h"
@@ -187,6 +188,10 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     Ref<Queue> queue;
     DAWN_TRY_ASSIGN(queue, Queue::Create(this, &descriptor->defaultQueue, mMainQueueFamily));
 
+    if (HasFeature(Feature::ChromiumExperimentalSamplingResourceTable)) {
+        DAWN_TRY_ASSIGN(mResourceTableLayout, ResourceTable::MakeDescriptorSetLayout(this));
+    }
+
     return DeviceBase::Initialize(descriptor, std::move(queue));
 }
 
@@ -228,8 +233,7 @@ Ref<RenderPipelineBase> Device::CreateUninitializedRenderPipelineImpl(
 }
 ResultOrError<Ref<ResourceTableBase>> Device::CreateResourceTableImpl(
     const ResourceTableDescriptor* descriptor) {
-    // TODO(https://issues.chromium.org/435317394): Implement resource tables in Vulkan.
-    return DAWN_UNIMPLEMENTED_ERROR("ResourceTable is not implemented on Vulkan");
+    return ResourceTable::Create(this, descriptor);
 }
 ResultOrError<Ref<SamplerBase>> Device::CreateSamplerImpl(const SamplerDescriptor* descriptor) {
     return Sampler::Create(this, descriptor);
@@ -986,8 +990,12 @@ void Device::DestroyImpl() {
 
     // Enough of the Device's initialization happened that we can now do regular robust
     // deinitialization.
-
     ToBackend(GetPhysicalDevice())->GetVulkanInstance()->StopListeningForDeviceMessages(this);
+
+    if (mResourceTableLayout != VK_NULL_HANDLE) {
+        fn.DestroyDescriptorSetLayout(mVkDevice, mResourceTableLayout, nullptr);
+        mResourceTableLayout = VK_NULL_HANDLE;
+    }
 
     mDescriptorAllocatorsPendingDeallocation.Use([&](auto pending) {
         for (Ref<DescriptorSetAllocator>& allocator : pending->IterateUpTo(kMaxExecutionSerial)) {

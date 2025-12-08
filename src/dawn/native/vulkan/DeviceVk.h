@@ -75,6 +75,7 @@ class Device final : public DeviceBase {
     const VulkanGlobalInfo& GetGlobalInfo() const;
     VkDevice GetVkDevice() const;
     uint32_t GetGraphicsQueueFamily() const;
+    VkDescriptorSetLayout GetResourceTableLayout() const;
 
     MutexProtected<FencedDeleter>& GetFencedDeleter() const;
     FramebufferCache* GetFramebufferCache() const;
@@ -181,6 +182,7 @@ class Device final : public DeviceBase {
         const SharedFenceDescriptor* baseDescriptor) override;
 
     ResultOrError<VulkanDeviceKnobs> CreateDevice(VkPhysicalDevice vkPhysicalDevice);
+    MaybeError CreateResourceTableLayout();
 
     MaybeError CheckDebugLayerAndGenerateErrors();
     void AppendDebugLayerMessages(ErrorData* error) override;
@@ -197,6 +199,8 @@ class Device final : public DeviceBase {
     VulkanDeviceInfo mDeviceInfo = {};
     VkDevice mVkDevice = VK_NULL_HANDLE;
     uint32_t mMainQueueFamily = 0;
+
+    VkDescriptorSetLayout mResourceTableLayout = VK_NULL_HANDLE;
 
     // Entries can be appended without holding the device mutex.
     MutexProtected<SerialQueue<ExecutionSerial, Ref<DescriptorSetAllocator>>>
