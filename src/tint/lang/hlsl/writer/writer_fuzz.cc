@@ -61,6 +61,7 @@ struct FuzzedOptions {
     std::optional<uint32_t> first_index_offset;
     std::optional<uint32_t> first_instance_offset;
     std::optional<uint32_t> num_workgroups_start_offset;
+    bool polyfill_sample_mask;
     std::vector<BindingPoint> ignored_by_robustness_transform;
     SubstituteOverridesConfig substitute_overrides_config;
 
@@ -82,6 +83,7 @@ struct FuzzedOptions {
                  first_index_offset,
                  first_instance_offset,
                  num_workgroups_start_offset,
+                 polyfill_sample_mask,
                  ignored_by_robustness_transform,
                  substitute_overrides_config);
 };
@@ -130,6 +132,7 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     options.first_index_offset = fuzzed_options.first_index_offset;
     options.first_instance_offset = fuzzed_options.first_instance_offset;
     options.num_workgroups_start_offset = fuzzed_options.num_workgroups_start_offset;
+    options.polyfill_sample_mask = fuzzed_options.polyfill_sample_mask;
     options.ignored_by_robustness_transform = fuzzed_options.ignored_by_robustness_transform;
     options.substitute_overrides_config = fuzzed_options.substitute_overrides_config;
 
