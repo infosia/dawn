@@ -200,5 +200,134 @@ TEST_F(ResourceTableValidationTest_PipelineCreation,
     // table to be set
 }
 
+// Tests for setting resource tables on command encoders
+using ResourceTableValidationTest_CommandEncoder = ResourceTableValidationTest;
+using ResourceTableValidationTestDisabled_CommandEncoder = ResourceTableValidationTestDisabled;
+
+// Tests calling CommandEncoder::SetResourceTable
+TEST_F(ResourceTableValidationTest_CommandEncoder, SetResourceTable) {
+    // Failure case: invalid encoder state
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        encoder.Finish();
+        ASSERT_DEVICE_ERROR(encoder.SetResourceTable(nullptr));
+    }
+
+    // Failure case: invalid resource table
+    {
+        wgpu::ResourceTableDescriptor descriptor;
+        descriptor.size = kMaxResourceTableSize + 1u;  // Invalid size
+        wgpu::ResourceTable resourceTable;
+        ASSERT_DEVICE_ERROR(resourceTable = device.CreateResourceTable(&descriptor));
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        encoder.SetResourceTable(resourceTable);
+        ASSERT_DEVICE_ERROR(encoder.Finish());
+    }
+
+    // Success case: valid resource table
+    {
+        wgpu::ResourceTableDescriptor descriptor;
+        descriptor.size = 1;
+        wgpu::ResourceTable resourceTable = device.CreateResourceTable(&descriptor);
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        encoder.SetResourceTable(resourceTable);
+        encoder.Finish();
+    }
+}
+
+// Tests calling CommandEncoder::SetResourceTable when the feature is disabled
+TEST_F(ResourceTableValidationTestDisabled_CommandEncoder, SetResourceTable) {
+    // Failure case: feature is disabled
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    encoder.SetResourceTable(nullptr);
+    ASSERT_DEVICE_ERROR(encoder.Finish());
+}
+
+// Tests for submit with resource tables
+using ResourceTableValidationTest_Submit = ResourceTableValidationTest;
+using ResourceTableValidationTestDisabled_Submit = ResourceTableValidationTestDisabled;
+
+// Tests that the resource table can be used in submit
+TEST_F(ResourceTableValidationTest_Submit, CanUseInSubmit) {
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = utils::CreateShaderModule(device, R"(
+        enable chromium_experimental_resource_table;
+        @compute @workgroup_size(1) fn main() {
+            _ = hasResource<texture_2d<f32>>(0);
+        }
+    )");
+
+    wgpu::PipelineLayoutDescriptor pipelineLayoutDescriptor;
+    pipelineLayoutDescriptor.bindGroupLayoutCount = 0;
+    wgpu::PipelineLayoutResourceTable plResourceTable;
+    pipelineLayoutDescriptor.nextInChain = &plResourceTable;
+
+    plResourceTable.usesResourceTable = true;
+    csDesc.layout = device.CreatePipelineLayout(&pipelineLayoutDescriptor);
+    wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&csDesc);
+
+    // Success case: resource table can be used in submit
+    {
+        wgpu::ResourceTableDescriptor descriptor;
+        descriptor.size = 1u;
+        wgpu::ResourceTable resourceTable = device.CreateResourceTable(&descriptor);
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        encoder.SetResourceTable(resourceTable);
+
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+
+        wgpu::CommandBuffer commands = encoder.Finish();
+        device.GetQueue().Submit(1, &commands);
+    }
+
+    // Failure case: resource table has been destroyed
+    {
+        wgpu::ResourceTableDescriptor descriptor;
+        descriptor.size = 1u;
+        wgpu::ResourceTable resourceTable = device.CreateResourceTable(&descriptor);
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        encoder.SetResourceTable(resourceTable);
+
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+
+        wgpu::CommandBuffer commands = encoder.Finish();
+        resourceTable.Destroy();  // Destroy it
+        ASSERT_DEVICE_ERROR(device.GetQueue().Submit(1, &commands));
+    }
+
+    // Failure case: one of multiple resource tables has been destroyed
+    {
+        wgpu::ResourceTableDescriptor descriptor;
+        descriptor.size = 1u;
+        wgpu::ResourceTable resourceTable1 = device.CreateResourceTable(&descriptor);
+        wgpu::ResourceTable resourceTable2 = device.CreateResourceTable(&descriptor);
+        wgpu::ResourceTable resourceTable3 = device.CreateResourceTable(&descriptor);
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        encoder.SetResourceTable(resourceTable1);
+        encoder.SetResourceTable(resourceTable2);
+        encoder.SetResourceTable(resourceTable3);
+
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+
+        wgpu::CommandBuffer commands = encoder.Finish();
+        resourceTable2.Destroy();  // Destroy one
+        ASSERT_DEVICE_ERROR(device.GetQueue().Submit(1, &commands));
+    }
+}
+
 }  // namespace
 }  // namespace dawn
