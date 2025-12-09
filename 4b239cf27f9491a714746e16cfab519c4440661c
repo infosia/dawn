@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a735d8a3_8b36d2a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-09T20:29:08Z",
+      "side": 1,
+      "message": "This CL is a workaround and not a proper polyfill.",
+      "revId": "4b239cf27f9491a714746e16cfab519c4440661c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f76ef6f5_662b830b",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-09T20:29:08Z",
+      "side": 1,
+      "message": "We will move this to perm skips.",
+      "range": {
+        "startLine": 518,
+        "startChar": 0,
+        "endLine": 519,
+        "endChar": 147
+      },
+      "revId": "4b239cf27f9491a714746e16cfab519c4440661c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
