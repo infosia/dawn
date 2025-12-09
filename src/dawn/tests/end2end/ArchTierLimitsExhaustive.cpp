@@ -71,6 +71,9 @@ class TierArchInfoTest_TieredMaxLimits : public TierArchInfoTestBase {
 
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         std::vector<wgpu::FeatureName> features;
+        if (SupportsFeatures({wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable})) {
+            features.push_back(wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable);
+        }
         if (SupportsFeatures({wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix})) {
             features.push_back(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix);
         }
@@ -117,128 +120,132 @@ class TierArchInfoTest_TieredMaxLimits : public TierArchInfoTestBase {
     }
 };
 
-// TODO(https://issues.chromium.org/467170771): Test extension limits as well.
-#define ENUM_LIST_LIMITS                                           \
-    /*                   field name                  */            \
-    ENUM_LIMIT_PROPERTY(maxTextureDimension1D)                     \
-    ENUM_LIMIT_PROPERTY(maxTextureDimension2D)                     \
-    ENUM_LIMIT_PROPERTY(maxTextureDimension3D)                     \
-    ENUM_LIMIT_PROPERTY(maxTextureArrayLayers)                     \
-    ENUM_LIMIT_PROPERTY(maxBindGroups)                             \
-    ENUM_LIMIT_PROPERTY(maxBindGroupsPlusVertexBuffers)            \
-    ENUM_LIMIT_PROPERTY(maxBindingsPerBindGroup)                   \
-    ENUM_LIMIT_PROPERTY(maxDynamicUniformBuffersPerPipelineLayout) \
-    ENUM_LIMIT_PROPERTY(maxDynamicStorageBuffersPerPipelineLayout) \
-    ENUM_LIMIT_PROPERTY(maxSampledTexturesPerShaderStage)          \
-    ENUM_LIMIT_PROPERTY(maxSamplersPerShaderStage)                 \
-    ENUM_LIMIT_PROPERTY(maxStorageBuffersPerShaderStage)           \
-    ENUM_LIMIT_PROPERTY(maxStorageTexturesPerShaderStage)          \
-    ENUM_LIMIT_PROPERTY(maxUniformBuffersPerShaderStage)           \
-    ENUM_LIMIT_PROPERTY(maxUniformBufferBindingSize)               \
-    ENUM_LIMIT_PROPERTY(maxStorageBufferBindingSize)               \
-    ENUM_LIMIT_PROPERTY(minUniformBufferOffsetAlignment)           \
-    ENUM_LIMIT_PROPERTY(minStorageBufferOffsetAlignment)           \
-    ENUM_LIMIT_PROPERTY(maxVertexBuffers)                          \
-    ENUM_LIMIT_PROPERTY(maxBufferSize)                             \
-    ENUM_LIMIT_PROPERTY(maxVertexAttributes)                       \
-    ENUM_LIMIT_PROPERTY(maxVertexBufferArrayStride)                \
-    ENUM_LIMIT_PROPERTY(maxInterStageShaderVariables)              \
-    ENUM_LIMIT_PROPERTY(maxColorAttachments)                       \
-    ENUM_LIMIT_PROPERTY(maxColorAttachmentBytesPerSample)          \
-    ENUM_LIMIT_PROPERTY(maxComputeWorkgroupStorageSize)            \
-    ENUM_LIMIT_PROPERTY(maxComputeInvocationsPerWorkgroup)         \
-    ENUM_LIMIT_PROPERTY(maxComputeWorkgroupSizeX)                  \
-    ENUM_LIMIT_PROPERTY(maxComputeWorkgroupSizeY)                  \
-    ENUM_LIMIT_PROPERTY(maxComputeWorkgroupSizeZ)                  \
-    ENUM_LIMIT_PROPERTY(maxComputeWorkgroupsPerDimension)          \
-    ENUM_LIMIT_PROPERTY(maxImmediateSize)                          \
-    ENUM_LIMIT_PROPERTY(maxStorageBuffersInVertexStage)            \
-    ENUM_LIMIT_PROPERTY(maxStorageTexturesInVertexStage)           \
-    ENUM_LIMIT_PROPERTY(maxStorageBuffersInFragmentStage)          \
-    ENUM_LIMIT_PROPERTY(maxStorageTexturesInFragmentStage)
+#define STABLE_ENUM_LIST_LIMITS                                           \
+    /*                  Suffix.fieldName                  */              \
+    ENUM_LIMIT_PROPERTY(Stable.maxTextureDimension1D)                     \
+    ENUM_LIMIT_PROPERTY(Stable.maxTextureDimension2D)                     \
+    ENUM_LIMIT_PROPERTY(Stable.maxTextureDimension3D)                     \
+    ENUM_LIMIT_PROPERTY(Stable.maxTextureArrayLayers)                     \
+    ENUM_LIMIT_PROPERTY(Stable.maxBindGroups)                             \
+    ENUM_LIMIT_PROPERTY(Stable.maxBindGroupsPlusVertexBuffers)            \
+    ENUM_LIMIT_PROPERTY(Stable.maxBindingsPerBindGroup)                   \
+    ENUM_LIMIT_PROPERTY(Stable.maxDynamicUniformBuffersPerPipelineLayout) \
+    ENUM_LIMIT_PROPERTY(Stable.maxDynamicStorageBuffersPerPipelineLayout) \
+    ENUM_LIMIT_PROPERTY(Stable.maxSampledTexturesPerShaderStage)          \
+    ENUM_LIMIT_PROPERTY(Stable.maxSamplersPerShaderStage)                 \
+    ENUM_LIMIT_PROPERTY(Stable.maxStorageBuffersPerShaderStage)           \
+    ENUM_LIMIT_PROPERTY(Stable.maxStorageTexturesPerShaderStage)          \
+    ENUM_LIMIT_PROPERTY(Stable.maxUniformBuffersPerShaderStage)           \
+    ENUM_LIMIT_PROPERTY(Stable.maxUniformBufferBindingSize)               \
+    ENUM_LIMIT_PROPERTY(Stable.maxStorageBufferBindingSize)               \
+    ENUM_LIMIT_PROPERTY(Stable.minUniformBufferOffsetAlignment)           \
+    ENUM_LIMIT_PROPERTY(Stable.minStorageBufferOffsetAlignment)           \
+    ENUM_LIMIT_PROPERTY(Stable.maxVertexBuffers)                          \
+    ENUM_LIMIT_PROPERTY(Stable.maxBufferSize)                             \
+    ENUM_LIMIT_PROPERTY(Stable.maxVertexAttributes)                       \
+    ENUM_LIMIT_PROPERTY(Stable.maxVertexBufferArrayStride)                \
+    ENUM_LIMIT_PROPERTY(Stable.maxInterStageShaderVariables)              \
+    ENUM_LIMIT_PROPERTY(Stable.maxColorAttachments)                       \
+    ENUM_LIMIT_PROPERTY(Stable.maxColorAttachmentBytesPerSample)          \
+    ENUM_LIMIT_PROPERTY(Stable.maxComputeWorkgroupStorageSize)            \
+    ENUM_LIMIT_PROPERTY(Stable.maxComputeInvocationsPerWorkgroup)         \
+    ENUM_LIMIT_PROPERTY(Stable.maxComputeWorkgroupSizeX)                  \
+    ENUM_LIMIT_PROPERTY(Stable.maxComputeWorkgroupSizeY)                  \
+    ENUM_LIMIT_PROPERTY(Stable.maxComputeWorkgroupSizeZ)                  \
+    ENUM_LIMIT_PROPERTY(Stable.maxComputeWorkgroupsPerDimension)          \
+    ENUM_LIMIT_PROPERTY(Stable.maxImmediateSize)                          \
+    ENUM_LIMIT_PROPERTY(Stable.maxStorageBuffersInVertexStage)            \
+    ENUM_LIMIT_PROPERTY(Stable.maxStorageTexturesInVertexStage)           \
+    ENUM_LIMIT_PROPERTY(Stable.maxStorageBuffersInFragmentStage)          \
+    ENUM_LIMIT_PROPERTY(Stable.maxStorageTexturesInFragmentStage)
+
+static const int kNumStableElements =
+#define ENUM_LIMIT_PROPERTY(fieldName) 1 +
+    STABLE_ENUM_LIST_LIMITS + 0;
+#undef ENUM_LIMIT_PROPERTY
+
+static_assert(
+    kNumStableElements == utils::ComboLimits::kMemberCount,
+    "Combo limits structure has a different number of limits than the above ENUM_LIST_LIMITS");
+
+#define ENUM_LIST_LIMITS    \
+    STABLE_ENUM_LIST_LIMITS \
+    ENUM_LIMIT_PROPERTY(ResourceTable.maxResourceTableSize)
 
 static const int kNumElements =
 #define ENUM_LIMIT_PROPERTY(fieldName) 1 +
     ENUM_LIST_LIMITS + 0;
-
 #undef ENUM_LIMIT_PROPERTY
-
-static_assert(
-    kNumElements == utils::ComboLimits::kMemberCount,
-    "Combo limits structure has a different number of limits than the above ENUM_LIST_LIMITS");
 
 TEST_P(TierArchInfoTest_TieredMaxLimits, ExhaustiveTestAllFields) {
     // SwiftShader will return a lower limit than any modern device on CQ.
     DAWN_TEST_UNSUPPORTED_IF(IsSwiftshader());
+
+    constexpr uint32_t kUndefU32 = wgpu::kLimitU32Undefined;
 
     std::map<std::string, std::array<uint64_t, kNumElements>> device_map;
 
     // clang-format off
     {
 // AMD
-device_map["Metal_AMD_Radeon_Pro_5300M"]                    = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
-device_map["Metal_AMD_Radeon_Pro_555X"]                     = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535,  0, 10, 8, 10, 8,};
-device_map["Metal_AMD_Radeon_Pro_555X_alt1"]                = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
-device_map["Metal_AMD_Radeon_Pro_560X"]                     = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
+device_map["Metal_AMD_Radeon_Pro_5300M"]                    = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8, kUndefU32,};
+device_map["Metal_AMD_Radeon_Pro_555X"]                     = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535,  0, 10, 8, 10, 8, kUndefU32,};
+device_map["Metal_AMD_Radeon_Pro_555X_alt1"]                = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8, kUndefU32,};
+device_map["Metal_AMD_Radeon_Pro_560X"]                     = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8, kUndefU32,};
 
 // Apple
-device_map["Metal_Apple_M2"]                                = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 4294967292, 256, 256, 8, 4294967296, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
+device_map["Metal_Apple_M2"]                                = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 4294967292, 256, 256, 8, 4294967296, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8, kUndefU32,};
 
 // ARM
-device_map["OpenGLES_Mali_G78_compat"]                      = {   8192,  8192, 2048,  256, 4, 24, 1000,  8, 4, 16, 16,  8, 4, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 16, 8, 128, 32768,  256,  256,  256, 64, 65535,  0,  0, 0,  4, 4,};
-device_map["OpenGLES_Mali_G78_compat_alt1"]                 = {   8192,  8192, 2048,  256, 4, 24, 1000,  8, 4, 16, 16,  8, 4, 12, 65536,  268435456, 256, 256, 8, 2147483648, 30, 2048, 16, 8, 128, 32768,  256,  256,  256, 64, 65535,  0,  0,  0, 4, 4,};
-device_map["Vulkan_Mali_G78"]                               = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768,  256,  256,  256, 64, 65535, 64, 10, 8, 10, 8,};
-device_map["Vulkan_Mali_G78_alt1"]                          = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  268435456, 256, 256, 8, 4294967296, 30, 2048, 28, 8, 128, 32768,  256,  256,  256, 64, 65535, 64, 10, 8, 10, 8,};
+device_map["OpenGLES_Mali_G78_compat"]                      = {   8192,  8192, 2048,  256, 4, 24, 1000,  8, 4, 16, 16,  8, 4, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 16, 8, 128, 32768,  256,  256,  256, 64, 65535,  0,  0, 0,  4, 4, kUndefU32,};
+device_map["OpenGLES_Mali_G78_compat_alt1"]                 = {   8192,  8192, 2048,  256, 4, 24, 1000,  8, 4, 16, 16,  8, 4, 12, 65536,  268435456, 256, 256, 8, 2147483648, 30, 2048, 16, 8, 128, 32768,  256,  256,  256, 64, 65535,  0,  0,  0, 4, 4, kUndefU32,};
+device_map["Vulkan_Mali_G78"]                               = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768,  256,  256,  256, 64, 65535, 64, 10, 8, 10, 8,     50000,};
+device_map["Vulkan_Mali_G78_alt1"]                          = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  268435456, 256, 256, 8, 4294967296, 30, 2048, 28, 8, 128, 32768,  256,  256,  256, 64, 65535, 64, 10, 8, 10, 8,     50000,};
 
 // Intel
-device_map["D3D11_Intel_R__UHD_Graphics_630"]               = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
-device_map["D3D12_Intel_R__UHD_Graphics_630"]               = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
-device_map["Metal_Intel_R__UHD_Graphics_630"]               = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
-device_map["OpenGLES_ANGLE__Intel__Intel_R__UHD_Graphics_630__0x00009BC5__Direct3D11_vs_5_0_ps_5_0__D3D11_31_0_101_2127__compat"]
-                                                            = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  134217728, 256, 256, 8, 2147483648, 16, 2048, 16, 8, 128, 32768, 1024, 1024, 1024, 64, 65535,  0, 10, 8, 10, 8,};
-device_map["Vulkan_Intel_R__UHD_Graphics_630"]              = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  536870912, 256, 256, 8, 4294967296, 30, 2048, 28, 8, 128, 32768,  256,  256,  256, 64, 65535, 64, 10, 8, 10, 8,};
-device_map["Vulkan_Intel_R__UHD_Graphics_630__CML_GT2"]     = {  16384, 16384, 2048, 2048, 4, 24, 1000,  8, 4, 16, 16, 10, 4, 12, 65536, 4294967292, 256, 256, 8, 4294967296, 16, 2048, 16, 8, 128, 65536,  256,  256,  256, 64, 65535, 64, 10, 4, 10, 4,};
-device_map["D3D11_Intel_R__UHD_Graphics_770"]               = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
-device_map["D3D12_Intel_R__UHD_Graphics_770"]               = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
-device_map["OpenGLES_ANGLE__Intel__Intel_R__UHD_Graphics_770__0x00004680__Direct3D11_vs_5_0_ps_5_0__D3D11_31_0_101_5333__compat"]
-                                                            = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  134217728, 256, 256, 8, 2147483648, 16, 2048, 16, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 0, 10,  8, 10, 8,};
-device_map["Vulkan_Intel_R__UHD_Graphics_770"]              = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  536870912, 256, 256, 8, 4294967296, 30, 2048, 28, 8, 128, 32768,  256,  256,  256, 64, 65535, 64, 10, 8, 10, 8,};
-device_map["Vulkan_Intel_R__UHD_Graphics_770__ADL_S_GT1"]   = {  16384, 16384, 2048, 2048, 4, 24, 1000,  8, 4, 16, 16, 10, 4, 12, 65536, 4294967292, 256, 256, 8, 4294967296, 16, 2048, 16, 8, 128, 65536, 1024, 1024, 1024, 64, 65535, 64, 10, 4, 10, 4,};
-device_map["Vulkan_Intel_R__Iris_R__Xe_Graphics__TGL_GT2"]  = {  16384, 16384, 2048, 2048, 4, 24, 1000,  8, 4, 16, 16, 10, 4, 12, 65536, 4294967292, 256, 256, 8, 4294967296, 16, 2048, 28, 8, 128, 65536, 1024, 1024, 1024, 64, 65535, 64, 10, 4, 10, 4,};
+device_map["D3D11_Intel_R__UHD_Graphics_630"]               = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8, kUndefU32,};
+device_map["D3D12_Intel_R__UHD_Graphics_630"]               = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8, kUndefU32,};
+device_map["Metal_Intel_R__UHD_Graphics_630"]               = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8, kUndefU32,};
+device_map["Vulkan_Intel_R__UHD_Graphics_630"]              = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  536870912, 256, 256, 8, 4294967296, 30, 2048, 28, 8, 128, 32768,  256,  256,  256, 64, 65535, 64, 10, 8, 10, 8,     50000,};
+device_map["Vulkan_Intel_R__UHD_Graphics_630__CML_GT2"]     = {  16384, 16384, 2048, 2048, 4, 24, 1000,  8, 4, 16, 16, 10, 4, 12, 65536, 4294967292, 256, 256, 8, 4294967296, 16, 2048, 16, 8, 128, 65536,  256,  256,  256, 64, 65535, 64, 10, 4, 10, 4,     50000,};
+device_map["D3D11_Intel_R__UHD_Graphics_770"]               = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8, kUndefU32,};
+device_map["D3D12_Intel_R__UHD_Graphics_770"]               = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8, kUndefU32,};
+device_map["Vulkan_Intel_R__UHD_Graphics_770"]              = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  536870912, 256, 256, 8, 4294967296, 30, 2048, 28, 8, 128, 32768,  256,  256,  256, 64, 65535, 64, 10, 8, 10, 8,     50000,};
+device_map["Vulkan_Intel_R__UHD_Graphics_770__ADL_S_GT1"]   = {  16384, 16384, 2048, 2048, 4, 24, 1000,  8, 4, 16, 16, 10, 4, 12, 65536, 4294967292, 256, 256, 8, 4294967296, 16, 2048, 16, 8, 128, 65536, 1024, 1024, 1024, 64, 65535, 64, 10, 4, 10, 4,     50000,};
+device_map["Vulkan_Intel_R__Iris_R__Xe_Graphics__TGL_GT2"]  = {  16384, 16384, 2048, 2048, 4, 24, 1000,  8, 4, 16, 16, 10, 4, 12, 65536, 4294967292, 256, 256, 8, 4294967296, 16, 2048, 28, 8, 128, 65536, 1024, 1024, 1024, 64, 65535, 64, 10, 4, 10, 4,     50000,};
 
 // llvmpipe
-device_map["Vulkan_llvmpipe__LLVM_19_1_7__256_bits"]        = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  134217728, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
+device_map["Vulkan_llvmpipe__LLVM_19_1_7__256_bits"]        = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  134217728, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,     50000,};
 
 // Microsoft
 device_map["D3D11_Microsoft_Basic_Render_Driver_Integrated_GPU"]
-                                                            = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
+                                                            = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8, kUndefU32,};
 device_map["D3D12_Microsoft_Basic_Render_Driver_Integrated_GPU"]
-                                                            = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
+                                                            = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8, kUndefU32,};
 
 // NVIDIA
-device_map["D3D11_NVIDIA_GeForce_GTX_1660"]                 = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
-device_map["D3D12_NVIDIA_GeForce_GTX_1660"]                 = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
-device_map["Vulkan_GeForce_GTX_1660"]                       = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 49152, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
-device_map["OpenGLES_ANGLE__NVIDIA__NVIDIA_GeForce_GTX_1660__0x00002184__Direct3D11_vs_5_0_ps_5_0__D3D11_31_0_15_4601__compat"]
-                                                            = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  134217728, 256, 256, 8, 2147483648, 16, 2048, 16, 8, 128, 32768, 1024, 1024, 1024, 64, 65535,  0, 10, 8, 10, 8,};
-device_map["OpenGLES_ANGLE__NVIDIA__NVIDIA_GeForce_GTX_1660__0x00002184__Direct3D11_vs_5_0_ps_5_0__D3D11_32_0_15_7602__compat"]
-                                                            = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  134217728, 256, 256, 8, 2147483648, 16, 2048, 16, 8, 128, 32768, 1024, 1024, 1024, 64, 65535,  0, 10, 8, 10, 8,};
-device_map["Vulkan_NVIDIA_GeForce_GTX_1660"]                = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 4294967292, 256, 256, 8, 4294967296, 30, 2048, 28, 8, 128, 49152, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
+device_map["D3D11_NVIDIA_GeForce_GTX_1660"]                 = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8, kUndefU32,};
+device_map["D3D12_NVIDIA_GeForce_GTX_1660"]                 = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8, kUndefU32,};
+device_map["Vulkan_GeForce_GTX_1660"]                       = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 2147483644, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 49152, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,     50000,};
+device_map["Vulkan_NVIDIA_GeForce_GTX_1660"]                = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536, 4294967292, 256, 256, 8, 4294967296, 30, 2048, 28, 8, 128, 49152, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,     50000,};
 
 // Qualcomm
-device_map["OpenGLES_Adreno__TM__640_compat"]               = {  16384, 16384, 2048, 2048, 4, 24, 1000,  8, 4, 16, 16,  8, 4, 12, 65536,  536870912, 256, 256, 8, 2147483648, 30, 2048, 16, 8, 128, 32768, 1024, 1024, 1024, 64, 65535,  0,  0, 4,  4, 4,};
-device_map["Vulkan_Adreno__TM__640"]                        = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  536870912, 256, 256, 8, 1073741824, 30, 2048, 16, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
-device_map["D3D11_Qualcomm_R__Adreno_TM__X1_85_GPU"]        = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  268435456, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
-device_map["D3D12_Qualcomm_R__Adreno_TM__X1_85_GPU"]        = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  268435456, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
-device_map["Vulkan_Qualcomm_R__Adreno_TM__X1_85_GPU"]       = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  134217728, 256, 256, 8, 2147483648, 30, 2048, 16, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,};
+device_map["OpenGLES_Adreno__TM__640_compat"]               = {  16384, 16384, 2048, 2048, 4, 24, 1000,  8, 4, 16, 16,  8, 4, 12, 65536,  536870912, 256, 256, 8, 2147483648, 30, 2048, 16, 8, 128, 32768, 1024, 1024, 1024, 64, 65535,  0,  0, 4,  4, 4, kUndefU32,};
+device_map["Vulkan_Adreno__TM__640"]                        = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  536870912, 256, 256, 8, 1073741824, 30, 2048, 16, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,     50000,};
+device_map["D3D11_Qualcomm_R__Adreno_TM__X1_85_GPU"]        = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  268435456, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8, kUndefU32,};
+device_map["D3D12_Qualcomm_R__Adreno_TM__X1_85_GPU"]        = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  268435456, 256, 256, 8, 2147483648, 30, 2048, 28, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8, kUndefU32,};
+device_map["Vulkan_Qualcomm_R__Adreno_TM__X1_85_GPU"]       = {  16384, 16384, 2048, 2048, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 65536,  134217728, 256, 256, 8, 2147483648, 30, 2048, 16, 8, 128, 32768, 1024, 1024, 1024, 64, 65535, 64, 10, 8, 10, 8,     50000,};
 
 // SwiftShader
 device_map["OpenGLES_ANGLE__Google__Vulkan_1_3_0__SwiftShader_Device__Subzero___0x0000C0DE____SwiftShader_driver_5_0_0__compat"]
-                                                            = {   8192,  8192, 2048,  256, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 16384, 1073741824, 256, 256, 8, 2147483648, 16, 2048, 16, 4, 64, 32768,  256,  256,  256, 64, 65535,  0, 10, 8, 10, 8,};
+                                                            = {   8192,  8192, 2048,  256, 4, 24, 1000, 10, 8, 16, 16, 10, 8, 12, 16384, 1073741824, 256, 256, 8, 2147483648, 16, 2048, 16, 4,  64, 32768,  256,  256,  256, 64, 65535,  0, 10, 8, 10, 8, kUndefU32,};
     }
     // clang-format on
 
-    auto& supported_limits = GetSupportedLimits();
+    // Limits for unstable feature have to be listed explicitly in `GetLinked`.
+    wgpu::ResourceTableLimits supportedLimitsResourceTable;
+    utils::ComboLimits supportedLimitsStable;
+    device.GetLimits(supportedLimitsStable.GetLinked(&supportedLimitsResourceTable));
 
     // We need alternates mostly due to differences in driver versions.
     // Some devices might be on one driver that supports limit X while others might be on a driver
@@ -268,19 +275,18 @@ device_map["OpenGLES_ANGLE__Google__Vulkan_1_3_0__SwiftShader_Device__Subzero___
         }
 
         int curr_idx = 0;
-#define ENUM_LIMIT_PROPERTY(fieldName)                                                   \
-    if (!encountered_error &&                                                            \
-        supported_limits.fieldName != static_cast<decltype(supported_limits.fieldName)>( \
-                                          (iter_curr_limits->second)[curr_idx])) {       \
-        /* maybe the alternate will pass. Do not surface error.*/                        \
-        if (!has_next_alternate) {                                                       \
-            EXPECT_EQ(supported_limits.fieldName,                                        \
-                      static_cast<decltype(supported_limits.fieldName)>(                 \
-                          (iter_curr_limits->second)[curr_idx]));                        \
-        }                                                                                \
-        /*Report first error only*/                                                      \
-        encountered_error = true;                                                        \
-    }                                                                                    \
+#define ENUM_LIMIT_PROPERTY(Suffix)                                                            \
+    if (!encountered_error &&                                                                  \
+        supportedLimits##Suffix != static_cast<decltype(supportedLimits##Suffix)>(             \
+                                       (iter_curr_limits->second)[curr_idx])) {                \
+        /* maybe the alternate will pass. Do not surface error.*/                              \
+        if (!has_next_alternate) {                                                             \
+            EXPECT_EQ(supportedLimits##Suffix, static_cast<decltype(supportedLimits##Suffix)>( \
+                                                   (iter_curr_limits->second)[curr_idx]));     \
+        }                                                                                      \
+        /*Report first error only*/                                                            \
+        encountered_error = true;                                                              \
+    }                                                                                          \
     curr_idx++;
 
         ENUM_LIST_LIMITS
@@ -292,7 +298,7 @@ device_map["OpenGLES_ANGLE__Google__Vulkan_1_3_0__SwiftShader_Device__Subzero___
             "\n  Mismatch found! The full set of correct limits for this device are:\n"
             "  device_map[\"" +
             full_param + "\"] = { " +
-#define ENUM_LIMIT_PROPERTY(fieldName) " " + std::to_string(supported_limits.fieldName) + "," +
+#define ENUM_LIMIT_PROPERTY(Suffix) " " + std::to_string(supportedLimits##Suffix) + "," +
             ENUM_LIST_LIMITS
 #undef ENUM_LIMIT_PROPERTY
             "};";
@@ -437,7 +443,6 @@ AddDevice({1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 
 AddDevice({1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0}, "D3D12_Intel_R__UHD_Graphics_630");
 AddDevice({1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0}, "D3D12_Intel_R__UHD_Graphics_630");
 AddDevice({1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0}, "Metal_Intel_R__UHD_Graphics_630");
-AddDevice({0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, "OpenGLES_ANGLE__Intel__Intel_R__UHD_Graphics_630__0x00009BC5__Direct3D11_vs_5_0_ps_5_0__D3D11_31_0_101_2127__compat");
 AddDevice({1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1}, "Vulkan_Intel_R__UHD_Graphics_630");
 AddDevice({1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1}, "Vulkan_Intel_R__UHD_Graphics_630__CML_GT2");
 AddDevice({1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0}, "D3D11_Intel_R__UHD_Graphics_770");
@@ -445,8 +450,6 @@ AddDevice({1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 
 AddDevice({1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0}, "D3D12_Intel_R__UHD_Graphics_770");
 AddDevice({1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0}, "D3D12_Intel_R__UHD_Graphics_770");
 AddDevice({1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0}, "D3D12_Intel_R__UHD_Graphics_770");
-AddDevice({0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, "OpenGLES_ANGLE__Intel__Intel_R__UHD_Graphics_770__0x00004680__Direct3D11_vs_5_0_ps_5_0__D3D11_31_0_101_5333__compat");
-AddDevice({0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, "OpenGLES_ANGLE__Intel__Intel_R__UHD_Graphics_770__0x00004680__Direct3D11_vs_5_0_ps_5_0__D3D11_31_0_101_5333__compat");
 AddDevice({1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1}, "Vulkan_Intel_R__UHD_Graphics_770");
 AddDevice({1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1}, "Vulkan_Intel_R__UHD_Graphics_770__ADL_S_GT1");
 AddDevice({1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1}, "Vulkan_Intel_R__Iris_R__Xe_Graphics__TGL_GT2");
@@ -466,7 +469,6 @@ AddDevice({1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 
 AddDevice({1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0}, "D3D12_NVIDIA_GeForce_GTX_1660");
 AddDevice({1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1}, "Vulkan_GeForce_GTX_1660");
 AddDevice({1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1}, "Vulkan_GeForce_GTX_1660");
-AddDevice({0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, "OpenGLES_ANGLE__NVIDIA__NVIDIA_GeForce_GTX_1660__0x00002184__Direct3D11_vs_5_0_ps_5_0__D3D11_31_0_15_4601__compat");
 AddDevice({1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1}, "Vulkan_NVIDIA_GeForce_GTX_1660");
 AddDevice({1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1}, "Vulkan_NVIDIA_GeForce_GTX_1660");
 AddDevice({1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1}, "Vulkan_NVIDIA_GeForce_GTX_1660");
