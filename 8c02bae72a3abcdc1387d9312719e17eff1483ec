@@ -16,6 +16,29 @@
       "message": "LGTM",
       "revId": "8c02bae72a3abcdc1387d9312719e17eff1483ec",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09c79603_755a743e",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-12-09T17:38:36Z",
+      "side": 1,
+      "message": "Should this be before the immediate execution?",
+      "range": {
+        "startLine": 95,
+        "startChar": 8,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "8c02bae72a3abcdc1387d9312719e17eff1483ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
