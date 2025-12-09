@@ -16,6 +16,24 @@
       "message": "This is great but I was wondering if there was more of a way we could do this directly? Like never allow signed access on struct members from the start.",
       "revId": "35e6e4c94b644e5c4597c26f52259730d5f31df1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58fbce3e_ae948c0b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-09T21:57:21Z",
+      "side": 1,
+      "message": "I considered this and could\u0027ve gone either way. In the end decided this small tweak  was better since it\u0027s nice to keep constants as constants so that the backend to better optimize, and it avoids a special-case in the validation logic.",
+      "parentUuid": "e43219f5_000736f2",
+      "revId": "35e6e4c94b644e5c4597c26f52259730d5f31df1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
