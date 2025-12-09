@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "165305cf_25a2dde9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-09T22:47:46Z",
+      "side": 1,
+      "message": "side note: it would be good for these CLs to explain how the roll is done, as a future reference (like how roll-dep rolls include the command in the description)",
+      "revId": "99fddcec71f9d53e7757c27c35acbad0b8468481",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "ec5214d8_0d5cc8fa",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
