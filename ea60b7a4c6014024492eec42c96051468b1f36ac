@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "142956f2_fe2b8ac7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-09T19:56:14Z",
+      "side": 1,
+      "message": "I think I\u0027m mis-understanding how this works.\n\nBefore this change it works like this\n\n1. User calls `AddBufferExpectation(buffer, expected)`\n2. a `readbackBuffer` is created and initialized to `0`\n3. a command buffer is executed to `copyBufferToBuffer(buffer, readbackBuffer)`\n4. the `readbackBuffer` and `expected` are added to some list of things\n\nAt teardown:\n\n1. all the readbackBuffers are mapped\n2. all the mapped datas is compared against expectations\n3. all the readbackBuffers are unmapped\n\nI\u0027d expect that to change to\n\n0. start recording **(added)**\n1. User calls `AddBufferExpectation(buffer, expected)`\n2. a `readbackBuffer` is created and initialized to `0` (with a unique name) **(changed)**\n3. a command buffer is executed to `copyBufferToBuffer(buffer, readbackBuffer)`\n4. the `readbackBuffer` and `expected` are added to some list of things\n5. end recording **(added)**\n\nAt teardown:\n\n0. replay recording  **(added)**\n1. all the readbackBuffers are mapped BY NAME (because they are different buffers on replay) **changed)**\n2. all the mapped datas is compared against expectations\n3. all the readbackBuffers are unmapped\n\nI don\u0027t see any reason need to `PauseRecording`... Right?",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08682e65_a9b76dd1",
