@@ -746,9 +746,16 @@ struct State {
             coords = AppendArrayIndex(coords, array_idx, builtin);
         }
 
+        const bool is_depth_3d_cube_array =
+            texture_ty->GetArrayed() == type::Arrayed::kArrayed &&
+            texture_ty->GetDepth() == type::Depth::kDepth &&
+            (texture_ty->GetDim() == type::Dim::kCube || texture_ty->GetDim() == type::Dim::kD3);
+        const bool polyfill_depth_cube_array =
+            config.texture_sample_compare_depth_cube_array && is_depth_3d_cube_array;
         // Determine which SPIR-V function to use and which optional image operands are needed.
         enum spirv::BuiltinFn function = BuiltinFn::kNone;
         core::ir::Value* depth = nullptr;
+        core::ir::Value* depth_ref_for_polyfill = nullptr;
         ImageOperands operands;
         switch (builtin->Func()) {
             case core::BuiltinFn::kTextureSample:
@@ -761,13 +768,23 @@ struct State {
                 operands.offset = next_arg();
                 break;
             case core::BuiltinFn::kTextureSampleCompare:
-                function = spirv::BuiltinFn::kImageSampleDrefImplicitLod;
-                depth = next_arg();
+                if (polyfill_depth_cube_array) {
+                    function = spirv::BuiltinFn::kImageSampleImplicitLod;
+                    depth_ref_for_polyfill = next_arg();
+                } else {
+                    function = spirv::BuiltinFn::kImageSampleDrefImplicitLod;
+                    depth = next_arg();
+                }
                 operands.offset = next_arg();
                 break;
             case core::BuiltinFn::kTextureSampleCompareLevel:
-                function = spirv::BuiltinFn::kImageSampleDrefExplicitLod;
-                depth = next_arg();
+                if (polyfill_depth_cube_array) {
+                    function = spirv::BuiltinFn::kImageSampleExplicitLod;
+                    depth_ref_for_polyfill = next_arg();
+                } else {
+                    function = spirv::BuiltinFn::kImageSampleDrefExplicitLod;
+                    depth = next_arg();
+                }
                 operands.lod = b.Constant(0_f);
                 operands.offset = next_arg();
                 break;
@@ -811,6 +828,26 @@ struct State {
         if (!depth && texture_ty->GetDepth() == type::Depth::kDepth) {
             result = b.Access(ty.f32(), result, 0_u);
             result->InsertBefore(builtin);
+        }
+
+        if (depth_ref_for_polyfill) {
+            core::ir::Instruction* fake_result = nullptr;
+            b.InsertAfter(result, [&] {
+                // THIS IS AN INCOMPLETE POLYFILL. see crbug.com/467015399
+                // To do a complete polyfill we would either need to use TextureGatherCompare
+                // (assuming that works) or manually do the correct comparison by passing the
+                // comparison op in as an immediate (per sampler).
+                auto* cmp = b.LessThanEqual(depth_ref_for_polyfill, result->Result());
+                auto* call = b.Call<spirv::ir::BuiltinCall>(ty.f32(), spirv::BuiltinFn::kSelect,
+                                                            cmp->Result(), b.Constant(1.0_f),
+                                                            b.Constant(0.0_f));
+                // The render feature here is PCF style shadow mapping of point lights. The correct
+                // output range is [0,1] but are not sure which extreme counts as in shadow. So here
+                // we just output 0.5 so all everything is in half shadow. This will not look
+                // correct but will allow the App (game) to remain visually functional.
+                fake_result = b.Add(b.Constant(0.5_f), b.Multiply(call, b.Constant(0.01_f)));
+            });
+            result = fake_result;
         }
 
         result->SetResult(builtin->DetachResult());
