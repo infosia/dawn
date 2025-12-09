@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33f639d2_559860e1",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-09T16:47:26Z",
+      "side": 0,
+      "message": "Note: This verbose output is not needed here because the callsite now handles this.",
+      "revId": "52a3c5ce7bd3829a083d9d355832259d8addb89c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
