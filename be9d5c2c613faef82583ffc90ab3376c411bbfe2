@@ -34,6 +34,24 @@
       "parentUuid": "9e86f16a_a42515a0",
       "revId": "be9d5c2c613faef82583ffc90ab3376c411bbfe2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad24023a_9dcc7e37",
+        "filename": "src/dawn/tests/unittests/native/BufferBaseTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-12-09T15:51:25Z",
+      "side": 1,
+      "message": "\u003e Could we have tests for GetMappedRange while in the middle of a mutating operation as well?\n\nDone",
+      "parentUuid": "87c50b2b_52fb26a9",
+      "revId": "be9d5c2c613faef82583ffc90ab3376c411bbfe2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

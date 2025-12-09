@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa4f6fa0_4509e712",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-12-09T15:51:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f04da80_6227ca7f",
+      "revId": "d407e91f90e859f46b86a5701a264bf5258da33f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc6e39ae_fd5e07d0",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-12-05T15:51:43Z",
       "side": 1,
       "message": "nit: can we have a comment before these non-trivial tests that explains what they do?",
+      "revId": "d407e91f90e859f46b86a5701a264bf5258da33f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dd987a8_50b1abbc",
+        "filename": "src/dawn/tests/unittests/native/BufferBaseTests.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-12-09T15:51:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc6e39ae_fd5e07d0",
       "revId": "d407e91f90e859f46b86a5701a264bf5258da33f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80ac200c_1616299e",
+        "filename": "src/dawn/tests/unittests/native/BufferBaseTests.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-12-09T15:51:25Z",
+      "side": 1,
+      "message": "I moved creation to SetUp() to avoid repeating it between tests.",
+      "parentUuid": "b32cbeee_b9bed937",
+      "revId": "d407e91f90e859f46b86a5701a264bf5258da33f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "072d7c78_1ba8136b",
@@ -69,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "afd1a128_e86e4e86",
+        "filename": "src/dawn/tests/unittests/native/BufferBaseTests.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-12-09T15:51:25Z",
+      "side": 1,
+      "message": "I added a test that calls MapAsync() on one thread and then once that is successful Unmap() on a second thread.",
+      "parentUuid": "072d7c78_1ba8136b",
+      "revId": "d407e91f90e859f46b86a5701a264bf5258da33f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed09e053_aa606731",
@@ -82,6 +154,24 @@
       "writtenOn": "2025-12-05T15:51:43Z",
       "side": 1,
       "message": "ditto",
+      "revId": "d407e91f90e859f46b86a5701a264bf5258da33f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36d7b125_d7ad508c",
+        "filename": "src/dawn/tests/unittests/native/BufferBaseTests.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-12-09T15:51:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed09e053_aa606731",
       "revId": "d407e91f90e859f46b86a5701a264bf5258da33f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
