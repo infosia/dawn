@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4e91d1e_670c364f",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2198,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T08:20:21Z",
+      "side": 1,
+      "message": "This looks correct. (assuming additions to ValidateQueueSubmit to call `ResourceTableBase::ValidateCanUseInSubmit`)",
+      "revId": "86f451217c0a8935e109b0f68f61b97fbadae525",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5dd1dd17_72249733",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2202,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T08:20:21Z",
+      "side": 1,
+      "message": "That would be in a different CL since the `[[resource_tables_used]]` can be tested on its own. On creation of the CommandBufferStateTracker we would tell it if a resource table is currently set (IIRC the CommandBufferStateTracker is per-pass), which would be a bit set in the dirty-bits part, then when validating we\u0027d check that bit similarly to the bindgroups or vertex buffers.",
+      "revId": "86f451217c0a8935e109b0f68f61b97fbadae525",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
