@@ -1731,7 +1731,7 @@ class CompatTextureViewDimensionValidationTests : public CompatTextureViewValida
             CreateTextureWithViewDimension(depth, dimension, textureBindingViewDimension);
         } else {
             ASSERT_DEVICE_ERROR(
-                CreateTextureWithViewDimension(depth, dimension, textureBindingViewDimension);
+                CreateTextureWithViewDimension(depth, dimension, textureBindingViewDimension),
                 testing::HasSubstr(expectedSubstr));
         }
     }
