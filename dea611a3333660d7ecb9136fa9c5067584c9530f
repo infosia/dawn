@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80ea5d4e_77519adb",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:09:07Z",
+      "side": 1,
+      "message": "Thanks for the explanation, lets keep as is and if it becomes an issue in the future we can always add the caching in DawnTest then.",
+      "parentUuid": "d50061ba_cc9c597d",
+      "revId": "dea611a3333660d7ecb9136fa9c5067584c9530f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "40389834_65a3fce6",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "took me a while to see what was wrong. `isBackend` vs `IsBackend`. Fixed",
       "parentUuid": "40389834_65a3fce6",
+      "revId": "dea611a3333660d7ecb9136fa9c5067584c9530f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbdfd926_7ea9f535",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:09:07Z",
+      "side": 1,
+      "message": "Sorry I should have just made a change suggestion.",
+      "parentUuid": "3f3e3c2c_8f3f72c1",
       "revId": "dea611a3333660d7ecb9136fa9c5067584c9530f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
