@@ -91,6 +91,10 @@ struct Options {
         /// the spec max subgroup size.
         bool subgroup_shuffle_clamped = false;
 
+        /// Set to 'true' to force workaround for 'textureSampleCompare(Level)' for texture arrays
+        /// of cube depth.
+        bool texture_sample_compare_depth_cube_array = false;
+
         /// Set to `true` to generate polyfill for `subgroupBroadcast(f16)`
         bool polyfill_subgroup_broadcast_f16 = false;
 
