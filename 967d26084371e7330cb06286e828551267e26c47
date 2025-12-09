@@ -75,6 +75,30 @@
       ],
       "revId": "967d26084371e7330cb06286e828551267e26c47",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11402eee_358985c6",
+        "filename": "src/dawn/tests/end2end/ShaderTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2891,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-09T17:14:31Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "b0a23bfc_28a62e8d",
+      "range": {
+        "startLine": 2891,
+        "startChar": 20,
+        "endLine": 2891,
+        "endChar": 47
+      },
+      "revId": "967d26084371e7330cb06286e828551267e26c47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
