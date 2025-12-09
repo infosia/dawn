@@ -789,6 +789,9 @@ implicit(C: iu32) fn textureStore(texture: texel_buffer<u32_texel_format, read_w
 @stage("fragment", "compute") implicit(T: iu32, S: workgroup_or_storage) fn atomicExchange(ptr<S, atomic<T>, read_write>, T) -> T
 @stage("fragment", "compute") implicit(T: iu32, S: workgroup_or_storage) fn atomicCompareExchangeWeak(ptr<S, atomic<T>, read_write>, T, T) -> __atomic_compare_exchange_result<T>
 
+@stage("fragment", "compute") implicit(T: vec2<u32>, S: storage) fn atomicStoreMax(ptr<S, atomic<T>, read_write>)
+@stage("fragment", "compute") implicit(T: vec2<u32>, S: storage) fn atomicStoreMin(ptr<S, atomic<T>, read_write>)
+
 @must_use @stage("fragment", "compute") fn subgroupBallot(bool) -> vec4<u32>
 @must_use @stage("fragment", "compute") fn subgroupElect() -> bool
 @must_use @stage("fragment", "compute") implicit(T: fiu32_f16) fn subgroupBroadcast(value: T, @const sourceLaneIndex: iu32) -> T

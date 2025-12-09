@@ -440,7 +440,12 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
     {Feature::ChromiumExperimentalSamplingResourceTable,
      {"Experimental support for the bindless sampling resource table",
       "https://github.com/Kangz/gpuweb/blob/bindless/proposals/bindless.md",
-      FeatureInfo::FeatureState::Experimental}}};
+      FeatureInfo::FeatureState::Experimental}},
+    {Feature::ChromiumExperimentalAtomicVec2uMinMax,
+     {"Experimental support atomic vec2u (64 bit)",
+      "https://github.com/Kangz/gpuweb/blob/bindless/proposals/atomic-64-min-max.md",
+      FeatureInfo::FeatureState::Experimental}},
+};
 
 }  // anonymous namespace
 

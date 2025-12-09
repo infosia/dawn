@@ -171,6 +171,7 @@ static constexpr std::array<DeviceExtInfo, kDeviceExtCount> sDeviceExtInfos{{
     {DeviceExt::ShaderFloat16Int8, "VK_KHR_shader_float16_int8", VulkanVersion_1_2},
     {DeviceExt::ShaderSubgroupExtendedTypes, "VK_KHR_shader_subgroup_extended_types",
      VulkanVersion_1_2},
+    {DeviceExt::ShaderBufferInt64Atomics, "VK_KHR_shader_atomic_int64", VulkanVersion_1_2},
     {DeviceExt::DrawIndirectCount, "VK_KHR_draw_indirect_count", NeverPromoted},
     {DeviceExt::VulkanMemoryModel, "VK_KHR_vulkan_memory_model", VulkanVersion_1_2},
     {DeviceExt::ShaderFloatControls, "VK_KHR_shader_float_controls", VulkanVersion_1_2},
@@ -304,6 +305,7 @@ DeviceExtSet EnsureDependencies(const DeviceExtSet& advertisedExts,
             case DeviceExt::Robustness2:
             case DeviceExt::SubgroupSizeControl:
             case DeviceExt::ShaderSubgroupExtendedTypes:
+            case DeviceExt::ShaderBufferInt64Atomics:
             case DeviceExt::VulkanMemoryModel:
             case DeviceExt::CooperativeMatrix:
             case DeviceExt::ShaderFloatControls:
