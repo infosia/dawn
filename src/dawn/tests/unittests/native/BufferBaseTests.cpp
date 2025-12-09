@@ -32,6 +32,7 @@
 
 #include "dawn/common/Log.h"
 #include "dawn/common/Ref.h"
+#include "dawn/native/Error.h"
 #include "dawn/utils/TestUtils.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
@@ -114,6 +115,24 @@ TEST_F(BufferBaseTest, MapAsyncImplError) {
                      cb.Callback());
 }
 
+// Tests that calling MapAsync() while the buffer is being used by queue fails.
+TEST_F(BufferBaseTest, MapWhileUsedByQueueFails) {
+    EXPECT_CALL(mDeviceErrorCallback,
+                Call(_, wgpu::ErrorType::Validation,
+                     testing::HasSubstr("Concurrent buffer operations are not allowed")))
+        .Times(1);
+
+    MaybeError validate = mBufferMock->ValidateCanUseOnQueueNow();
+    ASSERT_TRUE(validate.IsSuccess());
+
+    MockMapAsyncCallback cb;
+    EXPECT_CALL(cb, Call);
+    mBuffer.MapAsync(wgpu::MapMode::Write, 0, kBufferSize, wgpu::CallbackMode::AllowSpontaneous,
+                     cb.Callback());
+
+    mBufferMock->FinishUseOnQueue();
+}
+
 class BufferBaseThreadedTest : public BufferBaseTest {
   public:
     BufferBaseThreadedTest() : BufferBaseTest() {
@@ -188,6 +207,97 @@ TEST_F(BufferBaseThreadedTest, ConcurrentUnmapGetMappedRange) {
         }
     });
     ProcessEvents();
+}
+
+// Tests calling MapAsync() on one thread and then MapAsync() concurrently on another thread.
+// The second MapAsync() should throw a validation error and callback should fail.
+TEST_F(BufferBaseThreadedTest, ConcurrentMap) {
+    WaitableEvent event;
+    EXPECT_CALL(*mBufferMock.Get(), MapAsyncImpl)
+        .WillOnce([&](wgpu::MapMode mode, uint64_t offset, uint64_t size) -> MaybeError {
+            event.Wait();
+            return {};
+        });
+
+    EXPECT_CALL(mDeviceErrorCallback,
+                Call(_, wgpu::ErrorType::Validation, testing::HasSubstr(kValidationErrorMessage)));
+
+    MockMapAsyncCallback cb;
+    EXPECT_CALL(cb, Call(Eq(wgpu::MapAsyncStatus::Success), _));
+    EXPECT_CALL(cb, Call(Eq(wgpu::MapAsyncStatus::Error), _));
+
+    utils::RunInParallel(2, [&](uint32_t) {
+        mBuffer.MapAsync(wgpu::MapMode::Write, 0, kBufferSize, wgpu::CallbackMode::AllowSpontaneous,
+                         cb.Callback());
+        event.Signal();
+    });
+}
+
+// Tests calling MapAsync() on one thread and then Unmap() concurrently on another thread. Unmap
+// will throw a validation error.
+TEST_F(BufferBaseThreadedTest, ConcurrentMapUnmap) {
+    WaitableEvent unmapStartEvent;
+    WaitableEvent unmapDoneEvent;
+    EXPECT_CALL(*mBufferMock.Get(), MapAsyncImpl).WillOnce([&]() -> MaybeError {
+        unmapStartEvent.Signal();
+        unmapDoneEvent.Wait();
+        return {};
+    });
+
+    EXPECT_CALL(mDeviceErrorCallback,
+                Call(_, wgpu::ErrorType::Validation, testing::HasSubstr(kValidationErrorMessage)));
+
+    utils::RunInParallel(2, [&](uint32_t index) {
+        if (index == 0) {
+            // First thread will start MapAsync() operation.
+            MockMapAsyncCallback cb;
+            EXPECT_CALL(cb, Call(Eq(wgpu::MapAsyncStatus::Success), _));
+            mBuffer.MapAsync(wgpu::MapMode::Write, 0, kBufferSize,
+                             wgpu::CallbackMode::AllowSpontaneous, cb.Callback());
+        } else {
+            // Second thread will start Unmap() operation concurrently with MapAsync() and
+            // fail with validation error.
+            unmapStartEvent.Wait();
+            mBuffer.Unmap();
+            unmapDoneEvent.Signal();
+        }
+    });
+}
+
+// Tests calling MapAsync() on one thread and then Destroy() concurrently on another thread.
+// Destroy() should throw a validation error and wait for MapAsync() to finish before destroying the
+// object.
+TEST_F(BufferBaseThreadedTest, ConcurrentMapDestroy) {
+    WaitableEvent destroyEvent;
+    WaitableEvent errorEvent;
+    EXPECT_CALL(*mBufferMock.Get(), MapAsyncImpl)
+        .WillOnce([&](wgpu::MapMode mode, uint64_t offset, uint64_t size) -> MaybeError {
+            destroyEvent.Signal();
+            errorEvent.Wait();
+            return {};
+        });
+
+    EXPECT_CALL(mDeviceErrorCallback,
+                Call(_, wgpu::ErrorType::Validation, testing::HasSubstr(kValidationErrorMessage)))
+        .WillOnce([&]() { errorEvent.Signal(); });
+
+    EXPECT_CALL(*mBufferMock.Get(), DestroyImpl);
+    // Map shouldn't complete since buffer is destroyed first.
+    EXPECT_CALL(*mBufferMock.Get(), FinalizeMapImpl).Times(0);
+
+    // One thread will MapAsync() while another thread calls Destroy(). Destroy() will wait for
+    // Unmap() to return.
+    utils::RunInParallel(2, [&](uint32_t index) {
+        if (index == 0) {
+            MockMapAsyncCallback cb;
+            EXPECT_CALL(cb, Call);
+            mBuffer.MapAsync(wgpu::MapMode::Write, 0, kBufferSize,
+                             wgpu::CallbackMode::AllowSpontaneous, cb.Callback());
+        } else {
+            destroyEvent.Wait();
+            mBuffer.Destroy();
+        }
+    });
 }
 
 // Tests calling Unmap() on one thread and then Destroy() concurrently on another thread. Destroy()

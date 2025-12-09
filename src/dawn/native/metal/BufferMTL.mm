@@ -193,6 +193,8 @@ MaybeError Buffer::MapAtCreationImpl() {
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
+    // TODO(kylechar): Initialize data with memset() once buffer is mapped.
+    auto deviceGuard = GetDevice()->GetGuard();
     CommandRecordingContext* commandContext =
         ToBackend(GetDevice()->GetQueue())->GetPendingCommandContext();
     EnsureDataInitialized(commandContext);
