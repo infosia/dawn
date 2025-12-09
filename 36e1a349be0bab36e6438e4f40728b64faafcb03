@@ -16,6 +16,24 @@
       "message": "Could we structure it like `src/dawn/wire/CMakeLists.txt` which moves sources and headers to variable definitions, but also and importantly sets the defines used by `dawn_replay_export`?",
       "revId": "36e1a349be0bab36e6438e4f40728b64faafcb03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eccca0a3_f61c9f54",
+        "filename": "src/dawn/replay/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-09T21:03:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21467a92_47a30f8c",
+      "revId": "36e1a349be0bab36e6438e4f40728b64faafcb03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
