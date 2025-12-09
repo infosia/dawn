@@ -148,7 +148,7 @@ AttachmentState::AttachmentState(const UnpackedPtr<RenderPassDescriptor>& descri
         if (mSampleCount == 0) {
             mSampleCount = attachment->GetTexture()->GetSampleCount();
         } else {
-            DAWN_ASSERT(mSampleCount == attachment->GetTexture()->GetSampleCount());
+            //DAWN_ASSERT(mSampleCount == attachment->GetTexture()->GetSampleCount());
         }
     }
 

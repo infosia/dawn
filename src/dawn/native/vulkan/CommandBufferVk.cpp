@@ -516,6 +516,16 @@ MaybeError RecordBeginRenderPass(CommandRecordingContext* recordingContext,
 
         query.SetSampleCount(renderPass->attachmentState->GetSampleCount());
 
+        if (renderPass->attachmentState->GetSampleCount() > 1) {
+            for (ColorAttachmentIndex i : renderPass->attachmentState->GetColorAttachmentsMask()) {
+                const auto& attachmentInfo = renderPass->colorAttachments[i];
+                if (attachmentInfo.view->GetTexture()->GetSampleCount() == 1) {
+                    query.renderToSingleSampled = true;
+                    break;
+                }
+            }
+        }
+
         RenderPassCache::RenderPassInfo renderPassInfo;
         DAWN_TRY_ASSIGN(renderPassInfo, device->GetRenderPassCache()->GetRenderPass(query));
         renderPassVK = renderPassInfo.renderPass;

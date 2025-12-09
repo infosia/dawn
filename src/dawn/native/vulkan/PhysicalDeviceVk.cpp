@@ -589,6 +589,10 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::DawnDrmFormatCapabilities);
     }
 
+    if (mDeviceInfo.HasExt(DeviceExt::MultisampledRenderToSingleSampled)) {
+        EnableFeature(Feature::MSAARenderToSingleSampled);
+    }
+
     EnableFeature(Feature::TextureComponentSwizzle);
 
     // Enable support for bindless if WebGPU semantics are supported:

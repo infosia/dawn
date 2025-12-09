@@ -324,6 +324,7 @@ MaybeError VulkanFunctions::LoadDeviceProcs(VkInstance instance,
     GET_DEVICE_PROC(CreatePipelineLayout);
     GET_DEVICE_PROC(CreateQueryPool);
     GET_DEVICE_PROC(CreateRenderPass);
+    GET_DEVICE_PROC(CreateRenderPass2);
     GET_DEVICE_PROC(CreateSampler);
     GET_DEVICE_PROC(CreateSemaphore);
     GET_DEVICE_PROC(CreateShaderModule);

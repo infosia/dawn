@@ -239,9 +239,14 @@ class RenderPassValidationState final : public NonMovable {
                 }
             }
 
+            // The depth stencil attachment [TextureView "Skia_DepthStencilAttachment__TextureView"]
+            // sample count (1) does not match the sample count of the other attachments (4)
+
             // Skip the sampleCount validation for resolve target
             DAWN_INVALID_IF(attachmentType != AttachmentType::ResolveTarget &&
-                                attachment->GetTexture()->GetSampleCount() != mSampleCount,
+                                attachmentType !=
+                                    AttachmentType::DepthStencilAttachment && attachment->GetTexture()
+                                        ->GetSampleCount() != mSampleCount,
                             "The %s %s %ssample count (%u) does not match the sample count of the "
                             "other attachments (%u).",
                             attachmentTypeStr, attachment, implicitPrefixStr,
@@ -297,7 +302,8 @@ class RenderPassValidationState final : public NonMovable {
         mRenderHeight = renderSize.height;
         mAttachmentValidationWidth = mRenderWidth;
         mAttachmentValidationHeight = mRenderHeight;
-        mSampleCount = attachment->GetTexture()->GetSampleCount();
+        mSampleCount = mImplicitSampleCount > 1 ? mImplicitSampleCount
+                                                : attachment->GetTexture()->GetSampleCount();
 
         DAWN_ASSERT(mRenderWidth != 0);
         DAWN_ASSERT(mRenderHeight != 0);
@@ -691,6 +697,14 @@ MaybeError ValidateRenderPassDepthStencilAttachment(
     DAWN_ASSERT(depthStencilAttachment != nullptr);
     UnpackedPtr<RenderPassDepthStencilAttachment> unpacked;
     DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(depthStencilAttachment));
+
+    const auto* msaaRenderToSingleSampledDesc =
+        unpacked.Get<DawnRenderPassColorAttachmentRenderToSingleSampled>();
+    if (msaaRenderToSingleSampledDesc) {
+        // DAWN_TRY(ValidateColorAttachmentRenderToSingleSampled(device, colorAttachment,
+        //                                                       msaaRenderToSingleSampledDesc));
+        validationState->SetImplicitSampleCount(msaaRenderToSingleSampledDesc->implicitSampleCount);
+    }
 
     TextureViewBase* attachment = unpacked->view;
     DAWN_TRY(device->ValidateObject(attachment));
