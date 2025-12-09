@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7068be6_cedd78ae",
+        "filename": "src/dawn/replay/Error.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-09T00:30:44Z",
+      "side": 1,
+      "message": "Note: replay/Error.h is now just copy of native/Error.h. We want replay to be a sperate component so don\u0027t share that with dawn native. For now DawnTest references both version, so rename macros from `replay/Error.h` with a `_REPLAY_` prefix.",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
