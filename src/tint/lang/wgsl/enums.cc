@@ -51,6 +51,9 @@ Extension ParseExtension(std::string_view str) {
     if (str == "chromium_disable_uniformity_analysis") {
         return Extension::kChromiumDisableUniformityAnalysis;
     }
+    if (str == "chromium_experimental_atomic_vec2u_min_max") {
+        return Extension::kChromiumExperimentalAtomicVec2UMinMax;
+    }
     if (str == "chromium_experimental_barycentric_coord") {
         return Extension::kChromiumExperimentalBarycentricCoord;
     }
@@ -98,6 +101,8 @@ std::string_view ToString(Extension value) {
             return "undefined";
         case Extension::kChromiumDisableUniformityAnalysis:
             return "chromium_disable_uniformity_analysis";
+        case Extension::kChromiumExperimentalAtomicVec2UMinMax:
+            return "chromium_experimental_atomic_vec2u_min_max";
         case Extension::kChromiumExperimentalBarycentricCoord:
             return "chromium_experimental_barycentric_coord";
         case Extension::kChromiumExperimentalDynamicBinding:
@@ -690,6 +695,12 @@ BuiltinFn ParseBuiltinFn(std::string_view name) {
     if (name == "atomicCompareExchangeWeak") {
         return BuiltinFn::kAtomicCompareExchangeWeak;
     }
+    if (name == "atomicStoreMax") {
+        return BuiltinFn::kAtomicStoreMax;
+    }
+    if (name == "atomicStoreMin") {
+        return BuiltinFn::kAtomicStoreMin;
+    }
     if (name == "subgroupBallot") {
         return BuiltinFn::kSubgroupBallot;
     }
@@ -1055,6 +1066,10 @@ const char* str(BuiltinFn i) {
             return "atomicExchange";
         case BuiltinFn::kAtomicCompareExchangeWeak:
             return "atomicCompareExchangeWeak";
+        case BuiltinFn::kAtomicStoreMax:
+            return "atomicStoreMax";
+        case BuiltinFn::kAtomicStoreMin:
+            return "atomicStoreMin";
         case BuiltinFn::kSubgroupBallot:
             return "subgroupBallot";
         case BuiltinFn::kSubgroupElect:

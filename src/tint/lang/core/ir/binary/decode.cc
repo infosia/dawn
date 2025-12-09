@@ -1986,6 +1986,10 @@ struct Decoder {
                 return core::BuiltinFn::kAtomicExchange;
             case pb::BuiltinFn::atomic_compare_exchange_weak:
                 return core::BuiltinFn::kAtomicCompareExchangeWeak;
+            case pb::BuiltinFn::atomic_store_max:
+                return core::BuiltinFn::kAtomicStoreMax;
+            case pb::BuiltinFn::atomic_store_min:
+                return core::BuiltinFn::kAtomicStoreMin;
             case pb::BuiltinFn::subgroup_ballot:
                 return core::BuiltinFn::kSubgroupBallot;
             case pb::BuiltinFn::subgroup_elect:

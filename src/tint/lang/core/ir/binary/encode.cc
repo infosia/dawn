@@ -1338,6 +1338,10 @@ struct Encoder {
                 return pb::BuiltinFn::atomic_exchange;
             case core::BuiltinFn::kAtomicCompareExchangeWeak:
                 return pb::BuiltinFn::atomic_compare_exchange_weak;
+            case core::BuiltinFn::kAtomicStoreMin:
+                return pb::BuiltinFn::atomic_store_min;
+            case core::BuiltinFn::kAtomicStoreMax:
+                return pb::BuiltinFn::atomic_store_max;
             case core::BuiltinFn::kSubgroupBallot:
                 return pb::BuiltinFn::subgroup_ballot;
             case core::BuiltinFn::kSubgroupElect:

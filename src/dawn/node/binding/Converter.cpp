@@ -1698,6 +1698,7 @@ bool Converter::Convert(interop::GPUFeatureName& out, wgpu::FeatureName in) {
         CASE(TextureFormatsTier2, kTextureFormatsTier2);
         CASE(TextureComponentSwizzle, kTextureComponentSwizzle);
         CASE(PrimitiveIndex, kPrimitiveIndex);
+        CASE(ChromiumExperimentalAtomicVec2uMinMax, kChromiumExperimentalAtomicVec2uMinMax);
 
 #undef CASE
 

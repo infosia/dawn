@@ -479,6 +479,11 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         !shaderF16Enabled ||
         (mDeviceInfo.shaderSubgroupExtendedTypes.shaderSubgroupExtendedTypes == VK_TRUE);
 
+    // VkPhysicalDeviceShaderAtomicInt64Features
+    const bool hasAtomic64Support = mDeviceInfo.HasExt(DeviceExt::ShaderBufferInt64Atomics) &&
+                                    mDeviceInfo.shaderAtomicInt64Features.shaderBufferInt64Atomics;
+
+    printf(" I have atomics 64 %d ! \n", hasAtomic64Support);
     // Some devices (PowerVR GE8320) can apparently report subgroup size of 1.
     const bool allowSubgroupSizeRanges =
         mSubgroupMinSize >= kDefaultSubgroupMinSize && mSubgroupMaxSize <= kDefaultSubgroupMaxSize;
