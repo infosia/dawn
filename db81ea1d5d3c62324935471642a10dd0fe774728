@@ -70,6 +70,24 @@
       "parentUuid": "6ed4ebd2_cee7f510",
       "revId": "db81ea1d5d3c62324935471642a10dd0fe774728",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c13574c_da0d3f5e",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1285,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-09T00:30:16Z",
+      "side": 1,
+      "message": "Done (public api: Capture and Replay interface with minimal methods at this point)",
+      "parentUuid": "4dcb8449_4b0e7b20",
+      "revId": "db81ea1d5d3c62324935471642a10dd0fe774728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
