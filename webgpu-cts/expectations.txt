@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-12-03 07:31:15AM
+# Last rolled: 2025-12-09 05:16:49AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -147,7 +147,6 @@ crbug.com/42251024 [ android-t ] webgpu:shader,execution,expression,call,builtin
 
 # Mac AMD does not correctly respect lodMinClamp/lodMaxClamp
 crbug.com/409266267 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords,lodClamp:* [ Skip ]
-
 
 ################################################################################
 # Temporary Skip Expectations
@@ -442,7 +441,6 @@ crbug.com/42240846 [ android-14 ] webgpu:api,operation,vertex_state,index_format
 crbug.com/42240846 [ android-t ] webgpu:api,operation,vertex_state,index_format:primitive_restart:indexFormat="uint32";primitiveTopology="line-list" [ Failure ]
 crbug.com/42240846 [ android-t ] webgpu:api,operation,vertex_state,index_format:primitive_restart:indexFormat="uint32";primitiveTopology="point-list" [ Failure ]
 crbug.com/42240846 [ android-t ] webgpu:api,operation,vertex_state,index_format:primitive_restart:indexFormat="uint32";primitiveTopology="triangle-list" [ Failure ]
-
 
 # Shader corr failing very flakily on Android ARM (Pixel 6) (too flaky for RetryOnFailure)
 crbug.com/41479550 [ android-t ] webgpu:shader,execution,memory_model,coherence:corr:memType="atomic_storage";testType="inter_workgroup" [ Failure ]
@@ -1028,7 +1026,6 @@ crbug.com/432291885 [ dawn-no-backend-validation intel sequoia ] webgpu:shader,e
 crbug.com/432291885 [ dawn-no-backend-validation intel sequoia ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:* [ Failure ]
 crbug.com/432291885 [ dawn-no-backend-validation intel sequoia ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:format="*";viewDimension="2d-array";stage="fragment";* [ Failure ]
 crbug.com/432291885 [ dawn-no-backend-validation intel sequoia ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:format="*";viewDimension="3d";stage="fragment";* [ Failure ]
-
 
 # rgb10a2unorm precision issue on Intel 770
 crbug.com/445458866 [ intel-0x4680 linux ] webgpu:api,operation,storage_texture,read_only:basic:format="rgb10a2unorm";* [ Failure ]
