@@ -1,6 +1,57 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "08682e65_a9b76dd1",
+        "filename": "include/dawn/native/WebGPUBackend.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:42:49Z",
+      "side": 1,
+      "message": "XXX check why this is needed.",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80961b31_68bb24bb",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:42:49Z",
+      "side": 1,
+      "message": "Is there any chance that we skip adding this toggle and just fix the runs with `--capture-replay` until the flag can be used to run all dawn_end2end_tests (with a few suppressions)? Adding a toggle that does nothing just as an allowlist is weird.\n\nBut if that\u0027s the only way then we can do it, but should strive to reach enough completion to remove the toggle quickly.",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce88db53_501e2946",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:42:49Z",
+      "side": 1,
+      "message": "Calling `ForTesting` functions and methods in production is usually a signal that something is wrong because the code is meant for testing only and not to be relied on.\n\nWhat\u0027s the concern about taking a reference to the object? Is it that during the destructor we run DestroyImpl before freeing the allocation which might keep a reference to a garbage pointer? Let\u0027s check with Kyle but IMHO we should add a `newState` argument to `UnmapImpl` instead.",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "f7068be6_cedd78ae",
@@ -14,6 +65,252 @@
       "writtenOn": "2025-12-09T00:30:44Z",
       "side": 1,
       "message": "Note: replay/Error.h is now just copy of native/Error.h. We want replay to be a sperate component so don\u0027t share that with dawn native. For now DawnTest references both version, so rename macros from `replay/Error.h` with a `_REPLAY_` prefix.",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f68376c8_ac6c465a",
+        "filename": "src/dawn/replay/Error.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:42:49Z",
+      "side": 1,
+      "message": "Which file is including internals of both dawn/native and dawn/replay at the same time? We have public APIs for both of them that hide implementation details so that should not happen. The only tests that should use internals are whitebox tests and they should only include one or the other.",
+      "parentUuid": "f7068be6_cedd78ae",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f776910_abbbe525",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 20
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:42:49Z",
+      "side": 1,
+      "message": "For other backends we do this in https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/BUILD.gn;drc\u003d84bb175587ebe7f0e53bbbfa8122362558d444f0;l\u003d75 and we can just use `DAWN_ENABLE_BACKEND_WEBGPU` in `DawnTest` instead of adding a new define.",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80ed57b8_7b2afcdc",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:42:49Z",
+      "side": 1,
+      "message": "```suggestion\n```\n\nWe should make public DawnNative.h APIs to allow removing these:\n\n```\n../../src/dawn/tests/DawnTest.cpp:869:50: error: no member named \u0027ToAPI\u0027 in namespace \u0027dawn::native\u0027\n  869 |                      info.adapterType \u003d\u003d native::ToAPI(param.adapterProperties.adapterType) \u0026\u0026\n      |                                                  ^~~~~\n../../src/dawn/tests/DawnTest.cpp:942:13: error: no member named \u0027FromAPI\u0027 in namespace \u0027dawn::native\u0027\n  942 |     native::FromAPI(gTestEnv-\u003eGetInstance()-\u003eGet())-\u003eSetPlatformForTesting(nullptr);\n      |             ^~~~~~~\n../../src/dawn/tests/DawnTest.cpp:1448:13: error: no member named \u0027FromAPI\u0027 in namespace \u0027dawn::native\u0027\n 1448 |     native::FromAPI(gTestEnv-\u003eGetInstance()-\u003eGet())-\u003eSetPlatformForTesting(mTestPlatform.get());\n      |             ^~~~~~~\n```\n\nAre the three things that fail when removing these includes. One can be a static_cast and the others a new DawnNative.h function.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 38
+      },
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26f18c91_dc1f6c32",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:42:49Z",
+      "side": 1,
+      "message": "To make the #ifdef more local, the Recorder in the case without `DAWN_ENABLE_CAPTURE_REPLAY` should implement a full noop interface. This way other code doesn\u0027t need to care about capture/replay not being compiled.",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6cdee87_6bc8c7d3",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1605,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:42:49Z",
+      "side": 1,
+      "message": "Can we separate the contents of this block in its own function? It might grow a bit in the future.",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6daf2bd1_4c40f4fd",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1619,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:42:49Z",
+      "side": 1,
+      "message": "We should also test that 1) the buffer exists, and 2) is the correct size",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a42dd5ea_95b38440",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1624,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:42:49Z",
+      "side": 1,
+      "message": "nit: this might not be needed because the destructor runs right after TearDown.",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcd0944e_d55d2398",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:42:49Z",
+      "side": 1,
+      "message": "Nit: can we have a `ScopedCapturePause` RAII helper? It will be useful in other places in DawnTest.",
+      "range": {
+        "startLine": 1675,
+        "startChar": 0,
+        "endLine": 1680,
+        "endChar": 6
+      },
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "106ce931_0acac978",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 2156,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:42:49Z",
+      "side": 1,
+      "message": "Can we do this unconditionally and just create a buffer descriptor manually here instead of putting the label after buffer creation? (we\u0027d inline / simplify parts of utils::CreateBufferFromData)",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adb95b05_4e78f6ba",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 2221,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:42:49Z",
+      "side": 1,
+      "message": "This should never happen?",
+      "range": {
+        "startLine": 2221,
+        "startChar": 45,
+        "endLine": 2221,
+        "endChar": 64
+      },
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0c58348_752d8d85",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:42:49Z",
+      "side": 1,
+      "message": "```suggestion\n    bool IsCaptureReplayCheckingEnabled() const;\n```",
+      "range": {
+        "startLine": 209,
+        "startChar": 9,
+        "endLine": 209,
+        "endChar": 36
+      },
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b36ce50_6ca744af",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:42:49Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98cb1d89_0f771db8",
+        "filename": "src/dawn/tests/end2end/BasicTests.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T10:42:49Z",
+      "side": 1,
+      "message": "Can we have at least one test enabled for this check in this CL so we know the code in DawnTest is a bit correct?",
       "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
