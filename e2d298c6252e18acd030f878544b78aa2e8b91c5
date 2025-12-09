@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "340af98a_ff4800f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-09T22:48:46Z",
+      "side": 1,
+      "message": "going to skip this one because a bunch of stuff broke from upstream CTS changes. Fixes are in progress.",
+      "revId": "e2d298c6252e18acd030f878544b78aa2e8b91c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
