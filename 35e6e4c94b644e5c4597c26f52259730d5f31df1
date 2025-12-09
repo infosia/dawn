@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e43219f5_000736f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-09T17:47:10Z",
+      "side": 1,
+      "message": "This is great but I was wondering if there was more of a way we could do this directly? Like never allow signed access on struct members from the start.",
+      "revId": "35e6e4c94b644e5c4597c26f52259730d5f31df1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
