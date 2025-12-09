@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b52363ce_06c16c16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-09T15:21:44Z",
+      "side": 1,
+      "message": "Abandoning this after our discussion and instead will look to make most backends (except WebGPUOnWebGPU) not have a child class of CommandBuffer.",
+      "revId": "d9da99135d587e049280cacd7e13a5f63acd8b5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
