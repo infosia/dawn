@@ -1,0 +1,62 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62bfdab2_3151be1a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-09T16:46:44Z",
+      "side": 1,
+      "message": "LGTM. Corentin, for some context, see chat: https://chat.google.com/room/AAAAp0qrn9I/t3Eg3DL4s1A",
+      "revId": "967d26084371e7330cb06286e828551267e26c47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0a23bfc_28a62e8d",
+        "filename": "src/dawn/tests/end2end/ShaderTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2891,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-09T16:46:44Z",
+      "side": 1,
+      "message": "suggest: SkiaGraphiteVertexShaderBugOnIntelGen9",
+      "range": {
+        "startLine": 2891,
+        "startChar": 20,
+        "endLine": 2891,
+        "endChar": 47
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c58243f2_fd6ef9e9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/ShaderTests.cpp",
+              "range": {
+                "startLine": 2891,
+                "startChar": 0,
+                "endLine": 2892,
+                "endChar": 0
+              },
+              "replacement": "TEST_P(ShaderTests, SkiaGraphiteVertexShaderBugOnIntelGen9) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "967d26084371e7330cb06286e828551267e26c47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
