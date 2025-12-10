@@ -16,6 +16,24 @@
       "message": "To help validate these diffs, I added some printing to dawn_json_generator to see what the deps found are:\n```\n\"compute pass encoder.bind group\" optionally depends on \"set bind group\"\n\"render bundle encoder.bind group\" optionally depends on \"set bind group\"\n\"render bundle encoder.buffer\" optionally depends on \"set vertex buffer\"\n\"render pass encoder.buffer\" optionally depends on \"multi draw indexed indirect\"\n\"render pass encoder.buffer\" optionally depends on \"multi draw indirect\"\n\"render pass encoder.bind group\" optionally depends on \"set bind group\"\n\"render pass encoder.buffer\" optionally depends on \"set vertex buffer\"\n```\n\nThis explains why WGPUComputePassEncoderImpl, WGPURenderBundleEncoderImpl, and WGPURenderPassEncoderImpl are emitted at the bottom. I\u0027m not sure why there are a bunch of new lines added here, though.",
       "revId": "17886373c8c819aa652aebbab6a22128b45c42a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "feb1fa8e_f6d11aa7",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-10T20:22:07Z",
+      "side": 1,
+      "message": "Most of the lines appearing in the diff are just \"context\" lines that didn\u0027t change. This diff looks correct to me though we will eventually need to implement this sorting change in webgpu-headers too.",
+      "parentUuid": "398d108d_dd134a44",
+      "revId": "17886373c8c819aa652aebbab6a22128b45c42a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
