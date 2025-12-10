@@ -172,6 +172,8 @@ ProgramInfo LoadProgramInfo(const LoadProgramOptions& opts) {
 
                 tint::wgsl::reader::Options options;
                 options.allowed_features = tint::wgsl::AllowedFeatures::Everything();
+                // buffer_view is not ready for fuzzing.
+                options.allowed_features.features.erase(tint::wgsl::LanguageFeature::kBufferView);
 
                 auto file = std::make_unique<tint::Source::File>(
                     opts.filename, std::string(data.begin(), data.end()));
