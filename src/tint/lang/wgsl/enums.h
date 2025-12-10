@@ -190,6 +190,7 @@ static constexpr Extension kAllExtensions[] = {
 /// @see src/tint/lang/wgsl/wgsl.def for language feature descriptions
 enum class LanguageFeature : uint8_t {
     kUndefined,
+    kBufferView,
     kChromiumPrint,
     kChromiumTestingExperimental,
     kChromiumTestingShipped,
@@ -219,6 +220,7 @@ std::string_view ToString(LanguageFeature value);
 LanguageFeature ParseLanguageFeature(std::string_view str);
 
 constexpr std::string_view kLanguageFeatureStrings[] = {
+    "buffer_view",
     "chromium_print",
     "chromium_testing_experimental",
     "chromium_testing_shipped",
@@ -240,6 +242,7 @@ constexpr std::string_view kLanguageFeatureStrings[] = {
 
 /// All features
 static constexpr LanguageFeature kAllLanguageFeatures[] = {
+    LanguageFeature::kBufferView,
     LanguageFeature::kChromiumPrint,
     LanguageFeature::kChromiumTestingExperimental,
     LanguageFeature::kChromiumTestingShipped,
@@ -462,6 +465,8 @@ enum class BuiltinFn : uint8_t {
     kSubgroupMatrixScalarAdd,
     kSubgroupMatrixScalarSubtract,
     kSubgroupMatrixScalarMultiply,
+    kBufferView,
+    kBufferLength,
     kPrint,
     kTintMaterialize,
     kHasBinding,
@@ -645,6 +650,8 @@ constexpr BuiltinFn kBuiltinFns[] = {
     BuiltinFn::kSubgroupMatrixScalarAdd,
     BuiltinFn::kSubgroupMatrixScalarSubtract,
     BuiltinFn::kSubgroupMatrixScalarMultiply,
+    BuiltinFn::kBufferView,
+    BuiltinFn::kBufferLength,
     BuiltinFn::kPrint,
     BuiltinFn::kTintMaterialize,
     BuiltinFn::kHasBinding,
@@ -809,6 +816,8 @@ constexpr const char* kBuiltinFnStrings[] = {
     "subgroupMatrixScalarAdd",
     "subgroupMatrixScalarSubtract",
     "subgroupMatrixScalarMultiply",
+    "bufferView",
+    "bufferLength",
     "print",
     "__tint_materialize",
     "hasBinding",

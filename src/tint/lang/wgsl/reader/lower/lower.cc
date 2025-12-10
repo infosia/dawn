@@ -206,6 +206,9 @@ core::BuiltinFn Convert(wgsl::BuiltinFn fn) {
         case tint::wgsl::BuiltinFn::kBitcast:               // should lower to ir::Bitcast
         case tint::wgsl::BuiltinFn::kWorkgroupUniformLoad:  // should be handled in Lower()
         case tint::wgsl::BuiltinFn::kTintMaterialize:
+        // TODO(b/468472623): handle these for real
+        case tint::wgsl::BuiltinFn::kBufferView:
+        case tint::wgsl::BuiltinFn::kBufferLength:
         case tint::wgsl::BuiltinFn::kNone:
             break;
     }
