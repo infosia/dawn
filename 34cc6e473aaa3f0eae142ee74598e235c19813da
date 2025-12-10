@@ -50,6 +50,24 @@
       "message": "Apologies for not catching this earlier, but can we have this in include/dawn/replay instead of include/replay? This will match the path of the sources and makes it clear to folks adding our include path to their project that this is a dawn header. (because they have to type `dawn/replay/Replay.h` instead of `replan/Replay.h`)",
       "revId": "34cc6e473aaa3f0eae142ee74598e235c19813da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae252d2a_eac0540e",
+        "filename": "include/replay/Replay.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-10T23:43:05Z",
+      "side": 1,
+      "message": "Done (Ah losing both +2)",
+      "parentUuid": "ba309d0d_4ba0a877",
+      "revId": "34cc6e473aaa3f0eae142ee74598e235c19813da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
