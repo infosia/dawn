@@ -125,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "13efe807_5a70a697",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-10T13:08:10Z",
+      "side": 1,
+      "message": "How many tests fail when running with the flag (and all WebGPUBackend() tests allowlisted)? The capture/replay seemed to reach a fair amount of API coverage and I was hoping that it would pass most tests. But if there\u0027s a lot and the failures aren\u0027t obvious, the temporary allowlist sounds good.",
+      "parentUuid": "d0fc7f34_b3a23aa7",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ce88db53_501e2946",
         "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
         "patchSetId": 20
@@ -417,6 +435,24 @@
       "side": 1,
       "message": "Related to [1]. Even we have it uncomment here it won\u0027t run until we land a chromium CL with the new config --check-capture-replay end2end tests running. Compared to adding the config now and maybe fail directly when the Chromium CL of adding the config to CQ, I think it better to add the config later when the CQ bot with this config is on.",
       "parentUuid": "98cb1d89_0f771db8",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "065fe5e1_9852f3b9",
+        "filename": "src/dawn/tests/end2end/BasicTests.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-10T13:08:10Z",
+      "side": 1,
+      "message": "Turning it on now would be a noop for CI, as in it would test the same thing as `WebGPUBackend()` but at least it would be possible to run the tests manually. Without it we cannot check even manually that the capture/replay testing is working at all.",
+      "parentUuid": "211cda21_6c7bf7d3",
       "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
