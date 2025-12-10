@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cea5346e_31383e44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-10T20:50:27Z",
+      "side": 1,
+      "message": "PTAL\n\nTrybot run is green. Will remove the Chromium builder after this lands.",
+      "revId": "42738f7a859dc053f802b3201561bd9ee5811e83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "628516fd_420e54fc",
+        "filename": "infra/specs/mixins.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-10T20:50:27Z",
+      "side": 1,
+      "message": "Unrelated change caused by forgetting to regenerate after rolling //testing (autoroller hasn\u0027t made any progress after I filed the request for a new one). We don\u0027t have any Win/NVIDIA experimental tests enabled on Dawn yet, so this will be a no-op.",
+      "range": {
+        "startLine": 124,
+        "startChar": 90,
+        "endLine": 124,
+        "endChar": 102
+      },
+      "revId": "42738f7a859dc053f802b3201561bd9ee5811e83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
