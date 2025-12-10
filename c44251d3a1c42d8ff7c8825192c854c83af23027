@@ -34,6 +34,24 @@
       "parentUuid": "d5a38037_4ce73556",
       "revId": "c44251d3a1c42d8ff7c8825192c854c83af23027",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2db739b3_abd9fa9b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-10T17:07:20Z",
+      "side": 1,
+      "message": "In Debug at least, it will print the status message \"Context can only be current on one thread\". (I know because I missed a case and it helpfully informed me. 😊 )",
+      "parentUuid": "7f35b999_c79c7252",
+      "revId": "c44251d3a1c42d8ff7c8825192c854c83af23027",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
