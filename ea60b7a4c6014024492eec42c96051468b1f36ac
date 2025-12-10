@@ -455,6 +455,24 @@
       "parentUuid": "211cda21_6c7bf7d3",
       "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52ed419a_c42ca40a",
+        "filename": "src/dawn/tests/end2end/BasicTests.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-10T17:16:42Z",
+      "side": 1,
+      "message": "For now you can manually test with the two flags together (--check-capture-replay --enable-toggles\u003denable_for_check_capture_replay)",
+      "parentUuid": "065fe5e1_9852f3b9",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
