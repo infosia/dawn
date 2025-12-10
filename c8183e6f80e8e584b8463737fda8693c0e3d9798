@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6203bdd7_8c6463c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-10T18:04:38Z",
+      "side": 1,
+      "message": "+kainino to stamp since Jonathan isn\u0027t a Dawn committer.\n\nWhat\u0027s the process for making him a committer? He\u0027s already a Chromium committer and will likely be making some changes in Dawn on and off for GPU infra-related work.",
+      "revId": "c8183e6f80e8e584b8463737fda8693c0e3d9798",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
