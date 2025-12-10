@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d696691_e595b7a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-10T01:40:41Z",
+      "side": 1,
+      "message": "PTAL\n\nI\u0027m working on the test follow-up, but I probably won\u0027t be able to go over everything that Gemini spat out before EoD, so might as well submit this now.",
+      "revId": "c4a7bda9f3ab197436226599ada62375abc4c871",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
