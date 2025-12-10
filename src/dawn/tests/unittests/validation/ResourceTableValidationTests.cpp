@@ -344,5 +344,61 @@ TEST_F(ResourceTableValidationTest_Submit, CanUseInSubmit) {
     }
 }
 
+// Tests that the resource table can be used in submit
+TEST_F(ResourceTableValidationTest_Submit, DispatchRequiresResourceTable) {
+    // TODO(435317394): Implemented bindless in the wire.
+    if (UsesWire()) {
+        GTEST_SKIP();
+    }
+
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = utils::CreateShaderModule(device, R"(
+        enable chromium_experimental_resource_table;
+        @compute @workgroup_size(1) fn main() {
+            _ = hasResource<texture_2d<f32>>(0);
+        }
+    )");
+
+    wgpu::PipelineLayoutResourceTable plResourceTable;
+    plResourceTable.usesResourceTable = true;
+
+    wgpu::PipelineLayoutDescriptor pipelineLayoutDescriptor;
+    pipelineLayoutDescriptor.bindGroupLayoutCount = 0;
+    pipelineLayoutDescriptor.nextInChain = &plResourceTable;
+
+    csDesc.layout = device.CreatePipelineLayout(&pipelineLayoutDescriptor);
+    wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&csDesc);
+
+    // Success case: `usesResourceTable` is enabled, and one has been set on the encoder 
+    {
+        wgpu::ResourceTableDescriptor descriptor;
+        descriptor.size = 1u;
+        wgpu::ResourceTable resourceTable = device.CreateResourceTable(&descriptor);
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        encoder.SetResourceTable(resourceTable);
+
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+
+        wgpu::CommandBuffer commands = encoder.Finish();
+        device.GetQueue().Submit(1, &commands);
+    }
+
+    // Failure case: `usesResourceTable` is enabled, but none has been set on the encoder 
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+
+        wgpu::CommandBuffer commands = encoder.Finish();
+        ASSERT_DEVICE_ERROR(device.GetQueue().Submit(1, &commands));
+    }    
+}
+
 }  // namespace
 }  // namespace dawn
