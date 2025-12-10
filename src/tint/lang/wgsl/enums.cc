@@ -180,6 +180,9 @@ std::string_view ToString(ChromiumDiagnosticRule value) {
 /// @param str the string to parse
 /// @returns the parsed enum, or LanguageFeature::kUndefined if the string could not be parsed.
 LanguageFeature ParseLanguageFeature(std::string_view str) {
+    if (str == "buffer_view") {
+        return LanguageFeature::kBufferView;
+    }
     if (str == "chromium_print") {
         return LanguageFeature::kChromiumPrint;
     }
@@ -237,6 +240,8 @@ std::string_view ToString(LanguageFeature value) {
     switch (value) {
         case LanguageFeature::kUndefined:
             return "undefined";
+        case LanguageFeature::kBufferView:
+            return "buffer_view";
         case LanguageFeature::kChromiumPrint:
             return "chromium_print";
         case LanguageFeature::kChromiumTestingExperimental:
@@ -786,6 +791,12 @@ BuiltinFn ParseBuiltinFn(std::string_view name) {
     if (name == "subgroupMatrixScalarMultiply") {
         return BuiltinFn::kSubgroupMatrixScalarMultiply;
     }
+    if (name == "bufferView") {
+        return BuiltinFn::kBufferView;
+    }
+    if (name == "bufferLength") {
+        return BuiltinFn::kBufferLength;
+    }
     if (name == "print") {
         return BuiltinFn::kPrint;
     }
@@ -1119,6 +1130,10 @@ const char* str(BuiltinFn i) {
             return "subgroupMatrixScalarSubtract";
         case BuiltinFn::kSubgroupMatrixScalarMultiply:
             return "subgroupMatrixScalarMultiply";
+        case BuiltinFn::kBufferView:
+            return "bufferView";
+        case BuiltinFn::kBufferLength:
+            return "bufferLength";
         case BuiltinFn::kPrint:
             return "print";
         case BuiltinFn::kTintMaterialize:

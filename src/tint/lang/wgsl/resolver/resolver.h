@@ -241,6 +241,8 @@ class Resolver {
     const core::type::SubgroupMatrix* SubgroupMatrix(const ast::Identifier* ident,
                                                      core::SubgroupMatrixKind kind);
 
+    const core::type::Buffer* Buffer(const ast::Identifier* ident);
+
     /// @returns @p ident cast to an ast::TemplatedIdentifier, if the identifier is templated and
     /// the number of templated arguments are between @p min_args and @p max_args.
     const ast::TemplatedIdentifier* TemplatedIdentifier(const ast::Identifier* ident,
