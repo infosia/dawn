@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "308aaed2_d6d119a9",
+        "filename": "include/dawn/native/WebGPUBackend.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-10T13:03:17Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "08682e65_a9b76dd1",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "80961b31_68bb24bb",
