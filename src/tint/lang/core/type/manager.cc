@@ -337,6 +337,10 @@ const core::type::SubgroupMatrix* Manager::subgroup_matrix(SubgroupMatrixKind ki
     return Get<core::type::SubgroupMatrix>(kind, inner, cols, rows);
 }
 
+const core::type::Buffer* Manager::buffer(uint32_t n) {
+    return Get<core::type::Buffer>(n);
+}
+
 const core::type::Array* Manager::array(const core::type::Type* elem_ty, uint32_t count) {
     uint32_t implicit_stride = tint::RoundUp(elem_ty->Align(), elem_ty->Size());
 

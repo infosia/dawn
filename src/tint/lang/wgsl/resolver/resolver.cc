@@ -2388,6 +2388,22 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
             RegisterStore(args[0]);
             break;
 
+        case wgsl::BuiltinFn::kBufferView: {
+            auto address_space =
+                call->Target()->ReturnType()->template As<core::type::Pointer>()->AddressSpace();
+            auto* store_type =
+                call->Target()->ReturnType()->template As<core::type::Pointer>()->StoreType();
+            if (!ApplyAddressSpaceUsageToType(address_space, store_type,
+                                              call->Declaration()->source)) {
+                AddNote(call->Declaration()->source) << " while instantiating bufferView";
+                return nullptr;
+            }
+            if (!validator_.BufferView(call)) {
+                return nullptr;
+            }
+            break;
+        }
+
         default:
             break;
     }
@@ -2478,6 +2494,8 @@ const core::type::Type* Resolver::BuiltinType(core::BuiltinType builtin_ty,
     switch (builtin_ty) {
         case core::BuiltinType::kBool:
             return check_no_tmpl_args(b.create<core::type::Bool>());
+        case core::BuiltinType::kBuffer:
+            return Buffer(ident);
         case core::BuiltinType::kI32:
             return check_no_tmpl_args(I32());
         case core::BuiltinType::kU32:
@@ -3048,6 +3066,27 @@ const core::type::SubgroupMatrix* Resolver::SubgroupMatrix(const ast::Identifier
     }
 
     return validator_.SubgroupMatrix(out, ident->source) ? out : nullptr;
+}
+
+const core::type::Buffer* Resolver::Buffer(const ast::Identifier* ident) {
+    core::type::Buffer* out = nullptr;
+    if (ident->Is<ast::TemplatedIdentifier>()) {
+        auto* tmpl_ident = TemplatedIdentifier(ident, 1);
+        auto* arg = tmpl_ident->arguments[0];
+        const auto* size_sem = Materialize(sem_.GetVal(arg));
+        if (!size_sem) {
+            return nullptr;
+        }
+        if (!size_sem->ConstantValue() || size_sem->ConstantValue()->ValueAs<AInt>() < 1) {
+            AddError(arg->source) << "buffer size count must be a constant positive integer";
+            return nullptr;
+        }
+        const auto* size = size_sem->ConstantValue();
+        out = b.create<core::type::Buffer>(size->ValueAs<uint32_t>());
+    } else {
+        out = b.create<core::type::Buffer>();
+    }
+    return validator_.Buffer(out, ident->source) ? out : nullptr;
 }
 
 const core::type::TexelBuffer* Resolver::TexelBuffer(const ast::Identifier* ident) {
