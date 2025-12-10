@@ -20,6 +20,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "681e7e7d_b844723e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-10T00:51:47Z",
+      "side": 1,
+      "message": "As we talked in chat, I think my CL had some problems. Please let me revisit this CL and I will let you know when it\u0027s at a correct state. Sorry.\n\nlooks like why it passes the test is that: when GetObjectByLabelis called it is the same original readback buffer with the same label getting checked twice.\n\n(My original intention: For each Buffer expectation macro (ends in AddBufferExpectation) in the test body, I\u0027m adding a same buffer expectation but for the replayed one. Both the original buffer and the replayed buffer are added with a label. They are tested in the same ResolveExpectations call. So two readback buffer will be added (1 for original, 1 for replay). Capture of the readback buffer copy is paused because the replayed buffer is treated the same as the \"original test\" buffer, just 1 more expect.) (but that seems incorrect because without immediate readback the replayed buffer content could be changed when Resolving)",
+      "parentUuid": "142956f2_fe2b8ac7",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81a5e65e_0f137332",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-10T00:51:47Z",
+      "side": 1,
+      "message": "Let me revisit and I will let you know when double checked again it\u0027s in a more correct state for you to review. Sorry about the noise.",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "08682e65_a9b76dd1",
         "filename": "include/dawn/native/WebGPUBackend.h",
         "patchSetId": 20
@@ -48,6 +83,24 @@
       "writtenOn": "2025-12-09T10:42:49Z",
       "side": 1,
       "message": "Is there any chance that we skip adding this toggle and just fix the runs with `--capture-replay` until the flag can be used to run all dawn_end2end_tests (with a few suppressions)? Adding a toggle that does nothing just as an allowlist is weird.\n\nBut if that\u0027s the only way then we can do it, but should strive to reach enough completion to remove the toggle quickly.",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0fc7f34_b3a23aa7",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-10T00:51:47Z",
+      "side": 1,
+      "message": "[1] For the allowlist toggle that\u0027s the way I can think of to get it run on cq bots to find.\n\n- Dawn CL1 (this)\n- Chromium CL2 to add a config to have `--check-capture-replay` flag\n- Dawn CL3 to start turning on tests with WebGPUBackend({\"enable_for_capture_replay\"}), either landing CL to turn on those tests that passes or just testing CL to see what tests pass and fail.\n\nThe alternative way is to have a testing Dawn CL that simply always turn on `--check-capture-replay` and to see which tests fails and then add suppressions. I did this at an earlier stage for this stage so I might do it again to expect more tests at a reasonable number are passing. But still concerns for this approach:\n- It\u0027s longer before I can incrementally land something and there\u0027s likely many suppressions added.\n- If test bots are happy with no regular end2end tests run at all (not for the first time I tried but I can try again)\n\nWDYT?",
+      "parentUuid": "80961b31_68bb24bb",
       "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -328,6 +381,24 @@
       "writtenOn": "2025-12-09T10:42:49Z",
       "side": 1,
       "message": "Can we have at least one test enabled for this check in this CL so we know the code in DawnTest is a bit correct?",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "211cda21_6c7bf7d3",
+        "filename": "src/dawn/tests/end2end/BasicTests.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-10T00:51:47Z",
+      "side": 1,
+      "message": "Related to [1]. Even we have it uncomment here it won\u0027t run until we land a chromium CL with the new config --check-capture-replay end2end tests running. Compared to adding the config now and maybe fail directly when the Chromium CL of adding the config to CQ, I think it better to add the config later when the CQ bot with this config is on.",
+      "parentUuid": "98cb1d89_0f771db8",
       "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
