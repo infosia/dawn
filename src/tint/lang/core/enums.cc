@@ -529,6 +529,9 @@ BuiltinType ParseBuiltinType(std::string_view str) {
     if (str == "bool") {
         return BuiltinType::kBool;
     }
+    if (str == "buffer") {
+        return BuiltinType::kBuffer;
+    }
     if (str == "f16") {
         return BuiltinType::kF16;
     }
@@ -817,6 +820,8 @@ std::string_view ToString(BuiltinType value) {
             return "binding_array";
         case BuiltinType::kBool:
             return "bool";
+        case BuiltinType::kBuffer:
+            return "buffer";
         case BuiltinType::kF16:
             return "f16";
         case BuiltinType::kF32:
