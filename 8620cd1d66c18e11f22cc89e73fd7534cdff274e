@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b6fa3f0_86b6a1aa",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2190,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-10T17:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71ab49f9_828ef46c",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "72507287_411a478e",
@@ -87,6 +105,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcbb90fd_5b673026",
+        "filename": "src/dawn/native/CommandEncoder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-10T17:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72507287_411a478e",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7325c422_2a525690",
+        "filename": "src/dawn/native/CommandEncoder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-10T17:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfd21376_df00a109",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2993a410_cf99fa73",
@@ -100,6 +154,24 @@
       "writtenOn": "2025-12-10T11:39:44Z",
       "side": 1,
       "message": "nit: IMHO  splitting per-aspect fixtures like this adds noise to the gtest output because there is one block per fixture. The `_CommandEncoder` could be part of the test name since the fixture is otherwise exactly the same.",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5651be9_08e579e1",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-10T17:13:19Z",
+      "side": 1,
+      "message": "Agreed, and updated.",
+      "parentUuid": "2993a410_cf99fa73",
       "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -156,6 +228,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1481f1b8_84b27749",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-10T17:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3941330_f4840616",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2a5dfae7_8f373f0f",
@@ -173,6 +263,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6965456a_18c35ff2",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-10T17:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a5dfae7_8f373f0f",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "13994741_c6197404",
@@ -186,6 +294,24 @@
       "writtenOn": "2025-12-10T11:39:44Z",
       "side": 1,
       "message": "Can we have a test that checks setting a table then nullptr still requires the table to be valid?",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1f52762_13a11e43",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-10T17:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13994741_c6197404",
       "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
