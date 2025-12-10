@@ -1295,6 +1295,13 @@ class Builder {
             }
         }
 
+        /// @param size the buffer size (0 is unsized)
+        /// @returns the buffer
+        ast::Type buffer(uint32_t size = 0) const {
+            auto n = core::AInt(size);
+            return (*this)("buffer", n);
+        }
+
         /// @param el the binding_array element type
         /// @param size the number of binding array elements
         /// @returns the binding array
