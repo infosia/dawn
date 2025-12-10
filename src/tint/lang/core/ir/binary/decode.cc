@@ -738,6 +738,8 @@ struct Decoder {
                                                 type_in.subgroup_matrix_result());
             case pb::Type::KindCase::kBuiltinStruct:
                 return CreateTypeBuiltinStruct(type_in.builtin_struct());
+            case pb::Type::KindCase::kBuffer:
+                return CreateTypeBuffer(type_in.buffer());
             case pb::Type::KindCase::KIND_NOT_SET:
                 break;
         }
@@ -1033,6 +1035,17 @@ struct Decoder {
         }
         return mod_out_.Types().subgroup_matrix(kind, el_ty, subgroup_matrix.columns(),
                                                 subgroup_matrix.rows());
+    }
+
+    const type::Type* CreateTypeBuffer(const pb::TypeBuffer& buffer_in) {
+        uint32_t count = buffer_in.count();
+        if (count >= internal_limits::kMaxArrayElementCount) {
+            err_ << "array count (" << count << ") must be less than "
+                 << internal_limits::kMaxArrayElementCount << "\n";
+            return mod_out_.Types().invalid();
+        }
+
+        return count > 0 ? mod_out_.Types().buffer(count) : mod_out_.Types().unsized_buffer();
     }
 
     const type::Type* CreateTypeBuiltinStruct(pb::TypeBuiltinStruct builtin_struct_in) {
@@ -2057,6 +2070,10 @@ struct Decoder {
                 return core::BuiltinFn::kHasResource;
             case pb::BuiltinFn::get_resource:
                 return core::BuiltinFn::kGetResource;
+            case pb::BuiltinFn::buffer_view:
+                return core::BuiltinFn::kBufferView;
+            case pb::BuiltinFn::buffer_length:
+                return core::BuiltinFn::kBufferLength;
 
             case pb::BuiltinFn::BuiltinFn_INT_MIN_SENTINEL_DO_NOT_USE_:
             case pb::BuiltinFn::BuiltinFn_INT_MAX_SENTINEL_DO_NOT_USE_:
