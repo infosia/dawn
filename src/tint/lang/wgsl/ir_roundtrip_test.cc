@@ -3531,11 +3531,11 @@ TEST_F(IRToProgramRoundtripTest, SubgroupMatrixLoad) {
     RUN_TEST(R"(
 enable chromium_experimental_subgroup_matrix;
 
-@group(0u) @binding(0u) var<storage, read_write> buffer : array<f32, 64u>;
+@group(0u) @binding(0u) var<storage, read_write> v : array<f32, 64u>;
 
 fn f() {
-  let l = subgroupMatrixLoad<subgroup_matrix_left<f32, 4, 2>>(&(buffer), 0u, false, 4u);
-  let r = subgroupMatrixLoad<subgroup_matrix_right<f32, 2, 4>>(&(buffer), 32u, true, 8u);
+  let l = subgroupMatrixLoad<subgroup_matrix_left<f32, 4, 2>>(&(v), 0u, false, 4u);
+  let r = subgroupMatrixLoad<subgroup_matrix_right<f32, 2, 4>>(&(v), 32u, true, 8u);
 }
 )");
 }

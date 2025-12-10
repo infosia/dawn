@@ -185,6 +185,8 @@ enum builtin_type {
   subgroup_matrix_left
   subgroup_matrix_right
   subgroup_matrix_result
+  // buffer
+  buffer
   // sized_binding_array
   binding_array
   // type-less binding array
