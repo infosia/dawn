@@ -16,6 +16,24 @@
       "message": "LGTM, but I\u0027m pretty sure ANGLE does this for us:\n\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/src/libANGLE/validationEGL.cpp;l\u003d3613\n\nNo harm in double-validation, though.",
       "revId": "c44251d3a1c42d8ff7c8825192c854c83af23027",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f35b999_c79c7252",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-10T06:03:04Z",
+      "side": 1,
+      "message": "Thanks. This is just for crashing immediately at the call site when violated MakeCurrent is being made. We could assert on ANGLE\u0027s return code such as `EGL_BAD_ACCESS`, but it can have other meanings than just \"another thread holding the context\".",
+      "parentUuid": "d5a38037_4ce73556",
+      "revId": "c44251d3a1c42d8ff7c8825192c854c83af23027",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
