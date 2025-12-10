@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "10966e18_45053789",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-10T14:47:23Z",
+      "side": 1,
+      "message": "I wonder if this is why I was hitting Wire failures on an earlier patchset: https://dawn-review.googlesource.com/c/dawn/+/279215?checksPatchset\u003d2\u0026checksRunsSelected\u003ddawn-cq-linux-x64-dbg,dawn-cq-mac-x64-dbg\u0026tab\u003dchecks\n\nThis is why I added those skips for the wire...",
+      "parentUuid": "f3e60f67_69bf73aa",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "71ab49f9_828ef46c",
         "filename": "src/dawn/native/CommandEncoder.cpp",
         "patchSetId": 5
@@ -99,6 +117,24 @@
       "writtenOn": "2025-12-10T11:39:44Z",
       "side": 1,
       "message": "This should happen to work in the wire already! I added these conditions to Update/InsertBinding etc because they need special handling that\u0027s manually written in the wire.",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8685621c_9cfae757",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-10T14:47:23Z",
+      "side": 1,
+      "message": "Right, I wrote in a reply above why I added these - I was hitting wire failures on an earlier patchset. Maybe it\u0027s because SetResourceTable wasn\u0027t configured to accept nullptr? I\u0027ll test it out.",
+      "parentUuid": "3aea37ab_3677abd7",
       "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
