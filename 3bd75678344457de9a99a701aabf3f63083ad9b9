@@ -16,6 +16,47 @@
       "message": "PTAL!",
       "revId": "3bd75678344457de9a99a701aabf3f63083ad9b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff0bf520_2876319b",
+        "filename": "src/dawn/native/null/DeviceNull.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-10T21:00:57Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 237,
+        "startChar": 4,
+        "endLine": 237,
+        "endChar": 21
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5d04a5f9_891f11e1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/null/DeviceNull.cpp",
+              "range": {
+                "startLine": 237,
+                "startChar": 0,
+                "endLine": 238,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "3bd75678344457de9a99a701aabf3f63083ad9b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
