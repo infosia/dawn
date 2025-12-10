@@ -2057,6 +2057,10 @@ struct Decoder {
                 return core::BuiltinFn::kHasResource;
             case pb::BuiltinFn::get_resource:
                 return core::BuiltinFn::kGetResource;
+            case pb::BuiltinFn::buffer_view:
+                return core::BuiltinFn::kBufferView;
+            case pb::BuiltinFn::buffer_length:
+                return core::BuiltinFn::kBufferLength;
 
             case pb::BuiltinFn::BuiltinFn_INT_MIN_SENTINEL_DO_NOT_USE_:
             case pb::BuiltinFn::BuiltinFn_INT_MAX_SENTINEL_DO_NOT_USE_:

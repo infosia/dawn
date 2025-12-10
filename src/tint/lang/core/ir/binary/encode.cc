@@ -1408,6 +1408,10 @@ struct Encoder {
                 return pb::BuiltinFn::has_resource;
             case core::BuiltinFn::kGetResource:
                 return pb::BuiltinFn::get_resource;
+            case core::BuiltinFn::kBufferView:
+                return pb::BuiltinFn::buffer_view;
+            case core::BuiltinFn::kBufferLength:
+                return pb::BuiltinFn::buffer_length;
             case core::BuiltinFn::kNone:
                 break;
         }
