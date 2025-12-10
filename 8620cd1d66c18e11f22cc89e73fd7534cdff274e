@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3e60f67_69bf73aa",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-10T11:39:44Z",
+      "side": 1,
+      "message": "nit: to allow nullptr to be passed, this should be marked `\"optional\": true`. This is used for example in dawn::wire to generate code that handles nullptr.",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71ab49f9_828ef46c",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2190,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-10T11:39:44Z",
+      "side": 1,
+      "message": "This validation check should be inside the `if (GetDevice()-\u003eIsValidationEnabled())` since it is a validation check ^^",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72507287_411a478e",
+        "filename": "src/dawn/native/CommandEncoder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-10T11:39:44Z",
+      "side": 1,
+      "message": "Right now a UAF is possible because nothing in CommandEncoder takes a ref to the resource table. This will be fixed in the future when we serialize the command in the command allocator so we don\u0027t necessarily have to fix it right away, but we should at least have a TODO to make sure we don\u0027t forget.",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfd21376_df00a109",
+        "filename": "src/dawn/native/CommandEncoder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-10T11:39:44Z",
+      "side": 1,
+      "message": "```suggestion\n    raw_ptr\u003cResourceTableBase\u003e mResourceTable \u003d nullptr;\n```\n\nThis is for MiraclePtr in Chromium and while raw_ptr was added for a bunch of members previously, new additions to the code didn\u0027t get them because we have yet to enable the clang plugin that checks that all member pointers are raw_ptr. It will happen in the future though so we might as well do it now.",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2993a410_cf99fa73",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-10T11:39:44Z",
+      "side": 1,
+      "message": "nit: IMHO  splitting per-aspect fixtures like this adds noise to the gtest output because there is one block per fixture. The `_CommandEncoder` could be part of the test name since the fixture is otherwise exactly the same.",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3aea37ab_3677abd7",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-10T11:39:44Z",
+      "side": 1,
+      "message": "This should happen to work in the wire already! I added these conditions to Update/InsertBinding etc because they need special handling that\u0027s manually written in the wire.",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3941330_f4840616",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-10T11:39:44Z",
+      "side": 1,
+      "message": "Can we have a control case in the test above that calling with nullptr is valid?",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a5dfae7_8f373f0f",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-10T11:39:44Z",
+      "side": 1,
+      "message": "nit: we don\u0027t need to even use the resource table to make it required to be valid on submit. Just setting it on the command encoder is enough so I think the test would be more clear without the pipeline and the dispatch.",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13994741_c6197404",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-10T11:39:44Z",
+      "side": 1,
+      "message": "Can we have a test that checks setting a table then nullptr still requires the table to be valid?",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
