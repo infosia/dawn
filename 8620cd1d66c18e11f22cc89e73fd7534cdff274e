@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d2e880a_9b8444f1",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-10T20:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10966e18_45053789",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "71ab49f9_828ef46c",
@@ -207,6 +225,24 @@
       "side": 1,
       "message": "Right, I wrote in a reply above why I added these - I was hitting wire failures on an earlier patchset. Maybe it\u0027s because SetResourceTable wasn\u0027t configured to accept nullptr? I\u0027ll test it out.",
       "parentUuid": "3aea37ab_3677abd7",
+      "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de17ab11_1caf088b",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-10T20:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8685621c_9cfae757",
       "revId": "8620cd1d66c18e11f22cc89e73fd7534cdff274e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
