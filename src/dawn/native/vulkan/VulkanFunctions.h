@@ -279,6 +279,7 @@ struct VulkanFunctions {
     VkFn<PFN_vkCreatePipelineLayout> CreatePipelineLayout = nullptr;
     VkFn<PFN_vkCreateQueryPool> CreateQueryPool = nullptr;
     VkFn<PFN_vkCreateRenderPass> CreateRenderPass = nullptr;
+    VkFn<PFN_vkCreateRenderPass2> CreateRenderPass2 = nullptr;
     VkFn<PFN_vkCreateSampler> CreateSampler = nullptr;
     VkFn<PFN_vkCreateSemaphore> CreateSemaphore = nullptr;
     VkFn<PFN_vkCreateShaderModule> CreateShaderModule = nullptr;

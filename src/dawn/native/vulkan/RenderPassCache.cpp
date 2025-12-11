@@ -30,6 +30,7 @@
 #include "absl/container/inlined_vector.h"
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/HashUtils.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/Range.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/TextureVk.h"
@@ -184,7 +185,8 @@ ResultOrError<RenderPassCache::RenderPassInfo> RenderPassCache::CreateRenderPass
     constexpr uint8_t kMaxAttachmentCount = kMaxColorAttachments * 2 + 1;
     std::array<VkAttachmentDescription, kMaxAttachmentCount> attachmentDescs = {};
 
-    VkSampleCountFlagBits vkSampleCount = VulkanSampleCount(query.sampleCount);
+    VkSampleCountFlagBits vkSampleCount =
+        query.renderToSingleSampled ? VK_SAMPLE_COUNT_1_BIT : VulkanSampleCount(query.sampleCount);
 
     uint32_t attachmentCount = 0;
     ColorAttachmentIndex highestColorAttachmentIndexPlusOne(static_cast<uint8_t>(0));
@@ -320,6 +322,126 @@ ResultOrError<RenderPassCache::RenderPassInfo> RenderPassCache::CreateRenderPass
     createInfo.dependencyCount = subpassDependencies.size();
     createInfo.pDependencies = subpassDependencies.data();
 
+    if (query.renderToSingleSampled) {
+        dawn::ErrorLog() << "renderToSingleSampled";
+        absl::InlinedVector<VkAttachmentDescription2, kMaxAttachmentCount> attachmentDescs2;
+        attachmentDescs2.reserve(attachmentCount);
+        for (uint32_t i = 0; i < attachmentCount; ++i) {
+            const auto& desc = attachmentDescs[i];
+            VkAttachmentDescription2 desc2 = {};
+            desc2.sType = VK_STRUCTURE_TYPE_ATTACHMENT_DESCRIPTION_2;
+            desc2.flags = desc.flags;
+            desc2.format = desc.format;
+            desc2.samples = desc.samples;
+            desc2.loadOp = desc.loadOp;
+            desc2.storeOp = desc.storeOp;
+            desc2.stencilLoadOp = desc.stencilLoadOp;
+            desc2.stencilStoreOp = desc.stencilStoreOp;
+            desc2.initialLayout = desc.initialLayout;
+            desc2.finalLayout = desc.finalLayout;
+            attachmentDescs2.push_back(desc2);
+        }
+
+        // We need to persist the vector of references until CreateRenderPass2 call.
+        std::vector<std::vector<VkAttachmentReference2>> inputAttachments2(subpassDescs.size());
+        std::vector<std::vector<VkAttachmentReference2>> colorAttachments2(subpassDescs.size());
+        std::vector<std::vector<VkAttachmentReference2>> resolveAttachments2(subpassDescs.size());
+        std::vector<VkAttachmentReference2> depthStencilAttachments2(subpassDescs.size());
+
+        absl::InlinedVector<VkSubpassDescription2, 2> subpassDescs2;
+        subpassDescs2.reserve(subpassDescs.size());
+
+        for (size_t i = 0; i < subpassDescs.size(); ++i) {
+            const auto& desc = subpassDescs[i];
+            VkSubpassDescription2 desc2 = {};
+            desc2.sType = VK_STRUCTURE_TYPE_SUBPASS_DESCRIPTION_2;
+            desc2.flags = desc.flags;
+            desc2.pipelineBindPoint = desc.pipelineBindPoint;
+            desc2.viewMask = 0;
+
+            if (desc.inputAttachmentCount > 0) {
+                inputAttachments2[i].resize(desc.inputAttachmentCount);
+                for (uint32_t j = 0; j < desc.inputAttachmentCount; ++j) {
+                    inputAttachments2[i][j].sType = VK_STRUCTURE_TYPE_ATTACHMENT_REFERENCE_2;
+                    inputAttachments2[i][j].attachment = desc.pInputAttachments[j].attachment;
+                    inputAttachments2[i][j].layout = desc.pInputAttachments[j].layout;
+                }
+                desc2.inputAttachmentCount = desc.inputAttachmentCount;
+                desc2.pInputAttachments = inputAttachments2[i].data();
+            }
+
+            if (desc.colorAttachmentCount > 0) {
+                colorAttachments2[i].resize(desc.colorAttachmentCount);
+                for (uint32_t j = 0; j < desc.colorAttachmentCount; ++j) {
+                    colorAttachments2[i][j].sType = VK_STRUCTURE_TYPE_ATTACHMENT_REFERENCE_2;
+                    colorAttachments2[i][j].attachment = desc.pColorAttachments[j].attachment;
+                    colorAttachments2[i][j].layout = desc.pColorAttachments[j].layout;
+                }
+                desc2.colorAttachmentCount = desc.colorAttachmentCount;
+                desc2.pColorAttachments = colorAttachments2[i].data();
+            }
+
+            if (desc.pResolveAttachments) {
+                resolveAttachments2[i].resize(desc.colorAttachmentCount);
+                for (uint32_t j = 0; j < desc.colorAttachmentCount; ++j) {
+                    resolveAttachments2[i][j].sType = VK_STRUCTURE_TYPE_ATTACHMENT_REFERENCE_2;
+                    resolveAttachments2[i][j].attachment = desc.pResolveAttachments[j].attachment;
+                    resolveAttachments2[i][j].layout = desc.pResolveAttachments[j].layout;
+                }
+                desc2.pResolveAttachments = resolveAttachments2[i].data();
+            }
+
+            if (desc.pDepthStencilAttachment) {
+                depthStencilAttachments2[i].sType = VK_STRUCTURE_TYPE_ATTACHMENT_REFERENCE_2;
+                depthStencilAttachments2[i].attachment = desc.pDepthStencilAttachment->attachment;
+                depthStencilAttachments2[i].layout = desc.pDepthStencilAttachment->layout;
+                desc2.pDepthStencilAttachment = &depthStencilAttachments2[i];
+            }
+
+            subpassDescs2.push_back(desc2);
+        }
+
+        absl::InlinedVector<VkSubpassDependency2, 2> subpassDependencies2;
+        subpassDependencies2.reserve(subpassDependencies.size());
+        for (const auto& dep : subpassDependencies) {
+            VkSubpassDependency2 dep2 = {};
+            dep2.sType = VK_STRUCTURE_TYPE_SUBPASS_DEPENDENCY_2;
+            dep2.srcSubpass = dep.srcSubpass;
+            dep2.dstSubpass = dep.dstSubpass;
+            dep2.srcStageMask = dep.srcStageMask;
+            dep2.dstStageMask = dep.dstStageMask;
+            dep2.srcAccessMask = dep.srcAccessMask;
+            dep2.dstAccessMask = dep.dstAccessMask;
+            dep2.dependencyFlags = dep.dependencyFlags;
+            subpassDependencies2.push_back(dep2);
+        }
+
+        VkMultisampledRenderToSingleSampledInfoEXT msrtss = {};
+        msrtss.sType = VK_STRUCTURE_TYPE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_INFO_EXT;
+        msrtss.multisampledRenderToSingleSampledEnable = VK_TRUE;
+        msrtss.rasterizationSamples = VulkanSampleCount(query.sampleCount);
+
+        subpassDescs2.back().pNext = &msrtss;
+
+        VkRenderPassCreateInfo2 createInfo2 = {};
+        createInfo2.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO_2;
+        createInfo2.flags = createInfo.flags;
+        createInfo2.attachmentCount = attachmentCount;
+        createInfo2.pAttachments = attachmentDescs2.data();
+        createInfo2.subpassCount = subpassDescs2.size();
+        createInfo2.pSubpasses = subpassDescs2.data();
+        createInfo2.dependencyCount = subpassDependencies2.size();
+        createInfo2.pDependencies = subpassDependencies2.data();
+
+        RenderPassInfo renderPassInfo;
+        renderPassInfo.mainSubpass = subpassDescs2.size() - 1;
+        renderPassInfo.uniqueId = nextRenderPassId++;
+        DAWN_TRY(CheckVkSuccess(mDevice->fn.CreateRenderPass2(mDevice->GetVkDevice(), &createInfo2,
+                                                              nullptr, &*renderPassInfo.renderPass),
+                                "CreateRenderPass2"));
+        return renderPassInfo;
+    }
+
     // Create the render pass from the zillion parameters
     RenderPassInfo renderPassInfo;
     renderPassInfo.mainSubpass = subpassDescs.size() - 1;
@@ -350,8 +472,7 @@ size_t RenderPassCache::CacheFuncs::operator()(const RenderPassCacheQuery& query
                     query.depthReadOnly, query.stencilLoadOp, query.stencilStoreOp,
                     query.stencilReadOnly);
     }
-
-    HashCombine(&hash, query.sampleCount);
+    HashCombine(&hash, query.sampleCount, query.renderToSingleSampled);
 
     return hash;
 }
@@ -367,6 +488,10 @@ bool RenderPassCache::CacheFuncs::operator()(const RenderPassCacheQuery& a,
     }
 
     if (a.sampleCount != b.sampleCount) {
+        return false;
+    }
+
+    if (a.renderToSingleSampled != b.renderToSingleSampled) {
         return false;
     }
 

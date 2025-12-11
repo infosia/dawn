@@ -136,6 +136,7 @@ enum class DeviceExt {
     Robustness2,
     DisplayTiming,
     CooperativeMatrix,
+    MultisampledRenderToSingleSampled,
 
     // External* extensions
     ExternalMemoryAndroidHardwareBuffer,

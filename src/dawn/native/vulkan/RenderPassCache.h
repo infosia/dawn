@@ -84,6 +84,7 @@ struct RenderPassCacheQuery {
     bool stencilReadOnly;
 
     uint32_t sampleCount;
+    bool renderToSingleSampled = false;
 };
 
 // Caches VkRenderPasses so that we don't create duplicate ones for every RenderPipeline or

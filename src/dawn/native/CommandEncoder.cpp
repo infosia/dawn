@@ -297,7 +297,8 @@ class RenderPassValidationState final : public NonMovable {
         mRenderHeight = renderSize.height;
         mAttachmentValidationWidth = mRenderWidth;
         mAttachmentValidationHeight = mRenderHeight;
-        mSampleCount = attachment->GetTexture()->GetSampleCount();
+        mSampleCount = mImplicitSampleCount > 1 ? mImplicitSampleCount
+                                                : attachment->GetTexture()->GetSampleCount();
 
         DAWN_ASSERT(mRenderWidth != 0);
         DAWN_ASSERT(mRenderHeight != 0);
