@@ -18,6 +18,57 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "14df193f_2524801a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-11T09:56:38Z",
+      "side": 1,
+      "message": "Approach looks good overall, I think the major question left open (in addition to `LoadResolve`) is how we are going to test the two code paths to ensure we don\u0027t accidentally regress the `VkRenderPass` path.",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39380011_a4c2b3e4",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-11T09:56:38Z",
+      "side": 1,
+      "message": "```suggestion\n      \"Makes use of VK_KHR_dynamic_rendering to implement WebGPU RenderPass.\",\n```",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c0293f0_82fbe9eb",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-11T09:56:38Z",
+      "side": 1,
+      "message": "nit: why is it in its own block? The ordering of toggles doesn\u0027t need to be stable (and it would be nice eventually to group them per-backend to make things more clear imho)",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "7273a045_436eea98",
@@ -90,6 +141,64 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "31db942c_7dedfb02",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-11T09:56:38Z",
+      "side": 1,
+      "message": "For now let\u0027s disable `LoadResolveTexture` when the dynamic rendering toggle is used, while we figure out what we want to do for tiler stuff at the interface of Graphite and Dawn.",
+      "parentUuid": "7a4efb38_146369d9",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "967132bc_47cc4f33",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-11T09:56:38Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8c3c7ca_7baa3820",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-11T09:56:38Z",
+      "side": 1,
+      "message": "```suggestion\n        const Format\u0026 dsFormat \u003d view-\u003eGetTexture()-\u003eGetFormat();\n```",
+      "range": {
+        "startLine": 599,
+        "startChar": 0,
+        "endLine": 600,
+        "endChar": 83
+      },
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6d275041_f0059b36",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 13
@@ -107,6 +216,138 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e8fa1898_ae9ec8b6",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-11T09:56:38Z",
+      "side": 1,
+      "message": "It could also be a driver bug. Intel\u0027s Windows Vulkan driver is of very poor quality compared to the opensource Mesa driver and has a ton of issues. We could blocklist the use of dynamic rendering on that driver.",
+      "parentUuid": "6d275041_f0059b36",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea27252f_7020dca3",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-11T09:56:38Z",
+      "side": 1,
+      "message": "The function is starting to be a bit insanely long, but I\u0027m not sure how to split it up usefully :/",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09863ce8_7c88488e",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-11T09:56:38Z",
+      "side": 1,
+      "message": "Does this work?\n\n```suggestion\n        createInfo.renderPass \u003d VK_NULL_HANDLE;\n```",
+      "range": {
+        "startLine": 570,
+        "startChar": 0,
+        "endLine": 571,
+        "endChar": 47
+      },
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b8e95b8_98bffd16",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-11T09:56:38Z",
+      "side": 1,
+      "message": "```suggestion\n        // Initialize all potential color attachment formats to undefined, which allows the\n```",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e996140d_9027feb7",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-11T09:56:38Z",
+      "side": 1,
+      "message": "```suggestion\n        colorAttachmentFormats.fill(VK_FORMAT_UNDEFINED);\n```",
+      "range": {
+        "startLine": 583,
+        "startChar": 0,
+        "endLine": 585,
+        "endChar": 9
+      },
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0225a710_f4c6fbe1",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-11T09:56:38Z",
+      "side": 1,
+      "message": "optional: we could use https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/ityp_bitset.h;drc\u003de3b5a8ad7e8b37204126338a75c5cbd431f70177;l\u003d274 to directly get the count.",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb4d754c_ea9f0008",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-11T09:56:38Z",
+      "side": 1,
+      "message": "Comment got truncated? ^^",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "75420440_61174c1a",
         "filename": "src/dawn/native/vulkan/VulkanExtensions.cpp",
         "patchSetId": 13
@@ -118,6 +359,24 @@
       "writtenOn": "2025-12-11T02:15:14Z",
       "side": 1,
       "message": "This was discussed with syoussefi@, who pointed out that the way we\u0027re handling extensions and Vulkan API versions isn\u0027t really practical. Would like to take a look at improving that in a follow up to this CL.",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9768f751_259898b2",
+        "filename": "src/dawn/native/vulkan/VulkanExtensions.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-11T09:56:38Z",
+      "side": 1,
+      "message": "Sounds good! I recently ran into the same issue where our use of 1.4 when creating the instance broke my [CL to use direct driver loading](https://dawn-review.googlesource.com/c/dawn/+/155961) to test with VVL on macOS + Swiftshader (Swiftshader only supports 1.3) (so I downgraded to 1.3 there, but a proper fix would be good).",
+      "parentUuid": "75420440_61174c1a",
       "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
