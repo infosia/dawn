@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2caf7802_1fd591dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T18:54:04Z",
+      "side": 1,
+      "message": "I\u0027ve selectively added some e2e test variants that disable dynamic rendering, mostly focused around things like render pass creation and various render attachment configurations (read only depth/stencil, sparse color attachments, etc).\n\nObviously the method of creating render passes has the potential to affect almost any rendering operation, but I don\u0027t know that we really want to effectively double the e2e test runtime on applicable devices just to make sure we catch some potential driver quirk. Regardless, if you have specific tests in mind that you\u0027d like to see covered I\u0027ll happily add them.",
+      "parentUuid": "14df193f_2524801a",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39380011_a4c2b3e4",
