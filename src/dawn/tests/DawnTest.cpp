@@ -303,6 +303,12 @@ DawnTestEnvironment::DawnTestEnvironment(int argc, char** argv) {
 DawnTestEnvironment::~DawnTestEnvironment() = default;
 
 void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
+    // !!! Test only
+    mCheckCaptureReplay = true;
+    // Force WebGPU backend.
+    mBackendTypeFilter = wgpu::BackendType::WebGPU;
+    mHasBackendTypeFilter = true;
+
     size_t argLen = 0;  // Set when parsing --arg=X arguments
     for (int i = 1; i < argc; ++i) {
         if (strcmp("-w", argv[i]) == 0 || strcmp("--use-wire", argv[i]) == 0) {
@@ -1583,11 +1589,11 @@ void DawnTestBase::SetUp() {
 #ifdef DAWN_ENABLE_CAPTURE_REPLAY
     mCheckCaptureReplay = gTestEnv->IsCheckCaptureReplayEnabled();
 
-    // TODO(crbug.com/462149555): Remove the toggle and related logic once capture and replay
-    // implementation is complete.
-    if (mCheckCaptureReplay) {
-        mCheckCaptureReplay = HasToggleEnabled("enable_for_check_capture_replay");
-    }
+    // // TODO(crbug.com/462149555): Remove the toggle and related logic once capture and replay
+    // // implementation is complete.
+    // if (mCheckCaptureReplay) {
+    //     mCheckCaptureReplay = HasToggleEnabled("enable_for_check_capture_replay");
+    // }
 
     if (IsCheckCaptureReplayEnabled()) {
         mRecorder = Recorder::CreateAndStart(device);
