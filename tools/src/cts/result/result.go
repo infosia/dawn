@@ -62,7 +62,7 @@ type Result struct {
 //
 // This matches the order in which results are sorted.
 func (r Result) Format(f fmt.State, verb rune) {
-	if len(r.Tags) > 0 {
+	if r.Tags.Len() > 0 {
 		fmt.Fprintf(f, "%v %v %v %v %v", r.Query, TagsToString(r.Tags), r.Status, r.Duration, r.MayExonerate)
 	} else {
 		fmt.Fprintf(f, "%v %v %v %v", r.Query, r.Status, r.Duration, r.MayExonerate)
@@ -257,7 +257,7 @@ func (l List) ReplaceDuplicates(f func(Statuses) Status) List {
 			duration += r.Duration
 		}
 		status := func() Status {
-			if len(statuses) > 1 {
+			if statuses.Len() > 1 {
 				return f(statuses)
 			}
 			return statuses.One()
@@ -324,10 +324,10 @@ func (l List) FilterByQuery(q query.Query) List {
 }
 
 // Statuses is a set of Status
-type Statuses = container.Set[Status]
+type Statuses = *container.OrderedSet[Status]
 
 // NewStatuses returns a new status set with the provided statuses
-func NewStatuses(s ...Status) Statuses { return container.NewSet(s...) }
+func NewStatuses(s ...Status) Statuses { return container.NewOrderedSet(s...) }
 
 // Statuses returns a set of all the statuses in the list
 func (l List) Statuses() Statuses {
@@ -464,7 +464,7 @@ func Merge(lists ...List) List {
 // This function is expected to be handed to List.ReplaceDuplicates().
 func Deduplicate(s Statuses) Status {
 	// If all results have the same status, then use that
-	if len(s) == 1 {
+	if s.Len() == 1 {
 		return s.One()
 	}
 

@@ -94,7 +94,7 @@ func (t Tags) removeXPriorityTagsImpl(tagsToReduce result.Tags, priorityComparis
 		priority int
 	}
 	highestPriorty := container.NewMap[string, *TagPriority]()
-	for tag := range tagsToReduce {
+	for _, tag := range tagsToReduce.List() {
 		info := t.ByName[tag]
 		tp := highestPriorty[info.Set]
 		if tp == nil {
@@ -104,7 +104,7 @@ func (t Tags) removeXPriorityTagsImpl(tagsToReduce result.Tags, priorityComparis
 			tp.tag, tp.priority = tag, info.Priority
 		}
 	}
-	out := container.Set[string]{}
+	out := result.NewTags()
 	for _, tp := range highestPriorty {
 		out.Add(tp.tag)
 	}

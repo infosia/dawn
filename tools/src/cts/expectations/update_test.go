@@ -30,12 +30,26 @@ package expectations
 import (
 	"testing"
 
+	"dawn.googlesource.com/dawn/tools/src/container"
 	"dawn.googlesource.com/dawn/tools/src/cts/query"
 	"dawn.googlesource.com/dawn/tools/src/cts/result"
+	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
 
 var Q = query.Parse
+
+var cmpOpts = []cmp.Option{
+	cmp.Comparer(func(a, b *container.OrderedSet[string]) bool {
+		if a == nil && b == nil {
+			return true
+		}
+		if a == nil || b == nil {
+			return false
+		}
+		return cmp.Equal(a.List(), b.List())
+	}),
+}
 
 /*******************************************************************************
  * removeUnknownTags tests
@@ -80,7 +94,7 @@ func TestRemoveUnknownTags(t *testing.T) {
 		},
 	}
 
-	require.Equal(t, expectedList, resultList)
+	require.True(t, cmp.Equal(expectedList, resultList, cmpOpts...))
 }
 
 /*******************************************************************************
@@ -141,12 +155,12 @@ func TestReduceTagsToMostExplicitOnly(t *testing.T) {
 		},
 		result.Result{
 			Query:  query.Parse("test"),
-			Tags:   result.NewTags("win10", "intel-0x3e9b"),
+			Tags:   result.NewTags("intel-0x3e9b", "win10"),
 			Status: result.Failure,
 		},
 	}
 
-	require.Equal(t, expectedList, resultList)
+	require.True(t, cmp.Equal(expectedList, resultList, cmpOpts...))
 }
 
 /*******************************************************************************
@@ -279,22 +293,22 @@ func TestReduceTagsToBroadGroups_Success(t *testing.T) {
 		},
 		result.Result{
 			Query:  query.Parse("test"),
-			Tags:   result.NewTags("linux", "amd"),
+			Tags:   result.NewTags("amd", "linux"),
 			Status: result.Failure,
 		},
 		result.Result{
 			Query:  query.Parse("test"),
-			Tags:   result.NewTags("mac", "apple"),
+			Tags:   result.NewTags("apple", "mac"),
 			Status: result.Failure,
 		},
 		result.Result{
 			Query:  query.Parse("test"),
-			Tags:   result.NewTags("win", "nvidia"),
+			Tags:   result.NewTags("nvidia", "win"),
 			Status: result.Failure,
 		},
 	}
 
-	require.Equal(t, expectedList, resultList)
+	require.True(t, cmp.Equal(expectedList, resultList, cmpOpts...))
 }
 
 func TestReduceTagsToBroadGroups_FailToGetBroadTagSets(t *testing.T) {
@@ -369,7 +383,7 @@ func TestReduceTagsToBroadGroups_FailToFindGpuTag(t *testing.T) {
  ******************************************************************************/
 
 func TestGetAndAssertOneOverlappingTag(t *testing.T) {
-	tests := []struct {
+	for _, testCase := range []struct {
 		name       string
 		validTags  result.Tags
 		allTags    result.Tags
@@ -454,8 +468,7 @@ func TestGetAndAssertOneOverlappingTag(t *testing.T) {
 			wantErr:    true,
 			wantErrMsg: "Tags [tag1, tag2, tag3] did not have exactly one overlap with [tag2, tag3, tag4]",
 		},
-	}
-	for _, testCase := range tests {
+	} {
 		t.Run(testCase.name, func(t *testing.T) {
 			got, err := getAndAssertOneOverlappingTag(testCase.validTags, testCase.allTags)
 			if (err != nil) != testCase.wantErr {
@@ -504,9 +517,9 @@ func TestGetBroadTagSets_Success(t *testing.T) {
 
 	osTagSet, gpuTagSet, deviceTagSet, err := c.getBroadTagSets()
 	require.NoError(t, err)
-	require.Equal(t, result.NewTags("android", "linux", "special-os"), osTagSet)
-	require.Equal(t, result.NewTags("intel", "nvidia", "special-vendor"), gpuTagSet)
-	require.Equal(t, result.NewTags("android-pixel-4", "android-pixel-6", "special-device"), deviceTagSet)
+	require.True(t, cmp.Equal(result.NewTags("android", "linux", "special-os"), osTagSet, cmpOpts...))
+	require.True(t, cmp.Equal(result.NewTags("intel", "nvidia", "special-vendor"), gpuTagSet, cmpOpts...))
+	require.True(t, cmp.Equal(result.NewTags("android-pixel-4", "android-pixel-6", "special-device"), deviceTagSet, cmpOpts...))
 }
 
 func TestGetBroadTagSets_MissingOSTagSet(t *testing.T) {

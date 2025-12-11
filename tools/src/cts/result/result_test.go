@@ -42,6 +42,27 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+var cmpOpts = []cmp.Option{
+	cmp.Comparer(func(a, b *container.OrderedSet[string]) bool {
+		if a == nil && b == nil {
+			return true
+		}
+		if a == nil || b == nil {
+			return false
+		}
+		return cmp.Equal(a.List(), b.List())
+	}),
+	cmp.Comparer(func(a, b *container.OrderedSet[result.Status]) bool {
+		if a == nil && b == nil {
+			return true
+		}
+		if a == nil || b == nil {
+			return false
+		}
+		return cmp.Equal(a.List(), b.List())
+	}),
+}
+
 var Q = query.Parse
 
 func T(tags ...string) result.Tags {
@@ -83,7 +104,7 @@ func TestStringAndParse(t *testing.T) {
 			`a:b,c:d,* x,yy,zzz Failure 42s false`,
 		},
 	} {
-		if diff := cmp.Diff(test.result.String(), test.expect); diff != "" {
+		if diff := cmp.Diff(test.result.String(), test.expect, cmpOpts...); diff != "" {
 			t.Errorf("'%v'.String() was not as expected:\n%v", test.result, diff)
 			continue
 		}
@@ -92,7 +113,7 @@ func TestStringAndParse(t *testing.T) {
 			t.Errorf("Parse('%v') returned %v", test.expect, err)
 			continue
 		}
-		if diff := cmp.Diff(parsed, test.result); diff != "" {
+		if diff := cmp.Diff(parsed, test.result, cmpOpts...); diff != "" {
 			t.Errorf("Parse('%v') was not as expected:\n%v", test.expect, diff)
 		}
 	}
@@ -112,7 +133,7 @@ func TestParseError(t *testing.T) {
 		if err != nil {
 			got = err.Error()
 		}
-		if diff := cmp.Diff(got, test.expect); diff != "" {
+		if diff := cmp.Diff(got, test.expect, cmpOpts...); diff != "" {
 			t.Errorf("Parse('%v'): %v", test, diff)
 			continue
 		}
@@ -153,7 +174,7 @@ func TestTransformTags(t *testing.T) {
 			},
 			transform: func(got result.Tags) result.Tags {
 				expect := result.NewTags("x")
-				if diff := cmp.Diff(got, expect); diff != "" {
+				if diff := cmp.Diff(got, expect, cmpOpts...); diff != "" {
 					t.Errorf("transform function's parameter was not as expected:\n%v", diff)
 				}
 				return got
@@ -206,13 +227,13 @@ func TestTransformTags(t *testing.T) {
 				result.Result{
 					Query:  Q(`c`),
 					Status: result.Pass,
-					Tags:   result.NewTags("z", "X"),
+					Tags:   result.NewTags("X", "z"),
 				},
 			},
 		},
 	} {
 		got := test.results.TransformTags(test.transform)
-		if diff := cmp.Diff(got, test.expect); diff != "" {
+		if diff := cmp.Diff(got, test.expect, cmpOpts...); diff != "" {
 			t.Errorf("Results:\n%v\nTransformTags() was not as expected:\n%v", test.results, diff)
 		}
 	}
@@ -274,7 +295,7 @@ func TestReplaceDuplicates(t *testing.T) {
 			},
 			fn: func(got result.Statuses) result.Status {
 				expect := result.NewStatuses(result.Pass, result.Skip)
-				if diff := cmp.Diff(got, expect); diff != "" {
+				if diff := cmp.Diff(got, expect, cmpOpts...); diff != "" {
 					t.Errorf("function's parameter was not as expected:\n%v", diff)
 				}
 				return result.Abort
@@ -311,7 +332,7 @@ func TestReplaceDuplicates(t *testing.T) {
 		},
 	} {
 		got := test.results.ReplaceDuplicates(test.fn)
-		if diff := cmp.Diff(got, test.expect); diff != "" {
+		if diff := cmp.Diff(got, test.expect, cmpOpts...); diff != "" {
 			t.Errorf("\n%v ReplaceDuplicates() was not as expected:\n%v", test.location, diff)
 		}
 	}
@@ -529,7 +550,7 @@ func TestSort(t *testing.T) {
 		got := make(result.List, len(test.results))
 		copy(got, test.results)
 		got.Sort()
-		if diff := cmp.Diff(got, test.expect); diff != "" {
+		if diff := cmp.Diff(got, test.expect, cmpOpts...); diff != "" {
 			t.Errorf("Results:\n%v\nSort() was not as expected:\n%v", test.results, diff)
 		}
 	}
@@ -575,7 +596,7 @@ func TestFilter(t *testing.T) {
 		},
 	} {
 		got := test.results.Filter(test.f)
-		if diff := cmp.Diff(got, test.expect); diff != "" {
+		if diff := cmp.Diff(got, test.expect, cmpOpts...); diff != "" {
 			t.Errorf("Results:\n%v\nFilter() was not as expected:\n%v", test.results, diff)
 		}
 	}
@@ -620,7 +641,7 @@ func TestFilterByStatus(t *testing.T) {
 		},
 	} {
 		got := test.results.FilterByStatus(test.status)
-		if diff := cmp.Diff(got, test.expect); diff != "" {
+		if diff := cmp.Diff(got, test.expect, cmpOpts...); diff != "" {
 			t.Errorf("Results:\n%v\nFilterByStatus(%v) was not as expected:\n%v", test.results, test.status, diff)
 		}
 	}
@@ -715,7 +736,7 @@ func TestFilterByTags(t *testing.T) {
 		},
 	} {
 		got := test.results.FilterByTags(test.tags)
-		if diff := cmp.Diff(got, test.expect); diff != "" {
+		if diff := cmp.Diff(got, test.expect, cmpOpts...); diff != "" {
 			t.Errorf("Results:\n%v\nFilterByTags(%v) was not as expected:\n%v", test.results, test.tags, diff)
 		}
 	}
@@ -724,12 +745,12 @@ func TestFilterByTags(t *testing.T) {
 func TestStatuses(t *testing.T) {
 	type Test struct {
 		results result.List
-		expect  container.Set[result.Status]
+		expect  result.Statuses
 	}
 	for _, test := range []Test{
 		{ //////////////////////////////////////////////////////////////////////
 			results: result.List{},
-			expect:  container.NewSet[result.Status](),
+			expect:  result.NewStatuses(),
 		},
 		{ //////////////////////////////////////////////////////////////////////
 			results: result.List{
@@ -738,7 +759,7 @@ func TestStatuses(t *testing.T) {
 					Status: result.Pass,
 				},
 			},
-			expect: container.NewSet(result.Pass),
+			expect: result.NewStatuses(result.Pass),
 		},
 		{ //////////////////////////////////////////////////////////////////////
 			results: result.List{
@@ -751,7 +772,7 @@ func TestStatuses(t *testing.T) {
 					Status: result.Pass,
 				},
 			},
-			expect: container.NewSet(result.Pass),
+			expect: result.NewStatuses(result.Pass),
 		},
 		{ //////////////////////////////////////////////////////////////////////
 			results: result.List{
@@ -764,7 +785,7 @@ func TestStatuses(t *testing.T) {
 					Status: result.Skip,
 				},
 			},
-			expect: container.NewSet(result.Pass, result.Skip),
+			expect: result.NewStatuses(result.Pass, result.Skip),
 		},
 		{ //////////////////////////////////////////////////////////////////////
 			results: result.List{
@@ -781,11 +802,11 @@ func TestStatuses(t *testing.T) {
 					Status: result.Failure,
 				},
 			},
-			expect: container.NewSet(result.Pass, result.Skip, result.Failure),
+			expect: result.NewStatuses(result.Pass, result.Skip, result.Failure),
 		},
 	} {
 		got := test.results.Statuses()
-		if diff := cmp.Diff(got, test.expect); diff != "" {
+		if diff := cmp.Diff(got, test.expect, cmpOpts...); diff != "" {
 			t.Errorf("Results:\n%v\nStatuses() was not as expected:\n%v", test.results, diff)
 		}
 	}
@@ -815,7 +836,7 @@ func TestSaveLoad(t *testing.T) {
 
 	out, err := result.LoadWithWrapper(saveLocation, wrapper)
 	require.NoErrorf(t, err, "Error loading results: %v", err)
-	require.Equal(t, in, out)
+	require.True(t, cmp.Equal(in, out, cmpOpts...))
 }
 
 func TestReadWrite(t *testing.T) {
@@ -841,7 +862,7 @@ func TestReadWrite(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Read(): %v", err)
 	}
-	if diff := cmp.Diff(got, in); diff != "" {
+	if diff := cmp.Diff(got, in, cmpOpts...); diff != "" {
 		t.Errorf("Read() was not as expected:\n%v", diff)
 	}
 }
@@ -981,7 +1002,7 @@ func TestMerge(t *testing.T) {
 		},
 	} {
 		got := result.Merge(test.a, test.b)
-		if diff := cmp.Diff(got, test.expect); diff != "" {
+		if diff := cmp.Diff(got, test.expect, cmpOpts...); diff != "" {
 			t.Errorf("%v\nStatusTree() was not as expected:\n%v", test.location, diff)
 		}
 	}
@@ -1076,7 +1097,7 @@ func TestDeduplicate(t *testing.T) {
 		},
 	} {
 		got := result.Deduplicate(test.statuses)
-		if diff := cmp.Diff(got, test.expect); diff != "" {
+		if diff := cmp.Diff(got, test.expect, cmpOpts...); diff != "" {
 			t.Errorf("\n%v Deduplicate() was not as expected:\n%v", test.location, diff)
 		}
 	}
