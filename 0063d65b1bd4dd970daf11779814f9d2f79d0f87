@@ -177,6 +177,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cc37f964_e05054ee",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-11T13:21:09Z",
+      "side": 1,
+      "message": "Good call, yeah we should make sure not to regress the existing path for Graphite-Vulkan. We could allow-list AMD/Nvidia/Intel and expand from there once we have MSRMS",
+      "parentUuid": "cac1c5c2_87464d00",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "967132bc_47cc4f33",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 13
