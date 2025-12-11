@@ -1204,14 +1204,32 @@ class Validator {
     /// @param ep the function to validate
     void CheckPositionPresentForVertexOutput(const Function* ep);
 
+    /// A task for validating shader IO attributes.
+    struct IOAttributesTask {
+        /// The object to anchor error messages to.
+        const CastableBase* anchor;
+        /// The data type being decorated by the attributes.
+        const core::type::Type* type;
+        /// The attributes to test.
+        const IOAttributes& attr;
+        /// Is the value being used as an input or an output.
+        IODirection dir;
+        /// The type of shader IO object the attribute is attached to.
+        ShaderIOKind io_kind;
+    };
+
     /// Validates the spec rules for IO attribute usage for a function.
     /// @param func the function to validate
-    void ValidateIOAttributes(const Function* func);
+    void ValidateIOAttributesForFunction(const Function* func);
+
+    void ValidateIOAttributes(const CastableBase* root_anchor,
+                              Function::PipelineStage stage,
+                              VectorRef<IOAttributesTask> tasks);
 
     /// Implementation for validating the spec rules for IO attribute usage.
     /// @param ctx context object shared between the multiple invocations of this per entry point
     /// @param msg_anchor the object to anchor the error message to
-    /// @param ty the data type being decorated by the attributes
+    /// @param ty the data type being decorated by the attributes.
     /// @param attr the attributes to test
     /// @param stage the shader stage the builtin is being used
     /// @param dir is value being used as an input or an output
@@ -2679,7 +2697,7 @@ void Validator::CheckFunction(const Function* func) {
         AddError(func) << "function return type must be constructible";
     }
 
-    ValidateIOAttributes(func);
+    ValidateIOAttributesForFunction(func);
 
     if (func->IsEntryPoint()) {
         if (DAWN_UNLIKELY(mod_.NameOf(func).Name().empty())) {
@@ -2760,20 +2778,12 @@ void Validator::CheckFunction(const Function* func) {
     ProcessTasks();
 }
 
-void Validator::ValidateIOAttributes(const Function* func) {
-    const auto stage = func->Stage();
-    struct Task {
-        const CastableBase* anchor;
-        const core::type::Type* type;
-        const IOAttributes& attr;
-        IODirection dir;
-        ShaderIOKind io_kind;
-    };
-    Vector<Task, 16> tasks;
+void Validator::ValidateIOAttributesForFunction(const Function* func) {
+    Vector<IOAttributesTask, 16> tasks;
 
     // Gather parameters.
     for (auto* param : func->Params()) {
-        tasks.Push({param, param->Type(), param->Attributes(), IODirection::kInput,
+        tasks.Push({param, param->Type(), param->Attributes(), IODirection::kInput,  //
                     ShaderIOKind::kInputParam});
     }
 
@@ -2793,11 +2803,16 @@ void Validator::ValidateIOAttributes(const Function* func) {
                         ShaderIOKind::kModuleScopeVar});
         }
     }
+    ValidateIOAttributes(func, func->Stage(), tasks);
+}
 
+void Validator::ValidateIOAttributes(const CastableBase* root_anchor,
+                                     Function::PipelineStage stage,
+                                     VectorRef<IOAttributesTask> tasks) {
     if (stage != Function::PipelineStage::kUndefined) {
         // Shared context for blend_src and location validation
-        BlendSrcContext input_ctx{func->Stage(), {}, {}, nullptr, IODirection::kInput};
-        BlendSrcContext output_ctx{func->Stage(), {}, {}, nullptr, IODirection::kOutput};
+        BlendSrcContext input_ctx{stage, {}, {}, nullptr, IODirection::kInput};
+        BlendSrcContext output_ctx{stage, {}, {}, nullptr, IODirection::kOutput};
 
         // First pass: pre-populate location hashes for blend_src.
         for (const auto& task : tasks) {
@@ -2819,19 +2834,20 @@ void Validator::ValidateIOAttributes(const Function* func) {
 
         if (!output_ctx.blend_srcs.IsEmpty()) {
             if (output_ctx.blend_srcs.Count() != 2) {
-                AddError(func) << "if any @blend_src is used on an output, then @blend_src(0) and "
-                                  "@blend_src(1) must be used";
+                AddError(root_anchor)
+                    << "if any @blend_src is used on an output, then @blend_src(0) and "
+                       "@blend_src(1) must be used";
             }
         }
 
         // Third pass: validate all non-blend_src location usages.
         for (const auto& task : tasks) {
             if (task.dir == IODirection::kInput) {
-                CheckLocation(input_ctx.locations, task.anchor, task.attr, func->Stage(), task.type,
+                CheckLocation(input_ctx.locations, task.anchor, task.attr, stage, task.type,
                               task.dir);
             } else if (task.dir == IODirection::kOutput) {
-                CheckLocation(output_ctx.locations, task.anchor, task.attr, func->Stage(),
-                              task.type, task.dir);
+                CheckLocation(output_ctx.locations, task.anchor, task.attr, stage, task.type,
+                              task.dir);
             }
         }
     }
@@ -3311,6 +3327,7 @@ void Validator::CheckVar(const Var* var) {
         }
     }
 
+    // DNS: Remove this
     CheckBindingPoint(var, var->Result(0)->Type(), var->Attributes(),
                       ShaderIOKind::kModuleScopeVar);
 
@@ -3354,6 +3371,7 @@ void Validator::CheckVar(const Var* var) {
             AddError(var) << "'@input_attachment_index' is not valid for non-handle var";
             return;
         }
+        // DNS: Remove this
         if (!capabilities_.Contains(Capability::kAllowAnyInputAttachmentIndexType) &&
             !mv->UnwrapPtrOrRef()->Is<core::type::InputAttachment>()) {
             AddError(var)
@@ -3621,6 +3639,7 @@ void Validator::ValidateShaderIOAnnotations(const CastableBase* msg_anchor,
         return;  // Early return because later rules assume non-void types.
     }
 
+    // DNS: Remove this
     if (attr.location.has_value()) {
         if (capabilities_.Contains(Capability::kAllowLocationForNumericElements)) {
             std::function<bool(const core::type::Type*)> is_numeric =
@@ -3664,6 +3683,7 @@ void Validator::ValidateShaderIOAnnotations(const CastableBase* msg_anchor,
     }
 
     if (auto* ty_struct = ty->UnwrapPtrOrRef()->As<core::type::Struct>()) {
+        // DNS: Remowork this
         for (const auto* mem : ty_struct->Members()) {
             EnumSet<IOAnnotation> mem_annotations = annotations;
             auto add_result = AddIOAnnotationsFromIOAttributes(mem_annotations, mem->Attributes());
