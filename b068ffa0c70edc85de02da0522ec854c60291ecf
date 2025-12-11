@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54573623_f9a76d55",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-11T00:06:17Z",
+      "side": 1,
+      "message": "Note: I thought about having `ExpectBufferEq` check `buffer.GetUsage()` and if it\u0027s `MapRead` then do this automatically. Then, tried making `DawnTest::AddBufferExpectation` do it. It turned out to have some issues so I left this as is. We can decide later if it would be good to make either of those functions automatically handle this case.",
+      "revId": "b068ffa0c70edc85de02da0522ec854c60291ecf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
