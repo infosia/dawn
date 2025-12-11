@@ -1543,11 +1543,9 @@ TEST_P(CaptureAndReplayTests, CaptureDepthRenderPass) {
 }
 
 constexpr static uint64_t kSentinelValue = ~uint64_t(0u);
-class OcclusionExpectation : public detail::Expectation {
+class OcclusionExpectation : public detail::CloneableExpectation<OcclusionExpectation> {
   public:
     enum class Result { Zero, NonZero };
-
-    ~OcclusionExpectation() override = default;
 
     explicit OcclusionExpectation(const std::vector<Result> expected) { mExpected = expected; }
 

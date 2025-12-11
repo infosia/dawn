@@ -30,6 +30,7 @@
 #include <algorithm>
 #include <atomic>
 #include <cstdio>
+#include <format>
 #include <fstream>
 #include <iomanip>
 #include <regex>
@@ -65,7 +66,7 @@
 #include "dawn/wire/WireServer.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
-#ifdef DAWN_ENABLE_CAPTURE_REPLAY
+#ifdef DAWN_ENABLE_BACKEND_WEBGPU
 #include "dawn/native/WebGPUBackend.h"
 #include "dawn/replay/Replay.h"
 #endif
@@ -83,6 +84,10 @@ using testing::MockCppCallback;
 
 DawnTestEnvironment* gTestEnv = nullptr;
 DawnTestBase* gCurrentTest = nullptr;
+
+std::string GetReadbackBufferLabel(size_t id) {
+    return std::format("readback_buffer_{}", id);
+}
 
 template <typename T>
 void printBuffer(testing::AssertionResult& result, const T* buffer, const size_t count) {
@@ -149,7 +154,7 @@ struct ParamTogglesHelper {
 };
 }  // anonymous namespace
 
-#ifdef DAWN_ENABLE_CAPTURE_REPLAY
+#ifdef DAWN_ENABLE_BACKEND_WEBGPU
 class Capture {
   public:
     Capture(const std::string& commandData, const std::string& contentData)
@@ -175,7 +180,6 @@ class Capture {
 
 class Recorder {
   public:
-    // static Recorder CreateAndStart(wgpu::Device device) { return Recorder(device); }
     static std::unique_ptr<Recorder> CreateAndStart(wgpu::Device device) {
         // Allocate memory first
         auto recorder = std::unique_ptr<Recorder>(new Recorder(device));
@@ -1576,7 +1580,7 @@ void DawnTestBase::SetUp() {
     device.GetLimits(deviceLimits.GetLinked());
     queue = device.GetQueue();
 
-#ifdef DAWN_ENABLE_CAPTURE_REPLAY
+#ifdef DAWN_ENABLE_BACKEND_WEBGPU
     mCheckCaptureReplay = gTestEnv->IsCheckCaptureReplayEnabled();
 
     // TODO(crbug.com/462149555): Remove the toggle and related logic once capture and replay
@@ -1592,7 +1596,7 @@ void DawnTestBase::SetUp() {
 }
 
 void DawnTestBase::TearDown() {
-#ifdef DAWN_ENABLE_CAPTURE_REPLAY
+#ifdef DAWN_ENABLE_BACKEND_WEBGPU
     if (IsCheckCaptureReplayEnabled()) {
         // Stop recording.
         DAWN_ASSERT(mRecorder.get());
@@ -1605,14 +1609,40 @@ void DawnTestBase::TearDown() {
 
         auto replay = capture.Replay(replayDevice);
 
-        // Check buffer contents.
-        for (const auto& [label, expectedData] : mReadbackBufferContents) {
+        for (const auto& [label, expectationId] : mReplayReadbackBuffers) {
+            // Get Deferred expectation with slot
             auto replayedBuffer = replay->GetObjectByLabel<wgpu::Buffer>(label.c_str());
+            const auto& originalDeferred = mDeferredExpectations[expectationId];
 
-            EXPECT_BUFFER_U8_RANGE_EQ(expectedData.data(), replayedBuffer, 0, expectedData.size())
-                << "Failed at verifying replayed result.";
+            const auto& originalReadback = mReadbackSlots[originalDeferred.readbackSlot];
+
+            // add new readback slot
+            ReadbackSlot slot;
+            slot.device = replayDevice;
+            slot.bufferSize = originalReadback.bufferSize;
+            slot.buffer = replayedBuffer;
+
+            size_t slotId = mReadbackSlots.size();
+
+            mReadbackSlots.push_back(std::move(slot));
+
+            DeferredExpectation deferred;
+            deferred.file = originalDeferred.file;
+            deferred.line = originalDeferred.line;
+            deferred.readbackSlot = slotId;
+            deferred.readbackOffset = originalDeferred.readbackOffset;
+            deferred.size = originalDeferred.size;
+            deferred.expectation = originalDeferred.expectation->Clone();
+            // // temp test BasicTest.QueueWriteBuffer
+            // deferred.expectation.reset(
+            //     new ::dawn::detail::ExpectEq<uint32_t>(0x01020304)
+            //     // new ::dawn::detail::ExpectEq<uint32_t>(0x01020399)
+            // );
+
+            mDeferredExpectations.push_back(std::move(deferred));
+            mDeferredExpectations.back().message =
+                std::make_unique<std::ostringstream>("of Replayed Readback " + label);
         }
-        mReadbackBufferContents.clear();
     }
 #endif
 
@@ -1665,13 +1695,6 @@ std::ostringstream& DawnTestBase::AddBufferExpectation(const char* file,
                                                        detail::Expectation* expectation) {
     uint64_t alignedSize = Align(size, uint64_t(4));
 
-#ifdef DAWN_ENABLE_CAPTURE_REPLAY
-    if (IsCheckCaptureReplayEnabled()) {
-        // Pause the capture so that the readback buffer copy is not recorded.
-        mRecorder->Pause();
-    }
-#endif
-
     auto readback = ReserveReadback(device, alignedSize);
 
     // We need to enqueue the copy immediately because by the time we resolve the expectation,
@@ -1681,13 +1704,6 @@ std::ostringstream& DawnTestBase::AddBufferExpectation(const char* file,
 
     wgpu::CommandBuffer commands = encoder.Finish();
     queue.Submit(1, &commands);
-
-#ifdef DAWN_ENABLE_CAPTURE_REPLAY
-    if (IsCheckCaptureReplayEnabled()) {
-        // Resume the capture.
-        mRecorder->Resume();
-    }
-#endif
 
     DeferredExpectation deferred;
     deferred.file = file;
@@ -1699,6 +1715,14 @@ std::ostringstream& DawnTestBase::AddBufferExpectation(const char* file,
 
     // This expectation might be called from multiple threads
     Mutex::AutoLock lg(&mMutex);
+
+#ifdef DAWN_ENABLE_BACKEND_WEBGPU
+    if (IsCheckCaptureReplayEnabled()) {
+        std::string label = GetReadbackBufferLabel(deferred.readbackSlot);
+        size_t deferredId = mDeferredExpectations.size();
+        mReplayReadbackBuffers[label] = deferredId;
+    }
+#endif
 
     mDeferredExpectations.push_back(std::move(deferred));
     mDeferredExpectations.back().message = std::make_unique<std::ostringstream>();
@@ -1756,6 +1780,14 @@ std::ostringstream& DawnTestBase::AddTextureExpectationImpl(const char* file,
 
     // This expectation might be called from multiple threads
     Mutex::AutoLock lg(&mMutex);
+
+#ifdef DAWN_ENABLE_BACKEND_WEBGPU
+    if (IsCheckCaptureReplayEnabled()) {
+        std::string label = GetReadbackBufferLabel(deferred.readbackSlot);
+        size_t deferredId = mDeferredExpectations.size();
+        mReplayReadbackBuffers[label] = deferredId;
+    }
+#endif
 
     mDeferredExpectations.push_back(std::move(deferred));
     mDeferredExpectations.back().message = std::make_unique<std::ostringstream>();
@@ -2137,25 +2169,20 @@ DawnTestBase::ReadbackReservation DawnTestBase::ReserveReadback(wgpu::Device tar
     // Create and initialize the slot buffer so that it won't unexpectedly affect the count of
     // resource lazy clear in the tests.
     const std::vector<uint8_t> initialBufferData(readbackSize, 0u);
-    slot.buffer =
-        utils::CreateBufferFromData(targetDevice, initialBufferData.data(), readbackSize,
-                                    wgpu::BufferUsage::MapRead | wgpu::BufferUsage::CopyDst);
 
     // This readback might be called from multiple threads
     Mutex::AutoLock lg(&mMutex);
 
-#ifdef DAWN_ENABLE_CAPTURE_REPLAY
-    if (IsCheckCaptureReplayEnabled()) {
-        std::string label = "readback_buffer_" + std::to_string(mReadbackSlots.size());
-        slot.buffer.SetLabel(label.c_str());
-        slot.label = label;
-    }
-#endif
+    size_t readbackSlotId = mReadbackSlots.size();
+    std::string readbackLabel = GetReadbackBufferLabel(readbackSlotId);
+    slot.buffer = utils::CreateBufferFromData(
+        targetDevice, initialBufferData.data(), readbackSize,
+        wgpu::BufferUsage::MapRead | wgpu::BufferUsage::CopyDst, readbackLabel);
 
     ReadbackReservation reservation;
     reservation.device = targetDevice;
     reservation.buffer = slot.buffer;
-    reservation.slot = mReadbackSlots.size();
+    reservation.slot = readbackSlotId;
     reservation.offset = 0;
 
     mReadbackSlots.push_back(std::move(slot));
@@ -2210,13 +2237,19 @@ void DawnTestBase::ResolveExpectations() {
 
         data += expectation.readbackOffset;
 
-#ifdef DAWN_ENABLE_CAPTURE_REPLAY
-        if (IsCheckCaptureReplayEnabled() && !slot.label.empty()) {
-            const uint8_t* bufferData = reinterpret_cast<const uint8_t*>(data);
-            mReadbackBufferContents[slot.label] =
-                std::vector<uint8_t>(bufferData, bufferData + expectation.size);
-        }
-#endif
+        // #ifdef DAWN_ENABLE_BACKEND_WEBGPU
+        //         // if (IsCheckCaptureReplayEnabled()) {
+        //         //     const uint8_t* bufferData = reinterpret_cast<const uint8_t*>(data);
+        //         //     mReadbackBufferContents[slot.label] =
+        //         //         std::vector<uint8_t>(bufferData, bufferData + expectation.size);
+        //         // }
+        //         if (IsCheckCaptureReplayEnabled()) {
+        //             const uint8_t* bufferData = reinterpret_cast<const uint8_t*>(data);
+        //             mReadbackBufferContents[slot.label] =
+        //                 std::vector<uint8_t>(bufferData, bufferData + expectation.size);
+
+        //         }
+        // #endif
 
         uint32_t size;
         std::vector<char> packedData;

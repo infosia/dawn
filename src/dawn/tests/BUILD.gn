@@ -546,7 +546,6 @@ source_set("test_infra_sources") {
     if (!defined(defines)) {
       defines = []
     }
-    defines += [ "DAWN_ENABLE_CAPTURE_REPLAY" ]
   }
 
   public = [
