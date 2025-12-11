@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f72a7647_fd07f8ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-11T06:35:13Z",
+      "side": 1,
+      "message": "mac-intel-exp looks flaky, should be OK to land with flake if it passes a retry",
+      "revId": "4cd777666c6a0d06f99b7bb486b643c354c4049b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
