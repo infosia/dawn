@@ -57,6 +57,30 @@
       ],
       "revId": "3bd75678344457de9a99a701aabf3f63083ad9b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "818df680_476af80d",
+        "filename": "src/dawn/native/null/DeviceNull.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-11T09:20:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff0bf520_2876319b",
+      "range": {
+        "startLine": 237,
+        "startChar": 4,
+        "endLine": 237,
+        "endChar": 21
+      },
+      "revId": "3bd75678344457de9a99a701aabf3f63083ad9b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
