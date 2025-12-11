@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83b13d4f_35fa19d4",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T22:17:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "803732d2_ba285388",
+      "range": {
+        "startLine": 541,
+        "startChar": 18,
+        "endLine": 541,
+        "endChar": 50
+      },
+      "revId": "3f2348fef92186f16a74523f71fdbd3297997bca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6b6f5244_01b0edc4",
@@ -71,6 +95,30 @@
       "writtenOn": "2025-12-11T19:27:32Z",
       "side": 1,
       "message": "This will need to vary based on if MSRTSS or local read path is available I think? Like for MRSTSS this is actually VK_ATTACHMENT_LOAD_OP_LOAD which automatically copies pixel values. For local read it would be VK_ATTACHMENT_LOAD_OP_DONT_CARE since we\u0027ll have to copy content from resolve texture after loading?\n\nJust thinking a 1:1 mapping function between types might not be appropriate here.",
+      "range": {
+        "startLine": 165,
+        "startChar": 19,
+        "endLine": 165,
+        "endChar": 50
+      },
+      "revId": "3f2348fef92186f16a74523f71fdbd3297997bca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a17e4b34_c15d0d54",
+        "filename": "src/dawn/native/vulkan/UtilsVulkan.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T22:17:10Z",
+      "side": 1,
+      "message": "Ack, though this was just copied from RenderPassCache.cpp. Will address this as MSRTSS support is added.",
+      "parentUuid": "6b6f5244_01b0edc4",
       "range": {
         "startLine": 165,
         "startChar": 19,
