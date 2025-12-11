@@ -76,16 +76,25 @@ ResultOrError<UnpackedPtr<PipelineLayoutDescriptor>> ValidatePipelineLayoutDescr
         DAWN_TRY(ValidatePLSInfo(device, pls->totalPixelLocalStorageSize,
                                  {attachments.data(), attachments.size()}));
     }
+    bool usesResourceTable = false;
     if (auto* rt = unpacked.Get<PipelineLayoutResourceTable>()) {
+        usesResourceTable = rt->usesResourceTable;
         DAWN_INVALID_IF(rt->usesResourceTable &&
                             !device->HasFeature(Feature::ChromiumExperimentalSamplingResourceTable),
                         "Resource table used without the %s feature enabled.",
                         wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable);
     }
 
-    DAWN_INVALID_IF(descriptor->bindGroupLayoutCount > kMaxBindGroups,
-                    "bindGroupLayoutCount (%i) is larger than the maximum allowed (%i).",
-                    descriptor->bindGroupLayoutCount, kMaxBindGroups);
+    if (usesResourceTable) {
+        DAWN_INVALID_IF(descriptor->bindGroupLayoutCount + 1 > kMaxBindGroups,
+                        "bindGroupLayoutCount (%i) + 1 for the resource table is larger than the "
+                        "maximum allowed (%i).",
+                        descriptor->bindGroupLayoutCount, kMaxBindGroups);
+    } else {
+        DAWN_INVALID_IF(descriptor->bindGroupLayoutCount > kMaxBindGroups,
+                        "bindGroupLayoutCount (%i) is larger than the maximum allowed (%i).",
+                        descriptor->bindGroupLayoutCount, kMaxBindGroups);
+    }
 
     BindingCounts bindingCounts = {};
     for (uint32_t i = 0; i < descriptor->bindGroupLayoutCount; ++i) {
@@ -383,11 +392,18 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
     // there's no issue with using the same struct multiple times.
     ExternalTextureBindingLayout externalTextureBindingLayout;
 
+    bool usesResourceTable = false;
+    uint32_t numBindGroupsInserted = 0;
     uint32_t immediateDataRangeByteSize = 0;
 
     // Loops over all the reflected BindGroupLayoutEntries from shaders.
     for (const StageAndDescriptor& stage : stages) {
         const EntryPointMetadata& metadata = stage.module->GetEntryPoint(stage.entryPoint);
+
+        // Check if at least one stage uses a resource table
+        if (metadata.usesResourceTable) {
+            usesResourceTable = true;
+        }
 
         // TODO(dawn:1704): Find if we can usefully deduce the PLS for the pipeline layout.
         DAWN_INVALID_IF(
@@ -410,6 +426,8 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
                     DAWN_TRY_CONTEXT(MergeEntries(&existingEntry->second, entry),
                                      "merging implicit bindings for @group(%u) @binding(%u).",
                                      group, bindingNumber);
+                } else {
+                    ++numBindGroupsInserted;
                 }
             }
         }
@@ -433,6 +451,11 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
         immediateDataRangeByteSize =
             std::max(immediateDataRangeByteSize, metadata.immediateDataRangeByteSize);
     }
+
+    DAWN_INVALID_IF(usesResourceTable && numBindGroupsInserted == kMaxBindGroups,
+                    "Number of bind groups from shaders (%i) + 1 for the resource table is "
+                    "larger than the maximum allowed (%i).",
+                    numBindGroupsInserted, kMaxBindGroups);
 
     // Gather the dynamic binding arrays from the shader and check compatibility between stages.
     PerBindGroup<std::optional<GroupDynamicBindingArrayInfo>> dynamicArrays;
@@ -465,9 +488,13 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
     }
 
     // Create the bind group layouts, including the empty ones as all the bind group layouts should
-    // be created with `pipelineCompatibilityToken` whether they are empty or not.
+    // be created with `pipelineCompatibilityToken` whether they are empty or not. If using a
+    // resource table, we create one less as it consumes a bind group slot.
+    const BindGroupIndex kBindGroupsToGenerate =
+        kMaxBindGroupsTyped - BindGroupIndex{usesResourceTable ? 1 : 0};
+
     PerBindGroup<Ref<BindGroupLayoutBase>> bindGroupLayouts = {};
-    for (auto group : Range(kMaxBindGroupsTyped)) {
+    for (auto group : Range(kBindGroupsToGenerate)) {
         wgpu::ChainedStruct* descriptorChain = nullptr;
 
         wgpu::BindGroupLayoutDynamicBindingArray dynamic;
@@ -486,24 +513,15 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
 
     // Create the deduced pipeline layout, validating if it is valid.
     PerBindGroup<BindGroupLayoutBase*> bgls = {};
-    for (auto group : Range(kMaxBindGroupsTyped)) {
+    for (auto group : Range(kBindGroupsToGenerate)) {
         bgls[group] = bindGroupLayouts[group].Get();
     }
 
     PipelineLayoutDescriptor desc = {};
     desc.bindGroupLayouts = bgls.data();
-    desc.bindGroupLayoutCount = static_cast<uint32_t>(kMaxBindGroupsTyped);
+    desc.bindGroupLayoutCount = static_cast<uint32_t>(kBindGroupsToGenerate);
     desc.immediateSize = immediateDataRangeByteSize;
 
-    // Check if at least one stage uses a resource table
-    bool usesResourceTable = false;
-    for (const StageAndDescriptor& stage : stages) {
-        const EntryPointMetadata& metadata = stage.module->GetEntryPoint(stage.entryPoint);
-        if (metadata.usesResourceTable) {
-            usesResourceTable = true;
-            break;
-        }
-    }
     PipelineLayoutResourceTable resourceTable;
     if (usesResourceTable) {
         resourceTable.usesResourceTable = true;
