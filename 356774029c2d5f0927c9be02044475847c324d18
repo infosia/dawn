@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe3259a7_abd29fca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 80
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-11T17:57:16Z",
+      "side": 1,
+      "message": "+cwallez for eyes on the race issue / RefHandle solution.",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "665015dd_2d7f8bd0",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 80
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-11T17:57:16Z",
+      "side": 1,
+      "message": "This (moving the GL calls to FinalizeMapImpl()) seems like a good change to make regardless of Graphite/Dawn. In particular, the current implemention appears to make MapMode::Read a blocking call (since it doesn\u0027t and can\u0027t use GL_MAP_UNSYNCHRONIZED_BIT).\n\nCould you put up a preliminary CL to move mapping to FinalizeMapImpl()? It seems like we could also remove GL_MAP_UNSYNCHRONIZED_BIT for MapMode::Write in that change too, if I understand correctly.",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "769c5fef_48b65ec9",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-11T17:57:16Z",
+      "side": 1,
+      "message": "Is this a case you actually ran into, or a hypothetical one?\n\nIn the deferral case, this should never happen, because the creation lambda holds a reference to the Dawn object (\"this\"). So the object\u0027s destructor (and DestroyImpl()) cannot be called until all the lambdas release their refs (including the creation lambda), at which point we know  mHandle is valid and will be correctly destroyed by GL.\n\nIn the mutex case, all calls are immediate (not deferred), so AFAICT this could only happen if the constructor was racing with the destructor. This sounds like a much bigger problem than just GL correctness: the Dawn object itself might be in an inconsistent/invalid state. If so, is this something we can/are exercising via a test?",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
