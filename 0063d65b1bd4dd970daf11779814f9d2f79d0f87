@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7273a045_436eea98",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T02:16:52Z",
+      "side": 1,
+      "message": "cwallez@: I missed your response to my question about VK_NULL_HANDLE earlier today. I\u0027ll give the `{ VK_NULL_HANDLE }` approach a try tomorrow, but for the record this works too.",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20bbad78_e12f744f",
