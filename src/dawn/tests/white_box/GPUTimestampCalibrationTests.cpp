@@ -61,10 +61,8 @@ std::ostream& operator<<(std::ostream& o, EncoderType type) {
 
 DAWN_TEST_PARAM_STRUCT(GPUTimestampCalibrationTestParams, FeatureName, EncoderType);
 
-class ExpectBetweenTimestamps : public detail::Expectation {
+class ExpectBetweenTimestamps : public detail::CloneableExpectation<ExpectBetweenTimestamps> {
   public:
-    ~ExpectBetweenTimestamps() override = default;
-
     ExpectBetweenTimestamps(uint64_t minValue, uint64_t maxValue, float errorToleranceRatio = 0.0f)
         : mMinValue(minValue), mMaxValue(maxValue), mErrorToleranceRatio(errorToleranceRatio) {}
 

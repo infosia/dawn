@@ -49,7 +49,7 @@ enum class TextureComponentType {
 
 // An expectation for float buffer content that can correctly compare different NaN values and
 // supports a basic tolerance for comparison of finite values.
-class ExpectFloatWithTolerance : public detail::Expectation {
+class ExpectFloatWithTolerance : public detail::CloneableExpectation<ExpectFloatWithTolerance> {
   public:
     ExpectFloatWithTolerance(std::vector<float> expected, float tolerance)
         : mExpected(std::move(expected)), mTolerance(tolerance) {}
@@ -97,7 +97,7 @@ class ExpectFloatWithTolerance : public detail::Expectation {
 };
 
 // An expectation for float16 buffers that can correctly compare NaNs (all NaNs are equivalent).
-class ExpectFloat16 : public detail::Expectation {
+class ExpectFloat16 : public detail::CloneableExpectation<ExpectFloat16> {
   public:
     explicit ExpectFloat16(std::vector<uint16_t> expected) : mExpected(std::move(expected)) {}
 
@@ -134,7 +134,7 @@ class ExpectFloat16 : public detail::Expectation {
 };
 
 // An expectation for RG11B10Ufloat buffer content that can correctly compare different NaN values
-class ExpectRG11B10Ufloat : public detail::Expectation {
+class ExpectRG11B10Ufloat : public detail::CloneableExpectation<ExpectRG11B10Ufloat> {
   public:
     explicit ExpectRG11B10Ufloat(std::vector<uint32_t> expected) : mExpected(std::move(expected)) {}
 
