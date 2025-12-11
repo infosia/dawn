@@ -58,7 +58,8 @@ DAWN_TEST_PARAM_STRUCT(Params,
                        SampleCount);
 
 template <typename T>
-class ExpectNonZero : public detail::CustomTextureExpectation {
+class ExpectNonZero
+    : public detail::CloneableExpectation<ExpectNonZero<T>, detail::CustomTextureExpectation> {
   public:
     uint32_t DataSize() override { return sizeof(T); }
 

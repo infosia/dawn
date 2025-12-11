@@ -62,11 +62,9 @@ class QueryTests : public DawnTest {
     }
 };
 
-class OcclusionExpectation : public detail::Expectation {
+class OcclusionExpectation : public detail::CloneableExpectation<OcclusionExpectation> {
   public:
     enum class Result { Zero, NonZero };
-
-    ~OcclusionExpectation() override = default;
 
     explicit OcclusionExpectation(Result expected) { mExpected = expected; }
 
@@ -602,10 +600,8 @@ TEST_P(OcclusionQueryTests, ResolveToBufferWithOffset) {
     }
 }
 
-class TimestampExpectation : public detail::Expectation {
+class TimestampExpectation : public detail::CloneableExpectation<TimestampExpectation> {
   public:
-    ~TimestampExpectation() override = default;
-
     // Expect the timestamp results are greater than 0.
     testing::AssertionResult Check(const void* data, size_t size) override {
         DAWN_ASSERT(size % sizeof(uint64_t) == 0);
