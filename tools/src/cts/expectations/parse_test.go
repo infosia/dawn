@@ -30,10 +30,25 @@ package expectations_test
 import (
 	"testing"
 
+	"dawn.googlesource.com/dawn/tools/src/container"
 	"dawn.googlesource.com/dawn/tools/src/cts/expectations"
 	"dawn.googlesource.com/dawn/tools/src/cts/result"
+	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 )
+
+var parseCmpOpts = []cmp.Option{
+	cmp.Comparer(func(a, b *container.OrderedSet[string]) bool {
+		if a == nil && b == nil {
+			return true
+		}
+		if a == nil || b == nil {
+			return false
+		}
+		return cmp.Equal(a.List(), b.List())
+	}),
+	cmp.AllowUnexported(expectations.Expectation{}),
+}
 
 func TestParse(t *testing.T) {
 	type Test struct {

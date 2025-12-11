@@ -105,7 +105,7 @@ func (c *Content) AddExpectationsForFailingResults(results result.List,
 func (c *Content) removeUnknownTags(results *result.List) error {
 	*results = results.TransformTags(func(t result.Tags) result.Tags {
 		filtered := result.NewTags()
-		for tag := range t {
+		for _, tag := range t.List() {
 			if _, ok := c.Tags.ByName[tag]; ok {
 				filtered.Add(tag)
 			}
@@ -172,7 +172,7 @@ func (c *Content) reduceTagsToBroadGroups(results *result.List) error {
 // shared between the given tags and returns it.
 func getAndAssertOneOverlappingTag(validTags, allTags result.Tags) (string, error) {
 	overlappingTags := validTags.Intersection(allTags)
-	if len(overlappingTags) != 1 {
+	if overlappingTags.Len() != 1 {
 		return "", fmt.Errorf("Tags %v did not have exactly one overlap with %v", validTags, allTags)
 	}
 	return overlappingTags.One(), nil

@@ -35,11 +35,11 @@ import (
 
 // Tags is a collection of strings used to annotate test results with the test
 // configuration.
-type Tags = container.Set[string]
+type Tags = *container.OrderedSet[string]
 
 // Returns a new tag set with the given tags
 func NewTags(tags ...string) Tags {
-	return Tags(container.NewSet(tags...))
+	return container.NewOrderedSet(tags...)
 }
 
 // TagsToString returns the tags sorted and joined using the TagDelimiter

@@ -171,7 +171,7 @@ func Parse(path, body string) (Content, error) {
 		// tags parses a [ tag ] block.
 		tags := func(use string) (result.Tags, error) {
 			if !match("[") {
-				return result.Tags{}, nil
+				return result.NewTags(), nil
 			}
 			out := result.NewTags()
 			for {
@@ -180,7 +180,7 @@ func Parse(path, body string) (Content, error) {
 				case "]":
 					return out, nil
 				case "":
-					return result.Tags{}, syntaxErr(t, "expected ']' for "+use)
+					return nil, syntaxErr(t, "expected ']' for "+use)
 				default:
 					out.Add(t.str)
 				}
@@ -279,7 +279,7 @@ func parseTags(tags *Tags, lines []string) {
 					tag := tokens[0]
 					tags.ByName[tag] = TagSetAndPriority{
 						Set:      tagSet.Name,
-						Priority: len(tagSet.Tags),
+						Priority: tagSet.Tags.Len(),
 					}
 					tagSet.Tags.Add(tag)
 				}

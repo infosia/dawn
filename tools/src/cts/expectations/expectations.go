@@ -297,7 +297,7 @@ func (e *Expectation) AsExpectationFileString() string {
 	if e.Bug != "" {
 		parts = append(parts, e.Bug)
 	}
-	if len(e.Tags) > 0 {
+	if e.Tags.Len() > 0 {
 		parts = append(parts, fmt.Sprintf("[ %v ]", strings.Join(e.Tags.List(), " ")))
 	}
 	parts = append(parts, e.Query)

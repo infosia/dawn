@@ -40,7 +40,7 @@ func TestRemoveLowerPriorityTags(t *testing.T) {
 		Sets: []expectations.TagSet{
 			{
 				Name: "OS",
-				Tags: container.NewSet(
+				Tags: container.NewOrderedSet(
 					"os_a",
 					"os_b",
 					"os_c",
@@ -48,7 +48,7 @@ func TestRemoveLowerPriorityTags(t *testing.T) {
 			},
 			{
 				Name: "GPU",
-				Tags: container.NewSet(
+				Tags: container.NewOrderedSet(
 					"gpu_a",
 					"gpu_b",
 					"gpu_c",
@@ -78,7 +78,7 @@ func TestRemoveLowerPriorityTags(t *testing.T) {
 		{in: []string{"os_b", "os_c"}, expected: []string{"os_c"}},
 		{in: []string{"gpu_a", "gpu_c", "os_b", "os_c"}, expected: []string{"gpu_c", "os_c"}},
 	} {
-		got := tags.RemoveLowerPriorityTags(container.NewSet(test.in...)).List()
+		got := tags.RemoveLowerPriorityTags(container.NewOrderedSet(test.in...)).List()
 		if diff := cmp.Diff(got, test.expected); diff != "" {
 			t.Errorf("TestRemoveLowerPriorityTags(%v) returned %v:\n%v", test.in, got, diff)
 		}
@@ -90,7 +90,7 @@ func TestRemoveHigherPriorityTags(t *testing.T) {
 		Sets: []expectations.TagSet{
 			{
 				Name: "OS",
-				Tags: container.NewSet(
+				Tags: container.NewOrderedSet(
 					"os_a",
 					"os_b",
 					"os_c",
@@ -98,7 +98,7 @@ func TestRemoveHigherPriorityTags(t *testing.T) {
 			},
 			{
 				Name: "GPU",
-				Tags: container.NewSet(
+				Tags: container.NewOrderedSet(
 					"gpu_a",
 					"gpu_b",
 					"gpu_c",
@@ -129,7 +129,7 @@ func TestRemoveHigherPriorityTags(t *testing.T) {
 		{in: []string{"gpu_a", "gpu_c", "os_b", "os_c"}, expected: []string{"gpu_a", "os_b"}},
 		{in: []string{"gpu_c", "gpu_a", "os_c", "os_b"}, expected: []string{"gpu_a", "os_b"}},
 	} {
-		got := tags.RemoveHigherPriorityTags(container.NewSet(test.in...)).List()
+		got := tags.RemoveHigherPriorityTags(container.NewOrderedSet(test.in...)).List()
 		if diff := cmp.Diff(got, test.expected); diff != "" {
 			t.Errorf("TestRemoveHigherPriorityTags(%v) returned %v:\n%v", test.in, got, diff)
 		}
