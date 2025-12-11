@@ -16,6 +16,24 @@
       "message": "Holding until the current CTS roll lands but LGTM (I will land this shortly)",
       "revId": "1a85bfda7f6301de79f148d80e4241df1e0660d3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7000c109_0fb8c2e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-11T17:47:56Z",
+      "side": 1,
+      "message": "Nvm we\u0027ll wait until the next CTS roll",
+      "parentUuid": "313898a6_f1b5292f",
+      "revId": "1a85bfda7f6301de79f148d80e4241df1e0660d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
