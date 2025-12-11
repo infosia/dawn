@@ -16,6 +16,41 @@
       "message": "Let me know if there\u0027s a better way to handle this sort of special-case check for builtins. I couldn\u0027t see an obvious way to put this in the PointSizeChecker without introducing another field for custom checks, but I don\u0027t know that there will be enough of these special-cases to warrant that.",
       "revId": "1b961de545d934b1bead924a33b49a646a5b3844",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa2e5562_045ee864",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-12-11T19:42:05Z",
+      "side": 1,
+      "message": "There currently isn\u0027t. The idiomatic way for how I have written the checkers would be to add a general .check field to BuiltInChecker, like the IOAttributChecker has, but as you alluded to that would be adding a field for a single instance.\n\nI am fine with this being a one off for now. If we start accreting a lot of these checks here we can refactor them up into the table.\n\n(If we end up a lot of capability controlled builtins we may consider adding a .cap field like the usage and have the logic still in here)",
+      "parentUuid": "7bb56435_ef93b24f",
+      "revId": "1b961de545d934b1bead924a33b49a646a5b3844",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad701631_d6c8fd93",
+        "filename": "src/tint/lang/msl/writer/printer/printer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-12-11T19:42:05Z",
+      "side": 1,
+      "message": "I assume the //s are needed here to keep git cl formatting from doing weird things?",
+      "revId": "1b961de545d934b1bead924a33b49a646a5b3844",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
