@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81139eab_1821973d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-11T09:21:11Z",
+      "side": 1,
+      "message": "I need another +2 after removing the DeviceNull changes.",
+      "revId": "605c7ed1e49f1ee98988dc49cee625b8d25eb79c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
