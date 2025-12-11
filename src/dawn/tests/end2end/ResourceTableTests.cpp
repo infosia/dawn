@@ -72,6 +72,8 @@ TEST_P(ResourceTableTests, ResourceTableCreation) {
     MakeResourceTable(kMaxResourceTableSize);
 }
 
+// XXX make test
+
 DAWN_INSTANTIATE_TEST(ResourceTableTests, D3D12Backend(), MetalBackend(), VulkanBackend());
 
 }  // anonymous namespace
