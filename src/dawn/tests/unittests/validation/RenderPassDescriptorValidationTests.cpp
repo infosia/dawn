@@ -1844,8 +1844,7 @@ class MSAARenderToSingleSampledRenderPassDescriptorValidationTest
     wgpu::TextureView CreateCompatibleColorTextureView() {
         wgpu::Texture colorTexture = CreateTexture(
             device, wgpu::TextureDimension::e2D, kColorFormat, kSize, kSize, kArrayLayers,
-            kLevelCount, /*sampleCount=*/1,
-            wgpu::TextureUsage::RenderAttachment);
+            kLevelCount, /*sampleCount=*/1, wgpu::TextureUsage::RenderAttachment);
 
         return colorTexture.CreateView();
     }
@@ -1903,10 +1902,9 @@ TEST_F(MSAARenderToSingleSampledRenderPassDescriptorValidationTest, UnsupportedS
 // color attachment's format doesn't support resolve. Example, RGBA8Sint format.
 TEST_F(MSAARenderToSingleSampledRenderPassDescriptorValidationTest, UnresolvableColorFormatError) {
     // Create a texture with sample count = 1.
-    auto texture =
-        CreateTexture(device, wgpu::TextureDimension::e2D, wgpu::TextureFormat::RGBA8Sint, kSize,
-                      kSize, kArrayLayers, kLevelCount, /*sampleCount=*/1,
-                      wgpu::TextureUsage::RenderAttachment);
+    auto texture = CreateTexture(
+        device, wgpu::TextureDimension::e2D, wgpu::TextureFormat::RGBA8Sint, kSize, kSize,
+        kArrayLayers, kLevelCount, /*sampleCount=*/1, wgpu::TextureUsage::RenderAttachment);
 
     auto renderPass = CreateMultisampledRenderToSingleSampledRenderPass(texture.CreateView());
     AssertBeginRenderPassError(&renderPass, testing::HasSubstr("does not support resolve"));

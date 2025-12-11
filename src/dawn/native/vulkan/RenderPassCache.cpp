@@ -386,6 +386,7 @@ ResultOrError<RenderPassCache::RenderPassInfo> RenderPassCache::CreateRenderPass
         return renderPassInfo;
     }
 
+    // MSAA Render To Single Sampled should not be enabled unless CreateRenderPass2 is also enabled.
     DAWN_ASSERT(!query.renderToSingleSampled);
 
     RenderPassCreateInfo passInfo;
