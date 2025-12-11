@@ -680,6 +680,15 @@ VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
                 flags |= VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT;
             }
         }
+
+        if (usage & wgpu::TextureUsage::TextureBinding) {
+            // If the MSAARenderToSingleSampled feature is enabled, textures with TextureBinding
+            // usage need to have VK_IMAGE_CREATE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_BIT_EXT set
+            // so that they can be used as a render target with an implicit sample count.
+            if (device->HasFeature(Feature::MSAARenderToSingleSampled)) {
+                flags |= VK_IMAGE_CREATE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_BIT_EXT;
+            }
+        }
     }
     if (usage & wgpu::TextureUsage::TransientAttachment) {
         flags |= VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT;
