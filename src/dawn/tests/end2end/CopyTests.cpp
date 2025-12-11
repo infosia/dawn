@@ -90,7 +90,8 @@ static_assert(sizeof(Color<uint16_t, 1>) == 2, "Unexpected padding");
 static_assert(sizeof(ColorRGB10A2) == 4, "Unexpected padding");
 
 template <typename ColorType>
-class ColorExpectation : public detail::CustomTextureExpectation {
+class ColorExpectation : public detail::CloneableExpectation<ColorExpectation<ColorType>,
+                                                             detail::CustomTextureExpectation> {
   public:
     static constexpr size_t kNumComponents = ColorType::kNumComponents;
     using CompRepType = ColorType::ComponentRepresentation;
