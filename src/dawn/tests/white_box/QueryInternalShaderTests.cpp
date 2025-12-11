@@ -46,10 +46,9 @@ void EncodeConvertTimestampsToNanoseconds(wgpu::CommandEncoder encoder,
                     .IsSuccess());
 }
 
-class InternalShaderExpectation : public ::dawn::detail::Expectation {
+class InternalShaderExpectation
+    : public ::dawn::detail::CloneableExpectation<InternalShaderExpectation> {
   public:
-    ~InternalShaderExpectation() override = default;
-
     InternalShaderExpectation(const uint64_t* values,
                               const unsigned int count,
                               const uint32_t quantizationMask) {
