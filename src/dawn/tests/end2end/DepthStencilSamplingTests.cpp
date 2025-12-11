@@ -454,13 +454,12 @@ class DepthStencilSamplingTest : public DawnTestWithParams<DepthStencilSamplingT
                            });
     }
 
-    class ExtraStencilComponentsExpectation : public detail::Expectation {
+    class ExtraStencilComponentsExpectation
+        : public detail::CloneableExpectation<ExtraStencilComponentsExpectation> {
         using StencilData = std::array<uint32_t, 4>;
 
       public:
         explicit ExtraStencilComponentsExpectation(uint32_t expected) : mExpected(expected) {}
-
-        ~ExtraStencilComponentsExpectation() override = default;
 
         testing::AssertionResult Check(const void* rawData, size_t size) override {
             DAWN_ASSERT(size == sizeof(StencilData));
