@@ -54,6 +54,42 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7a4efb38_146369d9",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-11T06:44:00Z",
+      "side": 1,
+      "message": "I am not very familiar with dynamic rendering. Quick searches",
+      "parentUuid": "20bbad78_e12f744f",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c02056f_2d65100b",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-11T06:44:00Z",
+      "side": 1,
+      "message": "I\u0027m not super familiar with dynamic rendering. But I guess we can use extensions like [dynamic_rendering_local_read](https://docs.vulkan.org/samples/latest/samples/extensions/dynamic_rendering_local_read/README.html).\n\nHowever, to make things simpler and avoid too many code paths in Dawn/Vk, maybe we should wait for \"multisampled render to single sampled\" path to be implemented first and use it for implementing LoadResolveTexture with dynamic rendering? So the plan could be:\n- Either disable `LoadResolveTexture` feature if dynamic rendering is enabled. Implement `MSAARenderToSingleSampled` feature and let client use it.\n  - To be clear, Skia is the only user of `LoadResolveTexture` currently and it already has alternative code to make use of `MSAARenderToSingleSampled`.\n- Or implement `LoadResolveTexture` feature using `VK_EXT_multisampled_render_to_single_sampled`. I think it shouldn\u0027t be hard:\n  - If the user\u0027s MSAA attachment in `RenderPassColorAttachmentInfo` is transient/memoryless then we can use `VK_EXT_multisampled_render_to_single_sampled` directly, ignore the user\u0027s MSAA attachment. Use loadOp\u003d`VK_ATTACHMENT_LOAD_OP_LOAD `\n  - If the user\u0027s MSAA attachment is not transient, blit the resolve target to the user\u0027s MSAA attachment at the end of the render pass. This simulates preserving the content of the MSAA attachment.\n  ```\n  VkMultisampledRenderToSingleSampledInfoEXT multisampledInfo \u003d {};\n  multisampledInfo.multisampledRenderToSingleSampledEnable \u003d VK_TRUE;\n  ...\n  VkRenderingInfo renderingInfo \u003d {};\n  renderingInfo.pNext \u003d \u0026multisampledInfo;\n  ...\n  vkCmdBeginRendering(...)\n  ...\n  vkCmdEndRendering(...)\n  ...\n  if (renderPassColorAttachmentInfo.storeOp \u003d\u003d Store) {\n     blit resolve target to renderPassColorAttachmentInfo.view\n  }\n  ```",
+      "parentUuid": "20bbad78_e12f744f",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6d275041_f0059b36",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 13
