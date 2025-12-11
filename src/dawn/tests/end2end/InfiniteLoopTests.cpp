@@ -235,7 +235,7 @@ void InfiniteLoopTests::RunTest(const char* file,
 // A gtest assertion checking that the given array is filled with zeros, except for one entry which
 // contains the given value.
 template <typename T>
-class ExpectOneNonZero : public detail::Expectation {
+class ExpectOneNonZero : public detail::CloneableExpectation<ExpectOneNonZero<T>> {
   public:
     explicit ExpectOneNonZero(T value) : mValue(value) { DAWN_ASSERT(mValue != T(0)); }
 
