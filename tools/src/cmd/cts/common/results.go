@@ -565,7 +565,7 @@ func CleanResults(cfg Config, results *result.List) {
 	// Clean up duplicate results
 	*results = results.ReplaceDuplicates(func(s result.Statuses) result.Status {
 		// If all results have the same status, then use that.
-		if len(s) == 1 {
+		if s.Len() == 1 {
 			return s.One()
 		}
 		// Mixed statuses. Replace with something appropriate.
