@@ -61,6 +61,20 @@ func (c Content) Validate() Diagnostics {
 					})
 				}
 			}
+			// Add check that tags are sorted here
+			tagList := ex.Tags.List()
+			for i := 0; i < len(tagList)-1; i++ {
+				if tagList[i] > tagList[i+1] {
+					out = append(out, Diagnostic{
+						Severity: Error,
+						Line:     ex.Line,
+						Message:  fmt.Sprintf("tags are not sorted lexicographically: %v", tagList),
+					})
+					break // Only report once per expectation
+				}
+			}
+
+			// Check query can be parsed and exists in tree
 			_, err := tree.Glob(query.Parse(ex.Query))
 			if err != nil {
 				out = append(out, Diagnostic{
