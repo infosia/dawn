@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bb56435_ef93b24f",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-11T19:28:03Z",
+      "side": 1,
+      "message": "Let me know if there\u0027s a better way to handle this sort of special-case check for builtins. I couldn\u0027t see an obvious way to put this in the PointSizeChecker without introducing another field for custom checks, but I don\u0027t know that there will be enough of these special-cases to warrant that.",
+      "revId": "1b961de545d934b1bead924a33b49a646a5b3844",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
