@@ -446,6 +446,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b143f87_a2a7893b",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T18:29:09Z",
+      "side": 1,
+      "message": "Hm, unfortunately it seems like `{YK_NULL_HANDLE}` is failing on some bots as well. I\u0027ve reverted it back to my previous pattern, though it would definitely be nice if this was more predictable.\n\nerror: cannot initialize a value of type \u0027VkRenderPass\u0027 (aka \u0027unsigned long long\u0027) with an lvalue of type \u0027const std::nullptr_t\u0027\n  570 |         createInfo.renderPass \u003d {VK_NULL_HANDLE};\n      |                                  ^~~~~~~~~~~~~~",
+      "parentUuid": "6e2a1864_ca78f40a",
+      "range": {
+        "startLine": 570,
+        "startChar": 0,
+        "endLine": 571,
+        "endChar": 47
+      },
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4b8e95b8_98bffd16",
