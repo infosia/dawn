@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d364b5d_813cf58c",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T18:16:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39380011_a4c2b3e4",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3c0293f0_82fbe9eb",
@@ -65,6 +83,24 @@
       "writtenOn": "2025-12-11T09:56:38Z",
       "side": 1,
       "message": "nit: why is it in its own block? The ordering of toggles doesn\u0027t need to be stable (and it would be nice eventually to group them per-backend to make things more clear imho)",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bab4d22a_9ffb7da7",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T18:16:40Z",
+      "side": 1,
+      "message": "Moved up with the majority of other toggles. May take a pass at organizing the whole list in a follow up CL.",
+      "parentUuid": "3c0293f0_82fbe9eb",
       "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -195,6 +231,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0f4cb682_66a527b7",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T18:16:40Z",
+      "side": 1,
+      "message": "For the moment I\u0027m also happy to add the code path and have some tests exercise it but not enable to toggle by default until we have LoadResolveTexture support figured out.\n\nI was also planning on investigating VK_EXT_multisampled_render_to_single_sampled next, barring something higher priority coming up, so hopefully it would be a relatively short period where it was toggled off.",
+      "parentUuid": "cc37f964_e05054ee",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "967132bc_47cc4f33",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 13
@@ -206,6 +260,24 @@
       "writtenOn": "2025-12-11T09:56:38Z",
       "side": 1,
       "message": "ditto",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e21b1a09_e88c8a39",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T18:16:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "967132bc_47cc4f33",
       "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -223,6 +295,30 @@
       "writtenOn": "2025-12-11T09:56:38Z",
       "side": 1,
       "message": "```suggestion\n        const Format\u0026 dsFormat \u003d view-\u003eGetTexture()-\u003eGetFormat();\n```",
+      "range": {
+        "startLine": 599,
+        "startChar": 0,
+        "endLine": 600,
+        "endChar": 83
+      },
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9eaa2203_9d887818",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T18:16:40Z",
+      "side": 1,
+      "message": "Derp. 😄 Didn\u0027t notice that as I was cobbling together this path from the traditional Vulkan one below. Done!",
+      "parentUuid": "a8c3c7ca_7baa3820",
       "range": {
         "startLine": 599,
         "startChar": 0,
@@ -270,6 +366,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "c9acbd94_9c729793",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T18:16:40Z",
+      "side": 1,
+      "message": "Added code to block the toggle when using Intel Gen 9 (the chipset failing on the bots) or earlier. Can switch it to just Intel if you\u0027d prefer to be more cautious about it.",
+      "parentUuid": "e8fa1898_ae9ec8b6",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "ea27252f_7020dca3",
         "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
         "patchSetId": 13
@@ -310,6 +424,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6e2a1864_ca78f40a",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T18:16:40Z",
+      "side": 1,
+      "message": "Unfortunately, no. It causes some of the Android bots to complain that you\u0027re passing nullptr when a VkRenderPass is expected. Testing your previous suggestion of `{ VK_NULL_HANDLE }` now.",
+      "parentUuid": "09863ce8_7c88488e",
+      "range": {
+        "startLine": 570,
+        "startChar": 0,
+        "endLine": 571,
+        "endChar": 47
+      },
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4b8e95b8_98bffd16",
         "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
         "patchSetId": 13
@@ -321,6 +459,24 @@
       "writtenOn": "2025-12-11T09:56:38Z",
       "side": 1,
       "message": "```suggestion\n        // Initialize all potential color attachment formats to undefined, which allows the\n```",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e66fa728_1c56690b",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T18:16:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b8e95b8_98bffd16",
       "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -348,6 +504,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37984de2_f5a0f3ad",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T18:16:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e996140d_9027feb7",
+      "range": {
+        "startLine": 583,
+        "startChar": 0,
+        "endLine": 585,
+        "endChar": 9
+      },
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0225a710_f4c6fbe1",
@@ -365,6 +545,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be5859bf_48aa0fa4",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T18:16:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0225a710_f4c6fbe1",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb4d754c_ea9f0008",
@@ -378,6 +576,24 @@
       "writtenOn": "2025-12-11T09:56:38Z",
       "side": 1,
       "message": "Comment got truncated? ^^",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91c1ff80_8f6d262e",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T18:16:40Z",
+      "side": 1,
+      "message": "Good catch, thanks! Fixed.",
+      "parentUuid": "cb4d754c_ea9f0008",
       "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -413,6 +629,24 @@
       "side": 1,
       "message": "Sounds good! I recently ran into the same issue where our use of 1.4 when creating the instance broke my [CL to use direct driver loading](https://dawn-review.googlesource.com/c/dawn/+/155961) to test with VVL on macOS + Swiftshader (Swiftshader only supports 1.3) (so I downgraded to 1.3 there, but a proper fix would be good).",
       "parentUuid": "75420440_61174c1a",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69a3111c_723ac50f",
+        "filename": "src/dawn/native/vulkan/VulkanExtensions.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T18:16:40Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9768f751_259898b2",
       "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
