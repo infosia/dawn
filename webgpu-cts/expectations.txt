@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-12-03 07:31:15AM
+# Last rolled: 2025-12-11 06:30:21PM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -148,7 +148,6 @@ crbug.com/42251024 [ android-t ] webgpu:shader,execution,expression,call,builtin
 # Mac AMD does not correctly respect lodMinClamp/lodMaxClamp
 crbug.com/409266267 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords,lodClamp:* [ Skip ]
 
-
 ################################################################################
 # Temporary Skip Expectations
 #
@@ -171,7 +170,7 @@ crbug.com/42240909 [ android ] webgpu:web_platform,canvas,configure:usage:* [ Sk
 crbug.com/42240909 [ android ] webgpu:web_platform,canvas,configure:viewFormats:* [ Skip ]
 
 # sample_mask tests causing instability
-crbug.com/42251115 [ qualcomm android ] webgpu:api,operation,render_pipeline,sample_mask:* [ Skip ]
+crbug.com/42251115 [ android qualcomm ] webgpu:api,operation,render_pipeline,sample_mask:* [ Skip ]
 
 # D3D12 create command queue failed with DXGI_ERROR_DEVICE_REMOVED. Skipped because these tests likely cause downstream flakes.
 crbug.com/41491936 [ nvidia-0x2184 win10 ] webgpu:api,validation,capability_checks,* [ Skip ]
@@ -382,7 +381,7 @@ crbug.com/42240657 [ angle-d3d11 intel-0x4680 no-asan release-x64 renderer-skia-
 crbug.com/42240657 [ intel-gen-9 release renderer-skia-gl ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,sample_mask:writeMask=0;* [ Failure ]
 
 # Occlusion query with alpha to coverage failing on Android Qualcomm (Pixel 4)
-crbug.com/42240847 [ qualcomm android ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:* [ Failure ]
+crbug.com/42240847 [ android qualcomm ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:* [ Failure ]
 
 # Failures due to Windows/NVIDIA driver upgrade
 crbug.com/42241352 [ nvidia-0x2184 nvidia_ge_31.0.15.4601 win10 ] webgpu:api,operation,command_buffer,image_copy:offsets_and_sizes:initMethod="WriteTexture";checkMethod="PartialCopyT2B";* [ Failure ]
@@ -442,7 +441,6 @@ crbug.com/42240846 [ android-14 ] webgpu:api,operation,vertex_state,index_format
 crbug.com/42240846 [ android-t ] webgpu:api,operation,vertex_state,index_format:primitive_restart:indexFormat="uint32";primitiveTopology="line-list" [ Failure ]
 crbug.com/42240846 [ android-t ] webgpu:api,operation,vertex_state,index_format:primitive_restart:indexFormat="uint32";primitiveTopology="point-list" [ Failure ]
 crbug.com/42240846 [ android-t ] webgpu:api,operation,vertex_state,index_format:primitive_restart:indexFormat="uint32";primitiveTopology="triangle-list" [ Failure ]
-
 
 # Shader corr failing very flakily on Android ARM (Pixel 6) (too flaky for RetryOnFailure)
 crbug.com/41479550 [ android-t ] webgpu:shader,execution,memory_model,coherence:corr:memType="atomic_storage";testType="inter_workgroup" [ Failure ]
@@ -1029,7 +1027,6 @@ crbug.com/432291885 [ dawn-no-backend-validation intel sequoia ] webgpu:shader,e
 crbug.com/432291885 [ dawn-no-backend-validation intel sequoia ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:format="*";viewDimension="2d-array";stage="fragment";* [ Failure ]
 crbug.com/432291885 [ dawn-no-backend-validation intel sequoia ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:format="*";viewDimension="3d";stage="fragment";* [ Failure ]
 
-
 # rgb10a2unorm precision issue on Intel 770
 crbug.com/445458866 [ intel-0x4680 linux ] webgpu:api,operation,storage_texture,read_only:basic:format="rgb10a2unorm";* [ Failure ]
 
@@ -1091,35 +1088,35 @@ crbug.com/448397616 [ amd-0x67ef mac ] webgpu:shader,execution,expression,call,b
 crbug.com/449980070 webgpu:api,validation,encoding,encoder_open_state:* [ Failure ]
 
 # Windows code-coverage bots - "The source image could not be decoded"
-crbug.com/40249801 [ win clang-coverage ] webgpu:web_platform,copyToTexture,image_file:from_orientation_metadata_file:imageName="four-colors-rotate-*-cw.jpg";objectTypeFromFile="ImageBitmap-from-Blob";* [ Failure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:web_platform,copyToTexture,image_file:from_orientation_metadata_file:imageName="four-colors.jpg";objectTypeFromFile="ImageBitmap-from-Blob";* [ Failure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:web_platform,copyToTexture,image_file:from_orientation_metadata_file:imageName="four-colors-rotate-*-cw.jpg";objectTypeFromFile="ImageBitmap-from-Blob";* [ Failure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:web_platform,copyToTexture,image_file:from_orientation_metadata_file:imageName="four-colors.jpg";objectTypeFromFile="ImageBitmap-from-Blob";* [ Failure ]
 
 # Windows code-coverage bots - unknown timeouts and flaky timeouts, [ Slow ] doesn't work
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f16_matrix_addition:matrix_compound:inputSource="const";cols=3;rows=4 [ RetryOnFailure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f16_matrix_addition:matrix_compound:inputSource="const";cols=4;rows=3 [ RetryOnFailure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f16_matrix_addition:matrix_compound:inputSource="const";cols=4;rows=4 [ Failure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f16_matrix_matrix_multiplication:matrix_matrix_compound:inputSource="const";common_dim=4;x_rows=2 [ RetryOnFailure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f16_matrix_matrix_multiplication:matrix_matrix_compound:inputSource="const";common_dim=4;x_rows=3 [ RetryOnFailure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f16_matrix_matrix_multiplication:matrix_matrix_compound:inputSource="const";common_dim=4;x_rows=4 [ Failure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f16_matrix_subtraction:matrix_compound:inputSource="const";cols=3;rows=4 [ RetryOnFailure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f16_matrix_subtraction:matrix_compound:inputSource="const";cols=4;rows=3 [ RetryOnFailure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f16_matrix_subtraction:matrix_compound:inputSource="const";cols=4;rows=4 [ Failure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f32_matrix_addition:matrix_compound:inputSource="const";cols=3;rows=4 [ RetryOnFailure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f32_matrix_addition:matrix_compound:inputSource="const";cols=4;rows=3 [ RetryOnFailure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f32_matrix_addition:matrix_compound:inputSource="const";cols=4;rows=4 [ Failure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f32_matrix_matrix_multiplication:matrix_matrix:inputSource="const";common_dim=3;x_rows=4;y_cols=4 [ RetryOnFailure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f32_matrix_matrix_multiplication:matrix_matrix_compound:inputSource="const";common_dim=4;x_rows=2 [ RetryOnFailure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f32_matrix_matrix_multiplication:matrix_matrix_compound:inputSource="const";common_dim=4;x_rows=3 [ RetryOnFailure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f32_matrix_matrix_multiplication:matrix_matrix_compound:inputSource="const";common_dim=4;x_rows=4 [ Failure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f32_matrix_subtraction:matrix_compound:inputSource="const";cols=3;rows=4 [ RetryOnFailure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f32_matrix_subtraction:matrix_compound:inputSource="const";cols=4;rows=3 [ RetryOnFailure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,binary,f32_matrix_subtraction:matrix_compound:inputSource="const";cols=4;rows=4 [ Failure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,call,builtin,mix:abstract_float_matching:inputSource="const";vectorize=4 [ RetryOnFailure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,call,builtin,mix:f16_matching:inputSource="storage_rw";vectorize=4 [ RetryOnFailure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,call,builtin,mix:f32_matching:inputSource="const";vectorize=2 [ RetryOnFailure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,expression,call,builtin,mix:f32_nonmatching_vec2:inputSource="const" [ RetryOnFailure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="function";workgroupSize=[1,1,1];batch__=9 [ Failure ]
-crbug.com/40249801 [ win clang-coverage ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="private";workgroupSize=[1,1,1];batch__=9 [ Failure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f16_matrix_addition:matrix_compound:inputSource="const";cols=3;rows=4 [ RetryOnFailure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f16_matrix_addition:matrix_compound:inputSource="const";cols=4;rows=3 [ RetryOnFailure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f16_matrix_addition:matrix_compound:inputSource="const";cols=4;rows=4 [ Failure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f16_matrix_matrix_multiplication:matrix_matrix_compound:inputSource="const";common_dim=4;x_rows=2 [ RetryOnFailure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f16_matrix_matrix_multiplication:matrix_matrix_compound:inputSource="const";common_dim=4;x_rows=3 [ RetryOnFailure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f16_matrix_matrix_multiplication:matrix_matrix_compound:inputSource="const";common_dim=4;x_rows=4 [ Failure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f16_matrix_subtraction:matrix_compound:inputSource="const";cols=3;rows=4 [ RetryOnFailure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f16_matrix_subtraction:matrix_compound:inputSource="const";cols=4;rows=3 [ RetryOnFailure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f16_matrix_subtraction:matrix_compound:inputSource="const";cols=4;rows=4 [ Failure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f32_matrix_addition:matrix_compound:inputSource="const";cols=3;rows=4 [ RetryOnFailure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f32_matrix_addition:matrix_compound:inputSource="const";cols=4;rows=3 [ RetryOnFailure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f32_matrix_addition:matrix_compound:inputSource="const";cols=4;rows=4 [ Failure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f32_matrix_matrix_multiplication:matrix_matrix:inputSource="const";common_dim=3;x_rows=4;y_cols=4 [ RetryOnFailure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f32_matrix_matrix_multiplication:matrix_matrix_compound:inputSource="const";common_dim=4;x_rows=2 [ RetryOnFailure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f32_matrix_matrix_multiplication:matrix_matrix_compound:inputSource="const";common_dim=4;x_rows=3 [ RetryOnFailure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f32_matrix_matrix_multiplication:matrix_matrix_compound:inputSource="const";common_dim=4;x_rows=4 [ Failure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f32_matrix_subtraction:matrix_compound:inputSource="const";cols=3;rows=4 [ RetryOnFailure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f32_matrix_subtraction:matrix_compound:inputSource="const";cols=4;rows=3 [ RetryOnFailure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,binary,f32_matrix_subtraction:matrix_compound:inputSource="const";cols=4;rows=4 [ Failure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,call,builtin,mix:abstract_float_matching:inputSource="const";vectorize=4 [ RetryOnFailure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,call,builtin,mix:f16_matching:inputSource="storage_rw";vectorize=4 [ RetryOnFailure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,call,builtin,mix:f32_matching:inputSource="const";vectorize=2 [ RetryOnFailure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,expression,call,builtin,mix:f32_nonmatching_vec2:inputSource="const" [ RetryOnFailure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="function";workgroupSize=[1,1,1];batch__=9 [ Failure ]
+crbug.com/40249801 [ clang-coverage win ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="private";workgroupSize=[1,1,1];batch__=9 [ Failure ]
 
 ################################################################################
 # Autogenerated Failure expectations. Please triage.
