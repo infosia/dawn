@@ -1188,9 +1188,9 @@ TEST_F(PixelLocalStorageAndRenderToSingleSampledTest, CombinationIsNotAllowed) {
     RecordRenderPass(&desc.rpDesc);
 
     // Error case: MSAA render to single sampled is added to the color attachment.
-    wgpu::DawnRenderPassColorAttachmentRenderToSingleSampled msaaRenderToSingleSampledDesc;
+    wgpu::DawnRenderPassDescriptorRenderToSingleSampled msaaRenderToSingleSampledDesc;
     msaaRenderToSingleSampledDesc.implicitSampleCount = 4;
-    desc.colorAttachment.nextInChain = &msaaRenderToSingleSampledDesc;
+    desc.rpDesc.nextInChain = &msaaRenderToSingleSampledDesc;
     ASSERT_DEVICE_ERROR(RecordRenderPass(&desc.rpDesc));
 }
 

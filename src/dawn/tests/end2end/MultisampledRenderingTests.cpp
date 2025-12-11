@@ -1444,7 +1444,7 @@ TEST_P(MultisampledRenderToSingleSampledTest, DrawThenLoad) {
 
     constexpr wgpu::Color kGreen = {0.0f, 0.8f, 0.0f, 0.8f};
 
-    wgpu::DawnRenderPassColorAttachmentRenderToSingleSampled msaaRenderToSingleSampledDesc;
+    wgpu::DawnRenderPassDescriptorRenderToSingleSampled msaaRenderToSingleSampledDesc;
     msaaRenderToSingleSampledDesc.implicitSampleCount = kSampleCount;
 
     // In first render pass we draw a green triangle.
@@ -1452,7 +1452,7 @@ TEST_P(MultisampledRenderToSingleSampledTest, DrawThenLoad) {
         utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
             {singleSampledTextureView}, {nullptr}, wgpu::LoadOp::Clear, wgpu::LoadOp::Clear,
             /*testDepth=*/false);
-        renderPass.cColorAttachments[0].nextInChain = &msaaRenderToSingleSampledDesc;
+        renderPass.nextInChain = &msaaRenderToSingleSampledDesc;
 
         EncodeRenderPassForTest(commandEncoder, renderPass, pipeline, kGreen);
     }
@@ -1462,7 +1462,7 @@ TEST_P(MultisampledRenderToSingleSampledTest, DrawThenLoad) {
         utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
             {singleSampledTextureView}, {nullptr}, wgpu::LoadOp::Load, wgpu::LoadOp::Load,
             /*testDepth=*/false);
-        renderPass.cColorAttachments[0].nextInChain = &msaaRenderToSingleSampledDesc;
+        renderPass.nextInChain = &msaaRenderToSingleSampledDesc;
 
         wgpu::RenderPassEncoder renderPassEncoder = commandEncoder.BeginRenderPass(&renderPass);
         renderPassEncoder.End();
@@ -1492,7 +1492,7 @@ TEST_P(MultisampledRenderToSingleSampledTest, ClearThenLoadThenDraw) {
     constexpr wgpu::Color kRed = {1.0f, 0.0f, 0.0f, 1.0f};
     constexpr wgpu::Color kGreen = {0.0f, 0.8f, 0.0f, 0.8f};
 
-    wgpu::DawnRenderPassColorAttachmentRenderToSingleSampled msaaRenderToSingleSampledDesc;
+    wgpu::DawnRenderPassDescriptorRenderToSingleSampled msaaRenderToSingleSampledDesc;
     msaaRenderToSingleSampledDesc.implicitSampleCount = kSampleCount;
 
     // In first render pass we clear to red without using implicit sample count.
@@ -1512,7 +1512,7 @@ TEST_P(MultisampledRenderToSingleSampledTest, ClearThenLoadThenDraw) {
         utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
             {singleSampledTextureView}, {nullptr}, wgpu::LoadOp::Load, wgpu::LoadOp::Load,
             /*testDepth=*/false);
-        renderPass.cColorAttachments[0].nextInChain = &msaaRenderToSingleSampledDesc;
+        renderPass.nextInChain = &msaaRenderToSingleSampledDesc;
 
         EncodeRenderPassForTest(commandEncoder, renderPass, pipeline, kGreen);
     }
@@ -1543,7 +1543,7 @@ TEST_P(MultisampledRenderToSingleSampledTest, DrawWithDepthTest) {
         /*testDepth=*/true, /*sampleMask=*/0xFFFFFFFF, /*alphaToCoverageEnabled=*/false,
         /*flipTriangle=*/false, /*enableExpandResolveLoadOp=*/false);
 
-    wgpu::DawnRenderPassColorAttachmentRenderToSingleSampled msaaRenderToSingleSampledDesc;
+    wgpu::DawnRenderPassDescriptorRenderToSingleSampled msaaRenderToSingleSampledDesc;
     msaaRenderToSingleSampledDesc.implicitSampleCount = kSampleCount;
 
     // In first render pass we draw a green triangle with depth value == 0.2f.
@@ -1551,7 +1551,7 @@ TEST_P(MultisampledRenderToSingleSampledTest, DrawWithDepthTest) {
         utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
             {singleSampledTextureView}, {nullptr}, wgpu::LoadOp::Clear, wgpu::LoadOp::Clear,
             /*testDepth=*/true);
-        renderPass.cColorAttachments[0].nextInChain = &msaaRenderToSingleSampledDesc;
+        renderPass.nextInChain = &msaaRenderToSingleSampledDesc;
 
         std::array<float, 8> kUniformData = {kGreen.r, kGreen.g, kGreen.b, kGreen.a,  // Color
                                              0.2f};                                   // depth
@@ -1566,7 +1566,7 @@ TEST_P(MultisampledRenderToSingleSampledTest, DrawWithDepthTest) {
         utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
             {singleSampledTextureView}, {nullptr}, wgpu::LoadOp::Load, wgpu::LoadOp::Load,
             /*testDepth=*/true);
-        renderPass.cColorAttachments[0].nextInChain = &msaaRenderToSingleSampledDesc;
+        renderPass.nextInChain = &msaaRenderToSingleSampledDesc;
 
         std::array<float, 8> kUniformData = {kRed.r, kRed.g, kRed.b, kRed.a,  // color
                                              0.5f};                           // depth

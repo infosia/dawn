@@ -118,17 +118,7 @@ AttachmentState::AttachmentState(const UnpackedPtr<RenderPassDescriptor>& descri
         mColorAttachmentsSet.set(i);
         mColorFormats[i] = attachment->GetFormat().format;
 
-        UnpackedPtr<RenderPassColorAttachment> unpackedColorAttachment = Unpack(&colorAttachment);
-        auto* msaaRenderToSingleSampledDesc =
-            unpackedColorAttachment.Get<DawnRenderPassColorAttachmentRenderToSingleSampled>();
-        uint32_t attachmentSampleCount;
-        if (msaaRenderToSingleSampledDesc != nullptr &&
-            msaaRenderToSingleSampledDesc->implicitSampleCount > 1) {
-            attachmentSampleCount = msaaRenderToSingleSampledDesc->implicitSampleCount;
-        } else {
-            attachmentSampleCount = attachment->GetTexture()->GetSampleCount();
-        }
-
+        uint32_t attachmentSampleCount = attachment->GetTexture()->GetSampleCount();
         if (mSampleCount == 0) {
             mSampleCount = attachmentSampleCount;
         } else {
@@ -139,6 +129,16 @@ AttachmentState::AttachmentState(const UnpackedPtr<RenderPassDescriptor>& descri
             mExpandResolveInfo.attachmentsToExpandResolve.set(i);
         }
         mExpandResolveInfo.resolveTargetsMask.set(i, colorAttachment.resolveTarget != nullptr);
+    }
+
+    // Override the sample count with the implicitSampleCount if provided. The sample count of all
+    // color attachments must be 1 for this to be valid.
+    auto* msaaRenderToSingleSampledDesc =
+        descriptor.Get<DawnRenderPassDescriptorRenderToSingleSampled>();
+    if (msaaRenderToSingleSampledDesc != nullptr &&
+        msaaRenderToSingleSampledDesc->implicitSampleCount > 1) {
+        DAWN_ASSERT(mSampleCount == 1);
+        mSampleCount = msaaRenderToSingleSampledDesc->implicitSampleCount;
     }
 
     // Gather the depth-stencil information.
