@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb398922_6cc1e5af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-11T17:41:45Z",
+      "side": 1,
+      "message": "I think a lot of these new expectations are because of TRANSIENT_ATTACHMENT and will get fixed, but until then I think it\u0027s OK to land this",
+      "revId": "358c55e34741614bfdb64ec1887af0d58c4659da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
