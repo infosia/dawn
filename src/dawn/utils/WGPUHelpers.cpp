@@ -32,6 +32,7 @@
 #include <iomanip>
 #include <mutex>
 #include <queue>
+#include <span>
 #include <sstream>
 
 #include "absl/container/flat_hash_map.h"
@@ -56,14 +57,30 @@ wgpu::ShaderModule CreateShaderModule(const wgpu::Device& device, const std::str
 wgpu::Buffer CreateBufferFromData(const wgpu::Device& device,
                                   const void* data,
                                   uint64_t size,
-                                  wgpu::BufferUsage usage) {
+                                  wgpu::BufferUsage usage,
+                                  std::string_view label) {
     wgpu::BufferDescriptor descriptor;
+    descriptor.label = label;
     descriptor.size = size;
     descriptor.usage = usage | wgpu::BufferUsage::CopyDst;
     wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
 
     device.GetQueue().WriteBuffer(buffer, 0, data, size);
     return buffer;
+    // wgpu::BufferDescriptor descriptor;
+    // descriptor.label = label;
+    // descriptor.size = size;
+    // descriptor.usage = usage;
+    // descriptor.mappedAtCreation = true;
+    // wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
+    // const uint8_t* src = static_cast<const uint8_t*>(data);
+    // uint8_t* dst = static_cast<uint8_t*>(buffer.GetMappedRange(0, size));
+    // auto srcSpan = std::span(src, size);
+    // auto dstSpan = std::span(dst, size);
+    // std::copy(srcSpan.begin(), srcSpan.end(), dstSpan.begin());
+
+    // buffer.Unmap();
+    // return buffer;
 }
 
 ComboRenderPassDescriptor::ComboRenderPassDescriptor(
