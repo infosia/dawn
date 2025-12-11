@@ -16,6 +16,69 @@
       "message": "Thanks for all the feedback so far!",
       "revId": "3f2348fef92186f16a74523f71fdbd3297997bca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e702391_b2c924f8",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-12-11T19:27:32Z",
+      "side": 1,
+      "message": "Just FYI you set this unconditionally later on in the function.",
+      "revId": "3f2348fef92186f16a74523f71fdbd3297997bca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "803732d2_ba285388",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-12-11T19:27:32Z",
+      "side": 1,
+      "message": "Can this initialize up to GetHighestBitIndexPlusOne(attachmentMask) instead?",
+      "range": {
+        "startLine": 541,
+        "startChar": 18,
+        "endLine": 541,
+        "endChar": 50
+      },
+      "revId": "3f2348fef92186f16a74523f71fdbd3297997bca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b6f5244_01b0edc4",
+        "filename": "src/dawn/native/vulkan/UtilsVulkan.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-12-11T19:27:32Z",
+      "side": 1,
+      "message": "This will need to vary based on if MSRTSS or local read path is available I think? Like for MRSTSS this is actually VK_ATTACHMENT_LOAD_OP_LOAD which automatically copies pixel values. For local read it would be VK_ATTACHMENT_LOAD_OP_DONT_CARE since we\u0027ll have to copy content from resolve texture after loading?\n\nJust thinking a 1:1 mapping function between types might not be appropriate here.",
+      "range": {
+        "startLine": 165,
+        "startChar": 19,
+        "endLine": 165,
+        "endChar": 50
+      },
+      "revId": "3f2348fef92186f16a74523f71fdbd3297997bca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

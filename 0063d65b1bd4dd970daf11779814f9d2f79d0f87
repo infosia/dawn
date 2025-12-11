@@ -267,6 +267,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "74da1991_443e93c8",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-12-11T19:27:32Z",
+      "side": 1,
+      "message": "\u003e For the moment I\u0027m also happy to add the code path and have some tests exercise it but not enable to toggle by default until we have LoadResolveTexture support figured out.\n\nThat sgtm. I commented on https://crbug.com/463893793 but it sounds like trying to the approach where MSRTSS is used in behind the scenes with DawnLoadResolveTexture was preferred. MSAARenderToSingleSampled would then be removed.\n\n\u003e We could allow-list AMD/Nvidia/Intel and expand from there once we have MSRMS\n\nIsn\u0027t DawnLoadResolveTexture still not going to work without MSRTSS? Would we have to implement load from single-sampled to multi sampled step with VK_EXT_dynamic_rendering_local_read since subpasses aren\u0027t available?",
+      "parentUuid": "0f4cb682_66a527b7",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "967132bc_47cc4f33",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 13
