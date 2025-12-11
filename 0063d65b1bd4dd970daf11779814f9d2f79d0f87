@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68e6f893_5c58e47a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T02:15:14Z",
+      "side": 1,
+      "message": "Looks like I have one remaining validation layer issue to resolve but I think this is ready to get some feedback.\n\nCCing lehoangquyen@ in case you have any advice for what may be needed to get LoadResolveTexture working on this new code path.",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20bbad78_e12f744f",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T02:15:14Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me how to support LoadResolveTexture with this code path. I\u0027ll do some research on it, but if anyone has some pointers I\u0027ll gladly hear them!",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d275041_f0059b36",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T02:15:14Z",
+      "side": 1,
+      "message": "Based on the dry run failures I assume I\u0027m doing something wrong with the depth or stencil attachments above? I\u0027ll research more tomorrow.",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75420440_61174c1a",
+        "filename": "src/dawn/native/vulkan/VulkanExtensions.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-11T02:15:14Z",
+      "side": 1,
+      "message": "This was discussed with syoussefi@, who pointed out that the way we\u0027re handling extensions and Vulkan API versions isn\u0027t really practical. Would like to take a look at improving that in a follow up to this CL.",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
