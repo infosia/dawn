@@ -106,6 +106,11 @@ TEST_P(ResourceTableTests, PipelineLayoutWithResourceTableCreation) {
     MakePipelineLayoutWithTable({testBgl, testBgl, testBgl}, 4);
 }
 
+// Test that creating pipelines that use resource tables doesn't crash in backends.
+TEST_P(ResourceTableTests, PipelineLayoutWithResourceTableCreation) {
+
+}
+
 DAWN_INSTANTIATE_TEST(ResourceTableTests, D3D12Backend(), MetalBackend(), VulkanBackend());
 
 }  // anonymous namespace
