@@ -159,6 +159,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cac1c5c2_87464d00",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-11T10:31:20Z",
+      "side": 1,
+      "message": "If we disabled `LoadResolveTexture`, it potentially would reduce the performance of Graphite experiment running on Android currently. That\u0027s because Graphite would be forced to store the entire MSAA texture to memory after each render pass in order to retain the previous content. It might not even work because Graphite is using transient MSAA textures currently which would trigger the validation errors.\n\nCan we at least not turn on dynamic rendering on TBR GPUs for now? I think the desktop trybots can provide the test coverage for dynamic renderings.",
+      "parentUuid": "31db942c_7dedfb02",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "967132bc_47cc4f33",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 13
