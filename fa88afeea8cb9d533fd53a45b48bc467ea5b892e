@@ -39,6 +39,30 @@
       },
       "revId": "fa88afeea8cb9d533fd53a45b48bc467ea5b892e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24172177_670433d6",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-11T14:34:55Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "c0fb96df_1ba2322f",
+      "range": {
+        "startLine": 555,
+        "startChar": 0,
+        "endLine": 561,
+        "endChar": 9
+      },
+      "revId": "fa88afeea8cb9d533fd53a45b48bc467ea5b892e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
