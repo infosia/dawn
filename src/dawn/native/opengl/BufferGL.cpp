@@ -196,17 +196,35 @@ bool Buffer::IsCPUWritableAtCreation() const {
 }
 
 MaybeError Buffer::MapAtCreationImpl() {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, mBuffer));
-    mMappedData = DAWN_GL_TRY_ALWAYS_CHECK(
-        gl, MapBufferRange(GL_ARRAY_BUFFER, 0, GetSize(), GL_MAP_WRITE_BIT));
+    // Will be handled in FinalizeMapImpl().
     return {};
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    DAWN_TRY(EnsureDataInitialized());
 
-    // It is an error to map an empty range in OpenGL. We always have at least a 4-byte buffer
+    // The real map will be handled in FinalizeMapImpl() when buffer is free of any GPU use.
+    return {};
+}
+
+MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
+    if (newState == BufferState::MappedAtCreation && GetSize() == 0) {
+        // Return early if MappedAtCreation() is called with size = 0. Front-end skips calling
+        // MapAtCreationImpl() & UnmapImpl() if size=0. However, it still calls
+        // FinalizeMapImpl(). MaptAtCreation with zero-size is supposed to be no-op.
+        return {};
+    }
+
+    DAWN_ASSERT(newState == BufferState::Mapped || newState == BufferState::MappedAtCreation);
+
+    Device* device = ToBackend(GetDevice());
+    auto deviceGuard = device->GetGuard();
+    auto size = MapSize();
+    auto offset = MapOffset();
+    const auto mode = MapMode();
+
+    // It is an error to map an empty range in OpenGL. We always have at least a 4-byte
+    // buffer
     // so we extend the range to be 4 bytes.
     if (size == 0) {
         if (offset != 0) {
@@ -215,10 +233,8 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
         size = 4;
     }
 
-    DAWN_TRY(EnsureDataInitialized());
+    const OpenGLFunctions& gl = device->GetGL();
 
-    // This does GPU->CPU synchronization, we could require a high
-    // version of OpenGL that would let us map the buffer unsynchronized.
     DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, mBuffer));
     void* mappedData = nullptr;
     if (mode & wgpu::MapMode::Read) {
@@ -234,10 +250,7 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
     // The frontend asks that the pointer returned by GetMappedPointer is from the start of
     // the resource but OpenGL gives us the pointer at offset. Remove the offset.
     mMappedData = static_cast<uint8_t*>(mappedData) - offset;
-    return {};
-}
 
-MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
     return {};
 }
 
