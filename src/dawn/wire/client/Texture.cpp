@@ -56,7 +56,8 @@ Texture::Texture(const ObjectBaseParams& params, const WGPUTextureDescriptor* de
       mDimension(descriptor->dimension == WGPUTextureDimension_Undefined ? WGPUTextureDimension_2D
                                                                          : descriptor->dimension),
       mFormat(descriptor->format),
-      mUsage(static_cast<WGPUTextureUsage>(descriptor->usage)) {}
+      mUsage(static_cast<WGPUTextureUsage>(descriptor->usage)),
+      mTextureBindingViewDimension(WGPUTextureViewDimension_Undefined) {}  // TODO fix
 
 Texture::~Texture() = default;
 
@@ -94,6 +95,10 @@ WGPUTextureFormat Texture::APIGetFormat() const {
 
 WGPUTextureUsage Texture::APIGetUsage() const {
     return mUsage;
+}
+
+WGPUTextureViewDimension Texture::APIGetTextureBindingViewDimension() const {
+    return mTextureBindingViewDimension;
 }
 
 }  // namespace dawn::wire::client

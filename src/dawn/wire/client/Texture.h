@@ -54,6 +54,7 @@ class Texture final : public ObjectBase {
     WGPUTextureDimension APIGetDimension() const;
     WGPUTextureFormat APIGetFormat() const;
     WGPUTextureUsage APIGetUsage() const;
+    WGPUTextureViewDimension APIGetTextureBindingViewDimension() const;
 
   private:
     WGPUExtent3D mSize;
@@ -62,6 +63,7 @@ class Texture final : public ObjectBase {
     WGPUTextureDimension mDimension;
     WGPUTextureFormat mFormat;
     WGPUTextureUsage mUsage;
+    WGPUTextureViewDimension mTextureBindingViewDimension;
 };
 
 }  // namespace dawn::wire::client

@@ -1533,6 +1533,10 @@ wgpu::TextureUsage TextureBase::APIGetUsage() const {
     return mUsage;
 }
 
+wgpu::TextureViewDimension TextureBase::APIGetTextureBindingViewDimension() const {
+    return mCompatibilityTextureBindingViewDimension;
+}
+
 void TextureBase::APIPin(wgpu::TextureUsage usage) {
     // There is no status to return so we don't need to handle the case where an error has been
     // consumed.
