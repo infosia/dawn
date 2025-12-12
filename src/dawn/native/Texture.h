@@ -249,6 +249,8 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
     wgpu::TextureDimension APIGetDimension() const;
     wgpu::TextureFormat APIGetFormat() const;
     wgpu::TextureUsage APIGetUsage() const;
+    void APISetOwnershipForMemoryDump(
+        const DawnMemoryDumpOwnershipDescriptor* descriptor = nullptr);
 
   protected:
     TextureBase(DeviceBase* device, const UnpackedPtr<TextureDescriptor>& descriptor);
@@ -324,6 +326,8 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
 
     // TODO(crbug.com/dawn/845): Use a more optimized data structure to save space
     std::vector<bool> mIsSubresourceContentInitializedAtIndex;
+
+    std::optional<uint64_t> mOwnerGUIDForMemoryDump;
 };
 
 template <typename CreateFn>

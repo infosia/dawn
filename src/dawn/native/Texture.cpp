@@ -1471,6 +1471,9 @@ void TextureBase::DumpMemoryStatistics(dawn::native::MemoryDump* dump, const cha
     dump->AddString(name.c_str(), "sample_count", absl::StrFormat("%u", GetSampleCount()));
     dump->AddString(name.c_str(), "usage", absl::StrFormat("%s", GetUsage()));
     dump->AddString(name.c_str(), "internal_usage", absl::StrFormat("%s", GetInternalUsage()));
+    if (mOwnerGUIDForMemoryDump.has_value()) {
+        dump->AddOwnerGUID(name.c_str(), mOwnerGUIDForMemoryDump.value());
+    }
 }
 
 uint64_t TextureBase::ComputeEstimatedByteSize() const {
@@ -1690,6 +1693,15 @@ MaybeError TextureBase::ValidateUnpin() const {
                     "Texture unpinning used without %s enabled.",
                     wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable);
     return {};
+}
+
+void TextureBase::APISetOwnershipForMemoryDump(
+    const DawnMemoryDumpOwnershipDescriptor* descriptor) {
+    if (descriptor) {
+        mOwnerGUIDForMemoryDump = descriptor->ownerGuid;
+    } else {
+        mOwnerGUIDForMemoryDump.reset();
+    }
 }
 
 // TextureViewQuery
