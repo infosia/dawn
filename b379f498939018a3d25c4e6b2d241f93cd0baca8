@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6b4ffff_02f6369e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-12T01:40:31Z",
+      "side": 1,
+      "message": "Also I wasn\u0027t sure where to put some tests. I feel like I should probably test that no matter what you pass in in core, it\u0027s reflected as undefined. And then in compat, it\u0027s reflect as specified.",
+      "revId": "b379f498939018a3d25c4e6b2d241f93cd0baca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
