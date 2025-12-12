@@ -542,6 +542,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7355e29_469a6c68",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-12T12:58:29Z",
+      "side": 1,
+      "message": "Ah https://dawn-review.googlesource.com/c/dawn/+/15580 changed to keep vulkan use real vulkan types and makes a lot of things confusing. I\u0027m wondering if we should remove all the machinery in vulkan_platform.h and instead use Vulkan types directly. We would lose the ability to overload based on the Vulkan type but that\u0027s at worst mildly annoying compared to how much confusion is caused by vulkan_platform.h",
+      "parentUuid": "2b143f87_a2a7893b",
+      "range": {
+        "startLine": 570,
+        "startChar": 0,
+        "endLine": 571,
+        "endChar": 47
+      },
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4b8e95b8_98bffd16",

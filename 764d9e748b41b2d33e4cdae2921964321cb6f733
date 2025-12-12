@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "297b6193_a0a4ab43",
+        "filename": "src/dawn/tests/end2end/ColorStateTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1287,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-12T12:58:29Z",
+      "side": 1,
+      "message": "When adding configurations like this we want to also add a corresponding version that forcedisables the toggle to keep testing the `VkRenderPass` path. It looks like:\n\n```\n                      VulkanBackend({}, {\"vulkan_use_dynamic_rendering\"}),\n                      VulkanBackend({\"vulkan_use_dynamic_rendering\"}, {}),\n```\n\nditto in other tests.",
+      "revId": "764d9e748b41b2d33e4cdae2921964321cb6f733",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c680afd0_72c93944",
+        "filename": "src/dawn/tests/end2end/RenderAttachmentTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-12T12:58:29Z",
+      "side": 1,
+      "message": "Could we have a minimal test added here (potentially in a follow-up) for `depthSlice`? There is surprisingly only one end2end test that uses it and it\u0027s in Texture3DTests which we don\u0027t want to run under both toggles. As far as I can tell, it\u0027s the only feature not testing with `vulkan_use_dynamic_rendering` right now.",
+      "revId": "764d9e748b41b2d33e4cdae2921964321cb6f733",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c90de24_c2fb272e",
+        "filename": "src/dawn/tests/end2end/RenderPassTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-12T12:58:29Z",
+      "side": 1,
+      "message": "This is the one we should pareametrize, and remove the fixtures at [1] and [2]",
+      "revId": "764d9e748b41b2d33e4cdae2921964321cb6f733",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca35de8d_c797bcd5",
+        "filename": "src/dawn/tests/end2end/RenderPassTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-12T12:58:29Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "764d9e748b41b2d33e4cdae2921964321cb6f733",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "251e017b_f5fe027c",
+        "filename": "src/dawn/tests/end2end/RenderPassTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-12T12:58:29Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "764d9e748b41b2d33e4cdae2921964321cb6f733",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
