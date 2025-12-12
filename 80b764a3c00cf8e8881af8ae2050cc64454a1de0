@@ -16,6 +16,23 @@
       "message": "Thank you for the reviews and CQ!",
       "revId": "80b764a3c00cf8e8881af8ae2050cc64454a1de0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee25c9d0_b2d8bbfb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-12-12T13:14:02Z",
+      "side": 1,
+      "message": "Brian, FYI - some new failures might start showing on Win Qualcomm due to this.",
+      "revId": "80b764a3c00cf8e8881af8ae2050cc64454a1de0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
