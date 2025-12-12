@@ -35,9 +35,25 @@
 namespace dawn::wire::client {
 
 // static
+WGPUTexture Texture::Create(Device* device, const WGPUTextureDescriptor* descriptor) {
+    Client* wireClient = device->GetClient();
+
+    DeviceCreateTextureCmd cmd;
+    cmd.self = ToAPI(device);
+    cmd.descriptor = descriptor;
+
+    Ref<Texture> texture = wireClient->Make<Texture>(device, descriptor);
+    cmd.result = texture->GetWireHandle(wireClient);
+
+    wireClient->SerializeCommand(cmd);
+
+    return ReturnToAPI(std::move(texture));
+}
+
+// static
 WGPUTexture Texture::CreateError(Device* device, const WGPUTextureDescriptor* descriptor) {
     Client* client = device->GetClient();
-    Ref<Texture> texture = client->Make<Texture>(descriptor);
+    Ref<Texture> texture = client->Make<Texture>(device, descriptor);
 
     DeviceCreateErrorTextureCmd cmd;
     cmd.self = ToAPI(device);
@@ -48,7 +64,9 @@ WGPUTexture Texture::CreateError(Device* device, const WGPUTextureDescriptor* de
     return ReturnToAPI(std::move(texture));
 }
 
-Texture::Texture(const ObjectBaseParams& params, const WGPUTextureDescriptor* descriptor)
+Texture::Texture(const ObjectBaseParams& params,
+                 const Device* device,
+                 const WGPUTextureDescriptor* descriptor)
     : ObjectBase(params),
       mSize(descriptor->size),
       mMipLevelCount(descriptor->mipLevelCount),
@@ -56,7 +74,42 @@ Texture::Texture(const ObjectBaseParams& params, const WGPUTextureDescriptor* de
       mDimension(descriptor->dimension == WGPUTextureDimension_Undefined ? WGPUTextureDimension_2D
                                                                          : descriptor->dimension),
       mFormat(descriptor->format),
-      mUsage(static_cast<WGPUTextureUsage>(descriptor->usage)) {}
+      mUsage(static_cast<WGPUTextureUsage>(descriptor->usage)),
+      mTextureBindingViewDimension(WGPUTextureViewDimension_Undefined) {
+    for (auto* chain = descriptor->nextInChain; chain; chain = chain->next) {
+        switch (chain->sType) {
+            case WGPUSType_TextureBindingViewDimensionDescriptor:
+                if (!device->APIHasFeature(WGPUFeatureName_CoreFeaturesAndLimits)) {
+                    // We only set this field in compatibility mode
+                    // and if it's undefined we need to set it to the default.
+                    WGPUTextureViewDimension viewDimension =
+                        reinterpret_cast<WGPUTextureBindingViewDimensionDescriptor*>(chain)
+                            ->textureBindingViewDimension;
+                    if (viewDimension == WGPUTextureViewDimension_Undefined) {
+                        switch (mDimension) {
+                            case WGPUTextureDimension_1D:
+                                viewDimension = WGPUTextureViewDimension_1D;
+                                break;
+                            case WGPUTextureDimension_2D:
+                                viewDimension = mSize.depthOrArrayLayers == 1
+                                                    ? WGPUTextureViewDimension_2D
+                                                    : WGPUTextureViewDimension_2DArray;
+                                break;
+                            case WGPUTextureDimension_3D:
+                                viewDimension = WGPUTextureViewDimension_3D;
+                                break;
+                            default:
+                                DAWN_UNREACHABLE();
+                        }
+                    }
+                    mTextureBindingViewDimension = viewDimension;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+}
 
 Texture::~Texture() = default;
 
@@ -94,6 +147,10 @@ WGPUTextureFormat Texture::APIGetFormat() const {
 
 WGPUTextureUsage Texture::APIGetUsage() const {
     return mUsage;
+}
+
+WGPUTextureViewDimension Texture::APIGetTextureBindingViewDimension() const {
+    return mTextureBindingViewDimension;
 }
 
 }  // namespace dawn::wire::client
