@@ -40,6 +40,30 @@
       ],
       "revId": "aff2947165a57da9c87697a101c31f572a073628",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f11128c1_d473567c",
+        "filename": "src/dawn/native/ResourceTable.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-12T15:01:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4f47d66_116ffe94",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 29
+      },
+      "revId": "aff2947165a57da9c87697a101c31f572a073628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
