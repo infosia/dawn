@@ -33,6 +33,24 @@
       "message": "Brian, FYI - some new failures might start showing on Win Qualcomm due to this.",
       "revId": "80b764a3c00cf8e8881af8ae2050cc64454a1de0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf914eab_f3a5078c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-12-12T15:01:30Z",
+      "side": 1,
+      "message": "yes, webgpu:api,operation,render_pipeline,sample_mask:* also fails on Windows, while webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:* seems to be Android specific.\n\nWhy couldn\u0027t I find any marked failures for Qualcomm Windows in this expectation file? I put below failures locally at my side. Except for webgpu:api,operation,render_pipeline,sample_mask:*, the rests look like browser or test case issues.\n\ncrbug.com/0000 [ qualcomm win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format\u003d\"depth16unorm\";func\u003d\"textureGatherCompare\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format\u003d\"depth16unorm\";func\u003d\"textureSampleCompare\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format\u003d\"depth16unorm\";func\u003d\"textureSampleCompareLevel\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format\u003d\"depth24plus\";func\u003d\"textureGatherCompare\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format\u003d\"depth24plus\";func\u003d\"textureSampleCompare\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format\u003d\"depth24plus\";func\u003d\"textureSampleCompareLevel\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format\u003d\"depth24plus-stencil8\";func\u003d\"textureGatherCompare\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format\u003d\"depth24plus-stencil8\";func\u003d\"textureSampleCompare\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format\u003d\"depth24plus-stencil8\";func\u003d\"textureSampleCompareLevel\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format\u003d\"depth32float\";func\u003d\"textureGatherCompare\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format\u003d\"depth32float\";func\u003d\"textureSampleCompare\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format\u003d\"depth32float\";func\u003d\"textureSampleCompareLevel\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format\u003d\"depth32float-stencil8\";func\u003d\"textureGatherCompare\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format\u003d\"depth32float-stencil8\";func\u003d\"textureSampleCompare\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format\u003d\"depth32float-stencil8\";func\u003d\"textureSampleCompareLevel\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,validation,encoding,encoder_state:pass_end_invalid_order:pass0Type\u003d\"compute\";pass1Type\u003d\"compute\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,validation,encoding,encoder_state:pass_end_invalid_order:pass0Type\u003d\"compute\";pass1Type\u003d\"render\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,validation,encoding,encoder_state:pass_end_invalid_order:pass0Type\u003d\"render\";pass1Type\u003d\"compute\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,validation,encoding,encoder_state:pass_end_invalid_order:pass0Type\u003d\"render\";pass1Type\u003d\"render\" [ Failure ]\ncrbug.com/0000 [ qualcomm win ] webgpu:api,operation,render_pipeline,sample_mask:* [ Skip ]",
+      "parentUuid": "ee25c9d0_b2d8bbfb",
+      "revId": "80b764a3c00cf8e8881af8ae2050cc64454a1de0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
