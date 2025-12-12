@@ -65,10 +65,10 @@ MaybeError Deserialize(ReadHead& s, T* v)
 template <typename T>
 MaybeError Deserialize(ReadHead& s, std::vector<T>* v) {
     size_t size = 0;
-    DAWN_REPLAY_TRY(Deserialize(s, &size));
+    DAWN_TRY(Deserialize(s, &size));
     v->resize(size);
     for (size_t i = 0; i < size; ++i) {
-        DAWN_REPLAY_TRY(Deserialize(s, &(*v)[i]));
+        DAWN_TRY(Deserialize(s, &(*v)[i]));
     }
     return {};
 }
@@ -90,7 +90,7 @@ MaybeError Deserialize(
 template <typename T, typename... Ts>
 auto Deserialize(ReadHead& s, T* v, Ts*... vs)
     -> std::enable_if_t<(sizeof...(Ts) > 0) || !std::is_enum_v<T>, MaybeError> {
-    DAWN_REPLAY_TRY(Deserialize(s, v));
+    DAWN_TRY(Deserialize(s, v));
     return Deserialize(s, vs...);
 }
 
