@@ -86,6 +86,24 @@
       "parentUuid": "882ccbcf_86d9635d",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c28313a_729d02f0",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-12T17:00:39Z",
+      "side": 1,
+      "message": "Right, I forgot about explicit Destroy() calls.\n\nI actually like the TryAddRef() flavour better, since we\u0027re already doing that for UnmapImpl().\n\nAnd I think we could wrap it in another flavour of EnqueueGL() to avoid replicating it everywhere. The idea would be to capture a ref if we can, or a raw pointer if we can\u0027t. Something like this:\n\n```\n    template \u003ctypename Fn, typename T\u003e\n    MaybeError EnqueueGL(T* self, Fn\u0026\u0026 work) {\n        if (self-\u003eTryAddRef()) {\n            return EnqueueGL([self \u003d Ref\u003cT\u003e(self), work](const OpenGLFunctions\u0026 gl) -\u003e MaybeError {\n                return work(self.Get(), gl);\n            });\n        } else {\n            return EnqueueGL([self, work](const OpenGLFunctions\u0026 gl) -\u003e MaybeError {\n                return work(self, gl);\n            });\n        }\n    }\n```\n\nWould that work?",
+      "parentUuid": "645194c0_7eef0bf6",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
