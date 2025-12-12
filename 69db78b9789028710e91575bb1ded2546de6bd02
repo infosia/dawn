@@ -16,6 +16,24 @@
       "message": "This code was actually copied from DawnPlatform.cpp [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d/PlatformFunctions.cpp;l\u003d41?q\u003dplatformfunc) and [partly from here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d/PlatformFunctions.cpp;l\u003d123?q\u003dplatformfunc). Is there a better way for us to share this code in both native and tests? Perhaps in dawn/common?",
       "revId": "69db78b9789028710e91575bb1ded2546de6bd02",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e74a7326_49651135",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-12T22:59:00Z",
+      "side": 1,
+      "message": "dawn/common probably makes sense if it\u0027s available to tests. It would be nice to avoid code duplication but up to you if you want to dig into trying to move some code to common/, I\u0027m not sure how hard it will be",
+      "parentUuid": "08da15ee_8c605b45",
+      "revId": "69db78b9789028710e91575bb1ded2546de6bd02",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
