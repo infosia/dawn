@@ -68,6 +68,24 @@
       "parentUuid": "769c5fef_48b65ec9",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "645194c0_7eef0bf6",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-12T06:41:01Z",
+      "side": 1,
+      "message": "Though, one alternative solution is using `TryAddRef` in `DestroyImpl`.\n```\nBuffer::DestroyImpl() {\n    if (!this-\u003eTryAddRef()) {\n        // TryAddRef() fails mean we are being destroyed by dtor.\n        // mHandle must already be created at this point after the\n        // creation lambda releases the ref.\n        device-\u003eEnqueueGL([handle\u003dmHandle] {\n            glDeleteBuffers(1, \u0026handle);\n        });\n    }\n\n    // If we can increment the ref, it means Destroy() is called explicitly\n    // by user. In this case, mHandle might not be created yet, capture self\n    // instead.\n    // Adopt ref\n    Ref\u003cBuffer\u003e self \u003d AcquireRef(this);\n    device-\u003eEnqueueGL([self] {\n            glDeleteBuffers(1, \u0026self-\u003emHandle);\n        });\n}\n```\n\nHowever, I think it requires more code in `DestroyImpl` not just Buffer class but any other classes in future CLs. And it\u0027s error-prone. The future CLs might accidentally delete zero handles without knowing it.\n\nFurthermore, a `FutureHandle` class here can add a safeguard to ensure we don\u0027t use the handle before it\u0027s created in the lambdas.",
+      "parentUuid": "882ccbcf_86d9635d",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
