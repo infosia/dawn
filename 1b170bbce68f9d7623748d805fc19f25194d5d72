@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92d9d219_92044129",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-12T01:39:03Z",
+      "side": 1,
+      "message": "What do you suggest I do for client side textureBindingViewDimension? \n\nI\u0027m not at all familiar with the wire code. My impression is no validation happens there so what should I do? Can I check we\u0027re in compat there and set a default but not in core? Does that happen at some other level? Looking at dawn/native there\u0027s also some flag HasFlexibleViews which seems to mean \"behave like core\".\n\nAlso, not familiar with webgpu.h.diff and why it\u0027s showing so many changes. What\u0027s the right thing to do for that?",
+      "revId": "1b170bbce68f9d7623748d805fc19f25194d5d72",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
