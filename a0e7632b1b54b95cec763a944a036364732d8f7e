@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "04e44461_15da086c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-12-12T14:38:24Z",
+      "side": 1,
+      "message": "lgtm",
+      "revId": "a0e7632b1b54b95cec763a944a036364732d8f7e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "23083eac_b6779d27",
         "filename": "src/dawn/native/Buffer.cpp",
         "patchSetId": 3
@@ -49,6 +66,24 @@
       "side": 1,
       "message": "This code is from the 1st version of Buffer implementation. I don\u0027t have context about why it\u0027s needed. Yes we can try to remove it in this CL.",
       "parentUuid": "6e11086d_60f64fd9",
+      "revId": "a0e7632b1b54b95cec763a944a036364732d8f7e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfc1088c_5c71bdec",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-12-12T14:38:24Z",
+      "side": 1,
+      "message": "This likely never runs since [1] clears mMappedData.",
+      "parentUuid": "048fcae6_07e161e5",
       "revId": "a0e7632b1b54b95cec763a944a036364732d8f7e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
