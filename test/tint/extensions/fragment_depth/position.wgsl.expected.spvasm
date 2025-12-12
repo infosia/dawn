@@ -1,0 +1,209 @@
+;
+; any
+;
+; SPIR-V
+; Version: 1.3
+; Generator: Google Tint Compiler; 1
+; Bound: 32
+; Schema: 0
+               OpCapability Shader
+         %31 = OpExtInstImport "GLSL.std.450"
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint Fragment %any "any" %any_position_Input %any_frag_depth_Output
+               OpExecutionMode %any OriginUpperLeft
+               OpExecutionMode %any DepthReplacing
+               OpMemberName %tint_immediate_data_struct 0 "tint_frag_depth_min"
+               OpMemberName %tint_immediate_data_struct 1 "tint_frag_depth_max"
+               OpName %tint_immediate_data_struct "tint_immediate_data_struct"
+               OpName %tint_immediate_data "tint_immediate_data"
+               OpName %any_position_Input "any_position_Input"
+               OpName %any_loc0_Input "any_loc0_Input"
+               OpName %any_frag_depth_Output "any_frag_depth_Output"
+               OpName %any_inner "any_inner"
+               OpName %position "position"
+               OpName %any "any"
+               OpMemberDecorate %tint_immediate_data_struct 0 Offset 0
+               OpMemberDecorate %tint_immediate_data_struct 1 Offset 4
+               OpDecorate %tint_immediate_data_struct Block
+               OpDecorate %any_position_Input BuiltIn FragCoord
+               OpDecorate %any_loc0_Input Location 0
+               OpDecorate %any_loc0_Input NoPerspective
+               OpDecorate %any_loc0_Input Centroid
+               OpDecorate %any_frag_depth_Output BuiltIn FragDepth
+      %float = OpTypeFloat 32
+%tint_immediate_data_struct = OpTypeStruct %float %float
+%_ptr_PushConstant_tint_immediate_data_struct = OpTypePointer PushConstant %tint_immediate_data_struct
+%tint_immediate_data = OpVariable %_ptr_PushConstant_tint_immediate_data_struct PushConstant
+    %v4float = OpTypeVector %float 4
+%_ptr_Input_v4float = OpTypePointer Input %v4float
+%any_position_Input = OpVariable %_ptr_Input_v4float Input
+%any_loc0_Input = OpVariable %_ptr_Input_v4float Input
+%_ptr_Output_float = OpTypePointer Output %float
+%any_frag_depth_Output = OpVariable %_ptr_Output_float Output
+         %13 = OpTypeFunction %float %v4float
+    %float_1 = OpConstant %float 1
+       %void = OpTypeVoid
+         %18 = OpTypeFunction %void
+%_ptr_PushConstant_float = OpTypePointer PushConstant %float
+       %uint = OpTypeInt 32 0
+     %uint_0 = OpConstant %uint 0
+     %uint_1 = OpConstant %uint 1
+  %any_inner = OpFunction %float None %13
+   %position = OpFunctionParameter %v4float
+         %14 = OpLabel
+               OpReturnValue %float_1
+               OpFunctionEnd
+        %any = OpFunction %void None %18
+         %19 = OpLabel
+         %20 = OpLoad %v4float %any_position_Input None
+         %21 = OpFunctionCall %float %any_inner %20
+         %22 = OpAccessChain %_ptr_PushConstant_float %tint_immediate_data %uint_0
+         %26 = OpLoad %float %22 None
+         %27 = OpAccessChain %_ptr_PushConstant_float %tint_immediate_data %uint_1
+         %29 = OpLoad %float %27 None
+         %30 = OpExtInst %float %31 NClamp %21 %26 %29
+               OpStore %any_frag_depth_Output %30 None
+               OpReturn
+               OpFunctionEnd
+;
+; less
+;
+; SPIR-V
+; Version: 1.3
+; Generator: Google Tint Compiler; 1
+; Bound: 35
+; Schema: 0
+               OpCapability Shader
+         %25 = OpExtInstImport "GLSL.std.450"
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint Fragment %less "less" %less_position_Input %less_loc0_Input %less_frag_depth_Output
+               OpExecutionMode %less OriginUpperLeft
+               OpExecutionMode %less DepthReplacing
+               OpExecutionMode %less DepthLess
+               OpMemberName %tint_immediate_data_struct 0 "tint_frag_depth_min"
+               OpMemberName %tint_immediate_data_struct 1 "tint_frag_depth_max"
+               OpName %tint_immediate_data_struct "tint_immediate_data_struct"
+               OpName %tint_immediate_data "tint_immediate_data"
+               OpName %less_position_Input "less_position_Input"
+               OpName %less_loc0_Input "less_loc0_Input"
+               OpName %less_frag_depth_Output "less_frag_depth_Output"
+               OpName %less_inner "less_inner"
+               OpName %position "position"
+               OpName %less "less"
+               OpMemberDecorate %tint_immediate_data_struct 0 Offset 0
+               OpMemberDecorate %tint_immediate_data_struct 1 Offset 4
+               OpDecorate %tint_immediate_data_struct Block
+               OpDecorate %less_position_Input BuiltIn FragCoord
+               OpDecorate %less_loc0_Input Location 0
+               OpDecorate %less_loc0_Input NoPerspective
+               OpDecorate %less_loc0_Input Centroid
+               OpDecorate %less_frag_depth_Output BuiltIn FragDepth
+      %float = OpTypeFloat 32
+%tint_immediate_data_struct = OpTypeStruct %float %float
+%_ptr_PushConstant_tint_immediate_data_struct = OpTypePointer PushConstant %tint_immediate_data_struct
+%tint_immediate_data = OpVariable %_ptr_PushConstant_tint_immediate_data_struct PushConstant
+    %v4float = OpTypeVector %float 4
+%_ptr_Input_v4float = OpTypePointer Input %v4float
+%less_position_Input = OpVariable %_ptr_Input_v4float Input
+%less_loc0_Input = OpVariable %_ptr_Input_v4float Input
+%_ptr_Output_float = OpTypePointer Output %float
+%less_frag_depth_Output = OpVariable %_ptr_Output_float Output
+         %13 = OpTypeFunction %float %v4float
+    %float_1 = OpConstant %float 1
+       %void = OpTypeVoid
+         %18 = OpTypeFunction %void
+%_ptr_PushConstant_float = OpTypePointer PushConstant %float
+       %uint = OpTypeInt 32 0
+     %uint_0 = OpConstant %uint 0
+     %uint_1 = OpConstant %uint 1
+ %less_inner = OpFunction %float None %13
+   %position = OpFunctionParameter %v4float
+         %14 = OpLabel
+               OpReturnValue %float_1
+               OpFunctionEnd
+       %less = OpFunction %void None %18
+         %19 = OpLabel
+         %20 = OpLoad %v4float %less_position_Input None
+         %21 = OpFunctionCall %float %less_inner %20
+         %22 = OpLoad %v4float %less_loc0_Input None
+         %23 = OpCompositeExtract %float %22 2
+         %24 = OpExtInst %float %25 NMax %21 %23
+         %26 = OpAccessChain %_ptr_PushConstant_float %tint_immediate_data %uint_0
+         %30 = OpLoad %float %26 None
+         %31 = OpAccessChain %_ptr_PushConstant_float %tint_immediate_data %uint_1
+         %33 = OpLoad %float %31 None
+         %34 = OpExtInst %float %25 NClamp %24 %30 %33
+               OpStore %less_frag_depth_Output %34 None
+               OpReturn
+               OpFunctionEnd
+;
+; greater
+;
+; SPIR-V
+; Version: 1.3
+; Generator: Google Tint Compiler; 1
+; Bound: 35
+; Schema: 0
+               OpCapability Shader
+         %25 = OpExtInstImport "GLSL.std.450"
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint Fragment %greater "greater" %greater_position_Input %greater_loc0_Input %greater_frag_depth_Output
+               OpExecutionMode %greater OriginUpperLeft
+               OpExecutionMode %greater DepthReplacing
+               OpExecutionMode %greater DepthGreater
+               OpMemberName %tint_immediate_data_struct 0 "tint_frag_depth_min"
+               OpMemberName %tint_immediate_data_struct 1 "tint_frag_depth_max"
+               OpName %tint_immediate_data_struct "tint_immediate_data_struct"
+               OpName %tint_immediate_data "tint_immediate_data"
+               OpName %greater_position_Input "greater_position_Input"
+               OpName %greater_loc0_Input "greater_loc0_Input"
+               OpName %greater_frag_depth_Output "greater_frag_depth_Output"
+               OpName %greater_inner "greater_inner"
+               OpName %position "position"
+               OpName %greater "greater"
+               OpMemberDecorate %tint_immediate_data_struct 0 Offset 0
+               OpMemberDecorate %tint_immediate_data_struct 1 Offset 4
+               OpDecorate %tint_immediate_data_struct Block
+               OpDecorate %greater_position_Input BuiltIn FragCoord
+               OpDecorate %greater_loc0_Input Location 0
+               OpDecorate %greater_loc0_Input NoPerspective
+               OpDecorate %greater_loc0_Input Centroid
+               OpDecorate %greater_frag_depth_Output BuiltIn FragDepth
+      %float = OpTypeFloat 32
+%tint_immediate_data_struct = OpTypeStruct %float %float
+%_ptr_PushConstant_tint_immediate_data_struct = OpTypePointer PushConstant %tint_immediate_data_struct
+%tint_immediate_data = OpVariable %_ptr_PushConstant_tint_immediate_data_struct PushConstant
+    %v4float = OpTypeVector %float 4
+%_ptr_Input_v4float = OpTypePointer Input %v4float
+%greater_position_Input = OpVariable %_ptr_Input_v4float Input
+%greater_loc0_Input = OpVariable %_ptr_Input_v4float Input
+%_ptr_Output_float = OpTypePointer Output %float
+%greater_frag_depth_Output = OpVariable %_ptr_Output_float Output
+         %13 = OpTypeFunction %float %v4float
+    %float_1 = OpConstant %float 1
+       %void = OpTypeVoid
+         %18 = OpTypeFunction %void
+%_ptr_PushConstant_float = OpTypePointer PushConstant %float
+       %uint = OpTypeInt 32 0
+     %uint_0 = OpConstant %uint 0
+     %uint_1 = OpConstant %uint 1
+%greater_inner = OpFunction %float None %13
+   %position = OpFunctionParameter %v4float
+         %14 = OpLabel
+               OpReturnValue %float_1
+               OpFunctionEnd
+    %greater = OpFunction %void None %18
+         %19 = OpLabel
+         %20 = OpLoad %v4float %greater_position_Input None
+         %21 = OpFunctionCall %float %greater_inner %20
+         %22 = OpLoad %v4float %greater_loc0_Input None
+         %23 = OpCompositeExtract %float %22 2
+         %24 = OpExtInst %float %25 NMin %21 %23
+         %26 = OpAccessChain %_ptr_PushConstant_float %tint_immediate_data %uint_0
+         %30 = OpLoad %float %26 None
+         %31 = OpAccessChain %_ptr_PushConstant_float %tint_immediate_data %uint_1
+         %33 = OpLoad %float %31 None
+         %34 = OpExtInst %float %25 NClamp %24 %30 %33
+               OpStore %greater_frag_depth_Output %34 None
+               OpReturn
+               OpFunctionEnd
