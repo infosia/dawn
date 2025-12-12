@@ -16,6 +16,98 @@
       "message": "Also I wasn\u0027t sure where to put some tests. I feel like I should probably test that no matter what you pass in in core, it\u0027s reflected as undefined. And then in compat, it\u0027s reflect as specified.",
       "revId": "b379f498939018a3d25c4e6b2d241f93cd0baca8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88f505c4_5a35e426",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-12T13:12:33Z",
+      "side": 1,
+      "message": "They would be in src/dawn/tests/unittests/validation/TextureValidationTests.cpp that\u0027s where the existing reflection tests are. Yeah we need to check that it\u0027s ignored in core and reflects undefined, and have tests that instantiate a compat device and check the defaulting behavior / that passing something passes. We also want to check that if you pass garbage, the same garbage is reflected (even if it makes the texture an error) like `CreationParameterReflectionForErrorTextures`.",
+      "parentUuid": "c6b4ffff_02f6369e",
+      "revId": "b379f498939018a3d25c4e6b2d241f93cd0baca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78e98fb0_6978fd18",
+        "filename": "src/dawn/wire/client/Texture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-12T13:12:33Z",
+      "side": 1,
+      "message": "In all [three of the code paths](https://source.chromium.org/search?q\u003df:dawn%2Fwire%20%22Make%3CTexture%3E%22%20-f:angle\u0026ss\u003dchromium%2Fchromium%2Fsrc) that create the texture we have a device:  (or the configuredDevice in the surface case) and we could pass it to this constructor so it can call [`HasFeature`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/wire/client/Device.h;drc\u003dac2f090d3838c6ebfd20a6ce6006e94ac0768f9e;l\u003d83).",
+      "revId": "b379f498939018a3d25c4e6b2d241f93cd0baca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80598d09_2b18ae0f",
+        "filename": "src/dawn/wire/client/Texture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-12T13:12:33Z",
+      "side": 1,
+      "message": "This is a non-standard feature so IMHO we can just check compat vs. core and not worry about the flexible texture view subtlety in the wire.",
+      "range": {
+        "startLine": 67,
+        "startChar": 61,
+        "endLine": 67,
+        "endChar": 86
+      },
+      "revId": "b379f498939018a3d25c4e6b2d241f93cd0baca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8cf95bf9_6458fd0b",
+        "filename": "src/dawn/wire/client/Texture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-12T13:12:33Z",
+      "side": 1,
+      "message": "I believe that we\u0027ll have to implement the defaulting from [this part of the spec](https://gpuweb.github.io/gpuweb/#:~:text\u003dIf%20t.%5B%5Bdevice%5D%5D.%5B%5Bfeatures%5D%5D%20does%20not%20contain%20%22core%2Dfeatures%2Dand%2Dlimits%22%3A) in the wire client as well.",
+      "revId": "b379f498939018a3d25c4e6b2d241f93cd0baca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59b599e4_0fdb1a46",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-12T13:12:33Z",
+      "side": 1,
+      "message": "We\u0027ll need a PR to webgpu-headers to add it as well.",
+      "revId": "b379f498939018a3d25c4e6b2d241f93cd0baca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
