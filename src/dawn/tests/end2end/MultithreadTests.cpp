@@ -268,6 +268,239 @@ TEST_P(MultithreadTests, Buffers_MapInParallel) {
     });
 }
 
+// Test that multiple buffers being created and mapped on multiple threads won't interfere with
+// each other, and callbacks are processed on the main thread.
+TEST_P(MultithreadTests, Buffers_MapInParallelAndProcessEventsOnMainThread) {
+    constexpr uint32_t kDataSize = 1000;
+    std::vector<uint32_t> myData;
+    for (uint32_t i = 0; i < kDataSize; ++i) {
+        myData.push_back(i);
+    }
+
+    constexpr uint32_t kSize = static_cast<uint32_t>(kDataSize * sizeof(uint32_t));
+    constexpr uint32_t kNumThreads = 10;
+
+    std::vector<wgpu::Buffer> buffers(kNumThreads);
+    std::atomic<uint32_t> buffersDoneCount(0);
+
+    utils::RunInParallel(
+        kNumThreads,
+        // Background thread
+        [this, &myData, &buffers, &buffersDoneCount](uint32_t index) {
+            wgpu::Buffer buffer =
+                CreateBuffer(kSize, wgpu::BufferUsage::MapWrite | wgpu::BufferUsage::CopySrc);
+            buffers[index] = buffer;
+
+            std::atomic<bool> isMapped(false);
+            buffer.MapAsync(wgpu::MapMode::Write, 0, kSize, wgpu::CallbackMode::AllowProcessEvents,
+                            [&isMapped](wgpu::MapAsyncStatus status, wgpu::StringView) {
+                                ASSERT_EQ(status, wgpu::MapAsyncStatus::Success);
+                                isMapped = true;
+                                isMapped.notify_one();
+                            });
+
+            isMapped.wait(false);
+
+            // Buffer is mapped, write into it and unmap .
+            memcpy(buffer.GetMappedRange(0, kSize), myData.data(), kSize);
+            buffer.Unmap();
+
+            buffersDoneCount++;
+        },
+        // Main thread: process MapAsync events
+        [this, &buffersDoneCount] {
+            while (buffersDoneCount < kNumThreads) {
+                WaitABit();
+            }
+        });
+
+    // Check the content of the buffer.
+    for (const auto& buffer : buffers) {
+        EXPECT_BUFFER_U32_RANGE_EQ(myData.data(), buffer, 0, kDataSize);
+    }
+}
+
+// Test that creating a buffer on one thread, mapping on another, and unmapping on a third works
+// correctly.
+TEST_P(MultithreadTests, Buffer_CreateMapUnmapDifferentThreads) {
+    constexpr uint32_t kDataSize = 100;
+    std::vector<uint32_t> myData;
+    for (uint32_t i = 0; i < kDataSize; ++i) {
+        myData.push_back(i);
+    }
+
+    constexpr uint32_t kSize = static_cast<uint32_t>(kDataSize * sizeof(uint32_t));
+
+    wgpu::Buffer buffer;
+
+    // Thread to create the buffer
+    std::thread creatorThread([&] {
+        buffer = CreateBuffer(kSize, wgpu::BufferUsage::MapWrite | wgpu::BufferUsage::CopySrc);
+    });
+
+    creatorThread.join();
+    ASSERT_NE(buffer.Get(), nullptr);
+
+    // Main thread: map.
+    auto mapFuture =
+        buffer.MapAsync(wgpu::MapMode::Write, 0, kSize, wgpu::CallbackMode::WaitAnyOnly,
+                        [](wgpu::MapAsyncStatus status, wgpu::StringView) {
+                            ASSERT_EQ(status, wgpu::MapAsyncStatus::Success);
+                        });
+    ASSERT_EQ(instance.WaitAny(mapFuture, UINT64_MAX), wgpu::WaitStatus::Success);
+
+    // Thread to write and unmap the buffer
+    std::thread unmapperThread([&] {
+        memcpy(buffer.GetMappedRange(0, kSize), myData.data(), kSize);
+        buffer.Unmap();
+    });
+
+    unmapperThread.join();
+
+    // Main thread: verify.
+    EXPECT_BUFFER_U32_RANGE_EQ(myData.data(), buffer, 0, kDataSize);
+}
+
+// Test that creating a buffer with mappedAtCreation on a background thread works.
+TEST_P(MultithreadTests, Buffer_MappedAtCreationOnAnotherThread) {
+    constexpr uint32_t kDataSize = 100;
+    std::vector<uint32_t> myData;
+    for (uint32_t i = 0; i < kDataSize; ++i) {
+        myData.push_back(i);
+    }
+    constexpr uint32_t kSize = static_cast<uint32_t>(kDataSize * sizeof(uint32_t));
+
+    wgpu::Buffer buffer;
+
+    std::thread creatorThread([&] {
+        wgpu::BufferDescriptor descriptor;
+        descriptor.size = kSize;
+        descriptor.usage = wgpu::BufferUsage::CopySrc;
+        descriptor.mappedAtCreation = true;
+
+        buffer = device.CreateBuffer(&descriptor);
+        ASSERT_NE(buffer.Get(), nullptr);
+        memcpy(buffer.GetMappedRange(), myData.data(), kSize);
+        buffer.Unmap();
+    });
+
+    creatorThread.join();
+
+    // Verify the data on the main thread.
+    EXPECT_BUFFER_U32_RANGE_EQ(myData.data(), buffer, 0, kDataSize);
+}
+
+// Test that asynchronous glUnmapBuffer in GL backend works correctly even when we re-map the
+// buffer.
+TEST_P(MultithreadTests, Buffer_RemapBeforeAsyncUnmapOnGL) {
+    constexpr uint32_t kDataSize = 20;
+    constexpr uint32_t kHalfDataSize = kDataSize / 2;
+    constexpr uint32_t kSize = static_cast<uint32_t>(kDataSize * sizeof(uint32_t));
+    constexpr uint32_t kHalfSize = static_cast<uint32_t>(kHalfDataSize * sizeof(uint32_t));
+
+    std::vector<uint32_t> firstHalfData(kHalfDataSize, 1);
+    std::vector<uint32_t> secondHalfData(kHalfDataSize, 2);
+
+    std::vector<uint32_t> expectedData;
+    expectedData.insert(expectedData.end(), firstHalfData.begin(), firstHalfData.end());
+    expectedData.insert(expectedData.end(), secondHalfData.begin(), secondHalfData.end());
+
+    wgpu::Buffer buffer =
+        CreateBuffer(kSize, wgpu::BufferUsage::MapWrite | wgpu::BufferUsage::CopySrc);
+
+    // 1. Map, then in a thread write the first half and unmap.
+    auto mapFuture1 =
+        buffer.MapAsync(wgpu::MapMode::Write, 0, kSize, wgpu::CallbackMode::WaitAnyOnly,
+                        [](wgpu::MapAsyncStatus status, wgpu::StringView) {
+                            ASSERT_EQ(status, wgpu::MapAsyncStatus::Success);
+                        });
+    ASSERT_EQ(instance.WaitAny(mapFuture1, UINT64_MAX), wgpu::WaitStatus::Success);
+
+    std::thread unmapperThread([&] {
+        memcpy(buffer.GetMappedRange(), firstHalfData.data(), kHalfSize);
+        buffer.Unmap();
+    });
+    unmapperThread.join();
+
+    // 2. Immediately request to map the buffer again on the main thread.
+    // In GL backend, the above unmap is asynchronous, we want to make sure that it is ordered
+    // properly before the re-map.
+    auto mapFuture2 =
+        buffer.MapAsync(wgpu::MapMode::Write, 0, kSize, wgpu::CallbackMode::WaitAnyOnly,
+                        [](wgpu::MapAsyncStatus status, wgpu::StringView) {
+                            ASSERT_EQ(status, wgpu::MapAsyncStatus::Success);
+                        });
+    ASSERT_EQ(instance.WaitAny(mapFuture2, UINT64_MAX), wgpu::WaitStatus::Success);
+
+    // 3. Write the second half and unmap.
+    memcpy(static_cast<uint8_t*>(buffer.GetMappedRange()) + kHalfSize, secondHalfData.data(),
+           kHalfSize);
+    buffer.Unmap();
+
+    // 4. Verify the final data is present.
+    EXPECT_BUFFER_U32_RANGE_EQ(expectedData.data(), buffer, 0, kDataSize);
+}
+
+// Test that asynchronous glUnmapBuffer in GL backend works correctly even when we re-map the
+// buffer which was mapped at creation.
+TEST_P(MultithreadTests, Buffer_MatAtCreationThenRemap) {
+    constexpr uint32_t kDataSize = 20;
+    constexpr uint32_t kHalfDataSize = kDataSize / 2;
+    constexpr uint32_t kSize = static_cast<uint32_t>(kDataSize * sizeof(uint32_t));
+    constexpr uint32_t kHalfSize = static_cast<uint32_t>(kHalfDataSize * sizeof(uint32_t));
+
+    std::vector<uint32_t> firstHalfData(kHalfDataSize, 1);
+    std::vector<uint32_t> secondHalfData(kHalfDataSize, 2);
+
+    std::vector<uint32_t> expectedData;
+    expectedData.insert(expectedData.end(), firstHalfData.begin(), firstHalfData.end());
+    expectedData.insert(expectedData.end(), secondHalfData.begin(), secondHalfData.end());
+
+    wgpu::Buffer buffer;
+
+    // 1. Create buffer with mappedAtCreation, write the first half, and unmap on a separate thread.
+    std::thread mapAtCreationThread([&] {
+        wgpu::BufferDescriptor descriptor;
+        descriptor.size = kSize;
+        descriptor.usage = wgpu::BufferUsage::MapWrite | wgpu::BufferUsage::CopySrc;
+        descriptor.mappedAtCreation = true;
+        buffer = device.CreateBuffer(&descriptor);
+
+        ASSERT_NE(buffer.Get(), nullptr);
+        memcpy(buffer.GetMappedRange(), firstHalfData.data(), kHalfSize);
+        buffer.Unmap();
+    });
+    mapAtCreationThread.join();
+
+    // 2. Immediately request to map the buffer again on the main thread.
+    // In GL backend, the above unmap is asynchronous, we want to make sure that it is ordered
+    // properly before the re-map.
+    auto mapFuture =
+        buffer.MapAsync(wgpu::MapMode::Write, 0, kSize, wgpu::CallbackMode::WaitAnyOnly,
+                        [](wgpu::MapAsyncStatus status, wgpu::StringView) {
+                            ASSERT_EQ(status, wgpu::MapAsyncStatus::Success);
+                        });
+    ASSERT_EQ(instance.WaitAny(mapFuture, UINT64_MAX), wgpu::WaitStatus::Success);
+
+    // 3. Write the second half and unmap.
+    memcpy(static_cast<uint8_t*>(buffer.GetMappedRange()) + kHalfSize, secondHalfData.data(),
+           kHalfSize);
+    buffer.Unmap();
+
+    // 4. Verify the final data is present.
+    EXPECT_BUFFER_U32_RANGE_EQ(expectedData.data(), buffer, 0, kDataSize);
+}
+
+TEST_P(MultithreadTests, CreateAndDestroyBuffersInParallel) {
+    utils::RunInParallel(100, [&, this](uint32_t) {
+        wgpu::Buffer buffer =
+            CreateBuffer(sizeof(uint32_t), wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc |
+                                               wgpu::BufferUsage::CopyDst);
+
+        buffer.Destroy();
+    });
+}
+
 // Test that copy a texture to a buffer then map that buffer in parallel works.
 TEST_P(MultithreadTests, T2BThenMapInParallel) {
     // TODO(451928481): multithread support in GL is incomplete
@@ -804,6 +1037,27 @@ TEST_P(MultithreadTests, DestroyTextureAndViewsAtSameTime) {
                 textureViews[id - 1] = {};
             }
         });
+    }
+}
+
+// Test that WriteBuffer in parallel should work.
+TEST_P(MultithreadTests, WriteBufferInParallel) {
+    constexpr uint32_t kSize = sizeof(uint32_t);
+    constexpr uint32_t kNumThreads = 10;
+
+    std::vector<wgpu::Buffer> buffers(kNumThreads);
+    std::vector<uint32_t> expectedData(kNumThreads);
+
+    utils::RunInParallel(kNumThreads, [&](uint32_t index) {
+        buffers[index] =
+            CreateBuffer(kSize, wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::CopySrc);
+        uint32_t data = index + 1;
+        expectedData[index] = data;
+        queue.WriteBuffer(buffers[index], 0, &data, sizeof(data));
+    });
+
+    for (uint32_t i = 0; i < kNumThreads; ++i) {
+        EXPECT_BUFFER_U32_EQ(expectedData[i], buffers[i], 0);
     }
 }
 
@@ -1771,8 +2025,8 @@ DAWN_INSTANTIATE_TEST(MultithreadTests,
                       D3D11Backend({"d3d11_delay_flush_to_gpu"}),
                       D3D12Backend(),
                       MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
+                      OpenGLBackend({"gl_defer"}),
+                      OpenGLESBackend({"gl_defer"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -1782,8 +2036,8 @@ DAWN_INSTANTIATE_TEST(MultithreadCachingTests,
                       D3D11Backend({"d3d11_delay_flush_to_gpu"}),
                       D3D12Backend(),
                       MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
+                      OpenGLBackend({"gl_defer"}),
+                      OpenGLESBackend({"gl_defer"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -1795,8 +2049,8 @@ DAWN_INSTANTIATE_TEST(MultithreadEncodingTests,
                       D3D12Backend({"always_resolve_into_zero_level_and_layer"}),
                       MetalBackend(),
                       MetalBackend({"always_resolve_into_zero_level_and_layer"}),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
+                      OpenGLBackend({"gl_defer"}),
+                      OpenGLESBackend({"gl_defer"}),
                       VulkanBackend(),
                       VulkanBackend({"always_resolve_into_zero_level_and_layer"}),
                       WebGPUBackend());
@@ -1809,8 +2063,8 @@ DAWN_INSTANTIATE_TEST(
     MetalBackend({"use_blit_for_buffer_to_depth_texture_copy",
                   "use_blit_for_depth_texture_to_texture_copy_to_nonzero_subresource"}),
     MetalBackend({"use_blit_for_buffer_to_stencil_texture_copy"}),
-    OpenGLBackend(),
-    OpenGLESBackend(),
+    OpenGLBackend({"gl_defer"}),
+    OpenGLESBackend({"gl_defer"}),
     VulkanBackend(),
     WebGPUBackend());
 
@@ -1818,8 +2072,8 @@ DAWN_INSTANTIATE_TEST(MultithreadDrawIndexedIndirectTests,
                       D3D11Backend(),
                       D3D12Backend(),
                       MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
+                      OpenGLBackend({"gl_defer"}),
+                      OpenGLESBackend({"gl_defer"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
@@ -1827,8 +2081,8 @@ DAWN_INSTANTIATE_TEST(MultithreadTimestampQueryTests,
                       D3D11Backend(),
                       D3D12Backend(),
                       MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
+                      OpenGLBackend({"gl_defer"}),
+                      OpenGLESBackend({"gl_defer"}),
                       VulkanBackend(),
                       WebGPUBackend());
 
