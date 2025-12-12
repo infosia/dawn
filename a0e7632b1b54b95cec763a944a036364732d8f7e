@@ -33,6 +33,24 @@
       "message": "Why do we unmap here? It seems that this should already be done at [1]. Can we try removing this additional unmap? +CC Quyen for this.",
       "revId": "a0e7632b1b54b95cec763a944a036364732d8f7e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "048fcae6_07e161e5",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-12T13:57:12Z",
+      "side": 1,
+      "message": "This code is from the 1st version of Buffer implementation. I don\u0027t have context about why it\u0027s needed. Yes we can try to remove it in this CL.",
+      "parentUuid": "6e11086d_60f64fd9",
+      "revId": "a0e7632b1b54b95cec763a944a036364732d8f7e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
