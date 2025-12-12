@@ -64,11 +64,17 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     // Final output value of 'position' builtin from the vertex shader.
     core::ir::Value* vert_out_position = nullptr;
 
-    // IO index for vertex position emulation interpolant
+    // IO index for vertex position emulation center interpolant
     std::optional<uint32_t> center_pos_vert_idx;
 
-    // IO index for fragment position emulation interpolant
+    // IO index for fragment position emulation center interpolant
     std::optional<uint32_t> center_pos_frag_idx;
+
+    // IO index for vertex position emulation centroid interpolant
+    std::optional<uint32_t> centroid_pos_vert_idx;
+
+    // IO index for fragment position emulation centroid interpolant
+    std::optional<uint32_t> centroid_pos_frag_idx;
 
     /// Constructor
     StateImpl(core::ir::Module& mod, core::ir::Function* f, const ShaderIOConfig& cfg)
@@ -77,12 +83,13 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     /// Destructor
     ~StateImpl() override {}
 
-    /// Add a new interpolant that will be used to emulate the position builtin as if it always is
-    /// pixel centered.
+    /// Add a new interpolant that will be used to emulate the position builtin.
     /// @param entries the entries to emit
     /// @param addrspace the address to use for the global variables
-    uint32_t AddCenterPosInterpolant(Vector<core::type::Manager::StructMemberDesc, 4>& entries,
-                                     core::AddressSpace addrspace) {
+    /// @param sampling the interpolation sampling to use
+    uint32_t AddPositionInterpolant(Vector<core::type::Manager::StructMemberDesc, 4>& entries,
+                                    core::AddressSpace addrspace,
+                                    core::InterpolationSampling sampling) {
         // Verbose way of finding the smallest free location (id). This of course needs to be the
         // same id value for both vertex and fragment.
         std::set<uint32_t> existing_locations;
@@ -101,10 +108,10 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             }
         }
 
-        auto io_attrib = core::IOAttributes{
-            .location = free_location,
-            .interpolation = core::Interpolation{.type = core::InterpolationType::kLinear,
-                                                 .sampling = core::InterpolationSampling::kCenter}};
+        auto io_attrib =
+            core::IOAttributes{.location = free_location,
+                               .interpolation = core::Interpolation{
+                                   .type = core::InterpolationType::kLinear, .sampling = sampling}};
 
         if (addrspace == core::AddressSpace::kOut) {
             return AddOutput(ir.symbols.New("center_pos"), ty.vec4f(), io_attrib);
@@ -125,11 +132,23 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                   const char* name_suffix) {
         if (func->IsVertex() && addrspace == core::AddressSpace::kOut &&
             config.polyfill_pixel_center) {
-            center_pos_vert_idx = AddCenterPosInterpolant(entries, addrspace);
+            center_pos_vert_idx =
+                AddPositionInterpolant(entries, addrspace, core::InterpolationSampling::kCenter);
 
         } else if (func->IsFragment() && addrspace == core::AddressSpace::kIn &&
                    config.polyfill_pixel_center) {
-            center_pos_frag_idx = AddCenterPosInterpolant(entries, addrspace);
+            center_pos_frag_idx =
+                AddPositionInterpolant(entries, addrspace, core::InterpolationSampling::kCenter);
+        }
+
+        if (func->IsVertex() && addrspace == core::AddressSpace::kOut &&
+            config.frag_depth_requires_clamping) {
+            centroid_pos_vert_idx =
+                AddPositionInterpolant(entries, addrspace, core::InterpolationSampling::kCentroid);
+        } else if (func->IsFragment() && addrspace == core::AddressSpace::kIn &&
+                   config.frag_depth_requires_clamping) {
+            centroid_pos_frag_idx =
+                AddPositionInterpolant(entries, addrspace, core::InterpolationSampling::kCentroid);
         }
 
         for (auto io : entries) {
@@ -224,6 +243,21 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                         ->Result();
         }
 
+        if (inputs[idx].attributes.builtin == core::BuiltinValue::kPosition &&
+            centroid_pos_frag_idx.has_value()) {
+            auto* xyzw_from_user_centroid = builder.Load(input_vars[centroid_pos_frag_idx.value()]);
+
+            auto* user_centroid_xy = builder.Swizzle(ty.vec2f(), xyzw_from_user_centroid, {0, 1});
+            auto* user_centroid_z = builder.Swizzle(ty.f32(), xyzw_from_user_centroid, {2});
+            auto* user_centroid_w = builder.Swizzle(ty.f32(), xyzw_from_user_centroid, {3});
+
+            auto* viewport_centroid_z = ViewportMappedFragDepth(builder, user_centroid_z->Result());
+            value =
+                builder
+                    .Construct(ty.vec4f(), user_centroid_xy, viewport_centroid_z, user_centroid_w)
+                    ->Result();
+        }
+
         return value;
     }
 
@@ -233,6 +267,9 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     void SetBackendOutputs(core::ir::Builder& builder, core::ir::Value* inner_result) override {
         if (center_pos_vert_idx.has_value()) {
             SetOutput(builder, center_pos_vert_idx.value(), inner_result);
+        }
+        if (centroid_pos_vert_idx.has_value()) {
+            SetOutput(builder, centroid_pos_vert_idx.value(), inner_result);
         }
     }
 
@@ -268,7 +305,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
         // Clamp frag_depth values if necessary.
         if (output.attributes.builtin == core::BuiltinValue::kFragDepth) {
-            value = ClampFragDepth(builder, value);
+            value = ClampFragDepth(builder, value, output.attributes.depth_mode);
         }
 
         // Convert f16 values to f32 values if needed.
@@ -304,8 +341,24 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     /// Clamp a frag_depth builtin value if necessary.
     /// @param builder the builder to use for new instructions
     /// @param frag_depth the incoming frag_depth value
+    /// @param depth_mode the incoming optional depth_mode value
     /// @returns the clamped value
-    core::ir::Value* ClampFragDepth(core::ir::Builder& builder, core::ir::Value* frag_depth) {
+    core::ir::Value* ClampFragDepth(core::ir::Builder& builder,
+                                    core::ir::Value* frag_depth,
+                                    std::optional<core::BuiltinDepthMode> depth_mode) {
+        if (centroid_pos_vert_idx.has_value() && (depth_mode == core::BuiltinDepthMode::kGreater ||
+                                                  depth_mode == core::BuiltinDepthMode::kLess)) {
+            auto* xyzw_from_user_centroid =
+                builder.Load(output_vars[centroid_pos_vert_idx.value()]);
+            auto* user_centroid_z =
+                builder.Swizzle(ty.f32(), xyzw_from_user_centroid, {2})->Result();
+
+            if (depth_mode == core::BuiltinDepthMode::kGreater) {
+                frag_depth = builder.Max(frag_depth, user_centroid_z)->Result();
+            } else {
+                frag_depth = builder.Min(frag_depth, user_centroid_z)->Result();
+            }
+        }
         if (!config.depth_range_offsets) {
             return frag_depth;
         }

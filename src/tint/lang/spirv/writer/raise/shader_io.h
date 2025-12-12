@@ -62,6 +62,8 @@ struct ShaderIOConfig {
     bool polyfill_pixel_center = false;
     /// offsets for clamping frag depth
     std::optional<Options::RangeOffsets> depth_range_offsets{};
+    /// true if we should clamp frag depth based on depth mode.
+    bool frag_depth_requires_clamping = true;
 };
 
 /// ShaderIO is a transform that moves each entry point function's parameters and return value to
