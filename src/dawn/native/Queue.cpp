@@ -36,6 +36,7 @@
 #include <utility>
 #include <vector>
 
+#include "absl/cleanup/cleanup.h"
 #include "dawn/common/Constants.h"
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/FutureUtils.h"
@@ -196,7 +197,8 @@ Future QueueBase::APIOnSubmittedWorkDone(const WGPUQueueWorkDoneCallbackInfo& ca
               mUserdata1(callbackInfo.userdata1),
               mUserdata2(callbackInfo.userdata2) {}
 
-        // Create an event that's ready at creation (for errors, etc.)
+        // Create an event that's read
+        // y at creation (for errors, etc.)
         WorkDoneEvent(const WGPUQueueWorkDoneCallbackInfo& callbackInfo,
                       QueueBase* queue,
                       wgpu::QueueWorkDoneStatus earlyStatus)
@@ -332,6 +334,7 @@ MaybeError QueueBase::WriteBuffer(BufferBase* buffer,
     DAWN_TRY(GetDevice()->ValidateObject(this));
     DAWN_TRY(ValidateWriteBuffer(GetDevice(), buffer, bufferOffset, size));
     DAWN_TRY(buffer->ValidateCanUseOnQueueNow());
+    absl::Cleanup cleanup = [&buffer]() { buffer->FinishUseOnQueue(); };
     return WriteBufferImpl(buffer, bufferOffset, data, size);
 }
 
@@ -481,8 +484,7 @@ MaybeError QueueBase::CopyExternalTextureForBrowserInternal(
     return DoCopyExternalTextureForBrowser(GetDevice(), source, &destination, copySize, options);
 }
 
-MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
-                                     CommandBufferBase* const* commands) const {
+MaybeError QueueBase::ValidateSubmit(uint32_t commandCount, CommandBufferBase* const* commands) {
     TRACE_EVENT0(GetDevice()->GetPlatform(), Validation, "Queue::ValidateSubmit");
     DAWN_TRY(GetDevice()->ValidateObject(this));
 
@@ -499,8 +501,11 @@ MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
 
         // Maybe track last usage for other resources, and use it to release resources earlier?
         for (const SyncScopeResourceUsage& scope : usages.renderPasses) {
-            for (const BufferBase* buffer : scope.buffers) {
-                DAWN_TRY(buffer->ValidateCanUseOnQueueNow());
+            for (BufferBase* buffer : scope.buffers) {
+                if (!mBuffersUsedInSubmit.contains(buffer)) {
+                    DAWN_TRY(buffer->ValidateCanUseOnQueueNow());
+                    mBuffersUsedInSubmit.insert(buffer);
+                }
             }
             for (const TextureBase* texture : scope.textures) {
                 DAWN_TRY(texture->ValidateCanUseInSubmitNow());
@@ -514,8 +519,11 @@ MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
         }
 
         for (const ComputePassResourceUsage& pass : usages.computePasses) {
-            for (const BufferBase* buffer : pass.referencedBuffers) {
-                DAWN_TRY(buffer->ValidateCanUseOnQueueNow());
+            for (BufferBase* buffer : pass.referencedBuffers) {
+                if (!mBuffersUsedInSubmit.contains(buffer)) {
+                    DAWN_TRY(buffer->ValidateCanUseOnQueueNow());
+                    mBuffersUsedInSubmit.insert(buffer);
+                }
             }
             for (const TextureBase* texture : pass.referencedTextures) {
                 DAWN_TRY(texture->ValidateCanUseInSubmitNow());
@@ -528,8 +536,11 @@ MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
             }
         }
 
-        for (const BufferBase* buffer : usages.topLevelBuffers) {
-            DAWN_TRY(buffer->ValidateCanUseOnQueueNow());
+        for (BufferBase* buffer : usages.topLevelBuffers) {
+            if (!mBuffersUsedInSubmit.contains(buffer)) {
+                DAWN_TRY(buffer->ValidateCanUseOnQueueNow());
+                mBuffersUsedInSubmit.insert(buffer);
+            }
         }
         for (const TextureBase* texture : usages.topLevelTextures) {
             DAWN_TRY(texture->ValidateCanUseInSubmitNow());
@@ -644,14 +655,25 @@ MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* c
     DAWN_TRY(device->ValidateIsAlive());
 
     TRACE_EVENT0(device->GetPlatform(), General, "Queue::Submit");
+    absl::Cleanup cleanup = [this]() {
+        for (BufferBase* buffer : mBuffersUsedInSubmit) {
+            buffer->FinishUseOnQueue();
+        }
+        mBuffersUsedInSubmit.clear();
+    };
     if (device->IsValidationEnabled()) {
         DAWN_TRY(ValidateSubmit(commandCount, commands));
     }
+    // TODO(kylechar): Do we want to update buffer state when validation is disabled to guard
+    // against concurrent access?
     DAWN_ASSERT(!IsError());
 
     mInSubmit = true;
     DAWN_TRY(SubmitImpl(commandCount, commands));
     mInSubmit = false;
+
+    // Switch the buffer state back to unmapped before Tick().
+    std::move(cleanup).Invoke();
 
     // Call Tick() to flush pending work.
     DAWN_TRY(device->Tick());
