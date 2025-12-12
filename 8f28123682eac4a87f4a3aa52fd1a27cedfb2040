@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdc20bd0_e1d43e67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-12T16:11:17Z",
+      "side": 1,
+      "message": "Thanks! LGTM\n\nNits are at your discretion.",
+      "revId": "8f28123682eac4a87f4a3aa52fd1a27cedfb2040",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe1a3841_f78c744b",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-12T16:11:17Z",
+      "side": 1,
+      "message": "```suggestion\n        // FinalizeMapImpl(). MapAtCreation() with zero size is supposed to be a no-op.\n```\n\nBTW, is it a bug that the front end still calls FinalizeMapImpl()? If so, could you log one?",
+      "revId": "8f28123682eac4a87f4a3aa52fd1a27cedfb2040",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aee6d234_fdb58e26",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-12T16:11:17Z",
+      "side": 1,
+      "message": "Can we get rid of GL_MAP_UNSYNCHRONIZED_BIT, or is that still required?",
+      "revId": "8f28123682eac4a87f4a3aa52fd1a27cedfb2040",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
