@@ -4101,6 +4101,14 @@
             {
                 "name": "unpin",
                 "tags": ["dawn"]
+            },
+            {
+                "name": "set ownership for memory dump",
+                "tags": ["dawn", "native"],
+                "_comment": "Sets texture's ownership information for memory dump, resets if given owner guid is 0.",
+                "args": [
+                    {"name": "owner guid", "type": "uint64_t", "default": 0}
+                ]
             }
         ]
     },
@@ -4603,6 +4611,14 @@
         "tags": ["dawn"],
         "members": [
             {"name": "internal usage", "type": "texture usage"}
+        ]
+    },
+    "dawn memory dump ownership descriptor": {
+        "category": "structure",
+        "tags": ["dawn", "native"],
+        "_comment": "Provide ownership information for memory dump",
+        "members": [
+            {"name": "owner guid", "type": "uint64_t"}
         ]
     },
     "dawn encoder internal usage descriptor": {
