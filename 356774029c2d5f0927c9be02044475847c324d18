@@ -104,6 +104,24 @@
       "parentUuid": "645194c0_7eef0bf6",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9875df9_254eb395",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-12T17:10:05Z",
+      "side": 1,
+      "message": "Actually the above probably won\u0027t work for the deferred case (I was thinking about a different problem: trying to avoid the ref/unref churn for the immediate case). Still thinking.",
+      "parentUuid": "5c28313a_729d02f0",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
