@@ -64,6 +64,8 @@ class MemoryDumpMock : public MemoryDump {
                 (const char* name, const char* key, const char* units, uint64_t value),
                 (override));
 
+    MOCK_METHOD(void, AddOwnershipEdge, (const char* name, uint64_t ownerGUID), (override));
+
     void AddString(const char* name, const char* key, const std::string& value) override {}
 
     uint64_t GetTotalSize() const { return mTotalSize; }
@@ -201,6 +203,45 @@ TEST_F(MemoryInstrumentationTest, DumpMemoryStatistics) {
 
     EXPECT_EQ(memoryDumpMock.GetTotalSize(), kBufferAllocatedSize + kMipmappedTextureSize +
                                                  kMultisampleTextureSize + kETC2TextureSize);
+
+    // Create a mip-mapped texture with ownership GUID and check that AddOwnershipEdge is called
+    // during memory dumping.
+    constexpr uint64_t kMipmappedTextureOwnerGUID = 0xBEAFCAFE;
+    const wgpu::DawnMemoryDumpOwnershipDescriptor kMipmappedTextureOwnershipDesc = {
+        .ownerGuid = kMipmappedTextureOwnerGUID,
+    };
+    const wgpu::TextureDescriptor kMipmappedTextureWithOwnershipDesc = kMipmappedTextureDesc;
+    kMipmappedTextureWithOwnershipDesc.nextInChain = &kMipmappedTextureOwnershipDesc;
+    wgpu::Texture mipmappedTextureWithOwnership =
+        device.CreateTexture(&kMipmappedTextureWithOwnershipDesc);
+    EXPECT_CALL(memoryDumpMock,
+                AddScalar(StrEq(textureLabel(mipmappedTextureWithOwnership)), MemoryDump::kNameSize,
+                          MemoryDump::kUnitsBytes, kMipmappedTextureSize));
+    EXPECT_CALL(memoryDumpMock, AddOwnershipEdge(StrEq(textureLabel(mipmappedTextureWithOwnership)),
+                                                 kMipmappedTextureOwnerGUID));
+
+    // Create a shared resource memory texture with ownership GUID and check that AddOwnershipEdge
+    // is called during memory dumping.
+    constexpr uint64_t kSharedTextureOwnerGUID = 0x12345678;
+    const wgpu::DawnMemoryDumpOwnershipDescriptor kSharedTextureOwnershipDesc = {
+        .ownerGuid = kSharedTextureOwnerGUID,
+    };
+    const wgpu::TextureDescriptor kSharedTextureWithOwnershipDesc = kSharedTextureDesc;
+    kSharedTextureWithOwnershipDesc.nextInChain = &kSharedTextureOwnershipDesc;
+    Ref<TextureMock> sharedTextureWithOwnershipMock = AcquireRef(
+        new NiceMock<TextureMock>(mDeviceMock, FromCppAPI(&kSharedTextureWithOwnershipDesc)));
+    sharedTextureWithOwnershipMock->SetSharedResourceMemoryContentsForTesting(
+        AcquireRef(new SharedResourceMemoryContents(nullptr)));
+    EXPECT_CALL(*mDeviceMock, CreateTextureImpl)
+        .WillOnce(Return(ByMove(std::move(sharedTextureWithOwnershipMock))))
+        .WillRepeatedly(DoDefault());
+    wgpu::Texture sharedTextureWithOwnership =
+        device.CreateTexture(&kSharedTextureWithOwnershipDesc);
+    EXPECT_CALL(memoryDumpMock,
+                AddScalar(StrEq(textureLabel(sharedTextureWithOwnership)), MemoryDump::kNameSize,
+                          MemoryDump::kUnitsBytes, /*size=*/0));
+    EXPECT_CALL(memoryDumpMock, AddOwnershipEdge(StrEq(textureLabel(sharedTextureWithOwnership)),
+                                                 kSharedTextureOwnerGUID));
 
     // Check that ComputeEstimatedMemoryUsageInfo() matches the memory dump total size.
     MemoryUsageInfo memInfo = ComputeEstimatedMemoryUsageInfo(device.Get());
