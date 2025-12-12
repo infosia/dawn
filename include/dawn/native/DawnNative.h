@@ -307,6 +307,11 @@ class DAWN_NATIVE_EXPORT MemoryDump {
 
     virtual void AddString(const char* name, const char* key, const std::string& value) = 0;
 
+    virtual void AddOwnershipEdge(const char* name, uint64_t ownerGUID) {
+        // Provide a default empty implementation to prevent breaking existing MemoryDump
+        // implementations.
+    }
+
     MemoryDump(const MemoryDump&) = delete;
     MemoryDump& operator=(const MemoryDump&) = delete;
 

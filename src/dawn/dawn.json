@@ -4059,7 +4059,8 @@
             {"value": 81, "name": "shared texture memory D3D12 resource descriptor", "tags": ["dawn", "native"]},
             {"value": 82, "name": "request adapter options angle virtualization group", "tags": ["dawn", "native"]},
             {"value": 83, "name": "resource table limits", "tags": ["dawn"]},
-            {"value": 84, "name": "pipeline layout resource table", "tags": ["dawn"]}
+            {"value": 84, "name": "pipeline layout resource table", "tags": ["dawn"]},
+            {"value": 85, "name": "dawn memory dump ownership descriptor", "tags": ["dawn", "native"]}
         ]
     },
     "texture": {
@@ -4642,6 +4643,16 @@
         "tags": ["dawn"],
         "members": [
             {"name": "internal usage", "type": "texture usage"}
+        ]
+    },
+    "dawn memory dump ownership descriptor": {
+        "category": "structure",
+        "chained": "in",
+        "chain roots": ["texture descriptor"],
+        "tags": ["dawn", "native"],
+        "_comment": "Provide ownership information for memory dump",
+        "members": [
+            {"name": "owner guid", "type": "uint64_t"}
         ]
     },
     "dawn encoder internal usage descriptor": {
