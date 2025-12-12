@@ -198,6 +198,7 @@ TEST_F(WireInjectTextureTests, ReservedTextureReflection) {
     ASSERT_EQ(desc.dimension, texture.GetDimension());
     ASSERT_EQ(desc.mipLevelCount, texture.GetMipLevelCount());
     ASSERT_EQ(desc.sampleCount, texture.GetSampleCount());
+    ASSERT_EQ(wgpu::TextureViewDimension::Undefined, texture.GetTextureBindingViewDimension());
 }
 
 }  // anonymous namespace

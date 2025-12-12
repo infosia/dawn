@@ -56,7 +56,24 @@ Texture::Texture(const ObjectBaseParams& params, const WGPUTextureDescriptor* de
       mDimension(descriptor->dimension == WGPUTextureDimension_Undefined ? WGPUTextureDimension_2D
                                                                          : descriptor->dimension),
       mFormat(descriptor->format),
-      mUsage(static_cast<WGPUTextureUsage>(descriptor->usage)) {}
+      mUsage(static_cast<WGPUTextureUsage>(descriptor->usage)),
+      mTextureBindingViewDimension(WGPUTextureViewDimension_Undefined) {
+    for (auto* chain = descriptor->nextInChain; chain; chain = chain->next) {
+        switch (chain->sType) {
+            case WGPUSType_TextureBindingViewDimensionDescriptor:
+                // TODO(458616688): If we're in core we should never set this.
+                // Even though it's passed in it should always reflect as undefined.
+                // In compat, if it's not passed in or is undefined it gets a default value.
+                // Further, in compat it would not be set if HasFlexibleTextureViews() is true?
+                mTextureBindingViewDimension =
+                    reinterpret_cast<WGPUTextureBindingViewDimensionDescriptor*>(chain)
+                        ->textureBindingViewDimension;
+                break;
+            default:
+                break;
+        }
+    }
+}
 
 Texture::~Texture() = default;
 
@@ -94,6 +111,10 @@ WGPUTextureFormat Texture::APIGetFormat() const {
 
 WGPUTextureUsage Texture::APIGetUsage() const {
     return mUsage;
+}
+
+WGPUTextureViewDimension Texture::APIGetTextureBindingViewDimension() const {
+    return mTextureBindingViewDimension;
 }
 
 }  // namespace dawn::wire::client
