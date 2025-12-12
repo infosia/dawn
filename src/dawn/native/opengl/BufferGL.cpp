@@ -34,6 +34,7 @@
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/opengl/DeviceGL.h"
+#include "dawn/native/opengl/QueueGL.h"
 #include "dawn/native/opengl/UtilsGL.h"
 
 namespace dawn::native::opengl {
@@ -62,34 +63,37 @@ ResultOrError<Ref<Buffer>> Buffer::CreateInternalBuffer(Device* device,
 // static
 ResultOrError<Ref<Buffer>> Buffer::Create(Device* device,
                                           const UnpackedPtr<BufferDescriptor>& descriptor) {
-    const OpenGLFunctions& gl = device->GetGL();
+    Ref<Buffer> buffer = AcquireRef(new Buffer(device, descriptor));
 
-    GLuint handle = 0;
-    DAWN_GL_TRY(gl, GenBuffers(1, &handle));
-    Ref<Buffer> buffer = AcquireRef(new Buffer(device, descriptor, handle));
+    DAWN_TRY(device->EnqueueGL([device, buffer, isMappedAtCreation = descriptor->mappedAtCreation](
+                                   const OpenGLFunctions& gl) -> MaybeError {
+        GLuint glHandle = 0;
+        DAWN_GL_TRY(gl, GenBuffers(1, &glHandle));
+        buffer->mHandle->Set(glHandle);
+        DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, glHandle));
 
-    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, handle));
+        // The buffers with mappedAtCreation == true will be initialized in
+        // BufferBase::MapAtCreation().
+        if (device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting) &&
+            !isMappedAtCreation) {
+            std::vector<uint8_t> clearValues(buffer->mAllocatedSize, 1u);
+            DAWN_GL_TRY_ALWAYS_CHECK(gl, BufferData(GL_ARRAY_BUFFER, buffer->mAllocatedSize,
+                                                    clearValues.data(), GL_STATIC_DRAW));
+        } else {
+            DAWN_GL_TRY_ALWAYS_CHECK(
+                gl, BufferData(GL_ARRAY_BUFFER, buffer->mAllocatedSize, nullptr, GL_STATIC_DRAW));
+        }
 
-    // The buffers with mappedAtCreation == true will be initialized in
-    // BufferBase::MapAtCreation().
-    if (device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting) &&
-        !descriptor->mappedAtCreation) {
-        std::vector<uint8_t> clearValues(buffer->mAllocatedSize, 1u);
-        DAWN_GL_TRY_ALWAYS_CHECK(gl, BufferData(GL_ARRAY_BUFFER, buffer->mAllocatedSize,
-                                                clearValues.data(), GL_STATIC_DRAW));
-    } else {
-        // Buffers start uninitialized if you pass nullptr to glBufferData.
-        DAWN_GL_TRY_ALWAYS_CHECK(
-            gl, BufferData(GL_ARRAY_BUFFER, buffer->mAllocatedSize, nullptr, GL_STATIC_DRAW));
-    }
+        return {};
+    }));
 
     buffer->TrackUsage();
 
     return std::move(buffer);
 }
 
-Buffer::Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor, GLuint handle)
-    : BufferBase(device, descriptor), mBuffer(handle) {
+Buffer::Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor)
+    : BufferBase(device, descriptor), mHandle(AcquireRef(new FutureHandle())) {
     // Allocate at least 4 bytes so clamped accesses are always in bounds.
     // Align with 4 byte to avoid out-of-bounds access issue in compute emulation for 2 byte
     // element.
@@ -100,12 +104,20 @@ Buffer::Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor, 
         alignment = 16u;
     }
     mAllocatedSize = Align(std::max(GetSize(), uint64_t(4u)), alignment);
+
+    if (descriptor->mappedAtCreation && GetSize() != 0 &&
+        device->IsToggleEnabled(Toggle::GLDefer)) {
+        // Allocate shadow copy for mapAtCreation. However, we only do so if GetSize() is non-zero.
+        // This is because the front-end never actually calls into backend's MapAtCreationImpl &
+        // UnmapImpl for zero-sized buffers. Thus shadow copy is basically unused in that case.
+        mShadowCopy.resize(mAllocatedSize);
+    }
 }
 
 Buffer::~Buffer() = default;
 
 GLuint Buffer::GetHandle() const {
-    return mBuffer;
+    return mHandle->Get();
 }
 
 MaybeError Buffer::EnsureDataInitialized(bool* outDidDataInitialization) {
@@ -175,14 +187,19 @@ MaybeError Buffer::EnsureDataInitializedAsDestination(const CopyTextureToBufferC
 MaybeError Buffer::InitializeToZero() {
     DAWN_ASSERT(NeedsInitialization());
 
-    const uint64_t size = GetAllocatedSize();
     Device* device = ToBackend(GetDevice());
-    const OpenGLFunctions& gl = device->GetGL();
+    Ref<Buffer> self = this;
+    DAWN_TRY(device->EnqueueGL([self](const OpenGLFunctions& gl) -> MaybeError {
+        const uint64_t size = self->GetAllocatedSize();
+        const std::vector<uint8_t> clearValues(size, 0u);
 
-    const std::vector<uint8_t> clearValues(size, 0u);
-    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, mBuffer));
-    DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, 0, size, clearValues.data()));
-    device->IncrementLazyClearCountForTesting();
+        DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, self->GetHandle()));
+        DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, 0, size, clearValues.data()));
+
+        return {};
+    }));
+
+    ToBackend(GetDevice())->IncrementLazyClearCountForTesting();
 
     TrackUsage();
     SetInitialized(true);
@@ -190,8 +207,6 @@ MaybeError Buffer::InitializeToZero() {
 }
 
 bool Buffer::IsCPUWritableAtCreation() const {
-    // TODO(enga): All buffers in GL can be mapped. Investigate if mapping them will cause the
-    // driver to migrate it to shared memory.
     return true;
 }
 
@@ -208,18 +223,28 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
 }
 
 MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
-    if (newState == BufferState::MappedAtCreation && GetSize() == 0) {
-        // Return early if MappedAtCreation() is called with size = 0. Front-end skips calling
-        // MapAtCreationImpl() & UnmapImpl() if size=0. However, it still calls
-        // FinalizeMapImpl(). MaptAtCreation() with zero size is supposed to be a no-op.
-        // TODO(crbug.com/468327048): Maybe we should fix this on the front-end side.
-        return {};
+    if (newState == BufferState::MappedAtCreation) {
+        if (GetSize() == 0) {
+            // Return early if MappedAtCreation() is called with size = 0. Front-end skips calling
+            // MapAtCreationImpl() & UnmapImpl() if size=0. However, it still calls
+            // FinalizeMapImpl(). MaptAtCreation() with zero size is supposed to be a no-op.
+            // TODO(crbug.com/468327048): Maybe we should fix this on the front-end side.
+            return {};
+        }
+
+        if (!mShadowCopy.empty()) {
+            // If shadow copy is enabled, use its pointer directly.
+            mMappedData = mShadowCopy.data();
+            return {};
+        }
     }
 
     DAWN_ASSERT(newState == BufferState::Mapped || newState == BufferState::MappedAtCreation);
+    DAWN_ASSERT(mShadowCopy.empty());
 
     Device* device = ToBackend(GetDevice());
     auto deviceGuard = device->GetGuard();
+    void* mappedData = nullptr;
     auto size = MapSize();
     auto offset = MapOffset();
     const auto mode = MapMode();
@@ -234,48 +259,108 @@ MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
         size = 4;
     }
 
-    const OpenGLFunctions& gl = device->GetGL();
+    // Since FinalizeMap() is called when EventManager detects that all GPU uses of this buffer have
+    // completed, it's safe to use ExecuteGL() to trigger GL command immediately without waiting for
+    // pending GL commands.
+    // TODO(451928481):
+    // - We assume this is called on a thread that can make GL context current, e.g. playback thread
+    // in Skia (denoted as GL thread).
+    // - This requires client to call MapAsync(AllowSpontaneous) or Tick()/WaitAny()/ProcessEvents()
+    // on GL thread. The latter is required if non-AllowSpontaneous callback mode is used.
+    return device->ExecuteGL(
+        ExecutionQueueBase::SubmitMode::Passive,
+        [&](const OpenGLFunctions& gl) mutable -> MaybeError {
+            // UnmapImpl enqueues an asynchronous unmap operation, which may not have executed when
+            // this function is called. We need to ensure the buffer is unmapped before we can map
+            // it again. Calling DoGLUnmapIfNeeded() directly handles this by unmapping only if it
+            // is currently mapped.
+            DoGLUnmapIfNeeded(gl);
 
-    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, mBuffer));
-    void* mappedData = nullptr;
-    if (mode & wgpu::MapMode::Read) {
-        mappedData = DAWN_GL_TRY_ALWAYS_CHECK(
-            gl, MapBufferRange(GL_ARRAY_BUFFER, offset, size, GL_MAP_READ_BIT));
-    } else {
-        DAWN_ASSERT(mode & wgpu::MapMode::Write);
-        mappedData = DAWN_GL_TRY_ALWAYS_CHECK(
-            gl, MapBufferRange(GL_ARRAY_BUFFER, offset, size,
-                               GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT));
-    }
+            DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, GetHandle()));
+            if (mode & wgpu::MapMode::Read) {
+                mappedData = DAWN_GL_TRY_ALWAYS_CHECK(
+                    gl, MapBufferRange(GL_ARRAY_BUFFER, offset, size, GL_MAP_READ_BIT));
+            } else {
+                DAWN_ASSERT(mode & wgpu::MapMode::Write);
+                mappedData = DAWN_GL_TRY_ALWAYS_CHECK(
+                    gl, MapBufferRange(GL_ARRAY_BUFFER, offset, size,
+                                       GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT));
+            }
 
-    // The frontend asks that the pointer returned by GetMappedPointer is from the start of
-    // the resource but OpenGL gives us the pointer at offset. Remove the offset.
-    mMappedData = static_cast<uint8_t*>(mappedData) - offset;
+            // The frontend asks that the pointer returned by GetMappedPointer is from the start of
+            // the resource but OpenGL gives us the pointer at offset. Remove the offset.
+            mMappedData = static_cast<uint8_t*>(mappedData) - offset;
 
-    return {};
+            return {};
+        });
 }
 
 void* Buffer::GetMappedPointerImpl() {
-    // The mapping offset has already been removed.
     return mMappedData;
 }
 
 void Buffer::UnmapImpl(BufferState oldState) {
     auto deviceGuard = GetDevice()->GetGuard();
 
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    // Unmap() might be called in DestroyImpl(), we need to check whether it is the case or not.
+    if (!this->TryAddRef()) {
+        // TryAddRef() fails mean we are being destroyed, skip further steps.
+        mMappedData = nullptr;
+        return;
+    }
 
-    DAWN_GL_TRY_IGNORE_ERRORS(gl, BindBuffer(GL_ARRAY_BUFFER, mBuffer));
+    // adopt ref
+    Ref<Buffer> self = AcquireRef(this);
+
+    Device* device = ToBackend(GetDevice());
+
+    if (mShadowCopy.empty()) {
+        IgnoreErrors(device->EnqueueGL(ExecutionQueueBase::SubmitMode::Passive,
+                                       [self](const OpenGLFunctions& gl) -> MaybeError {
+                                           self->DoGLUnmapIfNeeded(gl);
+                                           return {};
+                                       }));
+
+        return;
+    }
+
+    // Transfer shadow copy to the real GL buffer.
+    IgnoreErrors(device->EnqueueGL([self](const OpenGLFunctions& gl) -> MaybeError {
+        self->mMappedData = nullptr;
+        auto data = std::move(self->mShadowCopy);
+        DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, self->GetHandle()));
+        DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, 0, self->GetAllocatedSize(), data.data()));
+        return {};
+    }));
+
+    // Mark the buffer as being used in pending command buffer.
+    TrackUsage();
+    return;
+}
+
+void Buffer::DoGLUnmapIfNeeded(const OpenGLFunctions& gl) {
+    if (!mMappedData) {
+        return;
+    }
+
+    DAWN_GL_TRY_IGNORE_ERRORS(gl, BindBuffer(GL_ARRAY_BUFFER, GetHandle()));
     DAWN_GL_TRY_IGNORE_ERRORS(gl, UnmapBuffer(GL_ARRAY_BUFFER));
+
     mMappedData = nullptr;
 }
 
 void Buffer::DestroyImpl() {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-
     BufferBase::DestroyImpl();
-    DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteBuffers(1, &mBuffer));
-    mBuffer = 0;
+
+    Device* device = ToBackend(GetDevice());
+    Ref<FutureHandle> handle = mHandle;
+
+    IgnoreErrors(device->EnqueueGL(ExecutionQueueBase::SubmitMode::Passive,
+                                   [handle](const OpenGLFunctions& gl) -> MaybeError {
+                                       GLuint realHandle = handle->Get();
+                                       DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteBuffers(1, &realHandle));
+                                       return {};
+                                   }));
 }
 
 }  // namespace dawn::native::opengl

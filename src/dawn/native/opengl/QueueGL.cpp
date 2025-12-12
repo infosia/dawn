@@ -27,6 +27,8 @@
 
 #include "dawn/native/opengl/QueueGL.h"
 
+#include <vector>
+
 #include "dawn/native/BlitBufferToDepthStencil.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/CommandEncoder.h"
@@ -91,14 +93,24 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   uint64_t bufferOffset,
                                   const void* data,
                                   size_t size) {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    Device* device = ToBackend(GetDevice());
+    Ref<Buffer> glBuffer = ToBackend(buffer);
 
-    DAWN_TRY(ToBackend(buffer)->EnsureDataInitializedAsDestination(bufferOffset, size));
+    glBuffer->MarkUsedInPendingCommands();
 
-    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, ToBackend(buffer)->GetHandle()));
-    DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, size, data));
-    buffer->MarkUsedInPendingCommands();
-    return {};
+    std::vector<uint8_t> copyData(size);
+    memcpy(copyData.data(), data, size);
+
+    return device->EnqueueGL(
+        [glBuffer, bufferOffset, copyData = std::move(copyData)](const auto& gl) -> MaybeError {
+            DAWN_TRY(glBuffer->EnsureDataInitializedAsDestination(bufferOffset, copyData.size()));
+
+            DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, glBuffer->GetHandle()));
+            DAWN_GL_TRY(
+                gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, copyData.size(), copyData.data()));
+
+            return {};
+        });
 }
 
 MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
