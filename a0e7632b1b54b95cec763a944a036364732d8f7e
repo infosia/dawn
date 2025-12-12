@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23083eac_b6779d27",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-12T13:44:16Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "a0e7632b1b54b95cec763a944a036364732d8f7e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e11086d_60f64fd9",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-12T13:44:16Z",
+      "side": 1,
+      "message": "Why do we unmap here? It seems that this should already be done at [1]. Can we try removing this additional unmap? +CC Quyen for this.",
+      "revId": "a0e7632b1b54b95cec763a944a036364732d8f7e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
