@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19445966_8de85734",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-12T16:20:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e454a1c1_4ed0ffec",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "b6df580bdb0f9727b07e2b371e1e6038e5cdb1a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb2b6e8c_40746d60",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-12-12T13:32:18Z",
       "side": 1,
       "message": "This inside the per-binding loop so I don\u0027t think it\u0027s counting what we want here.",
+      "revId": "b6df580bdb0f9727b07e2b371e1e6038e5cdb1a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86b385a6_f8a04e71",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-12T16:20:19Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "cb2b6e8c_40746d60",
       "revId": "b6df580bdb0f9727b07e2b371e1e6038e5cdb1a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "de5a0aba_87b4929f",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-12T16:20:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "913eb0ee_0aba2c24",
+      "revId": "b6df580bdb0f9727b07e2b371e1e6038e5cdb1a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d60a99fc_15420fb0",
@@ -71,6 +131,24 @@
       "writtenOn": "2025-12-12T13:32:18Z",
       "side": 1,
       "message": "[2]\n\n```suggestion\n        desc.nextInChain \u003d \u0026resourceTable;\n        \n        // The resource table uses on BGL so remove the last specified BGL to not run into the maxBindGroups limit. However keep a non-empty BGL in the last index so that we get the validation error that too many BGLs are used with the resource table.\n        if (desc.bindGroupLayouts[desc.bindGroupLayoutCount - 1]-\u003eIsEmpty()) {\n            desc.bindGroupLayoutCount --;\n        }\n```",
+      "revId": "b6df580bdb0f9727b07e2b371e1e6038e5cdb1a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be2c7863_6fd1f928",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-12T16:20:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d60a99fc_15420fb0",
       "revId": "b6df580bdb0f9727b07e2b371e1e6038e5cdb1a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -109,6 +187,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "65e8f4cf_b1624593",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-12T16:20:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94cb7a6d_2e9cd894",
+      "revId": "b6df580bdb0f9727b07e2b371e1e6038e5cdb1a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae427862_2cb07a1e",
@@ -122,6 +218,24 @@
       "writtenOn": "2025-12-12T13:32:18Z",
       "side": 1,
       "message": "```suggestion\n// Test that a defaulted pipeline layout with a resource table uses up a BindGroupLayout slot\n```",
+      "revId": "b6df580bdb0f9727b07e2b371e1e6038e5cdb1a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "440273fa_80913f8a",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-12T16:20:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae427862_2cb07a1e",
       "revId": "b6df580bdb0f9727b07e2b371e1e6038e5cdb1a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -143,6 +257,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f29126a_3f7622b0",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-12T16:20:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ece734ce_48aa1b25",
+      "revId": "b6df580bdb0f9727b07e2b371e1e6038e5cdb1a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33c9c5c0_aa6f79ac",
@@ -156,6 +288,24 @@
       "writtenOn": "2025-12-12T13:32:18Z",
       "side": 1,
       "message": "```suggestion\n    // Failure case: not enough room for bgls and a resource table\n```",
+      "revId": "b6df580bdb0f9727b07e2b371e1e6038e5cdb1a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c1e5470_7d49cc10",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-12T16:20:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33c9c5c0_aa6f79ac",
       "revId": "b6df580bdb0f9727b07e2b371e1e6038e5cdb1a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
