@@ -969,7 +969,17 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         // Qualcomm's shader compiler returns an internal error when binding_array<texture*> is
         // passed by argument to functions.
         deviceToggles->Default(Toggle::VulkanDirectVariableAccessTransformHandle, true);
+
+        // Qualcomm has compiler error on these generations.
+        if (gpu_info::IsQualcommPCIAdreno6xx(GetVendorId(), GetDeviceId()) ||
+            gpu_info::IsQualcommPCIAdreno7xx(GetVendorId(), GetDeviceId()) ||
+            gpu_info::IsQualcommACPIAdreno6xx(GetVendorId(), GetDeviceId()) ||
+            gpu_info::IsQualcommACPIAdreno7xx(GetVendorId(), GetDeviceId())) {
+            deviceToggles->Default(Toggle::VulkanSampleCompareDepthCubeArrayWorkaround, true);
+        }
     }
+
+    deviceToggles->Default(Toggle::VulkanSampleCompareDepthCubeArrayWorkaround, true);
 
     if (IsPixel10()) {
         // Pixel 10 has a bug in vkGetPipelineCacheData(), see https://crbug.com/437807243.
