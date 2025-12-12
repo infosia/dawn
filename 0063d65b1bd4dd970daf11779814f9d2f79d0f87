@@ -301,6 +301,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f944727_b19c60e1",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-12T06:00:38Z",
+      "side": 1,
+      "message": "\u003e Isn\u0027t DawnLoadResolveTexture still not going to work without MSRTSS? Would we have to implement load from single-sampled to multi sampled step with VK_EXT_dynamic_rendering_local_read since subpasses aren\u0027t available?\n\nI think `VK_EXT_dynamic_rendering_local_read` is also not always available. Both it and MSRTSS require optional extensions so maybe we should focus on MSRTSS only. MSRTSS is older and should be more available. I think in future we should enable dynamic rendering on tile based GPUs only if MSRTSS is avalable.",
+      "parentUuid": "51fb3138_9e195d5e",
+      "revId": "0063d65b1bd4dd970daf11779814f9d2f79d0f87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "967132bc_47cc4f33",
