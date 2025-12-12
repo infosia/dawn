@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4f47d66_116ffe94",
+        "filename": "src/dawn/native/ResourceTable.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-12-12T14:54:01Z",
+      "side": 1,
+      "message": "Why not leave it as `Initialize` and make it virtual?",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 29
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d7707620_e843ffb8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/ResourceTable.h",
+              "range": {
+                "startLine": 55,
+                "startChar": 0,
+                "endLine": 56,
+                "endChar": 0
+              },
+              "replacement": "    virtual MaybeError Initialize();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "aff2947165a57da9c87697a101c31f572a073628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
