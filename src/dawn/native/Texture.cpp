@@ -995,6 +995,10 @@ TextureBase::TextureBase(DeviceBase* device, const UnpackedPtr<TextureDescriptor
 
     mInternalUsage = AddInternalUsages(device, mInternalUsage, *mFormat, GetSampleCount(),
                                        GetNumMipLevels(), GetArrayLayers());
+
+    if (auto* memoryDumpOwnershipDescriptor = descriptor.Get<DawnMemoryDumpOwnershipDescriptor>()) {
+        mOwnerGUIDForMemoryDump = memoryDumpOwnershipDescriptor->ownerGuid;
+    }
 }
 
 TextureBase::~TextureBase() = default;
@@ -1459,6 +1463,9 @@ void TextureBase::DumpMemoryStatistics(dawn::native::MemoryDump* dump, const cha
     dump->AddString(name.c_str(), "sample_count", absl::StrFormat("%u", GetSampleCount()));
     dump->AddString(name.c_str(), "usage", absl::StrFormat("%s", GetUsage()));
     dump->AddString(name.c_str(), "internal_usage", absl::StrFormat("%s", GetInternalUsage()));
+    if (mOwnerGUIDForMemoryDump.has_value()) {
+        dump->AddOwnershipEdge(name.c_str(), mOwnerGUIDForMemoryDump.value());
+    }
 }
 
 uint64_t TextureBase::ComputeEstimatedByteSize() const {
