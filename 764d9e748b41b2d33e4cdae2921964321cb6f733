@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e78000d4_9f4bb8bb",
+        "filename": "src/dawn/tests/end2end/ColorStateTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1287,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-12T19:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "297b6193_a0a4ab43",
+      "revId": "764d9e748b41b2d33e4cdae2921964321cb6f733",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c680afd0_72c93944",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b18cd85_d5406474",
+        "filename": "src/dawn/tests/end2end/RenderAttachmentTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-12T19:05:45Z",
+      "side": 1,
+      "message": "Done. The test I added isn\u0027t particularly complex, but at least it gives some coverage of `depthSlice` use.",
+      "parentUuid": "c680afd0_72c93944",
+      "revId": "764d9e748b41b2d33e4cdae2921964321cb6f733",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c90de24_c2fb272e",
@@ -48,6 +84,24 @@
       "writtenOn": "2025-12-12T12:58:29Z",
       "side": 1,
       "message": "This is the one we should pareametrize, and remove the fixtures at [1] and [2]",
+      "revId": "764d9e748b41b2d33e4cdae2921964321cb6f733",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e0fc935_9f38fce4",
+        "filename": "src/dawn/tests/end2end/RenderPassTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-12T19:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c90de24_c2fb272e",
       "revId": "764d9e748b41b2d33e4cdae2921964321cb6f733",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
