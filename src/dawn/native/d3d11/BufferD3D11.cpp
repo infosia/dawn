@@ -545,7 +545,7 @@ MaybeError Buffer::FinalizeMap(ScopedCommandRecordingContext* commandContext,
     return {};
 }
 
-void Buffer::UnmapImpl(BufferState oldState) {
+void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
     DAWN_ASSERT(IsMappable(GetInternalUsage()));
     mMapReadySerial = kMaxExecutionSerial;
     if (mMappedData) {
@@ -571,7 +571,7 @@ void Buffer::DestroyImpl() {
     //   other threads using the buffer since there are no other live refs.
     BufferBase::DestroyImpl();
     if (mMappedData) {
-        UnmapImpl(GetState());
+        UnmapImpl(GetState(), BufferState::Destroyed);
     }
 }
 
