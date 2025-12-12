@@ -1027,6 +1027,8 @@ static void CheckTextureMatchesDescriptor(const wgpu::Texture& tex,
     }
     EXPECT_EQ(desc.usage, tex.GetUsage());
     EXPECT_EQ(desc.format, tex.GetFormat());
+    // This is undefined in core, set in compat.
+    EXPECT_EQ(wgpu::TextureViewDimension::Undefined, tex.GetTextureBindingViewDimension());
 }
 
 // Test that the texture creation parameters are correctly reflected for succesfully created
