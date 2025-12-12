@@ -707,6 +707,10 @@ MaybeError ValidateTextureDescriptor(
             "enabled");
         usage |= internalUsageDesc->internalUsage;
     }
+    DAWN_INVALID_IF(descriptor.Get<DawnMemoryDumpOwnershipDescriptor>() &&
+                        !device->HasFeature(Feature::DawnNative),
+                    "The DawnMemoryDumpOwnershipDescriptor is used while the dawn-native feature "
+                    "is not enabled");
 
     const Format* format;
     DAWN_TRY_ASSIGN(format, device->GetInternalFormat(descriptor->format));
@@ -995,6 +999,10 @@ TextureBase::TextureBase(DeviceBase* device, const UnpackedPtr<TextureDescriptor
 
     mInternalUsage = AddInternalUsages(device, mInternalUsage, *mFormat, GetSampleCount(),
                                        GetNumMipLevels(), GetArrayLayers());
+
+    if (auto* memoryDumpOwnershipDescriptor = descriptor.Get<DawnMemoryDumpOwnershipDescriptor>()) {
+        mOwnerGUIDForMemoryDump = memoryDumpOwnershipDescriptor->ownerGuid;
+    }
 }
 
 TextureBase::~TextureBase() = default;
@@ -1459,6 +1467,9 @@ void TextureBase::DumpMemoryStatistics(dawn::native::MemoryDump* dump, const cha
     dump->AddString(name.c_str(), "sample_count", absl::StrFormat("%u", GetSampleCount()));
     dump->AddString(name.c_str(), "usage", absl::StrFormat("%s", GetUsage()));
     dump->AddString(name.c_str(), "internal_usage", absl::StrFormat("%s", GetInternalUsage()));
+    if (mOwnerGUIDForMemoryDump.has_value()) {
+        dump->AddOwnerGUID(name.c_str(), mOwnerGUIDForMemoryDump.value());
+    }
 }
 
 uint64_t TextureBase::ComputeEstimatedByteSize() const {
