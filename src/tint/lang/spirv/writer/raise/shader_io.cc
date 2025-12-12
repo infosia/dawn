@@ -70,6 +70,9 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     // IO index for fragment position emulation interpolant
     std::optional<uint32_t> center_pos_frag_idx;
 
+    // TODO
+    core::ir::Value* user_center_z_result = nullptr;
+
     /// Constructor
     StateImpl(core::ir::Module& mod, core::ir::Function* f, const ShaderIOConfig& cfg)
         : ShaderIOBackendState(mod, f), config(cfg) {}
@@ -127,8 +130,9 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             config.apply_pixel_center_polyfill) {
             center_pos_vert_idx = AddCenterPosInterpolant(entries, addrspace);
 
-        } else if (func->IsFragment() && addrspace == core::AddressSpace::kIn &&
-                   config.apply_pixel_center_polyfill) {
+        } else if (func->IsFragment() && addrspace == core::AddressSpace::kIn) {
+            //&&
+            //     config.apply_pixel_center_polyfill) {
             center_pos_frag_idx = AddCenterPosInterpolant(entries, addrspace);
         }
 
@@ -218,8 +222,9 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             auto* user_center_z = builder.Swizzle(ty.f32(), xyzw_from_user_center, {2});
             auto* user_center_w = builder.Swizzle(ty.f32(), xyzw_from_user_center, {3});
 
-            auto* viewport_user_center_z =
-                ViewportMappedFragDepth(builder, user_center_z->Result());
+            user_center_z_result = user_center_z->Result();
+
+            auto* viewport_user_center_z = ViewportMappedFragDepth(builder, user_center_z_result);
             value = builder.Construct(ty.vec4f(), plus_p5, viewport_user_center_z, user_center_w)
                         ->Result();
         }
@@ -268,7 +273,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
         // Clamp frag_depth values if necessary.
         if (output.attributes.builtin == core::BuiltinValue::kFragDepth) {
-            value = ClampFragDepth(builder, value);
+            value = ClampFragDepth(builder, value, output.attributes.depth_mode);
         }
 
         // Convert f16 values to f32 values if needed.
@@ -304,8 +309,19 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     /// Clamp a frag_depth builtin value if necessary.
     /// @param builder the builder to use for new instructions
     /// @param frag_depth the incoming frag_depth value
+    /// @param depth_mode the incoming optional depth_mode value
     /// @returns the clamped value
-    core::ir::Value* ClampFragDepth(core::ir::Builder& builder, core::ir::Value* frag_depth) {
+    core::ir::Value* ClampFragDepth(core::ir::Builder& builder,
+                                    core::ir::Value* frag_depth,
+                                    std::optional<core::BuiltinDepthMode> depth_mode) {
+        if (user_center_z_result) {
+            if (depth_mode == core::BuiltinDepthMode::kGreater) {
+                frag_depth = builder.Min(frag_depth, user_center_z_result)->Result();
+            }
+            if (depth_mode == core::BuiltinDepthMode::kLess) {
+                frag_depth = builder.Max(frag_depth, user_center_z_result)->Result();
+            }
+        }
         if (!config.depth_range_offsets) {
             return frag_depth;
         }
