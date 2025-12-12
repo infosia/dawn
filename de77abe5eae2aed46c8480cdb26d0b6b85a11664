@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb0115d1_b9ff0a08",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-12-12T21:53:38Z",
+      "side": 1,
+      "message": "In particular, should we support override sized buffers immediately?",
+      "revId": "de77abe5eae2aed46c8480cdb26d0b6b85a11664",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
