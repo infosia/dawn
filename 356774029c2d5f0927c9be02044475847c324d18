@@ -50,6 +50,24 @@
       "message": "Is this a case you actually ran into, or a hypothetical one?\n\nIn the deferral case, this should never happen, because the creation lambda holds a reference to the Dawn object (\"this\"). So the object\u0027s destructor (and DestroyImpl()) cannot be called until all the lambdas release their refs (including the creation lambda), at which point we know  mHandle is valid and will be correctly destroyed by GL.\n\nIn the mutex case, all calls are immediate (not deferred), so AFAICT this could only happen if the constructor was racing with the destructor. This sounds like a much bigger problem than just GL correctness: the Dawn object itself might be in an inconsistent/invalid state. If so, is this something we can/are exercising via a test?",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "882ccbcf_86d9635d",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-12T06:26:36Z",
+      "side": 1,
+      "message": "`DestroyImpl` can be called explicitly by user.\n\nSo in this example, a race can happen:\n```\nwgpu::Texture texture \u003d device.CreateTexture(...);\n\n// texture\u0027s GL handle hasn\u0027t had a chance to be created.\ntexture.Destroy();\n```\n\nAdded a test.",
+      "parentUuid": "769c5fef_48b65ec9",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
