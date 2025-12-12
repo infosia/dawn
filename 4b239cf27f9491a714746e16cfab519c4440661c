@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0285db1e_73dc20fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-12T15:25:23Z",
+      "side": 1,
+      "message": "We can try instead to replace with \nhttps://www.w3.org/TR/WGSL/#texturegathercompare\n\nThen do the PCF math ourselves",
+      "revId": "4b239cf27f9491a714746e16cfab519c4440661c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f76ef6f5_662b830b",
         "filename": "webgpu-cts/expectations.txt",
         "patchSetId": 13
