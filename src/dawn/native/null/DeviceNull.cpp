@@ -414,7 +414,7 @@ void* Buffer::GetMappedPointerImpl() {
     return mBackingData.get();
 }
 
-void Buffer::UnmapImpl(BufferState oldState) {}
+void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {}
 
 void Buffer::DestroyImpl() {
     // TODO(crbug.com/dawn/831): DestroyImpl is called from two places.

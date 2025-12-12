@@ -156,8 +156,9 @@ void* Buffer::GetMappedPointerImpl() {
     return mMappedData;
 }
 
-void Buffer::UnmapImpl(BufferState oldState) {
-    if (IsMappedState(oldState) && MapMode() == wgpu::MapMode::Write) {
+void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
+    if (IsMappedState(oldState) && MapMode() == wgpu::MapMode::Write &&
+        newState != BufferState::Destroyed) {
         CaptureContext* captureContext = ToBackend(GetDevice()->GetQueue())->GetCaptureContext();
         if (captureContext != nullptr) {
             [[maybe_unused]] auto result =

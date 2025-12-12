@@ -102,7 +102,7 @@ class ErrorBuffer final : public BufferBase {
 
     void* GetMappedPointerImpl() override { return mFakeMappedData.get(); }
 
-    void UnmapImpl(BufferState oldState) override { mFakeMappedData.reset(); }
+    void UnmapImpl(BufferState oldState, BufferState newState) override { mFakeMappedData.reset(); }
 
     std::unique_ptr<uint8_t[]> mFakeMappedData;
 };
@@ -476,7 +476,8 @@ void BufferBase::DestroyImpl() {
     }
     if (needsUnmap) {
         [[maybe_unused]] bool hadError = GetDevice()->ConsumedError(
-            UnmapInternal("Buffer was destroyed before mapping was resolved."),
+            UnmapInternal(BufferState::Destroyed,
+                          "Buffer was destroyed before mapping was resolved."),
             "calling %s.Destroy().", this);
     }
     mState.store(BufferState::Destroyed, std::memory_order::release);
@@ -798,24 +799,25 @@ void BufferBase::APIUnmap() {
         return;
     }
     auto unmap = [&]() -> MaybeError {
-        DAWN_TRY(UnmapInternal("Buffer was unmapped before mapping was resolved."));
+        DAWN_TRY(UnmapInternal(BufferState::Unmapped,
+                               "Buffer was unmapped before mapping was resolved."));
         return GetDevice()->GetDynamicUploader()->MaybeSubmitPendingCommands();
     };
     [[maybe_unused]] bool hadError =
         GetDevice()->ConsumedError(unmap(), "calling %s.Unmap().", this);
 }
 
-MaybeError BufferBase::Unmap() {
+MaybeError BufferBase::Unmap(BufferState newState) {
     switch (mState.load(std::memory_order::acquire)) {
         case BufferState::Mapped:
-            UnmapImpl(BufferState::Mapped);
+            UnmapImpl(BufferState::Mapped, newState);
             break;
         case BufferState::MappedAtCreation:
             if (mStagingBuffer != nullptr) {
                 DAWN_TRY(CopyFromStagingBuffer());
             }
             if (mSize != 0 && IsCPUWritableAtCreation()) {
-                UnmapImpl(BufferState::MappedAtCreation);
+                UnmapImpl(BufferState::MappedAtCreation, newState);
             }
             break;
         case BufferState::Unmapped:
@@ -832,7 +834,7 @@ MaybeError BufferBase::Unmap() {
     return {};
 }
 
-MaybeError BufferBase::UnmapInternal(std::string_view earlyUnmapMessage) {
+MaybeError BufferBase::UnmapInternal(BufferState newState, std::string_view earlyUnmapMessage) {
     BufferState state = mState.load(std::memory_order::acquire);
 
     // If the buffer is already destroyed, we don't need to do anything.
@@ -857,7 +859,7 @@ MaybeError BufferBase::UnmapInternal(std::string_view earlyUnmapMessage) {
 
         if (event) {
             // Continue early unmap after releasing the mutex.
-            UnmapImpl(BufferState::PendingMap);
+            UnmapImpl(BufferState::PendingMap, newState);
             mState.store(BufferState::Unmapped, std::memory_order::release);
 
             GetDevice()->DeferIfLocked(
@@ -871,7 +873,7 @@ MaybeError BufferBase::UnmapInternal(std::string_view earlyUnmapMessage) {
         mState.wait(BufferState::PendingMap, std::memory_order_acquire);
     }
 
-    DAWN_TRY(Unmap());
+    DAWN_TRY(Unmap(newState));
     return {};
 }
 

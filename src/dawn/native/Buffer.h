@@ -130,7 +130,7 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     // Internal non-reentrant version of Unmap. This is used in workarounds or additional copies.
     // Note that this will fail if the map event is pending since that should never happen
     // internally.
-    MaybeError Unmap();
+    MaybeError Unmap(BufferState newState = BufferState::Unmapped);
 
     void DumpMemoryStatistics(dawn::native::MemoryDump* dump, const char* prefix) const;
 
@@ -185,7 +185,8 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     virtual MaybeError FinalizeMapImpl(BufferState newState) = 0;
     virtual void* GetMappedPointerImpl() = 0;
     // `oldState` is the state of the buffer before unmap operation started.
-    virtual void UnmapImpl(BufferState oldState) = 0;
+    // `newState` is the state of the buffer after unmap operation completed.
+    virtual void UnmapImpl(BufferState oldState, BufferState newState) = 0;
 
     virtual bool IsCPUWritableAtCreation() const = 0;
     MaybeError CopyFromStagingBuffer();
@@ -193,7 +194,7 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     MaybeError ValidateMapAsync(wgpu::MapMode mode, size_t offset, size_t size) const;
     MaybeError ValidateUnmap() const;
     bool CanGetMappedRange(bool writable, size_t offset, size_t size) const;
-    MaybeError UnmapInternal(std::string_view earlyUnmapMessage);
+    MaybeError UnmapInternal(BufferState newState, std::string_view earlyUnmapMessage);
 
     // Updates internal state to reflect that the buffer is now mapped.
     MaybeError FinalizeMap(BufferState newState);
