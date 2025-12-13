@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "758e624a_11eb01f7",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-13T00:51:57Z",
+      "side": 1,
+      "message": "nit: remove `[ ]`",
+      "revId": "deb35f447c5de911984eac281cf8ef699e37eb92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
