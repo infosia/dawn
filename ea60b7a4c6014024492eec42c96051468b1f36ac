@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a54f73c3_65515361",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-13T01:28:26Z",
+      "side": 1,
+      "message": "FYI Here is a [doc table](https://docs.google.com/document/d/1dIo2bkcnvrhwfFHKUVRA-LCfvS-Og6NNGy7p-a-FkbM/edit?usp\u003dsharing\u0026resourcekey\u003d0-WdLMvP5CXVvLQvmM32deXw) showing what capture/replay part / extra expectations are done during a end2end tests",
+      "parentUuid": "681e7e7d_b844723e",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08682e65_a9b76dd1",
@@ -141,6 +159,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fc5029e_dc4435c1",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-13T01:28:26Z",
+      "side": 1,
+      "message": "failed tests: 1239/4645, other 17 interrupted tests. (using [`gtest-parallel`](https://github.com/google/gtest-parallel))\nSo I think that\u0027s ~1/4 of all tests. Just using an allowlist for now.",
+      "parentUuid": "13efe807_5a70a697",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce88db53_501e2946",
@@ -154,6 +190,24 @@
       "writtenOn": "2025-12-09T10:42:49Z",
       "side": 1,
       "message": "Calling `ForTesting` functions and methods in production is usually a signal that something is wrong because the code is meant for testing only and not to be relied on.\n\nWhat\u0027s the concern about taking a reference to the object? Is it that during the destructor we run DestroyImpl before freeing the allocation which might keep a reference to a garbage pointer? Let\u0027s check with Kyle but IMHO we should add a `newState` argument to `UnmapImpl` instead.",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94b07b2a_002d8cd7",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-13T01:28:26Z",
+      "side": 1,
+      "message": "Done https://dawn-review.googlesource.com/c/dawn/+/280016 (The issue is we should not capture the unmap if the unmap is triggered by buffer destroy/deconstructor. Yes I shouldn\u0027t use GetRefCountForTesting here, sloppy. Changed to add a newState arg and only captuing if `newState !\u003d BufferState::Destroyed`)",
+      "parentUuid": "ce88db53_501e2946",
       "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -193,6 +247,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69446d6b_af5ca7d2",
+        "filename": "src/dawn/replay/Error.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-13T01:28:26Z",
+      "side": 1,
+      "message": "Removed Renamings. (Now only places native/Error.h in tests are unittests. I did the rename before making the replay public. so could be that CL removed both including)",
+      "parentUuid": "f68376c8_ac6c465a",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f776910_abbbe525",
@@ -206,6 +278,24 @@
       "writtenOn": "2025-12-09T10:42:49Z",
       "side": 1,
       "message": "For other backends we do this in https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/BUILD.gn;drc\u003d84bb175587ebe7f0e53bbbfa8122362558d444f0;l\u003d75 and we can just use `DAWN_ENABLE_BACKEND_WEBGPU` in `DawnTest` instead of adding a new define.",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbe2d21b_3777a9cf",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 20
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-13T01:28:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f776910_abbbe525",
       "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -233,6 +323,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a82b6cf_6e2acf09",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-13T01:28:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80ed57b8_7b2afcdc",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 38
+      },
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "26f18c91_dc1f6c32",
@@ -246,6 +360,24 @@
       "writtenOn": "2025-12-09T10:42:49Z",
       "side": 1,
       "message": "To make the #ifdef more local, the Recorder in the case without `DAWN_ENABLE_CAPTURE_REPLAY` should implement a full noop interface. This way other code doesn\u0027t need to care about capture/replay not being compiled.",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4795aaa_98868288",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-13T01:28:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26f18c91_dc1f6c32",
       "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -267,6 +399,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67c50254_50b8278c",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1605,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-13T01:28:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6cdee87_6bc8c7d3",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6daf2bd1_4c40f4fd",
@@ -284,6 +434,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f7176cc_f900f14a",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1619,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-13T01:28:26Z",
+      "side": 1,
+      "message": "Not applicable any more",
+      "parentUuid": "6daf2bd1_4c40f4fd",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a42dd5ea_95b38440",
@@ -297,6 +465,24 @@
       "writtenOn": "2025-12-09T10:42:49Z",
       "side": 1,
       "message": "nit: this might not be needed because the destructor runs right after TearDown.",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "061c6fac_74b7a3bd",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1624,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-13T01:28:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a42dd5ea_95b38440",
       "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -324,6 +510,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02d0cf1a_e821cd69",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-13T01:28:26Z",
+      "side": 1,
+      "message": "Not applicable any more",
+      "parentUuid": "dcd0944e_d55d2398",
+      "range": {
+        "startLine": 1675,
+        "startChar": 0,
+        "endLine": 1680,
+        "endChar": 6
+      },
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "106ce931_0acac978",
@@ -341,6 +551,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "553ec7ca_a783dacd",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 2156,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-13T01:28:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "106ce931_0acac978",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "adb95b05_4e78f6ba",
@@ -354,6 +582,30 @@
       "writtenOn": "2025-12-09T10:42:49Z",
       "side": 1,
       "message": "This should never happen?",
+      "range": {
+        "startLine": 2221,
+        "startChar": 45,
+        "endLine": 2221,
+        "endChar": 64
+      },
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c112be84_78059670",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 2221,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-13T01:28:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adb95b05_4e78f6ba",
       "range": {
         "startLine": 2221,
         "startChar": 45,
@@ -387,6 +639,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af1f2e1d_58304470",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-13T01:28:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0c58348_752d8d85",
+      "range": {
+        "startLine": 209,
+        "startChar": 9,
+        "endLine": 209,
+        "endChar": 36
+      },
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8b36ce50_6ca744af",
@@ -400,6 +676,24 @@
       "writtenOn": "2025-12-09T10:42:49Z",
       "side": 1,
       "message": "ditto",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb8ab0e6_a140132d",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-13T01:28:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b36ce50_6ca744af",
       "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -471,6 +765,24 @@
       "side": 1,
       "message": "For now you can manually test with the two flags together (--check-capture-replay --enable-toggles\u003denable_for_check_capture_replay)",
       "parentUuid": "065fe5e1_9852f3b9",
+      "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4cbd946_dba33484",
+        "filename": "src/dawn/tests/end2end/BasicTests.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-13T01:28:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52ed419a_c42ca40a",
       "revId": "ea60b7a4c6014024492eec42c96051468b1f36ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
