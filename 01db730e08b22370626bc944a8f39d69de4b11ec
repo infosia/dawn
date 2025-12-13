@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d662d43a_6d46a2b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4517202
+      },
+      "writtenOn": "2025-12-13T14:42:01Z",
+      "side": 1,
+      "message": "279775: [dawn][native] Disallow 0 texture usage even with internal usages | https://dawn-review.googlesource.com/c/dawn/+/279775",
+      "revId": "01db730e08b22370626bc944a8f39d69de4b11ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
