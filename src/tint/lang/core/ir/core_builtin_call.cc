@@ -220,6 +220,8 @@ tint::core::ir::Instruction::Accesses CoreBuiltinCall::GetSideEffects() const {
         case BuiltinFn::kSubgroupMatrixScalarMultiply:
         case BuiltinFn::kHasBinding:
         case BuiltinFn::kHasResource:
+        case BuiltinFn::kBufferView:
+        case BuiltinFn::kBufferLength:
         case BuiltinFn::kNone:
             break;
     }
