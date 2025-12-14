@@ -33,8 +33,11 @@
 #include "src/tint/lang/core/enums.h"
 #include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/ir/builder.h"
+#include "src/tint/lang/core/ir/core_builtin_call.h"
+#include "src/tint/lang/core/ir/instruction.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/validator.h"
+#include "src/tint/lang/core/ir/value.h"
 #include "src/tint/lang/core/type/binding_array.h"
 #include "src/tint/lang/core/type/builtin_structs.h"
 #include "src/tint/lang/core/type/depth_multisampled_texture.h"
@@ -733,6 +736,15 @@ struct State {
         auto* coords = next_arg();
         auto* texture_ty = texture->Type()->As<spirv::type::Image>();
 
+        const bool is_depth_3d_cube_array =
+            texture_ty->GetArrayed() == type::Arrayed::kArrayed &&
+            texture_ty->GetDepth() == type::Depth::kDepth &&
+            (texture_ty->GetDim() == type::Dim::kCube || texture_ty->GetDim() == type::Dim::kD3);
+        const bool polyfill_depth_cube_array =
+            config.texture_sample_compare_depth_cube_array && is_depth_3d_cube_array &&
+            (builtin->Func() == core::BuiltinFn::kTextureSampleCompare ||
+             builtin->Func() == core::BuiltinFn::kTextureSampleCompareLevel);
+
         // Use OpSampledImage to create an OpTypeSampledImage object.
         auto* sampled_image = b.CallExplicit<spirv::ir::BuiltinCall>(
             ty.Get<type::SampledImage>(texture_ty), spirv::BuiltinFn::kOpSampledImage,
@@ -761,14 +773,20 @@ struct State {
                 operands.offset = next_arg();
                 break;
             case core::BuiltinFn::kTextureSampleCompare:
-                function = spirv::BuiltinFn::kImageSampleDrefImplicitLod;
+                function = polyfill_depth_cube_array
+                               ? spirv::BuiltinFn::kImageDrefGather
+                               : spirv::BuiltinFn::kImageSampleDrefImplicitLod;
                 depth = next_arg();
                 operands.offset = next_arg();
                 break;
             case core::BuiltinFn::kTextureSampleCompareLevel:
-                function = spirv::BuiltinFn::kImageSampleDrefExplicitLod;
+                function = polyfill_depth_cube_array
+                               ? spirv::BuiltinFn::kImageDrefGather
+                               : spirv::BuiltinFn::kImageSampleDrefExplicitLod;
                 depth = next_arg();
-                operands.lod = b.Constant(0_f);
+                if (!polyfill_depth_cube_array) {
+                    operands.lod = b.Constant(0_f);
+                }
                 operands.offset = next_arg();
                 break;
             case core::BuiltinFn::kTextureSampleGrad:
@@ -801,7 +819,10 @@ struct State {
 
         // Call the function.
         // If this is a depth comparison, the result is always f32, otherwise vec4f.
-        auto* result_ty = depth ? static_cast<const core::type::Type*>(ty.f32()) : ty.vec4f();
+        auto* result_ty = (depth && !polyfill_depth_cube_array)
+                              ? static_cast<const core::type::Type*>(ty.f32())
+                              : ty.vec4f();
+
         core::ir::Instruction* result =
             b.Call<spirv::ir::BuiltinCall>(result_ty, function, std::move(function_args));
         result->InsertBefore(builtin);
@@ -813,12 +834,43 @@ struct State {
             result->InsertBefore(builtin);
         }
 
+        if (polyfill_depth_cube_array) {
+            // Treat as though this is a texture gather compare (params are identical)
+            // builtin->SetFunc(core::BuiltinFn::kTextureGatherCompare);
+            // builtin->Result()->SetType(ty.vec4f());
+            // auto og_result = builtin->DetachResult();
+            // builtin->SetResult(ir::InstructionResult *result)
+            // auto as_gather = TextureGather(builtin);
+
+            core::ir::Instruction* fake_result = nullptr;
+            b.InsertAfter(result, [&] {
+                // THIS IS AN INCOMPLETE POLYFILL. see crbug.com/467015399
+                // To do a complete polyfill we would either need to use TextureGatherCompare
+                // (assuming that works) or manually do the correct comparison by passing the
+                // comparison op in as an immediate (per sampler).
+
+                // The render feature here is PCF style shadow mapping of point lights. The correct
+                // output range is [0,1] but are not sure which extreme counts as in shadow. So here
+                // we just output 0.5 so all everything is in half shadow. This will not look
+                // correct but will allow the App (game) to remain visually functional.
+
+                fake_result =
+                    b.Call<spirv::ir::BuiltinCall>(ty.f32(), spirv::BuiltinFn::kDot, result,
+                                                   b.Splat(ty.vec4f(), b.Constant(0.25_f)));
+            });
+
+            fake_result->SetResult(builtin->DetachResult());
+            builtin->Destroy();
+            return;
+        }
+
         result->SetResult(builtin->DetachResult());
         builtin->Destroy();
     }
 
     /// Handle a textureGather*() builtin.
     /// @param builtin the builtin call instruction
+
     void TextureGather(core::ir::CoreBuiltinCall* builtin) {
         // Helper to get the next argument from the call, or nullptr if there are no more arguments.
         uint32_t arg_idx = 0;
