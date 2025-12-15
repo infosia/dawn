@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15165c09_8bfb8f21",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-15T14:22:54Z",
+      "side": 1,
+      "message": "Yes!",
+      "revId": "470df9177a2f398f3f2af500e9812b16565e32f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
