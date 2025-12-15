@@ -122,6 +122,24 @@
       "parentUuid": "5c28313a_729d02f0",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d55175e8_a91bc470",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-15T03:55:12Z",
+      "side": 1,
+      "message": "Here\u0027s a doc where I attempted to capture the options for DestroyImpl; comments welcome: https://docs.google.com/document/d/1_4m0cYr9Njv3C98p4B7m2lFabHTwh315DBRIMyIjC-Q/edit?usp\u003dsharing\n\nAnd here\u0027s another take on EnqueueGL() that attempts to use the optimal version for each option by adding a \"this\" pointer and a \"GetHandle()\" function argument. In the non-deferred case, it retrieves the handle directly from `self` and calls the lambda with it. In the deferred-destructor case, it calls GetHandle() and captures that. In the deferred-explicit-Destroy case, it captures `Ref\u003cT\u003e(self)` and calls GetHandle within the lambda:\n\n    template\u003ctypename T, typename Fn\u003e\n    MaybeError EnqueueGL(T* self, Fn work, GLuint(T::*GetHandle())) {\n        if (!IsToggleEnabled(Toggle::GLDefer)) {\n            MarkGLUsed(ExecutionQueueBase::SubmitMode::Normal);\n\n            // Execute immediately\n            ContextEGL::ScopedMakeCurrent scopedCurrentContext;\n            DAWN_TRY_ASSIGN(scopedCurrentContext, mContext-\u003eMakeCurrent());\n\n            work(mGL, (self-\u003e*GetHandle)());\n            return {};\n        }\n        if (!TryAddRef(self)) {\n            // “self” is being destroyed; capture handle\n            return EnqueueGL([handle \u003d (self-\u003e*GetHandle)(), work](const OpenGLFunctions\u0026 gl) -\u003e MaybeError {\n                work(gl, handle);\n                return {};\n            });\n        } else {\n            // “self” is not being destroyed; capture a reference to “self”\n            return EnqueueGL([self \u003d Ref\u003cT\u003e(self), work, GetHandle](const OpenGLFunctions\u0026 gl) -\u003e MaybeError {\n                work(gl, (self-\u003e*GetHandle)());\n                return {};\n            });\n        }\n    }",
+      "parentUuid": "b9875df9_254eb395",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
