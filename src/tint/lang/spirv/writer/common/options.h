@@ -64,6 +64,7 @@ struct Options {
         TINT_REFLECT(RangeOffsets, min, max);
     };
 
+
     /// An optional remapped name to use when emitting the entry point.
     std::string remapped_entry_point_name = {};
 
@@ -142,6 +143,12 @@ struct Options {
     /// Set to `true` to decompose uniform buffers into array<vec4u, ...>.
     bool decompose_uniform_buffers = true;
 
+    /// Set to 'true' to polyfill unary negation.
+    bool polyfill_unary_f32_negation = false;
+
+    /// Set to 'true' to polyfill unary abs.
+    bool polyfill_f32_abs = false;
+
     /// Offsets of the minDepth and maxDepth push constants.
     std::optional<RangeOffsets> depth_range_offsets = std::nullopt;
 
@@ -150,6 +157,8 @@ struct Options {
 
     /// Resource binding information
     std::optional<ResourceBindingConfig> resource_binding = std::nullopt;
+
+
 
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(Options,
@@ -177,6 +186,8 @@ struct Options {
                  use_vulkan_memory_model,
                  dva_transform_handle,
                  decompose_uniform_buffers,
+                 polyfill_unary_f32_negation,
+                 polyfill_f32_abs,
                  depth_range_offsets,
                  spirv_version,
                  resource_binding);
