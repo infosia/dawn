@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "68e344e8_5f5348cc",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 80
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-15T11:44:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "665015dd_2d7f8bd0",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "769c5fef_48b65ec9",
@@ -138,6 +156,24 @@
       "side": 1,
       "message": "Here\u0027s a doc where I attempted to capture the options for DestroyImpl; comments welcome: https://docs.google.com/document/d/1_4m0cYr9Njv3C98p4B7m2lFabHTwh315DBRIMyIjC-Q/edit?usp\u003dsharing\n\nAnd here\u0027s another take on EnqueueGL() that attempts to use the optimal version for each option by adding a \"this\" pointer and a \"GetHandle()\" function argument. In the non-deferred case, it retrieves the handle directly from `self` and calls the lambda with it. In the deferred-destructor case, it calls GetHandle() and captures that. In the deferred-explicit-Destroy case, it captures `Ref\u003cT\u003e(self)` and calls GetHandle within the lambda:\n\n    template\u003ctypename T, typename Fn\u003e\n    MaybeError EnqueueGL(T* self, Fn work, GLuint(T::*GetHandle())) {\n        if (!IsToggleEnabled(Toggle::GLDefer)) {\n            MarkGLUsed(ExecutionQueueBase::SubmitMode::Normal);\n\n            // Execute immediately\n            ContextEGL::ScopedMakeCurrent scopedCurrentContext;\n            DAWN_TRY_ASSIGN(scopedCurrentContext, mContext-\u003eMakeCurrent());\n\n            work(mGL, (self-\u003e*GetHandle)());\n            return {};\n        }\n        if (!TryAddRef(self)) {\n            // “self” is being destroyed; capture handle\n            return EnqueueGL([handle \u003d (self-\u003e*GetHandle)(), work](const OpenGLFunctions\u0026 gl) -\u003e MaybeError {\n                work(gl, handle);\n                return {};\n            });\n        } else {\n            // “self” is not being destroyed; capture a reference to “self”\n            return EnqueueGL([self \u003d Ref\u003cT\u003e(self), work, GetHandle](const OpenGLFunctions\u0026 gl) -\u003e MaybeError {\n                work(gl, (self-\u003e*GetHandle)());\n                return {};\n            });\n        }\n    }",
       "parentUuid": "b9875df9_254eb395",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70d464ed_dc7b9fcc",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-15T11:44:19Z",
+      "side": 1,
+      "message": "That would work. However it only works for classes with single handle. It doesn\u0027t work for QuerySet as you mentioned. A `FutureHandle` can work in all cases.\n\nAnd IMHO, the templated DestroyGL + `TryAddRef` approach is quite difficult to read at least for me. Too many indirections, getter function pointer then lambda.\n\nI\u0027m curious what is the issue with the `FutureHandle` container approach? Its main purpose is separating the lifetime of the handle from the Buffer class\u0027. It\u0027s useful for deferrals because after the Buffer object is destroyed, the handle\u0027s destruction is deferred. That `FutureHandle` class\u0027 implementation might even have less code than the templated `DestroyGL` function.\n\n\n\u003e I actually like the TryAddRef() flavour better, since we\u0027re already doing that for UnmapImpl().\n\nActually, after this [CL](https://dawn-review.googlesource.com/c/dawn/+/280016/5/src/dawn/native/opengl/BufferGL.cpp), we can know whether we are being destroyed or not in `UnmapImpl` without `TryAddRef`. So it is no longer needed there.",
+      "parentUuid": "d55175e8_a91bc470",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
