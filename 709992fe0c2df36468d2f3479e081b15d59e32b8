@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4d2be22_d07caf71",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-12-15T11:59:32Z",
+      "side": 1,
+      "message": "Hi @kainino@chromium.org, @jimblackler@google.com\nPresubmit failed on the previous patchset. I\u0027ve applied the fix. Could you please review it again?",
+      "revId": "709992fe0c2df36468d2f3479e081b15d59e32b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
