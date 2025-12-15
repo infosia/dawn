@@ -320,6 +320,24 @@
       "parentUuid": "b38b079b_b8c0f44b",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83955743_ed2468eb",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-15T16:51:20Z",
+      "side": 1,
+      "message": "Actually \"bind-to-create\" approach is not applicable to all object types.\n\nIt doesn\u0027t work for GL program and [sampler](https://registry.khronos.org/OpenGL-Refpages/es3.0/html/glBindSampler.xhtml) at least. So this is not an universal solution for all classes.",
+      "parentUuid": "6bc639c4_ed11b9aa",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
