@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "92ed6652_7e0da0b0",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-12-15T20:33:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5b86ea10_dc08876b",
+      "revId": "e15d21e32c037da13ad1b6dee7a3d1defe71b27d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93086854_b9c4a5cd",
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "I\u0027ve fixed this locally indeed but forgot to upload patch.",
       "parentUuid": "93086854_b9c4a5cd",
+      "revId": "e15d21e32c037da13ad1b6dee7a3d1defe71b27d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a00b88fb_5f737424",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-12-15T20:33:41Z",
+      "side": 1,
+      "message": "I now get this error:\n```\nfragment_depth/position.wgsl spvasm FAIL\n    ../../src/tint/utils/containers/vector.h:582 internal compiler error: TINT_ASSERT(iterator_count_ \u003d\u003d 0) \n```",
+      "parentUuid": "3b1e8359_af8edd2a",
       "revId": "e15d21e32c037da13ad1b6dee7a3d1defe71b27d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
