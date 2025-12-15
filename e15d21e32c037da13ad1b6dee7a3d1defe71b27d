@@ -122,6 +122,24 @@
       "parentUuid": "3b1e8359_af8edd2a",
       "revId": "e15d21e32c037da13ad1b6dee7a3d1defe71b27d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7242056f_8faadeee",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T20:42:14Z",
+      "side": 1,
+      "message": "Seems like something is wrong, you\u0027ll need to use a debugger to determine which access is triggering this issue.",
+      "parentUuid": "a00b88fb_5f737424",
+      "revId": "e15d21e32c037da13ad1b6dee7a3d1defe71b27d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
