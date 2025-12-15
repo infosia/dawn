@@ -383,6 +383,25 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
      {"metal_polyfill_unpack_2x16_snorm",
       "Polyfill unpack2x16snorm for MSL due to CTS failures on Mac AMD devices.",
       "https://crbug.com/407109055", ToggleStage::Device}},
+<<<<<<< HEAD   (e1ce227ebf75378c5f60a9d531579982bcdd93ee m143: Generate Dawn version as array instead of string)
+||||||| BASE   (c3de402889bfe9d7949503e6f66ac3ee18bdbc98 set ios to 14 in github action ci)
+    {Toggle::MetalPolyfillUnpack2x16unorm,
+     {"metal_polyfill_unpack_2x16_unorm",
+      "Polyfill unpack2x16unorm for MSL due to CTS failures on Mac M3+ devices.",
+      "https://crbug.com/449576833", ToggleStage::Device}},
+=======
+    {Toggle::MetalPolyfillUnpack2x16unorm,
+     {"metal_polyfill_unpack_2x16_unorm",
+      "Polyfill unpack2x16unorm for MSL due to CTS failures on Mac M3+ devices.",
+      "https://crbug.com/449576833", ToggleStage::Device}},
+    {Toggle::VulkanPolyfillF32Negation,
+     {"spirv_polyfill_f32_negation",
+      "Polyfill f32 negation with bit manipulation in SPIR-V writer.",
+      "https://crbug.com/448294721", ToggleStage::Device}},
+    {Toggle::VulkanPolyfillF32Abs,
+     {"spirv_polyfill_f32_abs", "Polyfill f32 abs with bit manipulation in SPIR-V writer.",
+      "https://crbug.com/448294721", ToggleStage::Device}},
+>>>>>>> CHANGE (7369bddb2b510ffd4feb52b8d32e853bfa6695e0 [tint] Polyfill unary negation and abs for amd mesa frontend)
     {Toggle::MetalFillEmptyOcclusionQueriesWithZero,
      {"metal_fill_empty_occlusion_queries_with_zero",
       "Apple GPUs leave stale results in the visibility result buffer instead of writing zero if "

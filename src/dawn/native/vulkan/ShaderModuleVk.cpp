@@ -210,6 +210,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
 
     req.tintOptions.statically_paired_texture_binding_points =
         std::move(staticallyPairedTextureBindingPoints);
+<<<<<<< HEAD   (e1ce227ebf75378c5f60a9d531579982bcdd93ee m143: Generate Dawn version as array instead of string)
     req.tintOptions.disable_robustness = !GetDevice()->IsRobustnessEnabled();
     req.tintOptions.emit_vertex_point_size = emitPointSize;
 
@@ -240,6 +241,28 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         GetDevice()->IsToggleEnabled(Toggle::VulkanPolyfillSwitchWithIf);
     req.tintOptions.polyfill_subgroup_broadcast_f16 =
         GetDevice()->IsToggleEnabled(Toggle::EnableSubgroupsIntelGen9);
+||||||| BASE   (c3de402889bfe9d7949503e6f66ac3ee18bdbc98 set ios to 14 in github action ci)
+    req.tintOptions.substitute_overrides_config = {
+        .map = BuildSubstituteOverridesTransformConfig(programmableStage),
+    };
+    req.tintOptions.bindings = std::move(bindings);
+    req.tintOptions.resource_binding = std::move(resourceBindingConfig);
+
+    req.tintOptions.disable_robustness = !GetDevice()->IsRobustnessEnabled();
+    req.tintOptions.disable_workgroup_init =
+        GetDevice()->IsToggleEnabled(Toggle::DisableWorkgroupInit);
+=======
+    req.tintOptions.substitute_overrides_config = {
+        .map = BuildSubstituteOverridesTransformConfig(programmableStage),
+    };
+    req.tintOptions.bindings = std::move(bindings);
+    req.tintOptions.resource_binding = std::move(resourceBindingConfig);
+
+    req.tintOptions.workarounds.polyfill_unary_f32_negation =
+        GetDevice()->IsToggleEnabled(Toggle::VulkanPolyfillF32Negation);
+    req.tintOptions.workarounds.polyfill_f32_abs =
+        GetDevice()->IsToggleEnabled(Toggle::VulkanPolyfillF32Abs);
+>>>>>>> CHANGE (7369bddb2b510ffd4feb52b8d32e853bfa6695e0 [tint] Polyfill unary negation and abs for amd mesa frontend)
     req.tintOptions.disable_polyfill_integer_div_mod =
         GetDevice()->IsToggleEnabled(Toggle::DisablePolyfillsOnIntegerDivisonAndModulo);
     req.tintOptions.scalarize_max_min_clamp =

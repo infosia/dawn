@@ -64,6 +64,174 @@ struct Options {
         TINT_REFLECT(RangeOffsets, min, max);
     };
 
+<<<<<<< HEAD   (e1ce227ebf75378c5f60a9d531579982bcdd93ee m143: Generate Dawn version as array instead of string)
+||||||| BASE   (c3de402889bfe9d7949503e6f66ac3ee18bdbc98 set ios to 14 in github action ci)
+    /// The set of options which control workarounds for driver issues in the SPIR-V generator.
+    struct Workarounds {
+        /// Set to `true` to generate a polyfill for switch statements using if/else statements.
+        bool polyfill_case_switch = false;
+
+        /// Set to `true` to scalarize max min and clamp builtins.
+        bool scalarize_max_min_clamp = false;
+
+        /// Set to `true` if handles should be transformed by direct variable access.
+        bool dva_transform_handle = false;
+
+        /// Set to `true` to generate polyfill for `pack4x8snorm`, `pack4x8unorm`, `unpack4x8snorm`
+        /// and `unpack4x8unorm` builtins
+        bool polyfill_pack_unpack_4x8_norm = false;
+
+        /// Set to `true` to generate a polyfill clamp of `id` param of subgroupShuffle to within
+        /// the spec max subgroup size.
+        bool subgroup_shuffle_clamped = false;
+
+        /// Set to `true` to generate polyfill for `subgroupBroadcast(f16)`
+        bool polyfill_subgroup_broadcast_f16 = false;
+
+        /// Set to `true` to always pass matrices to user functions by pointer instead of by value.
+        bool pass_matrix_by_pointer = false;
+
+        TINT_REFLECT(Workarounds,
+                     polyfill_case_switch,
+                     scalarize_max_min_clamp,
+                     dva_transform_handle,
+                     polyfill_pack_unpack_4x8_norm,
+                     subgroup_shuffle_clamped,
+                     polyfill_subgroup_broadcast_f16,
+                     pass_matrix_by_pointer);
+    };
+
+    /// Any options which are controlled by the presence/absence of a vulkan extension.
+    struct Extensions {
+        /// Set to `true` to allow for the usage of the demote to helper extension.
+        bool use_demote_to_helper_invocation = false;
+
+        /// Set to `true` to use the StorageInputOutput16 capability for shader IO that uses f16
+        /// types.
+        bool use_storage_input_output_16 = true;
+
+        /// Set to `true` to initialize workgroup memory with OpConstantNull when
+        /// VK_KHR_zero_initialize_workgroup_memory is enabled.
+        bool use_zero_initialize_workgroup_memory = false;
+
+        /// Set to `true` if the Vulkan Memory Model should be used
+        bool use_vulkan_memory_model = false;
+
+        /// Set to `true` to skip robustness transform on textures.
+        bool disable_image_robustness = false;
+
+        /// Set to `true` to disable index clamping on the runtime-sized arrays in robustness
+        /// transform.
+        bool disable_runtime_sized_array_index_clamping = false;
+
+        /// Set to `true` to generate polyfill for `dot4I8Packed` and `dot4U8Packed` builtins
+        bool dot_4x8_packed = false;
+
+        /// Set to `true` to decompose uniform buffers into array<vec4u, ...>.
+        bool decompose_uniform_buffers = true;
+
+        TINT_REFLECT(Extensions,
+                     use_demote_to_helper_invocation,
+                     use_storage_input_output_16,
+                     use_zero_initialize_workgroup_memory,
+                     use_vulkan_memory_model,
+                     disable_image_robustness,
+                     disable_runtime_sized_array_index_clamping,
+                     dot_4x8_packed,
+                     decompose_uniform_buffers);
+    };
+
+    /// The entry point name to generate
+    std::string entry_point_name;
+
+=======
+    /// The set of options which control workarounds for driver issues in the SPIR-V generator.
+    struct Workarounds {
+        /// Set to `true` to generate a polyfill for switch statements using if/else statements.
+        bool polyfill_case_switch = false;
+
+        /// Set to `true` to scalarize max min and clamp builtins.
+        bool scalarize_max_min_clamp = false;
+
+        /// Set to `true` if handles should be transformed by direct variable access.
+        bool dva_transform_handle = false;
+
+        /// Set to `true` to generate polyfill for `pack4x8snorm`, `pack4x8unorm`, `unpack4x8snorm`
+        /// and `unpack4x8unorm` builtins
+        bool polyfill_pack_unpack_4x8_norm = false;
+
+        /// Set to `true` to generate a polyfill clamp of `id` param of subgroupShuffle to within
+        /// the spec max subgroup size.
+        bool subgroup_shuffle_clamped = false;
+
+        /// Set to `true` to generate polyfill for `subgroupBroadcast(f16)`
+        bool polyfill_subgroup_broadcast_f16 = false;
+
+        /// Set to `true` to always pass matrices to user functions by pointer instead of by value.
+        bool pass_matrix_by_pointer = false;
+
+        /// Set to `true` to generate polyfill for f32 negation.
+        bool polyfill_unary_f32_negation = false;
+
+        /// Set to `true` to generate polyfill for f32 abs.
+        bool polyfill_f32_abs = false;
+
+        TINT_REFLECT(Workarounds,
+                     polyfill_case_switch,
+                     scalarize_max_min_clamp,
+                     dva_transform_handle,
+                     polyfill_pack_unpack_4x8_norm,
+                     subgroup_shuffle_clamped,
+                     polyfill_subgroup_broadcast_f16,
+                     pass_matrix_by_pointer,
+                     polyfill_unary_f32_negation,
+                     polyfill_f32_abs);
+    };
+
+    /// Any options which are controlled by the presence/absence of a vulkan extension.
+    struct Extensions {
+        /// Set to `true` to allow for the usage of the demote to helper extension.
+        bool use_demote_to_helper_invocation = false;
+
+        /// Set to `true` to use the StorageInputOutput16 capability for shader IO that uses f16
+        /// types.
+        bool use_storage_input_output_16 = true;
+
+        /// Set to `true` to initialize workgroup memory with OpConstantNull when
+        /// VK_KHR_zero_initialize_workgroup_memory is enabled.
+        bool use_zero_initialize_workgroup_memory = false;
+
+        /// Set to `true` if the Vulkan Memory Model should be used
+        bool use_vulkan_memory_model = false;
+
+        /// Set to `true` to skip robustness transform on textures.
+        bool disable_image_robustness = false;
+
+        /// Set to `true` to disable index clamping on the runtime-sized arrays in robustness
+        /// transform.
+        bool disable_runtime_sized_array_index_clamping = false;
+
+        /// Set to `true` to generate polyfill for `dot4I8Packed` and `dot4U8Packed` builtins
+        bool dot_4x8_packed = false;
+
+        /// Set to `true` to decompose uniform buffers into array<vec4u, ...>.
+        bool decompose_uniform_buffers = true;
+
+        TINT_REFLECT(Extensions,
+                     use_demote_to_helper_invocation,
+                     use_storage_input_output_16,
+                     use_zero_initialize_workgroup_memory,
+                     use_vulkan_memory_model,
+                     disable_image_robustness,
+                     disable_runtime_sized_array_index_clamping,
+                     dot_4x8_packed,
+                     decompose_uniform_buffers);
+    };
+
+    /// The entry point name to generate
+    std::string entry_point_name;
+
+>>>>>>> CHANGE (7369bddb2b510ffd4feb52b8d32e853bfa6695e0 [tint] Polyfill unary negation and abs for amd mesa frontend)
     /// An optional remapped name to use when emitting the entry point.
     std::string remapped_entry_point_name = {};
 
