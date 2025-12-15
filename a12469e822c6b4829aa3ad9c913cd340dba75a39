@@ -81,6 +81,30 @@
       },
       "revId": "a12469e822c6b4829aa3ad9c913cd340dba75a39",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c699bb0_34dddc05",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-15T21:58:33Z",
+      "side": 1,
+      "message": "Ah I see.",
+      "parentUuid": "3c728e3e_98301696",
+      "range": {
+        "startLine": 847,
+        "startChar": 0,
+        "endLine": 854,
+        "endChar": 76
+      },
+      "revId": "a12469e822c6b4829aa3ad9c913cd340dba75a39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

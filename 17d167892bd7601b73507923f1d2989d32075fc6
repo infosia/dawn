@@ -1,0 +1,66 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68c97284_6b526645",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2128,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-15T21:58:33Z",
+      "side": 1,
+      "message": "Nit: ret_store_type",
+      "fixSuggestions": [
+        {
+          "fixId": "71555774_95174bd3",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/wgsl/resolver/validator.cc",
+              "range": {
+                "startLine": 2128,
+                "startChar": 0,
+                "endLine": 2129,
+                "endChar": 0
+              },
+              "replacement": "    if (value % ret_store_type-\u003eAlign() !\u003d 0) {\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/resolver/validator.cc",
+              "range": {
+                "startLine": 2131,
+                "startChar": 0,
+                "endLine": 2133,
+                "endChar": 0
+              },
+              "replacement": "            \u003c\u003c \" must evenly divide the alignment of the return type (\" \u003c\u003c ret_store_type-\u003eAlign()\n            \u003c\u003c \")\";\n"
+            }
+          ]
+        }
+      ],
+      "revId": "17d167892bd7601b73507923f1d2989d32075fc6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e732d4e_1821c8a7",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2135,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-15T21:58:33Z",
+      "side": 1,
+      "message": "Should this be including the type size in the check?\n`offset + ret_store_type-\u003eSize() \u003e\u003d buffer_type-\u003eSize()`?",
+      "revId": "17d167892bd7601b73507923f1d2989d32075fc6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
