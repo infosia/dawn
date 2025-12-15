@@ -16,6 +16,23 @@
       "message": "Please take a look, thanks!",
       "revId": "547eac3a4e6562ac6f7b5c37f58d8aafb32f766b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c12970b8_50c51061",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 4648,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-15T09:54:46Z",
+      "side": 1,
+      "message": "As asked on Slack, given this is to avoid double-counting of SharedImage allocations, why not make this GUID part of SharedTextureMemory instead?",
+      "revId": "547eac3a4e6562ac6f7b5c37f58d8aafb32f766b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
