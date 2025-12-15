@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d0ecaa1f_4c2f1995",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-12-15T21:48:45Z",
+      "side": 1,
+      "message": "Since no impl is provided for this in this change it\u0027s not clear why this is named \"Edge\" in this change. Maybe adding some comments documenting what the intention of this function is would hel?",
+      "range": {
+        "startLine": 310,
+        "startChar": 17,
+        "endLine": 310,
+        "endChar": 33
+      },
+      "revId": "547eac3a4e6562ac6f7b5c37f58d8aafb32f766b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c12970b8_50c51061",
         "filename": "src/dawn/dawn.json",
         "patchSetId": 4
@@ -49,6 +72,29 @@
       "side": 1,
       "message": "Hi, thanks forreviewing!\nAs I mentioned in the [issue\u0027s comment](https://issues.chromium.org/issues/397989391#comment8), shared images created using `WrappedGraphiteTextureBacking` will not use `SharedTextureMemory`, it will directly create a Dawn texture if using Skia Graphite Dawn. We should also mark these textures with proper ownership information.",
       "parentUuid": "c12970b8_50c51061",
+      "revId": "547eac3a4e6562ac6f7b5c37f58d8aafb32f766b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a5dd14d_30d74446",
+        "filename": "src/dawn/tests/unittests/native/MemoryInstrumentationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-12-15T21:48:45Z",
+      "side": 1,
+      "message": "nit. This test is super overloaded for a unit test. I think it would be better to move these into separate unit tests. Ideally, I think this whole test could be split up a bit more, but at least for this change, maybe we could just separate out the new changes.",
+      "range": {
+        "startLine": 202,
+        "startChar": 4,
+        "endLine": 241,
+        "endChar": 75
+      },
       "revId": "547eac3a4e6562ac6f7b5c37f58d8aafb32f766b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
