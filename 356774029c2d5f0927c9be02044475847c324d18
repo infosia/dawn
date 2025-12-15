@@ -284,6 +284,24 @@
       "parentUuid": "9f2b05ca_c8d057bd",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b38b079b_b8c0f44b",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-15T16:16:27Z",
+      "side": 1,
+      "message": "Sorry, I should have explained GL \"bind-to-create\" more in my comment. In OpenGL and OpenGL ES, there is this very weird mechanism where the application can allocate the IDs itself and just tell the driver \"now glBindBuffer the ID 42 to an ARRAY_BUFFER\" which will implicitly make the driver allocate a buffer with ID 42, even if `glGenBuffers` wasn\u0027t called prior to that.\n\nWe can have a small registry service on the `opengl::Device` that has a mutex internally and looks like:\n\n```\nclass IdAllocator {\n  public:\n    GLuint AllocateBufferID();\n    void FreeBuffer(const OpenGLFunctions\u0026 gl, GLuint id); // calls glDeleteBuffer\n    \n  private:\n    MutexProtected\u003cfreelist + nextAvailable\u003e mBufferIDs;\n};\n```\n\nThen `opengl::Buffer` looks a bit like this:\n\n```\nResultOrError\u003cRef\u003cBuffer\u003e\u003e Buffer::Create(Device* device,\n                                          const UnpackedPtr\u003cBufferDescriptor\u003e\u0026 descriptor) {\n    Ref\u003cBuffer\u003e buffer \u003d AcquireRef(new Buffer(device, descriptor));\n    buffer-\u003emHandle \u003d device-\u003eGetIdAllocator()-\u003eAllocateBufferID();\n\n    DAWN_TRY(device-\u003eEnqueueGL([device, buffer, bufferId, isMappedAtCreation \u003d descriptor-\u003emappedAtCreation](\n                                   const OpenGLFunctions\u0026 gl) -\u003e MaybeError {\n        // This replaces the GenBuffers using bind-to-create.\n        DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, buffer-\u003emHandle));\n\n        // ...\n        return {};\n    }));\n\n    // ...\n\n    return std::move(buffer);\n}\n\nvoid Buffer::DestroyImpl() {\n    BufferBase::DestroyImpl();\n\n    Device* device \u003d ToBackend(GetDevice());\n    GLuint handle \u003d mHandle;\n    mHandle \u003d 0;\n    device-\u003eEnqueueGL(ExecutionQueueBase::SubmitMode::Passive,\n                                   [device, handle](const OpenGLFunctions\u0026 gl) {\n        device-\u003eGetIdAllocator()-\u003eFreeBuffer(gl, mHandle);\n    }\n}\n```\n\nWe would need to check if we have cases where DestroyImpl is not called (for example if initialization fail) and make sure we free the handle in these cases (like in the destructor if `mHandle` is still 0?)\n\nThis would avoid the issues when `DestroyImpl` is called before the commands for the initialization are executed because `mHandle` has its value immediately on buffer creation and it is not a deferred thing.",
+      "parentUuid": "9f2b05ca_c8d057bd",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
