@@ -186,6 +186,24 @@
       "parentUuid": "cfa8db39_f3648425",
       "revId": "e11aae943bc46518bc2561040b396853e09a4bc8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5801abc5_98938301",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2025-12-15T05:17:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "951138cb_839aa43b",
+      "revId": "e11aae943bc46518bc2561040b396853e09a4bc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
