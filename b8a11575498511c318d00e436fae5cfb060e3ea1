@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf09434e_8d48e964",
+        "filename": "src/tint/lang/wgsl/ir_roundtrip_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3534,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T16:46:06Z",
+      "side": 1,
+      "message": "Ah possibly due to the round tripping.",
+      "parentUuid": "54ca946c_f519c017",
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "92f15ee2_1f876823",
@@ -108,6 +126,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "35816667_f30056ff",
+        "filename": "src/tint/lang/wgsl/reader/lower/lower.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T16:46:06Z",
+      "side": 1,
+      "message": "Let\u0027s remove the `FIXME` or change it into a `TODO(\u003cbug number\u003e) ...` just to make it clearer",
+      "parentUuid": "1637f0ad_4bbbd90d",
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6e01e9e3_8b5a4453",
         "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
         "patchSetId": 2
@@ -137,6 +173,24 @@
       "side": 1,
       "message": "Wouldn\u0027t compile without it for me. No idea on when it\u0027s required.",
       "parentUuid": "6e01e9e3_8b5a4453",
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49791138_391dc14f",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2398,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T16:46:06Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "38c457ad_1950dbdc",
       "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -365,6 +419,30 @@
       "side": 1,
       "message": "Right, uniform can only be read. Storage can be read or read_write. Workgroup can only be read_write.",
       "parentUuid": "4762b84a_5dc1ecd8",
+      "range": {
+        "startLine": 838,
+        "startChar": 0,
+        "endLine": 845,
+        "endChar": 7
+      },
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6b198e6_69d65083",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 2
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T16:46:06Z",
+      "side": 1,
+      "message": "`writable` means `write | read_write`, so these could just be `write` is that correct then?",
+      "parentUuid": "94159344_41419649",
       "range": {
         "startLine": 838,
         "startChar": 0,

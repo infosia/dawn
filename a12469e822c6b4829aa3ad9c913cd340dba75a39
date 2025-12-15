@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a9cab3d_7ca291dd",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2137,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T16:46:06Z",
+      "side": 1,
+      "message": "```suggestion\n            \u003c\u003c \"the offset argument of \" \u003c\u003c builtin-\u003estr() \u003c\u003c \" must be smaller than the buffer size\";\n```",
+      "revId": "a12469e822c6b4829aa3ad9c913cd340dba75a39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
