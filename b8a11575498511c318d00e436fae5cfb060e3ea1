@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "635d3dc5_b663648c",
+        "filename": "src/tint/lang/wgsl/ir_roundtrip_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3534,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-15T18:25:16Z",
+      "side": 1,
+      "message": "Yes, it is valid on the input WGSL here, but when we convert IR back to WGSL we automatically rename anything that conflicts with a builtin type in case there is unintended shadowing.",
+      "parentUuid": "7c62fc95_1ecd88d1",
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "92f15ee2_1f876823",
         "filename": "src/tint/lang/wgsl/reader/lower/lower.cc",
         "patchSetId": 2
