@@ -184,6 +184,7 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 	if err != nil {
 		return err
 	}
+	cfg.Querier = client
 
 	credCheckInput := common.CredCheckInputs{
 		// TODO(crbug.com/349798588): Re-enable this check once we figure out why
@@ -494,7 +495,7 @@ func (r *roller) roll(ctx context.Context) error {
 
 		// Gather the build results
 		log.Println("gathering results...")
-		psResultsByExecutionMode, err = common.CacheUnsuppressedFailingResults(ctx, r.cfg, ps, r.flags.cacheDir, r.client, builds)
+		psResultsByExecutionMode, err = common.CacheUnsuppressedFailingResults(ctx, r.cfg, ps, r.flags.cacheDir, builds)
 		if err != nil {
 			return err
 		}
