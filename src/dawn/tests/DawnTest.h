@@ -791,12 +791,17 @@ class DawnTestBase {
     };
     ReadbackReservation ReserveReadback(wgpu::Device targetDevice, uint64_t readbackSize);
 
-    // Map used for --check-capture-replay flag for expectations of the replayed version readback
-    // buffers . <label, index in mDeferredExpectations>
-    std::unordered_map<std::string, size_t> mReplayDeferredExpectations;
+    // Used for --check-capture-replay flag for expectations of the replayed readback buffers.
+    struct ReplayReadbackInfo {
+        size_t originalExpectationIndex;
+        size_t replayReadbackSlotIndex;
+    };
+    std::unordered_map<std::string, ReplayReadbackInfo> mReplayReadbacks;
     std::unique_ptr<Recorder> mRecorder;
-    void ReplayCaptureAndAddNewExpectations();
-    void AddDeferredExpectationForReplay(const ReadbackReservation& readback);
+    void ReplayCaptureAndAddNewReadbacks();
+    void AddReadbackForReplay(ReadbackReservation readback,
+                              size_t originalDeferredExpectationIndex);
+    void ResolveReplayExpectations();
 
     struct DeferredExpectation {
         const char* file;

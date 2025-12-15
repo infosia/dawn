@@ -33,6 +33,7 @@
 #include <format>
 #include <fstream>
 #include <iomanip>
+#include <limits>
 #include <regex>
 #include <set>
 #include <sstream>
@@ -1601,7 +1602,7 @@ void DawnTestBase::SetUp() {
 }
 
 // Called at TearDown when all test body finishes.
-void DawnTestBase::ReplayCaptureAndAddNewExpectations() {
+void DawnTestBase::ReplayCaptureAndAddNewReadbacks() {
     if (!IsCaptureReplayCheckingEnabled()) {
         return;
     }
@@ -1616,50 +1617,39 @@ void DawnTestBase::ReplayCaptureAndAddNewExpectations() {
 
     auto replay = capture.Replay(replayDevice);
 
-    for (const auto& [label, deferredIndex] : mReplayDeferredExpectations) {
-        // Get Deferred expectation with slot
+    for (auto& [label, info] : mReplayReadbacks) {
         auto replayedBuffer = replay->GetObjectByLabel<wgpu::Buffer>(label.c_str());
-        const auto& originalDeferred = mDeferredExpectations[deferredIndex];
-        const auto& originalReadback = mReadbackSlots[originalDeferred.readbackSlot];
+
+        const auto& originalDeferred = mDeferredExpectations[info.originalExpectationIndex];
 
         // Add a new readback slot of the replayedBuffer.
         ReadbackSlot slot;
         slot.device = replayDevice;
-        slot.bufferSize = originalReadback.bufferSize;
+        slot.bufferSize = mReadbackSlots[originalDeferred.readbackSlot].bufferSize;
         slot.buffer = replayedBuffer;
 
-        size_t slotId = mReadbackSlots.size();
-
+        info.replayReadbackSlotIndex = mReadbackSlots.size();
         mReadbackSlots.push_back(std::move(slot));
-
-        // Add a new deferred expectation, clone the expectation of the original one.
-        DeferredExpectation deferred;
-        deferred.file = originalDeferred.file;
-        deferred.line = originalDeferred.line;
-        deferred.readbackSlot = slotId;
-        deferred.readbackOffset = originalDeferred.readbackOffset;
-        deferred.size = originalDeferred.size;
-        deferred.expectation = originalDeferred.expectation->Clone();
-
-        mDeferredExpectations.push_back(std::move(deferred));
-        mDeferredExpectations.back().message =
-            std::make_unique<std::ostringstream>("of capture replayed " + label);
     }
 }
 
 // Called at AddBufferExpectation and AddTextureExpectationImpl
-void DawnTestBase::AddDeferredExpectationForReplay(const ReadbackReservation& readback) {
+// Record the replay readback buffer label and the original deferred expectation index in
+// mReadbackSlots.
+void DawnTestBase::AddReadbackForReplay(ReadbackReservation readback,
+                                        size_t originalDeferredExpectationIndex) {
     if (!IsCaptureReplayCheckingEnabled()) {
         return;
     }
-    size_t deferredId = mDeferredExpectations.size();
-    mReplayDeferredExpectations[readback.label] = deferredId;
+
+    // Assign the original deferred expectation index now.
+    // The replayReadbackSlotIndex will be assigned at TearDown after replayed.
+    mReplayReadbacks[readback.label] =
+        ReplayReadbackInfo{originalDeferredExpectationIndex, std::numeric_limits<size_t>::max()};
 }
 
 void DawnTestBase::TearDown() {
-    if (IsCaptureReplayCheckingEnabled()) {
-        ReplayCaptureAndAddNewExpectations();
-    }
+    ReplayCaptureAndAddNewReadbacks();
 
     ResolveDeferredExpectationsNow();
 
@@ -1730,7 +1720,7 @@ std::ostringstream& DawnTestBase::AddBufferExpectation(const char* file,
     // This expectation might be called from multiple threads
     Mutex::AutoLock lg(&mMutex);
 
-    AddDeferredExpectationForReplay(readback);
+    AddReadbackForReplay(readback, mDeferredExpectations.size());
 
     mDeferredExpectations.push_back(std::move(deferred));
     mDeferredExpectations.back().message = std::make_unique<std::ostringstream>();
@@ -1789,7 +1779,7 @@ std::ostringstream& DawnTestBase::AddTextureExpectationImpl(const char* file,
     // This expectation might be called from multiple threads
     Mutex::AutoLock lg(&mMutex);
 
-    AddDeferredExpectationForReplay(readback);
+    AddReadbackForReplay(readback, mDeferredExpectations.size());
 
     mDeferredExpectations.push_back(std::move(deferred));
     mDeferredExpectations.back().message = std::make_unique<std::ostringstream>();
@@ -2272,6 +2262,54 @@ void DawnTestBase::ResolveExpectations() {
     }
 }
 
+void DawnTestBase::ResolveReplayExpectations() {
+    if (!IsCaptureReplayCheckingEnabled()) {
+        return;
+    }
+
+    for (const auto& [label, info] : mReplayReadbacks) {
+        const auto& originalDeferred = mDeferredExpectations[info.originalExpectationIndex];
+
+        // Get a pointer to the mapped copy of the data for the original expectation.
+        const auto& originalSlot = mReadbackSlots[originalDeferred.readbackSlot];
+        const uint8_t* originalData = static_cast<const uint8_t*>(originalSlot.mappedData);
+
+        // Handle the case where the device was lost so the expected data couldn't be read back.
+        if (originalData == nullptr) {
+            InfoLog() << "Skipping deferred expectation because the device was lost";
+            continue;
+        }
+
+        DAWN_ASSERT(info.replayReadbackSlotIndex != std::numeric_limits<size_t>::max());
+        const auto& replaySlot = mReadbackSlots[info.replayReadbackSlotIndex];
+        const uint8_t* replayData = static_cast<const uint8_t*>(replaySlot.mappedData);
+
+        EXPECT_TRUE(replayData) << "Readback of replay buffer [" << label << "] is missing";
+
+        // Compare the raw bytes of originalData and replayData to see if they are an exact match.
+        DAWN_ASSERT(originalSlot.bufferSize == replaySlot.bufferSize);
+        for (size_t i = 0; i < originalSlot.bufferSize; ++i) {
+            if (originalData[i] != replayData[i]) {
+                testing::AssertionResult result = testing::AssertionFailure()
+                                                  << "Original data[" << i << "] to be "
+                                                  << originalData[i] << ", replayed "
+                                                  << replayData[i] << "\n";
+                if (originalSlot.bufferSize <= 1024) {
+                    result << "Original:\n";
+                    printBuffer(result, originalData, originalSlot.bufferSize);
+
+                    result << "Replayed:\n";
+                    printBuffer(result, replayData, replaySlot.bufferSize);
+                }
+                result << " Expectation created at " << originalDeferred.file << ":"
+                       << originalDeferred.line << "\n";
+                EXPECT_TRUE(result) << " Failure at Capture Replay Check";
+                break;
+            }
+        }
+    }
+}
+
 std::unique_ptr<platform::Platform> DawnTestBase::CreateTestPlatform() {
     return nullptr;
 }
@@ -2289,8 +2327,10 @@ void DawnTestBase::ResolveDeferredExpectationsNow() {
 
     Mutex::AutoLock lg(&mMutex);
     ResolveExpectations();
+    ResolveReplayExpectations();
 
     mDeferredExpectations.clear();
+    mReplayReadbacks.clear();
     for (size_t i = 0; i < mReadbackSlots.size(); ++i) {
         mReadbackSlots[i].buffer.Unmap();
     }
