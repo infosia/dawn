@@ -302,6 +302,24 @@
       "parentUuid": "9f2b05ca_c8d057bd",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bc639c4_ed11b9aa",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-15T16:40:30Z",
+      "side": 1,
+      "message": "\u003e In OpenGL and OpenGL ES, there is this very weird mechanism where the application can allocate the IDs itself and just tell the driver \"now glBindBuffer the ID 42 to an ARRAY_BUFFER\" which will implicitly make the driver allocate a buffer with ID 42, even if glGenBuffers wasn\u0027t called prior to that.\n\nI see, I didn\u0027t know this rule exists. This would work, it might be the best solution for this. However, it seems to only work for OpenGL compat profile and OpenGL ES. OpenGL 4.6 Core profile [disallows](https://registry.khronos.org/OpenGL/specs/gl/glspec46.core.pdf) that.\nSo we have to be careful only supporting deferrals if we are not using OpenGL core profile (relevant for linux only). Or can we disable the use of OpenGL core profile in `DisplayEGL.cpp`?",
+      "parentUuid": "b38b079b_b8c0f44b",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
