@@ -374,6 +374,24 @@
       "parentUuid": "83955743_ed2468eb",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5006dd7d_e325eaea",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-15T18:01:36Z",
+      "side": 1,
+      "message": "\u003e Could we not just allocate the FutureHandle (or shared_ptr) in the creation lambda and assert that it\u0027s non-null? Would that work for assertions?\n\nIgnore this suggestion; this wouldn\u0027t work as the `FutureHandle` must be allocated before an explicit `Destroy()` call captures it.",
+      "parentUuid": "47b7d5c2_038326c3",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
