@@ -40,6 +40,7 @@
 #include "dawn/wire/client/Queue.h"
 #include "dawn/wire/client/RenderBundleEncoder.h"
 #include "dawn/wire/client/RenderPassEncoder.h"
+#include "dawn/wire/client/ResourceTable.h"
 #include "dawn/wire/client/ShaderModule.h"
 #include "dawn/wire/client/Surface.h"
 #include "dawn/wire/client/Texture.h"
