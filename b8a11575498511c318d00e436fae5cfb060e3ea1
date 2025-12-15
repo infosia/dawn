@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b3ab7c42_8a7ca38a",
+        "filename": "src/tint/lang/core/type/buffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T20:40:48Z",
+      "side": 1,
+      "message": "I think we should go straight to ArrayCount and validate out override-sized. Then the code is consistent with array, and can easily be extended later.",
+      "parentUuid": "356c84f1_da563ccc",
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7c62fc95_1ecd88d1",
         "filename": "src/tint/lang/wgsl/ir_roundtrip_test.cc",
         "patchSetId": 2
@@ -366,6 +384,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8088e5d2_4ea76fc9",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T20:40:48Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f5634c51_03c6cacf",
+      "range": {
+        "startLine": 2112,
+        "startChar": 42,
+        "endLine": 2112,
+        "endChar": 57
+      },
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "918d6c6e_580b5c1b",
@@ -539,6 +581,30 @@
       "side": 1,
       "message": "Neither workgroup nor storage allows write as the access. I guess I could change to read_write here.",
       "parentUuid": "c6b198e6_69d65083",
+      "range": {
+        "startLine": 838,
+        "startChar": 0,
+        "endLine": 845,
+        "endChar": 7
+      },
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe6acb30_f44d64d9",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 2
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T20:40:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "415fd243_5e2649e3",
       "range": {
         "startLine": 838,
         "startChar": 0,
