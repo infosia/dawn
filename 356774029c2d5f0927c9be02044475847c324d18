@@ -176,6 +176,24 @@
       "parentUuid": "d55175e8_a91bc470",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "191a242b_2286ed43",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-15T14:39:44Z",
+      "side": 1,
+      "message": "Another idea, could we potentially use GL\u0027s \"bind-to-create\" to get rid of this constraint? We can allocate the GL IDs ourselves and the objects will be created the first time the ID is bound to something. This means that we can choose the ID ourselves (with a locked registry on `opengl::Device` that has a freelist) during the constructor, which sidesteps this issue entirely.",
+      "parentUuid": "70d464ed_dc7b9fcc",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f6b8b57_51c3bced",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 86
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-15T14:39:44Z",
+      "side": 1,
+      "message": "Loko\u0027s work stream tries to make event triggered on their own without necessarily waiting on Tick/WaitAny/ProcessEvents. Won\u0027t this break down in this case? What\u0027s the advantage compared to a an EnqueueGL here?",
+      "revId": "4fcf2c04b5dd317696054a8c5a7ce99522e5fa1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "060929f6_8946b835",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 86
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-15T14:39:44Z",
+      "side": 1,
+      "message": "Any chance to have an AssertNoErrors here? Or better we can make the return value of EnqueueGL depend on the return value of Fn maybe so a lambda returning `void` isn\u0027t forced into a `MaybeError` one. We do something like that in [`SubresourceStorage::Iterate`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/SubresourceStorage.h;drc\u003d2c09910818ca1ea4abca925b6a1d4b4804e97c37;l\u003d162)\n\nAlso feel free to defer and leave a TODO for now.\n\nDitto twice below.",
+      "range": {
+        "startLine": 316,
+        "startChar": 8,
+        "endLine": 316,
+        "endChar": 20
+      },
+      "revId": "4fcf2c04b5dd317696054a8c5a7ce99522e5fa1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
