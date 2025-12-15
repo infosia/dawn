@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1ce720e_fd0747c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 86
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-15T17:13:12Z",
+      "side": 1,
+      "message": "That\u0027s a shame. Bind-to-create would have actually cleaned things up a lot.",
+      "revId": "4fcf2c04b5dd317696054a8c5a7ce99522e5fa1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f6b8b57_51c3bced",
