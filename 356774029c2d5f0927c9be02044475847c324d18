@@ -230,6 +230,24 @@
       "parentUuid": "4472cbdc_a1bc3b63",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57e07289_ae60f5aa",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-15T15:05:20Z",
+      "side": 1,
+      "message": "One other thing I forgot to ask: is FutureHandle roughly equivalent to a shared_ptr\u003cGLuint\u003e? Could we use that instead? I realize that would remove the mIsSet check, but I don\u0027t see great value in that TBH.",
+      "parentUuid": "a79d6c63_abd7e95e",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
