@@ -131,6 +131,7 @@ tint_add_target(tint_lang_wgsl_resolver_test test
   lang/wgsl/resolver/framebuffer_fetch_extension_test.cc
   lang/wgsl/resolver/function_validation_test.cc
   lang/wgsl/resolver/host_shareable_validation_test.cc
+  lang/wgsl/resolver/immediate_variable_test.cc
   lang/wgsl/resolver/increment_decrement_validation_test.cc
   lang/wgsl/resolver/inferred_type_test.cc
   lang/wgsl/resolver/input_attachments_extension_test.cc

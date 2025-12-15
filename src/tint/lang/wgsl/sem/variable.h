@@ -37,6 +37,7 @@
 #include "src/tint/lang/core/type/type.h"
 #include "src/tint/lang/wgsl/ast/parameter.h"
 #include "src/tint/lang/wgsl/sem/value_expression.h"
+#include "src/tint/utils/containers/bitset.h"
 #include "src/tint/utils/containers/unique_vector.h"
 
 // Forward declarations
@@ -155,6 +156,8 @@ struct GlobalVariableAttributes {
     std::optional<tint::BindingPoint> binding_point;
     /// The `input_attachment_index` attribute value for the variable, if set
     std::optional<uint32_t> input_attachment_index;
+    /// The slots used in the immediate block. Each slot is 4 bytes.
+    tint::Bitset<0> immediate_accessible_slots;
 };
 
 /// GlobalVariable is a module-scope variable
@@ -196,6 +199,8 @@ struct ParameterAttributes {
     std::optional<uint32_t> blend_src;
     /// The `color` attribute value for the variable, if set
     std::optional<uint32_t> color;
+    /// The slots used in the immediate block. Each slot is 4 bytes.
+    tint::Bitset<0> immediate_accessible_slots;
 };
 
 /// Parameter is a function parameter

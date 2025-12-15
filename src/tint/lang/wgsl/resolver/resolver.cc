@@ -1536,9 +1536,20 @@ void Resolver::RegisterLoad(const sem::ValueExpression* expr) {
         expr->RootIdentifier(),
         [&](const sem::GlobalVariable* global) {
             alias_analysis_infos_[current_function_].module_scope_reads.Add(global, expr);
+            if (global->AddressSpace() == core::AddressSpace::kImmediate) {
+                if (!processing_function_args_) {
+                    // The const_cast is safe because we are in the resolver and we own the semantic
+                    // nodes.
+                    RecordImmediateVariableAccess(const_cast<sem::GlobalVariable*>(global), expr);
+                }
+            }
         },
         [&](const sem::Parameter* param) {
             alias_analysis_infos_[current_function_].parameter_reads.Add(param);
+
+            // Track access to parameters for immediate variable propagation.
+            // The const_cast is safe because we are in the resolver and we own the semantic nodes.
+            RecordImmediateVariableAccess(const_cast<sem::Parameter*>(param), expr);
         });
 }
 
@@ -1761,6 +1772,7 @@ const sem::ValueExpression* Resolver::Materialize(
 template <size_t N>
 bool Resolver::MaybeMaterializeAndLoadArguments(Vector<const sem::ValueExpression*, N>& args,
                                                 const sem::CallTarget* target) {
+    TINT_SCOPED_ASSIGNMENT(processing_function_args_, true);
     for (size_t i = 0, n = std::min(args.Length(), target->Parameters().Length()); i < n; i++) {
         const auto* param_ty = target->Parameters()[i]->Type();
         if (ShouldMaterializeArgument(param_ty)) {
@@ -3145,6 +3157,29 @@ sem::Call* Resolver::FunctionCall(const ast::CallExpression* expr,
 
     target->AddCallSite(call);
 
+    // Propagate immediate variable access from callee parameters to caller arguments.
+    for (size_t i = 0; i < args.Length(); ++i) {
+        if (i >= target->Parameters().Length()) {
+            break;
+        }
+        auto* arg = args[i];
+        auto* param = target->Parameters()[i];
+        const auto& slots = param->Attributes().immediate_accessible_slots;
+        if (!slots.AllBitsZero()) {
+            auto* root = arg->RootIdentifier();
+            if (!root) {
+                continue;
+            }
+            if (auto* global = root->As<sem::GlobalVariable>()) {
+                if (global->AddressSpace() == core::AddressSpace::kImmediate) {
+                    RecordImmediateVariableAccess(const_cast<sem::GlobalVariable*>(global), arg);
+                }
+            } else if (auto* p = root->As<sem::Parameter>()) {
+                RecordImmediateVariableAccess(const_cast<sem::Parameter*>(p), arg);
+            }
+        }
+    }
+
     if (!validator_.FunctionCall(call, current_statement_)) {
         return nullptr;
     }
@@ -3268,6 +3303,10 @@ sem::Expression* Resolver::Identifier(const ast::IdentifierExpression* expr) {
                 }
                 auto* user =
                     b.create<sem::VariableUser>(expr, stage, current_statement_, value, variable);
+
+                if (auto* param = variable->As<sem::Parameter>()) {
+                    RecordImmediateVariableAccess(param, user);
+                }
 
                 if (current_statement_) {
                     // Check all parent continuing blocks to make sure that this is not a reference
@@ -4912,6 +4951,172 @@ diag::Diagnostic& Resolver::AddWarning(const Source& source) const {
 
 diag::Diagnostic& Resolver::AddNote(const Source& source) const {
     return diagnostics_.AddNote(source);
+}
+
+namespace {
+
+void MarkAccessibleSlots(const core::type::Type* type, uint32_t offset, tint::Bitset<0>& slots) {
+    type = type->UnwrapRef();
+
+    if (type->Is<core::type::F16>() || type->Is<core::type::Array>()) {
+        return;
+    }
+
+    if (type->IsAnyOf<core::type::Scalar, core::type::Vector>()) {
+        uint32_t size = type->Size();
+        uint32_t start_slot = offset / 4;
+        uint32_t end_slot = (offset + size + 3) / 4;
+        for (uint32_t i = start_slot; i < end_slot; ++i) {
+            slots[i] = true;
+        }
+    } else if (auto* mat = type->As<core::type::Matrix>()) {
+        uint32_t cols = mat->Columns();
+        uint32_t stride = mat->ColumnStride();
+        auto* vec = mat->ColumnType();
+        for (uint32_t i = 0; i < cols; ++i) {
+            MarkAccessibleSlots(vec, offset + i * stride, slots);
+        }
+    } else if (auto* str = type->As<core::type::Struct>()) {
+        for (auto* member : str->Members()) {
+            MarkAccessibleSlots(member->Type(), offset + member->Offset(), slots);
+        }
+    } else if (auto* atomic = type->As<core::type::Atomic>()) {
+        MarkAccessibleSlots(atomic->Type(), offset, slots);
+    }
+}
+
+}  // namespace
+
+void Resolver::RecordImmediateVariableAccess(sem::GlobalVariable* global,
+                                             const sem::ValueExpression*) {
+    uint32_t var_size = global->Type()->UnwrapRef()->Size();
+    uint32_t num_slots = (var_size + 3) / 4;
+    if (global->Attributes().immediate_accessible_slots.Length() < num_slots) {
+        global->Attributes().immediate_accessible_slots.Resize(num_slots);
+    }
+    MarkAccessibleSlots(global->Type(), 0, global->Attributes().immediate_accessible_slots);
+}
+
+void Resolver::RecordImmediateVariableAccess(sem::Parameter* param, const sem::ValueExpression*) {
+    uint32_t var_size = param->Type()->UnwrapRef()->Size();
+    uint32_t num_slots = (var_size + 3) / 4;
+    if (param->Attributes().immediate_accessible_slots.Length() < num_slots) {
+        param->Attributes().immediate_accessible_slots.Resize(num_slots);
+    }
+    MarkAccessibleSlots(param->Type(), 0, param->Attributes().immediate_accessible_slots);
+}
+
+void Resolver::RecordImmediateVariableAccess(
+    const sem::ValueExpression* expr,
+    const tint::Bitset<0>& relative_slots,
+    std::function<void(sem::GlobalVariable*, uint32_t)> callback) {
+    sem::GlobalVariable* global = nullptr;
+    sem::Parameter* param = nullptr;
+    uint32_t offset = 0;
+    bool dynamic_access = false;
+    auto* current = expr;
+
+    while (current) {
+        if (auto* var_user = current->As<sem::VariableUser>()) {
+            auto* var = var_user->Variable();
+            if (auto* g = var->As<sem::GlobalVariable>()) {
+                if (g->AddressSpace() == core::AddressSpace::kImmediate) {
+                    global = const_cast<sem::GlobalVariable*>(g);
+                }
+            } else if (auto* p = var->As<sem::Parameter>()) {
+                param = const_cast<sem::Parameter*>(p);
+            }
+            break;
+        }
+
+        if (dynamic_access) {
+            if (auto* member = current->As<sem::StructMemberAccess>()) {
+                current = member->Object();
+            } else if (auto* index = current->As<sem::IndexAccessorExpression>()) {
+                current = index->Object();
+            } else if (auto* swizzle = current->As<sem::Swizzle>()) {
+                current = swizzle->Object();
+            } else {
+                break;
+            }
+            continue;
+        }
+
+        if (auto* member = current->As<sem::StructMemberAccess>()) {
+            offset += member->Member()->Offset();
+            current = member->Object();
+        } else if (auto* index = current->As<sem::IndexAccessorExpression>()) {
+            auto* obj_type = index->Object()->Type()->UnwrapRef();
+            auto* elem_type = obj_type->Elements().type;
+
+            auto* idx_val = index->Index()->ConstantValue();
+            if (idx_val) {
+                uint32_t idx = idx_val->ValueAs<uint32_t>();
+                if (obj_type->Is<core::type::Vector>()) {
+                    offset += idx * elem_type->Size();
+                } else if (auto* mat = obj_type->As<core::type::Matrix>()) {
+                    offset += idx * mat->ColumnStride();
+                }
+            } else {
+                dynamic_access = true;
+                current = index->Object();
+            }
+        } else if (auto* swizzle = current->As<sem::Swizzle>()) {
+            if (swizzle->Indices().Length() == 1) {
+                auto idx = swizzle->Indices()[0];
+                auto* vec_type = swizzle->Object()->Type()->UnwrapRef()->As<core::type::Vector>();
+                offset += idx * vec_type->Type()->Size();
+                current = swizzle->Object();
+            } else {
+                dynamic_access = true;
+                current = swizzle->Object();
+            }
+        } else {
+            break;
+        }
+    }
+
+    if (!global && !param) {
+        return;
+    }
+
+    tint::Bitset<0>* target_slots = nullptr;
+    uint32_t var_size = 0;
+
+    if (global) {
+        target_slots = &global->Attributes().immediate_accessible_slots;
+        var_size = global->Type()->UnwrapRef()->Size();
+    } else {
+        target_slots = &param->Attributes().immediate_accessible_slots;
+        var_size = param->Type()->UnwrapRef()->Size();
+    }
+
+    if (dynamic_access) {
+        uint32_t num_slots = (var_size + 3) / 4;
+        if (target_slots->Length() < num_slots) {
+            target_slots->Resize(num_slots);
+        }
+        for (uint32_t i = 0; i < num_slots; ++i) {
+            (*target_slots)[i] = true;
+            if (global) {
+                callback(global, i);
+            }
+        }
+        return;
+    }
+
+    for (size_t i = 0; i < relative_slots.Length(); ++i) {
+        if (relative_slots[i]) {
+            uint32_t slot = (offset / 4) + static_cast<uint32_t>(i);
+            if (target_slots->Length() <= slot) {
+                target_slots->Resize(slot + 1);
+            }
+            (*target_slots)[slot] = true;
+            if (global) {
+                callback(global, slot);
+            }
+        }
+    }
 }
 
 }  // namespace tint::resolver

@@ -448,6 +448,32 @@ class Resolver {
     /// @returns true on success, false on failure
     bool StageAttribute(const ast::StageAttribute* attr);
 
+    /// Records the access to an immediate variable
+    /// @param global the global variable being accessed
+    /// @param expr the expression accessing the variable
+    void RecordImmediateVariableAccess(sem::GlobalVariable* global,
+                                       const sem::ValueExpression* expr);
+
+    /// Records the access to an immediate variable via a parameter
+    /// @param param the parameter being accessed
+    /// @param expr the expression accessing the parameter
+    void RecordImmediateVariableAccess(sem::Parameter* param, const sem::ValueExpression* expr);
+
+    /// Records the access to an immediate variable
+    /// @param expr the expression accessing the variable
+    /// @param relative_slots the slots accessed relative to the expression
+    /// @param callback a callback to be called when the root identifier is found
+    void RecordImmediateVariableAccess(
+        const sem::ValueExpression* expr,
+        const tint::Bitset<0>& relative_slots,
+        std::function<void(sem::GlobalVariable*, uint32_t)> callback);
+
+    /// Records the access to an immediate variable
+    /// @param expr the expression accessing the variable
+    /// @param relative_slots the slots accessed relative to the expression
+    void RecordImmediateVariableAccess(const sem::ValueExpression* expr,
+                                       const tint::Bitset<0>& relative_slots);
+
     /// Resolves the `@must_use` attribute @p attr
     /// @returns true on success, false on failure
     bool MustUseAttribute(const ast::MustUseAttribute* attr);
@@ -699,6 +725,7 @@ class Resolver {
     Hashmap<std::pair<core::intrinsic::Overload, wgsl::BuiltinFn>, sem::BuiltinFn*, 64> builtins_;
     Hashmap<core::intrinsic::Overload, sem::ValueConstructor*, 16> constructors_;
     Hashmap<core::intrinsic::Overload, sem::ValueConversion*, 16> converters_;
+    bool processing_function_args_ = false;
 };
 
 }  // namespace tint::resolver
