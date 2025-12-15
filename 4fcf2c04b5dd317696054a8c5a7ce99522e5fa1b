@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "071fa362_e37d93bb",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 86
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-15T15:09:19Z",
+      "side": 1,
+      "message": "Do you mean the `AllowSpontaneous` mode? Yes it should work. It doesn\u0027t matter which method triggers this event, the event should happen on GL thread. IIUC this what Stephen prefers as well.\n\nIf we used `EnqueueGL`, it would delay the `glMapBufferRange` further until `Queue.Submit` is called. And the mapping has to wait for all unrelated GL commands to execute 1st. Furthermore, it would break the MapAsync\u0027s spec. Here `FinalizeMap` is supposed to be called just before we trigger the user callback. If we used `EnqueueGL` here, the mapping would be delayed and by the time the user callback is triggered, the buffer would not be mapped yet.\n\n```\nbuffer.MapAsync([]{\n   // Crash because the buffer is not yet mapped.\n   memcpy(buffer.GetMappedRange(), ...);\n});\n```\n\nIt\u0027s possible to use `EnqueueGL` for mapping. However we would have to abandon the `FinalizeMapImpl` optimization, we have to use it inside `MapAsyncImpl` instead:\n```\nBuffer::MapAsyncImpl() {\n   device-\u003eEnqueueGL([] {\n      glMapBufferRange(...)\n   });\n   \n   TrackUsage();\n}\n```\n\nThis will put the glMapBufferRange to the queue after the pending GL commands. And the user callback will only execute after all pending commands are completed by the GPU. Is this latency something acceptable?\n\nFor example, let\u0027s say the user calls:\n```\n- draw A\n- draw B\n- buffer.MapAsync()\n```\n\nThen the MapAsync callback has to wait for draw A, draw B to complete 1st. Even though draw A, draw B don\u0027t use the buffer.",
+      "parentUuid": "8f6b8b57_51c3bced",
+      "revId": "4fcf2c04b5dd317696054a8c5a7ce99522e5fa1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "060929f6_8946b835",
         "filename": "src/dawn/native/opengl/BufferGL.cpp",
         "patchSetId": 86
