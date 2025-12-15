@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f98429bb_870c3b54",
+        "filename": "src/tint/lang/core/type/buffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T15:16:31Z",
+      "side": 1,
+      "message": "Should this be something like `explicit Buffer(const ArrayCount* count)` instead of a `uint32_t`. Then for an unsized you can use RuntimeArrayCount and for sized a ConstantArrayCount?",
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c62fc95_1ecd88d1",
+        "filename": "src/tint/lang/wgsl/ir_roundtrip_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3534,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T15:16:31Z",
+      "side": 1,
+      "message": "Hm, this shouldn\u0027t need to change should it? Type names are all overridable, so this test can\u0027t use the `buffer` view feature, but `buffer` is still a valid name here.",
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92f15ee2_1f876823",
+        "filename": "src/tint/lang/wgsl/reader/lower/lower.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T15:16:31Z",
+      "side": 1,
+      "message": "Fix how?",
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e01e9e3_8b5a4453",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2398,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T15:16:31Z",
+      "side": 1,
+      "message": "Do these need the `template`? (I honestly have no idea when it\u0027s required or not, just haven\u0027t see it outside of template\u0027d methods)",
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e3aefe3_0617d886",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T15:16:31Z",
+      "side": 1,
+      "message": "```suggestion\n    /// @returns a buffer view resolved from the templated identifier @p ident\n    const core::type::Buffer* Buffer(const ast::Identifier* ident);\n```",
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6053ed92_20d29656",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T15:16:31Z",
+      "side": 1,
+      "message": "Is it an error if the offset is not an integer scalar? What does it mean if it\u0027s a float?",
+      "range": {
+        "startLine": 2112,
+        "startChar": 42,
+        "endLine": 2112,
+        "endChar": 57
+      },
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7626a1ce_5a263c77",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T15:16:31Z",
+      "side": 1,
+      "message": "```suggestion\n    if (!constant_value || !offset-\u003eType()-\u003eIsIntegerScalar()) {\n       return true;\n    }\n```",
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "918d6c6e_580b5c1b",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2128,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T15:16:31Z",
+      "side": 1,
+      "message": "```suggestion\n                \u003c\u003c \" must evenly divide the alignment of the return type \" \u003c\u003c ret_ptr_type-\u003eStoreType()-\u003eAlign() \u003c\u003c \")\";\n```",
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abc92f90_62790b99",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2131,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T15:16:31Z",
+      "side": 1,
+      "message": "Can it be equal to the buffer size? Or does it have to be one less? Like, if I have buffer\u003c4\u003e, I assume I can access, 0, 1, 2, 3, but not 4?",
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4762b84a_5dc1ecd8",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 2
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T15:16:31Z",
+      "side": 1,
+      "message": "So, you can `read` from only uniform, but `read` and `write` to storage and workgroup, yea?\n\nIf so, why are the `read` versions `uniform_or_storage` instead of just `uniform`?\n\nOh, you can\u0027t have a non-writable workgroup version, is that the issue but you can have non-writable storage?",
+      "range": {
+        "startLine": 838,
+        "startChar": 0,
+        "endLine": 845,
+        "endChar": 7
+      },
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
