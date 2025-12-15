@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27846aef_62a6eb44",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-15T09:17:24Z",
+      "side": 1,
+      "message": "Done. Added a bug tracker too.",
+      "parentUuid": "fe1a3841_f78c744b",
+      "revId": "8f28123682eac4a87f4a3aa52fd1a27cedfb2040",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aee6d234_fdb58e26",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-12-12T16:11:17Z",
       "side": 1,
       "message": "Can we get rid of GL_MAP_UNSYNCHRONIZED_BIT, or is that still required?",
+      "revId": "8f28123682eac4a87f4a3aa52fd1a27cedfb2040",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ff0dbe7_622a64b0",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-15T09:17:24Z",
+      "side": 1,
+      "message": "It\u0027s not required but I think no harm including it. It will tell driver to skip unnecessary bookkeeping. Since Dawn already does the bookkeeping itself. AFAIK at least in ANGLE/Vk, this flag can [tell the Vk backend to return early](https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/src/libANGLE/renderer/vulkan/BufferVk.cpp;drc\u003dd255a3c100425654ffa017a759f4bad92f533b0a;l\u003d800), avoiding any serial checks below.\nI think native drivers would do the same.\nIt might be able to save a few CPU cycles, but a small win is still a win.",
+      "parentUuid": "aee6d234_fdb58e26",
       "revId": "8f28123682eac4a87f4a3aa52fd1a27cedfb2040",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
