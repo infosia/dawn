@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd3b138a_812b5182",
+        "filename": "src/dawn/tests/end2end/RenderPassTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-15T09:02:17Z",
+      "side": 1,
+      "message": "Can we remove the bespoke fixtures at [1] and [2] to use `RenderPassTest` instead so we get coverage of these as well?",
+      "parentUuid": "0e0fc935_9f38fce4",
+      "revId": "764d9e748b41b2d33e4cdae2921964321cb6f733",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "ca35de8d_c797bcd5",

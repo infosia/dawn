@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05ac5523_0c1b07be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-15T09:02:17Z",
+      "side": 1,
+      "message": "Still LGTM",
+      "revId": "d2643e53248ff5c4a315462b40db1bc107c73f25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb7fff17_694a8adb",
+        "filename": "src/dawn/tests/end2end/RenderAttachmentTests.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-15T09:02:17Z",
+      "side": 1,
+      "message": "Just to check, this is added because we don\u0027t have support for 3D textures in EXPECT_PIXEL_EQ and friends? If it takes minimal much effort (IDK how involved it will be) do you mind adding support for 3D textures to the regular helpers in a follow-up and removing the bespoke expectation?",
+      "revId": "d2643e53248ff5c4a315462b40db1bc107c73f25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "397b594d_2364cfa1",
+        "filename": "src/dawn/tests/end2end/RenderAttachmentTests.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-15T09:02:17Z",
+      "side": 1,
+      "message": "I\u0027m confused by this comment, aren\u0027t the outputs used with the three `cTargets` lines below?",
+      "revId": "d2643e53248ff5c4a315462b40db1bc107c73f25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
