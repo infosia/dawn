@@ -212,6 +212,24 @@
       "parentUuid": "191a242b_2286ed43",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a79d6c63_abd7e95e",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-15T15:03:09Z",
+      "side": 1,
+      "message": "Corentin: interesting; that would be another way of moving the ownership of the handle IDs out of the objects themselves. What would be the registry key be, though? In the deferral case, the object itself may be destroyed by the time we need to look up its handle.",
+      "parentUuid": "4472cbdc_a1bc3b63",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
