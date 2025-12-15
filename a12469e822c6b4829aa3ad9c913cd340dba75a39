@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6b148bd_e82e91ee",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2137,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-12-15T20:32:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a9cab3d_7ca291dd",
+      "revId": "a12469e822c6b4829aa3ad9c913cd340dba75a39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18292b84_6bed66e0",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-12-15T18:25:16Z",
       "side": 1,
       "message": "I thought we were only going to support unsized buffers for the `storage` address space? I\u0027m not sure how we\u0027d do it for uniform and workgroup.",
+      "range": {
+        "startLine": 847,
+        "startChar": 0,
+        "endLine": 854,
+        "endChar": 76
+      },
+      "revId": "a12469e822c6b4829aa3ad9c913cd340dba75a39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c728e3e_98301696",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-12-15T20:32:00Z",
+      "side": 1,
+      "message": "Workgroup and uniform *variables* must be sized, but the proposal allows for passing a sized buffer to an unsized buffer parameter for QoL. The validator does check this.",
+      "parentUuid": "18292b84_6bed66e0",
       "range": {
         "startLine": 847,
         "startChar": 0,
