@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fad4eec9_6bae20ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-15T19:53:41Z",
+      "side": 1,
+      "message": "PTAL\n\nSome notes that I let Ryan know previously (he was reviewing these sorts of CLs before leaving for the holidays):\n\n1. These dependency injection CLs are almost entirely Gemini-generated, but I\u0027m supervising it and manually reviewing everything before sending it out for review.\n2. If there are multiple CLs in the chain and you have any comments, I will opt to address them in follow-ups instead of in the same CL unless the comment is about something we don\u0027t want to submit, e.g. introducing a bug.",
+      "revId": "468e77f3dc286b3d737d126c106aa67f477de103",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
