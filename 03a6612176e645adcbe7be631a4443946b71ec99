@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e636f25b_00991c9e",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-15T23:51:53Z",
+      "side": 1,
+      "message": "The various bots have been picky about how VK_NULL_HANDLE works so I\u0027m not sure, but I\u0027m giving it a try.",
+      "parentUuid": "084f93d7_51143486",
+      "range": {
+        "startLine": 538,
+        "startChar": 4,
+        "endLine": 538,
+        "endChar": 47
+      },
+      "revId": "03a6612176e645adcbe7be631a4443946b71ec99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc114feb_b7180b04",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80ee21a9_e8b9e150",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-15T23:51:53Z",
+      "side": 1,
+      "message": "Correct! That was only needed for an earlier version of the CL. Removed.",
+      "parentUuid": "cc114feb_b7180b04",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 30
+      },
+      "revId": "03a6612176e645adcbe7be631a4443946b71ec99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "72b54d8c_0951c543",
@@ -60,6 +108,30 @@
       "writtenOn": "2025-12-15T23:07:30Z",
       "side": 1,
       "message": "nit. Existing, but I think that we have been adding `return`s after the `DAWN_UNREACHABLE()` calls in places (see https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/Log.cpp;l\u003d65?q\u003dDAWN_UNREACHABLE\u0026ss\u003dchromium%2Fchromium%2Fsrc:third_party%2Fdawn%2Fsrc%2Fdawn%2F) because debug vs release builds? Or maybe it was because of fuzzers? Idr exactly why, but if there\u0027s an equivalent to an error or bad enum, maybe we should return also after the unreachable?",
+      "range": {
+        "startLine": 167,
+        "startChar": 12,
+        "endLine": 167,
+        "endChar": 31
+      },
+      "revId": "03a6612176e645adcbe7be631a4443946b71ec99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "daabdc9d_9d430204",
+        "filename": "src/dawn/native/vulkan/UtilsVulkan.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-15T23:51:53Z",
+      "side": 1,
+      "message": "I don\u0027t mind tweaking code like this to fit new style standards while moving it! Done.",
+      "parentUuid": "72b54d8c_0951c543",
       "range": {
         "startLine": 167,
         "startChar": 12,
