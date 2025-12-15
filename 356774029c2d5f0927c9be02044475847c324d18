@@ -266,6 +266,24 @@
       "parentUuid": "191a242b_2286ed43",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdb47787_0022fb54",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-15T16:00:26Z",
+      "side": 1,
+      "message": "\u003e So I\u0027d like to keep the Destroy complexity located in a single place, rather than spreading it to all the classes via FutureHandle\n\nBy \"spreading it to all the classses via FutureHandle\" do you mean extra `Set` \u0026 `Get` things we would have do in other methods besides `Destroy`? If it\u0027s only `Destroy`, what extra things other classes have to do besides just calling `FutureHandle::Get()`? How is it different from the `Device::DestroyGL` approach: Those classes have to remember to call `DestroyGL` as well? Had they forgot to call `DestroyGL`, they would have captured unintialized handles accidentally.\n\n\u003e I\u0027m also a little confused about the atomic operations on mIsSet\n\n`mIsSet` is just for assertions. In release mode, it\u0027s not used. It\u0027s only 2 extra lines of code (or 3). It\u0027s atomic because the purpose of assertion is catching programming errors, in which we cannot assume the callers call the methods in a good manner. They could call `Set` in one thread and `Get` it on another thread. How do we ensure that won\u0027t happen? It doesn\u0027t happen now doesn\u0027t mean it won\u0027t in future. I\u0027m totally fine just using naked GLuint wrapper, but 1st, we will need a dedicated class anw because:\n1. `shared_ptr` is banned here.\n2. `Ref\u003c\u003e` only works on `RefCounted`\u0027s child class. Plain data type like `GLuint` won\u0027t work without a wrapper.\n3. Is avoiding 2 extra lines of assertions really important?",
+      "parentUuid": "9f2b05ca_c8d057bd",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
