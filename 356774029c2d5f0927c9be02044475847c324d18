@@ -194,6 +194,24 @@
       "parentUuid": "70d464ed_dc7b9fcc",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4472cbdc_a1bc3b63",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-15T14:56:59Z",
+      "side": 1,
+      "message": "Quyen: My hope is that at some point (after benchmarking, optimization, and the WebView integration) we can remove one of the two paths (deferral or mutex) from the GL backend. So I\u0027d like to keep the Destroy complexity located in a single place, rather than spreading it to all the classes via FutureHandle. The other problem I have with the FutureHandle is that it adds a level of indirection in cases where it isn\u0027t needed (e.g., the mutex case) where just capturing the \"this\" pointer is sufficient. I\u0027m also a little confused about the atomic operations on mIsSet. If this is only really needed for the deferral case (correct me if I\u0027m wrong), why do we need thread-safety for it? Shouldn\u0027t it only be modified while the context lock is active? And those atomic oeprations being inside a DAWN_ASSERT() suggests to me they might not be run if asserts are disabled. Is that by design?",
+      "parentUuid": "191a242b_2286ed43",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
