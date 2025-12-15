@@ -16,6 +16,46 @@
       "message": "PTAL!",
       "revId": "03e46aece2a0749b56a0ea2632cc6a2b02ad317a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e302172_70b0524f",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T14:47:05Z",
+      "side": 1,
+      "message": "```suggestion\n    BindingCounts bindingCounts{};\n```\n\nI think you can just initialize it empty, instead of creating and then assigning.",
+      "revId": "03e46aece2a0749b56a0ea2632cc6a2b02ad317a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b856962c_c9ba73d9",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T14:47:05Z",
+      "side": 1,
+      "message": "```suggestion\n        // resource table. Set a minimum binding size so as to not increment unverifiedBufferCount.\n```",
+      "range": {
+        "startLine": 93,
+        "startChar": 11,
+        "endLine": 93,
+        "endChar": 24
+      },
+      "revId": "03e46aece2a0749b56a0ea2632cc6a2b02ad317a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
