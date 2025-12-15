@@ -356,6 +356,24 @@
       "parentUuid": "83955743_ed2468eb",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bca1a70d_caf8ed65",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-15T17:52:36Z",
+      "side": 1,
+      "message": "Ah thanks for looking into it, I forgot that there were all these special cases, that unfortunate. Both `FutureHandle` and the `EnqueueDestroyGL` have their own problems, and I tried to come up with a few other alternatives but they have their own issues.\n\n - FutureHandle: extra allocations and verbosity.\n - EnqueueDestroyGL: I\u0027m very concerned about `TryAddRef` as that\u0027s used in other load-bearing logic like the destruction of all child objects on device destruction.\n - EnqueueDestroyGL + add an enum to DestroyImpl to say why we are being destroyed. Maybe? But also I didn\u0027t audit the 365 lines that reference it in Dawn.\n - Making all the OpenGL backend objects `WeakRefSupport` and use that somehow: didn\u0027t find a way to make it work.\n - Make the handles `std::optional\u003cGLuint\u003e` to know in `DestroyImpl` if they have been initialized or not: runs into races with the deferred commands running, difficult logic for what to do when initialization only works partially.\n \nLooking at all this, could we move forward with `FutureHandle` and open an issue to investigate adding a `reason` to `DestroyImpl` in the future (but given the amount of code it touches, I don\u0027t think we\u0027ll get to it soon or at all).",
+      "parentUuid": "83955743_ed2468eb",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
