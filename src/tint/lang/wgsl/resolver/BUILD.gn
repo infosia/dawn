@@ -131,6 +131,7 @@ if (tint_build_unittests) {
       "framebuffer_fetch_extension_test.cc",
       "function_validation_test.cc",
       "host_shareable_validation_test.cc",
+      "immediate_variable_test.cc",
       "increment_decrement_validation_test.cc",
       "inferred_type_test.cc",
       "input_attachments_extension_test.cc",
