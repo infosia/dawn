@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1422b308_367d8e07",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T15:38:55Z",
+      "side": 1,
+      "message": "were the test results not updated? I don\u0027t see the clamping?",
+      "revId": "e15d21e32c037da13ad1b6dee7a3d1defe71b27d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b86ea10_dc08876b",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T15:38:55Z",
+      "side": 1,
+      "message": "This method name seems wrong now?",
+      "revId": "e15d21e32c037da13ad1b6dee7a3d1defe71b27d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
