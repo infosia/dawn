@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "178854b4_ae8992be",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T14:49:31Z",
+      "side": 1,
+      "message": "```suggestion\n[dawn][native] Disallow GetBGL(maxBindGroups - 1) with resource tables.\n```",
+      "revId": "955d6f84775eb6da09c3f3ce57d69e4b0f031b1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "faeae018_6d5a03b4",
@@ -14,6 +31,23 @@
       "writtenOn": "2025-12-15T10:02:18Z",
       "side": 1,
       "message": "PTAL!",
+      "revId": "955d6f84775eb6da09c3f3ce57d69e4b0f031b1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad77204b_82f8c08c",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-15T14:49:31Z",
+      "side": 1,
+      "message": "```suggestion\n                        \"(%u) - 1 (one slot reserved for the resource table).\",\n```",
       "revId": "955d6f84775eb6da09c3f3ce57d69e4b0f031b1a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
