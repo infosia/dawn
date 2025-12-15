@@ -36,8 +36,63 @@ namespace dawn {
 namespace {
 
 class ResourceTableValidationTest : public ValidationTest {
+  private:
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         return {wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable};
+    }
+
+  protected:
+    wgpu::ResourceTable MakeResourceTable(uint32_t size) {
+        wgpu::ResourceTableDescriptor desc;
+        desc.size = size;
+        return device.CreateResourceTable(&desc);
+    }
+
+    wgpu::PipelineLayout MakePipelineLayoutWithTable(std::vector<wgpu::BindGroupLayout> bgls = {},
+                                                     uint32_t immediateSize = 0) {
+        wgpu::PipelineLayoutResourceTable plTable;
+        plTable.usesResourceTable = true;
+
+        wgpu::PipelineLayoutDescriptor desc{
+            .nextInChain = &plTable,
+            .bindGroupLayoutCount = bgls.size(),
+            .bindGroupLayouts = bgls.data(),
+            .immediateSize = immediateSize,
+        };
+
+        return device.CreatePipelineLayout(&desc);
+    }
+
+    enum Mutator {
+        Update,
+        InsertBinding,
+    };
+    void TestMutator(Mutator mutator, const wgpu::BindingResource* resource, bool success) {
+        wgpu::ResourceTable table = MakeResourceTable(1);
+
+        switch (mutator) {
+            case Mutator::Update: {
+                wgpu::Status status;
+                if (success) {
+                    status = table.Update(0, resource);
+                } else {
+                    ASSERT_DEVICE_ERROR(status = table.Update(0, resource));
+                }
+                EXPECT_EQ(status, wgpu::Status::Success);
+                break;
+            }
+
+            case Mutator::InsertBinding: {
+                uint32_t slot = wgpu::kInvalidBinding;
+                if (success) {
+                    slot = table.InsertBinding(resource);
+                } else {
+                    ASSERT_DEVICE_ERROR(slot = table.InsertBinding(resource));
+                }
+                EXPECT_EQ(slot, 0u);
+                break;
+            }
+        }
     }
 };
 
@@ -956,6 +1011,206 @@ TEST_F(ResourceTableValidationTest, PinValidationUsageRenderPass) {
         }
     }
 }
+
+// Checks that only texture views are allowed as resources in mutators for SamplingResourceTable.
+// TODO(https://issues.chromium.org/435317394): Support samplers in SamplingResourceTable.
+TEST_F(ResourceTableValidationTest, MutatorBindingKindValidation) {
+    // TODO(435317394): Implemented bindless in the wire.
+    if (UsesWire()) {
+        GTEST_SKIP();
+    }
+
+    // Create the texture to put in the table.
+    wgpu::TextureDescriptor tDesc = {
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {1, 1},
+        .format = wgpu::TextureFormat::RGBA8Unorm,
+    };
+    wgpu::Texture texture = device.CreateTexture(&tDesc);
+
+    // Create the buffer to put in the table.
+    wgpu::BufferDescriptor bDesc{
+        .usage = wgpu::BufferUsage::Storage,
+        .size = 4,
+    };
+    wgpu::Buffer buffer = device.CreateBuffer(&bDesc);
+
+    // Creathe the sampler to put in the table.
+    wgpu::Sampler sampler = device.CreateSampler();
+
+    for (auto mutator : {Mutator::Update, Mutator::InsertBinding}) {
+        // Control case: putting only a texture is valid.
+        {
+            wgpu::BindingResource resource = {.textureView = texture.CreateView()};
+            TestMutator(mutator, &resource, true);
+        }
+
+        // Error case: a buffer is an error.
+        {
+            wgpu::BindingResource resource = {.buffer = buffer};
+            TestMutator(mutator, &resource, false);
+        }
+
+        // Error case: a sampler is an error.
+        // TODO(https://issues.chromium.org/435317394): Support samplers in SamplingResourceTable.
+        {
+            wgpu::BindingResource resource = {.sampler = sampler};
+            TestMutator(mutator, &resource, false);
+        }
+
+        // Error case: both a sampler and a texture at the same time is an error.
+        {
+            wgpu::BindingResource resource = {.sampler = sampler,
+                                              .textureView = texture.CreateView()};
+            TestMutator(mutator, &resource, false);
+        }
+    }
+}
+
+// Check that the view must have only the TextureBinding usage for SamplingResourceTable.
+// TODO(https://issues.chromium.org/435317394): Support storage textures in FullResourceTable
+TEST_F(ResourceTableValidationTest, MutatorTextureViewMustBeOnlyTextureBinding) {
+    // TODO(435317394): Implemented bindless in the wire.
+    if (UsesWire()) {
+        GTEST_SKIP();
+    }
+
+    // Create the texture to put in the table.
+    wgpu::TextureDescriptor tDesc{
+        .usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TextureBinding |
+                 wgpu::TextureUsage::StorageBinding,
+        .size = {1, 1},
+        .format = wgpu::TextureFormat::R32Uint,
+    };
+    wgpu::Texture tex = device.CreateTexture(&tDesc);
+
+    for (auto mutator : {Mutator::Update, Mutator::InsertBinding}) {
+        // Control case: limiting the usage to TextureBinding is valid.
+        {
+            wgpu::TextureViewDescriptor vDesc{
+                .usage = wgpu::TextureUsage::TextureBinding,
+            };
+            wgpu::BindingResource resource = {.textureView = tex.CreateView(&vDesc)};
+            TestMutator(mutator, &resource, true);
+        }
+
+        // Error case: having unrelated usages in the view is not allowed. RenderAttachment case.
+        {
+            wgpu::TextureViewDescriptor vDesc{
+                .usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment,
+            };
+            wgpu::BindingResource resource = {.textureView = tex.CreateView(&vDesc)};
+            TestMutator(mutator, &resource, false);
+        }
+
+        // Error case: having unrelated usages in the view is not allowed. StorageBinding case.
+        {
+            wgpu::TextureViewDescriptor vDesc{
+                .usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::StorageBinding,
+            };
+            wgpu::BindingResource resource = {.textureView = tex.CreateView(&vDesc)};
+            TestMutator(mutator, &resource, false);
+        }
+
+        // Error case: the defaulted texture usages don't contain TextureBinding.
+        {
+            wgpu::TextureDescriptor tDesc2 = tDesc;
+            tDesc2.usage = wgpu::TextureUsage::CopyDst;
+            wgpu::BindingResource resource = {.textureView =
+                                                  device.CreateTexture(&tDesc2).CreateView()};
+            TestMutator(mutator, &resource, false);
+        }
+    }
+}
+
+// Check that the texture view must have a single aspect for mutators.
+TEST_F(ResourceTableValidationTest, MutatorTextureViewMustBeSingleAspect) {
+    // TODO(435317394): Implemented bindless in the wire.
+    if (UsesWire()) {
+        GTEST_SKIP();
+    }
+
+    // Create the texture to put in the table.
+    wgpu::TextureDescriptor tDesc{
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {1, 1},
+        .format = wgpu::TextureFormat::Depth24PlusStencil8,
+    };
+    wgpu::Texture tex = device.CreateTexture(&tDesc);
+
+    for (auto mutator : {Mutator::Update, Mutator::InsertBinding}) {
+        // Success case, only the depth aspect is selected.
+        {
+            wgpu::TextureViewDescriptor vDesc{
+                .aspect = wgpu::TextureAspect::DepthOnly,
+            };
+            wgpu::BindingResource resource = {.textureView = tex.CreateView(&vDesc)};
+            TestMutator(mutator, &resource, true);
+        }
+
+        // Success case, only the stencil aspect is selected.
+        {
+            wgpu::TextureViewDescriptor vDesc{
+                .aspect = wgpu::TextureAspect::StencilOnly,
+            };
+            wgpu::BindingResource resource = {.textureView = tex.CreateView(&vDesc)};
+            TestMutator(mutator, &resource, true);
+        }
+
+        // Error case: both aspects are selected.
+        {
+            wgpu::BindingResource resource = {.textureView = tex.CreateView()};
+            TestMutator(mutator, &resource, false);
+        }
+    }
+}
+
+// Test that it is not allowed to call Update, RemoveBinding or InsertBinding after the table is destroyed.
+//TEST_F(DynamicBindingArrayTests, MutatorsAfterDestroy) {
+//    // TODO(435317394): Implemented bindless in the wire.
+//    if (UsesWire()) {
+//        GTEST_SKIP();
+//    }
+//
+//    // Test on a valid bindgroup that doesn't have a dynamic array.
+//    {
+//        wgpu::BindGroupLayout bgl = MakeBindGroupLayout(wgpu::DynamicBindingKind::SampledTexture);
+//        wgpu::BindGroup bg = MakeBindGroup(bgl, 3, {});
+//        bg.Destroy();
+//
+//        wgpu::BindGroupEntry entry{.binding = 0};
+//        EXPECT_EQ(wgpu::Status::Error, bg.Update(&entry));
+//
+//        wgpu::BindGroupEntryContents contents = {};
+//        EXPECT_EQ(wgpu::kInvalidBinding, bg.InsertBinding(&contents));
+//
+//        EXPECT_EQ(wgpu::Status::Error, bg.RemoveBinding(0));
+//    }
+//    // Test on a invalid bindgroup that doesn't have a dynamic array.
+//    {
+//        // Buffer that we'll try to put in the dynamic binding array to make it fail its creation.
+//        wgpu::BufferDescriptor bufDesc{
+//            .usage = wgpu::BufferUsage::Uniform,
+//            .size = 4,
+//        };
+//        wgpu::Buffer buffer = device.CreateBuffer(&bufDesc);
+//
+//        wgpu::BindGroupLayout bgl = MakeBindGroupLayout(wgpu::DynamicBindingKind::SampledTexture);
+//        wgpu::BindGroup bg;
+//        ASSERT_DEVICE_ERROR(bg = MakeBindGroup(bgl, 3, {{0, buffer}}));
+//        bg.Destroy();
+//
+//        wgpu::BindGroupEntry entry{.binding = 0};
+//        EXPECT_EQ(wgpu::Status::Error, bg.Update(&entry));
+//
+//        wgpu::BindGroupEntryContents contents = {};
+//        EXPECT_EQ(wgpu::kInvalidBinding, bg.InsertBinding(&contents));
+//
+//        EXPECT_EQ(wgpu::Status::Error, bg.RemoveBinding(0));
+//    }
+//}
+
+// TODO error table at creation?
 
 }  // namespace
 }  // namespace dawn
