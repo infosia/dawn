@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ed28c83_92da9f64",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-15T21:28:37Z",
+      "side": 1,
+      "message": "Wrong link, I don\u0027t think subgroup_uniformity is approved yet.",
+      "revId": "eb18f6d5de5efedb1773c8792ece0e28d04e3b0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
