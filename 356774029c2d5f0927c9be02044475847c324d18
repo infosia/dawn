@@ -338,6 +338,24 @@
       "parentUuid": "6bc639c4_ed11b9aa",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47b7d5c2_038326c3",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-15T17:50:28Z",
+      "side": 1,
+      "message": "\u003e `shared_ptr` is banned here.\n\nIt\u0027s tolerated in Dawn as I understand it.\n\n\u003e `Ref\u003c\u003e` only works on `RefCounted`\u0027s child class. Plain data type like GLuint won\u0027t work without a wrapper.\n\nI know; I\u0027m not suggesting that.\n\n\u003e Is avoiding 2 extra lines of assertions really important?\n\nIt was confusing to me that it uses atomics, suggesting this class is to handle the mutex case, when it\u0027s really about the deferred case and in fact wouldn\u0027t be needed in the mutex case (correct me if I\u0027m wrong). It\u0027s confusing that it introduces a member variable that would be unused if assertions were disabled. (These are not super-strong objections from me, BTW, just things that slowed me down.) Could we not just allocate the `FutureHandle` (or `shared_ptr`) in the creation lambda and assert that it\u0027s non-null? Would that work for assertions?\n\nWhether `shared_ptr` or `RefCounted`, it\u0027s allocation and complexity we don\u0027t need in the mutex case (IIUC) and that would have to remove if we decide to go fully-deferred.\n\nIf we do keep `FutureHandle`, I\u0027d also like to bikeshed its name a bit. It conflates with Dawn\u0027s Futures. Some ideas: `GLHandle`, `HandleGL`, or just `[opengl::]Handle` if that\u0027s available.",
+      "parentUuid": "83955743_ed2468eb",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
