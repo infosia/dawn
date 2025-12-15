@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "89f2a0b2_b81d2c08",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-12-15T23:07:30Z",
+      "side": 1,
+      "message": "nit. Should we file a bug and add TODO here instead of a FIXME?",
+      "range": {
+        "startLine": 609,
+        "startChar": 8,
+        "endLine": 609,
+        "endChar": 48
+      },
+      "revId": "d2643e53248ff5c4a315462b40db1bc107c73f25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "eb7fff17_694a8adb",
         "filename": "src/dawn/tests/end2end/RenderAttachmentTests.cpp",
         "patchSetId": 20
