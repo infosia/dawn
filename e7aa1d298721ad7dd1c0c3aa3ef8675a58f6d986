@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dadb8ce_84f43385",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-16T16:37:53Z",
+      "side": 1,
+      "message": "Please also add to the FuzzedOptions structure in writer_fuzz.cc.",
+      "revId": "e7aa1d298721ad7dd1c0c3aa3ef8675a58f6d986",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f93e652_3218a2d3",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-16T16:37:53Z",
+      "side": 1,
+      "message": "Remove the 3D check here as discussed",
+      "fixSuggestions": [
+        {
+          "fixId": "2ede5cfa_a9255c01",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+              "range": {
+                "startLine": 741,
+                "startChar": 0,
+                "endLine": 743,
+                "endChar": 0
+              },
+              "replacement": "            texture_ty-\u003eGetDepth() \u003d\u003d type::Depth::kDepth \u0026\u0026 texture_ty-\u003eGetDim() \u003d\u003d type::Dim::kCube;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e7aa1d298721ad7dd1c0c3aa3ef8675a58f6d986",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
