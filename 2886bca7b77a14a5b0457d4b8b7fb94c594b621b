@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cacc261_9ca9c18c",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 3662,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "I was thinking about it while making this CL. For now this follows the IDL in https://github.com/gpuweb/gpuweb/blob/main/proposals/bindless.md\n\n```\npartial interface GPUResourceTable {\n    void update(GPUIndex32 slot, GPUBindingResource resource);\n    GPUIndex32 insertBinding(GPUBindingResource resource);\n    void removeBinding(GPUIndex32 slot);\n};\n```\n\nI\u0027ll open an issue on the WG to discuss renaming with shorter names and will rename in Dawn when that happens.\n\nhttps://github.com/gpuweb/gpuweb/issues/5491",
+      "parentUuid": "4c0ecdcd_1b603ff2",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db350020_afc21d17",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-12-16T14:51:14Z",
       "side": 1,
       "message": "Just to check, `destroy` isn\u0027t needed here?",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a21a9709_5a6bacc2",
+        "filename": "src/dawn/dawn_wire.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "It will be. Done!",
+      "parentUuid": "db350020_afc21d17",
       "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2acde3bd_a06079a3",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a363263_35a90611",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb51de0d_f3270bc9",
@@ -82,6 +136,24 @@
       "writtenOn": "2025-12-16T14:51:14Z",
       "side": 1,
       "message": "nit: \n\n```suggestion\n        DAWN_INVALID_IF(!HasOneBit(aspect), \"Multiple aspects (%s) selected in %s. Expected only 1.\", aspect, view);\n```\n\nNot sure if this helps explain things?",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d07034a_e0c6c10b",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb51de0d_f3270bc9",
       "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -103,6 +175,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "151fdb58_428acd1d",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9366fac_c719fb29",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f03a2046_f2aec636",
@@ -116,6 +206,24 @@
       "writtenOn": "2025-12-16T14:51:14Z",
       "side": 1,
       "message": "```suggestion\n    enum class Mutator : uint8_t {\n```",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddfbf934_d5e230f7",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f03a2046_f2aec636",
       "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -137,6 +245,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c173272_9b4e512e",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79c008a7_cac375aa",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9c563eb0_0881488b",
@@ -150,6 +276,24 @@
       "writtenOn": "2025-12-16T14:51:14Z",
       "side": 1,
       "message": "```suggestion\n    // Create the sampler to put in the table.\n```",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0eae6d74_d5507eda",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c563eb0_0881488b",
       "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -171,6 +315,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61f4f6a8_21d221e5",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1193,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9284a8f1_d5152530",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d651a67_caa670ec",
@@ -184,6 +346,24 @@
       "writtenOn": "2025-12-16T14:51:14Z",
       "side": 1,
       "message": "```suggestion\n    // and we ignore device-timeline validation errors they are not what we are testing here.\n```",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2a340a1_40fe879a",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d651a67_caa670ec",
       "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -205,6 +385,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "93d39519_81dcc9a9",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1246,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "694396a5_1beee5e6",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f48de5a_1bccc6f0",
@@ -218,6 +416,24 @@
       "writtenOn": "2025-12-16T14:51:14Z",
       "side": 1,
       "message": "```suggestion\n    // and we ignore device-timeline validation errors they are not what we are testing here.\n```",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "427c0517_af4240cf",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1306,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f48de5a_1bccc6f0",
       "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -239,6 +455,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "176a22da_e3ba9545",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1328,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3d2fcb0_a901cacb",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03eb99c0_cd8c2588",
@@ -252,6 +486,24 @@
       "writtenOn": "2025-12-16T14:51:14Z",
       "side": 1,
       "message": "```suggestion\n    // and we ignore device-timeline validation errors they are not what we are testing here.\n```",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af35e9f5_5826221f",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1351,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03eb99c0_cd8c2588",
       "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -273,6 +525,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "098b4feb_5977d42c",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15cd6d23_ff7a0935",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e79f7459_dfa749c3",
@@ -286,6 +556,24 @@
       "writtenOn": "2025-12-16T14:51:14Z",
       "side": 1,
       "message": "```suggestion\n    // and we ignore device-timeline validation errors they are not what we are testing here.\n```",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d02e06e1_d289c20a",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e79f7459_dfa749c3",
       "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -307,6 +595,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3b6e138_cabc10fb",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f6832da_cffbd9c7",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d013de18_8fce50cf",
@@ -320,6 +626,24 @@
       "writtenOn": "2025-12-16T14:51:14Z",
       "side": 1,
       "message": "```suggestion\n        // InsertBinding skips over entries used at creation by Update()\n```",
+      "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84421248_e5cd3b1d",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1475,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d013de18_8fce50cf",
       "revId": "2886bca7b77a14a5b0457d4b8b7fb94c594b621b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
