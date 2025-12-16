@@ -291,6 +291,7 @@
             "QueueWriteTexture",
             "RenderBundleEncoderSetImmediates",
             "RenderPassEncoderSetImmediates",
+            "ResourceTableGetSize",
             "ResourceTableInsertBinding",
             "ResourceTableRemoveBinding",
             "ResourceTableUpdate",
