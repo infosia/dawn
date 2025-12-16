@@ -16,6 +16,40 @@
       "message": "It is better but not how I would like it to be eventually. Ideally `centroid_pos_frag_idx` would be created only when frag depth clamping is necessary but I don\u0027t know how to do this. Any idea how to proceed?",
       "revId": "d7d26054afe1b30d58b49add923f51d575b75fee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03d52f98_ce7405a7",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-16T15:05:09Z",
+      "side": 1,
+      "message": "`MakeVars` is called twice, once with an `addrspace` of `kIn` and once `kOut`. I\u0027m guessing we call `FinalizeInput` then `FinalizeOutput`, so you should be able to just set a flag if you see it on `kIn` and then create it on `kOut` if the flag is set.\n\n@jrprice@google.com in case I\u0027ve got something wrong here.",
+      "revId": "d7d26054afe1b30d58b49add923f51d575b75fee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ca9a0db_84b1bbfe",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-16T15:05:09Z",
+      "side": 1,
+      "message": "Why move this out of the general `if (io.attributes.builtin)` block above?",
+      "revId": "d7d26054afe1b30d58b49add923f51d575b75fee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
