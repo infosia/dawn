@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e8650224_043217d6",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-12-16T17:09:14Z",
+      "side": 1,
+      "message": "FYI the following code raises an error:\n\n```\nif (func -\u003e IsFragment() \u0026\u0026 addrspace \u003d\u003d core::AddressSpace::kOut) {\n  centroid_pos_frag_idx \u003d AddPositionInterpolant(inputs, core::AddressSpace::kIn,\n    core::InterpolationSampling::kCentroid);\n}\n``` \n```\n../../src/tint/utils/containers/slice.h:229 \ninternal compiler error: TINT_ASSERT(i \u003c Length())`\n```",
+      "parentUuid": "66fd4023_001a74be",
+      "revId": "d7d26054afe1b30d58b49add923f51d575b75fee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8ca9a0db_84b1bbfe",
         "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
         "patchSetId": 12
