@@ -16,6 +16,23 @@
       "message": "I still have concerns about how this adds logic in multiple code paths etc. We should really only need to start the capture at the start, and check replayed buffers at the end. The diff at https://dawn-review.googlesource.com/c/dawn/+/280876/1..2 passes at least some tests and does that. (of course it would need cleaning, simplification, comments and a use of ExpectEq\u003cu8\u003e instead of a memcmp.)",
       "revId": "01851643be4eabfbc7610f577aa086f8fb8d523c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e209aee_04fcdff5",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 2271,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-16T17:58:50Z",
+      "side": 1,
+      "message": "I\u0027m sorry to backseat drive but is this what we wanted, checking expectations twice? \n\nIn an case, can this code be deduplicated with `ResolveExpectations`? Something like\n\n```\n// PSUEDO CODE\nvoid DawnBaseTest::ResolveExpectations() {\n      for (const auto\u0026 expectation : mDeferredExpectations) {\n         ...\n         CheckExpecation(expectation, dataFromFirstRun)\n      }\n}\n\nvoid DawnBaseTest::ResolveReplayExpectations() {\n      for (const auto\u0026 expectation : mReplayRedabacks) {\n         ...\n         CheckExpecation(expectation, dataFromReacback)\n      }\n}\n```\n\nThey seem like they should be the same to me. The only difference is which buffer is mapped.",
+      "revId": "01851643be4eabfbc7610f577aa086f8fb8d523c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
