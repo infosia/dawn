@@ -25,7 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "src/tint/lang/core/ir/transform/decompose_uniform_access.h"
+#include "src/tint/lang/core/ir/transform/decompose_memory_access.h"
 
 #include <utility>
 
@@ -57,9 +57,11 @@ struct State {
     using VarTypePair = std::pair<core::ir::Var*, const core::type::Type*>;
     /// Maps a struct to the load function
     Hashmap<VarTypePair, core::ir::Function*, 2> var_and_type_to_load_fn_{};
+    /// Maps a struct/array/matrix to the store function
+    Hashmap<VarTypePair, core::ir::Function*, 2> var_and_type_to_store_fn_{};
 
     /// Process the module.
-    void Process() {
+    void Process(core::AddressSpace address_space) {
         Vector<core::ir::Var*, 4> var_worklist;
         for (auto* inst : *ir.root_block) {
             // Allow this to run before or after PromoteInitializers by handling non-var root_block
@@ -77,8 +79,8 @@ struct State {
                 continue;
             }
 
-            // Only care about uniform address space variables.
-            if (var_ty->AddressSpace() != core::AddressSpace::kUniform) {
+            // Only care about the requested address space variables.
+            if (var_ty->AddressSpace() != address_space) {
                 continue;
             }
 
@@ -102,8 +104,10 @@ struct State {
                 OffsetData od{};
                 tint::Switch(
                     inst,  //
-                    [&](core::ir::LoadVectorElement* l) { LoadVectorElement(l, var, od); },
-                    [&](core::ir::Load* l) { Load(l, var, od); },
+                    [&](core::ir::LoadVectorElement* l) { ProcessLoadVectorElement(l, var, od); },
+                    [&](core::ir::Load* l) { ProcessLoad(l, var, od); },
+                    [&](core::ir::StoreVectorElement* s) { ProcessStoreVectorElement(s, var, od); },
+                    [&](core::ir::Store* s) { ProcessStore(s, var, od); },
                     [&](core::ir::Access* a) { Access(a, var, a->Object()->Type(), od); },
                     [&](core::ir::Let* let) {
                         // The `let` is, essentially, an alias for the `var` as it's assigned
@@ -260,18 +264,26 @@ struct State {
                 },
                 [&](core::ir::Load* ld) {
                     a->Result()->RemoveUsage(usage);
-                    Load(ld, var, offset);
+                    ProcessLoad(ld, var, offset);
                 },
                 [&](core::ir::LoadVectorElement* lve) {
                     a->Result()->RemoveUsage(usage);
-                    LoadVectorElement(lve, var, offset);
+                    ProcessLoadVectorElement(lve, var, offset);
+                },
+                [&](core::ir::Store* s) {
+                    a->Result()->RemoveUsage(usage);
+                    ProcessStore(s, var, offset);
+                },
+                [&](core::ir::StoreVectorElement* sve) {
+                    a->Result()->RemoveUsage(usage);
+                    ProcessStoreVectorElement(sve, var, offset);
                 },
                 TINT_ICE_ON_NO_MATCH);
         }
         a->Destroy();
     }
 
-    void Load(core::ir::Load* ld, core::ir::Var* var, OffsetData offset) {
+    void ProcessLoad(core::ir::Load* ld, core::ir::Var* var, OffsetData offset) {
         b.InsertBefore(ld, [&] {
             auto* byte_idx = OffsetToValue(offset);
             auto* result = MakeLoad(ld, var, ld->Result()->Type(), byte_idx);
@@ -280,9 +292,9 @@ struct State {
         ld->Destroy();
     }
 
-    void LoadVectorElement(core::ir::LoadVectorElement* lve,
-                           core::ir::Var* var,
-                           OffsetData offset) {
+    void ProcessLoadVectorElement(core::ir::LoadVectorElement* lve,
+                                  core::ir::Var* var,
+                                  OffsetData offset) {
         b.InsertBefore(lve, [&] {
             // Add the byte count from the start of the vector to the requested element to the
             // current offset calculation
@@ -300,6 +312,36 @@ struct State {
             lve->Result()->ReplaceAllUsesWith(result->Result());
         });
         lve->Destroy();
+    }
+
+    void ProcessStore(core::ir::Store* s, core::ir::Var* var, OffsetData offset) {
+        b.InsertBefore(s, [&] {
+            auto* byte_idx = OffsetToValue(offset);
+            MakeStore(s, var, s->To()->Type()->UnwrapPtr(), byte_idx, s->From());
+        });
+        s->Destroy();
+    }
+
+    void ProcessStoreVectorElement(core::ir::StoreVectorElement* sve,
+                                   core::ir::Var* var,
+                                   OffsetData offset) {
+        b.InsertBefore(sve, [&] {
+            // Add the byte count from the start of the vector to the requested element to the
+            // current offset calculation
+            auto elem_byte_size = sve->To()->Type()->UnwrapPtr()->DeepestElement()->Size();
+            if (auto* cnst = sve->Index()->As<core::ir::Constant>()) {
+                offset.byte_offset += (cnst->Value()->ValueAs<uint32_t>() * elem_byte_size);
+            } else {
+                offset.byte_offset_expr.Push(
+                    b.Multiply(b.InsertConvertIfNeeded(ty.u32(), sve->Index()), u32(elem_byte_size))
+                        ->Result());
+            }
+
+            auto* byte_idx = OffsetToValue(offset);
+            MakeStore(sve, var, sve->To()->Type()->UnwrapPtr()->DeepestElement(), byte_idx,
+                      sve->Value());
+        });
+        sve->Destroy();
     }
 
     // Creates the appropriate load instructions for the given result type.
@@ -333,7 +375,8 @@ struct State {
                                           const core::type::Type* result_ty,
                                           core::ir::Value* byte_idx) {
         auto* array_idx = OffsetValueToArrayIndex(byte_idx);
-        auto* access = b.Access(ty.ptr(uniform, ty.vec4u()), var, array_idx);
+        auto as = var->Result()->Type()->As<core::type::Pointer>()->AddressSpace();
+        auto* access = b.Access(ty.ptr(as, ty.vec4u()), var, array_idx);
 
         auto* vec_idx = CalculateVectorOffset(byte_idx);
         core::ir::Instruction* load = b.LoadVectorElement(access, vec_idx);
@@ -386,7 +429,8 @@ struct State {
                                           const core::type::Vector* result_ty,
                                           core::ir::Value* byte_idx) {
         auto* array_idx = OffsetValueToArrayIndex(byte_idx);
-        auto* access = b.Access(ty.ptr(uniform, ty.vec4u()), var, array_idx);
+        auto as = var->Result()->Type()->As<core::type::Pointer>()->AddressSpace();
+        auto* access = b.Access(ty.ptr(as, ty.vec4u()), var, array_idx);
 
         if (result_ty->DeepestElement()->Is<core::type::F16>()) {
             return MakeVectorLoadF16(access, result_ty, byte_idx);
@@ -602,6 +646,145 @@ struct State {
             return fn;
         });
     }
+
+    // --- Store Helpers ---
+
+    void MakeStore(core::ir::Instruction* inst,
+                   core::ir::Var* var,
+                   const core::type::Type* type,
+                   core::ir::Value* byte_idx,
+                   core::ir::Value* value) {
+        if (type->IsFloatScalar() || type->IsIntegerScalar()) {
+            MakeScalarStore(var, type, byte_idx, value);
+            return;
+        }
+
+        tint::Switch(
+            type,
+            [&](const core::type::Struct* s) {
+                auto* fn = GetStoreFunctionFor(inst, var, s);
+                b.Call(fn, byte_idx, value);
+            },
+            [&](const core::type::Matrix* m) {
+                auto* fn = GetStoreFunctionFor(inst, var, m);
+                b.Call(fn, byte_idx, value);
+            },
+            [&](const core::type::Array* a) {
+                auto* fn = GetStoreFunctionFor(inst, var, a);
+                b.Call(fn, byte_idx, value);
+            },
+            [&](const core::type::Vector* v) { MakeVectorStore(var, v, byte_idx, value); },
+            TINT_ICE_ON_NO_MATCH);
+    }
+
+    void MakeScalarStore(core::ir::Var* var,
+                         const core::type::Type* type,
+                         core::ir::Value* byte_idx,
+                         core::ir::Value* value) {
+        auto* array_idx = OffsetValueToArrayIndex(byte_idx);
+        auto as = var->Result()->Type()->As<core::type::Pointer>()->AddressSpace();
+        auto* access = b.Access(ty.ptr(as, ty.vec4u()), var, array_idx);
+        auto* vec_idx = CalculateVectorOffset(byte_idx);
+
+        if (type->Is<core::type::F16>()) {
+            // F16 store is complex (RMW), skipping for now or implementing simplified version
+            // Assuming we can't easily do partial write to u32 without RMW.
+            // For now, let's assume we don't support F16 stores in this pass or implement RMW later.
+            // But to be complete, we should probably implement it.
+            // However, StoreVectorElement writes a u32.
+            // We would need to Load, InsertBits, Store.
+            // Leaving as TODO or simple bitcast if aligned.
+            TINT_UNIMPLEMENTED() << "F16 store not implemented in DecomposeWorkgroupAccess";
+        }
+
+        auto* val_u32 = b.Bitcast(ty.u32(), value);
+        b.StoreVectorElement(access, vec_idx, val_u32);
+    }
+
+    void MakeVectorStore(core::ir::Var* var,
+                         const core::type::Vector* vec_ty,
+                         core::ir::Value* byte_idx,
+                         core::ir::Value* value) {
+        // Decompose vector store into scalar stores
+        for (uint32_t i = 0; i < vec_ty->Width(); ++i) {
+            auto* elem_val = b.Access(vec_ty->Type(), value, u32(i))->Result();
+            auto elem_size = vec_ty->Type()->Size();
+            
+            // Calculate offset for this element
+            OffsetData od{i * elem_size, {byte_idx}};
+            auto* elem_byte_idx = OffsetToValue(od);
+            
+            MakeScalarStore(var, vec_ty->Type(), elem_byte_idx, elem_val);
+        }
+    }
+
+    core::ir::Function* GetStoreFunctionFor(core::ir::Instruction* inst,
+                                            core::ir::Var* var,
+                                            const core::type::Struct* s) {
+        return var_and_type_to_store_fn_.GetOrAdd(VarTypePair{var, s}, [&] {
+            auto* start_byte_offset = b.FunctionParam("start_byte_offset", ty.u32());
+            auto* val = b.FunctionParam("val", s);
+            auto* fn = b.Function(ty.void_());
+            fn->SetParams({start_byte_offset, val});
+            b.Append(fn->Block(), [&] {
+                for (const auto* mem : s->Members()) {
+                    uint32_t stride = static_cast<uint32_t>(mem->Offset());
+                    OffsetData od{stride, {start_byte_offset}};
+                    auto* byte_idx = OffsetToValue(od);
+                    auto* mem_val = b.Access(mem->Type(), val, u32(mem->Index()))->Result();
+                    MakeStore(inst, var, mem->Type(), byte_idx, mem_val);
+                }
+                b.Return(fn);
+            });
+            return fn;
+        });
+    }
+
+    core::ir::Function* GetStoreFunctionFor(core::ir::Instruction* inst,
+                                            core::ir::Var* var,
+                                            const core::type::Matrix* m) {
+        return var_and_type_to_store_fn_.GetOrAdd(VarTypePair{var, m}, [&] {
+            auto* start_byte_offset = b.FunctionParam("start_byte_offset", ty.u32());
+            auto* val = b.FunctionParam("val", m);
+            auto* fn = b.Function(ty.void_());
+            fn->SetParams({start_byte_offset, val});
+            b.Append(fn->Block(), [&] {
+                for (size_t i = 0; i < m->Columns(); ++i) {
+                    uint32_t stride = static_cast<uint32_t>(i * m->ColumnStride());
+                    OffsetData od{stride, {start_byte_offset}};
+                    auto* byte_idx = OffsetToValue(od);
+                    auto* col_val = b.Access(m->ColumnType(), val, u32(i))->Result();
+                    MakeStore(inst, var, m->ColumnType(), byte_idx, col_val);
+                }
+                b.Return(fn);
+            });
+            return fn;
+        });
+    }
+
+    core::ir::Function* GetStoreFunctionFor(core::ir::Instruction* inst,
+                                            core::ir::Var* var,
+                                            const core::type::Array* arr) {
+        return var_and_type_to_store_fn_.GetOrAdd(VarTypePair{var, arr}, [&] {
+            auto* start_byte_offset = b.FunctionParam("start_byte_offset", ty.u32());
+            auto* val = b.FunctionParam("val", arr);
+            auto* fn = b.Function(ty.void_());
+            fn->SetParams({start_byte_offset, val});
+            b.Append(fn->Block(), [&] {
+                auto* count = arr->Count()->As<core::type::ConstantArrayCount>();
+                TINT_IR_ASSERT(ir, count);
+                b.LoopRange(0_u, u32(count->value), 1_u, [&](core::ir::Value* idx) {
+                    auto* stride = b.Multiply(idx, u32(arr->ImplicitStride()))->Result();
+                    OffsetData od{0, {start_byte_offset, stride}};
+                    auto* byte_idx = OffsetToValue(od);
+                    auto* elem_val = b.Access(arr->ElemType(), val, idx)->Result();
+                    MakeStore(inst, var, arr->ElemType(), byte_idx, elem_val);
+                });
+                b.Return(fn);
+            });
+            return fn;
+        });
+    }
 };
 
 }  // namespace
@@ -619,7 +802,25 @@ Result<SuccessType> DecomposeUniformAccess(core::ir::Module& ir) {
         return result.Failure();
     }
 
-    State{ir}.Process();
+    State{ir}.Process(core::AddressSpace::kUniform);
+
+    return Success;
+}
+
+Result<SuccessType> DecomposeWorkgroupAccess(core::ir::Module& ir) {
+    auto result =
+        ValidateAndDumpIfNeeded(ir, "core.DecomposeWorkgroupAccess",
+                                core::ir::Capabilities{
+                                    core::ir::Capability::kAllow8BitIntegers,
+                                    core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
+                                    core::ir::Capability::kAllowDuplicateBindings,
+                                    core::ir::Capability::kAllowNonCoreTypes,
+                                });
+    if (result != Success) {
+        return result.Failure();
+    }
+
+    State{ir}.Process(core::AddressSpace::kWorkgroup);
 
     return Success;
 }
