@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2007f6e1_c81e4554",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-16T05:18:55Z",
+      "side": 1,
+      "message": "I won\u0027t land this now because the roller just started another attempt, but it\u0027s now stamped if that fails and you still need to land this.",
+      "revId": "a5af983f9d038eccfca48c902761723a3c601b55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
