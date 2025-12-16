@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c792517_52a96c2c",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-12-16T10:08:52Z",
+      "side": 1,
+      "message": "Rename it to `AddOwnerGUID` so it can explain itself (hopefully?)",
+      "parentUuid": "d0ecaa1f_4c2f1995",
+      "range": {
+        "startLine": 310,
+        "startChar": 17,
+        "endLine": 310,
+        "endChar": 33
+      },
+      "revId": "547eac3a4e6562ac6f7b5c37f58d8aafb32f766b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c12970b8_50c51061",
@@ -89,6 +113,30 @@
       "writtenOn": "2025-12-15T21:48:45Z",
       "side": 1,
       "message": "nit. This test is super overloaded for a unit test. I think it would be better to move these into separate unit tests. Ideally, I think this whole test could be split up a bit more, but at least for this change, maybe we could just separate out the new changes.",
+      "range": {
+        "startLine": 202,
+        "startChar": 4,
+        "endLine": 241,
+        "endChar": 75
+      },
+      "revId": "547eac3a4e6562ac6f7b5c37f58d8aafb32f766b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9431c814_b09557ab",
+        "filename": "src/dawn/tests/unittests/native/MemoryInstrumentationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-12-16T10:08:52Z",
+      "side": 1,
+      "message": "Done, making the textures with owner tested in a new test.",
+      "parentUuid": "9a5dd14d_30d74446",
       "range": {
         "startLine": 202,
         "startChar": 4,
