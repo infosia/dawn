@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "66fd4023_001a74be",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-12-16T15:11:53Z",
+      "side": 1,
+      "message": "MakeVars is called with different entries (input and outputs) though for location discovery I believe. Is this that easy?",
+      "parentUuid": "03d52f98_ce7405a7",
+      "revId": "d7d26054afe1b30d58b49add923f51d575b75fee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8ca9a0db_84b1bbfe",
         "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
         "patchSetId": 12
@@ -48,6 +66,24 @@
       "writtenOn": "2025-12-16T15:05:09Z",
       "side": 1,
       "message": "Why move this out of the general `if (io.attributes.builtin)` block above?",
+      "revId": "d7d26054afe1b30d58b49add923f51d575b75fee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13930319_5638c22a",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-12-16T15:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ca9a0db_84b1bbfe",
       "revId": "d7d26054afe1b30d58b49add923f51d575b75fee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
