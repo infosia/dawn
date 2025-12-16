@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bb58c12_991baa87",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-12-16T14:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd06b6d1_1221ecbf",
+      "revId": "e15d21e32c037da13ad1b6dee7a3d1defe71b27d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5b86ea10_dc08876b",
@@ -138,6 +156,24 @@
       "side": 1,
       "message": "Seems like something is wrong, you\u0027ll need to use a debugger to determine which access is triggering this issue.",
       "parentUuid": "a00b88fb_5f737424",
+      "revId": "e15d21e32c037da13ad1b6dee7a3d1defe71b27d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74d8dd9d_369b6120",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-12-16T14:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7242056f_8faadeee",
       "revId": "e15d21e32c037da13ad1b6dee7a3d1defe71b27d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

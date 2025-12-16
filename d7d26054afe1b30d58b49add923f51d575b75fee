@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3700aa5_c09eb18f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-12-16T14:48:51Z",
+      "side": 1,
+      "message": "It is better but not how I would like it to be eventually. Ideally `centroid_pos_frag_idx` would be created only when frag depth clamping is necessary but I don\u0027t know how to do this. Any idea how to proceed?",
+      "revId": "d7d26054afe1b30d58b49add923f51d575b75fee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
