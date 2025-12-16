@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a0ab829_b217a8e2",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1949,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-16T19:09:35Z",
+      "side": 1,
+      "message": "“What\u0027s in a name? that which we call a rose\nBy any other name would smell as sweet.”  -- Shakespeare",
+      "revId": "5aa980db48bfcf6fbbf51eb5c8242cd503e8293e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
