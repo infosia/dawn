@@ -428,6 +428,24 @@
       "parentUuid": "adf819d8_540588eb",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d8f5769_d682f2a9",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-16T17:03:50Z",
+      "side": 1,
+      "message": "Thanks for sketching this out!\n\nPluses:\n\n+ derived class implementation is very clean for the most part\n+ GL handles are bulletproof\n+ the CRTP is always complex, but at least the ugly is contained to one file\n\nMinuses:\n- the CRTP is always complex\n- putting the destruction lambda in the class initializer is a bit weird (in a duck-billed platypus kind of way)\n- still some extra allocation and indirection in the non-deferred case\n\nTBH, in the end, I don\u0027t think we need to make handle access this bulletproof. There are really not a lot of derived classes or GL calls, and we have a *lot* of tests.\n\nLet me try one more variant before we commit.",
+      "parentUuid": "64882167_e77127d7",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
