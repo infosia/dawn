@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14c67521_13ddc0f7",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:07:58Z",
+      "side": 1,
+      "message": "I still have concerns about how this adds logic in multiple code paths etc. We should really only need to start the capture at the start, and check replayed buffers at the end. The diff at https://dawn-review.googlesource.com/c/dawn/+/280876/1..2 passes at least some tests and does that. (of course it would need cleaning, simplification, comments and a use of ExpectEq\u003cu8\u003e instead of a memcmp.)",
+      "revId": "01851643be4eabfbc7610f577aa086f8fb8d523c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
