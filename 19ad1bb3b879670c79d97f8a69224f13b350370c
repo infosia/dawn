@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84a26b69_676fac5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T16:34:42Z",
+      "side": 1,
+      "message": "(emptying the leftover comment box in Gerrit, sending a non-empty text is the only way to do it)",
+      "revId": "19ad1bb3b879670c79d97f8a69224f13b350370c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
