@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c31a6d0_f0b178a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-16T17:32:34Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"manully\" is a possible misspelling of \"manually\".\n\nTo bypass Spellchecker, add ...\n\n\"manully\" is a possible misspelling of \"manually\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "ccbd24ff0715b44eda47ee9e77deeb4a4502fe70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
