@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "075dcccc_46cc42a1",
+        "filename": "src/dawn/replay/Error.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-16T02:01:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e1a19b0_b8cd4469",
+      "revId": "eb105d894a44d5097e0f9a6971fdafbdabe0a07e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98cad337_19068b4e",
@@ -65,6 +83,30 @@
       "writtenOn": "2025-12-15T09:52:49Z",
       "side": 1,
       "message": "No longer needed?",
+      "range": {
+        "startLine": 546,
+        "startChar": 0,
+        "endLine": 548,
+        "endChar": 5
+      },
+      "revId": "eb105d894a44d5097e0f9a6971fdafbdabe0a07e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e300945c_eefcae1f",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 28
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-16T02:01:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98cad337_19068b4e",
       "range": {
         "startLine": 546,
         "startChar": 0,
@@ -109,6 +151,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c415b52_ef58375b",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 1590,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-16T02:01:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1adea860_44014519",
+      "revId": "eb105d894a44d5097e0f9a6971fdafbdabe0a07e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9a8198c3_607134ad",
@@ -122,6 +182,24 @@
       "writtenOn": "2025-12-15T09:52:49Z",
       "side": 1,
       "message": "```suggestion\n    for (const auto\u0026 [label, deferredIndex] : mReplayDeferredExpectations) {\n```",
+      "revId": "eb105d894a44d5097e0f9a6971fdafbdabe0a07e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37f88f8d_10a0cdc2",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 1619,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-16T02:01:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a8198c3_607134ad",
       "revId": "eb105d894a44d5097e0f9a6971fdafbdabe0a07e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -143,6 +221,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74883d30_c55200b7",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 1621,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-16T02:01:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ac2d098_c79764b3",
+      "revId": "eb105d894a44d5097e0f9a6971fdafbdabe0a07e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ab72b39_bc859c97",
@@ -156,6 +252,24 @@
       "writtenOn": "2025-12-15T09:52:49Z",
       "side": 1,
       "message": "Why do we need to clone the expectation instead of just checking that the buffer content is the same as the readback buffer? It seems that we have some complexity because we try to use the deferred expectation mechanism to check the contents of the replayed buffers. Instead we could on TearDown first handle all the deferred expectations, save the buffer contents on the side, and then only after that, do the replay, and manually copy and map buffers to check their contents.\n\nThe alternative if you really want to use the same expectations, would be to make them stored as a shared_ptr instead of a unique_ptr. (but imho it is a bit more intrusive compared to manual expectation just for replay as suggested above).",
+      "revId": "eb105d894a44d5097e0f9a6971fdafbdabe0a07e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "208e9770_c81c1033",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-16T02:01:16Z",
+      "side": 1,
+      "message": "Done (Now compare replay readback buffer to original readback buffer for raw bytes, no extra deferred expectation is added. The comparison happened after the original expectations are resolved)",
+      "parentUuid": "4ab72b39_bc859c97",
       "revId": "eb105d894a44d5097e0f9a6971fdafbdabe0a07e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -183,6 +297,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2df5559_46d80de9",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-16T02:01:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "152f454b_fcd53d06",
+      "range": {
+        "startLine": 1729,
+        "startChar": 1,
+        "endLine": 1740,
+        "endChar": 1
+      },
+      "revId": "eb105d894a44d5097e0f9a6971fdafbdabe0a07e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af9b2220_90a0c891",
@@ -196,6 +334,24 @@
       "writtenOn": "2025-12-15T09:52:49Z",
       "side": 1,
       "message": "nit: can we store the label in `ReadbackReservation` so that we don\u0027t need to have the two computations of the labels happen to match?",
+      "revId": "eb105d894a44d5097e0f9a6971fdafbdabe0a07e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "acdfc51a_98065820",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 1796,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-16T02:01:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af9b2220_90a0c891",
       "revId": "eb105d894a44d5097e0f9a6971fdafbdabe0a07e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -217,6 +373,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b198c978_45aadfb2",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-16T02:01:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd371b15_7601296c",
+      "revId": "eb105d894a44d5097e0f9a6971fdafbdabe0a07e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d772048e_9f08bd07",
@@ -234,6 +408,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e426095_8afc88c7",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-16T02:01:16Z",
+      "side": 1,
+      "message": "(I thought you\u0027d have to write Clone for every child class without the helper as Expectation is an abstract class. Is that what you were asking?)\n\nRemoved the whole thing now though.",
+      "parentUuid": "d772048e_9f08bd07",
+      "revId": "eb105d894a44d5097e0f9a6971fdafbdabe0a07e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9eb5c8ce_968d5ce9",
@@ -247,6 +439,30 @@
       "writtenOn": "2025-12-15T09:52:49Z",
       "side": 1,
       "message": "In general using `detail::` outside of the header that defines it is a signal that the abstractions are breaking down and something is wrong.",
+      "range": {
+        "startLine": 1696,
+        "startChar": 38,
+        "endLine": 1696,
+        "endChar": 86
+      },
+      "revId": "eb105d894a44d5097e0f9a6971fdafbdabe0a07e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1de21a01_950bb890",
+        "filename": "src/dawn/tests/end2end/BufferTests.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 1696,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-16T02:01:16Z",
+      "side": 1,
+      "message": "Not applicable any more.",
+      "parentUuid": "9eb5c8ce_968d5ce9",
       "range": {
         "startLine": 1696,
         "startChar": 38,
