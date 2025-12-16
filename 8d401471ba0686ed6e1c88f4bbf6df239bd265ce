@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc4acea3_e495923a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-16T23:02:06Z",
+      "side": 1,
+      "message": "PTAL. Happily, this turned out to be simpler than I anticipated!",
+      "revId": "8d401471ba0686ed6e1c88f4bbf6df239bd265ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
