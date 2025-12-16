@@ -16,6 +16,57 @@
       "message": "PTAL",
       "revId": "b92f89f424454a272a186de4cd96e28b13a163bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cc47edf_bc7d2a68",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 4337941
+      },
+      "writtenOn": "2025-12-16T21:34:20Z",
+      "side": 1,
+      "message": "nit: Maybe use https://docs.python.org/3/library/shlex.html#shlex.join. That way, the command remains copy-pastable in a shell, even if some `sys.argv` contain spaces.",
+      "range": {
+        "startLine": 830,
+        "startChar": 30,
+        "endLine": 830,
+        "endChar": 56
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "67732604_8627426e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "scripts/roll_chromium_deps.py",
+              "range": {
+                "startLine": 38,
+                "startChar": 0,
+                "endLine": 38,
+                "endChar": 0
+              },
+              "replacement": "import shlex\n"
+            },
+            {
+              "path": "scripts/roll_chromium_deps.py",
+              "range": {
+                "startLine": 830,
+                "startChar": 0,
+                "endLine": 831,
+                "endChar": 0
+              },
+              "replacement": "    command_lines.append(f\u0027  {shlex.join(relative_command)}\u0027)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b92f89f424454a272a186de4cd96e28b13a163bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
