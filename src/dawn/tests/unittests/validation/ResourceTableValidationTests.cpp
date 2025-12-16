@@ -159,6 +159,11 @@ TEST_F(ResourceTableValidationTest, NextInChain) {
 
 // Test the Destroy call on a ResourceTable
 TEST_F(ResourceTableValidationTest, Destroy) {
+    // TODO(435317394): Implemented bindless in the wire.
+    if (UsesWire()) {
+        GTEST_SKIP();
+    }
+
     wgpu::ResourceTableDescriptor descriptor;
     descriptor.size = 1u;
     wgpu::ResourceTable resourceTable = device.CreateResourceTable(&descriptor);
@@ -520,6 +525,11 @@ TEST_F(ResourceTableValidationTestDisabled, CommandEncoder_SetResourceTable) {
 
 // Tests that the resource table can be used in submit
 TEST_F(ResourceTableValidationTest, Submit_CanUseInSubmit) {
+    // TODO(435317394): Implemented bindless in the wire.
+    if (UsesWire()) {
+        GTEST_SKIP();
+    }
+
     // Success case: resource table can be used in submit
     {
         wgpu::ResourceTableDescriptor descriptor;
@@ -1488,6 +1498,60 @@ TEST_F(ResourceTableValidationTest, InsertBindingSkipsOverUsedSlots) {
         EXPECT_EQ(2u, table.InsertBinding(&resource));
         EXPECT_EQ(3u, table.InsertBinding(&resource));
         EXPECT_EQ(4u, table.InsertBinding(&resource));
+    }
+}
+
+// Test the value returned by GetSize right after creating the table.
+TEST_F(ResourceTableValidationTest, GetSizeAfterCreation) {
+    // TODO(435317394): Implemented bindless in the wire.
+    if (UsesWire()) {
+        GTEST_SKIP();
+    }
+
+    // Valid resource tables of varying size.
+    {
+        EXPECT_EQ(0u, MakeResourceTable(0).GetSize());
+        EXPECT_EQ(42u, MakeResourceTable(42).GetSize());
+        EXPECT_EQ(kMaxResourceTableSize, MakeResourceTable(kMaxResourceTableSize).GetSize());
+    }
+
+    // Invalid resource tables of varying size under the limit.
+    {
+        EXPECT_EQ(0u, MakeErrorResourceTable(0).GetSize());
+        EXPECT_EQ(42u, MakeErrorResourceTable(42).GetSize());
+        EXPECT_EQ(kMaxResourceTableSize, MakeErrorResourceTable(kMaxResourceTableSize).GetSize());
+    }
+
+    // Invalid resource table with a size above the limit is a special case that doesn't allocate
+    // state tracking.
+    {
+        wgpu::ResourceTable table;
+        ASSERT_DEVICE_ERROR(table = MakeResourceTable(kMaxResourceTableSize + 1));
+        EXPECT_EQ(0u, table.GetSize());
+    }
+}
+
+// Test the value returned by GetSize after calling Destroy() should return the same value.
+TEST_F(ResourceTableValidationTest, GetSizeAfterDestroy) {
+    // TODO(435317394): Implemented bindless in the wire.
+    if (UsesWire()) {
+        GTEST_SKIP();
+    }
+
+    // Valid resource table.
+    {
+        wgpu::ResourceTable table = MakeResourceTable(42);
+        EXPECT_EQ(42u, table.GetSize());
+        table.Destroy();
+        EXPECT_EQ(42u, table.GetSize());
+    }
+
+    // Invalid resource table.
+    {
+        wgpu::ResourceTable table = MakeResourceTable(42);
+        EXPECT_EQ(42u, table.GetSize());
+        table.Destroy();
+        EXPECT_EQ(42u, table.GetSize());
     }
 }
 
