@@ -446,6 +446,24 @@
       "parentUuid": "64882167_e77127d7",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2560ffb4_67efe96a",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-16T18:04:36Z",
+      "side": 1,
+      "message": "\u003e There\u0027s a few places where we use it, but Ref is preferred as it has an intrusive refcount, which is much more efficient than shared_ptr.\n\nWell, long before `WeakRef` was implemented, I got some problems that could be easily solved by `weak_ref`. But Autstin told me `weak_ref` is discouraged in Dawn the same way `shared_ptr` is in the chromium\u0027s guideline. I guess it\u0027s informally banned.\n\n\u003e And then we can see if a reason can be added to DestroyImpl to remove the need for mIsBeingDeleted\n\n`mIsBeingDeleted` is a workaround for not having \"reason\" in DestroyImpl. We could add a TODO to add \"reason\" in future. That would require changing too many places though. Technically this is not CRTP though since it doesn\u0027t use Derived as template param. The template Base class is only because different GL classes might have different base classes. Without it we would have a diamond inheritance problem.\n\n\u003e still some extra allocation and indirection in the non-deferred case\n\nBy \"no extra allocation\" I meant we don\u0027t do separate heap allocations for the Buffer class and the handle. With `Ref\u003cFutureHandle\u003e` we have to allocate a separate heap memory for the handle. With the wrapper class here and the `std::optional` there shouldn\u0027t be any additional heap allocation. I don\u0027t think there should be any indirection here either. The compiler should be smart enough to find direct offset in the Buffer object to point directly to value stored in `*mWrappedGLObject`. Since everything is allocated in one heap allocation unlike `Ref\u003cFutureHandle\u003e`.",
+      "parentUuid": "5d8f5769_d682f2a9",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
