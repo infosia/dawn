@@ -33,6 +33,24 @@
       "message": "I\u0027m sorry to backseat drive but is this what we wanted, checking expectations twice? \n\nIn an case, can this code be deduplicated with `ResolveExpectations`? Something like\n\n```\n// PSUEDO CODE\nvoid DawnBaseTest::ResolveExpectations() {\n      for (const auto\u0026 expectation : mDeferredExpectations) {\n         ...\n         CheckExpecation(expectation, dataFromFirstRun)\n      }\n}\n\nvoid DawnBaseTest::ResolveReplayExpectations() {\n      for (const auto\u0026 expectation : mReplayRedabacks) {\n         ...\n         CheckExpecation(expectation, dataFromReacback)\n      }\n}\n```\n\nThey seem like they should be the same to me. The only difference is which buffer is mapped.",
       "revId": "01851643be4eabfbc7610f577aa086f8fb8d523c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d775730_70537b2f",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 2271,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-16T19:59:31Z",
+      "side": 1,
+      "message": "Just to follow up from our meeting. I see that Corentin wanted it that the original buffers are still checked and then the replay buffers are checked against the original buffers, not the expectations.\n\nThat\u0027s fine. Just, the original expectations take an offset and a size. I think, only that offset and size are valid to compare, not the entire buffer? Or am I wrong. I guess if the playback is the same the buffer should be the same so maybe it\u0027s fine to compare the entire buffer.",
+      "parentUuid": "0e209aee_04fcdff5",
+      "revId": "01851643be4eabfbc7610f577aa086f8fb8d523c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
