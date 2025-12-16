@@ -16,6 +16,40 @@
       "message": "PTAL!",
       "revId": "43ab2eca17d0362c550c516e998b49da2758702d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a006d3f2_af2a9941",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-16T14:53:07Z",
+      "side": 1,
+      "message": "lgtm w/ question",
+      "revId": "43ab2eca17d0362c550c516e998b49da2758702d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a83bfa98_937dbf81",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3659,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-16T14:53:07Z",
+      "side": 1,
+      "message": "Why `GetSize` and not just `Size`?",
+      "revId": "43ab2eca17d0362c550c516e998b49da2758702d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
