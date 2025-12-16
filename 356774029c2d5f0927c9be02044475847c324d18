@@ -410,6 +410,24 @@
       "parentUuid": "5006dd7d_e325eaea",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64882167_e77127d7",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T16:29:42Z",
+      "side": 1,
+      "message": "\u003e Austin banned shared_ptr when I tried to use it last time. There is a reason we have to implement WeakRef manually instead of using weak_ptr.\n\nThere\u0027s a few places where we use it, but `Ref` is preferred as it has an intrusive refcount, which is much more efficient than `shared_ptr`.\n\nThe use of the CRTP like this would work though it\u0027s a bit heavy handed, though I\u0027d be ok with having it. Maybe the `WrappedGLObjects` should have a method `Delete` that takes the `OpenGLFunctions` so that it\u0027s 1) forced to be a struct, 2) has the code colocated with the data definition. And then we can see if a `reason` can be added to `DestroyImpl` to remove the need for mIsBeingDeleted. (so the CRTP is similar to \"EnqueueDestroyGL + add an enum to DestroyImpl\" but with less manual code that needs to be written).\n\nSo either of these SGTM: FutureHandle (with Stephen\u0027s comments), CRTP with/without DestroyImpl reason, or DestroyImpl with a reason (if find how to make that work). Given we want to make forward progress for prototyping the deferral / locking of the context, the CRTP seems fine?",
+      "parentUuid": "adf819d8_540588eb",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
