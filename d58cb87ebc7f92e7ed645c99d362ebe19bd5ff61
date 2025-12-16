@@ -33,6 +33,24 @@
       "message": "Will this eventually take another parameter which provides the DynamicBindingKind?",
       "revId": "d58cb87ebc7f92e7ed645c99d362ebe19bd5ff61",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39d10eaa_b0b034b9",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-16T15:27:57Z",
+      "side": 1,
+      "message": "No, instead when the DynamicArrayState is inlined in ResourceTableBase, the concept of DynamicBindingKind will disappear.",
+      "parentUuid": "db3671d1_0e2662b6",
+      "revId": "d58cb87ebc7f92e7ed645c99d362ebe19bd5ff61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
