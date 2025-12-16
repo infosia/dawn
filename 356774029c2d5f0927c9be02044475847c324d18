@@ -392,6 +392,24 @@
       "parentUuid": "47b7d5c2_038326c3",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adf819d8_540588eb",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-16T09:16:21Z",
+      "side": 1,
+      "message": "How about I create a base class for all GL classes like this:\n```\ntemplate \u003ctypename Base, typename WrappedGLObject\u003e\n    requires std::derived_from\u003cBase, ApiObjectBase\u003e\nclass GLWrapper : public Base {\n  public:\n  \n  const WrappedGLObject\u0026 GetGLObject() const {\n     DAWN_ASSERT(mWrappedGLObj.has_value());\n     return *mWrappedGLObj;\n  }\n\n  template \u003ctypename Fn\u003e\n  MaybeError Initialize(Fn \u0026\u0026createGL) {\n    return device-\u003eEnqueueGL( ... {\n      self-\u003emWrappedGLObj \u003d createGL(gl);\n\n      return {};\n    });\n  }\n\n  void DeleteThis() final {\n    mIsBeingDeleted \u003d true;\n    Base::DeleteThis();\n  }\n\n  void DestroyImpl() final {\n    Base::DestroyImpl();\n\n    if (mIsBeingDeleted) {\n      // Cannot capture self, capture mWrappedGLObj instead.\n      device-\u003eEnqueueGL([handle \u003d std::move(mWrappedGLObject),\n                         deleteFunc\u003dmDeletefunc](const auto\u0026 gl)\n      -\u003e MaybeError {\n        deleteFunc(gl, *handle);\n        return {};\n      });\n    } else {\n      // Capture self\n      device-\u003eEnqueueGL([self\u003dRef\u003cGLWrapper\u003e(this)](const auto\u0026 gl)\n      -\u003e MaybeError {\n        self-\u003emDeleteFunc(gl, std::move(self-\u003eGetGLObject()));\n        return {};\n      });\n    }\n  }\n\n\n  protected:\n  using DeleteFunc \u003d void (*)(const OpenGLFunctions\u0026 gl, WrappedGLObject glObject);\n  \n  template \u003cclass... Args\u003e\n  GLWrapper(DeleteFunc deleteFunc, Args\u0026\u0026... args)\n   : Base(std::forward\u003cArgs\u003e(args)...),\n     mDeleteFunc(deleteFunc) {}\n\n  private:\n  const DeleteFunc mDeleteFunc;\n  std::optional\u003cWrappedGLObject\u003e mWrappedGLObj;\n  bool mIsBeingDeleted \u003d false;\n};\n\nclass Buffer: public GLWrapper\u003cBufferBase, GLuint\u003e {\npublic:\n   Buffer(...): GLWrapper(/*deleteFunc\u003d*/\n                      [](const OpenGLFunctions\u0026 gl, GLuint handle) {\n                         gl.DeleteBuffers(1, \u0026handle);\n                      }, ...)\n}\n```\n\nWith this base class:\n- The deferred `DestroyImpl` is automatically handled. Derived classes don\u0027t have to do anything.\n- There won\u0027t be any extra allocation.\n- All derived classes cannot use GLuint directly anw, they have to call base class\u0027 `GetGLObject`.\n- The template parameter allows the derived classes to wrap `GLuint`, `std::vector\u003cGLuint\u003e` or composite structs.\n- I would prefer we don\u0027t allow the derived classes to use `GLuint` directly. That is very __error-prone__.\n\nIs it cleaner or is it too complicated for this CL?\n\n\u003e It\u0027s tolerated in Dawn as I understand it.\n\nAustin banned `shared_ptr` when I tried to use it last time. There is a reason we have to implement WeakRef manually instead of using `weak_ptr`.",
+      "parentUuid": "5006dd7d_e325eaea",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
