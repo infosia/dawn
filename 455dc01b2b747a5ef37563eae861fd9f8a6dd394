@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "636c73e4_59b06ccb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-16T14:15:52Z",
+      "side": 1,
+      "message": "```suggestion\nIn ValidationTest, ASSERT_DEVICE_ERROR used GTest\u0027s FAIL() macro which\n```",
+      "revId": "455dc01b2b747a5ef37563eae861fd9f8a6dd394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "674dfcf2_dfb8db48",
