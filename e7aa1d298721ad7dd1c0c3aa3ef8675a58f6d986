@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "57f89eea_b1032f32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-16T16:38:28Z",
+      "side": 1,
+      "message": "Discussed with james. Remove the 3d check on the condition as the cube should be sufficient. Rerun CQ. Then move failing tests to skip.",
+      "revId": "e7aa1d298721ad7dd1c0c3aa3ef8675a58f6d986",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2dadb8ce_84f43385",
         "filename": "src/tint/lang/spirv/writer/common/options.h",
         "patchSetId": 21
