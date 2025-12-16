@@ -482,6 +482,24 @@
       "parentUuid": "2560ffb4_67efe96a",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1771c7a8_6e6e768f",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-16T20:57:46Z",
+      "side": 1,
+      "message": "So I took Quyen\u0027s \"mIsBeingDeleted\" idea, generalized GetHandle() into GetData() and applied it to my variant of EnqueueGL:\n\n```\ntemplate \u003ctypename T, typename Fn, typename Data\u003e\nMaybeError EnqueueGL(T* self, Data (T::*GetData)() const, Fn work) {\n    if (!IsToggleEnabled(Toggle::GLDefer)) {\n        MarkGLUsed(ExecutionQueueBase::SubmitMode::Normal);\n\n        // Execute immediately\n        ContextEGL::ScopedMakeCurrent scopedCurrentContext;\n        DAWN_TRY_ASSIGN(scopedCurrentContext, mContext-\u003eMakeCurrent());\n        return work(mGL, (self-\u003e*GetData)());\n    }\n    if (self-\u003eIsBeingDeleted()) {\n        // “self” is being destroyed; capture data\n        return EnqueueGL(\n            [data \u003d (self-\u003e*GetData)(), work](const OpenGLFunctions\u0026 gl) -\u003e MaybeError {\n                return work(gl, data);\n            });\n    } else {\n        // “self” is not being destroyed; capture a reference to “self”\n        return EnqueueGL(\n            [self \u003d Ref\u003cT\u003e(self), work, GetData](const OpenGLFunctions\u0026 gl) -\u003e MaybeError {\n                return work(gl, (self.Get()-\u003e*GetData)());\n            });\n    }\n}\n```\n\nIn my version, rather than derive all GL objects from a templated base class just to get mIsBeginDestroyed, I just added an mIsBeingDestroyed bool to ApiObjectBase and set it in ApiObjectBase::DeleteThis(). If an extra bool is too much to add for all backends, we could do the templated base class instead.",
+      "parentUuid": "f95c6327_93eb6e78",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
