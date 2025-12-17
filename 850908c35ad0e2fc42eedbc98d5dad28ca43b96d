@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "d81d5a6e_a2203914",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-17T18:15:36Z",
+      "side": 1,
+      "message": "```suggestion\nThis moves the logic to skip resource updates for empty slots into the\n```",
+      "revId": "850908c35ad0e2fc42eedbc98d5dad28ca43b96d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "2f7b5ccc_4e0a57cb",
