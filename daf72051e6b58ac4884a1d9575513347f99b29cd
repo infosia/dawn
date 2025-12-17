@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9c03f81_09ccf617",
+        "filename": "tools/src/cts/expectations/validate.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-17T18:58:55Z",
+      "side": 1,
+      "message": "Nit: Remove \"Add\" (seems like it was Gemini talking to itself)",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 9
+      },
+      "revId": "daf72051e6b58ac4884a1d9575513347f99b29cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "659e72da_2e2aedea",
+        "filename": "tools/src/cts/expectations/validate.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-17T18:58:55Z",
+      "side": 1,
+      "message": "Please add test cases for this in validate_test.go",
+      "range": {
+        "startLine": 64,
+        "startChar": 10,
+        "endLine": 64,
+        "endChar": 41
+      },
+      "revId": "daf72051e6b58ac4884a1d9575513347f99b29cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9834929_eb1e5985",
+        "filename": "tools/src/cts/expectations/validate.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-17T18:58:55Z",
+      "side": 1,
+      "message": "Might be worth mentioning that `tools/run cts format` should resolve this.",
+      "range": {
+        "startLine": 71,
+        "startChar": 29,
+        "endLine": 71,
+        "endChar": 66
+      },
+      "revId": "daf72051e6b58ac4884a1d9575513347f99b29cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
