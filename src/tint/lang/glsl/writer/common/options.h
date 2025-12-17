@@ -178,6 +178,9 @@ struct Options {
     /// Set to `true` to decompose uniform buffers into array<vec4u, ...>.
     bool decompose_uniform_buffers = true;
 
+    /// Set to `true` to decompose workgroup buffers into array<vec4u, ...>.
+    bool decompose_workgroup_buffers = true;
+
     /// The entry point name to emit
     std::string entry_point_name;
 
@@ -228,6 +231,7 @@ struct Options {
                  disable_polyfill_integer_div_mod,
                  use_array_length_from_uniform,
                  decompose_uniform_buffers,
+                 decompose_workgroup_buffers,
                  entry_point_name,
                  version,
                  first_vertex_offset,

@@ -273,6 +273,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         GetDevice()->IsToggleEnabled(Toggle::VulkanUseZeroInitializeWorkgroupMemoryExtension);
     req.tintOptions.extensions.decompose_uniform_buffers =
         GetDevice()->IsToggleEnabled(Toggle::DecomposeUniformBuffers);
+    req.tintOptions.extensions.decompose_workgroup_buffers =
+        GetDevice()->IsToggleEnabled(Toggle::DecomposeWorkgroupBuffers);
 
     req.tintOptions.workarounds.subgroup_shuffle_clamped =
         GetDevice()->IsToggleEnabled(Toggle::SubgroupShuffleClamped);

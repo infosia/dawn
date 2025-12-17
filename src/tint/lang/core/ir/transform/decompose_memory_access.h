@@ -37,16 +37,18 @@ class Module;
 
 namespace tint::core::ir::transform {
 
-/// DecomposeUniformAccess is a transform used to replace uniform buffer accesses with a
-/// the correct load of the HLSL primitive objects
+/// DecomposeUniformAccess is a transform that replaces uniform buffer accesses with
+/// explicit byte offset calculations and bitcasts, treating the storage as an array
+/// of vec4<u32>.
 ///
 /// @param module the module to transform
 /// @returns success or failure
 Result<SuccessType> DecomposeUniformAccess(core::ir::Module& module);
 
-/// DecomposeWorkgroupAccess is a transform that replaces access to workgroup storage
-/// with explicit byte offset calculations and bitcasts, treating the storage as
-/// an array of vec4<u32>.
+/// DecomposeWorkgroupAccess is a transform that replaces workgroup variable accesses
+/// with explicit byte offset calculations and bitcasts. The storage is treated as:
+///   - array<vec4<u32>> for variables without f16 types
+///   - array<vec4<f16>> for variables containing f16 types (to avoid store races)
 ///
 /// @param module the module to transform
 /// @returns success or failure

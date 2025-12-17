@@ -40,10 +40,13 @@ using namespace tint::core::number_suffixes;  // NOLINT
 
 /// PIMPL state for the transform.
 ///
-/// Each uniform buffer variable is rewritten so its store type is an array of vec4u
-/// elements.  Accesses to original store type contents are rewritten to pick out the
-/// right set of vec4u elements and then use bitcasts as needed to construct the originally
-/// loaded value.
+/// Uniform and workgroup variables are rewritten so their store types become arrays of vec4
+/// elements. Accesses are rewritten to pick out the appropriate array elements and use bitcasts
+/// as needed to construct the originally loaded/stored values.
+///
+/// Uniform buffers use array<vec4<u32>> (16 bytes/element). Workgroup variables use
+/// array<vec4<u32>> normally, but array<vec4<f16>> (8 bytes/element) when the type contains
+/// f16 to avoid race conditions when storing f16 values.
 struct State {
     /// The IR module.
     core::ir::Module& ir;
@@ -62,6 +65,39 @@ struct State {
     /// Maps a (var, type) pair to the generated store helper function for structs, arrays, and
     /// matrices.
     Hashmap<VarTypePair, core::ir::Function*, 2> var_and_type_to_store_fn_{};
+
+    /// Maps a var to whether it uses f16 storage mode (array<vec4<f16>> instead of
+    /// array<vec4<u32>>). This is used for workgroup variables that contain f16 types to avoid race
+    /// conditions.
+    Hashmap<core::ir::Var*, bool, 4> var_uses_f16_storage_{};
+
+    /// Returns true if `type` is or contains a f16 type.
+    bool ContainsF16Type(const core::type::Type* type) {
+        if (type->Is<core::type::F16>()) {
+            return true;
+        }
+
+        if (type->IsScalar()) {
+            return false;
+        }
+
+        if (const auto* str = type->As<core::type::Struct>()) {
+            for (auto* member : str->Members()) {
+                if (ContainsF16Type(member->Type())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        return ContainsF16Type(type->DeepestElement());
+    }
+
+    /// Returns true if `var` uses f16 storage mode (array<vec4<f16>>).
+    bool UsesF16Storage(core::ir::Var* var) {
+        auto result = var_uses_f16_storage_.Get(var);
+        return result && *result;
+    }
 
     /// Process the module.
     void Process(core::AddressSpace address_space) {
@@ -88,6 +124,15 @@ struct State {
             }
 
             var_worklist.Push(var);
+        }
+
+        // First pass: determine storage mode for each variable
+        for (auto* var : var_worklist) {
+            auto* var_ty = var->Result()->Type()->As<core::type::Pointer>();
+            // For workgroup address space, use f16 storage if the type contains f16
+            bool uses_f16_storage = (address_space == core::AddressSpace::kWorkgroup) &&
+                                    ContainsF16Type(var_ty->StoreType());
+            var_uses_f16_storage_.Add(var, uses_f16_storage);
         }
 
         for (auto* var : var_worklist) {
@@ -126,9 +171,17 @@ struct State {
             }
 
             // Swap the result type of the `var` to the new result type
-            auto array_length = (var_ty->StoreType()->Size() + 15) / 16;
-            result->SetType(ty.ptr(var_ty->AddressSpace(), ty.array(ty.vec4u(), array_length),
-                                   var_ty->Access()));
+            if (UsesF16Storage(var)) {
+                // f16 storage mode: array<vec4<f16>> - 8 bytes per element
+                auto array_length = (var_ty->StoreType()->Size() + 7) / 8;
+                result->SetType(ty.ptr(var_ty->AddressSpace(), ty.array(ty.vec4h(), array_length),
+                                       var_ty->Access()));
+            } else {
+                // u32 storage mode: array<vec4<u32>> - 16 bytes per element
+                auto array_length = (var_ty->StoreType()->Size() + 15) / 16;
+                result->SetType(ty.ptr(var_ty->AddressSpace(), ty.array(ty.vec4u(), array_length),
+                                       var_ty->Access()));
+            }
         }
     }
 
@@ -164,7 +217,7 @@ struct State {
         return val;
     }
 
-    // Converts a byte offset to an index into a vec4u array.
+    // Converts a byte offset to an index into a vec4u array (16 bytes per element).
     // After the transform runs the store type of the uniform buffer variable is an
     // array of vec4u.
     // Note, this must be called inside a builder insert block (Append, InsertBefore, etc)
@@ -174,6 +227,17 @@ struct State {
             return b.Value(u32(v / 16u));
         }
         return b.Divide(val, 16_u)->Result();
+    }
+
+    // Converts a byte offset to an index into a vec4<f16> array (8 bytes per element).
+    // Used for f16 storage mode.
+    // Note, this must be called inside a builder insert block (Append, InsertBefore, etc)
+    core::ir::Value* OffsetValueToArrayIndexF16Storage(core::ir::Value* val) {
+        if (auto* cnst = val->As<core::ir::Constant>()) {
+            auto v = cnst->Value()->ValueAs<uint32_t>();
+            return b.Value(u32(v / 8u));
+        }
+        return b.Divide(val, 8_u)->Result();
     }
 
     // Calculates the index of the vec4u element containing the byte at (byte_idx % 16).
@@ -186,6 +250,16 @@ struct State {
         // Note: Using bitwise-and and shift instead of modulo and divide here was necessary to
         // avoid an FXC miscompile. See https://crbug.com/454366353.
         return b.ShiftRight(b.And(byte_idx, 15_u), 2_u)->Result();
+    }
+
+    // Calculates the index of the vec4<f16> element containing the byte at (byte_idx % 8).
+    // Used for f16 storage mode. Each element is 2 bytes.
+    core::ir::Value* CalculateVectorOffsetF16Storage(core::ir::Value* byte_idx) {
+        if (auto* byte_cnst = byte_idx->As<core::ir::Constant>()) {
+            return b.Value(u32((byte_cnst->Value()->ValueAs<uint32_t>() % 8u) / 2u));
+        }
+        // (byte_idx % 8) / 2 = (byte_idx & 7) >> 1
+        return b.ShiftRight(b.And(byte_idx, 7_u), 1_u)->Result();
     }
 
     void Access(core::ir::Access* a,
@@ -377,6 +451,9 @@ struct State {
     core::ir::Instruction* MakeScalarLoad(core::ir::Var* var,
                                           const core::type::Type* result_ty,
                                           core::ir::Value* byte_idx) {
+        if (UsesF16Storage(var)) {
+            return MakeScalarLoadF16Storage(var, result_ty, byte_idx);
+        }
         auto* array_idx = OffsetValueToArrayIndex(byte_idx);
         auto as = var->Result()->Type()->As<core::type::Pointer>()->AddressSpace();
         auto* access = b.Access(ty.ptr(as, ty.vec4u()), var, array_idx);
@@ -387,6 +464,42 @@ struct State {
             return ExtractScalarF16(load, byte_idx);
         }
         return b.Bitcast(result_ty, load);
+    }
+
+    // Loads a scalar value from f16 storage mode (array<vec4<f16>>).
+    // For f16 types: direct load from vec4<f16>
+    // For 32-bit types: load 2 adjacent f16 values and bitcast to the target type
+    core::ir::Instruction* MakeScalarLoadF16Storage(core::ir::Var* var,
+                                                    const core::type::Type* result_ty,
+                                                    core::ir::Value* byte_idx) {
+        auto* array_idx = OffsetValueToArrayIndexF16Storage(byte_idx);
+        auto as = var->Result()->Type()->As<core::type::Pointer>()->AddressSpace();
+        auto* access = b.Access(ty.ptr(as, ty.vec4h()), var, array_idx);
+
+        auto* vec_idx = CalculateVectorOffsetF16Storage(byte_idx);
+
+        if (result_ty->Is<core::type::F16>()) {
+            // Direct load for f16
+            return b.LoadVectorElement(access, vec_idx);
+        }
+
+        // For 32-bit types, load 2 adjacent f16 values and bitcast
+        // vec_idx points to the first f16, vec_idx+1 is the second
+        core::ir::Value* val_x = nullptr;
+        core::ir::Value* val_y = nullptr;
+
+        if (auto* cnst = vec_idx->As<core::ir::Constant>()) {
+            auto idx = cnst->Value()->ValueAs<uint32_t>();
+            val_x = b.LoadVectorElement(access, u32(idx))->Result();
+            val_y = b.LoadVectorElement(access, u32(idx + 1))->Result();
+        } else {
+            val_x = b.LoadVectorElement(access, vec_idx)->Result();
+            auto* next_idx = b.Add(vec_idx, 1_u)->Result();
+            val_y = b.LoadVectorElement(access, next_idx)->Result();
+        }
+
+        auto* vec2h = b.Construct<vec2<f16>>(val_x, val_y);
+        return b.Bitcast(result_ty, vec2h);
     }
 
     // Calculates the element index (0 or 1) within a vec2<f16> based on byte offset.
@@ -415,38 +528,6 @@ struct State {
         return b.Access<f16>(bitcast, element_index);
     }
 
-    // Inserts a scalar f16 value into a u32 value at the position determined by byte_idx.
-    // Performs a read-modify-write: loads the existing u32, bitcasts to vec2<f16>,
-    // replaces the appropriate element, and returns the new u32 value.
-    core::ir::Instruction* InsertScalarF16(core::ir::Access* access,
-                                           core::ir::Value* vec_idx,
-                                           core::ir::Value* byte_idx,
-                                           core::ir::Value* value) {
-        auto* element_index = CalculateF16ElementIndex(byte_idx);
-
-        // Load the existing u32 value and bitcast to vec2<f16>
-        auto* existing_u32 = b.LoadVectorElement(access, vec_idx);
-        auto* existing_vec2h = b.Bitcast<vec2<f16>>(existing_u32);
-
-        // Extract existing elements
-        auto* x_elem = b.Access<f16>(existing_vec2h, 0_u)->Result();
-        auto* y_elem = b.Access<f16>(existing_vec2h, 1_u)->Result();
-
-        // If element_index == 0, new_x = value, new_y = existing.y
-        // If element_index == 1, new_x = existing.x, new_y = value
-        auto* is_first_elem = b.Equal(element_index, 0_u);
-        auto* new_x = b.Call(ty.f16(), core::BuiltinFn::kSelect,
-                             Vector{x_elem, value, is_first_elem->Result()})
-                          ->Result();
-        auto* new_y = b.Call(ty.f16(), core::BuiltinFn::kSelect,
-                             Vector{value, y_elem, is_first_elem->Result()})
-                          ->Result();
-
-        // Construct the new vec2<f16> and bitcast back to u32
-        auto* new_vec2h = b.Construct<vec2<f16>>(new_x, new_y);
-        return b.Bitcast<u32>(new_vec2h);
-    }
-
     // When loading a vector we have to take the alignment into account to determine which part of
     // the `uint4` to load. A `vec`  of `u32`, `f32` or `i32` has an alignment requirement of
     // a multiple of 8-bytes (`f16` is 4-bytes). So, this means we'll have memory like:
@@ -467,6 +548,9 @@ struct State {
     core::ir::Instruction* MakeVectorLoad(core::ir::Var* var,
                                           const core::type::Vector* result_ty,
                                           core::ir::Value* byte_idx) {
+        if (UsesF16Storage(var)) {
+            return MakeVectorLoadF16Storage(var, result_ty, byte_idx);
+        }
         auto* array_idx = OffsetValueToArrayIndex(byte_idx);
         auto as = var->Result()->Type()->As<core::type::Pointer>()->AddressSpace();
         auto* access = b.Access(ty.ptr(as, ty.vec4u()), var, array_idx);
@@ -563,6 +647,145 @@ struct State {
                 load = b.Access(ty.u32(), b.Load(access), vec_idx);
             }
             return b.Bitcast(result_ty, load);
+        }
+
+        TINT_IR_UNREACHABLE(ir);
+    }
+
+    // Loads a vector from f16 storage mode (array<vec4<f16>>).
+    // For vec<f16> types: direct load/swizzle from vec4<f16>
+    // For vec<32-bit> types: load multiple f16 values and bitcast to the target type
+    core::ir::Instruction* MakeVectorLoadF16Storage(core::ir::Var* var,
+                                                    const core::type::Vector* result_ty,
+                                                    core::ir::Value* byte_idx) {
+        auto* array_idx = OffsetValueToArrayIndexF16Storage(byte_idx);
+        auto as = var->Result()->Type()->As<core::type::Pointer>()->AddressSpace();
+        auto* access = b.Access(ty.ptr(as, ty.vec4h()), var, array_idx);
+
+        auto width = result_ty->Width();
+
+        if (result_ty->DeepestElement()->Is<core::type::F16>()) {
+            // Direct load for vec<f16>
+            auto* vec_idx = CalculateVectorOffsetF16Storage(byte_idx);
+
+            if (width == 4) {
+                // vec4<f16> - load the entire vec4<f16>
+                return b.Load(access);
+            } else if (width == 3) {
+                // vec3<f16> - load vec4<f16> and swizzle
+                auto* loaded = b.Load(access);
+                return b.Swizzle(result_ty, loaded, {0, 1, 2});
+            } else if (width == 2) {
+                // vec2<f16> - decide which pair to load based on vec_idx
+                if (auto* cnst = vec_idx->As<core::ir::Constant>()) {
+                    auto idx = cnst->Value()->ValueAs<uint32_t>();
+                    if (idx >= 2) {
+                        return b.Swizzle(result_ty, b.Load(access), {2, 3});
+                    } else {
+                        return b.Swizzle(result_ty, b.Load(access), {0, 1});
+                    }
+                } else {
+                    auto* loaded = b.Load(access);
+                    auto* sw_zw = b.Swizzle(result_ty, loaded, {2, 3});
+                    auto* sw_xy = b.Swizzle(result_ty, loaded, {0, 1});
+                    auto* cond = b.GreaterThanEqual(vec_idx, 2_u);
+                    return b.Call(result_ty, core::BuiltinFn::kSelect,
+                                  Vector{sw_xy->Result(), sw_zw->Result(), cond->Result()});
+                }
+            }
+            TINT_IR_UNREACHABLE(ir);
+        }
+
+        // For 32-bit element types, each element needs 2 f16 values
+        // vec_idx points to the first f16 of the first element
+        auto* vec_idx = CalculateVectorOffsetF16Storage(byte_idx);
+
+        if (width == 4) {
+            // vec4<32-bit> = 8 f16 values, need 2 vec4<f16> loads
+            // First vec4<f16>
+            auto* v0 = b.Load(access)->Result();
+            // Second vec4<f16> - next array element
+            core::ir::Value* next_array_idx = nullptr;
+            if (auto* cnst = array_idx->As<core::ir::Constant>()) {
+                auto idx = cnst->Value()->ValueAs<uint32_t>();
+                next_array_idx = b.Value(u32(idx + 1));
+            } else {
+                next_array_idx = b.Add(array_idx, 1_u)->Result();
+            }
+            auto* access2 = b.Access(ty.ptr(as, ty.vec4h()), var, next_array_idx);
+            auto* v1 = b.Load(access2)->Result();
+
+            // Combine into vec4<32-bit> by bitcasting pairs of f16 to 32-bit
+            Vector<core::ir::Value*, 4> elems;
+            for (uint32_t i = 0; i < 4; ++i) {
+                core::ir::Value* h0 = nullptr;
+                core::ir::Value* h1 = nullptr;
+                if (i < 2) {
+                    h0 = b.Access<f16>(v0, u32(i * 2))->Result();
+                    h1 = b.Access<f16>(v0, u32(i * 2 + 1))->Result();
+                } else {
+                    h0 = b.Access<f16>(v1, u32((i - 2) * 2))->Result();
+                    h1 = b.Access<f16>(v1, u32((i - 2) * 2 + 1))->Result();
+                }
+                auto* pair = b.Construct<vec2<f16>>(h0, h1);
+                elems.Push(b.Bitcast(result_ty->Type(), pair)->Result());
+            }
+            return b.Construct(result_ty, elems);
+        }
+
+        if (width == 3) {
+            // vec3<32-bit> = 6 f16 values (padded to 8), stored in one vec4<f16> + 2 more
+            auto* v0 = b.Load(access)->Result();
+            // May need elements from next array slot
+            core::ir::Value* next_array_idx = nullptr;
+            if (auto* cnst = array_idx->As<core::ir::Constant>()) {
+                auto idx = cnst->Value()->ValueAs<uint32_t>();
+                next_array_idx = b.Value(u32(idx + 1));
+            } else {
+                next_array_idx = b.Add(array_idx, 1_u)->Result();
+            }
+            auto* access2 = b.Access(ty.ptr(as, ty.vec4h()), var, next_array_idx);
+            auto* v1 = b.Load(access2)->Result();
+
+            Vector<core::ir::Value*, 3> elems;
+            for (uint32_t i = 0; i < 3; ++i) {
+                core::ir::Value* h0 = nullptr;
+                core::ir::Value* h1 = nullptr;
+                if (i < 2) {
+                    h0 = b.Access<f16>(v0, u32(i * 2))->Result();
+                    h1 = b.Access<f16>(v0, u32(i * 2 + 1))->Result();
+                } else {
+                    h0 = b.Access<f16>(v1, 0_u)->Result();
+                    h1 = b.Access<f16>(v1, 1_u)->Result();
+                }
+                auto* pair = b.Construct<vec2<f16>>(h0, h1);
+                elems.Push(b.Bitcast(result_ty->Type(), pair)->Result());
+            }
+            return b.Construct(result_ty, elems);
+        }
+
+        if (width == 2) {
+            // vec2<32-bit> = 4 f16 values, fits in one vec4<f16>
+            auto* v0 = b.Load(access)->Result();
+
+            Vector<core::ir::Value*, 2> elems;
+            for (uint32_t i = 0; i < 2; ++i) {
+                core::ir::Value* h0 = nullptr;
+                core::ir::Value* h1 = nullptr;
+                if (auto* cnst = vec_idx->As<core::ir::Constant>()) {
+                    auto base = cnst->Value()->ValueAs<uint32_t>();
+                    h0 = b.Access<f16>(v0, u32(base + i * 2))->Result();
+                    h1 = b.Access<f16>(v0, u32(base + i * 2 + 1))->Result();
+                } else {
+                    auto* idx0 = b.Add(vec_idx, u32(i * 2))->Result();
+                    auto* idx1 = b.Add(vec_idx, u32(i * 2 + 1))->Result();
+                    h0 = b.Access<f16>(v0, idx0)->Result();
+                    h1 = b.Access<f16>(v0, idx1)->Result();
+                }
+                auto* pair = b.Construct<vec2<f16>>(h0, h1);
+                elems.Push(b.Bitcast(result_ty->Type(), pair)->Result());
+            }
+            return b.Construct(result_ty, elems);
         }
 
         TINT_IR_UNREACHABLE(ir);
@@ -720,30 +943,58 @@ struct State {
                          const core::type::Type* type,
                          core::ir::Value* byte_idx,
                          core::ir::Value* value) {
+        if (UsesF16Storage(var)) {
+            MakeScalarStoreF16Storage(var, type, byte_idx, value);
+            return;
+        }
         auto* array_idx = OffsetValueToArrayIndex(byte_idx);
         auto as = var->Result()->Type()->As<core::type::Pointer>()->AddressSpace();
         auto* access = b.Access(ty.ptr(as, ty.vec4u()), var, array_idx);
         auto* vec_idx = CalculateVectorOffset(byte_idx);
+        auto* val_u32 = b.Bitcast(ty.u32(), value);
+        b.StoreVectorElement(access, vec_idx, val_u32);
+    }
+
+    // Stores a scalar value using f16 storage mode (array<vec4<f16>>).
+    // For f16 types: direct store to vec4<f16>
+    // For 32-bit types: bitcast to vec2<f16> and store 2 adjacent f16 values
+    void MakeScalarStoreF16Storage(core::ir::Var* var,
+                                   const core::type::Type* type,
+                                   core::ir::Value* byte_idx,
+                                   core::ir::Value* value) {
+        auto* array_idx = OffsetValueToArrayIndexF16Storage(byte_idx);
+        auto as = var->Result()->Type()->As<core::type::Pointer>()->AddressSpace();
+        auto* access = b.Access(ty.ptr(as, ty.vec4h()), var, array_idx);
+        auto* vec_idx = CalculateVectorOffsetF16Storage(byte_idx);
 
         if (type->Is<core::type::F16>()) {
-            auto* new_u32 = InsertScalarF16(access, vec_idx, byte_idx, value);
-            b.StoreVectorElement(access, vec_idx, new_u32);
+            // Direct store for f16
+            b.StoreVectorElement(access, vec_idx, value);
             return;
         }
 
-        auto* val_u32 = b.Bitcast(ty.u32(), value);
-        b.StoreVectorElement(access, vec_idx, val_u32);
+        // For 32-bit types, bitcast to vec2<f16> and store 2 adjacent f16 values
+        auto* vec2h = b.Bitcast<vec2<f16>>(value);
+        auto* h0 = b.Access<f16>(vec2h, 0_u)->Result();
+        auto* h1 = b.Access<f16>(vec2h, 1_u)->Result();
+
+        if (auto* cnst = vec_idx->As<core::ir::Constant>()) {
+            auto idx = cnst->Value()->ValueAs<uint32_t>();
+            b.StoreVectorElement(access, u32(idx), h0);
+            b.StoreVectorElement(access, u32(idx + 1), h1);
+        } else {
+            b.StoreVectorElement(access, vec_idx, h0);
+            auto* next_idx = b.Add(vec_idx, 1_u)->Result();
+            b.StoreVectorElement(access, next_idx, h1);
+        }
     }
 
     void MakeVectorStore(core::ir::Var* var,
                          const core::type::Vector* vec_ty,
                          core::ir::Value* byte_idx,
                          core::ir::Value* value) {
-        if (vec_ty->DeepestElement()->Is<core::type::F16>()) {
-            auto* array_idx = OffsetValueToArrayIndex(byte_idx);
-            auto as = var->Result()->Type()->As<core::type::Pointer>()->AddressSpace();
-            auto* access = b.Access(ty.ptr(as, ty.vec4u()), var, array_idx);
-            MakeVectorStoreF16(access, vec_ty, byte_idx, value);
+        if (UsesF16Storage(var)) {
+            MakeVectorStoreF16Storage(var, vec_ty, byte_idx, value);
             return;
         }
 
@@ -760,61 +1011,137 @@ struct State {
         }
     }
 
-    // Stores a vector-of-f16 value into memory.
-    // A `vec4` or `vec3` of `f16` occupies 8 bytes (stored in vec2<u32>).
-    // A `vec2` of `f16` occupies 4 bytes (stored in a single u32).
-    void MakeVectorStoreF16(core::ir::Access* access,
-                            const core::type::Vector* vec_ty,
-                            core::ir::Value* byte_idx,
-                            core::ir::Value* value) {
-        auto* vec_idx = CalculateVectorOffset(byte_idx);
+    // Stores a vector value using f16 storage mode (array<vec4<f16>>).
+    // For vec<f16> types: direct store to vec4<f16>
+    // For vec<32-bit> types: bitcast each element to vec2<f16> and store
+    void MakeVectorStoreF16Storage(core::ir::Var* var,
+                                   const core::type::Vector* vec_ty,
+                                   core::ir::Value* byte_idx,
+                                   core::ir::Value* value) {
+        auto* array_idx = OffsetValueToArrayIndexF16Storage(byte_idx);
+        auto as = var->Result()->Type()->As<core::type::Pointer>()->AddressSpace();
+        auto* access = b.Access(ty.ptr(as, ty.vec4h()), var, array_idx);
 
-        if (vec_ty->Width() == 4) {
-            // vec4<f16> -> vec2<u32>
-            auto* val_vec2u = b.Bitcast<vec2<u32>>(value);
-            auto* val_x = b.Access<u32>(val_vec2u, 0_u)->Result();
-            auto* val_y = b.Access<u32>(val_vec2u, 1_u)->Result();
+        auto width = vec_ty->Width();
 
-            // Store the two u32 values at vec_idx and vec_idx+1
-            if (auto* cnst = vec_idx->As<core::ir::Constant>()) {
-                auto idx = cnst->Value()->ValueAs<uint32_t>();
-                b.StoreVectorElement(access, u32(idx), val_x);
-                b.StoreVectorElement(access, u32(idx + 1), val_y);
-            } else {
-                b.StoreVectorElement(access, vec_idx, val_x);
-                auto* next_idx = b.Add(vec_idx, 1_u)->Result();
-                b.StoreVectorElement(access, next_idx, val_y);
+        if (vec_ty->DeepestElement()->Is<core::type::F16>()) {
+            // Direct store for vec<f16>
+            auto* vec_idx = CalculateVectorOffsetF16Storage(byte_idx);
+
+            if (width == 4) {
+                // vec4<f16> - store the entire vec4<f16>
+                b.Store(access, value);
+                return;
+            } else if (width == 3) {
+                // vec3<f16> - store as vec4<f16> with padding
+                auto* x = b.Access<f16>(value, 0_u)->Result();
+                auto* y = b.Access<f16>(value, 1_u)->Result();
+                auto* z = b.Access<f16>(value, 2_u)->Result();
+                auto* vec4_val = b.Construct<vec4<f16>>(x, y, z, b.Value(f16(0)));
+                b.Store(access, vec4_val);
+                return;
+            } else if (width == 2) {
+                // vec2<f16> - store 2 elements
+                auto* x = b.Access<f16>(value, 0_u)->Result();
+                auto* y = b.Access<f16>(value, 1_u)->Result();
+
+                if (auto* cnst = vec_idx->As<core::ir::Constant>()) {
+                    auto idx = cnst->Value()->ValueAs<uint32_t>();
+                    b.StoreVectorElement(access, u32(idx), x);
+                    b.StoreVectorElement(access, u32(idx + 1), y);
+                } else {
+                    b.StoreVectorElement(access, vec_idx, x);
+                    auto* next_idx = b.Add(vec_idx, 1_u)->Result();
+                    b.StoreVectorElement(access, next_idx, y);
+                }
+                return;
             }
+            TINT_IR_UNREACHABLE(ir);
+        }
+
+        // For 32-bit element types, each element needs 2 f16 values
+        auto* vec_idx = CalculateVectorOffsetF16Storage(byte_idx);
+
+        if (width == 4) {
+            // vec4<32-bit> = 8 f16 values, need 2 vec4<f16> stores
+            // First, extract all elements and bitcast to vec2<f16>
+            Vector<core::ir::Value*, 8> h_values;
+            for (uint32_t i = 0; i < 4; ++i) {
+                auto* elem = b.Access(vec_ty->Type(), value, u32(i))->Result();
+                auto* vec2h = b.Bitcast<vec2<f16>>(elem);
+                h_values.Push(b.Access<f16>(vec2h, 0_u)->Result());
+                h_values.Push(b.Access<f16>(vec2h, 1_u)->Result());
+            }
+
+            // Build and store first vec4<f16>
+            auto* v0 = b.Construct<vec4<f16>>(h_values[0], h_values[1], h_values[2], h_values[3]);
+            b.Store(access, v0);
+
+            // Build and store second vec4<f16>
+            core::ir::Value* next_array_idx = nullptr;
+            if (auto* cnst = array_idx->As<core::ir::Constant>()) {
+                auto idx = cnst->Value()->ValueAs<uint32_t>();
+                next_array_idx = b.Value(u32(idx + 1));
+            } else {
+                next_array_idx = b.Add(array_idx, 1_u)->Result();
+            }
+            auto* access2 = b.Access(ty.ptr(as, ty.vec4h()), var, next_array_idx);
+            auto* v1 = b.Construct<vec4<f16>>(h_values[4], h_values[5], h_values[6], h_values[7]);
+            b.Store(access2, v1);
             return;
         }
 
-        if (vec_ty->Width() == 3) {
-            // vec3<f16> is stored as vec4<f16>, so it also occupies 8 bytes (vec2<u32>)
-            // Extend vec3 to vec4 with zero padding, then store as vec2<u32>
-            auto* x = b.Access<f16>(value, 0_u)->Result();
-            auto* y = b.Access<f16>(value, 1_u)->Result();
-            auto* z = b.Access<f16>(value, 2_u)->Result();
-            auto* vec4_val = b.Construct<vec4<f16>>(x, y, z, b.Value(f16(0)));
-            auto* val_vec2u = b.Bitcast<vec2<u32>>(vec4_val);
-            auto* val_x = b.Access<u32>(val_vec2u, 0_u)->Result();
-            auto* val_y = b.Access<u32>(val_vec2u, 1_u)->Result();
-
-            if (auto* cnst = vec_idx->As<core::ir::Constant>()) {
-                auto idx = cnst->Value()->ValueAs<uint32_t>();
-                b.StoreVectorElement(access, u32(idx), val_x);
-                b.StoreVectorElement(access, u32(idx + 1), val_y);
-            } else {
-                b.StoreVectorElement(access, vec_idx, val_x);
-                auto* next_idx = b.Add(vec_idx, 1_u)->Result();
-                b.StoreVectorElement(access, next_idx, val_y);
+        if (width == 3) {
+            // vec3<32-bit> = 6 f16 values (padded to 8)
+            Vector<core::ir::Value*, 6> h_values;
+            for (uint32_t i = 0; i < 3; ++i) {
+                auto* elem = b.Access(vec_ty->Type(), value, u32(i))->Result();
+                auto* vec2h = b.Bitcast<vec2<f16>>(elem);
+                h_values.Push(b.Access<f16>(vec2h, 0_u)->Result());
+                h_values.Push(b.Access<f16>(vec2h, 1_u)->Result());
             }
+
+            // First vec4<f16>: first 4 f16 values
+            auto* v0 = b.Construct<vec4<f16>>(h_values[0], h_values[1], h_values[2], h_values[3]);
+            b.Store(access, v0);
+
+            // Second vec4<f16>: remaining 2 f16 values + padding
+            core::ir::Value* next_array_idx = nullptr;
+            if (auto* cnst = array_idx->As<core::ir::Constant>()) {
+                auto idx = cnst->Value()->ValueAs<uint32_t>();
+                next_array_idx = b.Value(u32(idx + 1));
+            } else {
+                next_array_idx = b.Add(array_idx, 1_u)->Result();
+            }
+            auto* access2 = b.Access(ty.ptr(as, ty.vec4h()), var, next_array_idx);
+            auto* v1 =
+                b.Construct<vec4<f16>>(h_values[4], h_values[5], b.Value(f16(0)), b.Value(f16(0)));
+            b.Store(access2, v1);
             return;
         }
 
-        if (vec_ty->Width() == 2) {
-            // vec2<f16> -> u32
-            auto* val_u32 = b.Bitcast<u32>(value);
-            b.StoreVectorElement(access, vec_idx, val_u32);
+        if (width == 2) {
+            // vec2<32-bit> = 4 f16 values, fits in one vec4<f16>
+            Vector<core::ir::Value*, 4> h_values;
+            for (uint32_t i = 0; i < 2; ++i) {
+                auto* elem = b.Access(vec_ty->Type(), value, u32(i))->Result();
+                auto* vec2h = b.Bitcast<vec2<f16>>(elem);
+                h_values.Push(b.Access<f16>(vec2h, 0_u)->Result());
+                h_values.Push(b.Access<f16>(vec2h, 1_u)->Result());
+            }
+
+            // Store all 4 f16 values
+            if (auto* cnst = vec_idx->As<core::ir::Constant>()) {
+                auto base = cnst->Value()->ValueAs<uint32_t>();
+                for (uint32_t i = 0; i < 4; ++i) {
+                    b.StoreVectorElement(access, u32(base + i), h_values[i]);
+                }
+            } else {
+                for (uint32_t i = 0; i < 4; ++i) {
+                    auto* idx = b.Add(vec_idx, u32(i))->Result();
+                    b.StoreVectorElement(access, idx, h_values[i]);
+                }
+            }
             return;
         }
 

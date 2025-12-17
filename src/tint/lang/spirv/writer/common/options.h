@@ -149,6 +149,9 @@ struct Options {
         /// Set to `true` to decompose uniform buffers into array<vec4u, ...>.
         bool decompose_uniform_buffers = true;
 
+        /// Set to `true` to decompose workgroup buffers into array<vec4u, ...>.
+        bool decompose_workgroup_buffers = true;
+
         TINT_REFLECT(Extensions,
                      use_demote_to_helper_invocation,
                      use_storage_input_output_16,
@@ -157,7 +160,8 @@ struct Options {
                      disable_image_robustness,
                      disable_runtime_sized_array_index_clamping,
                      dot_4x8_packed,
-                     decompose_uniform_buffers);
+                     decompose_uniform_buffers,
+                     decompose_workgroup_buffers);
     };
 
     ///////////////////////////////////////////////////////////////////////////////////////////
