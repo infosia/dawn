@@ -168,6 +168,8 @@ wgsl::BuiltinFn Convert(core::BuiltinFn fn) {
         CASE(kAtomicXor)
         CASE(kAtomicExchange)
         CASE(kAtomicCompareExchangeWeak)
+        CASE(kAtomicStoreMin)
+        CASE(kAtomicStoreMax)
         CASE(kSubgroupBallot)
         CASE(kSubgroupElect)
         CASE(kSubgroupBroadcast)

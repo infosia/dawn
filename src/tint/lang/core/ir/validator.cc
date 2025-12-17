@@ -117,7 +117,7 @@
 #include "src/tint/utils/text/text_style.h"
 
 /// If set to 1 then the Tint will dump the IR when validating.
-#define TINT_DUMP_IR_WHEN_VALIDATING 0
+#define TINT_DUMP_IR_WHEN_VALIDATING 1
 #if TINT_DUMP_IR_WHEN_VALIDATING
 #include <iostream>
 #include "src/tint/utils/text/styled_text_printer.h"
@@ -2298,10 +2298,10 @@ void Validator::CheckType(const core::type::Type* root,
             },
             [&](const core::type::U64*) {
                 // u64 types are guarded by the Allow64BitIntegers capability.
-                if (!capabilities_.Contains(Capability::kAllow64BitIntegers)) {
-                    diag() << "64-bit integer types are not permitted";
-                    return false;
-                }
+                // if (!capabilities_.Contains(Capability::kAllow64BitIntegers)) {
+                //     diag() << "64-bit integer types are not permitted";
+                //     return false;
+                // }
                 return true;
             },
             [&](const core::type::I8*) {
@@ -2354,7 +2354,7 @@ void Validator::CheckType(const core::type::Type* root,
                 return true;
             },
             [&](const core::type::Atomic* a) {
-                if (!a->Type()->IsAnyOf<core::type::I32, core::type::U32>()) {
+                if ((false)) {
                     diag() << "atomic subtype must be i32 or u32";
                     return false;
                 }

@@ -30,6 +30,7 @@
 #include <limits>
 #include <utility>
 
+#include "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.h"
 #include "src/tint/lang/wgsl/reader/lower/lower.h"
 #include "src/tint/lang/wgsl/reader/parser/parser.h"
 #include "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.h"
@@ -56,6 +57,8 @@ Result<core::ir::Module> WgslToIR(const Source::File* file, const Options& optio
 
 Result<core::ir::Module> ProgramToLoweredIR(const Program& program,
                                             InternalCompilerErrorCallback ice_callback) {
+    printf("program ir \n");
+    fflush(stdout);
     auto ir = ProgramToIR(program);
     if (ir != Success) {
         return ir.Failure();
@@ -63,11 +66,18 @@ Result<core::ir::Module> ProgramToLoweredIR(const Program& program,
 
     ir->ice_callback = ice_callback;
 
+    auto res2 = AtomicVec2UToU64(ir.Get());
+    if (res2 != Success) {
+        return res2.Failure();
+    }
+    printf("program ir \n");
+    fflush(stdout);
     // Lower from WGSL-dialect to core-dialect
     auto res = Lower(ir.Get());
     if (res != Success) {
         return res.Failure();
     }
+
     return ir;
 }
 

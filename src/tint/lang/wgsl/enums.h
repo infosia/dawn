@@ -115,6 +115,7 @@ constexpr std::string_view kChromiumDiagnosticRuleStrings[] = {
 enum class Extension : uint8_t {
     kUndefined,
     kChromiumDisableUniformityAnalysis,
+    kChromiumExperimentalAtomicVec2UMinMax,
     kChromiumExperimentalBarycentricCoord,
     kChromiumExperimentalDynamicBinding,
     kChromiumExperimentalFramebufferFetch,
@@ -151,6 +152,7 @@ Extension ParseExtension(std::string_view str);
 
 constexpr std::string_view kExtensionStrings[] = {
     "chromium_disable_uniformity_analysis",
+    "chromium_experimental_atomic_vec2u_min_max",
     "chromium_experimental_barycentric_coord",
     "chromium_experimental_dynamic_binding",
     "chromium_experimental_framebuffer_fetch",
@@ -170,6 +172,7 @@ constexpr std::string_view kExtensionStrings[] = {
 /// All extensions
 static constexpr Extension kAllExtensions[] = {
     Extension::kChromiumDisableUniformityAnalysis,
+    Extension::kChromiumExperimentalAtomicVec2UMinMax,
     Extension::kChromiumExperimentalBarycentricCoord,
     Extension::kChromiumExperimentalDynamicBinding,
     Extension::kChromiumExperimentalFramebufferFetch,
@@ -430,6 +433,8 @@ enum class BuiltinFn : uint8_t {
     kAtomicXor,
     kAtomicExchange,
     kAtomicCompareExchangeWeak,
+    kAtomicStoreMax,
+    kAtomicStoreMin,
     kSubgroupBallot,
     kSubgroupElect,
     kSubgroupBroadcast,
@@ -613,6 +618,8 @@ constexpr BuiltinFn kBuiltinFns[] = {
     BuiltinFn::kAtomicXor,
     BuiltinFn::kAtomicExchange,
     BuiltinFn::kAtomicCompareExchangeWeak,
+    BuiltinFn::kAtomicStoreMax,
+    BuiltinFn::kAtomicStoreMin,
     BuiltinFn::kSubgroupBallot,
     BuiltinFn::kSubgroupElect,
     BuiltinFn::kSubgroupBroadcast,
@@ -777,6 +784,8 @@ constexpr const char* kBuiltinFnStrings[] = {
     "atomicXor",
     "atomicExchange",
     "atomicCompareExchangeWeak",
+    "atomicStoreMax",
+    "atomicStoreMin",
     "subgroupBallot",
     "subgroupElect",
     "subgroupBroadcast",
