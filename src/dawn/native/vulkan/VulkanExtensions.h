@@ -38,11 +38,6 @@ namespace dawn::native::vulkan {
 // The list of known instance extensions. They must be in dependency order (this is checked
 // inside EnsureDependencies)
 enum class InstanceExt {
-    // Promoted to 1.1
-    GetPhysicalDeviceProperties2,
-    ExternalMemoryCapabilities,
-    ExternalSemaphoreCapabilities,
-
     // Surface extensions
     Surface,
     FuchsiaImagePipeSurface,
@@ -86,23 +81,6 @@ InstanceExtSet EnsureDependencies(const InstanceExtSet& advertisedExts);
 // The list of known device extensions. They must be in dependency order (this is checked
 // inside EnsureDependencies)
 enum class DeviceExt {
-    // Promoted to 1.1
-    BindMemory2,
-    Maintenance1,
-    Maintenance2,
-    Maintenance3,
-    StorageBufferStorageClass,
-    GetPhysicalDeviceProperties2,
-    GetMemoryRequirements2,
-    DedicatedAllocation,
-    ExternalMemoryCapabilities,
-    ExternalSemaphoreCapabilities,
-    ExternalMemory,
-    ExternalSemaphore,
-    _16BitStorage,
-    SamplerYCbCrConversion,
-    Multiview,
-
     // Promoted to 1.2
     DriverProperties,
     ImageFormatList,
