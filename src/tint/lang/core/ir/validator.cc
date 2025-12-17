@@ -2679,6 +2679,10 @@ void Validator::CheckFunction(const Function* func) {
             }
         }
 
+        if (address_space == AddressSpace::kPixelLocal) {
+            AddError(param) << "function parameters cannot be in the 'pixel_local' address space";
+        }
+
         if (func->IsEntryPoint()) {
             ValidateShaderIOAnnotations(param, param->Type(), param->BindingPoint(),
                                         param->Attributes(), ShaderIOKind::kInputParam);
@@ -3799,11 +3803,11 @@ void Validator::ValidateShaderIOAnnotations(const CastableBase* msg_anchor,
                 if (capabilities_.Contains(Capability::kAllowLocationForNumericElements)) {
                     if (!mem->Type()->UnwrapPtrOrRef()->IsNumericScalarOrVector() &&
                         !mem->Type()->UnwrapPtrOrRef()->Is<core::type::Struct>()) {
-                        AddError(msg_anchor)
-                            << ToString(kind)
-                            << " struct member with a location attribute must be a numeric scalar, "
-                               "a numeric vector or a struct, but has type "
-                            << mem->Type()->FriendlyName();
+                        AddError(msg_anchor) << ToString(kind)
+                                             << " struct member with a location attribute must "
+                                                "be a numeric scalar, "
+                                                "a numeric vector or a struct, but has type "
+                                             << mem->Type()->FriendlyName();
                         return;
                     }
                 } else {
@@ -4052,8 +4056,8 @@ void Validator::CheckBuiltinCall(const BuiltinCall* call) {
         CheckCoreBuiltinCall(bc, builtin.Get());
     }
 
-    // Track the stages that this builtin call is limited to, so that we can check them against the
-    // entry points that they are used from.
+    // Track the stages that this builtin call is limited to, so that we can check them against
+    // the entry points that they are used from.
     SupportedStages stages;
     if (builtin->info->flags.Contains(intrinsic::OverloadFlag::kSupportsComputePipeline)) {
         stages.Add(Function::PipelineStage::kCompute);
@@ -4169,8 +4173,8 @@ void Validator::CheckConstruct(const Construct* construct) {
     auto* result_type = construct->Result()->Type();
 
     if (!result_type->IsConstructible()) {
-        // We only allow `construct` to create non-constructible types when they are structures that
-        // contain pointers and handle types, with the corresponding capability enabled.
+        // We only allow `construct` to create non-constructible types when they are structures
+        // that contain pointers and handle types, with the corresponding capability enabled.
         if (!(result_type->Is<core::type::Struct>() &&
               capabilities_.Contains(Capability::kMslAllowEntryPointInterface))) {
             AddError(construct) << "type is not constructible";
@@ -4185,7 +4189,8 @@ void Validator::CheckConstruct(const Construct* construct) {
     }
 
     auto check_args_match_elements = [&] {
-        // Check that type type of each argument matches the expected element type of the composite.
+        // Check that type type of each argument matches the expected element type of the
+        // composite.
         for (size_t i = 0; i < args.Length(); i++) {
             if (args[i]->Is<ir::Unused>()) {
                 continue;
@@ -4626,7 +4631,8 @@ void Validator::CheckLoopContinuing(const Loop* loop) {
                     if (TransitivelyHolds(loop->Continuing(), use.instruction)) {
                         AddError(use.instruction, use.operand_index)
                             << NameOf(result)
-                            << " cannot be used in continuing block as it is declared after the "
+                            << " cannot be used in continuing block as it is declared after "
+                               "the "
                                "first "
                             << style::Instruction("continue") << " in the loop's body";
                         AddDeclarationNote(result);
