@@ -16,6 +16,23 @@
       "message": "Cleaning up so persistent bot issues after the WriteBuffer/Texture optimizations landed. PTAL!",
       "revId": "c3a737b1290ea95efc162de2b800e0e30cf95a59",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9e0a627_15c7fd18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-17T18:05:37Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "c3a737b1290ea95efc162de2b800e0e30cf95a59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
