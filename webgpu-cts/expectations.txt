@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-12-16 07:37:58AM
+# Last rolled: 2025-12-17 05:04:24AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -870,26 +870,26 @@ crbug.com/418226002 [ dawn-backend-validation nvidia-0x2184 win11 ] webgpu:web_p
 crbug.com/418226002 [ dawn-backend-validation nvidia-0x2184 win11 ] webgpu:web_platform,copyToTexture,ImageBitmap:copy_subrect_from_ImageData:alpha="premultiply";* [ Failure ]
 
 # Win/GTX 1660 failures when going from Win10/driver 546.01 to Win11/driver 581.80
-crbug.com/469143666 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,command_buffer,copyTextureToTexture:copy_depth_stencil:format="stencil8" [ Failure ]
-crbug.com/469143666 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,command_buffer,copyTextureToTexture:copy_multisampled_depth:format="depth*" [ Failure ]
-crbug.com/469120968 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;* [ Failure ]
-crbug.com/469120968 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=15;* [ Failure ]
-crbug.com/469120968 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,sample_mask:writeMask=0;* [ Failure ]
-crbug.com/469120968 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,sample_mask:writeMask=15;* [ Failure ]
-crbug.com/469143667 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,memory_sync,texture,same_subresource:wr:boundary="command-buffer";write={"op":"attachment-resolve","in":"command-encoder"};* [ Failure ]
-crbug.com/469143667 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,memory_sync,texture,same_subresource:wr:boundary="queue-op";write={"op":"attachment-resolve","in":"command-encoder"};* [ Failure ]
-crbug.com/469143667 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,memory_sync,texture,same_subresource:ww:boundary="command-buffer";first={"op":"attachment-resolve","in":"command-encoder"};* [ Failure ]
-crbug.com/469143667 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,memory_sync,texture,same_subresource:ww:boundary="queue-op";first={"op":"attachment-resolve","in":"command-encoder"};* [ Failure ]
-crbug.com/469120971 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,render_pass,resolve:render_pass_resolve:* [ Failure ]
-crbug.com/469120975 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,render_pipeline,sample_mask:alpha_to_coverage_mask:*sampleCount=4;* [ Failure ]
-crbug.com/469125053 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,rendering,depth_clip_clamp:depth_clamp_and_clip:*;multisampled=true [ Failure ]
-crbug.com/469125053 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,rendering,depth_clip_clamp:depth_test_input_clamped:*;multisampled=true [ Failure ]
-crbug.com/469125054 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,rendering,draw:arguments:*;instance_count=0;*;indirect=false;vertex_buffer_offset=0;index_buffer_offset="_undef_";* [ Failure ]
-crbug.com/469125054 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,rendering,draw:arguments:*;instance_count=0;*;indirect=false;vertex_buffer_offset=32;index_buffer_offset="_undef_";* [ Failure ]
-crbug.com/469125054 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,rendering,draw:arguments:*;instance_count=0;*;indirect=false;vertex_buffer_offset=0;index_buffer_offset=0;* [ Failure ]
-crbug.com/469125054 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,rendering,draw:arguments:*;instance_count=0;*;indirect=false;vertex_buffer_offset=32;index_buffer_offset=0;* [ Failure ]
-crbug.com/469125054 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,rendering,draw:arguments:*;instance_count=0;*;indirect=false;vertex_buffer_offset=0;index_buffer_offset=16;* [ Failure ]
-crbug.com/469125054 [ dawn-backend-validation nvidia-0x2184 win11 nvidia_ge_32.0.15.8180 ] webgpu:api,operation,rendering,draw:arguments:*;instance_count=0;*;indirect=false;vertex_buffer_offset=32;index_buffer_offset=16;* [ Failure ]
+crbug.com/469143666 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,command_buffer,copyTextureToTexture:copy_depth_stencil:format="stencil8" [ Failure ]
+crbug.com/469143666 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,command_buffer,copyTextureToTexture:copy_multisampled_depth:format="depth*" [ Failure ]
+crbug.com/469120968 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;* [ Failure ]
+crbug.com/469120968 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=15;* [ Failure ]
+crbug.com/469120968 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,sample_mask:writeMask=0;* [ Failure ]
+crbug.com/469120968 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,sample_mask:writeMask=15;* [ Failure ]
+crbug.com/469143667 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,memory_sync,texture,same_subresource:wr:boundary="command-buffer";write={"op":"attachment-resolve","in":"command-encoder"};* [ Failure ]
+crbug.com/469143667 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,memory_sync,texture,same_subresource:wr:boundary="queue-op";write={"op":"attachment-resolve","in":"command-encoder"};* [ Failure ]
+crbug.com/469143667 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,memory_sync,texture,same_subresource:ww:boundary="command-buffer";first={"op":"attachment-resolve","in":"command-encoder"};* [ Failure ]
+crbug.com/469143667 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,memory_sync,texture,same_subresource:ww:boundary="queue-op";first={"op":"attachment-resolve","in":"command-encoder"};* [ Failure ]
+crbug.com/469120971 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,render_pass,resolve:render_pass_resolve:* [ Failure ]
+crbug.com/469120975 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,render_pipeline,sample_mask:alpha_to_coverage_mask:*sampleCount=4;* [ Failure ]
+crbug.com/469125053 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,rendering,depth_clip_clamp:depth_clamp_and_clip:*;multisampled=true [ Failure ]
+crbug.com/469125053 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,rendering,depth_clip_clamp:depth_test_input_clamped:*;multisampled=true [ Failure ]
+crbug.com/469125054 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,rendering,draw:arguments:*;instance_count=0;*;indirect=false;vertex_buffer_offset=0;index_buffer_offset="_undef_";* [ Failure ]
+crbug.com/469125054 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,rendering,draw:arguments:*;instance_count=0;*;indirect=false;vertex_buffer_offset=32;index_buffer_offset="_undef_";* [ Failure ]
+crbug.com/469125054 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,rendering,draw:arguments:*;instance_count=0;*;indirect=false;vertex_buffer_offset=0;index_buffer_offset=0;* [ Failure ]
+crbug.com/469125054 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,rendering,draw:arguments:*;instance_count=0;*;indirect=false;vertex_buffer_offset=32;index_buffer_offset=0;* [ Failure ]
+crbug.com/469125054 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,rendering,draw:arguments:*;instance_count=0;*;indirect=false;vertex_buffer_offset=0;index_buffer_offset=16;* [ Failure ]
+crbug.com/469125054 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,rendering,draw:arguments:*;instance_count=0;*;indirect=false;vertex_buffer_offset=32;index_buffer_offset=16;* [ Failure ]
 
 # Intel linux copyTextureToTexture with compressed textures, dim=2d, dim=3d
 crbug.com/419842532 [ dawn-backend-validation intel linux ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,compressed,array:srcFormat="astc-12x10-unorm";dstFormat="astc-12x10-unorm";dimension="3d" [ Failure ]
