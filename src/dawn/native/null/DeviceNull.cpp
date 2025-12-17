@@ -189,7 +189,7 @@ ResultOrError<Ref<Device>> Device::Create(AdapterBase* adapter,
 }
 
 Device::~Device() {
-    Destroy();
+    Destroy(DestroyReason::ObjectBeingDeleted);
 }
 
 MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {

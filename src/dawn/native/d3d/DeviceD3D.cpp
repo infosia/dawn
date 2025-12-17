@@ -44,7 +44,7 @@ Device::Device(AdapterBase* adapter,
     : DeviceBase(adapter, descriptor, deviceToggles, std::move(lostEvent)) {}
 
 Device::~Device() {
-    Destroy();
+    Destroy(DestroyReason::ObjectBeingDeleted);
 }
 
 void Device::DestroyImpl(DestroyReason reason) {}
