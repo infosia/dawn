@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db7fac22_9b233f81",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-12-17T08:50:08Z",
+      "side": 1,
+      "message": "This implementation is mainly for address validation rules for immediate. See PR https://github.com/gpuweb/gpuweb/pull/5423.\n\nThe related texts are:\n* \u003cdfn noexport id\u003d\"accessible-bytes\"\u003eAccessibleBytes\u003c/dfn\u003e(|T|) is the set of byte offsets within an instance of type |T| that contain data.\n    * If |T| is a scalar or vector, then [\u003dAccessibleBytes\u003d](|T|) is the set of integers `k` such that `0 \u003c\u003d k \u003c` [\u003dSizeOf\u003d](|T|).\n    \n    * If |T| is a matrix with |C| columns and |R| rows, then [\u003dAccessibleBytes\u003d](|T|) is the union of sets `{ k + i * Stride | k in AccessibleBytes(vec|R|) }` for `i` in `0..C-1`, where `Stride` is [\u003droundUp\u003d]([\u003dAlignOf\u003d](vec|R|), [\u003dSizeOf\u003d](vec|R|)).\n    \n    * If |T| is a structure |S|, then [\u003dAccessibleBytes\u003d](|T|) is the union of sets `{ k + Offset | k in AccessibleBytes(M_i) }` for each member `M_i` at offset `Offset` \u003d [\u003dOffsetOfMember\u003d](|S|, `i`).\n    \n* \u003cdfn noexport id\u003d\"accessible-slots\"\u003eAccessibleSlots\u003c/dfn\u003e(|T|) is the set of integers `i` such that the intersection of the interval `[4*i, 4*i+4)` and [\u003dAccessibleBytes\u003d](|T|) is not empty.\n\nThe [\u003dAccessibleSlots\u003d] exclude padding bytes between structure members and at the end of structures.\n\nThere\u0027re two ways to achieve this:\n- Put the analysis code in inspector, which means we need to analysis AST tree again.\n- Put the analysis code in resolver, so that it could mark slots during the analysis. Inspector is a simple call to get the bitset.\n\nI choose the second way here, but pls let me know if it is not proper way.\n\nPTAL, thanks!",
+      "revId": "7af3fa940e78fb6926e54385471e3f635ca7d5bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
