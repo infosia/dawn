@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "744a9b65_13e85831",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-17T00:05:49Z",
+      "side": 1,
+      "message": "Applied the diff and modified a bit. PTAL\n\nSome Recap:\n- [CL 20](https://dawn-review.googlesource.com/c/dawn/+/274934/20): Reuse most existing logic (mReadbackSlots, mDeferredExpectations, detail::Expectation(either clone or shared_ptr)) for the replayed part; Compare the replayed readback buffer using expectation; Most instrusive change to existing logic and scattered around.\n- [CL 28](https://dawn-review.googlesource.com/c/dawn/+/274934/28): Reuse only mReadbackSlots for buffer mapping; Compare the replayed readback buffer with the original test readback buffer; Simpler;\n- [CL 35](https://dawn-review.googlesource.com/c/dawn/+/274934/35): Didn\u0027t reuse existing test logic. Map and unmap manually of the replayed readback buffer and compare with the orignal test readback buffer, after all original test check are done; Simple logic and least intrusive change.\n  - Capture includes the buffer.MapAsync (MapSlotsSynchronously). But current capture logic is no-op for buffer.MapAsync (only captures at buffer.Unmap). So this should be fine.\n  - It maps replayed readbuffer synchronously, compared to the mReadbackSlots map all at once. But we are on webgpu-on-webgpu and capture-replay so we don\u0027t care perf that much.\n   \n   \nFYI on local runs at a glance most failures are due to unimplemented path/validation error/uninteresting mock. AFAICT there\u0027s ~5 that actually fail because of the readback buffer unmatch (maybe the root cause is also the previous ones though).\n\nCL 28 and CL 35 have the similiar ~580 failures out of ~4600 tests.",
+      "parentUuid": "14c67521_13ddc0f7",
+      "revId": "01851643be4eabfbc7610f577aa086f8fb8d523c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0e209aee_04fcdff5",
@@ -49,6 +67,58 @@
       "side": 1,
       "message": "Just to follow up from our meeting. I see that Corentin wanted it that the original buffers are still checked and then the replay buffers are checked against the original buffers, not the expectations.\n\nThat\u0027s fine. Just, the original expectations take an offset and a size. I think, only that offset and size are valid to compare, not the entire buffer? Or am I wrong. I guess if the playback is the same the buffer should be the same so maybe it\u0027s fine to compare the entire buffer.",
       "parentUuid": "0e209aee_04fcdff5",
+      "revId": "01851643be4eabfbc7610f577aa086f8fb8d523c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c131a2fc_cadf479c",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 2271,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-17T00:05:49Z",
+      "side": 1,
+      "message": "Yes. readback offsets ([1] and [2]) are always 0 at current code status. We are comparing the whole readback buffer. I think we should remove them to prevent future error. Is there any other reasons for keeping these offsets?",
+      "parentUuid": "3d775730_70537b2f",
+      "revId": "01851643be4eabfbc7610f577aa086f8fb8d523c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45592a0c_e772f653",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-17T00:05:49Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "01851643be4eabfbc7610f577aa086f8fb8d523c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bde3f045_87a1fb07",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-17T00:05:49Z",
+      "side": 1,
+      "message": "[2]",
       "revId": "01851643be4eabfbc7610f577aa086f8fb8d523c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
