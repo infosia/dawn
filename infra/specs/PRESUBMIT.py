@@ -29,17 +29,16 @@ See http://dev.chromium.org/developers/how-tos/depottools/presubmit-scripts
 for more details on the presubmit API built into depot_tools.
 """
 
+import sys
+
 PRESUBMIT_VERSION = '2.0.0'
 
 
 def CheckGeneratedJsonUpToDate(input_api, output_api):
     """Verifies that generated JSON files match .pyl contents."""
-    command = input_api.Command(name='validate_generated_json',
-                                cmd=[
-                                    input_api.python3_executable,
-                                    'generate_test_spec_json.py',
-                                    '--verify-only',
-                                ],
-                                kwargs={},
-                                message=output_api.PresubmitError)
-    return input_api.RunTests([command])
+    sys.path += [input_api.change.RepositoryRoot()]
+
+    import test_spec_presubmit_support
+
+    return test_spec_presubmit_support.validate_test_specs(
+        input_api, output_api)
