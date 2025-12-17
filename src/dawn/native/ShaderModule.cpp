@@ -1913,7 +1913,7 @@ ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
 
 ShaderModuleBase::~ShaderModuleBase() = default;
 
-void ShaderModuleBase::DestroyImpl() {
+void ShaderModuleBase::DestroyImpl(DestroyReason reason) {
     Uncache();
 }
 

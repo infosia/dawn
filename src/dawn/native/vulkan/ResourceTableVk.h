@@ -49,7 +49,7 @@ class ResourceTable final : public ResourceTableBase {
     static ResultOrError<VkDescriptorSetLayout> MakeDescriptorSetLayout(Device* device);
 
   protected:
-    void DestroyImpl() override;
+    void DestroyImpl(DestroyReason reason) override;
     void SetLabelImpl() override;
 
   private:

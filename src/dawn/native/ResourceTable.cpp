@@ -135,7 +135,7 @@ DynamicArrayState* ResourceTableBase::GetDynamicArrayState() {
     return mDynamicArray.Get();
 }
 
-void ResourceTableBase::DestroyImpl() {
+void ResourceTableBase::DestroyImpl(DestroyReason reason) {
     if (!mDynamicArray->IsDestroyed()) {
         mDynamicArray->Destroy();
     }

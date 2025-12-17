@@ -1024,7 +1024,7 @@ TextureBase::TextureBase(DeviceBase* device,
       mUsage(descriptor->usage),
       mFormatEnumForReflection(descriptor->format) {}
 
-void TextureBase::DestroyImpl() {
+void TextureBase::DestroyImpl(DestroyReason reason) {
     // TODO(crbug.com/dawn/831): DestroyImpl is called from two places.
     // - It may be called if the texture is explicitly destroyed with APIDestroy.
     //   This case is NOT thread-safe and needs proper synchronization with other
@@ -1770,7 +1770,7 @@ TextureViewBase::TextureViewBase(DeviceBase* device, ObjectBase::ErrorTag tag, S
 
 TextureViewBase::~TextureViewBase() = default;
 
-void TextureViewBase::DestroyImpl() {}
+void TextureViewBase::DestroyImpl(DestroyReason reason) {}
 
 // static
 Ref<TextureViewBase> TextureViewBase::MakeError(DeviceBase* device, StringView label) {
