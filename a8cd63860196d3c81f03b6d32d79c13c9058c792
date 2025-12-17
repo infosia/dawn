@@ -16,6 +16,24 @@
       "message": "My gut feeling is that OrderedSet is unnecessary, but I\u0027ll need to look at your changes more closely.",
       "revId": "a8cd63860196d3c81f03b6d32d79c13c9058c792",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6269e19d_a04749e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-17T19:20:39Z",
+      "side": 1,
+      "message": "My thought process is:\n\n1. We only care about ordering when validating, so changing all uses of tags seems unnecessary. If `len()` worked properly, I think I would be more open to using OrderedSet\n2. When we\u0027re validating, we\u0027re only checking file contents (i.e. we don\u0027t have to worry about any modified internal state)\n3. Thus, it seems like we should be able to just store the raw parsed tags as an additional field and use that for validation instead of the tag set\n\nI believe that would be pretty easy to do by adding `RawParsedTags` as a field to the `Expectation` struct and modifying https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/tools/src/cts/expectations/parse.go;l\u003d172 to return both the set and list versions of the tags.\n\nAn additional benefit of this approach is we would be able to check for the presence of duplicate tags, e.g. `[ win win nvidia ]`. I believe that\u0027s currently not validated since everything gets put into a set, but would end up causing parsing errors when actually using the expectation (don\u0027t quote me on that, though). Validating no duplicate tags should be as easy as checking that the length of the raw parsed tags is the same as the tag set.\n\nIt\u0027s possible I\u0027m missing something and this approach would be a mess, though. Seems like the kind of thing that we\u0027d have to try to confirm.",
+      "parentUuid": "a636bd06_bf554e03",
+      "revId": "a8cd63860196d3c81f03b6d32d79c13c9058c792",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
