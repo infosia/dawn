@@ -48,6 +48,10 @@ class ResourceTable final : public ResourceTableBase {
     // All the resource tables share the same VkDescriptorSetLayout so it is cached on the device.
     static ResultOrError<VkDescriptorSetLayout> MakeDescriptorSetLayout(Device* device);
 
+    void UpdateResourceBindings(const std::vector<DynamicArrayState::ResourceUpdate>& updates);
+
+    VkDescriptorSet GetHandle() const;
+
   protected:
     void DestroyImpl() override;
     void SetLabelImpl() override;

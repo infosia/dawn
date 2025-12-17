@@ -49,6 +49,8 @@ class ResourceTableBase : public ApiObjectBase {
 
     ObjectType GetType() const override;
 
+    DynamicArrayState* GetDynamicArrayState();
+
     // Dawn API
     void APIDestroy();
     wgpu::Status APIUpdate(uint32_t slot, const BindingResource* resource);
@@ -63,8 +65,6 @@ class ResourceTableBase : public ApiObjectBase {
 
     MaybeError InitializeBase();
     void DestroyImpl() override;
-
-    DynamicArrayState* GetDynamicArrayState();
 
   private:
     ResourceTableBase(DeviceBase* device,
