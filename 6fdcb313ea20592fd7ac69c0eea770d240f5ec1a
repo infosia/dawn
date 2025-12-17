@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdc6c207_724dac6c",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-17T19:02:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd2c86b3_9900119d",
+      "revId": "6fdcb313ea20592fd7ac69c0eea770d240f5ec1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "376b0323_b949e2b4",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-12-17T14:45:15Z",
       "side": 1,
       "message": "```suggestion\n\n    slot.buffer \u003d utils::CreateBufferFromData(\n        targetDevice, initialBufferData.data(), readbackSize,\n        wgpu::BufferUsage::MapRead | wgpu::BufferUsage::CopyDst, readbackLabel);\n\n```",
+      "range": {
+        "startLine": 2123,
+        "startChar": 0,
+        "endLine": 2131,
+        "endChar": 0
+      },
+      "revId": "6fdcb313ea20592fd7ac69c0eea770d240f5ec1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18aa4dcb_b7c89cdc",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 2131,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-17T19:02:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "376b0323_b949e2b4",
       "range": {
         "startLine": 2123,
         "startChar": 0,
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37acfd5e_b262f3e4",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 2221,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-17T19:02:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9da4b68_61174a21",
+      "revId": "6fdcb313ea20592fd7ac69c0eea770d240f5ec1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1998af86_2b1dfd1e",
@@ -81,6 +141,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "35ef9443_92d157b3",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 2254,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-17T19:02:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1998af86_2b1dfd1e",
+      "range": {
+        "startLine": 2250,
+        "startChar": 39,
+        "endLine": 2254,
+        "endChar": 48
+      },
+      "revId": "6fdcb313ea20592fd7ac69c0eea770d240f5ec1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "63267c50_6451b033",
@@ -94,6 +178,24 @@
       "writtenOn": "2025-12-17T14:45:15Z",
       "side": 1,
       "message": "nit: unused?",
+      "revId": "6fdcb313ea20592fd7ac69c0eea770d240f5ec1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db442333_dd517251",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-17T19:02:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63267c50_6451b033",
       "revId": "6fdcb313ea20592fd7ac69c0eea770d240f5ec1a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
