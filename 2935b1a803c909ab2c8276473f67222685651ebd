@@ -16,6 +16,57 @@
       "message": "PTAL!",
       "revId": "2935b1a803c909ab2c8276473f67222685651ebd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6aa2724c_a300916d",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-17T18:21:53Z",
+      "side": 1,
+      "message": "```suggestion\n    // Test that the `table`, has resources of `wgslType` in the `expected` slots.\n```",
+      "revId": "2935b1a803c909ab2c8276473f67222685651ebd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df65ce2d_7707a126",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-17T18:21:53Z",
+      "side": 1,
+      "message": "```suggestion\n// Test that creating resource tables of different sizes doesn\u0027t end up reusing incorrectly sized\n```",
+      "revId": "2935b1a803c909ab2c8276473f67222685651ebd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ad80437_256756c0",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-17T18:21:53Z",
+      "side": 1,
+      "message": "This mentions TextureVK specifically, but the e2e test is generic, no? So should this be Textures in general or is there something VK specific this test relies on?",
+      "revId": "2935b1a803c909ab2c8276473f67222685651ebd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
