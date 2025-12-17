@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d8d7f9f7_5a38c318",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-17T18:03:18Z",
+      "side": 1,
+      "message": "Only thing I can think of would be a unit test that asserts the number of members in these structures, and if that number changes it errors with a message that says the FuzzedOptions struct needs to be updated too.",
+      "parentUuid": "bb3c4b67_dbeb0276",
+      "revId": "e7aa1d298721ad7dd1c0c3aa3ef8675a58f6d986",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3f93e652_3218a2d3",
         "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
         "patchSetId": 21
