@@ -2679,6 +2679,10 @@ void Validator::CheckFunction(const Function* func) {
             }
         }
 
+        if (address_space == AddressSpace::kPixelLocal) {
+            AddError(param) << "function parameters cannot be in the 'pixel_local' address space";
+        }
+
         if (func->IsEntryPoint()) {
             ValidateShaderIOAnnotations(param, param->Type(), param->BindingPoint(),
                                         param->Attributes(), ShaderIOKind::kInputParam);
