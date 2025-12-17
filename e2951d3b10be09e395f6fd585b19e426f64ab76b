@@ -33,6 +33,24 @@
       "message": "What about CommandBufferD3D11 ?",
       "revId": "e2951d3b10be09e395f6fd585b19e426f64ab76b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62de9443_fbfdd613",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-17T18:04:37Z",
+      "side": 1,
+      "message": "Bindless will not be supported there (nor GL) so it will end up in the catchall `DAWN_UNREACHABLE()`.",
+      "parentUuid": "c8821769_6ab0efcb",
+      "revId": "e2951d3b10be09e395f6fd585b19e426f64ab76b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
