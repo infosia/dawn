@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "645e1385_60dc5ccf",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-12-17T10:38:41Z",
+      "side": 1,
+      "message": "My understanding is that I should clamp frag depth `kOut` value based on position z `kIn` value.\n\nSince `FinalizeInput` happens before `FinalizeOutput`, I can\u0027t create `centroid_pos_frag_idx` in `kIn` when `MakeVars` is called with `kOut` since `input_vars` have been set previously in `FinalizeInput`.\n\nMoreover, the more I look at `center_pos_frag_idx`, not `centroid_pos_frag_idx`, the more I think I\u0027m handling it badly in this CL. I wonder if `GetInput` and `SetBackendOutputs` should be updated as well. I\u0027m really confused ;(",
+      "parentUuid": "e8650224_043217d6",
+      "revId": "d7d26054afe1b30d58b49add923f51d575b75fee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8ca9a0db_84b1bbfe",
         "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
         "patchSetId": 12
