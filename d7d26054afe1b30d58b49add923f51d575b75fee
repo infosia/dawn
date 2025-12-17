@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bd237c1e_5c3b04a7",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-17T15:23:22Z",
+      "side": 1,
+      "message": "We\u0027re planning on bringing this up in the internal webgpu team meeting today to determine if we actually need to clamp, or if we\u0027re ok with the portability issues.\n\nDepending on that, either we can close this, or we can try to sort out the best way to fit this into ShaderIO.",
+      "parentUuid": "645e1385_60dc5ccf",
+      "revId": "d7d26054afe1b30d58b49add923f51d575b75fee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8ca9a0db_84b1bbfe",
         "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
         "patchSetId": 12
