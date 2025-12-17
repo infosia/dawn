@@ -96,7 +96,9 @@ class BindGroupTrackerBase {
 
         // Changing the pipeline layout sets bind groups as dirty. If CanInheritBindGroups,
         // the first |k| matching bind groups may be inherited.
-        if (CanInheritBindGroups && mLastAppliedPipelineLayout != nullptr) {
+        if (CanInheritBindGroups && mLastAppliedPipelineLayout != nullptr &&
+            mLastAppliedPipelineLayout->UsesResourceTable() ==
+                mPipelineLayout->UsesResourceTable()) {
             // Dirty bind groups that cannot be inherited.
             BindGroupMask dirtiedGroups =
                 ~mPipelineLayout->InheritedGroupsMask(mLastAppliedPipelineLayout);

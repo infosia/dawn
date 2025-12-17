@@ -56,6 +56,7 @@
 #include "dawn/native/vulkan/RenderPassCache.h"
 #include "dawn/native/vulkan/RenderPipelineVk.h"
 #include "dawn/native/vulkan/ResolveTextureLoadingUtilsVk.h"
+#include "dawn/native/vulkan/ResourceTableVk.h"
 #include "dawn/native/vulkan/TextureVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
@@ -159,7 +160,7 @@ VkImageCopy ComputeImageCopyRegion(const TextureCopy& srcCopy,
 
 class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
   public:
-    DescriptorSetTracker() = default;
+    DescriptorSetTracker(ResourceTable* table) : mResourceTable(table) {}
 
     bool AreLayoutsCompatible() override {
         return mPipelineLayout == mLastAppliedPipelineLayout &&
@@ -178,14 +179,28 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
                CommandRecordingContext* recordingContext,
                VkPipelineBindPoint bindPoint) {
         BeforeApply();
-        for (BindGroupIndex dirtyIndex : mDirtyBindGroupsObjectChangedOrIsDynamic) {
-            VkDescriptorSet set = ToBackend(mBindGroups[dirtyIndex])->GetHandle();
-            const auto dynamicOffsetSpan = GetDynamicOffsets(dirtyIndex);
+
+        BindGroupIndex startOfBindGroups{0};
+        if (mPipelineLayout->UsesResourceTable()) {
+            startOfBindGroups = BindGroupIndex{1};
+
+            if (!mLastAppliedPipelineLayout || !mLastAppliedPipelineLayout->UsesResourceTable()) {
+                VkDescriptorSet set = mResourceTable->GetHandle();
+                device->fn.CmdBindDescriptorSets(recordingContext->commandBuffer, bindPoint,
+                                                 mVkLayout, 0, 1, &*set, 0, nullptr);
+            }
+        }
+
+        for (BindGroupIndex dirtyBGIndex : mDirtyBindGroupsObjectChangedOrIsDynamic) {
+            VkDescriptorSet set = ToBackend(mBindGroups[dirtyBGIndex])->GetHandle();
+            uint32_t setIndex = uint32_t(dirtyBGIndex + startOfBindGroups);
+
+            const auto dynamicOffsetSpan = GetDynamicOffsets(dirtyBGIndex);
             uint32_t count = static_cast<uint32_t>(dynamicOffsetSpan.size());
             const uint32_t* dynamicOffset = count > 0 ? dynamicOffsetSpan.data() : nullptr;
+
             device->fn.CmdBindDescriptorSets(recordingContext->commandBuffer, bindPoint, mVkLayout,
-                                             static_cast<uint32_t>(dirtyIndex), 1, &*set, count,
-                                             dynamicOffset);
+                                             setIndex, 1, &*set, count, dynamicOffset);
         }
 
         // Update PipelineLayout
@@ -195,6 +210,7 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
     }
 
     RAW_PTR_EXCLUSION VkPipelineLayout mVkLayout;
+    raw_ptr<ResourceTable> mResourceTable;
     uint32_t mLastAppliedImmediateConstantSize = 0;
     uint32_t mImmediateConstantSize = 0;
 };
@@ -238,13 +254,20 @@ class ImmediateConstantTracker : public T {
 // multiple metadata buffers potentially).
 MaybeError UpdateDynamicArrayBindings(Device* device,
                                       CommandRecordingContext* recordingContext,
-                                      BindGroup* dynamicArrayBG) {
-    DynamicArrayState* dynamicArray = dynamicArrayBG->GetDynamicArray();
+                                      DynamicArrayState* dynamicArray,
+                                      BindGroup* dynamicArrayBG,
+                                      ResourceTable* resourceTable) {
     DynamicArrayState::BindingUpdates updates = dynamicArray->AcquireDirtyBindingUpdates();
 
-    // Update the bindings in the VkDescriptorSet.
+    // TODO(https://issues.chromium.org/463925499): Replace the DynamicArrayState + BindGroup +
+    // ResourceTable arguments with just ResourceTable once the bindless bindgroups are removed.
+    // Also rename the function. Update the bindings in the VkDescriptorSet.
     if (!updates.resourceUpdates.empty()) {
-        dynamicArrayBG->UpdateDynamicArrayBindings(updates.resourceUpdates);
+        if (dynamicArrayBG != nullptr) {
+            dynamicArrayBG->UpdateDynamicArrayBindings(updates.resourceUpdates);
+        } else {
+            resourceTable->UpdateResourceBindings(updates.resourceUpdates);
+        }
     }
 
     // Allocate enough space for all the data to modify and schedule the copies.
@@ -287,12 +310,24 @@ MaybeError UpdateDynamicArrayBindings(Device* device,
 // data pre-computed in the frontend. Also performs lazy initialization if required.
 MaybeError PrepareResourcesForSyncScope(Device* device,
                                         CommandRecordingContext* recordingContext,
-                                        const SyncScopeResourceUsage& scope) {
+                                        const SyncScopeResourceUsage& scope,
+                                        ResourceTable* resourceTable) {
     // Update the dynamic binding array metadata buffers before transitioning resources. The
     // metadata buffers are part of the resources and will be transitioned to Storage if needed
     // then.
+    // TODO(https://issues.chromium.org/463925499): Remove once bindless bindgroups are removed.
     for (BindGroupBase* dynamicArrayBG : scope.dynamicBindingArrays) {
-        DAWN_TRY(UpdateDynamicArrayBindings(device, recordingContext, ToBackend(dynamicArrayBG)));
+        DAWN_TRY(UpdateDynamicArrayBindings(device, recordingContext,
+                                            dynamicArrayBG->GetDynamicArray(),
+                                            ToBackend(dynamicArrayBG), nullptr));
+    }
+
+    // Update the resource table metadata buffers before transitioning resources. The metadata
+    // buffers are part of the resources and will be transitioned to Storage if needed then.
+    if (resourceTable != nullptr) {
+        DAWN_TRY(UpdateDynamicArrayBindings(device, recordingContext,
+                                            resourceTable->GetDynamicArrayState(), nullptr,
+                                            resourceTable));
     }
 
     // Separate barriers with vertex stages in destination stages from all other barriers.
@@ -848,10 +883,10 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
 
     // Records the necessary barriers for the resource usage pre-computed by the frontend.
     // And resets the used query sets which are rewritten on the render pass.
-    auto PrepareResourcesForRenderPass = [](Device* device,
-                                            CommandRecordingContext* recordingContext,
-                                            const RenderPassResourceUsage& usages) -> MaybeError {
-        DAWN_TRY(PrepareResourcesForSyncScope(device, recordingContext, usages));
+    auto PrepareResourcesForRenderPass =
+        [](Device* device, CommandRecordingContext* recordingContext,
+           const RenderPassResourceUsage& usages, ResourceTable* resourceTable) -> MaybeError {
+        DAWN_TRY(PrepareResourcesForSyncScope(device, recordingContext, usages, resourceTable));
 
         // Reset all query set used on current render pass together before beginning render pass
         // because the reset command must be called outside render pass
@@ -864,6 +899,7 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
 
     size_t nextComputePassNumber = 0;
     size_t nextRenderPassNumber = 0;
+    ResourceTable* currentResourceTable = nullptr;
 
     Command type;
     while (mCommands.NextCommandId(&type)) {
@@ -1078,10 +1114,10 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
 
                 DAWN_TRY(PrepareResourcesForRenderPass(
                     device, recordingContext,
-                    GetResourceUsages().renderPasses[nextRenderPassNumber]));
+                    GetResourceUsages().renderPasses[nextRenderPassNumber], currentResourceTable));
 
                 LazyClearRenderPassAttachments(cmd);
-                DAWN_TRY(RecordRenderPass(recordingContext, cmd));
+                DAWN_TRY(RecordRenderPass(recordingContext, cmd, currentResourceTable));
 
                 recordingContext->hasRecordedRenderPass = true;
                 nextRenderPassNumber++;
@@ -1102,9 +1138,9 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                     commands = recordingContext->commandBuffer;
                 }
 
-                DAWN_TRY(
-                    RecordComputePass(recordingContext, cmd,
-                                      GetResourceUsages().computePasses[nextComputePassNumber]));
+                DAWN_TRY(RecordComputePass(recordingContext, cmd,
+                                           GetResourceUsages().computePasses[nextComputePassNumber],
+                                           currentResourceTable));
 
                 nextComputePassNumber++;
                 break;
@@ -1236,8 +1272,9 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
             }
 
             case Command::SetResourceTable: {
-                // TODO(https://issues.chromium.org/435317394): Add support for resource tables.
-                return DAWN_UNIMPLEMENTED_ERROR("SetResourceTable unimplemented.");
+                SetResourceTableCmd* cmd = mCommands.NextCommand<SetResourceTableCmd>();
+                currentResourceTable = ToBackend(cmd->table.Get());
+                break;
             }
 
             default:
@@ -1250,7 +1287,8 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
 
 MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingContext,
                                             BeginComputePassCmd* computePassCmd,
-                                            const ComputePassResourceUsage& resourceUsages) {
+                                            const ComputePassResourceUsage& resourceUsages,
+                                            ResourceTable* resourceTable) {
     Device* device = ToBackend(GetDevice());
 
     // Write timestamp at the beginning of compute pass if it's set
@@ -1265,7 +1303,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
     VkCommandBuffer commands = recordingContext->commandBuffer;
 
     uint64_t currentDispatch = 0;
-    DescriptorSetTracker descriptorSets = {};
+    DescriptorSetTracker descriptorSets{resourceTable};
     ImmediateConstantTracker<ComputeImmediateConstantsTrackerBase> immediates = {};
 
     Command type;
@@ -1289,7 +1327,8 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
                 DispatchCmd* dispatch = mCommands.NextCommand<DispatchCmd>();
 
                 DAWN_TRY(PrepareResourcesForSyncScope(
-                    device, recordingContext, resourceUsages.dispatchUsages[currentDispatch]));
+                    device, recordingContext, resourceUsages.dispatchUsages[currentDispatch],
+                    resourceTable));
                 descriptorSets.Apply(device, recordingContext, VK_PIPELINE_BIND_POINT_COMPUTE);
                 immediates.Apply(device, commands);
                 device->fn.CmdDispatch(commands, dispatch->x, dispatch->y, dispatch->z);
@@ -1302,7 +1341,8 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
                 VkBuffer indirectBuffer = ToBackend(dispatch->indirectBuffer)->GetHandle();
 
                 DAWN_TRY(PrepareResourcesForSyncScope(
-                    device, recordingContext, resourceUsages.dispatchUsages[currentDispatch]));
+                    device, recordingContext, resourceUsages.dispatchUsages[currentDispatch],
+                    resourceTable));
                 descriptorSets.Apply(device, recordingContext, VK_PIPELINE_BIND_POINT_COMPUTE);
                 immediates.Apply(device, commands);
                 device->fn.CmdDispatchIndirect(commands, indirectBuffer,
@@ -1413,7 +1453,8 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
 }
 
 MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingContext,
-                                           BeginRenderPassCmd* renderPassCmd) {
+                                           BeginRenderPassCmd* renderPassCmd,
+                                           ResourceTable* resourceTable) {
     Device* device = ToBackend(GetDevice());
     VkCommandBuffer commands = recordingContext->commandBuffer;
 
@@ -1466,7 +1507,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
         immediates.SetClampFragDepth(0.0, 1.0);
     }
 
-    DescriptorSetTracker descriptorSets = {};
+    DescriptorSetTracker descriptorSets{resourceTable};
     RenderPipeline* lastPipeline = nullptr;
 
     // Tracks the number of commands that do significant GPU work (a draw or query write) this pass.
