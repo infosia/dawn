@@ -22,6 +22,30 @@
       },
       "revId": "55d0aaa49b5a8a8c613320ec9cf3a2055a9bb2ba",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f60c3e4_2e105f44",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-17T17:48:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3fa278a1_51efd706",
+      "range": {
+        "startLine": 843,
+        "startChar": 13,
+        "endLine": 843,
+        "endChar": 72
+      },
+      "revId": "55d0aaa49b5a8a8c613320ec9cf3a2055a9bb2ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
