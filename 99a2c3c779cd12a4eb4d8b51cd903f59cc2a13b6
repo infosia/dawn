@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "99a2c3c779cd12a4eb4d8b51cd903f59cc2a13b6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "113a4f0a_e7664968",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-17T22:33:02Z",
+      "side": 1,
+      "message": "Where does this restriction come from?\n\nThere\u0027s a note above the PixelLocal transform in Raise that says it needs to come after DirectVariableAccess so that pointer parameters to pixel_local are removed, which implies that this is something we expect to support?",
+      "revId": "99a2c3c779cd12a4eb4d8b51cd903f59cc2a13b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
