@@ -39,6 +39,8 @@
 # Kind:      lib
 ################################################################################
 tint_add_target(tint_lang_wgsl_reader_lower lib
+  lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc
+  lang/wgsl/reader/lower/atomic_vec2u_to_u64.h
   lang/wgsl/reader/lower/lower.cc
   lang/wgsl/reader/lower/lower.h
 )
