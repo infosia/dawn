@@ -33,6 +33,23 @@
       "message": "This turned out to be an easier change than expected. PTAL!",
       "revId": "8d401471ba0686ed6e1c88f4bbf6df239bd265ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9888156_adaac135",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-17T18:05:56Z",
+      "side": 1,
+      "message": "Nice, TY!",
+      "revId": "8d401471ba0686ed6e1c88f4bbf6df239bd265ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
