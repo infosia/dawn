@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "675660ac_8bed4715",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-17T17:38:25Z",
+      "side": 1,
+      "message": "Cleaning up so persistent bot issues after the WriteBuffer/Texture optimizations landed. PTAL!",
+      "revId": "c3a737b1290ea95efc162de2b800e0e30cf95a59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
