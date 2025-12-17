@@ -61,7 +61,7 @@ class ResourceTableBase : public ApiObjectBase {
     ResourceTableBase(DeviceBase* device, const ResourceTableDescriptor* descriptor);
 
     MaybeError InitializeBase();
-    void DestroyImpl() override;
+    void DestroyImpl(DestroyReason reason) override;
 
     DynamicArrayState* GetDynamicArrayState();
 

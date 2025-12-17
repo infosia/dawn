@@ -140,11 +140,11 @@ MaybeError ResourceTable::Initialize() {
     return {};
 }
 
-void ResourceTable::DestroyImpl() {
+void ResourceTable::DestroyImpl(DestroyReason reason) {
     mDSAllocator->Deallocate(&mAllocation);
     mDSAllocator = nullptr;
 
-    ResourceTableBase::DestroyImpl();
+    ResourceTableBase::DestroyImpl(reason);
 }
 
 void ResourceTable::SetLabelImpl() {
