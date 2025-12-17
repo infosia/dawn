@@ -134,8 +134,7 @@ struct VulkanFunctions {
     VkFn<PFN_vkGetPhysicalDeviceSurfacePresentModesKHR> GetPhysicalDeviceSurfacePresentModesKHR =
         nullptr;
 
-    // Core Vulkan 1.1 promoted extensions, set if either the core version or the extension is
-    // present.
+    // Core Vulkan 1.1 promoted extensions.
 
     // VK_KHR_external_memory_capabilities
     VkFn<PFN_vkGetPhysicalDeviceExternalBufferProperties>
@@ -332,8 +331,31 @@ struct VulkanFunctions {
     VkFn<PFN_vkUnmapMemory> UnmapMemory = nullptr;
     VkFn<PFN_vkUpdateDescriptorSets> UpdateDescriptorSets = nullptr;
     VkFn<PFN_vkWaitForFences> WaitForFences = nullptr;
+
+    // Promoted in 1.1
+
     VkFn<PFN_vkCreateSamplerYcbcrConversion> CreateSamplerYcbcrConversion = nullptr;
     VkFn<PFN_vkDestroySamplerYcbcrConversion> DestroySamplerYcbcrConversion = nullptr;
+    VkFn<PFN_vkGetBufferMemoryRequirements2> GetBufferMemoryRequirements2 = nullptr;
+    VkFn<PFN_vkGetImageMemoryRequirements2> GetImageMemoryRequirements2 = nullptr;
+    VkFn<PFN_vkGetImageSparseMemoryRequirements2> GetImageSparseMemoryRequirements2 = nullptr;
+
+    // Below this point update the method names and function pointer types to omit the vendor
+    // postfix when kRequiredVulkanVersion is updated to the associated version.
+
+    // Promoted in 1.2
+
+    // VK_KHR_draw_indirect_count
+    VkFn<PFN_vkCmdDrawIndirectCountKHR> CmdDrawIndirectCountKHR = nullptr;
+    VkFn<PFN_vkCmdDrawIndexedIndirectCountKHR> CmdDrawIndexedIndirectCountKHR = nullptr;
+
+    // Promoted in 1.3
+
+    // VK_KHR_dynamic_rendering
+    VkFn<PFN_vkCmdBeginRenderingKHR> CmdBeginRenderingKHR = nullptr;
+    VkFn<PFN_vkCmdEndRenderingKHR> CmdEndRenderingKHR = nullptr;
+
+    // Not promoted to core in any version
 
     // VK_KHR_external_memory_fd
     VkFn<PFN_vkGetMemoryFdKHR> GetMemoryFdKHR = nullptr;
@@ -346,25 +368,12 @@ struct VulkanFunctions {
     VkFn<PFN_vkImportSemaphoreFdKHR> ImportSemaphoreFdKHR = nullptr;
     VkFn<PFN_vkGetSemaphoreFdKHR> GetSemaphoreFdKHR = nullptr;
 
-    // VK_KHR_get_memory_requirements2
-    VkFn<PFN_vkGetBufferMemoryRequirements2KHR> GetBufferMemoryRequirements2 = nullptr;
-    VkFn<PFN_vkGetImageMemoryRequirements2KHR> GetImageMemoryRequirements2 = nullptr;
-    VkFn<PFN_vkGetImageSparseMemoryRequirements2KHR> GetImageSparseMemoryRequirements2 = nullptr;
-
     // VK_KHR_swapchain
     VkFn<PFN_vkCreateSwapchainKHR> CreateSwapchainKHR = nullptr;
     VkFn<PFN_vkDestroySwapchainKHR> DestroySwapchainKHR = nullptr;
     VkFn<PFN_vkGetSwapchainImagesKHR> GetSwapchainImagesKHR = nullptr;
     VkFn<PFN_vkAcquireNextImageKHR> AcquireNextImageKHR = nullptr;
     VkFn<PFN_vkQueuePresentKHR> QueuePresentKHR = nullptr;
-
-    // VK_KHR_draw_indirect_count
-    VkFn<PFN_vkCmdDrawIndirectCount> CmdDrawIndirectCountKHR = nullptr;
-    VkFn<PFN_vkCmdDrawIndexedIndirectCount> CmdDrawIndexedIndirectCountKHR = nullptr;
-
-    // VK_KHR_dynamic_rendering
-    VkFn<PFN_vkCmdBeginRenderingKHR> CmdBeginRenderingKHR = nullptr;
-    VkFn<PFN_vkCmdEndRenderingKHR> CmdEndRenderingKHR = nullptr;
 
 #if VK_USE_PLATFORM_FUCHSIA
     // VK_FUCHSIA_external_memory
