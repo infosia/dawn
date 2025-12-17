@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "38289b6f_889c04e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-17T14:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57f89eea_b1032f32",
+      "revId": "e7aa1d298721ad7dd1c0c3aa3ef8675a58f6d986",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2dadb8ce_84f43385",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-12-16T16:37:53Z",
       "side": 1,
       "message": "Please also add to the FuzzedOptions structure in writer_fuzz.cc.",
+      "revId": "e7aa1d298721ad7dd1c0c3aa3ef8675a58f6d986",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2e6822a_61297821",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-17T14:17:26Z",
+      "side": 1,
+      "message": "ah yes this again. We need to make this work better.",
+      "parentUuid": "2dadb8ce_84f43385",
       "revId": "e7aa1d298721ad7dd1c0c3aa3ef8675a58f6d986",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -66,6 +102,24 @@
           ]
         }
       ],
+      "revId": "e7aa1d298721ad7dd1c0c3aa3ef8675a58f6d986",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "846fd216_fff1ce75",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-12-17T14:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f93e652_3218a2d3",
       "revId": "e7aa1d298721ad7dd1c0c3aa3ef8675a58f6d986",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
