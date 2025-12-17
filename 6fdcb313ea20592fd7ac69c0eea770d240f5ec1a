@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd2c86b3_9900119d",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-17T14:45:15Z",
+      "side": 1,
+      "message": "nit: this is called only once and the exact readback label isn\u0027t too important. Can we just inline?",
+      "revId": "6fdcb313ea20592fd7ac69c0eea770d240f5ec1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "376b0323_b949e2b4",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 2131,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-17T14:45:15Z",
+      "side": 1,
+      "message": "```suggestion\n\n    slot.buffer \u003d utils::CreateBufferFromData(\n        targetDevice, initialBufferData.data(), readbackSize,\n        wgpu::BufferUsage::MapRead | wgpu::BufferUsage::CopyDst, readbackLabel);\n\n```",
+      "range": {
+        "startLine": 2123,
+        "startChar": 0,
+        "endLine": 2131,
+        "endChar": 0
+      },
+      "revId": "6fdcb313ea20592fd7ac69c0eea770d240f5ec1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9da4b68_61174a21",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 2221,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-17T14:45:15Z",
+      "side": 1,
+      "message": "Can we have a comment explaining what kind of checking we\u0027ll do here? Something about how we replay all commands including the ones for the test readbacks, so we can use the values stored in readback buffers to make sure everything participating of the computations of values read back is working in the capture/replay. Also that the buffers are MapRead so we map them and check them directly.",
+      "revId": "6fdcb313ea20592fd7ac69c0eea770d240f5ec1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1998af86_2b1dfd1e",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 2254,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-17T14:45:15Z",
+      "side": 1,
+      "message": "nit: these are good comments for code review but risk going stale quickly when put in code so IMHO we should remove them.",
+      "range": {
+        "startLine": 2250,
+        "startChar": 39,
+        "endLine": 2254,
+        "endChar": 48
+      },
+      "revId": "6fdcb313ea20592fd7ac69c0eea770d240f5ec1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63267c50_6451b033",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-17T14:45:15Z",
+      "side": 1,
+      "message": "nit: unused?",
+      "revId": "6fdcb313ea20592fd7ac69c0eea770d240f5ec1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "879de774_22915f3b",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-17T14:45:15Z",
+      "side": 1,
+      "message": "Thank you for the update and confirming that the failure rate is similar.",
+      "parentUuid": "744a9b65_13e85831",
+      "revId": "01851643be4eabfbc7610f577aa086f8fb8d523c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0e209aee_04fcdff5",
@@ -85,6 +103,24 @@
       "side": 1,
       "message": "Yes. readback offsets ([1] and [2]) are always 0 at current code status. We are comparing the whole readback buffer. I think we should remove them to prevent future error. Is there any other reasons for keeping these offsets?",
       "parentUuid": "3d775730_70537b2f",
+      "revId": "01851643be4eabfbc7610f577aa086f8fb8d523c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "849e984e_6929a968",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 2271,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-17T14:45:15Z",
+      "side": 1,
+      "message": "The offset was most likely because when we set up DawnTests deferred expectations, we thought that we\u0027d allocate larger buffers and suballocate the readbacks, but that never happened and doesn\u0027t look necessary.",
+      "parentUuid": "c131a2fc_cadf479c",
       "revId": "01851643be4eabfbc7610f577aa086f8fb8d523c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
