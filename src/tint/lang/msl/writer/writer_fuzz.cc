@@ -60,6 +60,7 @@ struct FuzzedOptions {
     std::optional<VertexPullingConfig> vertex_pulling_config;
     std::unordered_map<uint32_t, ArgumentBufferInfo> group_to_argument_buffer_info;
     SubstituteOverridesConfig substitute_overrides_config;
+    bool texture_sample_compare_depth_cube_array;
 
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(FuzzedOptions,
@@ -79,7 +80,8 @@ struct FuzzedOptions {
                  pixel_local_attachments,
                  vertex_pulling_config,
                  group_to_argument_buffer_info,
-                 substitute_overrides_config);
+                 substitute_overrides_config,
+                 texture_sample_compare_depth_cube_array);
     TINT_REFLECT_HASH_CODE(FuzzedOptions);
 };
 
@@ -125,6 +127,8 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     options.workarounds.polyfill_unpack_2x16_snorm = fuzzed_options.polyfill_unpack_2x16_snorm;
     options.workarounds.polyfill_unpack_2x16_unorm = fuzzed_options.polyfill_unpack_2x16_unorm;
     options.fixed_sample_mask = fuzzed_options.fixed_sample_mask;
+    options.texture_sample_compare_depth_cube_array =
+        fuzzed_options.texture_sample_compare_depth_cube_array;
     options.pixel_local_attachments = fuzzed_options.pixel_local_attachments;
     options.vertex_pulling_config = fuzzed_options.vertex_pulling_config;
     options.group_to_argument_buffer_info = fuzzed_options.group_to_argument_buffer_info;
