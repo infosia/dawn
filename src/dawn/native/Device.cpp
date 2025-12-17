@@ -542,7 +542,7 @@ void DeviceBase::WillDropLastExternalRef() {
         // the device - either directly or indirectly. We would need to ensure those tasks don't
         // create new reference cycles, and we would need to continuously try draining the pending
         // tasks to clear out all remaining refs.
-        Destroy();
+        Destroy(DestroyReason::Placeholder);
     }
 
     // Flush last remaining callback tasks.
@@ -615,7 +615,7 @@ void DeviceBase::DestroyObjects() {
     }
 }
 
-void DeviceBase::Destroy() {
+void DeviceBase::Destroy(DestroyReason reason) {
     // Skip if we are already destroyed.
     if (mState == State::Destroyed) {
         return;
@@ -706,7 +706,7 @@ void DeviceBase::Destroy() {
     }
 
     // Now that the GPU timeline is empty, destroy the backend device.
-    DestroyImpl();
+    DestroyImpl(reason);
 
     mCaches = nullptr;
     mState = State::Destroyed;
