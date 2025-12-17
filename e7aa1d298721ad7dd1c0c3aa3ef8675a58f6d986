@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cc8d38e9_3b78d778",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-17T14:28:38Z",
+      "side": 1,
+      "message": "Suggestions welcome, we couldn\u0027t come up with anything better then the giant comment. You could maybe do some kinda python script onupload thing, but, bleh.\n\nThe ordering if fuzzer options can\u0027t be changed, they can\u0027t be removed or modified. We want to be able to remove/move/modify these options.",
+      "parentUuid": "c2e6822a_61297821",
+      "revId": "e7aa1d298721ad7dd1c0c3aa3ef8675a58f6d986",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3f93e652_3218a2d3",
         "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
         "patchSetId": 21
