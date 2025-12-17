@@ -151,7 +151,7 @@ Device::Device(AdapterBase* adapter,
       mContext(std::move(context)) {}
 
 Device::~Device() {
-    Destroy();
+    Destroy(DestroyReason::ObjectBeingDeleted);
 }
 
 MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
