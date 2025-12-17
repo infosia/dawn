@@ -477,6 +477,8 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
 
     req.tintOptions.decompose_uniform_buffers =
         GetDevice()->IsToggleEnabled(Toggle::DecomposeUniformBuffers);
+    req.tintOptions.decompose_workgroup_buffers =
+        GetDevice()->IsToggleEnabled(Toggle::DecomposeWorkgroupBuffers);
 
     CacheResult<GLSLCompilation> compilationResult;
     DAWN_TRY_LOAD_OR_RUN(

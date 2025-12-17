@@ -186,6 +186,15 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     } else {
         RUN_TRANSFORM(core::ir::transform::Std140, module);
     }
+    if (options.decompose_workgroup_buffers) {
+        // DecomposeWorkgroupAccess must come before BlockDecoratedStructs, which will wrap the
+        // workgroup variable in a structure. It must come after DirectVariableAccess which removes
+        // workgroup buffers passed as function parameters.
+        RUN_TRANSFORM(core::ir::transform::DecomposeWorkgroupAccess, module);
+    } else {
+        RUN_TRANSFORM(core::ir::transform::Std140, module);
+    }
+
     RUN_TRANSFORM(core::ir::transform::BlockDecoratedStructs, module);
 
     // RemoveUniformVectorComponentLoads is used to work around a Qualcomm driver bug.

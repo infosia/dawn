@@ -341,6 +341,8 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     // ArrayOffsetFrom* transforms
     RUN_TRANSFORM(core::ir::transform::DecomposeUniformAccess, module);
 
+    RUN_TRANSFORM(core::ir::transform::DecomposeWorkgroupAccess, module);
+
     // PixelLocal must run after DirectVariableAccess to avoid chasing pointer parameters.
     if (pixel_local_enabled) {
         raise::PixelLocalConfig config;
