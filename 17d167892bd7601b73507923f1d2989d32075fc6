@@ -46,6 +46,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db68c84a_7e444e5b",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2128,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-12-17T01:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68c97284_6b526645",
+      "revId": "17d167892bd7601b73507923f1d2989d32075fc6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e732d4e_1821c8a7",
@@ -59,6 +77,24 @@
       "writtenOn": "2025-12-15T21:58:33Z",
       "side": 1,
       "message": "Should this be including the type size in the check?\n`offset + ret_store_type-\u003eSize() \u003e\u003d buffer_type-\u003eSize()`?",
+      "revId": "17d167892bd7601b73507923f1d2989d32075fc6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d22e8e2c_1baba113",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2135,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-12-17T01:38:32Z",
+      "side": 1,
+      "message": "Hmmm, proposal calls that invalid memory reference, but I think it\u0027s ok to be an error. Makes sense to me.",
+      "parentUuid": "9e732d4e_1821c8a7",
       "revId": "17d167892bd7601b73507923f1d2989d32075fc6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bc40cdf_bdf3d8c4",
+        "filename": "src/tint/lang/core/type/buffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-12-17T01:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3ab7c42_8a7ca38a",
+      "revId": "b8a11575498511c318d00e436fae5cfb060e3ea1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c62fc95_1ecd88d1",
