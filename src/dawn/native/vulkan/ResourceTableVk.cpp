@@ -30,6 +30,7 @@
 #include "dawn/native/DynamicArrayState.h"
 #include "dawn/native/vulkan/DescriptorSetAllocator.h"
 #include "dawn/native/vulkan/DeviceVk.h"
+#include "dawn/native/vulkan/TextureVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
 
@@ -138,6 +139,53 @@ MaybeError ResourceTable::Initialize() {
     device->fn.UpdateDescriptorSets(device->GetVkDevice(), 1, &write, 0, nullptr);
 
     return {};
+}
+
+void ResourceTable::UpdateResourceBindings(
+    const std::vector<DynamicArrayState::ResourceUpdate>& updates) {
+    std::vector<VkDescriptorImageInfo> imageWrites;
+    std::vector<uint32_t> arrayElements;
+
+    for (DynamicArrayState::ResourceUpdate update : updates) {
+        // TODO(https://issues.chromium.org/435317394): Support samplers updates.
+        // TODO(https://issues.chromium.org/435317394): Support buffer, texel buffers and storage
+        // textures.
+
+        VkImageView handle = ToBackend(update.textureView)->GetHandle();
+        if (handle == nullptr) {
+            continue;
+        }
+
+        VkDescriptorImageInfo imageWrite = {
+            .sampler = VkSampler{},
+            .imageView = handle,
+            .imageLayout = VulkanImageLayout(update.textureView->GetFormat(),
+                                             wgpu::TextureUsage::TextureBinding),
+        };
+        imageWrites.push_back(imageWrite);
+        arrayElements.push_back(uint32_t(update.slot));
+    }
+
+    std::vector<VkWriteDescriptorSet> writes;
+    for (size_t i = 0; i < imageWrites.size(); i++) {
+        VkWriteDescriptorSet write{
+            .sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,
+            .pNext = nullptr,
+            .dstSet = mAllocation.set,
+            .dstBinding = 1,
+            .dstArrayElement = arrayElements[i],
+            .descriptorCount = 1,
+            .descriptorType = VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE,
+            .pImageInfo = &imageWrites[i],
+            .pBufferInfo = nullptr,
+            .pTexelBufferView = nullptr,
+        };
+        writes.push_back(write);
+    }
+
+    Device* device = ToBackend(GetDevice());
+    device->fn.UpdateDescriptorSets(device->GetVkDevice(), writes.size(), writes.data(), 0,
+                                    nullptr);
 }
 
 void ResourceTable::DestroyImpl() {
