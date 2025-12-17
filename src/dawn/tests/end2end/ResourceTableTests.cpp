@@ -53,7 +53,9 @@ class ResourceTableTests : public DawnTest {
         // produces bad code and crashes on some VK_EXT_descriptor_indexing workloads. Skip tests on
         // it, but still run them with Swiftshader LLVM 10.0. On ARM64 the only supported compiler
         // is LLVM10.0 so use that signal to choose when Swiftshader can be tested.
-        DAWN_SUPPRESS_TEST_IF(IsSwiftshader() && !DAWN_PLATFORM_IS(ARM64));
+        // TODO(https://issuetracker.google.com/470127833): Swiftshader has a bad assert that
+        // prevents the VK_EXT_descriptor_indexing extension from working properly on any platform.
+        DAWN_SUPPRESS_TEST_IF(IsSwiftshader());
     }
 
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
