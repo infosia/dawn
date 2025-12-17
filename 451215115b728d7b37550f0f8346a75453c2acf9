@@ -16,6 +16,40 @@
       "message": "PTAL, thanks!",
       "revId": "451215115b728d7b37550f0f8346a75453c2acf9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2490be6f_52ee7ba6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-17T13:58:06Z",
+      "side": 1,
+      "message": "Can you please update the associated bug with the problem being worked around here? Why do we need to decompose workgroup memory?",
+      "revId": "451215115b728d7b37550f0f8346a75453c2acf9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e37ede1b_aefaf083",
+        "filename": "src/tint/lang/core/ir/transform/decompose_memory_access.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-17T13:58:06Z",
+      "side": 1,
+      "message": "The `decompose_storage_access` transforms does stores, why was this based off decompose uniform instead of storage? It seems like it\u0027s closer to storage or does it have to be an array of uvec4s?",
+      "revId": "451215115b728d7b37550f0f8346a75453c2acf9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
