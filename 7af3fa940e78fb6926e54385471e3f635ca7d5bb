@@ -33,6 +33,23 @@
       "message": "What\u0027s the plan for this information? Is it to be reflected back to Dawn or used from some other tracking?",
       "revId": "7af3fa940e78fb6926e54385471e3f635ca7d5bb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "585a5a9d_5188ddc8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-17T20:59:51Z",
+      "side": 1,
+      "message": "We\u0027ve read through the current spec PR, and as far as we can tell there should be no need to track actual accesses at this granularity.\n\nThe API side of the spec just looks at all of the accessible slots for whole type of the immediate var. The WGSL definition for accessible slots does not do any tracking of loads, it just recursively defines what the accessible slots are for a given type. So I think we just need to reflect all of the non-padding slots for the immediate variable that is used by the entry point.\n\nI don\u0027t think you need any new tracking in the resolver to do this, since we already know all of the transitively reference global variables in a given function (see `sem::Function`). The inspector should be able to just look for a referenced immediate variable in there and then do the recursion through the type hierarchy to get all of the non-padding bytes.\n\nLet me know if this makes sense or if you disagree about what the validation rule should actually be doing.",
+      "revId": "7af3fa940e78fb6926e54385471e3f635ca7d5bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
