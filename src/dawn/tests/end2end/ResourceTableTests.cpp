@@ -346,9 +346,6 @@ TEST_P(ResourceTableTests, PinningBalancedInBackends) {
 
 // Test WGSL `hasResource` reflects the state of the resource table.
 TEST_P(ResourceTableTests, HasResourceOneTexturePinUnpin) {
-    // TODO(https://issues.chromium.org/463925499): Remove suppression once supported.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -372,9 +369,6 @@ TEST_P(ResourceTableTests, HasResourceOneTexturePinUnpin) {
 
 // Test that calling texture.Destroy() implicitly unpins it.
 TEST_P(ResourceTableTests, HasResourceOneTexturePinDestroy) {
-    // TODO(https://issues.chromium.org/463925499): Remove suppression once supported.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -398,9 +392,6 @@ TEST_P(ResourceTableTests, HasResourceOneTexturePinDestroy) {
 
 // Test that a texture used multiple times in the same table has its availability correctly updated.
 TEST_P(ResourceTableTests, HasResourceSameTextureMultipleTimesPinUnpin) {
-    // TODO(https://issues.chromium.org/463925499): Remove suppression once supported.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -428,9 +419,6 @@ TEST_P(ResourceTableTests, HasResourceSameTextureMultipleTimesPinUnpin) {
 // Test that updating a table with an already destroyed texture works, but doesn't show that entry
 // as available.
 TEST_P(ResourceTableTests, HasResourceUpdateWithTextureAlreadyDestroyed) {
-    // TODO(https://issues.chromium.org/463925499): Remove suppression once supported.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -447,9 +435,6 @@ TEST_P(ResourceTableTests, HasResourceUpdateWithTextureAlreadyDestroyed) {
 
 // Test that a texture used in multiple resource tables has its availability correctly updated.
 TEST_P(ResourceTableTests, HasResourceSameTextureMultipleTables) {
-    // TODO(https://issues.chromium.org/463925499): Remove suppression once supported.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -476,9 +461,6 @@ TEST_P(ResourceTableTests, HasResourceSameTextureMultipleTables) {
 
 // Test that texture availabililty is controlled per-texture.
 TEST_P(ResourceTableTests, HasResourceMultipleTexturesTable) {
-    // TODO(https://issues.chromium.org/463925499): Remove suppression once supported.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -790,9 +772,6 @@ std::vector<TextureDescForTypeIDCase> MakeTextureDescForTypeIDCases() {
 
 // Test that hasResource() works as expected for all supported types in WGSL.
 TEST_P(ResourceTableTests, HasResourceTextureCompatibilityAllTypes) {
-    // TODO(https://issues.chromium.org/463925499): Remove suppression once supported.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
     auto textureCases = MakeTextureDescForTypeIDCases();
 
     // Make a resource table with all of our test texture views.
@@ -815,9 +794,6 @@ TEST_P(ResourceTableTests, HasResourceTextureCompatibilityAllTypes) {
 
 // Test that calling hasResource() with values outside of the resource table size returns false.
 TEST_P(ResourceTableTests, HasBindingOOBIsFalse) {
-    // TODO(https://issues.chromium.org/463925499): Remove suppression once supported.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
     // Create the test pipeline
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
@@ -891,9 +867,6 @@ TEST_P(ResourceTableTests, HasBindingOOBIsFalse) {
 // test (that's for the CTS) but tries to check a few different interesting cases (MS, DS, Cube, 2D
 // array).
 TEST_P(ResourceTableTests, DefaultBindingsAreZeroAndSizeOne) {
-    // TODO(https://issues.chromium.org/463925499): Remove suppression once supported.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
     // Create the test pipeline
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
@@ -972,9 +945,6 @@ TEST_P(ResourceTableTests, DefaultBindingsAreZeroAndSizeOne) {
 
 // Check that Pin forces zero-initialization of the resources.
 TEST_P(ResourceTableTests, PinDoesZeroInit) {
-    // TODO(https://issues.chromium.org/463925499): Remove suppression once supported.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
     // Create the pipeline reading back from the texture.
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
@@ -1184,9 +1154,6 @@ TEST_P(ResourceTableTests, UpdateAfterRemoveRequiresGPUIsFinished_ErrorBindGroup
 
 // Check that Update and InsertBinding make the new binding visible in the resource table.
 TEST_P(ResourceTableTests, UpdateAndInsertBindingMakeBindingVisible) {
-    // TODO(https://issues.chromium.org/463925499): Remove suppression once supported.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
     // TODO(435317394): Implemented bindless in the wire.
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
 
@@ -1209,9 +1176,6 @@ TEST_P(ResourceTableTests, UpdateAndInsertBindingMakeBindingVisible) {
 // Check that RemoveBinding instantly makes the binding not visible, both for entries added with
 // Update and InsertBinding.
 TEST_P(ResourceTableTests, RemoveBindingMakeBindingInvalid) {
-    // TODO(https://issues.chromium.org/463925499): Remove suppression once supported.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
     // TODO(435317394): Implemented bindless in the wire.
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
 
@@ -1236,9 +1200,6 @@ TEST_P(ResourceTableTests, RemoveBindingMakeBindingInvalid) {
 
 // Check that removing a binding and adding a different one works.
 TEST_P(ResourceTableTests, ReplaceBinding) {
-    // TODO(https://issues.chromium.org/463925499): Remove suppression once supported.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
     // TODO(435317394): Implemented bindless in the wire.
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
 
@@ -1262,9 +1223,6 @@ TEST_P(ResourceTableTests, ReplaceBinding) {
 
 // Check that removing a binding and adding it back works.
 TEST_P(ResourceTableTests, ReplaceWithSameBinding) {
-    // TODO(https://issues.chromium.org/463925499): Remove suppression once supported.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
     // TODO(435317394): Implemented bindless in the wire.
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
 
