@@ -82,7 +82,7 @@ class BindGroupLayout : public BindGroupLayoutInternalBase {
     MaybeError Initialize(
         const VkDescriptorSetLayoutCreateInfo* createInfo,
         absl::flat_hash_map<BindingIndex, BindingIndex> textureToStaticSamplerIndex);
-    void DestroyImpl() override;
+    void DestroyImpl(DestroyReason reason) override;
 
     MutexProtected<SlabAllocator<BindGroup>> mBindGroupAllocator;
 
@@ -111,7 +111,7 @@ class BindGroupLayoutStaticBindingOnly final : public BindGroupLayout {
 
   private:
     ~BindGroupLayoutStaticBindingOnly() override;
-    void DestroyImpl() override;
+    void DestroyImpl(DestroyReason reason) override;
 
     Ref<DescriptorSetAllocator> mDescriptorSetAllocator;
 };
@@ -130,7 +130,7 @@ class BindGroupLayoutDynamicArray final : public BindGroupLayout {
 
   private:
     ~BindGroupLayoutDynamicArray() override;
-    void DestroyImpl() override;
+    void DestroyImpl(DestroyReason reason) override;
 
     absl::flat_hash_map<VkDescriptorType, uint32_t> mStaticDescriptorCountPerType;
     std::unique_ptr<DescriptorSetAllocatorDynamicArray> mDescriptorSetAllocator;

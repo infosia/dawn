@@ -232,8 +232,8 @@ MaybeError BindGroupLayout::Initialize(
     return {};
 }
 
-void BindGroupLayout::DestroyImpl() {
-    BindGroupLayoutInternalBase::DestroyImpl();
+void BindGroupLayout::DestroyImpl(DestroyReason reason) {
+    BindGroupLayoutInternalBase::DestroyImpl(reason);
 
     Device* device = ToBackend(GetDevice());
 
@@ -312,8 +312,8 @@ void BindGroupLayoutStaticBindingOnly::DeallocateDescriptorSet(
     mDescriptorSetAllocator->Deallocate(descriptorSetAllocation);
 }
 
-void BindGroupLayoutStaticBindingOnly::DestroyImpl() {
-    BindGroupLayout::DestroyImpl();
+void BindGroupLayoutStaticBindingOnly::DestroyImpl(DestroyReason reason) {
+    BindGroupLayout::DestroyImpl(reason);
 
     mDescriptorSetAllocator = nullptr;
 }
@@ -398,8 +398,8 @@ void BindGroupLayoutDynamicArray::DeallocateDescriptorSet(
     mDescriptorSetAllocator->Deallocate(descriptorSetAllocation);
 }
 
-void BindGroupLayoutDynamicArray::DestroyImpl() {
-    BindGroupLayout::DestroyImpl();
+void BindGroupLayoutDynamicArray::DestroyImpl(DestroyReason reason) {
+    BindGroupLayout::DestroyImpl(reason);
 
     mDescriptorSetAllocator = nullptr;
 }

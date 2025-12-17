@@ -103,6 +103,10 @@ class ObjectBase : public ErrorMonad {
     Ref<DeviceBase> mDevice;
 };
 
+enum class DestroyReason {
+    Placeholder,
+};
+
 // Generic object list with a mutex for tracking for destruction.
 class ApiObjectList {
   public:
@@ -113,7 +117,7 @@ class ApiObjectList {
     bool Untrack(ApiObjectBase* object);
 
     // Destroys and removes all the objects tracked in the list.
-    void Destroy();
+    void Destroy(DestroyReason reason = DestroyReason::Placeholder);
 
     template <typename F>
     void ForEach(F fn) const {
@@ -156,7 +160,7 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
     bool IsAlive() const;
 
     // This needs to be public because it can be called from the device owning the object.
-    void Destroy();
+    void Destroy(DestroyReason reason = DestroyReason::Placeholder);
 
     // Dawn API
     void APISetLabel(StringView label);
@@ -184,7 +188,7 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
     // however, users should be sure to call their parent's version in the new override to make
     // sure that all destroy functionality is kept. This function is guaranteed to only be
     // called once through the exposed Destroy function.
-    virtual void DestroyImpl() = 0;
+    virtual void DestroyImpl(DestroyReason reason) = 0;
 
     virtual void SetLabelImpl();
 

@@ -802,7 +802,7 @@ BindGroupLayoutInternalBase::BindGroupLayoutInternalBase(DeviceBase* device,
 
 BindGroupLayoutInternalBase::~BindGroupLayoutInternalBase() = default;
 
-void BindGroupLayoutInternalBase::DestroyImpl() {
+void BindGroupLayoutInternalBase::DestroyImpl(DestroyReason reason) {
     Uncache();
 }
 

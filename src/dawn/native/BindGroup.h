@@ -123,7 +123,7 @@ class BindGroupBase : public ApiObjectBase {
 
     virtual MaybeError InitializeImpl() = 0;
 
-    void DestroyImpl() override;
+    void DestroyImpl(DestroyReason reason) override;
 
     ~BindGroupBase() override;
 
