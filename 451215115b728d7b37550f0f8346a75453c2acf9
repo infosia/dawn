@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "30c7653d_f80c332f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-17T22:23:34Z",
+      "side": 1,
+      "message": "I think this would introduce data races for scalar f16 writes.\n\nSee further discussion on the email thread before we proceed further with this CL.",
+      "revId": "451215115b728d7b37550f0f8346a75453c2acf9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e37ede1b_aefaf083",
         "filename": "src/tint/lang/core/ir/transform/decompose_memory_access.cc",
         "patchSetId": 5
