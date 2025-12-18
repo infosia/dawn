@@ -16,6 +16,40 @@
       "message": "PTAL! This is a somewhat large patch but the changes are straightforward and fall into a few buckets:\n - Removing extensions/checks for features that are core in 1.1\n - No longer excluding extensions based on their promoted version\n - Organizing the code to make this type of change easier in the future",
       "revId": "cc2a6e13ce20dc228527821abfffd249b84699c9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab144ab6_93868a0b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T18:49:48Z",
+      "side": 1,
+      "message": "lgtm w/ nit",
+      "revId": "cc2a6e13ce20dc228527821abfffd249b84699c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f4f9760_00bf8790",
+        "filename": "src/dawn/native/vulkan/VulkanExtensions.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T18:49:48Z",
+      "side": 1,
+      "message": "This was previously NeverPromoted, but now is in the 1.3 section?",
+      "revId": "cc2a6e13ce20dc228527821abfffd249b84699c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
