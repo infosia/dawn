@@ -208,6 +208,9 @@ struct Options {
     /// Set to `true` to apply builtin 'position' pixel center emulation.
     bool apply_pixel_center_polyfill = false;
 
+    /// Set to `true` to force all workarounds off regardless of their setting
+    bool disable_all_workarounds = false;
+
     /// Any workarounds to enable/disable.
     Workarounds workarounds{};
 
