@@ -518,6 +518,24 @@
       "parentUuid": "1771c7a8_6e6e768f",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82d64c20_ba76e415",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-12-18T06:40:51Z",
+      "side": 1,
+      "message": "If we went with the `EnqueueDestroyGL` approach and Destroy\u0027s \"reason\", may I know how are we going to use \"reason\" in the `EnqueueDestroyGL` function? The \"reason\" would be local to each class\u0027 DestroyImpl in this case. Are we going to pass the reason to the `EnqueueDestroyGL`? Making it 4 parameters in total? Aren\u0027t that too many?\n```\ntemplate \u003ctypename T, typename Fn, typename Data\u003e\nMaybeError EnqueueGL(T* self,\n                     bool isBeingDeleted,\n                     Data (T::*GetData)() const,\n                     Fn work) {\n}\nBuffer::DestroyImpl(bool isBeingDeleted) {\n   EnqueueGL(this, isBeingDeleted, 1, 2);\n}\nTexture::DestroyImpl() {\n   EnqueueGL(this, isBeingDeleted, 3, 4);\n}\nSampler::DestroyImpl(bool isBeingDeleted) {\n   EnqueueGL(this, isBeingDeleted, 5, 6);\n}\nQuerySet::DestroyImpl() {\n   EnqueueGL(this, isBeingDeleted, 7, 8);\n}\n...\n```\nWhy shouldn\u0027t we implement a base class that does the `DestroyImpl`\u0027s boilerplate for all base classes instead of having to repeat the same pattern in each class: Buffer, Texture, QuerySet, etc?\n\n\u003e putting the destruction lambda in the class initializer is a bit weird (in a duck-billed platypus kind of way)\n\nThe pattern is not that weird since it\u0027s already used in practice.\n- [shared_ptr\u0027s constructor](https://en.cppreference.com/w/cpp/memory/shared_ptr/shared_ptr.html) takes in a deleter parameter.\n- Our Dawn\u0027s [Blob](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Blob.h;drc\u003d7666bc1983c2a5b98e5dc6fa6c28f8f53c07d06f;l\u003d48) class also has deleter parameter in its ctor.\n- If we don\u0027t like passing deleter to ctor, I think we can put in the T class as Corentin suggested.\n\n\u003e TBH, in the end, I don\u0027t think we need to make handle access this bulletproof. There are really not a lot of derived classes or GL calls, and we have a lot of tests.\n\nMy concern is that the tests cannot catch memory leak bugs.\n- Even if we accidentally passed uninitialized handle (value\u003d0) to `glDeleteBuffers`, it would just succeed and the leaks would still be silently hidden somewhere.\n- In future, when new members start working on the GL backend, they might miss the details of interactions between `Initialize`, `DestroyImpl` and `EnqueueGL`.\n- I might not continue working on GL backend next year, or Stephen might move on to other projects. The details would be forgotten and people could start passing raw handle to the `Delete` functions in new/updated classes and no test would catch that. No error thrown.\n- We also almost missed this `Destroy`\u0027s leaking case at the start of this conversation.",
+      "parentUuid": "2560ffb4_67efe96a",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
