@@ -51,6 +51,24 @@
       ],
       "revId": "b74e3781ef9c26b86ab10a2eb9793a0bdecb3bcf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbceb7eb_e824566f",
+        "filename": "src/tint/lang/wgsl/ast/subgroup_size_attribute.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-12-18T03:15:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac3c51a8_50f2b1c1",
+      "revId": "b74e3781ef9c26b86ab10a2eb9793a0bdecb3bcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
