@@ -33,6 +33,24 @@
       "message": "Where does this restriction come from?\n\nThere\u0027s a note above the PixelLocal transform in Raise that says it needs to come after DirectVariableAccess so that pointer parameters to pixel_local are removed, which implies that this is something we expect to support?",
       "revId": "99a2c3c779cd12a4eb4d8b51cd903f59cc2a13b6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a7750de_9bf83fe2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T13:48:16Z",
+      "side": 1,
+      "message": "I was going the single line in the explainer doc which said:\n\n```\nA pixel_local storage class in WGSL that can be used with var\u003cpixel_local\u003e pls : u32/MyStruct which declares the pixel local data in the shader. It requires a WGSL enable, see chromium_experimental_framebuffer_fetch.\n```\nhttps://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/pixel_local_storage.md\n\nIt only mentioned `var` so I disallowed parameter. I could also just change this to check the type is a struct instead. Basically I picked one of the two options, heh.",
+      "parentUuid": "113a4f0a_e7664968",
+      "revId": "99a2c3c779cd12a4eb4d8b51cd903f59cc2a13b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
