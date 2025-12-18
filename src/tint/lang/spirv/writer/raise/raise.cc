@@ -251,8 +251,8 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     RUN_TRANSFORM(
         raise::ShaderIO, module,
         raise::ShaderIOConfig{immediate_data_layout.Get(), options.emit_vertex_point_size,
-                              options.extensions.polyfill_f16_io,
-                              options.apply_pixel_center_polyfill, options.depth_range_offsets});
+                              options.extensions.polyfill_f16_io, options.polyfill_pixel_center,
+                              options.depth_range_offsets});
 
     // ForkExplicitLayoutTypes must come after DecomposeUniformAccess, since it rewrites
     // host-shareable array types to use the explicitly laid array type defined by the SPIR-V
