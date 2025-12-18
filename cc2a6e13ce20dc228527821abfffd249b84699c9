@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1183b50f_80d6131a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-18T19:10:02Z",
+      "side": 1,
+      "message": "Joy. CL breaks something in Swiftshader, it seems. Looking into it.",
+      "revId": "cc2a6e13ce20dc228527821abfffd249b84699c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f4f9760_00bf8790",
@@ -48,6 +65,24 @@
       "writtenOn": "2025-12-18T18:49:48Z",
       "side": 1,
       "message": "This was previously NeverPromoted, but now is in the 1.3 section?",
+      "revId": "cc2a6e13ce20dc228527821abfffd249b84699c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e51117b4_7e2c6005",
+        "filename": "src/dawn/native/vulkan/VulkanExtensions.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-18T19:10:02Z",
+      "side": 1,
+      "message": "That\u0027s part of what this change is fixing. :) The fact that it was NeverPromoted previously was due to the fact that if you properly marked it as 1.3 then on any 1.3 capable drivers the extension string would be omitted during device creation and you wouldn\u0027t be able to query the function procs. (There\u0027s a couple of other examples of this sprinkled through the list.)\n\nAfter this change we will no longer exclude any of these extensions at device creation (as long as the device actually supports them), which means we no longer need to indicate which version they were promoted in for anything other than code organization, so we can ensure they\u0027re all in the proper section.",
+      "parentUuid": "1f4f9760_00bf8790",
       "revId": "cc2a6e13ce20dc228527821abfffd249b84699c9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
