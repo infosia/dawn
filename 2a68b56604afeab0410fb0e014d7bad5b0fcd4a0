@@ -122,6 +122,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d4922d4_d0c34837",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-18T20:17:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c3370bdc_8ed96623",
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91552042_24937af6",
@@ -381,6 +399,48 @@
       "side": 1,
       "message": "There are 2 meanings of empty bitset, the immediate block doesn\u0027t exist, and none of the immediate block member are accessed.\n\nThis is tracking slots, that\u0027s exactly what\u0027s in the bitset. It\u0027s all the slots with data. Just, if you access one you access them all.",
       "parentUuid": "25c6dc53_5980d739",
+      "range": {
+        "startLine": 110,
+        "startChar": 23,
+        "endLine": 110,
+        "endChar": 80
+      },
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5a431e9_0f99287a",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-18T20:17:00Z",
+      "side": 1,
+      "message": "The slot is accessible to the entry point if it covers non-padding bytes, and the var itself is referenced in any way (doesn\u0027t even have to be accessed - we\u0027re not checking that).\n\nAnother way of saying it: \"this is data that this entry point might use\".",
+      "parentUuid": "e72324cb_4d2b438e",
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71acc6ec_6834f27d",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-18T20:17:00Z",
+      "side": 1,
+      "message": "Disagree, there\u0027s only one meaning of an empty bitset: this entry point does not reference any immediate variables.",
+      "parentUuid": "fb8a8338_661e2bde",
       "range": {
         "startLine": 110,
         "startChar": 23,
