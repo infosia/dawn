@@ -129,7 +129,10 @@ TEST(WaitListEventTests, WaitAsyncAlreadySignaled) {
 }
 
 // Test WaitAsync, signaling the event later
-TEST(WaitListEventTests, WaitAsyncThenSignal) {
+TEST_P(WaitListEventTests, WaitAsyncThenSignal) {
+    // TODO(crbug.com/469958428): Flaky w/ WARP.
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsWARP());
+
     Ref<WaitListEvent> event = AcquireRef(new WaitListEvent());
     EXPECT_FALSE(event->IsSignaled());
 
@@ -364,6 +367,8 @@ TEST(WaitListEventTests, ZeroRequiredSignals) {
     Ref<WaitListEvent> event1 = AcquireRef(new WaitListEvent(0));
     EXPECT_TRUE(event1->IsSignaled());
 }
+
+GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST(WaitListEventTests);
 
 }  // namespace
 }  // namespace dawn::native
