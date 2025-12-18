@@ -51,6 +51,24 @@
       "parentUuid": "a6cda906_6b0a4adf",
       "revId": "5c8ac49e999946f5560e7ef876ff43cbdb24e52e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f1bddc6_b36aad81",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-18T22:56:49Z",
+      "side": 1,
+      "message": "I think doing it outside of Tint makes the intent unambiguous.\n\ne.g. with this CL, you could write this:\n```\noptions.disable_all_workarounds \u003d false;\noptions.workarounds.pass_matrix_by_pointer \u003d true;\n```\nIt\u0027s not completely intuitive to me that the first line would override the second line. Usually with APIs specific selections override general ones, at least in my experience.\n\nWhereas this is completely clear to me::\n```\nif (!device-\u003eIsToggleSet(Toggles::DisableAllWorkarounds)) {\n  options.workarounds.pass_matrix_by_pointer \u003d ...;\n  options.workarounds.polyfill_something \u003d ...;\n  options.workarounds.polyfill_something_else \u003d ...;\n}\n```",
+      "parentUuid": "8ce49ab5_d3327b41",
+      "revId": "5c8ac49e999946f5560e7ef876ff43cbdb24e52e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
