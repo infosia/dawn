@@ -16,6 +16,206 @@
       "message": "This is the inspector.\n\nPTAL, thanks!",
       "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3a45e35_cbadd400",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T13:43:51Z",
+      "side": 1,
+      "message": "```suggestion\n    auto* mv \u003d immediate_var-\u003eType()-\u003eAs\u003ccore::type::MemoryView\u003e();\n    auto* type \u003d mv-\u003eStoreType();\n```\n\nI think this is a bit more obvious what\u0027s happening",
+      "range": {
+        "startLine": 748,
+        "startChar": 0,
+        "endLine": 748,
+        "endChar": 52
+      },
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f628ad88_fc1b9136",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T13:43:51Z",
+      "side": 1,
+      "message": "```suggestion\n    uint32_t total_used_slots \u003d (size + 3) / 4;\n    Bitset\u003c16\u003e accessible_slots;\n    accessible_slots.Resize(total_used_slots);\n```",
+      "range": {
+        "startLine": 750,
+        "startChar": 0,
+        "endLine": 752,
+        "endChar": 39
+      },
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "107aadd8_5ff8a57b",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T13:43:51Z",
+      "side": 1,
+      "message": "A comment here on why this is the correct `resize` would be useful. Something like:\n\n```\nWe resize to the maximum number of slots used by the type, this will include the necessary slots for any padding bytes.\n```",
+      "range": {
+        "startLine": 752,
+        "startChar": 4,
+        "endLine": 752,
+        "endChar": 37
+      },
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91552042_24937af6",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T13:43:51Z",
+      "side": 1,
+      "message": "Is this unwrap necessary?",
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36f61baf_455b8223",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T13:43:51Z",
+      "side": 1,
+      "message": "Can this ever happen?",
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0013904_524f14f6",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T13:43:51Z",
+      "side": 1,
+      "message": "This should always be true given the resize above, is the check necessary?",
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c8eeef5_00b3fe84",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T13:43:51Z",
+      "side": 1,
+      "message": "We would usually use a `tint::Switch` for something like this:\n\n```suggestion\n            tint::Switch(t,\n              [\u0026](const sem::Struct* str) {\n                  for (auto* member : str-\u003eMembers()) {\n                      mark_slots(member-\u003eType(), offset + member-\u003eOffset());\n                  }\n              },\n              [\u0026](const core::type::Matrix* mat) {\n                uint32_t col_stride \u003d mat-\u003eColumnStride();\n                for (uint32_t i \u003d 0; i \u003c mat-\u003eColumns(); i++) {\n                    mark_slots(mat-\u003eColumnType(), offset + i * col_stride);\n                }\n              },\n              [\u0026](Default) {\n                uint32_t s \u003d t-\u003eSize();\n                if (s \u003d\u003d 0) {\n                    return;\n                }\n                uint32_t start_slot \u003d offset / 4;\n                uint32_t end_byte \u003d offset + s;\n                uint32_t end_slot \u003d (end_byte - 1) / 4;\n                for (uint32_t i \u003d start_slot; i \u003c\u003d end_slot; i++) {\n                    if (i \u003c accessible_slots.Length()) {\n                        accessible_slots[i] \u003d true;\n                    }\n                }\n            }\n          );\n```",
+      "range": {
+        "startLine": 757,
+        "startChar": 0,
+        "endLine": 779,
+        "endChar": 13
+      },
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2410e029_8754f037",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T13:43:51Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to use a bitset here, this means it will need to be accessible by Dawn and Dawn doesn\u0027t access anything in `src/tint/utils` this way.\n\nWe\u0027d either need to move bitset to `src/utils` which I think would be difficult or use something different. Probably just a `std::array\u003cbool, 16\u003e` would work?",
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6a08dac_f3ed328c",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T13:43:51Z",
+      "side": 1,
+      "message": "```suggestion\n    /// is accessed. Returns an empty bitset if the immediate block is not used.\n```\n\nShould this be `accessed` ? We want to know if the entry point uses that slot, yea?",
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48bd0c25_71ac2f40",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T13:43:51Z",
+      "side": 1,
+      "message": "Should this be something like `Returns an empty bitset if none of the slots in the immediate block are accessed, or there is no immediate block` ?",
+      "range": {
+        "startLine": 110,
+        "startChar": 23,
+        "endLine": 110,
+        "endChar": 80
+      },
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
