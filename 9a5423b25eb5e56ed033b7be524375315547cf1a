@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28f03dac_fd0cd347",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-18T14:20:34Z",
+      "side": 1,
+      "message": "Could this be defined in `DawnNative.cpp`?",
+      "revId": "9a5423b25eb5e56ed033b7be524375315547cf1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "474f569b_142bf544",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-18T14:20:34Z",
+      "side": 1,
+      "message": "Let\u0027s gate the new subdescriptor on the dawnnative feature.",
+      "revId": "9a5423b25eb5e56ed033b7be524375315547cf1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
