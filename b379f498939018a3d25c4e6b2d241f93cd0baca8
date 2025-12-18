@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9054e0ca_d0341bf1",
+        "filename": "src/dawn/wire/client/Texture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-18T00:05:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78e98fb0_6978fd18",
+      "revId": "b379f498939018a3d25c4e6b2d241f93cd0baca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "80598d09_2b18ae0f",
@@ -83,6 +101,30 @@
       "writtenOn": "2025-12-12T13:12:33Z",
       "side": 1,
       "message": "This is a non-standard feature so IMHO we can just check compat vs. core and not worry about the flexible texture view subtlety in the wire.",
+      "range": {
+        "startLine": 67,
+        "startChar": 61,
+        "endLine": 67,
+        "endChar": 86
+      },
+      "revId": "b379f498939018a3d25c4e6b2d241f93cd0baca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2093f10a_1e3de9ef",
+        "filename": "src/dawn/wire/client/Texture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-18T00:05:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80598d09_2b18ae0f",
       "range": {
         "startLine": 67,
         "startChar": 61,
@@ -110,6 +152,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a20e65bf_2b3c1b81",
+        "filename": "src/dawn/wire/client/Texture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-18T00:05:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cf95bf9_6458fd0b",
+      "revId": "b379f498939018a3d25c4e6b2d241f93cd0baca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59b599e4_0fdb1a46",
@@ -123,6 +183,24 @@
       "writtenOn": "2025-12-12T13:12:33Z",
       "side": 1,
       "message": "We\u0027ll need a PR to webgpu-headers to add it as well.",
+      "revId": "b379f498939018a3d25c4e6b2d241f93cd0baca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee20b8cd_49ea3516",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-18T00:05:54Z",
+      "side": 1,
+      "message": "I have a PR up: https://github.com/webgpu-native/webgpu-headers/pull/575",
+      "parentUuid": "59b599e4_0fdb1a46",
       "revId": "b379f498939018a3d25c4e6b2d241f93cd0baca8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

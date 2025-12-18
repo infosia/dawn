@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e96ac60_9a206a6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-18T00:05:54Z",
+      "side": 1,
+      "message": "this can\u0027t land until (https://github.com/webgpu-native/webgpu-headers/pull/575) lands but ptal.\n\nThe stuff in Texture.cpp is all voodoo to me so I\u0027m not sure I did it correctly but it passed the CQ 😜.  Thanks for pointing me in the right direction.",
+      "revId": "9213689c2dbd665daca4fa3b430d08d087948bbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
