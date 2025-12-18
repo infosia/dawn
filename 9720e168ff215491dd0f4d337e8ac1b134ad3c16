@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53e8a955_c8e661a3",
+        "filename": "infra/config/global/generated/luci/cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-18T23:47:27Z",
+      "side": 0,
+      "message": "This experiment shouldn\u0027t have any effect anymore.",
+      "range": {
+        "startLine": 882,
+        "startChar": 14,
+        "endLine": 882,
+        "endChar": 53
+      },
+      "revId": "9720e168ff215491dd0f4d337e8ac1b134ad3c16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
