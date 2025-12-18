@@ -43,6 +43,7 @@
 #include "src/tint/lang/wgsl/inspector/resource_binding_info.h"
 #include "src/tint/lang/wgsl/program/program.h"
 #include "src/tint/lang/wgsl/sem/sampler_texture_pair.h"
+#include "src/tint/utils/containers/bitset.h"
 
 namespace tint::inspector {
 
@@ -103,6 +104,11 @@ class Inspector {
     std::vector<SamplerTexturePair> GetSamplerAndNonSamplerTextureUses(
         const std::string& entry_point,
         const BindingPoint& non_sampler_placeholder);
+
+    /// @param entry_point name of the entry point to get information about
+    /// @returns a bitset where the nth bit is true if the nth 4-byte slot of the immediate block
+    /// is accessible. Returns an empty bitset if the immediate block is not used.
+    Bitset<16> GetImmediateBlockInfo(const std::string& entry_point);
 
     /// @returns vector of all valid extension names used by the program. There
     /// will be no duplicated names in the returned vector even if an extension

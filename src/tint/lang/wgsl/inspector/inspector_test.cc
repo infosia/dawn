@@ -4355,4 +4355,189 @@ static std::ostream& operator<<(std::ostream& out, const Inspector::TextureQuery
     return out;
 }
 
+using InspectorImmediateBlockTest = InspectorTest;
+
+TEST_F(InspectorImmediateBlockTest, NoImmediateVariable) {
+    auto* src = R"(
+@compute @workgroup_size(1)
+fn main() {}
+)";
+    Inspector& inspector = Initialize(src);
+    auto info = inspector.GetImmediateBlockInfo("main");
+    EXPECT_EQ(0u, info.Length());
+}
+
+TEST_F(InspectorImmediateBlockTest, UnusedImmediateVariable) {
+    auto* src = R"(
+requires immediate_address_space;
+var<immediate> a : u32;
+@compute @workgroup_size(1)
+fn main() {}
+)";
+    Inspector& inspector = Initialize(src);
+    auto info = inspector.GetImmediateBlockInfo("main");
+    EXPECT_EQ(0u, info.Length());
+}
+
+TEST_F(InspectorImmediateBlockTest, SimpleScalar) {
+    auto* src = R"(
+requires immediate_address_space;
+var<immediate> a : u32;
+@compute @workgroup_size(1)
+fn main() {
+  _ = a;
+}
+)";
+    Inspector& inspector = Initialize(src);
+    auto info = inspector.GetImmediateBlockInfo("main");
+    ASSERT_EQ(1u, info.Length());
+    EXPECT_TRUE(info[0]);
+}
+
+TEST_F(InspectorImmediateBlockTest, SimpleVector) {
+    auto* src = R"(
+requires immediate_address_space;
+var<immediate> a : vec4<f32>;
+@compute @workgroup_size(1)
+fn main() {
+  _ = a;
+}
+)";
+    Inspector& inspector = Initialize(src);
+    auto info = inspector.GetImmediateBlockInfo("main");
+    ASSERT_EQ(4u, info.Length());
+    for (size_t i = 0; i < info.Length(); ++i) {
+        EXPECT_TRUE(info[i]);
+    }
+}
+
+TEST_F(InspectorImmediateBlockTest, MatrixWithPadding) {
+    auto* src = R"(
+requires immediate_address_space;
+var<immediate> a : mat3x3<f32>;
+@compute @workgroup_size(1)
+fn main() {
+  _ = a;
+}
+)";
+    Inspector& inspector = Initialize(src);
+    auto info = inspector.GetImmediateBlockInfo("main");
+    // mat3x3<f32> has 3 columns of vec3<f32>.
+    // vec3<f32> is 12 bytes, aligned to 16.
+    // Size is 48 bytes.
+    ASSERT_EQ(12u, info.Length());
+
+    // Col 0: slots 0, 1, 2. Slot 3 is padding.
+    EXPECT_TRUE(info[0]);
+    EXPECT_TRUE(info[1]);
+    EXPECT_TRUE(info[2]);
+    EXPECT_FALSE(info[3]);
+
+    // Col 1: slots 4, 5, 6. Slot 7 is padding.
+    EXPECT_TRUE(info[4]);
+    EXPECT_TRUE(info[5]);
+    EXPECT_TRUE(info[6]);
+    EXPECT_FALSE(info[7]);
+
+    // Col 2: slots 8, 9, 10. Slot 11 is padding.
+    EXPECT_TRUE(info[8]);
+    EXPECT_TRUE(info[9]);
+    EXPECT_TRUE(info[10]);
+    EXPECT_FALSE(info[11]);
+}
+
+TEST_F(InspectorImmediateBlockTest, StructWithPadding) {
+    auto* src = R"(
+requires immediate_address_space;
+struct S {
+  a : u32,
+  b : vec3<f32>,
+}
+var<immediate> u : S;
+@compute @workgroup_size(1)
+fn main() {
+  _ = u;
+}
+)";
+    Inspector& inspector = Initialize(src);
+    auto info = inspector.GetImmediateBlockInfo("main");
+    // S alignment is 16 (vec3<f32>).
+    // a: offset 0, size 4.
+    // padding: 12 bytes.
+    // b: offset 16, size 12.
+    // padding: 4 bytes (to align struct size to 16).
+    // Total size: 32 bytes.
+    ASSERT_EQ(8u, info.Length());
+
+    // a
+    EXPECT_TRUE(info[0]);
+    // padding
+    EXPECT_FALSE(info[1]);
+    EXPECT_FALSE(info[2]);
+    EXPECT_FALSE(info[3]);
+    // b
+    EXPECT_TRUE(info[4]);
+    EXPECT_TRUE(info[5]);
+    EXPECT_TRUE(info[6]);
+    // padding
+    EXPECT_FALSE(info[7]);
+}
+
+TEST_F(InspectorImmediateBlockTest, IndirectUse) {
+    auto* src = R"(
+requires immediate_address_space;
+var<immediate> a : u32;
+fn foo() {
+  _ = a;
+}
+@compute @workgroup_size(1)
+fn main() {
+  foo();
+}
+)";
+    Inspector& inspector = Initialize(src);
+    auto info = inspector.GetImmediateBlockInfo("main");
+    ASSERT_EQ(1u, info.Length());
+    EXPECT_TRUE(info[0]);
+}
+
+TEST_F(InspectorImmediateBlockTest, PartialAccess) {
+    auto* src = R"(
+requires immediate_address_space;
+struct S {
+  a : u32,
+  b : u32,
+}
+var<immediate> u : S;
+@compute @workgroup_size(1)
+fn main() {
+  _ = u.b;
+}
+)";
+    Inspector& inspector = Initialize(src);
+    auto info = inspector.GetImmediateBlockInfo("main");
+    // Even with partial access, we mark all non-padding bytes.
+    ASSERT_EQ(2u, info.Length());
+    EXPECT_TRUE(info[0]);
+    EXPECT_TRUE(info[1]);
+}
+
+TEST_F(InspectorImmediateBlockTest, FunctionParameter) {
+    auto* src = R"(
+requires immediate_address_space;
+var<immediate> a : u32;
+fn foo(val : u32) {
+  _ = val;
+}
+@compute @workgroup_size(1)
+fn main() {
+  foo(a);
+}
+)";
+    Inspector& inspector = Initialize(src);
+    auto info = inspector.GetImmediateBlockInfo("main");
+    ASSERT_EQ(1u, info.Length());
+    EXPECT_TRUE(info[0]);
+}
+
 }  // namespace tint::inspector

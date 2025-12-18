@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/wgsl/inspector/inspector.h"
 
+#include <functional>
 #include <unordered_set>
 #include <utility>
 
@@ -722,6 +723,65 @@ const Inspector::EntryPointTextureMetadata& Inspector::ComputeTextureMetadata(
     }
 
     return metadata;
+}
+
+Bitset<16> Inspector::GetImmediateBlockInfo(const std::string& entry_point) {
+    auto* func = FindEntryPointByName(entry_point);
+    if (!func) {
+        return {};
+    }
+
+    auto* func_sem = program_.Sem().Get(func);
+
+    const sem::GlobalVariable* immediate_var = nullptr;
+    for (const sem::Variable* var : func_sem->TransitivelyReferencedGlobals()) {
+        if (var->AddressSpace() == core::AddressSpace::kImmediate) {
+            immediate_var = var->As<sem::GlobalVariable>();
+            break;
+        }
+    }
+
+    if (!immediate_var) {
+        return {};
+    }
+
+    auto* type = immediate_var->Type()->UnwrapRef();
+    uint32_t size = type->Size();
+    uint32_t num_slots = (size + 3) / 4;
+    Bitset<16> accessible_slots;
+    accessible_slots.Resize(num_slots);
+
+    std::function<void(const core::type::Type*, uint32_t)> mark_slots =
+        [&](const core::type::Type* t, uint32_t offset) {
+            t = t->UnwrapRef();
+            if (auto* str = t->As<sem::Struct>()) {
+                for (auto* member : str->Members()) {
+                    mark_slots(member->Type(), offset + member->Offset());
+                }
+            } else if (auto* mat = t->As<core::type::Matrix>()) {
+                uint32_t col_stride = mat->ColumnStride();
+                for (uint32_t i = 0; i < mat->Columns(); i++) {
+                    mark_slots(mat->ColumnType(), offset + i * col_stride);
+                }
+            } else {
+                uint32_t s = t->Size();
+                if (s == 0) {
+                    return;
+                }
+                uint32_t start_slot = offset / 4;
+                uint32_t end_byte = offset + s;
+                uint32_t end_slot = (end_byte - 1) / 4;
+                for (uint32_t i = start_slot; i <= end_slot; i++) {
+                    if (i < accessible_slots.Length()) {
+                        accessible_slots[i] = true;
+                    }
+                }
+            }
+        };
+
+    mark_slots(type, 0);
+
+    return accessible_slots;
 }
 
 std::vector<std::string> Inspector::GetUsedExtensionNames() {
