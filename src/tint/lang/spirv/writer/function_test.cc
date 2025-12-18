@@ -375,9 +375,7 @@ TEST_F(SpirvWriterTest, Function_ShaderIO_F16_Input_WithCapability) {
         b.Return(func, b.Convert(ty.vec4f(), input));
     });
 
-    Options options;
-    options.extensions.use_storage_input_output_16 = true;
-    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    ASSERT_TRUE(Generate()) << Error() << output_;
     EXPECT_INST("OpCapability StorageInputOutput16");
     EXPECT_INST(R"(OpEntryPoint Fragment %main "main" %main_loc1_Input %main_loc2_Output)");
     EXPECT_INST("%main_loc1_Input = OpVariable %_ptr_Input_v4half Input");
@@ -403,8 +401,9 @@ TEST_F(SpirvWriterTest, Function_ShaderIO_F16_Input_WithoutCapability) {
         b.Return(func, b.Convert(ty.vec4f(), input));
     });
 
-    Options options;
-    options.extensions.use_storage_input_output_16 = false;
+    Options options{.extensions = {
+                        .polyfill_f16_io = true,
+                    }};
     ASSERT_TRUE(Generate(options)) << Error() << output_;
     EXPECT_INST(R"(OpEntryPoint Fragment %main "main" %main_loc1_Input %main_loc2_Output)");
     EXPECT_INST("%main_loc1_Input = OpVariable %_ptr_Input_v4float Input");
@@ -431,9 +430,7 @@ TEST_F(SpirvWriterTest, Function_ShaderIO_F16_Output_WithCapability) {
         b.Return(func, b.Convert(ty.vec4h(), input));
     });
 
-    Options options;
-    options.extensions.use_storage_input_output_16 = true;
-    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    ASSERT_TRUE(Generate()) << Error() << output_;
     EXPECT_INST("OpCapability StorageInputOutput16");
     EXPECT_INST(R"(OpEntryPoint Fragment %main "main" %main_loc1_Input %main_loc2_Output)");
     EXPECT_INST("%main_loc1_Input = OpVariable %_ptr_Input_v4float Input");
@@ -459,8 +456,9 @@ TEST_F(SpirvWriterTest, Function_ShaderIO_F16_Output_WithoutCapability) {
         b.Return(func, b.Convert(ty.vec4h(), input));
     });
 
-    Options options;
-    options.extensions.use_storage_input_output_16 = false;
+    Options options{.extensions = {
+                        .polyfill_f16_io = true,
+                    }};
     ASSERT_TRUE(Generate(options)) << Error() << output_;
     EXPECT_INST(R"(OpEntryPoint Fragment %main "main" %main_loc1_Input %main_loc2_Output)");
     EXPECT_INST("%main_loc1_Input = OpVariable %_ptr_Input_v4float Input");

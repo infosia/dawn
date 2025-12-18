@@ -59,7 +59,7 @@ struct FuzzedOptions {
     bool polyfill_unary_f32_negation;
     bool polyfill_f32_abs;
     bool use_demote_to_helper_invocation;
-    bool use_storage_input_output_16;
+    bool use_storage_input_output_f16;
     bool use_zero_initialize_workgroup_memory;
     bool use_vulkan_memory_model;
     bool disable_image_robustness;
@@ -89,7 +89,7 @@ struct FuzzedOptions {
                  polyfill_unary_f32_negation,
                  polyfill_f32_abs,
                  use_demote_to_helper_invocation,
-                 use_storage_input_output_16,
+                 use_storage_input_output_f16,
                  use_zero_initialize_workgroup_memory,
                  use_vulkan_memory_model,
                  disable_image_robustness,
@@ -152,7 +152,7 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     options.workarounds.polyfill_f32_abs = fuzzed_options.polyfill_f32_abs;
     options.extensions.use_demote_to_helper_invocation =
         fuzzed_options.use_demote_to_helper_invocation;
-    options.extensions.use_storage_input_output_16 = fuzzed_options.use_storage_input_output_16;
+    options.extensions.polyfill_f16_io = !fuzzed_options.use_storage_input_output_f16;
     options.extensions.use_zero_initialize_workgroup_memory =
         fuzzed_options.use_zero_initialize_workgroup_memory;
     options.extensions.use_vulkan_memory_model = fuzzed_options.use_vulkan_memory_model;
