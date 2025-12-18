@@ -106,6 +106,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c3370bdc_8ed96623",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T15:32:10Z",
+      "side": 1,
+      "message": "It\u0027s recursive so it has to have a declaration, can\u0027t use auto.",
+      "parentUuid": "e299440e_804e6ebe",
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "91552042_24937af6",
         "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
         "patchSetId": 1
@@ -321,6 +339,48 @@
       "side": 1,
       "message": "Again, we\u0027re not actually tracking accessed slots.",
       "parentUuid": "48bd0c25_71ac2f40",
+      "range": {
+        "startLine": 110,
+        "startChar": 23,
+        "endLine": 110,
+        "endChar": 80
+      },
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e72324cb_4d2b438e",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T15:32:10Z",
+      "side": 1,
+      "message": "But what does `accessible` mean then. It\u0027s accessible if it was accessed. If you don\u0027t access any of the members then none of them are `accessible`.",
+      "parentUuid": "776d4379_e5064843",
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb8a8338_661e2bde",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T15:32:10Z",
+      "side": 1,
+      "message": "There are 2 meanings of empty bitset, the immediate block doesn\u0027t exist, and none of the immediate block member are accessed.\n\nThis is tracking slots, that\u0027s exactly what\u0027s in the bitset. It\u0027s all the slots with data. Just, if you access one you access them all.",
+      "parentUuid": "25c6dc53_5980d739",
       "range": {
         "startLine": 110,
         "startChar": 23,
