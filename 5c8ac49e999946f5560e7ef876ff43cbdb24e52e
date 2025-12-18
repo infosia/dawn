@@ -16,6 +16,23 @@
       "message": "Thoughts?",
       "revId": "5c8ac49e999946f5560e7ef876ff43cbdb24e52e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6cda906_6b0a4adf",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-18T20:30:33Z",
+      "side": 1,
+      "message": "This seems strange that this would override the user\u0027s explicit workaround the requests. The workarounds are all disabled by default already, so have a way to override that default for each workaround and the re-override it again is a bit odd?\n\nIf this is for the \"no workarounds mode\" then I would expect that to just be a Dawn toggle that we use to wrap the `options.workarounds.blah \u003d true;` lines on the Dawn side.",
+      "revId": "5c8ac49e999946f5560e7ef876ff43cbdb24e52e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
