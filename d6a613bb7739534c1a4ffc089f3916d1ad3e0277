@@ -51,6 +51,24 @@
       "parentUuid": "0c1a9774_b24b936b",
       "revId": "d6a613bb7739534c1a4ffc089f3916d1ad3e0277",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d8a478c_76a0b25a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-18T22:13:27Z",
+      "side": 1,
+      "message": "Seems like it just removes the test in this case...\n\n[Run with the current patchset](http://chromium-swarm.appspot.com/task?id\u003d754c275e0afd5110) is missing `WaitListEventTests.WaitAsyncThenSignal` while it\u0027s present in the [CI equivalent](https://chromium-swarm.appspot.com/task?id\u003d754bb97d4315d910)",
+      "parentUuid": "eafb6e2e_91a57764",
+      "revId": "d6a613bb7739534c1a4ffc089f3916d1ad3e0277",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
