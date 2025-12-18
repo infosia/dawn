@@ -130,6 +130,9 @@ TEST(WaitListEventTests, WaitAsyncAlreadySignaled) {
 
 // Test WaitAsync, signaling the event later
 TEST(WaitListEventTests, WaitAsyncThenSignal) {
+    // TODO(crbug.com/469958428): Flaky w/ WARP.
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsWARP());
+
     Ref<WaitListEvent> event = AcquireRef(new WaitListEvent());
     EXPECT_FALSE(event->IsSignaled());
 
