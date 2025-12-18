@@ -50,6 +50,42 @@
       "message": "We\u0027ve read through the current spec PR, and as far as we can tell there should be no need to track actual accesses at this granularity.\n\nThe API side of the spec just looks at all of the accessible slots for whole type of the immediate var. The WGSL definition for accessible slots does not do any tracking of loads, it just recursively defines what the accessible slots are for a given type. So I think we just need to reflect all of the non-padding slots for the immediate variable that is used by the entry point.\n\nI don\u0027t think you need any new tracking in the resolver to do this, since we already know all of the transitively reference global variables in a given function (see `sem::Function`). The inspector should be able to just look for a referenced immediate variable in there and then do the recursion through the type hierarchy to get all of the non-padding bytes.\n\nLet me know if this makes sense or if you disagree about what the validation rule should actually be doing.",
       "revId": "7af3fa940e78fb6926e54385471e3f635ca7d5bb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "187204e2_e5a4f654",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-12-18T03:09:01Z",
+      "side": 1,
+      "message": "Yes. The plan is to use this info in Dawn side. Dawn knows the API uploading bytes, and validate it based on this.",
+      "parentUuid": "7f5aa625_bee26c7f",
+      "revId": "7af3fa940e78fb6926e54385471e3f635ca7d5bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b2d2919_2da08912",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-12-18T03:09:01Z",
+      "side": 1,
+      "message": "Thanks James! I didn\u0027t realize spec PR doesn\u0027t include \"tracking of loads\". After talking with more folks I think this should be an expected behaviour. And yes, we don\u0027t need to do \"word-by-word\" tracking in such detailed level.\n\nTo align with you about my understanding, the validation rule is:\n\"all words accessible in any way through the struct definition to be initialized\". And an example for this is:\n- It doesn\u0027t need any statically access analysis for sub-members in immediate block (Assume struct A is declared as immediate var a).\n- If this a variable is used in entryPoint, then all slots except paddings (paddings between members, padding in members) are set.\n\nAnd yes, I\u0027ll follow below plan to do the inspector, great! \n\"we already know all of the transitively reference global variables in a given function (see sem::Function). The inspector should be able to just look for a referenced immediate variable in there and then do the recursion through the type hierarchy to get all of the non-padding bytes.\"",
+      "parentUuid": "585a5a9d_5188ddc8",
+      "revId": "7af3fa940e78fb6926e54385471e3f635ca7d5bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
