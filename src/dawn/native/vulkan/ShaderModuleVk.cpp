@@ -265,8 +265,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     // "OpTerminateInvocation" which remains unimplemented in dawn/tint.
     req.tintOptions.extensions.use_demote_to_helper_invocation =
         GetDevice()->IsToggleEnabled(Toggle::VulkanUseDemoteToHelperInvocationExtension);
-    req.tintOptions.extensions.use_storage_input_output_16 =
-        GetDevice()->IsToggleEnabled(Toggle::VulkanUseStorageInputOutput16);
+    req.tintOptions.extensions.polyfill_f16_io =
+        !GetDevice()->IsToggleEnabled(Toggle::VulkanUseStorageInputOutput16);
     req.tintOptions.extensions.dot_4x8_packed =
         GetDevice()->IsToggleEnabled(Toggle::PolyFillPacked4x8DotProduct);
     req.tintOptions.extensions.use_zero_initialize_workgroup_memory =

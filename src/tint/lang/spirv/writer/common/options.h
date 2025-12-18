@@ -130,9 +130,9 @@ struct Options {
         /// Set to `true` to allow for the usage of the demote to helper extension.
         bool use_demote_to_helper_invocation = false;
 
-        /// Set to `true` to use the StorageInputOutput16 capability for shader IO that uses f16
-        /// types.
-        bool use_storage_input_output_16 = true;
+        /// Set to `true` to polyfill the Shader IO of f16. If `false` then use the
+        /// StorageInputOutput16 capability for shader IO that uses f16 types.
+        bool polyfill_f16_io = false;
 
         /// Set to `true` to initialize workgroup memory with OpConstantNull when
         /// VK_KHR_zero_initialize_workgroup_memory is enabled.
@@ -156,7 +156,7 @@ struct Options {
 
         TINT_REFLECT(Extensions,
                      use_demote_to_helper_invocation,
-                     use_storage_input_output_16,
+                     polyfill_f16_io,
                      use_zero_initialize_workgroup_memory,
                      use_vulkan_memory_model,
                      disable_image_robustness,
