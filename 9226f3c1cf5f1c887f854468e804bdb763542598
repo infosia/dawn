@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1984b64b_edc50f72",
+        "filename": "src/dawn/wire/server/ServerQueue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-18T12:15:38Z",
+      "side": 1,
+      "message": "Seems like we should have returned WireResult::FatalError if AllocNoThrow returns nullptr.",
+      "revId": "9226f3c1cf5f1c887f854468e804bdb763542598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
