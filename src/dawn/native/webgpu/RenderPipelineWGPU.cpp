@@ -256,7 +256,28 @@ MaybeError RenderPipeline::CaptureCreationParameters(CaptureContext& captureCont
         HasStage(SingleShaderStage::Fragment) ? GetStage(SingleShaderStage::Fragment) : empty;
     std::vector<schema::ColorTargetState> targets;
     if (fragment.module != nullptr) {
+        ColorAttachmentIndex nextSlot(uint8_t(0));
         for (auto slot : GetColorAttachmentsMask()) {
+            // The front end does not store the number of attachments but the API required that we
+            // provide them for sparse attachments so, if the nextSlot is less than slot
+            // we add empty slots.
+            for (; nextSlot < slot; ++nextSlot) {
+                static const schema::BlendComponent kDefaultBlendComponent{{
+                    .operation = wgpu::BlendOperation::Add,
+                    .srcFactor = wgpu::BlendFactor::One,
+                    .dstFactor = wgpu::BlendFactor::Zero,
+                }};
+                static const schema::ColorTargetState kDefaultColorTargetState{{
+                    .format = wgpu::TextureFormat::Undefined,
+                    .blend{{
+                        .color = kDefaultBlendComponent,
+                        .alpha = kDefaultBlendComponent,
+                    }},
+                    .writeMask = wgpu::ColorWriteMask::None,
+                }};
+                targets.push_back(kDefaultColorTargetState);
+            }
+            ++nextSlot;
             const auto& target = *GetColorTargetState(slot);
             targets.push_back({{
                 .format = target.format,

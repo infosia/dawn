@@ -902,8 +902,18 @@ MaybeError CommandBuffer::CaptureCreationParameters(CaptureContext& captureConte
             case Command::BeginRenderPass: {
                 const auto& cmd = *commands.NextCommand<BeginRenderPassCmd>();
                 std::vector<schema::ColorAttachment> colorAttachments;
-                for (ColorAttachmentIndex i : cmd.attachmentState->GetColorAttachmentsMask()) {
-                    colorAttachments.push_back(ToSchema(captureContext, cmd.colorAttachments[i]));
+
+                // The front end does not store the number of attachments but the API required that
+                // we provide them for sparse attachments so, if the nextSlot is less than slot we
+                // add empty slots.
+                ColorAttachmentIndex nextSlot(uint8_t(0));
+                for (ColorAttachmentIndex slot : cmd.attachmentState->GetColorAttachmentsMask()) {
+                    for (; nextSlot < slot; ++nextSlot) {
+                        colorAttachments.push_back(schema::ColorAttachment{});
+                    }
+                    ++nextSlot;
+                    colorAttachments.push_back(
+                        ToSchema(captureContext, cmd.colorAttachments[slot]));
                 }
                 schema::CommandBufferCommandBeginRenderPassCmd data{{
                     .data = {{
