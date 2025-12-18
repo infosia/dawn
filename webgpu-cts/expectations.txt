@@ -411,7 +411,22 @@ crbug.com/42251290 [ intel-0x9bc5 linux mesa_ge_23.2 ] webgpu:shader,execution,m
 crbug.com/42251180 [ asan dawn-no-backend-validation intel-0x9bc5 release-x64 target-cpu-64 webgpu-dxc-enabled win10 ] webgpu:shader,execution,robust_access:linear_memory:* [ Failure ]
 crbug.com/42251180 [ dawn-no-backend-validation intel-0x9bc5 no-asan release-x64 target-cpu-64 webgpu-dxc-enabled win10 ] webgpu:shader,execution,robust_access:linear_memory:* [ Failure ]
 
-crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:* [ Failure ]
+crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat4x3h_align8";aspace="workgroup" [ Failure ]
+crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat3x4h_align8";aspace="workgroup" [ Failure ]
+crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat4x4h_align8";aspace="workgroup" [ Failure ]
+crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat3x2f_size";aspace="workgroup" [ Failure ]
+crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat4x2f_size";aspace="workgroup" [ Failure ]
+crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat2x3f_size";aspace="workgroup" [ Failure ]
+crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat3x3f_size";aspace="workgroup" [ Failure ]
+crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat4x3f_size";aspace="workgroup" [ Failure ]
+crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat2x4f_size";aspace="workgroup" [ Failure ]
+crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat3x4f_size";aspace="workgroup" [ Failure ]
+crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat4x4f_size";aspace="workgroup" [ Failure ]
+crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat3x3h_size";aspace="workgroup" [ Failure ]
+crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat4x3h_size";aspace="workgroup" [ Failure ]
+crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat3x4h_size";aspace="workgroup" [ Failure ]
+crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat4x4h_size";aspace="workgroup" [ Failure ]
+
 crbug.com/341991440 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,robust_access:linear_memory:addressSpace="workgroup";access="read";containerType="array";* [ Failure ]
 
 # Video tests fail on Mac SwiftShader
@@ -556,14 +571,6 @@ crbug.com/407109057 [ android-pixel-6 android-t ] webgpu:shader,execution,shader
 crbug.com/407109058 [ android-pixel-4 ] webgpu:shader,execution,memory_layout:read_layout:case="array_stride_size";aspace="function" [ Failure ]
 crbug.com/407109058 [ android-pixel-4 ] webgpu:shader,execution,memory_layout:read_layout:case="array_stride_size";aspace="private" [ Failure ]
 
-# `memory_layout:read_layout` vec3h/vec4 failures on Win Intel DXC
-crbug.com/407076131 [ intel-0x9bc5 webgpu-dxc-enabled win10 ] webgpu:shader,execution,memory_layout:read_layout:case="vec3h_align8";aspace="function" [ Failure ]
-crbug.com/407076131 [ intel-0x9bc5 webgpu-dxc-enabled win10 ] webgpu:shader,execution,memory_layout:read_layout:case="vec3h_align8";aspace="private" [ Failure ]
-crbug.com/407076131 [ intel-0x9bc5 webgpu-dxc-enabled win10 ] webgpu:shader,execution,memory_layout:read_layout:case="vec3h_align8";aspace="workgroup" [ Failure ]
-crbug.com/407076131 [ intel-0x9bc5 webgpu-dxc-enabled win10 ] webgpu:shader,execution,memory_layout:read_layout:case="vec4h_align8";aspace="function" [ Failure ]
-crbug.com/407076131 [ intel-0x9bc5 webgpu-dxc-enabled win10 ] webgpu:shader,execution,memory_layout:read_layout:case="vec4h_align8";aspace="private" [ Failure ]
-crbug.com/407076131 [ intel-0x9bc5 webgpu-dxc-enabled win10 ] webgpu:shader,execution,memory_layout:read_layout:case="vec4h_align8";aspace="workgroup" [ Failure ]
-
 # Assorted copyToTexture test failures
 crbug.com/358165874 [ linux nvidia-0x2184 ] webgpu:web_platform,copyToTexture,* [ Failure ]
 crbug.com/331237795 [ dawn-backend-validation graphite-enabled nvidia release-x64 target-cpu-64 webgpu-adapter-default webgpu-no-worker win10 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_canvas:orientation="none";colorSpaceConversion="default";srcFlipYInCopy=false;dstFormat="rg32float";dstPremultiplied=false [ Failure ]
@@ -649,7 +656,6 @@ crbug.com/407088850 [ intel-0x4680 win ] webgpu:shader,execution,expression,call
 crbug.com/407088850 [ intel-0x9bc5 win ] webgpu:shader,execution,expression,call,builtin,textureGatherCompare:sampled_3d_coords:* [ Failure ]
 crbug.com/407088850 [ intel-0x3e9b mac ] webgpu:shader,execution,expression,call,builtin,textureLoad:arrayed:* [ Failure ]
 crbug.com/407088850 [ intel webgpu-dxc-disabled win ] webgpu:shader,execution,expression,call,builtin,textureLoad:multisampled:* [ Failure ]
-crbug.com/407088850 [ intel-0x3e9b ] webgpu:shader,execution,expression,call,builtin,textureLoad:sampled_2d:* [ Failure ]
 crbug.com/407088850 [ intel-0x9bc5 linux ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:arrayed_2d_coords:* [ Failure ]
 crbug.com/407088850 [ intel-0x9bc5 linux ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:sampled_3d_coords:* [ Failure ]
 crbug.com/407088850 [ intel-0x9bc5 linux ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_array_3d_coords:* [ Failure ]
@@ -1448,7 +1454,6 @@ crbug.com/0000 [ dawn-no-backend-validation intel-0x9bc5 no-asan release-x64 tar
 crbug.com/0000 [ intel mac ] webgpu:shader,execution,expression,call,builtin,texture_utils:readTextureToTexelViews:srcFormat="stencil8";texelViewFormat="stencil8";viewDimension="2d";sampleCount=4 [ Failure ]
 crbug.com/0000 [ intel-0x3e9b mac ] webgpu:shader,execution,expression,call,builtin,texture_utils:weights:stage="compute" [ Failure ]
 crbug.com/0000 [ android-t ] webgpu:shader,execution,expression,constructor,non_zero:concrete_matrix_elements:* [ Failure ]
-crbug.com/0000 [ intel win ] webgpu:shader,execution,expression,constructor,zero_value:structure:member_types=["i32","u32"];nested=true [ Failure ]
 crbug.com/0000 [ dawn-no-backend-validation no-asan webgpu-dxc-disabled win ] webgpu:shader,execution,limits:struct_members: [ Failure ]
 crbug.com/0000 [ android-r qualcomm ] webgpu:shader,execution,memory_layout:write_layout:* [ Failure ]
 crbug.com/0000 [ android-r ] webgpu:shader,execution,shader_io,vertex_builtins:* [ Failure ]
@@ -1457,7 +1462,6 @@ crbug.com/0000 [ no-clang-coverage nvidia webgpu-dxc-disabled win ] webgpu:shade
 crbug.com/0000 [ dawn-no-backend-validation intel-0x4680 no-asan release-x64 target-cpu-64 webgpu-dxc-disabled win ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="function";workgroupSize=[1,1,1];batch__=1 [ Failure ]
 crbug.com/0000 [ dawn-backend-validation intel-0x4680 no-asan release-x64 target-cpu-64 webgpu-dxc-disabled win ] webgpu:shader,validation,decl,var:function_scope_types:type="array%3Cvec4u,%20array_size_const%3E";kind="var";via_alias=false [ Failure ]
 crbug.com/0000 [ intel win ] webgpu:shader,validation,expression,binary,add_sub_mul:scalar_vector:lhs="abstract-float";rhs="vec2%3Cbool%3E";compound_assignment=false [ Failure ]
-crbug.com/0000 [ intel win ] webgpu:shader,validation,expression,binary,add_sub_mul:scalar_vector:lhs="vec3%3Cabstract-float%3E";rhs="bool";compound_assignment=false [ Failure ]
 crbug.com/0000 [ nvidia win ] webgpu:shader,validation,expression,binary,add_sub_mul:scalar_vector_out_of_range:op="mul";lhs="vec3%3Cu32%3E";rhs="u32" [ Failure ]
 crbug.com/0000 [ dawn-backend-validation no-asan no-clang-coverage nvidia release-x64 target-cpu-64 webgpu-dxc-disabled win10 ] webgpu:shader,validation,expression,binary,and_or_xor:scalar_vector:lhs="abstract-int";rhs="bool";compound_assignment=false [ Failure ]
 crbug.com/0000 [ android-pixel-4 ] webgpu:shader,validation,extension,dual_source_blending:blend_src_same_type:blendSrc0Type="u32";blendSrc1Type="i32" [ Failure ]
