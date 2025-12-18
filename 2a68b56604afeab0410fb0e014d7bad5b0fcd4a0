@@ -89,6 +89,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e299440e_804e6ebe",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-18T15:26:35Z",
+      "side": 1,
+      "message": "Nit: We\u0027d typically just declare this as a lambda: `auto mark_slots \u003d [\u0026](...)`\nUnless there\u0027s a particular reason to use std::function.",
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "91552042_24937af6",
         "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
         "patchSetId": 1
@@ -100,6 +117,24 @@
       "writtenOn": "2025-12-18T13:43:51Z",
       "side": 1,
       "message": "Is this unwrap necessary?",
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8683d35e_349e0087",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-18T15:26:35Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be since you\u0027ve already unwrapped above.",
+      "parentUuid": "91552042_24937af6",
       "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -134,6 +169,24 @@
       "writtenOn": "2025-12-18T13:43:51Z",
       "side": 1,
       "message": "This should always be true given the resize above, is the check necessary?",
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "186d6e85_ef9cb0d0",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-18T15:26:35Z",
+      "side": 1,
+      "message": "Yeah, maybe just `TINT_ASSERT` if anything.",
+      "parentUuid": "c0013904_524f14f6",
       "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -180,6 +233,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5033fc45_821c54ca",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-18T15:26:35Z",
+      "side": 1,
+      "message": "Or just use `std::bitset`.",
+      "parentUuid": "2410e029_8754f037",
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e6a08dac_f3ed328c",
         "filename": "src/tint/lang/wgsl/inspector/inspector.h",
         "patchSetId": 1
@@ -208,6 +279,48 @@
       "writtenOn": "2025-12-18T13:43:51Z",
       "side": 1,
       "message": "Should this be something like `Returns an empty bitset if none of the slots in the immediate block are accessed, or there is no immediate block` ?",
+      "range": {
+        "startLine": 110,
+        "startChar": 23,
+        "endLine": 110,
+        "endChar": 80
+      },
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "776d4379_e5064843",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-18T15:26:35Z",
+      "side": 1,
+      "message": "No, we\u0027re not tracking actual accesses any more, so we just want to know which slots might be accessed (i.e. the ones that are accessible).",
+      "parentUuid": "e6a08dac_f3ed328c",
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25c6dc53_5980d739",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-18T15:26:35Z",
+      "side": 1,
+      "message": "Again, we\u0027re not actually tracking accessed slots.",
+      "parentUuid": "48bd0c25_71ac2f40",
       "range": {
         "startLine": 110,
         "startChar": 23,
