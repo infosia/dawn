@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e5524e6_0b6811d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-18T16:53:10Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"superseeded\" is a possible misspelling of \"superseded\".\n\nTo bypass Spellchecker...\n\n\"superseeded\" is a possible misspelling of \"superseded\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "3f6c400e62a968e243eed85625b9a5c65500aaae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "4d605456_53ba664f",
@@ -14,6 +37,29 @@
       "writtenOn": "2025-12-18T16:52:55Z",
       "side": 1,
       "message": "PTAL!",
+      "revId": "3f6c400e62a968e243eed85625b9a5c65500aaae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0e4a464_4642d781",
+        "filename": "src/dawn/native/DynamicArrayState.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-18T16:53:10Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"paramter\" is a possible misspelling of \"parameter\".\n\nTo bypass Spellchecker, ad...\n\n\"paramter\" is a possible misspelling of \"parameter\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 53,
+        "startChar": 67,
+        "endLine": 53,
+        "endChar": 75
+      },
       "revId": "3f6c400e62a968e243eed85625b9a5c65500aaae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
