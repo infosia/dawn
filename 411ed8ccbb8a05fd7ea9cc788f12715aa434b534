@@ -16,6 +16,23 @@
       "message": "this fixes some tests. For example: `TextureComponentSwizzleTest.OnlyRedChannelPresent`",
       "revId": "411ed8ccbb8a05fd7ea9cc788f12715aa434b534",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8358c37a_db1abad0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-18T01:01:05Z",
+      "side": 1,
+      "message": "hold on, I think I jumped to conclusions. lemme check",
+      "revId": "411ed8ccbb8a05fd7ea9cc788f12715aa434b534",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
