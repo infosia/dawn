@@ -69,6 +69,24 @@
       "parentUuid": "eafb6e2e_91a57764",
       "revId": "d6a613bb7739534c1a4ffc089f3916d1ad3e0277",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa24696d_3c574689",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-18T23:03:50Z",
+      "side": 1,
+      "message": "Tests are running properly with the most recent patchset.",
+      "parentUuid": "2d8a478c_76a0b25a",
+      "revId": "d6a613bb7739534c1a4ffc089f3916d1ad3e0277",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
