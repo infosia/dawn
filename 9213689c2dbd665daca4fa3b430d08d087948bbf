@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6167e0c_d006ad5e",
+        "filename": "src/dawn/tests/unittests/validation/TextureValidationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-18T22:25:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea3d39ea_0aa4c784",
+      "revId": "9213689c2dbd665daca4fa3b430d08d087948bbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "328c3a1b_ce609c99",
@@ -65,6 +83,30 @@
       "writtenOn": "2025-12-18T08:50:56Z",
       "side": 1,
       "message": "This is actually reachable in `dawn::wire` because we don\u0027t validate the descriptor. Maybe we can just add a comment about that and `break` (with a small test?)",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 51
+      },
+      "revId": "9213689c2dbd665daca4fa3b430d08d087948bbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86bb54b9_9b2fae03",
+        "filename": "src/dawn/wire/client/Texture.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-18T22:25:16Z",
+      "side": 1,
+      "message": "Removed and added comment. For testing, this is covered by the invalid dimension test. `dawn_unittests --use-wire` crashes at `DAWN_UNREACHABLE` if it\u0027s still in the code.",
+      "parentUuid": "328c3a1b_ce609c99",
       "range": {
         "startLine": 101,
         "startChar": 0,

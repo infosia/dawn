@@ -221,6 +221,24 @@
       "parentUuid": "ee20b8cd_49ea3516",
       "revId": "b379f498939018a3d25c4e6b2d241f93cd0baca8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6a93e9c_edb7292b",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-18T22:25:16Z",
+      "side": 1,
+      "message": "the roll for webgpu-headers is in this chain",
+      "parentUuid": "a471109e_1fd20a57",
+      "revId": "b379f498939018a3d25c4e6b2d241f93cd0baca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
