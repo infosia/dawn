@@ -203,6 +203,24 @@
       "parentUuid": "59b599e4_0fdb1a46",
       "revId": "b379f498939018a3d25c4e6b2d241f93cd0baca8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a471109e_1fd20a57",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-18T08:50:56Z",
+      "side": 1,
+      "message": "(note that we can land with a diff and resolve it later)",
+      "parentUuid": "ee20b8cd_49ea3516",
+      "revId": "b379f498939018a3d25c4e6b2d241f93cd0baca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

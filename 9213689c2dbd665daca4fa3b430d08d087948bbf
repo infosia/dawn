@@ -16,6 +16,63 @@
       "message": "this can\u0027t land until (https://github.com/webgpu-native/webgpu-headers/pull/575) lands but ptal.\n\nThe stuff in Texture.cpp is all voodoo to me so I\u0027m not sure I did it correctly but it passed the CQ 😜.  Thanks for pointing me in the right direction.",
       "revId": "9213689c2dbd665daca4fa3b430d08d087948bbf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5d39ffd_43d1ba26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-18T08:50:56Z",
+      "side": 1,
+      "message": "Nice! Wire part looks good now.",
+      "revId": "9213689c2dbd665daca4fa3b430d08d087948bbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea3d39ea_0aa4c784",
+        "filename": "src/dawn/tests/unittests/validation/TextureValidationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-18T08:50:56Z",
+      "side": 1,
+      "message": "Can we have a test with a garbage dimension as well that expects a device error but no crash and that the `GetTextureBindingViewDimension` correctly returns undefined?\n\nAlso can we have tests where the texture creation fails for another unrelated reason (format is garbage for example) so that we know that error textures correctly compute the default textureBindingViewDimension?",
+      "revId": "9213689c2dbd665daca4fa3b430d08d087948bbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "328c3a1b_ce609c99",
+        "filename": "src/dawn/wire/client/Texture.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-18T08:50:56Z",
+      "side": 1,
+      "message": "This is actually reachable in `dawn::wire` because we don\u0027t validate the descriptor. Maybe we can just add a comment about that and `break` (with a small test?)",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 51
+      },
+      "revId": "9213689c2dbd665daca4fa3b430d08d087948bbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
