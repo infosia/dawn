@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "829ebe47_23dce46a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-18T00:58:38Z",
+      "side": 1,
+      "message": "this fixes some tests. For example: `TextureComponentSwizzleTest.OnlyRedChannelPresent`",
+      "revId": "411ed8ccbb8a05fd7ea9cc788f12715aa434b534",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
