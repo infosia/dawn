@@ -39,6 +39,7 @@
 
 #include "absl/container/flat_hash_map.h"
 #include "dawn/common/Constants.h"
+#include "dawn/common/Math.h"
 #include "dawn/replay/Capture.h"
 #include "dawn/replay/Deserialization.h"
 #include "src/dawn/replay/ReplayImpl.h"
@@ -231,8 +232,9 @@ MaybeError ReadContentIntoTexture(const ReplayImpl& replay,
                                   ReadHead& readHead,
                                   wgpu::Device device,
                                   const schema::RootCommandWriteTextureCmdData& cmdData) {
+    const uint64_t dataSize = RoundUp(cmdData.dataSize, 4);
     const uint32_t* data;
-    DAWN_TRY_ASSIGN(data, readHead.GetData(cmdData.dataSize));
+    DAWN_TRY_ASSIGN(data, readHead.GetData(dataSize));
 
     wgpu::TexelCopyTextureInfo dst = ToWGPU(replay, cmdData.destination);
     wgpu::TexelCopyBufferLayout layout = ToWGPU(cmdData.layout);
