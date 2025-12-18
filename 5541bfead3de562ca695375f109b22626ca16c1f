@@ -20,6 +20,40 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "55c37468_a848628c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T15:56:24Z",
+      "side": 1,
+      "message": "lgtm w/ question",
+      "revId": "5541bfead3de562ca695375f109b22626ca16c1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6af7b094_f1441575",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-12-18T15:56:24Z",
+      "side": 1,
+      "message": "So, not setting a resource table when a previous one was set still marks it as dirty? Is that because it then frees up the slot which was previously used?",
+      "revId": "5541bfead3de562ca695375f109b22626ca16c1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "f76205c7_d0ef0025",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 12
