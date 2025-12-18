@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "d6a613bb7739534c1a4ffc089f3916d1ad3e0277",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c1a9774_b24b936b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-18T19:26:23Z",
+      "side": 1,
+      "message": "I\u0027m confused by the compile failures. `IsWindows()` is declared in `DawnTest.h`, which the file includes and uses other functions from (e.g. `UsesWire()`)",
+      "revId": "d6a613bb7739534c1a4ffc089f3916d1ad3e0277",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
