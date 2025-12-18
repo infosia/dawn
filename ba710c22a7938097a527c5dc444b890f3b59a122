@@ -16,6 +16,111 @@
       "message": "PTAL.",
       "revId": "ba710c22a7938097a527c5dc444b890f3b59a122",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0742ccb_59ae81e6",
+        "filename": "src/tint/api/common/resource_table_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-18T20:01:25Z",
+      "side": 1,
+      "message": "Nit: resource table",
+      "fixSuggestions": [
+        {
+          "fixId": "fcc7c10b_f6d7aa2b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/api/common/resource_table_config.h",
+              "range": {
+                "startLine": 40,
+                "startChar": 0,
+                "endLine": 41,
+                "endChar": 0
+              },
+              "replacement": "// Configuration for the resource table transform.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "ba710c22a7938097a527c5dc444b890f3b59a122",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8124ceea_c152ddd5",
+        "filename": "src/tint/api/common/resource_table_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-18T20:01:25Z",
+      "side": 1,
+      "message": "Nit: resource table transform",
+      "fixSuggestions": [
+        {
+          "fixId": "337f9e09_5425b067",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/api/common/resource_table_config.h",
+              "range": {
+                "startLine": 42,
+                "startChar": 0,
+                "endLine": 43,
+                "endChar": 0
+              },
+              "replacement": "// The resource table transform assumes that for each resource table entry there will be an\n"
+            }
+          ]
+        }
+      ],
+      "revId": "ba710c22a7938097a527c5dc444b890f3b59a122",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "321cb891_2319bf97",
+        "filename": "src/tint/api/common/resource_table_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-18T20:01:25Z",
+      "side": 1,
+      "message": "Nit: resource table",
+      "fixSuggestions": [
+        {
+          "fixId": "fff8a7e5_1c17703f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/api/common/resource_table_config.h",
+              "range": {
+                "startLine": 44,
+                "startChar": 0,
+                "endLine": 45,
+                "endChar": 0
+              },
+              "replacement": "// attached for the resource table. Specifically, the storage buffer should have a format of:\n"
+            }
+          ]
+        }
+      ],
+      "revId": "ba710c22a7938097a527c5dc444b890f3b59a122",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
