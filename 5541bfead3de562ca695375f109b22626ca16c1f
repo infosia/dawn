@@ -54,6 +54,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "924ced4a_865b2d54",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-18T16:02:15Z",
+      "side": 1,
+      "message": "Correct, if you look at the test, before [1], the descriptor sets set are 0: resourceTable 1: resultBG. But noResourceTablePipeline expect only one descriptor set, 0: resultBG so we need to dirty everything to make sure we rebind from index 0.",
+      "parentUuid": "6af7b094_f1441575",
+      "revId": "5541bfead3de562ca695375f109b22626ca16c1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "f76205c7_d0ef0025",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 12
@@ -65,6 +83,23 @@
       "writtenOn": "2025-12-18T15:45:09Z",
       "side": 1,
       "message": "note: I\u0027m not super happy about checking the resource table on every sync scope because that\u0027s a few more branches that may be unnecessary if we iterated the resource tables only once per submit. However in the future we might have metadata buffer updates happening on the queue timeline so we\u0027d need to update the resource tables then.",
+      "revId": "5541bfead3de562ca695375f109b22626ca16c1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ec37cc3_a730dd95",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1346,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-18T16:02:15Z",
+      "side": 1,
+      "message": "[1]",
       "revId": "5541bfead3de562ca695375f109b22626ca16c1f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
