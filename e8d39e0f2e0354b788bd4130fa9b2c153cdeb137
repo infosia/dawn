@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "e8d39e0f2e0354b788bd4130fa9b2c153cdeb137",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71913c31_bc212329",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-12-18T16:23:08Z",
+      "side": 1,
+      "message": "I don\u0027t think I agree with this one.\n\nThe `Extensions` struct is (or should be) a list of extensions (or capabilities) that are available and should be used. We are told if `VK_KHR_zero_initialize_workgroup_memory` is available, or the Vulkan Memory Model is available, or if the `DotProductInput4x8Bit` capability is enabled etc. This is just like that IMO. So Dawn should just tell us whether `StorageInputOutput16` is available, and we use that information to determine whether or not a polyfill is needd.",
+      "revId": "e8d39e0f2e0354b788bd4130fa9b2c153cdeb137",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
