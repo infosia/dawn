@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b39d216e_97e65543",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-19T09:55:00Z",
+      "side": 1,
+      "message": "LGTM with a suggestion.",
+      "revId": "46403a39e5a76768096e3c14dacac790ee239cdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9c33b9f_e13ed899",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-19T09:55:00Z",
+      "side": 1,
+      "message": "Instead having two loops like this, WDYT of using https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/ityp_bitset.h;drc\u003de3b5a8ad7e8b37204126338a75c5cbd431f70177;l\u003d274 to resize `colorAttachments` with a default value, then in a second step iterate using the mask?\n\nDitto for `src/dawn/native/webgpu/RenderPipelineWGPU.cpp`?",
+      "revId": "46403a39e5a76768096e3c14dacac790ee239cdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
