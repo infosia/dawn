@@ -69,6 +69,24 @@
       "parentUuid": "474f569b_142bf544",
       "revId": "9a5423b25eb5e56ed033b7be524375315547cf1a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08ac430b_dddc6e96",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-19T10:33:49Z",
+      "side": 1,
+      "message": "Any chance to make Graphite require `DawnNative`? `DawnInternalUsages` seems like the wrong feature to associate this with.",
+      "parentUuid": "48a576b9_d4852988",
+      "revId": "9a5423b25eb5e56ed033b7be524375315547cf1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
