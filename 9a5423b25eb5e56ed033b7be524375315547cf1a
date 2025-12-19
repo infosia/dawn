@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1609d842_20b55646",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-12-19T08:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28f03dac_fd0cd347",
+      "revId": "9a5423b25eb5e56ed033b7be524375315547cf1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "474f569b_142bf544",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-12-18T14:20:34Z",
       "side": 1,
       "message": "Let\u0027s gate the new subdescriptor on the dawnnative feature.",
+      "revId": "9a5423b25eb5e56ed033b7be524375315547cf1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48a576b9_d4852988",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-12-19T08:01:15Z",
+      "side": 1,
+      "message": "Done, gated it with `Feature::DawnInternalUsages` as Graphite requires that instead of `DawnNative`. [1]\n\n[1]: https://source.chromium.org/chromium/chromium/src/+/main:gpu/command_buffer/service/dawn_context_provider.cc;drc\u003d3c7ac02f21e8ce17639c66acadb9c1919324c889;l\u003d221",
+      "parentUuid": "474f569b_142bf544",
       "revId": "9a5423b25eb5e56ed033b7be524375315547cf1a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
