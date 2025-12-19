@@ -69,6 +69,24 @@
       "parentUuid": "9d1e0c9e_e57b8330",
       "revId": "46403a39e5a76768096e3c14dacac790ee239cdb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b2ea0cd_c9e19af4",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-19T18:44:20Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "9cd7d13e_81f9f5ef",
+      "revId": "46403a39e5a76768096e3c14dacac790ee239cdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
