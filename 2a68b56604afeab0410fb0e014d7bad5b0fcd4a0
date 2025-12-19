@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47527477_19e9b930",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-12-19T08:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3a45e35_cbadd400",
+      "range": {
+        "startLine": 748,
+        "startChar": 0,
+        "endLine": 748,
+        "endChar": 52
+      },
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f628ad88_fc1b9136",
@@ -82,6 +106,54 @@
         "startChar": 4,
         "endLine": 752,
         "endChar": 37
+      },
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "801a4c1f_098f37ae",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-12-19T08:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "107aadd8_5ff8a57b",
+      "range": {
+        "startLine": 752,
+        "startChar": 4,
+        "endLine": 752,
+        "endChar": 37
+      },
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5773d480_8d3980de",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-12-19T08:24:32Z",
+      "side": 1,
+      "message": "Using `std::bitset` so no `resize` call any more.",
+      "parentUuid": "f628ad88_fc1b9136",
+      "range": {
+        "startLine": 750,
+        "startChar": 0,
+        "endLine": 752,
+        "endChar": 39
       },
       "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
@@ -175,6 +247,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "298b90c0_1c9cf04e",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-12-19T08:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8683d35e_349e0087",
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36f61baf_455b8223",
@@ -227,6 +317,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c2d1105_dd876c5c",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-12-19T08:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "186d6e85_ef9cb0d0",
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c8eeef5_00b3fe84",
@@ -240,6 +348,30 @@
       "writtenOn": "2025-12-18T13:43:51Z",
       "side": 1,
       "message": "We would usually use a `tint::Switch` for something like this:\n\n```suggestion\n            tint::Switch(t,\n              [\u0026](const sem::Struct* str) {\n                  for (auto* member : str-\u003eMembers()) {\n                      mark_slots(member-\u003eType(), offset + member-\u003eOffset());\n                  }\n              },\n              [\u0026](const core::type::Matrix* mat) {\n                uint32_t col_stride \u003d mat-\u003eColumnStride();\n                for (uint32_t i \u003d 0; i \u003c mat-\u003eColumns(); i++) {\n                    mark_slots(mat-\u003eColumnType(), offset + i * col_stride);\n                }\n              },\n              [\u0026](Default) {\n                uint32_t s \u003d t-\u003eSize();\n                if (s \u003d\u003d 0) {\n                    return;\n                }\n                uint32_t start_slot \u003d offset / 4;\n                uint32_t end_byte \u003d offset + s;\n                uint32_t end_slot \u003d (end_byte - 1) / 4;\n                for (uint32_t i \u003d start_slot; i \u003c\u003d end_slot; i++) {\n                    if (i \u003c accessible_slots.Length()) {\n                        accessible_slots[i] \u003d true;\n                    }\n                }\n            }\n          );\n```",
+      "range": {
+        "startLine": 757,
+        "startChar": 0,
+        "endLine": 779,
+        "endChar": 13
+      },
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4db0ab44_c594ff33",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-12-19T08:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c8eeef5_00b3fe84",
       "range": {
         "startLine": 757,
         "startChar": 0,
@@ -281,6 +413,24 @@
       "side": 1,
       "message": "Or just use `std::bitset`.",
       "parentUuid": "2410e029_8754f037",
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "575bd422_090a2848",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-12-19T08:24:32Z",
+      "side": 1,
+      "message": "Use `std::bitset` so it could convert to `ityp::bitset` in Dawn by generating uin64_t",
+      "parentUuid": "5033fc45_821c54ca",
       "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -489,6 +639,48 @@
         "endLine": 110,
         "endChar": 80
       },
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c46d48b3_c42f00b9",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-12-19T08:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cafdfc3d_58d6bae1",
+      "range": {
+        "startLine": 110,
+        "startChar": 23,
+        "endLine": 110,
+        "endChar": 80
+      },
+      "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "471e510d_22cc7400",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-12-19T08:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cee7063_64a01530",
       "revId": "2a68b56604afeab0410fb0e014d7bad5b0fcd4a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
