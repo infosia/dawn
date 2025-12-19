@@ -52,6 +52,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dd32570_c91b1d88",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-19T10:46:17Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "cc2a6e13ce20dc228527821abfffd249b84699c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f4f9760_00bf8790",
@@ -83,6 +100,23 @@
       "side": 1,
       "message": "That\u0027s part of what this change is fixing. :) The fact that it was NeverPromoted previously was due to the fact that if you properly marked it as 1.3 then on any 1.3 capable drivers the extension string would be omitted during device creation and you wouldn\u0027t be able to query the function procs. (There\u0027s a couple of other examples of this sprinkled through the list.)\n\nAfter this change we will no longer exclude any of these extensions at device creation (as long as the device actually supports them), which means we no longer need to indicate which version they were promoted in for anything other than code organization, so we can ensure they\u0027re all in the proper section.",
       "parentUuid": "1f4f9760_00bf8790",
+      "revId": "cc2a6e13ce20dc228527821abfffd249b84699c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9a449ee_d7a529a4",
+        "filename": "src/dawn/native/vulkan/VulkanFunctions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-19T10:46:17Z",
+      "side": 1,
+      "message": "Since we are requiring support for Vulkan 1.1, can we add members for all new functions in Vulkan 1.1? I see `vkGetImageSparseMemoryRequirements2` so maybe you did that already.",
       "revId": "cc2a6e13ce20dc228527821abfffd249b84699c9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
