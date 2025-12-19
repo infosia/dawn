@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "9744246fd8c3697f8e31df43a824558c97c96328",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11e10f8c_ab86c57d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-12-19T12:32:43Z",
+      "side": 1,
+      "message": "We should try to add this to Chromium auto-roll.",
+      "revId": "9744246fd8c3697f8e31df43a824558c97c96328",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
