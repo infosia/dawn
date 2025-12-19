@@ -39,6 +39,30 @@
       },
       "revId": "d4fb4e1a0160f5741e95eadf19e990c97042d45a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4e649e5_04f9b21a",
+        "filename": "src/dawn/tests/unittests/validation/TextureValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-19T17:41:02Z",
+      "side": 1,
+      "message": "Doh! I haven\u0027t assigned in a conditional in so long I practically forgot about it 😅. Fixed",
+      "parentUuid": "7ac4e01b_65303ce2",
+      "range": {
+        "startLine": 789,
+        "startChar": 0,
+        "endLine": 790,
+        "endChar": 61
+      },
+      "revId": "d4fb4e1a0160f5741e95eadf19e990c97042d45a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
