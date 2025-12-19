@@ -33,6 +33,24 @@
       "message": "Instead having two loops like this, WDYT of using https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/ityp_bitset.h;drc\u003de3b5a8ad7e8b37204126338a75c5cbd431f70177;l\u003d274 to resize `colorAttachments` with a default value, then in a second step iterate using the mask?\n\nDitto for `src/dawn/native/webgpu/RenderPipelineWGPU.cpp`?",
       "revId": "46403a39e5a76768096e3c14dacac790ee239cdb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d1e0c9e_e57b8330",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-12-19T17:22:16Z",
+      "side": 1,
+      "message": "Do you mean always having maxSlots? I\u0027d prefer to have 1 slot if the user only specified 1 slot. AFAICT there is no info on how many slots are used, there\u0027s just the bitset iterator.",
+      "parentUuid": "a9c33b9f_e13ed899",
+      "revId": "46403a39e5a76768096e3c14dacac790ee239cdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
