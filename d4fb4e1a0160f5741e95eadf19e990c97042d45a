@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d02a6d6_184fc381",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-19T09:04:03Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "d4fb4e1a0160f5741e95eadf19e990c97042d45a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ac4e01b_65303ce2",
+        "filename": "src/dawn/tests/unittests/validation/TextureValidationTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-12-19T09:04:03Z",
+      "side": 1,
+      "message": "```suggestion\n    wgpu::Texture tex;\n    ASSERT_DEVICE_EFFOR(tex \u003d device.CreateTexture(\u0026descriptor));\n```\n\nditto below and we don\u0027t need the helper function",
+      "range": {
+        "startLine": 789,
+        "startChar": 0,
+        "endLine": 790,
+        "endChar": 61
+      },
+      "revId": "d4fb4e1a0160f5741e95eadf19e990c97042d45a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
