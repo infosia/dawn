@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59d02237_b9a1f98c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-12-19T22:09:12Z",
+      "side": 1,
+      "message": "LGTM2\n\n(I don\u0027t grok the wire stuff, but I trust Corentin.)",
+      "revId": "041408eedbaf1d15f1c662b5a78108493edb338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
