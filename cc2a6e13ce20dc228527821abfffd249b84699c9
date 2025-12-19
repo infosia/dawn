@@ -119,6 +119,24 @@
       "message": "Since we are requiring support for Vulkan 1.1, can we add members for all new functions in Vulkan 1.1? I see `vkGetImageSparseMemoryRequirements2` so maybe you did that already.",
       "revId": "cc2a6e13ce20dc228527821abfffd249b84699c9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ff0832f_94165b8c",
+        "filename": "src/dawn/native/vulkan/VulkanFunctions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-12-19T23:37:25Z",
+      "side": 1,
+      "message": "Do you mean adding every available Vulkan 1.1 method, even the ones we don\u0027t use? Because this does at least cover all the ones we are making use of. (And I haven\u0027t checked it explicitly, but I\u0027d be surprised if we\u0027re currently getting all of the 1.0 functions.)",
+      "parentUuid": "a9a449ee_d7a529a4",
+      "revId": "cc2a6e13ce20dc228527821abfffd249b84699c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
