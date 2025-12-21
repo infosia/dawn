@@ -228,9 +228,9 @@ void DawnPerfTestBase::RunTest() {
     // We don't care about trace events during warmup and calibration.
     platform->EnableTraceEventRecording(true);
     {
-        TRACE_EVENT0(platform, General, testName);
+        DAWN_TRACE_EVENT0(platform, "gpu.dawn", testName);
         for (unsigned int trial = 0; trial < kNumTrials; ++trial) {
-            TRACE_EVENT0(platform, General, "Trial");
+            DAWN_TRACE_EVENT0(platform, "gpu.dawn", "Trial");
             DoRunLoop(kMaximumRunTimeSeconds);
             OutputResults();
         }
@@ -239,7 +239,7 @@ void DawnPerfTestBase::RunTest() {
 }
 
 void DawnPerfTestBase::DoRunLoop(double maxRunTime) {
-    platform::Platform* platform = gTestEnv->GetPlatform();
+    //platform::Platform* platform = gTestEnv->GetPlatform();
 
     mNumStepsPerformed = 0;
     mCpuTime = 0;
@@ -258,7 +258,7 @@ void DawnPerfTestBase::DoRunLoop(double maxRunTime) {
             mTest->WaitABit();
         }
 
-        TRACE_EVENT0(platform, General, "Step");
+        DAWN_TRACE_EVENT0(platform, "gpu.dawn", "Step");
         double stepStart = mTimer->GetElapsedTime();
         Step();
         mCpuTime += mTimer->GetElapsedTime() - stepStart;

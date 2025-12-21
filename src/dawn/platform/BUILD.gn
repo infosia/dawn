@@ -29,6 +29,34 @@ import("../../../scripts/dawn_overrides_with_defaults.gni")
 
 import("${dawn_root}/scripts/dawn_component.gni")
 
+if (!defined(dawn_perfetto_cpp_dir)) {
+  dawn_perfetto_cpp_dir = "//third_party/perfetto"
+}
+
+config("dawn_perfetto_config") {
+  if (dawn_enable_perfetto) {
+    defines = [ "DAWN_USE_PERFETTO" ]
+
+    configs = [ "$dawn_perfetto_cpp_dir/gn:public_config" ]
+  }
+}
+
+group("dawn_perfetto") {
+  if (dawn_enable_perfetto) {
+    # When build_with_chromium=true we need to include "//third_party/abseil-cpp:absl" while
+    # we can be more specific when building standalone non-component ANGLE.
+    # Also build the combined target when building Dawn to avoid multiply defined globals.
+    if (build_with_chromium) {
+      public_deps = [
+        "$dawn_perfetto_cpp_dir:libperfetto",
+        "$dawn_perfetto_cpp_dir/include/perfetto/tracing",
+      ]
+    }
+
+    public_configs = [ ":dawn_perfetto_config" ]
+  }
+}
+
 dawn_component("platform") {
   DEFINE_PREFIX = "DAWN_PLATFORM"
 
@@ -45,6 +73,8 @@ dawn_component("platform") {
     "tracing/EventTracer.cpp",
     "tracing/EventTracer.h",
     "tracing/TraceEvent.h",
+    "tracing/trace_categories.h",
+    "tracing/trace_categories.cc",
   ]
 
   deps = [ "${dawn_root}/src/dawn/common" ]
@@ -54,6 +84,7 @@ dawn_component("platform") {
 
   public_deps = [
     # DawnPlatform.h has #include <webgpu/webgpu.h>
+    ":dawn_perfetto",
     "${dawn_root}/include/dawn:headers",
     "${dawn_root}/src/dawn/partition_alloc:raw_ptr",
   ]

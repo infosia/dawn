@@ -148,7 +148,7 @@ MaybeError Queue::NextSerial() {
 
     IncrementLastSubmittedCommandSerial();
 
-    TRACE_EVENT1(device->GetPlatform(), General, "D3D12Device::SignalFence", "serial",
+    DAWN_TRACE_EVENT1(device->GetPlatform(), "gpu.dawn", "D3D12Device::SignalFence", "serial",
                  uint64_t(GetLastSubmittedCommandSerial()));
 
     return CheckHRESULT(

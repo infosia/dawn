@@ -1372,7 +1372,7 @@ CommandEncoder* DeviceBase::APICreateCommandEncoder(const CommandEncoderDescript
 ComputePipelineBase* DeviceBase::APICreateComputePipeline(
     const ComputePipelineDescriptor* descriptor) {
     utils::TraceLabel label = utils::GetLabelForTrace(descriptor->label);
-    TRACE_EVENT1(GetPlatform(), General, "DeviceBase::APICreateComputePipeline", "label",
+    DAWN_TRACE_EVENT1(GetPlatform(), "gpu.dawn", "DeviceBase::APICreateComputePipeline", "label",
                  label.label);
 
     auto resultOrError = CreateComputePipeline(descriptor);
@@ -1391,7 +1391,7 @@ Future DeviceBase::APICreateComputePipelineAsync(
     const ComputePipelineDescriptor* descriptor,
     const WGPUCreateComputePipelineAsyncCallbackInfo& callbackInfo) {
     utils::TraceLabel label = utils::GetLabelForTrace(descriptor->label);
-    TRACE_EVENT1(GetPlatform(), General, "DeviceBase::APICreateComputePipelineAsync", "label",
+    DAWN_TRACE_EVENT1(GetPlatform(), "gpu.dawn", "DeviceBase::APICreateComputePipelineAsync", "label",
                  label.label);
 
     EventManager* manager = GetInstance()->GetEventManager();
@@ -1468,7 +1468,7 @@ Future DeviceBase::APICreateRenderPipelineAsync(
     const RenderPipelineDescriptor* descriptor,
     const WGPUCreateRenderPipelineAsyncCallbackInfo& callbackInfo) {
     utils::TraceLabel label = utils::GetLabelForTrace(descriptor->label);
-    TRACE_EVENT1(GetPlatform(), General, "DeviceBase::APICreateRenderPipelineAsync", "label",
+    DAWN_TRACE_EVENT1(GetPlatform(), "gpu.dawn", "DeviceBase::APICreateRenderPipelineAsync", "label",
                  label.label);
 
     EventManager* manager = GetInstance()->GetEventManager();
@@ -1520,7 +1520,7 @@ RenderBundleEncoder* DeviceBase::APICreateRenderBundleEncoder(
 RenderPipelineBase* DeviceBase::APICreateRenderPipeline(
     const RenderPipelineDescriptor* descriptor) {
     utils::TraceLabel label = utils::GetLabelForTrace(descriptor->label);
-    TRACE_EVENT1(GetPlatform(), General, "DeviceBase::APICreateRenderPipeline", "label",
+    DAWN_TRACE_EVENT1(GetPlatform(), "gpu.dawn", "DeviceBase::APICreateRenderPipeline", "label",
                  label.label);
 
     auto resultOrError = CreateRenderPipeline(descriptor);
@@ -1537,7 +1537,7 @@ RenderPipelineBase* DeviceBase::APICreateRenderPipeline(
 }
 ShaderModuleBase* DeviceBase::APICreateShaderModule(const ShaderModuleDescriptor* descriptor) {
     utils::TraceLabel label = utils::GetLabelForTrace(descriptor->label);
-    TRACE_EVENT1(GetPlatform(), General, "DeviceBase::APICreateShaderModule", "label", label.label);
+    DAWN_TRACE_EVENT1(GetPlatform(), "gpu.dawn", "DeviceBase::APICreateShaderModule", "label", label.label);
 
     Ref<ShaderModuleBase> shaderModule;
     std::unique_ptr<ErrorData> errorData;
@@ -1666,7 +1666,7 @@ bool DeviceBase::APITick() {
         return HasPendingTasks();
     }
 
-    TRACE_EVENT1(GetPlatform(), General, "DeviceBase::APITick::IsDeviceIdle", "isDeviceIdle",
+    DAWN_TRACE_EVENT1(GetPlatform(), "gpu.dawn", "DeviceBase::APITick::IsDeviceIdle", "isDeviceIdle",
                  IsDeviceIdle());
 
     return !IsDeviceIdle();

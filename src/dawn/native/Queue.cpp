@@ -283,7 +283,7 @@ void QueueBase::Tick(ExecutionSerial finishedSerial) {
     // To prevent the reentrant call from invalidating mTasksInFlight while in use by the first
     // call, we remove the tasks to finish from the queue, update mTasksInFlight, then run the
     // callbacks.
-    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "Queue::Tick", "finishedSerial",
+    DAWN_TRACE_EVENT1(GetDevice()->GetPlatform(), "gpu.dawn", "Queue::Tick", "finishedSerial",
                  uint64_t(finishedSerial));
 
     std::vector<std::unique_ptr<TrackTaskCallback>> tasks;
@@ -483,7 +483,7 @@ MaybeError QueueBase::CopyExternalTextureForBrowserInternal(
 
 MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
                                      CommandBufferBase* const* commands) const {
-    TRACE_EVENT0(GetDevice()->GetPlatform(), Validation, "Queue::ValidateSubmit");
+    DAWN_TRACE_EVENT0(GetDevice()->GetPlatform(), "gpu.dawn.validation", "Queue::ValidateSubmit");
     DAWN_TRY(GetDevice()->ValidateObject(this));
 
     std::set<CommandBufferBase*> uniqueCommandBuffers;
@@ -644,7 +644,7 @@ MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* c
     // If device is lost, don't let any commands be submitted
     DAWN_TRY(device->ValidateIsAlive());
 
-    TRACE_EVENT0(device->GetPlatform(), General, "Queue::Submit");
+    DAWN_TRACE_EVENT0(device->GetPlatform(), "gpu.dawn", "Queue::Submit");
     if (device->IsValidationEnabled()) {
         DAWN_TRY(ValidateSubmit(commandCount, commands));
     }

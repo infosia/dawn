@@ -138,11 +138,11 @@ void CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::In
     DeviceBase* device = mPipeline->GetDevice();
     const char* eventLabel = utils::GetLabelForTrace(mPipeline->GetLabel());
     if (isAsync) {
-        TRACE_EVENT_FLOW_END1(device->GetPlatform(), General,
-                              "CreatePipelineAsyncEvent::InitializeAsync", this, "label",
+        TRACE_EVENT_END("gpu.dawn",
+                              /* CreatePipelineAsyncEvent::InitializeAsync */ perfetto::Track::FromPointer(this), "label",
                               eventLabel);
     }
-    TRACE_EVENT1(device->GetPlatform(), General, "CreatePipelineAsyncEvent::InitializeImpl",
+    DAWN_TRACE_EVENT1(device->GetPlatform(), "gpu.dawn", "CreatePipelineAsyncEvent::InitializeImpl",
                  "label", eventLabel);
 
     MaybeError maybeError;
@@ -170,8 +170,8 @@ template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
 void CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::InitializeAsync() {
     DeviceBase* device = mPipeline->GetDevice();
     const char* eventLabel = utils::GetLabelForTrace(mPipeline->GetLabel());
-    TRACE_EVENT_FLOW_BEGIN1(device->GetPlatform(), General,
-                            "CreatePipelineAsyncEvent::InitializeAsync", this, "label", eventLabel);
+    TRACE_EVENT_BEGIN("gpu.dawn",
+                            "CreatePipelineAsyncEvent::InitializeAsync", perfetto::Track::FromPointer(this), "label", eventLabel);
 
     auto asyncTask = [event = Ref<CreatePipelineAsyncEvent>(this)] { event->InitializeImpl(true); };
     device->GetAsyncTaskManager()->PostTask<AsyncTask>(std::move(asyncTask));

@@ -127,7 +127,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     bool emitPointSize,
     bool isSampled,
     const ImmediateConstantMask& pipelineImmediateMask) {
-    TRACE_EVENT0(GetDevice()->GetPlatform(), General, "ShaderModuleVk::GetHandleAndSpirv");
+    DAWN_TRACE_EVENT0(GetDevice()->GetPlatform(), "gpu.dawn", "ShaderModuleVk::GetHandleAndSpirv");
 
 #if TINT_BUILD_SPV_WRITER
     // Creation of module and spirv is deferred to this point when using tint generator
@@ -312,7 +312,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     DAWN_TRY_LOAD_OR_RUN(
         compilation, GetDevice(), std::move(req), CompiledSpirv::FromValidatedBlob,
         [](SpirvCompilationRequest r) -> ResultOrError<CompiledSpirv> {
-            TRACE_EVENT0(r.platform.UnsafeGetValue(), General, "tint::spirv::writer::Generate()");
+            DAWN_TRACE_EVENT0(r.platform.UnsafeGetValue(), "gpu.dawn", "tint::spirv::writer::Generate()");
 
             // Requires Tint Program here right before actual using.
             auto inputProgram = r.inputProgram.UnsafeGetValue()->GetTintProgram();
@@ -388,7 +388,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     VkShaderModule newHandle = VK_NULL_HANDLE;
     {
         SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(GetDevice()->GetPlatform(), "Vulkan.CreateShaderModule");
-        TRACE_EVENT0(GetDevice()->GetPlatform(), General, "vkCreateShaderModule");
+        DAWN_TRACE_EVENT0(GetDevice()->GetPlatform(), "gpu.dawn", "vkCreateShaderModule");
         DAWN_TRY(CheckVkSuccess(
             device->fn.CreateShaderModule(device->GetVkDevice(), &createInfo, nullptr, &*newHandle),
             "CreateShaderModule"));

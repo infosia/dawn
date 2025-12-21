@@ -77,12 +77,12 @@ Queue::Queue(Device* device, const QueueDescriptor* descriptor) : QueueBase(devi
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
     Device* device = ToBackend(GetDevice());
     return device->EnqueueAndFlushGL(
-        [this, commandCount, commands](const OpenGLFunctions& gl) -> MaybeError {
-            TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), Recording, "CommandBufferGL::Execute");
+        [commandCount, commands](const OpenGLFunctions& gl) -> MaybeError {
+            DAWN_TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), "gpu.dawn.recording", "CommandBufferGL::Execute");
             for (uint32_t i = 0; i < commandCount; ++i) {
                 DAWN_TRY(ToBackend(commands[i])->Execute(gl));
             }
-            TRACE_EVENT_END0(GetDevice()->GetPlatform(), Recording, "CommandBufferGL::Execute");
+            DAWN_TRACE_EVENT_END0(GetDevice()->GetPlatform(), "gpu.dawn.recording", "CommandBufferGL::Execute");
             return {};
         });
 }

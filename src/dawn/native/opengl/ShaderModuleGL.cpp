@@ -355,7 +355,7 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     const PipelineLayout* layout,
     EmulatedTextureBuiltinRegistrar* emulatedTextureBuiltins,
     bool* needsSSBOLengthUniformBuffer) {
-    TRACE_EVENT0(GetDevice()->GetPlatform(), General, "TranslateToGLSL");
+    DAWN_TRACE_EVENT0(GetDevice()->GetPlatform(), "gpu.dawn", "TranslateToGLSL");
 
     const OpenGLVersion& version = gl.GetVersion();
 

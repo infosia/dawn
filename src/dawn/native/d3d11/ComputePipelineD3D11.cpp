@@ -86,7 +86,7 @@ MaybeError ComputePipeline::InitializeImpl() {
                         ->Compile(programmableStage, SingleShaderStage::Compute,
                                   ToBackend(GetLayout()), compileFlags, GetImmediateMask()));
     {
-        TRACE_EVENT0(device->GetPlatform(), General, "ComputePipelineD3D11::CreateComputeShader");
+        DAWN_TRACE_EVENT0(device->GetPlatform(), "gpu.dawn", "ComputePipelineD3D11::CreateComputeShader");
         SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(device->GetPlatform(), "D3D11.CreateComputeShaderUs");
         DAWN_TRY_ASSIGN(mComputeShader, device->GetOrCreateComputeShader(compiledShader));
     }
