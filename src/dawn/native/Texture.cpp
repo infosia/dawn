@@ -1125,6 +1125,40 @@ void TextureBase::WillDropLastExternalRef() {
     mDefaultView = nullptr;
 }
 
+void* TextureBase::GetMetalTextureId() {
+    return GetMetalTextureIdImpl();
+}
+
+void* TextureBase::APIGetMetalTextureId() {
+    return GetMetalTextureId();
+}
+
+void* TextureBase::APIGetVulkanImage() {
+    return GetVulkanImage();
+}
+uint32_t TextureBase::APIGetVulkanImageUsage() {
+    return GetVulkanImageUsage();
+} 
+uint32_t TextureBase::APIGetVulkanImageLayout() {
+    return GetVulkanImageLayout();
+}
+uint32_t TextureBase::APIGetVulkanImageFormat() {
+    return GetVulkanImageFormat();
+}
+
+void* TextureBase::GetVulkanImage() {
+    return GetVulkanImageImpl();
+}
+uint32_t TextureBase::GetVulkanImageUsage() {
+    return GetVulkanImageUsageImpl();
+} 
+uint32_t TextureBase::GetVulkanImageLayout() {
+    return GetVulkanImageLayoutImpl();
+}
+uint32_t TextureBase::GetVulkanImageFormat() {
+    return GetVulkanImageFormatImpl();
+}
+
 std::string TextureBase::GetSizeLabel() const {
     if (mDimension == wgpu::TextureDimension::e1D) {
         return absl::StrFormat("%d px", mBaseSize.width);
