@@ -85,16 +85,28 @@ template <typename It>
         handles.push_back((*it).first.mPrimitive.Get());
     }
     DAWN_ASSERT(handles.size() <= MAXIMUM_WAIT_OBJECTS);
-    DWORD status = WaitForMultipleObjects(handles.size(), handles.data(), /*bWaitAll=*/false,
-                                          ToMilliseconds(timeout));
-    if (status == WAIT_TIMEOUT) {
-        return false;
-    }
-    DAWN_CHECK(WAIT_OBJECT_0 <= status && status < WAIT_OBJECT_0 + count);
-    const size_t completedIndex = status - WAIT_OBJECT_0;
 
-    *(*(begin + completedIndex)).second = true;
-    return true;
+    // TODO(crbug.com/344798087): Handle the issue of timeouts in a more general way further up the
+    // stack.
+    DWORD status = WAIT_TIMEOUT;
+    DWORD timeoutMS = ToMilliseconds(timeout);
+    while (1) {
+        status = WaitForMultipleObjects(handles.size(), handles.data(), /*bWaitAll=*/false,
+                                        ToMilliseconds(timeout));
+        if (status == WAIT_TIMEOUT && timeoutMS == INFINITE) {
+            if (timeoutMS == INFINITE) {
+                continue;
+            } else {
+                return false;
+            }
+        }
+
+        DAWN_CHECK(WAIT_OBJECT_0 <= status && status < WAIT_OBJECT_0 + count);
+        const size_t completedIndex = status - WAIT_OBJECT_0;
+
+        *(*(begin + completedIndex)).second = true;
+        return true;
+    }
 #elif DAWN_PLATFORM_IS(POSIX)
     absl::InlinedVector<pollfd, 4 /* avoid heap allocation for small waits */> pollfds;
     pollfds.reserve(count);
