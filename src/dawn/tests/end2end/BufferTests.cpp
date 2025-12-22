@@ -161,7 +161,7 @@ TEST_P(BufferMappingTests, MapRead_NonZeroOffset) {
     // TODO(crbug.com/469328928, crbug.com/465497435): Flakily times out on
     // Snapdragon X Elite SoCs, suspected of causing a crash in global test
     // teardown as a result.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm());
+    // DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm());
 
     uint32_t myData[3] = {0x01020304, 0x05060708, 0x090A0B0C};
 
@@ -264,10 +264,16 @@ TEST_P(BufferMappingTests, MapRead_Large) {
 
 // Test that GetConstMappedRange works inside map-read callback
 TEST_P(BufferMappingTests, MapRead_InCallback) {
+<<<<<<< HEAD
     // TODO(crbug.com/469328928, crbug.com/465497435): Flakily times out on
     // Snapdragon X Elite SoCs, suspected of causing a crash in global test
     // teardown as a result.
     DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm());
+=======
+    // TODO(crbug.com/465497435): Flakily hits timeout on Snapdragon X Elite
+    // SoCs.
+    // DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
+>>>>>>> af014807c1 (wip)
 
     constexpr size_t kBufferSize = 12;
     wgpu::Buffer buffer = CreateMapReadBuffer(kBufferSize);
