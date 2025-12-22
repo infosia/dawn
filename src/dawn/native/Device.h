@@ -250,7 +250,15 @@ class DeviceBase : public ErrorSink,
         BufferBase* buffer,
         const TexelBufferViewDescriptor* descriptor);
 
+    void* GetMetalDeviceId();
+    virtual void* GetMetalDeviceIdImpl() { return nullptr; }
+    void AboutToCommitMtlCommandBuffer();
+    virtual void AboutToCommitMtlCommandBufferImpl() {}
+
     // Implementation of API object creation methods. DO NOT use them in a reentrant manner.
+    void* APIGetMetalDeviceId();
+    void* APIGetMetalQueueId();
+    void APIAboutToCommitMtlCommandBuffer();
     BindGroupBase* APICreateBindGroup(const BindGroupDescriptor* descriptor);
     BindGroupLayoutBase* APICreateBindGroupLayout(const BindGroupLayoutDescriptor* descriptor);
     BufferBase* APICreateBuffer(const BufferDescriptor* rawDescriptor);
