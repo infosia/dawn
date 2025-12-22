@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "629a6f92_2054a753",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 4546411
+      },
+      "writtenOn": "2025-12-22T20:27:03Z",
+      "side": 0,
+      "message": "I think this removal is a mistake. It downgraded the benchmark performance on vulkan.",
+      "revId": "c3de402889bfe9d7949503e6f66ac3ee18bdbc98",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
