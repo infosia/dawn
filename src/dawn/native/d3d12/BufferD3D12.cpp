@@ -457,7 +457,7 @@ MaybeError Buffer::MapInternal(bool isWrite, size_t offset, size_t size, const c
 
     // The mapped buffer can be accessed at any time, so it must be locked to ensure it is never
     // evicted. This buffer should already have been made resident when it was created.
-    TRACE_EVENT0(GetDevice()->GetPlatform(), General, "BufferD3D12::MapInternal");
+    DAWN_TRACE_EVENT0(GetDevice()->GetPlatform(), "gpu.dawn", "BufferD3D12::MapInternal");
 
     if (mResourceAllocation.GetInfo().mMethod != AllocationMethod::kExternal) {
         Heap* heap = ToBackend(mResourceAllocation.GetResourceHeap());

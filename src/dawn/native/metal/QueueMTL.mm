@@ -285,11 +285,13 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
     @autoreleasepool {
         CommandRecordingContext* commandContext = GetPendingCommandContext();
 
-        TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), Recording, "CommandBufferMTL::FillCommands");
+        DAWN_TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), "gpu.dawn.recording",
+                                "CommandBufferMTL::FillCommands");
         for (uint32_t i = 0; i < commandCount; ++i) {
             DAWN_TRY(ToBackend(commands[i])->FillCommands(commandContext));
         }
-        TRACE_EVENT_END0(GetDevice()->GetPlatform(), Recording, "CommandBufferMTL::FillCommands");
+        DAWN_TRACE_EVENT_END0(GetDevice()->GetPlatform(), "gpu.dawn.recording",
+                              "CommandBufferMTL::FillCommands");
 
         DAWN_TRY(SubmitPendingCommandBuffer());
 

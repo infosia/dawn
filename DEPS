@@ -255,8 +255,12 @@ deps = {
     'url': '{chromium_git}/external/github.com/llvm/llvm-project/compiler-rt/lib/fuzzer.git' + '@' + 'bea408a6e01f0f7e6c82a43121fe3af4506c932e',
     'condition': 'dawn_standalone',
   },
-  'third_party/googletest': {
+  'third_party/googletest/src': {
     'url': '{chromium_git}/external/github.com/google/googletest@065127f1e4b46c5f14fc73cf8d323c221f9dc68e',
+    'condition': 'dawn_standalone',
+  },
+  'third_party/re2/src': {
+    'url': '{chromium_git}/external/github.com/google/re2.git@e7aec5985072c1dbe735add802653ef4b36c231a',
     'condition': 'dawn_standalone',
   },
   # This is a dependency of //testing
@@ -266,6 +270,10 @@ deps = {
   },
   'third_party/google_benchmark/src': {
     'url': '{chromium_git}/external/github.com/google/benchmark.git' + '@' + '188e8278990a9069ffc84441cb5a024fd0bede37',
+    'condition': 'dawn_standalone',
+  },
+  'third_party/perfetto': {
+    'url': '{chromium_git}/external/github.com/google/perfetto.git' + '@' + 'fd5496e443e0d4e30c11258d1e926171222bafb7',
     'condition': 'dawn_standalone',
   },
 

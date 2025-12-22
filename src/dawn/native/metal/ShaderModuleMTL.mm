@@ -346,7 +346,8 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     DAWN_TRY_LOAD_OR_RUN(
         mslCompilation, device, std::move(req), MslCompilation::FromValidatedBlob,
         [](MslCompilationRequest r) -> ResultOrError<MslCompilation> {
-            TRACE_EVENT0(r.platform.UnsafeGetValue(), General, "tint::msl::writer::Generate");
+            DAWN_TRACE_EVENT0(r.platform.UnsafeGetValue(), "gpu.dawn",
+                              "tint::msl::writer::Generate");
             // Requires Tint Program here right before actual using.
             auto shaderModule = r.inputProgram.UnsafeGetValue();
             auto inputProgram = shaderModule->GetTintProgram();
@@ -440,8 +441,8 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
                                         ShaderModule::MetalFunctionData* out,
                                         uint32_t sampleMask,
                                         const RenderPipeline* renderPipeline) {
-    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "metal::ShaderModule::CreateFunction",
-                 "label", utils::GetLabelForTrace(GetLabel()));
+    DAWN_TRACE_EVENT1(GetDevice()->GetPlatform(), "gpu.dawn", "metal::ShaderModule::CreateFunction",
+                      "label", utils::GetLabelForTrace(GetLabel()));
 
     DAWN_ASSERT(!IsError());
     DAWN_ASSERT(out);
@@ -504,7 +505,8 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
     NSPRef<id<MTLLibrary>> library;
     platform::metrics::DawnHistogramTimer timer(GetDevice()->GetPlatform());
     {
-        TRACE_EVENT0(GetDevice()->GetPlatform(), General, "MTLDevice::newLibraryWithSource");
+        DAWN_TRACE_EVENT0(GetDevice()->GetPlatform(), "gpu.dawn",
+                          "MTLDevice::newLibraryWithSource");
         library = AcquireNSPRef([mtlDevice newLibraryWithSource:mslSource.Get()
                                                         options:compileOptions.Get()
                                                           error:&error]);
@@ -526,7 +528,8 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
         [[NSString alloc] initWithUTF8String:mslCompilation->remappedEntryPointName.c_str()]);
 
     {
-        TRACE_EVENT0(GetDevice()->GetPlatform(), General, "MTLLibrary::newFunctionWithName");
+        DAWN_TRACE_EVENT0(GetDevice()->GetPlatform(), "gpu.dawn",
+                          "MTLLibrary::newFunctionWithName");
         out->function = AcquireNSPRef([*library newFunctionWithName:name.Get()]);
         // TODO(372181030): Remove this unnecessary check when we understand why the MTLFunction
         // might be nil here.

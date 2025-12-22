@@ -96,12 +96,14 @@ MaybeError Queue::Initialize() {
 }
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
-    TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), Recording, "CommandBufferVk::RecordCommands");
+    DAWN_TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), "gpu.dawn.recording",
+                            "CommandBufferVk::RecordCommands");
     CommandRecordingContext* recordingContext = GetPendingRecordingContext();
     for (uint32_t i = 0; i < commandCount; ++i) {
         DAWN_TRY(ToBackend(commands[i])->RecordCommands(recordingContext));
     }
-    TRACE_EVENT_END0(GetDevice()->GetPlatform(), Recording, "CommandBufferVk::RecordCommands");
+    DAWN_TRACE_EVENT_END0(GetDevice()->GetPlatform(), "gpu.dawn.recording",
+                          "CommandBufferVk::RecordCommands");
 
     DAWN_TRY(SubmitPendingCommandsImpl());
 
@@ -322,7 +324,7 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
     VkFence fence = VK_NULL_HANDLE;
     DAWN_TRY_ASSIGN(fence, GetUnusedFence());
 
-    TRACE_EVENT_BEGIN0(device->GetPlatform(), Recording, "vkQueueSubmit");
+    DAWN_TRACE_EVENT_BEGIN0(device->GetPlatform(), "gpu.dawn.recording", "vkQueueSubmit");
     DAWN_TRY_WITH_CLEANUP(
         CheckVkSuccess(device->fn.QueueSubmit(mQueue, 1, &submitInfo, fence), "vkQueueSubmit"), {
             // If submitting to the queue fails, move the fence back into the unused fence
@@ -330,7 +332,7 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
             // it would be neither in the unused list nor in the in-flight list.
             mUnusedFences->push_back(fence);
         });
-    TRACE_EVENT_END0(device->GetPlatform(), Recording, "vkQueueSubmit");
+    DAWN_TRACE_EVENT_END0(device->GetPlatform(), "gpu.dawn.recording", "vkQueueSubmit");
 
     // Enqueue the semaphores before incrementing the serial, so that they can be deleted as
     // soon as the current submission is finished.

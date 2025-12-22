@@ -165,6 +165,31 @@
 #ifndef SRC_DAWN_PLATFORM_TRACING_TRACEEVENT_H_
 #define SRC_DAWN_PLATFORM_TRACING_TRACEEVENT_H_
 
+#if defined(DAWN_USE_PERFETTO)
+
+// Enable legacy trace event macros (e.g., TRACE_EVENT{0,1,2}).
+#define PERFETTO_ENABLE_LEGACY_TRACE_EVENTS 1
+
+#include "dawn/platform/tracing/trace_categories.h"
+#include "perfetto/tracing/string_helpers.h"
+#include "perfetto/tracing/track_event.h"
+#include "perfetto/tracing/track_event_legacy.h"
+
+#define DAWN_TRACE_EVENT0(platform, CATEGORY, EVENT, ...) \
+    TRACE_EVENT0(CATEGORY, EVENT, ##__VA_ARGS__)
+#define DAWN_TRACE_EVENT1(platform, CATEGORY, EVENT, ...) \
+    TRACE_EVENT1(CATEGORY, EVENT, ##__VA_ARGS__)
+#define DAWN_TRACE_EVENT_BEGIN0(platform, CATEGORY, EVENT, ...) \
+    TRACE_EVENT_BEGIN0(CATEGORY, EVENT, ##__VA_ARGS__)
+#define DAWN_TRACE_EVENT_END0(platform, CATEGORY, EVENT, ...) \
+    TRACE_EVENT_END0(CATEGORY, EVENT, ##__VA_ARGS__)
+#define DAWN_TRACE_EVENT_NESTABLE_ASYNC_BEGIN0(platform, CATEGORY, EVENT, ...) \
+    TRACE_EVENT_NESTABLE_ASYNC_BEGIN0(CATEGORY, EVENT, ##__VA_ARGS__)
+#define DAWN_TRACE_EVENT_NESTABLE_ASYNC_END0(platform, CATEGORY, EVENT, ...) \
+    TRACE_EVENT_NESTABLE_ASYNC_END0(CATEGORY, EVENT, ##__VA_ARGS__)
+
+#else
+
 #include <atomic>
 #include <string>
 
@@ -978,5 +1003,7 @@ class TraceEndOnScopeClose {
 };
 
 }  // namespace dawn::platform::TraceEvent
+
+#endif  // !defined(V8_USE_PERFETTO)
 
 #endif  // SRC_DAWN_PLATFORM_TRACING_TRACEEVENT_H_

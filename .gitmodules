@@ -58,9 +58,13 @@
 	path = third_party/libFuzzer/src
 	url = https://chromium.googlesource.com/external/github.com/llvm/llvm-project/compiler-rt/lib/fuzzer.git
 	gclient-condition = dawn_standalone
-[submodule "third_party/googletest"]
-	path = third_party/googletest
+[submodule "third_party/googletest/src"]
+	path = third_party/googletest/src
 	url = https://chromium.googlesource.com/external/github.com/google/googletest
+	gclient-condition = dawn_standalone
+[submodule "third_party/re2/src"]
+	path = third_party/re2/src
+	url = https://chromium.googlesource.com/external/github.com/google/re2.git
 	gclient-condition = dawn_standalone
 [submodule "third_party/catapult"]
 	path = third_party/catapult
@@ -69,6 +73,10 @@
 [submodule "third_party/google_benchmark/src"]
 	path = third_party/google_benchmark/src
 	url = https://chromium.googlesource.com/external/github.com/google/benchmark.git
+	gclient-condition = dawn_standalone
+[submodule "third_party/perfetto"]
+	path = third_party/perfetto
+	url = https://chromium.googlesource.com/external/github.com/google/perfetto.git
 	gclient-condition = dawn_standalone
 [submodule "third_party/jinja2"]
 	path = third_party/jinja2
@@ -197,3 +205,7 @@
 	path = third_party/partition_alloc
 	url = https://chromium.googlesource.com/chromium/src/base/allocator/partition_allocator.git
 	gclient-condition = dawn_standalone
+[submodule "third_party/placeholder_chromium"]
+	path = third_party/placeholder_chromium
+	url = https://chromium.googlesource.com/chromium/src.git
+	gclient-condition = checkout_placeholder_chromium

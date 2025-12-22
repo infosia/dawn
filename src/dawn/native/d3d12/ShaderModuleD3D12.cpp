@@ -119,7 +119,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     const std::optional<dawn::native::d3d::InterStageShaderVariablesMask>&
         usedInterstageVariables) {
     Device* device = ToBackend(GetDevice());
-    TRACE_EVENT0(device->GetPlatform(), General, "ShaderModuleD3D12::Compile");
+    DAWN_TRACE_EVENT0(device->GetPlatform(), "gpu.dawn", "ShaderModuleD3D12::Compile");
     DAWN_ASSERT(!IsError());
 
     const EntryPointMetadata& entryPoint = GetEntryPoint(programmableStage.entryPoint);

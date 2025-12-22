@@ -190,7 +190,8 @@ ResultOrError<Ref<RenderBundleBase>> RenderBundleEncoder::Finish(
 }
 
 MaybeError RenderBundleEncoder::ValidateFinish(const RenderPassResourceUsage& usages) const {
-    TRACE_EVENT0(GetDevice()->GetPlatform(), Validation, "RenderBundleEncoder::ValidateFinish");
+    DAWN_TRACE_EVENT0(GetDevice()->GetPlatform(), "gpu.dawn.validation",
+                      "RenderBundleEncoder::ValidateFinish");
     DAWN_TRY(GetDevice()->ValidateObject(this));
     DAWN_TRY(ValidateProgrammableEncoderEnd());
     DAWN_TRY(ValidateSyncScopeResourceUsage(usages));

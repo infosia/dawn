@@ -29,6 +29,39 @@ import("../../../scripts/dawn_overrides_with_defaults.gni")
 
 import("${dawn_root}/scripts/dawn_component.gni")
 
+if (dawn_enable_perfetto && !defined(dawn_perfetto_cpp_dir)) {
+  dawn_perfetto_cpp_dir = "//third_party/perfetto"
+}
+
+config("dawn_perfetto_config") {
+  if (dawn_enable_perfetto) {
+    defines = [ "DAWN_USE_PERFETTO" ]
+
+    configs = [ "$dawn_perfetto_cpp_dir/gn:public_config" ]
+
+    include_dirs = [
+      "//third_party/perfetto/include",
+      "$root_gen_dir/third_party/perfetto",
+      "$root_gen_dir/third_party/perfetto/build_config",
+    ]
+  }
+}
+
+group("dawn_perfetto") {
+  if (dawn_enable_perfetto) {
+    if (build_with_chromium) {
+      public_deps = [
+        "$dawn_perfetto_cpp_dir:libperfetto",
+        "$dawn_perfetto_cpp_dir/include/perfetto/tracing",
+      ]
+    } else {
+      public_deps = [ "$dawn_perfetto_cpp_dir/src/tracing:client_api" ]
+    }
+
+    public_configs = [ ":dawn_perfetto_config" ]
+  }
+}
+
 dawn_component("platform") {
   DEFINE_PREFIX = "DAWN_PLATFORM"
 
@@ -45,6 +78,8 @@ dawn_component("platform") {
     "tracing/EventTracer.cpp",
     "tracing/EventTracer.h",
     "tracing/TraceEvent.h",
+    "tracing/trace_categories.cc",
+    "tracing/trace_categories.h",
   ]
 
   deps = [ "${dawn_root}/src/dawn/common" ]
@@ -54,6 +89,7 @@ dawn_component("platform") {
 
   public_deps = [
     # DawnPlatform.h has #include <webgpu/webgpu.h>
+    ":dawn_perfetto",
     "${dawn_root}/include/dawn:headers",
     "${dawn_root}/src/dawn/partition_alloc:raw_ptr",
   ]

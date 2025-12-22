@@ -77,7 +77,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     const std::optional<dawn::native::d3d::InterStageShaderVariablesMask>& usedInterstageVariables,
     const std::optional<tint::hlsl::writer::PixelLocalOptions>& pixelLocalOptions) {
     Device* device = ToBackend(GetDevice());
-    TRACE_EVENT0(device->GetPlatform(), General, "ShaderModuleD3D11::Compile");
+    DAWN_TRACE_EVENT0(device->GetPlatform(), "gpu.dawn", "ShaderModuleD3D11::Compile");
     DAWN_ASSERT(!IsError());
 
     d3d::D3DCompilationRequest req = {};
