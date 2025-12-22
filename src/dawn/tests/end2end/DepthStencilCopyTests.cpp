@@ -666,7 +666,7 @@ TEST_P(DepthCopyTests, FromNonZeroMipDepthAspect) {
 // the copy extent is still correctly preserved.
 TEST_P(DepthCopyTests, PreserveBufferContent) {
     // TODO(crbug.com/461837996): Flaky on Snapdragon X Elite.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm());
+    // DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm());
 
     constexpr uint32_t kBufferCopyOffsets[] = {0u, 4u, 512u};
     constexpr uint32_t kTestTextureSizes[][2] = {
@@ -1221,7 +1221,7 @@ TEST_P(StencilCopyTests, FromNonZeroMipStencilAspect) {
 // the copy extent is still correctly preserved.
 TEST_P(StencilCopyTests, PreserveBufferContent) {
     // TODO(crbug.com/461837996): Flaky on Snapdragon X Elite.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm());
+    // DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm());
 
     constexpr uint32_t kBufferCopyOffsets[] = {0u, 4u, 512u};
     constexpr uint32_t kTestTextureSizes[][2] = {
