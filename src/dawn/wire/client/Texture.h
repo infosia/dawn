@@ -48,6 +48,13 @@ class Texture final : public ObjectBase {
 
     ObjectType GetObjectType() const override;
 
+    void* APIGetMetalTextureId() { return nullptr; }
+
+    void* APIGetVulkanImage() { return nullptr; }
+    uint32_t APIGetVulkanImageUsage() { return 0; } 
+    uint32_t APIGetVulkanImageLayout() { return 0; }
+    uint32_t APIGetVulkanImageFormat() { return 0; }
+
     // Note that these values can be arbitrary since they aren't validated in the wire client.
     uint32_t APIGetWidth() const;
     uint32_t APIGetHeight() const;

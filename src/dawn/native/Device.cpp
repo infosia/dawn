@@ -1267,7 +1267,72 @@ Ref<PipelineCacheBase> DeviceBase::GetOrCreatePipelineCache(const CacheKey& key)
     return GetOrCreatePipelineCacheImpl(key);
 }
 
+void* DeviceBase::GetMetalDeviceId() {
+   return GetMetalDeviceIdImpl(); 
+}
+
+void DeviceBase::AboutToCommitMtlCommandBuffer() {
+    AboutToCommitMtlCommandBufferImpl();
+}
+
+void* DeviceBase::GetVulkanInstance() {
+    return GetVulkanInstanceImpl();
+}
+void* DeviceBase::GetVulkanPhysicalDevice() {
+    return GetVulkanPhysicalDeviceImpl();
+}
+void* DeviceBase::GetVulkanDevice() {
+    return GetVulkanDeviceImpl();
+}
+void* DeviceBase::GetVulkanQueue() {
+    return GetVulkanQueueImpl();
+}
+uint32_t DeviceBase::GetVulkanQueueIndex() {
+    return GetVulkanQueueIndexImpl();
+}
+
+bool DeviceBase::SubmitVulkanCommandBuffer(void* submitInfo,
+                                           void* fence,
+                                           int numReadImages,
+                                           void* readImages,
+                                           uint32_t* readFinalUsages,
+                                           int numWriteImages,
+                                           void* writeImages,
+                                           uint32_t* writeFinalUsages) {
+    return SubmitVulkanCommandBufferImpl(submitInfo, fence, numReadImages, readImages,
+                                         readFinalUsages, numWriteImages, writeImages,
+                                         writeFinalUsages);
+}
+
 // Object creation API methods
+
+void* DeviceBase::APIGetMetalDeviceId() {
+   return GetMetalDeviceId(); 
+}
+
+void* DeviceBase::APIGetMetalQueueId() {
+   return GetQueue()->GetMetalQueueId(); 
+}
+
+void DeviceBase::APIAboutToCommitMtlCommandBuffer() {
+    AboutToCommitMtlCommandBuffer();
+}
+
+void* DeviceBase::APIGetVulkanInstance() {
+    return GetVulkanInstance();
+}
+void* DeviceBase::APIGetVulkanPhysicalDevice() {
+    return GetVulkanPhysicalDevice();
+}
+void* DeviceBase::APIGetVulkanDevice() {
+    return GetVulkanDevice();
+}
+void* DeviceBase::APIGetVulkanQueue() {
+    return GetVulkanQueue();
+}
+uint32_t DeviceBase::APIGetVulkanQueueIndex() {
+    return GetVulkanQueueIndex();
+}
 
 BindGroupBase* DeviceBase::APICreateBindGroup(const BindGroupDescriptor* descriptor) {
     Ref<BindGroupBase> result;
