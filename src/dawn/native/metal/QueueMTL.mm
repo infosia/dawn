@@ -128,6 +128,11 @@ MaybeError Queue::Initialize() {
     return mCommandContext.PrepareNextCommandBuffer(*mCommandQueue);
 }
 
+void* Queue::GetMetalQueueIdImpl() {
+    return (__bridge void *)(*mCommandQueue);
+}
+
+
 void Queue::UpdateCommandsScheduledEvents(ExecutionSerial scheduledSerial) {
     std::vector<Ref<EventManager::TrackedEvent>> readyEvents;
     mCommandsScheduledEvents.Use([&](auto events) {

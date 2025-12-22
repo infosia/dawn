@@ -474,6 +474,10 @@ MTLTextureUsage Texture::GetMTLTextureUsage() const {
     return mMtlUsage;
 }
 
+void* Texture::GetMetalTextureIdImpl() {
+    return (__bridge void *)GetMTLTexture(Aspect::Color);
+}
+
 id<MTLTexture> Texture::GetMTLTexture(Aspect aspect) const {
     id<MTLTexture> tex;
     switch (aspect) {

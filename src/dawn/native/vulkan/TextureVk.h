@@ -79,6 +79,11 @@ class Texture : public TextureBase {
                                    uint32_t arrayLayer = 0,
                                    uint32_t mipLevel = 0) const;
 
+    void* GetVulkanImageImpl() override;
+    uint32_t GetVulkanImageUsageImpl() override;
+    uint32_t GetVulkanImageLayoutImpl() override;
+    uint32_t GetVulkanImageFormatImpl() override;
+
     // Transitions the texture to be used as `usage`, recording any necessary barrier in
     // `commands`.
     // TODO(crbug.com/dawn/851): coalesce barriers and do them early when possible.

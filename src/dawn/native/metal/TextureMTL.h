@@ -61,6 +61,8 @@ class Texture final : public TextureBase {
 
     Texture(DeviceBase* device, const UnpackedPtr<TextureDescriptor>& descriptor);
 
+    void* GetMetalTextureIdImpl() override;
+
     MTLTextureType GetMTLTextureType() const;
     MTLTextureUsage GetMTLTextureUsage() const;
 
