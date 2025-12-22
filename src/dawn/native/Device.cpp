@@ -1270,7 +1270,27 @@ Ref<PipelineCacheBase> DeviceBase::GetOrCreatePipelineCache(const CacheKey& key)
     return GetOrCreatePipelineCacheImpl(key);
 }
 
+void* DeviceBase::GetMetalDeviceId() {
+   return GetMetalDeviceIdImpl(); 
+}
+
+void DeviceBase::AboutToCommitMtlCommandBuffer() {
+    AboutToCommitMtlCommandBufferImpl();
+}
+
 // Object creation API methods
+
+void* DeviceBase::APIGetMetalDeviceId() {
+   return GetMetalDeviceId(); 
+}
+
+void* DeviceBase::APIGetMetalQueueId() {
+   return GetQueue()->GetMetalQueueId(); 
+}
+
+void DeviceBase::APIAboutToCommitMtlCommandBuffer() {
+    AboutToCommitMtlCommandBuffer();
+}
 
 BindGroupBase* DeviceBase::APICreateBindGroup(const BindGroupDescriptor* descriptor) {
     Ref<BindGroupBase> result;

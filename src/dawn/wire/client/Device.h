@@ -65,6 +65,9 @@ class Device final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
     class DeviceLostEvent;
 
     // WebGPU API
+    void* APIGetMetalDeviceId() { return nullptr; }
+    void* APIGetMetalQueueId() { return nullptr; }
+    void APIAboutToCommitMtlCommandBuffer() { }
     void APISetLoggingCallback(const WGPULoggingCallbackInfo& callbackInfo);
     void APIInjectError(WGPUErrorType type, WGPUStringView message);
     WGPUFuture APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbackInfo);

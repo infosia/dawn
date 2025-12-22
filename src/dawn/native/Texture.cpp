@@ -1089,6 +1089,14 @@ void TextureBase::WillDropLastExternalRef() {
     mDefaultView = nullptr;
 }
 
+void* TextureBase::GetMetalTextureId() {
+    return GetMetalTextureIdImpl();
+}
+
+void* TextureBase::APIGetMetalTextureId() {
+    return GetMetalTextureId();
+}
+
 std::string TextureBase::GetSizeLabel() const {
     if (mDimension == wgpu::TextureDimension::e1D) {
         return absl::StrFormat("%d px", mBaseSize.width);

@@ -234,7 +234,11 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
         const UnpackedPtr<TextureViewDescriptor>& desc,
         CreateFn createFn);
 
+    void* GetMetalTextureId();
+    virtual void* GetMetalTextureIdImpl() { return nullptr; }
+
     // Dawn API
+    void* APIGetMetalTextureId();
     TextureViewBase* APICreateView(const TextureViewDescriptor* descriptor = nullptr);
     TextureViewBase* APICreateErrorView(const TextureViewDescriptor* descriptor = nullptr);
     void APIDestroy();
