@@ -1323,6 +1323,17 @@
         "category": "object",
         "methods": [
             {
+                "name": "get metal device id",
+                "returns": "void *"
+            },
+            {
+                "name": "get metal queue id",
+                "returns": "void *"
+            },
+            {
+                "name": "about to commit mtl command buffer"
+            },
+            {
                 "name": "create bind group",
                 "returns": "bind group",
                 "args": [
