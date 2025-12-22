@@ -236,7 +236,26 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
         const UnpackedPtr<TextureViewDescriptor>& desc,
         CreateFn createFn);
 
+    void* GetMetalTextureId();
+    virtual void* GetMetalTextureIdImpl() { return nullptr; }
+
+    void* GetVulkanImage();
+    uint32_t GetVulkanImageUsage();
+    uint32_t GetVulkanImageLayout();
+    uint32_t GetVulkanImageFormat();
+
+    virtual void* GetVulkanImageImpl() { return nullptr; }
+    virtual uint32_t GetVulkanImageUsageImpl() { return 0; }
+    virtual uint32_t GetVulkanImageLayoutImpl()  { return 0; }
+    virtual uint32_t GetVulkanImageFormatImpl()  { return 0; }
+
     // Dawn API
+    void* APIGetMetalTextureId();
+    void* APIGetVulkanImage();
+    uint32_t APIGetVulkanImageUsage();
+    uint32_t APIGetVulkanImageLayout();
+    uint32_t APIGetVulkanImageFormat();
+
     TextureViewBase* APICreateView(const TextureViewDescriptor* descriptor = nullptr);
     TextureViewBase* APICreateErrorView(const TextureViewDescriptor* descriptor = nullptr);
     void APIDestroy();

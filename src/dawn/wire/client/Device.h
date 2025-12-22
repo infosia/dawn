@@ -67,6 +67,25 @@ class Device final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
     class DeviceLostEvent;
 
     // WebGPU API
+    void* APIGetMetalDeviceId() { return nullptr; }
+    void* APIGetMetalQueueId() { return nullptr; }
+    void* APIGetVulkanInstance() { return nullptr; }
+    void* APIGetVulkanInstanceGetProc() { return nullptr; }
+    void* APIGetVulkanPhysicalDevice() { return nullptr; }
+    void* APIGetVulkanDevice() { return nullptr; }
+    void* APIGetVulkanQueue() { return nullptr; }
+    uint32_t APIGetVulkanQueueIndex() { return 0; }
+
+    bool APISubmitVulkanCommandBuffer(void* submitInfo,
+                                      void* fence,
+                                      int numReadImages,
+                                      void* readImages,
+                                      uint32_t* readFinalUsages,
+                                      int numWriteImages,
+                                      void* writeImages,
+                                      uint32_t* writeFinalUsages) { return false; }
+
+    void APIAboutToCommitMtlCommandBuffer() { }
     void APISetLoggingCallback(const WGPULoggingCallbackInfo& callbackInfo);
     void APIInjectError(WGPUErrorType type, WGPUStringView message);
     WGPUFuture APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbackInfo);
