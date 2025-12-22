@@ -51,6 +51,8 @@ class Queue final : public QueueBase {
     CommandRecordingContext* GetPendingCommandContext(SubmitMode submitMode = SubmitMode::Normal);
     MaybeError SubmitPendingCommandBuffer();
 
+    void* GetMetalQueueIdImpl() override;
+    
     // TODO(crbug.com/444702048): Remove after migrating Chromium to commands scheduled futures.
     void WaitForCommandsToBeScheduled();
 

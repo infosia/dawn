@@ -250,7 +250,63 @@ class DeviceBase : public ErrorSink,
         BufferBase* buffer,
         const TexelBufferViewDescriptor* descriptor);
 
+    void* GetMetalDeviceId();
+    virtual void* GetMetalDeviceIdImpl() { return nullptr; }
+    void AboutToCommitMtlCommandBuffer();
+    virtual void AboutToCommitMtlCommandBufferImpl() {}
+
+    void* GetVulkanInstance();
+    void* GetVulkanInstanceGetProc();
+    void* GetVulkanPhysicalDevice();
+    void* GetVulkanDevice();
+    void* GetVulkanQueue();
+    uint32_t GetVulkanQueueIndex();
+
+    virtual void* GetVulkanInstanceImpl() { return nullptr; }
+    virtual void* GetVulkanInstanceGetProcImpl() { return nullptr; }
+    virtual void* GetVulkanPhysicalDeviceImpl() { return nullptr; }
+    virtual void* GetVulkanDeviceImpl() { return nullptr; }
+    virtual void* GetVulkanQueueImpl() { return nullptr; }
+    virtual uint32_t GetVulkanQueueIndexImpl() { return 0; }
+    
+    bool SubmitVulkanCommandBuffer(void* submitInfo,
+                                      void* fence,
+                                      int numReadImages,
+                                      void* readImages,
+                                      uint32_t* readFinalUsages,
+                                      int numWriteImages,
+                                      void* writeImages,
+                                      uint32_t* writeFinalUsages);
+
+    virtual bool SubmitVulkanCommandBufferImpl(void* submitInfo,
+                                      void* fence,
+                                      int numReadImages,
+                                      void* readImages,
+                                      uint32_t* readFinalUsages,
+                                      int numWriteImages,
+                                      void* writeImages,
+                                      uint32_t* writeFinalUsages) { return false; }
+
     // Implementation of API object creation methods. DO NOT use them in a reentrant manner.
+    void* APIGetMetalDeviceId();
+    void* APIGetMetalQueueId();
+    void* APIGetVulkanInstance();
+    void* APIGetVulkanInstanceGetProc();
+    void* APIGetVulkanPhysicalDevice();
+    void* APIGetVulkanDevice();
+    void* APIGetVulkanQueue();
+    uint32_t APIGetVulkanQueueIndex();
+
+    bool APISubmitVulkanCommandBuffer(void* submitInfo,
+                                      void* fence,
+                                      int numReadImages,
+                                      void* readImages,
+                                      uint32_t* readFinalUsages,
+                                      int numWriteImages,
+                                      void* writeImages,
+                                      uint32_t* writeFinalUsages);
+
+    void APIAboutToCommitMtlCommandBuffer();
     BindGroupBase* APICreateBindGroup(const BindGroupDescriptor* descriptor);
     BindGroupLayoutBase* APICreateBindGroupLayout(const BindGroupLayoutDescriptor* descriptor);
     BufferBase* APICreateBuffer(const BufferDescriptor* rawDescriptor);

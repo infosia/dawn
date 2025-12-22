@@ -96,6 +96,22 @@ class Device final : public DeviceBase {
 
     // Dawn Native API
 
+    void* GetVulkanInstanceImpl() override;
+    void* GetVulkanInstanceGetProcImpl() override;
+    void* GetVulkanPhysicalDeviceImpl() override;
+    void* GetVulkanDeviceImpl() override;
+    void* GetVulkanQueueImpl() override;
+    uint32_t GetVulkanQueueIndexImpl() override;
+
+    bool SubmitVulkanCommandBufferImpl(void* submitInfo,
+                                      void* fence,
+                                      int numReadImages,
+                                      void* readImages,
+                                      uint32_t* readFinalUsages,
+                                      int numWriteImages,
+                                      void* writeImages,
+                                      uint32_t* writeFinalUsages) override;
+
     Ref<TextureBase> CreateTextureWrappingVulkanImage(
         const ExternalImageDescriptorVk* descriptor,
         ExternalMemoryHandle memoryHandle,

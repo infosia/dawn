@@ -858,6 +858,20 @@ Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descripto
           GetNumMipLevels(),
           TextureSyncInfo{wgpu::TextureUsage::None, wgpu::ShaderStage::None}) {}
 
+void* Texture::GetVulkanImageImpl() {
+    return reinterpret_cast<void*>(&mHandle);
+}
+uint32_t Texture::GetVulkanImageUsageImpl() {
+    Device* device = ToBackend(GetDevice());
+    return static_cast<uint32_t>(VulkanImageUsage(device, GetInternalUsage(), GetFormat()));
+}
+uint32_t Texture::GetVulkanImageLayoutImpl() {
+    return static_cast<uint32_t>(GetCurrentLayout(Aspect::Color));
+}
+uint32_t Texture::GetVulkanImageFormatImpl() {
+    return static_cast<uint32_t>(ColorVulkanImageFormat(GetFormat().format));
+}
+
 void Texture::SetLabelHelper(const char* prefix) {
     SetDebugName(ToBackend(GetDevice()), mHandle, prefix, GetLabel());
 }

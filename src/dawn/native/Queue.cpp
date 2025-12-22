@@ -157,6 +157,10 @@ ObjectType QueueBase::GetType() const {
     return ObjectType::Queue;
 }
 
+void* QueueBase::GetMetalQueueId() {
+   return GetMetalQueueIdImpl(); 
+}
+
 // It doesn't make much sense right now to mark the default queue as "unlabeled", so this override
 // prevents that. Consider removing when multiqueue is implemented.
 void QueueBase::FormatLabel(absl::FormatSink* s) const {

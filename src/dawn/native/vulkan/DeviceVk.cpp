@@ -385,6 +385,22 @@ VkDevice Device::GetVkDevice() const {
     return mVkDevice;
 }
 
+
+bool Device::SubmitVulkanCommandBufferImpl(void* submitInfo,
+                                           void* fence,
+                                           int numReadImages,
+                                           void* readImages,
+                                           uint32_t* readFinalUsages,
+                                           int numWriteImages,
+                                           void* writeImages,
+                                           uint32_t* writeFinalUsages) {
+    Queue* queue = ToBackend(GetQueue());
+    VkSubmitInfo* vkSubmitInfo = static_cast<VkSubmitInfo*>(submitInfo);
+    VkFence vkFence = *static_cast<VkFence*>(fence);
+    auto result = queue->submitDirect(vkSubmitInfo, vkFence);
+    return !result.IsError();
+}
+
 uint32_t Device::GetGraphicsQueueFamily() const {
     return mMainQueueFamily;
 }
@@ -1209,6 +1225,26 @@ QuerySetBase* Device::GetEmptyPassQuerySet() {
         mEmptyPassQuerySet = APICreateQuerySet(&descriptor);
     }
     return mEmptyPassQuerySet.Get();
+}
+
+
+void* Device::GetVulkanInstanceImpl() {
+    return reinterpret_cast<void*>(GetVkInstance());
+} 
+void* Device::GetVulkanInstanceGetProcImpl() {
+    return reinterpret_cast<void*>(fn.GetInstanceProcAddr);
+} 
+void* Device::GetVulkanPhysicalDeviceImpl() {
+    return reinterpret_cast<void*>(ToBackend(GetPhysicalDevice())->GetVkPhysicalDevice());
+}
+void* Device::GetVulkanDeviceImpl() {
+    return reinterpret_cast<void*>(GetVkDevice());
+}
+void* Device::GetVulkanQueueImpl() {
+    return reinterpret_cast<void*>(ToBackend(GetQueue())->GetVkQueue());
+}
+uint32_t Device::GetVulkanQueueIndexImpl() {
+    return mMainQueueFamily;
 }
 
 }  // namespace dawn::native::vulkan

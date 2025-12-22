@@ -188,6 +188,13 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     return DeviceBase::Initialize(descriptor, std::move(queue));
 }
 
+void* Device::GetMetalDeviceIdImpl() {
+    return (__bridge void *)GetMTLDevice();
+}
+
+void Device::AboutToCommitMtlCommandBufferImpl() {
+}
+
 ResultOrError<Ref<BindGroupBase>> Device::CreateBindGroupImpl(
     const UnpackedPtr<BindGroupDescriptor>& descriptor) {
     return BindGroup::Create(this, descriptor);
