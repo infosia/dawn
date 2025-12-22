@@ -250,7 +250,32 @@ class DeviceBase : public ErrorSink,
         BufferBase* buffer,
         const TexelBufferViewDescriptor* descriptor);
 
+    void* GetMetalDeviceId();
+    virtual void* GetMetalDeviceIdImpl() { return nullptr; }
+    void AboutToCommitMtlCommandBuffer();
+    virtual void AboutToCommitMtlCommandBufferImpl() {}
+
+    void* GetVulkanInstance();
+    void* GetVulkanPhysicalDevice();
+    void* GetVulkanDevice();
+    void* GetVulkanQueue();
+    uint32_t GetVulkanQueueIndex();
+
+    virtual void* GetVulkanInstanceImpl() { return nullptr; }
+    virtual void* GetVulkanPhysicalDeviceImpl() { return nullptr; }
+    virtual void* GetVulkanDeviceImpl() { return nullptr; }
+    virtual void* GetVulkanQueueImpl() { return nullptr; }
+    virtual uint32_t GetVulkanQueueIndexImpl() { return 0; }
+
     // Implementation of API object creation methods. DO NOT use them in a reentrant manner.
+    void* APIGetMetalDeviceId();
+    void* APIGetMetalQueueId();
+    void* APIGetVulkanInstance();
+    void* APIGetVulkanPhysicalDevice();
+    void* APIGetVulkanDevice();
+    void* APIGetVulkanQueue();
+    uint32_t APIGetVulkanQueueIndex();
+    void APIAboutToCommitMtlCommandBuffer();
     BindGroupBase* APICreateBindGroup(const BindGroupDescriptor* descriptor);
     BindGroupLayoutBase* APICreateBindGroupLayout(const BindGroupLayoutDescriptor* descriptor);
     BufferBase* APICreateBuffer(const BufferDescriptor* rawDescriptor);

@@ -1323,6 +1323,37 @@
         "category": "object",
         "methods": [
             {
+                "name": "get metal device id",
+                "returns": "void *"
+            },
+            {
+                "name": "get metal queue id",
+                "returns": "void *"
+            },
+            {
+                "name": "get vulkan instance",
+                "returns": "void *"
+            },
+            {
+                "name": "get vulkan physical device",
+                "returns": "void *"
+            },
+            {
+                "name": "get vulkan device",
+                "returns": "void *"
+            },
+            {
+                "name": "get vulkan queue",
+                "returns": "void *"
+            },
+            {
+                "name": "get vulkan queue index",
+                "returns": "uint32_t"
+            },
+            {
+                "name": "about to commit mtl command buffer"
+            },
+            {
                 "name": "create bind group",
                 "returns": "bind group",
                 "args": [
@@ -4108,6 +4139,26 @@
     "texture": {
         "category": "object",
         "methods": [
+            {
+                "name": "get metal texture id",
+                "returns": "void *"
+            },
+            {
+                "name": "get vulkan image",
+                "returns": "void *"
+            },
+            {
+                "name": "get vulkan image usage",
+                "returns": "uint32_t"
+            },
+            {
+                "name": "get vulkan image layout",
+                "returns": "uint32_t"
+            },
+            {
+                "name": "get vulkan image format",
+                "returns": "uint32_t"
+            },
             {
                 "name": "create view",
                 "no autolock": true,

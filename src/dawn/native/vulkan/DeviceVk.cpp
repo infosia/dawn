@@ -1198,4 +1198,21 @@ QuerySetBase* Device::GetEmptyPassQuerySet() {
     return mEmptyPassQuerySet.Get();
 }
 
+
+void* Device::GetVulkanInstanceImpl() {
+    return reinterpret_cast<void*>(GetVkInstance());
+} 
+void* Device::GetVulkanPhysicalDeviceImpl() {
+    return reinterpret_cast<void*>(ToBackend(GetPhysicalDevice())->GetVkPhysicalDevice());
+}
+void* Device::GetVulkanDeviceImpl() {
+    return reinterpret_cast<void*>(GetVkDevice());
+}
+void* Device::GetVulkanQueueImpl() {
+    return reinterpret_cast<void*>(ToBackend(GetQueue())->GetVkQueue());
+}
+uint32_t Device::GetVulkanQueueIndexImpl() {
+    return mMainQueueFamily;
+}
+
 }  // namespace dawn::native::vulkan
