@@ -61,6 +61,9 @@ class Device final : public DeviceBase {
 
     MaybeError TickImpl() override;
 
+    void* GetMetalDeviceIdImpl() override;
+    void AboutToCommitMtlCommandBufferImpl() override;
+
     id<MTLDevice> GetMTLDevice() const;
 
     MaybeError CopyFromStagingToBuffer(BufferBase* source,

@@ -56,6 +56,8 @@ class Queue final : public QueueBase {
     ResultOrError<ExecutionSerial> WaitForQueueSerialImpl(ExecutionSerial waitSerial,
                                                           Nanoseconds timeout) override;
 
+    MaybeError submitDirect(VkSubmitInfo*, VkFence);
+
   private:
     Queue(Device* device, const QueueDescriptor* descriptor, uint32_t family);
     ~Queue() override;
