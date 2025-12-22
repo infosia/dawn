@@ -108,6 +108,16 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
     return {};
 }
 
+
+MaybeError Queue::submitDirect(VkSubmitInfo* submitInfo,
+                         VkFence fence) {
+    Device* device = ToBackend(GetDevice());
+
+    DAWN_TRY(CheckVkSuccess(device->fn.QueueSubmit(mQueue, 1, submitInfo, fence), "vkQueueSubmit"));
+
+    return {};
+}
+
 void Queue::SetLabelImpl() {
     Device* device = ToBackend(GetDevice());
     // TODO(crbug.com/dawn/1344): When we start using multiple queues this needs to be adjusted

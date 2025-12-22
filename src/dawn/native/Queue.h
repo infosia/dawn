@@ -74,6 +74,9 @@ class QueueBase : public ExecutionQueueBase, public WeakRefSupport<QueueBase> {
     ObjectType GetType() const override;
     void FormatLabel(absl::FormatSink* s) const override;
 
+    void* GetMetalQueueId();
+    virtual void* GetMetalQueueIdImpl() { return nullptr; }
+
     // Dawn API
     void APISubmit(uint32_t commandCount, CommandBufferBase* const* commands);
     Future APIOnSubmittedWorkDone(const WGPUQueueWorkDoneCallbackInfo& callbackInfo);
