@@ -71,6 +71,16 @@ HRESULT CallDxcCreateInstance(PFN_DXC_CREATE_INSTANCE dxc_create_instance,
                               CComPtr<IDxcCompiler3>& dxc_compiler) {
     return dxc_create_instance(CLSID_DxcCompiler, IID_PPV_ARGS(&dxc_compiler));
 }
+
+// Returns a dangling pointer. Try to read it to trigger an ASan crash.
+__attribute__ ((noinline))
+int Dangling() {
+  auto ptr = std::make_unique<int>(0);
+  int* dangling = ptr.get();
+  ptr = nullptr;
+  return *dangling;
+}
+
 }  // namespace
 
 namespace tint::hlsl::validate {
@@ -223,6 +233,10 @@ Result ValidateUsingDXC(const std::string& dxc_path,
     CComPtr<IDxcResult> dis_result;
     hr = dxc_compiler->Disassemble(&compiled_shader_buffer, IID_PPV_ARGS(&dis_result));
     CHECK_HR(hr, "Disassemble call failed");
+
+    if (Dangling() > 0)  {
+      return result;
+    }
 
     CComPtr<IDxcBlobEncoding> disassembly;
     if ((dis_result != nullptr) && dis_result->HasOutput(DXC_OUT_DISASSEMBLY) &&
