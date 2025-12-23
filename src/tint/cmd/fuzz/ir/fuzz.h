@@ -66,6 +66,12 @@ struct Context {
     Options options;
 };
 
+namespace {
+
+constexpr std::array<std::byte, 1 << 12> kAllZeroes = {};
+
+}  // namespace
+
 /// IRFuzzer describes a fuzzer function that takes a IR module as input
 struct IRFuzzer {
     /// @param name the name of the fuzzer
@@ -83,7 +89,8 @@ struct IRFuzzer {
             auto fn_with_decode = [fn](core::ir::Module& module, const Context& context,
                                        std::span<const std::byte> data) -> Result<SuccessType> {
                 if (data.empty()) {
-                    return Failure{"Data expected but no data provided."};
+                    data = kAllZeroes;
+                    //return Failure{"Data expected but no data provided."};
                 }
 
                 bytes::BufferReader reader{data};
