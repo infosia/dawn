@@ -80,6 +80,19 @@ if (tint_build_wgsl_reader) {
   }
 }
 if (tint_build_wgsl_reader) {
+  if (use_external_fuzzing_engine) {
+    # Checked in to the tree, built elsewhere.
+    copy("libdarthshader") {
+      sources = [ "libdarthshader.a" ]
+      outputs = [ "$target_out_dir/libdarthshader.a" ]
+      all_dependent_configs = [ "${tint_src_dir}/cmd/fuzz/wgsl:libdarthshader_alwayslink" ]
+    }
+
+    config("libdarthshader_alwayslink") {
+      ldflags = [ "-LinkWrapper,add-whole-archive=libdarthshader.a" ]
+    }
+  }
+
   tint_fuzzer_test("wgsl") {
     output_name = "tint_wgsl_fuzzer"
     sources = [ "main_fuzz.cc" ]
@@ -112,6 +125,17 @@ if (tint_build_wgsl_reader) {
       "${tint_src_dir}/utils/symbol",
       "${tint_src_dir}/utils/text",
     ]
+
+    if (use_external_fuzzing_engine) {
+      # Already provided by `libdarthshader`.
+      exclude_main = true
+
+      # Must use relative path for `gn` to understand this is a library from
+      # the build directory.
+      libs = [ "./libdarthshader.a" ]
+
+      deps += [ "${tint_src_dir}/cmd/fuzz/wgsl:libdarthshader" ]
+    }
 
     if (tint_build_glsl_writer) {
       deps += [ "${tint_src_dir}/lang/glsl/writer:fuzz" ]
