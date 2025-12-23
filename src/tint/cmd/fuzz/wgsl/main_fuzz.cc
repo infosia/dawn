@@ -137,7 +137,7 @@ extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* 
     if (auto res = opts.Parse(arguments, parse_opts); res != tint::Success) {
         show_help();
         std::cerr << res.Failure();
-        return 0;
+        return -1;
     }
 
     if (opt_help.value.value_or(false)) {
@@ -148,7 +148,7 @@ extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* 
     // Read optional user-supplied args or use default provided
     options.filter = opt_filter.value.value_or("");
     options.run_concurrently = opt_concurrent.value.value_or(false);
-    options.verbose = opt_verbose.value.value_or(false);
+    options.verbose = opt_verbose.value.value_or(true);
     options.dxc = opt_dxc.value.value_or(get_default_dxc_path(argv));
     options.dump = opt_dump.value.value_or(false);
 
