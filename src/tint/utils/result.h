@@ -164,6 +164,16 @@ struct [[nodiscard]] Result {
         return value == other.value;
     }
 
+    /// Returns whether this result holds a success value.
+    bool IsSuccess() const {
+        return std::holds_alternative<SUCCESS_TYPE>(value);
+    }
+
+    /// Returns whether this result holds a failure value.
+    bool IsFailure() const {
+        return std::holds_alternative<FAILURE_TYPE>(value);
+    }
+
     /// Equality operator
     /// @param val the value to compare this Result to
     /// @returns true if this result holds a success or failure value equal to `value`

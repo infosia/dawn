@@ -167,16 +167,11 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     // Run DXC against generated HLSL in order to fuzz it. Note that we ignore whether it succeeds
     // as DXC may fail on valid HLSL emitted by Tint. For example: post optimization infinite loops
     // will fail to compile, but these are beyond Tint's analysis capabilities.
-    const char* dxc_path = validate::kDxcDLLName;
-    if (!context.options.dxc.empty()) {
-        dxc_path = context.options.dxc.c_str();
-    }
-    auto dxc = tint::Command::LookPath(dxc_path);
-    if (dxc.Found()) {
+    if (context.options.dxc != std::nullopt) {
         uint32_t hlsl_shader_model = 66;
         bool require_16bit_types = true;
-        [[maybe_unused]] auto validate_res = validate::ValidateUsingDXC(
-            dxc.Path(), output->hlsl, output->entry_point_name, output->pipeline_stage,
+        [[maybe_unused]] auto validate_res = context.options.dxc->Validate(
+            output->hlsl, output->entry_point_name, output->pipeline_stage,
             require_16bit_types, hlsl_shader_model);
     }
 

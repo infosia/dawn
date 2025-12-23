@@ -36,6 +36,7 @@
 #include <utility>
 
 #include "src/tint/lang/wgsl/program/program.h"
+#include "src/tint/lang/hlsl/validate/validate.h"
 #include "src/tint/utils/bytes/buffer_reader.h"
 #include "src/tint/utils/bytes/decoder.h"
 #include "src/tint/utils/containers/enum_set.h"
@@ -51,8 +52,8 @@ struct Options {
     bool run_concurrently = false;
     /// If true, print the fuzzer name to stdout before running.
     bool verbose = false;
-    /// If not empty, load DXC from this path when fuzzing HLSL generation.
-    std::string dxc;
+    /// If present, validate HLSL outputs using DXC.
+    std::optional<hlsl::validate::DxcCompiler> dxc;
     /// If true, dump shader input/output text to stdout
     bool dump = false;
 };
@@ -73,7 +74,7 @@ enum class ProgramProperties {
 /// Context holds information about the fuzzer options and the input program.
 struct Context {
     /// The options used for Run()
-    Options options;
+    const Options& options;
     /// The properties of the input program
     EnumSet<ProgramProperties> program_properties;
 };

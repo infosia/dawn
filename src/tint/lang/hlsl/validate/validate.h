@@ -28,9 +28,11 @@
 #ifndef SRC_TINT_LANG_HLSL_VALIDATE_VALIDATE_H_
 #define SRC_TINT_LANG_HLSL_VALIDATE_VALIDATE_H_
 
+#include <memory>
 #include <string>
 
 #include "src/tint/lang/core/ir/function.h"
+#include "src/tint/utils/result.h"
 
 namespace tint::hlsl::validate {
 
@@ -53,6 +55,34 @@ struct Result {
     bool failed = false;
     /// Output of DXC.
     std::string output;
+};
+
+class DxcCompiler {
+  public:
+    static tint::Result<DxcCompiler> Create(const std::string& dxc_path);
+
+    /// Hlsl attempts to compile the shader with DXC, verifying that the shader
+    /// compiles successfully.
+    /// @param source the generated HLSL source
+    /// @param entry_point_name the name of the entry point to validate
+    /// @param pipeline_stage the pipeline stage of the entry point to validate
+    /// @param require_16bit_types set to `true` to require the support of float16 in DXC
+    /// @param hlsl_shader_model the shader model of the HLSL source
+    /// @return the result of the compile
+    Result Validate(
+        const std::string& source,
+        const std::string& entry_point_name,
+        core::ir::Function::PipelineStage pipeline_stage,
+        bool require_16bit_types,
+        uint32_t hlsl_shader_model);
+
+  private:
+    // Hide Windows header details behind a PIMPL.
+    struct Impl;
+
+    DxcCompiler(std::unique_ptr<Impl> impl);
+
+    std::unique_ptr<Impl> impl_;
 };
 
 /// Hlsl attempts to compile the shader with DXC, verifying that the shader

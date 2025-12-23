@@ -31,6 +31,7 @@
 #include <string>
 
 #include "src/tint/cmd/fuzz/wgsl/fuzz.h"
+#include "src/tint/lang/hlsl/validate/validate.h"
 #include "src/tint/utils/command/cli.h"
 #include "src/tint/utils/command/command.h"
 #include "src/tint/utils/text/base64.h"
@@ -145,20 +146,32 @@ extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* 
         return 0;
     }
 
-    // Read optional user-supplied args or use default provided
-    options.filter = opt_filter.value.value_or("");
-    options.run_concurrently = opt_concurrent.value.value_or(false);
-    options.verbose = opt_verbose.value.value_or(true);
-    options.dxc = opt_dxc.value.value_or(get_default_dxc_path(argv));
-    options.dump = opt_dump.value.value_or(false);
-
-    print_dxc_path_found(options.dxc);
 #if DAWN_ASAN_ENABLED() && !defined(NDEBUG)
     // TODO(crbug.com/352402877): Avoid DXC timeouts on asan + debug fuzzer builds
     std::cout << "DXC validation disabled in asan + debug builds"
               << "\n";
-    options.dxc = "";
+#else
+    std::string dxc_path = opt_dxc.value.value_or(get_default_dxc_path(argv));
+    auto dxc = tint::Command::LookPath(dxc_path);
+    if (dxc.Found()) {
+        std::cout << "DXC library found: " << dxc.Path() << "\n";
+        auto compiler = tint::hlsl::validate::DxcCompiler::Create(dxc.Path());
+        if (compiler.IsSuccess()) {
+            std::cout << "DXC library loaded\n";
+            options.dxc = std::move(compiler.Get());
+        } else {
+            std::cout << "DXC library failed to load: " << compiler.Failure().reason << "\n";
+        }
+    } else {
+        std::cout << "DXC library not found: " << dxc_path << "\n";
+    }
 #endif
+
+    // Read optional user-supplied args or use default provided
+    options.filter = opt_filter.value.value_or("");
+    options.run_concurrently = opt_concurrent.value.value_or(false);
+    options.verbose = opt_verbose.value.value_or(true);
+    options.dump = opt_dump.value.value_or(false);
 
     return 0;
 }

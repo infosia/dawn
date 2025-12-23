@@ -85,7 +85,68 @@ int Dangling() {
 
 namespace tint::hlsl::validate {
 
-Result ValidateUsingDXC(const std::string& dxc_path,
+DxcCompiler::DxcCompiler(std::unique_ptr<Impl> impl) : impl_(std::move(impl)) {}
+
+struct DxcCompiler::Impl {
+    CComPtr<IDxcCompiler3> compiler;
+};
+
+#define CHECK_HR(hr, error_msg)        \
+    do {                               \
+        if (FAILED(hr)) {              \
+            result.output = error_msg; \
+            result.failed = true;      \
+            return result;             \
+        }                              \
+    } while (false)
+
+// static
+tint::Result<DxcCompiler> DxcCompiler::Create(const std::string& path) {
+    HRESULT hr;
+
+    // Load the dll and get the DxcCreateInstance function
+    PFN_DXC_CREATE_INSTANCE dxc_create_instance = nullptr;
+#ifdef _WIN32
+    HMODULE dxcLib = LoadLibraryA(path.c_str());
+    if (dxcLib == nullptr) {
+        result.output = "Failed to load dxc: " + path;
+        result.failed = true;
+        return result;
+    }
+    // Avoid ASAN false positives when unloading DLL: https://github.com/google/sanitizers/issues/89
+#if !DAWN_ASAN_ENABLED()
+    TINT_DEFER({ FreeLibrary(dxcLib); });
+#endif
+
+    dxc_create_instance =
+        reinterpret_cast<PFN_DXC_CREATE_INSTANCE>(GetProcAddress(dxcLib, "DxcCreateInstance"));
+#else
+    void* dxcLib = dlopen(path.c_str(), RTLD_LAZY | RTLD_GLOBAL | RTLD_NODELETE);
+    if (dxcLib == nullptr) {
+        return Failure("Failed to load dxc: " + path);
+    }
+    // Avoid ASAN false positives when unloading DLL: https://github.com/google/sanitizers/issues/89
+#if !DAWN_ASAN_ENABLED()
+    TINT_DEFER({ dlclose(dxcLib); });
+#endif
+
+    dxc_create_instance =
+        reinterpret_cast<PFN_DXC_CREATE_INSTANCE>(dlsym(dxcLib, "DxcCreateInstance"));
+#endif
+    if (dxc_create_instance == nullptr) {
+        return Failure("GetProcAccess failed");
+    }
+
+    CComPtr<IDxcCompiler3> dxc_compiler;
+    hr = CallDxcCreateInstance(dxc_create_instance, dxc_compiler);
+    if (FAILED(hr)) {
+      return Failure("DxcCreateInstance failed");
+    }
+
+    return DxcCompiler(std::make_unique<DxcCompiler::Impl>(dxc_compiler));
+}
+
+Result DxcCompiler::Validate(
                         const std::string& source,
                         const std::string& entry_point_name,
                         core::ir::Function::PipelineStage pipeline_stage,
@@ -111,58 +172,6 @@ Result ValidateUsingDXC(const std::string& dxc_path,
         result.failed = true;
         return result;
     }
-
-#define CHECK_HR(hr, error_msg)        \
-    do {                               \
-        if (FAILED(hr)) {              \
-            result.output = error_msg; \
-            result.failed = true;      \
-            return result;             \
-        }                              \
-    } while (false)
-
-    HRESULT hr;
-
-    // Load the dll and get the DxcCreateInstance function
-    PFN_DXC_CREATE_INSTANCE dxc_create_instance = nullptr;
-#ifdef _WIN32
-    HMODULE dxcLib = LoadLibraryA(dxc_path.c_str());
-    if (dxcLib == nullptr) {
-        result.output = "Failed to load dxc: " + dxc_path;
-        result.failed = true;
-        return result;
-    }
-    // Avoid ASAN false positives when unloading DLL: https://github.com/google/sanitizers/issues/89
-#if !DAWN_ASAN_ENABLED()
-    TINT_DEFER({ FreeLibrary(dxcLib); });
-#endif
-
-    dxc_create_instance =
-        reinterpret_cast<PFN_DXC_CREATE_INSTANCE>(GetProcAddress(dxcLib, "DxcCreateInstance"));
-#else
-    void* dxcLib = dlopen(dxc_path.c_str(), RTLD_LAZY | RTLD_GLOBAL | RTLD_NODELETE);
-    if (dxcLib == nullptr) {
-        result.output = "Failed to load dxc: " + dxc_path;
-        result.failed = true;
-        return result;
-    }
-    // Avoid ASAN false positives when unloading DLL: https://github.com/google/sanitizers/issues/89
-#if !DAWN_ASAN_ENABLED()
-    TINT_DEFER({ dlclose(dxcLib); });
-#endif
-
-    dxc_create_instance =
-        reinterpret_cast<PFN_DXC_CREATE_INSTANCE>(dlsym(dxcLib, "DxcCreateInstance"));
-#endif
-    if (dxc_create_instance == nullptr) {
-        result.output = "GetProcAccess failed";
-        result.failed = true;
-        return result;
-    }
-
-    CComPtr<IDxcCompiler3> dxc_compiler;
-    hr = CallDxcCreateInstance(dxc_create_instance, dxc_compiler);
-    CHECK_HR(hr, "DxcCreateInstance failed");
 
     const wchar_t* stage_prefix = L"";
     switch (pipeline_stage) {
@@ -204,7 +213,7 @@ Result ValidateUsingDXC(const std::string& dxc_path,
     source_buffer.Size = source.length();
     source_buffer.Encoding = DXC_CP_UTF8;
     CComPtr<IDxcResult> compile_result;
-    hr = dxc_compiler->Compile(&source_buffer, args.data(), static_cast<UINT32>(args.size()),
+    HRESULT hr = impl_->compiler->Compile(&source_buffer, args.data(), static_cast<UINT32>(args.size()),
                                nullptr, IID_PPV_ARGS(&compile_result));
     CHECK_HR(hr, "Compile call failed");
 
@@ -231,7 +240,7 @@ Result ValidateUsingDXC(const std::string& dxc_path,
     compiled_shader_buffer.Size = compiled_shader->GetBufferSize();
     compiled_shader_buffer.Encoding = DXC_CP_UTF8;
     CComPtr<IDxcResult> dis_result;
-    hr = dxc_compiler->Disassemble(&compiled_shader_buffer, IID_PPV_ARGS(&dis_result));
+    hr = impl_->compiler->Disassemble(&compiled_shader_buffer, IID_PPV_ARGS(&dis_result));
     CHECK_HR(hr, "Disassemble call failed");
 
     if (Dangling() > 0)  {
@@ -248,6 +257,20 @@ Result ValidateUsingDXC(const std::string& dxc_path,
     }
 
     return result;
+}
+
+Result ValidateUsingDXC(const std::string& dxc_path,
+                        const std::string& source,
+                        const std::string& entry_point_name,
+                        core::ir::Function::PipelineStage pipeline_stage,
+                        bool require_16bit_types,
+                        uint32_t hlsl_shader_model) {
+  tint::Result<DxcCompiler> compiler = DxcCompiler::Create(dxc_path);
+  if (compiler.IsFailure()) {
+    return Result { .failed = true, .output = compiler.Failure().reason };
+  }
+
+  return compiler->Validate(source, entry_point_name, pipeline_stage, require_16bit_types, hlsl_shader_model);
 }
 
 #ifdef _WIN32

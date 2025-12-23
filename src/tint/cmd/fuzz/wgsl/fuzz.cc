@@ -163,9 +163,10 @@ void Run(std::string_view wgsl, const Options& options, std::span<const std::byt
         return;
     }
 
-    Context context;
-    context.options = options;
-    context.program_properties = ScanProgramProperties(program);
+    Context context {
+        .options = options,
+        .program_properties = ScanProgramProperties(program),
+    };
 
     bool ran_atleast_once = false;
 
