@@ -1944,6 +1944,7 @@ MaybeError CommandBuffer::EncodeRenderPass(
             case Command::SetRenderPipeline: {
                 SetRenderPipelineCmd* cmd = iter->NextCommand<SetRenderPipelineCmd>();
                 RenderPipeline* newPipeline = ToBackend(cmd->pipeline).Get();
+
                 if (newPipeline == lastPipeline) {
                     break;
                 }
@@ -1986,8 +1987,8 @@ MaybeError CommandBuffer::EncodeRenderPass(
             }
 
             case Command::SetImmediates: {
-                SetImmediatesCmd* cmd = mCommands.NextCommand<SetImmediatesCmd>();
-                uint8_t* value = mCommands.NextData<uint8_t>(cmd->size);
+                SetImmediatesCmd* cmd = iter->NextCommand<SetImmediatesCmd>();
+                uint8_t* value = iter->NextData<uint8_t>(cmd->size);
                 immediates.SetImmediates(cmd->offset, value, cmd->size);
                 break;
             }
