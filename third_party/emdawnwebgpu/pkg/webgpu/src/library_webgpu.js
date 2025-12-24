@@ -125,6 +125,20 @@ var LibraryWebGPU = {
       // Buffer unmapping callbacks are stored in a separate table to keep
       // the jsObject table simple.
       bufferOnUnmaps: [],
+      textureBindingViewDimensions: [],
+      textureBindingViewDimensionFromParams: (dimension, depthOrArrayLayers) => {
+        switch (dimension) {
+          case '1d':
+            return WebGPU.TextureViewDimension.indexOf('1d');
+          case '2d':
+            return WebGPU.TextureViewDimension.indexOf(
+              depthOrArrayLayers === 1 ? '2d' : '2d-array');
+          case '3d':
+            return WebGPU.TextureViewDimension.indexOf('3d');
+          default:
+            return 0;
+        }
+      },
 
       // Future to promise management. Note that all FutureIDs (uint64_t) are
       // passed either as a low and high value or by pointer because they need
@@ -670,6 +684,7 @@ var LibraryWebGPU = {
   emwgpuDelete__sig: 'vp',
   emwgpuDelete: (ptr) => {
     delete WebGPU.Internals.jsObjects[ptr];
+    delete WebGPU.Internals.textureBindingViewDimensions[ptr];
   },
 
   emwgpuSetLabel__deps: ['$UTF8ToString'],
@@ -1841,6 +1856,20 @@ var LibraryWebGPU = {
       "usage": {{{ makeGetValue('descriptor', C_STRUCTS.WGPUTextureDescriptor.usage, 'u32') }}},
     };
 
+    var textureBindingViewDimension = 0;
+    {
+      var nextInChainPtr = {{{ makeGetValue('descriptor', C_STRUCTS.WGPUTextureDescriptor.nextInChain, '*') }}};
+      while (nextInChainPtr !== 0) {
+        var sType = {{{ makeGetValue('nextInChainPtr', C_STRUCTS.WGPUChainedStruct.sType, 'i32') }}};
+        if (sType === {{{ gpu.SType.TextureBindingViewDimensionDescriptor }}}) {
+          textureBindingViewDimension =
+            {{{ makeGetValue('nextInChainPtr', C_STRUCTS.WGPUTextureBindingViewDimensionDescriptor.textureBindingViewDimension, 'i32') }}};
+          break;
+        }
+        nextInChainPtr = {{{ makeGetValue('nextInChainPtr', C_STRUCTS.WGPUChainedStruct.next, '*') }}};
+      }
+    }
+
     var viewFormatCount = {{{ makeGetValue('descriptor', C_STRUCTS.WGPUTextureDescriptor.viewFormatCount, '*') }}};
     if (viewFormatCount) {
       var viewFormatsPtr = {{{ makeGetValue('descriptor', C_STRUCTS.WGPUTextureDescriptor.viewFormats, '*') }}};
@@ -1852,6 +1881,11 @@ var LibraryWebGPU = {
     var device = WebGPU.getJsObject(devicePtr);
     var ptr = _emwgpuCreateTexture({{{ gpu.NULLPTR }}});
     WebGPU.Internals.jsObjectInsert(ptr, device.createTexture(desc));
+    if (textureBindingViewDimension === 0) {
+      textureBindingViewDimension = WebGPU.Internals.textureBindingViewDimensionFromParams(
+        desc.dimension, desc.size.depthOrArrayLayers);
+    }
+    WebGPU.Internals.textureBindingViewDimensions[ptr] = textureBindingViewDimension;
     return ptr;
   },
 
@@ -2671,6 +2705,16 @@ var LibraryWebGPU = {
   wgpuTextureGetSampleCount: (texturePtr) => {
     var texture = WebGPU.getJsObject(texturePtr);
     return texture.sampleCount;
+  },
+
+  wgpuTextureGetTextureBindingViewDimension: (texturePtr) => {
+    var stored = WebGPU.Internals.textureBindingViewDimensions[texturePtr];
+    if (stored !== undefined) {
+      return stored;
+    }
+    var texture = WebGPU.getJsObject(texturePtr);
+    return WebGPU.Internals.textureBindingViewDimensionFromParams(
+      texture.dimension, texture.depthOrArrayLayers);
   },
 
   wgpuTextureGetUsage: (texturePtr) => {
