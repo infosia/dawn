@@ -1940,13 +1940,15 @@ MaybeError CommandBuffer::EncodeRenderPass(
             case Command::SetRenderPipeline: {
                 SetRenderPipelineCmd* cmd = iter->NextCommand<SetRenderPipelineCmd>();
                 RenderPipeline* newPipeline = ToBackend(cmd->pipeline).Get();
+
+                immediates.OnSetPipeline(newPipeline);
+
                 if (newPipeline == lastPipeline) {
                     break;
                 }
 
                 vertexBuffers.OnSetPipeline(lastPipeline, newPipeline);
                 bindGroups.OnSetPipeline(newPipeline);
-                immediates.OnSetPipeline(newPipeline);
                 storageBufferLengths.OnSetPipeline(newPipeline);
 
                 [encoder setDepthStencilState:newPipeline->GetMTLDepthStencilState()];
@@ -1984,8 +1986,8 @@ MaybeError CommandBuffer::EncodeRenderPass(
             }
 
             case Command::SetImmediates: {
-                SetImmediatesCmd* cmd = mCommands.NextCommand<SetImmediatesCmd>();
-                uint8_t* value = mCommands.NextData<uint8_t>(cmd->size);
+                SetImmediatesCmd* cmd = iter->NextCommand<SetImmediatesCmd>();
+                uint8_t* value = iter->NextData<uint8_t>(cmd->size);
                 immediates.SetImmediates(cmd->offset, value, cmd->size);
                 break;
             }
@@ -2091,7 +2093,15 @@ MaybeError CommandBuffer::EncodeRenderPass(
                     while (iter->NextCommandId(&type)) {
                         EncodeRenderBundleCommand(iter, type);
                     }
+                    // Reset immediate constants after each bundle to ensure no state leakage.
+                    // This clears the content and forces a re-upload if the next bundle
+                    // uses the same pipeline.
+                    immediates.Reset();
                 }
+                // ExecuteBundles clears the current render pipeline state.
+                // We must invalidate lastPipeline so that subsequent SetRenderPipeline
+                // commands correctly re-apply the pipeline state.
+                lastPipeline = nullptr;
                 break;
             }
 
