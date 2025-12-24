@@ -878,10 +878,10 @@ MaybeError CommandBuffer::ExecuteRenderPass(
             }
 
             case Command::SetImmediates: {
-                SetImmediatesCmd* cmd = mCommands.NextCommand<SetImmediatesCmd>();
+                SetImmediatesCmd* cmd = iter->NextCommand<SetImmediatesCmd>();
                 DAWN_ASSERT(cmd->size > 0);
                 uint8_t* value = nullptr;
-                value = mCommands.NextData<uint8_t>(cmd->size);
+                value = iter->NextData<uint8_t>(cmd->size);
                 immediates.SetImmediates(cmd->offset, value, cmd->size);
                 break;
             }
@@ -984,7 +984,15 @@ MaybeError CommandBuffer::ExecuteRenderPass(
                     while (iter->NextCommandId(&type)) {
                         DAWN_TRY(DoRenderBundleCommand(iter, type));
                     }
+                    // Reset immediate constants after each bundle to ensure no state leakage.
+                    // This clears the content and forces a re-upload if the next bundle
+                    // uses the same pipeline.
+                    immediates.Reset();
                 }
+                // ExecuteBundles clears the current render pipeline state.
+                // We must invalidate lastPipeline so that subsequent SetRenderPipeline
+                // commands correctly re-apply the pipeline state.
+                lastPipeline = nullptr;
                 break;
             }
 

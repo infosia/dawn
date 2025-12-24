@@ -78,6 +78,12 @@ class UserImmediateConstantsTrackerBase {
   public:
     UserImmediateConstantsTrackerBase() {}
 
+    void Reset() {
+        mContent = {};
+        mDirty.reset();
+        mLastPipeline = nullptr;
+    }
+
     // Setters
     void SetImmediates(uint32_t offset, uint8_t* values, uint32_t size) {
         uint8_t* destData = mContent.template Get<uint8_t>(offsetof(T, userConstants) + offset);
