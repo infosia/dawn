@@ -526,6 +526,12 @@ class ImmediateConstantTracker : public T {
   public:
     ImmediateConstantTracker() = default;
 
+    void Reset() {
+        this->mContent = {};
+        this->mDirty.reset();
+        this->mLastPipeline = nullptr;
+    }
+
     // Applies immediate constants and buffer length data to the Metal command encoder.
     // This method uploads both immediate constant values and storage buffer lengths
     // to a single buffer, with buffer lengths appended after immediate constants.
@@ -1984,8 +1990,8 @@ MaybeError CommandBuffer::EncodeRenderPass(
             }
 
             case Command::SetImmediates: {
-                SetImmediatesCmd* cmd = mCommands.NextCommand<SetImmediatesCmd>();
-                uint8_t* value = mCommands.NextData<uint8_t>(cmd->size);
+                SetImmediatesCmd* cmd = iter->NextCommand<SetImmediatesCmd>();
+                uint8_t* value = iter->NextData<uint8_t>(cmd->size);
                 immediates.SetImmediates(cmd->offset, value, cmd->size);
                 break;
             }
@@ -2091,7 +2097,15 @@ MaybeError CommandBuffer::EncodeRenderPass(
                     while (iter->NextCommandId(&type)) {
                         EncodeRenderBundleCommand(iter, type);
                     }
+                    // Reset immediate constants after each bundle to ensure no state leakage.
+                    // This clears the content and forces a re-upload if the next bundle
+                    // uses the same pipeline.
+                    immediates.Reset();
                 }
+                // ExecuteBundles clears the current render pipeline state.
+                // We must invalidate lastPipeline so that subsequent SetRenderPipeline
+                // commands correctly re-apply the pipeline state.
+                lastPipeline = nullptr;
                 break;
             }
 
