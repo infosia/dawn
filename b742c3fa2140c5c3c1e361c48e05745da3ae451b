@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "456db29f_f89ea6c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3418012
+      },
+      "writtenOn": "2025-12-24T03:12:31Z",
+      "side": 1,
+      "message": "Hello, please review this CL. It\u0027s mainly to fix the following errors.\n\nThank you!\n\n```\nautoninja -C out/test all\n\nwasm-ld: error: wasm/obj/src/emdawnwebgpu/emdawnwebgpu_link_test/LinkTest.o: undefined symbol: wgpuTextureGetTextureBindingViewDimension\n\ndawn_build_node_bindings \u003d true\ndawn_enable_d3d12 \u003d false\ndawn_use_swiftshader \u003d true\ndcheck_always_on \u003d true\nis_clang \u003d true\nis_component_build \u003d true\nis_debug \u003d false\ntarget_cpu \u003d \"x64\"\ntarget_os \u003d \"linux\"\ntint_build_hlsl_writer \u003d true\ntint_build_msl_writer \u003d true\ntint_build_spv_reader \u003d true\ntint_build_spv_writer \u003d true\ntint_build_wgsl_reader \u003d true\ntint_build_wgsl_writer \u003d true\nuse_reclient \u003d false\nuse_remoteexec \u003d true\nuse_siso \u003d true\n```",
+      "revId": "b742c3fa2140c5c3c1e361c48e05745da3ae451b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
