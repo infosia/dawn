@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22ea9c5c_7ba04e3e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-24T01:07:53Z",
+      "side": 1,
+      "message": "LGTM but could you fix this warning that it found?",
+      "revId": "dd99b6d7163b17ff4eff97bf0e8678590de0dbcd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79819e08_b7b27ba3",
+        "filename": "src/tint/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-24T01:07:53Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Trailing Whitespace: Please remove the trailing whitespace.\n\nPlease remove the trailing whitespace.",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 2
+      },
+      "revId": "dd99b6d7163b17ff4eff97bf0e8678590de0dbcd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
