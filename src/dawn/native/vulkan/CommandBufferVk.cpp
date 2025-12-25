@@ -1651,10 +1651,10 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
             }
 
             case Command::SetImmediates: {
-                SetImmediatesCmd* cmd = mCommands.NextCommand<SetImmediatesCmd>();
+                SetImmediatesCmd* cmd = iter->NextCommand<SetImmediatesCmd>();
                 DAWN_ASSERT(cmd->size > 0);
                 uint8_t* value = nullptr;
-                value = mCommands.NextData<uint8_t>(cmd->size);
+                value = iter->NextData<uint8_t>(cmd->size);
                 immediates.SetImmediates(cmd->offset, value, cmd->size);
                 break;
             }
@@ -1763,6 +1763,10 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                         EncodeRenderBundleCommand(iter, type);
                     }
                 }
+                // ExecuteBundles clears the current render pipeline state.
+                // We must invalidate lastPipeline so that subsequent SetRenderPipeline
+                // commands correctly re-apply the pipeline state.
+                lastPipeline = nullptr;
                 break;
             }
 
