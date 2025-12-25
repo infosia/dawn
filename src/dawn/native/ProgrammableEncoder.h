@@ -54,6 +54,8 @@ class ProgrammableEncoder : public ApiObjectBase {
     void APISetImmediates(uint32_t offset, const void* data, size_t size);
 
   protected:
+    virtual void RecordImmediatesState(uint32_t offset, size_t size) = 0;
+
     bool IsValidationEnabled() const;
     bool NeedsIndirectGPUValidation() const;
     MaybeError ValidateProgrammableEncoderEnd() const;
