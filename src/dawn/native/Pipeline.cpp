@@ -33,6 +33,7 @@
 
 #include "absl/container/flat_hash_set.h"
 #include "absl/strings/string_view.h"
+#include "dawn/common/Constants.h"
 #include "dawn/common/Enumerator.h"
 #include "dawn/native/BindGroupLayout.h"
 #include "dawn/native/Device.h"
@@ -274,6 +275,7 @@ PipelineBase::PipelineBase(DeviceBase* device,
         bool isFirstStage = mStageMask == wgpu::ShaderStage::None;
         mStageMask |= StageBit(shaderStage);
         mStages[shaderStage] = {module, entryPointName, &metadata, {}};
+
         auto& constants = mStages[shaderStage].constants;
         for (uint32_t i = 0; i < stage.constantCount; i++) {
             constants.emplace(stage.constants[i].key, stage.constants[i].value);
@@ -434,8 +436,25 @@ MaybeError PipelineBase::Initialize(std::optional<ScopedUseShaderPrograms> scope
 
     // Set immediate constant status. userConstants is the first element in both
     // RenderImmediateConstants and ComputeImmediateConstants.
-    ImmediateConstantMask userConstantsBits =
-        GetImmediateConstantBlockBits(0, GetLayout()->GetImmediateDataRangeByteSize());
+    ImmediateConstantMask userConstantsBits;
+    for (SingleShaderStage stage : IterateStages(mStageMask)) {
+        const auto& metadata = *mStages[stage].metadata;
+        userConstantsBits |= metadata.immediateDataUsedSlots;
+    }
+
+    uint32_t immediateDataRangeByteSize = mLayout->GetImmediateDataRangeByteSize();
+    uint32_t validSlots = (immediateDataRangeByteSize + kImmediateConstantElementByteSize - 1) /
+                          kImmediateConstantElementByteSize;
+    ImmediateConstantMask validMask;
+    for (uint32_t i = 0; i < validSlots; ++i) {
+        validMask.set(ImmediateConstantIndex(i));
+    }
+
+    if ((userConstantsBits & ~validMask).any()) {
+        return DAWN_VALIDATION_ERROR(
+            "Shader uses immediate constants outside the range defined in PipelineLayout.");
+    }
+
     mImmediateMask |= userConstantsBits;
 
     DAWN_TRY_CONTEXT(InitializeImpl(), "initializing %s", this);
