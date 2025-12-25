@@ -87,6 +87,8 @@ class ComputePassEncoder final : public ProgrammableEncoder {
                        ErrorTag errorTag,
                        StringView label);
 
+    void RecordImmediatesState(uint32_t offset, size_t size) override;
+
   private:
     void DestroyImpl() override;
 

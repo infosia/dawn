@@ -99,6 +99,8 @@ class RenderEncoderBase : public ProgrammableEncoder {
 
     void DestroyImpl() override;
 
+    void RecordImmediatesState(uint32_t offset, size_t size) override;
+
     CommandBufferStateTracker mCommandBufferState;
     RenderPassResourceUsageTracker mUsageTracker;
     IndirectDrawMetadata mIndirectDrawMetadata;

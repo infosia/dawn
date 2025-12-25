@@ -827,6 +827,21 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
     if (entryPoint.immediate_data_size) {
         DAWN_ASSERT(IsAligned(entryPoint.immediate_data_size, 4u));
         metadata->immediateDataRangeByteSize = entryPoint.immediate_data_size;
+
+        // Avoid calling GetImmediateBlockInfo if the size exceeds the limit,
+        // as it might cause an assertion in Tint.
+        if (entryPoint.immediate_data_size <= kMaxExternalImmediateConstantsPerPipeline * 4) {
+            auto immediateBlockInfo = inspector->GetImmediateBlockInfo(entryPoint.name);
+            uint64_t mask = 0;
+            for (size_t i = 0; i < std::min(size_t(kMaxExternalImmediateConstantsPerPipeline),
+                                            immediateBlockInfo.size());
+                 ++i) {
+                if (immediateBlockInfo[i]) {
+                    mask |= (uint64_t(1) << i);
+                }
+            }
+            metadata->immediateDataUsedSlots = ImmediateConstantMask(mask);
+        }
     }
 
     // Vertex shader specific reflection.
