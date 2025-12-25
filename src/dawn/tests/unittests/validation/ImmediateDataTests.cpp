@@ -27,6 +27,7 @@
 
 #include <cstdint>
 #include <limits>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -377,10 +378,25 @@ TEST_F(ImmediateDataTest, ValidatePipelineLayoutImmediateDataBytesAndShaders) {
 }
 
 // Check that default pipelineLayout has too many immediate data bytes .
+// Force rebuild
 TEST_F(ImmediateDataTest, ValidateDefaultPipelineLayout) {
     wgpu::ShaderModule shaderModule = utils::CreateShaderModule(device, R"(
-            var<immediate> fragmentConstants: array<vec4f, 4>;
-            var<immediate> computeConstants: array<vec4u, 4>;
+            struct Constants {
+                c0: vec4f,
+                c1: vec4f,
+                c2: vec4f,
+                c3: vec4f,
+            }
+            var<immediate> fragmentConstants: Constants;
+
+            struct ComputeConstants {
+                c0: vec4u,
+                c1: vec4u,
+                c2: vec4u,
+                c3: vec4u,
+            }
+            var<immediate> computeConstants: ComputeConstants;
+
             @vertex fn vsMain(@builtin(vertex_index) VertexIndex : u32) -> @builtin(position) vec4f {
                 const pos = array(
                     vec2( 1.0, -1.0),
@@ -392,24 +408,30 @@ TEST_F(ImmediateDataTest, ValidateDefaultPipelineLayout) {
 
             // to reuse the same pipeline layout
             @fragment fn fsMain() -> @location(0) vec4f {
-                return vec4f(fragmentConstants[0].x, fragmentConstants[0].yzw);
+                return vec4f(fragmentConstants.c0.x, fragmentConstants.c0.yzw);
             }
 
             @group(0) @binding(0) var<storage, read_write> output : vec4u;
 
             @compute @workgroup_size(1, 1, 1)
             fn csMain() {
-                output = vec4u(computeConstants[0].x, computeConstants[0].yzw);
+                output = vec4u(computeConstants.c0.x, computeConstants.c0.yzw);
             })");
 
     wgpu::ShaderModule oobShaderModule = utils::CreateShaderModule(device, R"(
             struct FragmentConstants {
-                constants: array<vec4f, 4>,
+                c0: vec4f,
+                c1: vec4f,
+                c2: vec4f,
+                c3: vec4f,
                 constantsOOB: f32,
             };
 
             struct ComputeConstants {
-                constants: array<vec4u, 4>,
+                c0: vec4u,
+                c1: vec4u,
+                c2: vec4u,
+                c3: vec4u,
                 constantsOOB: u32,
             };
             var<immediate> fragmentConstants: FragmentConstants;
@@ -425,16 +447,16 @@ TEST_F(ImmediateDataTest, ValidateDefaultPipelineLayout) {
 
             // to reuse the same pipeline layout
             @fragment fn fsMain() -> @location(0) vec4f {
-                return vec4f(fragmentConstants.constants[0].x + fragmentConstants.constantsOOB,
-                             fragmentConstants.constants[0].yzw);
+                return vec4f(fragmentConstants.c0.x + fragmentConstants.constantsOOB,
+                             fragmentConstants.c0.yzw);
             }
 
             @group(0) @binding(0) var<storage, read_write> output : vec4u;
 
             @compute @workgroup_size(1, 1, 1)
             fn csMain() {
-                output = vec4u(computeConstants.constants[0].x + computeConstants.constantsOOB,
-                               computeConstants.constants[0].yzw);
+                output = vec4u(computeConstants.c0.x + computeConstants.constantsOOB,
+                               computeConstants.c0.yzw);
             })");
 
     // Success cases
@@ -469,6 +491,189 @@ TEST_F(ImmediateDataTest, ValidateDefaultPipelineLayout) {
         ASSERT_DEVICE_ERROR(device.CreateComputePipeline(&csDesc));
     }
 }
+
+struct ImmediateDataRange {
+    uint32_t offset;
+    uint32_t size;
+};
+
+struct ImmediateDataRequiredParams {
+    std::string entryPoint;
+    std::vector<ImmediateDataRange> ranges;
+    bool success;
+    bool isCompute;
+};
+
+class ImmediateDataRequiredTest : public ImmediateDataTest,
+                                  public testing::WithParamInterface<ImmediateDataRequiredParams> {
+};
+
+TEST_P(ImmediateDataRequiredTest, Test) {
+    const auto& param = GetParam();
+
+    // Structs with padding:
+    // PadMiddle:
+    //   a: u32 (0..4)
+    //   padding (4..16) -> 12 bytes
+    //   b: vec4<f32> (16..32)
+    //   Size: 32
+    //
+    // PadTail:
+    //   a: vec3<f32> (0..12)
+    //   padding (12..16) -> 4 bytes
+    //   Size: 16
+    //
+    // Layout:
+    //   padMiddle: offset 0, size 32
+    //   padTail: offset 32, size 16
+    const char* kShader = R"(
+        struct PadMiddle {
+            a : u32,
+            b : vec4<f32>,
+        }
+        struct PadTail {
+            a : vec3<f32>,
+        }
+        var<immediate> padMiddle : PadMiddle;
+        var<immediate> padTail : PadTail;
+
+        @compute @workgroup_size(1)
+        fn mainMiddle() {
+            _ = padMiddle.b;
+        }
+
+        @compute @workgroup_size(1)
+        fn mainTail() {
+            _ = padTail.a;
+        }
+
+        @vertex fn vsMiddle() -> @builtin(position) vec4f {
+            _ = padMiddle.b;
+            return vec4f(0.0, 0.0, 0.0, 1.0);
+        }
+        @fragment fn fsMiddle() -> @location(0) vec4f {
+            _ = padMiddle.b;
+            return vec4f(0.0, 0.0, 0.0, 1.0);
+        }
+
+        @vertex fn vsTail() -> @builtin(position) vec4f {
+            _ = padTail.a;
+            return vec4f(0.0, 0.0, 0.0, 1.0);
+        }
+        @fragment fn fsTail() -> @location(0) vec4f {
+            _ = padTail.a;
+            return vec4f(0.0, 0.0, 0.0, 1.0);
+        }
+    )";
+
+    wgpu::ShaderModule shaderModule = utils::CreateShaderModule(device, kShader);
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+
+    auto setImmediates = [&](auto& pass) {
+        for (const auto& range : param.ranges) {
+            if (range.size > 0) {
+                std::vector<uint32_t> data((range.size + 3) / 4, 0);
+                pass.SetImmediates(range.offset, data.data(), range.size);
+            }
+        }
+    };
+
+    if (param.isCompute) {
+        wgpu::ComputePipelineDescriptor descriptor;
+        descriptor.compute.module = shaderModule;
+        descriptor.compute.entryPoint = param.entryPoint.c_str();
+        wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&descriptor);
+
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        setImmediates(pass);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+    } else {
+        utils::ComboRenderPipelineDescriptor descriptor;
+        descriptor.vertex.module = shaderModule;
+        descriptor.cFragment.module = shaderModule;
+
+        if (param.entryPoint == "mainMiddle") {
+            descriptor.vertex.entryPoint = "vsMiddle";
+            descriptor.cFragment.entryPoint = "fsMiddle";
+        } else {
+            descriptor.vertex.entryPoint = "vsTail";
+            descriptor.cFragment.entryPoint = "fsTail";
+        }
+        descriptor.cFragment.targetCount = 1;
+
+        wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&descriptor);
+
+        utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 1, 1);
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
+        pass.SetPipeline(pipeline);
+        setImmediates(pass);
+        pass.Draw(3);
+        pass.End();
+    }
+
+    if (param.success) {
+        encoder.Finish();
+    } else {
+        ASSERT_DEVICE_ERROR(encoder.Finish());
+    }
+}
+
+std::vector<ImmediateDataRequiredParams> GetImmediateDataRequiredParams() {
+    // Base parameters (agnostic of pipeline type)
+    // Note: isCompute is set to true initially but will be overridden below.
+    std::vector<ImmediateDataRequiredParams> baseParams = {
+        // PadMiddle tests (Offset 0)
+        // Uses padMiddle.b (offset 16, size 16)
+        {"mainMiddle", {{16, 16}}, false, true},         // Misses a + padding
+        {"mainMiddle", {{0, 32}}, true, true},           // Covers whole struct
+        {"mainMiddle", {{0, 16}}, false, true},          // Misses b (covers a + padding)
+        {"mainMiddle", {{16, 12}}, false, true},         // Partial b
+        {"mainMiddle", {{0, 4}, {16, 16}}, true, true},  // Covers a and b, missing padding
+
+        // PadTail tests (Offset 0)
+        // Uses padTail.a (offset 0, size 12)
+        {"mainTail", {{0, 12}}, true, true},  // Covers a, ignores tail padding
+        {"mainTail", {{0, 16}}, true, true},  // Covers whole struct
+        {"mainTail", {{0, 11}}, false, true}  // Partial a
+    };
+
+    std::vector<ImmediateDataRequiredParams> allParams;
+    for (const auto& param : baseParams) {
+        // Add Compute case
+        ImmediateDataRequiredParams computeParam = param;
+        computeParam.isCompute = true;
+        allParams.push_back(computeParam);
+
+        // Add Render case
+        ImmediateDataRequiredParams renderParam = param;
+        renderParam.isCompute = false;
+        allParams.push_back(renderParam);
+    }
+    return allParams;
+}
+
+std::string PrintImmediateDataRequiredParams(
+    const testing::TestParamInfo<ImmediateDataRequiredParams>& info) {
+    std::stringstream ss;
+    ss << info.param.entryPoint;
+    if (info.param.isCompute) {
+        ss << "_Compute";
+    } else {
+        ss << "_Render";
+    }
+    for (const auto& range : info.param.ranges) {
+        ss << "_Offset_" << range.offset << "_Size_" << range.size;
+    }
+    ss << "_" << (info.param.success ? "Success" : "Fail");
+    return ss.str();
+}
+
+INSTANTIATE_TEST_SUITE_P(,
+                         ImmediateDataRequiredTest,
+                         ::testing::ValuesIn(GetImmediateDataRequiredParams()),
+                         PrintImmediateDataRequiredParams);
 
 }  // anonymous namespace
 }  // namespace dawn

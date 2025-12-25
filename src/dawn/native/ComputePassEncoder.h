@@ -88,6 +88,8 @@ class ComputePassEncoder final : public ProgrammableEncoder {
                        StringView label);
 
   private:
+    void RecordImmediatesState(uint32_t offset, size_t size) override;
+
     void DestroyImpl() override;
 
     ResultOrError<std::pair<Ref<BufferBase>, uint64_t>> TransformIndirectDispatchBuffer(

@@ -106,6 +106,8 @@ class RenderEncoderBase : public ProgrammableEncoder {
     uint64_t mDrawCount = 0;
 
   private:
+    void RecordImmediatesState(uint32_t offset, size_t size) override;
+
     Ref<AttachmentState> mAttachmentState;
     const bool mDisableBaseVertex;
     const bool mDisableBaseInstance;
