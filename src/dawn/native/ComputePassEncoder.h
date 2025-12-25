@@ -69,6 +69,8 @@ class ComputePassEncoder final : public ProgrammableEncoder {
                          uint32_t dynamicOffsetCount = 0,
                          const uint32_t* dynamicOffsets = nullptr);
 
+    void RecordImmediatesState(uint32_t offset, size_t size) override;
+
     void APIWriteTimestamp(QuerySetBase* querySet, uint32_t queryIndex);
 
     CommandBufferStateTracker* GetCommandBufferStateTrackerForTesting();
