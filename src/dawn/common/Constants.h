@@ -49,6 +49,7 @@ static constexpr uint64_t kAssumedMaxBufferSize =
 
 // All Immediate constants are 32 bit
 static constexpr uint32_t kImmediateConstantElementByteSize = sizeof(uint32_t);
+static constexpr uint32_t kImmediateSlotByteSize = sizeof(uint32_t);
 
 // Total number of "internal" 32-bit immediates, which includes both external (user) immediates
 // and any other immediates used by Dawn internally (e.g. workgroup sizes).
