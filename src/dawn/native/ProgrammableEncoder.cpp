@@ -157,6 +157,8 @@ void ProgrammableEncoder::APISetImmediates(uint32_t offset, const void* data, si
             uint8_t* immediateDatas = allocator->AllocateData<uint8_t>(cmd->size);
             memcpy(immediateDatas, data, size);
 
+            RecordImmediatesState(offset, size);
+
             return {};
         },
         "encoding %s.SetImmediates(%u, %u, ...).", this, offset, size);
