@@ -727,4 +727,9 @@ void RenderEncoderBase::APISetBindGroup(uint32_t groupIndexIn,
         dynamicOffsetCount);
 }
 
+void RenderEncoderBase::APISetImmediates(uint32_t offset, const void* data, size_t size) {
+    ProgrammableEncoder::APISetImmediates(offset, data, size);
+    mCommandBufferState.SetImmediateData(offset, size);
+}
+
 }  // namespace dawn::native

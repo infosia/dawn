@@ -484,6 +484,11 @@ void ComputePassEncoder::APISetBindGroup(uint32_t groupIndexIn,
         dynamicOffsetCount);
 }
 
+void ComputePassEncoder::APISetImmediates(uint32_t offset, const void* data, size_t size) {
+    ProgrammableEncoder::APISetImmediates(offset, data, size);
+    mCommandBufferState.SetImmediateData(offset, size);
+}
+
 void ComputePassEncoder::APIWriteTimestamp(QuerySetBase* querySet, uint32_t queryIndex) {
     mEncodingContext->TryEncode(
         this,

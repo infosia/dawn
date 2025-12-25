@@ -306,6 +306,7 @@ enum ValidationAspect {
     VALIDATION_ASPECT_RESOURCE_TABLES,
     VALIDATION_ASPECT_VERTEX_BUFFERS,
     VALIDATION_ASPECT_INDEX_BUFFER,
+    VALIDATION_ASPECT_IMMEDIATE_DATA,
 
     VALIDATION_ASPECT_COUNT
 };
@@ -313,20 +314,22 @@ static_assert(VALIDATION_ASPECT_COUNT == CommandBufferStateTracker::kNumAspects)
 
 static constexpr CommandBufferStateTracker::ValidationAspects kDispatchAspects =
     1 << VALIDATION_ASPECT_PIPELINE | 1 << VALIDATION_ASPECT_BIND_GROUPS |
-    1 << VALIDATION_ASPECT_RESOURCE_TABLES;
+    1 << VALIDATION_ASPECT_RESOURCE_TABLES | 1 << VALIDATION_ASPECT_IMMEDIATE_DATA;
 
 static constexpr CommandBufferStateTracker::ValidationAspects kDrawAspects =
     1 << VALIDATION_ASPECT_PIPELINE | 1 << VALIDATION_ASPECT_BIND_GROUPS |
-    1 << VALIDATION_ASPECT_RESOURCE_TABLES | 1 << VALIDATION_ASPECT_VERTEX_BUFFERS;
+    1 << VALIDATION_ASPECT_RESOURCE_TABLES | 1 << VALIDATION_ASPECT_VERTEX_BUFFERS |
+    1 << VALIDATION_ASPECT_IMMEDIATE_DATA;
 
 static constexpr CommandBufferStateTracker::ValidationAspects kDrawIndexedAspects =
     1 << VALIDATION_ASPECT_PIPELINE | 1 << VALIDATION_ASPECT_BIND_GROUPS |
     1 << VALIDATION_ASPECT_RESOURCE_TABLES | 1 << VALIDATION_ASPECT_VERTEX_BUFFERS |
-    1 << VALIDATION_ASPECT_INDEX_BUFFER;
+    1 << VALIDATION_ASPECT_INDEX_BUFFER | 1 << VALIDATION_ASPECT_IMMEDIATE_DATA;
 
 static constexpr CommandBufferStateTracker::ValidationAspects kLazyAspects =
     1 << VALIDATION_ASPECT_BIND_GROUPS | 1 << VALIDATION_ASPECT_RESOURCE_TABLES |
-    1 << VALIDATION_ASPECT_VERTEX_BUFFERS | 1 << VALIDATION_ASPECT_INDEX_BUFFER;
+    1 << VALIDATION_ASPECT_VERTEX_BUFFERS | 1 << VALIDATION_ASPECT_INDEX_BUFFER |
+    1 << VALIDATION_ASPECT_IMMEDIATE_DATA;
 
 CommandBufferStateTracker::CommandBufferStateTracker() = default;
 
@@ -573,6 +576,13 @@ void CommandBufferStateTracker::RecomputeLazyAspects(ValidationAspects aspects) 
             mAspects.set(VALIDATION_ASPECT_INDEX_BUFFER);
         }
     }
+
+    if (aspects[VALIDATION_ASPECT_IMMEDIATE_DATA]) {
+        const ImmediateConstantMask& requiredMask = mLastPipeline->GetImmediateMask();
+        if ((mImmediateDataMask & requiredMask) == requiredMask) {
+            mAspects.set(VALIDATION_ASPECT_IMMEDIATE_DATA);
+        }
+    }
 }
 
 MaybeError CommandBufferStateTracker::CheckMissingAspects(ValidationAspects aspects) {
@@ -627,6 +637,10 @@ MaybeError CommandBufferStateTracker::CheckMissingAspects(ValidationAspects aspe
                                                   VertexBufferSlot(uint8_t(1)));
         return DAWN_VALIDATION_ERROR("Vertex buffer slot %u required by %s was not set.",
                                      uint8_t(firstMissing), GetRenderPipeline());
+    }
+
+    if (aspects[VALIDATION_ASPECT_IMMEDIATE_DATA]) {
+        return DAWN_VALIDATION_ERROR("Required immediate data was not set.");
     }
 
     if (aspects[VALIDATION_ASPECT_BIND_GROUPS]) {
@@ -792,6 +806,15 @@ void CommandBufferStateTracker::UnsetVertexBuffer(VertexBufferSlot slot) {
 void CommandBufferStateTracker::SetVertexBuffer(VertexBufferSlot slot, uint64_t size) {
     mVertexBuffersUsed.set(slot);
     mVertexBufferSizes[slot] = size;
+}
+
+void CommandBufferStateTracker::SetImmediateData(uint32_t offset, uint32_t size) {
+    uint32_t startSlot = offset / kImmediateConstantElementByteSize;
+    uint32_t endSlot = (offset + size) / kImmediateConstantElementByteSize;
+    for (uint32_t i = startSlot; i < endSlot; ++i) {
+        mImmediateDataMask.set(ImmediateConstantIndex(i));
+    }
+    mAspects.reset(VALIDATION_ASPECT_IMMEDIATE_DATA);
 }
 
 void CommandBufferStateTracker::SetPipelineCommon(PipelineBase* pipeline) {

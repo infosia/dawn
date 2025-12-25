@@ -181,118 +181,54 @@ TEST_F(ImmediateDataTest, ValidateImmediateSize) {
     }
 }
 
-// Check that SetImmediates offset and length must be aligned to 4 bytes.
-TEST_F(ImmediateDataTest, ValidateSetImmediatesAlignment) {
-    // Success cases
-    {
-        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-        uint32_t data = 0;
-        wgpu::ComputePassEncoder computePass = encoder.BeginComputePass();
-        computePass.SetImmediates(0, &data, 4);
-        computePass.End();
+struct SetImmediatesCase {
+    uint32_t offset;
+    uint32_t size;
+    bool success;
+};
+
+class ImmediateDataSetImmediatesValidationTest
+    : public ImmediateDataTest,
+      public testing::WithParamInterface<SetImmediatesCase> {};
+
+TEST_P(ImmediateDataSetImmediatesValidationTest, Test) {
+    const auto& param = GetParam();
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::ComputePassEncoder computePass = encoder.BeginComputePass();
+
+    if (param.size > 0) {
+        std::vector<uint8_t> data(param.size, 0);
+        computePass.SetImmediates(param.offset, data.data(), param.size);
+    } else {
+        computePass.SetImmediates(param.offset, nullptr, 0);
+    }
+    computePass.End();
+
+    if (param.success) {
         encoder.Finish();
-    }
-
-    {
-        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-        wgpu::ComputePassEncoder computePass = encoder.BeginComputePass();
-        computePass.SetImmediates(4, nullptr, 0);
-        computePass.End();
-        encoder.Finish();
-    }
-
-    // Failed case with non-aligned offset bytes
-    {
-        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-        wgpu::ComputePassEncoder computePass = encoder.BeginComputePass();
-        computePass.SetImmediates(2, nullptr, 0);
-        computePass.End();
-        ASSERT_DEVICE_ERROR(encoder.Finish());
-    }
-
-    // Failed cases with non-aligned size
-    {
-        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-        uint8_t data = 0;
-        wgpu::ComputePassEncoder computePass = encoder.BeginComputePass();
-        computePass.SetImmediates(0, &data, 2);
-        computePass.End();
+    } else {
         ASSERT_DEVICE_ERROR(encoder.Finish());
     }
 }
 
-// Check that SetImmediates offset + length must be in bound.
-TEST_F(ImmediateDataTest, ValidateSetImmediatesOOB) {
-    // Success cases
-    {
-        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-        std::vector<uint32_t> data(kMaxImmediateDataBytes / 4, 0);
-        wgpu::ComputePassEncoder computePass = encoder.BeginComputePass();
-        computePass.SetImmediates(0, data.data(), kMaxImmediateDataBytes);
-        computePass.End();
-        encoder.Finish();
-    }
-
-    {
-        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-        wgpu::ComputePassEncoder computePass = encoder.BeginComputePass();
-        computePass.SetImmediates(kMaxImmediateDataBytes, nullptr, 0);
-        computePass.End();
-        encoder.Finish();
-    }
-
-    {
-        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-        uint32_t data = 0;
-        wgpu::ComputePassEncoder computePass = encoder.BeginComputePass();
-        computePass.SetImmediates(kMaxImmediateDataBytes - 4, &data, 4);
-        computePass.End();
-        encoder.Finish();
-    }
-
-    // Failed case with offset oob
-    {
-        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-        uint32_t offset = kMaxImmediateDataBytes + 4;
-        wgpu::ComputePassEncoder computePass = encoder.BeginComputePass();
-        computePass.SetImmediates(offset, nullptr, 0);
-        computePass.End();
-        ASSERT_DEVICE_ERROR(encoder.Finish());
-    }
-
-    // Failed cases with size oob
-    {
-        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-        uint32_t size = kMaxImmediateDataBytes + 4;
-        std::vector<uint32_t> data(size / 4, 0);
-        wgpu::ComputePassEncoder computePass = encoder.BeginComputePass();
-        computePass.SetImmediates(0, data.data(), size);
-        computePass.End();
-        ASSERT_DEVICE_ERROR(encoder.Finish());
-    }
-
-    // Failed cases with offset + size oob
-    {
-        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-        uint32_t offset = kMaxImmediateDataBytes;
-        uint32_t data[] = {0};
-        wgpu::ComputePassEncoder computePass = encoder.BeginComputePass();
-        computePass.SetImmediates(offset, data, 4);
-        computePass.End();
-        ASSERT_DEVICE_ERROR(encoder.Finish());
-    }
-
-    // Failed case with super large offset + size oob but looping back to zero
-    {
-        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-        uint32_t offset = std::numeric_limits<uint32_t>::max() - 3;
-        uint32_t data[] = {0};
-        wgpu::ComputePassEncoder computePass = encoder.BeginComputePass();
-        computePass.SetImmediates(offset, data, 4);
-        computePass.End();
-        ASSERT_DEVICE_ERROR(encoder.Finish());
-    }
-}
+INSTANTIATE_TEST_SUITE_P(
+    ,
+    ImmediateDataSetImmediatesValidationTest,
+    ::testing::Values(
+        // Alignment tests
+        SetImmediatesCase{0, 4, true},   // Success: aligned offset and size
+        SetImmediatesCase{4, 0, true},   // Success: aligned offset and 0 size
+        SetImmediatesCase{2, 0, false},  // Failure: unaligned offset
+        SetImmediatesCase{0, 2, false},  // Failure: unaligned size
+        // OOB tests
+        SetImmediatesCase{0, kMaxImmediateDataBytes, true},       // Success: full range
+        SetImmediatesCase{kMaxImmediateDataBytes, 0, true},       // Success: empty at end
+        SetImmediatesCase{kMaxImmediateDataBytes - 4, 4, true},   // Success: last 4 bytes
+        SetImmediatesCase{kMaxImmediateDataBytes + 4, 0, false},  // Failure: offset OOB
+        SetImmediatesCase{0, kMaxImmediateDataBytes + 4, false},  // Failure: size OOB
+        SetImmediatesCase{kMaxImmediateDataBytes, 4, false},      // Failure: offset + size OOB
+        SetImmediatesCase{std::numeric_limits<uint32_t>::max() - 3, 4,
+                          false}));  // Failure: overflow
 
 // Check that pipelineLayout immediate data bytes compatible with shaders.
 TEST_F(ImmediateDataTest, ValidatePipelineLayoutImmediateDataBytesAndShaders) {
@@ -469,6 +405,82 @@ TEST_F(ImmediateDataTest, ValidateDefaultPipelineLayout) {
         ASSERT_DEVICE_ERROR(device.CreateComputePipeline(&csDesc));
     }
 }
+
+struct ImmediateDataRequiredCase {
+    const char* shader;
+    uint32_t setOffset;
+    uint32_t setSize;
+    bool success;
+};
+
+class ImmediateDataRequiredTest : public ImmediateDataTest,
+                                  public testing::WithParamInterface<ImmediateDataRequiredCase> {};
+
+TEST_P(ImmediateDataRequiredTest, Test) {
+    const auto& param = GetParam();
+    wgpu::ShaderModule shaderModule = utils::CreateShaderModule(device, param.shader);
+
+    wgpu::ComputePipelineDescriptor descriptor;
+    descriptor.compute.module = shaderModule;
+    descriptor.compute.entryPoint = "main";
+    wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&descriptor);
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+    pass.SetPipeline(pipeline);
+
+    if (param.setSize > 0) {
+        std::vector<uint32_t> data(param.setSize / 4, 0);
+        pass.SetImmediates(param.setOffset, data.data(), param.setSize);
+    }
+
+    pass.DispatchWorkgroups(1);
+    pass.End();
+
+    if (param.success) {
+        encoder.Finish();
+    } else {
+        ASSERT_DEVICE_ERROR(encoder.Finish());
+    }
+}
+
+static const char* kShader1 = R"(
+        struct ImmediateData {
+            val : u32
+        }
+        var<immediate> data : ImmediateData;
+
+        @compute @workgroup_size(1)
+        fn main() {
+            _ = data.val;
+        }
+    )";
+
+static const char* kShader2 = R"(
+        struct ImmediateData {
+            val1 : u32,
+            val2 : u32,
+        }
+        var<immediate> data : ImmediateData;
+
+        @compute @workgroup_size(1)
+        fn main() {
+            _ = data.val1;
+            _ = data.val2;
+        }
+    )";
+
+INSTANTIATE_TEST_SUITE_P(,
+                         ImmediateDataRequiredTest,
+                         ::testing::Values(
+                             // Shader requires 4 bytes, but 0 provided.
+                             ImmediateDataRequiredCase{kShader1, 0, 0, false},
+                             // Shader requires 4 bytes, and 4 provided.
+                             ImmediateDataRequiredCase{kShader1, 0, 4, true},
+                             // Shader requires 8 bytes, but 4 provided.
+                             ImmediateDataRequiredCase{kShader2, 0, 4, false},
+                             // Shader requires 8 bytes, and 8 provided.
+                             ImmediateDataRequiredCase{kShader2, 0, 8, true}));
 
 }  // anonymous namespace
 }  // namespace dawn
