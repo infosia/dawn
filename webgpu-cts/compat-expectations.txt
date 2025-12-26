@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-12-17 09:28:19AM
+# Last rolled: 2025-12-26 10:11:09AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -2235,6 +2235,18 @@ crbug.com/0000 [ intel-0x4680 linux renderer-skia-vulkan ] webgpu:web_platform,c
 crbug.com/0000 [ intel-0x4680 linux renderer-skia-vulkan ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_gpu_context_canvas:canvasType="onscreen";srcAndDstInSameGPUDevice=false;dstColorFormat="rgba8unorm-srgb";srcAlphaMode="premultiplied";dstAlphaMode="opaque";srcDoFlipYDuringCopy=true [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_gpu_context_canvas:canvasType="onscreen";srcAndDstInSameGPUDevice=false;dstColorFormat="rgba8unorm-srgb";srcAlphaMode="premultiplied";dstAlphaMode="premultiplied";srcDoFlipYDuringCopy=false [ Failure ]
 crbug.com/0000 [ intel-0x4680 linux renderer-skia-vulkan ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_gpu_context_canvas:canvasType="onscreen";srcAndDstInSameGPUDevice=false;dstColorFormat="rgba8unorm-srgb";srcAlphaMode="premultiplied";dstAlphaMode="premultiplied";srcDoFlipYDuringCopy=true [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu\:api,validation,encoding,encoder_open_state:compute_pass_commands#command="setImmediates": [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu\:api,validation,encoding,encoder_open_state:compute_pass_commands#command="setImmediates": [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu\:api,validation,encoding,encoder_open_state:compute_pass_commands#command="setImmediates": [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu\:api,validation,encoding,encoder_open_state:render_bundle_commands#command="setImmediates": [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu\:api,validation,encoding,encoder_open_state:render_bundle_commands#command="setImmediates": [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu\:api,validation,encoding,encoder_open_state:render_bundle_commands#command="setImmediates": [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu\:api,validation,encoding,encoder_open_state:render_pass_commands#command="setImmediates": [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu\:api,validation,encoding,encoder_open_state:render_pass_commands#command="setImmediates": [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu\:api,validation,encoding,encoder_open_state:render_pass_commands#command="setImmediates": [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu\:api,validation,state,device_lost,destroy:command,clearBuffer#stage="submit";awaitLost=false: [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu\:web_platform,copyToTexture,ImageBitmap:from_ImageData#alpha="none";orientation="flipY";colorSpaceConversion="none";srcFlipYInCopy=false;dstFormat="rgba8unorm";dstPremultiplied=false: [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu\:web_platform,copyToTexture,canvas:copy_contents_from_gpu_context_canvas#canvasType="onscreen";srcAndDstInSameGPUDevice=false;dstColorFormat="rg8unorm";srcAlphaMode="premultiplied";dstAlphaMode="opaque";srcDoFlipYDuringCopy=true: [ Failure ]
 
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="dispatchWorkgroups" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="dispatchWorkgroups" [ Failure ]
