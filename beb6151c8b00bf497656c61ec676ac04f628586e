@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "beb6151c8b00bf497656c61ec676ac04f628586e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09395354_a26492ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-30T22:56:13Z",
+      "side": 1,
+      "message": "Looks like we\u0027ll need to either revert https://dawn-review.googlesource.com/c/dawn/+/280035 or land a forward fix before this can land.",
+      "revId": "beb6151c8b00bf497656c61ec676ac04f628586e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
