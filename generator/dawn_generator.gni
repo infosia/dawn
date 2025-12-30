@@ -95,6 +95,21 @@ template("dawn_json_generator") {
                   root_build_dir),
     ]
 
-    forward_variables_from(invoker, "*", [ "target" ])
+    forward_variables_from(invoker,
+                           "*",
+                           [
+                             "target",
+                             "inputs",
+                           ])
+
+    inputs = [
+      "${dawn_root}/src/dawn/dawn.json",
+      "${dawn_root}/src/dawn/dawn_wire.json",
+      "${dawn_root}/src/dawn/dawn_kotlin.json",
+      "${dawn_root}/third_party/webgpu-headers/src/webgpu.json",
+    ]
+    if (defined(invoker.inputs)) {
+      inputs += invoker.inputs
+    }
   }
 }
