@@ -33,6 +33,24 @@
       "message": "We should try to add this to Chromium auto-roll.",
       "revId": "9744246fd8c3697f8e31df43a824558c97c96328",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a5f769b_6c0953a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-12-30T20:01:04Z",
+      "side": 1,
+      "message": "That shouldn\u0027t be difficult, although probably best to put that logic in another script since it\u0027s not related to DEPS.",
+      "parentUuid": "11e10f8c_ab86c57d",
+      "revId": "9744246fd8c3697f8e31df43a824558c97c96328",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
