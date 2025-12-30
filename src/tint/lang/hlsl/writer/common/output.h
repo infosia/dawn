@@ -78,6 +78,9 @@ struct Output {
     /// The workgroup size information, if the entry point was a compute shader
     WorkgroupInfo workgroup_info{};
 
+    /// The subgroup size information, if the entry point declares `@subgroup_size`.
+    uint32_t subgroup_size = 0;
+
     /// True if the shader uses vertex_index
     bool has_vertex_index = false;
 
