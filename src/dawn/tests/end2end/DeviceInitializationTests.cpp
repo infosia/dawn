@@ -130,6 +130,12 @@ TEST_F(DeviceInitializationTest, DeviceOutlivesInstance) {
 // Test that it is still possible to create a device from an adapter after the reference to the
 // instance is dropped.
 TEST_F(DeviceInitializationTest, AdapterOutlivesInstance) {
+    // TODO(crbug.com/472472701): Flakily kills test process when run with
+    // software backends and MSVC-compiled binaries.
+#if DAWN_COMPILER_IS(MSVC)
+    DAWN_SUPPRESS_TEST_IF(IsSwiftshader() || IsANGLESwiftShader() || IsWARP());
+#endif  // DAWN_COMPILER_IS(MSVC)
+
     // Get info of all available adapters and then free the instance.
     // We want to create a device on a fresh instance and adapter each time.
     std::vector<wgpu::AdapterInfo> availableAdapterInfo;
