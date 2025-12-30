@@ -33,6 +33,23 @@
       "message": "https://dawn-review.googlesource.com/c/dawn/+/280035 is failing ci and cq: https://ci.chromium.org/ui/p/dawn/builders/ci/dawn-mac-x64-builder-dbg/1137/overview\n\nI think this CL can fix that.",
       "revId": "b742c3fa2140c5c3c1e361c48e05745da3ae451b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d903cff1_195a77c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-12-30T19:30:15Z",
+      "side": 1,
+      "message": "Let me use holiday owner-override to land this to unblock CQ",
+      "revId": "b742c3fa2140c5c3c1e361c48e05745da3ae451b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
