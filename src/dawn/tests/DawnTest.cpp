@@ -1037,7 +1037,7 @@ DawnTestBase::~DawnTestBase() {
 
     // D3D11 and D3D12's GPU-based validation will accumulate objects over time if the backend
     // device is not destroyed and recreated, so we reset it here.
-    if ((IsD3D11() || IsD3D12()) && IsBackendValidationEnabled()) {
+    if (mBackendAdapter && (IsD3D11() || IsD3D12()) && IsBackendValidationEnabled()) {
         mBackendAdapter.ResetInternalDeviceForTesting();
     }
     mWireHelper.reset();
