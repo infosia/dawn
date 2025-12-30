@@ -26,6 +26,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <memory>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -37,26 +38,55 @@
 namespace dawn {
 namespace {
 
-class DeviceInitializationTest : public testing::Test {
+class DeviceInitializationTest : public DawnTest {
   protected:
-    void SetUp() override { dawnProcSetProcs(&native::GetProcs()); }
+    void SetUp() override {
+        // We don't call DawnTest::SetUp() because we want to use the native procs
+        // and avoid the wire setup that DawnTest does when --use-wire is passed.
+        // This test manages its own instances and devices.
+        dawnProcSetProcs(&native::GetProcs());
 
-    void TearDown() override { dawnProcSetProcs(nullptr); }
+        // We need to populate mAdapterInfo for various Is* functions to work
+        // when suppressing tests.
+        auto instance = std::make_unique<native::Instance>();
+        for (const native::Adapter& nativeAdapter : instance->EnumerateAdapters()) {
+            wgpu::Adapter adapter = wgpu::Adapter(nativeAdapter.Get());
+            wgpu::AdapterInfo info;
+            adapter.GetInfo(&info);
+
+            const auto& props = GetAdapterProperties();
+            if (props.deviceID == info.deviceID && props.vendorID == info.vendorID &&
+                props.adapterType == info.adapterType && props.backendType == info.backendType &&
+                props.name == std::string(info.device.data, info.device.length)) {
+                mAdapterInfo = std::make_unique<wgpu::AdapterInfo>();
+                adapter.GetInfo(mAdapterInfo.get());
+                break;
+            }
+        }
+
+        // TODO(crbug.com/474097242): Crashes during teardown w/ D3D11 and D3D12.
+        DAWN_SUPPRESS_TEST_IF(IsWindows() && (IsD3D11() || IsD3D12()));
+    }
+
+    void TearDown() override {
+        mAdapterInfo = nullptr;
+        dawnProcSetProcs(nullptr);
+    }
 
     // Test that the device can still be used by creating an async pipeline. Note that this test
     // would be better if we did something like a buffer copy instead, but that can only be done
     // once wgpu::CallbackMode::AllowSpontaneous is completely implemented.
     // TODO(crbug.com/42241003): Update this test do a buffer copy instead.
-    void ExpectDeviceUsable(wgpu::Device device) {
-        device.PushErrorScope(wgpu::ErrorFilter::Validation);
+    void ExpectDeviceUsable(wgpu::Device deviceToTest) {
+        deviceToTest.PushErrorScope(wgpu::ErrorFilter::Validation);
 
         wgpu::ComputePipelineDescriptor desc;
-        desc.compute.module = utils::CreateShaderModule(device, R"(
+        desc.compute.module = utils::CreateShaderModule(deviceToTest, R"(
             @compute @workgroup_size(1) fn main() {}
         )");
 
         std::atomic<uint8_t> callbacks = 0;
-        device.CreateComputePipelineAsync(
+        deviceToTest.CreateComputePipelineAsync(
             &desc, wgpu::CallbackMode::AllowSpontaneous,
             [&callbacks](wgpu::CreatePipelineAsyncStatus status, wgpu::ComputePipeline pipeline,
                          wgpu::StringView) {
@@ -65,7 +95,7 @@ class DeviceInitializationTest : public testing::Test {
                 callbacks++;
             });
 
-        device.PopErrorScope(
+        deviceToTest.PopErrorScope(
             wgpu::CallbackMode::AllowSpontaneous,
             [&callbacks](wgpu::PopErrorScopeStatus status, wgpu::ErrorType type, wgpu::StringView) {
                 EXPECT_EQ(status, wgpu::PopErrorScopeStatus::Success);
@@ -81,7 +111,7 @@ class DeviceInitializationTest : public testing::Test {
 
 // Test that device operations are still valid if the reference to the instance
 // is dropped.
-TEST_F(DeviceInitializationTest, DeviceOutlivesInstance) {
+TEST_P(DeviceInitializationTest, DeviceOutlivesInstance) {
     // Get info of all available adapters and then free the instance.
     // We want to create a device on a fresh instance and adapter each time.
     std::vector<wgpu::AdapterInfo> availableAdapterInfo;
@@ -129,7 +159,13 @@ TEST_F(DeviceInitializationTest, DeviceOutlivesInstance) {
 
 // Test that it is still possible to create a device from an adapter after the reference to the
 // instance is dropped.
-TEST_F(DeviceInitializationTest, AdapterOutlivesInstance) {
+TEST_P(DeviceInitializationTest, AdapterOutlivesInstance) {
+    // TODO(crbug.com/472472701): Flakily kills test process when run with
+    // software backends and MSVC-compiled binaries.
+#if DAWN_COMPILER_IS(MSVC)
+    DAWN_SUPPRESS_TEST_IF(IsSwiftshader() || IsANGLESwiftShader() || IsWARP());
+#endif  // DAWN_COMPILER_IS(MSVC)
+
     // Get info of all available adapters and then free the instance.
     // We want to create a device on a fresh instance and adapter each time.
     std::vector<wgpu::AdapterInfo> availableAdapterInfo;
@@ -173,6 +209,16 @@ TEST_F(DeviceInitializationTest, AdapterOutlivesInstance) {
         }
     }
 }
+
+DAWN_INSTANTIATE_TEST(DeviceInitializationTest,
+                      D3D11Backend(),
+                      D3D12Backend(),
+                      MetalBackend(),
+                      NullBackend(),
+                      OpenGLBackend(),
+                      OpenGLESBackend(),
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 }  // anonymous namespace
 }  // namespace dawn
