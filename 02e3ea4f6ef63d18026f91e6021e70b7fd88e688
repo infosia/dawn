@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bae1022_a283dfad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-31T04:44:34Z",
+      "side": 1,
+      "message": "CQ is broken. This revert should fix it. If it does, it will land. :)",
+      "revId": "02e3ea4f6ef63d18026f91e6021e70b7fd88e688",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
