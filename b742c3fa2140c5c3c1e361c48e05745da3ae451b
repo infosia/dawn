@@ -85,6 +85,24 @@
       "message": "I don\u0027t think this getter is important enough to justify extra complexity. I would prefer for Emdawnwebgpu to just assume the browser exposes `texture.textureBindingViewDimension` correctly, which I think Chromium doesn\u0027t do yet, but will definitely do before shipping WebGPU Compatibility Mode for real. (Right now it is only in Origin Trial.)",
       "revId": "b742c3fa2140c5c3c1e361c48e05745da3ae451b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f1f6ccc_a87fea95",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 2710,
+      "author": {
+        "id": 3418012
+      },
+      "writtenOn": "2025-12-31T08:53:58Z",
+      "side": 1,
+      "message": "Thank you for reviewing. I have revised the patch. Please take another look when you have time.",
+      "parentUuid": "85c442ab_fa64af1a",
+      "revId": "b742c3fa2140c5c3c1e361c48e05745da3ae451b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
