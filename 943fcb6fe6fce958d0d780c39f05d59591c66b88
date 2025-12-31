@@ -26,6 +26,54 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "ab8f5f1c_a3fe35a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4541637
+      },
+      "writtenOn": "2025-12-31T21:03:39Z",
+      "side": 1,
+      "message": "Marked as resolved.\n\nThanks! I can take the follow-up (chromium:472359964) to enable stricter Closure checks in the emdawnwebgpu tests.\n\n**Local testing**\n\n* `emcmake cmake ../.. -DDAWN_BUILD_TESTS\u003dON -DDAWN_BUILD_SAMPLES\u003dOFF -DCMAKE_CXX_STANDARD\u003d20`\n* `cmake --build . --target emdawnwebgpu_tests_asyncify emdawnwebgpu_tests_jspi`\n\n**Result**\nNo Closure JSC warnings, aside from the expected JSPI experimental warning.",
+      "parentUuid": "967c8601_fbb4d94f",
+      "range": {
+        "startLine": 13,
+        "startChar": 92,
+        "endLine": 13,
+        "endChar": 143
+      },
+      "revId": "943fcb6fe6fce958d0d780c39f05d59591c66b88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ee65866_7ff27eb4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4541637
+      },
+      "writtenOn": "2025-12-31T21:03:39Z",
+      "side": 1,
+      "message": "Marked as resolved.",
+      "parentUuid": "967c8601_fbb4d94f",
+      "range": {
+        "startLine": 13,
+        "startChar": 92,
+        "endLine": 13,
+        "endChar": 143
+      },
+      "revId": "943fcb6fe6fce958d0d780c39f05d59591c66b88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "ccd906c5_9376f466",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
