@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "859af01e_4d7ece60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3418012
+      },
+      "writtenOn": "2025-12-31T09:23:21Z",
+      "side": 1,
+      "message": "It looks like there\u0027s an ongoing revert, which makes me abandon this CL.\n\nhttps://dawn-review.googlesource.com/c/dawn/+/282615",
+      "revId": "dfbd8bb9fe28092116dfc100524b5b83ea2610ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
