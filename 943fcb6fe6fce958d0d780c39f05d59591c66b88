@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccd906c5_9376f466",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-12-31T05:23:57Z",
+      "side": 1,
+      "message": "Nice, thank you! (Will CQ once CQ is unbroken)",
+      "revId": "943fcb6fe6fce958d0d780c39f05d59591c66b88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
