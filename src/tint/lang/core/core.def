@@ -100,6 +100,7 @@ enum builtin_type {
   bool
   i8
   u8
+  u16
   f16
   f32
   i32
@@ -297,6 +298,7 @@ enum usages {
 type bool
 type i8
 type u8
+type u16
 @precedence(3) type i32
 @precedence(2) type u32
 @precedence(1) type f32
@@ -360,7 +362,7 @@ type buffer<N: num>
 // A type matcher that can match one or more types.                           //
 ////////////////////////////////////////////////////////////////////////////////
 
-match scalar: f32 | f16 | i32 | u32 | bool
+match scalar: f32 | f16 | i32 | u32 | u16 | bool
 match scalar_no_f32: i32 | f16 | u32 | bool
 match scalar_no_f16: f32 | i32 | u32 | bool
 match scalar_no_i32: f32 | f16 | u32 | bool
@@ -958,6 +960,25 @@ implicit(C: iu32) fn textureStore(texture: texel_buffer<u32_texel_format, read_w
   fn bufferLength(ptr<AS, unsized_buffer, W>) -> u32
 @must_use implicit(W: read_write, AS: workgroup_or_storage, N: num)
   fn bufferLength(ptr<AS, buffer<N>, W>) -> u32
+
+// The following variants do not appear in WGSL.
+@must_use implicit(R: read, AS: uniform_or_storage, O: iu32)
+  fn bufferView<T>(ptr<AS, unsized_buffer, R>, O, u32) -> ptr<AS, T, R>
+@must_use implicit(R: read, AS: uniform_or_storage, O: iu32, N: num)
+  fn bufferView<T>(ptr<AS, buffer<N>, R>, O, u32) -> ptr<AS, T, R>
+@must_use implicit(W: writable, AS: workgroup_or_storage, O: iu32)
+  fn bufferView<T>(ptr<AS, unsized_buffer, W>, O, u32) -> ptr<AS, T, W>
+@must_use implicit(W: writable, AS: workgroup_or_storage, O: iu32, N: num)
+  fn bufferView<T>(ptr<AS, buffer<N>, W>, O, u32) -> ptr<AS, T, W>
+
+@must_use implicit(R: read, AS: uniform_or_storage)
+  fn bufferLength(ptr<AS, unsized_buffer, R>, u32) -> u32
+@must_use implicit(R: read, AS: uniform_or_storage, N: num)
+  fn bufferLength(ptr<AS, buffer<N>, R>, u32) -> u32
+@must_use implicit(W: writable, AS: workgroup_or_storage)
+  fn bufferLength(ptr<AS, unsized_buffer, W>, u32) -> u32
+@must_use implicit(W: writable, AS: workgroup_or_storage, N: num)
+  fn bufferLength(ptr<AS, buffer<N>, W>, u32) -> u32
 
 // chromium_experimental_print
 implicit(T: scalar) fn print(T)
