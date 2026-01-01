@@ -961,6 +961,25 @@ implicit(C: iu32) fn textureStore(texture: texel_buffer<u32_texel_format, read_w
 @must_use implicit(W: read_write, AS: workgroup_or_storage, N: num)
   fn bufferLength(ptr<AS, buffer<N>, W>) -> u32
 
+// The following variants do not appear in WGSL.
+@must_use implicit(R: read, AS: uniform_or_storage, O: iu32)
+  fn bufferView<T>(ptr<AS, unsized_buffer, R>, O, u32) -> ptr<AS, T, R>
+@must_use implicit(R: read, AS: uniform_or_storage, O: iu32, N: num)
+  fn bufferView<T>(ptr<AS, buffer<N>, R>, O, u32) -> ptr<AS, T, R>
+@must_use implicit(W: writable, AS: workgroup_or_storage, O: iu32)
+  fn bufferView<T>(ptr<AS, unsized_buffer, W>, O, u32) -> ptr<AS, T, W>
+@must_use implicit(W: writable, AS: workgroup_or_storage, O: iu32, N: num)
+  fn bufferView<T>(ptr<AS, buffer<N>, W>, O, u32) -> ptr<AS, T, W>
+
+@must_use implicit(R: read, AS: uniform_or_storage)
+  fn bufferLength(ptr<AS, unsized_buffer, R>, u32) -> u32
+@must_use implicit(R: read, AS: uniform_or_storage, N: num)
+  fn bufferLength(ptr<AS, buffer<N>, R>, u32) -> u32
+@must_use implicit(W: writable, AS: workgroup_or_storage)
+  fn bufferLength(ptr<AS, unsized_buffer, W>, u32) -> u32
+@must_use implicit(W: writable, AS: workgroup_or_storage, N: num)
+  fn bufferLength(ptr<AS, buffer<N>, W>, u32) -> u32
+
 // chromium_experimental_print
 implicit(T: scalar) fn print(T)
 implicit(N: num, T: scalar) fn print(vec<N, T>)
