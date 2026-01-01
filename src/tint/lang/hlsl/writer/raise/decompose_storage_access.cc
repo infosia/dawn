@@ -109,6 +109,8 @@ struct State {
                             case core::BuiltinFn::kAtomicCompareExchangeWeak:
                             case core::BuiltinFn::kAtomicStore:
                             case core::BuiltinFn::kAtomicLoad:
+                            case core::BuiltinFn::kBufferView:
+                            case core::BuiltinFn::kBufferLength:
                                 usage_worklist.Push(call);
                                 break;
                             default:
@@ -150,7 +152,7 @@ struct State {
                     [&](core::ir::CoreBuiltinCall* call) {
                         switch (call->Func()) {
                             case core::BuiltinFn::kArrayLength:
-                                ArrayLength(var, call, var_ty->StoreType(), 0);
+                                ArrayLength(var, call, var_ty->StoreType(), {});
                                 break;
                             case core::BuiltinFn::kAtomicAnd:
                                 AtomicAnd(var, call, {});
@@ -185,6 +187,12 @@ struct State {
                             case core::BuiltinFn::kAtomicLoad:
                                 AtomicLoad(var, call, {});
                                 break;
+                            case core::BuiltinFn::kBufferLength:
+                                BufferLength(var, call, var_ty->StoreType());
+                                break;
+                            case core::BuiltinFn::kBufferView:
+                                BufferView(var, call, var_ty->StoreType(), {});
+                                break;
                             default:
                                 TINT_IR_UNREACHABLE(ir);
                         }
@@ -197,10 +205,15 @@ struct State {
         }
     }
 
+    struct OffsetData {
+        uint32_t byte_offset = 0;
+        Vector<core::ir::Value*, 4> expr{};
+    };
+
     void ArrayLength(core::ir::Var* var,
                      core::ir::CoreBuiltinCall* call,
                      const core::type::Type* type,
-                     uint32_t offset) {
+                     OffsetData offset) {
         auto* arr_ty = type->As<core::type::Array>();
         // If the `arrayLength` was called directly on the storage buffer then
         // it _must_ be a runtime array.
@@ -217,8 +230,12 @@ struct State {
                                                       inst->Result());
 
             inst = b.Load(inst);
-            if (offset > 0) {
-                inst = b.Subtract(inst, u32(offset));
+            if (offset.byte_offset > 0) {
+                inst = b.Subtract(inst, u32(offset.byte_offset));
+            }
+            if (offset.expr.Length() > 0) {
+                // bufferView calls may have introduced a runtime offset value.
+                inst = b.Subtract(inst, offset.expr[0]);
             }
             auto* div = b.Divide(inst, u32(arr_ty->ImplicitStride()));
             call->Result()->ReplaceAllUsesWith(div->Result());
@@ -226,10 +243,30 @@ struct State {
         call->Destroy();
     }
 
-    struct OffsetData {
-        uint32_t byte_offset = 0;
-        Vector<core::ir::Value*, 4> expr{};
-    };
+    void BufferLength(core::ir::Var* var,
+                      core::ir::CoreBuiltinCall* call,
+                      const core::type::Type* type) {
+        auto* buffer_ty = type->As<core::type::Buffer>();
+        // Overrides should be resolved by now.
+        TINT_IR_ASSERT(ir, buffer_ty && (buffer_ty->Count()->As<core::type::RuntimeArrayCount>() ||
+                                         buffer_ty->Count()->As<core::type::ConstantArrayCount>()));
+
+        if (call->Args().Length() > 1) {
+            // Direct variable access encoded a lower limit.
+            call->Result()->ReplaceAllUsesWith(call->Args()[1]);
+        } else if (auto* const_count = buffer_ty->Count()->As<core::type::ConstantArrayCount>()) {
+            call->Result()->ReplaceAllUsesWith(b.Constant(u32(const_count->value)));
+        } else {
+            b.InsertBefore(call, [&] {
+                core::ir::Instruction* inst = b.Var(ty.ptr(function, ty.u32()));
+                b.MemberCall<hlsl::ir::MemberBuiltinCall>(ty.void_(), BuiltinFn::kGetDimensions,
+                                                          var, inst->Result());
+                inst = b.Load(inst);
+                call->Result()->ReplaceAllUsesWith(inst->Result());
+            });
+        }
+        call->Destroy();
+    }
 
     void Interlocked(core::ir::Var* var,
                      core::ir::CoreBuiltinCall* call,
@@ -741,62 +778,73 @@ struct State {
                 TINT_ICE_ON_NO_MATCH);
         }
 
-        // Copy the usages into a vector so we can remove items from the hashset.
-        auto usages = a->Result()->UsagesSorted();
+        AccessUses(var, a, obj, offset);
+    }
+
+    void BufferView(core::ir::Var* var,
+                    core::ir::BuiltinCall* inst,
+                    const core::type::Type* obj_type,
+                    OffsetData offset) {
+        auto* offset_arg = inst->Args()[1];
+        b.InsertBefore(inst, [&] { UpdateOffsetData(offset_arg, 1, &offset); });
+        obj_type = inst->Result()->Type()->As<core::type::Pointer>()->StoreType();
+
+        AccessUses(var, inst, obj_type, offset);
+    }
+
+    void AccessUses(core::ir::Var* var,
+                    core::ir::Instruction* inst,
+                    const core::type::Type* obj_type,
+                    OffsetData offset) {
+        auto usages = inst->Result()->UsagesSorted();
         while (!usages.IsEmpty()) {
             auto usage = usages.Pop();
             tint::Switch(
                 usage.instruction,
                 [&](core::ir::Let* let) {
-                    // The `let` is essentially an alias to the `access`. So, add the `let`
-                    // usages into the usage worklist, and replace the let with the access chain
-                    // directly.
                     for (auto& u : let->Result()->UsagesSorted()) {
                         usages.Push(u);
                     }
-                    let->Result()->ReplaceAllUsesWith(a->Result());
+                    let->Result()->ReplaceAllUsesWith(inst->Result());
                     let->Destroy();
                 },
-                [&](core::ir::Access* sub_access) {
-                    // Treat an access chain of the access chain as a continuation of the outer
-                    // chain. Pass through the object we stopped at and the current byte_offset
-                    // and then restart the access chain replacement for the new access chain.
-                    Access(sub_access, var, obj, offset);
-                },
-
+                [&](core::ir::Access* access) { Access(access, var, obj_type, offset); },
                 [&](core::ir::LoadVectorElement* lve) {
-                    a->Result()->RemoveUsage(usage);
+                    inst->Result()->RemoveUsage(usage);
 
                     OffsetData load_offset = offset;
                     b.InsertBefore(lve, [&] {
-                        UpdateOffsetData(lve->Index(), obj->DeepestElement()->Size(), &load_offset);
+                        UpdateOffsetData(lve->Index(), obj_type->DeepestElement()->Size(),
+                                         &load_offset);
                     });
                     Load(lve, var, load_offset);
                 },
                 [&](core::ir::Load* ld) {
-                    a->Result()->RemoveUsage(usage);
+                    inst->Result()->RemoveUsage(usage);
                     Load(ld, var, offset);
                 },
 
                 [&](core::ir::StoreVectorElement* sve) {
-                    a->Result()->RemoveUsage(usage);
+                    inst->Result()->RemoveUsage(usage);
 
                     OffsetData store_offset = offset;
                     b.InsertBefore(sve, [&] {
-                        UpdateOffsetData(sve->Index(), obj->DeepestElement()->Size(),
+                        UpdateOffsetData(sve->Index(), obj_type->DeepestElement()->Size(),
                                          &store_offset);
                     });
                     Store(sve, var, sve->Value(), store_offset);
                 },
                 [&](core::ir::Store* store) { Store(store, var, store->From(), offset); },
                 [&](core::ir::CoreBuiltinCall* call) {
+                    // We won't hit bufferLength or bufferView anymore.
                     switch (call->Func()) {
                         case core::BuiltinFn::kArrayLength:
                             // If this access chain is being used in an `arrayLength` call then the
                             // access chain _must_ have resolved to the runtime array member of the
                             // structure. So, we _must_ have set `obj` to the array member which is
                             // a runtime array.
-                            ArrayLength(var, call, obj, offset.byte_offset);
+
+                            ArrayLength(var, call, obj_type, offset);
                             break;
                         case core::BuiltinFn::kAtomicAnd:
                             AtomicAnd(var, call, offset);
@@ -838,8 +886,9 @@ struct State {
                 TINT_ICE_ON_NO_MATCH);
         }
 
-        a->Destroy();
+        inst->Destroy();
     }
+
 
     void Store(core::ir::Instruction* inst,
                core::ir::Var* var,

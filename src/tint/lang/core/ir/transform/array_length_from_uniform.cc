@@ -144,6 +144,12 @@ struct State {
                     ptr = let->Value();
                     continue;
                 }
+                if (auto* view = result->Instruction()->As<CoreBuiltinCall>()) {
+                    if (view->Func() == core::BuiltinFn::kBufferView) {
+                        ptr = view->Args()[0];
+                        continue;
+                    }
+                }
                 TINT_IR_UNREACHABLE(ir) << "unhandled source of a storage buffer pointer: "
                                         << result->Instruction()->TypeInfo().name;
             }

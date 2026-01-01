@@ -70,6 +70,7 @@ struct State {
         Vector<ir::StoreVectorElement*, 64> vector_stores;
         Vector<ir::CoreBuiltinCall*, 64> subgroup_matrix_calls;
         Vector<ir::CoreBuiltinCall*, 64> texture_calls;
+        Vector<ir::CoreBuiltinCall*, 64> buffer_view_calls;
 
         if (config.use_integer_range_analysis) {
             integer_range_analysis.emplace(&ir);
@@ -113,6 +114,10 @@ struct State {
                         call->Func() == core::BuiltinFn::kSubgroupMatrixStore) {
                         subgroup_matrix_calls.Push(call);
                     }
+
+                    if (call->Func() == core::BuiltinFn::kBufferView) {
+                        buffer_view_calls.Push(call);
+                    }
                 });
         }
 
@@ -152,6 +157,12 @@ struct State {
         for (auto* call : subgroup_matrix_calls) {
             b.InsertBefore(call, [&] {  //
                 PredicateSubgroupMatrixCall(call);
+            });
+        }
+
+        for (auto* call : buffer_view_calls) {
+            b.InsertBefore(call, [&] {  //
+                ClampBufferViewCall(call);
             });
         }
     }
@@ -518,6 +529,69 @@ struct State {
         });
     }
 
+    // Mask the offset to a valid alignment and clamp it to an acceptable size.
+    void ClampBufferViewCall(ir::CoreBuiltinCall* call) {
+        auto* buffer_arg = call->Args()[0];
+        auto* offset_arg = call->Args()[1];
+        auto* buffer_type =
+            buffer_arg->Type()->As<type::Pointer>()->StoreType()->As<type::Buffer>();
+        auto* result_type = call->Result()->Type()->As<type::Pointer>()->StoreType();
+        uint32_t result_size = result_type->Size();
+
+        // Skip clamping if the view is known to be in bounds.
+        // Note: since offset is a constant it is known to satisfy the alignment requirement.
+        if (buffer_type->Count()->Is<type::ConstantArrayCount>() && offset_arg->Is<Constant>() &&
+            result_type->Size() > 0) {
+            uint32_t buffer_size = buffer_type->ConstantCount().value();
+            uint32_t offset_value = offset_arg->As<Constant>()->Value()->ValueAs<uint32_t>();
+            if (result_size + offset_value <= buffer_size) {
+                return;
+            }
+        }
+
+        // Calculate the result type size.
+        Value* size_value = nullptr;
+        if (result_size == 0) {
+            // Must contain a runtime array.
+            if (auto* array_type = result_type->As<type::Array>()) {
+                TINT_IR_ASSERT(ir, array_type->Count()->Is<type::RuntimeArrayCount>());
+                size_value =
+                    b.Call(ty.u32(), core::BuiltinFn::kArrayLength, call->Result())->Result(0);
+            } else if (auto* struct_type = result_type->As<type::Struct>()) {
+                auto arr_index = struct_type->Members().Length() - 1;
+                auto* arr_member = struct_type->Members()[arr_index];
+                auto* arr_ty = arr_member->Type()->As<core::type::Array>();
+                TINT_IR_ASSERT(ir, arr_ty && arr_ty->Count()->Is<type::RuntimeArrayCount>());
+                auto* access =
+                    b.Access(arr_ty, call->Result(), b.Constant(u32(arr_index)))->Result();
+                size_value = b.Add(access, b.Constant(u32(arr_member->Offset())))->Result();
+            } else {
+                TINT_IR_UNREACHABLE(ir);
+            }
+        } else {
+            size_value = b.Constant(u32(result_size));
+        }
+
+        if (offset_arg->Type()->Is<type::I32>()) {
+            offset_arg = CastToU32(offset_arg);
+        }
+
+        // Mask the offset to ensure alignment.
+        if (!offset_arg->Is<Constant>()) {
+            uint32_t num_bits = Log2(result_type->Align());
+            uint32_t mask = ~((1u << num_bits) - 1);
+            offset_arg = b.And(offset_arg, b.Constant(u32(mask)))->Result();
+        }
+
+        // Clamp the offset to smaller of:
+        // * offset + size
+        // * buffer length
+        auto* add = b.Add(offset_arg, size_value)->Result();
+        auto* length = b.Call(ty.u32(), core::BuiltinFn::kBufferLength, buffer_arg)->Result();
+        offset_arg = b.Min(add, length)->Result();
+        call->SetOperand(CoreBuiltinCall::kArgsOperandOffset + 1, offset_arg);
+    }
+
     // Returns the root Var for `value` by walking up the chain of instructions,
     // or nullptr if none is found.
     Var* RootVarFor(Value* value) {
@@ -541,7 +615,7 @@ struct State {
                             result = var;
                             return nullptr;  // Done
                         },
-                        TINT_ICE_ON_NO_MATCH);
+                        [&](BuiltinCall* call) { return call->Args()[0]; }, TINT_ICE_ON_NO_MATCH);
                 },
                 [&](FunctionParam*) {
                     // Cannot follow function params to vars

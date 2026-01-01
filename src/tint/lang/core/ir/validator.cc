@@ -96,6 +96,7 @@
 #include "src/tint/lang/core/type/sampled_texture.h"
 #include "src/tint/lang/core/type/storage_texture.h"
 #include "src/tint/lang/core/type/type.h"
+#include "src/tint/lang/core/type/u16.h"
 #include "src/tint/lang/core/type/u32.h"
 #include "src/tint/lang/core/type/u64.h"
 #include "src/tint/lang/core/type/u8.h"
@@ -2319,6 +2320,14 @@ void Validator::CheckType(const core::type::Type* root,
                 }
                 return true;
             },
+            [&](const core::type::U16*) {
+                // u16 types are guarded by the Allow16BitIntegers capability.
+                if (!capabilities_.Contains(Capability::kAllow16BitIntegers)) {
+                    diag() << "16-bit integer types are not permitted";
+                    return false;
+                }
+                return true;
+            },
             [&](const core::type::Array* arr) {
                 if (!arr->ElemType()->HasCreationFixedFootprint()) {
                     diag() << "array elements, " << NameOf(type)
@@ -3952,13 +3961,14 @@ void Validator::CheckBitcastTypes(const Bitcast* bitcast) {
         // S -> vec2<f16>
         if (auto* vec_type = result_type->As<core::type::Vector>()) {
             auto elements = vec_type->Elements();
-            if (elements.count == 2 && Is<core::type::F16>(elements.type)) {
+            if (elements.count == 2 && IsAnyOf<core::type::F16, core::type::U16>(elements.type)) {
                 return;
             }
         }
-    } else if (val_type->Is<core::type::F16>()) {
-        // f16 -> f16, identity
-        if (result_type->Is<core::type::F16>()) {
+    } else if (val_type->IsAnyOf<core::type::F16, core::type::U16>()) {
+        // S, where S is f16 or u16
+        // S -> S, identity and reinterpretation
+        if (result_type->IsAnyOf<core::type::F16, core::type::U16>()) {
             return;
         }
     } else if (val_type->Is<core::type::Vector>()) {
@@ -3988,22 +3998,22 @@ void Validator::CheckBitcastTypes(const Bitcast* bitcast) {
                 return;
             }
 
-            // vec2<S> -> vec4<f16>
+            // vec2<S> -> vec4<f16|u16>
             if (val_elements.count == 2) {
                 if (result_elements.has_value() && result_elements->count == 4 &&
-                    result_elements->type->Is<core::type::F16>()) {
+                    result_elements->type->IsAnyOf<core::type::F16, core::type::U16>()) {
                     return;
                 }
             }
-        } else if (val_elements.type->Is<core::type::F16>()) {
+        } else if (val_elements.type->IsAnyOf<core::type::F16, core::type::U16>()) {
             if (result_elements.has_value()) {
-                if (result_elements->type->Is<core::type::F16>()) {
-                    // vecN<f16> -> vecN<f16>, identity
+                if (result_elements->type->IsAnyOf<core::type::F16, core::type::U16>()) {
+                    // vecN<f16|u16> -> vecN<f16|u16>, identity
                     if (val_elements.count == result_elements->count) {
                         return;
                     }
                 } else {
-                    // vec4<f16> -> vec2<S>, where S is i32, u32, or f32
+                    // vec4<f16|u16> -> vec2<S>, where S is i32, u32, or f32
                     if (val_elements.count == 4 && result_elements->count == 2 &&
                         result_elements->type
                             ->IsAnyOf<core::type::U32, core::type::I32, core::type::F32>()) {
@@ -4011,7 +4021,7 @@ void Validator::CheckBitcastTypes(const Bitcast* bitcast) {
                     }
                 }
             } else {
-                // vec2<f16> -> i32, u32, or f32
+                // vec2<f16|u16> -> i32, u32, or f32
                 if (val_elements.count == 2 &&
                     result_type->IsAnyOf<core::type::U32, core::type::I32, core::type::F32>()) {
                     return;
@@ -4352,7 +4362,23 @@ void Validator::CheckUserCall(const UserCall* call) {
     }
 
     for (size_t i = 0; i < args.Length(); i++) {
-        if (args[i]->Type() != params[i]->Type()) {
+        bool allow_mismatch = false;
+        auto* arg_ptr = args[i]->Type()->As<core::type::Pointer>();
+        auto* param_ptr = args[i]->Type()->As<core::type::Pointer>();
+        if (arg_ptr && param_ptr) {
+            auto* arg_buffer = arg_ptr->StoreType()->As<core::type::Buffer>();
+            auto* param_buffer = param_ptr->StoreType()->As<core::type::Buffer>();
+            if (arg_buffer && param_buffer) {
+                auto* arg_count = arg_buffer->Count();
+                auto* param_count = param_buffer->Count();
+                allow_mismatch =
+                    param_count->Is<core::type::RuntimeArrayCount>() ||
+                    (arg_count->Is<core::type::ConstantArrayCount>() &&
+                     param_count->Is<core::type::ConstantArrayCount>() &&
+                     arg_buffer->ConstantCount().value() >= param_buffer->ConstantCount().value());
+            }
+        }
+        if (!allow_mismatch && args[i]->Type() != params[i]->Type()) {
             AddError(call, UserCall::kArgsOperandOffset + i)
                 << "type " << NameOf(params[i]->Type()) << " of function parameter " << i
                 << " does not match argument type " << NameOf(args[i]->Type());

@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/core/ir/transform/decompose_uniform_access.h"
 
+#include <limits>
 #include <utility>
 
 #include "src/tint/lang/core/ir/builder.h"
@@ -48,6 +49,9 @@ struct State {
     /// The IR module.
     core::ir::Module& ir;
 
+    /// The transform options.
+    const DecomposeUniformAccessOptions& options;
+
     /// The IR builder.
     core::ir::Builder b{ir};
 
@@ -55,8 +59,12 @@ struct State {
     core::type::Manager& ty{ir.Types()};
 
     using VarTypePair = std::pair<core::ir::Var*, const core::type::Type*>;
-    /// Maps a struct to the load function
+    /// Maps a variable and type to the load function
     Hashmap<VarTypePair, core::ir::Function*, 2> var_and_type_to_load_fn_{};
+    /// Maps a variable and type to the store function
+    Hashmap<VarTypePair, core::ir::Function*, 2> var_and_type_to_store_fn_{};
+
+    const type::Type* base_ty_ = nullptr;
 
     /// Process the module.
     void Process() {
@@ -69,7 +77,7 @@ struct State {
                 continue;
             }
 
-            // DecomposeStorageAccess maybe have converte the var pointers into ByteAddressBuffer
+            // DecomposeStorageAccess maybe have converted the var pointers into ByteAddressBuffer
             // objects. Since they've been changed, then they're Storage buffers and we don't care
             // about them here.
             auto* var_ty = var->Result()->Type()->As<core::type::Pointer>();
@@ -77,16 +85,24 @@ struct State {
                 continue;
             }
 
-            // Only care about uniform address space variables.
-            if (var_ty->AddressSpace() != core::AddressSpace::kUniform) {
-                continue;
+            // Always decompose buffer types, otherwise depend on the options.
+            if (var_ty->StoreType()->Is<type::Buffer>()) {
+                var_worklist.Push(var);
+            } else if ((var_ty->AddressSpace() == AddressSpace::kStorage && options.storage) ||
+                       (var_ty->AddressSpace() == AddressSpace::kUniform && options.uniform) ||
+                       (var_ty->AddressSpace() == AddressSpace::kWorkgroup && options.workgroup)) {
+                // Atomics could be handled in some backends, but not in a generic way.
+                // Bool is spec'd as same as u32 so that could also be handled.
+                // TODO(b/474819671): Should bool be supported? WebGPU issue 5338.
+                if (!ContainsAtomicOrBool(var_ty->StoreType())) {
+                    var_worklist.Push(var);
+                }
             }
-
-            var_worklist.Push(var);
         }
 
         for (auto* var : var_worklist) {
             auto* result = var->Result();
+            SetBaseType(var);
 
             auto usage_worklist = result->UsagesSorted();
             auto* var_ty = result->Type()->As<core::type::Pointer>();
@@ -103,7 +119,9 @@ struct State {
                 tint::Switch(
                     inst,  //
                     [&](core::ir::LoadVectorElement* l) { LoadVectorElement(l, var, od); },
+                    [&](core::ir::StoreVectorElement* s) { StoreVectorElement(s, var, od); },
                     [&](core::ir::Load* l) { Load(l, var, od); },
+                    [&](core::ir::Store* s) { Store(s, var, od); },
                     [&](core::ir::Access* a) { Access(a, var, a->Object()->Type(), od); },
                     [&](core::ir::Let* let) {
                         // The `let` is, essentially, an alias for the `var` as it's assigned
@@ -115,15 +133,58 @@ struct State {
                         let->Result()->ReplaceAllUsesWith(result);
                         let->Destroy();
                     },
+                    [&](core::ir::CoreBuiltinCall* call) {
+                        switch (call->Func()) {
+                            case core::BuiltinFn::kArrayLength:
+                                ArrayLength(call, var, var_ty->StoreType(), {});
+                                break;
+                            case core::BuiltinFn::kBufferLength:
+                                BufferLength(call, var, var_ty->StoreType(), {});
+                                break;
+                            case core::BuiltinFn::kBufferView:
+                                BufferView(call, var, var_ty->StoreType(), {});
+                                break;
+                            default:
+                                TINT_IR_UNREACHABLE(ir);
+                        }
+                    },
                     TINT_ICE_ON_NO_MATCH);
             }
 
+            auto HasRuntimeSize = [&](const type::Type* type) {
+                return tint::Switch(
+                    type,
+                    [&](const type::Array* arr) {
+                        return arr->Count()->Is<type::RuntimeArrayCount>();
+                    },
+                    [&](const type::Buffer* buf) {
+                        return buf->Count()->Is<type::RuntimeArrayCount>();
+                    },
+                    [&](const type::Struct* str) {
+                        auto* last = str->Element(str->Members().Length() - 1);
+                        if (auto* arr = last->As<type::Array>()) {
+                            return arr->Count()->Is<type::RuntimeArrayCount>();
+                        }
+                        return false;
+                    },
+                    [&](Default) { return false; });
+            };
+
             // Swap the result type of the `var` to the new result type
-            auto array_length = (var_ty->StoreType()->Size() + 15) / 16;
-            result->SetType(ty.ptr(var_ty->AddressSpace(), ty.array(ty.vec4u(), array_length),
-                                   var_ty->Access()));
+            const type::Array* array_ty = nullptr;
+            if (HasRuntimeSize(var_ty->StoreType())) {
+                // Use a runtime-sized array of the base type.
+                array_ty = ty.runtime_array(BaseType());
+            } else {
+                auto array_length =
+                    (var_ty->StoreType()->Size() + BaseType()->Size() - 1) / BaseType()->Size();
+                array_ty = ty.array(BaseType(), array_length);
+            }
+            result->SetType(ty.ptr(var_ty->AddressSpace(), array_ty, var_ty->Access()));
         }
     }
+
+    const type::Type* BaseType() { return base_ty_; }
 
     // OffsetData represents an unsigned integer expression.
     // The value is the sum of a const part, held in `byte_offset`, and
@@ -132,6 +193,114 @@ struct State {
         uint32_t byte_offset = 0;
         Vector<core::ir::Value*, 4> byte_offset_expr{};
     };
+
+    bool ContainsAtomicOrBool(const type::Type* type) const {
+        bool has_atomic = false;
+        tint::Switch(
+            type,  //
+            [&](const type::Bool*) { has_atomic = true; },
+            [&](const type::Atomic*) { has_atomic = true; },
+            [&](const type::Vector* vec_ty) { has_atomic = ContainsAtomicOrBool(vec_ty->Type()); },
+            [&](const type::Array* array_ty) {
+                has_atomic = ContainsAtomicOrBool(array_ty->ElemType());
+            },
+            [&](const type::Struct* struct_ty) {
+                for (auto* member : struct_ty->Members()) {
+                    if (ContainsAtomicOrBool(member->Type())) {
+                        has_atomic = true;
+                        break;
+                    }
+                }
+            });
+        return has_atomic;
+    }
+
+    void SmallestElementSize(const type::Type* type, uint32_t* size) {
+        if (type->IsScalar()) {
+            *size = std::min(*size, type->Size());
+            return;
+        }
+        if (auto* vec_ty = type->As<type::Vector>()) {
+            // For vec3, use scalar size.
+            if (vec_ty->Width() == 3) {
+                *size = std::min(*size, vec_ty->Type()->Size());
+                return;
+            }
+            *size = std::min(*size, type->Size());
+            return;
+        }
+        tint::Switch(
+            type,
+            [&](const type::Struct* struct_ty) {
+                for (auto* member : struct_ty->Members()) {
+                    SmallestElementSize(member->Type(), size);
+                }
+            },
+            [&](const type::Array* array_ty) { SmallestElementSize(array_ty->ElemType(), size); });
+    }
+
+    // Returns the smallest access size (load/store) in bytes for `var`.
+    uint32_t SmallestAccessSize(core::ir::Var* var) {
+        uint32_t size = std::numeric_limits<uint32_t>::max();
+        auto worklist = var->Result()->UsagesSorted();
+        while (!worklist.IsEmpty()) {
+            auto usage = worklist.Pop();
+            auto* inst = usage.instruction;
+
+            tint::Switch(
+                inst,
+                [&](core::ir::LoadVectorElement* lve) {
+                    size = std::min(size, lve->Result()->Type()->Size());
+                },
+                [&](core::ir::StoreVectorElement* sve) {
+                    size = std::min(size, sve->Value()->Type()->Size());
+                },
+                [&](core::ir::Load* load) { SmallestElementSize(load->Result()->Type(), &size); },
+                [&](core::ir::Store* store) { SmallestElementSize(store->From()->Type(), &size); },
+                [&](core::ir::Instruction* inst) {
+                    bool bufferView = false;
+                    if (auto* call = inst->As<core::ir::CoreBuiltinCall>()) {
+                        if (call->Func() == core::BuiltinFn::kArrayLength) {
+                            auto* ptr_ty = call->Args()[0]->Type()->As<type::Pointer>();
+                            SmallestElementSize(ptr_ty->StoreType(), &size);
+                        }
+                        bufferView = call->Func() == core::BuiltinFn::kBufferView;
+                    }
+                    if (inst->Is<core::ir::Access>() || inst->Is<core::ir::Let>() || bufferView) {
+                        for (auto usage : inst->Result()->UsagesSorted()) {
+                            worklist.Push(usage);
+                        }
+                    }
+                });
+        }
+        // No need to be larger than a vec4u.
+        size = std::min(size, 16u);
+        return size;
+    }
+
+    // Sets the base type based on the smallest access size.
+    // Possible values are: u16, u32, vec2u, and vec4u.
+    void SetBaseType(core::ir::Var* var) {
+        uint32_t size = 0;
+        if (var->Result()->Type()->As<core::type::Pointer>()->AddressSpace() ==
+            AddressSpace::kUniform) {
+            size = 16u;
+        } else {
+            size = SmallestAccessSize(var);
+        }
+
+        if (size == 2 || size == 6) {
+            // 6 == vec3h so we must use a 2-byte type to be safe.
+            base_ty_ = ty.u16();
+        } else if (size < 8 || size == 12) {
+            // 12 == vec3u so we must use a 4-byte type to be safe.
+            base_ty_ = ty.u32();
+        } else if (size < 16) {
+            base_ty_ = ty.vec2u();
+        } else if (size == 16) {
+            base_ty_ = ty.vec4u();
+        }
+    }
 
     // Note, must be called inside a builder insert block (Append, InsertBefore, etc)
     core::ir::Value* OffsetToValue(OffsetData offset) {
@@ -157,28 +326,50 @@ struct State {
         return val;
     }
 
-    // Converts a byte offset to an index into a vec4u array.
+    // Converts a byte offset to an index into an array of base type.
     // After the transform runs the store type of the uniform buffer variable is an
     // array of vec4u.
     // Note, this must be called inside a builder insert block (Append, InsertBefore, etc)
     core::ir::Value* OffsetValueToArrayIndex(core::ir::Value* val) {
         if (auto* cnst = val->As<core::ir::Constant>()) {
             auto v = cnst->Value()->ValueAs<uint32_t>();
-            return b.Value(u32(v / 16u));
+            return b.Value(u32(v / BaseType()->Size()));
         }
-        return b.Divide(val, 16_u)->Result();
+        return b.Divide(val, u32(BaseType()->Size()))->Result();
     }
 
-    // Calculates the index of the vec4u element containing the byte at (byte_idx % 16).
+    // Calculates the index of the vector element containing the byte at (byte_idx % SIZE).
     // Assumes the upper bits of byte_idx have already been used to access the correct
-    // vec4u array element in the underlying variable.
-    core::ir::Value* CalculateVectorOffset(core::ir::Value* byte_idx) {
+    // vector array element in the underlying variable.
+    core::ir::Value* CalculateVectorOffset(core::ir::Value* byte_idx, const type::Type* ref_ty) {
+        TINT_IR_ASSERT(ir, ref_ty->Is<type::Vector>());
         if (auto* byte_cnst = byte_idx->As<core::ir::Constant>()) {
-            return b.Value(u32((byte_cnst->Value()->ValueAs<uint32_t>() % 16u) / 4u));
+            return b.Value(u32((byte_cnst->Value()->ValueAs<uint32_t>() % ref_ty->Size()) /
+                               ref_ty->As<type::Vector>()->Width()));
         }
         // Note: Using bitwise-and and shift instead of modulo and divide here was necessary to
         // avoid an FXC miscompile. See https://crbug.com/454366353.
-        return b.ShiftRight(b.And(byte_idx, 15_u), 2_u)->Result();
+        return b
+            .ShiftRight(b.And(byte_idx, b.Constant(u32(BaseType()->Size() - 1))),
+                        b.Constant(u32(log2(ref_ty->As<type::Vector>()->Width()))))
+            ->Result();
+    }
+
+    // Note, must be called inside a builder insert block (Append, InsertBefore, etc)
+    void UpdateOffsetData(core::ir::Value* v, uint32_t elm_size, OffsetData* offset) {
+        tint::Switch(
+            v,  //
+            [&](core::ir::Constant* idx_value) {
+                offset->byte_offset += idx_value->Value()->ValueAs<uint32_t>() * elm_size;
+            },
+            [&](core::ir::Value* val) {
+                auto* idx = val;
+                if (val->Type() != ty.u32()) {
+                    idx = b.Convert(ty.u32(), val)->Result();
+                }
+                offset->byte_offset_expr.Push(b.Multiply(idx, u32(elm_size))->Result());
+            },
+            TINT_ICE_ON_NO_MATCH);
     }
 
     void Access(core::ir::Access* a,
@@ -192,35 +383,19 @@ struct State {
             obj_ty = view->StoreType();
         }
 
-        auto update_offset = [&](core::ir::Value* idx_value, uint32_t size) {
-            tint::Switch(
-                idx_value,
-                [&](core::ir::Constant* cnst) {
-                    uint32_t idx = cnst->Value()->ValueAs<uint32_t>();
-                    offset.byte_offset += size * idx;
-                },
-                [&](core::ir::Value* val) {
-                    b.InsertBefore(a, [&] {
-                        offset.byte_offset_expr.Push(
-                            b.Multiply(u32(size), b.InsertConvertIfNeeded(ty.u32(), val))
-                                ->Result());
-                    });
-                });
-        };
-
         for (auto* idx_value : a->Indices()) {
             tint::Switch(
                 obj_ty,
                 [&](const core::type::Vector* v) {
-                    update_offset(idx_value, v->Type()->Size());
+                    UpdateOffsetData(idx_value, v->Type()->Size(), &offset);
                     obj_ty = v->Type();
                 },
                 [&](const core::type::Matrix* m) {
-                    update_offset(idx_value, m->ColumnStride());
+                    UpdateOffsetData(idx_value, m->ColumnStride(), &offset);
                     obj_ty = m->ColumnType();
                 },
                 [&](const core::type::Array* ary) {
-                    update_offset(idx_value, ary->ImplicitStride());
+                    UpdateOffsetData(idx_value, ary->ImplicitStride(), &offset);
                     obj_ty = ary->ElemType();
                 },
                 [&](const core::type::Struct* s) {
@@ -237,7 +412,25 @@ struct State {
                 TINT_ICE_ON_NO_MATCH);
         }
 
-        auto usages = a->Result()->UsagesSorted();
+        AccessUses(a, var, obj_ty, offset);
+    }
+
+    void BufferView(core::ir::CoreBuiltinCall* call,
+                    core::ir::Var* var,
+                    const type::Type* obj_type,
+                    OffsetData offset) {
+        auto* offset_arg = call->Args()[1];
+        b.InsertBefore(call, [&] { UpdateOffsetData(offset_arg, 1, &offset); });
+        obj_type = call->Result()->Type()->As<type::Pointer>()->StoreType();
+
+        AccessUses(call, var, obj_type, offset);
+    }
+
+    void AccessUses(core::ir::Instruction* inst,
+                    core::ir::Var* var,
+                    const type::Type* obj_ty,
+                    OffsetData offset) {
+        auto usages = inst->Result()->UsagesSorted();
         while (!usages.IsEmpty()) {
             auto usage = usages.Pop();
             tint::Switch(
@@ -249,7 +442,7 @@ struct State {
                     for (auto& u : let->Result()->UsagesSorted()) {
                         usages.Push(u);
                     }
-                    let->Result()->ReplaceAllUsesWith(a->Result());
+                    let->Result()->ReplaceAllUsesWith(inst->Result());
                     let->Destroy();
                 },
                 [&](core::ir::Access* sub_access) {
@@ -259,16 +452,30 @@ struct State {
                     Access(sub_access, var, obj_ty, offset);
                 },
                 [&](core::ir::Load* ld) {
-                    a->Result()->RemoveUsage(usage);
+                    inst->Result()->RemoveUsage(usage);
                     Load(ld, var, offset);
                 },
+                [&](core::ir::Store* st) {
+                    inst->Result()->RemoveUsage(usage);
+                    Store(st, var, offset);
+                },
                 [&](core::ir::LoadVectorElement* lve) {
-                    a->Result()->RemoveUsage(usage);
+                    inst->Result()->RemoveUsage(usage);
                     LoadVectorElement(lve, var, offset);
+                },
+                [&](core::ir::StoreVectorElement* sve) {
+                    inst->Result()->RemoveUsage(usage);
+                    StoreVectorElement(sve, var, offset);
+                },
+                [&](core::ir::CoreBuiltinCall* call) {
+                    // bufferView and bufferLength cannot be encountered after an access.
+                    if (call->Func() == core::BuiltinFn::kArrayLength) {
+                        ArrayLength(call, var, obj_ty, offset);
+                    }
                 },
                 TINT_ICE_ON_NO_MATCH);
         }
-        a->Destroy();
+        inst->Destroy();
     }
 
     void Load(core::ir::Load* ld, core::ir::Var* var, OffsetData offset) {
@@ -307,6 +514,7 @@ struct State {
                                     core::ir::Var* var,
                                     const core::type::Type* result_ty,
                                     core::ir::Value* byte_idx) {
+        // TODO(b/474819671): Update if we support bool.
         if (result_ty->IsFloatScalar() || result_ty->IsIntegerScalar()) {
             return MakeScalarLoad(var, result_ty, byte_idx);
         }
@@ -332,19 +540,61 @@ struct State {
     core::ir::Instruction* MakeScalarLoad(core::ir::Var* var,
                                           const core::type::Type* result_ty,
                                           core::ir::Value* byte_idx) {
+        auto* var_ty = var->Result()->Type()->As<type::Pointer>();
+        // Number of array elements needed to load the scalar.
+        auto num_array_eles = (result_ty->Size() + BaseType()->Size() - 1) / BaseType()->Size();
         auto* array_idx = OffsetValueToArrayIndex(byte_idx);
-        auto* access = b.Access(ty.ptr(uniform, ty.vec4u()), var, array_idx);
-
-        auto* vec_idx = CalculateVectorOffset(byte_idx);
-        core::ir::Instruction* load = b.LoadVectorElement(access, vec_idx);
-        if (result_ty->Is<core::type::F16>()) {
-            return ExtractScalarF16(load, byte_idx);
+        if (num_array_eles > 1) {
+            // This should only happen when the base type is u16 and a 4-byte scalar is being
+            // loaded.
+            TINT_IR_ASSERT(ir, num_array_eles == 2);
+            auto* vec_ty = ty.vec(BaseType(), num_array_eles);
+            Vector<Value*, 2> loads;
+            for (uint32_t i = 0; i < num_array_eles; i++) {
+                auto* access = b.Access(
+                    ty.ptr(var_ty->AddressSpace(), BaseType(), var_ty->Access()), var, array_idx);
+                loads.Push(b.Load(access->Result())->Result());
+                if (i < num_array_eles - 1) {
+                    if (auto* cnst = array_idx->As<Constant>()) {
+                        array_idx = b.Constant(u32(cnst->Value()->ValueAs<uint32_t>() + 1));
+                    } else {
+                        array_idx = b.Add(array_idx, b.Constant(1_u))->Result();
+                    }
+                }
+            }
+            auto* construct = b.Construct(vec_ty, loads);
+            return b.Bitcast(result_ty, construct);
         }
-        return b.Bitcast(result_ty, load);
+
+        auto* access =
+            b.Access(ty.ptr(var_ty->AddressSpace(), BaseType(), var_ty->Access()), var, array_idx);
+
+        ir::Instruction* load = nullptr;
+        if (BaseType()->Is<type::Vector>()) {
+            auto* vec_idx = CalculateVectorOffset(byte_idx, BaseType());
+            load = b.LoadVectorElement(access, vec_idx);
+        } else {
+            load = b.Load(access);
+        }
+
+        if (result_ty->Size() < load->Result()->Type()->Size()) {
+            return ExtractScalarF16(load, result_ty, byte_idx);
+        }
+        if (result_ty != load->Result()->Type()) {
+            return b.Bitcast(result_ty, load);
+        }
+        return load;
     }
 
-    core::ir::Access* ExtractScalarF16(core::ir::Instruction* load, core::ir::Value* byte_idx) {
-        // We will bitcast the u32 to a vec2h and then extract the element that we want.
+    // Currently this could only be f16, but in the future that will not be true.
+    core::ir::Access* ExtractScalarF16(core::ir::Instruction* load,
+                                       const type::Type* result_ty,
+                                       core::ir::Value* byte_idx) {
+        // We will bitcast the load to a vector of result_ty and then extract the element that we
+        // want.
+        const uint32_t load_size = load->Result()->Type()->Size();
+        uint32_t num_eles = load_size / result_ty->Size();
+        const type::Type* vec_ty = ty.vec(result_ty, num_eles);
         core::ir::Value* element_index = nullptr;
         if (auto* cnst = byte_idx->As<core::ir::Constant>()) {
             if (cnst->Value()->ValueAs<uint32_t>() % 4 == 0) {
@@ -361,8 +611,8 @@ struct State {
             element_index = b.Call(ty.u32(), core::BuiltinFn::kSelect, args)->Result();
         }
 
-        auto* bitcast = b.Bitcast<vec2<f16>>(load);
-        return b.Access<f16>(bitcast, element_index);
+        auto* bitcast = b.Bitcast(vec_ty, load);
+        return b.Access(result_ty, bitcast, element_index);
     }
 
     // When loading a vector we have to take the alignment into account to determine which part of
@@ -385,44 +635,98 @@ struct State {
     core::ir::Instruction* MakeVectorLoad(core::ir::Var* var,
                                           const core::type::Vector* result_ty,
                                           core::ir::Value* byte_idx) {
-        auto* array_idx = OffsetValueToArrayIndex(byte_idx);
-        auto* access = b.Access(ty.ptr(uniform, ty.vec4u()), var, array_idx);
+        if (result_ty->DeepestElement()->Size() == 2) {
+            return MakeVectorLoadF16(var, result_ty, byte_idx);
+        }
 
-        if (result_ty->DeepestElement()->Is<core::type::F16>()) {
-            return MakeVectorLoadF16(access, result_ty, byte_idx);
+        auto* array_idx = OffsetValueToArrayIndex(byte_idx);
+        auto* var_ty = var->Result()->Type()->As<type::Pointer>();
+        uint32_t num_loads = (result_ty->Size() + BaseType()->Size() - 1) / BaseType()->Size();
+        Vector<Instruction*, 4> loads;
+        for (uint32_t i = 0; i < num_loads; i++) {
+            auto* access = b.Access(ty.ptr(var_ty->AddressSpace(), BaseType(), var_ty->Access()),
+                                    var, array_idx);
+            loads.Push(b.Load(access));
+            if (i < num_loads - 1) {
+                if (auto* cnst = array_idx->As<Constant>()) {
+                    array_idx = b.Constant(u32(cnst->Value()->ValueAs<uint32_t>() + 1));
+                } else {
+                    array_idx = b.Add(array_idx, 1_u)->Result();
+                }
+            }
+        }
+
+        if (BaseType()->Size() < result_ty->DeepestElement()->Size()) {
+            TINT_IR_ASSERT(ir, BaseType() == ty.u16());
+            // Need to step up the size first.
+            Vector<Instruction*, 4> new_loads;
+            for (uint32_t i = 0; i < num_loads; i += 2) {
+                Vector<Value*, 2> args;
+                args.Push(loads[i]->Result());
+                args.Push(loads[i + 1]->Result());
+                new_loads.Push(
+                    b.Bitcast(ty.u32(), b.Construct(ty.vec2(BaseType()), args)->Result()));
+            }
+            std::swap(loads, new_loads);
+            num_loads /= 2;
+        }
+
+        Instruction* value = nullptr;
+        Vector<Value*, 4> construct_args;
+        for (auto* l : loads) {
+            construct_args.Push(l->Result());
+        }
+        if (loads[0]->Result()->Type() == ty.u32()) {
+            value = b.Construct(ty.vec(ty.u32(), loads.Length()), construct_args);
+        } else if (loads[0]->Result()->Type() == ty.vec2u()) {
+            if (loads.Length() > 1) {
+                value = b.Construct(ty.vec4u(), construct_args);
+            } else {
+                value = loads[0];
+            }
+        } else {
+            TINT_IR_ASSERT(ir, loads[0]->Result()->Type() == ty.vec4u());
+            value = loads[0];
         }
 
         TINT_IR_ASSERT(ir, result_ty->DeepestElement()->Size() == 4);
         core::ir::Instruction* load = nullptr;
         if (result_ty->Width() == 4) {
-            load = b.Load(access);
+            load = value;
         } else if (result_ty->Width() == 3) {
-            load = b.Swizzle(ty.vec3u(), b.Load(access), {0, 1, 2});
+            load = b.Swizzle(ty.vec3u(), value, {0, 1, 2});
         } else if (result_ty->Width() == 2) {
-            auto* vec_idx = CalculateVectorOffset(byte_idx);
-            if (auto* cnst = vec_idx->As<core::ir::Constant>()) {
-                if (cnst->Value()->ValueAs<uint32_t>() == 2u) {
-                    load = b.Swizzle(ty.vec2u(), b.Load(access), {2, 3});
-                } else {
-                    load = b.Swizzle(ty.vec2u(), b.Load(access), {0, 1});
-                }
+            if (value->Result()->Type()->Size() == result_ty->Size()) {
+                load = value;
             } else {
-                auto* ubo = b.Load(access);
-                // if vec_idx == 2 -> zw
-                auto* sw_lhs = b.Swizzle(ty.vec2u(), ubo, {2, 3});
-                // else -> xy
-                auto* sw_rhs = b.Swizzle(ty.vec2u(), ubo, {0, 1});
-                auto* cond = b.Equal(vec_idx, 2_u);
+                auto* vec_idx = CalculateVectorOffset(byte_idx, ty.vec4u());
+                if (auto* cnst = vec_idx->As<core::ir::Constant>()) {
+                    if (cnst->Value()->ValueAs<uint32_t>() == 2u) {
+                        load = b.Swizzle(ty.vec2u(), value, {2, 3});
+                    } else {
+                        load = b.Swizzle(ty.vec2u(), value, {0, 1});
+                    }
+                } else {
+                    auto* ubo = value;
+                    // if vec_idx == 2 -> zw
+                    auto* sw_lhs = b.Swizzle(ty.vec2u(), ubo, {2, 3});
+                    // else -> xy
+                    auto* sw_rhs = b.Swizzle(ty.vec2u(), ubo, {0, 1});
+                    auto* cond = b.Equal(vec_idx, 2_u);
 
-                Vector<core::ir::Value*, 3> args{sw_rhs->Result(), sw_lhs->Result(),
-                                                 cond->Result()};
+                    Vector<core::ir::Value*, 3> args{sw_rhs->Result(), sw_lhs->Result(),
+                                                     cond->Result()};
 
-                load = b.Call(ty.vec2u(), core::BuiltinFn::kSelect, args);
+                    load = b.Call(ty.vec2u(), core::BuiltinFn::kSelect, args);
+                }
             }
         } else {
             TINT_IR_UNREACHABLE(ir);
         }
-        return b.Bitcast(result_ty, load);
+        if (result_ty != load->Result()->Type()) {
+            return b.Bitcast(result_ty, load);
+        }
+        return load;
     }
 
     // Returns the instruction for getting a vector-of-f16 value of type `result_ty`
@@ -437,23 +741,73 @@ struct State {
     // vec4<f16>:|   x     |    y    |    z    |    w    |   x     |    y    |    z    |    w    |
     // vec3<f16>:|   x     |    y    |    z    |         |   x     |    y    |    z    |         |
     // vec2<f16>:|   x     |    y    |    x    |    y    |   x     |    y    |    x    |    y    |
-    core::ir::Instruction* MakeVectorLoadF16(core::ir::Access* access,
+    core::ir::Instruction* MakeVectorLoadF16(core::ir::Var* var,
                                              const core::type::Vector* result_ty,
                                              core::ir::Value* byte_idx) {
+        auto* var_ty = var->Result()->Type()->As<type::Pointer>();
+        auto* array_idx = OffsetValueToArrayIndex(byte_idx);
+        uint32_t num_loads = (result_ty->Size() + BaseType()->Size() - 1) / BaseType()->Size();
+        Vector<Value*, 4> loads;
+        for (uint32_t i = 0; i < num_loads; i++) {
+            auto* access = b.Access(ty.ptr(var_ty->AddressSpace(), BaseType(), var_ty->Access()),
+                                    var, array_idx);
+            loads.Push(b.Load(access)->Result());
+            if (i < num_loads - 1) {
+                if (auto* cnst = array_idx->As<Constant>()) {
+                    array_idx = b.Constant(u32(cnst->Value()->ValueAs<uint32_t>() + 1));
+                } else {
+                    array_idx = b.Add(array_idx, b.Constant(1_u))->Result();
+                }
+            }
+        }
+
+        // Since this vector has 2-byte elements, there are only a few possibilities:
+        // 1. Base type is u16
+        //    - scalar loads equal to number of vector elements
+        // 2. Base type is u32
+        //    - 1 or 2 u32 loads
+        //    - Note: vec3h is not possible here
+        // 3. Base type is vec2u
+        //    - 1 load of vec2u
+        //    - Note: only vec4h possible here
+        // 4. Base type is vec4u
+        //    - 1 load of vec4u
+        //    - Note: vec3h is not possible here, but vec2h is
+        if (BaseType() == ty.u16()) {
+            auto* vec_ty = ty.vec(ty.u16(), num_loads);
+            auto* construct = b.Construct(vec_ty, loads);
+            if (vec_ty != result_ty) {
+                return b.Bitcast(result_ty, construct->Result());
+            }
+            return construct;
+        } else if (BaseType() == ty.u32()) {
+            if (result_ty->Width() == 2) {
+                return b.Bitcast(result_ty, loads[0]);
+            }
+            TINT_IR_ASSERT(ir, result_ty->Width() == 4);
+            auto* construct = b.Construct(ty.vec2u(), loads);
+            return b.Bitcast(result_ty, construct->Result());
+        } else if (BaseType() == ty.vec2u()) {
+            TINT_IR_ASSERT(ir, result_ty->Width() == 4);
+            return b.Bitcast(result_ty, loads[0]);
+        }
+        TINT_IR_ASSERT(ir, BaseType() == ty.vec4u());
+        TINT_IR_ASSERT(ir, loads.Length() == 1);
+
         // Vec4 ends up being the same as a bitcast of vec2<u32> to a vec4<f16>.
         // A vec3 will be stored as a vec4, so we can bitcast as if we're a vec4
         // and swizzle out the last element.
         if (result_ty->Width() == 3 || result_ty->Width() == 4) {
             core::ir::Instruction* load = nullptr;
-            auto* vec_idx = CalculateVectorOffset(byte_idx);  // 0 or 2
+            auto* vec_idx = CalculateVectorOffset(byte_idx, ty.vec4u());  // 0 or 2
             if (auto* cnst = vec_idx->As<core::ir::Constant>()) {
                 if (cnst->Value()->ValueAs<uint32_t>() == 2u) {
-                    load = b.Swizzle(ty.vec2u(), b.Load(access), {2, 3});
+                    load = b.Swizzle(ty.vec2u(), loads[0], {2, 3});
                 } else {
-                    load = b.Swizzle(ty.vec2u(), b.Load(access), {0, 1});
+                    load = b.Swizzle(ty.vec2u(), loads[0], {0, 1});
                 }
             } else {
-                auto* ubo = b.Load(access);
+                auto* ubo = loads[0];
                 // if vec_idx == 2 -> zw
                 auto* sw_lhs = b.Swizzle(ty.vec2u(), ubo, {2, 3});
                 // else -> xy
@@ -472,12 +826,12 @@ struct State {
         // Vec2 ends up being the same as a bitcast u32 to vec2<f16>
         if (result_ty->Width() == 2) {
             core::ir::Instruction* load = nullptr;
-            auto* vec_idx = CalculateVectorOffset(byte_idx);  // 0, 1, 2, or 3
+            auto* vec_idx = CalculateVectorOffset(byte_idx, ty.vec4u());  // 0, 1, 2, or 3
             if (auto* cnst = vec_idx->As<core::ir::Constant>()) {
                 const auto vec_idx_val = cnst->Value()->ValueAs<uint32_t>();
-                load = b.Swizzle(ty.u32(), b.Load(access), {vec_idx_val});
+                load = b.Swizzle(ty.u32(), loads[0], {vec_idx_val});
             } else {
-                load = b.Access(ty.u32(), b.Load(access), vec_idx);
+                load = b.Access(ty.u32(), loads[0], vec_idx);
             }
             return b.Bitcast(result_ty, load);
         }
@@ -602,21 +956,394 @@ struct State {
             return fn;
         });
     }
+
+    // Updates an arrayLength call to account for `offset`.
+    // The builtin call returns the length of the whole variable. The array type may have changed
+    // too, so we must account for that difference. Any offset must be subtracted from that value to
+    // provide the same result as before the transform. Offsets can come from two sources:
+    //
+    // 1. An offset from an access into a structure.
+    // 2. An offset (possibly runtime value) from a bufferView call.
+    void ArrayLength(core::ir::CoreBuiltinCall* call,
+                     core::ir::Var* var,
+                     const type::Type* type,
+                     OffsetData offset) {
+        auto* array_ty = type->As<type::Array>();
+        TINT_IR_ASSERT(ir, array_ty && array_ty->Count()->Is<core::type::RuntimeArrayCount>());
+
+        // The arrayLength of the transformed variable will always be a multiple of the base type.
+        TINT_IR_ASSERT(ir, array_ty->ElemType()->Size() / BaseType()->Size() >= 1);
+        const uint32_t ratio = array_ty->ImplicitStride() / BaseType()->Size();
+
+        // Given:
+        // b = bufferView var, o1
+        // a = access b, o2
+        // l = arrayLength a
+        //
+        // Transformed:
+        // l = arrayLength var
+        // o = add o1, bytes(o2)
+        // s = sub l, o
+        // m = mul s, ratio
+        ir::CoreBinary* mul = nullptr;
+        ir::CoreBinary* sub = nullptr;
+        b.InsertAfter(call, [&] {
+            Value* value = nullptr;
+            ir::Instruction* inst = call;
+            // bufferView calls may have introduced a single runtime offset value.
+            if (offset.byte_offset > 0 && offset.byte_offset_expr.Length() > 0) {
+                value = b.Add(offset.byte_offset_expr[0], u32(offset.byte_offset))->Result();
+            } else if (offset.byte_offset_expr.Length() > 0) {
+                value = offset.byte_offset_expr[0];
+            } else if (offset.byte_offset > 0) {
+                value = b.Constant(u32(offset.byte_offset / BaseType()->Size()));
+            }
+            if (value && offset.byte_offset_expr.Length() > 0) {
+                value = b.Divide(value, u32(BaseType()->Size()))->Result();
+            }
+            if (value) {
+                sub = b.Subtract(inst, value);
+                inst = sub;
+            }
+            if (ratio != 1u) {
+                mul = b.Multiply(inst, u32(ratio));
+                inst = mul;
+            }
+            if (inst != call) {
+                call->Result()->ReplaceAllUsesWith(inst->Result());
+            }
+        });
+        call->SetOperand(BuiltinCall::kArgsOperandOffset + 0, var->Result());
+        if (sub) {
+            sub->SetOperand(0, call->Result());
+        } else if (mul) {
+            mul->SetOperand(0, call->Result());
+        }
+    }
+
+    // bufferLength calls are replaced with arrayLength calls for the entire var size with two
+    // special cases:
+    //
+    // 1. The bufferLength has a third operand added by DirectVariableAccess that represents the
+    //    lowest limit encountered.
+    // 2. The buffer is sized and we can use that directly from the type.
+    void BufferLength(core::ir::CoreBuiltinCall* call,
+                      core::ir::Var* var,
+                      const type::Type* type,
+                      OffsetData offset) {
+        auto* buffer_ty = type->As<core::type::Buffer>();
+        TINT_IR_ASSERT(ir, buffer_ty && (buffer_ty->Count()->Is<type::RuntimeArrayCount>() ||
+                                         buffer_ty->Count()->Is<type::ConstantArrayCount>()));
+
+        if (call->Args().Length() > 1) {
+            // Direct variable access encoded a lower limit.
+            call->Result()->ReplaceAllUsesWith(call->Args()[1]);
+        } else if (auto* cnst = buffer_ty->Count()->As<type::ConstantArrayCount>()) {
+            call->Result()->ReplaceAllUsesWith(b.Constant(u32(cnst->value)));
+        } else {
+            TINT_IR_ASSERT(ir, buffer_ty->Count()->Is<type::RuntimeArrayCount>());
+            b.InsertBefore(call, [&] {
+                // arrayLength(var) * BaseType()->Size()
+                ir::Instruction* inst = b.Call(ty.u32(), core::BuiltinFn::kArrayLength, var);
+                inst = b.Multiply(inst, u32(BaseType()->Size()));
+                call->Result()->ReplaceAllUsesWith(inst->Result());
+            });
+        }
+        call->Destroy();
+    }
+
+    // Store the scalar value `from` at `byte_idx` offset.
+    //
+    // The transform should never select a base type that is not an even multiple of the smallest
+    // storage size, so there are two cases here:
+    //
+    // 1. Multiple stores are needed to store `from` (e.g. base type u16 storing a u32).
+    // 2. The base type size matches `from`'s size.
+    void MakeScalarStore(core::ir::Var* var, core::ir::Value* from, core::ir::Value* byte_idx) {
+        auto* st_ty = from->Type();
+        auto* var_ty = var->Result()->Type()->As<type::Pointer>();
+        // Number of array elements need to store the scalar.
+        auto num_array_eles = (st_ty->Size() + BaseType()->Size() - 1) / BaseType()->Size();
+        auto* array_idx = OffsetValueToArrayIndex(byte_idx);
+        if (num_array_eles > 1) {
+            // This should only happen if the base type is u16 and a 4-byte scalar is being stored.
+            TINT_IR_ASSERT(ir, num_array_eles == 2);
+            auto* vec_ty = ty.vec(BaseType(), num_array_eles);
+            auto* cast = b.Bitcast(vec_ty, from);
+            for (uint32_t i = 0; i < num_array_eles; i++) {
+                auto* access = b.Access(
+                    ty.ptr(var_ty->AddressSpace(), BaseType(), var_ty->Access()), var, array_idx);
+                b.Store(access, b.Access(BaseType(), cast, u32(i)));
+                if (i < num_array_eles - 1) {
+                    if (auto* cnst = array_idx->As<Constant>()) {
+                        array_idx = b.Constant(u32(cnst->Value()->ValueAs<uint32_t>() + 1));
+                    } else {
+                        array_idx = b.Add(array_idx, 1_u)->Result();
+                    }
+                }
+            }
+            return;
+        }
+
+        // For stores, we know that the base type size must be less than or equal to the store size
+        // (or we'd have picked a smaller base type).
+        TINT_IR_ASSERT(ir, st_ty->Size() == BaseType()->Size());
+        auto* value = from;
+        if (st_ty != BaseType()) {
+          value = b.Bitcast(BaseType(), from)->Result();
+        }
+        auto* access =
+            b.Access(ty.ptr(var_ty->AddressSpace(), BaseType(), var_ty->Access()), var, array_idx);
+        b.Store(access, value);
+    }
+
+    // Store the vector `from` at `byte_idx` offset.
+    //
+    // The two main cases to consider are:
+    //
+    // 1. The base type is a vector.
+    //    i.  If a single store is needed, we simply cast the result if necessary
+    //    ii. Multiple stores are needed, break the vector in sub-vectors and store those.
+    // 2. The base type is a scalar. Store each element at successive indices.
+    void MakeVectorStore(core::ir::Var* var, core::ir::Value* from, core::ir::Value* byte_idx) {
+        auto* st_ty = from->Type()->As<type::Vector>();
+        auto* var_ty = var->Result()->Type()->As<type::Pointer>();
+        // Number of array elements need to store the scalar.
+        auto num_array_eles = (st_ty->Size() + BaseType()->Size() - 1) / BaseType()->Size();
+        auto* array_idx = OffsetValueToArrayIndex(byte_idx);
+
+        // We're storing a vector so we need break down `from` into appropriate `BaseType()` bits.
+        // The base type size will be less than or equal to the store size, but may be a scalar or a
+        // vector.
+        if (BaseType()->Is<type::Vector>()) {
+            // | Base type | Possible store sizes            | # Array Ele |
+            // | vec2u     | vec2u, vec4u, vec4h (NOT vec3u) | 1 or 2      |
+            // | vec4u     | vec4u                           | 1           |
+            if (num_array_eles == 1) {
+                Value* value = from;
+                if (st_ty != BaseType()) {
+                    value = b.Bitcast(BaseType(), value)->Result();
+                }
+                auto* access = b.Access(
+                    ty.ptr(var_ty->AddressSpace(), BaseType(), var_ty->Access()), var, array_idx);
+                b.Store(access, value);
+            } else {
+                auto* sub_vec_ty = ty.vec2(st_ty->DeepestElement());
+                Instruction* first = b.Swizzle(sub_vec_ty, from, {0, 1});
+                if (sub_vec_ty != BaseType()) {
+                    first = b.Bitcast(st_ty, first);
+                }
+                auto* access = b.Access(
+                    ty.ptr(var_ty->AddressSpace(), BaseType(), var_ty->Access()), var, array_idx);
+                b.Store(access, first);
+
+                if (auto* cnst = array_idx->As<Constant>()) {
+                    array_idx = b.Constant(u32(cnst->Value()->ValueAs<uint32_t>() + 1));
+                } else {
+                    array_idx = b.Add(array_idx, 1_u)->Result();
+                }
+                Instruction* second = b.Swizzle(sub_vec_ty, from, {2, 3});
+                if (sub_vec_ty != BaseType()) {
+                    second = b.Bitcast(st_ty, second);
+                }
+                access = b.Access(ty.ptr(var_ty->AddressSpace(), BaseType(), var_ty->Access()), var,
+                                  array_idx);
+                b.Store(access, second);
+            }
+        } else {
+            auto* st_ele_ty = st_ty->DeepestElement();
+            uint32_t ratio = st_ele_ty->Size() / BaseType()->Size();
+            TINT_IR_ASSERT(ir, ratio == 1 || ratio == 2);
+            for (uint32_t i = 0; i < num_array_eles; i++) {
+                Instruction* value = b.Access(st_ele_ty, from, u32(i / ratio));
+                if (ratio == 2) {
+                    value = b.Bitcast(ty.vec2(BaseType()), value);
+                    uint32_t sub_idx = i % 2;
+                    value = b.Access(BaseType(), value, u32(sub_idx));
+                } else if (st_ele_ty != BaseType()) {
+                    value = b.Bitcast(BaseType(), value);
+                }
+                auto* access = b.Access(
+                    ty.ptr(var_ty->AddressSpace(), BaseType(), var_ty->Access()), var, array_idx);
+                b.Store(access, value);
+                if (i < num_array_eles - 1) {
+                    if (auto* cnst = array_idx->As<Constant>()) {
+                        array_idx = b.Constant(u32(cnst->Value()->ValueAs<uint32_t>() + 1));
+                    } else {
+                        array_idx = b.Add(array_idx, 1_u)->Result();
+                    }
+                }
+            }
+        }
+    }
+
+    // Generate a store of `from` at `byte_idx` for the appropriate type.
+    void MakeStore(core::ir::Instruction* inst,
+                   core::ir::Var* var,
+                   core::ir::Value* from,
+                   core::ir::Value* byte_idx) {
+        // TODO(b/474819671): Update if we support bool.
+        if (from->Type()->IsFloatScalar() || from->Type()->IsIntegerScalar()) {
+            MakeScalarStore(var, from, byte_idx);
+            return;
+        }
+
+        tint::Switch(
+            from->Type(),  //
+            [&](const type::Struct* s) {
+                auto* fn = GetStoreFunctionFor(inst, var, s);
+                b.Call(fn, byte_idx, from);
+            },
+            [&](const type::Matrix* m) {
+                auto* fn = GetStoreFunctionFor(inst, var, m);
+                b.Call(fn, byte_idx, from);
+            },
+            [&](const type::Array* a) {
+                auto* fn = GetStoreFunctionFor(inst, var, a);
+                b.Call(fn, byte_idx, from);
+            },
+            [&](const type::Vector* v) { MakeVectorStore(var, from, byte_idx); },
+            TINT_ICE_ON_NO_MATCH);
+    }
+
+    void Store(core::ir::Store* s, core::ir::Var* var, OffsetData offset) {
+        b.InsertBefore(s, [&] {
+            auto* byte_idx = OffsetToValue(offset);
+            MakeStore(s, var, s->From(), byte_idx);
+        });
+        s->Destroy();
+    }
+
+    void StoreVectorElement(core::ir::StoreVectorElement* s,
+                            core::ir::Var* var,
+                            OffsetData offset) {
+        b.InsertBefore(s, [&] {
+            UpdateOffsetData(s->Index(), s->Value()->Type()->Size(), &offset);
+            auto* byte_idx = OffsetToValue(offset);
+            MakeStore(s, var, s->Value(), byte_idx);
+        });
+    }
+
+    // Create a store function for the given `var` and `struct` combination. Essentially creates a
+    // function similar to:
+    //
+    // fn custom_store_S(start_offset:u32, object:S) {
+    //   store object at (start_offset + member 0 offset)
+    //   store object at (start_offset + member 1 offset)
+    //   ...
+    //   store object at (start_offset + member n-1 offset)
+    // }
+    core::ir::Function* GetStoreFunctionFor(core::ir::Instruction* inst,
+                                            core::ir::Var* var,
+                                            const core::type::Struct* s) {
+        return var_and_type_to_store_fn_.GetOrAdd(VarTypePair{var, s}, [&] {
+            auto* start_byte_offset = b.FunctionParam("start_byte_offset", ty.u32());
+            auto* object = b.FunctionParam("object", s);
+            auto* fn = b.Function(ty.void_());
+            fn->SetParams({start_byte_offset, object});
+
+            b.Append(fn->Block(), [&] {
+                for (auto* member : s->Members()) {
+                    uint32_t mem_offset = static_cast<uint32_t>(member->Offset());
+                    OffsetData offset{mem_offset, {start_byte_offset}};
+                    auto* byte_idx = OffsetToValue(offset);
+                    auto* from = b.Access(member->Type(), object, u32(member->Index()))->Result();
+                    MakeStore(inst, var, from, byte_idx);
+                }
+                b.Return(fn);
+            });
+
+            return fn;
+        });
+    }
+
+    // Create a store function for the given `var` and `matrix` combination. Essentially creates a
+    // function similar to:
+    //
+    // fn custom_store_M(start_offset:u32, object:M) {
+    //   store object[0] at offset (start_offset + 0)
+    //   store object[1] at offset (start_offset + (1 * ColumnStride))
+    //   store object[2] at offset (start_offset + (2 * ColumnStride))
+    //   store object[3] at offset (start_offset + (3 * ColumnStride))
+    // }
+    core::ir::Function* GetStoreFunctionFor(core::ir::Instruction* inst,
+                                            core::ir::Var* var,
+                                            const core::type::Matrix* m) {
+        return var_and_type_to_store_fn_.GetOrAdd(VarTypePair{var, m}, [&] {
+            auto* start_byte_offset = b.FunctionParam("start_byte_offset", ty.u32());
+            auto* object = b.FunctionParam("object", m);
+            auto* fn = b.Function(ty.void_());
+            fn->SetParams({start_byte_offset, object});
+
+            b.Append(fn->Block(), [&] {
+                for (uint32_t c = 0; c < m->Columns(); c++) {
+                    uint32_t vec_offset = static_cast<uint32_t>(c * m->ColumnStride());
+                    OffsetData offset{vec_offset, {start_byte_offset}};
+                    auto* byte_idx = OffsetToValue(offset);
+                    auto* from = b.Access(m->ColumnType(), object, u32(c))->Result();
+                    MakeStore(inst, var, from, byte_idx);
+                }
+                b.Return(fn);
+            });
+
+            return fn;
+        });
+    }
+
+    // Create a store function for the given `var` and `array` combination. Essentially creates a
+    // function similar to:
+    //
+    // fn custom_store_A(start_offset:u32, object:A) {
+    // }
+    core::ir::Function* GetStoreFunctionFor(core::ir::Instruction* inst,
+                                            core::ir::Var* var,
+                                            const core::type::Array* a) {
+        return var_and_type_to_store_fn_.GetOrAdd(VarTypePair{var, a}, [&] {
+            auto* start_byte_offset = b.FunctionParam("start_byte_offset", ty.u32());
+            auto* object = b.FunctionParam("object", a);
+            auto* fn = b.Function(ty.void_());
+            fn->SetParams({start_byte_offset, object});
+
+            b.Append(fn->Block(), [&] {
+                auto* count = a->Count()->As<core::type::ConstantArrayCount>();
+                TINT_IR_ASSERT(ir, count);
+
+                b.LoopRange(0_u, u32(count->value), 1_u, [&](core::ir::Value* idx) {
+                    auto* stride = b.Multiply(idx, u32(a->ImplicitStride()))->Result();
+                    OffsetData od{0, {start_byte_offset, stride}};
+                    auto* byte_idx = OffsetToValue(od);
+                    auto* from = b.Access(a->ElemType(), object, idx)->Result();
+                    MakeStore(inst, var, from, byte_idx);
+                });
+
+                b.Return(fn);
+            });
+
+            return fn;
+        });
+    }
 };
 
 }  // namespace
 
 Result<SuccessType> DecomposeUniformAccess(core::ir::Module& ir) {
+    return DecomposeUniformAccessWithOptions(ir, {.uniform = true});
+}
+
+Result<SuccessType> DecomposeUniformAccessWithOptions(
+    core::ir::Module& ir,
+    const DecomposeUniformAccessOptions& options) {
     TINT_CHECK_RESULT(
         ValidateAndDumpIfNeeded(ir, "core.DecomposeUniformAccess",
                                 core::ir::Capabilities{
                                     core::ir::Capability::kAllow8BitIntegers,
+                                    core::ir::Capability::kAllow16BitIntegers,
                                     core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
                                     core::ir::Capability::kAllowDuplicateBindings,
                                     core::ir::Capability::kAllowNonCoreTypes,
                                 }));
 
-    State{ir}.Process();
+    State{ir, options}.Process();
 
     return Success;
 }

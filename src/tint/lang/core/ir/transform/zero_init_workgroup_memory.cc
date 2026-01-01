@@ -205,6 +205,26 @@ struct State {
                     new_indices.Push(member->Index());
                     PrepareStores(var, member->Type(), iteration_count, new_indices, stores);
                 }
+            },
+            [&](const type::Buffer* buffer) {
+                TINT_IR_ASSERT(ir, buffer->ConstantCount());
+                auto count = buffer->ConstantCount().value();
+                uint32_t units = 0;
+                const core::type::Type* type = nullptr;
+                if (count < 4) {
+                    units = (count + 1u) / 2u;
+                    type = ty.u16();
+                } else {
+                    units = (count + 3u) / 4u;
+                    type = ty.u32();
+                }
+                Vector<Index, 1> new_indices;
+                if (units > 1) {
+                    new_indices.Push(ArrayIndex{units});
+                } else {
+                    new_indices.Push(0u);
+                }
+                stores.GetOrAddZero(iteration_count).Push(Store{var, type, new_indices});
             },  //
             TINT_ICE_ON_NO_MATCH);
     }
@@ -246,6 +266,17 @@ struct State {
     void GenerateStore(const Store& store, uint32_t total_count, Value* linear_index) {
         auto* to = store.var->Result();
         if (!store.indices.IsEmpty()) {
+            auto* store_ty = store.var->Result()->Type()->UnwrapPtr();
+            if (auto* buffer_ty = store_ty->As<core::type::Buffer>()) {
+                // Previously asserted it was sized.
+                auto count = (buffer_ty->ConstantCount().value() + store.store_type->Size() - 1) /
+                             store.store_type->Size();
+                // Insert a bufferView call.
+                auto* arr_ty = ty.array(store.store_type, count);
+                to = b.CallExplicit(ty.ptr(workgroup, arr_ty), core::BuiltinFn::kBufferView,
+                                    Vector{arr_ty}, to, 0_u)
+                         ->Result();
+            }
             // Build the access indices to get to the target element.
             // We walk backwards along the index list so that adjacent invocation store to
             // adjacent array elements.

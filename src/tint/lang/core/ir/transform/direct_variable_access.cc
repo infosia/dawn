@@ -581,6 +581,66 @@ struct State {
                     replacement = b.Load(replacement)->Result();
                 }
 
+                // Need to rebuild bufferView and bufferLength calls because might not be match due
+                // to relaxed requirements for buffer parameters.
+                //
+                // What happens for the following chain? Sized -> smaller sized -> unsized
+                // Is this well specified in the proposal? See WebGPU issue 5409.
+                if (auto* old_ptr = old_param->Type()->As<type::Pointer>()) {
+                    if (auto* old_buffer = old_ptr->StoreType()->As<type::Buffer>()) {
+                        auto* new_buffer = replacement->Type()
+                                               ->As<type::Pointer>()
+                                               ->StoreType()
+                                               ->As<type::Buffer>();
+                        if (old_buffer != new_buffer) {
+                            uint32_t old_size = 0;
+                            uint32_t new_size = 0;
+                            if (old_buffer->Count()->As<type::RuntimeArrayCount>()) {
+                                // Different type, so this is sized to unsized.
+                                new_size = new_buffer->ConstantCount().value();
+                            } else {
+                                // Size to smaller size.
+                                TINT_IR_ASSERT(
+                                    ir, new_buffer->Count()->Is<type::ConstantArrayCount>() &&
+                                            old_buffer->Count()->Is<type::ConstantArrayCount>());
+                                old_size = old_buffer->ConstantCount().value();
+                                new_size = new_buffer->ConstantCount().value();
+                            }
+                            auto usages = old_param->UsagesSorted();
+                            for (auto usage : usages) {
+                                if (auto* call = usage.instruction->As<CoreBuiltinCall>()) {
+                                    auto* limit = b.Constant(u32(
+                                        old_size == 0 ? new_size : std::min(old_size, new_size)));
+
+                                    // Add an extra operand to represent the lower size limit.
+                                    Vector<Value*, 4> ops(call->Args());
+                                    ops[0] = replacement;
+                                    ops.Push(limit);
+                                    if (call->Func() == core::BuiltinFn::kBufferView ||
+                                        call->Func() == core::BuiltinFn::kBufferLength) {
+                                        Value* new_call = nullptr;
+                                        Vector<const type::Type*, 1> params;
+                                        if (call->Func() == core::BuiltinFn::kBufferView) {
+                                            params.Push(call->Result()
+                                                            ->Type()
+                                                            ->As<type::Pointer>()
+                                                            ->StoreType());
+                                        }
+                                        b.InsertBefore(call, [&] {
+                                            new_call = b.CallExplicit<CoreBuiltinCall>(
+                                                            call->Result()->Type(), call->Func(),
+                                                            params, ops)
+                                                           ->Result();
+                                        });
+                                        call->Result()->ReplaceAllUsesWith(new_call);
+                                        call->Destroy();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
                 // Replace the now removed parameter value with the access instruction.
                 old_param->ReplaceAllUsesWith(replacement);
                 old_param->Destroy();
