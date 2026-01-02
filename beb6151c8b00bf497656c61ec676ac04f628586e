@@ -73,6 +73,30 @@
       },
       "revId": "beb6151c8b00bf497656c61ec676ac04f628586e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87cd1263_84b40ee0",
+        "filename": "generator/dawn_generator.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-02T18:24:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "867ef3a1_6f0808dd",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 5
+      },
+      "revId": "beb6151c8b00bf497656c61ec676ac04f628586e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
