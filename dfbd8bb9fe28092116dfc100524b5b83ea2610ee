@@ -34,6 +34,24 @@
       "parentUuid": "859af01e_4d7ece60",
       "revId": "dfbd8bb9fe28092116dfc100524b5b83ea2610ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bc0699e_5d61ff00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3418012
+      },
+      "writtenOn": "2026-01-02T23:59:07Z",
+      "side": 1,
+      "message": "Thank you for your review. I have restored this CL, please take another look.\n\nAdditionally, I need another committer\u0027s vote, but many people are currently on vacation, so I expect it will take some time before this CL can be merged.",
+      "parentUuid": "bcb51c24_081709a2",
+      "revId": "dfbd8bb9fe28092116dfc100524b5b83ea2610ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
