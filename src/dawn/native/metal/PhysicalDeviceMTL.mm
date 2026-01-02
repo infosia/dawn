@@ -445,12 +445,6 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     bool useSharedMode = gpu_info::IsIntel(vendorId);
     deviceToggles->Default(Toggle::MetalUseSharedModeForCounterSampleBuffer, useSharedMode);
 
-    // Rendering R8Unorm and RG8Unorm to small mip doesn't work properly on Intel.
-    // TODO(crbug.com/dawn/1071): Tighten the workaround when this issue is fixed.
-    if (gpu_info::IsIntel(vendorId)) {
-        deviceToggles->Default(Toggle::MetalRenderR8RG8UnormSmallMipToTempTexture, true);
-    }
-
     // chromium:419804339: Module constant hoisting is not supported for values containing f16
     // types on Intel.
     if (gpu_info::IsIntel(vendorId)) {
@@ -697,7 +691,6 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::RG11B10UfloatRenderable);
     EnableFeature(Feature::BGRA8UnormStorage);
     EnableFeature(Feature::DualSourceBlending);
-    EnableFeature(Feature::R8UnormStorage);
     EnableFeature(Feature::ShaderModuleCompilationOptions);
     EnableFeature(Feature::DawnLoadResolveTexture);
     EnableFeature(Feature::ClipDistances);
