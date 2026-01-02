@@ -16,6 +16,24 @@
       "message": "It looks like there\u0027s an ongoing revert, which makes me abandon this CL.\n\nhttps://dawn-review.googlesource.com/c/dawn/+/282615",
       "revId": "dfbd8bb9fe28092116dfc100524b5b83ea2610ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcb51c24_081709a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-02T19:05:52Z",
+      "side": 1,
+      "message": "Apologies, I didn\u0027t catch at first that the breakage was why you submitted this CL.\nLatest revision does look correct, but I think it will need to be done along with (or before) the reland.",
+      "parentUuid": "859af01e_4d7ece60",
+      "revId": "dfbd8bb9fe28092116dfc100524b5b83ea2610ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
