@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d050021_ab96ac1b",
+        "filename": "src/dawn/native/vulkan/VulkanInfo.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-02T08:59:59Z",
+      "side": 1,
+      "message": "nit: can we have a public link like `issues.chromium.org`?",
+      "revId": "b56d27e3bfea13c06799e9040c85eee1492da868",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

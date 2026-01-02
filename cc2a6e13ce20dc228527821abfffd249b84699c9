@@ -137,6 +137,24 @@
       "parentUuid": "a9a449ee_d7a529a4",
       "revId": "cc2a6e13ce20dc228527821abfffd249b84699c9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "474966e9_7942412f",
+        "filename": "src/dawn/native/vulkan/VulkanFunctions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-02T08:59:59Z",
+      "side": 1,
+      "message": "I believe that we do have all the 1.0 functions, Vulkan uses a lot of descriptors so there aren\u0027t that many entrypoints overall. The new commands are here https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#_new_commands_4\n\nI\u0027m suggesting to add all of them as doing it in bulk now will be easy while hitting a missing function when doing unrelated changes will be mildly annoying.",
+      "parentUuid": "1ff0832f_94165b8c",
+      "revId": "cc2a6e13ce20dc228527821abfffd249b84699c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
