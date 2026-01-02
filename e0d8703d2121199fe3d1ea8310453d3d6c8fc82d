@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f497d9a_d190d74c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-02T23:11:22Z",
+      "side": 1,
+      "message": "PTAL\n\nI suspect there\u0027s still some missing test coverage, but it\u0027s a bit difficult to be sure since the code being tested is a monolithic file that should probably be split up. I suspect this might be dead code, though, so doesn\u0027t seem worth the effort to do that at the moment.",
+      "revId": "e0d8703d2121199fe3d1ea8310453d3d6c8fc82d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
