@@ -52,6 +52,24 @@
       "parentUuid": "bcb51c24_081709a2",
       "revId": "dfbd8bb9fe28092116dfc100524b5b83ea2610ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "174edb55_0395f785",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-03T00:51:40Z",
+      "side": 1,
+      "message": "Thanks. Technically it would make sense for this to be in the same commit with the reland but practically it makes sense to just land this first and reland that on top. Working on that in https://dawn-review.googlesource.com/c/dawn/+/282896",
+      "parentUuid": "8bc0699e_5d61ff00",
+      "revId": "dfbd8bb9fe28092116dfc100524b5b83ea2610ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
