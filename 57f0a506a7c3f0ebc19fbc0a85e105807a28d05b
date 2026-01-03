@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d76fb87_948683b5",
+        "filename": "tools/src/cmd/idlgen/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-03T00:33:45Z",
+      "side": 0,
+      "message": "The alternative would be to remove the ability to output to stdout. Not sure if there\u0027s ever a case where we\u0027d want to output an IDL to stdout, though.",
+      "range": {
+        "startLine": 78,
+        "startChar": 26,
+        "endLine": 78,
+        "endChar": 42
+      },
+      "revId": "57f0a506a7c3f0ebc19fbc0a85e105807a28d05b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
