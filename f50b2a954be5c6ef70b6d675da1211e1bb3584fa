@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "df0a6726_a15314d5",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-03T00:43:46Z",
+      "side": 1,
+      "message": "Actually one question, if you know. Does this mean `ci.yml` will run twice on release commits, once when it is `push`ed and once when `release.yml` runs on `schedule`/`dispatch`? Or does it dedup with the existing run if there is one?\n\nIt\u0027s not really a big deal right now, I\u0027d just like to know. It seems from the runs on your repo that at least `release` _can_ run `ci` on demand, because I see `ci` was cancelled on the commit that got released. But it still seems possible it could reuse the results.... Didn\u0027t see anything in docs about it though.\n\nI wonder if instead of `schedule` we could do something like, pack everything into `ci.yml`, and when it runs on `main`, if there hasn\u0027t been a release in \u003e24 hours, do a release?\n\nAnyway, not important now, just thinking out loud.",
+      "revId": "f50b2a954be5c6ef70b6d675da1211e1bb3584fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "528b6afe_cc984451",
@@ -14,6 +31,24 @@
       "writtenOn": "2026-01-02T23:41:16Z",
       "side": 1,
       "message": "This looks fantastic. Thank you!\n\nI\u0027ll push one small change to remove RELEASE_INFO from the artifacts (and fix the \"Bug:\" formatting that the github sync always messes up)",
+      "revId": "f50b2a954be5c6ef70b6d675da1211e1bb3584fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fb991e2_55a43df5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-03T00:43:46Z",
+      "side": 1,
+      "message": "Actually there is bug https://crbug.com/430624000. Let me link to that.\n\nAlso rebased over a tweak I want to make to the RELEASE_INFO first.\n\nIIUC this will not publish if any of the steps fail? We might need to loosen that, but let\u0027s see how it works for us!",
+      "parentUuid": "528b6afe_cc984451",
       "revId": "f50b2a954be5c6ef70b6d675da1211e1bb3584fa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
