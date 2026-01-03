@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "273ac1f4_96ba3eed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-03T00:48:40Z",
+      "side": 1,
+      "message": "Attempting dry-run to make sure CQ fails, then I\u0027ll rebase this.",
+      "revId": "027071771ae7d964f0ee0ec53b99e5ba01950a0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
