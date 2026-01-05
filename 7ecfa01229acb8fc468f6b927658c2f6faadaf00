@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "514dbe8a_83250b51",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-05T21:37:45Z",
+      "side": 1,
+      "message": "LGTM modulo the failures which I think are all from the previous CL.",
+      "revId": "7ecfa01229acb8fc468f6b927658c2f6faadaf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "13a0ef39_541d9d27",
@@ -50,6 +67,24 @@
       "side": 1,
       "message": "Acknowledged",
       "parentUuid": "629bcc1a_65be87d9",
+      "revId": "7ecfa01229acb8fc468f6b927658c2f6faadaf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e495daaa_b9661485",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 2
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-05T21:37:45Z",
+      "side": 1,
+      "message": "Yeah seems best to just allow any type here and implement any restrictions in the validator if needed.",
+      "parentUuid": "f840c5c7_d0a5d41f",
       "revId": "7ecfa01229acb8fc468f6b927658c2f6faadaf00",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
