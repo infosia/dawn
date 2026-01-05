@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9215b89a_71c148f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-01-05T19:26:50Z",
+      "side": 1,
+      "message": "PTAL, tested in a local branch where I was applying dan\u0027s original CL that was failing and the presubmit was happy with this change.",
+      "revId": "725ea58c53af572a59eeb0dac0f1d102ce529216",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
