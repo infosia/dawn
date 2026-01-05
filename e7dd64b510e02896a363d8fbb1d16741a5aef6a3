@@ -46,6 +46,30 @@
       },
       "revId": "e7dd64b510e02896a363d8fbb1d16741a5aef6a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "575ab35d_e01879ba",
+        "filename": "src/tint/utils/protos/ir/ir.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-01-05T16:16:59Z",
+      "side": 1,
+      "message": "Fair, I guess the checker needs to be smarter",
+      "parentUuid": "7f6045ae_3836b78a",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 32
+      },
+      "revId": "e7dd64b510e02896a363d8fbb1d16741a5aef6a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
