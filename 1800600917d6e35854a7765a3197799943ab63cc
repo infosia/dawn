@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da882946_43054d01",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-05T21:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "136d969d_a4a01da7",
+      "revId": "1800600917d6e35854a7765a3197799943ab63cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "65848fad_738f7f7e",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-01-05T19:51:13Z",
       "side": 1,
       "message": "Does this mean spurious timeouts, or other types of timeouts?\n\nSeems like a syscall-specific thing whether we need to do a loop in any particular implementation.",
+      "revId": "1800600917d6e35854a7765a3197799943ab63cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41ac4377_d3cbbb52",
+        "filename": "src/dawn/native/WaitAnySystemEvent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-05T21:53:34Z",
+      "side": 1,
+      "message": "I just added this comment because we have the same workaround in Vulkan with this TODO. Updated the comment above to add some more details as well.",
+      "parentUuid": "65848fad_738f7f7e",
       "revId": "1800600917d6e35854a7765a3197799943ab63cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -84,6 +120,24 @@
       "side": 1,
       "message": "Ack, maybe clarify this in a comment",
       "parentUuid": "0727c884_dc3f58a6",
+      "revId": "1800600917d6e35854a7765a3197799943ab63cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7eb0af83_3796a688",
+        "filename": "src/dawn/native/WaitAnySystemEvent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-05T21:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fa3183c_fd625148",
       "revId": "1800600917d6e35854a7765a3197799943ab63cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
