@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "554ee4a4_85e6baca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-05T19:55:55Z",
+      "side": 1,
+      "message": "LGTM but could you please add another E2E test that uses an override for the subgroup size?\n\nYou can set an override value in an E2E test with a comment like this:\n```// flags: --overrides subgroup_size\u003d8```",
+      "revId": "d21785f873ade7fbbfc503c99c96ec19f235e34a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "65672227_f156c86c",
         "filename": "src/tint/lang/hlsl/writer/common/output.h",
         "patchSetId": 9
