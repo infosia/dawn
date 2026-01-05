@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79c64473_8c7a0766",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-05T15:29:51Z",
+      "side": 1,
+      "message": "```suggestion\nWGSL support for buffer_view language feature\n```",
+      "revId": "a5feeace37a7c3ae373884f0ba07743b3f551798",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
