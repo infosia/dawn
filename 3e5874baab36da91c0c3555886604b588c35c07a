@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01d3fb5a_f593b288",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-05T23:16:08Z",
+      "side": 1,
+      "message": "See https://issues.chromium.org/issues/473593119 for some notes",
+      "revId": "3e5874baab36da91c0c3555886604b588c35c07a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
