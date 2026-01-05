@@ -16,6 +16,217 @@
       "message": "This CL is adding immediate accessible slot validation logic. PTAL, thanks!",
       "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40d7422c_f888ac53",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-05T16:36:23Z",
+      "side": 1,
+      "message": "u-nit: we have IsSubset that can help make the intent of this more clear.",
+      "range": {
+        "startLine": 582,
+        "startChar": 12,
+        "endLine": 582,
+        "endChar": 63
+      },
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81ea0134_edf8380e",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-05T16:36:23Z",
+      "side": 1,
+      "message": "Could we say what\u0027s one slot that\u0027s missing?",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "079e7cfa_275f5bed",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-05T16:36:23Z",
+      "side": 1,
+      "message": "nit: GetUserImmediateSlots maybe?",
+      "range": {
+        "startLine": 90,
+        "startChar": 34,
+        "endLine": 90,
+        "endChar": 62
+      },
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da582b5b_1a19860e",
+        "filename": "src/dawn/native/ProgrammableEncoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-05T16:36:23Z",
+      "side": 1,
+      "message": "Instead of a virtual call, could we split `APISetImmediates` in all three programmable encoder like we do for `APISetBindGroup`? The validation and some other logic could be shared here though.",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "520e99ac_b1b81fdd",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-05T16:36:23Z",
+      "side": 1,
+      "message": "Why don\u0027t we just generate an error in this case? There are many examples of that below.",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "813894cb_47cbd1ec",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-05T16:36:23Z",
+      "side": 1,
+      "message": "We could use to_ullong and creation of a bitset from an ullong to avoid the loop just to copy bits.",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "455ae4e9_d8508310",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1774,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-05T16:36:23Z",
+      "side": 1,
+      "message": "why is this necessary? The validation should already ensure that all the immediates are set inside the bundle so no state leakage can happen since all immediates get overwritten before the first draw.",
+      "range": {
+        "startLine": 1771,
+        "startChar": 0,
+        "endLine": 1774,
+        "endChar": 39
+      },
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e6d3d5a_8e67a8c2",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1776,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-05T16:36:23Z",
+      "side": 1,
+      "message": "This might be unnecessary if we remove the code above. (and Reset() would also be possible to remove).",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2de45ff_b60f9de7",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-05T16:36:23Z",
+      "side": 1,
+      "message": "Why did this need to change to be a struct?",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "462b5c23_0444aa0c",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-05T16:36:23Z",
+      "side": 1,
+      "message": "This test LGTM but can we also have simple tests (no need to check all the padding etc, that can be done in the CTS) for the interaction with render bundles? Each bundle starts with no immediates set so we need to check that, also what happens after ExecuteBundle.\n\nThis should find an issue where `CommandBufferStateTracker::mImmediateDataMask` is not reset at the end of `ExecuteBundle`.",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "589ee466_b3ddc162",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-05T16:36:23Z",
+      "side": 1,
+      "message": "```suggestion\n        {\"mainTail\", {{0, 8}}, false, true}  // Partial a\n```",
+      "range": {
+        "startLine": 638,
+        "startChar": 26,
+        "endLine": 638,
+        "endChar": 28
+      },
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
