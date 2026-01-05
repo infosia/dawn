@@ -3137,7 +3137,9 @@ TEST_P(CopyTests_T2T, CopyFromNonZeroMipLevelWithTexelBlockSizeLessThan4Bytes) {
 
             // Resolve all the deferred expectations now to avoid allocating too much memory
             // in mDeferredExpectations.
-            ResolveDeferredExpectationsNow();
+            if (!IsCaptureReplayCheckingEnabled()) {
+                ResolveDeferredExpectationsNow();
+            }
         }
     }
 }
