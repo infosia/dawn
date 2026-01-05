@@ -68,6 +68,24 @@
       "parentUuid": "3538bce4_741c3e50",
       "revId": "1800600917d6e35854a7765a3197799943ab63cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fa3183c_fd625148",
+        "filename": "src/dawn/native/WaitAnySystemEvent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-05T20:40:53Z",
+      "side": 1,
+      "message": "Ack, maybe clarify this in a comment",
+      "parentUuid": "0727c884_dc3f58a6",
+      "revId": "1800600917d6e35854a7765a3197799943ab63cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
