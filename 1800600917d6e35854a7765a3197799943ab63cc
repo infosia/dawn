@@ -50,6 +50,24 @@
       "message": "Only handles INFINITE, but I\u0027m guessing WaitForMultipleObjects can also return early for smaller timeouts? (Unclear if the TODO above includes handling that.)\n\nI\u0027m not really sure what\u0027s happening though because I don\u0027t see anything in documentation that would allow it to `WAIT_TIMEOUT` before the timeout elapses. There are other cases though like WAIT_FAILED and WAIT_ABANDONED_*",
       "revId": "1800600917d6e35854a7765a3197799943ab63cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0727c884_dc3f58a6",
+        "filename": "src/dawn/native/WaitAnySystemEvent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-05T20:01:31Z",
+      "side": 1,
+      "message": "Yea, I\u0027m not sure either and it very well may be a driver bug since these issues were only observed on the new arm64 Qualcomm bots.\n\nYea right now I only added the workaround for the infinite timeout case since anything aside from infinite could theoretically timeout and the user should be handling that anyways.",
+      "parentUuid": "3538bce4_741c3e50",
+      "revId": "1800600917d6e35854a7765a3197799943ab63cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
