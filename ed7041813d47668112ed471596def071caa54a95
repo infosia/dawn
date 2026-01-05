@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb15ab7c_a5863ab8",
+        "filename": "src/dawn/tests/end2end/BufferTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-05T23:03:54Z",
+      "side": 0,
+      "message": "I don\u0027t think this bug is related to timeouts?",
+      "range": {
+        "startLine": 1377,
+        "startChar": 26,
+        "endLine": 1377,
+        "endChar": 35
+      },
+      "revId": "ed7041813d47668112ed471596def071caa54a95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
