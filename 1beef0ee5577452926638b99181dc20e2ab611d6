@@ -16,6 +16,24 @@
       "message": "Shall we remove `MetalRenderR8RG8UnormSmallMipToTempTexture` as well then?",
       "revId": "1beef0ee5577452926638b99181dc20e2ab611d6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5294b37_a8834b82",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-05T08:47:38Z",
+      "side": 0,
+      "message": "Restored that code block, I shouldn\u0027t have removed it.",
+      "parentUuid": "8d815b20_1f2563f6",
+      "revId": "1beef0ee5577452926638b99181dc20e2ab611d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
