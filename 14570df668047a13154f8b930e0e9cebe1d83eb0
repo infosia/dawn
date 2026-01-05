@@ -16,6 +16,52 @@
       "message": "PTAL",
       "revId": "14570df668047a13154f8b930e0e9cebe1d83eb0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80cd7d7f_d8c75e4a",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-05T14:59:37Z",
+      "side": 1,
+      "message": "```suggestion\n\n    VkDescriptorSetLayoutCreateInfo createInfo{\n        .sType \u003d VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO,\n        .pNext \u003d nullptr,\n        .flags \u003d 0,\n        .bindingCount \u003d uint32_t(bindings.bindings.size()),\n        .pBindings \u003d bindings.bindings.data(),\n    };\n```",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 212,
+        "endChar": 6
+      },
+      "revId": "14570df668047a13154f8b930e0e9cebe1d83eb0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93e65ac7_48eeb9e9",
+        "filename": "src/dawn/native/vulkan/ResourceTableVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-05T14:59:37Z",
+      "side": 1,
+      "message": "Why do you dereference `mPool` and then immediately take a pointer again? Why not just `mPool`? (and below if this changes)",
+      "range": {
+        "startLine": 127,
+        "startChar": 89,
+        "endLine": 127,
+        "endChar": 96
+      },
+      "revId": "14570df668047a13154f8b930e0e9cebe1d83eb0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
