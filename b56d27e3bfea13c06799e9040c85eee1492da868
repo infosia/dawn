@@ -16,6 +16,24 @@
       "message": "nit: can we have a public link like `issues.chromium.org`?",
       "revId": "b56d27e3bfea13c06799e9040c85eee1492da868",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "595f7eb7_85e5ded7",
+        "filename": "src/dawn/native/vulkan/VulkanInfo.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-05T21:55:53Z",
+      "side": 1,
+      "message": "That is a public link? Redirects to https://b.corp.google.com/ when visiting from a corp account, but you can still get to it externally. And it\u0027s not in the issues.chromium.org tracker because it\u0027s a Swiftshader bug. That\u0027s the tracker that the Swiftshader docs request bugs are filed against.\n\nRegardless, this change didn\u0027t actually work the way I intended and the associated SwiftShader fix should be landed soon, so I\u0027m just removing this for now and waiting for the SwiftShader fix to roll.",
+      "parentUuid": "9d050021_ab96ac1b",
+      "revId": "b56d27e3bfea13c06799e9040c85eee1492da868",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

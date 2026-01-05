@@ -155,6 +155,24 @@
       "parentUuid": "1ff0832f_94165b8c",
       "revId": "cc2a6e13ce20dc228527821abfffd249b84699c9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "675b466f_ba6986dd",
+        "filename": "src/dawn/native/vulkan/VulkanFunctions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-05T21:55:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "474966e9_7942412f",
+      "revId": "cc2a6e13ce20dc228527821abfffd249b84699c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
