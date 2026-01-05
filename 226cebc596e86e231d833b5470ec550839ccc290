@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad2e3ae6_ea6af973",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-05T23:42:18Z",
+      "side": 1,
+      "message": "Note: this appears to be the only place `ResolveDeferredExpectationsNow` is called early",
+      "revId": "226cebc596e86e231d833b5470ec550839ccc290",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
