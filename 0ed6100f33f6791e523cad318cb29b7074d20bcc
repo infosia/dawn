@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ea570fe_f87f78a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-05T22:58:48Z",
+      "side": 1,
+      "message": "Nit: `pyl`",
+      "range": {
+        "startLine": 7,
+        "startChar": 61,
+        "endLine": 7,
+        "endChar": 64
+      },
+      "revId": "0ed6100f33f6791e523cad318cb29b7074d20bcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c28c46e_8592ed4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-05T22:58:48Z",
+      "side": 1,
+      "message": "Looks like the increase in testing load is pretty minimal, although that\u0027s expected to increase in the future.",
+      "revId": "0ed6100f33f6791e523cad318cb29b7074d20bcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
