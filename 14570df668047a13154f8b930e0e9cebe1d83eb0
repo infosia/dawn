@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f0f6f0e_5739f9c0",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-05T15:23:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80cd7d7f_d8c75e4a",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 212,
+        "endChar": 6
+      },
+      "revId": "14570df668047a13154f8b930e0e9cebe1d83eb0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93e65ac7_48eeb9e9",
@@ -54,6 +78,30 @@
       "writtenOn": "2026-01-05T14:59:37Z",
       "side": 1,
       "message": "Why do you dereference `mPool` and then immediately take a pointer again? Why not just `mPool`? (and below if this changes)",
+      "range": {
+        "startLine": 127,
+        "startChar": 89,
+        "endLine": 127,
+        "endChar": 96
+      },
+      "revId": "14570df668047a13154f8b930e0e9cebe1d83eb0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36c9899a_aab5f7f1",
+        "filename": "src/dawn/native/vulkan/ResourceTableVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-05T15:23:45Z",
+      "side": 1,
+      "message": "These functions take a pointer to the `::VkDescriptorPool` hence the `\u0026`, however in `vulkan_platform.h`, Dawn wraps these handles in a `using VkDescriptorPool \u003d VkHandle\u003c...\u003e` with a `operator*` that returns the `::VkDescriptorPool`. There are historical reasons for this complexity but IMHO we should eventually remove it.",
+      "parentUuid": "93e65ac7_48eeb9e9",
       "range": {
         "startLine": 127,
         "startChar": 89,
