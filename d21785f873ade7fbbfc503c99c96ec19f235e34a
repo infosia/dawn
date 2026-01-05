@@ -33,6 +33,24 @@
       "message": "Do we allow overridable constants for the subgroup size? That\u0027s the reason why we have the workgroup size here and not just in the normal inspector path.",
       "revId": "d21785f873ade7fbbfc503c99c96ec19f235e34a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f33254b_7e9746be",
+        "filename": "src/tint/lang/hlsl/writer/common/output.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-05T08:24:28Z",
+      "side": 1,
+      "message": "Yes and in writers all the override expressions should already been replaced by the constant values.",
+      "parentUuid": "65672227_f156c86c",
+      "revId": "d21785f873ade7fbbfc503c99c96ec19f235e34a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
