@@ -94,6 +94,30 @@
       },
       "revId": "e7dd64b510e02896a363d8fbb1d16741a5aef6a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9cd8991_358195f4",
+        "filename": "src/tint/utils/protos/ir/ir.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-01-05T16:18:53Z",
+      "side": 1,
+      "message": "Just remove the reserveds for now, bypass the presubmit and assign a bug to me about the script needing updating.",
+      "parentUuid": "575ab35d_e01879ba",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 32
+      },
+      "revId": "e7dd64b510e02896a363d8fbb1d16741a5aef6a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
