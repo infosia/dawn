@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13a0ef39_541d9d27",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 2
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-05T15:33:25Z",
+      "side": 1,
+      "message": "Are there any type restrictions on `T` or can it be anything?",
+      "revId": "7ecfa01229acb8fc468f6b927658c2f6faadaf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43e8d8ef_e5b9b151",
+        "filename": "src/tint/lang/wgsl/ast/builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-05T15:33:25Z",
+      "side": 1,
+      "message": "nit: else not needed as `if` returns.",
+      "revId": "7ecfa01229acb8fc468f6b927658c2f6faadaf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a59bc8a_f029ec07",
+        "filename": "src/tint/lang/wgsl/writer/ir_to_program/ir_to_program.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-05T15:33:25Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "7ecfa01229acb8fc468f6b927658c2f6faadaf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
