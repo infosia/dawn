@@ -22,6 +22,30 @@
       },
       "revId": "ed7041813d47668112ed471596def071caa54a95",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "478f2753_5da0efc5",
+        "filename": "src/dawn/tests/end2end/BufferTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-05T23:06:54Z",
+      "side": 0,
+      "message": "It\u0027s the same root cause. Because the `MapAsyncAndWait` call fails, and we don\u0027t necessarily have exceptions enabled, it returns and continues execution. Since the wait part timed-out, that means that map wasn\u0027t completed, and when you call `GetMappedRange` before the map is successful, it returns null.",
+      "parentUuid": "eb15ab7c_a5863ab8",
+      "range": {
+        "startLine": 1377,
+        "startChar": 26,
+        "endLine": 1377,
+        "endChar": 35
+      },
+      "revId": "ed7041813d47668112ed471596def071caa54a95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
