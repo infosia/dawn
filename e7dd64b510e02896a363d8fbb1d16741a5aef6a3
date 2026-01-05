@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82c0361f_bb4c9155",
+        "filename": "src/tint/utils/protos/ir/ir.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-01-05T16:07:56Z",
+      "side": 1,
+      "message": "This I think is in the wrong scope, it should be within the \u0027}\u0027",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 32
+      },
+      "revId": "e7dd64b510e02896a363d8fbb1d16741a5aef6a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
