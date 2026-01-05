@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "629bcc1a_65be87d9",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 2
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-05T15:42:12Z",
+      "side": 1,
+      "message": "The proposal is a little confused on this. It says constructible, but probably shouldn\u0027t to allow for override-sized arrays in workgroup. The real limitation is whatever is allowed for that address space (except buffer and atomics). I\u0027m not sure of a way to express that in the def file, but if there is one it should also go in the wgsl.def file too.",
+      "parentUuid": "13a0ef39_541d9d27",
+      "revId": "7ecfa01229acb8fc468f6b927658c2f6faadaf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43e8d8ef_e5b9b151",
         "filename": "src/tint/lang/wgsl/ast/builder.h",
         "patchSetId": 2
