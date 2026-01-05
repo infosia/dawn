@@ -38,6 +38,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "c50f2cba_8f224366",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-05T20:25:00Z",
+      "side": 1,
+      "message": "Actually, on second thought, I don\u0027t think there\u0027s really any reason for us to even run ci.yml on `push` (or `pull_request`) if we have it running on publish. Maybe we just take that out.\nhttps://dawn-review.googlesource.com/c/dawn/+/283135",
+      "parentUuid": "57ffd337_51e7ac05",
+      "revId": "f50b2a954be5c6ef70b6d675da1211e1bb3584fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "528b6afe_cc984451",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 5
