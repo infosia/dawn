@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "871ced85_aa17bbdd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-05T08:32:29Z",
+      "side": 1,
+      "message": "PTAL! CQ will keep failing until https://skia-review.googlesource.com/c/skia/+/1134356 rolls into Chromium.",
+      "revId": "dc181ae990d4723dad47d9d8e77ba8a0c2b5eb87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
