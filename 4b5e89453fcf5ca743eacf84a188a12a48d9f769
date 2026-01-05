@@ -100,6 +100,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a7ed580e_eebdfcab",
+        "filename": "src/dawn/native/ProgrammableEncoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-05T21:53:10Z",
+      "side": 1,
+      "message": "Is the idea for this so that we skip the vtable lookup since it might be hot code?",
+      "parentUuid": "da582b5b_1a19860e",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "520e99ac_b1b81fdd",
         "filename": "src/dawn/native/ShaderModule.cpp",
         "patchSetId": 7
@@ -174,6 +192,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "75c81e0a_bbccce1d",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-05T21:53:10Z",
+      "side": 1,
+      "message": "nit. existing additional space",
+      "range": {
+        "startLine": 380,
+        "startChar": 70,
+        "endLine": 380,
+        "endChar": 71
+      },
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a2de45ff_b60f9de7",
         "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
         "patchSetId": 7
@@ -202,6 +243,29 @@
       "writtenOn": "2026-01-05T16:36:23Z",
       "side": 1,
       "message": "This test LGTM but can we also have simple tests (no need to check all the padding etc, that can be done in the CTS) for the interaction with render bundles? Each bundle starts with no immediates set so we need to check that, also what happens after ExecuteBundle.\n\nThis should find an issue where `CommandBufferStateTracker::mImmediateDataMask` is not reset at the end of `ExecuteBundle`.",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaa90b41_58563548",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-05T21:53:10Z",
+      "side": 1,
+      "message": "nit. Not too strong of a preference, but personally, I think that instead of parameterizing like this, it would be a bit better to move the `Test` into a helper function and then explicitly name each case here (like the comments), using the helper to do the same work. It would make it a bit easier to identify failure cases and also to add suppressions in the future if necessary. The only thing that I think would make sense to parameterize would be maybe the `ComputePipeline`/`RenderePipeline`/`RenderBundle` part. \n\nExample:\n```\nvoid ImmediateDataRequiredTest::TestImmediateDataValidation(...) {...}\n\nTEST_F(ImmediateDataRequiredTest, ValidateMissingFrontHalf) {\n    TestImmediateDataValidation(\"mainMiddle\", {{16, 16}}, false);\n}\n\nTEST_F(ImmediateDataRequiredTest, ValidateNominal) {\n    TestImmediateDataValidation(\"mainMiddle\", {{0, 32}}, true);\n}\n\n...\n```",
+      "range": {
+        "startLine": 622,
+        "startChar": 0,
+        "endLine": 622,
+        "endChar": 75
+      },
       "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
