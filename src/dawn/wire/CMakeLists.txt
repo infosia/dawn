@@ -105,6 +105,7 @@ set(sources
     "server/ServerInstance.cpp"
     "server/ServerProgrammableEncoder.cpp"
     "server/ServerQueue.cpp"
+    "server/ServerResourceTable.cpp"
     "server/ServerShaderModule.cpp"
     "server/ServerSurface.cpp"
     "SupportedFeatures.cpp"
