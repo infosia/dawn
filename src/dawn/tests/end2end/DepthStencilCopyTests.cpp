@@ -44,9 +44,9 @@ namespace {
 using TextureFormat = wgpu::TextureFormat;
 DAWN_TEST_PARAM_STRUCT(DepthStencilCopyTestParams, TextureFormat);
 
-constexpr std::array<wgpu::TextureFormat, 3> kValidDepthCopyTextureFormats = {
-    wgpu::TextureFormat::Depth16Unorm,
-    wgpu::TextureFormat::Depth32Float,
+constexpr std::array<wgpu::TextureFormat, 5> kValidDepthCopyTextureFormats = {
+    wgpu::TextureFormat::Depth16Unorm,         wgpu::TextureFormat::Depth24Plus,
+    wgpu::TextureFormat::Depth24PlusStencil8,  wgpu::TextureFormat::Depth32Float,
     wgpu::TextureFormat::Depth32FloatStencil8,
 };
 
@@ -57,11 +57,7 @@ constexpr std::array<wgpu::TextureFormat, 1> kValidDepthCopyFromBufferFormats = 
 uint32_t GetBytesPerPixel(wgpu::TextureFormat format, wgpu::TextureAspect aspect) {
     uint32_t bytesPerPixel = 0;
     switch (format) {
-        case wgpu::TextureFormat::Depth24PlusStencil8: {
-            DAWN_ASSERT(aspect == wgpu::TextureAspect::StencilOnly);
-            bytesPerPixel = 1;
-            break;
-        }
+        case wgpu::TextureFormat::Depth24PlusStencil8:
         case wgpu::TextureFormat::Depth32FloatStencil8: {
             switch (aspect) {
                 case wgpu::TextureAspect::DepthOnly:
@@ -149,6 +145,21 @@ class DepthStencilCopyTests : public DawnTestWithParams<DepthStencilCopyTestPara
             case wgpu::TextureFormat::Depth32Float:
             case wgpu::TextureFormat::Depth32FloatStencil8:
                 return true;
+            default:
+                return false;
+        }
+    }
+
+    // Can you use this the format as the source to T2T or T2B.
+    bool IsValidDepthCopySourceTextureFormat() {
+        switch (GetParam().mTextureFormat) {
+            case wgpu::TextureFormat::Depth16Unorm:
+            case wgpu::TextureFormat::Depth32Float:
+            case wgpu::TextureFormat::Depth32FloatStencil8:
+                return true;
+            case wgpu::TextureFormat::Depth24Plus:
+            case wgpu::TextureFormat::Depth24PlusStencil8:
+                return HasToggleEnabled("use_packed_depth24_unorm_stencil8_format");
             default:
                 return false;
         }
@@ -519,6 +530,8 @@ class DepthCopyTests : public DepthStencilCopyTests {
         bool checkBufferContent,
         // Test cube binding view dimension for compatibility mode
         wgpu::TextureViewDimension bindingViewDimension = wgpu::TextureViewDimension::Undefined) {
+        DAWN_TEST_UNSUPPORTED_IF(!IsValidDepthCopySourceTextureFormat());
+
         uint32_t mipLevelCount = testLevel + 1;
         wgpu::Texture texture =
             CreateTexture(textureWidth, textureHeight,
@@ -1598,14 +1611,25 @@ DAWN_INSTANTIATE_TEST_P(
     std::vector<wgpu::TextureFormat>(utils::kDepthAndStencilFormats.begin(),
                                      utils::kDepthAndStencilFormats.end()));
 
-DAWN_INSTANTIATE_TEST_P(DepthCopyTests,
-                        {D3D11Backend(), D3D12Backend(),
-                         D3D12Backend({"d3d12_use_temp_buffer_in_depth_stencil_texture_and_buffer_"
-                                       "copy_with_non_zero_buffer_offset"}),
-                         MetalBackend(), OpenGLBackend(), OpenGLESBackend(), VulkanBackend(),
-                         WebGPUBackend()},
-                        std::vector<wgpu::TextureFormat>(kValidDepthCopyTextureFormats.begin(),
-                                                         kValidDepthCopyTextureFormats.end()));
+DAWN_INSTANTIATE_TEST_P(
+    DepthCopyTests,
+    {D3D11Backend(), D3D11Backend({"use_blit_for_depth24plus_texture_to_buffer_copy"}),
+     D3D12Backend(),
+     D3D12Backend({"d3d12_use_temp_buffer_in_depth_stencil_texture_and_buffer_"
+                   "copy_with_non_zero_buffer_offset"}),
+     D3D12Backend({"use_blit_for_depth24plus_texture_to_buffer_copy"}), MetalBackend(),
+     MetalBackend({"use_blit_for_depth24plus_texture_to_buffer_copy"}), OpenGLBackend(),
+     OpenGLBackend({"use_blit_for_depth24plus_texture_to_buffer_copy"}),
+
+     OpenGLESBackend(), OpenGLESBackend({"use_blit_for_depth24plus_texture_to_buffer_copy"}),
+
+     VulkanBackend(), VulkanBackend({"use_blit_for_depth24plus_texture_to_buffer_copy"}),
+     WebGPUBackend()
+
+    },
+    std::vector<wgpu::TextureFormat>(kValidDepthCopyTextureFormats.begin(),
+                                     kValidDepthCopyTextureFormats.end()));
+
 DAWN_INSTANTIATE_TEST_P(DepthCopyTests_Compat,
                         {OpenGLBackend(), OpenGLESBackend()},
                         std::vector<wgpu::TextureFormat>(kValidDepthCopyFromBufferFormats.begin(),
