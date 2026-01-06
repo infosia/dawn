@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1f9fd02_837668a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-06T21:58:47Z",
+      "side": 1,
+      "message": "Probably will need to do the same thing for textures and buffers?",
+      "revId": "46c31f9f885279eccac1c819fb94f8c7d2f54850",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
