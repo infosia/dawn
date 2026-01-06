@@ -140,6 +140,24 @@
       "parentUuid": "2673f5c2_f5a50429",
       "revId": "a5feeace37a7c3ae373884f0ba07743b3f551798",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2f74f58_d723aad0",
+        "filename": "test/tint/builtins/gen/literal/bufferView/002e01.wgsl",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-06T17:42:53Z",
+      "side": 1,
+      "message": "Note, it does make reviewing the backend additions easier if the tests are already added, then you just see that backends generated files changed. Makes it easier to be sure nothing else changed by accident. But, not a requirement.",
+      "parentUuid": "0be3c173_91c51528",
+      "revId": "a5feeace37a7c3ae373884f0ba07743b3f551798",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
