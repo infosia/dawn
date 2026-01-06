@@ -111,6 +111,29 @@
       },
       "revId": "86ccc5045d3f290cc4fcd2e0bd36b199a3412a24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e30e9682_434c9daf",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-06T21:59:14Z",
+      "side": 1,
+      "message": "Q: Why does this need a default argument?",
+      "range": {
+        "startLine": 253,
+        "startChar": 60,
+        "endLine": 253,
+        "endChar": 69
+      },
+      "revId": "86ccc5045d3f290cc4fcd2e0bd36b199a3412a24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
