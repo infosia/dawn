@@ -50,6 +50,24 @@
       "message": "This is where we get invalid WGSL because it tries to store the pointer in a storage buffer.\n\nYou can skip generating tests for `bufferView` by adding it alongside `getResource`\nhttps://source.chromium.org/chromium/chromium/src/+/refs/tags/145.0.7617.0:third_party/dawn/test/tint/builtins/gen/gen.wgsl.tmpl;l\u003d16\n\nIt\u0027d be good to add some manually written E2E tests for the `bufferView()` builtin in a directory under `test/tint/extensions/`.",
       "revId": "a5feeace37a7c3ae373884f0ba07743b3f551798",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5a46c2b_72e3aa45",
+        "filename": "test/tint/builtins/gen/literal/bufferView/002e01.wgsl",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-06T01:38:59Z",
+      "side": 1,
+      "message": "I was planning to add E2E tests once I have one of the backends working.",
+      "parentUuid": "11195284_ca9524cf",
+      "revId": "a5feeace37a7c3ae373884f0ba07743b3f551798",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
