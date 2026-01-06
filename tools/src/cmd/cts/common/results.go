@@ -381,6 +381,12 @@ func getRawResultsImpl(
 				}
 
 				testName := r.TestId[len(prefix):]
+				if isV2Prefix {
+					testName = strings.TrimSuffix(testName, "#single_case")
+					testName = strings.ReplaceAll(testName, `\:`, `:`)
+					testName = strings.ReplaceAll(testName, `#`, `:`)
+					testName = strings.TrimSuffix(testName, ":")
+				}
 				status := convertRdbStatus(r.Status)
 				tags := result.NewTags()
 				duration := time.Duration(r.Duration * float64(time.Second))
@@ -687,6 +693,12 @@ func getRecentUniqueSuppressedResults(
 				}
 
 				testName := r.TestId[len(prefix):]
+				if isV2Prefix {
+					testName = strings.TrimSuffix(testName, "#single_case")
+					testName = strings.ReplaceAll(testName, `\:`, `:`)
+					testName = strings.ReplaceAll(testName, `#`, `:`)
+					testName = strings.TrimSuffix(testName, ":")
+				}
 				tags := result.NewTags()
 
 				for _, tagPair := range r.Tags {
