@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "459e4e9a_ec5fab8b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-06T13:24:09Z",
+      "side": 1,
+      "message": "Done\n\nThanks for your suggestions! The test really helps find a bug in the CL.",
+      "parentUuid": "554ee4a4_85e6baca",
+      "revId": "d21785f873ade7fbbfc503c99c96ec19f235e34a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "65672227_f156c86c",
