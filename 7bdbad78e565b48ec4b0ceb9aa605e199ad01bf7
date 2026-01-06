@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1ce7001_b973c44f",
+        "filename": "tools/src/cmd/cts/common/results.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-06T21:16:52Z",
+      "side": 1,
+      "message": "I don\u0027t think we can unconditionally trim trailing `:`, as tests with that existed prior to the switch. See [this result](https://ci.chromium.org/ui/test-investigate/invocations/build-8695906215918976993/modules/legacy/schemes/legacy/variants/0021d452d3858438/cases/ninja%3A%2F%2Fchrome%2Ftest%3Atelemetry_gpu_integration_test%2Fgpu_tests.webgpu_cts_integration_test.WebGpuCtsIntegrationTest.webgpu%3Aapi%2Coperation%2Ccommand_buffer%2Cbasic%3Aempty%3A) from December 9th as an example.",
+      "range": {
+        "startLine": 388,
+        "startChar": 5,
+        "endLine": 388,
+        "endChar": 49
+      },
+      "revId": "7bdbad78e565b48ec4b0ceb9aa605e199ad01bf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6aedaf56_2285041f",
+        "filename": "tools/src/cmd/cts/common/results.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-06T21:16:52Z",
+      "side": 1,
+      "message": "Should be moved to a helper like `convertV2NameToLegacyName` or similar.",
+      "range": {
+        "startLine": 385,
+        "startChar": 5,
+        "endLine": 388,
+        "endChar": 49
+      },
+      "revId": "7bdbad78e565b48ec4b0ceb9aa605e199ad01bf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
