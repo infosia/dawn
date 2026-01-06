@@ -113,7 +113,12 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
 
     MaybeError MapAtCreation();
 
-    MaybeError ValidateCanUseOnQueueNow() const;
+    // Checks that the buffer is ready for use on queue. If successful this changes state to denote
+    // it's being used on queue.
+    MaybeError ValidateCanUseOnQueueNow();
+    // Called when buffer is done being used on queue. This should only be called after successful
+    // call to ValidateCanUseOnQueueNow().
+    void FinishUseOnQueue();
 
     bool IsFullBufferRange(uint64_t offset, uint64_t size) const;
     bool NeedsInitialization() const;
@@ -184,8 +189,12 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     class MapAsyncEvent;
 
     virtual MaybeError MapAtCreationImpl() = 0;
+
+    // Performs backend specific work to start mapping. The device mutex is not locked when this is
+    // called so the implementation should lock if required.
     virtual MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) = 0;
-    // `newState` is the state the buffer will be in after this returns.
+    // Performs backend specific work to finalize mapping. `newState` is the state the buffer will
+    // be in after this returns.
     virtual MaybeError FinalizeMapImpl(BufferState newState) = 0;
     virtual void* GetMappedPointerImpl() = 0;
     // Performs backend specific work to unmap. `oldState` is the state of the buffer before unmap
@@ -212,6 +221,7 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     const uint64_t mSize = 0;
     const wgpu::BufferUsage mUsage = wgpu::BufferUsage::None;
     const wgpu::BufferUsage mInternalUsage = wgpu::BufferUsage::None;
+    const bool mIsHostMapped = false;
     bool mIsDataInitialized = false;
 
     // Once MapAsync() returns a future there is a possible race between MapAsyncEvent completing
@@ -243,7 +253,8 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     // 4. For Unmap() set state to InsideOperation before modifying any other member variables. If
     //    there is a race modifying state compare_exchange() will fail and a validation error is
     //    thrown. After the buffer is unmapped set state to Unmapped.
-    // 5. For Destroy() check if the state is InsideOperation and if so spin loop until the
+    // 5. TODO(kylechar): Describe use on queue.
+    // 6. For Destroy() check if the state is InsideOperation and if so spin loop until the
     //    concurrent operation is finished. This prevents destruction in the middle of an operation.
     //
     // With those `mState` changes in place, we can guarantee that if GetMappedRange() is
