@@ -134,7 +134,7 @@
         ],
         "render pass encoder set immediates": [
             { "name": "render pass encoder id", "type": "ObjectId", "id_type": "render pass encoder"},
-            {"name": "offset", "type": "uint32_t"},
+            { "name": "offset", "type": "uint32_t"},
             { "name": "data", "type": "uint8_t", "annotation": "const*", "length": "size", "wire_is_data_only": true},
             { "name": "size", "type": "size_t"}
         ],
@@ -146,9 +146,18 @@
         ],
         "compute pass encoder set immediates": [
             { "name": "compute pass encoder id", "type": "ObjectId", "id_type": "compute pass encoder"},
-            {"name": "offset", "type": "uint32_t"},
+            { "name": "offset", "type": "uint32_t"},
             { "name": "data", "type": "uint8_t", "annotation": "const*", "length": "size", "wire_is_data_only": true},
             { "name": "size", "type": "size_t"}
+        ],
+        "resource table update": [
+            { "name": "resource table id", "type": "ObjectId", "id_type": "resource table"},
+            { "name": "slot", "type": "uint32_t"},
+            { "name": "resource", "type": "binding resource", "annotation": "const*"}
+        ],
+        "resource table remove binding": [
+            { "name": "resource table id", "type": "ObjectId", "id_type": "resource table"},
+            { "name": "slot", "type": "uint32_t"}
         ]
     },
     "return commands": {
@@ -288,7 +297,6 @@
             "QueueWriteTexture",
             "RenderBundleEncoderSetImmediates",
             "RenderPassEncoderSetImmediates",
-            "ResourceTableDestroy",
             "ResourceTableGetSize",
             "ResourceTableInsertBinding",
             "ResourceTableRemoveBinding",
@@ -313,6 +321,7 @@
             "BufferUnmap",
             "DeviceCreateErrorBuffer",
             "DeviceCreateErrorTexture",
+            "DeviceCreateResourceTable",
             "DeviceCreateTexture",
             "DeviceDestroy",
             "DeviceGetQueue",
@@ -321,6 +330,7 @@
             "InstanceProcessEvents",
             "InstanceWaitAny",
             "QueueSubmit",
+            "ResourceTableDestroy",
             "SurfaceConfigure",
             "SurfacePresent",
             "SurfaceUnconfigure"
