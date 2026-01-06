@@ -384,7 +384,10 @@ class DepthTextureClearTwiceTest : public DawnTestWithParams<DepthTextureClearTw
 };
 
 TEST_P(DepthTextureClearTwiceTest, ClearDepthAspectTwice) {
-    DAWN_SUPPRESS_TEST_IF(!mIsFormatSupported);
+    DAWN_TEST_UNSUPPORTED_IF(!mIsFormatSupported);
+
+    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
+    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
 
     constexpr uint32_t kSize = 64;
     constexpr uint32_t kLevelCount = 5;
