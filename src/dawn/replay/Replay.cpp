@@ -39,11 +39,14 @@
 
 #include "absl/container/flat_hash_map.h"
 #include "dawn/common/Constants.h"
+#include "dawn/replay/BlitBufferToDepthTexture.h"
 #include "dawn/replay/Capture.h"
 #include "dawn/replay/Deserialization.h"
 #include "src/dawn/replay/ReplayImpl.h"
 
 namespace dawn::replay {
+
+class ReplayImpl;
 
 Replay::~Replay() = default;
 
@@ -243,6 +246,20 @@ MaybeError ReadContentIntoTexture(const ReplayImpl& replay,
     return {};
 }
 
+bool TextureFormatNeedsBlit(wgpu::TextureFormat format, wgpu::TextureAspect aspect) {
+    switch (format) {
+        case wgpu::TextureFormat::Depth24Plus:
+        case wgpu::TextureFormat::Depth32Float:
+            return true;
+        case wgpu::TextureFormat::Depth24PlusStencil8:
+        case wgpu::TextureFormat::Depth32FloatStencil8: {
+            return aspect == wgpu::TextureAspect::DepthOnly;
+        }
+        default:
+            return false;
+    }
+}
+
 MaybeError InitializeTexture(const ReplayImpl& replay,
                              ReadHead& readHead,
                              wgpu::Device device,
@@ -255,7 +272,12 @@ MaybeError InitializeTexture(const ReplayImpl& replay,
     wgpu::TexelCopyTextureInfo dst = ToWGPU(replay, cmdData.destination);
     wgpu::TexelCopyBufferLayout layout = ToWGPU(cmdData.layout);
     wgpu::Extent3D size = ToWGPU(cmdData.size);
+
+    if (TextureFormatNeedsBlit(dst.texture.GetFormat(), dst.aspect)) {
+        DAWN_TRY(BlitBufferToDepthTexture(device, dst, data, cmdData.dataSize, layout, size));
+    } else {
         device.GetQueue().WriteTexture(&dst, data, cmdData.dataSize, &layout, &size);
+    }
     return {};
 }
 
