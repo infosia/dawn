@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "11b1f9c7_92b9de21",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-06T17:37:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79c64473_8c7a0766",
+      "revId": "a5feeace37a7c3ae373884f0ba07743b3f551798",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9cec8c57_d7e6713a",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-01-05T20:08:07Z",
       "side": 1,
       "message": "As Dan mentioned earlier, use `--generate-expected --generate-skips` to generate the expectation files for the E2E tests.\n\nWe typically add a check to the `CanGenerate()` function in each backend\u0027s `writer.cc` to reject a new type/builtin/etc while a new feature is under development, which will spit out a nicer error instead of crashing somewhere in the backend.",
+      "revId": "a5feeace37a7c3ae373884f0ba07743b3f551798",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3869613_8a4b3f9a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-06T17:37:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cec8c57_d7e6713a",
       "revId": "a5feeace37a7c3ae373884f0ba07743b3f551798",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -84,6 +120,24 @@
       "side": 1,
       "message": "Makes sense, SGTM.",
       "parentUuid": "f5a46c2b_72e3aa45",
+      "revId": "a5feeace37a7c3ae373884f0ba07743b3f551798",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0be3c173_91c51528",
+        "filename": "test/tint/builtins/gen/literal/bufferView/002e01.wgsl",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-06T17:37:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2673f5c2_f5a50429",
       "revId": "a5feeace37a7c3ae373884f0ba07743b3f551798",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
