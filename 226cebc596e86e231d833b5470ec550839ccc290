@@ -51,6 +51,24 @@
       "parentUuid": "116a6998_5a878c6e",
       "revId": "226cebc596e86e231d833b5470ec550839ccc290",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "099f16dd_9f02e5d7",
+        "filename": "src/dawn/tests/end2end/CopyTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3140,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-06T19:02:07Z",
+      "side": 1,
+      "message": "Corentin did you mean use `DAWN_INSTANTIATE_TEST_P(CopyTests_T2T, {WebGPUBackend()}, {0, 1})`. The last bool param means capture test / or not, and use this for checking instead of the temporary toggle \"enable_for_check_capture_replay\" to enable tests?",
+      "parentUuid": "b733ad7c_5140819c",
+      "revId": "226cebc596e86e231d833b5470ec550839ccc290",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
