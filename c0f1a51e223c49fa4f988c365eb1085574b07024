@@ -16,6 +16,23 @@
       "message": "This is the stack mentioned in the meeting.",
       "revId": "c0f1a51e223c49fa4f988c365eb1085574b07024",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62309876_58d971a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-06T21:58:18Z",
+      "side": 1,
+      "message": "Seems fine to me!",
+      "revId": "c0f1a51e223c49fa4f988c365eb1085574b07024",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
