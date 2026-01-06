@@ -94,6 +94,49 @@ ObjectType Queue::GetObjectType() const {
     return ObjectType::Queue;
 }
 
+uint64_t Queue::GetLastSubmitIndex() const {
+    return mLastSubmitIndex;
+}
+
+uint64_t Queue::GetCompletedSubmitIndex() const {
+    return mCompletedSubmitIndex;
+}
+
+void Queue::APISubmit(size_t commandCount, const WGPUCommandBuffer* commands) {
+    mLastSubmitIndex++;
+
+    // Send the submit command
+    QueueSubmitCmd cmd;
+    cmd.self = ToAPI(this);
+    cmd.commandCount = commandCount;
+    cmd.commands = commands;
+    GetClient()->SerializeCommand(cmd);
+
+    // Immediately request a callback for OnSubmittedWorkDone to update mCompletedSubmitIndex before
+    // any OnSubmittedWorkDone callbacks from the application.
+    struct CallbackData {
+        Ref<Queue> self;
+        uint64_t submitIndex;
+    };
+    WGPUQueueWorkDoneCallbackInfo callback = {
+        .nextInChain = nullptr,
+        .mode = WGPUCallbackMode_AllowSpontaneous,
+        .callback =
+            [](WGPUQueueWorkDoneStatus status, WGPUStringView, void* userdata1, void* userdata2) {
+                if (status != WGPUQueueWorkDoneStatus_Success) {
+                    return;
+                }
+
+                std::unique_ptr<CallbackData> data(reinterpret_cast<CallbackData*>(userdata1));
+                data->self->mCompletedSubmitIndex = data->submitIndex;
+            },
+        .userdata1 = new CallbackData{this, mLastSubmitIndex},
+        .userdata2 = nullptr,
+    };
+
+    APIOnSubmittedWorkDone(callback);
+}
+
 WireResult Client::DoQueueWorkDoneCallback(ObjectHandle eventManager,
                                            WGPUFuture future,
                                            WGPUQueueWorkDoneStatus status,
