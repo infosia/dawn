@@ -203,16 +203,21 @@ MaybeError Buffer::CaptureContentIfNeeded(CaptureContext& captureContext,
                                           bool newResource) {
     // TODO(451338754): If it's a new resource and we know the buffer is all zero then don't
     // capture.
+std::cerr << "CaptureContentIfNeeded(buf): " << GetLabel() << ": " << GetSize() << "\n";
+
     wgpu::BufferUsage usage = GetUsage();
     bool unwritableOnPlayback = usage & wgpu::BufferUsage::MapWrite;
     if (!newResource || unwritableOnPlayback) {
+std::cerr << "  skip\n";
         return {};
     }
     // A MapRead buffer is never used as input since it's only allowed CopyDst
     // so we don't need its contents.
     if (usage & wgpu::BufferUsage::MapRead) {
+std::cerr << "  skip\n";
         return {};
     }
+std::cerr << "  copy\n";
 
     return AddContentToCapture(captureContext);
 }

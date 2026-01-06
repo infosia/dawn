@@ -188,6 +188,7 @@ class CaptureContext {
                                         const TexelExtent3D& writeSizePixel);
 
     WGPUBuffer GetCopyBuffer();
+    WGPUBuffer GetBlitTextureToBufferBuffer();
 
   protected:
     void WriteContentBytes(const void* data, size_t size);

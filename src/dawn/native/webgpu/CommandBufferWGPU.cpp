@@ -810,7 +810,9 @@ schema::RenderPassDepthStencilAttachment ToSchema(
 MaybeError CommandBuffer::CaptureCreationParameters(CaptureContext& captureContext) {
     CommandIterator& commands = mCommands;
     Command type;
+std::cerr << "capture cb\n";
     while (commands.NextCommandId(&type)) {
+std::cerr << "  cmd: " << static_cast<uint32_t>(type) << "\n";
         switch (type) {
             case Command::CopyBufferToBuffer: {
                 const auto& cmd = *commands.NextCommand<CopyBufferToBufferCmd>();
