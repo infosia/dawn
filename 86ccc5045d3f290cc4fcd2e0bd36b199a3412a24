@@ -39,6 +39,30 @@
       },
       "revId": "86ccc5045d3f290cc4fcd2e0bd36b199a3412a24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8964132f_b45471de",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 4111,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2026-01-06T11:30:15Z",
+      "side": 1,
+      "message": "I am not sure, if I get it right this `uint64_t` GUID comes from a hash function ([1]) that SHA1Diagest the name string, *theoretically* it might be zero although it would never actually happen. If we can live with that, I would remove this descriptor.\n\n[1]: https://source.chromium.org/chromium/chromium/src/+/main:base/trace_event/memory_allocator_dump_guid.cc;drc\u003d56535b80c32d3a618b8fc8cfd7b1afdd3862e1b2;l\u003d16",
+      "parentUuid": "6f2cdb07_50a8a9f6",
+      "range": {
+        "startLine": 4110,
+        "startChar": 16,
+        "endLine": 4111,
+        "endChar": 133
+      },
+      "revId": "86ccc5045d3f290cc4fcd2e0bd36b199a3412a24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
