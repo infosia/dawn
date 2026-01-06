@@ -63,6 +63,30 @@
       },
       "revId": "86ccc5045d3f290cc4fcd2e0bd36b199a3412a24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "352f77f8_803b5ac7",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 4111,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-06T19:29:42Z",
+      "side": 1,
+      "message": "Another option would be to explicitly have a \"set\" and \"reset/unset\" method.\n\nSeparately, in practice, do we reset the ownership of the textures? Specifically, do we actually ever need to reset ownership, or would it just be passing ownership to another guid? I\u0027m wondering in what case would we have a texture that had an owner, that somehow loses the owner but isn\u0027t newly owned by someone else? If we don\u0027t need that, then we could just get by with just the \"set\" method.",
+      "parentUuid": "8964132f_b45471de",
+      "range": {
+        "startLine": 4110,
+        "startChar": 16,
+        "endLine": 4111,
+        "endChar": 133
+      },
+      "revId": "86ccc5045d3f290cc4fcd2e0bd36b199a3412a24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
