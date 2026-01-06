@@ -121,25 +121,28 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
     }
     SetLabelImpl();
 
-    // The buffers with mappedAtCreation == true will be initialized in
-    // BufferBase::MapAtCreation().
-    if (GetDevice()->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting) &&
-        !mappedAtCreation) {
-        CommandRecordingContext* commandContext =
-            ToBackend(GetDevice()->GetQueue())->GetPendingCommandContext();
-        ClearBuffer(commandContext, uint8_t(1u));
-    }
+    // The buffers with mappedAtCreation == true will be initialized in BufferBase::MapAtCreation().
+    if (!mappedAtCreation) {
+        uint32_t paddingClearSize = Align(GetAllocatedSize() - GetSize(), 4);
+        uint64_t paddingClearOffset = GetAllocatedSize() - paddingClearSize;
 
-    // Initialize the padding bytes to zero.
-    if (GetDevice()->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse) && !mappedAtCreation) {
-        uint32_t paddingBytes = GetAllocatedSize() - GetSize();
-        if (paddingBytes > 0) {
-            uint32_t clearSize = Align(paddingBytes, 4);
-            uint64_t clearOffset = GetAllocatedSize() - clearSize;
+        bool needsNonZeroClear =
+            GetDevice()->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting);
+        bool needsPaddingClear =
+            GetDevice()->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse) &&
+            paddingClearSize > 0;
 
+        if (needsNonZeroClear || needsPaddingClear) {
+            DAWN_TRY(ValidateCanUseOnQueueNow());
             CommandRecordingContext* commandContext =
                 ToBackend(GetDevice()->GetQueue())->GetPendingCommandContext();
-            ClearBuffer(commandContext, 0, clearOffset, clearSize);
+            if (needsNonZeroClear) {
+                ClearBuffer(commandContext, uint8_t(1u));
+            }
+            if (needsPaddingClear) {
+                ClearBuffer(commandContext, 0, paddingClearOffset, paddingClearSize);
+            }
+            FinishUseOnQueue();
         }
     }
     return {};
@@ -193,6 +196,8 @@ MaybeError Buffer::MapAtCreationImpl() {
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
+    // TODO(kylechar): Initialize data with memset() once buffer is mapped.
+    auto deviceGuard = GetDevice()->GetGuard();
     CommandRecordingContext* commandContext =
         ToBackend(GetDevice()->GetQueue())->GetPendingCommandContext();
     EnsureDataInitialized(commandContext);

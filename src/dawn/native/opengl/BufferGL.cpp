@@ -83,7 +83,9 @@ ResultOrError<Ref<Buffer>> Buffer::Create(Device* device,
             gl, BufferData(GL_ARRAY_BUFFER, buffer->mAllocatedSize, nullptr, GL_STATIC_DRAW));
     }
 
+    DAWN_TRY(buffer->ValidateCanUseOnQueueNow());
     buffer->TrackUsage();
+    buffer->FinishUseOnQueue();
 
     return std::move(buffer);
 }
@@ -204,6 +206,8 @@ MaybeError Buffer::MapAtCreationImpl() {
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
+    auto deviceGuard = GetDevice()->GetGuard();
+
     const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
 
     // It is an error to map an empty range in OpenGL. We always have at least a 4-byte buffer
