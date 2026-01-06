@@ -34,6 +34,24 @@
       "parentUuid": "9d050021_ab96ac1b",
       "revId": "b56d27e3bfea13c06799e9040c85eee1492da868",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3055f86b_97e21187",
+        "filename": "src/dawn/native/vulkan/VulkanInfo.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-06T09:49:05Z",
+      "side": 1,
+      "message": "Ah my bad, because of the redirect I assumed it was private. Waiting for the Swiftshader roll sounds good.",
+      "parentUuid": "595f7eb7_85e5ded7",
+      "revId": "b56d27e3bfea13c06799e9040c85eee1492da868",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
