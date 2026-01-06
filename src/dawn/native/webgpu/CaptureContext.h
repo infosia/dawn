@@ -188,6 +188,8 @@ class CaptureContext {
                                         const TexelExtent3D& writeSizePixel);
 
     WGPUBuffer GetCopyBuffer();
+    WGPUBuffer GetStorageBuffer();
+    WGPUBuffer GetBlitTextureToBufferBuffer();
 
   protected:
     void WriteContentBytes(const void* data, size_t size);
@@ -211,6 +213,7 @@ class CaptureContext {
     schema::ObjectId mNextObjectId = 2;  // 1 = the device itself.
 
     WGPUBuffer mCopyBuffer = nullptr;
+    WGPUBuffer mStorageBuffer = nullptr;
 };
 
 wgpu::TextureAspect ToDawn(const Aspect aspect);

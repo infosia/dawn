@@ -87,6 +87,9 @@ CaptureContext::~CaptureContext() {
     if (mCopyBuffer) {
         mDevice->wgpu.bufferDestroy(mCopyBuffer);
     }
+    if (mStorageBuffer) {
+        mDevice->wgpu.bufferDestroy(mStorageBuffer);
+    }
 }
 
 WGPUBuffer CaptureContext::GetCopyBuffer() {
@@ -99,6 +102,18 @@ WGPUBuffer CaptureContext::GetCopyBuffer() {
         mCopyBuffer = mDevice->wgpu.deviceCreateBuffer(mDevice->GetInnerHandle(), &desc);
     }
     return mCopyBuffer;
+}
+
+WGPUBuffer CaptureContext::GetStorageBuffer() {
+    if (!mStorageBuffer) {
+        WGPUBufferDescriptor desc = {};
+        // Add a label to the copy buffer for better debugging experience.
+        desc.label = ToOutputStringView("Capture Storage Buffer");
+        desc.size = kCopyBufferSize;
+        desc.usage = WGPUBufferUsage_CopySrc | WGPUBufferUsage_CopyDst | WGPUBufferUsage_Storage;
+        mStorageBuffer = mDevice->wgpu.deviceCreateBuffer(mDevice->GetInnerHandle(), &desc);
+    }
+    return mStorageBuffer;
 }
 
 void CaptureContext::WriteContentBytes(const void* data, size_t size) {
