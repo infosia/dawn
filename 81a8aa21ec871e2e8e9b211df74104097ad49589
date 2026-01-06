@@ -16,6 +16,24 @@
       "message": "Won\u0027t this fail in non-compat because it is supposed to return undefined without throwing an exception?",
       "revId": "81a8aa21ec871e2e8e9b211df74104097ad49589",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cc2b2ec_178cc3a0",
+        "filename": "src/dawn/node/binding/GPUTexture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-06T17:01:35Z",
+      "side": 1,
+      "message": "yes! 😂  thanks for catching that! fixed",
+      "parentUuid": "8cce6d77_f7916db8",
+      "revId": "81a8aa21ec871e2e8e9b211df74104097ad49589",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
