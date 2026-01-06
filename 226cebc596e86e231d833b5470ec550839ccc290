@@ -69,6 +69,24 @@
       "parentUuid": "b733ad7c_5140819c",
       "revId": "226cebc596e86e231d833b5470ec550839ccc290",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13d848b9_7a9b3fc1",
+        "filename": "src/dawn/tests/end2end/CopyTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3140,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-06T20:43:09Z",
+      "side": 1,
+      "message": "Another solution would be to refactor the `ResolveDeferredExpectectationsNow` code to not destroy the first device. Instead, stop the capture, make a 2nd device (if it doesn\u0027t already exist), replay the capture to this 2nd device, check those expectations, start a new capture, then continue.",
+      "parentUuid": "099f16dd_9f02e5d7",
+      "revId": "226cebc596e86e231d833b5470ec550839ccc290",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
