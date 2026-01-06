@@ -50,6 +50,24 @@
       "message": "Could we pad the buffers on creation to have a size that\u0027s a multiple of 4? This way we can always capture the full contents, only with some trailing bytes that the replay would just ignore.",
       "revId": "3e5874baab36da91c0c3555886604b588c35c07a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "471810d3_83af654d",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-06T18:16:47Z",
+      "side": 1,
+      "message": "rounding up would have the issue that the buffer on replay would be the wrong size. User searches for buffer of size 123 but can\u0027t find it because it\u0027s been rounded up to be 124. replay can\u0027t make buffer of 123 because it can\u0027t put the data back in. I guess it could pass \"this buffer is really size \u003d 123\" so lie about it in the UI.\n\nMaybe this isn\u0027t a concern. I just think I\u0027d lose 20 minutes of time when I was looking over a replay and wondering why my 123 allocation was 124. Going back to the capture and adding a printf/console.log to verify that yea, I asked for 123. Etc....\n\nI don\u0027t mind adding the copyB2T, copyB2T workaround. I was just trying to unblock the dawn_end2end_test with a smaller change first and leave the issue open. I can put in the bigger change now if that\u0027s unacceptable.",
+      "parentUuid": "9f02a5a3_fbf6b934",
+      "revId": "3e5874baab36da91c0c3555886604b588c35c07a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
