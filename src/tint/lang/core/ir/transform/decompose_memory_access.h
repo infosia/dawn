@@ -1,4 +1,4 @@
-// Copyright 2024 The Dawn & Tint Authors
+// Copyright 2026 The Dawn & Tint Authors
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -25,8 +25,8 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_TINT_LANG_CORE_IR_TRANSFORM_DECOMPOSE_UNIFORM_ACCESS_H_
-#define SRC_TINT_LANG_CORE_IR_TRANSFORM_DECOMPOSE_UNIFORM_ACCESS_H_
+#ifndef SRC_TINT_LANG_CORE_IR_TRANSFORM_DECOMPOSE_MEMORY_ACCESS_H_
+#define SRC_TINT_LANG_CORE_IR_TRANSFORM_DECOMPOSE_MEMORY_ACCESS_H_
 
 #include "src/tint/utils/result.h"
 
@@ -44,6 +44,13 @@ namespace tint::core::ir::transform {
 /// @returns success or failure
 Result<SuccessType> DecomposeUniformAccess(core::ir::Module& module);
 
+/// DecomposeWorkgroupAccess is a transform used to replace workgroup buffer accesses with a
+/// the correct load of the HLSL primitive objects
+/// Workgroup variables that do not contain f16 types are left unchanged
+/// @param module the module to transform
+/// @returns success or failure
+Result<SuccessType> DecomposeWorkgroupAccess(core::ir::Module& module);
+
 }  // namespace tint::core::ir::transform
 
-#endif  // SRC_TINT_LANG_CORE_IR_TRANSFORM_DECOMPOSE_UNIFORM_ACCESS_H_
+#endif  // SRC_TINT_LANG_CORE_IR_TRANSFORM_DECOMPOSE_MEMORY_ACCESS_H_
