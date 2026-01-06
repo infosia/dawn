@@ -309,6 +309,9 @@ TEST_P(BufferMappingTests, MapWrite_ZeroSized) {
 
 // Test map-writing with a non-zero offset.
 TEST_P(BufferMappingTests, MapWrite_NonZeroOffset) {
+    // TODO(crbug.com/473894293): [Capture] buffer mapping: investigate.
+    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
+
     wgpu::Buffer buffer = CreateMapWriteBuffer(20);
 
     uint32_t myData = 2934875;
@@ -370,6 +373,9 @@ TEST_P(BufferMappingTests, MapWrite_TwicePreserve) {
 
 // Map write and unmap twice with overlapping ranges and make sure data is updated correctly
 TEST_P(BufferMappingTests, MapWrite_TwiceRangeOverlap) {
+    // TODO(crbug.com/473894293): [Capture] buffer mapping: investigate.
+    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
+
     wgpu::Buffer buffer = CreateMapWriteBuffer(16);
 
     uint32_t data1[] = {0x01234567, 0x89abcdef};
@@ -414,6 +420,9 @@ TEST_P(BufferMappingTests, MapWrite_MultipleMappedRange) {
 
 // Test mapping a large buffer.
 TEST_P(BufferMappingTests, MapWrite_Large) {
+    // TODO(crbug.com/473894293): [Capture] buffer mapping: investigate.
+    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
+
     constexpr uint32_t kDataSize = 1000 * 1000;
     constexpr size_t kByteSize = kDataSize * sizeof(uint32_t);
     wgpu::Buffer buffer = CreateMapWriteBuffer(kDataSize * sizeof(uint32_t));
@@ -854,6 +863,9 @@ TEST_P(BufferMappedAtCreationTests, MapWriteUsageSmall) {
 
 // Test that the simplest mappedAtCreation works for MapRead buffers.
 TEST_P(BufferMappedAtCreationTests, MapReadUsageSmall) {
+    // TODO(crbug.com/473894293): [Capture] buffer mapping: investigate.
+    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
+
     uint32_t myData = 230502;
     wgpu::Buffer buffer = BufferMappedAtCreationWithData(wgpu::BufferUsage::MapRead, {myData});
     UnmapBuffer(buffer);
@@ -889,6 +901,9 @@ TEST_P(BufferMappedAtCreationTests, MapWriteUsageLarge) {
 
 // Test mappedAtCreation for a large MapRead buffer
 TEST_P(BufferMappedAtCreationTests, MapReadUsageLarge) {
+    // TODO(crbug.com/473894293): [Capture] buffer mapping: investigate.
+    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
+
     constexpr uint64_t kDataSize = 1000 * 1000;
     std::vector<uint32_t> myData;
     for (uint32_t i = 0; i < kDataSize; ++i) {
