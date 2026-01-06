@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8cce6d77_f7916db8",
+        "filename": "src/dawn/node/binding/GPUTexture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-06T09:40:11Z",
+      "side": 1,
+      "message": "Won\u0027t this fail in non-compat because it is supposed to return undefined without throwing an exception?",
+      "revId": "81a8aa21ec871e2e8e9b211df74104097ad49589",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
