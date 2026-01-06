@@ -16,6 +16,40 @@
       "message": "See https://issues.chromium.org/issues/473593119 for some notes",
       "revId": "3e5874baab36da91c0c3555886604b588c35c07a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b396a5e_110e33d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-06T12:21:27Z",
+      "side": 1,
+      "message": "LGTM with a suggestion that might allow always capturing all of the buffer\u0027s contents.",
+      "revId": "3e5874baab36da91c0c3555886604b588c35c07a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f02a5a3_fbf6b934",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-06T12:21:27Z",
+      "side": 1,
+      "message": "Could we pad the buffers on creation to have a size that\u0027s a multiple of 4? This way we can always capture the full contents, only with some trailing bytes that the replay would just ignore.",
+      "revId": "3e5874baab36da91c0c3555886604b588c35c07a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
