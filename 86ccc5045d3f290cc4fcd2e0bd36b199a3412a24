@@ -87,6 +87,30 @@
       },
       "revId": "86ccc5045d3f290cc4fcd2e0bd36b199a3412a24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f51184d9_986b9ebd",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 4111,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-06T21:51:15Z",
+      "side": 1,
+      "message": "Chrome memory dumps already consider 0 to be an empty GUID [here](https://source.chromium.org/chromium/chromium/src/+/main:base/trace_event/memory_allocator_dump_guid.h;l\u003d31;drc\u003d5f5478c22e63ec0a3effbdc82c9fac2615690334) so you should be fine to use that as sentinel value in dawn too.",
+      "parentUuid": "352f77f8_803b5ac7",
+      "range": {
+        "startLine": 4110,
+        "startChar": 16,
+        "endLine": 4111,
+        "endChar": 133
+      },
+      "revId": "86ccc5045d3f290cc4fcd2e0bd36b199a3412a24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
