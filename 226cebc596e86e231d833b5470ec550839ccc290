@@ -33,6 +33,24 @@
       "message": "Ugh that call to ResolveDeferredExpectationsNow is kind of a hack. Any chance to turn it into a parametrized test instead (so we don\u0027t need to leak `IsCaptureReplayCheckingEnabled` outside of DawnTest?). Feel free to skip or just add a TODO if it\u0027s too much effort.",
       "revId": "226cebc596e86e231d833b5470ec550839ccc290",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b733ad7c_5140819c",
+        "filename": "src/dawn/tests/end2end/CopyTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3140,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-06T17:18:23Z",
+      "side": 1,
+      "message": "What do you mean by parameterized test. You want the parameters to be [Backend, EarlyExpectationCheck] and then the if to be `if (param.earlyExpectationCheck) {...`?",
+      "parentUuid": "116a6998_5a878c6e",
+      "revId": "226cebc596e86e231d833b5470ec550839ccc290",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
