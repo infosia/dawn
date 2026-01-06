@@ -68,6 +68,24 @@
       "parentUuid": "11195284_ca9524cf",
       "revId": "a5feeace37a7c3ae373884f0ba07743b3f551798",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2673f5c2_f5a50429",
+        "filename": "test/tint/builtins/gen/literal/bufferView/002e01.wgsl",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-06T16:32:26Z",
+      "side": 1,
+      "message": "Makes sense, SGTM.",
+      "parentUuid": "f5a46c2b_72e3aa45",
+      "revId": "a5feeace37a7c3ae373884f0ba07743b3f551798",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
