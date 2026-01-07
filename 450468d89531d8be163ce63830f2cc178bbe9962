@@ -33,6 +33,24 @@
       "message": "Delete file",
       "revId": "450468d89531d8be163ce63830f2cc178bbe9962",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42395ee1_138a227c",
+        "filename": "out.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-07T21:40:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f719c1a_9eba7aad",
+      "revId": "450468d89531d8be163ce63830f2cc178bbe9962",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
