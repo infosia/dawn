@@ -51,6 +51,24 @@
       "parentUuid": "11e10f8c_ab86c57d",
       "revId": "9744246fd8c3697f8e31df43a824558c97c96328",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edc811d1_f9035a06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-07T14:22:31Z",
+      "side": 1,
+      "message": "It\u0027s kind of related to DEPS, since Chromium version is in DEPS, and we want to have the same PACKAGE that Chromium has, so that we can reuse the GPU pool mixins once they are in PACKAGE.\nBut yeah, if PACKAGE.star version was managed via DEPS in Chromium as well it would simplify this.",
+      "parentUuid": "1a5f769b_6c0953a6",
+      "revId": "9744246fd8c3697f8e31df43a824558c97c96328",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
