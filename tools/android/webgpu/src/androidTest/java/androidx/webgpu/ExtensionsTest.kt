@@ -45,7 +45,7 @@ class ExtensionsTest {
     }
 
     @Test
-    @ApiRequirement(minApi = Build.VERSION_CODES.O)
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     fun testLongToGpuColor() {
         // Create a long color for opaque blue
         val blueLong = Color.pack(0.0f, 0.0f, 1.0f)
