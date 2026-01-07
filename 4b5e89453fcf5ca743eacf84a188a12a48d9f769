@@ -414,6 +414,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c19c82ec_3a8b1235",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1776,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-07T08:35:48Z",
+      "side": 1,
+      "message": "It sounds like the lines should be moved to the next CL then? I\u0027m confused as to what it is achieving in this one.",
+      "parentUuid": "64dbc623_addf19ae",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "75c81e0a_bbccce1d",
         "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
         "patchSetId": 7
