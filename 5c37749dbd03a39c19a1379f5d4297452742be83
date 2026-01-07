@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "59a051d0_30236c66",
+        "filename": "src/dawn/common/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2026-01-07T22:30:05Z",
+      "side": 1,
+      "message": "are these abseil dependencies used in the *interface* to dawn_common?  If yes, then this seems fine. Otherwise it seems wrong.",
+      "parentUuid": "8810b636_b7a1a82d",
+      "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8987e3b8_384b69fe",
         "filename": "src/dawn/fuzzers/CMakeLists.txt",
         "patchSetId": 1
@@ -88,6 +106,24 @@
       "writtenOn": "2026-01-07T22:14:27Z",
       "side": 1,
       "message": "Given that this can only build on Windows, I am not sure if it is needed/desired, since I don\u0027t know offhand if we care about CMake + Windows",
+      "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a562791_57e07af5",
+        "filename": "src/dawn/fuzzers/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2026-01-07T22:30:05Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a4280e8b_09567756",
       "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
