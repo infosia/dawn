@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b6ba8f6_329673db",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T07:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40d7422c_f888ac53",
+      "range": {
+        "startLine": 582,
+        "startChar": 12,
+        "endLine": 582,
+        "endChar": 63
+      },
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81ea0134_edf8380e",
@@ -58,6 +82,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fc86305_ba4f4161",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T07:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81ea0134_edf8380e",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "079e7cfa_275f5bed",
@@ -71,6 +113,30 @@
       "writtenOn": "2026-01-05T16:36:23Z",
       "side": 1,
       "message": "nit: GetUserImmediateSlots maybe?",
+      "range": {
+        "startLine": 90,
+        "startChar": 34,
+        "endLine": 90,
+        "endChar": 62
+      },
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95dd671d_c74fdc50",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T07:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "079e7cfa_275f5bed",
       "range": {
         "startLine": 90,
         "startChar": 34,
@@ -152,6 +218,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "603b484b_fa79b2b7",
+        "filename": "src/dawn/native/ProgrammableEncoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T07:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fb65e2c_702ef24d",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "520e99ac_b1b81fdd",
@@ -169,6 +253,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbcb4887_9be4e9e1",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T07:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "520e99ac_b1b81fdd",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "813894cb_47cbd1ec",
@@ -182,6 +284,24 @@
       "writtenOn": "2026-01-05T16:36:23Z",
       "side": 1,
       "message": "We could use to_ullong and creation of a bitset from an ullong to avoid the loop just to copy bits.",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "269960d5_9d69cbca",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T07:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "813894cb_47cbd1ec",
       "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -233,6 +353,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eda5eb47_0df3eb62",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1774,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T07:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d272f5b5_fc7ad09b",
+      "range": {
+        "startLine": 1771,
+        "startChar": 0,
+        "endLine": 1774,
+        "endChar": 39
+      },
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0e6d3d5a_8e67a8c2",
@@ -246,6 +390,24 @@
       "writtenOn": "2026-01-05T16:36:23Z",
       "side": 1,
       "message": "This might be unnecessary if we remove the code above. (and Reset() would also be possible to remove).",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64dbc623_addf19ae",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1776,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T07:09:08Z",
+      "side": 1,
+      "message": "This seems a previous code related to bundle. I have some test cases for bundle in CL https://dawn-review.googlesource.com/c/dawn/+/282155/6. Shall we keep this line a bit and modify this in that CL?",
+      "parentUuid": "0e6d3d5a_8e67a8c2",
       "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -273,6 +435,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7e6725e_7b8992eb",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T07:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75c81e0a_bbccce1d",
+      "range": {
+        "startLine": 380,
+        "startChar": 70,
+        "endLine": 380,
+        "endChar": 71
+      },
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a2de45ff_b60f9de7",
@@ -286,6 +472,24 @@
       "writtenOn": "2026-01-05T16:36:23Z",
       "side": 1,
       "message": "Why did this need to change to be a struct?",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffe11640_1567ba96",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T07:09:08Z",
+      "side": 1,
+      "message": "No need. I tend to do some padding tricks in this but abandon at last. Done.",
+      "parentUuid": "a2de45ff_b60f9de7",
       "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -348,6 +552,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6904f83b_2805d353",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T07:09:08Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion!",
+      "parentUuid": "aaa90b41_58563548",
+      "range": {
+        "startLine": 622,
+        "startChar": 0,
+        "endLine": 622,
+        "endChar": 75
+      },
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "589ee466_b3ddc162",
@@ -361,6 +589,30 @@
       "writtenOn": "2026-01-05T16:36:23Z",
       "side": 1,
       "message": "```suggestion\n        {\"mainTail\", {{0, 8}}, false, true}  // Partial a\n```",
+      "range": {
+        "startLine": 638,
+        "startChar": 26,
+        "endLine": 638,
+        "endChar": 28
+      },
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f1212de_8f927eb4",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T07:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "589ee466_b3ddc162",
       "range": {
         "startLine": 638,
         "startChar": 26,
