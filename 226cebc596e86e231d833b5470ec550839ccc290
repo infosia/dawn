@@ -87,6 +87,24 @@
       "parentUuid": "099f16dd_9f02e5d7",
       "revId": "226cebc596e86e231d833b5470ec550839ccc290",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "180f6444_5f798806",
+        "filename": "src/dawn/tests/end2end/CopyTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3140,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-07T09:13:30Z",
+      "side": 1,
+      "message": "Ah sorry I should have detailed more. The reason there is a `ResolveDeferredExpectationsNow` is because the takes takes too long because it runs three levels of loops on `format x mipLevel x arrayLayer` (from what the comment says). With `DAWN_INSTANTIATE_TEST_P` we could turn this into a DawnTest instantiation per format (or per format and miplevel) such that the runtime stays reasonable and we don\u0027t need the `ResolveDeferredExpectationsNow` call.\n\nDoing what Gregg suggested would also be a good idea.",
+      "parentUuid": "13d848b9_7a9b3fc1",
+      "revId": "226cebc596e86e231d833b5470ec550839ccc290",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
