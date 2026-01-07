@@ -236,6 +236,13 @@ auto& operator<<(STREAM& out, const Result<SUCCESS, FAILURE>& res) {
     }
 }
 
+/// Check that @p result is Success and propagate the failure if not.
+#define CHECK_RESULT(result)     \
+    if (result != Success) {     \
+        return result.Failure(); \
+    }                            \
+    TINT_REQUIRE_SEMICOLON
+
 }  // namespace tint
 
 #endif  // SRC_TINT_UTILS_RESULT_H_
