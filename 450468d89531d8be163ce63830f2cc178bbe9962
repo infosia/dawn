@@ -16,6 +16,23 @@
       "message": "PTAL. I always type these pluralized and have to fix them so just adding aliases.",
       "revId": "450468d89531d8be163ce63830f2cc178bbe9962",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f719c1a_9eba7aad",
+        "filename": "out.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-07T21:37:41Z",
+      "side": 1,
+      "message": "Delete file",
+      "revId": "450468d89531d8be163ce63830f2cc178bbe9962",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
