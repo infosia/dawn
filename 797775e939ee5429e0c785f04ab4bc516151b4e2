@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22c58a91_a6e567c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-07T23:03:13Z",
+      "side": 1,
+      "message": "cts test: https://github.com/gpuweb/cts/pull/4552",
+      "revId": "797775e939ee5429e0c785f04ab4bc516151b4e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
