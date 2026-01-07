@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "628b7e2f_82aec0ac",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T09:38:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ca4dba3_6307ef9f",
+      "range": {
+        "startLine": 649,
+        "startChar": 0,
+        "endLine": 650,
+        "endChar": 55
+      },
+      "revId": "15fc7fe03fb982501820db1c389fc38495db533c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "00e1b757_27d1ec9c",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-01-07T08:35:48Z",
       "side": 1,
       "message": "This is not needed since it is included in kLazyAspects",
+      "range": {
+        "startLine": 837,
+        "startChar": 0,
+        "endLine": 838,
+        "endChar": 53
+      },
+      "revId": "15fc7fe03fb982501820db1c389fc38495db533c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90231ccc_19ef1582",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T09:38:58Z",
+      "side": 1,
+      "message": "Thanks for pointing it out!",
+      "parentUuid": "00e1b757_27d1ec9c",
       "range": {
         "startLine": 837,
         "startChar": 0,
@@ -64,6 +112,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5c46973_78285178",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T09:38:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "094caec7_779e0b94",
+      "revId": "15fc7fe03fb982501820db1c389fc38495db533c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4100c715_655379b5",
@@ -77,6 +143,24 @@
       "writtenOn": "2026-01-07T08:35:48Z",
       "side": 1,
       "message": "stray comment",
+      "revId": "15fc7fe03fb982501820db1c389fc38495db533c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03d5ca79_3b73e46e",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T09:38:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4100c715_655379b5",
       "revId": "15fc7fe03fb982501820db1c389fc38495db533c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
