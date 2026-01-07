@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffdbcf90_7bf0453d",
+        "filename": "infra/config/global/cmake_ci.star",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-07T14:59:47Z",
+      "side": 1,
+      "message": "target_cpu?\n\nAlso, seems like the properties are not inherited by the try mirror by default (per the content of cr-buildbucket.cfg).",
+      "range": {
+        "startLine": 71,
+        "startChar": 9,
+        "endLine": 71,
+        "endChar": 12
+      },
+      "revId": "4cc3e227ded7fb74362bc3ef776db04604846ba5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f68a9760_b6a8cbf1",
+        "filename": "infra/config/global/generated/luci/cr-buildbucket.cfg",
+        "patchSetId": 6
+      },
+      "lineNbr": 2450,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-07T14:59:47Z",
+      "side": 1,
+      "message": "Do we need this?",
+      "range": {
+        "startLine": 2431,
+        "startChar": 0,
+        "endLine": 2450,
+        "endChar": 9
+      },
+      "revId": "4cc3e227ded7fb74362bc3ef776db04604846ba5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
