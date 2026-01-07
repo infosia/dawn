@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "773b5226_f53a7f6c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-07T13:36:18Z",
+      "side": 1,
+      "message": "```suggestion\nUpdate the CountUTF16CodeUnitsFromUTF8String tests to check surrogates\n```",
+      "revId": "8dad4db736342e72c63349302c88a0bfeffdb45f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "1569becf_f2c67145",
