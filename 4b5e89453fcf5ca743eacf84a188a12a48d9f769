@@ -211,6 +211,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d272f5b5_fc7ad09b",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1774,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T03:13:02Z",
+      "side": 1,
+      "message": "My concern comes from the scenario that bundle mixes with normal pass draw commands. But I think this changes should be in the stacked CL which support immediates in render bundle. Let me remove these code here and use test cases to check whether we requires this reset.",
+      "parentUuid": "455ae4e9_d8508310",
+      "range": {
+        "startLine": 1771,
+        "startChar": 0,
+        "endLine": 1774,
+        "endChar": 39
+      },
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0e6d3d5a_8e67a8c2",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 7
