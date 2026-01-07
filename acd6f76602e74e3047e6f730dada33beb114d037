@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e95605e_c30a24b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-07T18:09:20Z",
+      "side": 1,
+      "message": "Something broke in the CTS w.r.t webgpu\\:api,validation,capability_checks,limits,maxInterStageShaderVariables  I will look",
+      "revId": "acd6f76602e74e3047e6f730dada33beb114d037",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
