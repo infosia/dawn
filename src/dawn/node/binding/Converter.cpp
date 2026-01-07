@@ -40,6 +40,7 @@
 #include "src/dawn/node/binding/GPUTexture.h"
 #include "src/dawn/node/binding/GPUTextureView.h"
 #include "src/dawn/node/utils/Debug.h"
+#include "webgpu/webgpu_cpp.h"
 
 namespace wgpu::binding {
 
@@ -1800,6 +1801,9 @@ bool Converter::Convert(wgpu::WGSLLanguageFeatureName& out, interop::WGSLLanguag
         case interop::WGSLLanguageFeatureName::kSubgroupUniformity:
             out = wgpu::WGSLLanguageFeatureName::SubgroupUniformity;
             return true;
+        case interop::WGSLLanguageFeatureName::kTextureAndSamplerLet:
+            out = wgpu::WGSLLanguageFeatureName::TextureAndSamplerLet;
+            return true;
     }
     return false;
 }
@@ -1841,6 +1845,9 @@ bool Converter::Convert(interop::WGSLLanguageFeatureName& out, wgpu::WGSLLanguag
             return true;
         case wgpu::WGSLLanguageFeatureName::SubgroupUniformity:
             out = interop::WGSLLanguageFeatureName::kSubgroupUniformity;
+            return true;
+        case wgpu::WGSLLanguageFeatureName::TextureAndSamplerLet:
+            out = interop::WGSLLanguageFeatureName::kTextureAndSamplerLet;
             return true;
 
         case wgpu::WGSLLanguageFeatureName::ChromiumTestingUnimplemented:
