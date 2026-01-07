@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "e873b7c3_69089980",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-07T22:27:14Z",
+      "side": 1,
+      "message": "I believe this is  unnecessary given the check in the cmake file?",
+      "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "8810b636_b7a1a82d",
@@ -31,6 +48,29 @@
       "writtenOn": "2026-01-07T22:16:28Z",
       "side": 1,
       "message": "This is needed, because otherwise these don\u0027t propegate and the fuzzer build targets which use dawn_common, but don\u0027t directly use absl fail to build or have to add in these targets.",
+      "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8987e3b8_384b69fe",
+        "filename": "src/dawn/fuzzers/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-07T22:27:14Z",
+      "side": 1,
+      "message": "Instead of doing this a bunch of times, you could define a cmake function and have the conditional inside that function, then just call it for each of your targets. Makes it clearer they all do the same thing",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 7
+      },
       "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
