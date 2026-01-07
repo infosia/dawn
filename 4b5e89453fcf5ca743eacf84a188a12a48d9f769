@@ -136,6 +136,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7fb65e2c_702ef24d",
+        "filename": "src/dawn/native/ProgrammableEncoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T01:40:45Z",
+      "side": 1,
+      "message": "Good point! I do this to share the validation logic and split the difference but yes, it might be a hot code.",
+      "parentUuid": "ad5d52f6_48418191",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "520e99ac_b1b81fdd",
         "filename": "src/dawn/native/ShaderModule.cpp",
         "patchSetId": 7
