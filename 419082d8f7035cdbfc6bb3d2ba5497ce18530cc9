@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "890ee492_95ae0eed",
+        "filename": "src/dawn/wire/client/ResourceTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-07T08:47:36Z",
+      "side": 1,
+      "message": "I think it\u0027s ok, bindless is really weird because of this but most WebGPU APIs even additions in the future won\u0027t need synchronous validation.",
+      "parentUuid": "adb8f394_6c706c9e",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 73
+      },
+      "revId": "419082d8f7035cdbfc6bb3d2ba5497ce18530cc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f856960b_70556ff9",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-01-07T00:22:44Z",
       "side": 1,
       "message": "nit. I think we might be able to special case this in the generator such that any server-side commands that return a `WGPUStatus`, should check that it\u0027s success, otherwise it is probably a fatal error. For the most part, I think that all such commands are currently implemented on the client side, but given that commands that return a `WGPUStatus` are all synchronous, it probably makes sense to default to making the server doers do the check unconditionally if they aren\u0027t being manually implemented on the client side.\n\nI think that would mean we wouldn\u0027t need to introduce new commands in dawn_wire.json for these, and that they wouldn\u0027t need to be under `client_side_commands`. I think that `ResourceTableInsertBinding` would still need to be under there though since we manually implement that to use `Update` instead.",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 89
+      },
+      "revId": "419082d8f7035cdbfc6bb3d2ba5497ce18530cc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e389885_b3e8ae8e",
+        "filename": "src/dawn/wire/server/ServerResourceTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-07T08:47:36Z",
+      "side": 1,
+      "message": "Looking at the commands in `dawn.json`, it seems this would only really apply to `Surface::Present` and the two new methods here. I\u0027ll give it a try later this week.",
+      "parentUuid": "f856960b_70556ff9",
       "range": {
         "startLine": 37,
         "startChar": 4,
