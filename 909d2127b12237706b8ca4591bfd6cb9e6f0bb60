@@ -34,6 +34,24 @@
       ],
       "revId": "909d2127b12237706b8ca4591bfd6cb9e6f0bb60",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00707613_a5cdc704",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ExtensionsTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-01-07T16:23:42Z",
+      "side": 1,
+      "message": "While ApiLevelSkipRule works in g3 and dawn repo, it triggers Android Lint errors in the AndroidX repo because the linter doesn\u0027t realize the test is skipped at runtime.\nSwitching to @SdkSuppress satisfies the linter for Color.pack() (which requires API 26). We aren\u0027t replacing it elsewhere yet as this is currently our only API-dependent test.",
+      "parentUuid": "aead7ed8_6a0bb030",
+      "revId": "909d2127b12237706b8ca4591bfd6cb9e6f0bb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
