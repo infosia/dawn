@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9189673d_5a1205c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-01-07T22:14:27Z",
+      "side": 1,
+      "message": "PTAL\n\nThe initial pass of this was generated via Gemini, but I have reviewed it all, and have confirmed that the non-D3D12 fuzzers build and run fine",
+      "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4280e8b_09567756",
+        "filename": "src/dawn/fuzzers/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-01-07T22:14:27Z",
+      "side": 1,
+      "message": "Given that this can only build on Windows, I am not sure if it is needed/desired, since I don\u0027t know offhand if we care about CMake + Windows",
+      "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
