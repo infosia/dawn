@@ -16,6 +16,92 @@
       "message": "PTAL.",
       "revId": "2992e4bcff798f2d65b99147f9e300e570ac591f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4eeff785_1a1acd70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-07T16:43:53Z",
+      "side": 1,
+      "message": "Node bindings need to be updated too",
+      "revId": "2992e4bcff798f2d65b99147f9e300e570ac591f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "635fe2c7_70167af5",
+        "filename": "src/tint/lang/wgsl/inspector/inspector_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1703,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-07T16:43:53Z",
+      "side": 1,
+      "message": "Was this one supposed to be `b`?",
+      "fixSuggestions": [
+        {
+          "fixId": "50b26cc3_7ca19829",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/wgsl/inspector/inspector_test.cc",
+              "range": {
+                "startLine": 1703,
+                "startChar": 0,
+                "endLine": 1704,
+                "endChar": 0
+              },
+              "replacement": "            load_texture_depth_arg(b);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "2992e4bcff798f2d65b99147f9e300e570ac591f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9008f403_4a0a4a2c",
+        "filename": "test/tint/extensions/texture_and_sampler_let/sampler_let.wgsl",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-07T16:43:53Z",
+      "side": 1,
+      "message": "Please write result to a storage buffer so this doesn\u0027t get DCE\u0027d in the future.",
+      "revId": "2992e4bcff798f2d65b99147f9e300e570ac591f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86d5a880_6e03b34f",
+        "filename": "test/tint/extensions/texture_and_sampler_let/texture_let.wgsl",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-07T16:43:53Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2992e4bcff798f2d65b99147f9e300e570ac591f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
