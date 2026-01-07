@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "062e68e5_c0569eed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-07T08:41:10Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "72ed22411334753a710efa8a10c44240aaab7a44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3e7c121b_93a966ad",
@@ -41,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e86b3ce4_91895c6c",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-07T08:41:10Z",
+      "side": 1,
+      "message": "I had one originally but it would make the client less robust to a bad server. While it is not exactly a threat model for Chromium, it might be useful to have the client be robust in other deployments. Let me know if you\u0027d like this change back in a follow-up.",
+      "parentUuid": "3e7c121b_93a966ad",
+      "range": {
+        "startLine": 126,
+        "startChar": 16,
+        "endLine": 128,
+        "endChar": 17
+      },
+      "revId": "72ed22411334753a710efa8a10c44240aaab7a44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5ec65189_5c3622ec",
@@ -54,6 +95,30 @@
       "writtenOn": "2026-01-07T00:23:08Z",
       "side": 1,
       "message": "Probably want to do this with an atomic max just in case. In theory the callbacks should be ordered, but because we are using `AllowSpontaneous` it might be possible for them to be out of order depending on the backend.",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 70
+      },
+      "revId": "72ed22411334753a710efa8a10c44240aaab7a44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dc7baa0_4bb293c7",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-07T08:41:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ec65189_5c3622ec",
       "range": {
         "startLine": 131,
         "startChar": 16,
