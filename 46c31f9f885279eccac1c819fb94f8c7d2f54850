@@ -33,6 +33,24 @@
       "message": "PTAL!",
       "revId": "46c31f9f885279eccac1c819fb94f8c7d2f54850",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c13c860_c4ad8f3d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-07T13:28:19Z",
+      "side": 1,
+      "message": "It was handled by the default argument value but that was not clear. Made it explicit.",
+      "parentUuid": "a1f9fd02_837668a7",
+      "revId": "46c31f9f885279eccac1c819fb94f8c7d2f54850",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
