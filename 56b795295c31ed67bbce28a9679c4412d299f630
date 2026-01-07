@@ -132,6 +132,24 @@
       ],
       "revId": "56b795295c31ed67bbce28a9679c4412d299f630",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bff9e585_4960a892",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-07T20:32:18Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "41f4f9f4_1eaa31a2",
+      "revId": "56b795295c31ed67bbce28a9679c4412d299f630",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
