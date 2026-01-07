@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ad7d5ec_d8279bf6",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-07T18:20:45Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this one is correct since this is only the last external ref being dropped which doesn\u0027t necessarily mean that cpp dtor will be called.",
+      "range": {
+        "startLine": 543,
+        "startChar": 8,
+        "endLine": 543,
+        "endChar": 46
+      },
+      "revId": "82ce67b967f3658f2b29fdd6723a013f73db1324",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
