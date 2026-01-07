@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aead7ed8_6a0bb030",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ExtensionsTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-01-07T13:50:49Z",
+      "side": 1,
+      "message": "What\u0027s the reason for replacing this? And are we replacing this everywhere?",
+      "fixSuggestions": [
+        {
+          "fixId": "0404c1d5_bfdf83e8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ExtensionsTest.kt",
+              "range": {
+                "startLine": 7,
+                "startChar": 0,
+                "endLine": 8,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "909d2127b12237706b8ca4591bfd6cb9e6f0bb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
