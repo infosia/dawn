@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02bc8d40_5c8648fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-07T17:00:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eeff785_1a1acd70",
+      "revId": "2992e4bcff798f2d65b99147f9e300e570ac591f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "635fe2c7_70167af5",
@@ -70,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0742b922_645d5f7e",
+        "filename": "src/tint/lang/wgsl/inspector/inspector_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1703,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-07T17:00:39Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "635fe2c7_70167af5",
+      "revId": "2992e4bcff798f2d65b99147f9e300e570ac591f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9008f403_4a0a4a2c",
@@ -87,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f5adb13_f094dcce",
+        "filename": "test/tint/extensions/texture_and_sampler_let/sampler_let.wgsl",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-07T17:00:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9008f403_4a0a4a2c",
+      "revId": "2992e4bcff798f2d65b99147f9e300e570ac591f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "86d5a880_6e03b34f",
@@ -100,6 +154,24 @@
       "writtenOn": "2026-01-07T16:43:53Z",
       "side": 1,
       "message": "ditto",
+      "revId": "2992e4bcff798f2d65b99147f9e300e570ac591f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38a2abab_3ec0f032",
+        "filename": "test/tint/extensions/texture_and_sampler_let/texture_let.wgsl",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-07T17:00:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86d5a880_6e03b34f",
       "revId": "2992e4bcff798f2d65b99147f9e300e570ac591f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
