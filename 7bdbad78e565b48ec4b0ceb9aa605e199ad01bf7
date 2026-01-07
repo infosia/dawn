@@ -45,6 +45,30 @@
       },
       "revId": "7bdbad78e565b48ec4b0ceb9aa605e199ad01bf7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fe7d016_cf9d2233",
+        "filename": "tools/src/cmd/cts/common/results.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 4401357
+      },
+      "writtenOn": "2026-01-07T05:21:40Z",
+      "side": 1,
+      "message": "the new id for that test is: \t://chrome/test\\:telemetry_gpu_integration_test!webgpucts:webgpu\\:api,operation,command_buffer,basic:empty#single_case\n\nso i think that in that case I just need to replace \"#single_case\" with \":\" instead of trimming it. I\u0027ll look into it to make sure thats consistent with other examples.",
+      "parentUuid": "f1ce7001_b973c44f",
+      "range": {
+        "startLine": 388,
+        "startChar": 5,
+        "endLine": 388,
+        "endChar": 49
+      },
+      "revId": "7bdbad78e565b48ec4b0ceb9aa605e199ad01bf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
