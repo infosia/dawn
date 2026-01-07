@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-12-17 09:28:19AM
+# Last rolled: 2026-01-07 05:04:28AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -626,8 +626,8 @@ crbug.com/407076132 [ dawn-no-backend-validation linux no-clang-coverage nvidia 
 crbug.com/407076132 [ dawn-no-backend-validation linux no-clang-coverage nvidia webgpu-adapter-default webgpu-shared-worker ] webgpu:web_platform,copyToTexture,image_file:from_orientation_metadata_file:imageName="*";objectTypeFromFile="ImageBitmap-from-Blob";* [ Failure ]
 crbug.com/407076132 [ dawn-no-backend-validation no-clang-coverage nvidia release-x64 target-cpu-64 webgpu-adapter-default webgpu-dedicated-worker webgpu-dxc-enabled win ] webgpu:web_platform,copyToTexture,image_file:from_orientation_metadata_file:imageName="*";objectTypeFromFile="ImageBitmap-from-Blob";* [ Failure ]
 crbug.com/407076132 [ dawn-no-backend-validation no-clang-coverage nvidia release-x64 target-cpu-64 webgpu-adapter-default webgpu-dxc-enabled webgpu-shared-worker win ] webgpu:web_platform,copyToTexture,image_file:from_orientation_metadata_file:imageName="*";objectTypeFromFile="ImageBitmap-from-Blob";* [ Failure ]
-crbug.com/407076132 [ qualcomm-0x36334330 win webgpu-dedicated-worker ] webgpu:web_platform,copyToTexture,image_file:from_orientation_metadata_file:imageName="*";objectTypeFromFile="ImageBitmap-from-Blob";* [ Failure ]
-crbug.com/407076132 [ qualcomm-0x36334330 win webgpu-shared-worker ] webgpu:web_platform,copyToTexture,image_file:from_orientation_metadata_file:imageName="*";objectTypeFromFile="ImageBitmap-from-Blob";* [ Failure ]
+crbug.com/407076132 [ qualcomm-0x36334330 webgpu-dedicated-worker win ] webgpu:web_platform,copyToTexture,image_file:from_orientation_metadata_file:imageName="*";objectTypeFromFile="ImageBitmap-from-Blob";* [ Failure ]
+crbug.com/407076132 [ qualcomm-0x36334330 webgpu-shared-worker win ] webgpu:web_platform,copyToTexture,image_file:from_orientation_metadata_file:imageName="*";objectTypeFromFile="ImageBitmap-from-Blob";* [ Failure ]
 
 # Widespread texture builtin failures on Intel (Linux/Win/Mac)
 crbug.com/407088850 [ intel-0x4680 win ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_3d_coords:* [ Failure ]
@@ -916,7 +916,7 @@ crbug.com/469819315 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.81
 crbug.com/469819316 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,operation,texture_view,write:format:method="render-pass-resolve";*sampleCount=1;* [ Failure ]
 crbug.com/469819317 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,validation,encoding,cmds,render,draw:vertex_buffer_OOB:type="draw";* [ Failure ]
 crbug.com/469819317 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,validation,encoding,cmds,render,draw:vertex_buffer_OOB:type="drawIndexed";* [ Failure ]
-crbug.com/470127836 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 webgpu-dxc-disabled ] webgpu:api,validation,capability_checks,limits,max*,at_over:* [ Failure ]
+crbug.com/470127836 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 webgpu-dxc-disabled win11 ] webgpu:api,validation,capability_checks,limits,max*,at_over:* [ Failure ]
 crbug.com/470131712 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,validation,encoding,cmds,copyTextureToTexture:copy_aspects:format="stencil8" [ Failure ]
 crbug.com/470131712 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,validation,encoding,cmds,copyTextureToTexture:texture_format_compatibility:srcFormat="stencil8";dstFormat="stencil8" [ Failure ]
 crbug.com/470115242 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_32.0.15.8180 win11 ] webgpu:api,validation,queue,destroyed,texture:beginRenderPass: [ Failure ]
@@ -937,6 +937,7 @@ crbug.com/473827156 [ qualcomm-0x36334330 win ] webgpu:api,validation,capability
 crbug.com/442950558 [ qualcomm-0x36334330 win ] webgpu:api,validation,encoding,cmds,render,draw:vertex_buffer_OOB:* [ RetryOnFailure ]
 crbug.com/473827158 [ qualcomm-0x36334330 win ] webgpu:api,validation,encoding,encoder_state:pass_end_invalid_order:* [ Failure ]
 crbug.com/473827162 [ arch-arm64 webgpu-adapter-swiftshader win ] webgpu:web_platform,copyToTexture,* [ RetryOnFailure ]
+
 # finder:enable-unused
 
 # Intel linux copyTextureToTexture with compressed textures, dim=2d, dim=3d
