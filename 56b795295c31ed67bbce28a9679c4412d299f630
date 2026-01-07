@@ -39,6 +39,30 @@
       },
       "revId": "56b795295c31ed67bbce28a9679c4412d299f630",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21ae3945_99d51efa",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-07T19:03:32Z",
+      "side": 1,
+      "message": "For the existing code, this didn\u0027t seem to trigger, so it seems this code only triggered when doing a let assigned getResource.",
+      "parentUuid": "1b0ed8cc_65dfbcf0",
+      "range": {
+        "startLine": 567,
+        "startChar": 11,
+        "endLine": 568,
+        "endChar": 73
+      },
+      "revId": "56b795295c31ed67bbce28a9679c4412d299f630",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
