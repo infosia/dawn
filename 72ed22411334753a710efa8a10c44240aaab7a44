@@ -16,6 +16,52 @@
       "message": "Loko PTAL, Kai as second reviewer if needed.",
       "revId": "72ed22411334753a710efa8a10c44240aaab7a44",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e7c121b_93a966ad",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-07T00:23:08Z",
+      "side": 1,
+      "message": "Should this be an assert?",
+      "range": {
+        "startLine": 126,
+        "startChar": 16,
+        "endLine": 128,
+        "endChar": 17
+      },
+      "revId": "72ed22411334753a710efa8a10c44240aaab7a44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ec65189_5c3622ec",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-07T00:23:08Z",
+      "side": 1,
+      "message": "Probably want to do this with an atomic max just in case. In theory the callbacks should be ordered, but because we are using `AllowSpontaneous` it might be possible for them to be out of order depending on the backend.",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 70
+      },
+      "revId": "72ed22411334753a710efa8a10c44240aaab7a44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
