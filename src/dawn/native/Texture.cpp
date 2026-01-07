@@ -127,8 +127,10 @@ bool IsTextureViewDimensionCompatibleWithTextureDimension(
         case wgpu::TextureViewDimension::e2D:
         case wgpu::TextureViewDimension::e2DArray:
         case wgpu::TextureViewDimension::Cube:
-        case wgpu::TextureViewDimension::CubeArray:
             return textureDimension == wgpu::TextureDimension::e2D;
+
+        case wgpu::TextureViewDimension::CubeArray:
+            return false;
 
         case wgpu::TextureViewDimension::e3D:
             return textureDimension == wgpu::TextureDimension::e3D;
