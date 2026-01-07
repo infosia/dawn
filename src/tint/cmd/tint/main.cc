@@ -1497,14 +1497,26 @@ int Run(tint::VectorRef<std::string_view> arguments, ExeMode exe_mode) {
         return GenerateWgsl(options, inspector, info.program) ? 0 : 1;
     }
 
-    if (inspector.GetEntryPoints().empty()) {
+    auto entry_points = inspector.GetEntryPoints();
+    if (entry_points.empty()) {
         std::cerr << "no entry point found, entry point required\n";
         return 1;
     }
 
+    if (!tint::cmd::IsStdout(options.output_file) && !options.emit_single_entry_point) {
+        if (entry_points.size() > 1) {
+            std::cerr
+                << "Emitting to a file but the module has multiple entry-points. Please provide "
+                   "the `--ep <name>` option to specific the entry point to emit\n";
+            return 1;
+        }
+
+        // Set the emitted entry point to the name from the inspector
+        options.ep_name = entry_points.front().name;
+        options.emit_single_entry_point = true;
+    }
+
     bool success = true;
-    std::string outfile_name = options.output_file;
-    auto entry_points = inspector.GetEntryPoints();
     for (auto& entry_point : entry_points) {
         if (options.emit_single_entry_point && entry_point.name != options.ep_name) {
             continue;
@@ -1526,14 +1538,6 @@ int Run(tint::VectorRef<std::string_view> arguments, ExeMode exe_mode) {
                 } else {
                     std::cout << "//\n";
                 }
-            }
-        } else if (!options.emit_single_entry_point) {
-            auto pos = outfile_name.rfind(".");
-            if (pos == std::string_view::npos) {
-                options.output_file = outfile_name + "." + entry_point.name;
-            } else {
-                options.output_file = outfile_name.substr(0, pos) + "." + entry_point.name + "." +
-                                      outfile_name.substr(pos + 1);
             }
         }
 
