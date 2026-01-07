@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39e34dd0_f0d65e15",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-07T09:09:09Z",
+      "side": 1,
+      "message": "Thanks, since it will help in multiple ways, let\u0027s go with it.",
+      "revId": "6c1049b80df788fed292aea98f012dbdbfaab141",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
