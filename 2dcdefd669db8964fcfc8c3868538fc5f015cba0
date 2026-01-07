@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f37036a_64c9434b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-07T20:44:42Z",
+      "side": 1,
+      "message": "CC Shaobo just an FYI that this validation logic for immediates is moving.",
+      "revId": "2dcdefd669db8964fcfc8c3868538fc5f015cba0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
