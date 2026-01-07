@@ -309,6 +309,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3103a025_9f211aa3",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T03:15:09Z",
+      "side": 1,
+      "message": "Agree. And sry for misleading about implementation mixed with stacked CL. I tend to put such test cases into render bundle supported CL.",
+      "parentUuid": "462b5c23_0444aa0c",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aaa90b41_58563548",
         "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
         "patchSetId": 7
