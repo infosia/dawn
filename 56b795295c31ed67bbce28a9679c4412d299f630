@@ -63,6 +63,75 @@
       },
       "revId": "56b795295c31ed67bbce28a9679c4412d299f630",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f7fee88_53765010",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-07T20:28:55Z",
+      "side": 1,
+      "message": "Ah, I see that we skip the non-let case on line 708. It\u0027d be nice if the logic for those two paths was combined somehow, but I don\u0027t see a trivial way to do that.",
+      "parentUuid": "21ae3945_99d51efa",
+      "range": {
+        "startLine": 567,
+        "startChar": 11,
+        "endLine": 568,
+        "endChar": 73
+      },
+      "revId": "56b795295c31ed67bbce28a9679c4412d299f630",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41f4f9f4_1eaa31a2",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-07T20:28:55Z",
+      "side": 1,
+      "message": "Nit: could just directly return here?",
+      "fixSuggestions": [
+        {
+          "fixId": "6ef77036_7fef1bdf",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/wgsl/inspector/inspector.cc",
+              "range": {
+                "startLine": 578,
+                "startChar": 0,
+                "endLine": 579,
+                "endChar": 0
+              },
+              "replacement": "                return scratch_global;\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/inspector/inspector.cc",
+              "range": {
+                "startLine": 582,
+                "startChar": 0,
+                "endLine": 585,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "56b795295c31ed67bbce28a9679c4412d299f630",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
