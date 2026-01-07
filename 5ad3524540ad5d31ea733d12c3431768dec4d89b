@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8c49c73_1f3e973a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-07T18:27:53Z",
+      "side": 1,
+      "message": "Perhaps longer-term we could have a cmake_v2 recipe which actually makes use of Chromium recipe code for GN args, etc., but that\u0027s probably more work than is worth it atm.",
+      "revId": "5ad3524540ad5d31ea733d12c3431768dec4d89b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

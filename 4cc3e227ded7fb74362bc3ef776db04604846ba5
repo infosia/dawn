@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6386eee9_8c9be9e3",
+        "filename": "infra/config/global/cmake_ci.star",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-07T18:27:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffdbcf90_7bf0453d",
+      "range": {
+        "startLine": 71,
+        "startChar": 9,
+        "endLine": 71,
+        "endChar": 12
+      },
+      "revId": "4cc3e227ded7fb74362bc3ef776db04604846ba5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f68a9760_b6a8cbf1",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-01-07T14:59:47Z",
       "side": 1,
       "message": "Do we need this?",
+      "range": {
+        "startLine": 2431,
+        "startChar": 0,
+        "endLine": 2450,
+        "endChar": 9
+      },
+      "revId": "4cc3e227ded7fb74362bc3ef776db04604846ba5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d54281f_08019f51",
+        "filename": "infra/config/global/generated/luci/cr-buildbucket.cfg",
+        "patchSetId": 6
+      },
+      "lineNbr": 2450,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-07T18:27:53Z",
+      "side": 1,
+      "message": "No, but it shouldn\u0027t hurt anything and it\u0027s automatically applied when using the chromium-luci code.",
+      "parentUuid": "f68a9760_b6a8cbf1",
       "range": {
         "startLine": 2431,
         "startChar": 0,
