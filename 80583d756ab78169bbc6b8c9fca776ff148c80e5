@@ -16,6 +16,29 @@
       "message": "PTAL.",
       "revId": "80583d756ab78169bbc6b8c9fca776ff148c80e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12d9c339_4bddcbf8",
+        "filename": "src/tint/lang/msl/writer/raise/raise.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-07T20:46:19Z",
+      "side": 1,
+      "message": "Note: The return values will need to be checked after https://dawn-review.googlesource.com/c/dawn/+/283696 lands",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 77
+      },
+      "revId": "80583d756ab78169bbc6b8c9fca776ff148c80e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
