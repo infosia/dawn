@@ -33,7 +33,6 @@
 #include <string>
 #include <string_view>
 #include <utility>
-#include <vector>
 
 #include "src/tint/lang/core/intrinsic/table.h"
 #include "src/tint/lang/core/ir/access.h"
@@ -1602,6 +1601,7 @@ class Validator {
     Hashmap<const ir::Function*, Hashset<const ir::UserCall*, 4>, 4> user_func_calls_;
     Hashmap<const ir::Instruction*, SupportedStages, 4> stage_restricted_instructions_;
     core::ir::ReferencedModuleVars<const Module> referenced_module_vars_;
+    const Var* user_declared_immediate_ = nullptr;
     Hashset<OverrideId, 8> seen_override_ids_;
     Hashset<std::string, 4> entry_point_names_;
     Hashset<ValidatedType, 16> validated_types_{};
@@ -3461,10 +3461,15 @@ void Validator::CheckVar(const Var* var) {
     }
 
     if (mv->AddressSpace() == AddressSpace::kImmediate) {
+        if (user_declared_immediate_) {
+            AddError(var) << "multiple user-declared immediate data variables";
+            return;
+        }
         if (mv->StoreType() && !mv->StoreType()->IsHostShareable()) {
             AddError(var) << "vars in the 'immediate' address space must be host-shareable";
             return;
         }
+        user_declared_immediate_ = var;
     }
 
     if (var->InputAttachmentIndex().has_value()) {
@@ -5216,73 +5221,6 @@ Result<SuccessType> ValidateAndDumpIfNeeded([[maybe_unused]] const Module& ir,
     }
 #endif
 
-    return Success;
-}
-
-Result<uint32_t> ValidateSingleUserImmediate(const Module& ir, core::ir::Function* ep) {
-    uint32_t user_immediate_size = 0;
-
-    core::ir::ReferencedModuleVars<const core::ir::Module> referenced_module_vars{ir};
-    auto& refs = referenced_module_vars.TransitiveReferences(ep);
-    for (auto* var : refs) {
-        auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
-        if (!ptr) {
-            continue;
-        }
-        if (ptr->AddressSpace() == core::AddressSpace::kImmediate) {
-            if (user_immediate_size > 0) {
-                return Failure("module contains multiple user-declared immediate data");
-            }
-            user_immediate_size = tint::RoundUp(4u, ptr->StoreType()->Size());
-        }
-    }
-    return user_immediate_size;  // 0 if none found
-}
-
-Result<SuccessType> ValidateInternalImmediateOffset(uint32_t max_immediate_block_size,
-                                                    uint32_t user_immediate_data_size,
-                                                    const std::vector<ImmediateInfo>& immediates) {
-    struct Range {
-        uint32_t offset;
-        uint32_t size;
-    };
-    std::vector<Range> ranges;
-    ranges.reserve(immediates.size());
-    for (size_t i = 0; i < immediates.size(); ++i) {
-        const auto& info = immediates[i];
-        if (info.size == 0) {
-            return Failure("immediate data #" + std::to_string(i) + " has zero size");
-        }
-        if (info.offset & 0x3) {
-            return Failure("immediate data #" + std::to_string(i) +
-                           " offset is not 4-byte aligned");
-        }
-        if (info.offset < user_immediate_data_size) {
-            return Failure("immediate data #" + std::to_string(i) +
-                           " overlaps user-declared immediate data region");
-        }
-        if (info.offset > max_immediate_block_size) {
-            return Failure("immediate data #" + std::to_string(i) +
-                           " offset exceeds maximum immediate block size");
-        }
-        if (info.size > max_immediate_block_size ||
-            info.offset > max_immediate_block_size - info.size) {
-            return Failure("immediate data #" + std::to_string(i) +
-                           " (offset + size) exceeds maximum immediate block size");
-        }
-        ranges.push_back(Range{info.offset, info.size});
-    }
-    std::sort(ranges.begin(), ranges.end(),
-              [](const Range& a, const Range& b) { return a.offset < b.offset; });
-    for (size_t i = 1; i < ranges.size(); ++i) {
-        const auto& prev = ranges[i - 1];
-        const auto& cur = ranges[i];
-        if (cur.offset < prev.offset + prev.size) {
-            return Failure("immediate data ranges overlap (offset " + std::to_string(prev.offset) +
-                           " size " + std::to_string(prev.size) + " and offset " +
-                           std::to_string(cur.offset) + " size " + std::to_string(cur.size) + ")");
-        }
-    }
     return Success;
 }
 

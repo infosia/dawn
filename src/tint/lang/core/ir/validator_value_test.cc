@@ -522,6 +522,22 @@ TEST_F(IR_ValidatorTest, Var_Immediate_NotHostShareable) {
 )")) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, Var_Immediate_Multiple) {
+    auto* v1 = b.Var<immediate, u32>();
+    auto* v2 = b.Var<immediate, u32>();
+    mod.root_block->Append(v1);
+    mod.root_block->Append(v2);
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr(
+                    R"(:3:34 error: var: multiple user-declared immediate data variables
+  %2:ptr<immediate, u32, read> = var undef
+                                 ^^^
+)")) << res.Failure();
+}
+
 TEST_F(IR_ValidatorTest, Var_Storage_NotHostShareable) {
     auto* v = b.Var<storage, bool, read>();
     v->SetBindingPoint(0, 0);
