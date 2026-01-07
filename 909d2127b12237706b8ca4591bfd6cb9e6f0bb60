@@ -52,6 +52,24 @@
       "parentUuid": "aead7ed8_6a0bb030",
       "revId": "909d2127b12237706b8ca4591bfd6cb9e6f0bb60",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fb7a8b7_75b52f77",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ExtensionsTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-01-07T19:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00707613_a5cdc704",
+      "revId": "909d2127b12237706b8ca4591bfd6cb9e6f0bb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
