@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5b15ed1_ec866319",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-07T10:50:19Z",
+      "side": 1,
+      "message": "These are the same constant, let\u0027s just use `kImmediateConstantElementByteSize` instead of the name I suggested?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "255e5fbc03b90990f55d3e07b1f8631339160cd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
