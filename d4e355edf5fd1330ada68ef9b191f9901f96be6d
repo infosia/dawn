@@ -16,6 +16,24 @@
       "message": "this should probably be `TINT_CHECK_RESULT` as otherwise there is no namespacing",
       "revId": "d4e355edf5fd1330ada68ef9b191f9901f96be6d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25404624_ee4ea5e1",
+        "filename": "src/tint/utils/result.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-07T22:21:26Z",
+      "side": 1,
+      "message": "Done, and also reworked the macro because I noticed that it would evaluate the parameter twice if the result was a failure.",
+      "parentUuid": "06428eb0_5966661a",
+      "revId": "d4e355edf5fd1330ada68ef9b191f9901f96be6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
