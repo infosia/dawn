@@ -432,6 +432,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f72ed2da_924d49f0",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1776,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-07T08:49:36Z",
+      "side": 1,
+      "message": "My bad. I do the wrong diff (diff from previous patcheset instead of base). Let me remove it.",
+      "parentUuid": "c19c82ec_3a8b1235",
+      "revId": "4b5e89453fcf5ca743eacf84a188a12a48d9f769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "75c81e0a_bbccce1d",
         "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
         "patchSetId": 7
