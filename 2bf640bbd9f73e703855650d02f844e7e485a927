@@ -34,6 +34,24 @@
       "parentUuid": "b4cafaee_288d9101",
       "revId": "2bf640bbd9f73e703855650d02f844e7e485a927",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82e558d2_211cafd8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-07T18:28:44Z",
+      "side": 1,
+      "message": "I looked at these 2 runs from your CL:\nhttps://ci.chromium.org/ui/p/dawn/builders/try/dawn-try-win-arm64-qualcomm-snapdragonxelite-rel/33/overview\nhttps://ci.chromium.org/ui/p/dawn/builders/try/dawn-try-win-arm64-qualcomm-snapdragonxelite-rel/34/overview\nWhat happened is that they were green because the test failed the first time it ran and then passed in retry.\nHere are the failures:\nhttps://chromium-swarm.appspot.com/task?id\u003d758922ab9aec4d10\nhttps://chromium-swarm.appspot.com/task?id\u003d75a87ebde685f910\n\nWe used to have a setting to disallow retries on bots to prevent hidden failures like this, but Chromium made it a noop crbug.com/40107890",
+      "parentUuid": "a49e27ba_84320756",
+      "revId": "2bf640bbd9f73e703855650d02f844e7e485a927",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
