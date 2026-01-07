@@ -16,6 +16,29 @@
       "message": "PTAL.",
       "revId": "56b795295c31ed67bbce28a9679c4412d299f630",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b0ed8cc_65dfbcf0",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-07T19:00:21Z",
+      "side": 1,
+      "message": "IIUC this scenario is not specific to the assignment to let and would happen any time getResource is used?",
+      "range": {
+        "startLine": 567,
+        "startChar": 11,
+        "endLine": 568,
+        "endChar": 73
+      },
+      "revId": "56b795295c31ed67bbce28a9679c4412d299f630",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
