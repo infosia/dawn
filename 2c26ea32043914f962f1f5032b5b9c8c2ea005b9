@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c4932b2_43700acd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-07T16:30:37Z",
+      "side": 1,
+      "message": "Swiftshader change rolled. Giving the CQ a dry run now to ensure that it cleared up the issue on the bots. Assuming that they come back OK I need a +2 to land.",
+      "revId": "2c26ea32043914f962f1f5032b5b9c8c2ea005b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
