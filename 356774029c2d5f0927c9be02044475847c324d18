@@ -536,6 +536,24 @@
       "parentUuid": "2560ffb4_67efe96a",
       "revId": "356774029c2d5f0927c9be02044475847c324d18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bebb8cfd_3af83aa3",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 80
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-01-07T21:10:32Z",
+      "side": 1,
+      "message": "For reference, here\u0027s what my CL looks like on top of Corentin\u0027s CLs:\n\nhttps://dawn-review.googlesource.com/c/dawn/+/283399\n\nThis passes all dawn_end2end_tests, with the exception of 11 SinglePipelineCachingTests.",
+      "parentUuid": "82d64c20_ba76e415",
+      "revId": "356774029c2d5f0927c9be02044475847c324d18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
