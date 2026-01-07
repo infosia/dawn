@@ -68,6 +68,24 @@
       "parentUuid": "9f02a5a3_fbf6b934",
       "revId": "3e5874baab36da91c0c3555886604b588c35c07a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6971c6c0_383eda53",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-07T09:18:16Z",
+      "side": 1,
+      "message": "Yeah the idea would be that the UI would also lie about it like you wrote. But it\u0027s a bunch of work. Maybe the current solution is good until we add unaligned copies in WebGPU since it seems that Kai is experimenting with that idea. Can we have a TODO on his issue https://issues.chromium.org/473568230 ?",
+      "parentUuid": "471810d3_83af654d",
+      "revId": "3e5874baab36da91c0c3555886604b588c35c07a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
