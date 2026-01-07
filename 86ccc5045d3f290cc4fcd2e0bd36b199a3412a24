@@ -113,6 +113,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb708f75_e004bf2c",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 4111,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2026-01-07T07:34:56Z",
+      "side": 1,
+      "message": "Done removing the descriptor and using `uint64_t` directly with `0u` as empty.",
+      "parentUuid": "f51184d9_986b9ebd",
+      "range": {
+        "startLine": 4110,
+        "startChar": 16,
+        "endLine": 4111,
+        "endChar": 133
+      },
+      "revId": "86ccc5045d3f290cc4fcd2e0bd36b199a3412a24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e30e9682_434c9daf",
@@ -126,6 +150,30 @@
       "writtenOn": "2026-01-06T21:59:14Z",
       "side": 1,
       "message": "Q: Why does this need a default argument?",
+      "range": {
+        "startLine": 253,
+        "startChar": 60,
+        "endLine": 253,
+        "endChar": 69
+      },
+      "revId": "86ccc5045d3f290cc4fcd2e0bd36b199a3412a24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "988eb9e2_db039e8c",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2026-01-07T07:34:56Z",
+      "side": 1,
+      "message": "This is unnecessary if I get it right. Although I mark this `descriptor` argument with `\"optional\": true` in the `dawn.json`, it would just add the default in `webgpu_cpp.h`.\n\nRemoved now.",
+      "parentUuid": "e30e9682_434c9daf",
       "range": {
         "startLine": 253,
         "startChar": 60,
