@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8810b636_b7a1a82d",
+        "filename": "src/dawn/common/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-01-07T22:16:28Z",
+      "side": 1,
+      "message": "This is needed, because otherwise these don\u0027t propegate and the fuzzer build targets which use dawn_common, but don\u0027t directly use absl fail to build or have to add in these targets.",
+      "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a4280e8b_09567756",
