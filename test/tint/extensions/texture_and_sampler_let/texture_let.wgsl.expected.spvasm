@@ -1,0 +1,49 @@
+; SPIR-V
+; Version: 1.3
+; Generator: Google Tint Compiler; 1
+; Bound: 32
+; Schema: 0
+               OpCapability Shader
+               OpCapability ImageQuery
+         %18 = OpExtInstImport "GLSL.std.450"
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint Fragment %main "main"
+               OpExecutionMode %main OriginUpperLeft
+               OpName %tex "tex"
+               OpName %main "main"
+               OpName %res "res"
+               OpDecorate %tex DescriptorSet 0
+               OpDecorate %tex Binding 0
+      %float = OpTypeFloat 32
+          %3 = OpTypeImage %float 2D 0 0 0 1 Unknown
+%_ptr_UniformConstant_3 = OpTypePointer UniformConstant %3
+        %tex = OpVariable %_ptr_UniformConstant_3 UniformConstant
+       %void = OpTypeVoid
+          %7 = OpTypeFunction %void
+       %uint = OpTypeInt 32 0
+     %uint_1 = OpConstant %uint 1
+        %int = OpTypeInt 32 1
+      %int_0 = OpConstant %int 0
+     %v2uint = OpTypeVector %uint 2
+         %22 = OpConstantComposite %v2uint %uint_1 %uint_1
+      %v2int = OpTypeVector %int 2
+      %int_1 = OpConstant %int 1
+         %24 = OpConstantComposite %v2int %int_1 %int_1
+    %v4float = OpTypeVector %float 4
+%_ptr_Function_v4float = OpTypePointer Function %v4float
+       %main = OpFunction %void None %7
+          %8 = OpLabel
+        %res = OpVariable %_ptr_Function_v4float Function
+          %9 = OpLoad %3 %tex None
+         %10 = OpImageQueryLevels %uint %9
+         %12 = OpISub %uint %10 %uint_1
+         %14 = OpBitcast %uint %int_0
+         %17 = OpExtInst %uint %18 UMin %14 %12
+         %19 = OpImageQuerySizeLod %v2uint %9 %17
+         %21 = OpISub %v2uint %19 %22
+         %23 = OpBitcast %v2uint %24
+         %27 = OpExtInst %v2uint %18 UMin %23 %21
+         %28 = OpImageFetch %v4float %9 %27 Lod %17
+               OpStore %res %28
+               OpReturn
+               OpFunctionEnd

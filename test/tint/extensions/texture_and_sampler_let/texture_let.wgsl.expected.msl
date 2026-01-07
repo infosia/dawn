@@ -1,0 +1,13 @@
+#include <metal_stdlib>
+using namespace metal;
+
+struct tint_module_vars_struct {
+  texture2d<float, access::sample> tex;
+};
+
+fragment void v(texture2d<float, access::sample> tex [[texture(0)]]) {
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.tex=tex};
+  uint const v_1 = min(uint(0), (tint_module_vars.tex.get_num_mip_levels() - 1u));
+  uint2 const v_2 = (uint2(tint_module_vars.tex.get_width(v_1), tint_module_vars.tex.get_height(v_1)) - uint2(1u));
+  float4 res = tint_module_vars.tex.read(min(uint2(int2(1)), v_2), v_1);
+}
