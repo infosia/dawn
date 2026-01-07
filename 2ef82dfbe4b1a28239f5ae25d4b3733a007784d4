@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2ebc7b7_212c767f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-07T22:25:33Z",
+      "side": 1,
+      "message": "```suggestion\n[tint] Add TINT_CHECK_RESULT macro and use it in Raise()\n```",
+      "revId": "2ef82dfbe4b1a28239f5ae25d4b3733a007784d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
