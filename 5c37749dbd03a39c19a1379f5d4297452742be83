@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "15d98ac6_4f427473",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-01-08T15:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e873b7c3_69089980",
+      "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "8810b636_b7a1a82d",
         "filename": "src/dawn/common/CMakeLists.txt",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "are these abseil dependencies used in the *interface* to dawn_common?  If yes, then this seems fine. Otherwise it seems wrong.",
       "parentUuid": "8810b636_b7a1a82d",
+      "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7da5d516_77e89ae1",
+        "filename": "src/dawn/common/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-01-08T15:48:28Z",
+      "side": 1,
+      "message": "I think technically they are implicitly part of the dawn_common interface. I was seeing missing symbol issues due to transitive header inclusion, i.e. dawn_common_foo.h includes abseil_foo.h, so when the fuzzer includes dawn_common_foo.h, I was seeing missing symbol issues related to abseil_foo.h when building the fuzzer .o.\n\nI didn\u0027t dig too deep into this, but I think this is due to things being defined in the headers and not just declared, possibly header only implementations, either in absl itself or how dawn is using absl.\n\nIf I recall correctly, for this CL only one asbl::\u003cfoo\u003e actually needs to be moved out of the private section, but it felt weird to me to split the absl dependencies between public/private.\n\nThis felt like a larger dependency ball of twine, that I really didn\u0027t want to pull on for just enabling building the fuzzers in CMake, since it likely rooted in how absl declares things kinda assuming you are including it all and everywhere.\n\nThe other option for fixing for this, is for the fuzzer targets to just include the specific absl target as a dependency even though they don\u0027t really directly use it.",
+      "parentUuid": "59a051d0_30236c66",
       "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -111,6 +147,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bda1c8c_f6676d19",
+        "filename": "src/dawn/common/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-01-08T15:48:28Z",
+      "side": 1,
+      "message": "Unintentional, I originally moved just it out of the private section, and then moved everything, so ended up with duplicates. Fixes",
+      "parentUuid": "b7abe1d3_6cd997b2",
+      "range": {
+        "startLine": 183,
+        "startChar": 14,
+        "endLine": 183,
+        "endChar": 28
+      },
+      "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8987e3b8_384b69fe",
@@ -124,6 +184,30 @@
       "writtenOn": "2026-01-07T22:27:14Z",
       "side": 1,
       "message": "Instead of doing this a bunch of times, you could define a cmake function and have the conditional inside that function, then just call it for each of your targets. Makes it clearer they all do the same thing",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 7
+      },
+      "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6c777e3_d1412576",
+        "filename": "src/dawn/fuzzers/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-01-08T15:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8987e3b8_384b69fe",
       "range": {
         "startLine": 60,
         "startChar": 0,
