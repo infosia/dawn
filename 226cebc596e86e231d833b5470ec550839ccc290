@@ -141,6 +141,24 @@
       "parentUuid": "e3ed1eda_f3f53185",
       "revId": "226cebc596e86e231d833b5470ec550839ccc290",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93e541d9_415a338d",
+        "filename": "src/dawn/tests/end2end/CopyTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3140,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-08T23:17:20Z",
+      "side": 1,
+      "message": "I just added a check for if there is still a device.",
+      "parentUuid": "8c61df3d_494e5384",
+      "revId": "226cebc596e86e231d833b5470ec550839ccc290",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
