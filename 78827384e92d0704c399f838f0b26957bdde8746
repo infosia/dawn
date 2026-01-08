@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b563a21_04dda793",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2026-01-08T03:43:49Z",
+      "side": 1,
+      "message": "Thanks for reviewing! I am submitting the CL.",
+      "revId": "78827384e92d0704c399f838f0b26957bdde8746",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
