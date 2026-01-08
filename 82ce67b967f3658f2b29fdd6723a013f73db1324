@@ -22,6 +22,30 @@
       },
       "revId": "82ce67b967f3658f2b29fdd6723a013f73db1324",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fb7be3d_c307bc27",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-08T17:28:47Z",
+      "side": 1,
+      "message": "Indeed, and the code and comment even show that new refs can be taken:\n\n```\n    void APIRelease() {\n        if (mExternalRefCount.Decrement()) {\n            WillDropLastExternalRef();\n        }\n        T::APIRelease();\n    }\n```",
+      "parentUuid": "5ad7d5ec_d8279bf6",
+      "range": {
+        "startLine": 543,
+        "startChar": 8,
+        "endLine": 543,
+        "endChar": 46
+      },
+      "revId": "82ce67b967f3658f2b29fdd6723a013f73db1324",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
