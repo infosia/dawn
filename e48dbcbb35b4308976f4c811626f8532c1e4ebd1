@@ -16,6 +16,24 @@
       "message": "This is unrelated to `LazyClearRenderPass ` and causing a failure, could we split it to another CL?",
       "revId": "e48dbcbb35b4308976f4c811626f8532c1e4ebd1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "409687eb_e1ce1633",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-08T13:20:49Z",
+      "side": 1,
+      "message": "Done. Please re-review.",
+      "parentUuid": "0ceaedd2_cc68fad5",
+      "revId": "e48dbcbb35b4308976f4c811626f8532c1e4ebd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
