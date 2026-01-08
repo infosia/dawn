@@ -16,6 +16,24 @@
       "message": "Is the intent to keep the same separator from the previous code?\n\n```suggestion\n                        separator \u003d \"|\";\n```",
       "revId": "1297ec64a2ae8228d09e401775bfea48bd63cce9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ead10028_d9e60879",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-08T23:56:48Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "a0e5ff05_b30f05ee",
+      "revId": "1297ec64a2ae8228d09e401775bfea48bd63cce9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
