@@ -4477,7 +4477,7 @@
             "pool": "chromium.tests.gpu"
           },
           "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
-          "shards": 3
+          "shards": 6
         },
         "test": "dawn_end2end_tests",
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
@@ -4569,7 +4569,7 @@
             "pool": "chromium.tests.gpu"
           },
           "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
-          "shards": 3
+          "shards": 6
         },
         "test": "dawn_end2end_tests",
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"

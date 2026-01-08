@@ -5,5 +5,23 @@
       'dawn-win-x64-intel-uhd630-asan',
       'dawn-win-x64-nvidia-gtx1660-asan',
     ],
+    'modifications': {
+      # Speculative workaround for crbug.com/474149934.
+      'dawn-win-x64-nvidia-gtx1660-exp-rel': {
+        'swarming': {
+          'shards': 6,
+        },
+      },
+    },
+  },
+  'dawn_end2end_validation_layers_tests': {
+    'modifications': {
+      # Speculative workaround for crbug.com/474149934.
+      'dawn-win-x64-nvidia-gtx1660-exp-rel': {
+        'swarming': {
+          'shards': 6,
+        },
+      },
+    },
   },
 }
