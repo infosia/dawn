@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18619a4b_446c20c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-08T16:17:27Z",
+      "side": 1,
+      "message": "Looking pretty good, just some minor things and then I think it\u0027s good to land.",
+      "revId": "f5e76aa0a6d24731ed24cc8831edf68ddb54b04c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a1e95d9_1ecc2bc7",
+        "filename": "src/tint/cmd/fuzz/wgsl/fuzz.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-08T16:17:27Z",
+      "side": 1,
+      "message": "FYI I opened https://crbug.com/474324630 so we don\u0027t forget to enable fuzzing.",
+      "revId": "f5e76aa0a6d24731ed24cc8831edf68ddb54b04c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c8a7b42_3fe0a03f",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 24
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-08T16:17:27Z",
+      "side": 1,
+      "message": "Nit: Could limit these to read-write to match the wgsl.def and remove unneeded overloads. Same with unsized ones below.",
+      "range": {
+        "startLine": 948,
+        "startChar": 0,
+        "endLine": 950,
+        "endChar": 74
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "0532db9d_e9e09624",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/core.def",
+              "range": {
+                "startLine": 948,
+                "startChar": 0,
+                "endLine": 949,
+                "endChar": 0
+              },
+              "replacement": "@must_use implicit(W: read_write, AS: workgroup_or_storage, O: iu32)\n"
+            },
+            {
+              "path": "src/tint/lang/core/core.def",
+              "range": {
+                "startLine": 950,
+                "startChar": 0,
+                "endLine": 951,
+                "endChar": 0
+              },
+              "replacement": "@must_use implicit(W: read_write, AS: workgroup_or_storage, O: iu32, N: num)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f5e76aa0a6d24731ed24cc8831edf68ddb54b04c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f95995ee_14cb4ef0",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 3076,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-08T16:17:27Z",
+      "side": 1,
+      "message": "`TemplatedIdentifier` can fail (e.g. too many template arguments), so we need to check `tmpl_ident` and early exit if `nullptr` here. Please add a unit test that has multiple template arguments.",
+      "fixSuggestions": [
+        {
+          "fixId": "c7802407_ca368b37",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/wgsl/resolver/resolver.cc",
+              "range": {
+                "startLine": 3077,
+                "startChar": 0,
+                "endLine": 3077,
+                "endChar": 0
+              },
+              "replacement": "        if (DAWN_UNLIKELY(!tmpl_ident)) {\n            return nullptr;\n        }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f5e76aa0a6d24731ed24cc8831edf68ddb54b04c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1264b923_f80cd5f7",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-08T16:17:27Z",
+      "side": 1,
+      "message": "Nit: Could just `return atomic_composite_info_.Contains(type);`.\n\nAlso, what about an atomic that is not in a composite (`bufferView\u003catomic\u003cu32\u003e\u003e(buffer)`)? You might need to check that separately, since I don\u0027t think it would show up in atomic_composite_info_. Please add a unit test for that case.",
+      "range": {
+        "startLine": 2106,
+        "startChar": 0,
+        "endLine": 2109,
+        "endChar": 21
+      },
+      "revId": "f5e76aa0a6d24731ed24cc8831edf68ddb54b04c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "575be085_4981c36b",
+        "filename": "test/tint/builtins/bufferLength/sized_function_parameter.wgsl",
+        "patchSetId": 24
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-08T16:17:27Z",
+      "side": 1,
+      "message": "We are expecting to do more DCE in Tint at some point, so for new E2E tests please write values out to a storage buffer or something like that so that we do not have to update them later.",
+      "revId": "f5e76aa0a6d24731ed24cc8831edf68ddb54b04c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9e30243_baf590bb",
+        "filename": "test/tint/builtins/gen/gen.wgsl.tmpl",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-08T16:17:27Z",
+      "side": 1,
+      "message": "Are the changes in this file still needed now that we are not auto-generating any buffer tests?",
+      "revId": "f5e76aa0a6d24731ed24cc8831edf68ddb54b04c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6697a323_e6a60cc2",
+        "filename": "tools/src/tint/intrinsic/gen/permutate.go",
+        "patchSetId": 24
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-08T16:17:27Z",
+      "side": 1,
+      "message": "Can this be `\u003d\u003d` instead of `Contains()`? I\u0027m concerned that it\u0027d also exclude things like `texel_buffer`.",
+      "revId": "f5e76aa0a6d24731ed24cc8831edf68ddb54b04c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
