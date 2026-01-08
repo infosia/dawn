@@ -123,6 +123,24 @@
       "parentUuid": "180f6444_5f798806",
       "revId": "226cebc596e86e231d833b5470ec550839ccc290",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c61df3d_494e5384",
+        "filename": "src/dawn/tests/end2end/CopyTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3140,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-08T21:37:39Z",
+      "side": 1,
+      "message": "I test this locally and seems it additionally fail CreatePipelineAsyncTest.ReleaseDeviceBeforeCallbackOfCreateComputePipelineAsync.\n\nMaybe you can rebase this on top of https://dawn-review.googlesource.com/c/dawn/+/283435 (turning on all tests for capture) to see if it breaks anything",
+      "parentUuid": "e3ed1eda_f3f53185",
+      "revId": "226cebc596e86e231d833b5470ec550839ccc290",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
