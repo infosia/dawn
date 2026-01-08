@@ -251,6 +251,24 @@
       "parentUuid": "a4280e8b_09567756",
       "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84a9b49e_b8943547",
+        "filename": "src/dawn/fuzzers/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002886
+      },
+      "writtenOn": "2026-01-08T15:51:30Z",
+      "side": 1,
+      "message": "Skia will use CMake to build Dawn on Windows, but not for fuzzers.",
+      "parentUuid": "7a562791_57e07af5",
+      "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
