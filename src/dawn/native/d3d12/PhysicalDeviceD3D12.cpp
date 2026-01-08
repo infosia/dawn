@@ -120,10 +120,7 @@ MaybeError PhysicalDevice::InitializeImpl() {
     }
 
     mSubgroupMinSize = mDeviceInfo.waveLaneCountMin;
-    // Currently the WaveLaneCountMax queried from D3D12 API is not reliable and the meaning is
-    // unclear. Use 128 instead, which is the largest possible size. Reference:
-    // https://github.com/Microsoft/DirectXShaderCompiler/wiki/Wave-Intrinsics#:~:text=UINT%20WaveLaneCountMax
-    mSubgroupMaxSize = 128u;
+    mSubgroupMaxSize = GetSubgroupMaxSize();
 
     return {};
 }
@@ -195,6 +192,11 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     // Subgroups feature requires SM >= 6.0 and capabilities flags.
     if (mDeviceInfo.supportsWaveOps) {
         EnableFeature(Feature::Subgroups);
+    }
+
+    // SubgroupSizeControl feature requires SM >= 6.6 for the `[WaveSize]` attribute.
+    if (mDeviceInfo.highestSupportedShaderModel >= 66) {
+        EnableFeature(Feature::ChromiumExperimentalSubgroupSizeControl);
     }
 #endif
 
@@ -889,6 +891,18 @@ MaybeError PhysicalDevice::ValidateUseOfD3D12() const {
     }
 
     return {};
+}
+
+uint32_t PhysicalDevice::GetSubgroupMaxSize() const {
+    uint32_t vendorId = GetVendorId();
+    if (gpu_info::IsIntel(vendorId)) {
+        return mDeviceInfo.waveLaneCountMax;
+    }
+
+    // Currently the WaveLaneCountMax queried from D3D12 API is not reliable and the meaning is
+    // unclear. Use 128 instead, which is the largest possible size. Reference:
+    // https://github.com/Microsoft/DirectXShaderCompiler/wiki/Wave-Intrinsics#:~:text=UINT%20WaveLaneCountMax
+    return 128;
 }
 
 ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
