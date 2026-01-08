@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a4fa999_2148b57a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-08T21:36:26Z",
+      "side": 1,
+      "message": "LGTM with one last test update",
+      "revId": "a50ac7dae6deb39209ad57a920f7a30f5b1f1c3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50b409a2_07c46d91",
+        "filename": "test/tint/builtins/bufferView/uniform_struct.wgsl",
+        "patchSetId": 25
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-08T21:36:26Z",
+      "side": 1,
+      "message": "This one needs to be storage (the WGSL fails validation).",
+      "revId": "a50ac7dae6deb39209ad57a920f7a30f5b1f1c3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
