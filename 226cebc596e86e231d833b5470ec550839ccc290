@@ -105,6 +105,24 @@
       "parentUuid": "13d848b9_7a9b3fc1",
       "revId": "226cebc596e86e231d833b5470ec550839ccc290",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3ed1eda_f3f53185",
+        "filename": "src/dawn/tests/end2end/CopyTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3140,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-08T21:05:22Z",
+      "side": 1,
+      "message": "Thanks for the discussion. Fixed this in DawnTest. PTAL. I think it\u0027s correct. Create a new recorder CheckReplayedReadbackBuffers. Reset the readback slots. remove the recorder at the end (it\u0027s holding a ref to the device)",
+      "parentUuid": "180f6444_5f798806",
+      "revId": "226cebc596e86e231d833b5470ec550839ccc290",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
