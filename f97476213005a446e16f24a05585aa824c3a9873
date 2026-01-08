@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a653400d_cc5246c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-08T09:03:55Z",
+      "side": 1,
+      "message": "fyi, the `maxInterStageShaderVariable` failures are correct. Fixing here: https://dawn-review.googlesource.com/c/dawn/+/283660",
+      "revId": "f97476213005a446e16f24a05585aa824c3a9873",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
