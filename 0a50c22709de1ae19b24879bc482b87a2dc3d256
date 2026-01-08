@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d96b9ace_40ba11cf",
+        "filename": "infra/config/global/cmake_try.star",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-08T10:02:51Z",
+      "side": 1,
+      "message": "I wonder if something like this would have worked (like it does for `gn_args`):\n`properties \u003d \"ci/dawn-linux-x64-sws-cmake-rel\",`",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 6
+      },
+      "revId": "0a50c22709de1ae19b24879bc482b87a2dc3d256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
