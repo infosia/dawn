@@ -72,6 +72,47 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b7abe1d3_6cd997b2",
+        "filename": "src/dawn/common/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002886
+      },
+      "writtenOn": "2026-01-08T14:01:55Z",
+      "side": 1,
+      "message": "Why is this listed twice?",
+      "range": {
+        "startLine": 183,
+        "startChar": 14,
+        "endLine": 183,
+        "endChar": 28
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "e5b05aee_61c48d6b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/common/CMakeLists.txt",
+              "range": {
+                "startLine": 183,
+                "startChar": 0,
+                "endLine": 184,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8987e3b8_384b69fe",
         "filename": "src/dawn/fuzzers/CMakeLists.txt",
         "patchSetId": 1
