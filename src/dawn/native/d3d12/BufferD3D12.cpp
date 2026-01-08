@@ -233,25 +233,30 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
 
     SetLabelImpl();
 
-    // The buffers with mappedAtCreation == true will be initialized in
-    // BufferBase::MapAtCreation().
-    if (GetDevice()->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting) &&
-        !mappedAtCreation) {
-        CommandRecordingContext* commandRecordingContext =
-            ToBackend(GetDevice()->GetQueue())->GetPendingCommandContext();
-        DAWN_TRY(ClearBuffer(commandRecordingContext, uint8_t(1u)));
-    }
+    // The buffers with mappedAtCreation == true will be initialized in BufferBase::MapAtCreation().
+    if (!mappedAtCreation) {
+        uint32_t paddingClearSize = GetAllocatedSize() - GetSize();
 
-    // Initialize the padding bytes to zero.
-    if (GetDevice()->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse) && !mappedAtCreation) {
-        uint64_t paddingBytes = GetAllocatedSize() - GetSize();
-        if (paddingBytes > 0) {
+        bool needsNonZeroClear =
+            GetDevice()->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting);
+        bool needsPaddingClear =
+            GetDevice()->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse) &&
+            paddingClearSize > 0;
+
+        if (needsNonZeroClear || needsPaddingClear) {
+            DAWN_TRY(ValidateCanUseOnQueueNow());
             CommandRecordingContext* commandRecordingContext =
                 ToBackend(GetDevice()->GetQueue())->GetPendingCommandContext();
 
-            uint64_t clearSize = paddingBytes;
-            uint64_t clearOffset = GetSize();
-            DAWN_TRY(ClearBuffer(commandRecordingContext, 0, clearOffset, clearSize));
+            if (needsNonZeroClear) {
+                DAWN_TRY(ClearBuffer(commandRecordingContext, uint8_t(1u)));
+            }
+
+            // Initialize the padding bytes to zero.
+            if (needsPaddingClear) {
+                DAWN_TRY(ClearBuffer(commandRecordingContext, 0, GetSize(), paddingClearSize));
+            }
+            FinishUseOnQueue();
         }
     }
 
@@ -495,6 +500,8 @@ MaybeError Buffer::MapAtCreationImpl() {
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
+    auto deviceGuard = GetDevice()->GetGuard();
+
     // GetPendingCommandContext() call might create a new commandList. Dawn will handle
     // it in Tick() by execute the commandList and signal a fence for it even it is empty.
     // Skip the unnecessary GetPendingCommandContext() call saves an extra fence.

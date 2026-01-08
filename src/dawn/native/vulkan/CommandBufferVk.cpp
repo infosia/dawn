@@ -29,6 +29,7 @@
 
 #include <algorithm>
 #include <limits>
+#include <utility>
 #include <vector>
 
 #include "dawn/common/Enumerator.h"
@@ -777,6 +778,7 @@ MaybeError CommandBuffer::RecordCopyImageWithTemporaryBuffer(
     Ref<BufferBase> tempBufferBase;
     DAWN_TRY_ASSIGN(tempBufferBase, device->CreateBuffer(&tempBufferDescriptor));
     Buffer* tempBuffer = ToBackend(tempBufferBase.Get());
+    DAWN_TRY(tempBuffer->ValidateCanUseOnQueueNow());
 
     BufferCopy tempBufferCopy;
     tempBufferCopy.buffer = tempBuffer;
@@ -806,7 +808,8 @@ MaybeError CommandBuffer::RecordCopyImageWithTemporaryBuffer(
                                     VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1,
                                     &tempBufferToDstRegion);
 
-    recordingContext->tempBuffers.emplace_back(tempBuffer);
+    tempBuffer->FinishUseOnQueue();
+    recordingContext->tempBuffers.emplace_back(std::move(tempBuffer));
 
     return {};
 }
