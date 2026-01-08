@@ -503,6 +503,7 @@ void Buffer::UnmapInternal(const ScopedCommandRecordingContext* commandContext) 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
     DAWN_ASSERT((mode == wgpu::MapMode::Write && IsCPUWritable()) ||
                 (mode == wgpu::MapMode::Read && IsCPUReadable()));
+    auto deviceGuard = GetDevice()->GetGuard();
 
     mMapReadySerial = mLastUsageSerial;
     const ExecutionSerial completedSerial = GetDevice()->GetQueue()->GetCompletedCommandSerial();
