@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02ee27dc_d76f66d8",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-08T15:49:22Z",
+      "side": 1,
+      "message": "```suggestion\n            # - \"status\" is used to synchronously return validation errors so the server checks that\n```",
+      "revId": "249196d5ffb1a6e477d9a661564780c3f8d82495",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb6ad50d_73b93356",
+        "filename": "src/dawn/dawn_wire.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-08T15:49:22Z",
+      "side": 1,
+      "message": "Question for my dawn.json knowledge, so `surface present` was removed from teh command list above, but  not the handwritten commands? (It also seems like the handwritten command was removed?)\n\nDoes it not need to be in the command list above to be a command?",
+      "revId": "249196d5ffb1a6e477d9a661564780c3f8d82495",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
