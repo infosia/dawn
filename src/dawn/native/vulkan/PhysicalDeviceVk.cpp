@@ -1184,6 +1184,9 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         // when dynamic rendering is enabled.
         deviceToggles->Default(Toggle::VulkanUseDynamicRendering, false);
     }
+
+    // Vulkan waiting is already thread safe.
+    deviceToggles->Default(Toggle::WaitIsThreadSafe, true);
 }
 
 ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
