@@ -16,6 +16,29 @@
       "message": "PTAL.",
       "revId": "93c55b7614246aefd4bdd36fb89a43ada8c72bc9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f53b758e_39bc300b",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-08T14:11:45Z",
+      "side": 1,
+      "message": "```suggestion\n                \u003c\u003c \"Emitting to a file but the module has multiple entry points. Please provide \"\n```",
+      "range": {
+        "startLine": 1509,
+        "startChar": 72,
+        "endLine": 1509,
+        "endChar": 73
+      },
+      "revId": "93c55b7614246aefd4bdd36fb89a43ada8c72bc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
