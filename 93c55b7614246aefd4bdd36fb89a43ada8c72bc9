@@ -39,6 +39,41 @@
       },
       "revId": "93c55b7614246aefd4bdd36fb89a43ada8c72bc9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66716ff7_8e077070",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-08T15:08:58Z",
+      "side": 1,
+      "message": "Update comment",
+      "fixSuggestions": [
+        {
+          "fixId": "50e7cff4_3f8bd978",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/cmd/tint/main.cc",
+              "range": {
+                "startLine": 1525,
+                "startChar": 0,
+                "endLine": 1528,
+                "endChar": 0
+              },
+              "replacement": "        // If we\u0027re emitting to stdout, add a separator between the entry points.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "93c55b7614246aefd4bdd36fb89a43ada8c72bc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
