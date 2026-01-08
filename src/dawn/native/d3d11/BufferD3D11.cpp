@@ -442,7 +442,7 @@ MaybeError Buffer::Initialize(bool mappedAtCreation,
 
     SetLabelImpl();
 
-    if (!mappedAtCreation) {
+    if (!mappedAtCreation && GetDevice()->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse)) {
         if (commandContext) {
             DAWN_TRY(ClearInitialResource(commandContext));
         } else {
