@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "74c505fb0e2e02d8cc073bdec44b45770674e790",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b03917f2_f9fd6e4c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-08T10:46:14Z",
+      "side": 1,
+      "message": "The workaround could work, but let\u0027s see if there is something we can do to address the underlying problem first.\nI wrote some ideas in crbug.com/474149934#comment3.",
+      "revId": "74c505fb0e2e02d8cc073bdec44b45770674e790",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
