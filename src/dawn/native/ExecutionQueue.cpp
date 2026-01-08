@@ -37,6 +37,9 @@
 
 namespace dawn::native {
 namespace {
+// Thread-local variable to track which ExecutionQueue is currently in a submit operation.
+thread_local ExecutionQueueBase* gQueueInSubmit = nullptr;
+
 void PopWaitingTasksInto(ExecutionSerial serial,
                          SerialMap<ExecutionSerial, ExecutionQueueBase::Task>& waitingTasks,
                          std::vector<ExecutionQueueBase::Task>& tasks) {
@@ -49,6 +52,18 @@ void PopWaitingTasksInto(ExecutionSerial serial,
 
 ExecutionQueueBase::~ExecutionQueueBase() {
     DAWN_ASSERT(mWaitingTasks.Empty());
+}
+
+bool ExecutionQueueBase::IsInSubmit() const {
+    return gQueueInSubmit == this;
+}
+
+void ExecutionQueueBase::SetInSubmit(bool inSubmit) {
+    if (inSubmit) {
+        gQueueInSubmit = this;
+    } else {
+        gQueueInSubmit = nullptr;
+    }
 }
 
 ExecutionSerial ExecutionQueueBase::GetPendingCommandSerial() const {
@@ -260,15 +275,12 @@ MaybeError ExecutionQueueBase::EnsureCommandsFlushed(ExecutionSerial serial) {
 }
 
 MaybeError ExecutionQueueBase::SubmitPendingCommands() {
-    if (mInSubmit) {
+    if (IsInSubmit()) {
         return {};
     }
 
-    mInSubmit = true;
-    auto result = SubmitPendingCommandsImpl();
-    mInSubmit = false;
-
-    return result;
+    auto scope = BeginSubmit();
+    return SubmitPendingCommandsImpl();
 }
 
 void ExecutionQueueBase::AssumeCommandsComplete() {

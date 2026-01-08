@@ -282,6 +282,8 @@ ResultOrError<Ref<SharedFence>> Queue::GetOrCreateSharedFence() {
 }
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
+    // TODO(crbug.com/474265307): Revisit whether this lock is needed for this backend.
+    auto deviceGuard = GetDevice()->GetGuard();
     @autoreleasepool {
         CommandRecordingContext* commandContext = GetPendingCommandContext();
 
