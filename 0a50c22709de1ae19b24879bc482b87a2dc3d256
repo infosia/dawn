@@ -22,6 +22,30 @@
       },
       "revId": "0a50c22709de1ae19b24879bc482b87a2dc3d256",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bb728f2_118fb4a6",
+        "filename": "infra/config/global/cmake_try.star",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-08T21:31:35Z",
+      "side": 1,
+      "message": "Seems like no:\n\n```\nTraceback (most recent call last):\n  //main.star:341:5: in \u003ctoplevel\u003e\nError in exec: exec //cmake_try.star failed: Traceback (most recent call last):\n  //cmake_try.star:98:27: in \u003ctoplevel\u003e\n  //cmake_try.star:94:48: in dawn_linux_cmake_cq_tester\n  //cmake_try.star:83:17: in add_builder_to_main_and_milestone_cq_groups\n  @chromium-luci//try.star:321:22: in try_builder\nError in dict: dict: got string, want iterable\n```\n\nTrying a list (similar to `mirrors`) also doesn\u0027t work:\n\n```\nTraceback (most recent call last):\n  //main.star:341:5: in \u003ctoplevel\u003e\nError in exec: exec //cmake_try.star failed: Traceback (most recent call last):\n  //cmake_try.star:98:27: in \u003ctoplevel\u003e\n  //cmake_try.star:94:48: in dawn_linux_cmake_cq_tester\n  //cmake_try.star:83:17: in add_builder_to_main_and_milestone_cq_groups\n  @chromium-luci//try.star:321:22: in try_builder\nError in dict: dict: dictionary update sequence element #0 is not iterable (string)\n```",
+      "parentUuid": "d96b9ace_40ba11cf",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 6
+      },
+      "revId": "0a50c22709de1ae19b24879bc482b87a2dc3d256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
