@@ -53,6 +53,9 @@ Queue::Queue(Device* device, const QueueDescriptor* descriptor)
 }
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
+    // TODO(crbug.com/474265307): Revisit whether this lock is needed for this backend.
+    auto deviceGuard = GetDevice()->GetGuard();
+
     if (commandCount == 0 || commands == nullptr) {
         return {};
     }
