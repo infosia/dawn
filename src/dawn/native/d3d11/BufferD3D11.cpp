@@ -503,6 +503,7 @@ void Buffer::UnmapInternal(const ScopedCommandRecordingContext* commandContext) 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
     DAWN_ASSERT((mode == wgpu::MapMode::Write && IsCPUWritable()) ||
                 (mode == wgpu::MapMode::Read && IsCPUReadable()));
+    auto deviceGuard = GetDevice()->GetGuard();
 
     mMapReadySerial = mLastUsageSerial;
     const ExecutionSerial completedSerial = GetDevice()->GetQueue()->GetCompletedCommandSerial();
@@ -1419,12 +1420,15 @@ MaybeError GPUUsableBuffer::UpdateD3D11ConstantBuffer(
     // transfer the data to constant buffer.
     Ref<BufferBase> stagingBuffer;
     DAWN_TRY_ASSIGN(stagingBuffer, ToBackend(GetDevice())->GetStagingBuffer(commandContext, size));
-    stagingBuffer->MarkUsedInPendingCommands();
-    DAWN_TRY(ToBackend(stagingBuffer)->WriteInternal(commandContext, 0, data, size));
-    DAWN_TRY(ToBackend(stagingBuffer.Get())
-                 ->CopyToInternal(commandContext,
-                                  /*sourceOffset=*/0,
-                                  /*size=*/size, this, offset));
+    {
+        auto use = stagingBuffer->UseBufferInternal();
+        stagingBuffer->MarkUsedInPendingCommands();
+        DAWN_TRY(ToBackend(stagingBuffer)->WriteInternal(commandContext, 0, data, size));
+        DAWN_TRY(ToBackend(stagingBuffer.Get())
+                     ->CopyToInternal(commandContext,
+                                      /*sourceOffset=*/0,
+                                      /*size=*/size, this, offset));
+    }
     ToBackend(GetDevice())->ReturnStagingBuffer(std::move(stagingBuffer));
 
     return {};
