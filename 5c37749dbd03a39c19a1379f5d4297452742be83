@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f74a5d3_63c1bba5",
+        "filename": "src/dawn/common/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2026-01-08T16:32:43Z",
+      "side": 1,
+      "message": "ok, so it seems the overall answer is \"yes\": if you include dawn_common headers then you also need the abseil code linked in.   (At least that\u0027s what I meant by the question).\n\nAs long as this is being done for a reason, I\u0027m fine with it, even if it could be refined later on.",
+      "parentUuid": "7da5d516_77e89ae1",
+      "revId": "5c37749dbd03a39c19a1379f5d4297452742be83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b7abe1d3_6cd997b2",
