@@ -648,6 +648,7 @@ MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* c
     mInSubmit = false;
 
     // Call Tick() to flush pending work.
+    auto deviceGuard = GetDevice()->GetGuard();
     DAWN_TRY(device->Tick());
 
     return {};
