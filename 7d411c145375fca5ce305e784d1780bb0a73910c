@@ -16,6 +16,24 @@
       "message": "Since the IR doesn\u0027t really have a concept of language features to disable fuzzing this before it is ready, you should be able to change this to return mod_out_.Types().invalid(); instead so that the fuzzer doesn\u0027t try to run it.",
       "revId": "7d411c145375fca5ce305e784d1780bb0a73910c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1522bf29_abc1a0e8",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-08T02:28:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80271f58_8538d852",
+      "revId": "7d411c145375fca5ce305e784d1780bb0a73910c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
