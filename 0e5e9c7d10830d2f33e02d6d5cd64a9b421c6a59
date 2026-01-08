@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e39bb7e0_1d69ca07",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-08T09:02:38Z",
+      "side": 1,
+      "message": "The CTS was updated recently to match the spec.",
+      "revId": "0e5e9c7d10830d2f33e02d6d5cd64a9b421c6a59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
