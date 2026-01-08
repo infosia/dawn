@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd14a4c9_fcfb54ae",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-08T10:28:57Z",
+      "side": 1,
+      "message": "```suggestion\n        ImmediateConstantMask requiredMask \u003d mLastPipeline-\u003eGetUserImmediateSlots();\n        if (!IsSubset(requiredMask, mImmediateDataMask)) {\n            ImmediateConstantMask missing \u003d requiredMask \u0026 ~mImmediateDataMask;\n            size_t firstMissing \u003d std::countr_zero(static_cast\u003cuint64_t\u003e(missing.to_ullong()));\n            return DAWN_VALIDATION_ERROR(\"Required immediate data at offset %u was not set.\",\n                                         firstMissing * kImmediateConstantElementByteSize);\n        }\n    }\n```",
+      "range": {
+        "startLine": 646,
+        "startChar": 0,
+        "endLine": 654,
+        "endChar": 5
+      },
+      "revId": "15e1a7b7dc32a5967802aac59eac8eef07bd8ab4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

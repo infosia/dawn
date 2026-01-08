@@ -46,6 +46,30 @@
       },
       "revId": "255e5fbc03b90990f55d3e07b1f8631339160cd1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fa44cce_15bab3f7",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-08T10:28:57Z",
+      "side": 1,
+      "message": "That\u0027s not what the patch does? It makes an alias in `src/dawn/native/CommandBufferStateTracker.cpp` which is not what you described and is strictly worse than just using `kImmediateConstantElementByteSize` there. I don\u0027t understand what\u0027s going on with this review TBH is it because of Copilot. Or is it that you meant that you\u0027ll fix it in a follow-up?",
+      "parentUuid": "61b75c18_4cd3a1c2",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "255e5fbc03b90990f55d3e07b1f8631339160cd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
