@@ -56,6 +56,30 @@
       },
       "revId": "80583d756ab78169bbc6b8c9fca776ff148c80e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "867f8740_0bba8896",
+        "filename": "src/tint/lang/msl/writer/raise/raise.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-08T15:39:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12d9c339_4bddcbf8",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 77
+      },
+      "revId": "80583d756ab78169bbc6b8c9fca776ff148c80e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
