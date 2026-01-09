@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8338743d_210e2e90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-09T17:01:05Z",
+      "side": 1,
+      "message": "LGTM. I guess we should land this with some temporary CTS suppressions before the CTS PR lands and rolls in?",
+      "revId": "519d5b44480746e3d0609b86d5efea0dfe3c79ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
