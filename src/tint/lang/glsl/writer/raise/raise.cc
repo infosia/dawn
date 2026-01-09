@@ -104,6 +104,7 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     }
     TINT_CHECK_RESULT_UNWRAP(immediate_data_layout, core::ir::transform::PrepareImmediateData(
                                                         module, immediate_data_config));
+    TINT_CHECK_RESULT(core::ir::transform::DecomposeImmediateAccess(module));
 
     // Note, this must come after Robustness as it may add `arrayLength`.
     // This also needs to come before binding remapper as Dawn inserts _pre-remapping_ binding
