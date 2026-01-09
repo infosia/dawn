@@ -22,6 +22,30 @@
       },
       "revId": "0ebdba5df4214a2975dc5db198d87a4c2486ec55",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57a8c058_542436d8",
+        "filename": "infra/config/global/generated/luci/commit-queue.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 1430,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-09T17:56:42Z",
+      "side": 0,
+      "message": "Seems like it also prevents it from being added to CLs? I\u0027m not seeing any CMake builders on https://dawn-review.googlesource.com/c/dawn/+/282955.\n\nI\u0027ll keep it experimental for now, but we should figure out why this is experimental/if we can remove that.",
+      "parentUuid": "a96325db_e922f5f4",
+      "range": {
+        "startLine": 1430,
+        "startChar": 8,
+        "endLine": 1430,
+        "endChar": 34
+      },
+      "revId": "0ebdba5df4214a2975dc5db198d87a4c2486ec55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
