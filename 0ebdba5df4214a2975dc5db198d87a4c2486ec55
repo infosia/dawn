@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a96325db_e922f5f4",
+        "filename": "infra/config/global/generated/luci/commit-queue.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 1430,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-09T17:48:41Z",
+      "side": 0,
+      "message": "nit: It looks like the old builder was experimental on branches, not sure why.",
+      "range": {
+        "startLine": 1430,
+        "startChar": 8,
+        "endLine": 1430,
+        "endChar": 34
+      },
+      "revId": "0ebdba5df4214a2975dc5db198d87a4c2486ec55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
