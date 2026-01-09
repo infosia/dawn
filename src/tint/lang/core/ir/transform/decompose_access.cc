@@ -92,7 +92,8 @@ struct State {
                 var_worklist.Push(var);
             } else if ((var_ty->AddressSpace() == AddressSpace::kStorage && options.storage) ||
                        (var_ty->AddressSpace() == AddressSpace::kUniform && options.uniform) ||
-                       (var_ty->AddressSpace() == AddressSpace::kWorkgroup && options.workgroup)) {
+                       (var_ty->AddressSpace() == AddressSpace::kWorkgroup && options.workgroup) ||
+                       (var_ty->AddressSpace() == AddressSpace::kImmediate && options.immediate)) {
                 // Atomics could be handled in some backends, but not in a generic way.
                 if (!ContainsAtomic(var_ty->StoreType())) {
                     var_worklist.Push(var);
@@ -178,6 +179,14 @@ struct State {
                 array_ty = ty.runtime_array(BaseEleType());
             } else {
                 auto array_length = NumBaseElements(var_ty->StoreType());
+                // If a user immediate of alignment 16 (e.g., vec4) is used only in one stage but
+                // internal immediates (e.g., vertex index offset) are inserted in both, the
+                // immediates struct and the resulting decomposed array can have differing sizes in
+                // the two stages. Ensure that immediate variables have the same size in both stages
+                // by rounding them up to 4 u32s, accommodating the widest alignment.
+                if (var_ty->AddressSpace() == AddressSpace::kImmediate) {
+                    array_length = RoundUp(4u, array_length);
+                }
                 array_ty = ty.array(BaseEleType(), array_length);
             }
             result->SetType(ty.ptr(var_ty->AddressSpace(), array_ty, var_ty->Access()));
@@ -289,6 +298,8 @@ struct State {
         auto* var_ty = var->Result()->Type()->As<core::type::Pointer>();
         if (var_ty->AddressSpace() == AddressSpace::kUniform) {
             size = 16u;
+        } else if (var_ty->AddressSpace() == AddressSpace::kImmediate) {
+            size = 4u;
         } else {
             size = SmallestAccessSize(var);
         }
@@ -1328,9 +1339,11 @@ Result<SuccessType> DecomposeAccess(core::ir::Module& ir, const DecomposeAccessO
                                 core::ir::Capabilities{
                                     core::ir::Capability::kAllow8BitIntegers,
                                     core::ir::Capability::kAllow16BitIntegers,
+                                    core::ir::Capability::kAllowHandleVarsWithoutBindings,
                                     core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
                                     core::ir::Capability::kAllowDuplicateBindings,
                                     core::ir::Capability::kAllowNonCoreTypes,
+                                    core::ir::Capability::kLoosenValidationForShaderIO,
                                 }));
 
     State{ir, options}.Process();
