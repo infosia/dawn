@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c220026c_bbbc1b33",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-09T08:54:44Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "02ee27dc_d76f66d8",
+      "revId": "249196d5ffb1a6e477d9a661564780c3f8d82495",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb6ad50d_73b93356",
