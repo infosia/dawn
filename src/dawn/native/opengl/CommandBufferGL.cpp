@@ -39,6 +39,7 @@
 #include "dawn/native/CommandEncoder.h"
 #include "dawn/native/Commands.h"
 #include "dawn/native/ExternalTexture.h"
+#include "dawn/native/ImmediateConstantsTracker.h"
 #include "dawn/native/RenderBundle.h"
 #include "dawn/native/opengl/BufferGL.h"
 #include "dawn/native/opengl/ComputePipelineGL.h"
@@ -727,6 +728,30 @@ TexelExtent3D ComputeTextureCopyExtent(const TextureCopy& textureCopy,
     return validTextureCopyExtent;
 }
 
+template <typename T>
+class ImmediateConstantTracker : public T {
+  public:
+    ImmediateConstantTracker() = default;
+
+    void Apply(const OpenGLFunctions& gl) {
+        DAWN_ASSERT(this->mLastPipeline != nullptr);
+
+        auto* lastPipeline = this->mLastPipeline;
+        ImmediateConstantMask pipelineMask = lastPipeline->GetImmediateMask();
+        ImmediateConstantMask uploadBits = this->mDirty & pipelineMask;
+        for (auto&& [offset, size] : IterateRanges(uploadBits)) {
+            auto data = this->mContent.template Get<uint32_t>(offset);
+            std::memcpy(&mImmediateBlockContent[offset], data, size);
+        }
+
+        DAWN_GL_TRY(gl, Uniform1uiv(PipelineLayout::ImmediateLocation::Immediates, kMaxImmediateConstantsPerPipeline, mImmediateBlockContent.data()));
+
+        // Reset all dirty bits after uploading.
+        this->mDirty.reset();
+    }
+    std::array<uint32_t, kMaxImmediateConstantsPerPipeline> mImmediateBlockContent;
+};
+
 }  // namespace
 
 CommandBuffer::CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor)
@@ -1136,6 +1161,7 @@ MaybeError CommandBuffer::ExecuteComputePass(const OpenGLFunctions& gl) {
     BindGroupTracker bindGroupTracker = {};
 
     Command type;
+    ImmediateConstantTracker<ComputeImmediateConstantsTrackerBase> immediates = {};
     while (mCommands.NextCommandId(&type)) {
         switch (type) {
             case Command::EndComputePass: {
@@ -1202,8 +1228,12 @@ MaybeError CommandBuffer::ExecuteComputePass(const OpenGLFunctions& gl) {
                 return DAWN_UNIMPLEMENTED_ERROR("WriteTimestamp unimplemented");
             }
 
-            case Command::SetImmediates:
-                return DAWN_UNIMPLEMENTED_ERROR("SetImmediates unimplemented");
+            case Command::SetImmediates: {
+                SetImmediatesCmd* cmd = mCommands.NextCommand<SetImmediatesCmd>();
+                uint8_t* values = mCommands.NextData<uint8_t>(cmd->size);
+                immediates.SetImmediates(cmd->offset, values, cmd->size);
+                break;
+            }
 
             default:
                 DAWN_UNREACHABLE();
@@ -1519,6 +1549,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
         return {};
     };
 
+    ImmediateConstantTracker<ComputeImmediateConstantsTrackerBase> immediates = {};
     Command type;
     while (mCommands.NextCommandId(&type)) {
         switch (type) {
@@ -1606,8 +1637,12 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
             case Command::WriteTimestamp:
                 return DAWN_UNIMPLEMENTED_ERROR("WriteTimestamp unimplemented");
 
-            case Command::SetImmediates:
-                return DAWN_UNIMPLEMENTED_ERROR("SetImmediates unimplemented");
+            case Command::SetImmediates: {
+                SetImmediatesCmd* cmd = mCommands.NextCommand<SetImmediatesCmd>();
+                uint8_t* values = mCommands.NextData<uint8_t>(cmd->size);
+                immediates.SetImmediates(cmd->offset, values, cmd->size);
+                break;
+            }
 
             default: {
                 DAWN_TRY(DoRenderBundleCommand(&mCommands, type));
