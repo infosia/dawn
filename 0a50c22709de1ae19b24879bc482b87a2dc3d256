@@ -70,6 +70,30 @@
       },
       "revId": "0a50c22709de1ae19b24879bc482b87a2dc3d256",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1801c423_831d1441",
+        "filename": "infra/config/global/cmake_try.star",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-09T17:31:50Z",
+      "side": 1,
+      "message": "Or whoever takes over this work - Garrett is moving to a different team.",
+      "parentUuid": "c9067d11_da09d6a1",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 6
+      },
+      "revId": "0a50c22709de1ae19b24879bc482b87a2dc3d256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
