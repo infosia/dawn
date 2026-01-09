@@ -92,7 +92,8 @@ struct State {
                 var_worklist.Push(var);
             } else if ((var_ty->AddressSpace() == AddressSpace::kStorage && options.storage) ||
                        (var_ty->AddressSpace() == AddressSpace::kUniform && options.uniform) ||
-                       (var_ty->AddressSpace() == AddressSpace::kWorkgroup && options.workgroup)) {
+                       (var_ty->AddressSpace() == AddressSpace::kWorkgroup && options.workgroup) ||
+                       (var_ty->AddressSpace() == AddressSpace::kImmediate && options.immediate)) {
                 // Atomics could be handled in some backends, but not in a generic way.
                 if (!ContainsAtomic(var_ty->StoreType())) {
                     var_worklist.Push(var);
@@ -289,6 +290,8 @@ struct State {
         auto* var_ty = var->Result()->Type()->As<core::type::Pointer>();
         if (var_ty->AddressSpace() == AddressSpace::kUniform) {
             size = 16u;
+        } else if (var_ty->AddressSpace() == AddressSpace::kImmediate) {
+            size = 4u;
         } else {
             size = SmallestAccessSize(var);
         }
@@ -1328,9 +1331,11 @@ Result<SuccessType> DecomposeAccess(core::ir::Module& ir, const DecomposeAccessO
                                 core::ir::Capabilities{
                                     core::ir::Capability::kAllow8BitIntegers,
                                     core::ir::Capability::kAllow16BitIntegers,
+                                    core::ir::Capability::kAllowHandleVarsWithoutBindings,
                                     core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
                                     core::ir::Capability::kAllowDuplicateBindings,
                                     core::ir::Capability::kAllowNonCoreTypes,
+                                    core::ir::Capability::kLoosenValidationForShaderIO,
                                 }));
 
     State{ir, options}.Process();
