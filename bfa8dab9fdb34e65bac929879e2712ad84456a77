@@ -16,6 +16,24 @@
       "message": "LGTM but need to hold off on landing this for the moment while the CTS roller is making a roll attempt (merge conflicts will cause it to fail early), as rolls have been broken for a little while and we\u0027re hoping the current one will pass.\nhttps://dawn-review.googlesource.com/c/dawn/+/283957",
       "revId": "bfa8dab9fdb34e65bac929879e2712ad84456a77",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2efdbd9a_30118029",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000030
+      },
+      "writtenOn": "2026-01-09T08:52:36Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e432a2b4_720c0f67",
+      "revId": "bfa8dab9fdb34e65bac929879e2712ad84456a77",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
