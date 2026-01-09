@@ -33,6 +33,24 @@
       "message": "This one needs to be storage (the WGSL fails validation).",
       "revId": "a50ac7dae6deb39209ad57a920f7a30f5b1f1c3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34888983_5c26e166",
+        "filename": "test/tint/builtins/bufferView/uniform_struct.wgsl",
+        "patchSetId": 25
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-09T16:01:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50b409a2_07c46d91",
+      "revId": "a50ac7dae6deb39209ad57a920f7a30f5b1f1c3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
