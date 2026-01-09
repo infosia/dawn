@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b429bf9b_85e75e07",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-09T23:31:20Z",
+      "side": 1,
+      "message": "Hoping this is okay. If it\u0027s wrong can we document why? Here or in the bug.\n\nnote: chromium did this for at least clang\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/5392741",
+      "revId": "63571f01c6ae7cd700fca0ca816456ca638edbd9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
