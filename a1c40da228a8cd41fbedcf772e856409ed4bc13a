@@ -16,6 +16,24 @@
       "message": "if we let this roll one more time the 700+ `maxInterStageShaderVariables` errors will go away as they are already suppressed in top of tree",
       "revId": "a1c40da228a8cd41fbedcf772e856409ed4bc13a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f46e2c37_8fe79904",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-09T22:42:44Z",
+      "side": 1,
+      "message": "I was thinking that but was just gonna let the next roll regenerate and delete all those lines automatically.\n\nBut actually I can just reupload this CL with those lines deleted. Did that, PTAL",
+      "parentUuid": "fc54736c_bc1f66c9",
+      "revId": "a1c40da228a8cd41fbedcf772e856409ed4bc13a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
