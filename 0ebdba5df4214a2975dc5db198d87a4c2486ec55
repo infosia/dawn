@@ -46,6 +46,30 @@
       },
       "revId": "0ebdba5df4214a2975dc5db198d87a4c2486ec55",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b66f7772_c656f480",
+        "filename": "infra/config/global/generated/luci/commit-queue.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 1430,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-09T19:32:35Z",
+      "side": 0,
+      "message": "These builders have been marked as experimental ever since they were added in https://dawn-review.googlesource.com/c/dawn/+/176982.\n\nAFAICT this was just done out of abundance of caution. I don\u0027t see why the GN builders would be fine on the branches but the CMake ones wouldn\u0027t be, though, so should be safe to make these non-experimental.",
+      "parentUuid": "57a8c058_542436d8",
+      "range": {
+        "startLine": 1430,
+        "startChar": 8,
+        "endLine": 1430,
+        "endChar": 34
+      },
+      "revId": "0ebdba5df4214a2975dc5db198d87a4c2486ec55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
