@@ -53,18 +53,17 @@ namespace dawn::native::vulkan {
 
 namespace {
 
-constexpr char kBlitToColorVS[] = R"(
-
-@vertex fn vert_fullscreen_quad(
-  @builtin(vertex_index) vertex_index : u32,
-) -> @builtin(position) vec4f {
-  const pos = array(
-      vec2f(-1.0, -1.0),
-      vec2f( 3.0, -1.0),
-      vec2f(-1.0,  3.0));
-  return vec4f(pos[vertex_index], 0.0, 1.0);
-}
-)";
+constexpr char kBlitToColorVS[] =
+"@vertex fn vert_fullscreen_quad("
+  "@builtin(vertex_index) vertex_index : u32,"
+") -> @builtin(position) vec4f {"
+  "const pos = array("
+      "vec2f(-1.0, -1.0),"
+      "vec2f( 3.0, -1.0),"
+      "vec2f(-1.0,  3.0));"
+  "return vec4f(pos[vertex_index], 0.0, 1.0);"
+"}"
+;
 
 std::string GenerateFS(const BlitColorToColorWithDrawPipelineKey& pipelineKey) {
     std::ostringstream outputStructStream;
@@ -86,13 +85,13 @@ std::string GenerateFS(const BlitColorToColorWithDrawPipelineKey& pipelineKey) {
     }
 
     finalStream << "struct OutputColor {\n" << outputStructStream.str() << "}\n\n";
-    finalStream << R"(
-@fragment fn blit_to_color() -> OutputColor {
-    var outputColor : OutputColor;
-)" << assignOutputsStream.str()
-                << R"(
-    return outputColor;
-})";
+    finalStream <<
+"@fragment fn blit_to_color() -> OutputColor {"
+    "var outputColor : OutputColor;"
+ << assignOutputsStream.str()
+                <<
+    "return outputColor;"
+"}";
 
     return finalStream.str();
 }
