@@ -108,7 +108,10 @@ void ApiObjectList::Track(ApiObjectBase* object) {
         object->DestroyImpl(DestroyReason::EarlyDestroy);
         return;
     }
-    mObjects.Use([&object](auto lockedObjects) { lockedObjects->Prepend(object); });
+    mObjects.Use([&object](auto lockedObjects) {
+        lockedObjects->Prepend(object);
+        object->mIsAlive.store(true, std::memory_order_release);
+    });
 }
 
 bool ApiObjectList::Untrack(ApiObjectBase* object) {
@@ -138,7 +141,7 @@ void ApiObjectList::Destroy(DestroyReason reason) {
     });
 
     for (ApiObjectBase* object : objectsToDestroy) {
-        object->DestroyImpl(reason);
+        object->DestroyInternal(reason);
         // `object` may be deleted here if last real reference was dropped on another thread.
         object->Release();
     }
@@ -189,7 +192,7 @@ void ApiObjectBase::FormatLabel(absl::FormatSink* s) const {
 void ApiObjectBase::SetLabelImpl() {}
 
 bool ApiObjectBase::IsAlive() const {
-    return IsInList();
+    return mIsAlive.load(std::memory_order_acquire);
 }
 
 void ApiObjectBase::DeleteThis() {
@@ -211,8 +214,13 @@ void ApiObjectBase::Destroy(DestroyReason reason) {
     ApiObjectList* list = GetObjectTrackingList();
     DAWN_ASSERT(list != nullptr);
     if (list->Untrack(this)) {
-        DestroyImpl(reason);
+        DestroyInternal(reason);
     }
+}
+
+void ApiObjectBase::DestroyInternal(DestroyReason reason) {
+    mIsAlive.store(false, std::memory_order_release);
+    DestroyImpl(reason);
 }
 
 }  // namespace dawn::native

@@ -201,7 +201,18 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
   private:
     friend class ApiObjectList;
 
+    // Sets mIsAlive to false and calls DestroyImpl. Should only be called after the object
+    // has been removed from the tracking list.
+    void DestroyInternal(DestroyReason reason);
+
     std::string mLabel;
+    // Atomic flag tracking whether the object is alive (tracked in the device's object list).
+    // This is used instead of IsInList() for thread-safe liveness checks. IsInList() is not
+    // thread-safe because it reads the LinkedList node pointers, which can be concurrently
+    // modified by other threads removing nodes from the list. Even when checking different
+    // objects, the shared LinkedList structure itself is not safe for concurrent read/write
+    // access without synchronization.
+    std::atomic<bool> mIsAlive{false};
 };
 
 template <typename T>
