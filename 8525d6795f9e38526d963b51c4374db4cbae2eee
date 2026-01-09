@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4402cbc_8783ed5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-09T23:08:27Z",
+      "side": 1,
+      "message": "Filed crbug.com/474662276 to summarize our offline discussion.",
+      "parentUuid": "c16ea73b_26443eaf",
+      "range": {
+        "startLine": 12,
+        "startChar": 53,
+        "endLine": 14,
+        "endChar": 59
+      },
+      "revId": "8525d6795f9e38526d963b51c4374db4cbae2eee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f61c7ef3_d06421dc",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff304be8_198dec24",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-09T23:08:27Z",
+      "side": 1,
+      "message": "I didn\u0027t end up updating the comment for this because I found it felt a bit unrelated to the change, and a bit of a tangent. I think that the bug should also give a pretty good idea of the issue here.",
+      "parentUuid": "f61c7ef3_d06421dc",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 50
+      },
+      "revId": "8525d6795f9e38526d963b51c4374db4cbae2eee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad4dd41e_59e12dc9",
@@ -60,6 +108,30 @@
       "writtenOn": "2026-01-09T05:55:54Z",
       "side": 1,
       "message": "Aside(?): Semantically, I\u0027m wondering if we should instead consider the instance to still be externally referenced if you can get it from a getter. It\u0027s supposed to be the case that pointers are invalidated as soon as the last external ref is dropped. But in practice people we\u0027ll always return the same pointer again. Does it matter? Maybe if people end up accidentally relying on that. Though it doesn\u0027t seem that likely to matter.",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 38
+      },
+      "revId": "8525d6795f9e38526d963b51c4374db4cbae2eee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7657678_384a9c71",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-09T23:08:27Z",
+      "side": 1,
+      "message": "As per our offline conversation, this would be functionally equivalent to this change.",
+      "parentUuid": "ad4dd41e_59e12dc9",
       "range": {
         "startLine": 21,
         "startChar": 11,
