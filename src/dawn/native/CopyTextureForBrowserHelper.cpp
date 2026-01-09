@@ -61,10 +61,10 @@ static const char sCopyForBrowserShader[] =
             "};"
 
             "struct Uniforms {"                                                    // offset   align   size
-                "scale: vec2f,"                                                // 0        8       8
-                "offset: vec2f,"                                               // 8        8       8
+                "scale: vec2f,"                                                    // 0        8       8
+                "offset: vec2f,"                                                   // 8        8       8
                 "steps_mask: u32,"                                                 // 16       4       4
-                // implicit padding;                                             // 20               12
+                // implicit padding;                                               // 20               12
                 "conversion_matrix: mat3x3<f32>,"                                  // 32       16      48
                 "gamma_decoding_params: GammaTransferParamsInternal,"              // 80       4       32
                 "gamma_encoding_params: GammaTransferParamsInternal,"              // 112      4       32
