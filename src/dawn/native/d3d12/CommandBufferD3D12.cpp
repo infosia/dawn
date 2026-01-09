@@ -232,6 +232,7 @@ MaybeError RecordCopyTextureWithTemporaryBuffer(CommandRecordingContext* recordi
     Ref<BufferBase> tempBufferBase;
     DAWN_TRY_ASSIGN(tempBufferBase, device->CreateBuffer(&tempBufferDescriptor));
     Ref<Buffer> tempBuffer = ToBackend(std::move(tempBufferBase));
+    auto use = tempBuffer->UseBufferInternal();
 
     BufferCopy bufferCopy;
     bufferCopy.buffer = tempBuffer;
