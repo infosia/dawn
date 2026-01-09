@@ -45,102 +45,100 @@ namespace dawn::native {
 
 namespace {
 
-constexpr char kBlitRG8ToDepthShaders[] = R"(
+constexpr char kBlitRG8ToDepthShaders[] =
+"@vertex fn vert_fullscreen_quad("
+  "@builtin(vertex_index) vertex_index : u32"
+") -> @builtin(position) vec4f {"
+  "const pos = array("
+      "vec2f(-1.0, -1.0),"
+      "vec2f( 3.0, -1.0),"
+      "vec2f(-1.0,  3.0));"
+  "return vec4f(pos[vertex_index], 0.0, 1.0);"
+"}"
 
-@vertex fn vert_fullscreen_quad(
-  @builtin(vertex_index) vertex_index : u32
-) -> @builtin(position) vec4f {
-  const pos = array(
-      vec2f(-1.0, -1.0),
-      vec2f( 3.0, -1.0),
-      vec2f(-1.0,  3.0));
-  return vec4f(pos[vertex_index], 0.0, 1.0);
-}
+"struct Params {"
+  "origin : vec2u"
+"};"
 
-struct Params {
-  origin : vec2u
-};
+"@group(0) @binding(0) var src_tex : texture_2d<u32>;"
+"@group(0) @binding(1) var<uniform> params : Params;"
 
-@group(0) @binding(0) var src_tex : texture_2d<u32>;
-@group(0) @binding(1) var<uniform> params : Params;
-
-@fragment fn blit_to_depth(
-    @builtin(position) position : vec4f
-) -> @builtin(frag_depth) f32 {
+"@fragment fn blit_to_depth("
+    "@builtin(position) position : vec4f"
+") -> @builtin(frag_depth) f32 {"
   // Load the source texel.
-  let src_texel = textureLoad(
-    src_tex, vec2u(position.xy) - params.origin, 0u);
+  "let src_texel = textureLoad("
+    "src_tex, vec2u(position.xy) - params.origin, 0u);"
 
-  let depth_u16_val = (src_texel.y << 8u) + src_texel.x;
+  "let depth_u16_val = (src_texel.y << 8u) + src_texel.x;"
 
-  const one_over_max : f32 = 1.0 / f32(0xFFFFu);
-  return f32(depth_u16_val) * one_over_max;
-}
+  "const one_over_max : f32 = 1.0 / f32(0xFFFFu);"
+  "return f32(depth_u16_val) * one_over_max;"
+"}"
+;
 
-)";
+constexpr std::string_view kTexture2DHead =
+"fn textureLoadGeneral(tex: texture_2d<u32>, coords: vec2u, level: u32) -> vec4<u32> {"
+    "return textureLoad(tex, coords, level);"
+"}"
+"@group(0) @binding(0) var src_tex : texture_2d<u32>;"
+;
 
-constexpr std::string_view kTexture2DHead = R"(
-fn textureLoadGeneral(tex: texture_2d<u32>, coords: vec2u, level: u32) -> vec4<u32> {
-    return textureLoad(tex, coords, level);
-}
-@group(0) @binding(0) var src_tex : texture_2d<u32>;
-)";
+constexpr std::string_view kTexture2DArrayHead =
+"fn textureLoadGeneral(tex: texture_2d_array<u32>, coords: vec2u, level: u32) -> vec4<u32> {"
+    "return textureLoad(tex, coords, params.layer, level);"
+"}"
+"@group(0) @binding(0) var src_tex : texture_2d_array<u32>;"
+;
 
-constexpr std::string_view kTexture2DArrayHead = R"(
-fn textureLoadGeneral(tex: texture_2d_array<u32>, coords: vec2u, level: u32) -> vec4<u32> {
-    return textureLoad(tex, coords, params.layer, level);
-}
-@group(0) @binding(0) var src_tex : texture_2d_array<u32>;
-)";
+constexpr std::string_view kBlitStencilShaderCommon =
+"struct Params {"
+  "origin : vec2u,"
+  "layer: u32,"
+"};"
+"@group(0) @binding(1) var<uniform> params : Params;"
 
-constexpr std::string_view kBlitStencilShaderCommon = R"(
-struct Params {
-  origin : vec2u,
-  layer: u32,
-};
-@group(0) @binding(1) var<uniform> params : Params;
-
-struct VertexOutputs {
-  @location(0) @interpolate(flat, either) stencil_val : u32,
-  @builtin(position) position : vec4f,
-};
+"struct VertexOutputs {"
+  "@location(0) @interpolate(flat, either) stencil_val : u32,"
+  "@builtin(position) position : vec4f,"
+"};"
 
 // The instance_index here is not used for instancing.
 // It represents the current stencil mask we're testing in the
 // source.
 // This is a cheap way to get the stencil value into the shader
 // since WebGPU doesn't have immediate data.
-@vertex fn vert_fullscreen_quad(
-  @builtin(vertex_index) vertex_index : u32,
-  @builtin(instance_index) instance_index: u32,
-) -> VertexOutputs {
-  const pos = array(
-      vec2f(-1.0, -1.0),
-      vec2f( 3.0, -1.0),
-      vec2f(-1.0,  3.0));
-  return VertexOutputs(
-    instance_index,
-    vec4f(pos[vertex_index], 0.0, 1.0),
-  );
-}
+"@vertex fn vert_fullscreen_quad("
+  "@builtin(vertex_index) vertex_index : u32,"
+  "@builtin(instance_index) instance_index: u32,"
+") -> VertexOutputs {"
+  "const pos = array("
+      "vec2f(-1.0, -1.0),"
+      "vec2f( 3.0, -1.0),"
+      "vec2f(-1.0,  3.0));"
+  "return VertexOutputs("
+    "instance_index,"
+    "vec4f(pos[vertex_index], 0.0, 1.0),"
+  ");"
+"}"
 
 // Do nothing (but also don't discard). Used for clearing
 // stencil to 0.
-@fragment fn frag_noop() {}
+"@fragment fn frag_noop() {}"
 
 // Discard the fragment if the source texture doesn't
 // have the stencil_val.
-@fragment fn frag_check_src_stencil(input : VertexOutputs) {
+"@fragment fn frag_check_src_stencil(input : VertexOutputs) {"
   // Load the source stencil value.
-  let src_val : u32 = textureLoadGeneral(
-    src_tex, vec2u(input.position.xy) - params.origin, 0u)[0];
+  "let src_val : u32 = textureLoadGeneral("
+    "src_tex, vec2u(input.position.xy) - params.origin, 0u)[0];"
 
   // Discard it if it doesn't contain the stencil reference.
-  if ((src_val & input.stencil_val) == 0u) {
-    discard;
-  }
-}
-)";
+  "if ((src_val & input.stencil_val) == 0u) {"
+    "discard;"
+  "}"
+"}"
+;
 
 ResultOrError<Ref<RenderPipelineBase>> GetOrCreateRG8ToDepth16UnormPipeline(DeviceBase* device) {
     InternalPipelineStore* store = device->GetInternalPipelineStore();
