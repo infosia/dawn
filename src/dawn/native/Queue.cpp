@@ -170,13 +170,8 @@ void QueueBase::APISubmit(uint32_t commandCount, CommandBufferBase* const* comma
     MaybeError result = SubmitInternal(commandCount, commands);
 
     // Destroy the command buffers even if SubmitInternal failed. (crbug.com/dawn/1863)
-    {
-        // TODO(crbug.com/474516844): device guard is needed here because ApiObjectBase::Destroy()
-        // needs to be synchronized with ApiObjectBase::IsAlive() on another thread.
-        auto deviceGuard = GetDevice()->GetGuard();
-        for (uint32_t i = 0; i < commandCount; ++i) {
-            commands[i]->Destroy();
-        }
+    for (uint32_t i = 0; i < commandCount; ++i) {
+        commands[i]->Destroy();
     }
 
     [[maybe_unused]] bool hadError = GetDevice()->ConsumedError(
@@ -644,9 +639,6 @@ MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* c
 
     TRACE_EVENT0(device->GetPlatform(), General, "Queue::Submit");
     if (device->IsValidationEnabled()) {
-        // TODO(crbug.com/474516844): device guard is needed here because ApiObjectBase::IsAlive()
-        // is not thread safe.
-        auto deviceGuard = GetDevice()->GetGuard();
         DAWN_TRY(ValidateSubmit(commandCount, commands));
     }
     DAWN_ASSERT(!IsError());

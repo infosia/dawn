@@ -108,6 +108,7 @@ void ApiObjectList::Track(ApiObjectBase* object) {
         object->DestroyImpl(DestroyReason::Placeholder);
         return;
     }
+    object->mIsAlive.store(true, std::memory_order_release);
     mObjects.Use([&object](auto lockedObjects) { lockedObjects->Prepend(object); });
 }
 
@@ -138,6 +139,7 @@ void ApiObjectList::Destroy(DestroyReason reason) {
     });
 
     for (ApiObjectBase* object : objectsToDestroy) {
+        object->mIsAlive.store(false, std::memory_order_release);
         object->DestroyImpl(reason);
         // `object` may be deleted here if last real reference was dropped on another thread.
         object->Release();
@@ -189,7 +191,7 @@ void ApiObjectBase::FormatLabel(absl::FormatSink* s) const {
 void ApiObjectBase::SetLabelImpl() {}
 
 bool ApiObjectBase::IsAlive() const {
-    return IsInList();
+    return mIsAlive.load(std::memory_order_acquire);
 }
 
 void ApiObjectBase::DeleteThis() {
@@ -211,6 +213,7 @@ void ApiObjectBase::Destroy(DestroyReason reason) {
     ApiObjectList* list = GetObjectTrackingList();
     DAWN_ASSERT(list != nullptr);
     if (list->Untrack(this)) {
+        mIsAlive.store(false, std::memory_order_release);
         DestroyImpl(reason);
     }
 }
