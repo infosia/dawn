@@ -119,7 +119,7 @@ struct State {
                                                           internal.second.type,
                                                           /* index */ index,
                                                           /* offset */ offset,
-                                                          /* align */ internal.second.type->Align(),
+                                                          /* align */ 16u,
                                                           /* size */ internal.second.type->Size(),
                                                           /* attributes */ IOAttributes{}));
         }
