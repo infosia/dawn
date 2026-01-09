@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc54736c_bc1f66c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-09T22:32:47Z",
+      "side": 1,
+      "message": "if we let this roll one more time the 700+ `maxInterStageShaderVariables` errors will go away as they are already suppressed in top of tree",
+      "revId": "a1c40da228a8cd41fbedcf772e856409ed4bc13a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
