@@ -102,6 +102,7 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
             options.depth_range_offsets.value().max, module.symbols.New("tint_frag_depth_max"),
             module.Types().f32()));
     }
+    TINT_CHECK_RESULT(core::ir::transform::DecomposeImmediateAccess(module));
     TINT_CHECK_RESULT_UNWRAP(immediate_data_layout, core::ir::transform::PrepareImmediateData(
                                                         module, immediate_data_config));
 

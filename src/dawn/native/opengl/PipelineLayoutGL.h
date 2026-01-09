@@ -64,10 +64,11 @@ class PipelineLayout final : public PipelineLayoutBase {
     FlatBindingIndex GetInternalArrayLengthUniformBinding() const;
 
     enum ImmediateLocation {
-        FirstVertex = 0,
-        FirstInstance = 1,
-        MinDepth = 2,
-        MaxDepth = 3,
+        UserImmediateData = 0,
+        FirstVertex = 16,
+        FirstInstance = 17,
+        MinDepth = 18,
+        MaxDepth = 19,
     };
 
   private:

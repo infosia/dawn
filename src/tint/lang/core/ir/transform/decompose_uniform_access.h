@@ -44,6 +44,8 @@ namespace tint::core::ir::transform {
 /// @returns success or failure
 Result<SuccessType> DecomposeUniformAccess(core::ir::Module& module);
 
+Result<SuccessType> DecomposeImmediateAccess(core::ir::Module& module);
+
 }  // namespace tint::core::ir::transform
 
 #endif  // SRC_TINT_LANG_CORE_IR_TRANSFORM_DECOMPOSE_UNIFORM_ACCESS_H_
