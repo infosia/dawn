@@ -8,7 +8,7 @@ struct tint_immediate_struct {
   int inner;
 };
 
-layout(location = 0) uniform tint_immediate_struct tint_immediates;
+layout(location = 4) uniform tint_immediate_struct tint_immediates;
 void uses_a() {
   int foo = tint_immediates.inner;
 }
@@ -26,7 +26,7 @@ struct tint_immediate_struct {
   int inner;
 };
 
-layout(location = 0) uniform tint_immediate_struct tint_immediates;
+layout(location = 4) uniform tint_immediate_struct tint_immediates;
 void uses_a() {
   int foo = tint_immediates.inner;
 }
@@ -47,7 +47,7 @@ struct tint_immediate_struct {
   int inner;
 };
 
-layout(location = 0) uniform tint_immediate_struct tint_immediates;
+layout(location = 4) uniform tint_immediate_struct tint_immediates;
 void uses_b() {
   int foo = tint_immediates.inner;
 }

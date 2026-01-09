@@ -82,6 +82,7 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
         TINT_CHECK_RESULT(core::ir::transform::PreventInfiniteLoops(module));
     }
 
+    TINT_CHECK_RESULT(core::ir::transform::DecomposeImmediateAccess(module));
     // Note, this must come after Robustness as it may add `arrayLength`.
     // This also needs to come before binding remapper as Dawn inserts _pre-remapping_ binding
     // information. So, in order to move this later we'd need to update Dawn to send the

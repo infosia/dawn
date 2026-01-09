@@ -48,6 +48,8 @@ struct State {
     /// The IR module.
     core::ir::Module& ir;
 
+    core::AddressSpace address_space;
+
     /// The IR builder.
     core::ir::Builder b{ir};
 
@@ -77,8 +79,8 @@ struct State {
                 continue;
             }
 
-            // Only care about uniform address space variables.
-            if (var_ty->AddressSpace() != core::AddressSpace::kUniform) {
+            // Only care about given address space variables.
+            if (var_ty->AddressSpace() != address_space) {
                 continue;
             }
 
@@ -333,7 +335,7 @@ struct State {
                                           const core::type::Type* result_ty,
                                           core::ir::Value* byte_idx) {
         auto* array_idx = OffsetValueToArrayIndex(byte_idx);
-        auto* access = b.Access(ty.ptr(uniform, ty.vec4u()), var, array_idx);
+        auto* access = b.Access(ty.ptr(address_space, ty.vec4u()), var, array_idx);
 
         auto* vec_idx = CalculateVectorOffset(byte_idx);
         core::ir::Instruction* load = b.LoadVectorElement(access, vec_idx);
@@ -386,7 +388,7 @@ struct State {
                                           const core::type::Vector* result_ty,
                                           core::ir::Value* byte_idx) {
         auto* array_idx = OffsetValueToArrayIndex(byte_idx);
-        auto* access = b.Access(ty.ptr(uniform, ty.vec4u()), var, array_idx);
+        auto* access = b.Access(ty.ptr(address_space, ty.vec4u()), var, array_idx);
 
         if (result_ty->DeepestElement()->Is<core::type::F16>()) {
             return MakeVectorLoadF16(access, result_ty, byte_idx);
@@ -616,7 +618,22 @@ Result<SuccessType> DecomposeUniformAccess(core::ir::Module& ir) {
                                     core::ir::Capability::kAllowNonCoreTypes,
                                 }));
 
-    State{ir}.Process();
+    State{ir, core::AddressSpace::kUniform}.Process();
+
+    return Success;
+}
+
+Result<SuccessType> DecomposeImmediateAccess(core::ir::Module& ir) {
+    TINT_CHECK_RESULT(
+        ValidateAndDumpIfNeeded(ir, "core.DecomposeImmediateAccess",
+                                core::ir::Capabilities{
+                                    core::ir::Capability::kAllow8BitIntegers,
+                                    core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
+                                    core::ir::Capability::kAllowDuplicateBindings,
+                                    core::ir::Capability::kAllowNonCoreTypes,
+                                }));
+
+    State{ir, core::AddressSpace::kImmediate}.Process();
 
     return Success;
 }
