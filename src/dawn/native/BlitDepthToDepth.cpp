@@ -43,26 +43,24 @@ namespace dawn::native {
 
 namespace {
 
-constexpr char kBlitToDepthShaders[] = R"(
+constexpr char kBlitToDepthShaders[] =
+"@vertex fn vert_fullscreen_quad("
+  "@builtin(vertex_index) vertex_index : u32,"
+") -> @builtin(position) vec4f {"
+  "const pos = array("
+      "vec2f(-1.0, -1.0),"
+      "vec2f( 3.0, -1.0),"
+      "vec2f(-1.0,  3.0));"
+  "return vec4f(pos[vertex_index], 0.0, 1.0);"
+"}"
 
-@vertex fn vert_fullscreen_quad(
-  @builtin(vertex_index) vertex_index : u32,
-) -> @builtin(position) vec4f {
-  const pos = array(
-      vec2f(-1.0, -1.0),
-      vec2f( 3.0, -1.0),
-      vec2f(-1.0,  3.0));
-  return vec4f(pos[vertex_index], 0.0, 1.0);
-}
-
-@group(0) @binding(0) var src_tex : texture_depth_2d;
+"@group(0) @binding(0) var src_tex : texture_depth_2d;"
 
 // Load the depth value and return it as the frag_depth.
-@fragment fn blit_to_depth(@builtin(position) position : vec4f) -> @builtin(frag_depth) f32 {
-  return textureLoad(src_tex, vec2u(position.xy), 0);
-}
-
-)";
+"@fragment fn blit_to_depth(@builtin(position) position : vec4f) -> @builtin(frag_depth) f32 {"
+  "return textureLoad(src_tex, vec2u(position.xy), 0);"
+"}"
+;
 
 ResultOrError<Ref<RenderPipelineBase>> GetOrCreateDepthBlitPipeline(DeviceBase* device,
                                                                     wgpu::TextureFormat format) {
