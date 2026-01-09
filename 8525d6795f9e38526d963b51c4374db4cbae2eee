@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c16ea73b_26443eaf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-09T05:55:54Z",
+      "side": 1,
+      "message": "`webgpu.h` doesn\u0027t have either of those getters, and it describes specific behavior about `CallbackCancelled`: https://github.com/webgpu-native/webgpu-headers/blob/0bfcdc4f487023d85e33597de0a94fc523e30fca/doc/articles/Asynchronous%20Operations.md?plain\u003d1#L45-L46\n\nIf we want to do this then I think we\u0027ll need to add `wgpuAdapterGetInstance()` and `wgpuDeviceGetAdapter()` and update that. Fortunately this is an error that\u0027s not supposed to happen in production so I doubt it will cause problems.",
+      "range": {
+        "startLine": 12,
+        "startChar": 53,
+        "endLine": 14,
+        "endChar": 59
+      },
+      "revId": "8525d6795f9e38526d963b51c4374db4cbae2eee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f61c7ef3_d06421dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-09T05:55:54Z",
+      "side": 1,
+      "message": "Perhaps worth a mention that even though it\u0027s possible to do `buffer.MapSync` after dropping the device (and thus dropping the instance), that\u0027s OK because [doing so destroys the device](https://webgpu-native.github.io/webgpu-headers/Ownership.html#DeviceRelease).\n\nIncidentally we don\u0027t mention there that dropping the Instance has special behavior, so we don\u0027t need to update that. But we should tweak the language there because I think Device will now be the _only_ object with special behavior on drop, not just the only _destroyable_ object.",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 50
+      },
+      "revId": "8525d6795f9e38526d963b51c4374db4cbae2eee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad4dd41e_59e12dc9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-09T05:55:54Z",
+      "side": 1,
+      "message": "Aside(?): Semantically, I\u0027m wondering if we should instead consider the instance to still be externally referenced if you can get it from a getter. It\u0027s supposed to be the case that pointers are invalidated as soon as the last external ref is dropped. But in practice people we\u0027ll always return the same pointer again. Does it matter? Maybe if people end up accidentally relying on that. Though it doesn\u0027t seem that likely to matter.",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 38
+      },
+      "revId": "8525d6795f9e38526d963b51c4374db4cbae2eee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
