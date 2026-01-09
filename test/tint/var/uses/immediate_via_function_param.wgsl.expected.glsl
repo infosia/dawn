@@ -5,7 +5,7 @@ struct tint_immediate_struct {
   uint inner;
 };
 
-layout(location = 0) uniform tint_immediate_struct tint_immediates;
+layout(location = 4) uniform tint_immediate_struct tint_immediates;
 layout(binding = 0, std430)
 buffer output_block_1_ssbo {
   uint inner;

@@ -68,6 +68,7 @@ class PipelineLayout final : public PipelineLayoutBase {
         FirstInstance = 1,
         MinDepth = 2,
         MaxDepth = 3,
+        UserImmediateData = 4,
     };
 
   private:

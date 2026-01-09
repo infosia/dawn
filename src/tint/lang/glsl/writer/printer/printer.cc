@@ -1122,7 +1122,7 @@ class Printer : public tint::TextGenerator {
         auto* str = ptr->StoreType()->As<core::type::Struct>();
         if (str) {
             // FIXME: pass location of user immediates from Dawn
-            EmitLayoutLocation(out, {0}, std::nullopt);
+            EmitLayoutLocation(out, {4}, std::nullopt);
             // We need to use the same name for the immediate data structure and variable between
             // different pipeline stages.
             constexpr const char* kImmediateStructName = "tint_immediate_struct";
