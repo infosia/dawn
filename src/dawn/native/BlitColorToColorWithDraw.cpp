@@ -50,47 +50,47 @@ namespace dawn::native {
 
 namespace {
 
-constexpr std::string_view kVertexOutputsStruct = R"(
-struct VertexOutputs {
-  @builtin(position) position : vec4<f32>,
-  @location(0) @interpolate(flat, either) offsets : vec2i,
-};
-)";
+constexpr std::string_view kVertexOutputsStruct =
+"struct VertexOutputs {"
+  "@builtin(position) position : vec4<f32>,"
+  "@location(0) @interpolate(flat, either) offsets : vec2i,"
+"};"
+;
 
 std::string GenerateBlitToColorVS() {
-    constexpr std::string_view kBlitToColorVS = R"(
+    constexpr std::string_view kBlitToColorVS =
 // Unpack a u32 into two i32 values, each was originally two 16-bit signed
 // integer.
-fn unpack_offsets(offsets : u32) -> vec2<i32> {
+"fn unpack_offsets(offsets : u32) -> vec2<i32> {"
   // First extract the high and low 16-bit values, then convert to u32 for
   // zero-extension.
-  var offsets_bits = vec2u(offsets & 0xFFFFu, (offsets >> 16) & 0xFFFFu);
+  "var offsets_bits = vec2u(offsets & 0xFFFFu, (offsets >> 16) & 0xFFFFu);"
   // For each 16-bit value, if the sign bit is set (0x8000), perform sign
   // extension by setting the upper 16 bits to 1s (0xFFFF0000).
-  offsets_bits = select(
-      offsets_bits,
-      offsets_bits | vec2u(0xFFFF0000u),
+  "offsets_bits = select("
+      "offsets_bits,"
+      "offsets_bits | vec2u(0xFFFF0000u),"
       // Check if negative.
-      (offsets_bits & vec2u(0x8000u)) != vec2u(0u),
-  );
+      "(offsets_bits & vec2u(0x8000u)) != vec2u(0u),"
+  ");"
   // Reinterpret the final 32-bit values as signed integers.
-  return bitcast<vec2i>(offsets_bits);
-}
+  "return bitcast<vec2i>(offsets_bits);"
+"}"
 
-@vertex fn vert_fullscreen_quad(
-  @builtin(vertex_index) vertex_index : u32,
-  @builtin(instance_index) instance_index : u32
-) -> VertexOutputs {
-  var output : VertexOutputs;
-  const pos = array(
-      vec2f(-1.0, -1.0),
-      vec2f(3.0, -1.0),
-      vec2f(-1.0, 3.0));
-  output.position = vec4f(pos[vertex_index], 0.0, 1.0);
-  output.offsets = unpack_offsets(instance_index);
-  return output;
-}
-)";
+"@vertex fn vert_fullscreen_quad("
+  "@builtin(vertex_index) vertex_index : u32,"
+  "@builtin(instance_index) instance_index : u32"
+") -> VertexOutputs {"
+  "var output : VertexOutputs;"
+  "const pos = array("
+      "vec2f(-1.0, -1.0),"
+      "vec2f(3.0, -1.0),"
+      "vec2f(-1.0, 3.0));"
+  "output.position = vec4f(pos[vertex_index], 0.0, 1.0);"
+  "output.offsets = unpack_offsets(instance_index);"
+  "return output;"
+"}"
+;
     return std::string(kVertexOutputsStruct) + "\n" + std::string(kBlitToColorVS);
 }
 
@@ -112,13 +112,13 @@ std::string GenerateExpandFS(const BlitColorToColorWithDrawPipelineKey& pipeline
 
     finalStream << kVertexOutputsStruct << "\n";
     finalStream << "struct OutputColor {\n" << outputStructStream.str() << "}\n\n";
-    finalStream << R"(
-@fragment fn expand_multisample(input: VertexOutputs) -> OutputColor {
-    var outputColor : OutputColor;
-)" << assignOutputsStream.str()
-                << R"(
-    return outputColor;
-})";
+    finalStream <<
+"@fragment fn expand_multisample(input: VertexOutputs) -> OutputColor {"
+    "var outputColor : OutputColor;"
+ << assignOutputsStream.str()
+                <<
+    "return outputColor;"
+"}";
 
     return finalStream.str();
 }
@@ -127,13 +127,13 @@ std::string GenerateExpandFS(const BlitColorToColorWithDrawPipelineKey& pipeline
 std::string GenerateResolveFS(uint32_t sampleCount) {
     std::ostringstream ss;
     ss << kVertexOutputsStruct << "\n";
-    ss << R"(
-@group(0) @binding(0) var srcTex : texture_multisampled_2d<f32>;
+    ss <<
+"@group(0) @binding(0) var srcTex : texture_multisampled_2d<f32>;"
 
-@fragment
-fn resolve_multisample(input: VertexOutputs) -> @location(0) vec4f {
-    var sum = vec4f(0.0, 0.0, 0.0, 0.0);
-    var offsetPos = vec2i(input.position.xy) - input.offsets;)";
+"@fragment"
+"fn resolve_multisample(input: VertexOutputs) -> @location(0) vec4f {"
+    "var sum = vec4f(0.0, 0.0, 0.0, 0.0);"
+    "var offsetPos = vec2i(input.position.xy) - input.offsets;";
     ss << "\n";
     for (uint32_t sample = 0; sample < sampleCount; ++sample) {
         ss << absl::StrFormat("    sum += textureLoad(srcTex, offsetPos, %u);\n", sample);
