@@ -42,6 +42,7 @@ struct DecomposeAccessOptions {
     bool storage = false;
     bool uniform = false;
     bool workgroup = false;
+    bool immediate = false;
 
     // TODO(b/477295042): should there be a uniform standard layout option? When enabled uniform
     // could be treated like every other storage class.

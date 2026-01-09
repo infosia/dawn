@@ -406,6 +406,44 @@ TEST_P(ImmediateDataTests, UsingImmediateDataDontAffectClampFragDepth) {
     EXPECT_PIXEL_FLOAT_EQ(0.5f, depthTexture, 0, 0);
 }
 
+// Test that vertex_index (supported by internal immediate constants)
+// works fine when shaders don't have immediate data
+TEST_P(ImmediateDataTests, VertexIndexAlone) {
+    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
+
+    wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
+        @vertex fn vs(@builtin(vertex_index) VertexIndex : u32) -> @builtin(position) vec4f {
+            return vec4f(0.5, 0.5, 0.4, 1.0);
+        }
+
+        @fragment fn fs() -> @location(0) vec4f {
+            return vec4f(1.0, 1.0, 1.0, 1.0);
+        }
+    )");
+
+    // Create the pipeline that uses frag_depth to output the depth.
+    utils::ComboRenderPipelineDescriptor pDesc;
+    pDesc.vertex.module = module;
+    pDesc.primitive.topology = wgpu::PrimitiveTopology::PointList;
+    pDesc.cFragment.module = module;
+    pDesc.cFragment.targetCount = 1;
+
+    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pDesc);
+
+    utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
+    wgpu::CommandEncoder commandEncoder = device.CreateCommandEncoder();
+    wgpu::RenderPassEncoder renderPassEncoder =
+        commandEncoder.BeginRenderPass(&renderPass.renderPassInfo);
+    renderPassEncoder.SetPipeline(pipeline);
+    renderPassEncoder.SetBindGroup(0, CreateBindGroup());
+    renderPassEncoder.Draw(3);
+    renderPassEncoder.End();
+    wgpu::CommandBuffer commands = commandEncoder.Finish();
+    queue.Submit(1, &commands);
+
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(255, 255, 255, 255), renderPass.color, 0, 0);
+}
+
 // SetImmediates Multiple times should upload dirtied, latest contents.
 TEST_P(ImmediateDataTests, SetImmediatesWithPipelineSwitch) {
     wgpu::ShaderModule shaderModuleWithLessImmediateData = utils::CreateShaderModule(device, R"(
@@ -592,6 +630,7 @@ DAWN_INSTANTIATE_TEST(ImmediateDataTests,
                       D3D11Backend(),
                       D3D12Backend(),
                       MetalBackend(),
+                      OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
 

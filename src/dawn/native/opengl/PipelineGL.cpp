@@ -55,9 +55,7 @@ PipelineGL::~PipelineGL() = default;
 MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
                                       const PipelineLayout* layout,
                                       const PerStage<ProgrammableStage>& stages,
-                                      bool usesVertexIndex,
-                                      bool usesInstanceIndex,
-                                      bool usesFragDepth,
+                                      ImmediateConstantMask& pipelineImmediateMask,
                                       VertexAttributeMask bgraSwizzleAttributes) {
     mProgram = DAWN_GL_TRY(gl, CreateProgram());
 
@@ -80,10 +78,9 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
         std::vector<CombinedSampler> stageCombinedSamplers;
         GLuint shader;
         DAWN_TRY_ASSIGN(
-            shader,
-            module->CompileShader(gl, stages[stage], stage, usesVertexIndex, usesInstanceIndex,
-                                  usesFragDepth, bgraSwizzleAttributes, &stageCombinedSamplers,
-                                  layout, &emulatedTextureBuiltins, &needsSSBOLengthUniformBuffer));
+            shader, module->CompileShader(gl, stages[stage], stage, pipelineImmediateMask,
+                                          bgraSwizzleAttributes, &stageCombinedSamplers, layout,
+                                          &emulatedTextureBuiltins, &needsSSBOLengthUniformBuffer));
 
         mNeedsSSBOLengthUniformBuffer |= needsSSBOLengthUniformBuffer;
         combinedSamplers.insert(stageCombinedSamplers.begin(), stageCombinedSamplers.end());
@@ -153,6 +150,13 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
             DAWN_GL_TRY(gl, Uniform1i(location, uniformsToSet[0]));
         } else {
             DAWN_GL_TRY(gl, Uniform1iv(location, uniformsToSet.size(), uniformsToSet.data()));
+        }
+    }
+
+    if (pipelineImmediateMask.any()) {
+        auto location = DAWN_GL_TRY(gl, GetUniformLocation(mProgram, "tint_immediates"));
+        if (location == -1) {
+            pipelineImmediateMask.reset();
         }
     }
 
