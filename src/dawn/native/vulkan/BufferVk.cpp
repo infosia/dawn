@@ -312,16 +312,20 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
         uint32_t paddingClearSize = Align(GetAllocatedSize() - GetSize(), 4);
         uint64_t paddingClearOffset = GetAllocatedSize() - paddingClearSize;
 
+        bool needsNonZeroClear =
+            device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting);
+        bool needsPaddingClear =
+            device->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse) && paddingClearSize > 0;
+
         if (mHostVisible && GetSize() > 0) {
             // For host visible buffers do initialization on CPU to avoid a GPU write that
             // interferes with using the UploadData() fast path.
-            if (device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting)) {
+            if (needsNonZeroClear) {
                 DAWN_TRY(MapMemoryAndPerformOperation(
                     0, mAllocatedSize,
                     [](std::span<uint8_t> mapped) { std::ranges::fill(mapped, 0x01); }));
             }
-            if (device->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse) &&
-                paddingClearSize > 0) {
+            if (needsPaddingClear) {
                 DAWN_TRY(
                     MapMemoryAndPerformOperation(paddingClearOffset, paddingClearSize,
                                                  [&paddingClearSize](std::span<uint8_t> mapped) {
@@ -329,15 +333,14 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
                                                      std::ranges::fill(mapped, 0x0);
                                                  }));
             }
-        } else {
-            if (device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting)) {
-                ClearBuffer(ToBackend(device->GetQueue())->GetPendingRecordingContext(),
-                            0x01010101);
+        } else if (needsNonZeroClear || needsPaddingClear) {
+            auto use = UseBufferInternal();
+            CommandRecordingContext* recordingContext =
+                ToBackend(device->GetQueue())->GetPendingRecordingContext();
+            if (needsNonZeroClear) {
+                ClearBuffer(recordingContext, 0x01010101);
             }
-            if (device->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse) &&
-                paddingClearSize > 0) {
-                CommandRecordingContext* recordingContext =
-                    ToBackend(device->GetQueue())->GetPendingRecordingContext();
+            if (needsPaddingClear) {
                 ClearBuffer(recordingContext, 0, paddingClearOffset, paddingClearSize);
             }
         }
