@@ -1454,6 +1454,7 @@ ResourceTableBase* DeviceBase::APICreateResourceTable(const ResourceTableDescrip
     return ReturnToAPI(std::move(result));
 }
 SamplerBase* DeviceBase::APICreateSampler(const SamplerDescriptor* descriptor) {
+    auto deviceGuard = UseGuardForSamplerCreationImpl();
     Ref<SamplerBase> result;
     if (ConsumedError(CreateSampler(descriptor), &result, "calling %s.CreateSampler(%s).", this,
                       descriptor)) {
@@ -1587,6 +1588,7 @@ ShaderModuleBase* DeviceBase::APICreateErrorShaderModule(const ShaderModuleDescr
     return ReturnToAPI(std::move(result));
 }
 TextureBase* DeviceBase::APICreateTexture(const TextureDescriptor* descriptor) {
+    auto deviceGuard = UseGuardForTextureCreationImpl();
     Ref<TextureBase> result;
     if (ConsumedError(CreateTexture(descriptor), &result, InternalErrorType::OutOfMemory,
                       "calling %s.CreateTexture(%s).", this, descriptor)) {
@@ -2531,6 +2533,14 @@ bool DeviceBase::ReduceMemoryUsageImpl() {
 }
 
 void DeviceBase::PerformIdleTasksImpl() {}
+
+std::optional<DeviceGuard> DeviceBase::UseGuardForTextureCreationImpl() {
+    return GetGuard();
+}
+
+std::optional<DeviceGuard> DeviceBase::UseGuardForSamplerCreationImpl() {
+    return GetGuard();
+}
 
 bool DeviceBase::ShouldDuplicateNumWorkgroupsForDispatchIndirect(
     ComputePipelineBase* computePipeline) const {
