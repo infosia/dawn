@@ -45,6 +45,11 @@ DynamicUploader::DynamicUploader(DeviceBase* device) : mDevice(device) {}
 
 ResultOrError<UploadReservation> DynamicUploader::Reserve(uint64_t allocationSize,
                                                           uint64_t offsetAlignment) {
+    // TODO(crbug.com/474265307): This class is not thread-safe yet. The caller must ensure the
+    // device lock is held. Lock acquisition must not happen here, to avoid potential lock inversion
+    // since this method could be called deep within Queue::Submit().
+    DAWN_ASSERT(mDevice->IsLockedByCurrentThreadIfNeeded());
+
     // Disable further sub-allocation should the request be too large.
     if (allocationSize > kRingBufferSize) {
         BufferDescriptor bufferDesc = {};
@@ -156,6 +161,7 @@ MaybeError DynamicUploader::MaybeSubmitPendingCommands() {
 }
 
 void DynamicUploader::Deallocate(ExecutionSerial lastCompletedSerial, bool freeAll) {
+    DAWN_ASSERT(mDevice->IsLockedByCurrentThreadIfNeeded());
     // Reclaim memory within the ring buffers by ticking (or removing requests no longer
     // in-flight).
     size_t i = 0;
