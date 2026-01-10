@@ -533,6 +533,14 @@ std::optional<DeviceGuard> Device::UseGuardForCreateSampler() {
     return std::nullopt;
 }
 
+std::optional<DeviceGuard> Device::UseGuardForCreateBindGroup() {
+    return std::nullopt;
+}
+
+std::optional<DeviceGuard> Device::UseGuardForCreateBindGroupLayout() {
+    return std::nullopt;
+}
+
 std::optional<DeviceGuard> Device::UseGuardForCreateBuffer() {
     return std::nullopt;
 }
