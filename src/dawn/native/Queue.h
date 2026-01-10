@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_QUEUE_H_
 
 #include <memory>
+#include <mutex>
 #include <optional>
 
 #include "dawn/common/MutexProtected.h"
@@ -108,6 +109,8 @@ class QueueBase : public ExecutionQueueBase, public WeakRefSupport<QueueBase> {
     // of completion.
     void TrackPendingTask(std::unique_ptr<TrackTaskCallback> task);
 
+    std::unique_lock<std::mutex> Lock();
+
     void Tick(ExecutionSerial finishedSerial);
     void HandleDeviceLoss();
 
@@ -158,6 +161,7 @@ class QueueBase : public ExecutionQueueBase, public WeakRefSupport<QueueBase> {
     MaybeError SubmitInternal(uint32_t commandCount, CommandBufferBase* const* commands);
 
     MutexProtected<SerialMap<ExecutionSerial, std::unique_ptr<TrackTaskCallback>>> mTasksInFlight;
+    std::mutex mLock;
 };
 
 }  // namespace dawn::native

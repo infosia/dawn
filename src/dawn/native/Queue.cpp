@@ -636,33 +636,45 @@ MaybeError QueueBase::ValidateWriteTexture(const TexelCopyTextureInfo* destinati
 MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* const* commands) {
     DeviceBase* device = GetDevice();
 
-    // If device is lost, don't let any commands be submitted
-    DAWN_TRY(device->ValidateIsAlive());
-
     TRACE_EVENT0(device->GetPlatform(), General, "Queue::Submit");
-    if (device->IsValidationEnabled()) {
-        // TODO(crbug.com/474265307): There is a race between Submit() and object's APIDestroy().
-        // This device lock can only partially fix it. It doesn't prevent the case when APIDestroy()
-        // is called after this validation.
-        auto deviceGuard = GetDevice()->GetGuard();
-        DAWN_TRY(ValidateSubmit(commandCount, commands));
-    }
-    DAWN_ASSERT(!IsError());
-
     {
+        // Device guard is needed for validation
+        std::optional<DeviceGuard> validationGuard =
+            device->IsValidationEnabled() ? std::optional<DeviceGuard>(device->GetGuard())
+                                          : std::nullopt;
+
+        // Queue's lock must be acquired after device guard to avoid lock inversion.
+        std::scoped_lock queueLock(mLock);
+
+        // If device is lost, don't let any commands be submitted
+        DAWN_TRY(device->ValidateIsAlive());
+
+        if (device->IsValidationEnabled()) {
+            DAWN_TRY(ValidateSubmit(commandCount, commands));
+            validationGuard = std::nullopt;
+        }
+
+        DAWN_ASSERT(!IsError());
+
         auto scope = BeginSubmit();
         DAWN_TRY(SubmitImpl(commandCount, commands));
     }
 
-    // Call Tick() to flush pending work.
-    auto deviceGuard = GetDevice()->GetGuard();
-    DAWN_TRY(device->Tick());
+    {
+        // Call Tick() to flush pending work.
+        auto deviceGuard = GetDevice()->GetGuard();
+        DAWN_TRY(device->Tick());
+    }
 
     return {};
 }
 
 std::optional<DeviceGuard> QueueBase::UseDeviceGuardForSubmitImpl() {
     return GetDevice()->GetGuard();
+}
+
+std::unique_lock<std::mutex> QueueBase::Lock() {
+    return std::unique_lock(mLock);
 }
 
 }  // namespace dawn::native
