@@ -35,6 +35,7 @@
 #include "dawn/native/Device.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/ObjectType_autogen.h"
+#include "dawn/native/Queue.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 
 namespace dawn::native {
@@ -211,6 +212,13 @@ ApiObjectList* ApiObjectBase::GetObjectTrackingList() {
 }
 
 void ApiObjectBase::Destroy(DestroyReason reason) {
+    std::unique_lock<std::mutex> queueLock;
+    if (reason == DestroyReason::EarlyDestroy) {
+        // The object might be used in queue, lock the queue to avoid races.
+        // TODO(crbug.com/474265307): Implement a lock-free way.
+        queueLock = GetDevice()->GetQueue()->Lock();
+    }
+
     ApiObjectList* list = GetObjectTrackingList();
     DAWN_ASSERT(list != nullptr);
     if (list->Untrack(this)) {

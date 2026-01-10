@@ -231,6 +231,54 @@ TEST_P(MultithreadTests, Device_WaitForDroppedInAnotherThread) {
     waitThread.join();
 }
 
+// Test that destroying buffers while submitting commands that use them doesn't cause races.
+TEST_P(MultithreadTests, DestroyBufferDuringSubmit) {
+    // TODO(451928481): multithread support in GL is incomplete
+    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
+    DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("skip_validation"));
+
+    constexpr uint32_t kNumThreads = 20;
+    constexpr uint32_t kSize = 256;
+
+    std::vector<wgpu::Buffer> buffers(kNumThreads);
+    std::vector<wgpu::CommandBuffer> commandBuffers(kNumThreads);
+
+    // Create buffers and command buffers that use them
+    for (uint32_t i = 0; i < kNumThreads; ++i) {
+        buffers[i] = CreateBuffer(kSize, wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::CopySrc);
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        encoder.ClearBuffer(buffers[i], 0, kSize);
+        commandBuffers[i] = encoder.Finish();
+    }
+
+    // Submit and destroy in parallel - some may race
+    utils::RunInParallel(kNumThreads * 2, [&](uint32_t threadIndex) {
+        uint32_t bufferIndex = threadIndex / 2;
+
+        if (threadIndex % 2 == 0) {
+            // Even threads: submit commands
+            device.PushErrorScope(wgpu::ErrorFilter::Validation);
+            queue.Submit(1, &commandBuffers[bufferIndex]);
+
+            // Pop and consume any validation errors
+            std::atomic<bool> errorChecked(false);
+            device.PopErrorScope(wgpu::CallbackMode::AllowProcessEvents,
+                                 [&errorChecked](wgpu::PopErrorScopeStatus status,
+                                                 wgpu::ErrorType type, wgpu::StringView) {
+                                     EXPECT_EQ(status, wgpu::PopErrorScopeStatus::Success);
+                                     // Error type could be NoError or Validation depending on
+                                     // timing
+                                     errorChecked = true;
+                                 });
+            instance.ProcessEvents();
+            EXPECT_TRUE(errorChecked.load());
+        } else {
+            // Odd threads: destroy buffers
+            buffers[bufferIndex].Destroy();
+        }
+    });
+}
+
 // Test that multiple buffers being created and mapped on multiple threads won't interfere with
 // each other.
 TEST_P(MultithreadTests, Buffers_MapInParallel) {
