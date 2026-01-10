@@ -16,6 +16,24 @@
       "message": "This is a good thing to do but I don\u0027t love that it makes the code a bit painful to read/edit...\n\nEnded up nerd-sniping me into trying to do this with constexpr/consteval. It was a huge pain but Gemini managed to figure out how to do a few key things with constexpr that I couldn\u0027t think of. I haven\u0027t fully finished working on it but it seems promising.\nhttps://godbolt.org/z/x3zzWP4zP\n(Even if I end up throwing this away it\u0027s been a good excuse to spend time learning some C++ and how to use Gemini.)\n\nLet me know what you think.",
       "revId": "cf5555c06f5eff08bfc9e561f1d2f54ec15f8f45",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fde4dd97_28d51ed2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-10T08:09:52Z",
+      "side": 1,
+      "message": "One specific thing to note is this doesn\u0027t handle removing comments, but it probably could.",
+      "parentUuid": "ce1f4b36_001216e6",
+      "revId": "cf5555c06f5eff08bfc9e561f1d2f54ec15f8f45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
