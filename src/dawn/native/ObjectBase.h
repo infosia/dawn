@@ -37,6 +37,7 @@
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/Ref.h"
 #include "dawn/common/RefCounted.h"
+#include "dawn/native/Error.h"
 #include "dawn/native/Forward.h"
 #include "dawn/native/dawn_platform.h"
 
@@ -164,6 +165,13 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
     // by the owning device.
     bool IsAlive() const;
 
+    // Begin using the object in a queue submission.
+    // Returns an error if the object is not in the Alive state.
+    MaybeError BeginUseInSubmit();
+
+    // End using the object in a queue submission.
+    void EndUseInSubmit();
+
     // This needs to be public because it can be called from the device owning the object.
     void Destroy(DestroyReason reason = DestroyReason::EarlyDestroy);
 
@@ -201,18 +209,30 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
   private:
     friend class ApiObjectList;
 
-    // Sets mIsAlive to false and calls DestroyImpl. Should only be called after the object
+    // The state of an API object's lifetime.
+    enum class AliveState {
+        // The object has been destroyed and is no longer tracked.
+        Destroyed,
+        // The object is alive and tracked in the device's object list.
+        Alive,
+        // The object is currently being used in a queue submission.
+        AliveInSubmit,
+        // The object is in the process of being destroyed.
+        Destroying,
+    };
+
+    // Sets mAliveState to Destroyed and calls DestroyImpl. Should only be called after the object
     // has been removed from the tracking list.
     void DestroyInternal(DestroyReason reason);
 
     std::string mLabel;
-    // Atomic flag tracking whether the object is alive (tracked in the device's object list).
+    // Atomic state tracking the object's lifetime state.
     // This is used instead of IsInList() for thread-safe liveness checks. IsInList() is not
     // thread-safe because it reads the LinkedList node pointers, which can be concurrently
     // modified by other threads removing nodes from the list. Even when checking different
     // objects, the shared LinkedList structure itself is not safe for concurrent read/write
     // access without synchronization.
-    std::atomic<bool> mIsAlive{false};
+    std::atomic<AliveState> mAliveState{AliveState::Destroyed};
 };
 
 template <typename T>
