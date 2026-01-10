@@ -1154,6 +1154,14 @@ void Device::PerformIdleTasksImpl() {
     }
 }
 
+std::optional<DeviceGuard> Device::UseGuardForBindGroupCreationImpl() {
+    return std::nullopt;
+}
+
+std::optional<DeviceGuard> Device::UseGuardForBindGroupLayoutCreationImpl() {
+    return std::nullopt;
+}
+
 bool Device::CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage storageUsage,
                                                           wgpu::BufferUsage originalUsage,
                                                           size_t bufferSize) const {
