@@ -35,6 +35,7 @@
 #include "dawn/native/Device.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/ObjectType_autogen.h"
+#include "dawn/native/Queue.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 
 namespace dawn::native {
@@ -110,7 +111,7 @@ void ApiObjectList::Track(ApiObjectBase* object) {
     }
     mObjects.Use([&object](auto lockedObjects) {
         lockedObjects->Prepend(object);
-        object->mIsAlive.store(true, std::memory_order_release);
+        object->mAliveState.store(ApiObjectBase::AliveState::Alive, std::memory_order_release);
     });
 }
 
@@ -192,7 +193,27 @@ void ApiObjectBase::FormatLabel(absl::FormatSink* s) const {
 void ApiObjectBase::SetLabelImpl() {}
 
 bool ApiObjectBase::IsAlive() const {
-    return mIsAlive.load(std::memory_order_acquire);
+    return mAliveState.load(std::memory_order_acquire) != AliveState::Destroyed;
+}
+
+MaybeError ApiObjectBase::BeginUseInSubmit() {
+    AliveState expected = AliveState::Alive;
+    while (!mAliveState.compare_exchange_weak(expected, AliveState::AliveInSubmit,
+                                              std::memory_order_acq_rel,
+                                              std::memory_order_acquire)) {
+        // We don't currently support duplicated BeginUseInSubmit() without EndUseInSubmit() 1st.
+        DAWN_ASSERT(expected != AliveState::AliveInSubmit);
+        if (expected != AliveState::Alive) {
+            return DAWN_VALIDATION_ERROR(
+                "Cannot use %s in submit. It is used concurrently by other methods.", this);
+        }
+    }
+    return {};
+}
+
+void ApiObjectBase::EndUseInSubmit() {
+    AliveState previous = mAliveState.exchange(AliveState::Alive, std::memory_order_acq_rel);
+    DAWN_ASSERT(previous == AliveState::AliveInSubmit);
 }
 
 void ApiObjectBase::DeleteThis() {
@@ -211,6 +232,26 @@ ApiObjectList* ApiObjectBase::GetObjectTrackingList() {
 }
 
 void ApiObjectBase::Destroy(DestroyReason reason) {
+    // Try to transition to Destroying state
+    AliveState expected = AliveState::Alive;
+    while (!mAliveState.compare_exchange_weak(
+        expected, AliveState::Destroying, std::memory_order_acq_rel, std::memory_order_acquire)) {
+        if (expected == AliveState::AliveInSubmit) {
+            std::ignore = GetDevice()->ConsumedError(
+                DAWN_VALIDATION_ERROR("Cannot destroy %s while it is used in a "
+                                      "queue submission.",
+                                      this));
+            return;
+        }
+        // If expected is Destroyed or Destroying, we're already being destroyed, so return
+        if (expected == AliveState::Destroyed || expected == AliveState::Destroying) {
+            return;
+        }
+    }
+
+    // After successful CAS, expected should still be Alive
+    DAWN_CHECK(expected == AliveState::Alive);
+
     ApiObjectList* list = GetObjectTrackingList();
     DAWN_ASSERT(list != nullptr);
     if (list->Untrack(this)) {
@@ -219,7 +260,8 @@ void ApiObjectBase::Destroy(DestroyReason reason) {
 }
 
 void ApiObjectBase::DestroyInternal(DestroyReason reason) {
-    mIsAlive.store(false, std::memory_order_release);
+    AliveState previous = mAliveState.exchange(AliveState::Destroyed, std::memory_order_acq_rel);
+    DAWN_ASSERT(previous == AliveState::Alive || previous == AliveState::Destroying);
     DestroyImpl(reason);
 }
 
