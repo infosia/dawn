@@ -2881,6 +2881,7 @@
         "category": "object",
         "methods": [
             {
+                "no autolock": true,
                 "name": "submit",
                 "args": [
                     {"name": "command count", "type": "size_t"},

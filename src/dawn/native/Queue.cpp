@@ -167,6 +167,8 @@ void QueueBase::FormatLabel(absl::FormatSink* s) const {
 }
 
 void QueueBase::APISubmit(uint32_t commandCount, CommandBufferBase* const* commands) {
+    auto guard = UseDeviceGuardForSubmitImpl();
+
     MaybeError result = SubmitInternal(commandCount, commands);
 
     // Destroy the command buffers even if SubmitInternal failed. (crbug.com/dawn/1863)
@@ -634,11 +636,18 @@ MaybeError QueueBase::ValidateWriteTexture(const TexelCopyTextureInfo* destinati
 MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* const* commands) {
     DeviceBase* device = GetDevice();
 
-    // If device is lost, don't let any commands be submitted
+    // If device is lost, don't let any commands be submitted.
+    // TODO(crbug.com/474265307): There is a race between Submit() the device's
+    // WillDropLastExternalRef(). After this validation, another thread might drop last external ref
+    // of the device and cause it to be destroyed while Submit() is in progress.
     DAWN_TRY(device->ValidateIsAlive());
 
     TRACE_EVENT0(device->GetPlatform(), General, "Queue::Submit");
     if (device->IsValidationEnabled()) {
+        // TODO(crbug.com/474265307): There is a race between Submit() and objects' APIDestroy().
+        // This device lock can only partially fix it. It doesn't prevent the case when APIDestroy()
+        // is called after this validation.
+        auto deviceGuard = GetDevice()->GetGuard();
         DAWN_TRY(ValidateSubmit(commandCount, commands));
     }
     DAWN_ASSERT(!IsError());
@@ -646,9 +655,14 @@ MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* c
     DAWN_TRY(SubmitImpl(commandCount, commands));
 
     // Call Tick() to flush pending work.
+    auto deviceGuard = GetDevice()->GetGuard();
     DAWN_TRY(device->Tick());
 
     return {};
+}
+
+std::optional<DeviceGuard> QueueBase::UseDeviceGuardForSubmitImpl() {
+    return GetDevice()->GetGuard();
 }
 
 }  // namespace dawn::native
