@@ -807,6 +807,51 @@ TEST_P(MultithreadTests, DestroyTextureAndViewsAtSameTime) {
     }
 }
 
+// Test that copying a smaller buffer to a uniform buffer repeatedly on multiple threads works.
+// On some backends, this might allocate temporary buffers during command buffer submissions.
+TEST_P(MultithreadTests, PartialB2BInParallel) {
+    // TODO(451928481): multithread support in GL is incomplete
+    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
+
+    constexpr uint32_t kUniformBufferSize = 512;
+    constexpr uint32_t kSrcBufferSize = 256;  // Smaller than uniform buffer for partial copy
+    constexpr uint32_t kNumThreads = 10;
+    constexpr uint32_t kNumCopies = 5;
+
+    // Prepare test data
+    std::vector<uint32_t> testData(kSrcBufferSize / sizeof(uint32_t));
+    for (uint32_t i = 0; i < testData.size(); ++i) {
+        testData[i] = i;
+    }
+
+    // Create source buffer once with mapAtCreation=true and write data using CPU
+    wgpu::BufferDescriptor srcBufferDesc;
+    srcBufferDesc.size = kSrcBufferSize;
+    srcBufferDesc.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite;
+    srcBufferDesc.mappedAtCreation = true;
+    wgpu::Buffer srcBuffer = device.CreateBuffer(&srcBufferDesc);
+    memcpy(srcBuffer.GetMappedRange(0, kSrcBufferSize), testData.data(), kSrcBufferSize);
+    srcBuffer.Unmap();
+
+    utils::RunInParallel(kNumThreads, [this, &testData, srcBuffer](uint32_t threadIndex) {
+        // Create uniform buffer once per thread
+        wgpu::Buffer uniformBuffer = CreateBuffer(
+            kUniformBufferSize,
+            wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::CopySrc);
+
+        // Repeatedly copy from source buffer to uniform buffer (partial copy)
+        for (uint32_t copyIndex = 0; copyIndex < kNumCopies; ++copyIndex) {
+            wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+            encoder.CopyBufferToBuffer(srcBuffer, 0, uniformBuffer, 0, kSrcBufferSize);
+            wgpu::CommandBuffer commands = encoder.Finish();
+            queue.Submit(1, &commands);
+        }
+
+        // Verify the uniform buffer has the correct data after all copies
+        EXPECT_BUFFER_U32_RANGE_EQ(testData.data(), uniformBuffer, 0, testData.size());
+    });
+}
+
 class MultithreadCachingTests : public MultithreadTests {
   protected:
     wgpu::ShaderModule CreateComputeShaderModule() const {
