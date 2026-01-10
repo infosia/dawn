@@ -46,12 +46,16 @@ template <typename MutexT>
 class DAWN_MUTEX_CAPABILITY MutexBase : public RefCounted, NonCopyable {
   public:
     template <typename MutexRef>
-    struct DAWN_SCOPED_LOCKABLE AutoLockBase : NonMovable {
+    struct DAWN_SCOPED_LOCKABLE AutoLockBase : NonCopyable {
         AutoLockBase() : mMutex(nullptr) {}
         explicit AutoLockBase(MutexRef mutex) : mMutex(std::move(mutex)) {
             if (mMutex != nullptr) {
                 mMutex->Lock();
             }
+        }
+
+        AutoLockBase(AutoLockBase&& other) : mMutex(std::move(other.mMutex)) {
+            other.mMutex = nullptr;
         }
 
         ~AutoLockBase() {
