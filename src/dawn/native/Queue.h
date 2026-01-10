@@ -29,11 +29,13 @@
 #define SRC_DAWN_NATIVE_QUEUE_H_
 
 #include <memory>
+#include <optional>
 
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
 #include "dawn/common/WeakRefSupport.h"
 #include "dawn/native/CallbackTaskManager.h"
+#include "dawn/native/DeviceGuard.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/ExecutionQueue.h"
 #include "dawn/native/Forward.h"
@@ -116,6 +118,11 @@ class QueueBase : public ExecutionQueueBase, public WeakRefSupport<QueueBase> {
     void DestroyImpl(DestroyReason reason) override;
 
     virtual MaybeError SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) = 0;
+
+    // TODO(crbug.com/474265307): Remove this once all backends' SubmitImpl methods are
+    // thread-safe
+    virtual std::optional<DeviceGuard> UseDeviceGuardForSubmitImpl();
+
     virtual MaybeError WriteBufferImpl(BufferBase* buffer,
                                        uint64_t bufferOffset,
                                        const void* data,
