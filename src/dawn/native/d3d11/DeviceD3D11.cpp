@@ -529,6 +529,10 @@ std::optional<DeviceGuard> Device::UseGuardForTextureCreationImpl() {
     return std::nullopt;
 }
 
+std::optional<DeviceGuard> Device::UseGuardForBufferCreationImpl() {
+    return std::nullopt;
+}
+
 bool Device::MayRequireDuplicationOfIndirectParameters() const {
     return true;
 }

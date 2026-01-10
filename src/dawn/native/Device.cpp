@@ -1313,7 +1313,7 @@ BufferBase* DeviceBase::APICreateBuffer(const BufferDescriptor* rawDescriptor) {
             // Creating a buffer from a host-mapped pointer doesn't require the lock.
             return CreateBufferImpl(descriptor);
         } else {
-            auto deviceGuard = GetGuard();
+            auto deviceGuard = UseGuardForBufferCreationImpl();
             return CreateBufferImpl(descriptor);
         }
     })();
@@ -1335,7 +1335,7 @@ BufferBase* DeviceBase::APICreateBuffer(const BufferDescriptor* rawDescriptor) {
     // 3. Mapping at creation. The buffer may be either valid or ErrorBuffer.
     if (rawDescriptor->mappedAtCreation) {
         // MapAtCreation requires the device lock in case it allocates staging memory.
-        auto deviceGuard = GetGuard();
+        auto deviceGuard = UseGuardForBufferCreationImpl();
 
         MaybeError mapResult =
             fakeOOMAtNativeMap
@@ -2534,6 +2534,10 @@ bool DeviceBase::ReduceMemoryUsageImpl() {
 void DeviceBase::PerformIdleTasksImpl() {}
 
 std::optional<DeviceGuard> DeviceBase::UseGuardForTextureCreationImpl() {
+    return GetGuard();
+}
+
+std::optional<DeviceGuard> DeviceBase::UseGuardForBufferCreationImpl() {
     return GetGuard();
 }
 
