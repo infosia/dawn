@@ -96,6 +96,8 @@ MaybeError Queue::Initialize() {
 }
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
+    // TODO(crbug.com/474265307): Revisit whether this lock is needed for this backend.
+    auto deviceGuard = GetDevice()->GetGuard();
     TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), Recording, "CommandBufferVk::RecordCommands");
     CommandRecordingContext* recordingContext = GetPendingRecordingContext();
     for (uint32_t i = 0; i < commandCount; ++i) {

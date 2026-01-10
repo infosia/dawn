@@ -108,9 +108,22 @@ class ExecutionQueueBase : public ApiObjectBase {
     // happen when allocating resources or staging memory during submission (for workarounds, or
     // emulation) and the heuristics ask for an early submit to happen (which would cause a
     // submit-in-submit and many issues).
-    // TODO(crbug.com/42240396): Move all handling of Submit(command buffers) in this class as well,
-    // at which point this member can be private.
-    bool mInSubmit = false;
+    // Note: this method only returns true if the current thread is in submit. So if thread A in a
+    // middle of Queue.Submit() and thread B calls IsInSubmit(), it might return false.
+    bool IsInSubmit() const;
+
+    class ScopedInSubmit {
+      public:
+        explicit ScopedInSubmit(ExecutionQueueBase* queue) : mQueue(queue) {
+            mQueue->SetInSubmit(true);
+        }
+        ~ScopedInSubmit() { mQueue->SetInSubmit(false); }
+
+      private:
+        raw_ptr<ExecutionQueueBase> mQueue;
+    };
+
+    ScopedInSubmit BeginSubmit() { return ScopedInSubmit(this); }
 
   protected:
     using ApiObjectBase::ApiObjectBase;
@@ -145,6 +158,8 @@ class ExecutionQueueBase : public ApiObjectBase {
     virtual MaybeError SubmitPendingCommandsImpl() = 0;
 
     void UpdateCompletedSerialToInternal(ExecutionSerial completedSerial, bool forceTasks = false);
+
+    void SetInSubmit(bool inSubmit);
 
     // |mCompletedSerial| tracks the last completed command serial that the fence has returned. This
     // is currently implicitly guarded by the lock for |mWaitingTasks| since we only update this
