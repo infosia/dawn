@@ -69,6 +69,7 @@ class Queue : public d3d::Queue {
     MaybeError InitializeD3DFence(bool useMonitoredFence);
 
     MaybeError SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) override;
+    std::optional<DeviceGuard> UseDeviceGuardForSubmitImpl() override;
     MaybeError WriteBufferImpl(BufferBase* buffer,
                                uint64_t bufferOffset,
                                const void* data,
