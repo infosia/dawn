@@ -58,6 +58,22 @@ TEST_F(MutexTest, AutoLock) {
     EXPECT_FALSE(mMutex.IsLockedByCurrentThread());
 }
 
+// Test AutoLock move constructor transfers ownership of the lock.
+TEST_F(MutexTest, AutoLockMoveConstructor) {
+    {
+        Mutex::AutoLock autoLock1(&mMutex);
+        EXPECT_TRUE(mMutex.IsLockedByCurrentThread());
+
+        // Move autoLock1 to autoLock2
+        Mutex::AutoLock autoLock2(std::move(autoLock1));
+        EXPECT_TRUE(mMutex.IsLockedByCurrentThread());
+
+        // autoLock1 should no longer own the lock, so destroying it shouldn't unlock
+    }
+    // autoLock2 is destroyed here, mutex should be unlocked
+    EXPECT_FALSE(mMutex.IsLockedByCurrentThread());
+}
+
 // Test AutoLockAndHoldRef will keep the mutex alive
 TEST_F(MutexTest, AutoLockAndHoldRef) {
     auto* mutex = new Mutex();
