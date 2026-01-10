@@ -525,6 +525,14 @@ bool Device::ReduceMemoryUsageImpl() {
     return false;
 }
 
+std::optional<DeviceGuard> Device::UseGuardForTextureCreationImpl() {
+    return std::nullopt;
+}
+
+std::optional<DeviceGuard> Device::UseGuardForSamplerCreationImpl() {
+    return std::nullopt;
+}
+
 bool Device::MayRequireDuplicationOfIndirectParameters() const {
     return true;
 }
