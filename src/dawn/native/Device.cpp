@@ -1275,6 +1275,7 @@ Ref<PipelineCacheBase> DeviceBase::GetOrCreatePipelineCache(const CacheKey& key)
 // Object creation API methods
 
 BindGroupBase* DeviceBase::APICreateBindGroup(const BindGroupDescriptor* descriptor) {
+    auto deviceGuard = UseGuardForCreateBindGroup();
     Ref<BindGroupBase> result;
     if (ConsumedError(CreateBindGroup(descriptor), &result, "calling %s.CreateBindGroup(%s).", this,
                       descriptor)) {
@@ -1284,6 +1285,7 @@ BindGroupBase* DeviceBase::APICreateBindGroup(const BindGroupDescriptor* descrip
 }
 BindGroupLayoutBase* DeviceBase::APICreateBindGroupLayout(
     const BindGroupLayoutDescriptor* descriptor) {
+    auto deviceGuard = UseGuardForCreateBindGroupLayout();
     Ref<BindGroupLayoutBase> result;
     if (ConsumedError(CreateBindGroupLayout(descriptor), &result,
                       "calling %s.CreateBindGroupLayout(%s).", this, descriptor)) {
@@ -2545,11 +2547,19 @@ bool DeviceBase::ReduceMemoryUsageImpl() {
 
 void DeviceBase::PerformIdleTasksImpl() {}
 
-std::optional<DeviceGuard> DeviceBase::UseGuardForCreateTexture() {
-    // Backends with thread-safe CreateTextureImpl() can override this to return nullopt.
-    // TODO(crbug.com/475530346): Even with a thread-safe CreateTextureImpl(), there's still a
-    // potential race between Device::Destroy() and APICreateTexture() without the device lock. We
-    // assume callers are responsible for synchronizing Destroy() calls with texture creation.
+std::optional<DeviceGuard> DeviceBase::UseGuardForCreateBindGroup() {
+    // Backends with thread-safe Create*Impl() methods can override these to return nullopt.
+    // TODO(crbug.com/475530346): Even with thread-safe Create*Impl() methods, there's still a
+    // potential race between Device::Destroy() and APICreate*() calls without the device lock. We
+    // assume callers are responsible for synchronizing Destroy() calls with object creation.
+    return GetGuard();
+}
+
+std::optional<DeviceGuard> DeviceBase::UseGuardForCreateBindGroupLayout() {
+    return GetGuard();
+}
+
+std::optional<DeviceGuard> DeviceBase::UseGuardForCreateBuffer() {
     return GetGuard();
 }
 
@@ -2557,7 +2567,7 @@ std::optional<DeviceGuard> DeviceBase::UseGuardForCreateSampler() {
     return GetGuard();
 }
 
-std::optional<DeviceGuard> DeviceBase::UseGuardForCreateBuffer() {
+std::optional<DeviceGuard> DeviceBase::UseGuardForCreateTexture() {
     return GetGuard();
 }
 
