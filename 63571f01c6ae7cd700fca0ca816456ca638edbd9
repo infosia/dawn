@@ -33,6 +33,41 @@
       "message": "Adding Kai also because he might know more, but I am a bit hesitant because I notice that in Chromium, we also still use python, not vpython3, and I don\u0027t know if I know enough context about why...",
       "revId": "63571f01c6ae7cd700fca0ca816456ca638edbd9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea6ce7eb_c3111472",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-10T00:48:51Z",
+      "side": 1,
+      "message": "I don\u0027t thi",
+      "revId": "63571f01c6ae7cd700fca0ca816456ca638edbd9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7aa582af_e1a4c5a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-10T00:48:51Z",
+      "side": 1,
+      "message": "Maybe chromium has something that sets paths differently so that python3 is the one from depot_tools?\n\nTechnically I don\u0027t think dawn requires depot_tools but I\u0027m sure that DEPS does and can assume it\u0027s present.\n\nI don\u0027t think there\u0027s any harm in trying this, if someone runs into trouble, it\u0027s trivial to revert.",
+      "parentUuid": "1090fd8b_561ba129",
+      "revId": "63571f01c6ae7cd700fca0ca816456ca638edbd9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
