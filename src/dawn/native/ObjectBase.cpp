@@ -35,6 +35,7 @@
 #include "dawn/native/Device.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/ObjectType_autogen.h"
+#include "dawn/native/Queue.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 
 namespace dawn::native {
@@ -195,6 +196,10 @@ bool ApiObjectBase::IsAlive() const {
     return mIsAlive.load(std::memory_order_acquire);
 }
 
+void ApiObjectBase::SetInSubmit(bool inSubmit) {
+    mInSubmit.store(inSubmit, std::memory_order_release);
+}
+
 void ApiObjectBase::DeleteThis() {
     Destroy(DestroyReason::CppDestructor);
     RefCounted::DeleteThis();
@@ -211,6 +216,19 @@ ApiObjectList* ApiObjectBase::GetObjectTrackingList() {
 }
 
 void ApiObjectBase::Destroy(DestroyReason reason) {
+    if (reason == DestroyReason::EarlyDestroy) {
+        // We rely on device lock for explicit destroy for now.
+        DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
+    }
+
+    if (mInSubmit.load(std::memory_order_acquire)) {
+        std::ignore = GetDevice()->ConsumedError(
+            DAWN_VALIDATION_ERROR("Cannot destroy %s while it is used in a "
+                                  "queue submission.",
+                                  this));
+        return;
+    }
+
     ApiObjectList* list = GetObjectTrackingList();
     DAWN_ASSERT(list != nullptr);
     if (list->Untrack(this)) {

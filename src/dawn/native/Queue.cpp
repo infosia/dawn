@@ -36,6 +36,7 @@
 #include <utility>
 #include <vector>
 
+#include "absl/cleanup/cleanup.h"
 #include "dawn/common/Constants.h"
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/FutureUtils.h"
@@ -167,13 +168,19 @@ void QueueBase::FormatLabel(absl::FormatSink* s) const {
 }
 
 void QueueBase::APISubmit(uint32_t commandCount, CommandBufferBase* const* commands) {
+    // For SubmitInternal, device lock is optional depending on backends.
     auto guard = UseDeviceGuardForSubmitImpl();
-
     MaybeError result = SubmitInternal(commandCount, commands);
 
-    // Destroy the command buffers even if SubmitInternal failed. (crbug.com/dawn/1863)
-    for (uint32_t i = 0; i < commandCount; ++i) {
-        commands[i]->Destroy();
+    {
+        // Destroy the command buffers even if SubmitInternal failed. (crbug.com/dawn/1863)
+
+        // Device lock is mandatory for protecting Destroy()
+        auto guard = GetDevice()->GetGuard();
+
+        for (uint32_t i = 0; i < commandCount; ++i) {
+            commands[i]->Destroy();
+        }
     }
 
     [[maybe_unused]] bool hadError = GetDevice()->ConsumedError(
@@ -483,9 +490,24 @@ MaybeError QueueBase::CopyExternalTextureForBrowserInternal(
     return DoCopyExternalTextureForBrowser(GetDevice(), source, &destination, copySize, options);
 }
 
-MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
-                                     CommandBufferBase* const* commands) const {
-    TRACE_EVENT0(GetDevice()->GetPlatform(), Validation, "Queue::ValidateSubmit");
+template <typename T>
+MaybeError QueueBase::ValidateCanUseInSubmitAndTrack(T* object) {
+    // We rely on device lock to synchronize with object's explicit destroy.
+    DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
+
+    if constexpr (requires { object->ValidateCanUseInSubmitNow(); }) {
+        DAWN_TRY(object->ValidateCanUseInSubmitNow());
+    } else if constexpr (requires { object->ValidateCanUseOnQueueNow(); }) {
+        DAWN_TRY(object->ValidateCanUseOnQueueNow());
+    }
+    object->SetInSubmit(true);
+    mUsedInSubmit.push_back(Ref<ApiObjectBase>(object));
+    return {};
+}
+
+MaybeError QueueBase::ValidateSubmitAndTrackObjects(uint32_t commandCount,
+                                                    CommandBufferBase* const* commands) {
+    TRACE_EVENT0(GetDevice()->GetPlatform(), Validation, "Queue::ValidateSubmitAndTrackObjects");
     DAWN_TRY(GetDevice()->ValidateObject(this));
 
     std::set<CommandBufferBase*> uniqueCommandBuffers;
@@ -501,40 +523,40 @@ MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
 
         // Maybe track last usage for other resources, and use it to release resources earlier?
         for (const SyncScopeResourceUsage& scope : usages.renderPasses) {
-            for (const BufferBase* buffer : scope.buffers) {
-                DAWN_TRY(buffer->ValidateCanUseOnQueueNow());
+            for (BufferBase* buffer : scope.buffers) {
+                DAWN_TRY(ValidateCanUseInSubmitAndTrack(buffer));
             }
-            for (const TextureBase* texture : scope.textures) {
-                DAWN_TRY(texture->ValidateCanUseInSubmitNow());
+            for (TextureBase* texture : scope.textures) {
+                DAWN_TRY(ValidateCanUseInSubmitAndTrack(texture));
             }
-            for (const ExternalTextureBase* externalTexture : scope.externalTextures) {
-                DAWN_TRY(externalTexture->ValidateCanUseInSubmitNow());
+            for (ExternalTextureBase* externalTexture : scope.externalTextures) {
+                DAWN_TRY(ValidateCanUseInSubmitAndTrack(externalTexture));
             }
         }
 
         for (const ComputePassResourceUsage& pass : usages.computePasses) {
-            for (const BufferBase* buffer : pass.referencedBuffers) {
-                DAWN_TRY(buffer->ValidateCanUseOnQueueNow());
+            for (BufferBase* buffer : pass.referencedBuffers) {
+                DAWN_TRY(ValidateCanUseInSubmitAndTrack(buffer));
             }
-            for (const TextureBase* texture : pass.referencedTextures) {
-                DAWN_TRY(texture->ValidateCanUseInSubmitNow());
+            for (TextureBase* texture : pass.referencedTextures) {
+                DAWN_TRY(ValidateCanUseInSubmitAndTrack(texture));
             }
-            for (const ExternalTextureBase* externalTexture : pass.referencedExternalTextures) {
-                DAWN_TRY(externalTexture->ValidateCanUseInSubmitNow());
+            for (ExternalTextureBase* externalTexture : pass.referencedExternalTextures) {
+                DAWN_TRY(ValidateCanUseInSubmitAndTrack(externalTexture));
             }
         }
 
-        for (const BufferBase* buffer : usages.topLevelBuffers) {
-            DAWN_TRY(buffer->ValidateCanUseOnQueueNow());
+        for (BufferBase* buffer : usages.topLevelBuffers) {
+            DAWN_TRY(ValidateCanUseInSubmitAndTrack(buffer));
         }
-        for (const TextureBase* texture : usages.topLevelTextures) {
-            DAWN_TRY(texture->ValidateCanUseInSubmitNow());
+        for (TextureBase* texture : usages.topLevelTextures) {
+            DAWN_TRY(ValidateCanUseInSubmitAndTrack(texture));
         }
-        for (const QuerySetBase* querySet : usages.usedQuerySets) {
-            DAWN_TRY(querySet->ValidateCanUseInSubmitNow());
+        for (QuerySetBase* querySet : usages.usedQuerySets) {
+            DAWN_TRY(ValidateCanUseInSubmitAndTrack(querySet));
         }
-        for (const ResourceTableBase* resourceTable : usages.usedResourceTables) {
-            DAWN_TRY(resourceTable->ValidateCanUseInSubmitNow());
+        for (ResourceTableBase* resourceTable : usages.usedResourceTables) {
+            DAWN_TRY(ValidateCanUseInSubmitAndTrack(resourceTable));
         }
 
         // Validate that pinned textures are only used with their pinned usage. This is done in a
@@ -636,33 +658,51 @@ MaybeError QueueBase::ValidateWriteTexture(const TexelCopyTextureInfo* destinati
 MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* const* commands) {
     DeviceBase* device = GetDevice();
 
-    // If device is lost, don't let any commands be submitted.
-    // TODO(crbug.com/474265307): There is a race between Submit() the device's
-    // WillDropLastExternalRef(). After this validation, another thread might drop last external ref
-    // of the device and cause it to be destroyed while Submit() is in progress.
-    DAWN_TRY(device->ValidateIsAlive());
-
     TRACE_EVENT0(device->GetPlatform(), General, "Queue::Submit");
-    if (device->IsValidationEnabled()) {
-        // TODO(crbug.com/474265307): There is a race between Submit() and objects' APIDestroy().
-        // This device lock can only partially fix it. It doesn't prevent the case when APIDestroy()
-        // is called after this validation.
-        auto deviceGuard = GetDevice()->GetGuard();
-        DAWN_TRY(ValidateSubmit(commandCount, commands));
+    {
+        // Device guard is needed for validation
+        std::optional<DeviceGuard> validationGuard =
+            device->IsValidationEnabled() ? std::optional<DeviceGuard>(device->GetGuard())
+                                          : std::nullopt;
+
+        // Queue's lock must be acquired after device guard to avoid lock inversion.
+        std::scoped_lock queueLock(mLock);
+
+        // If device is lost, don't let any commands be submitted.
+        DAWN_TRY(device->ValidateIsAlive());
+
+        // Clear any tracked objects upon exit.
+        absl::Cleanup clearUsedInSubmit = [this] {
+            for (const auto& object : mUsedInSubmit) {
+                object->SetInSubmit(false);
+            }
+            mUsedInSubmit.clear();
+        };
+        if (device->IsValidationEnabled()) {
+            DAWN_TRY(ValidateSubmitAndTrackObjects(commandCount, commands));
+            validationGuard = std::nullopt;
+        }
+
+        DAWN_ASSERT(!IsError());
+
+        DAWN_TRY(SubmitImpl(commandCount, commands));
     }
-    DAWN_ASSERT(!IsError());
 
-    DAWN_TRY(SubmitImpl(commandCount, commands));
-
-    // Call Tick() to flush pending work.
-    auto deviceGuard = GetDevice()->GetGuard();
-    DAWN_TRY(device->Tick());
+    {
+        // Call Tick() to flush pending work.
+        auto deviceGuard = GetDevice()->GetGuard();
+        DAWN_TRY(device->Tick());
+    }
 
     return {};
 }
 
 std::optional<DeviceGuard> QueueBase::UseDeviceGuardForSubmitImpl() {
     return GetDevice()->GetGuard();
+}
+
+std::unique_lock<std::mutex> QueueBase::Lock() {
+    return std::unique_lock(mLock);
 }
 
 }  // namespace dawn::native

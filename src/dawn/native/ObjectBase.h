@@ -164,6 +164,9 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
     // by the owning device.
     bool IsAlive() const;
 
+    // Set whether the object is currently being used in a queue submission.
+    void SetInSubmit(bool inSubmit);
+
     // This needs to be public because it can be called from the device owning the object.
     void Destroy(DestroyReason reason = DestroyReason::EarlyDestroy);
 
@@ -213,6 +216,8 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
     // objects, the shared LinkedList structure itself is not safe for concurrent read/write
     // access without synchronization.
     std::atomic<bool> mIsAlive{false};
+    // Atomic flag tracking whether the object is currently being used in a queue submission.
+    std::atomic<bool> mInSubmit{false};
 };
 
 template <typename T>
