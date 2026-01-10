@@ -533,6 +533,10 @@ std::optional<DeviceGuard> Device::UseGuardForSamplerCreationImpl() {
     return std::nullopt;
 }
 
+std::optional<DeviceGuard> Device::UseGuardForBufferCreationImpl() {
+    return std::nullopt;
+}
+
 bool Device::MayRequireDuplicationOfIndirectParameters() const {
     return true;
 }
