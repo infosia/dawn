@@ -35,6 +35,7 @@
 #include "dawn/native/Device.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/ObjectType_autogen.h"
+#include "dawn/native/Queue.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 
 namespace dawn::native {
@@ -192,6 +193,22 @@ bool ApiObjectBase::IsAlive() const {
     return IsInList();
 }
 
+MaybeError ApiObjectBase::BeginExclusiveUse() {
+    // Try to acquire exclusive use
+    bool expected = false;
+    if (!mExclusiveUse.compare_exchange_strong(expected, true, std::memory_order_acq_rel,
+                                               std::memory_order_acquire)) {
+        return DAWN_VALIDATION_ERROR("Cannot use %s. It is in exclusive use.", this);
+    }
+
+    return {};
+}
+
+void ApiObjectBase::EndExclusiveUse() {
+    bool previous = mExclusiveUse.exchange(false, std::memory_order_acq_rel);
+    DAWN_ASSERT(previous);
+}
+
 void ApiObjectBase::DeleteThis() {
     Destroy(DestroyReason::CppDestructor);
     RefCounted::DeleteThis();
@@ -208,6 +225,11 @@ ApiObjectList* ApiObjectBase::GetObjectTrackingList() {
 }
 
 void ApiObjectBase::Destroy(DestroyReason reason) {
+    ScopedExclusiveUse exclusiveUse(this);
+    if (GetDevice()->ConsumedError(exclusiveUse.Acquire())) {
+        return;
+    }
+
     ApiObjectList* list = GetObjectTrackingList();
     DAWN_ASSERT(list != nullptr);
     if (list->Untrack(this)) {
