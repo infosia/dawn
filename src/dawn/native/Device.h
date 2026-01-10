@@ -564,6 +564,8 @@ class DeviceBase : public ErrorSink,
     // thread-safe
     virtual std::optional<DeviceGuard> UseGuardForCreateTexture();
     virtual std::optional<DeviceGuard> UseGuardForCreateSampler();
+    virtual std::optional<DeviceGuard> UseGuardForCreateBindGroup();
+    virtual std::optional<DeviceGuard> UseGuardForCreateBindGroupLayout();
     virtual std::optional<DeviceGuard> UseGuardForCreateBuffer();
 
     virtual MaybeError TickImpl() = 0;
