@@ -1270,6 +1270,7 @@ Ref<PipelineCacheBase> DeviceBase::GetOrCreatePipelineCache(const CacheKey& key)
 // Object creation API methods
 
 BindGroupBase* DeviceBase::APICreateBindGroup(const BindGroupDescriptor* descriptor) {
+    auto deviceGuard = UseGuardForBindGroupCreationImpl();
     Ref<BindGroupBase> result;
     if (ConsumedError(CreateBindGroup(descriptor), &result, "calling %s.CreateBindGroup(%s).", this,
                       descriptor)) {
@@ -1279,6 +1280,7 @@ BindGroupBase* DeviceBase::APICreateBindGroup(const BindGroupDescriptor* descrip
 }
 BindGroupLayoutBase* DeviceBase::APICreateBindGroupLayout(
     const BindGroupLayoutDescriptor* descriptor) {
+    auto deviceGuard = UseGuardForBindGroupLayoutCreationImpl();
     Ref<BindGroupLayoutBase> result;
     if (ConsumedError(CreateBindGroupLayout(descriptor), &result,
                       "calling %s.CreateBindGroupLayout(%s).", this, descriptor)) {
@@ -2539,6 +2541,14 @@ std::optional<DeviceGuard> DeviceBase::UseGuardForTextureCreationImpl() {
 }
 
 std::optional<DeviceGuard> DeviceBase::UseGuardForSamplerCreationImpl() {
+    return GetGuard();
+}
+
+std::optional<DeviceGuard> DeviceBase::UseGuardForBindGroupCreationImpl() {
+    return GetGuard();
+}
+
+std::optional<DeviceGuard> DeviceBase::UseGuardForBindGroupLayoutCreationImpl() {
     return GetGuard();
 }
 
