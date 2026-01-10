@@ -563,6 +563,8 @@ class DeviceBase : public ErrorSink,
     // TODO(crbug.com/474265307): Remove this once all backends' Create*Impl methods are
     // thread-safe
     virtual std::optional<DeviceGuard> UseGuardForTextureCreationImpl();
+    virtual std::optional<DeviceGuard> UseGuardForBindGroupCreationImpl();
+    virtual std::optional<DeviceGuard> UseGuardForBindGroupLayoutCreationImpl();
     virtual std::optional<DeviceGuard> UseGuardForBufferCreationImpl();
 
     virtual MaybeError TickImpl() = 0;
