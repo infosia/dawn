@@ -29,8 +29,11 @@
 #define SRC_DAWN_NATIVE_QUEUE_H_
 
 #include <memory>
+#include <mutex>
 #include <optional>
+#include <vector>
 
+#include "absl/container/flat_hash_set.h"
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
 #include "dawn/common/WeakRefSupport.h"
@@ -108,6 +111,8 @@ class QueueBase : public ExecutionQueueBase, public WeakRefSupport<QueueBase> {
     // of completion.
     void TrackPendingTask(std::unique_ptr<TrackTaskCallback> task);
 
+    std::scoped_lock<std::mutex> Lock();
+
     void Tick(ExecutionSerial finishedSerial);
     void HandleDeviceLoss();
 
@@ -148,7 +153,11 @@ class QueueBase : public ExecutionQueueBase, public WeakRefSupport<QueueBase> {
                                                      const Extent3D* copySize,
                                                      const CopyTextureForBrowserOptions* options);
 
-    MaybeError ValidateSubmit(uint32_t commandCount, CommandBufferBase* const* commands) const;
+    template <typename T>
+    MaybeError ValidateCanUseInSubmitAndTrack(T* object);
+
+    MaybeError ValidateSubmitAndTrackObjects(uint32_t commandCount,
+                                             CommandBufferBase* const* commands);
     MaybeError ValidateOnSubmittedWorkDone() const;
     MaybeError ValidateWriteTexture(const TexelCopyTextureInfo* destination,
                                     size_t dataSize,
@@ -158,6 +167,8 @@ class QueueBase : public ExecutionQueueBase, public WeakRefSupport<QueueBase> {
     MaybeError SubmitInternal(uint32_t commandCount, CommandBufferBase* const* commands);
 
     MutexProtected<SerialMap<ExecutionSerial, std::unique_ptr<TrackTaskCallback>>> mTasksInFlight;
+    std::mutex mLock;
+    absl::flat_hash_set<ApiObjectBase*> mObjsUsedInSubmit;
 };
 
 }  // namespace dawn::native

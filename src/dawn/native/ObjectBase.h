@@ -35,8 +35,10 @@
 #include "absl/strings/str_format.h"
 #include "dawn/common/LinkedList.h"
 #include "dawn/common/MutexProtected.h"
+#include "dawn/common/NonCopyable.h"
 #include "dawn/common/Ref.h"
 #include "dawn/common/RefCounted.h"
+#include "dawn/native/Error.h"
 #include "dawn/native/Forward.h"
 #include "dawn/native/dawn_platform.h"
 
@@ -164,6 +166,35 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
     // by the owning device.
     bool IsAlive() const;
 
+    // Begin exclusive use of the object. This provides mutual exclusion between operations
+    // that cannot run concurrently (e.g., Queue::Submit and Destroy) without blocking.
+    // Returns an error if the object is already in exclusive use.
+    MaybeError BeginExclusiveUse();
+
+    // End exclusive use of the object.
+    void EndExclusiveUse();
+
+    // RAII wrapper for exclusive use of the object.
+    class ScopedExclusiveUse : public NonCopyable {
+      public:
+        explicit ScopedExclusiveUse(ApiObjectBase* object) : mObject(object) {}
+        ~ScopedExclusiveUse() {
+            if (mAcquired) {
+                mObject->EndExclusiveUse();
+            }
+        }
+
+        MaybeError Acquire() {
+            DAWN_TRY(mObject->BeginExclusiveUse());
+            mAcquired = true;
+            return {};
+        }
+
+      private:
+        ApiObjectBase* mObject;
+        bool mAcquired = false;
+    };
+
     // This needs to be public because it can be called from the device owning the object.
     void Destroy(DestroyReason reason = DestroyReason::EarlyDestroy);
 
@@ -202,6 +233,9 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
     friend class ApiObjectList;
 
     std::string mLabel;
+    // Atomic flag for mutual exclusion between methods that cannot be used concurrently,
+    // such as Queue::Submit() and Destroy(). When true, the object is in exclusive use.
+    std::atomic<bool> mExclusiveUse{false};
 };
 
 template <typename T>
