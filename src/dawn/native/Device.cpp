@@ -1587,6 +1587,7 @@ ShaderModuleBase* DeviceBase::APICreateErrorShaderModule(const ShaderModuleDescr
     return ReturnToAPI(std::move(result));
 }
 TextureBase* DeviceBase::APICreateTexture(const TextureDescriptor* descriptor) {
+    auto deviceGuard = UseGuardForTextureCreationImpl();
     Ref<TextureBase> result;
     if (ConsumedError(CreateTexture(descriptor), &result, InternalErrorType::OutOfMemory,
                       "calling %s.CreateTexture(%s).", this, descriptor)) {
@@ -2531,6 +2532,10 @@ bool DeviceBase::ReduceMemoryUsageImpl() {
 }
 
 void DeviceBase::PerformIdleTasksImpl() {}
+
+std::optional<DeviceGuard> DeviceBase::UseGuardForTextureCreationImpl() {
+    return GetGuard();
+}
 
 bool DeviceBase::ShouldDuplicateNumWorkgroupsForDispatchIndirect(
     ComputePipelineBase* computePipeline) const {

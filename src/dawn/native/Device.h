@@ -32,6 +32,7 @@
 
 #include <atomic>
 #include <memory>
+#include <optional>
 #include <string>
 #include <utility>
 #include <vector>
@@ -558,6 +559,10 @@ class DeviceBase : public ErrorSink,
     virtual void SetLabelImpl();
     virtual bool ReduceMemoryUsageImpl();
     virtual void PerformIdleTasksImpl();
+
+    // TODO(crbug.com/474265307): Remove this once all backends' Create*Impl methods are
+    // thread-safe
+    virtual std::optional<DeviceGuard> UseGuardForTextureCreationImpl();
 
     virtual MaybeError TickImpl() = 0;
     void FlushCallbackTaskQueue();

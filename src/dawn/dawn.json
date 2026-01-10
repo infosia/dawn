@@ -1384,6 +1384,7 @@
             },
             {
                 "name": "create texture",
+                "no autolock": true,
                 "returns": "texture",
                 "args": [
                     {"name": "descriptor", "type": "texture descriptor", "annotation": "const*"}
