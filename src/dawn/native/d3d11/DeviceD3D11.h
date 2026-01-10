@@ -99,6 +99,8 @@ class Device final : public d3d::Device {
 
     std::optional<DeviceGuard> UseGuardForCreateTexture() override;
     std::optional<DeviceGuard> UseGuardForCreateSampler() override;
+    std::optional<DeviceGuard> UseGuardForCreateBindGroup() override;
+    std::optional<DeviceGuard> UseGuardForCreateBindGroupLayout() override;
     std::optional<DeviceGuard> UseGuardForCreateBuffer() override;
 
     uint32_t GetUAVSlotCount() const;
