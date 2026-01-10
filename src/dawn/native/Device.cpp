@@ -515,6 +515,8 @@ void DeviceBase::WillDropLastExternalRef() {
         // Note: we cannot hold the lock when flushing the callbacks so have to limit the scope of
         // the lock.
         auto deviceGuard = GetGuard();
+        // Lock queue to avoid races with Queue::Submit()
+        auto queueLock = mQueue->Lock();
 
         // Set DeviceLostEvent to pass a null device to the callback (which may happen in Destroy()
         // depending on the CallbackMode). This also makes DeviceLostEvent skip unregistering the
@@ -716,6 +718,7 @@ void DeviceBase::Destroy(DestroyReason reason) {
 }
 
 void DeviceBase::APIDestroy() {
+    auto lock = mQueue->Lock();
     Destroy(DestroyReason::EarlyDestroy);
 }
 

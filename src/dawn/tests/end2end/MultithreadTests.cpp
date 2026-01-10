@@ -231,6 +231,86 @@ TEST_P(MultithreadTests, Device_WaitForDroppedInAnotherThread) {
     waitThread.join();
 }
 
+// Test that destroying buffers while submitting commands that use them doesn't cause races.
+TEST_P(MultithreadTests, DestroyBufferDuringSubmit) {
+    // TODO(451928481): multithread support in GL is incomplete
+    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
+    DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("skip_validation"));
+
+    constexpr uint32_t kNumThreads = 20;
+    constexpr uint32_t kSize = 256;
+
+    std::vector<wgpu::Buffer> buffers(kNumThreads);
+    std::vector<wgpu::CommandBuffer> commandBuffers(kNumThreads);
+
+    // Create buffers and command buffers that use them
+    for (uint32_t i = 0; i < kNumThreads; ++i) {
+        buffers[i] = CreateBuffer(kSize, wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::CopySrc);
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        encoder.ClearBuffer(buffers[i], 0, kSize);
+        commandBuffers[i] = encoder.Finish();
+    }
+
+    // Submit and destroy in parallel - some may race
+    utils::RunInParallel(kNumThreads * 2, [&](uint32_t threadIndex) {
+        uint32_t bufferIndex = threadIndex / 2;
+
+        device.PushErrorScope(wgpu::ErrorFilter::Validation);
+
+        if (threadIndex % 2 == 0) {
+            // Even threads: submit commands
+            queue.Submit(1, &commandBuffers[bufferIndex]);
+        } else {
+            // Odd threads: destroy buffers
+            buffers[bufferIndex].Destroy();
+        }
+
+        // Pop and consume any validation errors
+        std::atomic<bool> errorChecked(false);
+        device.PopErrorScope(wgpu::CallbackMode::AllowProcessEvents,
+                             [&errorChecked](wgpu::PopErrorScopeStatus status, wgpu::ErrorType type,
+                                             wgpu::StringView) {
+                                 EXPECT_EQ(status, wgpu::PopErrorScopeStatus::Success);
+                                 // Error type could be NoError or Validation depending on timing
+                                 errorChecked = true;
+                             });
+        instance.ProcessEvents();
+        EXPECT_TRUE(errorChecked.load());
+    });
+}
+
+// Test that dropping a device's last ref while submitting to the queue doesn't cause races.
+TEST_P(MultithreadTests, DeviceDropDuringSubmit) {
+    // TODO(451928481): multithread support in GL is incomplete
+    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
+
+    constexpr uint32_t kNumDevices = 4;
+    std::vector<wgpu::Device> devices(kNumDevices);
+    std::vector<wgpu::Queue> queues(kNumDevices);
+    std::vector<wgpu::CommandBuffer> commandBuffers(kNumDevices);
+
+    // Create devices, queues, and command buffers
+    for (uint32_t i = 0; i < kNumDevices; ++i) {
+        devices[i] = CreateDevice();
+        queues[i] = devices[i].GetQueue();
+        wgpu::CommandEncoder encoder = devices[i].CreateCommandEncoder();
+        commandBuffers[i] = encoder.Finish();
+    }
+
+    // Submit and drop device refs in parallel - some may race
+    utils::RunInParallel(kNumDevices * 2, [&](uint32_t threadIndex) {
+        uint32_t deviceIndex = threadIndex / 2;
+
+        if (threadIndex % 2 == 0) {
+            // Even threads: submit commands
+            queues[deviceIndex].Submit(1, &commandBuffers[deviceIndex]);
+        } else {
+            // Odd threads: drop last ref of device
+            devices[deviceIndex] = nullptr;
+        }
+    });
+}
+
 // Test that multiple buffers being created and mapped on multiple threads won't interfere with
 // each other.
 TEST_P(MultithreadTests, Buffers_MapInParallel) {
