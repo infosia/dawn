@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00d75290_f4639264",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-12T07:15:36Z",
+      "side": 1,
+      "message": "Hi Corentin and Kai,\n\nSorry I don\u0027t know how I can make emscripten happy with `chromium_experimental_subgroup_size_control`, could you help me?",
+      "revId": "89975356abf54f0d7e0f86bcdbcfe7c3172bee21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
