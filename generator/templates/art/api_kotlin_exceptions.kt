@@ -25,7 +25,6 @@
 //* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 //* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @file:JvmName("Exceptions")
-
 package {{ kotlin_package }}
 {% set ns = namespace() %}
 {% for enum in by_category["enum"] %}
