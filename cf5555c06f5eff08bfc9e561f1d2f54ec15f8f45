@@ -69,6 +69,24 @@
       "parentUuid": "fde4dd97_28d51ed2",
       "revId": "cf5555c06f5eff08bfc9e561f1d2f54ec15f8f45",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2ac2316_8611bf15",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-12T15:17:52Z",
+      "side": 1,
+      "message": "If you want to go this route, Tint already has the ability to do minification (which I believe is strip blankspace/comments, shorten names). @jrprice@google.com added it a while ago.",
+      "parentUuid": "aa51bf3f_3e118383",
+      "revId": "cf5555c06f5eff08bfc9e561f1d2f54ec15f8f45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
