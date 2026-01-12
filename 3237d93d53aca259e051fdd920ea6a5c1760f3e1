@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf79aa44_15d25f78",
+        "filename": "src/dawn/common/Mutex.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-12T11:40:35Z",
+      "side": 1,
+      "message": "Implement move assignment would require more code since we would have to unlock the old mutex as well. We don\u0027t need move assignment for now. So I made this class NonMovable and only enable move ctor.",
+      "parentUuid": "664d7d21_97ec5002",
+      "revId": "3237d93d53aca259e051fdd920ea6a5c1760f3e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0706ad6_12104281",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4680d795_e7f6d39b",
+        "filename": "src/dawn/native/DeviceGuard.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-12T11:40:35Z",
+      "side": 1,
+      "message": "The DeviceGuard class below inherits `Guard` which only implements [move ctor](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/MutexProtected.h;drc\u003df199a6313ae8a20e87bfe40924910dadcbf9e43c;l\u003d116). It deletes move assignment via NonMovable base class.\n\nWe only need move ctor for now so I leave move assignment disabled. The commit message has been updated to clearly say we want only \"move constructible\".",
+      "parentUuid": "e0706ad6_12104281",
+      "revId": "3237d93d53aca259e051fdd920ea6a5c1760f3e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9f9e4b31_b817a2c2",
@@ -65,6 +101,24 @@
       "writtenOn": "2026-01-12T10:40:17Z",
       "side": 1,
       "message": "Did you mean to do this check after destroying autoLock1? We could do that by putting it in a heap allocation.",
+      "revId": "3237d93d53aca259e051fdd920ea6a5c1760f3e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e8499a3_1f33ba16",
+        "filename": "src/dawn/tests/unittests/MutexTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-12T11:40:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f9e4b31_b817a2c2",
       "revId": "3237d93d53aca259e051fdd920ea6a5c1760f3e1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
