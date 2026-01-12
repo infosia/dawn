@@ -22,6 +22,57 @@
       },
       "revId": "4d28d877ee7a3ba5046d678cce7ca3a4a6067582",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98ff3569_6e2c65d7",
+        "filename": "src/dawn/common/LinkedList.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-12T14:57:22Z",
+      "side": 1,
+      "message": "nit: add the modification here.\n\nCan we have minimal multithreaded tests? https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/unittests/LinkedListTests.cpp;l\u003d1?q\u003dLinkedListTests%20f:dawn\u0026sq\u003d",
+      "revId": "4d28d877ee7a3ba5046d678cce7ca3a4a6067582",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f90b923_67ac0179",
+        "filename": "src/dawn/common/LinkedList.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-12T14:57:22Z",
+      "side": 1,
+      "message": "Can we have a comment explaining that all mutators require locking at the `LinkedList` level, but that `IsInList` only needs synchronization of `this` list node?",
+      "revId": "4d28d877ee7a3ba5046d678cce7ca3a4a6067582",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc62ccd7_34200ec1",
+        "filename": "src/dawn/common/LinkedList.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-12T14:57:22Z",
+      "side": 1,
+      "message": "It\u0027d be better to explain in short form here again and in IsInList as well why it is thread safe.",
+      "revId": "4d28d877ee7a3ba5046d678cce7ca3a4a6067582",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
