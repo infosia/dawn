@@ -73,6 +73,24 @@
       "message": "It\u0027d be better to explain in short form here again and in IsInList as well why it is thread safe.",
       "revId": "4d28d877ee7a3ba5046d678cce7ca3a4a6067582",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e93b4c10_374c0cc8",
+        "filename": "src/dawn/common/LinkedList.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-12T20:08:30Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "cc62ccd7_34200ec1",
+      "revId": "4d28d877ee7a3ba5046d678cce7ca3a4a6067582",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
