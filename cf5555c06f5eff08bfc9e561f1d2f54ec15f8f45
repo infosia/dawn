@@ -87,6 +87,24 @@
       "parentUuid": "aa51bf3f_3e118383",
       "revId": "cf5555c06f5eff08bfc9e561f1d2f54ec15f8f45",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef123fbc_adb8f343",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-12T17:30:20Z",
+      "side": 1,
+      "message": "Using Tint\u0027s WGSL minifier would requiring pulling the shaders out to separate `.wgsl` files and then creating a build step that invokes Tint to minify, then converts the result into a header file that can be included by Dawn.\n\nCertainly do-able, and in theory would yield larger gains, but up to Dawn folks if they want to go down that path. It also wouldn\u0027t work with the shaders that are dynamically constructed.",
+      "parentUuid": "b2ac2316_8611bf15",
+      "revId": "cf5555c06f5eff08bfc9e561f1d2f54ec15f8f45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
