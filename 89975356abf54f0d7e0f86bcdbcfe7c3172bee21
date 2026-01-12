@@ -16,6 +16,23 @@
       "message": "Hi Corentin and Kai,\n\nSorry I don\u0027t know how I can make emscripten happy with `chromium_experimental_subgroup_size_control`, could you help me?",
       "revId": "89975356abf54f0d7e0f86bcdbcfe7c3172bee21",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c9d1849_cc4cc8f4",
+        "filename": "docs/tint/extensions/chromium_experimental_subgroup_size_control.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-12T07:44:13Z",
+      "side": 1,
+      "message": "```suggestion\nEnabling this extension will implicitly enable the `subgroups` extension.\n```",
+      "revId": "89975356abf54f0d7e0f86bcdbcfe7c3172bee21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
