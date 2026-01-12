@@ -34,6 +34,41 @@
       "parentUuid": "ce1f4b36_001216e6",
       "revId": "cf5555c06f5eff08bfc9e561f1d2f54ec15f8f45",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7cee9f1_ae19baa5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002886
+      },
+      "writtenOn": "2026-01-12T13:58:35Z",
+      "side": 1,
+      "message": "It appears the minification has caused some shaders to cause problems now. I\u0027m not set up for running Dawn tests locally, but if we want to push more on that, I can do so. Or hand it off to you.",
+      "revId": "cf5555c06f5eff08bfc9e561f1d2f54ec15f8f45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa51bf3f_3e118383",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002886
+      },
+      "writtenOn": "2026-01-12T13:58:35Z",
+      "side": 1,
+      "message": "The minifying code is, uh, quite something. The Skia team ended up doing the in-line string minifying for Ganesh and I haven\u0027t heard too many complaints about it, but probably because that code isn\u0027t very active.\nFor the more recent Graphite code, we built a build-step phase that piped the uniminified shaders (which were in their own files) into `skslc` which could minify them properly (including shortened variable names) and then had our release code include the minified versions instead of the unminified versions that debug included.\n\nThat might be a better approach if we wanted an automated minifying approach.",
+      "parentUuid": "fde4dd97_28d51ed2",
+      "revId": "cf5555c06f5eff08bfc9e561f1d2f54ec15f8f45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
