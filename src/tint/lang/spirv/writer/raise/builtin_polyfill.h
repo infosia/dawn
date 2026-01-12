@@ -44,6 +44,7 @@ struct PolyfillConfig {
     SpvVersion version = SpvVersion::kSpv13;
     bool subgroup_shuffle_clamped = false;
     bool texture_sample_compare_depth_cube_array = false;
+    bool polyfill_clamp_as_min_max_f16 = false;
 };
 
 /// BuiltinPolyfill is a transform that replaces calls to builtins with polyfills and calls to

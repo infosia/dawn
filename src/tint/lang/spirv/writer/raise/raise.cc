@@ -200,7 +200,9 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
         .version = options.spirv_version,
         .subgroup_shuffle_clamped = options.workarounds.subgroup_shuffle_clamped,
         .texture_sample_compare_depth_cube_array =
-            options.workarounds.texture_sample_compare_depth_cube_array};
+            options.workarounds.texture_sample_compare_depth_cube_array,
+        .polyfill_clamp_as_min_max_f16 = options.workarounds.polyfill_clamp_as_min_max_f16,
+    };
     TINT_CHECK_RESULT(raise::BuiltinPolyfill(module, config));
     TINT_CHECK_RESULT(raise::ExpandImplicitSplats(module));
 

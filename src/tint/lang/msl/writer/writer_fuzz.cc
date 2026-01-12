@@ -60,6 +60,7 @@ struct FuzzedOptions {
     std::optional<VertexPullingConfig> vertex_pulling_config;
     std::unordered_map<uint32_t, ArgumentBufferInfo> group_to_argument_buffer_info;
     SubstituteOverridesConfig substitute_overrides_config;
+    bool polyfill_clamp_as_min_max_f16;
 
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(FuzzedOptions,
@@ -79,7 +80,8 @@ struct FuzzedOptions {
                  pixel_local_attachments,
                  vertex_pulling_config,
                  group_to_argument_buffer_info,
-                 substitute_overrides_config);
+                 substitute_overrides_config,
+                 polyfill_clamp_as_min_max_f16);
     TINT_REFLECT_HASH_CODE(FuzzedOptions);
 };
 
@@ -129,7 +131,10 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     options.vertex_pulling_config = fuzzed_options.vertex_pulling_config;
     options.group_to_argument_buffer_info = fuzzed_options.group_to_argument_buffer_info;
     options.substitute_overrides_config = fuzzed_options.substitute_overrides_config;
+    options.workarounds.polyfill_clamp_as_min_max_f16 =
+        fuzzed_options.polyfill_clamp_as_min_max_f16;
 
+    // Generate the bindings
     options.bindings = GenerateBindings(module, ep_name, false, false);
     options.immediate_binding_point = BindingPoint(0, 30);
 
