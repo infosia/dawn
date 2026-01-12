@@ -733,7 +733,7 @@ class ImmediateConstantTracker : public T {
   public:
     ImmediateConstantTracker() = default;
 
-    void Apply(const OpenGLFunctions& gl) {
+    MaybeError Apply(const OpenGLFunctions& gl) {
         DAWN_ASSERT(this->mLastPipeline != nullptr);
 
         auto* lastPipeline = this->mLastPipeline;
@@ -741,10 +741,12 @@ class ImmediateConstantTracker : public T {
         ImmediateConstantMask uploadBits = this->mDirty & pipelineMask;
         for (auto&& [offset, size] : IterateRanges(uploadBits)) {
             auto data = this->mContent.template Get<uint32_t>(offset);
-            std::memcpy(&mImmediateBlockContent[offset], data, size);
+            std::memcpy(&mImmediateBlockContent[static_cast<uint32_t>(offset)], data, size);
         }
 
-        DAWN_GL_TRY(gl, Uniform1uiv(PipelineLayout::ImmediateLocation::Immediates, kMaxImmediateConstantsPerPipeline, mImmediateBlockContent.data()));
+        DAWN_GL_TRY(gl,
+                    Uniform1uiv(PipelineLayout::ImmediateLocation::UserImmediateData,
+                                kMaxImmediateConstantsPerPipeline, mImmediateBlockContent.data()));
 
         // Reset all dirty bits after uploading.
         this->mDirty.reset();
