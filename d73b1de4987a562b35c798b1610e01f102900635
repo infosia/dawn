@@ -33,6 +33,24 @@
       "message": "Input no longer needed",
       "revId": "d73b1de4987a562b35c798b1610e01f102900635",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8895a385_58b67767",
+        "filename": "third_party/gn/webgpu-cts/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 4581788
+      },
+      "writtenOn": "2026-01-12T23:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d9c4440_b4426a17",
+      "revId": "d73b1de4987a562b35c798b1610e01f102900635",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
