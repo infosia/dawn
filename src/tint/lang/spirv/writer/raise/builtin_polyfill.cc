@@ -254,6 +254,12 @@ struct State {
                     case core::BuiltinFn::kSubgroupMatrixScalarMultiply:
                         worklist.Push(builtin);
                         break;
+                    case core::BuiltinFn::kClamp:
+                        if (config.polyfill_clamp_as_max_min_f16 &&
+                            builtin->Result()->Type()->DeepestElement()->Is<core::type::F16>()) {
+                            worklist.Push(builtin);
+                        }
+                        break;
                     case core::BuiltinFn::kQuantizeToF16:
                         if (builtin->Result()->Type()->Is<core::type::Vector>()) {
                             worklist.Push(builtin);
@@ -349,6 +355,9 @@ struct State {
                     break;
                 case core::BuiltinFn::kInputAttachmentLoad:
                     InputAttachmentLoad(builtin);
+                    break;
+                case core::BuiltinFn::kClamp:
+                    Clamp(builtin);
                     break;
                 case core::BuiltinFn::kSubgroupMatrixLoad:
                     SubgroupMatrixLoad(builtin);
@@ -1142,6 +1151,26 @@ struct State {
         // Extract the third component to get the number of array layers.
         auto* extract = b.AccessWithResult(builtin->DetachResult(), texture_call->Result(), 2_u);
         extract->InsertBefore(builtin);
+        builtin->Destroy();
+    }
+
+    /// Polyfills clamp as min max for f16.
+    /// This was required on intel when loading from uniforms.
+    /// See crbug.com/448873316
+    /// @param builtin the builtin call instruction
+    void Clamp(core::ir::CoreBuiltinCall* builtin) {
+        auto* arg_val = builtin->Args()[0];
+        // When this was a saturate this will be 0.0
+        auto* arg_low = builtin->Args()[1];
+        // When this was a saturate this will be 1.0
+        auto* arg_high = builtin->Args()[2];
+
+        b.InsertBefore(builtin, [&] {
+            auto min_val = b.Min(arg_val, arg_high);
+            auto max_val = b.Max(min_val, arg_low);
+            max_val->SetResult(builtin->DetachResult());
+        });
+
         builtin->Destroy();
     }
 

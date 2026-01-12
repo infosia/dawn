@@ -1211,6 +1211,122 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, Clamp_VectorOperands_DisabledScalarize) 
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(SpirvWriter_BuiltinPolyfillTest, Clamp_F16) {
+    auto* x = b.FunctionParam("x", ty.f16());
+    auto* low = b.FunctionParam("low", ty.f16());
+    auto* high = b.FunctionParam("high", ty.f16());
+    auto* func = b.Function("foo", ty.f16());
+    func->SetParams({x, low, high});
+
+    b.Append(func->Block(), [&] {
+        auto* result = b.Call(ty.f16(), core::BuiltinFn::kClamp, x, low, high);
+        b.Return(func, result);
+    });
+
+    auto* src = R"(
+%foo = func(%x:f16, %low:f16, %high:f16):f16 {
+  $B1: {
+    %5:f16 = clamp %x, %low, %high
+    ret %5
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%x:f16, %low:f16, %high:f16):f16 {
+  $B1: {
+    %5:f16 = min %x, %high
+    %6:f16 = max %5, %low
+    ret %6
+  }
+}
+)";
+
+    PolyfillConfig config;
+    config.polyfill_clamp_as_max_min_f16 = true;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(SpirvWriter_BuiltinPolyfillTest, Clamp_Vec2F16) {
+    auto* x = b.FunctionParam("x", ty.vec2<f16>());
+    auto* low = b.FunctionParam("low", ty.vec2<f16>());
+    auto* high = b.FunctionParam("high", ty.vec2<f16>());
+    auto* func = b.Function("foo", ty.vec2<f16>());
+    func->SetParams({x, low, high});
+
+    b.Append(func->Block(), [&] {
+        auto* result = b.Call(ty.vec2<f16>(), core::BuiltinFn::kClamp, x, low, high);
+        b.Return(func, result);
+    });
+
+    auto* src = R"(
+%foo = func(%x:vec2<f16>, %low:vec2<f16>, %high:vec2<f16>):vec2<f16> {
+  $B1: {
+    %5:vec2<f16> = clamp %x, %low, %high
+    ret %5
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%x:vec2<f16>, %low:vec2<f16>, %high:vec2<f16>):vec2<f16> {
+  $B1: {
+    %5:vec2<f16> = min %x, %high
+    %6:vec2<f16> = max %5, %low
+    ret %6
+  }
+}
+)";
+
+    PolyfillConfig config;
+    config.polyfill_clamp_as_max_min_f16 = true;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(SpirvWriter_BuiltinPolyfillTest, Clamp_F16_PolyfillDisabled) {
+    auto* x = b.FunctionParam("x", ty.f16());
+    auto* low = b.FunctionParam("low", ty.f16());
+    auto* high = b.FunctionParam("high", ty.f16());
+    auto* func = b.Function("foo", ty.f16());
+    func->SetParams({x, low, high});
+
+    b.Append(func->Block(), [&] {
+        auto* result = b.Call(ty.f16(), core::BuiltinFn::kClamp, x, low, high);
+        b.Return(func, result);
+    });
+
+    auto* src = R"(
+%foo = func(%x:f16, %low:f16, %high:f16):f16 {
+  $B1: {
+    %5:f16 = clamp %x, %low, %high
+    ret %5
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%x:f16, %low:f16, %high:f16):f16 {
+  $B1: {
+    %5:f16 = clamp %x, %low, %high
+    ret %5
+  }
+}
+)";
+
+    PolyfillConfig config;
+    config.polyfill_clamp_as_max_min_f16 = false;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
 TEST_F(SpirvWriter_BuiltinPolyfillTest, Select_ScalarCondition_VectorOperands) {
     auto* argf = b.FunctionParam("argf", ty.vec4i());
     auto* argt = b.FunctionParam("argt", ty.vec4i());
