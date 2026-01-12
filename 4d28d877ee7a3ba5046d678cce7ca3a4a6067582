@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bee91702_33465923",
+        "filename": "src/dawn/common/Atomic.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-12T11:44:15Z",
+      "side": 1,
+      "message": "So I go ahead with using relaxed atomic ptrs in LinkedList. Additionally, implementing an Atomic wrapper class with implicit load/store ordering should be useful for the future migration of raw values to atomics.",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 13
+      },
+      "revId": "4d28d877ee7a3ba5046d678cce7ca3a4a6067582",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
