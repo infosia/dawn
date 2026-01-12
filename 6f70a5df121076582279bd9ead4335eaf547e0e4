@@ -16,6 +16,166 @@
       "message": "We don\u0027t need anything reset due to commandTracker is reset in APIExecuteBundle. So this CL is adding bundle related unittests and end2end tests (and some minor changes).\n\nPTAL, thanks!",
       "revId": "6f70a5df121076582279bd9ead4335eaf547e0e4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62526a55_c08d2f92",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-12T09:50:35Z",
+      "side": 1,
+      "message": "Maybe name the pipelines accordingly? pipeline4 and pipeline8?",
+      "revId": "6f70a5df121076582279bd9ead4335eaf547e0e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e54d70d_823c70f7",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-12T09:50:35Z",
+      "side": 1,
+      "message": "nit: that\u0027s the default. ditto below",
+      "revId": "6f70a5df121076582279bd9ead4335eaf547e0e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6ca941b_47d9ff5c",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-12T09:50:35Z",
+      "side": 1,
+      "message": "```suggestion\n        wgpu::RenderBundleEncoderDescriptor bundleDesc;\n        bundleDesc.colorFormatCount \u003d 1;\n        wgpu::TextureFormat format \u003d wgpu::TextureFormat::RGBA8Unorm;\n        bundleDesc.colorFormats \u003d \u0026format;\n        wgpu::RenderBundleEncoder encoder \u003d device.CreateRenderBundleEncoder(\u0026bundleDesc);\n        bundle \u003d encoder.Finish();\n```\n\nThe bundle doesn\u0027t need to do anything.",
+      "range": {
+        "startLine": 573,
+        "startChar": 0,
+        "endLine": 582,
+        "endChar": 34
+      },
+      "revId": "6f70a5df121076582279bd9ead4335eaf547e0e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23494261_a4f213b5",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-12T09:50:35Z",
+      "side": 1,
+      "message": "```suggestion\n    // Case 1: Immediate -\u003e ExecuteBundles -\u003e Draw (Fail: No pipeline)\n```\n\nBut also this case isn\u0027t actually needed as the pipeline being reset is not logic related to immediates?",
+      "revId": "6f70a5df121076582279bd9ead4335eaf547e0e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8303c22_d81c1a24",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-12T09:50:35Z",
+      "side": 1,
+      "message": "```suggestion\n    // Case 2: Immediate -\u003e ExecuteBundles -\u003e SetPipeline -\u003e Draw (Fail: No immediate data)\n```",
+      "revId": "6f70a5df121076582279bd9ead4335eaf547e0e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86d011c2_016807bd",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-12T09:50:35Z",
+      "side": 1,
+      "message": "Here and everywhere else when passing a single bundle.\n\n```suggestion\n        pass.ExecuteBundles(1, \u0026bundle);\n```",
+      "range": {
+        "startLine": 613,
+        "startChar": 0,
+        "endLine": 614,
+        "endChar": 40
+      },
+      "revId": "6f70a5df121076582279bd9ead4335eaf547e0e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc5ac8bc_7d9ea931",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-12T09:50:35Z",
+      "side": 1,
+      "message": "```suggestion\n    // Case 3: ExecuteBundles -\u003e SetImmediates -\u003e SetPipeline -\u003e Draw (Success)\n    {\n        wgpu::CommandEncoder encoder \u003d device.CreateCommandEncoder();\n        utils::BasicRenderPass renderPass \u003d utils::CreateBasicRenderPass(device, 1, 1);\n        wgpu::RenderPassEncoder pass \u003d encoder.BeginRenderPass(\u0026renderPass.renderPassInfo);\n        pass.ExecuteBundles(1, \u0026bundle);\n        pass.SetImmediates(0, \u0026data, 4);\n        pass.SetPipeline(pipelineA);\n        pass.Draw(3);\n        pass.End();\n        encoder.Finish();\n```\n\nI think doing immediates and then pipeline shows more clearly the difference with the control case just above. It\u0027s not that the immediates are done after the pipeline, it\u0027s that the immediates are done after the ExecuteBundles.",
+      "range": {
+        "startLine": 622,
+        "startChar": 0,
+        "endLine": 639,
+        "endChar": 25
+      },
+      "revId": "6f70a5df121076582279bd9ead4335eaf547e0e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b38172a_911d024d",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-12T09:50:35Z",
+      "side": 1,
+      "message": "What\u0027s the difference with bundle A? All we care about is the validation done in the BundleEncoder, not what happens in the submit no?",
+      "range": {
+        "startLine": 692,
+        "startChar": 0,
+        "endLine": 705,
+        "endChar": 5
+      },
+      "revId": "6f70a5df121076582279bd9ead4335eaf547e0e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
