@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55bcf5d6_b02171ef",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-12T06:16:33Z",
+      "side": 1,
+      "message": "Is this the mechanism to disallow `MapAsync` And Queue\u0027s operations from using the buffer concurrently?\n\nI\u0027m thinking maybe it would be generalized to apply to all object types. Would a simpler boolean flag `ApiObjectBase::mExclusiveUse` work? We could use atomic CAS to allow only 1 thread to set it to true and proceed, the other threads would fail and return validation error.\n\nFor example, this could be applied to prevent `Queue.Submit` \u0026 `Destroy` from using the an object simultaneously. I think it\u0027s also useful for many other methods we want to avoid concurrent use in future.",
+      "range": {
+        "startLine": 141,
+        "startChar": 9,
+        "endLine": 141,
+        "endChar": 25
+      },
+      "revId": "b1e9071ca6556e5c0877f4778b38bd19840b4543",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73253c31_a38e1016",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-12T06:16:33Z",
+      "side": 1,
+      "message": "Q: Why do we need to use `UseBufferInternal` here?\n\nThis buffer is transient inside Queue::Submit. It\u0027s impossible to access it externally.\n\nSame for other places where other temp buffers + CommandRecordingContext are used.\n\nIs the purpose is to reset the Buffer\u0027s state?",
+      "range": {
+        "startLine": 390,
+        "startChar": 26,
+        "endLine": 390,
+        "endChar": 39
+      },
+      "revId": "b1e9071ca6556e5c0877f4778b38bd19840b4543",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
