@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b211363_8e46f1dc",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-12T20:38:13Z",
+      "side": 1,
+      "message": "If we don\u0027t call Destroy, then when will DestroyImpl be called?\n\nAlso, should we be calling DestroyImpl() here instead?",
+      "revId": "9d8eb26e86163758d97f7cb5b8eb014d1c87e52e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
