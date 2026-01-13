@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf08d1c1_56165a95",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-13T14:13:06Z",
+      "side": 1,
+      "message": "Could we move it to CreateSampler? The error consumption and error object creation should be thread safe.\n\nditto for texture.",
+      "revId": "75ef358a32f6ed2552163e5c5bbabc2ec66a7c3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1542086c_9e2601b1",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-13T14:13:06Z",
+      "side": 1,
+      "message": "Could we use https://issues.chromium.org/465433756 or parent the issue somewhere under it? For D3D12 it seems that we might be able to remove some of the worst autolocks basically for free.",
+      "revId": "75ef358a32f6ed2552163e5c5bbabc2ec66a7c3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4d126f0_51a56969",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-13T14:13:06Z",
+      "side": 1,
+      "message": "Maybe the names should be made to match the function names?\n\n```suggestion\n    virtual std::optional\u003cDeviceGuard\u003e UseGuardForCreateTexture();\n```",
+      "range": {
+        "startLine": 565,
+        "startChar": 39,
+        "endLine": 565,
+        "endChar": 69
+      },
+      "revId": "75ef358a32f6ed2552163e5c5bbabc2ec66a7c3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "264c7393_f689ba5c",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-13T14:13:06Z",
+      "side": 1,
+      "message": "Can we have tests in MultithreadTests?",
+      "revId": "75ef358a32f6ed2552163e5c5bbabc2ec66a7c3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
