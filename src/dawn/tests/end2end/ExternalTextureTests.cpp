@@ -1601,7 +1601,8 @@ DAWN_INSTANTIATE_TEST(ExternalTextureTests,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 enum class AccessMode { Sample, Load };
 enum class OOBAccess { BelowBottomLeft, OverTopRight };
