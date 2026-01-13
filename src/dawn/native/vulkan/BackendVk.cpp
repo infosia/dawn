@@ -170,7 +170,13 @@ constexpr SkippedMessage kSkippedMessages[] = {
      // vkCmdDraw(): the descriptor
      "is being used in draw but has never been updated via vkUpdateDescriptorSets() or a similar "
      "call."},
-};
+
+    // This error gets raised when using MSAARenderToSingleSampled with CreateRenderPass2 because
+    // we have a mismatch in the number of samples in the actual render pass vs. the render pass the
+    // graphics pipeline was created with since we lack MSAARenderToSingleSampled info at pipeline
+    // creation time. This is a non-issue when using Dynamic Rendering.
+    // crbug.com/463893793
+    {"VUID-vkCmdDraw-renderPass-02684", "The current render pass must be compatible"}};
 
 namespace dawn::native::vulkan {
 
