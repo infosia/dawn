@@ -613,6 +613,14 @@ class Validator {
                             core::AddressSpace sc,
                             Source source) const;
 
+    /// Validate the total compute invocations per workgroup must be a multiple of the declared
+    /// subgroup size when both `@subgroup_size` and `@workgroup_size` are used.
+    /// @param function the function to validate
+    /// @param source the source of the function
+    /// @returns true on success, false on error
+    bool CheckWorkgroupSizeAndSubgroupSize(const sem::Function* function,
+                                           const Source& source) const;
+
   private:
     /// @param ty the type to check
     /// @returns true if @p ty is an array with an `override` expression element count, otherwise

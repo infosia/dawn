@@ -60,7 +60,7 @@ TEST_F(SubgroupSizeControlExtensionTest, RequiresExtension) {
     Func("main", tint::Empty, ty.void_(), tint::Empty,
          Vector{
              Stage(ast::PipelineStage::kCompute),
-             WorkgroupSize(1_i),
+             WorkgroupSize(16_i),
              SubgroupSize(Source{{12, 34}}, Expr(16_i)),
          });
 
@@ -77,7 +77,7 @@ TEST_F(SubgroupSizeControlExtensionTest, ValidWithExtension) {
     Func("main", tint::Empty, ty.void_(), tint::Empty,
          Vector{
              Stage(ast::PipelineStage::kCompute),
-             WorkgroupSize(1_i),
+             WorkgroupSize(16_i),
              SubgroupSize(Expr(16_i)),
          });
 
@@ -91,6 +91,7 @@ TEST_F(SubgroupSizeControlExtensionTest, NotAnEntryPoint) {
     Func("main", tint::Empty, ty.void_(), tint::Empty,
          Vector{
              SubgroupSize(Source{{12, 34}}, Expr(16_i)),
+             WorkgroupSize(16_i),
          });
 
     EXPECT_FALSE(r()->Resolve());
@@ -189,6 +190,87 @@ TEST_F(SubgroupSizeControlExtensionTest, DuplicateAttribute) {
     EXPECT_EQ(r()->error(),
               R"(56:78 error: duplicate subgroup_size attribute
 12:34 note: first attribute declared here)");
+}
+
+TEST_F(SubgroupSizeControlExtensionTest, WorkgroupSizeNotAMultipleOfSubgroupSize_OneDimension) {
+    Enable(wgsl::Extension::kSubgroups);
+    Enable(wgsl::Extension::kChromiumExperimentalSubgroupSizeControl);
+
+    Func(Source{{12, 34}}, "main", tint::Empty, ty.void_(), tint::Empty,
+         Vector{
+             Stage(ast::PipelineStage::kCompute),
+             WorkgroupSize(30_i),
+             SubgroupSize(16_i),
+         });
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(),
+              "12:34 error: the number of invocations per workgroup must be a multiple of the "
+              "subgroup size");
+}
+
+TEST_F(SubgroupSizeControlExtensionTest,
+       WorkgroupSizeNotAMultipleOfSubgroupSize_MultipleDimensions) {
+    Enable(wgsl::Extension::kSubgroups);
+    Enable(wgsl::Extension::kChromiumExperimentalSubgroupSizeControl);
+
+    Func(Source{{12, 34}}, "main", tint::Empty, ty.void_(), tint::Empty,
+         Vector{
+             Stage(ast::PipelineStage::kCompute),
+             WorkgroupSize(3_i, 4_i, 5_i),
+             SubgroupSize(16_i),
+         });
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(),
+              "12:34 error: the number of invocations per workgroup must be a multiple of the "
+              "subgroup size");
+}
+
+TEST_F(SubgroupSizeControlExtensionTest,
+       WorkgroupSizeNotAMultipleOfSubgroupSize_SubgroupSizeFirst) {
+    Enable(wgsl::Extension::kSubgroups);
+    Enable(wgsl::Extension::kChromiumExperimentalSubgroupSizeControl);
+
+    Func(Source{{12, 34}}, "main", tint::Empty, ty.void_(), tint::Empty,
+         Vector{
+             Stage(ast::PipelineStage::kCompute),
+             SubgroupSize(16_i),
+             WorkgroupSize(30_i),
+         });
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(),
+              "12:34 error: the number of invocations per workgroup must be a multiple of the "
+              "subgroup size");
+}
+
+TEST_F(SubgroupSizeControlExtensionTest, WorkgroupSizeIsMultipleOfSubgroupSize_OneDimension) {
+    Enable(wgsl::Extension::kSubgroups);
+    Enable(wgsl::Extension::kChromiumExperimentalSubgroupSizeControl);
+
+    Func(Source{{12, 34}}, "main", tint::Empty, ty.void_(), tint::Empty,
+         Vector{
+             Stage(ast::PipelineStage::kCompute),
+             WorkgroupSize(32_i),
+             SubgroupSize(16_i),
+         });
+
+    EXPECT_TRUE(r()->Resolve());
+}
+
+TEST_F(SubgroupSizeControlExtensionTest, WorkgroupSizeIsMultipleOfSubgroupSize_MultipleDimensions) {
+    Enable(wgsl::Extension::kSubgroups);
+    Enable(wgsl::Extension::kChromiumExperimentalSubgroupSizeControl);
+
+    Func(Source{{12, 34}}, "main", tint::Empty, ty.void_(), tint::Empty,
+         Vector{
+             Stage(ast::PipelineStage::kCompute),
+             WorkgroupSize(8_i, 4_i, 4_i),
+             SubgroupSize(32_i),
+         });
+
+    EXPECT_TRUE(r()->Resolve());
 }
 
 }  // namespace
