@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f07caa2_7aed2af4",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-01-13T15:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20aafd46_aa63fd2a",
+      "revId": "18be8525639a69f4af2a7514e739cdd3a117b375",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "454dadc0_c33f7a44",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-01-13T13:38:28Z",
       "side": 1,
       "message": "nit: maybe do this with an early continue (and same with the check for resolveTarget) to reduce the indentation level / simplify control flow.",
+      "revId": "18be8525639a69f4af2a7514e739cdd3a117b375",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b16b76c_1399b114",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-01-13T15:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "454dadc0_c33f7a44",
       "revId": "18be8525639a69f4af2a7514e739cdd3a117b375",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
