@@ -550,6 +550,12 @@ MaybeError RecordBeginDynamicRenderPass(CommandRecordingContext* recordingContex
             colorAttachment.resolveMode = VK_RESOLVE_MODE_AVERAGE_BIT;
             colorAttachment.resolveImageView = resolveView->GetHandle();
             colorAttachment.resolveImageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+        } else if (renderPass->msaaRenderToSingleSampled &&
+                   view->GetTexture()->GetSampleCount() == 1) {
+            // VUID-VkRenderingAttachmentInfo-None-12256: If MSRTSS is used and the attachement has
+            // a ssample count of 1, the resolve mode can't be VK_RESOLVE_MODE_NONE.
+            colorAttachment.resolveMode = VK_RESOLVE_MODE_AVERAGE_BIT;
+            colorAttachment.resolveImageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
         }
 
         colorAttachment.loadOp = VulkanAttachmentLoadOp(attachmentInfo.loadOp);
@@ -602,6 +608,17 @@ MaybeError RecordBeginDynamicRenderPass(CommandRecordingContext* recordingContex
         }
     }
 
+    VkMultisampledRenderToSingleSampledInfoEXT msrtss = {};
+    if (renderPass->msaaRenderToSingleSampled) {
+        msrtss.sType = VK_STRUCTURE_TYPE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_INFO_EXT;
+        msrtss.pNext = nullptr;
+        msrtss.multisampledRenderToSingleSampledEnable = VK_TRUE;
+        msrtss.rasterizationSamples =
+            VulkanSampleCount(renderPass->attachmentState->GetSampleCount());
+
+        renderInfo.pNext = &msrtss;
+    }
+
     device->fn.CmdBeginRenderingKHR(recordingContext->commandBuffer, &renderInfo);
 
     return {};
@@ -640,6 +657,7 @@ MaybeError RecordBeginRenderPass(CommandRecordingContext* recordingContext,
         }
 
         query.SetSampleCount(renderPass->attachmentState->GetSampleCount());
+        query.msaaRenderToSingleSampled = renderPass->msaaRenderToSingleSampled;
 
         RenderPassCache::RenderPassInfo renderPassInfo;
         DAWN_TRY_ASSIGN(renderPassInfo, device->GetRenderPassCache()->GetRenderPass(query));
