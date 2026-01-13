@@ -45,6 +45,7 @@ function(common_compile_options target)
     target_compile_options(${target}
       PRIVATE
         "-fno-exceptions"
+        "-fconstexpr-steps=100000000"
 
         "-Wno-assume"
         "-Wno-deprecated-builtins"

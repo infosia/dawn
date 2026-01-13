@@ -30,6 +30,7 @@
 #include "dawn/common/MatchVariant.h"
 #include "dawn/common/Math.h"
 #include "dawn/common/Range.h"
+#include "dawn/common/Strings.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/BindGroupLayout.h"
 #include "dawn/native/CacheRequest.h"
@@ -411,11 +412,11 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
             // some (old?) Metal drivers accidentally treat it as a MTLLibraryErrorCompileError
             // instead of a warning.
             msl = R"(
-                    #ifdef __clang__
-                    #pragma clang diagnostic ignored "-Wall"
-                    #endif
-                )" +
-                  math_mode_heading + msl;
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wall"
+#endif
+)" + math_mode_heading +
+                  msl;
 
             return MslCompilation{{
                 std::move(msl),
