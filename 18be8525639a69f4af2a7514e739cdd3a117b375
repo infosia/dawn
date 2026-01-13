@@ -16,6 +16,40 @@
       "message": "PTAL",
       "revId": "18be8525639a69f4af2a7514e739cdd3a117b375",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20aafd46_aa63fd2a",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-13T13:38:28Z",
+      "side": 1,
+      "message": "Please add a test instantiation with the toggle [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/MultisampledRenderingTests.cpp;drc\u003d9a026dfd41787e827160b48cc5850032131c4763;l\u003d2930) and in the instantiation just below.",
+      "revId": "18be8525639a69f4af2a7514e739cdd3a117b375",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "454dadc0_c33f7a44",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-13T13:38:28Z",
+      "side": 1,
+      "message": "nit: maybe do this with an early continue (and same with the check for resolveTarget) to reduce the indentation level / simplify control flow.",
+      "revId": "18be8525639a69f4af2a7514e739cdd3a117b375",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
