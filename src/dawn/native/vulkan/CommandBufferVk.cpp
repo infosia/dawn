@@ -527,6 +527,7 @@ MaybeError RecordBeginDynamicRenderPass(CommandRecordingContext* recordingContex
     }
 
     // Set the color attachments used by this pass. May be sparse.
+    bool renderToSingleSampled = false;
     for (auto i : attachmentMask) {
         auto& attachmentInfo = renderPass->colorAttachments[i];
         TextureView* view = ToBackend(attachmentInfo.view.Get());
@@ -549,6 +550,12 @@ MaybeError RecordBeginDynamicRenderPass(CommandRecordingContext* recordingContex
             colorAttachment.resolveMode = VK_RESOLVE_MODE_AVERAGE_BIT;
             colorAttachment.resolveImageView = resolveView->GetHandle();
             colorAttachment.resolveImageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+        }
+
+        // Detect if Multisample Render To Single Sampled is in use
+        if (view->GetTexture()->GetSampleCount() == 1 &&
+            renderPass->attachmentState->GetSampleCount() > 1) {
+            renderToSingleSampled = true;
         }
 
         colorAttachment.loadOp = VulkanAttachmentLoadOp(attachmentInfo.loadOp);
@@ -601,6 +608,17 @@ MaybeError RecordBeginDynamicRenderPass(CommandRecordingContext* recordingContex
         }
     }
 
+    VkMultisampledRenderToSingleSampledInfoEXT msrtss = {};
+    if (renderToSingleSampled) {
+        msrtss.sType = VK_STRUCTURE_TYPE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_INFO_EXT;
+        msrtss.pNext = nullptr;
+        msrtss.multisampledRenderToSingleSampledEnable = VK_TRUE;
+        msrtss.rasterizationSamples =
+            VulkanSampleCount(renderPass->attachmentState->GetSampleCount());
+
+        renderInfo.pNext = &msrtss;
+    }
+
     device->fn.CmdBeginRenderingKHR(recordingContext->commandBuffer, &renderInfo);
 
     return {};
@@ -639,6 +657,16 @@ MaybeError RecordBeginRenderPass(CommandRecordingContext* recordingContext,
         }
 
         query.SetSampleCount(renderPass->attachmentState->GetSampleCount());
+
+        if (renderPass->attachmentState->GetSampleCount() > 1) {
+            for (ColorAttachmentIndex i : renderPass->attachmentState->GetColorAttachmentsMask()) {
+                const auto& attachmentInfo = renderPass->colorAttachments[i];
+                if (attachmentInfo.view->GetTexture()->GetSampleCount() == 1) {
+                    query.renderToSingleSampled = true;
+                    break;
+                }
+            }
+        }
 
         RenderPassCache::RenderPassInfo renderPassInfo;
         DAWN_TRY_ASSIGN(renderPassInfo, device->GetRenderPassCache()->GetRenderPass(query));
