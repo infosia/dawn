@@ -30,6 +30,7 @@
 #include <bit>
 
 #include "dawn/common/Enumerator.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/ityp_span.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Device.h"
@@ -118,12 +119,16 @@ AttachmentState::AttachmentState(const UnpackedPtr<RenderPassDescriptor>& descri
         mColorAttachmentsSet.set(i);
         mColorFormats[i] = attachment->GetFormat().format;
 
+        // TODO(crbug.com/463893793): Remove once the attachment-based MSRTSS path is disabled.
         UnpackedPtr<RenderPassColorAttachment> unpackedColorAttachment = Unpack(&colorAttachment);
         auto* msaaRenderToSingleSampledDesc =
             unpackedColorAttachment.Get<DawnRenderPassColorAttachmentRenderToSingleSampled>();
         uint32_t attachmentSampleCount;
         if (msaaRenderToSingleSampledDesc != nullptr &&
             msaaRenderToSingleSampledDesc->implicitSampleCount > 1) {
+            dawn::WarningLog()
+                << "Use DawnRenderPassDescriptorRenderToSingleSampled instead of "
+                   "DawnRenderPassColorAttachmentRenderToSingleSampled, which is deprecated.";
             attachmentSampleCount = msaaRenderToSingleSampledDesc->implicitSampleCount;
         } else {
             attachmentSampleCount = attachment->GetTexture()->GetSampleCount();
@@ -139,6 +144,15 @@ AttachmentState::AttachmentState(const UnpackedPtr<RenderPassDescriptor>& descri
             mExpandResolveInfo.attachmentsToExpandResolve.set(i);
         }
         mExpandResolveInfo.resolveTargetsMask.set(i, colorAttachment.resolveTarget != nullptr);
+    }
+
+    // Override the sample count with an explicit sample count if provided. This is currently only
+    // valid if the MSAARenderToSingleSampled feature is enable, and requires the sample count of
+    // all color attachments to be 1. (Validated in CommandEncoder.cpp)
+    auto* renderPassSampleCount = descriptor.Get<DawnRenderPassSampleCount>();
+    if (renderPassSampleCount != nullptr && renderPassSampleCount->sampleCount > 1) {
+        DAWN_ASSERT(mSampleCount == 1);
+        mSampleCount = renderPassSampleCount->sampleCount;
     }
 
     // Gather the depth-stencil information.
