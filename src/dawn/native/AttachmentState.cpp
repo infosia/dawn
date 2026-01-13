@@ -30,6 +30,7 @@
 #include <bit>
 
 #include "dawn/common/Enumerator.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/ityp_span.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Device.h"
@@ -110,6 +111,16 @@ AttachmentState::AttachmentState(const UnpackedPtr<RenderPipelineDescriptor>& de
 AttachmentState::AttachmentState(const UnpackedPtr<RenderPassDescriptor>& descriptor) {
     auto colorAttachments = ityp::SpanFromUntyped<ColorAttachmentIndex>(
         descriptor->colorAttachments, descriptor->colorAttachmentCount);
+
+    // Override the sample count with an explicit sample count if provided. This is currently only
+    // valid if the MSAARenderToSingleSampled feature is enabled.
+    bool msrtssAllowed = false;
+    auto* renderPassSampleCount = descriptor.Get<DawnRenderPassSampleCount>();
+    if (renderPassSampleCount != nullptr && renderPassSampleCount->sampleCount > 1) {
+        mSampleCount = renderPassSampleCount->sampleCount;
+        msrtssAllowed = true;
+    }
+
     for (auto [i, colorAttachment] : Enumerate(colorAttachments)) {
         TextureViewBase* attachment = colorAttachment.view;
         if (attachment == nullptr) {
@@ -118,12 +129,16 @@ AttachmentState::AttachmentState(const UnpackedPtr<RenderPassDescriptor>& descri
         mColorAttachmentsSet.set(i);
         mColorFormats[i] = attachment->GetFormat().format;
 
+        // TODO(crbug.com/463893793): Remove once the attachment-based MSRTSS path is disabled.
         UnpackedPtr<RenderPassColorAttachment> unpackedColorAttachment = Unpack(&colorAttachment);
         auto* msaaRenderToSingleSampledDesc =
             unpackedColorAttachment.Get<DawnRenderPassColorAttachmentRenderToSingleSampled>();
         uint32_t attachmentSampleCount;
         if (msaaRenderToSingleSampledDesc != nullptr &&
             msaaRenderToSingleSampledDesc->implicitSampleCount > 1) {
+            dawn::WarningLog()
+                << "Use DawnRenderPassDescriptorRenderToSingleSampled instead of "
+                   "DawnRenderPassColorAttachmentRenderToSingleSampled, which is deprecated.";
             attachmentSampleCount = msaaRenderToSingleSampledDesc->implicitSampleCount;
         } else {
             attachmentSampleCount = attachment->GetTexture()->GetSampleCount();
@@ -132,7 +147,14 @@ AttachmentState::AttachmentState(const UnpackedPtr<RenderPassDescriptor>& descri
         if (mSampleCount == 0) {
             mSampleCount = attachmentSampleCount;
         } else {
-            DAWN_ASSERT(mSampleCount == attachmentSampleCount);
+            // Attachement sample counts are allowed to either match the sample count for the pass
+            // or, if MSAARenderToSingleSampled is enabled, be 1.
+            DAWN_ASSERT(mSampleCount == attachmentSampleCount ||
+                        (msrtssAllowed && attachmentSampleCount == 1));
+            if (msrtssAllowed && attachmentSampleCount == 1) {
+                // Indicate that MSRTSS is needed for this attachment state.
+                mHasMsrtss = true;
+            }
         }
 
         if (colorAttachment.loadOp == wgpu::LoadOp::ExpandResolveTexture) {
@@ -190,6 +212,7 @@ AttachmentState::AttachmentState(const AttachmentState& blueprint) {
     mSampleCount = blueprint.mSampleCount;
     mExpandResolveInfo = blueprint.mExpandResolveInfo;
     mHasPLS = blueprint.mHasPLS;
+    mHasMsrtss = blueprint.mHasMsrtss;
     mStorageAttachmentSlots = blueprint.mStorageAttachmentSlots;
     DAWN_ASSERT(IsSubset(mExpandResolveInfo.attachmentsToExpandResolve,
                          mExpandResolveInfo.resolveTargetsMask));
@@ -239,6 +262,9 @@ bool AttachmentState::EqualityFunc::operator()(const AttachmentState* a,
     if (a->mHasPLS != b->mHasPLS) {
         return false;
     }
+    if (a->mHasMsrtss != b->mHasMsrtss) {
+        return false;
+    }
     if (a->mStorageAttachmentSlots.size() != b->mStorageAttachmentSlots.size()) {
         return false;
     }
@@ -272,6 +298,7 @@ size_t AttachmentState::ComputeContentHash() {
 
     // Hash the PLS state
     HashCombine(&hash, mHasPLS);
+    HashCombine(&hash, mHasMsrtss);
     for (wgpu::TextureFormat slotFormat : mStorageAttachmentSlots) {
         HashCombine(&hash, slotFormat);
     }
@@ -307,6 +334,10 @@ const AttachmentState::ExpandResolveInfo& AttachmentState::GetExpandResolveInfo(
 
 bool AttachmentState::HasPixelLocalStorage() const {
     return mHasPLS;
+}
+
+bool AttachmentState::HasMSAARenderToSingleSampled() const {
+    return mHasMsrtss;
 }
 
 const std::vector<wgpu::TextureFormat>& AttachmentState::GetStorageAttachmentSlots() const {

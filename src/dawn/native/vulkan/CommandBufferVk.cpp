@@ -601,6 +601,17 @@ MaybeError RecordBeginDynamicRenderPass(CommandRecordingContext* recordingContex
         }
     }
 
+    VkMultisampledRenderToSingleSampledInfoEXT msrtss = {};
+    if (renderPass->attachmentState->HasMSAARenderToSingleSampled()) {
+        msrtss.sType = VK_STRUCTURE_TYPE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_INFO_EXT;
+        msrtss.pNext = nullptr;
+        msrtss.multisampledRenderToSingleSampledEnable = VK_TRUE;
+        msrtss.rasterizationSamples =
+            VulkanSampleCount(renderPass->attachmentState->GetSampleCount());
+
+        renderInfo.pNext = &msrtss;
+    }
+
     device->fn.CmdBeginRenderingKHR(recordingContext->commandBuffer, &renderInfo);
 
     return {};
@@ -639,6 +650,8 @@ MaybeError RecordBeginRenderPass(CommandRecordingContext* recordingContext,
         }
 
         query.SetSampleCount(renderPass->attachmentState->GetSampleCount());
+        query.msaaRenderToSingleSampled =
+            renderPass->attachmentState->HasMSAARenderToSingleSampled();
 
         RenderPassCache::RenderPassInfo renderPassInfo;
         DAWN_TRY_ASSIGN(renderPassInfo, device->GetRenderPassCache()->GetRenderPass(query));

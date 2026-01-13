@@ -74,6 +74,7 @@ class AttachmentState final : public RefCounted,
     uint32_t GetSampleCount() const;
     const ExpandResolveInfo& GetExpandResolveInfo() const;
     bool HasPixelLocalStorage() const;
+    bool HasMSAARenderToSingleSampled() const;
     const std::vector<wgpu::TextureFormat>& GetStorageAttachmentSlots() const;
     std::vector<ColorAttachmentIndex> ComputeStorageAttachmentPackingInColorAttachments() const;
 
@@ -95,6 +96,7 @@ class AttachmentState final : public RefCounted,
     ExpandResolveInfo mExpandResolveInfo;
 
     bool mHasPLS = false;
+    bool mHasMsrtss = false;
     std::vector<wgpu::TextureFormat> mStorageAttachmentSlots;
 };
 
