@@ -916,9 +916,23 @@ struct State {
             zero = b.MatchWidth(0_h, type);
             one = b.MatchWidth(1_h, type);
         }
-        auto* clamp = b.Clamp(call->Args()[0], zero, one);
-        clamp->SetResult(call->DetachResult());
-        clamp->InsertBefore(call);
+
+        // Intel mesa incorrectly performs saturate on vec f16 loads from uniforms.
+        // Note: to avoid compiler pattern matching, we do the min then the max which is
+        // functionally different than doing the max then the min for high/low swapped.
+        // See crbug.com/448873316
+        if (config.saturate_as_min_max && type->DeepestElement()->Is<core::type::F16>() &&
+            type->IsFloatVector()) {
+            b.InsertBefore(call, [&] {
+                auto* clamped_via_min_max = b.Max(b.Min(call->Args()[0], one), zero);
+                clamped_via_min_max->SetResult(call->DetachResult());
+            });
+        } else {
+            auto* clamp = b.Clamp(call->Args()[0], zero, one);
+            clamp->SetResult(call->DetachResult());
+            clamp->InsertBefore(call);
+        }
+
         call->Destroy();
     }
 
