@@ -16,6 +16,24 @@
       "message": "If we don\u0027t call Destroy, then when will DestroyImpl be called?\n\nAlso, should we be calling DestroyImpl() here instead?",
       "revId": "9d8eb26e86163758d97f7cb5b8eb014d1c87e52e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f105394_dc1c0e94",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-13T09:53:04Z",
+      "side": 1,
+      "message": "DestroyImpl is also called for all child objects on device destructions and when the last ref of non-error objects is lost.\n\nI don\u0027t remember why there is the non-error check though. It seems more annoying than helpful.\n\nThe current code has something more precise that does call DestroyImpl transitively https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/ResourceTable.cpp;drc\u003d315663686089cc69d70db9dad8aa4d181ea6be69;l\u003d372",
+      "parentUuid": "1b211363_8e46f1dc",
+      "revId": "9d8eb26e86163758d97f7cb5b8eb014d1c87e52e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
