@@ -176,6 +176,7 @@ enum class Toggle {
     EnableRenderDocProcessInjection,
     VulkanUseDynamicRendering,
     EnableSpirvValidation,
+    VulkanUseCreateRenderPass2,
 
     // Once all backends have been updated to be thread safe for waiting, we can remove this toggle.
     WaitIsThreadSafe,
