@@ -375,6 +375,72 @@ def _CheckCopyrightHeaders(input_api, output_api):
     return errors
 
 
+def _CheckBannedAPIs(input_api, output_api):
+    """Check source code for functions, packages, and symbols that should not be used."""
+
+    # A list of tuples of a regex to match an API and a suggested replacement for
+    # that API. There is an optional third parameter for files which *can* use this
+    # API without warning.
+    banned_replacements = [
+        # This form of multi line string can unintentionally cause binaries to
+        # ship with extraneous spaces and newlines in WGSL (or other) code,
+        # which increases code size. To avoid this, wrap it in DAWN_MINIFY:
+        #     DAWN_MINIFY(R"(
+        #         block {
+        #             // comment
+        #             indented code
+        #         }
+        #     )")
+        # Or silence the warning:
+        #     DAWN_UNMINIFIED(R"( ... )")
+        (r'(?<!(DAWN_MINIFY|_UNMINIFIED)\()R"',
+         'DAWN_MINIFY(R"()") or DAWN_UNMINIFIED(R"()")', [
+             '^src/dawn/tests',
+             '^src/tint/.*_test.cc',
+             '^src/tint/cmd',
+         ]),
+    ]
+
+    compiled_replacements = []
+    for rep in banned_replacements:
+        exceptions = []
+        if len(rep) == 3:
+            (re, replacement, exceptions) = rep
+        else:
+            (re, replacement) = rep
+
+        compiled_re = input_api.re.compile(re)
+        compiled_exceptions = [input_api.re.compile(exc) for exc in exceptions]
+        compiled_replacements.append(
+            (compiled_re, replacement, compiled_exceptions))
+
+    errors = []
+    file_filter = lambda x: (\
+        x.LocalPath().endswith('.h') or
+        x.LocalPath().endswith('.cpp') or
+        x.LocalPath().endswith('.cc') or
+        x.LocalPath().endswith('.m') or
+        x.LocalPath().endswith('.mm'))
+    for affected_file in input_api.AffectedSourceFiles(file_filter):
+        affected_filepath = affected_file.LocalPath()
+        for (line_num, line) in affected_file.ChangedContents():
+            for (re, replacement, exceptions) in compiled_replacements:
+                match = re.search(line)
+                if match:
+                    for exc in exceptions:
+                        if exc.search(affected_filepath):
+                            break
+                    else:
+                        errors.append('%s:%s: Instead of %s, please use %s.' %
+                                      (affected_filepath, line_num,
+                                       match.group(), replacement))
+
+    if errors:
+        return [output_api.PresubmitError('\n'.join(errors))]
+
+    return []
+
+
 def CheckChange(input_api, output_api):
     results = []
     results.extend(
@@ -411,6 +477,7 @@ def CheckChange(input_api, output_api):
     results.extend(
         input_api.canned_checks.CheckDoNotSubmit(input_api, output_api))
     results.extend(_CheckCopyrightHeaders(input_api, output_api))
+    results.extend(_CheckBannedAPIs(input_api, output_api))
     # Note, the verbose_level here should match what is set in tools/lint so
     # the same set of lint errors are reported on the CQ and Kokoro bots.
     results.extend(
