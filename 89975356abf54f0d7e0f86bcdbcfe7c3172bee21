@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "291407d0_bf21dffe",
+        "filename": "docs/tint/extensions/chromium_experimental_subgroup_size_control.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-13T01:50:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c9d1849_cc4cc8f4",
+      "revId": "89975356abf54f0d7e0f86bcdbcfe7c3172bee21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55371577_804fa250",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-01-13T01:14:50Z",
       "side": 1,
       "message": "The issue is WGPUHelpers.cpp is used in both Dawn native and Wasm builds. You can just use `#ifndef __EMSCRIPTEN__` around this entry to prevent it from being used in Wasm builds.",
+      "revId": "89975356abf54f0d7e0f86bcdbcfe7c3172bee21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c4f3f63_a1996417",
+        "filename": "src/dawn/utils/WGPUHelpers.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-13T01:50:46Z",
+      "side": 1,
+      "message": "It works! Thanks!",
+      "parentUuid": "55371577_804fa250",
       "revId": "89975356abf54f0d7e0f86bcdbcfe7c3172bee21",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
