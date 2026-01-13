@@ -2686,7 +2686,7 @@ TEST_F(IR_ValidatorTest, Function_SubgroupSize_ParamWrongType) {
 
 TEST_F(IR_ValidatorTest, Function_SubgroupSize_ParamTooSmall) {
     auto* f = ComputeEntryPoint();
-    f->SetWorkgroupSize({b.Constant(1_u), b.Constant(2_u), b.Constant(3_u)});
+    f->SetWorkgroupSize({b.Constant(16_u), b.Constant(1_u), b.Constant(1_u)});
     f->SetSubgroupSize(b.Constant(-16_i));
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
@@ -2695,7 +2695,7 @@ TEST_F(IR_ValidatorTest, Function_SubgroupSize_ParamTooSmall) {
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: @subgroup_size param must be greater than 0
-%f = @compute @workgroup_size(1u, 2u, 3u) @subgroup_size(-16i) func():void {
+%f = @compute @workgroup_size(16u, 1u, 1u) @subgroup_size(-16i) func():void {
 ^^
 )")) << res.Failure();
 }
@@ -2718,7 +2718,7 @@ TEST_F(IR_ValidatorTest, Function_SubgroupSize_ParamZero) {
 
 TEST_F(IR_ValidatorTest, Function_SubgroupSize_ParamNonPowerOfTwo) {
     auto* f = ComputeEntryPoint();
-    f->SetWorkgroupSize({b.Constant(1_u), b.Constant(2_u), b.Constant(3_u)});
+    f->SetWorkgroupSize({b.Constant(30_u), b.Constant(1_u), b.Constant(1_u)});
     f->SetSubgroupSize(b.Constant(15_u));
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
@@ -2727,14 +2727,14 @@ TEST_F(IR_ValidatorTest, Function_SubgroupSize_ParamNonPowerOfTwo) {
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: @subgroup_size param must be a power of 2
-%f = @compute @workgroup_size(1u, 2u, 3u) @subgroup_size(15u) func():void {
+%f = @compute @workgroup_size(30u, 1u, 1u) @subgroup_size(15u) func():void {
 ^^
 )")) << res.Failure();
 }
 
 TEST_F(IR_ValidatorTest, Function_SubgroupSize_ParamPowerOfTwo) {
     auto* f = ComputeEntryPoint();
-    f->SetWorkgroupSize({b.Constant(1_u), b.Constant(2_u), b.Constant(3_u)});
+    f->SetWorkgroupSize({b.Constant(32_u), b.Constant(1_u), b.Constant(1_u)});
     f->SetSubgroupSize(b.Constant(32_u));
 
     b.Append(f->Block(), [&] { b.Unreachable(); });

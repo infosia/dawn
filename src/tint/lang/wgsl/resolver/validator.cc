@@ -3510,4 +3510,31 @@ bool Validator::CheckNoMultipleModuleScopeVarsOfAddressSpace(sem::Function* entr
     return true;
 }
 
+bool Validator::CheckWorkgroupSizeAndSubgroupSize(const sem::Function* function,
+                                                  const Source& source) const {
+    if (function->Declaration()->PipelineStage() != ast::PipelineStage::kCompute) {
+        return true;
+    }
+
+    if (!function->SubgroupSize().has_value()) {
+        return true;
+    }
+
+    const auto& workgroup_size = function->WorkgroupSize();
+    if (!workgroup_size[0].has_value()) {
+        return true;
+    }
+
+    uint32_t subgroup_size = function->SubgroupSize().value();
+    uint32_t invocations_per_workgroup =
+        workgroup_size[0].value() * workgroup_size[1].value() * workgroup_size[2].value();
+
+    if (invocations_per_workgroup % subgroup_size != 0) {
+        AddError(source)
+            << "the number of invocations per workgroup must be a multiple of the subgroup size";
+        return false;
+    }
+    return true;
+}
+
 }  // namespace tint::resolver

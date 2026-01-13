@@ -907,6 +907,9 @@ sem::Function* Resolver::Function(const ast::Function* decl) {
     if (!validator_.NoDuplicateAttributes(decl->attributes)) {
         return nullptr;
     }
+    if (!validator_.CheckWorkgroupSizeAndSubgroupSize(func, decl->source)) {
+        return nullptr;
+    }
 
     // Resolve all the parameters
     uint32_t parameter_index = 0;
