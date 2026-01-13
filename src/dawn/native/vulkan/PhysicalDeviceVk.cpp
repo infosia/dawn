@@ -1172,6 +1172,13 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         // when dynamic rendering is enabled.
         deviceToggles->Default(Toggle::VulkanUseDynamicRendering, false);
     }
+
+    // Use createRenderPass2 by default if the corresponding extension is available.
+    if (GetDeviceInfo().HasExt(DeviceExt::CreateRenderPass2)) {
+        deviceToggles->Default(Toggle::VulkanUseCreateRenderPass2, true);
+    } else {
+        deviceToggles->ForceSet(Toggle::VulkanUseCreateRenderPass2, false);
+    }
 }
 
 ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
