@@ -10,6 +10,7 @@ AccessModifierOffset: -2
 InsertBraces: true
 
 WhitespaceSensitiveMacros:
+    - "DAWN_MULTILINE"
     # From https://emscripten.org/docs/porting/connecting_cpp_and_javascript/Interacting-with-code.html#calling-javascript-from-c-c
     - "EM_ASM"
     - "EM_JS"
