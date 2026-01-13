@@ -679,6 +679,15 @@ VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
                 // used in ExpandResolveTexture subpass.
                 flags |= VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT;
             }
+
+            // If the MSAARenderToSingleSampled feature is enabled, textures with RenderAttachment
+            // usage need to have VK_IMAGE_CREATE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_BIT_EXT set
+            // so that they can be used as a render target with an implicit sample count. syoussefi@
+            // has confirmed that this is expected to be very cheap or no cost on hardware that
+            // supports the extension.
+            if (device->HasFeature(Feature::MSAARenderToSingleSampled)) {
+                flags |= VK_IMAGE_CREATE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_BIT_EXT;
+            }
         }
     }
     if (usage & wgpu::TextureUsage::TransientAttachment) {
@@ -836,10 +845,14 @@ bool IsSampleCountSupported(const dawn::native::vulkan::Device* device,
     VkPhysicalDevice vkPhysicalDevice =
         ToBackend(device->GetPhysicalDevice())->GetVkPhysicalDevice();
     VkImageFormatProperties properties;
+    // On at least some devices GetPhysicalDeviceImageFormatProperties() does not return VK_SUCCESS
+    // if VK_IMAGE_CREATE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_BIT_EXT is included in the usage
+    // flags, so exclude it here.
+    VkImageUsageFlags usage =
+        imageCreateInfo.usage & ~VK_IMAGE_CREATE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_BIT_EXT;
     if (device->fn.GetPhysicalDeviceImageFormatProperties(
             vkPhysicalDevice, imageCreateInfo.format, imageCreateInfo.imageType,
-            imageCreateInfo.tiling, imageCreateInfo.usage, imageCreateInfo.flags,
-            &properties) != VK_SUCCESS) {
+            imageCreateInfo.tiling, usage, imageCreateInfo.flags, &properties) != VK_SUCCESS) {
         DAWN_UNREACHABLE();
     }
 
