@@ -130,6 +130,7 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     options.group_to_argument_buffer_info = fuzzed_options.group_to_argument_buffer_info;
     options.substitute_overrides_config = fuzzed_options.substitute_overrides_config;
 
+    // Generate the bindings
     options.bindings = GenerateBindings(module, ep_name, false, false);
     options.immediate_binding_point = BindingPoint(0, 30);
 

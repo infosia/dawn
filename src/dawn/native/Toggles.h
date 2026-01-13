@@ -146,6 +146,7 @@ enum class Toggle {
     ExposeWGSLExperimentalFeatures,
     DisablePolyfillsOnIntegerDivisonAndModulo,
     ScalarizeMaxMinClamp,
+    VulkanClampAsMinMaxF16,
     MetalPolyfillClampFloat,
     SubgroupShuffleClamped,
     VulkanSampleCompareDepthCubeArrayWorkaround,
