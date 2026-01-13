@@ -27,24 +27,28 @@
 
 #include "src/dawn/node/ManualConstructors.h"
 
+#include "dawn/common/Strings.h"
+
 namespace wgpu::interop {
 
 ManualConstructors::ManualConstructors(Napi::Env env) {
     // Define GPUUncapturedErrorEvent as a JavaScript object because it
     // must inherit from Event otherwise it can not be passed to an EventTarget
     // and this is apparently impossible in Napi if it's a C++ based object.
-    const char* gpuUncapturedErrorEventJs = R"(
-    (function() {
-      return class GPUUncapturedErrorEvent extends Event {
-        constructor(type, eventInitDict) {
-          super(type, eventInitDict);
-          if (!eventInitDict || eventInitDict.error === undefined) {
-            throw new TypeError("Failed to construct 'GPUUncapturedErrorEvent': Required member 'error' in 'eventInitDict' is undefined.");
-          }
-          this.error = eventInitDict.error;
+    const char* gpuUncapturedErrorEventJs = DAWN_MULTILINE(
+      (function() {
+        return class GPUUncapturedErrorEvent extends Event{
+            constructor(type, eventInitDict){super(type, eventInitDict);
+        if (!eventInitDict || eventInitDict.error == = undefined) {
+            throw new TypeError(
+                "Failed to construct 'GPUUncapturedErrorEvent': Required member 'error' in "
+                "'eventInitDict' is undefined.");
         }
-      };
-    })())";
+        this.error = eventInitDict.error;
+          }
+};
+})()
+    );
     Napi::Value gpuUncapturedErrorEvent_value =
         env.RunScript(Napi::String::New(env, gpuUncapturedErrorEventJs));
     GPUUncapturedErrorEvent_ctor =
@@ -61,18 +65,21 @@ ManualConstructors::ManualConstructors(Napi::Env env) {
     // generate a function we can pass it to using RunScript. We then call
     // that function and pass in the DOMException constructor so we can
     // make a class that extends it.
-    const char* gpuPipelineErrorJs = R"(
-    (function() {
-      return class GPUPipelineError extends DOMException {
-        constructor(message, gpuPipelineErrorInit) {
-          super(message, "GPUPipelineError");
-          if (!gpuPipelineErrorInit || gpuPipelineErrorInit.reason === undefined) {
-            throw new TypeError("Failed to construct 'GPUPipelineError': Required member 'reason' in 'gpuPipelineErrorInit' is undefined.");
+    const char* gpuPipelineErrorJs = DAWN_MULTILINE(
+      (function() {
+    return class GPUPipelineError extends DOMException{
+        constructor(message, gpuPipelineErrorInit){super(message, "GPUPipelineError");
+    if (!gpuPipelineErrorInit || gpuPipelineErrorInit.reason == = undefined) {
+        throw new TypeError(
+            "Failed to construct 'GPUPipelineError': Required member 'reason' in "
+            "'gpuPipelineErrorInit' is undefined.");
+    }
+    this.reason = gpuPipelineErrorInit.reason;
           }
-          this.reason = gpuPipelineErrorInit.reason;
-        }
-      };
-    })())";
+    }
+    ;
+    })()
+    );
     Napi::Value gpuPipelineError_value = env.RunScript(Napi::String::New(env, gpuPipelineErrorJs));
     GPUPipelineError_ctor = Napi::Persistent(gpuPipelineError_value.As<Napi::Function>());
 }
