@@ -298,7 +298,8 @@ class RenderPassValidationState final : public NonMovable {
         mRenderHeight = renderSize.height;
         mAttachmentValidationWidth = mRenderWidth;
         mAttachmentValidationHeight = mRenderHeight;
-        mSampleCount = attachment->GetTexture()->GetSampleCount();
+        mSampleCount = mImplicitSampleCount > 1 ? mImplicitSampleCount
+                                                : attachment->GetTexture()->GetSampleCount();
 
         DAWN_ASSERT(mRenderWidth != 0);
         DAWN_ASSERT(mRenderHeight != 0);
@@ -525,6 +526,55 @@ MaybeError ValidateColorAttachmentDepthSlice(const TextureViewBase* attachment,
     return {};
 }
 
+MaybeError ValidateDawnRenderPassSampleCount(
+    const DeviceBase* device,
+    const DawnRenderPassSampleCount* renderPassSampleCount) {
+    DAWN_ASSERT(renderPassSampleCount != nullptr);
+
+    DAWN_INVALID_IF(
+        !device->HasFeature(Feature::MSAARenderToSingleSampled),
+        "The render pass has an explicit sample count while the %s feature is not enabled.",
+        ToAPI(Feature::MSAARenderToSingleSampled));
+
+    DAWN_INVALID_IF(!IsValidSampleCount(renderPassSampleCount->sampleCount) ||
+                        renderPassSampleCount->sampleCount <= 1,
+                    "The render pass sample count (%u) is not supported.",
+                    renderPassSampleCount->sampleCount);
+
+    return {};
+}
+
+MaybeError ValidateColorAttachmentRenderToSingleSampled(
+    const DeviceBase* device,
+    const RenderPassColorAttachment& colorAttachment,
+    const DawnRenderPassSampleCount* renderPassSampleCount) {
+    DAWN_ASSERT(renderPassSampleCount != nullptr);
+    DAWN_ASSERT(device->HasFeature(Feature::MSAARenderToSingleSampled));
+
+    uint32_t passSampleCount = renderPassSampleCount->sampleCount;
+    uint32_t attachmentSampleCount = colorAttachment.view->GetTexture()->GetSampleCount();
+    DAWN_INVALID_IF(attachmentSampleCount != 1 && attachmentSampleCount != passSampleCount,
+                    "The color attachment %s sample count (%u) must be either 1 or %u when the "
+                    "render pass is using MSAARenderToSingleSampled with a sample count of %u.",
+                    colorAttachment.view, attachmentSampleCount, passSampleCount, passSampleCount);
+
+    DAWN_INVALID_IF(!colorAttachment.view->GetFormat().SupportsResolveTarget(),
+                    "The color attachment %s format (%s) does not support being used with a render "
+                    "pass using MSAARenderToSingleSampled with a sample count of %u. The format "
+                    "does not support resolve.",
+                    colorAttachment.view, colorAttachment.view->GetFormat().format,
+                    passSampleCount);
+
+    DAWN_INVALID_IF(colorAttachment.resolveTarget != nullptr,
+                    "Cannot set %s as a resolve target. No resolve target should be specified "
+                    "for the color attachment %s when the render pass is using "
+                    "MSAARenderToSingleSampled with a sample count of %u.",
+                    colorAttachment.resolveTarget, colorAttachment.view, passSampleCount);
+
+    return {};
+}
+
+// TODO(crbug.com/463893793): Remove once the deprecated attachment-based MSRTSS path is disabled.
 MaybeError ValidateColorAttachmentRenderToSingleSampled(
     const DeviceBase* device,
     const RenderPassColorAttachment& colorAttachment,
@@ -540,12 +590,6 @@ MaybeError ValidateColorAttachmentRenderToSingleSampled(
                         msaaRenderToSingleSampledDesc->implicitSampleCount <= 1,
                     "The color attachment %s's implicit sample count (%u) is not supported.",
                     colorAttachment.view, msaaRenderToSingleSampledDesc->implicitSampleCount);
-
-    DAWN_INVALID_IF(!colorAttachment.view->GetTexture()->IsImplicitMSAARenderTextureViewSupported(),
-                    "Color attachment %s was not created with %s usage, which is required for "
-                    "having implicit sample count (%u).",
-                    colorAttachment.view, wgpu::TextureUsage::TextureBinding,
-                    msaaRenderToSingleSampledDesc->implicitSampleCount);
 
     DAWN_INVALID_IF(!colorAttachment.view->GetFormat().SupportsResolveTarget(),
                     "The color attachment %s format (%s) does not support being used with "
@@ -612,6 +656,7 @@ MaybeError ValidateRenderPassColorAttachment(DeviceBase* device,
     UnpackedPtr<RenderPassColorAttachment> unpacked;
     DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(&colorAttachment));
 
+    // TODO(crbug.com/463893793): Remove once the attachment-based MSRTSS path is disabled.
     const auto* msaaRenderToSingleSampledDesc =
         unpacked.Get<DawnRenderPassColorAttachmentRenderToSingleSampled>();
     if (msaaRenderToSingleSampledDesc) {
@@ -868,10 +913,20 @@ MaybeError ValidateRenderPassDescriptor(DeviceBase* device,
         validationState->SetExpandResolveRect(*expandResolveRect);
     }
 
+    const auto* renderPassSampleCount = descriptor.Get<DawnRenderPassSampleCount>();
+    if (renderPassSampleCount) {
+        DAWN_TRY(ValidateDawnRenderPassSampleCount(device, renderPassSampleCount));
+        validationState->SetImplicitSampleCount(renderPassSampleCount->sampleCount);
+    }
+
     for (auto [i, attachment] : Enumerate(colorAttachments)) {
         DAWN_TRY_CONTEXT(ValidateRenderPassColorAttachment(device, attachment, usageValidationMode,
                                                            validationState),
                          "validating colorAttachments[%u].", i);
+        if (renderPassSampleCount) {
+            DAWN_TRY(ValidateColorAttachmentRenderToSingleSampled(device, attachment,
+                                                                  renderPassSampleCount));
+        }
         if (attachment.view) {
             colorAttachmentFormats.push_back(&attachment.view->GetFormat());
         }
@@ -1433,6 +1488,10 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                 if (resolveTarget != nullptr) {
                     usageTracker.TextureViewUsedAs(resolveTarget,
                                                    wgpu::TextureUsage::RenderAttachment);
+                } else if (colorTarget->GetTexture()->GetSampleCount() == 1 &&
+                           attachmentState->GetSampleCount() > 1) {
+                    // Detect if multisample render to single-sampled is in use
+                    cmd->msaaRenderToSingleSampled = true;
                 }
             }
 
