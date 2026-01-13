@@ -508,6 +508,9 @@ class DeviceBase : public ErrorSink,
     // and if so, what filename to save the trace under.
     std::pair<std::string, bool> GetTraceInfo();
 
+    virtual ResultOrError<Ref<ExternalTextureBase>> CreateExternalTextureImpl(
+        const ExternalTextureDescriptor* descriptor);
+
   private:
     void WillDropLastExternalRef() override;
 
@@ -517,8 +520,6 @@ class DeviceBase : public ErrorSink,
         const UnpackedPtr<BindGroupLayoutDescriptor>& descriptor) = 0;
     virtual ResultOrError<Ref<BufferBase>> CreateBufferImpl(
         const UnpackedPtr<BufferDescriptor>& descriptor) = 0;
-    virtual ResultOrError<Ref<ExternalTextureBase>> CreateExternalTextureImpl(
-        const ExternalTextureDescriptor* descriptor);
     virtual ResultOrError<Ref<PipelineLayoutBase>> CreatePipelineLayoutImpl(
         const UnpackedPtr<PipelineLayoutDescriptor>& descriptor) = 0;
     virtual ResultOrError<Ref<QuerySetBase>> CreateQuerySetImpl(
