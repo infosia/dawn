@@ -123,6 +123,24 @@
       "parentUuid": "ef123fbc_adb8f343",
       "revId": "cf5555c06f5eff08bfc9e561f1d2f54ec15f8f45",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cc9815a_f54ff375",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-13T03:13:04Z",
+      "side": 1,
+      "message": "[a bug](https://crbug.com/475274568)*",
+      "parentUuid": "6e7561d2_e5107100",
+      "revId": "cf5555c06f5eff08bfc9e561f1d2f54ec15f8f45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
