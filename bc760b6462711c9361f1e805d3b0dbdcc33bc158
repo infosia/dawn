@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cd27803_94e26417",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-13T16:23:05Z",
+      "side": 1,
+      "message": "We should probably call an UpdateImpl from both APIUpdate and APIInsertBinding, both to avoid needless validation and to also move towards not calling API*  functions from API* functions (as previously discussed).",
+      "range": {
+        "startLine": 190,
+        "startChar": 32,
+        "endLine": 190,
+        "endChar": 41
+      },
+      "revId": "bc760b6462711c9361f1e805d3b0dbdcc33bc158",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
