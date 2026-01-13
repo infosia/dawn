@@ -84,6 +84,8 @@ endfunction ()
 
 set(langs C CXX)
 
+dawn_add_flag("-fconstexpr-steps=100000000" CXX)
+
 dawn_add_flag("-Wconditional-uninitialized" ${langs})
 dawn_add_flag("-Wcstring-format-directive" ${langs})
 dawn_add_flag("-Wctad-maybe-unsupported" ${langs})

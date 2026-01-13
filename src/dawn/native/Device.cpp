@@ -41,6 +41,7 @@
 #include "dawn/common/Ref.h"
 #include "dawn/common/Sha3.h"
 #include "dawn/common/StringViewUtils.h"
+#include "dawn/common/Strings.h"
 #include "dawn/common/SystemUtils.h"
 #include "dawn/common/Version_autogen.h"
 #include "dawn/native/AsyncTask.h"
@@ -503,12 +504,12 @@ MaybeError DeviceBase::Initialize(const UnpackedPtr<DeviceDescriptor>& descripto
     // If placeholder fragment shader module is needed, initialize it
     if (IsToggleEnabled(Toggle::UsePlaceholderFragmentInVertexOnlyPipeline)) {
         // The empty fragment shader, used as a work around for vertex-only render pipeline
-        constexpr char kEmptyFragmentShader[] = R"(
-                @fragment fn fs_empty_main() {}
-            )";
+        static constexpr auto kEmptyFragmentShader = DAWN_MINIFY(R"(
+            @fragment fn fs_empty_main() {}
+        )");
         ShaderModuleDescriptor shaderDesc;
         ShaderSourceWGSL wgslDesc;
-        wgslDesc.code = kEmptyFragmentShader;
+        wgslDesc.code = kEmptyFragmentShader.c_str();
         shaderDesc.nextInChain = &wgslDesc;
 
         DAWN_TRY_ASSIGN(mInternalPipelineStore->placeholderFragmentShader,

@@ -153,6 +153,7 @@ config("internal_config") {
   # the use a different clang version.
   if (dawn_standalone && is_clang) {
     cflags += [
+      "-fconstexpr-steps=100000000",
       "-Wconditional-uninitialized",
       "-Wcstring-format-directive",
       "-Wctad-maybe-unsupported",
