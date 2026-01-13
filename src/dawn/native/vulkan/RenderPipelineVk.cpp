@@ -629,8 +629,10 @@ MaybeError RenderPipeline::InitializeImpl() {
                 // an appropriate query.
                 colorLoadOp = wgpu::LoadOp::ExpandResolveTexture;
             }
+            // FIXME: For non-dynamic rendering this bool needs to match the final RenderPass.
+            bool renderToSingleSample = false;
             query.SetColor(i, GetColorAttachmentFormat(i), colorLoadOp, wgpu::StoreOp::Store,
-                           hasResolveTarget);
+                           hasResolveTarget, renderToSingleSample);
         }
 
         if (HasDepthStencilAttachment()) {
