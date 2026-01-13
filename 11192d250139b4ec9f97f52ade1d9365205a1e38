@@ -16,6 +16,24 @@
       "message": "Should also check this for `var` initializers.\n\nIn fact, since all operands to all valid root-block instructions must always be const/override, you could just do this check before the `tint::Switch` instead of in each switch-case block.\n\nAlthough I see now that the lambda also adds the instruction result to `pipeline_evaluatable`, which you don\u0027t want to do for `var` instructions. Maybe do the operand check before the switch and then add to pipeline_evaluatable inside the cases (don\u0027t need to check for instruction results since all of these instructions have them)?",
       "revId": "11192d250139b4ec9f97f52ade1d9365205a1e38",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a02d00a1_a641ca4b",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2522,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-01-13T18:12:18Z",
+      "side": 1,
+      "message": "I originally had the check at the top of the block, and the vars being included in the values to be used later is why I refactored it like this. I agree that var initializers need to be checked too.\n\nI agree with seperating out the add and having the check before the switch.\n\nI think we still need to check for the result exists, since we are not guaranteed that these are well formed instructions.",
+      "parentUuid": "2030af6a_5a5a987a",
+      "revId": "11192d250139b4ec9f97f52ade1d9365205a1e38",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
