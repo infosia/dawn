@@ -629,8 +629,14 @@ MaybeError RenderPipeline::InitializeImpl() {
                 // an appropriate query.
                 colorLoadOp = wgpu::LoadOp::ExpandResolveTexture;
             }
+            // For non-dynamic rendering this bool should match the value used in the final
+            // RenderPass, but we don't have the appropriate values exposed here for MSRTSS and, as
+            // it turns out, it doesn't actually matter to most drivers? This will cause
+            // VUID-vkCmdDraw-renderPass-02684 to be raised by the Vulkan Validation Layers when
+            // using MSRTSS, though.
+            bool renderToSingleSample = false;
             query.SetColor(i, GetColorAttachmentFormat(i), colorLoadOp, wgpu::StoreOp::Store,
-                           hasResolveTarget);
+                           hasResolveTarget, renderToSingleSample);
         }
 
         if (HasDepthStencilAttachment()) {
