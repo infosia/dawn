@@ -16,6 +16,98 @@
       "message": "PTAL",
       "revId": "28ab59c94f6559281cb1565019ec468bc110c987",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0717c513_db67ba99",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 4337941
+      },
+      "writtenOn": "2026-01-13T01:38:16Z",
+      "side": 1,
+      "message": "nit: We can precompile the pattern and necessary flags:\n\n```suggestion\n    revision_pattern \u003d re.compile(\n        r\u0027(name\\s*\u003d\\s*\"@chromium-luci\".*?revision\\s*\u003d\\s*\")\u0027\n        r\u0027([a-fA-F0-9]+)\u0027\n        r\u0027(?\u003d\")\u0027,\n        re.DOTALL)\n    match \u003d revision_pattern.search(chromium_package_contents)\n```\n\n... which will simplify `re.sub()` below.",
+      "range": {
+        "startLine": 981,
+        "startChar": 0,
+        "endLine": 984,
+        "endChar": 77
+      },
+      "revId": "28ab59c94f6559281cb1565019ec468bc110c987",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d25099c_527e0500",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 4337941
+      },
+      "writtenOn": "2026-01-13T01:38:16Z",
+      "side": 1,
+      "message": "formatting nit:\n\n```suggestion\n            \"Unable to extract chromium-luci revision from Chromium\u0027s \"\n```",
+      "range": {
+        "startLine": 987,
+        "startChar": 68,
+        "endLine": 987,
+        "endChar": 70
+      },
+      "revId": "28ab59c94f6559281cb1565019ec468bc110c987",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b54ec428_0b7008e1",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 4337941
+      },
+      "writtenOn": "2026-01-13T01:38:16Z",
+      "side": 1,
+      "message": "```suggestion\n    dawn_package_contents \u003d revision_pattern.sub(\n        rf\u0027\\g\u003c1\u003e{chromium_luci_revision}\u0027,\n        dawn_package_contents)\n```",
+      "range": {
+        "startLine": 998,
+        "startChar": 0,
+        "endLine": 1001,
+        "endChar": 51
+      },
+      "revId": "28ab59c94f6559281cb1565019ec468bc110c987",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67c9a0f5_d7e26cce",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 4337941
+      },
+      "writtenOn": "2026-01-13T01:38:16Z",
+      "side": 1,
+      "message": "nit: Since we\u0027re not doing anything with the returned `CompletedProcess`, we can just send stdio directly to `DEVNULL` and skip the variable assignment (AFAIK, Python doesn\u0027t have a concept like C++\u0027s `[[nodiscard]]`):\n\n```suggestion\n    subprocess.check_call([\u0027lucicfg\u0027, \u0027generate\u0027,\n                           str(infra_path / \u0027main.star\u0027)],\n                          stdout\u003dsubprocess.DEVNULL,\n                          stderr\u003dsubprocess.DEVNULL)\n```\n\nSimilar suggestion below.",
+      "range": {
+        "startLine": 1008,
+        "startChar": 0,
+        "endLine": 1011,
+        "endChar": 34
+      },
+      "revId": "28ab59c94f6559281cb1565019ec468bc110c987",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
