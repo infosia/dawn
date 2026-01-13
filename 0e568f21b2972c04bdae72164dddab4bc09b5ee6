@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae8c4526_ec51c912",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-13T23:24:49Z",
+      "side": 1,
+      "message": "PTAL! Broke this out of https://dawn-review.googlesource.com/c/dawn/+/284015 because it\u0027s a large-ish change that isn\u0027t directly related to MSRTSS, just a dependency of it. Took a bit to figure out how to nicely initialize these mostly-identical structs without fully duplicating the code, which would cause maintenance headaches in the future.\n\nHopefully in a few years we can strip all of this out anyway and just do Dynamic Rendering all the time. 😊",
+      "revId": "0e568f21b2972c04bdae72164dddab4bc09b5ee6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
