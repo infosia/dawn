@@ -347,9 +347,15 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::DepthClipControl);
     }
 
+    if (mDeviceInfo.HasExt(DeviceExt::MultisampledRenderToSingleSampled) &&
+        mDeviceInfo.multisampledRenderToSingleSampledFeatures.multisampledRenderToSingleSampled ==
+            VK_TRUE) {
+        EnableFeature(Feature::YCbCrVulkanSamplers);
+    }
+
     if (mDeviceInfo.HasExt(DeviceExt::ExternalMemoryAndroidHardwareBuffer) &&
         mDeviceInfo.samplerYCbCrConversionFeatures.samplerYcbcrConversion == VK_TRUE) {
-        EnableFeature(Feature::YCbCrVulkanSamplers);
+        EnableFeature(Feature::MSAARenderToSingleSampled);
     }
 
     VkFormatProperties rg11b10Properties;
@@ -575,6 +581,10 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 
     if (mDeviceInfo.HasExt(DeviceExt::ImageDrmFormatModifier)) {
         EnableFeature(Feature::DawnDrmFormatCapabilities);
+    }
+
+    if (mDeviceInfo.HasExt(DeviceExt::MultisampledRenderToSingleSampled)) {
+        EnableFeature(Feature::MSAARenderToSingleSampled);
     }
 
     EnableFeature(Feature::TextureComponentSwizzle);

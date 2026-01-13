@@ -3132,15 +3132,6 @@
             {"name": "clear value", "type": "color"}
         ]
     },
-    "dawn render pass color attachment render to single sampled": {
-        "tags": ["dawn"],
-        "category": "structure",
-        "chained": "in",
-        "chain roots": ["render pass color attachment"],
-        "members": [
-            {"name": "implicit sample count", "type": "uint32_t", "default": 1}
-        ]
-    },
     "render pass depth stencil attachment": {
         "category": "structure",
         "extensible": "in",
@@ -3167,6 +3158,15 @@
             {"name": "depth stencil attachment", "type": "render pass depth stencil attachment", "annotation": "const*", "optional": true},
             {"name": "occlusion query set", "type": "query set", "optional": true},
             {"name": "timestamp writes", "type": "pass timestamp writes", "annotation": "const*", "optional": true}
+        ]
+    },
+    "dawn render pass descriptor render to single sampled": {
+        "tags": ["dawn"],
+        "category": "structure",
+        "chained": "in",
+        "chain roots": ["render pass descriptor"],
+        "members": [
+            {"name": "implicit sample count", "type": "uint32_t", "default": 1}
         ]
     },
     "render pass max draw count": {
@@ -3956,7 +3956,7 @@
             {"value": 12, "name": "request adapter options LUID", "tags": ["dawn", "native"]},
             {"value": 13, "name": "request adapter options get GL proc", "tags": ["dawn", "native"]},
             {"value": 14, "name": "request adapter options D3D11 device", "tags": ["dawn", "native"]},
-            {"value": 15, "name": "dawn render pass color attachment render to single sampled", "tags": ["dawn"]},
+            {"value": 15, "name": "dawn render pass descriptor render to single sampled", "tags": ["dawn"]},
             {"value": 16, "name": "render pass pixel local storage", "tags": ["dawn"]},
             {"value": 17, "name": "pipeline layout pixel local storage", "tags": ["dawn"]},
             {"value": 18, "name": "buffer host mapped pointer", "tags": ["dawn"]},
