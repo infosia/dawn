@@ -510,7 +510,6 @@ class DeviceBase : public ErrorSink,
 
   private:
     void WillDropLastExternalRef() override;
-
     virtual ResultOrError<Ref<BindGroupBase>> CreateBindGroupImpl(
         const UnpackedPtr<BindGroupDescriptor>& descriptor) = 0;
     virtual ResultOrError<Ref<BindGroupLayoutInternalBase>> CreateBindGroupLayoutImpl(

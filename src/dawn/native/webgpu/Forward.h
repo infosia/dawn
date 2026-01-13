@@ -39,6 +39,7 @@ class Buffer;
 class CommandBuffer;
 class ComputePipeline;
 class Device;
+class ExternalTexture;
 class PhysicalDevice;
 class PipelineLayout;
 class QuerySet;
@@ -59,6 +60,7 @@ struct WebGPUBackendTraits {
     using CommandBufferType = CommandBuffer;
     using ComputePipelineType = ComputePipeline;
     using DeviceType = Device;
+    using ExternalTextureType = ExternalTexture;
     using PhysicalDeviceType = PhysicalDevice;
     using PipelineLayoutType = PipelineLayout;
     using QuerySetType = QuerySet;
