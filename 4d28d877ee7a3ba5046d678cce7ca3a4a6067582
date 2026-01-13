@@ -41,6 +41,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f6c8945_b6e1aa22",
+        "filename": "src/dawn/common/LinkedList.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-13T09:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98ff3569_6e2c65d7",
+      "revId": "4d28d877ee7a3ba5046d678cce7ca3a4a6067582",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f90b923_67ac0179",
@@ -54,6 +72,24 @@
       "writtenOn": "2026-01-12T14:57:22Z",
       "side": 1,
       "message": "Can we have a comment explaining that all mutators require locking at the `LinkedList` level, but that `IsInList` only needs synchronization of `this` list node?",
+      "revId": "4d28d877ee7a3ba5046d678cce7ca3a4a6067582",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b30e4515_91fd42bf",
+        "filename": "src/dawn/common/LinkedList.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-13T09:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f90b923_67ac0179",
       "revId": "4d28d877ee7a3ba5046d678cce7ca3a4a6067582",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -89,6 +125,24 @@
       "side": 1,
       "message": "+1",
       "parentUuid": "cc62ccd7_34200ec1",
+      "revId": "4d28d877ee7a3ba5046d678cce7ca3a4a6067582",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1000d7ff_eeeec487",
+        "filename": "src/dawn/common/LinkedList.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-13T09:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e93b4c10_374c0cc8",
       "revId": "4d28d877ee7a3ba5046d678cce7ca3a4a6067582",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
