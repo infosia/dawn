@@ -1,0 +1,961 @@
+From 45e7cff37a905b01d0b92a2451c019e6c69631a9 Mon Sep 17 00:00:00 2001
+From: Brian Sheedy <bsheedy@chromium.org>
+Date: Mon, 12 Jan 2026 11:21:04 -0800
+Subject: [PATCH] WIP Enable Dawn tests on Pixel 10
+
+Change-Id: I68a3f7f50a1c649581f1011605b4723d062d4214
+---
+
+diff --git a/infra/config/generated/builders/ci/Dawn Android arm64 Builder/targets/chromium.dawn.json b/infra/config/generated/builders/ci/Dawn Android arm64 Builder/targets/chromium.dawn.json
+index fa929cbc..e5a7c27ed 100644
+--- a/infra/config/generated/builders/ci/Dawn Android arm64 Builder/targets/chromium.dawn.json
++++ b/infra/config/generated/builders/ci/Dawn Android arm64 Builder/targets/chromium.dawn.json
+@@ -305,26 +305,113 @@
+     ]
+   },
+   "Dawn Android arm64 Release (Pixel 10)": {
++    "gtest_tests": [
++      {
++        "args": [
++          "--enable-implicit-device-sync",
++          "--use-gpu-in-tests",
++          "--exclusive-device-type-preference=discrete,integrated",
++          "--test-launcher-retry-limit=0",
++          "--test-launcher-batch-limit=512",
++          "--gs-results-bucket=chromium-result-details",
++          "--recover-devices"
++        ],
++        "ci_only": true,
++        "merge": {
++          "args": [
++            "--bucket",
++            "chromium-result-details",
++            "--test-name",
++            "dawn_end2end_implicit_device_sync_tests"
++          ],
++          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
++        },
++        "module_name": "//third_party/dawn/src/dawn/tests:dawn_end2end_tests",
++        "module_scheme": "gtest",
++        "name": "dawn_end2end_implicit_device_sync_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 2
++        },
++        "test": "dawn_end2end_tests",
++        "test_id_prefix": "ninja://third_party/dawn/src/dawn/tests:dawn_end2end_tests/"
++      },
++      {
++        "args": [
++          "--use-gpu-in-tests",
++          "--exclusive-device-type-preference=discrete,integrated",
++          "--test-launcher-retry-limit=0",
++          "--test-launcher-batch-limit=512",
++          "--gs-results-bucket=chromium-result-details",
++          "--recover-devices"
++        ],
++        "merge": {
++          "args": [
++            "--bucket",
++            "chromium-result-details",
++            "--test-name",
++            "dawn_end2end_tests"
++          ],
++          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
++        },
++        "module_name": "//third_party/dawn/src/dawn/tests:dawn_end2end_tests",
++        "module_scheme": "gtest",
++        "name": "dawn_end2end_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 2
++        },
++        "test": "dawn_end2end_tests",
++        "test_id_prefix": "ninja://third_party/dawn/src/dawn/tests:dawn_end2end_tests/"
++      }
++    ],
+     "isolated_scripts": [
+       {
+         "args": [
+-          "noop_sleep",
++          "webgpu_compat_cts",
+           "--show-stdout",
+           "--browser=android-chromium",
+           "--passthrough",
+           "-v",
+           "--stable-jobs",
+-          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc",
++          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --enable-features=WebGPUExperimentalFeatures --use-webgpu-adapter=opengles --use-angle=gles --disable-features=Vulkan --force_high_performance_gpu",
+           "--enforce-browser-version",
+           "--jobs=1",
+-          "--initial-find-device-attempts=3"
++          "--initial-find-device-attempts=3",
++          "--use-webgpu-power-preference=default-high-performance"
+         ],
+         "merge": {
+           "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
+         },
+         "module_name": "//chrome/test:telemetry_gpu_integration_test_android_chrome",
+-        "module_scheme": "flat",
+-        "name": "noop_sleep_tests",
++        "module_scheme": "webgpucts",
++        "name": "webgpu_cts_compat_tests",
+         "resultdb": {
+           "enable": true,
+           "has_native_resultdb_integration": true
+@@ -340,7 +427,175 @@
+           "hard_timeout": 1800,
+           "idempotent": false,
+           "io_timeout": 1800,
+-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 36
++        },
++        "test": "telemetry_gpu_integration_test_android_chrome",
++        "test_id_prefix": "ninja://chrome/test:telemetry_gpu_integration_test_android_chrome/"
++      },
++      {
++        "args": [
++          "webgpu_cts",
++          "--show-stdout",
++          "--browser=android-chromium",
++          "--passthrough",
++          "-v",
++          "--stable-jobs",
++          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --force_high_performance_gpu",
++          "--enforce-browser-version",
++          "--use-worker=dedicated",
++          "--jobs=1",
++          "--initial-find-device-attempts=3",
++          "--use-webgpu-power-preference=default-high-performance"
++        ],
++        "merge": {
++          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
++        },
++        "module_name": "//chrome/test:telemetry_gpu_integration_test_android_chrome",
++        "module_scheme": "webgpucts",
++        "name": "webgpu_cts_dedicated_worker_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "idempotent": false,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 2
++        },
++        "test": "telemetry_gpu_integration_test_android_chrome",
++        "test_id_prefix": "ninja://chrome/test:telemetry_gpu_integration_test_android_chrome/"
++      },
++      {
++        "args": [
++          "webgpu_cts",
++          "--show-stdout",
++          "--browser=android-chromium",
++          "--passthrough",
++          "-v",
++          "--stable-jobs",
++          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --force_high_performance_gpu",
++          "--enforce-browser-version",
++          "--use-worker=service",
++          "--jobs=1",
++          "--initial-find-device-attempts=3",
++          "--use-webgpu-power-preference=default-high-performance"
++        ],
++        "merge": {
++          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
++        },
++        "module_name": "//chrome/test:telemetry_gpu_integration_test_android_chrome",
++        "module_scheme": "webgpucts",
++        "name": "webgpu_cts_service_worker_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "idempotent": false,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 2
++        },
++        "test": "telemetry_gpu_integration_test_android_chrome",
++        "test_id_prefix": "ninja://chrome/test:telemetry_gpu_integration_test_android_chrome/"
++      },
++      {
++        "args": [
++          "webgpu_cts",
++          "--show-stdout",
++          "--browser=android-chromium",
++          "--passthrough",
++          "-v",
++          "--stable-jobs",
++          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --force_high_performance_gpu",
++          "--enforce-browser-version",
++          "--jobs=1",
++          "--initial-find-device-attempts=3",
++          "--use-webgpu-power-preference=default-high-performance"
++        ],
++        "merge": {
++          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
++        },
++        "module_name": "//chrome/test:telemetry_gpu_integration_test_android_chrome",
++        "module_scheme": "webgpucts",
++        "name": "webgpu_cts_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "idempotent": false,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 36
++        },
++        "test": "telemetry_gpu_integration_test_android_chrome",
++        "test_id_prefix": "ninja://chrome/test:telemetry_gpu_integration_test_android_chrome/"
++      },
++      {
++        "args": [
++          "webgpu_cts",
++          "--show-stdout",
++          "--browser=android-chromium",
++          "--passthrough",
++          "-v",
++          "--stable-jobs",
++          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --force_high_performance_gpu",
++          "--enforce-browser-version",
++          "--enable-dawn-backend-validation",
++          "--jobs=1",
++          "--initial-find-device-attempts=3",
++          "--use-webgpu-power-preference=default-high-performance"
++        ],
++        "merge": {
++          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
++        },
++        "module_name": "//chrome/test:telemetry_gpu_integration_test_android_chrome",
++        "module_scheme": "webgpucts",
++        "name": "webgpu_cts_with_validation_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "idempotent": false,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 36
+         },
+         "test": "telemetry_gpu_integration_test_android_chrome",
+         "test_id_prefix": "ninja://chrome/test:telemetry_gpu_integration_test_android_chrome/"
+diff --git "a/infra/config/generated/builders/ci/Dawn Android arm64 Release \050Pixel 10\051/targets/chromium.dawn.json" "b/infra/config/generated/builders/ci/Dawn Android arm64 Release \050Pixel 10\051/targets/chromium.dawn.json"
+index 936b7754..e304f20 100644
+--- "a/infra/config/generated/builders/ci/Dawn Android arm64 Release \050Pixel 10\051/targets/chromium.dawn.json"
++++ "b/infra/config/generated/builders/ci/Dawn Android arm64 Release \050Pixel 10\051/targets/chromium.dawn.json"
+@@ -1,25 +1,112 @@
+ {
+   "Dawn Android arm64 Release (Pixel 10)": {
++    "gtest_tests": [
++      {
++        "args": [
++          "--enable-implicit-device-sync",
++          "--use-gpu-in-tests",
++          "--exclusive-device-type-preference=discrete,integrated",
++          "--test-launcher-retry-limit=0",
++          "--test-launcher-batch-limit=512",
++          "--gs-results-bucket=chromium-result-details",
++          "--recover-devices"
++        ],
++        "ci_only": true,
++        "merge": {
++          "args": [
++            "--bucket",
++            "chromium-result-details",
++            "--test-name",
++            "dawn_end2end_implicit_device_sync_tests"
++          ],
++          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
++        },
++        "module_name": "//third_party/dawn/src/dawn/tests:dawn_end2end_tests",
++        "module_scheme": "gtest",
++        "name": "dawn_end2end_implicit_device_sync_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 2
++        },
++        "test": "dawn_end2end_tests",
++        "test_id_prefix": "ninja://third_party/dawn/src/dawn/tests:dawn_end2end_tests/"
++      },
++      {
++        "args": [
++          "--use-gpu-in-tests",
++          "--exclusive-device-type-preference=discrete,integrated",
++          "--test-launcher-retry-limit=0",
++          "--test-launcher-batch-limit=512",
++          "--gs-results-bucket=chromium-result-details",
++          "--recover-devices"
++        ],
++        "merge": {
++          "args": [
++            "--bucket",
++            "chromium-result-details",
++            "--test-name",
++            "dawn_end2end_tests"
++          ],
++          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
++        },
++        "module_name": "//third_party/dawn/src/dawn/tests:dawn_end2end_tests",
++        "module_scheme": "gtest",
++        "name": "dawn_end2end_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 2
++        },
++        "test": "dawn_end2end_tests",
++        "test_id_prefix": "ninja://third_party/dawn/src/dawn/tests:dawn_end2end_tests/"
++      }
++    ],
+     "isolated_scripts": [
+       {
+         "args": [
+-          "noop_sleep",
++          "webgpu_compat_cts",
+           "--show-stdout",
+           "--browser=android-chromium",
+           "--passthrough",
+           "-v",
+           "--stable-jobs",
+-          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc",
++          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --enable-features=WebGPUExperimentalFeatures --use-webgpu-adapter=opengles --use-angle=gles --disable-features=Vulkan --force_high_performance_gpu",
+           "--enforce-browser-version",
+           "--jobs=1",
+-          "--initial-find-device-attempts=3"
++          "--initial-find-device-attempts=3",
++          "--use-webgpu-power-preference=default-high-performance"
+         ],
+         "merge": {
+           "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
+         },
+         "module_name": "//chrome/test:telemetry_gpu_integration_test_android_chrome",
+-        "module_scheme": "flat",
+-        "name": "noop_sleep_tests",
++        "module_scheme": "webgpucts",
++        "name": "webgpu_cts_compat_tests",
+         "resultdb": {
+           "enable": true,
+           "has_native_resultdb_integration": true
+@@ -35,7 +122,175 @@
+           "hard_timeout": 1800,
+           "idempotent": false,
+           "io_timeout": 1800,
+-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 36
++        },
++        "test": "telemetry_gpu_integration_test_android_chrome",
++        "test_id_prefix": "ninja://chrome/test:telemetry_gpu_integration_test_android_chrome/"
++      },
++      {
++        "args": [
++          "webgpu_cts",
++          "--show-stdout",
++          "--browser=android-chromium",
++          "--passthrough",
++          "-v",
++          "--stable-jobs",
++          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --force_high_performance_gpu",
++          "--enforce-browser-version",
++          "--use-worker=dedicated",
++          "--jobs=1",
++          "--initial-find-device-attempts=3",
++          "--use-webgpu-power-preference=default-high-performance"
++        ],
++        "merge": {
++          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
++        },
++        "module_name": "//chrome/test:telemetry_gpu_integration_test_android_chrome",
++        "module_scheme": "webgpucts",
++        "name": "webgpu_cts_dedicated_worker_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "idempotent": false,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 2
++        },
++        "test": "telemetry_gpu_integration_test_android_chrome",
++        "test_id_prefix": "ninja://chrome/test:telemetry_gpu_integration_test_android_chrome/"
++      },
++      {
++        "args": [
++          "webgpu_cts",
++          "--show-stdout",
++          "--browser=android-chromium",
++          "--passthrough",
++          "-v",
++          "--stable-jobs",
++          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --force_high_performance_gpu",
++          "--enforce-browser-version",
++          "--use-worker=service",
++          "--jobs=1",
++          "--initial-find-device-attempts=3",
++          "--use-webgpu-power-preference=default-high-performance"
++        ],
++        "merge": {
++          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
++        },
++        "module_name": "//chrome/test:telemetry_gpu_integration_test_android_chrome",
++        "module_scheme": "webgpucts",
++        "name": "webgpu_cts_service_worker_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "idempotent": false,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 2
++        },
++        "test": "telemetry_gpu_integration_test_android_chrome",
++        "test_id_prefix": "ninja://chrome/test:telemetry_gpu_integration_test_android_chrome/"
++      },
++      {
++        "args": [
++          "webgpu_cts",
++          "--show-stdout",
++          "--browser=android-chromium",
++          "--passthrough",
++          "-v",
++          "--stable-jobs",
++          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --force_high_performance_gpu",
++          "--enforce-browser-version",
++          "--jobs=1",
++          "--initial-find-device-attempts=3",
++          "--use-webgpu-power-preference=default-high-performance"
++        ],
++        "merge": {
++          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
++        },
++        "module_name": "//chrome/test:telemetry_gpu_integration_test_android_chrome",
++        "module_scheme": "webgpucts",
++        "name": "webgpu_cts_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "idempotent": false,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 36
++        },
++        "test": "telemetry_gpu_integration_test_android_chrome",
++        "test_id_prefix": "ninja://chrome/test:telemetry_gpu_integration_test_android_chrome/"
++      },
++      {
++        "args": [
++          "webgpu_cts",
++          "--show-stdout",
++          "--browser=android-chromium",
++          "--passthrough",
++          "-v",
++          "--stable-jobs",
++          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --force_high_performance_gpu",
++          "--enforce-browser-version",
++          "--enable-dawn-backend-validation",
++          "--jobs=1",
++          "--initial-find-device-attempts=3",
++          "--use-webgpu-power-preference=default-high-performance"
++        ],
++        "merge": {
++          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
++        },
++        "module_name": "//chrome/test:telemetry_gpu_integration_test_android_chrome",
++        "module_scheme": "webgpucts",
++        "name": "webgpu_cts_with_validation_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "idempotent": false,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 36
+         },
+         "test": "telemetry_gpu_integration_test_android_chrome",
+         "test_id_prefix": "ninja://chrome/test:telemetry_gpu_integration_test_android_chrome/"
+diff --git a/infra/config/generated/builders/try/android-dawn-arm64-p10-rel/targets/chromium.dawn.json b/infra/config/generated/builders/try/android-dawn-arm64-p10-rel/targets/chromium.dawn.json
+index 936b7754..e304f20 100644
+--- a/infra/config/generated/builders/try/android-dawn-arm64-p10-rel/targets/chromium.dawn.json
++++ b/infra/config/generated/builders/try/android-dawn-arm64-p10-rel/targets/chromium.dawn.json
+@@ -1,25 +1,112 @@
+ {
+   "Dawn Android arm64 Release (Pixel 10)": {
++    "gtest_tests": [
++      {
++        "args": [
++          "--enable-implicit-device-sync",
++          "--use-gpu-in-tests",
++          "--exclusive-device-type-preference=discrete,integrated",
++          "--test-launcher-retry-limit=0",
++          "--test-launcher-batch-limit=512",
++          "--gs-results-bucket=chromium-result-details",
++          "--recover-devices"
++        ],
++        "ci_only": true,
++        "merge": {
++          "args": [
++            "--bucket",
++            "chromium-result-details",
++            "--test-name",
++            "dawn_end2end_implicit_device_sync_tests"
++          ],
++          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
++        },
++        "module_name": "//third_party/dawn/src/dawn/tests:dawn_end2end_tests",
++        "module_scheme": "gtest",
++        "name": "dawn_end2end_implicit_device_sync_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 2
++        },
++        "test": "dawn_end2end_tests",
++        "test_id_prefix": "ninja://third_party/dawn/src/dawn/tests:dawn_end2end_tests/"
++      },
++      {
++        "args": [
++          "--use-gpu-in-tests",
++          "--exclusive-device-type-preference=discrete,integrated",
++          "--test-launcher-retry-limit=0",
++          "--test-launcher-batch-limit=512",
++          "--gs-results-bucket=chromium-result-details",
++          "--recover-devices"
++        ],
++        "merge": {
++          "args": [
++            "--bucket",
++            "chromium-result-details",
++            "--test-name",
++            "dawn_end2end_tests"
++          ],
++          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
++        },
++        "module_name": "//third_party/dawn/src/dawn/tests:dawn_end2end_tests",
++        "module_scheme": "gtest",
++        "name": "dawn_end2end_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 2
++        },
++        "test": "dawn_end2end_tests",
++        "test_id_prefix": "ninja://third_party/dawn/src/dawn/tests:dawn_end2end_tests/"
++      }
++    ],
+     "isolated_scripts": [
+       {
+         "args": [
+-          "noop_sleep",
++          "webgpu_compat_cts",
+           "--show-stdout",
+           "--browser=android-chromium",
+           "--passthrough",
+           "-v",
+           "--stable-jobs",
+-          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc",
++          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --enable-features=WebGPUExperimentalFeatures --use-webgpu-adapter=opengles --use-angle=gles --disable-features=Vulkan --force_high_performance_gpu",
+           "--enforce-browser-version",
+           "--jobs=1",
+-          "--initial-find-device-attempts=3"
++          "--initial-find-device-attempts=3",
++          "--use-webgpu-power-preference=default-high-performance"
+         ],
+         "merge": {
+           "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
+         },
+         "module_name": "//chrome/test:telemetry_gpu_integration_test_android_chrome",
+-        "module_scheme": "flat",
+-        "name": "noop_sleep_tests",
++        "module_scheme": "webgpucts",
++        "name": "webgpu_cts_compat_tests",
+         "resultdb": {
+           "enable": true,
+           "has_native_resultdb_integration": true
+@@ -35,7 +122,175 @@
+           "hard_timeout": 1800,
+           "idempotent": false,
+           "io_timeout": 1800,
+-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 36
++        },
++        "test": "telemetry_gpu_integration_test_android_chrome",
++        "test_id_prefix": "ninja://chrome/test:telemetry_gpu_integration_test_android_chrome/"
++      },
++      {
++        "args": [
++          "webgpu_cts",
++          "--show-stdout",
++          "--browser=android-chromium",
++          "--passthrough",
++          "-v",
++          "--stable-jobs",
++          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --force_high_performance_gpu",
++          "--enforce-browser-version",
++          "--use-worker=dedicated",
++          "--jobs=1",
++          "--initial-find-device-attempts=3",
++          "--use-webgpu-power-preference=default-high-performance"
++        ],
++        "merge": {
++          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
++        },
++        "module_name": "//chrome/test:telemetry_gpu_integration_test_android_chrome",
++        "module_scheme": "webgpucts",
++        "name": "webgpu_cts_dedicated_worker_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "idempotent": false,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 2
++        },
++        "test": "telemetry_gpu_integration_test_android_chrome",
++        "test_id_prefix": "ninja://chrome/test:telemetry_gpu_integration_test_android_chrome/"
++      },
++      {
++        "args": [
++          "webgpu_cts",
++          "--show-stdout",
++          "--browser=android-chromium",
++          "--passthrough",
++          "-v",
++          "--stable-jobs",
++          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --force_high_performance_gpu",
++          "--enforce-browser-version",
++          "--use-worker=service",
++          "--jobs=1",
++          "--initial-find-device-attempts=3",
++          "--use-webgpu-power-preference=default-high-performance"
++        ],
++        "merge": {
++          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
++        },
++        "module_name": "//chrome/test:telemetry_gpu_integration_test_android_chrome",
++        "module_scheme": "webgpucts",
++        "name": "webgpu_cts_service_worker_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "idempotent": false,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 2
++        },
++        "test": "telemetry_gpu_integration_test_android_chrome",
++        "test_id_prefix": "ninja://chrome/test:telemetry_gpu_integration_test_android_chrome/"
++      },
++      {
++        "args": [
++          "webgpu_cts",
++          "--show-stdout",
++          "--browser=android-chromium",
++          "--passthrough",
++          "-v",
++          "--stable-jobs",
++          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --force_high_performance_gpu",
++          "--enforce-browser-version",
++          "--jobs=1",
++          "--initial-find-device-attempts=3",
++          "--use-webgpu-power-preference=default-high-performance"
++        ],
++        "merge": {
++          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
++        },
++        "module_name": "//chrome/test:telemetry_gpu_integration_test_android_chrome",
++        "module_scheme": "webgpucts",
++        "name": "webgpu_cts_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "idempotent": false,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 36
++        },
++        "test": "telemetry_gpu_integration_test_android_chrome",
++        "test_id_prefix": "ninja://chrome/test:telemetry_gpu_integration_test_android_chrome/"
++      },
++      {
++        "args": [
++          "webgpu_cts",
++          "--show-stdout",
++          "--browser=android-chromium",
++          "--passthrough",
++          "-v",
++          "--stable-jobs",
++          "--extra-browser-args=--enable-logging=stderr --js-flags=--expose-gc --force_high_performance_gpu",
++          "--enforce-browser-version",
++          "--enable-dawn-backend-validation",
++          "--jobs=1",
++          "--initial-find-device-attempts=3",
++          "--use-webgpu-power-preference=default-high-performance"
++        ],
++        "merge": {
++          "script": "//testing/merge_scripts/standard_isolated_script_merge.py"
++        },
++        "module_name": "//chrome/test:telemetry_gpu_integration_test_android_chrome",
++        "module_scheme": "webgpucts",
++        "name": "webgpu_cts_with_validation_tests",
++        "resultdb": {
++          "enable": true,
++          "has_native_resultdb_integration": true
++        },
++        "swarming": {
++          "dimensions": {
++            "device_os": "BD3A.250721.001",
++            "device_os_type": "userdebug",
++            "device_type": "frankel",
++            "os": "Android",
++            "pool": "chromium.tests.gpu"
++          },
++          "hard_timeout": 1800,
++          "idempotent": false,
++          "io_timeout": 1800,
++          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com",
++          "shards": 36
+         },
+         "test": "telemetry_gpu_integration_test_android_chrome",
+         "test_id_prefix": "ninja://chrome/test:telemetry_gpu_integration_test_android_chrome/"
+diff --git a/infra/config/subprojects/chromium/ci/chromium.dawn.star b/infra/config/subprojects/chromium/ci/chromium.dawn.star
+index 68cc5552..9000632 100644
+--- a/infra/config/subprojects/chromium/ci/chromium.dawn.star
++++ b/infra/config/subprojects/chromium/ci/chromium.dawn.star
+@@ -939,12 +939,49 @@
+     ),
+     targets = targets.bundle(
+         targets = [
+-            "gpu_noop_sleep_telemetry_test",
++            "gpu_dawn_android_compat_telemetry_tests",
++            "gpu_dawn_integration_gtests_passthrough",
++            "gpu_dawn_android_isolated_scripts",
+         ],
+         mixins = [
+             "has_native_resultdb_integration",
+             "gpu_pixel_10_stable",
+         ],
++        per_test_modifications = {
++            "dawn_end2end_skip_validation_tests": targets.remove(
++                reason = "TODO(crbug.com/40238674): Enable once it's shown to work on Android.",
++            ),
++            "dawn_end2end_validation_layers_tests": targets.remove(
++                reason = "TODO(crbug.com/40238674): Enable once it's shown to work on Android.",
++            ),
++            "dawn_end2end_wire_tests": targets.remove(
++                reason = "TODO(crbug.com/40238674): Enable once it's shown to work on Android.",
++            ),
++            "dawn_perf_tests": targets.remove(
++                reason = "TODO(crbug.com/40238674): Enable once it's shown to work on Android.",
++            ),
++            "gl_tests_passthrough": targets.remove(
++                reason = "TODO(crbug.com/40238674): Enable once it's shown to work on Android.",
++            ),
++            "gl_unittests": targets.remove(
++                reason = "TODO(crbug.com/40238674): Enable once it's shown to work on Android.",
++            ),
++            "webgpu_blink_web_tests": targets.remove(
++                reason = "TODO(crbug.com/40238674): Enable once it's shown to work on Android.",
++            ),
++            "webgpu_blink_web_tests_with_backend_validation": targets.remove(
++                reason = "TODO(crbug.com/40238674): Enable once it's shown to work on Android.",
++            ),
++            "webgpu_cts_compat_min_es31_tests": targets.remove(
++                reason = "Too many failures.",
++            ),
++            "webgpu_cts_shared_worker_tests": targets.remove(
++                reason = [
++                    "We only need coverage on one GPU per OS, so remove from lower capacity",
++                    "configs. Additionally, shared workers are not supported on Android.",
++                ],
++            ),
++        },
+     ),
+     targets_settings = targets.settings(
+         browser_config = targets.browser_config.ANDROID_CHROMIUM,
