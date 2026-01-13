@@ -149,6 +149,7 @@ struct Options {
     bool enable_robustness = true;
 
     bool dump_ir = false;
+    bool ir_roundtrip = false;
     bool minify = false;
 
 #if TINT_BUILD_SPV_READER
@@ -482,6 +483,10 @@ When specified, automatically enables HLSL validation)",
     auto& dump_ir = options.Add<BoolOption>("dump-ir", "Writes the IR to stdout", Alias{"emit-ir"},
                                             Default{false});
     TINT_DEFER(opts->dump_ir = *dump_ir.value);
+
+    auto& ir_roundtrip = options.Add<BoolOption>(
+        "ir-roundtrip", "Converts the Program to IR and then back to a Program", Default{false});
+    TINT_DEFER(opts->ir_roundtrip = *ir_roundtrip.value);
 
     auto& dump_inspector_bindings = options.Add<BoolOption>(
         "dump-inspector-bindings", "Dump reflection data about bindings to stdout",
@@ -1484,6 +1489,19 @@ int Run(tint::VectorRef<std::string_view> arguments, ExeMode exe_mode) {
         auto res = DumpIR(info.program, options);
         if (options.format == Format::kIr) {
             return static_cast<int>(res);
+        }
+    }
+
+    if (options.ir_roundtrip) {
+        auto ir = tint::wgsl::reader::ProgramToIR(info.program);
+        if (ir != tint::Success) {
+            std::cerr << "Failed convert program to IR: " << ir.Failure() << "\n";
+            return 1;
+        }
+        auto p = tint::wgsl::writer::ProgramFromIR(ir.Get(), {});
+        if (p != tint::Success) {
+            std::cerr << "Failed converting IR to program: " << p.Failure() << "\n";
+            return 1;
         }
     }
 
