@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf9e2baf_c06a1449",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-13T20:34:12Z",
+      "side": 1,
+      "message": "nit: use \"state\" here and on line 554",
+      "range": {
+        "startLine": 548,
+        "startChar": 12,
+        "endLine": 548,
+        "endChar": 30
+      },
+      "revId": "ce2d442e21768265cee8c0a5cfe5603ce69b63fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
