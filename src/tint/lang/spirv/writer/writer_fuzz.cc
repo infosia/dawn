@@ -68,6 +68,7 @@ struct FuzzedOptions {
     SpvVersion spirv_version;
     SubstituteOverridesConfig substitute_overrides_config;
     bool texture_sample_compare_depth_cube_array;
+    bool polyfill_clamp_as_max_min_f16;
 
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(FuzzedOptions,
@@ -97,7 +98,8 @@ struct FuzzedOptions {
                  depth_range_offsets,
                  spirv_version,
                  substitute_overrides_config,
-                 texture_sample_compare_depth_cube_array);
+                 texture_sample_compare_depth_cube_array,
+                 polyfill_clamp_as_max_min_f16);
     TINT_REFLECT_HASH_CODE(FuzzedOptions);
 };
 
