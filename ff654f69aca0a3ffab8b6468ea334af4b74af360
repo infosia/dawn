@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72501f81_dd5353a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-13T17:55:05Z",
+      "side": 1,
+      "message": "Thank you!\nWould be nice to also have something like this in the commit message:\nhttps://chromium.googlesource.com/infra/chromium/+log/3de1f1039ee6e275dadf5652936a0b605a7a906c..76c662527154a5f02454d66f1d42f412c418c19f",
+      "revId": "ff654f69aca0a3ffab8b6468ea334af4b74af360",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
