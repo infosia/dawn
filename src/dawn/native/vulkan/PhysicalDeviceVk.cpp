@@ -347,9 +347,15 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::DepthClipControl);
     }
 
+    if (mDeviceInfo.HasExt(DeviceExt::MultisampledRenderToSingleSampled) &&
+        mDeviceInfo.multisampledRenderToSingleSampledFeatures.multisampledRenderToSingleSampled ==
+            VK_TRUE) {
+        EnableFeature(Feature::YCbCrVulkanSamplers);
+    }
+
     if (mDeviceInfo.HasExt(DeviceExt::ExternalMemoryAndroidHardwareBuffer) &&
         mDeviceInfo.samplerYCbCrConversionFeatures.samplerYcbcrConversion == VK_TRUE) {
-        EnableFeature(Feature::YCbCrVulkanSamplers);
+        EnableFeature(Feature::MSAARenderToSingleSampled);
     }
 
     VkFormatProperties rg11b10Properties;
@@ -575,6 +581,10 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 
     if (mDeviceInfo.HasExt(DeviceExt::ImageDrmFormatModifier)) {
         EnableFeature(Feature::DawnDrmFormatCapabilities);
+    }
+
+    if (mDeviceInfo.HasExt(DeviceExt::MultisampledRenderToSingleSampled)) {
+        EnableFeature(Feature::MSAARenderToSingleSampled);
     }
 
     EnableFeature(Feature::TextureComponentSwizzle);
@@ -1171,6 +1181,15 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         // TODO(crbug.com/463893794): Defaulted to false until ExpandResolveTexture is supported
         // when dynamic rendering is enabled.
         deviceToggles->Default(Toggle::VulkanUseDynamicRendering, false);
+    }
+
+    // Use CreateRenderPass2KHR by default if the corresponding extension is available. Disabled if
+    // dynamic rendering is being used for clarity.
+    if (!GetDeviceInfo().HasExt(DeviceExt::CreateRenderPass2) ||
+        deviceToggles->IsEnabled(Toggle::VulkanUseDynamicRendering)) {
+        deviceToggles->ForceSet(Toggle::VulkanUseCreateRenderPass2, false);
+    } else {
+        deviceToggles->Default(Toggle::VulkanUseCreateRenderPass2, true);
     }
 }
 
