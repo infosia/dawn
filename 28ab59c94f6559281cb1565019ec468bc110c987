@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e5af211_d83b1753",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-13T02:22:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0717c513_db67ba99",
+      "range": {
+        "startLine": 981,
+        "startChar": 0,
+        "endLine": 984,
+        "endChar": 77
+      },
+      "revId": "28ab59c94f6559281cb1565019ec468bc110c987",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d25099c_527e0500",
@@ -54,6 +78,30 @@
       "writtenOn": "2026-01-13T01:38:16Z",
       "side": 1,
       "message": "formatting nit:\n\n```suggestion\n            \"Unable to extract chromium-luci revision from Chromium\u0027s \"\n```",
+      "range": {
+        "startLine": 987,
+        "startChar": 68,
+        "endLine": 987,
+        "endChar": 70
+      },
+      "revId": "28ab59c94f6559281cb1565019ec468bc110c987",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "567e76fa_dba47af5",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-13T02:22:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d25099c_527e0500",
       "range": {
         "startLine": 987,
         "startChar": 68,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ba3f7d6_90ea5d90",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-13T02:22:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b54ec428_0b7008e1",
+      "range": {
+        "startLine": 998,
+        "startChar": 0,
+        "endLine": 1001,
+        "endChar": 51
+      },
+      "revId": "28ab59c94f6559281cb1565019ec468bc110c987",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "67c9a0f5_d7e26cce",
@@ -100,6 +172,30 @@
       "writtenOn": "2026-01-13T01:38:16Z",
       "side": 1,
       "message": "nit: Since we\u0027re not doing anything with the returned `CompletedProcess`, we can just send stdio directly to `DEVNULL` and skip the variable assignment (AFAIK, Python doesn\u0027t have a concept like C++\u0027s `[[nodiscard]]`):\n\n```suggestion\n    subprocess.check_call([\u0027lucicfg\u0027, \u0027generate\u0027,\n                           str(infra_path / \u0027main.star\u0027)],\n                          stdout\u003dsubprocess.DEVNULL,\n                          stderr\u003dsubprocess.DEVNULL)\n```\n\nSimilar suggestion below.",
+      "range": {
+        "startLine": 1008,
+        "startChar": 0,
+        "endLine": 1011,
+        "endChar": 34
+      },
+      "revId": "28ab59c94f6559281cb1565019ec468bc110c987",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "886e0143_7942e5de",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-13T02:22:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67c9a0f5_d7e26cce",
       "range": {
         "startLine": 1008,
         "startChar": 0,
