@@ -105,6 +105,24 @@
       "parentUuid": "b2ac2316_8611bf15",
       "revId": "cf5555c06f5eff08bfc9e561f1d2f54ec15f8f45",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e7561d2_e5107100",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-13T02:53:14Z",
+      "side": 1,
+      "message": "I considered that a bit, especially because of the better minification, but was hoping the consteval thing would be simpler. It did turn out to be really internally complex, but pulling sources out into files also adds some pretty annoying complexity.\n\nThere\u0027s enough here I decided file [a bug] and write up the tradeoffs in [a doc](https://docs.google.com/document/d/1ii8vRV1msqBYp7x9o4PGiRlquROTfD_nKYbYC3cMmtU/edit?usp\u003dsharing).\n\nWhile thinking about the slightly annoying syntax of the macro, by total chance I stumbled upon something neat: `#__VA_ARGS__` (option 3) seems to do almost exactly the minification we want, for free (unless it doesn\u0027t work on some shader strings for some reason).\n\nI was going to propose that I throw a bit more time at the `consteval` thing, but first I\u0027m going to see if that works.",
+      "parentUuid": "ef123fbc_adb8f343",
+      "revId": "cf5555c06f5eff08bfc9e561f1d2f54ec15f8f45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
