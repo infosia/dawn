@@ -366,16 +366,30 @@ ResultOrError<RenderPassCache::RenderPassInfo> RenderPassCache::CreateRenderPass
         RenderPassCreateInfo2 passInfo2;
         InitializePassInfo(mDevice, query, passInfo2);
 
-        // Create the render pass from the zillion parameters
         RenderPassInfo renderPassInfo;
         renderPassInfo.mainSubpass = passInfo2.createInfo.subpassCount - 1;
         renderPassInfo.uniqueId = nextRenderPassId++;
+
+        VkMultisampledRenderToSingleSampledInfoEXT msrtss = {};
+        if (query.renderToSingleSampled) {
+            msrtss.sType = VK_STRUCTURE_TYPE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_INFO_EXT;
+            msrtss.pNext = nullptr;
+            msrtss.multisampledRenderToSingleSampledEnable = VK_TRUE;
+            msrtss.rasterizationSamples = VulkanSampleCount(query.sampleCount);
+
+            passInfo2.subpassDescs[renderPassInfo.mainSubpass].pNext = &msrtss;
+        }
+
+        // Create the render pass from the zillion parameters
         DAWN_TRY(CheckVkSuccess(
             mDevice->fn.CreateRenderPass2KHR(mDevice->GetVkDevice(), &passInfo2.createInfo, nullptr,
                                              &*renderPassInfo.renderPass),
             "CreateRenderPass2KHR"));
         return renderPassInfo;
     }
+
+    // MSAA Render To Single Sampled should not be enabled unless CreateRenderPass2 is also enabled.
+    DAWN_ASSERT(!query.renderToSingleSampled);
 
     RenderPassCreateInfo passInfo;
     InitializePassInfo(mDevice, query, passInfo);
@@ -411,7 +425,7 @@ size_t RenderPassCache::CacheFuncs::operator()(const RenderPassCacheQuery& query
                     query.depthReadOnly, query.stencilLoadOp, query.stencilStoreOp,
                     query.stencilReadOnly);
     }
-    HashCombine(&hash, query.sampleCount);
+    HashCombine(&hash, query.sampleCount, query.renderToSingleSampled);
 
     return hash;
 }
@@ -427,6 +441,10 @@ bool RenderPassCache::CacheFuncs::operator()(const RenderPassCacheQuery& a,
     }
 
     if (a.sampleCount != b.sampleCount) {
+        return false;
+    }
+
+    if (a.renderToSingleSampled != b.renderToSingleSampled) {
         return false;
     }
 

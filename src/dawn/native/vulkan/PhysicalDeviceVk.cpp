@@ -347,6 +347,12 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::DepthClipControl);
     }
 
+    if (mDeviceInfo.HasExt(DeviceExt::MultisampledRenderToSingleSampled) &&
+        mDeviceInfo.multisampledRenderToSingleSampledFeatures.multisampledRenderToSingleSampled ==
+            VK_TRUE) {
+        EnableFeature(Feature::MSAARenderToSingleSampled);
+    }
+
     if (mDeviceInfo.HasExt(DeviceExt::ExternalMemoryAndroidHardwareBuffer) &&
         mDeviceInfo.samplerYCbCrConversionFeatures.samplerYcbcrConversion == VK_TRUE) {
         EnableFeature(Feature::YCbCrVulkanSamplers);
@@ -575,6 +581,10 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 
     if (mDeviceInfo.HasExt(DeviceExt::ImageDrmFormatModifier)) {
         EnableFeature(Feature::DawnDrmFormatCapabilities);
+    }
+
+    if (mDeviceInfo.HasExt(DeviceExt::MultisampledRenderToSingleSampled)) {
+        EnableFeature(Feature::MSAARenderToSingleSampled);
     }
 
     EnableFeature(Feature::TextureComponentSwizzle);
@@ -1238,6 +1248,18 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
                 !toggles.IsEnabled(Toggle::VulkanEnableF16OnNvidia)) {
                 return FeatureValidationResult(
                     absl::StrFormat("Feature %s is not yet supported on Nvidia GPUs", feature));
+            }
+            break;
+
+        case wgpu::FeatureName::MSAARenderToSingleSampled:
+            // Must be using either Dynamic Rendering or CreateRenderPass2 for this feature to be
+            // available.
+            if (!toggles.IsEnabled(Toggle::VulkanUseDynamicRendering) &&
+                !toggles.IsEnabled(Toggle::VulkanUseCreateRenderPass2)) {
+                return FeatureValidationResult(
+                    absl::StrFormat("Feature %s requires either the VulkanUseDynamicRendering or "
+                                    "VulkanUseCreateRenderPass2 toggle on Vulkan",
+                                    feature));
             }
             break;
 
