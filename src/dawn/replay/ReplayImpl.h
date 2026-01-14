@@ -55,7 +55,8 @@ typedef std::variant<wgpu::BindGroup,
                      wgpu::Sampler,
                      wgpu::ShaderModule,
                      wgpu::Texture,
-                     wgpu::TextureView>
+                     wgpu::TextureView,
+                     wgpu::ExternalTexture>
     Resource;
 
 struct LabeledResource {
