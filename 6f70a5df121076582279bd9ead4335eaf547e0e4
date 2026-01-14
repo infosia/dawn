@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "32f0f1d3_7e4833a1",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1693,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-14T12:06:55Z",
+      "side": 1,
+      "message": "It\u0027s not fixed here.",
+      "parentUuid": "02f3f1eb_ccccc4af",
+      "range": {
+        "startLine": 1692,
+        "startChar": 16,
+        "endLine": 1693,
+        "endChar": 63
+      },
+      "revId": "6f70a5df121076582279bd9ead4335eaf547e0e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "62526a55_c08d2f92",
         "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
         "patchSetId": 3
