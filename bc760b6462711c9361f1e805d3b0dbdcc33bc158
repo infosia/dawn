@@ -22,6 +22,30 @@
       },
       "revId": "bc760b6462711c9361f1e805d3b0dbdcc33bc158",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac8ba369_e70b3784",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-14T14:21:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cd27803_94e26417",
+      "range": {
+        "startLine": 190,
+        "startChar": 32,
+        "endLine": 190,
+        "endChar": 41
+      },
+      "revId": "bc760b6462711c9361f1e805d3b0dbdcc33bc158",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
