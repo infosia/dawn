@@ -39,6 +39,30 @@
       },
       "revId": "b7b534a52fa97365dc82d9ddf7a2a20a8b069a5b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fc549a4_6ff341aa",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill_test.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-01-14T18:48:42Z",
+      "side": 1,
+      "message": "We could instead polyfill all clamps from const min max (0,1) to be this new clamp. \nThis would also help avoid that future bug.\n\nAgain is it worth it. I assume we can simply call eval and then see if we have a const and check if it is equal to 0 or 1\n\nI mean it would be cooler. more like an optimizing compiler.",
+      "parentUuid": "031f132f_64d3ca75",
+      "range": {
+        "startLine": 214,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 38
+      },
+      "revId": "b7b534a52fa97365dc82d9ddf7a2a20a8b069a5b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
