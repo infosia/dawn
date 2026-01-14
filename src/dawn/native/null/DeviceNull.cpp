@@ -514,11 +514,12 @@ MaybeError ComputePipeline::InitializeImpl() {
     auto maxSubgroupSize = GetDevice()->GetAdapter()->GetPhysicalDevice()->GetSubgroupMaxSize();
 
     Extent3D _;
-    DAWN_TRY_ASSIGN(_, ValidateComputeStageWorkgroupSize(
-                           tintResult->workgroup_info.x, tintResult->workgroup_info.y,
-                           tintResult->workgroup_info.z, tintResult->workgroup_info.storage_size,
-                           computeStage.metadata->usesSubgroupMatrix, maxSubgroupSize, limits,
-                           adapterSupportedLimits));
+    DAWN_TRY_ASSIGN(_,
+                    ValidateComputeStageWorkgroupSize(
+                        tintResult->workgroup_info.x, tintResult->workgroup_info.y,
+                        tintResult->workgroup_info.z, tintResult->workgroup_info.storage_size,
+                        computeStage.metadata->usesSubgroupMatrix, maxSubgroupSize,
+                        tintResult->workgroup_info.subgroup_size, limits, adapterSupportedLimits));
 
     return {};
 }

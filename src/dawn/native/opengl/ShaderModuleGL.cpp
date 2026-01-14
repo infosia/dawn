@@ -517,8 +517,9 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
                                     result->workgroup_info.x, result->workgroup_info.y,
                                     result->workgroup_info.z, result->workgroup_info.storage_size,
                                     /* usesSubgroupMatrix */ false,
-                                    /* maxSubgroupSize, GL backend not support */ 0, r.limits,
-                                    r.adapterSupportedLimits.UnsafeGetValue()));
+                                    /* maxSubgroupSize, GL backend not support */ 0,
+                                    /* explicitSubgroupSize, GL backend not support */ std::nullopt,
+                                    r.limits, r.adapterSupportedLimits.UnsafeGetValue()));
             }
 
             return GLSLCompilation{{std::move(result->glsl)}};

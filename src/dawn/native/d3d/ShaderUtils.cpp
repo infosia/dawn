@@ -249,7 +249,8 @@ MaybeError TranslateToHLSL(d3d::HlslCompilationRequest r,
             _, ValidateComputeStageWorkgroupSize(
                    result->workgroup_info.x, result->workgroup_info.y, result->workgroup_info.z,
                    result->workgroup_info.storage_size, /* usesSubgroupMatrix */ false,
-                   r.maxSubgroupSize, r.limits, r.adapterSupportedLimits.UnsafeGetValue()));
+                   r.maxSubgroupSize, result->subgroup_size, r.limits,
+                   r.adapterSupportedLimits.UnsafeGetValue()));
     }
 
     bool usesVertexIndex = false;

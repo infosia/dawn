@@ -314,7 +314,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
                     _, ValidateComputeStageWorkgroupSize(
                            tintResult->workgroup_info.x, tintResult->workgroup_info.y,
                            tintResult->workgroup_info.z, tintResult->workgroup_info.storage_size,
-                           r.usesSubgroupMatrix, r.maxSubgroupSize, r.limits,
+                           r.usesSubgroupMatrix, r.maxSubgroupSize,
+                           tintResult->workgroup_info.subgroup_size, r.limits,
                            r.adapterSupportedLimits.UnsafeGetValue()));
             }
 

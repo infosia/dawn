@@ -392,7 +392,8 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
                                 ValidateComputeStageWorkgroupSize(
                                     result->workgroup_info.x, result->workgroup_info.y,
                                     result->workgroup_info.z, result->workgroup_info.storage_size,
-                                    r.usesSubgroupMatrix, r.maxSubgroupSize, r.limits,
+                                    r.usesSubgroupMatrix, r.maxSubgroupSize,
+                                    /*explicitSubgroupSize*/ std::nullopt, r.limits,
                                     r.adapterSupportedLimits.UnsafeGetValue()));
             }
 

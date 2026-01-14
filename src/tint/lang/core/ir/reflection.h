@@ -43,6 +43,9 @@ struct WorkgroupInfo {
 
     /// The needed workgroup storage size
     size_t storage_size = 0;
+
+    /// The `@subgroup_size` attribute
+    std::optional<uint32_t> subgroup_size = 0;
 };
 
 /// Generate WorkgroupInfo for an IR module input.
