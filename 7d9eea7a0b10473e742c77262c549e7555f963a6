@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ae7a388_3072aaee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-14T22:03:16Z",
+      "side": 1,
+      "message": "As a note, you can use the rubber stamper bot for expectation-only changes in the future.",
+      "revId": "7d9eea7a0b10473e742c77262c549e7555f963a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
