@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85834e77_39130c25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-14T00:31:39Z",
+      "side": 1,
+      "message": "PTAL\n\nSample snippet of the CL description from a local roll:\n\n```\n    Repo entries:\n      build: https://chromium.googlesource.com/chromium/src/build/+log/d747365c05..be2325e372\n      chromium-luci (Starlark): https://chromium.googlesource.com/infra/chromium/+log/76c6625271..e6a3f8a687\n      testing: https://chromium.googlesource.com/chromium/src/testing/+log/3052f51ada..a9191def47\n      third_party/catapult: https://chromium.googlesource.com/catapult.git/+log/c9916a593b..9a9768518a\n      third_party/depot_tools: https://chromium.googlesource.com/chromium/tools/depot_tools.git/+log/fb0b652edb..832d422ec4\n      third_party/llvm-libc/src: https://chromium.googlesource.com/external/github.com/llvm/llvm-project/libc.git/+log/e9f0fd9932..add939b558\n      third_party/partition_alloc: https://chromium.googlesource.com/chromium/src/base/allocator/partition_allocator.git/+log/b2155fca49..9149542aa8\n      third_party/zlib: https://chromium.googlesource.com/chromium/src/third_party/zlib/+log/2182f37a08..330a4df5c4\n      tools/clang: https://chromium.googlesource.com/chromium/src/tools/clang/+log/3240f2283a..c4c75fefba\n```",
+      "revId": "5e56f4422652b3142df87c218e3cd7b922f042c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
