@@ -2238,6 +2238,39 @@ TEST_P(CaptureAndReplayTests, MappedBufferDestroyed) {
     // just expect no errors
 }
 
+// // Test that capturing and replaying a BindGroup with an ExternalTexture works.
+// TEST_P(CaptureAndReplayTests, BindGroupWithExternalTexture) {
+//     wgpu::TextureDescriptor textureDesc;
+//     textureDesc.size = {1, 1, 1};
+//     textureDesc.format = wgpu::TextureFormat::RGBA8Unorm;
+//     textureDesc.usage = wgpu::TextureUsage::TextureBinding |
+//     wgpu::TextureUsage::RenderAttachment; wgpu::Texture texture =
+//     device.CreateTexture(&textureDesc); wgpu::TextureView textureView = texture.CreateView();
+
+//     wgpu::ExternalTextureDescriptor ethDesc;
+//     ethDesc.plane0 = textureView;
+//     wgpu::ExternalTexture externalTexture = device.CreateExternalTexture(&ethDesc);
+
+//     // Create an explicit bind group layout.
+//     auto bgl = utils::MakeBindGroupLayout(
+//         device, {{0, wgpu::ShaderStage::Fragment, &utils::kExternalTextureBindingLayout}});
+
+//     auto recorder = Recorder::CreateAndStart(device);
+
+//     auto bg = utils::MakeBindGroup(device, bgl, {{0, externalTexture}});
+//     bg.SetLabel("TestBindGroup");
+
+//     // need a render pass
+
+//     auto capture = recorder.Finish();
+//     auto replay = capture.Replay(device);
+
+//     // expect no errors.
+//     // // Verify that the bind group exists in the replayed device.
+//     // wgpu::BindGroup replayedBg = replay->GetObjectByLabel<wgpu::BindGroup>("TestBindGroup");
+//     // EXPECT_NE(replayedBg, nullptr);
+// }
+
 DAWN_INSTANTIATE_TEST(CaptureAndReplayTests, WebGPUBackend());
 
 class CaptureAndReplayDrawTests : public CaptureAndReplayTests {
