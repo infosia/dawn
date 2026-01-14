@@ -16,6 +16,52 @@
       "message": "PTAL\n\nSample snippet of the CL description from a local roll:\n\n```\n    Repo entries:\n      build: https://chromium.googlesource.com/chromium/src/build/+log/d747365c05..be2325e372\n      chromium-luci (Starlark): https://chromium.googlesource.com/infra/chromium/+log/76c6625271..e6a3f8a687\n      testing: https://chromium.googlesource.com/chromium/src/testing/+log/3052f51ada..a9191def47\n      third_party/catapult: https://chromium.googlesource.com/catapult.git/+log/c9916a593b..9a9768518a\n      third_party/depot_tools: https://chromium.googlesource.com/chromium/tools/depot_tools.git/+log/fb0b652edb..832d422ec4\n      third_party/llvm-libc/src: https://chromium.googlesource.com/external/github.com/llvm/llvm-project/libc.git/+log/e9f0fd9932..add939b558\n      third_party/partition_alloc: https://chromium.googlesource.com/chromium/src/base/allocator/partition_allocator.git/+log/b2155fca49..9149542aa8\n      third_party/zlib: https://chromium.googlesource.com/chromium/src/third_party/zlib/+log/2182f37a08..330a4df5c4\n      tools/clang: https://chromium.googlesource.com/chromium/src/tools/clang/+log/3240f2283a..c4c75fefba\n```",
       "revId": "5e56f4422652b3142df87c218e3cd7b922f042c2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69fc003f_0010dc86",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 4337941
+      },
+      "writtenOn": "2026-01-14T00:48:57Z",
+      "side": 1,
+      "message": "nit: Missed this last time, but let\u0027s comment on the group patterns themselves instead of duplicating them in comments (and hoping they stay in sync):\n\n```suggestion\nCHROMIUM_LUCI_REVISION_PATTERN \u003d re.compile(\n    # Group 1: Context prefix to ensure that we\u0027re matching the chromium-luci\n    # entry.\n    r\u0027(name\\s*\u003d\\s*\"@chromium-luci\".*?revision\\s*\u003d\\s*\")\u0027\n    # Group 2: The hexadecimal revision to extract/replace.\n    r\u0027([a-fA-F0-9]+)\u0027\n    # Positive lookahead: Asserts that a \" follows, but does not match/consume\n    # it.\n    r\u0027(?\u003d\")\u0027,\n    flags\u003dre.DOTALL)\n```",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 24
+      },
+      "revId": "5e56f4422652b3142df87c218e3cd7b922f042c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43ad60c1_e7b2a96c",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 4337941
+      },
+      "writtenOn": "2026-01-14T00:48:57Z",
+      "side": 1,
+      "message": "nit, readability: This is very optional, but it feels more natural to read about getting the `old_revision` first, then the `new_revision` (to match the \"old-new\" order in the `Returns` and in the `dataclass` definition).\n\nThen again, putting this block at the top of the function would distance `dawn_package_contents` from its substitution, so maybe keeping this is better.",
+      "range": {
+        "startLine": 997,
+        "startChar": 0,
+        "endLine": 1007,
+        "endChar": 49
+      },
+      "revId": "5e56f4422652b3142df87c218e3cd7b922f042c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
