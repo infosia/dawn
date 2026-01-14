@@ -49,7 +49,7 @@
 #include "dawn/native/ShaderModuleParseRequest.h"
 #include "dawn/native/TintUtils.h"
 
-#ifdef DAWN_ENABLE_SPIRV_VALIDATION
+#if TINT_BUILD_SPV_READER
 #include "dawn/native/SpirvValidation.h"
 #endif
 
@@ -1426,11 +1426,9 @@ void ShaderModuleParseResult::SetValidationError(std::unique_ptr<ErrorData>&& er
 void DumpShaderFromDescriptor(LogEmitter* logEmitter,
                               const UnpackedPtr<ShaderModuleDescriptor>& shaderModuleDesc) {
 #if TINT_BUILD_SPV_READER
-    if ([[maybe_unused]] const auto* spirvDesc = shaderModuleDesc.Get<ShaderSourceSPIRV>()) {
+    if (const auto* spirvDesc = shaderModuleDesc.Get<ShaderSourceSPIRV>()) {
         // Dump SPIR-V if enabled.
-#ifdef DAWN_ENABLE_SPIRV_VALIDATION
         DumpSpirv(logEmitter, spirvDesc->code, spirvDesc->codeSize);
-#endif  // DAWN_ENABLE_SPIRV_VALIDATION
         return;
     }
 #else   // TINT_BUILD_SPV_READER

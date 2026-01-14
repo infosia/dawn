@@ -47,6 +47,7 @@
 #include "dawn/native/RenderPipeline.h"
 #include "dawn/native/ResourceTable.h"
 #include "dawn/native/Serializable.h"
+#include "dawn/native/SpirvValidation.h"
 #include "dawn/native/TintUtils.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 #include "dawn/native/vulkan/BindGroupLayoutVk.h"
@@ -62,10 +63,6 @@
 #include "dawn/platform/tracing/TraceEvent.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 #include "tint/tint.h"
-
-#ifdef DAWN_ENABLE_SPIRV_VALIDATION
-#include "dawn/native/SpirvValidation.h"
-#endif
 
 namespace dawn::native::vulkan {
 
@@ -336,11 +333,11 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         DAWN_TRY(ValidateSpirv(GetDevice(), compilation->spirv.data(), compilation->spirv.size(),
                                spv14));
     }
+#endif
 
     if (GetDevice()->IsToggleEnabled(Toggle::DumpShaders)) {
         DumpSpirv(GetDevice(), compilation->spirv.data(), compilation->spirv.size());
     }
-#endif
 
     VkShaderModuleCreateInfo createInfo;
     createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
