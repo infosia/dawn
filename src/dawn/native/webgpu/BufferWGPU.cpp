@@ -163,8 +163,8 @@ void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
         newState != BufferState::Destroyed) {
         CaptureContext* captureContext = ToBackend(GetDevice()->GetQueue())->GetCaptureContext();
         if (captureContext != nullptr) {
-            [[maybe_unused]] auto result =
-                captureContext->CaptureUnmapBuffer(this, MapOffset(), mMappedData, MapSize());
+            [[maybe_unused]] bool hadError = GetDevice()->ConsumedError(
+                captureContext->CaptureUnmapBuffer(this, MapOffset(), mMappedData, MapSize()));
         }
     }
 
@@ -205,7 +205,7 @@ MaybeError Buffer::CaptureContentIfNeeded(CaptureContext& captureContext,
     // capture.
     wgpu::BufferUsage usage = GetUsage();
     bool unwritableOnPlayback = usage & wgpu::BufferUsage::MapWrite;
-    if (!newResource || unwritableOnPlayback) {
+    if (!newResource || unwritableOnPlayback || IsCPUWritableAtCreation()) {
         return {};
     }
     // A MapRead buffer is never used as input since it's only allowed CopyDst
