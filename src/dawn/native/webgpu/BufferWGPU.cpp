@@ -213,6 +213,10 @@ MaybeError Buffer::CaptureContentIfNeeded(CaptureContext& captureContext,
     if (usage & wgpu::BufferUsage::MapRead) {
         return {};
     }
+    // TODO(crbug.com/477349135): skip to capture mappedAtCreation = true buffer now.
+    if (IsCPUWritableAtCreation()) {
+        return {};
+    }
 
     return AddContentToCapture(captureContext);
 }

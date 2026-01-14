@@ -156,21 +156,52 @@ MaybeError BindGroup::AddReferenced(CaptureContext& captureContext) {
     {
         const auto& bindingMap = layout->GetBindingMap();
         for (const auto& [bindingNumber, apiBindingIndex] : bindingMap) {
-            BindingIndex bindingIndex = layout->AsBindingIndex(apiBindingIndex);
             const auto& bindingInfo = layout->GetAPIBindingInfo(apiBindingIndex);
 
             DAWN_TRY(MatchVariant(
                 bindingInfo.bindingLayout,
                 [&](const SamplerBindingInfo& info) -> MaybeError {
+                    BindingIndex bindingIndex = layout->AsBindingIndex(apiBindingIndex);
                     return captureContext.AddResource(ToBackend(GetBindingAsSampler(bindingIndex)));
                 },
                 [&](const StorageTextureBindingInfo& info) -> MaybeError {
+                    BindingIndex bindingIndex = layout->AsBindingIndex(apiBindingIndex);
                     return captureContext.AddResource(
                         ToBackend(GetBindingAsTextureView(bindingIndex)));
                 },
                 [&](const TextureBindingInfo& info) -> MaybeError {
+                    BindingIndex bindingIndex = layout->AsBindingIndex(apiBindingIndex);
                     return captureContext.AddResource(
                         ToBackend(GetBindingAsTextureView(bindingIndex)));
+                },
+                [&](const ExternalTextureBindingInfo& info) -> MaybeError {
+                    // We cannot use AsBindingIndex() as GetBindingCount() excludes ExternalTexture
+                    // bindings. Try to find the external texture by looking at the plane0.
+                    TextureViewBase* plane0 =
+                        static_cast<TextureViewBase*>(GetBindingAsTextureView(info.plane0));
+                    if (plane0 == nullptr) {
+                        return {};
+                    }
+
+                    for (const auto& externalTexture : GetBoundExternalTextures()) {
+                        if (externalTexture->GetTextureViews()[0].Get() == plane0) {
+                            return captureContext.AddResource(ToBackend(externalTexture.Get()));
+                        }
+                    }
+
+                    // If not found, it must be a texture view used as an external texture.
+                    // plane0 is that texture view.
+                    DAWN_TRY(captureContext.AddResource(ToBackend(plane0)));
+                    TextureViewBase* plane1 =
+                        static_cast<TextureViewBase*>(GetBindingAsTextureView(info.plane1));
+                    if (plane1 != nullptr) {
+                        DAWN_TRY(captureContext.AddResource(ToBackend(plane1)));
+                    }
+                    BufferBase* metadata = GetBindingAsBuffer(info.metadata);
+                    if (metadata != nullptr) {
+                        DAWN_TRY(captureContext.AddResource(ToBackend(metadata)));
+                    }
+                    return {};
                 },
                 [&](const auto& info) -> MaybeError { return {}; }));
         }
@@ -190,13 +221,13 @@ MaybeError BindGroup::CaptureCreationParameters(CaptureContext& captureContext) 
     Serialize(captureContext, bg);
 
     for (const auto& [bindingNumber, apiBindingIndex] : bindingMap) {
-        BindingIndex bindingIndex = layout->AsBindingIndex(apiBindingIndex);
         const auto& bindingInfo = layout->GetAPIBindingInfo(apiBindingIndex);
         uint32_t binding = uint32_t(bindingNumber);
 
         MatchVariant(
             bindingInfo.bindingLayout,
             [&](const BufferBindingInfo& info) {
+                BindingIndex bindingIndex = layout->AsBindingIndex(apiBindingIndex);
                 const auto& entry = GetBindingAsBufferBinding(bindingIndex);
                 schema::BindGroupEntryTypeBufferBinding data{{
                     .binding = binding,
@@ -209,6 +240,7 @@ MaybeError BindGroup::CaptureCreationParameters(CaptureContext& captureContext) 
                 Serialize(captureContext, data);
             },
             [&](const SamplerBindingInfo& info) {
+                BindingIndex bindingIndex = layout->AsBindingIndex(apiBindingIndex);
                 const auto& entry = GetBindingAsSampler(bindingIndex);
                 schema::BindGroupEntryTypeSamplerBinding data{{
                     .binding = binding,
@@ -219,6 +251,7 @@ MaybeError BindGroup::CaptureCreationParameters(CaptureContext& captureContext) 
                 Serialize(captureContext, data);
             },
             [&](const StorageTextureBindingInfo& info) {
+                BindingIndex bindingIndex = layout->AsBindingIndex(apiBindingIndex);
                 const auto& entry = GetBindingAsTextureView(bindingIndex);
                 schema::BindGroupEntryTypeTextureBinding data{{
                     .binding = binding,
@@ -229,11 +262,35 @@ MaybeError BindGroup::CaptureCreationParameters(CaptureContext& captureContext) 
                 Serialize(captureContext, data);
             },
             [&](const TextureBindingInfo& info) {
+                BindingIndex bindingIndex = layout->AsBindingIndex(apiBindingIndex);
                 const auto& entry = GetBindingAsTextureView(bindingIndex);
                 schema::BindGroupEntryTypeTextureBinding data{{
                     .binding = binding,
                     .data{{
                         .textureViewId = captureContext.GetId(entry),
+                    }},
+                }};
+                Serialize(captureContext, data);
+            },
+            [&](const ExternalTextureBindingInfo& info) {
+                // We cannot use AsBindingIndex() as GetBindingCount() excludes ExternalTexture
+                // bindings. Try to find the external texture by looking at the plane0.
+                TextureViewBase* plane0 =
+                    static_cast<TextureViewBase*>(GetBindingAsTextureView(info.plane0));
+                ExternalTextureBase* externalTexture = nullptr;
+                for (const auto& boundExternalTexture : GetBoundExternalTextures()) {
+                    if (boundExternalTexture->GetTextureViews()[0].Get() == plane0) {
+                        externalTexture = boundExternalTexture.Get();
+                        break;
+                    }
+                }
+
+                schema::BindGroupEntryTypeExternalTextureBinding data{{
+                    .binding = binding,
+                    .data{{
+                        .externalTextureId = captureContext.GetId(ToBackend(externalTexture)),
+                        .textureViewId =
+                            externalTexture ? 0 : captureContext.GetId(ToBackend(plane0)),
                     }},
                 }};
                 Serialize(captureContext, data);
