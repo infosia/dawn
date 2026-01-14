@@ -177,6 +177,7 @@ ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(
     size_t workgroupStorageSize,
     bool usesSubgroupMatrix,
     uint32_t maxSubgroupSize,
+    std::optional<uint32_t> explicitSubgroupSize,
     const LimitsForCompilationRequest& limits,
     const LimitsForCompilationRequest& adaterSupportedlimits);
 

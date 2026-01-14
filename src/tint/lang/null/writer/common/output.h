@@ -30,6 +30,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <optional>
 
 namespace tint::null::writer {
 
@@ -59,6 +60,9 @@ struct Output {
 
         /// The needed workgroup storage size
         size_t storage_size = 0;
+
+        /// The `@subgroup_size` attribute
+        std::optional<uint32_t> subgroup_size = 0;
     };
 
     /// The workgroup size information, if the entry point was a compute shader

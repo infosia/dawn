@@ -388,12 +388,14 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
             Extent3D localSize{0, 0, 0};
             if (r.stage == SingleShaderStage::Compute) {
                 // Validate workgroup size and workgroup storage size.
-                DAWN_TRY_ASSIGN(localSize,
-                                ValidateComputeStageWorkgroupSize(
-                                    result->workgroup_info.x, result->workgroup_info.y,
-                                    result->workgroup_info.z, result->workgroup_info.storage_size,
-                                    r.usesSubgroupMatrix, r.maxSubgroupSize, r.limits,
-                                    r.adapterSupportedLimits.UnsafeGetValue()));
+                DAWN_TRY_ASSIGN(
+                    localSize,
+                    ValidateComputeStageWorkgroupSize(
+                        result->workgroup_info.x, result->workgroup_info.y,
+                        result->workgroup_info.z, result->workgroup_info.storage_size,
+                        r.usesSubgroupMatrix, r.maxSubgroupSize,
+                        /* explicitSubgroupSize, Metal backend not support */ std::nullopt,
+                        r.limits, r.adapterSupportedLimits.UnsafeGetValue()));
             }
 
             auto msl = std::move(result->msl);

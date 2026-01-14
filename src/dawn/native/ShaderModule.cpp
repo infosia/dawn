@@ -1319,6 +1319,7 @@ ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(
     size_t workgroupStorageSize,
     bool usesSubgroupMatrix,
     uint32_t maxSubgroupSize,
+    std::optional<uint32_t> explicitSubgroupSize,
     const LimitsForCompilationRequest& limits,
     const LimitsForCompilationRequest& adaterSupportedlimits) {
     DAWN_INVALID_IF(x < 1 || y < 1 || z < 1,
@@ -1379,6 +1380,13 @@ ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(
                         "The x-dimension of workgroup_size (%u) must be a multiple of the device "
                         "maxSubgroupSize (%u) when the shader uses a subgroup matrix",
                         x, maxSubgroupSize);
+    }
+    if (explicitSubgroupSize.has_value()) {
+        DAWN_ASSERT(explicitSubgroupSize.value() > 0);
+        DAWN_INVALID_IF((numInvocations % explicitSubgroupSize.value() != 0),
+                        "The total number of workgroup invocations (%u) is not a multiple of the "
+                        "subgroup_size attribute (%u)",
+                        numInvocations, explicitSubgroupSize.value());
     }
 
     return Extent3D{x, y, z};
