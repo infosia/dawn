@@ -16,6 +16,63 @@
       "message": "PTAL, thanks！",
       "revId": "f323a01b6e7365ed22b2bffd621d5793dc46a392",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c4ad65b_76f50daa",
+        "filename": "docs/tint/extensions/chromium_experimental_subgroup_size_control.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-14T11:40:00Z",
+      "side": 1,
+      "message": "Can you explain in this document why they are not necessarily the same? It would seem extremely surprising to readers as they sound like they should match.",
+      "revId": "f323a01b6e7365ed22b2bffd621d5793dc46a392",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1edf01a5_8e19be1a",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-14T11:40:00Z",
+      "side": 1,
+      "message": "nit: can we have a comment briefly explaining what the test checks?",
+      "revId": "f323a01b6e7365ed22b2bffd621d5793dc46a392",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "856bce0d_062da737",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-14T11:40:00Z",
+      "side": 1,
+      "message": "```suggestion\n                      D3D12Backend(),\n                      MetalBackend(),\n                      VulkanBackend());\n```",
+      "range": {
+        "startLine": 1019,
+        "startChar": 3,
+        "endLine": 1022,
+        "endChar": 5
+      },
+      "revId": "f323a01b6e7365ed22b2bffd621d5793dc46a392",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
