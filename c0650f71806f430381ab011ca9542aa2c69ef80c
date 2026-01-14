@@ -33,6 +33,24 @@
       "message": "Doing the validation in the Resolver isn\u0027t going to work when the workgroup size and/or subgroup size are pipeline override values.\n\nWe have a place for post-override validation in IR land - `const_param_validator.cc`, so one option would be to put this there.\n\nAlternatively, you can reflect the subgroup size back to Dawn and have Dawn do it. We already have a place in Dawn where we have to check that the workgroup size is a multiple of the maximum subgroup size when subgroup matrix is used:\nhttps://source.chromium.org/chromium/chromium/src/+/refs/tags/145.0.7632.2:third_party/dawn/src/dawn/native/ShaderModule.cpp;l\u003d1379-1380\nI imagine we want to change that check if subgroup size control is also used, so we\u0027ll need Dawn to have the subgroup size for that. Then we can keep both checks there (the subgroup matrix one is just a more strict version of the new check you\u0027re adding anyway).",
       "revId": "c0650f71806f430381ab011ca9542aa2c69ef80c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "527280f2_07e90955",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-14T05:37:26Z",
+      "side": 1,
+      "message": "Done\n\nThanks for your suggestion!",
+      "parentUuid": "21c0e743_0ed31908",
+      "revId": "c0650f71806f430381ab011ca9542aa2c69ef80c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
