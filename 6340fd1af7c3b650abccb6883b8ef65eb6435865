@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44be7b83_9c340302",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-14T22:24:14Z",
+      "side": 1,
+      "message": "Nice small change to the generator. Just some high-level comments.",
+      "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c4ee6f4_a2f21860",
+        "filename": "src/dawn/webgpu_kt_docs.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-14T22:24:14Z",
+      "side": 1,
+      "message": "No one is going to see this comment except for us. It needs to be (also) surfaced somewhere where documentation-readers are going to see it, I didn\u0027t see that anywhere in this PR but let me know if I missed it.",
+      "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff231572_61b01da1",
+        "filename": "src/dawn/webgpu_kt_docs.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-14T22:24:14Z",
+      "side": 1,
+      "message": "Also documentation for the Web (JS) and C versions of WebGPU.",
+      "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
