@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e613a214_beba0029",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-14T15:03:44Z",
+      "side": 1,
+      "message": "I was thinking about reentrant usages as well but you\u0027re right that moving the lock deeper could cause inversions. LGTM",
+      "parentUuid": "fc162fa2_0fe4ef95",
+      "revId": "75ef358a32f6ed2552163e5c5bbabc2ec66a7c3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1542086c_9e2601b1",
