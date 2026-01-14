@@ -205,7 +205,7 @@ MaybeError Buffer::CaptureContentIfNeeded(CaptureContext& captureContext,
     // capture.
     wgpu::BufferUsage usage = GetUsage();
     bool unwritableOnPlayback = usage & wgpu::BufferUsage::MapWrite;
-    if (!newResource || unwritableOnPlayback) {
+    if (!newResource || unwritableOnPlayback || IsCPUWritableAtCreation()) {
         return {};
     }
     // A MapRead buffer is never used as input since it's only allowed CopyDst
