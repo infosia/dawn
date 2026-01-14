@@ -131,6 +131,7 @@ static constexpr std::array<DeviceExtInfo, kDeviceExtCount> sDeviceExtInfos{{
     {DeviceExt::CreateRenderPass2, "VK_KHR_create_renderpass2"},
     {DeviceExt::DepthStencilResolve, "VK_KHR_depth_stencil_resolve"},
 
+    {DeviceExt::ShaderBufferInt64Atomics, "VK_KHR_shader_atomic_int64"},
     // Promoted in 1.3
     {DeviceExt::ShaderIntegerDotProduct, "VK_KHR_shader_integer_dot_product"},
     {DeviceExt::ZeroInitializeWorkgroupMemory, "VK_KHR_zero_initialize_workgroup_memory"},
@@ -214,6 +215,7 @@ DeviceExtSet EnsureDependencies(const DeviceExtSet& advertisedExts,
             case DeviceExt::Robustness2:
             case DeviceExt::SubgroupSizeControl:
             case DeviceExt::ShaderSubgroupExtendedTypes:
+            case DeviceExt::ShaderBufferInt64Atomics:
             case DeviceExt::VulkanMemoryModel:
             case DeviceExt::CooperativeMatrix:
             case DeviceExt::ShaderFloatControls:

@@ -1013,6 +1013,8 @@ class AtomicPointers
             case wgsl::BuiltinFn::kAtomicXor:
             case wgsl::BuiltinFn::kAtomicExchange:
             case wgsl::BuiltinFn::kAtomicCompareExchangeWeak:
+            case wgsl::BuiltinFn::kAtomicStoreMin:
+            case wgsl::BuiltinFn::kAtomicStoreMax:
                 return true;
             default:
                 return false;
@@ -1038,6 +1040,8 @@ class AtomicPointers
             case wgsl::BuiltinFn::kAtomicOr:
             case wgsl::BuiltinFn::kAtomicXor:
             case wgsl::BuiltinFn::kAtomicExchange:
+            case wgsl::BuiltinFn::kAtomicStoreMin:
+            case wgsl::BuiltinFn::kAtomicStoreMax:
                 return CallStmt(Call(fn, ptr, 42_a));
             case wgsl::BuiltinFn::kAtomicCompareExchangeWeak:
                 return CallStmt(Call(fn, ptr, 10_a, 42_a));
@@ -1183,19 +1187,19 @@ TEST_P(AtomicPointers, ReadWriteAcrossDifferentFunctions) {
 12:34 note: aliases with another argument passed here)");
 }
 
-std::array kAtomicFns{
-    wgsl::BuiltinFn::kAtomicLoad,
-    wgsl::BuiltinFn::kAtomicStore,
-    wgsl::BuiltinFn::kAtomicAdd,
-    wgsl::BuiltinFn::kAtomicSub,
-    wgsl::BuiltinFn::kAtomicMax,
-    wgsl::BuiltinFn::kAtomicMin,
-    wgsl::BuiltinFn::kAtomicAnd,
-    wgsl::BuiltinFn::kAtomicOr,
-    wgsl::BuiltinFn::kAtomicXor,
-    wgsl::BuiltinFn::kAtomicExchange,
-    wgsl::BuiltinFn::kAtomicCompareExchangeWeak,
-};
+std::array kAtomicFns{wgsl::BuiltinFn::kAtomicLoad,
+                      wgsl::BuiltinFn::kAtomicStore,
+                      wgsl::BuiltinFn::kAtomicAdd,
+                      wgsl::BuiltinFn::kAtomicSub,
+                      wgsl::BuiltinFn::kAtomicMax,
+                      wgsl::BuiltinFn::kAtomicMin,
+                      wgsl::BuiltinFn::kAtomicAnd,
+                      wgsl::BuiltinFn::kAtomicOr,
+                      wgsl::BuiltinFn::kAtomicXor,
+                      wgsl::BuiltinFn::kAtomicExchange,
+                      wgsl::BuiltinFn::kAtomicCompareExchangeWeak,
+                      wgsl::BuiltinFn::kAtomicStoreMin,
+                      wgsl::BuiltinFn::kAtomicStoreMax};
 
 INSTANTIATE_TEST_SUITE_P(ResolverAliasAnalysisTest,
                          AtomicPointers,

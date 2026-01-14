@@ -116,7 +116,7 @@
 #include "src/tint/utils/text/text_style.h"
 
 /// If set to 1 then the Tint will dump the IR when validating.
-#define TINT_DUMP_IR_WHEN_VALIDATING 0
+#define TINT_DUMP_IR_WHEN_VALIDATING 1
 #if TINT_DUMP_IR_WHEN_VALIDATING
 #include <iostream>
 #include "src/tint/utils/text/styled_text_printer.h"
@@ -2353,8 +2353,8 @@ void Validator::CheckType(const core::type::Type* root,
                 return true;
             },
             [&](const core::type::Atomic* a) {
-                if (!a->Type()->IsAnyOf<core::type::I32, core::type::U32>()) {
-                    diag() << "atomic subtype must be i32 or u32";
+                if (!a->Type()->IsAnyOf<core::type::I32, core::type::U32, core::type::U64>()) {
+                    diag() << "atomic subtype must be i32, u32 or u64";
                     return false;
                 }
                 return true;
@@ -4005,6 +4005,12 @@ void Validator::CheckBitcastTypes(const Bitcast* bitcast) {
                 add_error();
                 return;
             }
+        }
+
+        // atomic vec2u support vec2u to u64 bitcast required
+        if (val_elements.count == 2 && val_elements.type->Is<core::type::U32>() &&
+            result_type->Is<core::type::U64>()) {
+            return;  // assume backend supported
         }
 
         if (val_elements.type->IsAnyOf<core::type::U32, core::type::I32, core::type::F32>()) {
