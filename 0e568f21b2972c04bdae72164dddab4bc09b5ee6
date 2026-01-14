@@ -16,6 +16,29 @@
       "message": "PTAL! Broke this out of https://dawn-review.googlesource.com/c/dawn/+/284015 because it\u0027s a large-ish change that isn\u0027t directly related to MSRTSS, just a dependency of it. Took a bit to figure out how to nicely initialize these mostly-identical structs without fully duplicating the code, which would cause maintenance headaches in the future.\n\nHopefully in a few years we can strip all of this out anyway and just do Dynamic Rendering all the time. 😊",
       "revId": "0e568f21b2972c04bdae72164dddab4bc09b5ee6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51aaacf9_97bfe238",
+        "filename": "src/dawn/native/vulkan/RenderPassCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-14T00:24:15Z",
+      "side": 1,
+      "message": "nit. Maybe we could use designated initializers for all these default structs (below also). You might also be able to make a function scope static one with the defaults and then use `\u003doperator` to set them.",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 80
+      },
+      "revId": "0e568f21b2972c04bdae72164dddab4bc09b5ee6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
