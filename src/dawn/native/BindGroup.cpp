@@ -675,6 +675,8 @@ MaybeError BindGroupBase::Initialize(const UnpackedPtr<BindGroupDescriptor>& des
                 // the bind group layout are created in this bind group and filled with the external
                 // texture's underlying resources.
                 if (auto* externalTextureBindingEntry = entry.Get<ExternalTextureBindingEntry>()) {
+                    mBindingNumberToBoundExternalTexturesIndex.emplace(
+                        binding, mBoundExternalTextures.size());
                     mBoundExternalTextures.push_back(externalTextureBindingEntry->externalTexture);
 
                     DAWN_ASSERT(mBindingData.bindings[info.plane0] == nullptr);
@@ -833,6 +835,15 @@ TexelBufferViewBase* BindGroupBase::GetBindingAsTexelBufferView(BindingIndex bin
 const std::vector<Ref<ExternalTextureBase>>& BindGroupBase::GetBoundExternalTextures() const {
     DAWN_ASSERT(!IsError());
     return mBoundExternalTextures;
+}
+
+Ref<ExternalTextureBase> BindGroupBase::GetBoundExternalTexture(BindingNumber binding) const {
+    DAWN_ASSERT(!IsError());
+    auto it = mBindingNumberToBoundExternalTexturesIndex.find(binding);
+    if (it != mBindingNumberToBoundExternalTexturesIndex.end()) {
+        return mBoundExternalTextures[it->second];
+    }
+    return {};
 }
 
 void BindGroupBase::ForEachUnverifiedBufferBindingIndex(

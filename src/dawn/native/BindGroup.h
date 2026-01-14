@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_BINDGROUP_H_
 
 #include <array>
+#include <map>
 #include <optional>
 #include <vector>
 
@@ -113,12 +114,19 @@ class BindGroupBase : public ApiObjectBase {
 
     ~BindGroupBase() override;
 
+    // Get the bound ExternalTexture by the binding number, if exists.
+    Ref<ExternalTextureBase> GetBoundExternalTexture(BindingNumber binding) const;
+
   private:
     BindGroupBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
 
     Ref<BindGroupLayoutBase> mLayout;
     BindGroupLayoutInternalBase::BindingDataPointers mBindingData;
     std::vector<Ref<ExternalTextureBase>> mBoundExternalTextures;
+    // The map from BindingNumber to index in mBoundExternalTextures.
+    // It is needed because ExternalTexture is excluded from the regular Dawn-facing bindings and
+    // cannot get BindingIndex calling BindGroupLayoutInternalBase::AsBindingIndex
+    std::map<BindingNumber, size_t> mBindingNumberToBoundExternalTexturesIndex;
 };
 
 }  // namespace dawn::native
