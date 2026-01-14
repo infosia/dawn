@@ -56,6 +56,30 @@
       },
       "revId": "0e568f21b2972c04bdae72164dddab4bc09b5ee6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6e79195_185189c5",
+        "filename": "src/dawn/native/vulkan/RenderPassCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-14T18:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51aaacf9_97bfe238",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 80
+      },
+      "revId": "0e568f21b2972c04bdae72164dddab4bc09b5ee6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
