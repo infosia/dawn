@@ -133,12 +133,24 @@ enum class RootCommand : uint32_t {
 
 DAWN_REPLAY_SERIALIZABLE(struct, Origin3D, ORIGIN3D_MEMBER){};
 
+#define ORIGIN2D_MEMBER(X) \
+    X(uint32_t, x)         \
+    X(uint32_t, y)
+
+DAWN_REPLAY_SERIALIZABLE(struct, Origin2D, ORIGIN2D_MEMBER){};
+
 #define EXTENT3D_MEMBER(X) \
     X(uint32_t, width)     \
     X(uint32_t, height)    \
     X(uint32_t, depthOrArrayLayers)
 
 DAWN_REPLAY_SERIALIZABLE(struct, Extent3D, EXTENT3D_MEMBER){};
+
+#define EXTENT2D_MEMBER(X) \
+    X(uint32_t, width)     \
+    X(uint32_t, height)
+
+DAWN_REPLAY_SERIALIZABLE(struct, Extent2D, EXTENT2D_MEMBER){};
 
 #define COLOR_MEMBER(X) \
     X(double, r)        \
@@ -346,6 +358,22 @@ DAWN_REPLAY_SERIALIZABLE(struct, TextureView, TEXTURE_VIEW_CREATION_MEMBER){};
     X(uint32_t, count)
 
 DAWN_REPLAY_SERIALIZABLE(struct, QuerySet, QUERYSET_CREATION_MEMBER){};
+
+#define EXTERNAL_TEXTURE_CREATION_MEMBER(X)              \
+    X(ObjectId, plane0Id)                                \
+    X(ObjectId, plane1Id)                                \
+    X(Origin2D, cropOrigin)                              \
+    X(Extent2D, cropSize)                                \
+    X(Extent2D, apparentSize)                            \
+    X(bool, doYuvToRgbConversionOnly)                    \
+    X(std::vector<float>, yuvToRgbConversionMatrix)      \
+    X(std::vector<float>, srcTransferFunctionParameters) \
+    X(std::vector<float>, dstTransferFunctionParameters) \
+    X(std::vector<float>, gamutConversionMatrix)         \
+    X(bool, mirrored)                                    \
+    X(wgpu::ExternalTextureRotation, rotation)
+
+DAWN_REPLAY_SERIALIZABLE(struct, ExternalTexture, EXTERNAL_TEXTURE_CREATION_MEMBER){};
 
 // TODO(452840621): Make this use a chain instead of hard coded to WGSL only and handle other
 // chained structs.

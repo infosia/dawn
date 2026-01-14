@@ -81,13 +81,20 @@ void ExternalTexture::SetLabelImpl() {
 }
 
 MaybeError ExternalTexture::AddReferenced(CaptureContext& captureContext) {
-    // TODO(crbug.com/465184041): Capture ExternalTexture
-    DAWN_UNREACHABLE();
+    for (auto view : GetTextureViews()) {
+        DAWN_TRY(captureContext.AddResource(ToBackend(view.Get())));
+    }
+    return {};
 }
 
-MaybeError ExternalTexture::CaptureCreationParameters(CaptureContext& context) {
-    // TODO(crbug.com/465184041): Capture ExternalTexture
-    DAWN_UNREACHABLE();
+MaybeError ExternalTexture::CaptureCreationParameters(CaptureContext& captureContext) {
+    // schema::ExternalTexture tex{{
+
+    // }};
+    // // mCreationParameters.plane0Id = captureContext.GetId(GetTextureViews()[0].Get());
+    // // mCreationParameters.plane1Id = captureContext.GetId(GetTextureViews()[1].Get());
+    // Serialize(captureContext, tex);
+    return {};
 }
 
 }  // namespace dawn::native::webgpu
