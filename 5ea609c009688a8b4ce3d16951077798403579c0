@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "caf89a72_9948d488",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-14T14:16:27Z",
+      "side": 1,
+      "message": "Why does it need to be `protected`?",
+      "revId": "5ea609c009688a8b4ce3d16951077798403579c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b206ee35_67257e2a",
+        "filename": "src/dawn/native/webgpu/BindGroupLayoutWGPU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-14T14:16:27Z",
+      "side": 1,
+      "message": "If the `InlinedVector` decides to reallocate, this will cause the pointers to point to garbage memory, or freed memory. I suggest 1) making the `InlinedVector` have a size of 1 since external textures are rare, 2) explicitly sizing it using a new `GetExternalTextureCount()` in the `BindGroupLayoutInternalBase` and 3) have a comment here explaining that the pointer will stay valid because of the preservation of space in the `InlinedVector`.",
+      "revId": "5ea609c009688a8b4ce3d16951077798403579c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7e4758e_80ff75e6",
+        "filename": "src/dawn/native/webgpu/BindGroupWGPU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-14T14:16:27Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "5ea609c009688a8b4ce3d16951077798403579c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd364b0d_fbcd9f40",
+        "filename": "src/dawn/tests/end2end/CopyExternalTextureForBrowserTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-14T14:16:27Z",
+      "side": 1,
+      "message": "Ditto needs WebGPU backend",
+      "revId": "5ea609c009688a8b4ce3d16951077798403579c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f065f492_a8cc9514",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1675,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-14T14:16:27Z",
+      "side": 1,
+      "message": "Should we add `WebGPUBackend` to the instantiation at [1] as well?",
+      "revId": "5ea609c009688a8b4ce3d16951077798403579c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d7cb4c2_5dc26244",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1827,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-14T14:16:27Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "5ea609c009688a8b4ce3d16951077798403579c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
