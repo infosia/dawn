@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc2b8596_52c58889",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 16
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-01-14T02:59:01Z",
+      "side": 0,
+      "message": "This only passes when this is fixed by this change.\nThis confirms that this CL fixes these issues.",
+      "range": {
+        "startLine": 472,
+        "startChar": 2,
+        "endLine": 473,
+        "endChar": 88
+      },
+      "revId": "baad8a77a92fe2f0fe62f62920cb92b57f7b27e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
