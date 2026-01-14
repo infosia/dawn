@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76cdcfae_8ff1e2a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-14T19:29:46Z",
+      "side": 1,
+      "message": "I didn\u0027t see your comments earlier, I guess no email was sent as the CL is still WIP?",
+      "revId": "b1e9071ca6556e5c0877f4778b38bd19840b4543",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55bcf5d6_b02171ef",
@@ -26,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e7ba9e83_040f00df",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-14T19:29:46Z",
+      "side": 1,
+      "message": "Yeah, the mState transition logic is what guards against concurrent access, assuming that\u0027s what you meant.\n\n\u003e I\u0027m thinking maybe it would be generalized to apply to all object types. Would a simpler boolean flag ApiObjectBase::mExclusiveUse work? We could use atomic CAS to allow only 1 thread to set it to true and proceed, the other threads would fail and return validation error.\n\nAll places that modified mState would have to set mExclusiveUse \u003d true before modifying. The places that just read from mState are a bit trickier, they can\u0027t necessarily set mExclusiveUse \u003d true before using because API calls like GetMappedPointer() aren\u0027t supposed to be exclusive. Do we still have an atomic mState and atomic mExclusiveUse use and how do they interact? Maybe this is possible but it\u0027s not trivial to change.\n\nThere is also some complexity around MapAsyncEvent completing and Unmap/Destroy [racing](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Buffer.cpp;l\u003d886-919;drc\u003d0ebdba5df4214a2975dc5db198d87a4c2486ec55) that does relies on mState transitions with more than just boolean state.\n\nThat is similar to the ConcurrentAccessGuard idea cwallez@ suggested on the design doc. I filed crbug.com/467247254 for that.",
+      "parentUuid": "55bcf5d6_b02171ef",
+      "range": {
+        "startLine": 141,
+        "startChar": 9,
+        "endLine": 141,
+        "endChar": 25
+      },
+      "revId": "b1e9071ca6556e5c0877f4778b38bd19840b4543",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "73253c31_a38e1016",
         "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
         "patchSetId": 14
@@ -37,6 +78,30 @@
       "writtenOn": "2026-01-12T06:16:33Z",
       "side": 1,
       "message": "Q: Why do we need to use `UseBufferInternal` here?\n\nThis buffer is transient inside Queue::Submit. It\u0027s impossible to access it externally.\n\nSame for other places where other temp buffers + CommandRecordingContext are used.\n\nIs the purpose is to reset the Buffer\u0027s state?",
+      "range": {
+        "startLine": 390,
+        "startChar": 26,
+        "endLine": 390,
+        "endChar": 39
+      },
+      "revId": "b1e9071ca6556e5c0877f4778b38bd19840b4543",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e610d6f_7bd501a1",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-14T19:29:46Z",
+      "side": 1,
+      "message": "There is an assertion that mState \u003d\u003d InsideOperation in MarkUsedInPendingCommands(). This handles changing staging buffer state to InsideOperation and then back to Unmapped later so the assertion doesn\u0027t crash.",
+      "parentUuid": "73253c31_a38e1016",
       "range": {
         "startLine": 390,
         "startChar": 26,
