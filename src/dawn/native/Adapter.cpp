@@ -150,6 +150,11 @@ wgpu::Status AdapterBase::APIGetInfo(AdapterInfo* info) const {
         hadError |= mInstance->ConsumedError(
             DAWN_VALIDATION_ERROR("Feature ChromiumExperimentalSubgroupMatrix is not available."));
     }
+    if (unpacked.Has<AdapterPropertiesExplicitComputeSubgroupSizeConfigs>() &&
+        !mSupportedFeatures.IsEnabled(wgpu::FeatureName::ChromiumExperimentalSubgroupSizeControl)) {
+        hadError |= mInstance->ConsumedError(DAWN_VALIDATION_ERROR(
+            "Feature ChromiumExperimentalExplicitComputeSubgroupSize is not available."));
+    }
     if (hadError) {
         return wgpu::Status::Error;
     }
