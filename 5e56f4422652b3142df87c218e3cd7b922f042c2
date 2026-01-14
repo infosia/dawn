@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cb3f2ca_5b1d198c",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-14T01:02:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69fc003f_0010dc86",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 24
+      },
+      "revId": "5e56f4422652b3142df87c218e3cd7b922f042c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43ad60c1_e7b2a96c",
@@ -54,6 +78,30 @@
       "writtenOn": "2026-01-14T00:48:57Z",
       "side": 1,
       "message": "nit, readability: This is very optional, but it feels more natural to read about getting the `old_revision` first, then the `new_revision` (to match the \"old-new\" order in the `Returns` and in the `dataclass` definition).\n\nThen again, putting this block at the top of the function would distance `dawn_package_contents` from its substitution, so maybe keeping this is better.",
+      "range": {
+        "startLine": 997,
+        "startChar": 0,
+        "endLine": 1007,
+        "endChar": 49
+      },
+      "revId": "5e56f4422652b3142df87c218e3cd7b922f042c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8146172a_619fd457",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-14T01:02:29Z",
+      "side": 1,
+      "message": "Agreed that it\u0027s slightly better if re-ordered, done.",
+      "parentUuid": "43ad60c1_e7b2a96c",
       "range": {
         "startLine": 997,
         "startChar": 0,
