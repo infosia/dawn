@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51f3f08d_b3dab58f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-14T18:46:03Z",
+      "side": 1,
+      "message": "Update commit message",
+      "revId": "b7b534a52fa97365dc82d9ddf7a2a20a8b069a5b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "031f132f_64d3ca75",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill_test.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-14T18:46:03Z",
+      "side": 1,
+      "message": "I\u0027m a little uneasy about the requirement to set both flags to enable the new polyfill. Is it possible to make the controls independent, or does that make the logic too awkward?",
+      "range": {
+        "startLine": 214,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 38
+      },
+      "revId": "b7b534a52fa97365dc82d9ddf7a2a20a8b069a5b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
