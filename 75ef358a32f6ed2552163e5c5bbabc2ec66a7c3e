@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc162fa2_0fe4ef95",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-14T10:21:59Z",
+      "side": 1,
+      "message": "`CreateTexture` can be called from the internal code such as [this](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d11/DeviceD3D11.cpp;drc\u003daa5c369fe2581155c4df93a7ff7505311331f91f;l\u003d575)\n\nI think we should lock at `APICreate*` level to avoid potential lock-inversions in future.",
+      "parentUuid": "cf08d1c1_56165a95",
+      "revId": "75ef358a32f6ed2552163e5c5bbabc2ec66a7c3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1542086c_9e2601b1",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-01-13T14:13:06Z",
       "side": 1,
       "message": "Could we use https://issues.chromium.org/465433756 or parent the issue somewhere under it? For D3D12 it seems that we might be able to remove some of the worst autolocks basically for free.",
+      "revId": "75ef358a32f6ed2552163e5c5bbabc2ec66a7c3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2431f3e6_8f0da412",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-14T10:21:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1542086c_9e2601b1",
       "revId": "75ef358a32f6ed2552163e5c5bbabc2ec66a7c3e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +94,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "292ede7b_422bd070",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-14T10:21:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4d126f0_51a56969",
+      "range": {
+        "startLine": 565,
+        "startChar": 39,
+        "endLine": 565,
+        "endChar": 69
+      },
+      "revId": "75ef358a32f6ed2552163e5c5bbabc2ec66a7c3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "264c7393_f689ba5c",
@@ -71,6 +131,24 @@
       "writtenOn": "2026-01-13T14:13:06Z",
       "side": 1,
       "message": "Can we have tests in MultithreadTests?",
+      "revId": "75ef358a32f6ed2552163e5c5bbabc2ec66a7c3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4c15ced_5ecdd4e6",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-14T10:21:59Z",
+      "side": 1,
+      "message": "There are existing tests for:\n- Samplers [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/MultithreadTests.cpp;drc\u003daa5c369fe2581155c4df93a7ff7505311331f91f;l\u003d913).\n- Textures [[1]](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/MultithreadTests.cpp;drc\u003daa5c369fe2581155c4df93a7ff7505311331f91f;l\u003d1472) [[2]](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/MultithreadTests.cpp;drc\u003daa5c369fe2581155c4df93a7ff7505311331f91f;l\u003d1185)",
+      "parentUuid": "264c7393_f689ba5c",
       "revId": "75ef358a32f6ed2552163e5c5bbabc2ec66a7c3e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
