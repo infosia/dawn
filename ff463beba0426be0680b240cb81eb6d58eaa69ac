@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "178e1137_8fe5401e",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-14T12:03:10Z",
+      "side": 1,
+      "message": "Could we make this function take in the tint::core::ir::WorkgroupInfo instead of passing each member individually in all 4 backends?",
+      "revId": "ff463beba0426be0680b240cb81eb6d58eaa69ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
