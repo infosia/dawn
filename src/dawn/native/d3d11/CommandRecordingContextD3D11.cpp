@@ -161,6 +161,8 @@ void ScopedCommandRecordingContext::WriteUniformBufferRange(uint32_t offset,
 
 MaybeError ScopedCommandRecordingContext::FlushUniformBuffer() const {
     if (Get()->mUniformBufferDirty) {
+        // TODO(kylechar): This should only acquire guard once?
+        auto use = Get()->mUniformBuffer->UseBufferInternal();
         DAWN_TRY(Get()->mUniformBuffer->Write(this, 0, Get()->mUniformBufferData.data(),
                                               Get()->mUniformBufferData.size() * sizeof(uint32_t)));
         Get()->mUniformBufferDirty = false;
