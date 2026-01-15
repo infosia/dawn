@@ -256,6 +256,22 @@ auto& operator<<(STREAM& out, const Result<SUCCESS, FAILURE>& res) {
 #define TINT_CHECK_RESULT_UNWRAP(to, result) \
     TINT_CHECK_RESULT_UNWRAP_IMPL(to, TINT_CONCAT(tint_check_result_value, __LINE__), result)
 
+/// Workgroup size information, which is part of the output of shader generation.
+struct WorkgroupInfo {
+    /// The x-component
+    uint32_t x = 0;
+    /// The y-component
+    uint32_t y = 0;
+    /// The z-component
+    uint32_t z = 0;
+
+    /// The needed workgroup storage size
+    size_t storage_size = 0;
+
+    /// The `@subgroup_size` attribute
+    std::optional<uint32_t> subgroup_size;
+};
+
 }  // namespace tint
 
 #endif  // SRC_TINT_UTILS_RESULT_H_

@@ -34,21 +34,6 @@
 #include "src/tint/utils/result.h"
 
 namespace tint::core::ir {
-/// Workgroup size information
-struct WorkgroupInfo {
-    /// The x-component
-    uint32_t x = 0;
-    /// The y-component
-    uint32_t y = 0;
-    /// The z-component
-    uint32_t z = 0;
-
-    /// The needed workgroup storage size
-    size_t storage_size = 0;
-
-    /// The `@subgroup_size` attribute
-    std::optional<uint32_t> subgroup_size;
-};
 
 /// Generate WorkgroupInfo for an IR module input.
 /// @param ir the workgroup info for the IR module
