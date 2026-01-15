@@ -1607,6 +1607,21 @@ TEST_P(BufferMapExtendedUsagesTests, MapWriteWithAnyUsage) {
     }
 }
 
+// Test that Queue.WriteBuffer works to update a mappable buffer.
+TEST_P(BufferMapExtendedUsagesTests, QueueWriteMappableBuffer) {
+    wgpu::BufferDescriptor descriptor;
+    descriptor.size = 4;
+    descriptor.usage = wgpu::BufferUsage::MapWrite | wgpu::BufferUsage::CopyDst |
+                       wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::Uniform;
+    wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
+
+    uint32_t myData = 0x12345678;
+    constexpr size_t kSize = sizeof(myData);
+    queue.WriteBuffer(buffer, 0, &myData, kSize);
+
+    EXPECT_BUFFER_U32_EQ(myData, buffer, 0);
+}
+
 // Test that mapping a vertex buffer, modifying the data then draw with the buffer works.
 TEST_P(BufferMapExtendedUsagesTests, MapWriteVertexBufferAndDraw) {
     const utils::RGBA8 kReds[] = {utils::RGBA8::kRed, utils::RGBA8::kRed, utils::RGBA8::kRed};
