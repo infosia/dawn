@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "581198c1_1fa2c89d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-15T16:33:33Z",
+      "side": 1,
+      "message": "what does NFC mean?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "a93b6e12ce4ca281d2267fb444b160d5e61d71e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d392583_b733f3a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-15T16:33:33Z",
+      "side": 1,
+      "message": "Which clang-tidy error? I feel like we do this a lot in the code base?",
+      "range": {
+        "startLine": 9,
+        "startChar": 42,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "a93b6e12ce4ca281d2267fb444b160d5e61d71e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
