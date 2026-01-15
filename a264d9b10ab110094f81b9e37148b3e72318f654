@@ -51,6 +51,24 @@
       "parentUuid": "3b911568_29b3a375",
       "revId": "a264d9b10ab110094f81b9e37148b3e72318f654",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd54910e_de37468d",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-15T15:59:16Z",
+      "side": 1,
+      "message": "Sure, but then they can turn it off with `DAWN_ENABLE_SPIRV_VALIDATION \u003d OFF` in their configuration. If they\u0027ve already built and have a cache it will stay off, so should be fine?\n\nHave GN and CMake have different default options is very confusing",
+      "parentUuid": "fb43a0fb_510dfaac",
+      "revId": "a264d9b10ab110094f81b9e37148b3e72318f654",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
