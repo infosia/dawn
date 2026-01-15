@@ -512,13 +512,11 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
             if (r.stage == SingleShaderStage::Compute) {
                 // Validate workgroup size after program runs transforms.
                 Extent3D _;
-                DAWN_TRY_ASSIGN(_,
-                                ValidateComputeStageWorkgroupSize(
-                                    result->workgroup_info.x, result->workgroup_info.y,
-                                    result->workgroup_info.z, result->workgroup_info.storage_size,
-                                    /* usesSubgroupMatrix */ false,
-                                    /* maxSubgroupSize, GL backend not support */ 0, r.limits,
-                                    r.adapterSupportedLimits.UnsafeGetValue()));
+                DAWN_TRY_ASSIGN(_, ValidateComputeStageWorkgroupSize(
+                                       result->workgroup_info,
+                                       /* usesSubgroupMatrix */ false,
+                                       /* maxSubgroupSize, GL backend not support */ 0, r.limits,
+                                       r.adapterSupportedLimits.UnsafeGetValue()));
             }
 
             return GLSLCompilation{{std::move(result->glsl)}};
