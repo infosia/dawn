@@ -33,6 +33,24 @@
       "message": "What about CMake? You need to flip the `set(ENABLE_SPIRV_VALIDATION OFF)` to `ON` for android.",
       "revId": "a264d9b10ab110094f81b9e37148b3e72318f654",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb43a0fb_510dfaac",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-15T15:57:39Z",
+      "side": 1,
+      "message": "I thought about that, but this would immediately bloat binary size for all non-Chrome native users. In the meeting yesterday that was a concern, so I\u0027m not sure that we should do this.\n\nI do agree that it\u0027d be nice to have the same defaults though.",
+      "parentUuid": "3b911568_29b3a375",
+      "revId": "a264d9b10ab110094f81b9e37148b3e72318f654",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
