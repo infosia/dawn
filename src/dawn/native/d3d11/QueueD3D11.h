@@ -56,13 +56,13 @@ class Queue : public d3d::Queue {
     MaybeError InitializePendingContext();
 
     // Register the pending map buffer to be checked.
-    void TrackPendingMapBuffer(Ref<Buffer>&& buffer,
+    void TrackPendingMapBuffer(Ref<GPUUsableBuffer>&& buffer,
                                wgpu::MapMode mode,
                                ExecutionSerial readySerial);
 
     // Defer buffer unmap until next time GetScopedPendingCommandContext() or
     // GetScopedSwapStatePendingCommandContext() is called.
-    void DeferUnmap(Ref<Buffer>&& buffer);
+    void DeferUnmap(Ref<GPUUsableBuffer>&& buffer);
 
     const Ref<SharedFence>& GetSharedFence() const { return mSharedFence; }
 
@@ -108,11 +108,11 @@ class Queue : public d3d::Queue {
     std::atomic<bool> mPendingCommandsNeedSubmit = false;
 
     struct BufferMapEntry {
-        Ref<Buffer> buffer;
+        Ref<GPUUsableBuffer> buffer;
         wgpu::MapMode mode;
     };
     MutexProtected<SerialMap<ExecutionSerial, BufferMapEntry>> mPendingMapBuffers;
-    MutexProtected<std::vector<Ref<Buffer>>> mPendingUnmapBuffers;
+    MutexProtected<std::vector<Ref<GPUUsableBuffer>>> mPendingUnmapBuffers;
 };
 
 }  // namespace dawn::native::d3d11

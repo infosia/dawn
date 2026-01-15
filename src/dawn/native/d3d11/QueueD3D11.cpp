@@ -350,13 +350,13 @@ MaybeError Queue::CheckAndMapReadyBuffers(ExecutionSerial completedSerial) {
     });
 }
 
-void Queue::TrackPendingMapBuffer(Ref<Buffer>&& buffer,
+void Queue::TrackPendingMapBuffer(Ref<GPUUsableBuffer>&& buffer,
                                   wgpu::MapMode mode,
                                   ExecutionSerial readySerial) {
     mPendingMapBuffers->Enqueue({buffer, mode}, readySerial);
 }
 
-void Queue::DeferUnmap(Ref<Buffer>&& buffer) {
+void Queue::DeferUnmap(Ref<GPUUsableBuffer>&& buffer) {
     mPendingUnmapBuffers->push_back(std::move(buffer));
 }
 
