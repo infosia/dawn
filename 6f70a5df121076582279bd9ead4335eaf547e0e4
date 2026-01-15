@@ -89,6 +89,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "488633bf_7b28d674",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1693,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-01-15T01:29:58Z",
+      "side": 1,
+      "message": "..... :(  Thanks. Done.",
+      "parentUuid": "32f0f1d3_7e4833a1",
+      "range": {
+        "startLine": 1692,
+        "startChar": 16,
+        "endLine": 1693,
+        "endChar": 63
+      },
+      "revId": "6f70a5df121076582279bd9ead4335eaf547e0e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62526a55_c08d2f92",
