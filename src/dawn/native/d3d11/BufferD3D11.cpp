@@ -32,6 +32,7 @@
 #include <utility>
 #include <vector>
 
+#include "absl/cleanup/cleanup.h"
 #include "dawn/common/Alloc.h"
 #include "dawn/common/Assert.h"
 #include "dawn/common/Constants.h"
@@ -650,13 +651,9 @@ MaybeError Buffer::Clear(const ScopedCommandRecordingContext* commandContext,
         return {};
     }
 
-    // Map the buffer if it is possible, so EnsureDataInitializedAsDestination() and ClearInternal()
-    // can write the mapped memory directly.
-    ScopedMap scopedMap;
-    DAWN_TRY_ASSIGN(scopedMap, ScopedMap::Create(commandContext, this, wgpu::MapMode::Write));
-
     // For non-staging buffers, we can use UpdateSubresource to write the data.
     DAWN_TRY(EnsureDataInitializedAsDestination(commandContext, offset, size));
+
     return ClearInternal(commandContext, clearValue, offset, size);
 }
 
@@ -674,7 +671,10 @@ MaybeError Buffer::ClearInternal(const ScopedCommandRecordingContext* commandCon
     // TODO(dawn:1705): use a reusable zero staging buffer to clear the buffer to avoid this CPU to
     // GPU copy.
     std::vector<uint8_t> clearData(size, clearValue);
-    return WriteInternal(commandContext, offset, clearData.data(), size);
+    DAWN_TRY(WriteInternal(commandContext, offset, clearData.data(), size));
+
+    MarkUsedInPendingCommands();
+    return {};
 }
 
 MaybeError Buffer::ClearPaddingInternal(const ScopedCommandRecordingContext* commandContext) {
@@ -695,15 +695,14 @@ MaybeError Buffer::Write(const ScopedCommandRecordingContext* commandContext,
                          size_t size) {
     DAWN_ASSERT(size != 0);
 
-    MarkUsedInPendingCommands();
-    // Map the buffer if it is possible, so EnsureDataInitializedAsDestination() and WriteInternal()
-    // can write the mapped memory directly.
-    ScopedMap scopedMap;
-    DAWN_TRY_ASSIGN(scopedMap, ScopedMap::Create(commandContext, this, wgpu::MapMode::Write));
+    absl::Cleanup markUsed = [this] { MarkUsedInPendingCommands(); };
 
     // For non-staging buffers, we can use UpdateSubresource to write the data.
     DAWN_TRY(EnsureDataInitializedAsDestination(commandContext, offset, size));
-    return WriteInternal(commandContext, offset, data, size);
+
+    DAWN_TRY(WriteInternal(commandContext, offset, data, size));
+
+    return {};
 }
 
 // static
@@ -1424,12 +1423,12 @@ MaybeError GPUUsableBuffer::UpdateD3D11ConstantBuffer(
     // transfer the data to constant buffer.
     Ref<BufferBase> stagingBuffer;
     DAWN_TRY_ASSIGN(stagingBuffer, ToBackend(GetDevice())->GetStagingBuffer(commandContext, size));
-    stagingBuffer->MarkUsedInPendingCommands();
     DAWN_TRY(ToBackend(stagingBuffer)->WriteInternal(commandContext, 0, data, size));
     DAWN_TRY(ToBackend(stagingBuffer.Get())
                  ->CopyToInternal(commandContext,
                                   /*sourceOffset=*/0,
                                   /*size=*/size, this, offset));
+    stagingBuffer->MarkUsedInPendingCommands();
     ToBackend(GetDevice())->ReturnStagingBuffer(std::move(stagingBuffer));
 
     return {};
