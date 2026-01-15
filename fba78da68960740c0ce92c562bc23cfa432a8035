@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88a921e5_e11434b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-15T22:17:08Z",
+      "side": 1,
+      "message": "(Thanks Gerrit for eating my comment)\n\nIIRC this is intentional. ANGLE uses a similar approach for autorolling using a [fake Chromium DEPS entry](https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/DEPS;l\u003d805) which does not have a corresponding entry in the [.gitmodules file](https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/.gitmodules)\n\n+ynovikov to provide more context on why this is.",
+      "revId": "fba78da68960740c0ce92c562bc23cfa432a8035",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
