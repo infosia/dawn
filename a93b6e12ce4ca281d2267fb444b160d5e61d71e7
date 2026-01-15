@@ -141,6 +141,30 @@
       },
       "revId": "a93b6e12ce4ca281d2267fb444b160d5e61d71e7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3461037e_d7454c57",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-15T18:26:30Z",
+      "side": 1,
+      "message": "nit: can you stick the clang-tidy check in the cl description?\n\nWe\u0027re happy to turn on more checks. When we added clang-tidy I turned them all on, and then turned off all the ones which triggered issues. The  idea is to then go and turn them on when we have time (which we haven\u0027t mostly had time, heh).\n\nSo, turning more of them on would be awesome in my books.",
+      "parentUuid": "e3c34805_d3de6e3d",
+      "range": {
+        "startLine": 9,
+        "startChar": 42,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "a93b6e12ce4ca281d2267fb444b160d5e61d71e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
