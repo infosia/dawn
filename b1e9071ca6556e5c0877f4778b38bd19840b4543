@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6368f39e_19cfca4f",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-15T05:51:45Z",
+      "side": 1,
+      "message": "OK, I see. I was trying to prevent the `Destroy()` \u0026 `Submit()` calls from running in parallel. Then I realized your CL already does similar things but only for buffers using a state flag. Thus I thought maybe a generalized impl would work. But guess not. Maybe buffers should have its own flag and mechanisms to avoid concurrency. \n\n\u003e API calls like GetMappedPointer() aren\u0027t supposed to be exclusive\n\nanw, even if GetMappedPointer() only reads, isn\u0027t there still a race? A concurrent Unmap() on another thread could invalidate the pointer right after we check that the state is safe.",
+      "parentUuid": "e7ba9e83_040f00df",
+      "range": {
+        "startLine": 141,
+        "startChar": 9,
+        "endLine": 141,
+        "endChar": 25
+      },
+      "revId": "b1e9071ca6556e5c0877f4778b38bd19840b4543",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "73253c31_a38e1016",
         "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
         "patchSetId": 14
