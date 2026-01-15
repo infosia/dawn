@@ -570,7 +570,6 @@ MaybeError Buffer::FinalizeMap(ScopedCommandRecordingContext* commandContext,
 
 void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
     DAWN_ASSERT(IsMappable(GetInternalUsage()));
-    auto deviceGuard = GetDevice()->GetGuard();
 
     mMapReadySerial = kMaxExecutionSerial;
     if (mMappedData && newState != BufferState::Destroyed) {
