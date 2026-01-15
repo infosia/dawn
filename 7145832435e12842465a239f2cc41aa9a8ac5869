@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c798ba2_c6dd673e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-15T19:45:49Z",
+      "side": 1,
+      "message": "Pushed a new version of this CL here: https://dawn-review.googlesource.com/c/dawn/+/285116",
+      "revId": "7145832435e12842465a239f2cc41aa9a8ac5869",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
