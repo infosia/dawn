@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "88ef5969_ff9c362a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-15T18:45:18Z",
+      "side": 1,
+      "message": "lgtm",
+      "revId": "e06378df69aa7cbbb8f8f4656954e6ba82dd11a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a76e8707_b7f96994",
@@ -54,6 +71,24 @@
       "writtenOn": "2026-01-15T12:39:25Z",
       "side": 1,
       "message": "One potential race for BindGroupLayout is if we try to destroy the device while we are creating a bindgroup: we might try to deallocate the SlabAllocation for the bindgroup and the VkDescriptorSet before we are done setting it up / registering in the device, which would cause problems. But that\u0027s an existing item to figure out that\u0027s listed in the doc so I think it is fine for now.",
+      "revId": "e06378df69aa7cbbb8f8f4656954e6ba82dd11a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c020a4aa_1d0f4820",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-15T18:45:18Z",
+      "side": 1,
+      "message": "The creation of any API object during device destruction is going to be problematic. Object creation is going to use the VkDevice somewhere and that is destroyed. We\u0027re taking the stance that object destruction needs to be properly externally synchronized, eg. nothing is using the object if an explicit Destroy() call is made, right?\n\n\u003e But that\u0027s an existing item to figure out that\u0027s listed in the doc so I think it is fine for now.\n\nWhich doc do you mean?",
+      "parentUuid": "916840c8_b0e33c2e",
       "revId": "e06378df69aa7cbbb8f8f4656954e6ba82dd11a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
