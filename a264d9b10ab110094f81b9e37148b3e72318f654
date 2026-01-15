@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d6931d9_6215d6d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-15T15:48:45Z",
+      "side": 1,
+      "message": "Skia has been updated to use disable SPIR-V validation at runtime with the toggle:\nhttps://skia-review.googlesource.com/c/skia/+/1142576",
+      "revId": "a264d9b10ab110094f81b9e37148b3e72318f654",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
