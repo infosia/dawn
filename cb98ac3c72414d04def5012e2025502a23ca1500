@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "a723a8e2_8414c5e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-15T23:45:06Z",
+      "side": 1,
+      "message": "?GetMipLevelSingleSubresourcePhysicalSize (or GetMipLevelSingleSubresourceVirtualSize) was the wrong function to call",
+      "revId": "cb98ac3c72414d04def5012e2025502a23ca1500",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bde7a7a_123b519e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-15T23:45:06Z",
+      "side": 1,
+      "message": "nit: Bug Id",
+      "revId": "cb98ac3c72414d04def5012e2025502a23ca1500",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "d655d7d6_468eae52",
