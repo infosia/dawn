@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bec0ee98_afe9a489",
+        "filename": "src/tint/lang/glsl/writer/common/output.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-15T07:19:59Z",
+      "side": 1,
+      "message": "Maybe I\u0027m still waking up and confused, but [this file](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/utils/result.h?q\u003dsrc%2Ftint%2Futils%2Fresult.h) seems to implement an error handling mechanism like Dawn\u0027s `ResultOrError` and not the result returned by Tint compilation. We should find a different header. Like a new `src/tint/api/common/workgroup_info.h`.",
+      "parentUuid": "d31e375c_17b317e7",
+      "revId": "b4374d6760314f2974b526a8283429527fdb533a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "194ae9d7_dc7b4b99",
         "filename": "src/tint/lang/hlsl/writer/common/output.h",
         "patchSetId": 3
