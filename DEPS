@@ -70,6 +70,11 @@ vars = {
   # We never want to actually checkout Chromium, but we need a fake DEPS entry
   # in order for the Chromium -> Dawn DEPS autoroller to work.
   'checkout_placeholder_chromium': False,
+
+  # Checkout mesa 3D graphics library and related dependencies
+  # Not used by Dawn/Tint directly, but is used as part of an
+  #  experiment in the fuzzing stack.
+  'checkout_mesa': False,
 }
 
 deps = {
@@ -267,6 +272,17 @@ deps = {
   'third_party/google_benchmark/src': {
     'url': '{chromium_git}/external/github.com/google/benchmark.git' + '@' + '188e8278990a9069ffc84441cb5a024fd0bede37',
     'condition': 'dawn_standalone',
+  },
+
+  # Required for fuzzer + mesa experiment
+# DNS: Uncomment once mesa mirror is working
+#  'third_party/mesa': {
+#    'url': '{chromium_git}/external/gitlab.com/Mesa3D/mesa@TDB',
+#    'condition': 'dawn_standalone and checkout_mesa',
+#  },
+  'third_party/meson': {
+    'url': '{chromium_git}/external/github.com/mesonbuild/meson@d389906a136c2aac9820ded0f38d1e25ef25fb9a',
+    'condition': 'dawn_standalone and checkout_mesa',
   },
 
   # Jinja2 and MarkupSafe for the code generator
