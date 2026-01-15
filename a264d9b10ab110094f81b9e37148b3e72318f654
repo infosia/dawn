@@ -87,6 +87,24 @@
       "parentUuid": "bd54910e_de37468d",
       "revId": "a264d9b10ab110094f81b9e37148b3e72318f654",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c61a569d_cd58fda6",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-15T16:52:44Z",
+      "side": 1,
+      "message": "k, updated CMake too. It\u0027s an easy enough change for downstream people to make once they realize what has gone wrong.",
+      "parentUuid": "bd54910e_de37468d",
+      "revId": "a264d9b10ab110094f81b9e37148b3e72318f654",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
