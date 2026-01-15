@@ -16,6 +16,23 @@
       "message": "Skia has been updated to use disable SPIR-V validation at runtime with the toggle:\nhttps://skia-review.googlesource.com/c/skia/+/1142576",
       "revId": "a264d9b10ab110094f81b9e37148b3e72318f654",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b911568_29b3a375",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-15T15:54:24Z",
+      "side": 1,
+      "message": "What about CMake? You need to flip the `set(ENABLE_SPIRV_VALIDATION OFF)` to `ON` for android.",
+      "revId": "a264d9b10ab110094f81b9e37148b3e72318f654",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
