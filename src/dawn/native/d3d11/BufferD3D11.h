@@ -83,15 +83,8 @@ class Buffer : public BufferBase {
                            Buffer* destination,
                            uint64_t destinationOffset);
 
-    // Actually map the buffer when its last usage serial has passed.
-    MaybeError FinalizeMap(ScopedCommandRecordingContext* commandContext,
-                           ExecutionSerial completedSerial,
-                           wgpu::MapMode mode);
-
     bool IsCPUWritable() const;
     bool IsCPUReadable() const;
-
-    void UnmapIfNeeded(const ScopedCommandRecordingContext* commandContext);
 
     // This performs GPU Clear. Unlike Clear(), this will always be affected by ID3D11Predicate.
     // Whereas Clear() might be unaffected by ID3D11Predicate if it's pure CPU clear.
@@ -149,9 +142,7 @@ class Buffer : public BufferBase {
     };
 
   protected:
-    Buffer(DeviceBase* device,
-           const UnpackedPtr<BufferDescriptor>& descriptor,
-           wgpu::BufferUsage internalMappableFlags);
+    Buffer(DeviceBase* device, const UnpackedPtr<BufferDescriptor>& descriptor);
     ~Buffer() override;
 
     void DestroyImpl(DestroyReason reason) override;
@@ -172,24 +163,22 @@ class Buffer : public BufferBase {
 
     virtual MaybeError ClearPaddingInternal(const ScopedCommandRecordingContext* commandContext);
 
+    // Internal usage indicating the native buffer supports mapping for read and/or write or not.
+    wgpu::BufferUsage mInternalMappableFlags = wgpu::BufferUsage::None;
+
+  protected:
     raw_ptr<uint8_t, AllowPtrArithmetic> mMappedData = nullptr;
 
   private:
     MaybeError Initialize(bool mappedAtCreation,
                           const ScopedCommandRecordingContext* commandContext);
     MaybeError ClearInitialResource(const ScopedCommandRecordingContext* commandContext);
-    MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override;
     MaybeError FinalizeMapImpl(BufferState newState) override;
-    void UnmapImpl(BufferState oldState, BufferState newState) override;
     bool IsCPUWritableAtCreation() const override;
     MaybeError MapAtCreationImpl() override;
     void* GetMappedPointerImpl() override;
 
     MaybeError InitializeToZero(const ScopedCommandRecordingContext* commandContext);
-
-    // Internal usage indicating the native buffer supports mapping for read and/or write or not.
-    const wgpu::BufferUsage mInternalMappableFlags;
-    ExecutionSerial mMapReadySerial = kMaxExecutionSerial;
 };
 
 // Buffer that can be used by GPU. It manages several copies of the buffer, each with its own
@@ -203,9 +192,7 @@ class Buffer : public BufferBase {
 // TODO(349848481): Consider making this the only Buffer class since it could cover all use cases.
 class GPUUsableBuffer final : public Buffer {
   public:
-    GPUUsableBuffer(DeviceBase* device,
-                    const UnpackedPtr<BufferDescriptor>& descriptor,
-                    D3D11_MAP mapWriteMode);
+    GPUUsableBuffer(DeviceBase* device, const UnpackedPtr<BufferDescriptor>& descriptor);
     ~GPUUsableBuffer() override;
 
     ResultOrError<ID3D11Buffer*> GetD3D11ConstantBuffer(
@@ -231,12 +218,21 @@ class GPUUsableBuffer final : public Buffer {
     // command buffer after the buffer was modified on GPU.
     MaybeError SyncGPUWritesToStaging(const ScopedCommandRecordingContext* commandContext);
 
+    void UnmapIfNeeded(const ScopedCommandRecordingContext* commandContext);
+
+    // Actually map the buffer when its last usage serial has passed.
+    MaybeError FinalizeMap(ScopedCommandRecordingContext* commandContext,
+                           ExecutionSerial completedSerial,
+                           wgpu::MapMode mode);
+
   private:
     class Storage;
 
     // Dawn API
     void DestroyImpl(DestroyReason reason) override;
     void SetLabelImpl() override;
+    MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override;
+    void UnmapImpl(BufferState oldState, BufferState newState) override;
 
     MaybeError InitializeInternal() override;
     MaybeError MapInternal(const ScopedCommandRecordingContext* commandContext,
@@ -342,7 +338,8 @@ class GPUUsableBuffer final : public Buffer {
     absl::flat_hash_map<BufferViewKey, ComPtr<ID3D11ShaderResourceView>> mSRVCache;
     absl::flat_hash_map<BufferViewKey, ComPtr<ID3D11UnorderedAccessView1>> mUAVCache;
 
-    const D3D11_MAP mD3DMapWriteMode = D3D11_MAP_WRITE;
+    D3D11_MAP mD3DMapWriteMode = D3D11_MAP_WRITE;
+    ExecutionSerial mMapReadySerial = kMaxExecutionSerial;
 };
 
 static inline GPUUsableBuffer* ToGPUUsableBuffer(BufferBase* buffer) {
