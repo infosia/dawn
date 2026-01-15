@@ -125,6 +125,7 @@ cc_library(
   ],
   deps = [
     "//src/tint/api",
+    "//src/tint/api/common",
     "//src/tint/lang/wgsl",
     "//src/tint/lang/wgsl/writer/common",
     "//src/tint/utils",

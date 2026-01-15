@@ -43,6 +43,7 @@ cc_binary(
   ],
   deps = [
     "//src/tint/api",
+    "//src/tint/api/common",
     "//src/tint/api/common:test",
     "//src/tint/api:test",
     "//src/tint/cmd/fuzz/ir/helpers:test",

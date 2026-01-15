@@ -138,6 +138,7 @@ tint_add_target(tint_api_test test
 
 tint_target_add_dependencies(tint_api_test test
   tint_api
+  tint_api_common
   tint_lang_wgsl
   tint_lang_wgsl_writer_common
   tint_utils

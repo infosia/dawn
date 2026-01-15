@@ -32,6 +32,7 @@
 #include <string>
 #include <vector>
 
+#include "src/tint/api/common/workgroup_info.h"
 #include "src/tint/lang/wgsl/writer/common/options.h"
 #include "src/tint/utils/result.h"
 
