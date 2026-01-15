@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a76e8707_b7f96994",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-15T12:39:25Z",
+      "side": 1,
+      "message": "Do we have MultithreadedTests for these already as well?",
+      "revId": "e06378df69aa7cbbb8f8f4656954e6ba82dd11a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc296cdb_8548cd99",
+        "filename": "src/dawn/native/d3d11/DeviceD3D11.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-15T12:39:25Z",
+      "side": 1,
+      "message": "u-nit: can we order them alphabetically? same in the .cpp",
+      "range": {
+        "startLine": 100,
+        "startChar": 1,
+        "endLine": 105,
+        "endChar": 0
+      },
+      "revId": "e06378df69aa7cbbb8f8f4656954e6ba82dd11a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "916840c8_b0e33c2e",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-15T12:39:25Z",
+      "side": 1,
+      "message": "One potential race for BindGroupLayout is if we try to destroy the device while we are creating a bindgroup: we might try to deallocate the SlabAllocation for the bindgroup and the VkDescriptorSet before we are done setting it up / registering in the device, which would cause problems. But that\u0027s an existing item to figure out that\u0027s listed in the doc so I think it is fine for now.",
+      "revId": "e06378df69aa7cbbb8f8f4656954e6ba82dd11a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
