@@ -650,13 +650,9 @@ MaybeError Buffer::Clear(const ScopedCommandRecordingContext* commandContext,
         return {};
     }
 
-    // Map the buffer if it is possible, so EnsureDataInitializedAsDestination() and ClearInternal()
-    // can write the mapped memory directly.
-    ScopedMap scopedMap;
-    DAWN_TRY_ASSIGN(scopedMap, ScopedMap::Create(commandContext, this, wgpu::MapMode::Write));
-
     // For non-staging buffers, we can use UpdateSubresource to write the data.
     DAWN_TRY(EnsureDataInitializedAsDestination(commandContext, offset, size));
+
     return ClearInternal(commandContext, clearValue, offset, size);
 }
 
@@ -696,13 +692,10 @@ MaybeError Buffer::Write(const ScopedCommandRecordingContext* commandContext,
     DAWN_ASSERT(size != 0);
 
     MarkUsedInPendingCommands();
-    // Map the buffer if it is possible, so EnsureDataInitializedAsDestination() and WriteInternal()
-    // can write the mapped memory directly.
-    ScopedMap scopedMap;
-    DAWN_TRY_ASSIGN(scopedMap, ScopedMap::Create(commandContext, this, wgpu::MapMode::Write));
 
     // For non-staging buffers, we can use UpdateSubresource to write the data.
     DAWN_TRY(EnsureDataInitializedAsDestination(commandContext, offset, size));
+
     return WriteInternal(commandContext, offset, data, size);
 }
 
