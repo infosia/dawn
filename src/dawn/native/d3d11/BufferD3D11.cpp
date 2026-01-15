@@ -181,6 +181,10 @@ class UploadBuffer final : public Buffer {
         return {};
     }
 
+    MaybeError MapAtCreationImpl() override { return MapInternal(nullptr, wgpu::MapMode::Write); }
+
+    void UnmapImpl(BufferState oldState, BufferState newState) override { UnmapInternal(nullptr); }
+
     MaybeError MapInternal(const ScopedCommandRecordingContext* commandContext,
                            wgpu::MapMode) override {
         mMappedData = mUploadData.get();
