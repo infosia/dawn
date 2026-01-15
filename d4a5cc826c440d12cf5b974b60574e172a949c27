@@ -16,6 +16,23 @@
       "message": "Great, thank you!",
       "revId": "d4a5cc826c440d12cf5b974b60574e172a949c27",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c124a45b_477a93a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-15T15:25:55Z",
+      "side": 1,
+      "message": "Brian, PTAL, https://autoroll.skia.org/r/chromium-dawn is failing now.\n```\nTraceback (most recent call last):\n  File \"/data/dawn/scripts/roll_chromium_deps.py\", line 1139, in \u003cmodule\u003e\n    main()\n  File \"/data/dawn/scripts/roll_chromium_deps.py\", line 1104, in main\n    chromium_luci_entry \u003d _sync_chromium_luci_revision(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data/dawn/scripts/roll_chromium_deps.py\", line 1016, in _sync_chromium_luci_revision\n    subprocess.check_call(\n  File \"/home/skia/.cache/vpython-root.2000/store/cpython+l5fnajrvijf7cvdkjqmbicg3i8/contents/lib/python3.11/subprocess.py\", line 413, in check_call\n    raise CalledProcessError(retcode, cmd)\nsubprocess.CalledProcessError: Command \u0027[\u0027lucicfg\u0027, \u0027generate\u0027, \u0027/data/dawn/infra/config/global/main.star\u0027]\u0027 returned non-zero exit status 1.\n```",
+      "revId": "d4a5cc826c440d12cf5b974b60574e172a949c27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
