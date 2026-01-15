@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7dc501b4_c6a70a21",
+        "filename": "src/tint/lang/glsl/writer/common/output.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-15T16:58:53Z",
+      "side": 1,
+      "message": "Agree, a new header in `tint/api/common` would be a better place for this.",
+      "parentUuid": "bec0ee98_afe9a489",
+      "revId": "b4374d6760314f2974b526a8283429527fdb533a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "194ae9d7_dc7b4b99",
         "filename": "src/tint/lang/hlsl/writer/common/output.h",
         "patchSetId": 3
