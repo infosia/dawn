@@ -181,15 +181,23 @@ class UploadBuffer final : public Buffer {
         return {};
     }
 
-    MaybeError MapInternal(const ScopedCommandRecordingContext* commandContext,
-                           wgpu::MapMode) override {
+    MaybeError MapAtCreationImpl() override { return MapInternal(nullptr, wgpu::MapMode::Write); }
+
+    MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override {
+        DAWN_TRY(MapInternal(nullptr, mode));
+        DAWN_TRY(EnsureDataInitialized(nullptr));
+
+        return {};
+    }
+
+    void UnmapImpl(BufferState oldState, BufferState newState) override { UnmapInternal(nullptr); }
+
+    MaybeError MapInternal(const ScopedCommandRecordingContext*, wgpu::MapMode) override {
         mMappedData = mUploadData.get();
         return {};
     }
 
-    void UnmapInternal(const ScopedCommandRecordingContext* commandContext) override {
-        mMappedData = nullptr;
-    }
+    void UnmapInternal(const ScopedCommandRecordingContext*) override { mMappedData = nullptr; }
 
     MaybeError ClearInternal(const ScopedCommandRecordingContext* commandContext,
                              uint8_t clearValue,
