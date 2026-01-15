@@ -191,6 +191,11 @@ class UploadBuffer final : public Buffer {
         mMappedData = nullptr;
     }
 
+    MaybeError MapAtCreationImpl() override {
+        mMappedData = mUploadData.get();
+        return {};
+    }
+
     MaybeError ClearInternal(const ScopedCommandRecordingContext* commandContext,
                              uint8_t clearValue,
                              uint64_t offset,
