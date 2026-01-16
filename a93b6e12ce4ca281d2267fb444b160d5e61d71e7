@@ -212,6 +212,30 @@
       },
       "revId": "a93b6e12ce4ca281d2267fb444b160d5e61d71e7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c84af81b_5f1ef611",
+        "filename": "src/dawn/tests/end2end/MultithreadTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-16T15:22:15Z",
+      "side": 1,
+      "message": "Looks like nope, oops. Must have been thinking of a different library and didn\u0027t check the std ref, fixing now: https://dawn-review.googlesource.com/c/dawn/+/285315. Surprised the test passed though?",
+      "parentUuid": "55d508ea_b7ce9abb",
+      "range": {
+        "startLine": 277,
+        "startChar": 33,
+        "endLine": 277,
+        "endChar": 42
+      },
+      "revId": "a93b6e12ce4ca281d2267fb444b160d5e61d71e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
