@@ -16,6 +16,23 @@
       "message": "(Thanks Gerrit for eating my comment)\n\nIIRC this is intentional. ANGLE uses a similar approach for autorolling using a [fake Chromium DEPS entry](https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/DEPS;l\u003d805) which does not have a corresponding entry in the [.gitmodules file](https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/.gitmodules)\n\n+ynovikov to provide more context on why this is.",
       "revId": "fba78da68960740c0ce92c562bc23cfa432a8035",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2942d34c_60d2274c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-16T13:54:20Z",
+      "side": 1,
+      "message": "Unfortunately, this entry needs to be manually removed from .gitmodules whenever you modify them.\nOtherwise, you\u0027ll get Chromium checked out when you \"gclient sync\".\nBut we must have this entry in DEPS for the Chromium-\u003eDawn autoroller to work.",
+      "revId": "fba78da68960740c0ce92c562bc23cfa432a8035",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
