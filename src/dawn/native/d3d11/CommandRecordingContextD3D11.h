@@ -165,6 +165,7 @@ class ScopedCommandRecordingContext : NonCopyable {
     void End(ID3D11Query* pQuery) const;
     void Flush() const;
     void Flush1(D3D11_CONTEXT_TYPE ContextType, HANDLE hEvent) const;
+    void ExecuteCommandList(ID3D11CommandList* pCommandList, BOOL RestoreContextState) const;
 
     // Write immediate data to the uniform buffer.
     void WriteUniformBufferRange(uint32_t offset, const void* data, size_t size) const;
