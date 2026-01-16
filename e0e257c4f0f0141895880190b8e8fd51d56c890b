@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd166952_347e6aa3",
+        "filename": "docs/tint/extensions/chromium_experimental_subgroup_size_control.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-16T08:33:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a7d2529e_85c4ab99",
+      "revId": "e0e257c4f0f0141895880190b8e8fd51d56c890b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59e0cbdd_c330b166",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-01-15T23:24:22Z",
       "side": 1,
       "message": "After this it would be good to DAWN_CHECK that the min and max are actually powers of two.\n\nActually, we should do this for subgroupMinSize and subgroupMaxSize too, I think.",
+      "revId": "e0e257c4f0f0141895880190b8e8fd51d56c890b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2473dd7_ec8e6382",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-16T08:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59e0cbdd_c330b166",
       "revId": "e0e257c4f0f0141895880190b8e8fd51d56c890b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +94,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5be7022c_dc39a955",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-16T08:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d1eb00d_87821dcd",
+      "range": {
+        "startLine": 1016,
+        "startChar": 53,
+        "endLine": 1016,
+        "endChar": 83
+      },
+      "revId": "e0e257c4f0f0141895880190b8e8fd51d56c890b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe1b5675_8411ddea",
@@ -71,6 +131,24 @@
       "writtenOn": "2026-01-15T23:24:22Z",
       "side": 1,
       "message": "This loop doesn\u0027t test the max size. (I think assert it\u0027s also a power of 2, and change the `\u003c` to `\u003c\u003d`.)",
+      "revId": "e0e257c4f0f0141895880190b8e8fd51d56c890b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9321a7fc_3a5d884c",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-16T08:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe1b5675_8411ddea",
       "revId": "e0e257c4f0f0141895880190b8e8fd51d56c890b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
