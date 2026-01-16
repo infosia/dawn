@@ -54,6 +54,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "74c636fe_02c332db",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 3172,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-16T17:09:53Z",
+      "side": 1,
+      "message": "One thing that came up in discussions last year was a preference from Corentin/Michael to avoid having a separate Dawn API for MRSTSS and instead rely on DawnLoadResolveTexture to infer when it can be used. It\u0027s described in https://crbug.com/463893793#comment8 and is discussed a bit in that thread. Skia would still be allocating a transient MSAA texture to use as a color attachment but that texture should be lazily allocated. Internally I believe dawn would replace the color attachment with the single sampled resolve attachment plus MSRTSS struct so the transient MSAA texture isn\u0027t used and is hopefully free/very cheap.\n\nI\u0027m not sure if there was any further discussion on this front?",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aa22ce12_f76b97be",
         "filename": "src/dawn/native/AttachmentState.cpp",
         "patchSetId": 9
