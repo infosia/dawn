@@ -189,6 +189,29 @@
       },
       "revId": "a93b6e12ce4ca281d2267fb444b160d5e61d71e7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55d508ea_b7ce9abb",
+        "filename": "src/dawn/tests/end2end/MultithreadTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-01-16T03:13:46Z",
+      "side": 1,
+      "message": "Is this a reserve?",
+      "range": {
+        "startLine": 277,
+        "startChar": 33,
+        "endLine": 277,
+        "endChar": 42
+      },
+      "revId": "a93b6e12ce4ca281d2267fb444b160d5e61d71e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
