@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06dd5964_2a32fa05",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 3135,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-16T18:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6df621c3_7ac6b6d2",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "74c636fe_02c332db",
@@ -65,6 +83,24 @@
       "writtenOn": "2026-01-16T17:09:53Z",
       "side": 1,
       "message": "One thing that came up in discussions last year was a preference from Corentin/Michael to avoid having a separate Dawn API for MRSTSS and instead rely on DawnLoadResolveTexture to infer when it can be used. It\u0027s described in https://crbug.com/463893793#comment8 and is discussed a bit in that thread. Skia would still be allocating a transient MSAA texture to use as a color attachment but that texture should be lazily allocated. Internally I believe dawn would replace the color attachment with the single sampled resolve attachment plus MSRTSS struct so the transient MSAA texture isn\u0027t used and is hopefully free/very cheap.\n\nI\u0027m not sure if there was any further discussion on this front?",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "053abbb9_684169d7",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 3172,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-16T18:59:52Z",
+      "side": 1,
+      "message": "Hm... I was under the impression that this was the route that the Graphite and Dawn teams has agreed on based on conversations with you, Corentin, and previous docs/comments.\n\nCorentin, what\u0027s your thoughts?",
+      "parentUuid": "74c636fe_02c332db",
       "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +122,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f37dafc_5f9c7ec3",
+        "filename": "src/dawn/native/AttachmentState.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-16T18:59:52Z",
+      "side": 1,
+      "message": "We do have validation to ensure that all color attachment sample counts are 1 when using MSRTSS. See [2].\n\nDepth/Stencil won\u0027t be MSRTSS. As pointed out in [this comment](https://g-issues.chromium.org/issues/463893793#comment12) DS isn\u0027t resolved in WebGPU, so there\u0027s no use case for preserving single-sample DS between render passes.",
+      "parentUuid": "aa22ce12_f76b97be",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b930206c_af49eda5",
@@ -99,6 +153,58 @@
       "writtenOn": "2026-01-16T15:56:09Z",
       "side": 1,
       "message": "Could we have validation tests for 100% coverage of this new validation?",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcf802e9_3a1abb75",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-16T18:59:52Z",
+      "side": 1,
+      "message": "This isn\u0027t really new validation. It\u0027s a minor refactoring of the existing validation logic in [3] to handle the fact that implicitSampleCount is declared at the pass level instead of the attachment level now.\n\nThe existing tests in MultisampledRenderingTests.cpp have been modified to use the new structure, but other than one check that no longer applied they were already providing the appropriate coverage.\n\n(Note that this change doesn\u0027t retain tests for the old struct, which is still present for migration purposes. My plan is to remove them almost immediately once Skia has been updated, however, so I didn\u0027t see that as problematic.)",
+      "parentUuid": "b930206c_af49eda5",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7356db3_5d37dc87",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-16T18:59:52Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "815e762a_e0aa7d58",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-16T18:59:52Z",
+      "side": 1,
+      "message": "[3]",
       "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -120,6 +226,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "196cb42d_e550c850",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-16T18:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e216a99c_7ae832f3",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36ea1672_748f466d",
@@ -133,6 +257,24 @@
       "writtenOn": "2026-01-16T15:56:09Z",
       "side": 1,
       "message": "ditto",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26999338_147d95db",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-16T18:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36ea1672_748f466d",
       "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -154,6 +296,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e07171e_91a8a6f1",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-16T18:59:52Z",
+      "side": 1,
+      "message": "Ah, yup. Fixed. Merge issue, thanks for pointing it out!",
+      "parentUuid": "95074e55_9b1252f0",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ebf5fe71_4bc6fce7",
@@ -171,6 +331,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecb863e2_50578acb",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-16T18:59:52Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ebf5fe71_4bc6fce7",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9b6bd0cb_d9242f03",
@@ -184,6 +362,24 @@
       "writtenOn": "2026-01-16T15:56:09Z",
       "side": 1,
       "message": "Can we add some explanation that this is an extremely cheap usage to add on the HW that support MSRTSS? (IIRC we had confirmation of that from Shabby?)",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98bde133_7595d8e8",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-16T18:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b6bd0cb_d9242f03",
       "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
