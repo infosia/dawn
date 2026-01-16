@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1a5ef50_66b31c50",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-16T19:47:51Z",
+      "side": 1,
+      "message": "I\u0027m not sure if there are any threading concerns around begin/end access ordering vs queue submit/write buffer I haven\u0027t handled.. BeginAccess()+EndAccess() are still protected under device mutex though so I guess they can\u0027t overlap with queue operations (yet).",
+      "range": {
+        "startLine": 1063,
+        "startChar": 0,
+        "endLine": 1072,
+        "endChar": 1
+      },
+      "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1641891_7db68265",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-16T19:47:51Z",
+      "side": 1,
+      "message": "Maybe this should be `InUse` to reflect that it\u0027s not just Map/Unmap/Destroy operation that sets it?",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 23
+      },
+      "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "605a0169_49ac9af6",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-16T19:47:51Z",
+      "side": 1,
+      "message": "This is atomic for two reasons. First it can be read without changing the state so we can read/write simultaneously. Second so that if validation is off and multiple updates to the variable happen concurrently we still get atomic updates.",
+      "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d477fae_190f73cb",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-16T19:47:51Z",
+      "side": 1,
+      "message": "I would have though something like `auto use \u003d Get()-\u003emUniformBuffer-\u003eUseBufferInternal();` is needed here but no tests crashed without it. @lehoangquyen@chromium.org is it expected D3D11 buffer creation never calls MarkUsedInPendingCommands() from ClearInitialResource()?",
+      "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2fd3c26_f41163cf",
+        "filename": "src/dawn/native/d3d12/BufferD3D12.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-16T19:47:51Z",
+      "side": 1,
+      "message": "This assert is failing for buffers in mSharedBuffers when ExecutionQueueBase::EnsureCommandsFlushed() runs.\n\nSynchronizeBufferBeforeUseOnGPU() is called for everything in [mSharedBuffers](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/CommandRecordingContext.cpp;l\u003d65;drc\u003db85ce935824810dbc34ccc72de0cb398d8cc9a29). Those should already have mLastUsageSerial \u003d\u003d GetPendingCommandSerial() since mLastUsageSerial was updated when the buffer is added to mSharedBuffers. It seems like the assert and changing mLastUsageSerial isn\u0027t needed for that case so these two lines can be skipped which fixes the crash.\n\nCQ was passing before I added this assertion FWIW.",
+      "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "341fd4ee_3c9c4629",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-16T19:47:51Z",
+      "side": 1,
+      "message": "I probably also have to fix this. I don\u0027t think anything prevents ClearBufferToZero running on multiple threads so the second UseBufferInternal() call crashes.",
+      "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

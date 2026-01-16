@@ -91,6 +91,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "320deb78_364b259a",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-16T19:47:51Z",
+      "side": 1,
+      "message": "\u003e Then I realized your CL already does similar things but only for buffers using a state flag. Thus I thought maybe a generalized impl would work. But guess not.\n\nThere is probably some way to make it work but not a simple switch.\n\n\u003e anw, even if GetMappedPointer() only reads, isn\u0027t there still a race? A concurrent Unmap() on another thread could invalidate the pointer right after we check that the state is safe.\n\nRight, there is still a race for getting the mapped pointer. Instead of atomic\u003cbool\u003e we\u0027d need something more like a shared mutex. We could avoid mutex and use atomic state plus counter wrapped up together maybe? I\u0027m thinking three states: unused, shared use, exclusive use plus a counter for shared use. GetMappedRange() would put the object into a shared read only use state. That way Unmap()/MapAsync() overlapping would trigger validation error but multiple threads could call GetMappedRange() at the same time.\n\nThat improves things but there is still a giant race after we return the pointer  to the client. It\u0027s a raw pointer so it can be held/used after buffer is unmapped. Guarding use of that mapped pointer that is essentially impossible (with current dawn public API) so we assume the client is externally synchronizing GetMappedRange() vs Unmap() already.",
+      "parentUuid": "6368f39e_19cfca4f",
+      "range": {
+        "startLine": 141,
+        "startChar": 9,
+        "endLine": 141,
+        "endChar": 25
+      },
+      "revId": "b1e9071ca6556e5c0877f4778b38bd19840b4543",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "73253c31_a38e1016",
         "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
         "patchSetId": 14
