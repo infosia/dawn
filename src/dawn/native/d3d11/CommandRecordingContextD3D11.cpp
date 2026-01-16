@@ -155,6 +155,11 @@ void ScopedCommandRecordingContext::Flush1(D3D11_CONTEXT_TYPE ContextType, HANDL
     return Get()->mD3D11DeviceContext3->Flush1(ContextType, hEvent);
 }
 
+void ScopedCommandRecordingContext::ExecuteCommandList(ID3D11CommandList* pCommandList,
+                                                       BOOL RestoreContextState) const {
+    Get()->mD3D11DeviceContext3->ExecuteCommandList(pCommandList, RestoreContextState);
+}
+
 void ScopedCommandRecordingContext::WriteUniformBufferRange(uint32_t offset,
                                                             const void* data,
                                                             size_t size) const {
