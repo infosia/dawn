@@ -52,7 +52,9 @@
 #include "src/tint/lang/core/type/sampled_texture.h"
 #include "src/tint/lang/core/type/sampler.h"
 #include "src/tint/lang/core/type/storage_texture.h"
+#include "src/tint/lang/core/type/swizzle_view.h"
 #include "src/tint/lang/core/type/u8.h"
+#include "src/tint/lang/core/type/vector.h"
 #include "src/tint/lang/wgsl/ast/alias.h"
 #include "src/tint/lang/wgsl/ast/assignment_statement.h"
 #include "src/tint/lang/wgsl/ast/attribute.h"
@@ -1706,6 +1708,19 @@ const sem::ValueExpression* Resolver::Load(const sem::ValueExpression* expr) {
         return nullptr;
     }
 
+    // In some cases a swizzle view should be "loaded" in order to resolve types for validation,
+    // however this sem::Load will be ignored in IR generation. As such these loads are not
+    // registered since they won't become true loads.
+    if (auto* swizzle_view = expr->Type()->As<core::type::SwizzleView>()) {
+        // Use the resulting vector as the storage type, for correct type resolution.
+        auto* storage_ty = b.create<core::type::Vector>(
+            swizzle_view->StoreType()->As<core::type::Vector>()->Type(), swizzle_view->ToSize());
+        auto* load = b.create<sem::Load>(expr, storage_ty, current_statement_, expr->Stage());
+        b.Sem().Replace(expr->Declaration(), load);
+
+        return load;
+    }
+
     if (!expr->Type()->Is<core::type::Reference>()) {
         // Expression is not a reference type, so cannot be loaded. Just return expr.
         return expr;
@@ -1888,8 +1903,9 @@ sem::ValueExpression* Resolver::IndexAccessor(const ast::IndexAccessorExpression
         return nullptr;
     }
 
-    // If we're extracting from a memory view, we return a reference.
-    if (memory_view) {
+    // If we're extracting from a memory view, we return a reference, except in the case of swizzle
+    // views, which will be resolved to a reference in IR generation if necessary.
+    if (memory_view && !memory_view->Is<core::type::SwizzleView>()) {
         ty =
             b.create<core::type::Reference>(memory_view->AddressSpace(), ty, memory_view->Access());
     }
@@ -3545,7 +3561,6 @@ sem::ValueExpression* Resolver::MemberAccessor(const ast::MemberAccessorExpressi
                 return nullptr;
             }
 
-            const sem::ValueExpression* obj_expr = object;
             if (size == 1) {
                 // A single element swizzle is just the type of the vector.
                 ty = vec->Type();
@@ -3558,24 +3573,13 @@ sem::ValueExpression* Resolver::MemberAccessor(const ast::MemberAccessorExpressi
                 // The vector will have a number of components equal to the length of
                 // the swizzle.
                 ty = b.create<core::type::Vector>(vec->Type(), static_cast<uint32_t>(size));
-
-                if (obj_expr->Type()->Is<core::type::Pointer>()) {
-                    // If the LHS is a pointer, the load rule is invoked. We special case this
-                    // because our usual handling of implicit loads assumes the expression has
-                    // reference type. This expression also has an implicit dereference before the
-                    // load, but we have no way of representing that, so we create the load directly
-                    // from the pointer expression.
-                    auto* load =
-                        b.create<sem::Load>(obj_expr, current_statement_, obj_expr->Stage());
-                    b.Sem().Replace(obj_expr->Declaration(), load);
-
-                    // Register the load for the alias analysis.
-                    RegisterLoad(obj_expr);
-
-                    obj_expr = load;
-                } else {
-                    // The load rule is invoked before the swizzle, if necessary.
-                    obj_expr = Load(obj_expr);
+                if (memory_view) {
+                    ty = b.create<core::type::SwizzleView>(
+                        memory_view->AddressSpace(), memory_view->StoreType(),
+                        memory_view->Access(), vec->Width(), static_cast<uint32_t>(size));
+                    // The object being swizzled will be loaded during IR generation, so we register
+                    // the load ahead of time here for the purpose of alias analysis.
+                    RegisterLoad(object);
                 }
             }
             const core::constant::Value* val = nullptr;
@@ -3586,7 +3590,7 @@ sem::ValueExpression* Resolver::MemberAccessor(const ast::MemberAccessorExpressi
                 }
                 val = res.Get();
             }
-            return b.create<sem::Swizzle>(expr, ty, current_statement_, val, obj_expr,
+            return b.create<sem::Swizzle>(expr, ty, current_statement_, val, object,
                                           std::move(swizzle), root_ident);
         },
 

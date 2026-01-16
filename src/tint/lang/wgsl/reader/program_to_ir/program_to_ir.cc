@@ -41,11 +41,14 @@
 #include "src/tint/lang/core/ir/loop.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/switch.h"
+#include "src/tint/lang/core/ir/swizzle.h"
 #include "src/tint/lang/core/ir/type/array_count.h"
 #include "src/tint/lang/core/ir/value.h"
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/core/type/reference.h"
 #include "src/tint/lang/core/type/struct.h"
+#include "src/tint/lang/core/type/swizzle_view.h"
+#include "src/tint/lang/core/type/vector.h"
 #include "src/tint/lang/wgsl/ast/accessor_expression.h"
 #include "src/tint/lang/wgsl/ast/alias.h"
 #include "src/tint/lang/wgsl/ast/assignment_statement.h"
@@ -784,8 +787,11 @@ class Impl {
             Hashmap<const ast::Expression*, ValueOrVecElAccess, 64> bindings_;
 
             void Bind(const ast::Expression* expr, core::ir::Value* value) {
-                // If this expression maps to sem::Load, insert a load instruction to get the result
-                if (impl.program_.Sem().Get<sem::Load>(expr)) {
+                auto* sem = impl.program_.Sem().Get<sem::Load>(expr);
+                // If this expression maps to sem::Load, insert a load instruction to get the
+                // result, unless the source is a swizzle view. The Load sem node around swizzle
+                // views is just a temporary wrapper to satisfy early type checking.
+                if (sem && !sem->Source()->Type()->Is<core::type::SwizzleView>()) {
                     auto* load = impl.builder_.Load(value);
                     impl.current_block_->Append(load);
                     value = load->Result();
@@ -857,8 +863,12 @@ class Impl {
                 // pointer, we generate a pointer.
                 const core::type::Type* ty =
                     sem->Type()->UnwrapRef()->Clone(impl.clone_ctx_.type_ctx);
-                if (auto* ptr = obj->Type()->As<core::type::Pointer>();
-                    ptr && !ty->Is<core::type::Pointer>()) {
+                if (auto* swizzle_view = sem->Type()->As<core::type::SwizzleView>()) {
+                    auto* vec_ty = swizzle_view->StoreType()->As<core::type::Vector>();
+                    ty = impl.builder_.ir.Types().vec(
+                        vec_ty->Type()->Clone(impl.clone_ctx_.type_ctx), swizzle_view->ToSize());
+                } else if (auto* ptr = obj->Type()->As<core::type::Pointer>();
+                           ptr && !ty->Is<core::type::Pointer>()) {
                     ty = impl.builder_.ir.Types().ptr(ptr->AddressSpace(), ty, ptr->Access());
                 }
 
@@ -883,7 +893,17 @@ class Impl {
                         if (indices.Length() == 1) {
                             return impl.builder_.Constant(u32(indices[0]));
                         }
-                        auto* val = impl.builder_.Swizzle(ty, obj, std::move(indices));
+
+                        core::ir::Swizzle* val;
+                        // Load the object being swizzled if it's a memory view.
+                        if (obj->Type()->Is<core::type::MemoryView>()) {
+                            auto* load = impl.builder_.Load(obj);
+                            impl.current_block_->Append(load);
+                            val = impl.builder_.Swizzle(ty, load, std::move(indices));
+                        } else {
+                            val = impl.builder_.Swizzle(ty, obj, std::move(indices));
+                        }
+
                         impl.current_block_->Append(val);
                         Bind(expr, val->Result());
                         return nullptr;
@@ -1089,12 +1109,19 @@ class Impl {
                     return std::nullopt;
                 }
 
+                if (memory_view->Is<core::type::SwizzleView>()) {
+                    return std::nullopt;
+                }
+
                 if (!memory_view->StoreType()->Is<core::type::Vector>()) {
                     return std::nullopt;
                 }
                 return tint::Switch(
                     access,
                     [&](const sem::Swizzle* s) -> std::optional<VectorRefElementAccess> {
+                        if (s->Indices().Length() != 1) {
+                            return std::nullopt;
+                        }
                         if (auto vec = GetValue(access->Object()->Declaration())) {
                             return VectorRefElementAccess{
                                 vec, impl.builder_.Constant(u32(s->Indices()[0]))};
@@ -1230,6 +1257,11 @@ class Impl {
             [&](const ast::Var* v) {
                 auto* ref = sem->Type()->As<core::type::Reference>();
                 auto* store_ty = RemapOverrideSizedArrayIfNeeded(ref->StoreType());
+                if (auto* swizzle_view = ref->StoreType()->As<core::type::SwizzleView>()) {
+                    auto* vec_ty = swizzle_view->StoreType()->As<core::type::Vector>();
+                    store_ty = builder_.ir.Types().Get<core::type::Vector>(
+                        vec_ty->Type()->Clone(clone_ctx_.type_ctx), swizzle_view->ToSize());
+                }
                 auto* ty = builder_.ir.Types().Get<core::type::Pointer>(ref->AddressSpace(),
                                                                         store_ty, ref->Access());
 
