@@ -426,8 +426,8 @@ BufferBase::BufferBase(DeviceBase* device, const UnpackedPtr<BufferDescriptor>& 
       mSize(descriptor->size),
       mUsage(descriptor->usage),
       mInternalUsage(ComputeInternalBufferUsages(device, descriptor->usage, descriptor->size)),
-      mState(descriptor.Has<BufferHostMappedPointer>() ? BufferState::HostMappedPersistent
-                                                       : BufferState::Unmapped) {
+      mIsHostMapped(descriptor.Has<BufferHostMappedPointer>()),
+      mState(mIsHostMapped ? BufferState::HostMappedPersistent : BufferState::Unmapped) {
     GetObjectTrackingList()->Track(this);
 }
 
@@ -467,14 +467,14 @@ void BufferBase::DestroyImpl(DestroyReason reason) {
     // the buffer.
     BufferState state = BufferState::Unmapped;
     while (
-        !mState.compare_exchange_weak(state, BufferState::Destroyed, std::memory_order_acq_rel)) {
+        !mState.compare_exchange_weak(state, BufferState::Destroyed, std::memory_order::acq_rel)) {
         switch (state) {
             case BufferState::Mapped:
             case BufferState::PendingMap:
             case BufferState::MappedAtCreation: {
                 [[maybe_unused]] bool hadError =
                     GetDevice()->ConsumedError(UnmapInternal(true), "calling %s.Destroy().", this);
-                state = mState.load(std::memory_order_acquire);
+                state = mState.load(std::memory_order::acquire);
                 break;
             }
             case BufferState::InsideOperation: {
@@ -482,7 +482,7 @@ void BufferBase::DestroyImpl(DestroyReason reason) {
                 // with API Destroy() call.
                 [[maybe_unused]] bool hadError =
                     GetDevice()->ConsumedError(ConcurrentUseError(), "calling %s.Destroy().", this);
-                while (mState.load(std::memory_order_acquire) == BufferState::InsideOperation) {
+                while (mState.load(std::memory_order::acquire) == BufferState::InsideOperation) {
                     // Spin loop instead of wait() to avoid overhead of signal in map/unmap.
                 }
                 break;
@@ -657,10 +657,17 @@ size_t BufferBase::MapSize() const {
     return mMapSize;
 }
 
-MaybeError BufferBase::ValidateCanUseOnQueueNow() const {
+BufferBase::ScopedUseBuffer BufferBase::UseBufferInternal() {
+    auto state = mState.exchange(BufferState::InsideOperation);
+    DAWN_CHECK(state ==
+               (mIsHostMapped ? BufferState::HostMappedPersistent : BufferState::Unmapped));
+    return ScopedUseBuffer(this);
+}
+
+MaybeError BufferBase::ValidateCanUseOnQueueNow() {
     DAWN_ASSERT(!IsError());
 
-    switch (mState.load(std::memory_order::acquire)) {
+    switch (BufferState state = mState.load(std::memory_order::acquire)) {
         case BufferState::Destroyed:
             return DAWN_VALIDATION_ERROR("%s used in submit while destroyed.", this);
         case BufferState::Mapped:
@@ -674,9 +681,16 @@ MaybeError BufferBase::ValidateCanUseOnQueueNow() const {
             return ConcurrentUseError();
         case BufferState::HostMappedPersistent:
         case BufferState::Unmapped:
-            return {};
+            return TransitionState(state, BufferState::InsideOperation);
     }
     DAWN_UNREACHABLE();
+}
+
+void BufferBase::FinishUse() {
+    BufferState fromState =
+        mState.exchange(mIsHostMapped ? BufferState::HostMappedPersistent : BufferState::Unmapped,
+                        std::memory_order::acq_rel);
+    DAWN_CHECK(fromState == BufferState::InsideOperation);
 }
 
 Future BufferBase::APIMapAsync(wgpu::MapMode mode,
@@ -689,8 +703,6 @@ Future BufferBase::APIMapAsync(wgpu::MapMode mode,
 
     Ref<MapAsyncEvent> event;
     {
-        auto deviceGuard = GetDevice()->GetGuard();
-
         // Handle the defaulting of size required by WebGPU, even if in webgpu_cpp.h it is not
         // possible to default the function argument (because there is the callback later in the
         // argument list)
@@ -897,7 +909,7 @@ MaybeError BufferBase::UnmapInternal(bool forDestroy) {
                                              : "Buffer was unmapped before mapping was resolved.");
 
                 BufferState exchangedState =
-                    mState.exchange(BufferState::InsideOperation, std::memory_order_acq_rel);
+                    mState.exchange(BufferState::InsideOperation, std::memory_order::acq_rel);
                 DAWN_CHECK(exchangedState == BufferState::PendingMap);
             }
         }
@@ -916,7 +928,7 @@ MaybeError BufferBase::UnmapInternal(bool forDestroy) {
         }
 
         // Wait until FinalizeMap() finishes before falling through to a regular unmap.
-        mState.wait(BufferState::PendingMap, std::memory_order_acquire);
+        mState.wait(BufferState::PendingMap, std::memory_order::acquire);
     }
 
     DAWN_TRY(Unmap(forDestroy));
@@ -1019,7 +1031,13 @@ bool BufferBase::NeedsInitialization() const {
     return !mIsDataInitialized && GetDevice()->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse);
 }
 
+bool BufferBase::IsStateInUse() const {
+    return !GetDevice()->IsValidationEnabled() ||
+           mState.load(std::memory_order::acquire) == BufferState::InsideOperation;
+}
+
 void BufferBase::MarkUsedInPendingCommands() {
+    DAWN_ASSERT(IsStateInUse());
     ExecutionSerial serial = GetDevice()->GetQueue()->GetPendingCommandSerial();
     DAWN_ASSERT(serial >= mLastUsageSerial);
     mLastUsageSerial = serial;
@@ -1103,11 +1121,31 @@ ApiObjectList* BufferBase::GetTexelBufferViewTrackingList() {
 }
 
 MaybeError BufferBase::TransitionState(BufferState currentState, BufferState desiredState) {
-    if (mState.compare_exchange_strong(currentState, desiredState, std::memory_order_acq_rel)) {
+    if (mState.compare_exchange_strong(currentState, desiredState, std::memory_order::acq_rel)) {
         return {};
     }
 
     return ConcurrentUseError();
+}
+
+BufferBase::ScopedUseBuffer::ScopedUseBuffer(BufferBase* buffer) : mBuffer(buffer) {
+    DAWN_ASSERT(mBuffer);
+}
+
+BufferBase::ScopedUseBuffer::~ScopedUseBuffer() {
+    if (mBuffer) {
+        mBuffer->FinishUse();
+    }
+}
+
+BufferBase::ScopedUseBuffer::ScopedUseBuffer(ScopedUseBuffer&& other) : mBuffer(other.mBuffer) {
+    other.mBuffer = nullptr;
+}
+
+BufferBase::ScopedUseBuffer& BufferBase::ScopedUseBuffer::operator=(ScopedUseBuffer&& other) {
+    mBuffer = other.mBuffer;
+    other.mBuffer = nullptr;
+    return *this;
 }
 
 }  // namespace dawn::native
