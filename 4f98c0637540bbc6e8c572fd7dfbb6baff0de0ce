@@ -16,6 +16,23 @@
       "message": "This is actually Brian\u0027s CL originally, but since I could test more readily on Windows, I took it over.",
       "revId": "4f98c0637540bbc6e8c572fd7dfbb6baff0de0ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "badb6185_b7a7209f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-16T18:02:44Z",
+      "side": 1,
+      "message": "In hindsight, we can actually probably use a `DAWN_SUPPRESS_TEST_IF(true);` in an MSVC pre-compiler block since we only test MSVC builds with software backends. That should remove the need for switching to DawnTest and all the other associated changes.",
+      "revId": "4f98c0637540bbc6e8c572fd7dfbb6baff0de0ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
