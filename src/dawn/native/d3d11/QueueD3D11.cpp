@@ -361,6 +361,7 @@ void Queue::DeferUnmap(Ref<Buffer>&& buffer) {
 }
 
 void Queue::PerformDeferredUnmaps(const ScopedCommandRecordingContext* commandContext) {
+    TRACE_EVENT0(GetDevice()->GetPlatform(), General, "Queue::PerformDeferredUnmaps");
     mPendingUnmapBuffers.Use([&](auto pendingUnmapBuffers) {
         for (auto& buffer : *pendingUnmapBuffers) {
             buffer->UnmapIfNeeded(commandContext);

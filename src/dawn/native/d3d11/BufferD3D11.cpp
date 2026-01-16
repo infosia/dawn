@@ -1133,6 +1133,48 @@ MaybeError GPUUsableBuffer::SyncGPUWritesToStaging(
     return SyncStorage(commandContext, stagingStorage);
 }
 
+MaybeError GPUUsableBuffer::MapAtCreationImpl() {
+    // Use deferred context to avoid immediate context's lock.
+    DAWN_ASSERT(IsCPUWritable());
+    DAWN_ASSERT(!mMappedData);
+
+    // Get a deferred context for mapping
+    DAWN_TRY_ASSIGN(mDeferredCtxForMapping, ToBackend(GetDevice())->GetOrCreateDeferredContext());
+
+    // Map the CPU writable storage with MAP_WRITE_DISCARD
+    DAWN_ASSERT(mCPUWritableStorage);
+    D3D11_MAPPED_SUBRESOURCE mappedResource;
+    DAWN_TRY(CheckHRESULT(mDeferredCtxForMapping->Map(mCPUWritableStorage->GetD3D11Buffer(),
+                                                      /*Subresource=*/0, D3D11_MAP_WRITE_DISCARD,
+                                                      /*MapFlags=*/0, &mappedResource),
+                          "ID3D11DeviceContext::Map"));
+    mMappedData = static_cast<uint8_t*>(mappedResource.pData);
+    mMappedStorage = mCPUWritableStorage;
+
+    return {};
+}
+
+void GPUUsableBuffer::UnmapImpl(BufferState oldState, BufferState newState) {
+    DAWN_ASSERT(IsMappable(GetInternalUsage()));
+
+    if (mDeferredCtxForMapping) {
+        // Unmap using the deferred context
+        mDeferredCtxForMapping->Unmap(mMappedStorage->GetD3D11Buffer(), /*Subresource=*/0);
+
+        // Finish the command list. The command list will be executed later in UnmapInternal().
+        auto commandListOrError =
+            ToBackend(GetDevice())->FinishUsingDeferredContext(std::move(mDeferredCtxForMapping));
+        if (commandListOrError.IsSuccess()) {
+            mDeferredMappingCommandList = commandListOrError.AcquireSuccess();
+        } else {
+            [[maybe_unused]] bool hasError =
+                GetDevice()->ConsumedError(commandListOrError.AcquireError());
+        }
+    }
+
+    Buffer::UnmapImpl(oldState, newState);
+}
+
 MaybeError GPUUsableBuffer::MapInternal(const ScopedCommandRecordingContext* commandContext,
                                         wgpu::MapMode mode) {
     DAWN_ASSERT(!mMappedData);
@@ -1172,8 +1214,17 @@ MaybeError GPUUsableBuffer::MapInternal(const ScopedCommandRecordingContext* com
 
 void GPUUsableBuffer::UnmapInternal(const ScopedCommandRecordingContext* commandContext) {
     DAWN_ASSERT(mMappedData);
-    commandContext->Unmap(mMappedStorage->GetD3D11Buffer(),
-                          /*Subresource=*/0);
+
+    if (mDeferredMappingCommandList) {
+        // Execute the command list from deferred context.
+        commandContext->ExecuteCommandList(mDeferredMappingCommandList.Get(),
+                                           /*RestoreContextState=*/TRUE);
+        mDeferredMappingCommandList = nullptr;
+    } else {
+        // Normal unmap
+        commandContext->Unmap(mMappedStorage->GetD3D11Buffer(), /*Subresource=*/0);
+    }
+
     mMappedData = nullptr;
     // Since D3D11_MAP_READ_WRITE is used even for MapMode::Read, we need to increment the
     // revision.
