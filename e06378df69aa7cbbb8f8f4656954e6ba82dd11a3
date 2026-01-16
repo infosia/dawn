@@ -91,6 +91,24 @@
       "parentUuid": "916840c8_b0e33c2e",
       "revId": "e06378df69aa7cbbb8f8f4656954e6ba82dd11a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a0eb609_1ff25976",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-16T15:30:38Z",
+      "side": 1,
+      "message": "https://docs.google.com/document/d/1EaiTbqcVglzqRC8d2CKXC219L6ITxh_eRBd7_SPTuUo\n\nQuyen maybe you should advertise it more, the link in the issue is very small and hard to find organically ^^",
+      "parentUuid": "c020a4aa_1d0f4820",
+      "revId": "e06378df69aa7cbbb8f8f4656954e6ba82dd11a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
