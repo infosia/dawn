@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "578bc0b2_7d3271ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-16T15:31:29Z",
+      "side": 1,
+      "message": "LGTM though the failures seem real.",
+      "revId": "0c7553def2af02665d3f9f9c8b9094ef0ce29989",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
