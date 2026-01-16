@@ -1784,5 +1784,53 @@ tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(MslWriter_ArgumentBuffersTest, DynamicOffsetOnNonBufferType) {
+    auto* var_a = b.Var("a", ty.ptr<storage, i32, core::Access::kReadWrite>());
+    var_a->SetBindingPoint(1, 2);
+    mod.root_block->Append(var_a);
+
+    auto* texture_ty = ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32());
+    auto* var_b = b.Var("b", ty.ptr(handle, texture_ty));
+    var_b->SetBindingPoint(1, 3);
+    mod.root_block->Append(var_b);
+
+    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        auto* load_a = b.Load(var_a);
+        auto* add = b.Add(load_a, load_a);
+        b.Store(var_a, add);
+        b.Return(func);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %a:ptr<storage, i32, read_write> = var undef @binding_point(1, 2)
+  %b:ptr<handle, texture_2d<f32>, read> = var undef @binding_point(1, 3)
+}
+
+%foo = @fragment func():void {
+  $B2: {
+    %4:i32 = load %a
+    %5:i32 = add %4, %4
+    store %a, %5
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    ArgumentBufferInfo info{
+        .id = 2,
+        .dynamic_buffer_id = 3,
+        .binding_info_to_offset_index = {{3, 4}},
+    };
+
+    ArgumentBuffersConfig cfg{};
+    cfg.group_to_argument_buffer_info.insert({1, info});
+    auto result = ArgumentBuffers(mod, cfg);
+    EXPECT_NE(result, Success);
+    EXPECT_EQ(result.Failure().reason, "");
+}
+
 }  // namespace
 }  // namespace tint::msl::writer::raise
