@@ -172,11 +172,10 @@ TEST_F(ResolverLoadTest, MultiComponentSwizzle) {
                    Var("v", MemberAccessor(ident, "xyz")));
 
     ASSERT_TRUE(r()->Resolve()) << r()->error();
+
+    // Swizzles should not be implicitly loaded by the resolver.
     auto* load = Sem().Get<sem::Load>(ident);
-    ASSERT_NE(load, nullptr);
-    EXPECT_TRUE(load->Type()->Is<core::type::Vector>());
-    EXPECT_TRUE(load->Source()->Type()->Is<core::type::Reference>());
-    EXPECT_TRUE(load->Source()->Type()->UnwrapRef()->Is<core::type::Vector>());
+    ASSERT_EQ(load, nullptr);
 }
 
 TEST_F(ResolverLoadTest, MultiComponentSwizzle_FromPointer) {
@@ -189,11 +188,10 @@ TEST_F(ResolverLoadTest, MultiComponentSwizzle_FromPointer) {
                    Var("v", MemberAccessor(ident, "xyz")));
 
     ASSERT_TRUE(r()->Resolve()) << r()->error();
+
+    // Swizzles should not be implicitly loaded by the resolver.
     auto* load = Sem().Get<sem::Load>(ident);
-    ASSERT_NE(load, nullptr);
-    EXPECT_TRUE(load->Type()->Is<core::type::Vector>());
-    EXPECT_TRUE(load->Source()->Type()->Is<core::type::Pointer>());
-    EXPECT_TRUE(load->Source()->Type()->UnwrapPtr()->Is<core::type::Vector>());
+    ASSERT_EQ(load, nullptr);
 }
 
 TEST_F(ResolverLoadTest, Bitcast) {

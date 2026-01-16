@@ -46,6 +46,7 @@
 #include "src/tint/lang/core/type/sampler.h"
 #include "src/tint/lang/core/type/storage_texture.h"
 #include "src/tint/lang/core/type/subgroup_matrix.h"
+#include "src/tint/lang/core/type/swizzle_view.h"
 #include "src/tint/lang/core/type/texture_dimension.h"
 #include "src/tint/lang/core/type/u8.h"
 #include "src/tint/lang/wgsl/ast/alias.h"
@@ -231,8 +232,9 @@ bool Validator::IsPlain(const core::type::Type* type) const {
 
 // https://gpuweb.github.io/gpuweb/wgsl.html#storable-types
 bool Validator::IsStorable(const core::type::Type* type) const {
-    return IsPlain(type) || type->IsAnyOf<core::type::BindingArray, core::type::Texture,
-                                          core::type::Sampler, core::type::Buffer>();
+    return IsPlain(type) ||
+           type->IsAnyOf<core::type::BindingArray, core::type::Texture, core::type::Sampler,
+                         core::type::Buffer, core::type::SwizzleView>();
 }
 
 const ast::Statement* Validator::ClosestContinuing(bool stop_at_loop,
