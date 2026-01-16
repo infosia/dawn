@@ -100,6 +100,23 @@ class ReplayImpl : public Replay {
         return *p;
     }
 
+    template <typename T>
+    const std::string& GetLabel(const T& object) const {
+        if (object == nullptr) {
+            return kNotFound;
+        }
+        auto iter = std::find_if(mResources.begin(), mResources.end(), [&object](const auto& pair) {
+            const T* p = std::get_if<T>(&pair.second.resource);
+            return p && p->Get() == object.Get();
+        });
+        if (iter == mResources.end()) {
+            return kNotFound;
+        }
+        return iter->second.label;
+    }
+
+    const std::string& GetLabel(schema::ObjectId id) const;
+
   private:
     ReplayImpl(wgpu::Device device, std::unique_ptr<CaptureImpl> capture);
 
@@ -113,6 +130,8 @@ class ReplayImpl : public Replay {
     IdToResourceMap mResources;
 
     BlitBufferToDepthTexture mBlitBufferToDepthTexture;
+
+    std::string kNotFound;
 };
 
 }  // namespace dawn::replay

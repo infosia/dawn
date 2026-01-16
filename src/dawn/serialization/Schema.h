@@ -48,49 +48,48 @@ const ObjectId kDeviceId = 1;
 // Helper to select the 1st, 2nd, 3rd implementation
 #define DAWN_REPLAY_GET_X_MACRO(_1, _2, _3, NAME, ...) NAME
 
-#define DAWN_REPLAY_ENUM_BAD(ENUMNAME) 
+#define DAWN_REPLAY_ENUM_BAD(ENUMNAME)
 #define DAWN_REPLAY_ENUM_DEfAULT_MEMBER(ENUMNAME, NAME) NAME,
 #define DAWN_REPLAY_ENUM_VALUE_MEMBER(ENUMNAME, NAME, VALUE) NAME = VALUE,
-#define DAWN_REPLAY_ENUM_MEMBER(...) DAWN_REPLAY_GET_X_MACRO(__VA_ARGS__, DAWN_REPLAY_ENUM_VALUE_MEMBER, DAWN_REPLAY_ENUM_DEfAULT_MEMBER, DAWN_REPLAY_ENUM_BAD)(__VA_ARGS__)
+#define DAWN_REPLAY_ENUM_MEMBER(...)                                    \
+    DAWN_REPLAY_GET_X_MACRO(__VA_ARGS__, DAWN_REPLAY_ENUM_VALUE_MEMBER, \
+                            DAWN_REPLAY_ENUM_DEfAULT_MEMBER, DAWN_REPLAY_ENUM_BAD)(__VA_ARGS__)
 
 #define DAWN_REPLAY_ENUM(NAME, MEMBERS) \
-    enum class NAME : uint32_t {    \
-        MEMBERS(NAME, DAWN_REPLAY_ENUM_MEMBER)    \
-    };
+    enum class NAME : uint32_t { MEMBERS(NAME, DAWN_REPLAY_ENUM_MEMBER) };
 
 #define DAWN_REPLAY_OBJECT_TYPES(NAME, X) \
-    X(NAME, Invalid, 0) \
-    X(NAME, BindGroup) \
-    X(NAME, BindGroupLayout) \
-    X(NAME, Buffer) \
-    X(NAME, CommandBuffer) \
-    X(NAME, ComputePipeline) \
-    X(NAME, Device) \
-    X(NAME, ExternalTexture) \
-    X(NAME, PipelineLayout) \
-    X(NAME, QuerySet) \
-    X(NAME, RenderBundle) \
-    X(NAME, RenderPipeline) \
-    X(NAME, Sampler) \
-    X(NAME, ShaderModule) \
-    X(NAME, Texture) \
-    X(NAME, TextureView) \
+    X(NAME, Invalid, 0)                   \
+    X(NAME, BindGroup)                    \
+    X(NAME, BindGroupLayout)              \
+    X(NAME, Buffer)                       \
+    X(NAME, CommandBuffer)                \
+    X(NAME, ComputePipeline)              \
+    X(NAME, Device)                       \
+    X(NAME, ExternalTexture)              \
+    X(NAME, PipelineLayout)               \
+    X(NAME, QuerySet)                     \
+    X(NAME, RenderBundle)                 \
+    X(NAME, RenderPipeline)               \
+    X(NAME, Sampler)                      \
+    X(NAME, ShaderModule)                 \
+    X(NAME, Texture)                      \
+    X(NAME, TextureView)
 
-#define DAWN_REPLAY_OBJECT_TYPES_ENUM(X) \
-    X(ObjectType, DAWN_REPLAY_OBJECT_TYPES)
+#define DAWN_REPLAY_OBJECT_TYPES_ENUM(X) X(ObjectType, DAWN_REPLAY_OBJECT_TYPES)
 
 DAWN_REPLAY_OBJECT_TYPES_ENUM(DAWN_REPLAY_ENUM)
 
 #define DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES(NAME, X) \
-    X(NAME, Invalid, 0) \
-    X(NAME, BufferBinding) \
-    X(NAME, SamplerBinding) \
-    X(NAME, TextureBinding) \
-    X(NAME, TexelBufferBinding) \
-    X(NAME, StorageTextureBinding) \
-    X(NAME, ExternalTextureBinding) \
-    X(NAME, StaticSamplerBindingInfo) \
-    X(NAME, InputAttachmentBindingInfo) \
+    X(NAME, Invalid, 0)                                       \
+    X(NAME, BufferBinding)                                    \
+    X(NAME, SamplerBinding)                                   \
+    X(NAME, TextureBinding)                                   \
+    X(NAME, TexelBufferBinding)                               \
+    X(NAME, StorageTextureBinding)                            \
+    X(NAME, ExternalTextureBinding)                           \
+    X(NAME, StaticSamplerBindingInfo)                         \
+    X(NAME, InputAttachmentBindingInfo)
 
 #define DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES_ENUM(X) \
     X(BindGroupLayoutEntryType, DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES)
@@ -98,41 +97,41 @@ DAWN_REPLAY_OBJECT_TYPES_ENUM(DAWN_REPLAY_ENUM)
 DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES_ENUM(DAWN_REPLAY_ENUM)
 
 #define DAWN_REPLAY_COMMAND_BUFFER_COMMANDS(NAME, X) \
-    X(NAME, Invalid, 0) \
-    X(NAME, BeginComputePass) \
-    X(NAME, BeginOcclusionQuery) \
-    X(NAME, BeginRenderPass) \
-    X(NAME, ClearBuffer) \
-    X(NAME, CopyBufferToBuffer) \
-    X(NAME, CopyBufferToTexture) \
-    X(NAME, CopyTextureToBuffer) \
-    X(NAME, CopyTextureToTexture) \
-    X(NAME, Dispatch) \
-    X(NAME, DispatchIndirect) \
-    X(NAME, Draw) \
-    X(NAME, DrawIndexed) \
-    X(NAME, DrawIndexedIndirect) \
-    X(NAME, DrawIndirect) \
-    X(NAME, End) \
-    X(NAME, EndOcclusionQuery) \
-    X(NAME, EndRenderPass) \
-    X(NAME, ExecuteBundles) \
-    X(NAME, InsertDebugMarker) \
-    X(NAME, PopDebugGroup) \
-    X(NAME, PushDebugGroup) \
-    X(NAME, ResolveQuerySet) \
-    X(NAME, SetBindGroup) \
-    X(NAME, SetBlendConstant) \
-    X(NAME, SetComputePipeline) \
-    X(NAME, SetImmediates) \
-    X(NAME, SetIndexBuffer) \
-    X(NAME, SetRenderPipeline) \
-    X(NAME, SetScissorRect) \
-    X(NAME, SetStencilReference) \
-    X(NAME, SetVertexBuffer) \
-    X(NAME, SetViewport) \
-    X(NAME, WriteBuffer) \
-    X(NAME, WriteTimestamp) \
+    X(NAME, Invalid, 0)                              \
+    X(NAME, BeginComputePass)                        \
+    X(NAME, BeginOcclusionQuery)                     \
+    X(NAME, BeginRenderPass)                         \
+    X(NAME, ClearBuffer)                             \
+    X(NAME, CopyBufferToBuffer)                      \
+    X(NAME, CopyBufferToTexture)                     \
+    X(NAME, CopyTextureToBuffer)                     \
+    X(NAME, CopyTextureToTexture)                    \
+    X(NAME, Dispatch)                                \
+    X(NAME, DispatchIndirect)                        \
+    X(NAME, Draw)                                    \
+    X(NAME, DrawIndexed)                             \
+    X(NAME, DrawIndexedIndirect)                     \
+    X(NAME, DrawIndirect)                            \
+    X(NAME, End)                                     \
+    X(NAME, EndOcclusionQuery)                       \
+    X(NAME, EndRenderPass)                           \
+    X(NAME, ExecuteBundles)                          \
+    X(NAME, InsertDebugMarker)                       \
+    X(NAME, PopDebugGroup)                           \
+    X(NAME, PushDebugGroup)                          \
+    X(NAME, ResolveQuerySet)                         \
+    X(NAME, SetBindGroup)                            \
+    X(NAME, SetBlendConstant)                        \
+    X(NAME, SetComputePipeline)                      \
+    X(NAME, SetImmediates)                           \
+    X(NAME, SetIndexBuffer)                          \
+    X(NAME, SetRenderPipeline)                       \
+    X(NAME, SetScissorRect)                          \
+    X(NAME, SetStencilReference)                     \
+    X(NAME, SetVertexBuffer)                         \
+    X(NAME, SetViewport)                             \
+    X(NAME, WriteBuffer)                             \
+    X(NAME, WriteTimestamp)
 
 #define DAWN_REPLAY_COMMAND_BUFFER_COMMANDS_ENUM(X) \
     X(CommandBufferCommand, DAWN_REPLAY_COMMAND_BUFFER_COMMANDS)
@@ -140,18 +139,17 @@ DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES_ENUM(DAWN_REPLAY_ENUM)
 DAWN_REPLAY_COMMAND_BUFFER_COMMANDS_ENUM(DAWN_REPLAY_ENUM)
 
 #define DAWN_REPLAY_ROOT_COMMANDS(NAME, X) \
-    X(NAME, Invalid, 0) \
-    X(NAME, CreateResource) \
-    X(NAME, QueueSubmit) \
-    X(NAME, WriteBuffer) \
-    X(NAME, WriteTexture) \
-    X(NAME, UnmapBuffer) \
-    X(NAME, SetLabel) \
-    X(NAME, InitTexture) \
-    X(NAME, End) \
+    X(NAME, Invalid, 0)                    \
+    X(NAME, CreateResource)                \
+    X(NAME, QueueSubmit)                   \
+    X(NAME, WriteBuffer)                   \
+    X(NAME, WriteTexture)                  \
+    X(NAME, UnmapBuffer)                   \
+    X(NAME, SetLabel)                      \
+    X(NAME, InitTexture)                   \
+    X(NAME, End)
 
-#define DAWN_REPLAY_ROOT_COMMANDS_ENUM(X) \
-    X(RootCommand, DAWN_REPLAY_ROOT_COMMANDS)
+#define DAWN_REPLAY_ROOT_COMMANDS_ENUM(X) X(RootCommand, DAWN_REPLAY_ROOT_COMMANDS)
 
 DAWN_REPLAY_ROOT_COMMANDS_ENUM(DAWN_REPLAY_ENUM)
 

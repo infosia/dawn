@@ -1342,6 +1342,14 @@ MaybeError ReplayImpl::SetLabel(schema::ObjectId id,
     return {};
 }
 
+const std::string& ReplayImpl::GetLabel(schema::ObjectId id) const {
+    auto iter = mResources.find(id);
+    if (iter == mResources.end()) {
+        return kNotFound;
+    }
+    return iter->second.label;
+}
+
 MaybeError ReplayImpl::Play() {
     auto readHead = mCapture->GetCommandReadHead();
     auto contentReadHead = mCapture->GetContentReadHead();
