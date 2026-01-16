@@ -176,6 +176,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "484e92d5_28b60fa9",
+        "filename": "src/dawn/native/AttachmentState.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-16T20:29:01Z",
+      "side": 1,
+      "message": "It can apply to DS in Vulkan, but WebGPU doesn\u0027t have a mechanism for resolving DS according to the spec, so it feels strange to introduce one here.\n\nAnd we already had validation to ensure that the DS attachment matches the implicitSampleCount, as well as a test to ensure that it succeeds if the DS count matches, but due to this comment I realized we didn\u0027t have a test to ensure it fails validation if the DS sample count is 1, so I\u0027ve added that. Thanks!",
+      "parentUuid": "8f5e5307_76534de8",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b930206c_af49eda5",
