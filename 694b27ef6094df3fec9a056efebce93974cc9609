@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e808b82_2e9ae84b",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-16T09:12:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0e5de60_a49b2bf3",
+      "revId": "694b27ef6094df3fec9a056efebce93974cc9609",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9deb6f6b_510adbf8",
@@ -58,6 +76,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbe2ed27_4dd54137",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-16T09:12:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9deb6f6b_510adbf8",
+      "range": {
+        "startLine": 250,
+        "startChar": 19,
+        "endLine": 252,
+        "endChar": 0
+      },
+      "revId": "694b27ef6094df3fec9a056efebce93974cc9609",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "018f1468_3cdfa417",
@@ -71,6 +113,30 @@
       "writtenOn": "2026-01-15T19:26:43Z",
       "side": 1,
       "message": "nit. Same here. Would be nice to move the comment for `maxSubgroupSize` and GL below out into a comment above here, and just use the variable name documenting style for that one also.",
+      "range": {
+        "startLine": 517,
+        "startChar": 39,
+        "endLine": 517,
+        "endChar": 70
+      },
+      "revId": "694b27ef6094df3fec9a056efebce93974cc9609",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69c4b6e0_27cbeef7",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-16T09:12:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "018f1468_3cdfa417",
       "range": {
         "startLine": 517,
         "startChar": 39,
