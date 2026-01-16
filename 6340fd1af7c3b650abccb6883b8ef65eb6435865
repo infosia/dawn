@@ -50,6 +50,42 @@
       "message": "Also documentation for the Web (JS) and C versions of WebGPU.",
       "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dd0623f_90e8fd0c",
+        "filename": "src/dawn/webgpu_kt_docs.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-01-16T10:36:36Z",
+      "side": 1,
+      "message": "Added. Thanks for the suggestion!",
+      "parentUuid": "ff231572_61b01da1",
+      "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87af1b71_0716f2b9",
+        "filename": "src/dawn/webgpu_kt_docs.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-01-16T10:36:36Z",
+      "side": 1,
+      "message": "We\u0027ll include this in the release notes for every future Jetpack release: https://developer.android.com/jetpack/androidx/releases/webgpu",
+      "parentUuid": "0c4ee6f4_a2f21860",
+      "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
