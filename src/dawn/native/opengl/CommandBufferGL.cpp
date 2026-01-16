@@ -1402,12 +1402,11 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 DrawCmd* draw = iter->NextCommand<DrawCmd>();
                 DAWN_TRY(vertexStateBufferBindingTracker.Apply(gl, 0, draw->firstInstance));
                 DAWN_TRY(bindGroupTracker.Apply(gl));
-                DAWN_TRY(immediates.Apply(gl));
 
                 if (lastPipeline->UsesInstanceIndex()) {
-                    DAWN_GL_TRY(gl, Uniform1ui(PipelineLayout::ImmediateLocation::FirstInstance,
-                                               draw->firstInstance));
+                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::FirstInstance * 4, reinterpret_cast<uint8_t*>(&draw->firstInstance), 4);
                 }
+                DAWN_TRY(immediates.Apply(gl));
                 DAWN_GL_TRY(gl, DrawArraysInstanced(lastPipeline->GetGLPrimitiveTopology(),
                                                     draw->firstVertex, draw->vertexCount,
                                                     draw->instanceCount));
@@ -1429,12 +1428,10 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 }
 
                 if (lastPipeline->UsesVertexIndex()) {
-                    DAWN_GL_TRY(gl, Uniform1ui(PipelineLayout::ImmediateLocation::FirstVertex,
-                                               draw->baseVertex));
+                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::FirstVertex * 4, reinterpret_cast<uint8_t*>(&draw->baseVertex), 4);
                 }
                 if (lastPipeline->UsesInstanceIndex()) {
-                    DAWN_GL_TRY(gl, Uniform1ui(PipelineLayout::ImmediateLocation::FirstInstance,
-                                               draw->firstInstance));
+                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::FirstInstance * 4, reinterpret_cast<uint8_t*>(&draw->firstInstance), 4);
                 }
                 DAWN_GL_TRY(gl, DrawElementsInstanced(
                                     topology, draw->indexCount, indexBufferFormat,
@@ -1447,8 +1444,8 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
             case Command::DrawIndirect: {
                 DrawIndirectCmd* draw = iter->NextCommand<DrawIndirectCmd>();
                 if (lastPipeline->UsesInstanceIndex()) {
-                    DAWN_GL_TRY(gl,
-                                Uniform1ui(PipelineLayout::ImmediateLocation::FirstInstance, 0));
+                    uint32_t zero = 0;
+                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::FirstInstance * 4, reinterpret_cast<uint8_t*>(&zero), sizeof(zero));
                 }
                 DAWN_TRY(vertexStateBufferBindingTracker.Apply(gl, 0, 0));
                 DAWN_TRY(bindGroupTracker.Apply(gl));
@@ -1470,8 +1467,8 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 DrawIndexedIndirectCmd* draw = iter->NextCommand<DrawIndexedIndirectCmd>();
 
                 if (lastPipeline->UsesInstanceIndex()) {
-                    DAWN_GL_TRY(gl,
-                                Uniform1ui(PipelineLayout::ImmediateLocation::FirstInstance, 0));
+                    uint32_t zero = 0;
+                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::FirstInstance * 4, reinterpret_cast<uint8_t*>(&zero), sizeof(zero));
                 }
                 DAWN_TRY(vertexStateBufferBindingTracker.Apply(gl, 0, 0));
                 DAWN_TRY(bindGroupTracker.Apply(gl));
@@ -1514,10 +1511,8 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 bindGroupTracker.OnSetPipeline(lastPipeline);
                 immediates.OnSetPipeline(lastPipeline);
                 if (lastPipeline->UsesFragDepth()) {
-                    DAWN_GL_TRY(gl,
-                                Uniform1f(PipelineLayout::ImmediateLocation::MinDepth, minDepth));
-                    DAWN_GL_TRY(gl,
-                                Uniform1f(PipelineLayout::ImmediateLocation::MaxDepth, maxDepth));
+                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::MinDepth * 4, reinterpret_cast<uint8_t*>(&minDepth), 4);
+                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::MaxDepth * 4, reinterpret_cast<uint8_t*>(&maxDepth), 4);
                 }
                 break;
             }
@@ -1595,10 +1590,8 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 maxDepth = cmd->maxDepth;
                 DAWN_GL_TRY(gl, DepthRangef(minDepth, maxDepth));
                 if (lastPipeline && lastPipeline->UsesFragDepth()) {
-                    DAWN_GL_TRY(gl,
-                                Uniform1f(PipelineLayout::ImmediateLocation::MinDepth, minDepth));
-                    DAWN_GL_TRY(gl,
-                                Uniform1f(PipelineLayout::ImmediateLocation::MaxDepth, maxDepth));
+                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::MinDepth * 4, reinterpret_cast<uint8_t*>(&minDepth), 4);
+                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::MaxDepth * 4, reinterpret_cast<uint8_t*>(&maxDepth), 4);
                 }
                 break;
             }
