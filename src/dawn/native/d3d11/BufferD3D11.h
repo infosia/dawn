@@ -155,6 +155,7 @@ class Buffer : public BufferBase {
     ~Buffer() override;
 
     void DestroyImpl(DestroyReason reason) override;
+    void UnmapImpl(BufferState oldState, BufferState newState) override;
 
     virtual MaybeError InitializeInternal() = 0;
 
@@ -180,7 +181,6 @@ class Buffer : public BufferBase {
     MaybeError ClearInitialResource(const ScopedCommandRecordingContext* commandContext);
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override;
     MaybeError FinalizeMapImpl(BufferState newState) override;
-    void UnmapImpl(BufferState oldState, BufferState newState) override;
     bool IsCPUWritableAtCreation() const override;
     MaybeError MapAtCreationImpl() override;
     void* GetMappedPointerImpl() override;
@@ -239,8 +239,10 @@ class GPUUsableBuffer final : public Buffer {
     void SetLabelImpl() override;
 
     MaybeError InitializeInternal() override;
+    MaybeError MapAtCreationImpl() override;
     MaybeError MapInternal(const ScopedCommandRecordingContext* commandContext,
                            wgpu::MapMode mode) override;
+    void UnmapImpl(BufferState oldState, BufferState newState) override;
     void UnmapInternal(const ScopedCommandRecordingContext* commandContext) override;
 
     MaybeError CopyToInternal(const ScopedCommandRecordingContext* commandContext,
@@ -343,6 +345,10 @@ class GPUUsableBuffer final : public Buffer {
     absl::flat_hash_map<BufferViewKey, ComPtr<ID3D11UnorderedAccessView1>> mUAVCache;
 
     const D3D11_MAP mD3DMapWriteMode = D3D11_MAP_WRITE;
+
+    // Deferred context for mapping operations
+    ComPtr<ID3D11DeviceContext> mDeferredCtxForMapping;
+    ComPtr<ID3D11CommandList> mDeferredMappingCommandList;
 };
 
 static inline GPUUsableBuffer* ToGPUUsableBuffer(BufferBase* buffer) {
