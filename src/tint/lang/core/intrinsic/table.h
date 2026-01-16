@@ -60,6 +60,8 @@ struct Overload {
         const core::type::Type* const type;
         /// Parameter usage
         core::ParameterUsage const usage = core::ParameterUsage::kNone;
+        /// True if the parameter is required to be const.
+        const bool is_const;
 
         /// Equality operator
         /// @param other the parameter to compare against
