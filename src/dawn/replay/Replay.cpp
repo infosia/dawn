@@ -97,13 +97,13 @@ namespace {
 
 bool IsSwizzleIdentity(const wgpu::TextureComponentSwizzle& swizzle) {
     return (swizzle.r == wgpu::ComponentSwizzle::R ||
-                swizzle.r == wgpu::ComponentSwizzle::Undefined) &&
+            swizzle.r == wgpu::ComponentSwizzle::Undefined) &&
            (swizzle.g == wgpu::ComponentSwizzle::G ||
-                swizzle.g == wgpu::ComponentSwizzle::Undefined) &&
+            swizzle.g == wgpu::ComponentSwizzle::Undefined) &&
            (swizzle.b == wgpu::ComponentSwizzle::B ||
-                swizzle.b == wgpu::ComponentSwizzle::Undefined) &&
+            swizzle.b == wgpu::ComponentSwizzle::Undefined) &&
            (swizzle.a == wgpu::ComponentSwizzle::A ||
-                swizzle.a == wgpu::ComponentSwizzle::Undefined);
+            swizzle.a == wgpu::ComponentSwizzle::Undefined);
 }
 
 wgpu::Origin3D ToWGPU(const schema::Origin3D& origin) {
@@ -1340,6 +1340,14 @@ MaybeError ReplayImpl::SetLabel(schema::ObjectId id,
             return DAWN_INTERNAL_ERROR("unhandled resource type");
     }
     return {};
+}
+
+const std::string& ReplayImpl::GetLabel(schema::ObjectId id) const {
+    auto iter = mResources.find(id);
+    if (iter == mResources.end()) {
+        return kNotFound;
+    }
+    return iter->second.label;
 }
 
 MaybeError ReplayImpl::Play() {
