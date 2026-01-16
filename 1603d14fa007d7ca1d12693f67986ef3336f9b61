@@ -16,6 +16,159 @@
       "message": "PTAL!\n\nFYI to kylechar@, since this was derived from your code.",
       "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e934005_10e9ebaf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-16T15:56:09Z",
+      "side": 1,
+      "message": "LGTM overall!",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6df621c3_7ac6b6d2",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 3135,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-16T15:56:09Z",
+      "side": 1,
+      "message": "Can we have a TODO to remove it as well as its sType?",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa22ce12_f76b97be",
+        "filename": "src/dawn/native/AttachmentState.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-16T15:56:09Z",
+      "side": 1,
+      "message": "Could we have validation that the sample count must be consistent between all the attachments? Like they must be all 1 (if we don\u0027t allow mixing), or a mix of single sampled and the same sample count (we don\u0027t support other than 4 or 1 so the test could be just a TODO). Also validation that the DS attachment is the correct sample count (or is it MSRTSS as well? In which case we would need a test and to update [1])",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b930206c_af49eda5",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-16T15:56:09Z",
+      "side": 1,
+      "message": "Could we have validation tests for 100% coverage of this new validation?",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e216a99c_7ae832f3",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-16T15:56:09Z",
+      "side": 1,
+      "message": "nit: we could store this in the BeginRenderPassCmd instead of detecting manually here.",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36ea1672_748f466d",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-16T15:56:09Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95074e55_9b1252f0",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-16T15:56:09Z",
+      "side": 1,
+      "message": "This looks redundant with the addition above?",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebf5fe71_4bc6fce7",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-16T15:56:09Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b6bd0cb_d9242f03",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-16T15:56:09Z",
+      "side": 1,
+      "message": "Can we add some explanation that this is an extremely cheap usage to add on the HW that support MSRTSS? (IIRC we had confirmation of that from Shabby?)",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
