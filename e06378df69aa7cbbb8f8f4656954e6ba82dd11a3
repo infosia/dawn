@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3cf3e3a_b7de826c",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-16T17:53:03Z",
+      "side": 1,
+      "message": "Yes, [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/MultithreadTests.cpp;drc\u003daa5c369fe2581155c4df93a7ff7505311331f91f;l\u003d725) and [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/MultithreadTests.cpp;drc\u003df199a6313ae8a20e87bfe40924910dadcbf9e43c;l\u003d864) are some examples. They are also used indirectly by several tests.",
+      "parentUuid": "a76e8707_b7f96994",
+      "revId": "e06378df69aa7cbbb8f8f4656954e6ba82dd11a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc296cdb_8548cd99",
@@ -48,6 +66,30 @@
       "writtenOn": "2026-01-15T12:39:25Z",
       "side": 1,
       "message": "u-nit: can we order them alphabetically? same in the .cpp",
+      "range": {
+        "startLine": 100,
+        "startChar": 1,
+        "endLine": 105,
+        "endChar": 0
+      },
+      "revId": "e06378df69aa7cbbb8f8f4656954e6ba82dd11a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3baace8_5a9efbe7",
+        "filename": "src/dawn/native/d3d11/DeviceD3D11.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-16T17:53:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc296cdb_8548cd99",
       "range": {
         "startLine": 100,
         "startChar": 1,
