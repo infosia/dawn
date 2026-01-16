@@ -16,6 +16,41 @@
       "message": "Separating out initializing a texture from writeTexture seems like a good idea. Especially for the next CL which will special case depth24...",
       "revId": "da3ecfb8c318fd69aa69b396df6012a460c2eb30",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc8c1a60_6d2af908",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-16T00:04:38Z",
+      "side": 1,
+      "message": "nit:",
+      "fixSuggestions": [
+        {
+          "fixId": "3609922f_2ff10403",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/replay/Replay.cpp",
+              "range": {
+                "startLine": 258,
+                "startChar": 0,
+                "endLine": 259,
+                "endChar": 0
+              },
+              "replacement": "    device.GetQueue().WriteTexture(\u0026dst, data, cmdData.dataSize, \u0026layout, \u0026size);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "da3ecfb8c318fd69aa69b396df6012a460c2eb30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
