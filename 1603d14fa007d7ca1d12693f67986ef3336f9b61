@@ -107,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ab295fac_850946dd",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 3172,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-16T20:00:02Z",
+      "side": 1,
+      "message": "I could have misunderstood the sentiment. FWIW I think this approach is fine, it has a benefit of not allocating a multi-sampled texture for use as the color attachment that will never get used. It\u0027s also a pretty simple API, minus the validation logic, so it wouldn\u0027t be too hard to change how we trigger MSRTSS in the future.",
+      "parentUuid": "053abbb9_684169d7",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aa22ce12_f76b97be",
         "filename": "src/dawn/native/AttachmentState.cpp",
         "patchSetId": 9
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "We do have validation to ensure that all color attachment sample counts are 1 when using MSRTSS. See [2].\n\nDepth/Stencil won\u0027t be MSRTSS. As pointed out in [this comment](https://g-issues.chromium.org/issues/463893793#comment12) DS isn\u0027t resolved in WebGPU, so there\u0027s no use case for preserving single-sample DS between render passes.",
       "parentUuid": "aa22ce12_f76b97be",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f5e5307_76534de8",
+        "filename": "src/dawn/native/AttachmentState.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-16T20:00:02Z",
+      "side": 1,
+      "message": "\u003e Depth/Stencil won\u0027t be MSRTSS. As pointed out in this comment DS isn\u0027t resolved in WebGPU, so there\u0027s no use case for preserving single-sample DS between render passes.\n\nI thought Vulkan MSRTSS did apply to depth/stencil attachments? Does Dawn ensure that if msaaRenderToSingleSampledDesc-\u003eimplicitSampleCount \u003d\u003d 4 then depth/stencil texture will always have sampleCount\u003d4 so that MSRTSS never comes into play?",
+      "parentUuid": "8f37dafc_5f9c7ec3",
       "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
