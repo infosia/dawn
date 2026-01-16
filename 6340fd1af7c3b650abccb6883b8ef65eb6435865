@@ -86,6 +86,24 @@
       "parentUuid": "0c4ee6f4_a2f21860",
       "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "565ff2c2_ba305cb7",
+        "filename": "src/dawn/webgpu_kt_docs.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-16T20:19:52Z",
+      "side": 1,
+      "message": "I don\u0027t think that people are going to reliably look at the release notes before they start developing with the library. The only idea I can think of, that people would definitely see, is to have something in every documentation item. It can be very short, people just need to know before they rely on it. Like `(AI-generated doc.)`",
+      "parentUuid": "87af1b71_0716f2b9",
+      "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
