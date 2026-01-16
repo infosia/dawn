@@ -686,4 +686,31 @@ ResultOrError<ComPtr<ID3D11ComputeShader>> Device::GetOrCreateComputeShader(
         });
 }
 
+ResultOrError<ComPtr<ID3D11DeviceContext>> Device::GetOrCreateDeferredContext() {
+    return mD3D11DeferredCtxs.Use(
+        [&](auto deferredCtxs) -> ResultOrError<ComPtr<ID3D11DeviceContext>> {
+            if (!deferredCtxs->empty()) {
+                ComPtr<ID3D11DeviceContext> ctx = std::move(deferredCtxs->back());
+                deferredCtxs->pop_back();
+                return ctx;
+            }
+
+            ComPtr<ID3D11DeviceContext> deferredCtx;
+            DAWN_TRY(CheckHRESULT(mD3d11Device->CreateDeferredContext(0, &deferredCtx),
+                                  "D3D11 create deferred context"));
+            return deferredCtx;
+        });
+}
+
+ResultOrError<ComPtr<ID3D11CommandList>> Device::FinishUsingDeferredContext(
+    ComPtr<ID3D11DeviceContext>&& deferredCtx) {
+    ComPtr<ID3D11CommandList> commandList;
+    DAWN_TRY(CheckHRESULT(deferredCtx->FinishCommandList(FALSE, &commandList),
+                          "D3D11 finish command list"));
+
+    mD3D11DeferredCtxs->push_back(std::move(deferredCtx));
+
+    return commandList;
+}
+
 }  // namespace dawn::native::d3d11
