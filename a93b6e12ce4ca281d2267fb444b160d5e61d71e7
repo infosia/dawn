@@ -236,6 +236,30 @@
       },
       "revId": "a93b6e12ce4ca281d2267fb444b160d5e61d71e7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70d418df_9acc96c6",
+        "filename": "src/dawn/tests/end2end/MultithreadTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-01-16T15:26:20Z",
+      "side": 1,
+      "message": "The test passes because the data in this vector doesnt matter. Its just a test for equals later.",
+      "parentUuid": "c84af81b_5f1ef611",
+      "range": {
+        "startLine": 277,
+        "startChar": 33,
+        "endLine": 277,
+        "endChar": 42
+      },
+      "revId": "a93b6e12ce4ca281d2267fb444b160d5e61d71e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
