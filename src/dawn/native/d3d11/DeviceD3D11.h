@@ -32,6 +32,7 @@
 #include <vector>
 
 #include "dawn/common/LRUCache.h"
+#include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialQueue.h"
 #include "dawn/common/Sha3.h"
 #include "dawn/native/d3d/DeviceD3D.h"
@@ -122,6 +123,10 @@ class Device final : public d3d::Device {
     ResultOrError<ComPtr<ID3D11ComputeShader>> GetOrCreateComputeShader(
         const d3d::CompiledShader& args);
 
+    ResultOrError<ComPtr<ID3D11DeviceContext>> GetOrCreateDeferredContext();
+    ResultOrError<ComPtr<ID3D11CommandList>> FinishUsingDeferredContext(
+        ComPtr<ID3D11DeviceContext>&& deferredCtx);
+
   private:
     using Base = d3d::Device;
     Device(AdapterBase* adapter,
@@ -192,6 +197,9 @@ class Device final : public d3d::Device {
     LRUCache<Sha3_256::Output, ComPtr<ID3D11VertexShader>, Sha3CacheFuncs> mVertexShaderCache;
     LRUCache<Sha3_256::Output, ComPtr<ID3D11PixelShader>, Sha3CacheFuncs> mPixelShaderCache;
     LRUCache<Sha3_256::Output, ComPtr<ID3D11ComputeShader>, Sha3CacheFuncs> mComputeShaderCache;
+
+    // Pool of deferred contexts for multithreaded command recording.
+    MutexProtected<std::vector<ComPtr<ID3D11DeviceContext>>> mD3D11DeferredCtxs;
 };
 
 }  // namespace dawn::native::d3d11
