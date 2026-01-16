@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce34e7fe_d92d2df6",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-16T19:53:57Z",
+      "side": 1,
+      "message": "nit: Get rid of this stray newline?",
+      "fixSuggestions": [
+        {
+          "fixId": "857234c9_92365b96",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "webgpu-cts/compat-expectations.txt",
+              "range": {
+                "startLine": 338,
+                "startChar": 0,
+                "endLine": 339,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "50f70a993b9c89979ffe4223dcd1615482d4a61d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
