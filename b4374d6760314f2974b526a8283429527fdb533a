@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17ffa648_35890f06",
+        "filename": "src/tint/lang/glsl/writer/common/output.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-16T09:11:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dc501b4_c6a70a21",
+      "revId": "b4374d6760314f2974b526a8283429527fdb533a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "194ae9d7_dc7b4b99",
@@ -136,6 +154,24 @@
       "writtenOn": "2026-01-15T15:31:49Z",
       "side": 1,
       "message": "This is not the right spot for this. The Result class is used all over Tint and it doesn\u0027t make sense to pull WorkgroupInfo definition in for most of those cases.\n\nThese types of shared api headers go in `src/tint/api/common` typically in their own files.",
+      "revId": "b4374d6760314f2974b526a8283429527fdb533a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dae2d966_c6ee7e15",
+        "filename": "src/tint/utils/result.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-16T09:11:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52383f6b_dc412aac",
       "revId": "b4374d6760314f2974b526a8283429527fdb533a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
