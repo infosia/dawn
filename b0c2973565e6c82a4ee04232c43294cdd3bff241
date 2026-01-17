@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "847955ae_936daca1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-17T02:16:07Z",
+      "side": 1,
+      "message": "Sorry, apparently in splitting jj changes I messed up the Change-Ids. This is new. Ptal. \n\nThe issue was, since the code was capturing texture contents on every reference it was hiding bugs. Bug #1, no swizzle. Bug #2, wrong format (next CL). With those 2 fixed then things work again on #3 (stop the extra content capture)",
+      "revId": "b0c2973565e6c82a4ee04232c43294cdd3bff241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
