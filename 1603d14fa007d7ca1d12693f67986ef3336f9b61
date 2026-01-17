@@ -125,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aafb769d_8c1a25e6",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 3172,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-17T00:01:36Z",
+      "side": 1,
+      "message": "This does seem really closely related to `DawnLoadResolveTexture`. It seems like they are alternatives to each other, and we should only keep one in the long term? The CL that added `DawnLoadResolveStore` even said it would replace `MSAARenderToSingleSampled`: https://dawn-review.googlesource.com/c/dawn/+/185200\n\nI don\u0027t really have an opinion about which one. They honestly seem very similar and I don\u0027t know what the meaningful differences are between them. So far I\u0027ve figured out:\n- I am not sure but I suspect `DawnLoadResolveTexture` requires a multi-sample attachment to be bound, whereas `MSAARenderToSingleSampled` doesn\u0027t allow it. That could be transient, but it still has the possibility of lazy-allocating, whereas here it doesn\u0027t.\n- If `DawnLoadResolveTexture` _can_ have a multisampled attachment, but doesn\u0027t require one by using `VK_EXT_multisampled_render_to_single_sampled` internally, then it seems like a superset of `MSAARenderToSingleSampled`, which cannot. (Does it allow loading from the resolve attachment and storing the expanded result into the multi-sample attachment? That seems potentially useful if it\u0027s possible.)",
+      "parentUuid": "ab295fac_850946dd",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aa22ce12_f76b97be",
         "filename": "src/dawn/native/AttachmentState.cpp",
         "patchSetId": 9
