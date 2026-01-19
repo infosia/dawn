@@ -200,6 +200,9 @@ class PhysicalDevice : public PhysicalDeviceBase {
         InstanceBase* instance,
         const Surface* surface) const override;
 
+    std::optional<uint32_t> GetMinExplicitComputeSubgroupSize() const override;
+    std::optional<uint32_t> GetMaxExplicitComputeSubgroupSize() const override;
+
     // Used for the tests that intend to use an adapter without all features enabled.
     using PhysicalDeviceBase::SetSupportedFeaturesForTesting;
 

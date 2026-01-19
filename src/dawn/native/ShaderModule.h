@@ -178,6 +178,10 @@ ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(
     const LimitsForCompilationRequest& limits,
     const LimitsForCompilationRequest& adaterSupportedlimits);
 
+MaybeError ValidateExplicitComputeSubgroupSize(const tint::WorkgroupInfo& workgroupInfo,
+                                               std::optional<uint32_t> minExplicitSubgroupSize,
+                                               std::optional<uint32_t> maxExplicitSubgroupSize);
+
 MaybeError ValidateSubgroupMatrixConfiguration(const tint::SubgroupMatrixInfo& smInfo,
                                                const std::vector<SubgroupMatrixConfig>& cfg);
 
