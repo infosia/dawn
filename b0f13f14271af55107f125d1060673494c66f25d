@@ -16,6 +16,131 @@
       "message": "Missing tests for some stuff, but worth looking at the changes to decompose uniform access since those look like they\u0027ll be needed regardless.",
       "revId": "b0f13f14271af55107f125d1060673494c66f25d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a058e570_34cb671a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-19T19:59:02Z",
+      "side": 1,
+      "message": "A few notes, it\u0027s hard to tell what\u0027s copied from other decompose transforms and what\u0027s new for bufferView so, would be nice to split it apart as mentioned in the meeting today.",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "108472ca_6e1c5f35",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-19T19:59:02Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to add `u16` here as it isn\u0027t a WGSL type? Like, we didn\u0027t add `u8` and `i8` here either instead added custom matches below.",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5238c93_224bf81e",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-19T19:59:02Z",
+      "side": 1,
+      "message": "Is this the conglomeration of the bufferView and combining the decompose transforms?",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05ff634f_ee10ff9d",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-19T19:59:02Z",
+      "side": 1,
+      "message": "```suggestion\n        return tint::Switch(\n            type,  //\n            [\u0026](const type::Bool*) { return true; },\n            [\u0026](const type::Atomic*) { return true; },\n            [\u0026](const type::Vector* vec_ty) { return ContainsAtomicOrBool(vec_ty-\u003eType()); },\n            [\u0026](const type::Array* array_ty) {\n                return ContainsAtomicOrBool(array_ty-\u003eElemType());\n            },\n            [\u0026](const type::Struct* struct_ty) {\n                for (auto* member : struct_ty-\u003eMembers()) {\n                    if (ContainsAtomicOrBool(member-\u003eType())) {\n                        return true;\n                    }\n                }\n                return false;\n            },\n            TINT_ICE_ON_NO_MATCH);\n```\n\nI think this can just return the switch result.",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 26
+      },
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83095310_d7014433",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-19T19:59:02Z",
+      "side": 1,
+      "message": "```suggestion\n    // Returns the smallest access size (load/store) in bytes for `var` up to a max of `16` bytes.\n```",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b8e7405_cf8564e9",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-19T19:59:02Z",
+      "side": 1,
+      "message": "Oh, is `BaseType` the `ResultElementType` ? or some better name? Seeing it above I was thinking it was just the var type.",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcf8ee6e_8b512e00",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-19T19:59:02Z",
+      "side": 1,
+      "message": "So, this is just i \u003d\u003d 0?",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
