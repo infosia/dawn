@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60d83c7e_cb4622eb",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-19T08:56:43Z",
+      "side": 1,
+      "message": "If this enum name is the reason for the extra `NAME` in the X macro, IMHO we could instead just do a local type alias in the definition of `EnumToString`:\n\n```\n#define DAWN_REPLAY_ENUM_TO_STRING_MEMBER(ENUMNAME, NAME, ...) \\\n    case EnumType::NAME:                                       \\\n        return #NAME;\n\n#define DAWN_REPLAY_ENUM_TO_STRING(NAME, MEMBERS)                    \\\n    const char* EnumToString(schema::NAME value) {                   \\\n        using EnumType \u003d NAME;\n        switch (value) {                                             \\\n            MEMBERS(DAWN_REPLAY_ENUM_TO_STRING_MEMBER)               \\\n            default:                                                 \\\n                return \"UNKNOWN\";                                    \\\n        }                                                            \\\n    }                                                                \\\n    std::ostream\u0026 operator\u003c\u003c(std::ostream\u0026 os, schema::NAME value) { \\\n        return os \u003c\u003c EnumToString(value);                            \\\n    }\n```",
+      "revId": "e20b933e6a36aae10b2913b4527bb5c276ea5833",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcb03c29_882be5b9",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-19T08:56:43Z",
+      "side": 1,
+      "message": "nit: we should undef helper macros once we are done with them.",
+      "revId": "e20b933e6a36aae10b2913b4527bb5c276ea5833",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
