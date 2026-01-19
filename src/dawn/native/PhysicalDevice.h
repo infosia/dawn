@@ -133,6 +133,9 @@ class PhysicalDeviceBase : public RefCounted {
         InstanceBase* instance,
         const Surface* surface) const = 0;
 
+    virtual std::optional<uint32_t> GetMinExplicitComputeSubgroupSize() const;
+    virtual std::optional<uint32_t> GetMaxExplicitComputeSubgroupSize() const;
+
   protected:
     uint32_t mVendorId = 0xFFFFFFFF;
     std::string mVendorName;

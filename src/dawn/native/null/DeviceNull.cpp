@@ -130,8 +130,10 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
     }
     if (auto* explicitComputeSubgroupSizeConfigs =
             info.Get<AdapterPropertiesExplicitComputeSubgroupSizeConfigs>()) {
-        explicitComputeSubgroupSizeConfigs->minExplicitComputeSubgroupSize = 4;
-        explicitComputeSubgroupSizeConfigs->maxExplicitComputeSubgroupSize = 128;
+        explicitComputeSubgroupSizeConfigs->minExplicitComputeSubgroupSize =
+            GetMinExplicitComputeSubgroupSize().value();
+        explicitComputeSubgroupSizeConfigs->maxExplicitComputeSubgroupSize =
+            GetMaxExplicitComputeSubgroupSize().value();
     }
 }
 
@@ -139,6 +141,14 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
     wgpu::FeatureName feature,
     const TogglesState& toggles) const {
     return {};
+}
+
+std::optional<uint32_t> PhysicalDevice::GetMinExplicitComputeSubgroupSize() const {
+    return 4;
+}
+
+std::optional<uint32_t> PhysicalDevice::GetMaxExplicitComputeSubgroupSize() const {
+    return 128;
 }
 
 class Backend : public BackendConnection {
@@ -522,6 +532,11 @@ MaybeError ComputePipeline::InitializeImpl() {
     DAWN_TRY_ASSIGN(_, ValidateComputeStageWorkgroupSize(
                            tintResult->workgroup_info, computeStage.metadata->usesSubgroupMatrix,
                            maxSubgroupSize, limits, adapterSupportedLimits));
+
+    DAWN_TRY(ValidateExplicitComputeSubgroupSize(
+        tintResult->workgroup_info,
+        GetDevice()->GetAdapter()->GetPhysicalDevice()->GetMinExplicitComputeSubgroupSize(),
+        GetDevice()->GetAdapter()->GetPhysicalDevice()->GetMaxExplicitComputeSubgroupSize()));
 
     return {};
 }
