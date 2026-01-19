@@ -122,6 +122,24 @@
       "parentUuid": "565ff2c2_ba305cb7",
       "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8457e542_de128e43",
+        "filename": "src/dawn/webgpu_kt_docs.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-01-19T12:47:32Z",
+      "side": 1,
+      "message": "+1, that sounds very very noisy to repeat that text on every kdoc string.  What would the goal be of adding such text?  Purely to inform users that it may be wrong?  (Because the same could be said of human-generated docs.)\n\nFWIW, it\u0027s been my experience that users do regularly read the AndroidX Release Notes page of the library (https://developer.android.com/jetpack/androidx/releases/webgpu) because fetching library updates are typically chosen manually, not triggered automatically.  That\u0027s where we\u0027ll be putting the commit hash, for instance.  \n\nIMHO, adding \"*Note*: Documentation in this library release has been generated with Google Gemini and may contain errors.\" to the release notes of each library update would be sufficient and less obtrusive.",
+      "parentUuid": "eaaf5778_30084fbb",
+      "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
