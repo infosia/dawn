@@ -20,6 +20,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a482b02c_71e0be32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-19T23:18:20Z",
+      "side": 1,
+      "message": "I think I\u0027ve forgotten the reasons for why the store type of the swizzle view being the \"to\" vector would make things harder. I noted a couple of the the places where I think that would make things simpler, but I couldn\u0027t immediately see where that would get more difficult.\n\nHappy to discuss (again) in person tomorrow if that\u0027s easier (and sorry for forgetting).",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de4fce61_7306be0b",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-19T23:18:20Z",
+      "side": 1,
+      "message": "Note to myself: IIUC this would be simpler if the store type of the swizzle view was the \"to\" vector type.",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "90a44341_29503289",
         "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
         "patchSetId": 1
@@ -94,6 +128,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b9b5d2d2_e75acd13",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1913,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-19T23:18:20Z",
+      "side": 1,
+      "message": "Similar to another comment I left down below - this seems strange because I\u0027d expect this LHS expression to still be a reference type:\n```\nv.yx[0] \u003d 42;\n```",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a6717944_0b22e66b",
         "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
         "patchSetId": 1
@@ -111,6 +162,64 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "88ee4d6d_b4540042",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1969,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-19T23:18:20Z",
+      "side": 1,
+      "message": "Note for myself: IIUC these are things that would all go away if the store type was the \"to\" vector instead of the element type.",
+      "parentUuid": "a6717944_0b22e66b",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3811bddf_e80a743e",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3595,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-19T23:18:20Z",
+      "side": 1,
+      "message": "This doesn\u0027t fit my mental model of how this works, but maybe that\u0027s an issue on my end.\n\nWhen we start to support swizzle-assign, this feels like it\u0027d cause problems because we\u0027ve prematurely stripped away the memory view. e.g.\n```\nv.yx.x \u003d 42;\n```\nThe type of the LHS should still be a reference, but I think with this special case that would not be true.",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "908299b7_48bc8c6b",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3607,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-19T23:18:20Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me why we have to do this ahead of time. Why can\u0027t this be done as part of `Resolver::Load()`, where you added the special-case to avoid doing this?",
+      "range": {
+        "startLine": 3605,
+        "startChar": 0,
+        "endLine": 3607,
+        "endChar": 41
+      },
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "85cbff0e_d5865303",
         "filename": "src/tint/lang/wgsl/resolver/resolver_test.cc",
         "patchSetId": 1
@@ -122,6 +231,23 @@
       "writtenOn": "2026-01-19T22:08:25Z",
       "side": 1,
       "message": "could also use DeepestElement here if you want.",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2a4399c_a1576731",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-19T23:18:20Z",
+      "side": 1,
+      "message": "Why did you need to add this here? A SwizzleView is a memory view but shouldn\u0027t itself be storable.",
       "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
