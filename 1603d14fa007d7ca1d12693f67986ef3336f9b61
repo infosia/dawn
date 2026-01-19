@@ -179,6 +179,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c613f5c4_19ce88f1",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 3172,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-19T15:42:28Z",
+      "side": 1,
+      "message": "\u003e To the best of my knowledge this is what happened:\n\nThis is a great summary, thank you!\n\n\u003e There is a pretty good design doc for the two Dawn extension APIs already. It doesn\u0027t cover the inter dependencies between various Vulkan extensions though. Do you want me to start a new one about that?\n\nIt\u0027s probably more worth editing Quyen\u0027s original doc with more information and history of what we tried (based on your list above).\n\n\u003e In Dawn/Vulkan if there are devices that support dynamic rendering but not VK_EXT_multisampled_render_to_single_sampled we\u0027d have to gate dynamic rendering on VK_KHR_dynamic_rendering_local_read. That could be used to implement the same subpass unresolve logic without using subpasses.\n\nLooking at VK_KHR_dynamic_rendering again, it seems that if the resolve attachment are in the layout \"VK_IMAGE_LAYOUT_GENERAL\", then we should be able to read from them in the \"dynamic rendering\", while still resolving to them at the end of the \"dynamic rendering\". This should let us use the emulation of the feature without the need for `VK_KHR_dynamic_rendering_local_read`.",
+      "parentUuid": "8e814a2d_5e4fb917",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aa22ce12_f76b97be",
         "filename": "src/dawn/native/AttachmentState.cpp",
         "patchSetId": 9
