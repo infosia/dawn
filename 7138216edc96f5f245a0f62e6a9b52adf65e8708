@@ -33,6 +33,24 @@
       "message": "The inversion of what is the X macro which first is `DAWN_REPLAY_ENUM` and then `DAWN_REPLAY_ENUM_MEMBER` is a bit confusing. Even with looking at the \"add enum to string\" CL it\u0027s not clear that there is value in having a separate `DAWN_REPLAY_OBJECT_TYPES_ENUM` that sets up the call with the object types.\n\nIt was also a bit confusing that NAME is just passed for later `DAWN_REPLAY_ENUM_VALUE_MEMBER` as `ENUMNAME` but then not used? Even if it is for string building later, IMHO we could concat at runtime or constexpr.",
       "revId": "7138216edc96f5f245a0f62e6a9b52adf65e8708",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41c62163_22ad8e98",
+        "filename": "src/dawn/serialization/Schema.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-19T09:18:11Z",
+      "side": 1,
+      "message": "the point of `DAWN_REPLAY_OBJECT_TYPES_ENUM` is to associate `ObjectType` with `DAWN_REPLAY_OBJECT_TYPES`. Other files should not have to repeat that association. I\u0027m happy to do any suggested solution. I\u0027d like to avoid having to remember which type to use with which set of enums.\n\n\u003e Even if it is for string building later, IMHO we could concat at runtime or constexpr.\n\nCan you give an example? Like generate the enum class and the enum to string function (see the other CL) with your preferred solution?",
+      "parentUuid": "50fd543a_27b830f9",
+      "revId": "7138216edc96f5f245a0f62e6a9b52adf65e8708",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
