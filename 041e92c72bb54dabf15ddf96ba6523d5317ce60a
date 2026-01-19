@@ -16,6 +16,24 @@
       "message": "For headers in `api/common/` I believe we just include the header directly from Dawn instead of relying on a transitive include like this.",
       "revId": "041e92c72bb54dabf15ddf96ba6523d5317ce60a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84531032_a6f17283",
+        "filename": "src/tint/api/tint.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-19T05:10:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b21eb9e8_0625968a",
+      "revId": "041e92c72bb54dabf15ddf96ba6523d5317ce60a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

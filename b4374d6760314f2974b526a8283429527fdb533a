@@ -141,6 +141,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ea12968_f06fd3d6",
+        "filename": "src/tint/lang/hlsl/writer/common/output.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-19T05:10:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "194ae9d7_dc7b4b99",
+      "revId": "b4374d6760314f2974b526a8283429527fdb533a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "52383f6b_dc412aac",
