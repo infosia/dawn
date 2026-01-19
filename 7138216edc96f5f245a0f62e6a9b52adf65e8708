@@ -51,6 +51,24 @@
       "parentUuid": "50fd543a_27b830f9",
       "revId": "7138216edc96f5f245a0f62e6a9b52adf65e8708",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca4a7b8e_c313aea2",
+        "filename": "src/dawn/serialization/Schema.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-19T09:24:16Z",
+      "side": 1,
+      "message": "Yes I commented on the other CL as well (we had a race condition).\n\n\u003e the point of DAWN_REPLAY_OBJECT_TYPES_ENUM is to associate ObjectType with DAWN_REPLAY_OBJECT_TYPES\n\nThen maybe we should have a second X macro that\u0027s `DAWN_REPLAY_FOREACH_ENUM()`? It makes the direction of the expansion always the same (just two-level) instead of what feels like an inversion of the direction of the expansion here.\n\nWe have something like this a bit in `Limits.cpp` (though that file is arguably very hard to read as well).",
+      "parentUuid": "41c62163_22ad8e98",
+      "revId": "7138216edc96f5f245a0f62e6a9b52adf65e8708",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
