@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "884f873f_c076c4d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-19T22:08:25Z",
+      "side": 1,
+      "message": "```suggestion\nsem node types, which are then lowered in ProgramToIR to the expected\n```",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90a44341_29503289",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-19T22:08:25Z",
+      "side": 1,
+      "message": "Can you replace `obj` here and remove the duplicated `Swizzle`?\n\n```suggestion\n                        if (obj-\u003eType()-\u003eIs\u003ccore::type::MemoryView\u003e()) {\n                            auto* load \u003d impl.builder_.Load(obj);\n                            impl.current_block_-\u003eAppend(load);\n                            obj \u003d load-\u003eResult();\n                        }\n                        val \u003d impl.builder_.Swizzle(ty, obj, std::move(indices));\n```\n\n(something like the above?)",
+      "range": {
+        "startLine": 900,
+        "startChar": 0,
+        "endLine": 906,
+        "endChar": 25
+      },
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18b1346b_23d99e5b",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-19T22:08:25Z",
+      "side": 1,
+      "message": "We only need to do the `RemapOverrideSizedArrayIfNeeded` in the case where we _aren\u0027t_ `SwizzleView` below. So, can this change to something like `type::Type* store_ty \u003d nullptr`; then assign in the else to the remapped value?",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff09aa38_594cb346",
+        "filename": "src/tint/lang/wgsl/resolver/load_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-19T22:08:25Z",
+      "side": 1,
+      "message": "Could just use `DeepestElement` here if you want\n\n```suggestion\n    EXPECT_TRUE(load-\u003eType()-\u003eDeepestElement()-\u003eIs\u003ccore::type::I32\u003e());\n```",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83282109_7952cb1f",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-19T22:08:25Z",
+      "side": 1,
+      "message": "This one is `FromSize` because you\u0027re, effectively, pretending to be the originating variable? Is that what we want here (it looks like it doesn\u0027t really matter as we never use the size just the type, but seems odd?)",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6717944_0b22e66b",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1969,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-19T22:08:25Z",
+      "side": 1,
+      "message": "Should we add a `mk_swizzle_result(swizzle)` method since we do this create 3-4 times?",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85cbff0e_d5865303",
+        "filename": "src/tint/lang/wgsl/resolver/resolver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-19T22:08:25Z",
+      "side": 1,
+      "message": "could also use DeepestElement here if you want.",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
