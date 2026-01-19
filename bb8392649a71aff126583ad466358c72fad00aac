@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a356b8ea_eddfe8ee",
+        "filename": "src/tint/lang/core/intrinsic/table.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-19T19:37:19Z",
+      "side": 1,
+      "message": "Should `is_const` not be checked as well?",
+      "revId": "bb8392649a71aff126583ad466358c72fad00aac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
