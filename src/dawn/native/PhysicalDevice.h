@@ -133,6 +133,14 @@ class PhysicalDeviceBase : public RefCounted {
         InstanceBase* instance,
         const Surface* surface) const = 0;
 
+    // Get minimum value that can be used as WGSL attribute `@subgroup_size` or return 0 if it is
+    // not supported.
+    virtual uint32_t GetMinExplicitComputeSubgroupSize() const;
+
+    // Get maximum value that can be used as WGSL attribute `@subgroup_size` or return 0 if it is
+    // not supported.
+    virtual uint32_t GetMaxExplicitComputeSubgroupSize() const;
+
   protected:
     uint32_t mVendorId = 0xFFFFFFFF;
     std::string mVendorName;
