@@ -161,6 +161,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8e814a2d_5e4fb917",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 3172,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-19T14:56:27Z",
+      "side": 1,
+      "message": "There is a [design doc](https://docs.google.com/document/d/1JV9re6BvgPNuISvMwfc4-MvG5sH9jisDBxt6RfIxzXA/edit?tab\u003dt.0#heading\u003dh.qo55ilhm4mgu) that Quyen wrote for MSRTSS/LoadResolveTexture originally. It has the most detailed information on the two dawn features. For this recent Vulkan work, most discussion was in https://crbug.com/463893793#comment3 and later comments. We did discuss it in a Android/Graphite meeting last year although I didn\u0027t take detailed enough notes.\n\nTo the best of my knowledge this is what happened:\n1. Quyen wrote the doc and got feedback to implement the MSRTSS like Dawn extension for Metal. \n2. Quyen implemented `Features::MSAARenderToSingleSampled` in Dawn/Metal. There is no native MSRTSS in Metal so Dawn had to internally allocate a transient multi sampled texture and do the unresolve/resolve from it.\n3. That internally allocation turned out to be too expensive. Quyen then implemented `Features::DawnLoadResolveTexture` in the Metal backend. The Metal `Features::MSAARenderToSingleSampled` implementation was removed in the process so the feature was dead but frontend structs/validation still exist.\n4. `Features::DawnLoadResolveTexture` was implemented in the Vulkan backend. It doesn\u0027t use VK_EXT_multisampled_render_to_single_sampled since that isn\u0027t supported everywhere. Instead it adds a subpass to handle the [\"unresolve\"](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp;l\u003d263-288;drc\u003de8e3490269a003ae1f1e92c9ae0ae30cdbdd3de0) from single sampled texture into mutli sampled render target.\n5. A year or so later we started discussing modern extensions to improve Vulkan performance. The Vulkan dynamic rendering extension doesn\u0027t have subpass support so dawn needs some other way to implement \"unresolve\". Using `VK_EXT_multisampled_render_to_single_sampled` in the Vulkan backend handles that automatically. That leaves a question of what frontend interface we want to use.\n6. I started experimenting with `MSAARenderToSingleSampled` in Vulkan. We discussed two frontend approaches in that bug. Brandon took over implementation.\n\n\u003e Kyle, did you have a previous design doc for this somewhere or should we start a new one?\n\nThere is a pretty good design doc for the two Dawn extension APIs already. It doesn\u0027t cover the inter dependencies between various Vulkan extensions though. Do you want me to start a new one about that?\n\n\u003e From all the above, it seems that we could have a DawnLoadResolveTexture with expand rect that requires the MSAA attachments are transient, and automatically uses MSRTSS if available? What prevented us from going this direction in the first place?\n\nI don\u0027t think anything stops us from using this approach. Michael brought up that allocating a lazily allocated + protected texture is likely not possible. That isn\u0027t a blocker today since dawn doesn\u0027t support protected content anyways.\n\n\u003e I\u0027m not sure what we do on Vulkan withouht MSRTSS.\n\nWe\u0027d still have to use the existing `DawnLoadResolveTexture` if `MSAARenderToSingleSampled` isn\u0027t supported. Skia is going to have to continue to use `DawnLoadResolveTexture` for other Dawn backends anyways.\n\nIn Dawn/Vulkan if there are devices that support dynamic rendering but not `VK_EXT_multisampled_render_to_single_sampled` we\u0027d have to gate dynamic rendering on `VK_KHR_dynamic_rendering_local_read`. That could be used to implement the same subpass unresolve logic without using subpasses.",
+      "parentUuid": "f56c23aa_dce3ade3",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aa22ce12_f76b97be",
         "filename": "src/dawn/native/AttachmentState.cpp",
         "patchSetId": 9
