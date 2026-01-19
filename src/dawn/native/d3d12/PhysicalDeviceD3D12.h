@@ -58,6 +58,9 @@ class PhysicalDevice : public d3d::PhysicalDevice {
 
     bool SupportsBufferMapExtendedUsages() const;
 
+    uint32_t GetMinExplicitComputeSubgroupSize() const override;
+    uint32_t GetMaxExplicitComputeSubgroupSize() const override;
+
   private:
     using Base = d3d::PhysicalDevice;
 
