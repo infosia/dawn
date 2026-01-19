@@ -104,6 +104,24 @@
       "parentUuid": "87af1b71_0716f2b9",
       "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eaaf5778_30084fbb",
+        "filename": "src/dawn/webgpu_kt_docs.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-01-19T10:20:24Z",
+      "side": 1,
+      "message": "Thanks, Kai. I understand the concern about visibility, we definitely want users to be aware of the source.\n\nHowever, I\u0027m concerned that appending \"(AI-generated doc.)\" or something similar to every single documentation item will create a lot of noise and redundancy as there are around ~1000 docs. And also, that the same doc will show up on the https://developer.android.com/reference/kotlin/androidx/webgpu/package-summary page as well.",
+      "parentUuid": "565ff2c2_ba305cb7",
+      "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
