@@ -973,4 +973,12 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
     }
 }
 
+uint32_t PhysicalDevice::GetMinExplicitComputeSubgroupSize() const {
+    return mDeviceInfo.waveLaneCountMin;
+}
+
+uint32_t PhysicalDevice::GetMaxExplicitComputeSubgroupSize() const {
+    return mDeviceInfo.waveLaneCountMax;
+}
+
 }  // namespace dawn::native::d3d12

@@ -80,6 +80,9 @@ class PhysicalDevice : public PhysicalDeviceBase {
         const Surface* surface) const override;
     const AHBFunctions* GetOrLoadAHBFunctions();
 
+    uint32_t GetMinExplicitComputeSubgroupSize() const override;
+    uint32_t GetMaxExplicitComputeSubgroupSize() const override;
+
   private:
     MaybeError InitializeImpl() override;
     void InitializeSupportedFeaturesImpl() override;

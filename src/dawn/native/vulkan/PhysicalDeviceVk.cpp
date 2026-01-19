@@ -1618,4 +1618,12 @@ void PhysicalDevice::SetCoreNotSupported(std::unique_ptr<ErrorData> error) {
     mCoreError = std::move(error);
 }
 
+uint32_t PhysicalDevice::GetMinExplicitComputeSubgroupSize() const {
+    return mDeviceInfo.subgroupSizeControlProperties.minSubgroupSize;
+}
+
+uint32_t PhysicalDevice::GetMaxExplicitComputeSubgroupSize() const {
+    return mDeviceInfo.subgroupSizeControlProperties.maxSubgroupSize;
+}
+
 }  // namespace dawn::native::vulkan
