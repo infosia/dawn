@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3627587f_e0041b24",
+        "filename": "src/dawn/replay/ReplayImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-19T08:52:04Z",
+      "side": 1,
+      "message": "What will this function be used for? Given it is in O(object_count) it\u0027s likely to introduce bad performance in the future. What about having a second map from object pointer to objectId?",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 11
+      },
+      "revId": "b49e15b61ae5c6f60c1cbccce43d18d746cf8591",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bceb3a22_407e92bc",
+        "filename": "src/dawn/serialization/Schema.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-19T08:52:04Z",
+      "side": 1,
+      "message": "nit: this formatting should have been in the previous CL",
+      "revId": "b49e15b61ae5c6f60c1cbccce43d18d746cf8591",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
