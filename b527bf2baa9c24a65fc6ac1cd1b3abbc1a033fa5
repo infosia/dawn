@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ed8c40d_fd6f57c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-19T16:16:44Z",
+      "side": 1,
+      "message": "Git did not handle the E2E updates well so I split this out to its own CL to make the other ones easier to review.\n\nThe only manual changes here are the .def updates.",
+      "revId": "b527bf2baa9c24a65fc6ac1cd1b3abbc1a033fa5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
