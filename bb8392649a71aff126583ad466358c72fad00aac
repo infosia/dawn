@@ -34,6 +34,24 @@
       "parentUuid": "a356b8ea_eddfe8ee",
       "revId": "bb8392649a71aff126583ad466358c72fad00aac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96cc0482_78737f1a",
+        "filename": "src/tint/lang/core/intrinsic/table.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-19T20:02:42Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a356b8ea_eddfe8ee",
+      "revId": "bb8392649a71aff126583ad466358c72fad00aac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
