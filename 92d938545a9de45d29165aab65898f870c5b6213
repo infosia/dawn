@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d86582ad_d996a579",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-19T09:13:37Z",
+      "side": 1,
+      "message": "Maybe mention that it allows validation for that to pass as well.\n\nCan we 1) double check that there is a validation test that will prevent doing the copy without this toggle and 2) add a minimal test (copying of a 1x1 d24 texture) that this toggle works?",
+      "revId": "92d938545a9de45d29165aab65898f870c5b6213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0edbd9fe_7d2a5bf5",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-19T09:13:37Z",
+      "side": 1,
+      "message": "nit: leftover",
+      "revId": "92d938545a9de45d29165aab65898f870c5b6213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4b21ff1_139c0697",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-19T09:13:37Z",
+      "side": 1,
+      "message": "I assume the changes here are the extra indentation due to the looping on aspects and the replacement of the latter part of the inner loop with calls to helper functions?",
+      "revId": "92d938545a9de45d29165aab65898f870c5b6213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "753544c2_e0f6c83c",
+        "filename": "src/dawn/replay/BlitBufferToDepthTexture.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-19T09:13:37Z",
+      "side": 1,
+      "message": "```suggestion\nconstexpr std::string_view kShaderSrc \u003d R\"(\n```",
+      "revId": "92d938545a9de45d29165aab65898f870c5b6213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94e09daa_d4d7abbd",
+        "filename": "src/dawn/replay/BlitBufferToDepthTexture.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-19T09:13:37Z",
+      "side": 1,
+      "message": "nit: this could use immediates! (or do we test on GL as well for now?)",
+      "revId": "92d938545a9de45d29165aab65898f870c5b6213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "705d0d7b_d136bb27",
+        "filename": "src/dawn/replay/BlitBufferToDepthTexture.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-19T09:13:37Z",
+      "side": 1,
+      "message": "nit: stale comment from copypaste?",
+      "revId": "92d938545a9de45d29165aab65898f870c5b6213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d03b22c_d3667302",
+        "filename": "src/dawn/replay/BlitBufferToDepthTexture.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-19T09:13:37Z",
+      "side": 1,
+      "message": "nit: GetBindGroupLayout should work and save some setup code.",
+      "revId": "92d938545a9de45d29165aab65898f870c5b6213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eefc1f61_4ae150a8",
+        "filename": "src/dawn/replay/BlitBufferToDepthTexture.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-19T09:13:37Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "92d938545a9de45d29165aab65898f870c5b6213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
