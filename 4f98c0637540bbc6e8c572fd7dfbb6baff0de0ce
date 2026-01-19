@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "968289fb_8ed9eacb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-19T20:12:38Z",
+      "side": 1,
+      "message": "Pushed a CL that does exactly this.",
+      "parentUuid": "7b06fa02_08d275ce",
+      "revId": "4f98c0637540bbc6e8c572fd7dfbb6baff0de0ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "224707f2_cbd5e2ed",
         "filename": "src/dawn/tests/end2end/DeviceInitializationTests.cpp",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "writtenOn": "2026-01-16T20:03:53Z",
       "side": 1,
       "message": "Does this parameterization actually do anything? This test seems to make everything from scratch, not use the device from the fixture, so I think it has no effect.\n\nI think maybe the `EnumerateAdapters` loop needs to be where the skipping logic happens.",
+      "revId": "4f98c0637540bbc6e8c572fd7dfbb6baff0de0ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b0fc336_fb3fd05a",
+        "filename": "src/dawn/tests/end2end/DeviceInitializationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-19T20:12:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "224707f2_cbd5e2ed",
       "revId": "4f98c0637540bbc6e8c572fd7dfbb6baff0de0ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
