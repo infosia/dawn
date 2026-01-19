@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f0d7d244_4be088e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-19T20:28:42Z",
+      "side": 1,
+      "message": "Hmm, so we can\u0027t use `DAWN_SUPPRESS_TEST_IF` unless we\u0027re a DawnTest as the macro calls `RunSuppressedTests()`. We could use `DAWN_TEST_UNSUPPORTED_IF` which works in all tests. Is that okay?",
+      "parentUuid": "968289fb_8ed9eacb",
+      "revId": "4f98c0637540bbc6e8c572fd7dfbb6baff0de0ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "224707f2_cbd5e2ed",
         "filename": "src/dawn/tests/end2end/DeviceInitializationTests.cpp",
         "patchSetId": 2
