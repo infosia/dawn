@@ -143,6 +143,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f56c23aa_dce3ade3",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 3172,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-19T10:05:25Z",
+      "side": 1,
+      "message": "My recollection from end of last year (but I tried very hard to find the thread / minutes, but repeatedly couldn\u0027t find them) is that we agreed on having two different extension for this kind of functionality. The reason I\u0027m pretty sure about it is that I really dislike having two APIs for the same thing, but in this case there was no other solution. In all the approaches we take, there are the following constraints:\n\n - Skia needs MSRTSS or LoadResolveTexture with expand rect, because when it restarts rendering on an attachment, it knows a more precise bounding box of what will be touched, and we don\u0027t want to expand (in memory or in tile) outside of that rect. MSRTSS makes the hardware do it for us (in the \"tile load shader\") while LoadResolveTexture does it with the expand rect.\n - Skia was concerned about the cost of allocating transient textures automatically in Dawn: even if they are supposed to be cheap, they were still seeing a cost and wanted to cache on the Skia side (but data was from a long time ago and maybe stale?)\n - We need to run on D3D11 and Metal non-tilers, Metal tilers, Vulkan with MSRTSS. I\u0027m not sure what we do on Vulkan withouht MSRTSS.\n\nKyle, did you have a previous design doc for this somewhere or should we start a new one? There is framebuffer fetch that has a design doc but it\u0027s an unrelated feature. Between all the discussion in the various issues, on code reviews, in meetings etc, we are all getting lost right now and would need single source of truth linked from the dawn extensions docs.\n\nFrom all the above, it seems that we could have a `DawnLoadResolveTexture` with expand rect that requires the MSAA attachments are transient, and automatically uses MSRTSS if available? What prevented us from going this direction in the first place?\n\nBrandon can you drive discussions to reach some form of resolution on what approach we should take (if there\u0027s multiple extensions or a single one etc).\n\nIn the meantime I think it is fine to land this CL for experimentation in Graphite Vulkan and we can always rework the code later if we choose to have a single extension.",
+      "parentUuid": "aafb769d_8c1a25e6",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aa22ce12_f76b97be",
         "filename": "src/dawn/native/AttachmentState.cpp",
         "patchSetId": 9
