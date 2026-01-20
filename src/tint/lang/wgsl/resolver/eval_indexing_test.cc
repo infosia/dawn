@@ -210,6 +210,28 @@ TEST_F(ConstEvalTest, Vec3_Swizzle_Chain) {
     EXPECT_EQ(sem->ConstantValue()->ValueAs<i32>(), 2_i);
 }
 
+TEST_F(ConstEvalTest, Vec3_Swizzle_Index) {
+    auto* expr = IndexAccessor(MemberAccessor(Call<vec3<i32>>(1_i, 2_i, 3_i), "xy"), 0_i);
+    WrapInFunction(expr);
+
+    EXPECT_TRUE(r()->Resolve()) << r()->error();
+
+    auto* sem = Sem().Get(expr);
+    ASSERT_NE(sem, nullptr);
+    ASSERT_TRUE(sem->Type()->Is<core::type::I32>());
+    EXPECT_TYPE(sem->ConstantValue()->Type(), sem->Type());
+    EXPECT_EQ(sem->ConstantValue()->ValueAs<i32>(), 1_i);
+}
+
+TEST_F(ConstEvalTest, Vec3_Swizzle_Index_OOB) {
+    auto* expr = IndexAccessor(MemberAccessor(Call<vec3<i32>>(1_i, 2_i, 3_i), "xy"),
+                               Expr(Source{{12, 34}}, 3_i));
+    WrapInFunction(expr);
+
+    EXPECT_FALSE(r()->Resolve()) << r()->error();
+    EXPECT_EQ(r()->error(), "12:34 error: index 3 out of bounds [0..1]");
+}
+
 TEST_F(ConstEvalTest, Mat3x2_Index) {
     auto* expr =
         IndexAccessor(Call<mat3x2<f32>>(Call<vec2<f32>>(1._a, 2._a), Call<vec2<f32>>(3._a, 4._a),
