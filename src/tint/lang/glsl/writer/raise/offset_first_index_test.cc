@@ -31,6 +31,7 @@
 #include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/ir/transform/helper_test.h"
 #include "src/tint/lang/core/number.h"
+#include "src/tint/lang/glsl/writer/raise/add_immediate_vars.h"
 
 using namespace tint::core::fluent_types;     // NOLINT
 using namespace tint::core::number_suffixes;  // NOLINT
@@ -38,7 +39,12 @@ using namespace tint::core::number_suffixes;  // NOLINT
 namespace tint::glsl::writer::raise {
 namespace {
 
-using GlslWriter_OffsetFirstIndexTest = core::ir::transform::TransformTest;
+class GlslWriter_OffsetFirstIndexTest : public core::ir::transform::TransformTest {
+  public:
+    GlslWriter_OffsetFirstIndexTest() {
+        capabilities.Add(core::ir::Capability::kAllowMultipleImmediateVars);
+    }
+};
 
 TEST_F(GlslWriter_OffsetFirstIndexTest, NoModify_NoBuiltins) {
     auto* func = b.Function("foo", ty.vec4f(), core::ir::Function::PipelineStage::kVertex);
@@ -58,13 +64,13 @@ TEST_F(GlslWriter_OffsetFirstIndexTest, NoModify_NoBuiltins) {
 
     auto* expect = src;
 
-    core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
-    auto immediate_data = PrepareImmediateData(mod, immediate_data_config);
-    EXPECT_EQ(immediate_data, Success);
+    core::ir::transform::AddImmediateVarsConfig immediate_vars_config;
+    auto immediate_vars = AddImmediateVars(mod, immediate_vars_config);
+    EXPECT_EQ(immediate_vars, Success);
 
-    OffsetFirstIndexConfig config{immediate_data.Get()};
-    config.first_vertex_offset = 4;
-    config.first_instance_offset = 8;
+    OffsetFirstIndexConfig config;
+    config.first_vertex = immediate_vars->first_vertex;
+    config.first_instance = immediate_vars->first_instance;
     Run(OffsetFirstIndex, config);
     EXPECT_EQ(expect, str());
 }
@@ -108,11 +114,11 @@ $B1: {  # root
 
     auto* expect = src;
 
-    core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
-    auto immediate_data = PrepareImmediateData(mod, immediate_data_config);
-    EXPECT_EQ(immediate_data, Success);
+    core::ir::transform::AddImmediateVarsConfig immediate_vars_config;
+    auto immediate_vars = AddImmediateVars(mod, immediate_vars_config);
+    EXPECT_EQ(immediate_vars, Success);
 
-    OffsetFirstIndexConfig config{immediate_data.Get()};
+    OffsetFirstIndexConfig config{};
     Run(OffsetFirstIndex, config);
     EXPECT_EQ(expect, str());
 }
@@ -155,39 +161,32 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_immediate_data_struct = struct @align(4), @block {
-  first_vertex:u32 @offset(4)
-}
-
 $B1: {  # root
   %vertex_index:ptr<__in, u32, read> = var undef @builtin(vertex_index)
   %instance_index:ptr<__in, u32, read> = var undef @builtin(instance_index)
-  %tint_immediate_data:ptr<immediate, tint_immediate_data_struct, read> = var undef
+  %tint_first_vertex:ptr<immediate, u32, read> = var undef @location(1)
 }
 
 %foo = @vertex func():vec4<f32> [@position] {
   $B2: {
     %5:u32 = load %vertex_index
-    %6:ptr<immediate, u32, read> = access %tint_immediate_data, 0u
-    %7:u32 = load %6
-    %8:u32 = add %5, %7
-    %9:u32 = load %instance_index
-    %10:u32 = add %8, %9
-    %add:u32 = let %10
+    %6:u32 = load %tint_first_vertex
+    %7:u32 = add %5, %6
+    %8:u32 = load %instance_index
+    %9:u32 = add %7, %8
+    %add:u32 = let %9
     ret vec4<f32>(0.0f)
   }
 }
 )";
 
-    core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
-    ASSERT_EQ(immediate_data_config.AddInternalImmediateData(4, mod.symbols.New("first_vertex"),
-                                                             ty.u32()),
-              Success);
-    auto immediate_data = PrepareImmediateData(mod, immediate_data_config);
-    EXPECT_EQ(immediate_data, Success);
+    core::ir::transform::AddImmediateVarsConfig immediate_vars_config;
+    immediate_vars_config.first_vertex_location = 1;
+    auto immediate_vars = AddImmediateVars(mod, immediate_vars_config);
+    EXPECT_EQ(immediate_vars, Success);
 
-    OffsetFirstIndexConfig config{immediate_data.Get()};
-    config.first_vertex_offset = 4;
+    OffsetFirstIndexConfig config{};
+    config.first_vertex = immediate_vars->first_vertex;
     Run(OffsetFirstIndex, config);
     EXPECT_EQ(expect, str());
 }
@@ -230,39 +229,32 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_immediate_data_struct = struct @align(4), @block {
-  first_instance:u32 @offset(4)
-}
-
 $B1: {  # root
   %vertex_index:ptr<__in, u32, read> = var undef @builtin(vertex_index)
   %instance_index:ptr<__in, u32, read> = var undef @builtin(instance_index)
-  %tint_immediate_data:ptr<immediate, tint_immediate_data_struct, read> = var undef
+  %tint_first_instance:ptr<immediate, u32, read> = var undef @location(1)
 }
 
 %foo = @vertex func():vec4<f32> [@position] {
   $B2: {
     %5:u32 = load %vertex_index
     %6:u32 = load %instance_index
-    %7:ptr<immediate, u32, read> = access %tint_immediate_data, 0u
-    %8:u32 = load %7
-    %9:u32 = add %6, %8
-    %10:u32 = add %5, %9
-    %add:u32 = let %10
+    %7:u32 = load %tint_first_instance
+    %8:u32 = add %6, %7
+    %9:u32 = add %5, %8
+    %add:u32 = let %9
     ret vec4<f32>(0.0f)
   }
 }
 )";
 
-    core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
-    ASSERT_EQ(immediate_data_config.AddInternalImmediateData(4, mod.symbols.New("first_instance"),
-                                                             ty.u32()),
-              Success);
-    auto immediate_data = PrepareImmediateData(mod, immediate_data_config);
-    EXPECT_EQ(immediate_data, Success);
+    core::ir::transform::AddImmediateVarsConfig immediate_vars_config;
+    immediate_vars_config.first_instance_location = 1;
+    auto immediate_vars = AddImmediateVars(mod, immediate_vars_config);
+    EXPECT_EQ(immediate_vars, Success);
 
-    OffsetFirstIndexConfig config{immediate_data.Get()};
-    config.first_instance_offset = 4;
+    OffsetFirstIndexConfig config{};
+    config.first_instance = immediate_vars->first_instance;
     Run(OffsetFirstIndex, config);
     EXPECT_EQ(expect, str());
 }
@@ -305,47 +297,37 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_immediate_data_struct = struct @align(4), @block {
-  first_vertex:u32 @offset(4)
-  first_instance:u32 @offset(8)
-}
-
 $B1: {  # root
   %vertex_index:ptr<__in, u32, read> = var undef @builtin(vertex_index)
   %instance_index:ptr<__in, u32, read> = var undef @builtin(instance_index)
-  %tint_immediate_data:ptr<immediate, tint_immediate_data_struct, read> = var undef
+  %tint_first_vertex:ptr<immediate, u32, read> = var undef @location(1)
+  %tint_first_instance:ptr<immediate, u32, read> = var undef @location(2)
 }
 
 %foo = @vertex func():vec4<f32> [@position] {
   $B2: {
-    %5:u32 = load %vertex_index
-    %6:ptr<immediate, u32, read> = access %tint_immediate_data, 0u
-    %7:u32 = load %6
-    %8:u32 = add %5, %7
+    %6:u32 = load %vertex_index
+    %7:u32 = load %tint_first_vertex
+    %8:u32 = add %6, %7
     %9:u32 = load %instance_index
-    %10:ptr<immediate, u32, read> = access %tint_immediate_data, 1u
-    %11:u32 = load %10
-    %12:u32 = add %9, %11
-    %13:u32 = add %8, %12
-    %add:u32 = let %13
+    %10:u32 = load %tint_first_instance
+    %11:u32 = add %9, %10
+    %12:u32 = add %8, %11
+    %add:u32 = let %12
     ret vec4<f32>(0.0f)
   }
 }
 )";
 
-    core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
-    ASSERT_EQ(immediate_data_config.AddInternalImmediateData(4, mod.symbols.New("first_vertex"),
-                                                             ty.u32()),
-              Success);
-    ASSERT_EQ(immediate_data_config.AddInternalImmediateData(8, mod.symbols.New("first_instance"),
-                                                             ty.u32()),
-              Success);
-    auto immediate_data = PrepareImmediateData(mod, immediate_data_config);
-    EXPECT_EQ(immediate_data, Success);
+    core::ir::transform::AddImmediateVarsConfig immediate_vars_config;
+    immediate_vars_config.first_vertex_location = 1;
+    immediate_vars_config.first_instance_location = 2;
+    auto immediate_vars = AddImmediateVars(mod, immediate_vars_config);
+    EXPECT_EQ(immediate_vars, Success);
 
-    OffsetFirstIndexConfig config{immediate_data.Get()};
-    config.first_vertex_offset = 4;
-    config.first_instance_offset = 8;
+    OffsetFirstIndexConfig config{};
+    config.first_vertex = immediate_vars->first_vertex;
+    config.first_instance = immediate_vars->first_instance;
     Run(OffsetFirstIndex, config);
     EXPECT_EQ(expect, str());
 }

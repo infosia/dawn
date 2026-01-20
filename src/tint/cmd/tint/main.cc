@@ -1291,18 +1291,17 @@ tint::msl::writer::ArrayLengthOptions GenerateArrayLengthFromConstants(tint::cor
 
     auto entry_point = inspector.GetEntryPoint(options.ep_name);
 
-    // Immediate data Offset must be 4-byte aligned.
-    uint32_t offset = tint::RoundUp(4u, entry_point.immediate_data_size);
+    // Convert immediate data size into a location.
+    uint32_t location = 0;
 
     if (entry_point.instance_index_used) {
         // Place the first_instance immediate data member after user-defined immediate data (if
         // any).
-        gen_options.first_instance_offset = offset;
-        offset += 4;
+        gen_options.first_instance_location = location++;
     }
     if (entry_point.frag_depth_used) {
-        gen_options.depth_range_offsets = {offset + 0, offset + 4};
-        offset += 8;
+        gen_options.min_depth_location = location++;
+        gen_options.max_depth_location = location++;
     }
 
     for (auto idx : options.bgra_swizzle) {
