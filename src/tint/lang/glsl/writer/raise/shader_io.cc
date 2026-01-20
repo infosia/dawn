@@ -220,15 +220,12 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     /// @returns the clamped value
     core::ir::Value* ClampFragDepth([[maybe_unused]] core::ir::Builder& builder,
                                     core::ir::Value* frag_depth) {
-        if (!config.depth_range_offsets) {
+        if (!config.min_depth || !config.max_depth) {
             return frag_depth;
         }
 
-        auto* immediate_data = config.immediate_data_layout.var;
-        auto min_idx = u32(config.immediate_data_layout.IndexOf(config.depth_range_offsets->min));
-        auto max_idx = u32(config.immediate_data_layout.IndexOf(config.depth_range_offsets->max));
-        auto* min = builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, min_idx));
-        auto* max = builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, max_idx));
+        auto* min = builder.Load(config.min_depth->Result());
+        auto* max = builder.Load(config.max_depth->Result());
         return builder.Clamp(frag_depth, min, max)->Result();
     }
 
@@ -242,7 +239,8 @@ Result<SuccessType> ShaderIO(core::ir::Module& ir, const ShaderIOConfig& config)
     TINT_CHECK_RESULT(ValidateAndDumpIfNeeded(
         ir, "glsl.ShaderIO",
         core::ir::Capabilities{core::ir::Capability::kAllowHandleVarsWithoutBindings,
-                               core::ir::Capability::kAllowDuplicateBindings}));
+                               core::ir::Capability::kAllowDuplicateBindings,
+                               core::ir::Capability::kAllowMultipleImmediateVars}));
 
     core::ir::transform::RunShaderIOBase(ir, [&](core::ir::Module& mod, core::ir::Function* func) {
         return std::make_unique<StateImpl>(mod, func, config);
