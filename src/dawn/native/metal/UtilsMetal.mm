@@ -211,6 +211,8 @@ void MakeResourceResident(id<MTLRenderCommandEncoder> encoder,
                           MTLResourceUsage usage,
                           wgpu::ShaderStage stages) {
     // This is a render encoder. Skip any resources that can't possibly be visible to it.
+    printf("  useResource %p %p usage %d stages %d (%d)\n", (void*)encoder, (void*)resource,
+           uint32_t(usage), uint32_t(stages), uint32_t(ToMTLRenderStages(stages)));
     if (stages & (wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment)) {
         [encoder useResource:resource usage:usage stages:ToMTLRenderStages(stages)];
     }
@@ -232,6 +234,9 @@ void MakeResourcesResident(Encoder encoder, const SyncScopeResourceUsage& resour
             continue;
         }
 
+        printf("Buffer %s set to usage %d (%d) for stages %d\n",
+               resourceUsage.buffers[i]->GetLabel().c_str(), uint32_t(info.usage),
+               uint32_t(ToMTLResourceUsage(info.usage)), uint32_t(info.shaderStages));
         MakeResourceResident(encoder, buffer, ToMTLResourceUsage(info.usage), info.shaderStages);
     }
 
@@ -259,6 +264,9 @@ void MakeResourcesResident(Encoder encoder, const SyncScopeResourceUsage& resour
         const Aspect kAspectsCorrespondingToPlane0{~(Aspect::Plane1 | Aspect::Plane2)};
         for (Aspect plane : {kAspectsCorrespondingToPlane0, Aspect::Plane1, Aspect::Plane2}) {
             if (aspects & plane) {
+                printf("Texture %s plane flags %u set to usage %d (%d) for stages %d\n",
+                       texture->GetLabel().c_str(), uint32_t(aspects & plane), uint32_t(usages),
+                       uint32_t(ToMTLResourceUsage(usages)), uint32_t(stages));
                 MakeResourceResident(encoder, texture->GetMTLTexture(plane),
                                      ToMTLResourceUsage(usages), stages);
             }
