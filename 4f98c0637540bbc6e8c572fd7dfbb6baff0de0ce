@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "65873ea2_d425e085",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-20T22:09:23Z",
+      "side": 1,
+      "message": "Hm. Not a huge deal, but it does seem like it should be possible to call `RunSuppressedTests` outside of a DawnTest since it\u0027s global state. I think `RunSuppressedTests()` could just be moved from DawnTest to the `dawn::` or global scope, would you mind trying that? Would be nice to make this work for any future uses that need it, but don\u0027t worry if it turns out not to be easy.",
+      "parentUuid": "ed6032f9_fcaf756c",
+      "revId": "4f98c0637540bbc6e8c572fd7dfbb6baff0de0ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "224707f2_cbd5e2ed",
         "filename": "src/dawn/tests/end2end/DeviceInitializationTests.cpp",
         "patchSetId": 2
