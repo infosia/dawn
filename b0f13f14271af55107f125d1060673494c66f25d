@@ -235,6 +235,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0795ac7e_0cd6e9ce",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T23:04:51Z",
+      "side": 1,
+      "message": "BaseEleType? ElementType is close some type functions IMO. ArrayType is not good because when it is expanded to immediates, it won\u0027t use an array in that case.",
+      "parentUuid": "2b4bec2e_caaadc5e",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dcf8ee6e_8b512e00",
         "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
         "patchSetId": 1
@@ -246,6 +264,24 @@
       "writtenOn": "2026-01-19T19:59:02Z",
       "side": 1,
       "message": "So, this is just i \u003d\u003d 0?",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0451a804_0b97ccef",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T23:04:51Z",
+      "side": 1,
+      "message": "Until 8-bit integers are supported. I left the assert to force whoever does that to make sure it all works. There are likely some extra cases, but the base logic is sound.",
+      "parentUuid": "dcf8ee6e_8b512e00",
       "revId": "b0f13f14271af55107f125d1060673494c66f25d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

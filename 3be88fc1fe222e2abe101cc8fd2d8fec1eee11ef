@@ -94,6 +94,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "35119d89_f6503e60",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T23:04:51Z",
+      "side": 1,
+      "message": "There might be a determinism issue since the instructions will be generated in different orders I think.",
+      "parentUuid": "e191e166_c7db7ea4",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8eaa9168_cb628b58",
         "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
         "patchSetId": 4
@@ -145,6 +163,30 @@
       "writtenOn": "2026-01-20T22:06:39Z",
       "side": 1,
       "message": "is this really just `size \u003d\u003d 8` ? If so, can we change and maybe add an:\n\n```\n} else {\n  TINT_UNREACHABLE();\n}\n```",
+      "range": {
+        "startLine": 299,
+        "startChar": 1,
+        "endLine": 300,
+        "endChar": 34
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10827dc2_ba477ade",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T23:04:51Z",
+      "side": 1,
+      "message": "For now, but if we support i8/u8 it will need changed.",
+      "parentUuid": "b05879b7_00c29d2a",
       "range": {
         "startLine": 299,
         "startChar": 1,
@@ -214,6 +256,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "55b59dd9_e555cbb9",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T23:04:51Z",
+      "side": 1,
+      "message": "I\u0027ll see. The callers would have to do so though and usually just BaseType is used.",
+      "parentUuid": "2e0140d8_8f505d07",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d4e8c1c9_d60e5c28",
         "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
         "patchSetId": 4
@@ -265,6 +325,30 @@
       "writtenOn": "2026-01-20T22:06:39Z",
       "side": 1,
       "message": "Should be able to do the same `InsertConvertIfNeeded` call the old code did, it will only convert if the dest type doesn\u0027t match the source type.",
+      "range": {
+        "startLine": 368,
+        "startChar": 0,
+        "endLine": 370,
+        "endChar": 17
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8655e601_d61179ff",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T23:04:51Z",
+      "side": 1,
+      "message": "Yeah. BitcastIfNeeded would be useful in this pass too.",
+      "parentUuid": "501c3d9b_506cd842",
       "range": {
         "startLine": 368,
         "startChar": 0,
@@ -334,6 +418,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d129d8a6_b3e71791",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T23:04:51Z",
+      "side": 1,
+      "message": "Maybe, but they were so nicely written and I didn\u0027t want to go into that much detail for the other cases. This remains the hardest case so I though there was value leaving it.",
+      "parentUuid": "197836b0_be8fa583",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "99d0e9dc_369861dc",
         "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
         "patchSetId": 4
@@ -391,6 +493,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2ea0cabe_86edffe5",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T23:04:51Z",
+      "side": 1,
+      "message": "No, that function is when the result is based on a 16-bit type, but this is for when the base is 16-bit, but the result is 32-bit",
+      "parentUuid": "db13af0a_47dafad6",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fe250288_ecb02b96",
         "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
         "patchSetId": 4
@@ -425,6 +545,30 @@
       "writtenOn": "2026-01-20T22:06:39Z",
       "side": 1,
       "message": "i wonder if a BitcastIfNecessary would be useful to collapse all of these",
+      "range": {
+        "startLine": 780,
+        "startChar": 1,
+        "endLine": 783,
+        "endChar": 29
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e31cbd4a_2f9be565",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T23:04:51Z",
+      "side": 1,
+      "message": "Yes probably.",
+      "parentUuid": "6a2c2d6c_5d200731",
       "range": {
         "startLine": 780,
         "startChar": 1,
@@ -482,6 +626,24 @@
       "writtenOn": "2026-01-20T22:58:14Z",
       "side": 1,
       "message": "Because we\u0027ve changed the element type of the array, and potentially added more stuff to it. e.g.\n```\nstruct S {\n  a: u32,\n  b: u32,\n  arr: array\u003cvec4\u003cf32, 4\u003e\u003e,\n}\nvar v: S;\n\nBecomes:\nvar v : array\u003cu32\u003e\n```\nThe number of elements in the new array is different, so we need to figure out the length of the original array.",
+      "parentUuid": "e4c07ecd_03665ffa",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65392131_b9758d50",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T23:04:51Z",
+      "side": 1,
+      "message": "Imagine you have\n```\nstruct S {\n  a : vec4u,\n  b : array\u003cu32\u003e\n}\n@group(0) @binding(0) var\u003cstorage\u003e v : S;\n```\nThe original arrayLength returns the number of elements in S.b and new arrayLength returns that value + 4 (S.a) (assuming u32 base type). So we have to account for the offset to get to the runtime-sized array. Previously that would only be possible with a constant offset (struct member), but bufferView can introduce a runtime offset via it\u0027s operand.",
       "parentUuid": "e4c07ecd_03665ffa",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
@@ -586,6 +748,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7c1f8b5f_ad3fda8a",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T23:04:51Z",
+      "side": 1,
+      "message": "The replaceAllUsesWith. Since we have to use the new and old together, but switch all the outside code there wasn\u0027t an easier way I could see.",
+      "parentUuid": "ffe15ae4_44582b3a",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4670fb10_8c46f90c",
         "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
         "patchSetId": 4
@@ -597,6 +777,24 @@
       "writtenOn": "2026-01-20T22:06:39Z",
       "side": 1,
       "message": "Why do we need to overwrite these, can\u0027t we just set them correctly when we make the `sub` or `mul`? The `call` already exists so the result already exists at that point.",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9d99960_0f50bd20",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T23:04:51Z",
+      "side": 1,
+      "message": "Same answer as previous question. I suppose I could recreate an entire arrayLength call if this is too confusing. Then we could destroy the old call.",
+      "parentUuid": "4670fb10_8c46f90c",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -671,6 +869,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2e96d4fe_bed06912",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T23:04:51Z",
+      "side": 1,
+      "message": "I can clarify. The statement is generic in how the transform picks a size and then combined with the above we\u0027ve eliminated the smaller size.",
+      "parentUuid": "c4d71f4d_e7e0e83b",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c8c02d23_7c997be5",
         "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.h",
         "patchSetId": 4
@@ -682,6 +898,24 @@
       "writtenOn": "2026-01-20T22:06:39Z",
       "side": 1,
       "message": "Should we rename to be something like `decompose_access` as this is not uniform specific anymore?",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a69c0785_31c08c66",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T23:04:51Z",
+      "side": 1,
+      "message": "I have that as a todo to reduce the diff in the first commit. I plan to rename the transform and file after this.",
+      "parentUuid": "c8c02d23_7c997be5",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -716,6 +950,24 @@
       "writtenOn": "2026-01-20T22:06:39Z",
       "side": 1,
       "message": "It should be possible to do this in this cl if you want as dawn would be the only caller and it\u0027s in the same repo, followon cl is also fine though.",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6cb0164_212ce788",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T23:04:51Z",
+      "side": 1,
+      "message": "My thought was it would be easier to review this way. Maybe gerrit track those types of changes better than I expect.",
+      "parentUuid": "7c1d2910_bb881110",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
