@@ -312,6 +312,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f5b7b167_00441718",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1969,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T16:20:40Z",
+      "side": 1,
+      "message": "Working on a patchset to switch the store type to the To vector now. Somewhat related, filed crbug.com/477255032 for another-other way this could be cleaner that we might want to consider as a very low priority code health change.",
+      "parentUuid": "88ee4d6d_b4540042",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3811bddf_e80a743e",
         "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
         "patchSetId": 1
