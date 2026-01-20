@@ -56,7 +56,9 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device,
         auto& bindingInfo = GetBindingInfo(i);
 
         MTLArgumentDescriptor* desc = [MTLArgumentDescriptor argumentDescriptor];
-        desc.index = uint32_t(bindingInfo.binding);
+        // This is the [[id(n)]] index in the MSL shader.
+        // DO NOT SUBMIT: Which index do we use for that??
+        desc.index = uint32_t(i);
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated"
         desc.access = MTLArgumentAccessReadOnly;
@@ -75,7 +77,7 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device,
                 DAWN_CHECK(false);
             },
             [&](const TextureBindingInfo&) { desc.dataType = MTLDataTypeTexture; },
-            [&](const StorageTextureBindingInfo&) { DAWN_CHECK(false); },
+            [&](const StorageTextureBindingInfo&) { desc.dataType = MTLDataTypeTexture; },
             [&](const TexelBufferBindingInfo&) { DAWN_CHECK(false); },
             [](const InputAttachmentBindingInfo&) { DAWN_CHECK(false); },
             [](const ExternalTextureBindingInfo&) { DAWN_CHECK(false); });
