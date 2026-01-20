@@ -83,6 +83,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cea5e8bb_b490834b",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-20T16:18:59Z",
+      "side": 1,
+      "message": "This is probably a bug in the D3D11 backend. It\u0027s mostly working now because the D3D11 runtime would block the `Map` calls until the \"Clear\" commands finish. So even if we don\u0027t mark the buffer as being used, the D3D11 runtime will do that internally for us.",
+      "parentUuid": "2d477fae_190f73cb",
+      "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e2fd3c26_f41163cf",
         "filename": "src/dawn/native/d3d12/BufferD3D12.cpp",
         "patchSetId": 18
