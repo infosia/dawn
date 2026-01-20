@@ -30,24 +30,22 @@
 
 #include <unordered_set>
 
-#include "src/tint/lang/core/ir/transform/prepare_immediate_data.h"
 #include "src/tint/lang/glsl/writer/common/options.h"
 #include "src/tint/utils/result.h"
 
 // Forward declarations.
 namespace tint::core::ir {
 class Module;
+class Var;
 }
 
 namespace tint::glsl::writer::raise {
 
 /// ShaderIOConfig describes the set of configuration options for the ShaderIO transform.
 struct ShaderIOConfig {
-    /// immediate data layout information
-    const core::ir::transform::ImmediateDataLayout& immediate_data_layout;
-
-    /// offsets for clamping frag depth
-    std::optional<Options::RangeOffsets> depth_range_offsets{};
+    /// immediate variables FIXME better comment pleez
+    core::ir::Var* min_depth;
+    core::ir::Var* max_depth;
 
     /// locations of vertex input variables to apply BGRA swizzle to.
     std::unordered_set<uint32_t> bgra_swizzle_locations{};

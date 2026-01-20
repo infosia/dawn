@@ -28,6 +28,7 @@
 #include "src/tint/lang/glsl/writer/raise/raise.h"
 
 #include "src/tint/lang/core/ir/module.h"
+#include "src/tint/lang/core/ir/transform/add_immediate_vars.h"
 #include "src/tint/lang/core/ir/transform/array_length_from_uniform.h"
 #include "src/tint/lang/core/ir/transform/bgra8unorm_polyfill.h"
 #include "src/tint/lang/core/ir/transform/binary_polyfill.h"
@@ -39,7 +40,6 @@
 #include "src/tint/lang/core/ir/transform/demote_to_helper.h"
 #include "src/tint/lang/core/ir/transform/direct_variable_access.h"
 #include "src/tint/lang/core/ir/transform/multiplanar_external_texture.h"
-#include "src/tint/lang/core/ir/transform/prepare_immediate_data.h"
 #include "src/tint/lang/core/ir/transform/preserve_padding.h"
 #include "src/tint/lang/core/ir/transform/prevent_infinite_loops.h"
 #include "src/tint/lang/core/ir/transform/remove_continue_in_switch.h"
@@ -81,29 +81,6 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
 
         TINT_CHECK_RESULT(core::ir::transform::PreventInfiniteLoops(module));
     }
-
-    // PrepareImmediateData must come before any transform that needs internal immediate data.
-    core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
-    if (options.first_instance_offset) {
-        TINT_CHECK_RESULT(immediate_data_config.AddInternalImmediateData(
-            options.first_instance_offset.value(), module.symbols.New("tint_first_instance"),
-            module.Types().u32()));
-    }
-    if (options.first_vertex_offset) {
-        TINT_CHECK_RESULT(immediate_data_config.AddInternalImmediateData(
-            options.first_vertex_offset.value(), module.symbols.New("tint_first_vertex"),
-            module.Types().u32()));
-    }
-    if (options.depth_range_offsets) {
-        TINT_CHECK_RESULT(immediate_data_config.AddInternalImmediateData(
-            options.depth_range_offsets.value().min, module.symbols.New("tint_frag_depth_min"),
-            module.Types().f32()));
-        TINT_CHECK_RESULT(immediate_data_config.AddInternalImmediateData(
-            options.depth_range_offsets.value().max, module.symbols.New("tint_frag_depth_max"),
-            module.Types().f32()));
-    }
-    TINT_CHECK_RESULT_UNWRAP(immediate_data_layout, core::ir::transform::PrepareImmediateData(
-                                                        module, immediate_data_config));
 
     // Note, this must come after Robustness as it may add `arrayLength`.
     // This also needs to come before binding remapper as Dawn inserts _pre-remapping_ binding
@@ -216,14 +193,22 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     TINT_CHECK_RESULT(core::ir::transform::VectorizeScalarMatrixConstructors(module));
     TINT_CHECK_RESULT(core::ir::transform::RemoveContinueInSwitch(module));
 
+    // AddImmediateVars must come before any transform that needs internal immediate vars.
+    core::ir::transform::AddImmediateVarsConfig immediate_data_config{
+        options.first_vertex_location, options.first_instance_location, options.min_depth_location,
+        options.max_depth_location};
+
+    TINT_CHECK_RESULT_UNWRAP(immediate_vars,
+                             core::ir::transform::AddImmediateVars(module, immediate_data_config));
+
     TINT_CHECK_RESULT(raise::ShaderIO(
-        module, raise::ShaderIOConfig{immediate_data_layout, options.depth_range_offsets,
+        module, raise::ShaderIOConfig{immediate_vars.min_depth, immediate_vars.max_depth,
                                       options.bgra_swizzle_locations}));
 
     // Must come after ShaderIO as it operates on module-scope `in` variables.
     TINT_CHECK_RESULT(raise::OffsetFirstIndex(
-        module, raise::OffsetFirstIndexConfig{immediate_data_layout, options.first_vertex_offset,
-                                              options.first_instance_offset}));
+        module,
+        raise::OffsetFirstIndexConfig{immediate_vars.first_vertex, immediate_vars.first_instance}));
 
     // These transforms need to be run last as various transforms introduce terminator arguments,
     // naming conflicts, and expressions that need to be explicitly not inlined.

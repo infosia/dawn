@@ -45,6 +45,8 @@ if (tint_build_unittests || tint_build_benchmarks) {
 
 libtint_source_set("transform") {
   sources = [
+    "add_immediate_vars.cc",
+    "add_immediate_vars.h",
     "array_length_from_immediate.cc",
     "array_length_from_immediate.h",
     "array_length_from_uniform.cc",
