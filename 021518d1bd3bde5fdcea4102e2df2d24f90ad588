@@ -33,6 +33,24 @@
       "message": "nit: can we more directly call out KeyedMutex, which other users of the SharedTextureMemory could rely on being unlocked after Dawn is finished doing the submit?",
       "revId": "021518d1bd3bde5fdcea4102e2df2d24f90ad588",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42e63a2a_8b711d67",
+        "filename": "src/dawn/native/d3d12/CommandRecordingContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-20T17:01:13Z",
+      "side": 1,
+      "message": "You mean call it out in this comment, right?",
+      "parentUuid": "a569d4f2_e52e69d7",
+      "revId": "021518d1bd3bde5fdcea4102e2df2d24f90ad588",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
