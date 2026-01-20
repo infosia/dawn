@@ -39,6 +39,7 @@ load("@bazel_skylib//lib:selects.bzl", "selects")
 cc_library(
   name = "raise",
   srcs = [
+    "add_immediate_vars.cc",
     "binary_polyfill.cc",
     "bitcast_polyfill.cc",
     "builtin_polyfill.cc",
@@ -49,6 +50,7 @@ cc_library(
     "texture_polyfill.cc",
   ],
   hdrs = [
+    "add_immediate_vars.h",
     "binary_polyfill.h",
     "bitcast_polyfill.h",
     "builtin_polyfill.h",
@@ -107,7 +109,6 @@ cc_library(
     "//src/tint/lang/core/constant",
     "//src/tint/lang/core/intrinsic",
     "//src/tint/lang/core/ir",
-    "//src/tint/lang/core/ir/transform",
     "//src/tint/lang/core/ir/transform:test",
     "//src/tint/lang/core/type",
     "//src/tint/utils",
