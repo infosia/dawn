@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3732ce5_809a2437",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-20T20:00:19Z",
+      "side": 1,
+      "message": "I think this can become a `compare_exchange` if we do remove the `HostMappedPersistent` state.\n\nSeparately, I was also thinking that maybe the state change could actually happen in the ctor of the `ScopedUseBuffer`. I don\u0027t have a strong preference for this, but right now, only the dtor does anything for that thing and it\u0027s sort of requiring the user to do something before which doesn\u0027t feel as RAII as what the class suggests.",
+      "range": {
+        "startLine": 661,
+        "startChar": 4,
+        "endLine": 661,
+        "endChar": 63
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1447150_8cc26b38",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-20T20:00:19Z",
+      "side": 1,
+      "message": "[1] Would it make sense for this to actually return a `ResultOrError\u003cBufferBase::ScopedUseBuffer\u003e` instead of a `MaybeError`? That way it\u0027s more obvious that this also causes a state change. Otherwise, it\u0027s not obvious since the name only suggests that we are doing some validation and most other validation helpers are roughly const w.r.t the objects.",
+      "range": {
+        "startLine": 667,
+        "startChar": 23,
+        "endLine": 667,
+        "endChar": 47
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f8225c6_cde49981",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-20T20:00:19Z",
+      "side": 1,
+      "message": "If [1] then this could just be return `UseBufferInternal()`.",
+      "range": {
+        "startLine": 684,
+        "startChar": 19,
+        "endLine": 684,
+        "endChar": 72
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5feeb83_33e4972b",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-20T20:00:19Z",
+      "side": 1,
+      "message": "Same comment as for `UseBufferInternal` where we might be able to just use a `compare_exchange` if we remove the `HostMappedPersistent` state.",
+      "range": {
+        "startLine": 690,
+        "startChar": 4,
+        "endLine": 692,
+        "endChar": 52
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "299a62b1_4a7df513",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-20T20:00:19Z",
+      "side": 1,
+      "message": "Should we also assert that the buffer is `InUse` here?",
+      "range": {
+        "startLine": 1128,
+        "startChar": 4,
+        "endLine": 1128,
+        "endChar": 25
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c24d0a35_36ce7f32",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-20T20:00:19Z",
+      "side": 1,
+      "message": "Is it possible to remove this state entirely with the new bool? I think it would be nice to separate this out of the states since it seems like intuitively it\u0027s an orthogonal property of the buffer. (Maybe same comment about the shared memory one as well, but not as relevant to this change since we aren\u0027t really touching that here.)",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 28
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fea689f_b6ce3065",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-20T20:00:19Z",
+      "side": 1,
+      "message": "nit. Maybe this can be an `Atomic\u003cBufferState, std::memory_order::acquire\u003e` now since I *think* all the loads are `acquire`. Though this might require adding some passthrough helpers on the template class to do the `compare_exchange`.",
+      "range": {
+        "startLine": 289,
+        "startChar": 4,
+        "endLine": 289,
+        "endChar": 60
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5038abbe_426e5b26",
+        "filename": "src/dawn/native/Queue.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-20T20:00:19Z",
+      "side": 1,
+      "message": "I did not know this existed 😮. That said though, since it\u0027s always being invoked early anyways right now, it might be fine to just use a normal lambda? Or just do the loop inline below?",
+      "range": {
+        "startLine": 654,
+        "startChar": 10,
+        "endLine": 654,
+        "endChar": 17
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "901fd12a_37899a47",
+        "filename": "src/dawn/tests/unittests/native/BufferBaseTests.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-20T20:00:19Z",
+      "side": 1,
+      "message": "nit. For this test and the one below, I think it might just be better to do two separate `std::thread`\u0027s which do the different things than to use `RunInParallel` since you end up hiding that detail via the index anyways,",
+      "range": {
+        "startLine": 260,
+        "startChar": 4,
+        "endLine": 260,
+        "endChar": 49
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

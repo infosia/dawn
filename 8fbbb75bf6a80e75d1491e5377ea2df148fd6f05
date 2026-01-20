@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a722215c_66deed54",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-20T20:00:19Z",
+      "side": 1,
+      "message": "+1, and probably update the comment above and maybe remove the TODO now?",
+      "parentUuid": "d1641891_7db68265",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 23
+      },
+      "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "605a0169_49ac9af6",
         "filename": "src/dawn/native/Buffer.h",
         "patchSetId": 18
