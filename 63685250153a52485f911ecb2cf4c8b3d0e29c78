@@ -16,6 +16,24 @@
       "message": "Are you planning to move this CL forward, or would you prefer one of us pick it up and try to get everything building? We\u0027d like to land something like this in the near future and pushing this CL forward seems like the best way forward.",
       "revId": "63685250153a52485f911ecb2cf4c8b3d0e29c78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74bf2aff_42471eb7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3578208
+      },
+      "writtenOn": "2026-01-20T16:11:20Z",
+      "side": 1,
+      "message": "Thank you for coming back at this! I already fixed the code in early November and had all tests run successfully. However when it came to uploading the CL I ran into an authentication issue.\nNow some depot_tools script is crashing and the best way forward for me would be to extract patch files and just re-install everything. This time in a Linux VM.\nIf speed is important for you it would be better if someone from your side takes over, I can send them the patch files.\n\nLet me try uploading the files manually, it seems this is possible in the web UI.",
+      "parentUuid": "6e8e15ca_bab43acc",
+      "revId": "63685250153a52485f911ecb2cf4c8b3d0e29c78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
