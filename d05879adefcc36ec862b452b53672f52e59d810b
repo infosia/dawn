@@ -1,6 +1,46 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff474bcc_0e6522e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-20T13:18:21Z",
+      "side": 1,
+      "message": "This is a VVL error, the spec for `VkAttachmentReference2` says:\n\n\u003e aspectMask is ignored when this structure is used to describe anything other than an input attachment reference.\n\nCan you file an issue on the VVL and add a temporary suppression in BackendVk instead?\n\nHowever we do need to set it at [1].",
+      "revId": "d05879adefcc36ec862b452b53672f52e59d810b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "736f04ae_2532e507",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-20T13:18:21Z",
+      "side": 1,
+      "message": "I\u0027m not sure why this one triggers given the code at [2].",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 46
+      },
+      "revId": "d05879adefcc36ec862b452b53672f52e59d810b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cc0e40eb_cc290d8d",
@@ -14,6 +54,63 @@
       "writtenOn": "2026-01-20T05:32:08Z",
       "side": 1,
       "message": "PTAL, thanks!",
+      "revId": "d05879adefcc36ec862b452b53672f52e59d810b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1da46ede_e60208ae",
+        "filename": "src/dawn/native/vulkan/RenderPassCache.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-20T13:18:21Z",
+      "side": 1,
+      "message": "These are written at [2] so why is this needed?",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 85
+      },
+      "revId": "d05879adefcc36ec862b452b53672f52e59d810b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b07c32ef_20d1ca5c",
+        "filename": "src/dawn/native/vulkan/RenderPassCache.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-20T13:18:21Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "d05879adefcc36ec862b452b53672f52e59d810b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c60c5a4e_8b765c9f",
+        "filename": "src/dawn/native/vulkan/RenderPassCache.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-20T13:18:21Z",
+      "side": 1,
+      "message": "[2]",
       "revId": "d05879adefcc36ec862b452b53672f52e59d810b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
