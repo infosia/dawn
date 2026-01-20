@@ -185,14 +185,17 @@ struct Options {
     /// The GLSL version to emit
     Version version;
 
-    /// Offset of the firstVertex immediate data.
-    std::optional<uint32_t> first_vertex_offset;
+    /// Location of the firstVertex immediate variable.
+    std::optional<uint32_t> first_vertex_location;
 
-    /// Offset of the firstInstance immediate data.
-    std::optional<uint32_t> first_instance_offset;
+    /// Location of the firstInstance immediate variable.
+    std::optional<uint32_t> first_instance_location;
 
-    /// Offsets of the minDepth and maxDepth immediate data.
-    std::optional<RangeOffsets> depth_range_offsets;
+    /// Location of the minDepth immediate variable.
+    std::optional<uint32_t> min_depth_location;
+
+    /// Locations of the maxDepth immediate variable.
+    std::optional<uint32_t> max_depth_location;
 
     /// Vertex inputs to perform BGRA swizzle on.
     std::unordered_set<uint32_t> bgra_swizzle_locations;
@@ -231,9 +234,10 @@ struct Options {
                  use_uniform_buffers,
                  entry_point_name,
                  version,
-                 first_vertex_offset,
-                 first_instance_offset,
-                 depth_range_offsets,
+                 first_vertex_location,
+                 first_instance_location,
+                 min_depth_location,
+                 max_depth_location,
                  bgra_swizzle_locations,
                  texture_builtins_from_uniform,
                  array_length_from_uniform,

@@ -45,6 +45,8 @@ if (tint_build_unittests || tint_build_benchmarks) {
 if (tint_build_glsl_writer) {
   libtint_source_set("raise") {
     sources = [
+      "add_immediate_vars.cc",
+      "add_immediate_vars.h",
       "binary_polyfill.cc",
       "binary_polyfill.h",
       "bitcast_polyfill.cc",
@@ -111,7 +113,6 @@ if (tint_build_unittests) {
         "${tint_src_dir}/lang/core/constant",
         "${tint_src_dir}/lang/core/intrinsic",
         "${tint_src_dir}/lang/core/ir",
-        "${tint_src_dir}/lang/core/ir/transform",
         "${tint_src_dir}/lang/core/ir/transform:unittests",
         "${tint_src_dir}/lang/core/type",
         "${tint_src_dir}/utils",
