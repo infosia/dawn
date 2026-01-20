@@ -33,6 +33,24 @@
       "message": "I am aware of the bot issue. I can reproduce the crash locally, but only if I use the same config as the bot, but not when running a debugger. I am trying investigate further into what is going wrong here.",
       "revId": "13dae7ebc218e291806c486399580d5d76414ac8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "369f81f1_07ff6967",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-01-20T20:34:51Z",
+      "side": 1,
+      "message": "I have been able to reproduce it in an ASAN build 🎉",
+      "parentUuid": "7cbdb57e_9dd02078",
+      "revId": "13dae7ebc218e291806c486399580d5d76414ac8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
