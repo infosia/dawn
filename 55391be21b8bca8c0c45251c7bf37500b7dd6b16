@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a75ea36_d3eb57be",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T14:32:04Z",
+      "side": 1,
+      "message": "@jrprice@google.com should we have i8 and u8 here too, or should we not put u16. This is core, so I don\u0027t think it has to match WGSL.",
+      "revId": "55391be21b8bca8c0c45251c7bf37500b7dd6b16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "377ed12f_b9683261",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4007,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T14:32:04Z",
+      "side": 1,
+      "message": "```suggestion\n        // S -\u003e vec2\u003cf16 | u16\u003e\n```",
+      "revId": "55391be21b8bca8c0c45251c7bf37500b7dd6b16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c22d2ce_1be40e40",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4017,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T14:32:04Z",
+      "side": 1,
+      "message": "I wonder if we should add a `IsTwoBytes` method on `type/type.h` ?\n\n\n```suggestion\n            if (elements.count \u003d\u003d 2 \u0026\u0026 elements.type-\u003eIsTwoBytes()) {\n                return;\n            }\n        }\n    } else if (val_type-\u003eIsTwoBytes()) {\n        // S, where S is f16 or u16\n        // S -\u003e S, identity and reinterpretation\n        if (result_type-\u003eIsTwoBytes()) {\n```",
+      "range": {
+        "startLine": 4010,
+        "startChar": 0,
+        "endLine": 4017,
+        "endChar": 71
+      },
+      "revId": "55391be21b8bca8c0c45251c7bf37500b7dd6b16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2115b682_860eed69",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4424,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T14:32:04Z",
+      "side": 1,
+      "message": "This seems unrelated to adding u16?",
+      "range": {
+        "startLine": 4409,
+        "startChar": 0,
+        "endLine": 4424,
+        "endChar": 9
+      },
+      "revId": "55391be21b8bca8c0c45251c7bf37500b7dd6b16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
