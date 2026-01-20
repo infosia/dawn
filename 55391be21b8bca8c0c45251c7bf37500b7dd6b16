@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "75d758a5_90d89a6a",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T19:02:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c295163b_d52fa7c7",
+      "revId": "55391be21b8bca8c0c45251c7bf37500b7dd6b16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "377ed12f_b9683261",
@@ -150,6 +168,30 @@
       "side": 1,
       "message": "We\u0027d still need to check that it\u0027s a scalar, because we don\u0027t want to allow bitcasting to something like `array\u003cf16, 1\u003e`.\n\nI think this is fine for now, and then maybe in the future we should consider defining the bitcast overloads in `core.def` like we do for WGSL. I opened crbug.com/477289753 for this.",
       "parentUuid": "be82c413_7c7abde9",
+      "range": {
+        "startLine": 4010,
+        "startChar": 0,
+        "endLine": 4017,
+        "endChar": 71
+      },
+      "revId": "55391be21b8bca8c0c45251c7bf37500b7dd6b16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e40cbb92_62ce8986",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4017,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T19:02:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95e91326_9cfa4722",
       "range": {
         "startLine": 4010,
         "startChar": 0,
