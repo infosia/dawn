@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e622e30a_6464644c",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-20T20:40:58Z",
+      "side": 1,
+      "message": "I think this change might be left over from an earlier iteration where SwizzleView was the store type of a reference?\n\nUnless I\u0027m missing something it shouldn\u0027t be possible to get here.",
+      "revId": "dbfe57bc5f1227e3bc5c5c9ee70af259dd9dbfa3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

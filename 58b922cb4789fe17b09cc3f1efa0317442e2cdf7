@@ -107,6 +107,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6945ff8b_4f2c5a06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-20T20:40:58Z",
+      "side": 1,
+      "message": "I like it, thanks!\nLooks like many of the special cases could in theory now be handled by adding an `UnwrapRefOrSwizzle` to replace the `UnwrapRef`, but that\u0027s minor and maybe it\u0027s nice to see them more explicitly for now.",
+      "parentUuid": "bd493fa4_585822d0",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "de4fce61_7306be0b",
@@ -326,6 +344,24 @@
       "side": 1,
       "message": "Ah yeah, got it. Fixed. And I\u0027ll add that one to CTS too.",
       "parentUuid": "4619a9a5_358d35b6",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c56a5060_d6d1f5b6",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-20T20:40:58Z",
+      "side": 1,
+      "message": "Was this really fixed? I see the same issue with the latest patchset.",
+      "parentUuid": "6dd6bbf1_c66cd3a9",
       "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
