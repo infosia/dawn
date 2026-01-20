@@ -29,6 +29,7 @@
 
 #include "src/tint/lang/core/ir/transform/helper_test.h"
 #include "src/tint/lang/core/type/struct.h"
+#include "src/tint/lang/glsl/writer/raise/add_immediate_vars.h"
 #include "src/tint/lang/glsl/writer/raise/shader_io.h"
 
 namespace tint::glsl::writer::raise {
@@ -41,6 +42,7 @@ class GlslWriter_ShaderIOTest : public core::ir::transform::TransformTest {
   public:
     GlslWriter_ShaderIOTest() {
         capabilities.Add(core::ir::Capability::kLoosenValidationForShaderIO);
+        capabilities.Add(core::ir::Capability::kAllowMultipleImmediateVars);
     }
 };
 
@@ -62,8 +64,7 @@ TEST_F(GlslWriter_ShaderIOTest, NoInputsOrOutputs) {
 
     auto* expect = src;
 
-    core::ir::transform::ImmediateDataLayout immediate_data;
-    ShaderIOConfig config{immediate_data};
+    ShaderIOConfig config{};
     Run(ShaderIO, config);
 
     EXPECT_EQ(expect, str());
@@ -142,8 +143,7 @@ $B1: {  # root
   }
 }
 )";
-    core::ir::transform::ImmediateDataLayout immediate_data;
-    ShaderIOConfig config{immediate_data};
+    ShaderIOConfig config{};
     Run(ShaderIO, config);
 
     EXPECT_EQ(expect, str());
@@ -276,8 +276,7 @@ $B1: {  # root
 }
 )";
 
-    core::ir::transform::ImmediateDataLayout immediate_data;
-    ShaderIOConfig config{immediate_data};
+    ShaderIOConfig config{};
     Run(ShaderIO, config);
 
     EXPECT_EQ(expect, str());
@@ -389,8 +388,7 @@ $B1: {  # root
 }
 )";
 
-    core::ir::transform::ImmediateDataLayout immediate_data;
-    ShaderIOConfig config{immediate_data};
+    ShaderIOConfig config{};
     Run(ShaderIO, config);
 
     EXPECT_EQ(expect, str());
@@ -446,8 +444,7 @@ $B1: {  # root
 }
 )";
 
-    core::ir::transform::ImmediateDataLayout immediate_data;
-    ShaderIOConfig config{immediate_data};
+    ShaderIOConfig config{};
     Run(ShaderIO, config);
 
     EXPECT_EQ(expect, str());
@@ -492,8 +489,7 @@ $B1: {  # root
 }
 )";
 
-    core::ir::transform::ImmediateDataLayout immediate_data;
-    ShaderIOConfig config{immediate_data};
+    ShaderIOConfig config{};
     Run(ShaderIO, config);
 
     EXPECT_EQ(expect, str());
@@ -599,8 +595,7 @@ $B1: {  # root
 }
 )";
 
-    core::ir::transform::ImmediateDataLayout immediate_data;
-    ShaderIOConfig config{immediate_data};
+    ShaderIOConfig config{};
     Run(ShaderIO, config);
 
     EXPECT_EQ(expect, str());
@@ -677,8 +672,7 @@ $B1: {  # root
 }
 )";
 
-    core::ir::transform::ImmediateDataLayout immediate_data;
-    ShaderIOConfig config{immediate_data};
+    ShaderIOConfig config{};
     Run(ShaderIO, config);
 
     EXPECT_EQ(expect, str());
@@ -774,8 +768,7 @@ $B1: {  # root
 }
 )";
 
-    core::ir::transform::ImmediateDataLayout immediate_data;
-    ShaderIOConfig config{immediate_data};
+    ShaderIOConfig config{};
     Run(ShaderIO, config);
 
     EXPECT_EQ(expect, str());
@@ -862,8 +855,7 @@ $B1: {  # root
 }
 )";
 
-    core::ir::transform::ImmediateDataLayout immediate_data;
-    ShaderIOConfig config{immediate_data};
+    ShaderIOConfig config{};
     Run(ShaderIO, config);
 
     EXPECT_EQ(expect, str());
@@ -955,8 +947,7 @@ $B1: {  # root
 }
 )";
 
-    core::ir::transform::ImmediateDataLayout immediate_data;
-    ShaderIOConfig config{immediate_data};
+    ShaderIOConfig config{};
     Run(ShaderIO, config);
 
     EXPECT_EQ(expect, str());
@@ -1026,8 +1017,7 @@ $B1: {  # root
 }
 )";
 
-    core::ir::transform::ImmediateDataLayout immediate_data;
-    ShaderIOConfig config{immediate_data};
+    ShaderIOConfig config{};
     Run(ShaderIO, config);
 
     EXPECT_EQ(expect, str());
@@ -1072,8 +1062,7 @@ $B1: {  # root
 }
 )";
 
-    core::ir::transform::ImmediateDataLayout immediate_data;
-    ShaderIOConfig config{immediate_data};
+    ShaderIOConfig config{};
     Run(ShaderIO, config);
 
     EXPECT_EQ(expect, str());
@@ -1126,51 +1115,42 @@ Outputs = struct @align(4) {
   depth:f32 @offset(4)
 }
 
-tint_immediate_data_struct = struct @align(4), @block {
-  depth_min:f32 @offset(4)
-  depth_max:f32 @offset(8)
-}
-
 $B1: {  # root
-  %tint_immediate_data:ptr<immediate, tint_immediate_data_struct, read> = var undef
+  %tint_frag_depth_min:ptr<immediate, f32, read> = var undef @location(1)
+  %tint_frag_depth_max:ptr<immediate, f32, read> = var undef @location(2)
   %foo_loc0_Output:ptr<__out, f32, write> = var undef @location(0)
   %foo_frag_depth:ptr<__out, f32, write> = var undef @builtin(frag_depth)
 }
 
 %foo_inner = func():Outputs {
   $B2: {
-    %5:Outputs = construct 0.5f, 2.0f
-    ret %5
+    %6:Outputs = construct 0.5f, 2.0f
+    ret %6
   }
 }
 %foo = @fragment func():void {
   $B3: {
-    %7:Outputs = call %foo_inner
-    %8:f32 = access %7, 0u
-    store %foo_loc0_Output, %8
-    %9:f32 = access %7, 1u
-    %10:ptr<immediate, f32, read> = access %tint_immediate_data, 0u
-    %11:f32 = load %10
-    %12:ptr<immediate, f32, read> = access %tint_immediate_data, 1u
-    %13:f32 = load %12
-    %14:f32 = clamp %9, %11, %13
-    store %foo_frag_depth, %14
+    %8:Outputs = call %foo_inner
+    %9:f32 = access %8, 0u
+    store %foo_loc0_Output, %9
+    %10:f32 = access %8, 1u
+    %11:f32 = load %tint_frag_depth_min
+    %12:f32 = load %tint_frag_depth_max
+    %13:f32 = clamp %10, %11, %12
+    store %foo_frag_depth, %13
     ret
   }
 }
 )";
 
-    core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
-    ASSERT_EQ(
-        immediate_data_config.AddInternalImmediateData(4, mod.symbols.New("depth_min"), ty.f32()),
-        Success);
-    ASSERT_EQ(
-        immediate_data_config.AddInternalImmediateData(8, mod.symbols.New("depth_max"), ty.f32()),
-        Success);
-    auto immediate_data = PrepareImmediateData(mod, immediate_data_config);
-    EXPECT_EQ(immediate_data, Success);
-    ShaderIOConfig config{immediate_data.Get()};
-    config.depth_range_offsets = {4, 8};
+    core::ir::transform::AddImmediateVarsConfig immediate_vars_config;
+    immediate_vars_config.min_depth_location = 1;
+    immediate_vars_config.max_depth_location = 2;
+    auto immediate_vars = AddImmediateVars(mod, immediate_vars_config);
+    EXPECT_EQ(immediate_vars, Success);
+    ShaderIOConfig config{};
+    config.min_depth = immediate_vars->min_depth;
+    config.max_depth = immediate_vars->max_depth;
     Run(ShaderIO, config);
 
     EXPECT_EQ(expect, str());
@@ -1233,8 +1213,7 @@ $B1: {  # root
 }
 )";
 
-    core::ir::transform::ImmediateDataLayout immediate_data;
-    ShaderIOConfig config{immediate_data};
+    ShaderIOConfig config{};
     config.bgra_swizzle_locations.insert(0u);
     Run(ShaderIO, config);
 
@@ -1329,8 +1308,7 @@ $B1: {  # root
 }
 )";
 
-    core::ir::transform::ImmediateDataLayout immediate_data;
-    ShaderIOConfig config{immediate_data};
+    ShaderIOConfig config{};
     config.bgra_swizzle_locations = swizzled_locations;
     Run(ShaderIO, config);
 
