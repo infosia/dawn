@@ -125,6 +125,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b0fe744_8343492f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T21:06:43Z",
+      "side": 1,
+      "message": "If I can make UnwrapRef and Ptr consistent here (https://dawn-review.googlesource.com/c/dawn/+/285876) then I\u0027ll follow up with a UnwrapMemoryView that does all 3, although I don\u0027t love the name...",
+      "parentUuid": "6945ff8b_4f2c5a06",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "de4fce61_7306be0b",
@@ -362,6 +380,24 @@
       "side": 1,
       "message": "Was this really fixed? I see the same issue with the latest patchset.",
       "parentUuid": "6dd6bbf1_c66cd3a9",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38d3a240_ce917b6f",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T21:06:43Z",
+      "side": 1,
+      "message": "In Patchset 4 there\u0027s no reference to swizzle view here anymore, it\u0027s just getting StoreType (which is now \"to\" vector). Were you maybe looking at Patchset 3?",
+      "parentUuid": "c56a5060_d6d1f5b6",
       "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
