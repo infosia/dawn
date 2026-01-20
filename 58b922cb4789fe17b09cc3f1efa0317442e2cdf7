@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3181ffa_f6a9ab9a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T16:02:56Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "884f873f_c076c4d7",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a482b02c_71e0be32",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-01-19T23:18:20Z",
       "side": 1,
       "message": "I think I\u0027ve forgotten the reasons for why the store type of the swizzle view being the \"to\" vector would make things harder. I noted a couple of the the places where I think that would make things simpler, but I couldn\u0027t immediately see where that would get more difficult.\n\nHappy to discuss (again) in person tomorrow if that\u0027s easier (and sorry for forgetting).",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73fbf21f_0df8a417",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T16:02:56Z",
+      "side": 1,
+      "message": "I think that you had thought that it being the To vector felt less representative of the memory being \"viewed\" and suggested it be the From vector, which does sound right in theory. In practice that type just isn\u0027t needed as much as the To type. I landed on making it the elem type for the first CL because 1) matches the spec so might as well try that way, 2) it made all the places either to/from type is used most explicit and obvious, so I think that makes it easier for us to decide which to change it to if we want to. I would also now lean To vector as cleanest.\n\nWorth noting that implementing assignment will rely on the from type more but I think that\u0027ll only be ~2 places.",
+      "parentUuid": "a482b02c_71e0be32",
       "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -75,6 +111,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aadbef77_79622b91",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T16:02:56Z",
+      "side": 1,
+      "message": "Yes, done!",
+      "parentUuid": "90a44341_29503289",
+      "range": {
+        "startLine": 900,
+        "startChar": 0,
+        "endLine": 906,
+        "endChar": 25
+      },
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18b1346b_23d99e5b",
@@ -92,6 +152,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dd905c0_dbb007c3",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T16:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18b1346b_23d99e5b",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ff09aa38_594cb346",
@@ -105,6 +183,24 @@
       "writtenOn": "2026-01-19T22:08:25Z",
       "side": 1,
       "message": "Could just use `DeepestElement` here if you want\n\n```suggestion\n    EXPECT_TRUE(load-\u003eType()-\u003eDeepestElement()-\u003eIs\u003ccore::type::I32\u003e());\n```",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01eb8226_c9a9c898",
+        "filename": "src/tint/lang/wgsl/resolver/load_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T16:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff09aa38_594cb346",
       "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -128,6 +224,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b62680c8_72b149a4",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T16:02:56Z",
+      "side": 1,
+      "message": "Maybe I\u0027m misunderstanding but I think this is correct, because this is the storage type for the object we\u0027re indexing into, which is the From size vector.",
+      "parentUuid": "83282109_7952cb1f",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b9b5d2d2_e75acd13",
         "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
         "patchSetId": 1
@@ -139,6 +253,24 @@
       "writtenOn": "2026-01-19T23:18:20Z",
       "side": 1,
       "message": "Similar to another comment I left down below - this seems strange because I\u0027d expect this LHS expression to still be a reference type:\n```\nv.yx[0] \u003d 42;\n```",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ede8d9a7_33c97981",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1913,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T16:02:56Z",
+      "side": 1,
+      "message": "Good catch, agreed. (I recall adding this for a case when I was getting a ref to a scalar on the rhs but expected a scalar, but the solution was probably a missing Load and I think I\u0027ve now found and addressed all those.)",
+      "parentUuid": "b9b5d2d2_e75acd13",
       "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -197,6 +329,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "172163f0_78a0a6a0",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3595,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T16:02:56Z",
+      "side": 1,
+      "message": "Oh, I see what\u0027s happened here. This example case made me think that I would have expected that\u0027s already supported, and I should have noticed breaking it, but it\u0027s actually not. In current Tint:\n\n```\nv.x \u003d 42; // This is allowed (you can swizzle assign a single element)\n//v.yx.x \u003d 42; // This fails with error: cannot assign to value of type u32\n```\n\nSo if this change is to truly be a no-op, maybe we could keep the `\u0026\u0026 !memory_view-\u003eIs\u003ccore::type::SwizzleView\u003e()`s here with a better comment, but I\u0027ll follow up with a CTS test to catch this and fix it as a bug separately?",
+      "parentUuid": "3811bddf_e80a743e",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "908299b7_48bc8c6b",
         "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
         "patchSetId": 1
@@ -208,6 +358,30 @@
       "writtenOn": "2026-01-19T23:18:20Z",
       "side": 1,
       "message": "It\u0027s not clear to me why we have to do this ahead of time. Why can\u0027t this be done as part of `Resolver::Load()`, where you added the special-case to avoid doing this?",
+      "range": {
+        "startLine": 3605,
+        "startChar": 0,
+        "endLine": 3607,
+        "endChar": 41
+      },
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d129a9b8_03eaca6f",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3607,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T16:02:56Z",
+      "side": 1,
+      "message": "This line is registering a Load of the object being swizzled, not the result of the swizzle. In the case of the fake Load of the result to fix the types, we actually don\u0027t register that Load. That\u0027s a very confusing sentence but am I on track there or thinking about it wrong?",
+      "parentUuid": "908299b7_48bc8c6b",
       "range": {
         "startLine": 3605,
         "startChar": 0,
@@ -235,6 +409,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d363397_3f44c8bf",
+        "filename": "src/tint/lang/wgsl/resolver/resolver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T16:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85cbff0e_d5865303",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2a4399c_a1576731",
@@ -248,6 +440,24 @@
       "writtenOn": "2026-01-19T23:18:20Z",
       "side": 1,
       "message": "Why did you need to add this here? A SwizzleView is a memory view but shouldn\u0027t itself be storable.",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02e8469a_618cc1f7",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T16:02:56Z",
+      "side": 1,
+      "message": "Good catch, must have been hanging about from a previous incorrect fix.",
+      "parentUuid": "f2a4399c_a1576731",
       "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
