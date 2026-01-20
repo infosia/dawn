@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60b7504e_de46019b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-20T16:59:11Z",
+      "side": 1,
+      "message": "LGTM, Sunny PTAL as well",
+      "revId": "021518d1bd3bde5fdcea4102e2df2d24f90ad588",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a569d4f2_e52e69d7",
+        "filename": "src/dawn/native/d3d12/CommandRecordingContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-20T16:59:11Z",
+      "side": 1,
+      "message": "nit: can we more directly call out KeyedMutex, which other users of the SharedTextureMemory could rely on being unlocked after Dawn is finished doing the submit?",
+      "revId": "021518d1bd3bde5fdcea4102e2df2d24f90ad588",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
