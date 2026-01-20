@@ -94,6 +94,8 @@ MaybeError BindGroup::InitializeImpl() {
                 const BufferBinding& binding = GetBindingAsBufferBinding(bindingIndex);
                 const id<MTLBuffer> buffer =
                     binding.buffer->IsDestroyed() ? nil : ToBackend(binding.buffer)->GetMTLBuffer();
+                printf("bind %p @ %u = %s + %llu\n", (void*)*mArgumentBuffer, dstBinding,
+                       binding.buffer->GetLabel().c_str(), binding.offset);
                 [*encoder setBuffer:buffer offset:binding.offset atIndex:dstBinding];
             },
             [&](const SamplerBindingInfo&) {

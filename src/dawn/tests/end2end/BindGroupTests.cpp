@@ -395,12 +395,12 @@ TEST_P(BindGroupTests, MultipleBindLayouts) {
             return fragmentUbo1.color + fragmentUbo2.color;
         })");
 
-    utils::ComboRenderPipelineDescriptor textureDescriptor;
-    textureDescriptor.vertex.module = vsModule;
-    textureDescriptor.cFragment.module = fsModule;
-    textureDescriptor.cTargets[0].format = renderPass.colorFormat;
+    utils::ComboRenderPipelineDescriptor pipelineDesc;
+    pipelineDesc.vertex.module = vsModule;
+    pipelineDesc.cFragment.module = fsModule;
+    pipelineDesc.cTargets[0].format = renderPass.colorFormat;
 
-    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&textureDescriptor);
+    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pipelineDesc);
 
     struct Data {
         float transform[4];

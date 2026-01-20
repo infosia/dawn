@@ -52,40 +52,41 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device,
         return;
     }
 
-    std::vector<MTLArgumentDescriptor*> descriptors;
-    for (BindingIndex bindingIndex{0}; bindingIndex < GetBindingCount(); ++bindingIndex) {
-        auto& bindingInfo = GetBindingInfo(bindingIndex);
+    @autoreleasepool {
+        std::vector<MTLArgumentDescriptor*> descriptors;
+        for (BindingIndex bindingIndex{0}; bindingIndex < GetBindingCount(); ++bindingIndex) {
+            auto& bindingInfo = GetBindingInfo(bindingIndex);
 
-        MTLArgumentDescriptor* desc = [MTLArgumentDescriptor argumentDescriptor];
-        desc.index = ToMTLArgumentBufferIndex(bindingIndex);
+            MTLArgumentDescriptor* desc = [MTLArgumentDescriptor argumentDescriptor];
+            desc.index = ToMTLArgumentBufferIndex(bindingIndex);
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated"
-        desc.access = MTLArgumentAccessReadOnly;
+            desc.access = MTLArgumentAccessReadOnly;
 #pragma clang diagnostic pop
 
-        // TODO(crbug.com/363031535): Handle more then uniform/storage.  (e.g. samplers, textures,
-        // etc.)
-        MatchVariant(
-            bindingInfo.bindingLayout,
-            [&](const BufferBindingInfo& layout) { desc.dataType = MTLDataTypePointer; },
-            [&](const SamplerBindingInfo&) { desc.dataType = MTLDataTypeSampler; },
-            [&](const StaticSamplerBindingInfo&) {
-                // Static samplers are handled in the frontend.
-                // TODO(crbug.com/dawn/2482): Implement static samplers in the
-                // Metal backend.
-                DAWN_CHECK(false);
-            },
-            [&](const TextureBindingInfo&) { desc.dataType = MTLDataTypeTexture; },
-            [&](const StorageTextureBindingInfo&) { desc.dataType = MTLDataTypeTexture; },
-            [&](const TexelBufferBindingInfo&) { DAWN_CHECK(false); },
-            [](const InputAttachmentBindingInfo&) { DAWN_CHECK(false); },
-            [](const ExternalTextureBindingInfo&) { DAWN_CHECK(false); });
+            // TODO(crbug.com/363031535): Implement the unimplemented binding types below.
+            MatchVariant(
+                bindingInfo.bindingLayout,
+                [&](const BufferBindingInfo& layout) { desc.dataType = MTLDataTypePointer; },
+                [&](const SamplerBindingInfo&) { desc.dataType = MTLDataTypeSampler; },
+                [&](const StaticSamplerBindingInfo&) {
+                    // Static samplers are handled in the frontend.
+                    // TODO(crbug.com/dawn/2482): Implement static samplers in the
+                    // Metal backend.
+                    DAWN_CHECK(false);
+                },
+                // TODO(crbug.com/363031535): May need to set desc.textureType.
+                [&](const TextureBindingInfo&) { desc.dataType = MTLDataTypeTexture; },
+                [&](const StorageTextureBindingInfo&) { desc.dataType = MTLDataTypeTexture; },
+                [&](const TexelBufferBindingInfo&) { DAWN_CHECK(false); },
+                [&](const InputAttachmentBindingInfo&) { DAWN_CHECK(false); },
+                [&](const ExternalTextureBindingInfo&) { DAWN_CHECK(false); });
 
-        descriptors.push_back(desc);
-    }
+            printf("BGL %p @ %u\n", (void*)this, uint32_t(desc.index));
+            descriptors.push_back(desc);
+        }
 
-    if (!descriptors.empty()) {
-        @autoreleasepool {
+        if (!descriptors.empty()) {
             NSArray* ary = [NSArray arrayWithObjects:descriptors.data() count:descriptors.size()];
             mArgumentEncoder = AcquireNSPRef(
                 [ToBackend(device)->GetMTLDevice() newArgumentEncoderWithArguments:ary]);

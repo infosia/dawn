@@ -734,7 +734,10 @@ class BindGroupTracker : public BindGroupTrackerBase<true> {
             auto HandleTextureBinding = [&]() {
                 auto textureView = ToBackend(group->GetBindingAsTextureView(bindingIndex));
                 id<MTLTexture> texture = textureView->GetMTLTexture();
-                if (!mUseArgumentBuffers) {
+                if (mUseArgumentBuffers) {
+                    [render useResource:texture usage:MTLResourceUsageRead];
+                    printf("HandleTextureBinding %p %p\n", (void*)render, (void*)texture);
+                } else {
                     if (hasVertStage &&
                         mBoundTextures[SingleShaderStage::Vertex][vertIndex] != texture) {
                         mBoundTextures[SingleShaderStage::Vertex][vertIndex] = texture;
