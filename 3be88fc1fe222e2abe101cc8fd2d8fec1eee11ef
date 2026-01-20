@@ -714,6 +714,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5fa14243_674ae713",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T23:11:53Z",
+      "side": 1,
+      "message": "I\u0027ll check this again. If all the calculations are done in bytes it\u0027s a multiply. See if the tests make sense. I\u0027ll double check this.",
+      "parentUuid": "de91ed7b_05825b6f",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "48a806db_c1d01972",
         "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
         "patchSetId": 4
@@ -725,6 +743,24 @@
       "writtenOn": "2026-01-20T22:58:14Z",
       "side": 1,
       "message": "I assume that chained `reinterpret` calls could produce multiple runtime offsets? If so, maybe add a `TINT_IR_ASSERT(ir, offset.byte_offset_expr.Length() \u003c\u003d 1)` to make sure we update this in the future?",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17cd0678_17797f82",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T23:11:53Z",
+      "side": 1,
+      "message": "Not `reinterpret`, but `view` yes, but assert makes sense.",
+      "parentUuid": "48a806db_c1d01972",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
