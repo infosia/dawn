@@ -140,6 +140,24 @@
       "parentUuid": "eaaf5778_30084fbb",
       "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59765448_718b435d",
+        "filename": "src/dawn/webgpu_kt_docs.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-20T23:22:26Z",
+      "side": 1,
+      "message": "It seems like an acceptable amount of noise to me personally. Itemized docs aren\u0027t for reading top-to-bottom, they\u0027re for referencing. Even if the docs are printed all on the same page I don\u0027t feel it would add an unreasonable size to the page.\n\nIf you feel strongly that it\u0027s too much, I would be OK putting a larger disclaimer in fewer places, e.g. `(All docs for this class are AI-generated.)` on all top-level items (classes, enums, whatever) and omit it for things like methods and enum values?",
+      "parentUuid": "8457e542_de128e43",
+      "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
