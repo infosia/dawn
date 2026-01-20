@@ -243,6 +243,10 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         (r8unormFormatSupport.Support2 & D3D12_FORMAT_SUPPORT2_UAV_TYPED_STORE)) {
         EnableFeature(Feature::TextureFormatsTier2);
     }
+
+    if (GetDeviceInfo().supportsBindless) {
+        EnableFeature(Feature::ChromiumExperimentalSamplingResourceTable);
+    }
 }
 
 MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
