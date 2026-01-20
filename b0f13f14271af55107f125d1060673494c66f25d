@@ -122,6 +122,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c54afe4_915bd908",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "bf834e1b_f668647b",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05ff634f_ee10ff9d",
@@ -193,6 +211,24 @@
       "side": 1,
       "message": "It is the eventual var\u0027s array element type. I wanted a short name since it\u0027s used all over the file.",
       "parentUuid": "5b8e7405_cf8564e9",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b4bec2e_caaadc5e",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "DestType? ArrayType? VarType? The `Base` name doesn\u0027t really tell me much when reading it.\n\nReading what it does maybe `ElementType` ?",
+      "parentUuid": "0e72604e_45dfce95",
       "revId": "b0f13f14271af55107f125d1060673494c66f25d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

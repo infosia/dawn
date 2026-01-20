@@ -16,6 +16,565 @@
       "message": "I can pull the bufferView specific stuff if that\u0027s preferable, but it is semi-tested at least.",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b055680_356b8514",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "Haven\u0027t looked at the test yet, but got through the cc and h files.",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aca214cc_759c2c07",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "```suggestion\n                    if (inst-\u003eIsAnyOf\u003ccore::ir::Access, core::ir::Let\u003e() || bufferView) {\n```",
+      "range": {
+        "startLine": 270,
+        "startChar": 24,
+        "endLine": 270,
+        "endChar": 95
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e191e166_c7db7ea4",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "Can use the unsorted usages here to save the sort + copy?",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8eaa9168_cb628b58",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "```suggestion\n        return std::min(size, 16u);\n```",
+      "range": {
+        "startLine": 278,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 20
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b05879b7_00c29d2a",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "is this really just `size \u003d\u003d 8` ? If so, can we change and maybe add an:\n\n```\n} else {\n  TINT_UNREACHABLE();\n}\n```",
+      "range": {
+        "startLine": 299,
+        "startChar": 1,
+        "endLine": 300,
+        "endChar": 34
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7adaf593_55040828",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "```suggestion\n    // Calculates the index of the vector element containing the byte at (byte_idx % BaseType()-\u003eSize()).\n```",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e0140d8_8f505d07",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "Make `type::Type*` an actual `type::Vector*` then you don\u0027t need to cast internally",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4e8c1c9_d60e5c28",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "`src_type` seems a bit better then ref because it\u0027s the type of the source data? (ref makes me think reference type which seems unrelated)\n\n```suggestion\n    core::ir::Value* CalculateVectorOffset(core::ir::Value* byte_idx, const type::Type* src_ty) {\n        TINT_IR_ASSERT(ir, src_ty-\u003eIs\u003ctype::Vector\u003e());\n        if (auto* byte_cnst \u003d byte_idx-\u003eAs\u003ccore::ir::Constant\u003e()) {\n            return b.Value(u32((byte_cnst-\u003eValue()-\u003eValueAs\u003cuint32_t\u003e() % src_ty-\u003eSize()) /\n                               src_ty-\u003eAs\u003ctype::Vector\u003e()-\u003eWidth()));\n        }\n        // Note: Using bitwise-and and shift instead of modulo and divide here was necessary to\n        // avoid an FXC miscompile. See https://crbug.com/454366353.\n        return b\n            .ShiftRight(b.And(byte_idx, b.Constant(u32(BaseType()-\u003eSize() - 1))),\n                        b.Constant(u32(log2(src_ty-\u003eAs\u003ctype::Vector\u003e()-\u003eWidth()))))\n```",
+      "range": {
+        "startLine": 345,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 83
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "501c3d9b_506cd842",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "Should be able to do the same `InsertConvertIfNeeded` call the old code did, it will only convert if the dest type doesn\u0027t match the source type.",
+      "range": {
+        "startLine": 368,
+        "startChar": 0,
+        "endLine": 370,
+        "endChar": 17
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fdec7c7_83bf9ba5",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "```suggestion\n                    // Note, we don\u0027t need to check for bufferView and bufferLength as they cannot be encountered after an access.\n```",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "720f0c95_6cfa0405",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "I think this would be clearer if we flipped it around:\n```suggestion\n                if (i \u003e 0) {\n                    if (auto* cnst \u003d array_idx-\u003eAs\u003cConstant\u003e()) {\n                        array_idx \u003d b.Constant(u32(cnst-\u003eValue()-\u003eValueAs\u003cuint32_t\u003e() + 1));\n                    } else {\n                        array_idx \u003d b.Add(array_idx, b.Constant(1_u))-\u003eResult();\n                    }\n                }\n                \n                auto* access \u003d b.Access(\n                    ty.ptr(var_ty-\u003eAddressSpace(), BaseType(), var_ty-\u003eAccess()), var, array_idx);\n                loads.Push(b.Load(access-\u003eResult())-\u003eResult());\n```",
+      "range": {
+        "startLine": 555,
+        "startChar": 1,
+        "endLine": 564,
+        "endChar": 17
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "197836b0_be8fa583",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "Does this comment, or the one for MakeVectorLoadF16 need to be updated for this change?",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99d0e9dc_369861dc",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "Should we rename this to `MakeVectorLoad2Bytes` or something, as it isn\u0027t just f16 anymore.",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5517a7f_8feae416",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "This seem same as above? Can we pull the load generation to a helper?",
+      "range": {
+        "startLine": 647,
+        "startChar": 7,
+        "endLine": 659,
+        "endChar": 0
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db13af0a_47dafad6",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this have been pulled int other check on 639? As u16 is 2 bytes?",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe250288_ecb02b96",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "ditto seems same as above?",
+      "range": {
+        "startLine": 752,
+        "startChar": 1,
+        "endLine": 762,
+        "endChar": 13
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a2c2d6c_5d200731",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "i wonder if a BitcastIfNecessary would be useful to collapse all of these",
+      "range": {
+        "startLine": 780,
+        "startChar": 1,
+        "endLine": 783,
+        "endChar": 29
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1af4250_114cb1cb",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "Maybe `TINT_IR_ASSERT(ir, result_ty-\u003eDeepestElement()-\u003eis\u003ccore::type::F16\u003e());` ?",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4c07ecd_03665ffa",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand this, is it updating both for bufferView _and_ what would be just an arraylength call we have now? For a non-bufferview arraylength call, why does anything need to change?",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39faa4e1_ad92235c",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "```suggestion\n        // b \u003d bufferView var, offset1\n        // a \u003d access b, offset2\n        // l \u003d arrayLength a\n```",
+      "range": {
+        "startLine": 980,
+        "startChar": 2,
+        "endLine": 982,
+        "endChar": 28
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5e85368_0cd8c9db",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "```suggestion\n        // Transformed:\n        // l \u003d arrayLength var\n        // o \u003d add offset1, bytes(offset2)\n        // s \u003d sub l, o\n        // m \u003d mul s, ratio\n```",
+      "range": {
+        "startLine": 984,
+        "startChar": 0,
+        "endLine": 988,
+        "endChar": 27
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffe15ae4_44582b3a",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "How do we end up with an arrayLength call not on the var?",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4670fb10_8c46f90c",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "Why do we need to overwrite these, can\u0027t we just set them correctly when we make the `sub` or `mul`? The `call` already exists so the result already exists at that point.",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66c5ccb9_da7d6c3b",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "We do this calculation for the num array elements a bunch, maybe pull out to a helper?",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d9f0162_06298422",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "assert the BaseType DeepestElement is U16?",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4d71f4d_e7e0e83b",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "Comment says \u003c\u003d, but assert is \u003d\u003d?",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8c02d23_7c997be5",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "Should we rename to be something like `decompose_access` as this is not uniform specific anymore?",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c89b629_eb0db2a2",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "```suggestion\n    /// Specify whether all variables in the address space should be decomposed.\n```",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c1d2910_bb881110",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-20T22:06:39Z",
+      "side": 1,
+      "message": "It should be possible to do this in this cl if you want as dawn would be the only caller and it\u0027s in the same repo, followon cl is also fine though.",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
