@@ -46,6 +46,30 @@
       },
       "revId": "3ec5b72e9ec23c8fe4a8010e1d6783687a5bb52f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6d4f9e0_456519e2",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-01-20T22:21:36Z",
+      "side": 1,
+      "message": "There is actually a hook that is suppose to tell you about this.\nIt might be broken or maybe it was skipped.",
+      "parentUuid": "a7910e82_b5ffb93c",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3ec5b72e9ec23c8fe4a8010e1d6783687a5bb52f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
