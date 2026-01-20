@@ -426,8 +426,7 @@ BufferBase::BufferBase(DeviceBase* device, const UnpackedPtr<BufferDescriptor>& 
       mSize(descriptor->size),
       mUsage(descriptor->usage),
       mInternalUsage(ComputeInternalBufferUsages(device, descriptor->usage, descriptor->size)),
-      mState(descriptor.Has<BufferHostMappedPointer>() ? BufferState::HostMappedPersistent
-                                                       : BufferState::Unmapped) {
+      mIsHostMapped(descriptor.Has<BufferHostMappedPointer>()) {
     GetObjectTrackingList()->Track(this);
 }
 
@@ -489,7 +488,6 @@ void BufferBase::DestroyImpl(DestroyReason reason) {
             }
             case BufferState::Destroyed:
                 DAWN_UNREACHABLE();
-            case BufferState::HostMappedPersistent:
             case BufferState::Unmapped:
             case BufferState::SharedMemoryNoAccess:
                 // Buffer is ready to be destroyed.
@@ -537,6 +535,7 @@ wgpu::BufferMapState BufferBase::APIGetMapState() const {
     switch (mState.load(std::memory_order::acquire)) {
         case BufferState::Mapped:
         case BufferState::MappedAtCreation:
+            DAWN_ASSERT(!mIsHostMapped);
             return wgpu::BufferMapState::Mapped;
         case BufferState::PendingMap:
             return wgpu::BufferMapState::Pending;
@@ -545,8 +544,6 @@ wgpu::BufferMapState BufferBase::APIGetMapState() const {
         case BufferState::InsideOperation:
         case BufferState::SharedMemoryNoAccess:
             return wgpu::BufferMapState::Unmapped;
-        case BufferState::HostMappedPersistent:
-            DAWN_UNREACHABLE();
     }
 }
 
@@ -672,7 +669,6 @@ MaybeError BufferBase::ValidateCanUseOnQueueNow() const {
             return DAWN_VALIDATION_ERROR("%s used in submit without shared memory access.", this);
         case BufferState::InsideOperation:
             return ConcurrentUseError();
-        case BufferState::HostMappedPersistent:
         case BufferState::Unmapped:
             return {};
     }
@@ -707,6 +703,10 @@ Future BufferBase::APIMapAsync(wgpu::MapMode mode,
             switch (mState.load(std::memory_order::acquire)) {
                 case BufferState::Mapped:
                 case BufferState::MappedAtCreation:
+                    if (mIsHostMapped) {
+                        return DAWN_VALIDATION_ERROR("Host-mapped %s cannot be mapped again.",
+                                                     this);
+                    }
                     return DAWN_VALIDATION_ERROR("%s is already mapped.", this);
                 case BufferState::InsideOperation:
                     return ConcurrentUseError();
@@ -715,8 +715,6 @@ Future BufferBase::APIMapAsync(wgpu::MapMode mode,
                                                  this);
                 case BufferState::Destroyed:
                     return DAWN_VALIDATION_ERROR("%s is destroyed.", this);
-                case BufferState::HostMappedPersistent:
-                    return DAWN_VALIDATION_ERROR("Host-mapped %s cannot be mapped again.", this);
                 case BufferState::SharedMemoryNoAccess:
                     return DAWN_VALIDATION_ERROR("%s used without shared memory access.", this);
                 case BufferState::Unmapped:
@@ -860,7 +858,6 @@ MaybeError BufferBase::Unmap(bool forDestroy) {
             return ConcurrentUseError();
         case BufferState::Unmapped:
             return {};
-        case BufferState::HostMappedPersistent:
         case BufferState::SharedMemoryNoAccess:
             break;
         case BufferState::PendingMap:
@@ -965,11 +962,6 @@ bool BufferBase::CanGetMappedRange(bool writable, size_t offset, size_t size) co
     //     for error buffers too.
 
     switch (mState.load(std::memory_order::acquire)) {
-        // It is never valid to call GetMappedRange on a host-mapped buffer.
-        // TODO(crbug.com/dawn/2018): consider returning the same pointer here.
-        case BufferState::HostMappedPersistent:
-            return false;
-
         // Writeable Buffer::GetMappedRange is always allowed when mapped at creation.
         case BufferState::MappedAtCreation:
             break;
@@ -1010,8 +1002,7 @@ bool BufferBase::CanGetMappedRange(bool writable, size_t offset, size_t size) co
 
 MaybeError BufferBase::ValidateUnmap() const {
     DAWN_TRY(GetDevice()->ValidateIsAlive());
-    DAWN_INVALID_IF(mState.load(std::memory_order::acquire) == BufferState::HostMappedPersistent,
-                    "Persistently mapped buffer cannot be unmapped.");
+    DAWN_INVALID_IF(mIsHostMapped, "Persistently mapped buffer cannot be unmapped.");
     return {};
 }
 
