@@ -2238,6 +2238,23 @@ TEST_P(CaptureAndReplayTests, MappedBufferDestroyed) {
     // just expect no errors
 }
 
+TEST_P(CaptureAndReplayTests, MappedAtCreationBuffer) {
+    auto recorder = Recorder::CreateAndStart(device);
+
+    constexpr uint8_t values[] = {0x11, 0x22, 0x33, 0x44};
+    const size_t size = sizeof(values);
+
+    wgpu::Buffer buffer = CreateBuffer(
+        "MyBuffer", size, wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Uniform, true);
+    memcpy(buffer.GetMappedRange(0, size), values, size);
+    buffer.Unmap();
+
+    auto capture = recorder.Finish();
+    auto replay = capture.Replay(device);
+
+    ExpectBufferEQ(replay.get(), "MyBuffer", values);
+}
+
 DAWN_INSTANTIATE_TEST(CaptureAndReplayTests, WebGPUBackend());
 
 class CaptureAndReplayDrawTests : public CaptureAndReplayTests {
