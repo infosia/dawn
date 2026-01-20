@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "934198a0_1d3434f2",
+        "filename": "src/tint/lang/wgsl/resolver/uniformity.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-20T19:17:49Z",
+      "side": 1,
+      "message": "I don\u0027t /think/ we need this? There should be a `sem::Load` in the expression chain somewhere if we are loading from a `SwizzleView`, which is enough to tell the analysis that memory is being accessed.\n\nAt least, removing this didn\u0027t make any tests fail for me, so if it\u0027s necessary then we\u0027re missing some test coverage.",
+      "range": {
+        "startLine": 1492,
+        "startChar": 0,
+        "endLine": 1495,
+        "endChar": 9
+      },
+      "revId": "21157f7efdec454f3cb912910799a0e420066aa5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
