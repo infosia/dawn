@@ -28,26 +28,23 @@
 #ifndef SRC_TINT_LANG_GLSL_WRITER_RAISE_OFFSET_FIRST_INDEX_H_
 #define SRC_TINT_LANG_GLSL_WRITER_RAISE_OFFSET_FIRST_INDEX_H_
 
-#include "src/tint/lang/core/ir/transform/prepare_immediate_data.h"
 #include "src/tint/utils/result.h"
 
 // Forward declarations.
 namespace tint::core::ir {
 class Module;
+class Var;
 }  // namespace tint::core::ir
 
 namespace tint::glsl::writer::raise {
 
 /// OffsetFirstIndexConfig describes the configuration options for the OffsetFirstIndex transform.
 struct OffsetFirstIndexConfig {
-    /// Immediate data layout information.
-    const core::ir::transform::ImmediateDataLayout& immediate_data_layout;
+    /// FirstVertex variable.
+    core::ir::Var* first_vertex = nullptr;
 
-    /// Offset of the firstVertex immediate data.
-    std::optional<uint32_t> first_vertex_offset{};
-
-    /// Offset of the firstInstance immediate data.
-    std::optional<uint32_t> first_instance_offset{};
+    /// FirstInstance variable.
+    core::ir::Var* first_instance = nullptr;
 };
 
 /// OffsetFirstIndex is a transform that adds an offset to the `vertex_index` and `instance_index`
