@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bd493fa4_585822d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T20:14:20Z",
+      "side": 1,
+      "message": "Well, now I\u0027ve already updated to a patchset with the To vector. WDYT?",
+      "parentUuid": "5a2e35f9_4e5b7925",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "de4fce61_7306be0b",
         "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
         "patchSetId": 1
@@ -102,6 +120,24 @@
       "writtenOn": "2026-01-19T23:18:20Z",
       "side": 1,
       "message": "Note to myself: IIUC this would be simpler if the store type of the swizzle view was the \"to\" vector type.",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4890f44c_95865020",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T20:14:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "de4fce61_7306be0b",
       "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -276,6 +312,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dd6bbf1_c66cd3a9",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T20:14:20Z",
+      "side": 1,
+      "message": "Ah yeah, got it. Fixed. And I\u0027ll add that one to CTS too.",
+      "parentUuid": "4619a9a5_358d35b6",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b9b5d2d2_e75acd13",
@@ -307,6 +361,24 @@
       "side": 1,
       "message": "Good catch, agreed. (I recall adding this for a case when I was getting a ref to a scalar on the rhs but expected a scalar, but the solution was probably a missing Load and I think I\u0027ve now found and addressed all those.)",
       "parentUuid": "b9b5d2d2_e75acd13",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf3991ea_dc62efb1",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1913,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T20:14:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ede8d9a7_33c97981",
       "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -364,6 +436,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd5c7939_4f34a4b0",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1969,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T20:14:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5b7b167_00441718",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3811bddf_e80a743e",
@@ -413,6 +503,24 @@
       "side": 1,
       "message": "Fixing as a follow-up SGTM.",
       "parentUuid": "172163f0_78a0a6a0",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4c5440b_83b55fab",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3595,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T20:14:20Z",
+      "side": 1,
+      "message": "Added a TODO(crbug)",
+      "parentUuid": "24afd4dc_6f2ba9e8",
       "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -478,6 +586,30 @@
       "side": 1,
       "message": "My mental model was that the load-after-the-swizzle was the semantically accurate load from a WGSL perspective, even if that\u0027s not what we emit in IR. But now that I\u0027ve actually read David\u0027s spec text I see that `SwizzleViewRead` prescribes a load of the whole vector. I think with something like `vec.wzyx.x` it should still technically be only loading a single element, but in practice that distinction does not matter for the alias analysis.\n\nI was also thinking ahead to when we have assignment. In that world, we don\u0027t know that are are going to load from the swizzle when the view is created, although I understand that the polyfill will in fact load anyway. It again doesn\u0027t really matter for the alias analysis though, since we will register a store as well anyway.\n\nSo in summary, I think it\u0027s fine to leave this as is and see how things shake out when we also have assignment.",
       "parentUuid": "d129a9b8_03eaca6f",
+      "range": {
+        "startLine": 3605,
+        "startChar": 0,
+        "endLine": 3607,
+        "endChar": 41
+      },
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48cb5736_535f97ef",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3607,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T20:14:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "704fa084_b1ee4ad1",
       "range": {
         "startLine": 3605,
         "startChar": 0,
