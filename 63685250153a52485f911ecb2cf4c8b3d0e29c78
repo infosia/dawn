@@ -34,6 +34,24 @@
       "parentUuid": "6e8e15ca_bab43acc",
       "revId": "63685250153a52485f911ecb2cf4c8b3d0e29c78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff75158b_a149d04e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3578208
+      },
+      "writtenOn": "2026-01-20T16:19:47Z",
+      "side": 1,
+      "message": "Forget the last sentence. The files cannot just be uploaded because they are not based on current HEAD. I should have tried that back then in November.",
+      "parentUuid": "74bf2aff_42471eb7",
+      "revId": "63685250153a52485f911ecb2cf4c8b3d0e29c78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

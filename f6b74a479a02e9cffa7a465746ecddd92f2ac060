@@ -16,6 +16,24 @@
       "message": "The test errors are completely different for patchset 7 compared to 6. The presubmit error wants me to run git",
       "revId": "f6b74a479a02e9cffa7a465746ecddd92f2ac060",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39d6f77b_30c924d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3578208
+      },
+      "writtenOn": "2026-01-20T16:19:47Z",
+      "side": 1,
+      "message": "This is an old message, can be ignored",
+      "parentUuid": "07217e88_b733e876",
+      "revId": "f6b74a479a02e9cffa7a465746ecddd92f2ac060",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
