@@ -653,6 +653,7 @@ source_set("end2end_tests_sources") {
     "end2end/DiscardBasicTests.cpp",
     "end2end/DrawIndexedIndirectTests.cpp",
     "end2end/DrawIndexedTests.cpp",
+    "end2end/DrawIndirectSwapchainSimulationTest.cpp",
     "end2end/DrawIndirectTests.cpp",
     "end2end/DrawTests.cpp",
     "end2end/DualSourceBlendTests.cpp",
