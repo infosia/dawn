@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c295163b_d52fa7c7",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-20T18:45:32Z",
+      "side": 1,
+      "message": "I think this is fine for now. Since we only use i8 to parameterize a subgroup matrix type at the moment we don\u0027t actually need it to be valid for any builtin or constructor.\n\nOne day we\u0027ll get an 8-bit int extension (maybe), and then we\u0027ll need to add iu8 to more stuff here.",
+      "parentUuid": "7276c532_bc0dcd99",
+      "revId": "55391be21b8bca8c0c45251c7bf37500b7dd6b16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "377ed12f_b9683261",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 3
@@ -108,6 +126,30 @@
       "side": 1,
       "message": "Is that better than type-\u003eSize() \u003d\u003d 2?",
       "parentUuid": "6c22d2ce_1be40e40",
+      "range": {
+        "startLine": 4010,
+        "startChar": 0,
+        "endLine": 4017,
+        "endChar": 71
+      },
+      "revId": "55391be21b8bca8c0c45251c7bf37500b7dd6b16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95e91326_9cfa4722",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4017,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-20T18:45:32Z",
+      "side": 1,
+      "message": "We\u0027d still need to check that it\u0027s a scalar, because we don\u0027t want to allow bitcasting to something like `array\u003cf16, 1\u003e`.\n\nI think this is fine for now, and then maybe in the future we should consider defining the bitcast overloads in `core.def` like we do for WGSL. I opened crbug.com/477289753 for this.",
+      "parentUuid": "be82c413_7c7abde9",
       "range": {
         "startLine": 4010,
         "startChar": 0,
