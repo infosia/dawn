@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7276c532_bc0dcd99",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T15:14:21Z",
+      "side": 1,
+      "message": "Just to note I only did this to make constructors work. I don\u0027t think it\u0027s strictly necessary for i8.",
+      "parentUuid": "1a75ea36_d3eb57be",
+      "revId": "55391be21b8bca8c0c45251c7bf37500b7dd6b16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "377ed12f_b9683261",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 3
