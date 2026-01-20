@@ -39,6 +39,7 @@ load("@bazel_skylib//lib:selects.bzl", "selects")
 cc_library(
   name = "transform",
   srcs = [
+    "add_immediate_vars.cc",
     "array_length_from_immediate.cc",
     "array_length_from_uniform.cc",
     "bgra8unorm_polyfill.cc",
@@ -76,6 +77,7 @@ cc_library(
     "zero_init_workgroup_memory.cc",
   ],
   hdrs = [
+    "add_immediate_vars.h",
     "array_length_from_immediate.h",
     "array_length_from_uniform.h",
     "bgra8unorm_polyfill.h",

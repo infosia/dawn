@@ -78,6 +78,10 @@ void Run(Module& ir) {
                 const_cast<type::Struct*>(str)->SetStructFlag(type::kBlock);
                 continue;
             }
+        } else {
+            if (ptr->AddressSpace() == core::AddressSpace::kImmediate) {
+                continue;  // don't wrap non-struct immediates
+            }
         }
 
         // The original struct might be used in other places, so create a new block-decorated
