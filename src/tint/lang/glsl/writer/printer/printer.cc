@@ -242,6 +242,17 @@ class Printer : public tint::TextGenerator {
         });
     }
 
+    /// @returns the name of the given variable
+    std::string NameOf(const core::ir::Var* var, bool add_stage_prefix = false) {
+        auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
+        if (ptr && !add_stage_prefix) {
+            if (ptr->AddressSpace() == core::AddressSpace::kImmediate) {
+                return ir_.NameOf(var->Result()).Name();
+            }
+        }
+        return NameOf(var->Result(), add_stage_prefix);
+    }
+
     /// @param m the struct member
     /// @returns the name to use for the struct member
     std::string NameOf(const core::type::StructMember* m) {
@@ -1000,7 +1011,7 @@ class Printer : public tint::TextGenerator {
         auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
         auto space = ptr->AddressSpace();
 
-        EmitTypeAndName(out, var->Result()->Type(), NameOf(var->Result(), add_stage_prefix));
+        EmitTypeAndName(out, var->Result()->Type(), NameOf(var, add_stage_prefix));
         if (var->Initializer()) {
             out << " = ";
             EmitValue(out, var->Initializer());
@@ -1117,23 +1128,28 @@ class Printer : public tint::TextGenerator {
     }
 
     void EmitImmediateVar(core::ir::Var* var) {
-        // We need to use the same name for the immediate data structure and variable between
-        // different pipeline stages.
-        constexpr const char* kImmediateStructName = "tint_immediate_struct";
-        constexpr const char* kImmediateVarName = "tint_immediates";
-
         auto out = Line();
-        EmitLayoutLocation(out, {0}, std::nullopt);
+        if (var->Attributes().location) {
+            EmitLayoutLocation(out, {var->Attributes().location}, std::nullopt);
+        }
 
         auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
         auto* str = ptr->StoreType()->As<core::type::Struct>();
-        TINT_IR_ASSERT(ir_, str);
-        names_.Add(str, kImmediateStructName);
-        EmitStructType(str);
+        if (str) {
+            // We need to use the same name for the immediate data structure and variable between
+            // different pipeline stages.
+            constexpr const char* kImmediateStructName = "tint_immediate_struct";
+            constexpr const char* kImmediateVarName = "tint_immediates";
 
-        names_.Add(var->Result(), kImmediateVarName);
-        EmitTypeAndName(out, var->Result()->Type(), kImmediateVarName);
-        out << ";";
+            names_.Add(str, kImmediateStructName);
+            EmitStructType(str);
+
+            names_.Add(var->Result(), kImmediateVarName);
+            EmitTypeAndName(out, var->Result()->Type(), kImmediateVarName);
+            out << ";";
+        } else {
+            EmitVar(out, var);
+        }
     }
 
     void EmitIOVar(core::ir::Var* var) {
@@ -1423,7 +1439,7 @@ class Printer : public tint::TextGenerator {
                     [&](const core::ir::Store* s) { EmitStore(s); },
                     [&](const core::ir::Swizzle* s) { EmitSwizzle(out, s); },  //
                     [&](const core::ir::UserCall* c) { EmitUserCall(out, c); },
-                    [&](const core::ir::Var* var) { out << NameOf(var->Result()); },
+                    [&](const core::ir::Var* var) { out << NameOf(var); },
 
                     [&](const glsl::ir::BuiltinCall* c) { EmitGlslBuiltinCall(out, c); },  //
                     [&](const glsl::ir::MemberBuiltinCall* mbc) {

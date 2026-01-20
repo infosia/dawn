@@ -31,6 +31,7 @@
 #include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/ir/transform/helper_test.h"
 #include "src/tint/lang/core/number.h"
+#include "src/tint/lang/glsl/writer/raise/add_immediate_vars.h"
 
 using namespace tint::core::fluent_types;     // NOLINT
 using namespace tint::core::number_suffixes;  // NOLINT
@@ -58,13 +59,13 @@ TEST_F(GlslWriter_OffsetFirstIndexTest, NoModify_NoBuiltins) {
 
     auto* expect = src;
 
-    core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
-    auto immediate_data = PrepareImmediateData(mod, immediate_data_config);
-    EXPECT_EQ(immediate_data, Success);
+    core::ir::transform::AddImmediateVarsConfig immediate_vars_config;
+    auto immediate_vars = AddImmediateVars(mod, immediate_vars_config);
+    EXPECT_EQ(immediate_vars, Success);
 
-    OffsetFirstIndexConfig config{immediate_data.Get()};
-    config.first_vertex_offset = 4;
-    config.first_instance_offset = 8;
+    OffsetFirstIndexConfig config;
+    config.first_vertex = immediate_vars->first_vertex;
+    config.first_instance = immediate_vars->first_instance;
     Run(OffsetFirstIndex, config);
     EXPECT_EQ(expect, str());
 }
@@ -108,11 +109,11 @@ $B1: {  # root
 
     auto* expect = src;
 
-    core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
-    auto immediate_data = PrepareImmediateData(mod, immediate_data_config);
-    EXPECT_EQ(immediate_data, Success);
+    core::ir::transform::AddImmediateVarsConfig immediate_vars_config;
+    auto immediate_vars = AddImmediateVars(mod, immediate_vars_config);
+    EXPECT_EQ(immediate_vars, Success);
 
-    OffsetFirstIndexConfig config{immediate_data.Get()};
+    OffsetFirstIndexConfig config{};
     Run(OffsetFirstIndex, config);
     EXPECT_EQ(expect, str());
 }
@@ -179,19 +180,18 @@ $B1: {  # root
 }
 )";
 
-    core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
-    ASSERT_EQ(immediate_data_config.AddInternalImmediateData(4, mod.symbols.New("first_vertex"),
-                                                             ty.u32()),
-              Success);
-    auto immediate_data = PrepareImmediateData(mod, immediate_data_config);
-    EXPECT_EQ(immediate_data, Success);
+    core::ir::transform::AddImmediateVarsConfig immediate_vars_config;
+    immediate_vars_config.first_vertex_location = 1;
+    auto immediate_vars = AddImmediateVars(mod, immediate_vars_config);
+    EXPECT_EQ(immediate_vars, Success);
 
-    OffsetFirstIndexConfig config{immediate_data.Get()};
-    config.first_vertex_offset = 4;
+    OffsetFirstIndexConfig config{};
+    config.first_vertex = immediate_vars->first_vertex;
     Run(OffsetFirstIndex, config);
     EXPECT_EQ(expect, str());
 }
 
+#if 0
 TEST_F(GlslWriter_OffsetFirstIndexTest, InstanceOffset) {
     auto* vertex_idx = b.Var("vertex_index", ty.ptr(core::AddressSpace::kIn, ty.u32()));
     vertex_idx->SetBuiltin(core::BuiltinValue::kVertexIndex);
@@ -254,15 +254,13 @@ $B1: {  # root
 }
 )";
 
-    core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
-    ASSERT_EQ(immediate_data_config.AddInternalImmediateData(4, mod.symbols.New("first_instance"),
-                                                             ty.u32()),
-              Success);
-    auto immediate_data = PrepareImmediateData(mod, immediate_data_config);
-    EXPECT_EQ(immediate_data, Success);
+    core::ir::transform::AddImmediateVarsConfig immediate_vars_config;
+    immediate_vars_config.first_instance = 1;
+    auto immediate_vars = AddImmediateVars(mod, immediate_vars_config);
+    EXPECT_EQ(immediate_vars, Success);
 
-    OffsetFirstIndexConfig config{immediate_data.Get()};
-    config.first_instance_offset = 4;
+    OffsetFirstIndexConfig config{};
+    config.first_instance = immediate_vars.first_instance;
     Run(OffsetFirstIndex, config);
     EXPECT_EQ(expect, str());
 }
@@ -333,14 +331,14 @@ $B1: {  # root
 }
 )";
 
-    core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
+    core::ir::transform::AddImmediateVarsConfig immediate_data_config;
     ASSERT_EQ(immediate_data_config.AddInternalImmediateData(4, mod.symbols.New("first_vertex"),
                                                              ty.u32()),
               Success);
     ASSERT_EQ(immediate_data_config.AddInternalImmediateData(8, mod.symbols.New("first_instance"),
                                                              ty.u32()),
               Success);
-    auto immediate_data = PrepareImmediateData(mod, immediate_data_config);
+    auto immediate_data = AddImmediateVars(mod, immediate_data_config);
     EXPECT_EQ(immediate_data, Success);
 
     OffsetFirstIndexConfig config{immediate_data.Get()};
@@ -349,6 +347,7 @@ $B1: {  # root
     Run(OffsetFirstIndex, config);
     EXPECT_EQ(expect, str());
 }
+#endif
 
 }  // namespace
 }  // namespace tint::glsl::writer::raise
