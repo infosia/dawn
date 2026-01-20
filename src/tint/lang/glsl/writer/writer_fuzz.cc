@@ -126,16 +126,16 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
             if (auto* str = param->Type()->As<core::type::Struct>()) {
                 for (auto* member : str->Members()) {
                     if (member->Attributes().builtin == core::BuiltinValue::kVertexIndex) {
-                        options.first_vertex_offset = builtin_immediate();
+                        options.first_vertex_location = builtin_immediate();
                     } else if (member->Attributes().builtin == core::BuiltinValue::kInstanceIndex) {
-                        options.first_vertex_offset = builtin_immediate();
+                        options.first_vertex_location = builtin_immediate();
                     }
                 }
             } else {
                 if (param->Builtin() == core::BuiltinValue::kVertexIndex) {
-                    options.first_vertex_offset = builtin_immediate();
+                    options.first_vertex_location = builtin_immediate();
                 } else if (param->Builtin() == core::BuiltinValue::kInstanceIndex) {
-                    options.first_vertex_offset = builtin_immediate();
+                    options.first_vertex_location = builtin_immediate();
                 }
             }
         }
@@ -144,18 +144,14 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
         if (auto* str = func->ReturnType()->As<core::type::Struct>()) {
             for (auto* member : str->Members()) {
                 if (member->Attributes().builtin == core::BuiltinValue::kFragDepth) {
-                    options.depth_range_offsets = {
-                        builtin_immediate(),
-                        builtin_immediate(),
-                    };
+                    options.min_depth_location = builtin_immediate();
+                    options.max_depth_location = builtin_immediate();
                 }
             }
         } else {
             if (func->ReturnBuiltin() == core::BuiltinValue::kFragDepth) {
-                options.depth_range_offsets = {
-                    builtin_immediate(),
-                    builtin_immediate(),
-                };
+                options.min_depth_location = builtin_immediate();
+                options.max_depth_location = builtin_immediate();
             }
         }
     }

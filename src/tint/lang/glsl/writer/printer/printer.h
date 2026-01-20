@@ -46,6 +46,7 @@ namespace tint::glsl::writer {
 const core::ir::Capabilities kPrinterCapabilities{
     core::ir::Capability::kAllowHandleVarsWithoutBindings,
     core::ir::Capability::kAllowDuplicateBindings,
+    core::ir::Capability::kAllowMultipleImmediateVars,
     core::ir::Capability::kLoosenValidationForShaderIO,
 };
 

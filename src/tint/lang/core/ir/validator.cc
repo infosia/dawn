@@ -2763,7 +2763,8 @@ void Validator::CheckFunction(const Function* func) {
             }
 
             if (mv->AddressSpace() == AddressSpace::kImmediate) {
-                if (user_declared_immediate) {
+                if (user_declared_immediate &&
+                    !capabilities_.Contains(Capability::kAllowMultipleImmediateVars)) {
                     AddError(var) << "multiple user-declared immediate data variables referenced "
                                      "by entry point "
                                   << NameOf(func);

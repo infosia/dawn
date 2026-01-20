@@ -439,17 +439,16 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
         GetDevice()->IsToggleEnabled(Toggle::DisableWorkgroupInit);
 
     if (usesVertexIndex) {
-        req.tintOptions.first_vertex_offset = 4 * PipelineLayout::ImmediateLocation::FirstVertex;
+        req.tintOptions.first_vertex_location = PipelineLayout::ImmediateLocation::FirstVertex;
     }
 
     if (usesInstanceIndex) {
-        req.tintOptions.first_instance_offset =
-            4 * PipelineLayout::ImmediateLocation::FirstInstance;
+        req.tintOptions.first_instance_location = PipelineLayout::ImmediateLocation::FirstInstance;
     }
 
     if (usesFragDepth) {
-        req.tintOptions.depth_range_offsets = {4 * PipelineLayout::ImmediateLocation::MinDepth,
-                                               4 * PipelineLayout::ImmediateLocation::MaxDepth};
+        req.tintOptions.min_depth_location = PipelineLayout::ImmediateLocation::MinDepth;
+        req.tintOptions.max_depth_location = PipelineLayout::ImmediateLocation::MaxDepth;
     }
 
     if (stage == SingleShaderStage::Vertex) {
