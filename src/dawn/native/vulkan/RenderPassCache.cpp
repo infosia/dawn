@@ -91,7 +91,7 @@ class RenderPassCreateInfo2 {
             .pNext = nullptr,
             .attachment = VK_ATTACHMENT_UNUSED,
             .layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-            .aspectMask = 0,
+            .aspectMask = VK_IMAGE_ASPECT_COLOR_BIT,
         };
         for (auto i : Range(kMaxColorAttachmentsTyped)) {
             colorAttachmentRefs[i] = defaultRef;
@@ -115,6 +115,9 @@ class RenderPassCreateInfo2 {
             subpassDependencies[i].sType = VK_STRUCTURE_TYPE_SUBPASS_DEPENDENCY_2;
             subpassDependencies[i].pNext = nullptr;
             subpassDependencies[i].viewOffset = 0;
+            subpassDependencies[i].srcStageMask = VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT;
+            subpassDependencies[i].dstStageMask = VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT;
+            subpassDependencies[i].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
         }
 
         createInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO_2;
@@ -149,6 +152,9 @@ void InitializePassInfo(Device* device, const RenderPassCacheQuery& query, InfoT
 
         attachmentRef.attachment = attachmentCount;
         attachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+        if constexpr (std::is_same<InfoType, RenderPassCreateInfo2>::value) {
+            attachmentRef.aspectMask = VulkanAspectMask(Aspect::Color);
+        }
 
         attachmentDesc.flags = 0;
         attachmentDesc.format = VulkanImageFormat(device, query.colorFormats[i]);
@@ -170,6 +176,16 @@ void InitializePassInfo(Device* device, const RenderPassCacheQuery& query, InfoT
         VkImageLayout layout = VulkanImageLayoutForDepthStencilAttachment(
             dsFormat, query.depthReadOnly, query.stencilReadOnly);
         passInfo.depthStencilAttachmentRef.layout = layout;
+        if constexpr (std::is_same<InfoType, RenderPassCreateInfo2>::value) {
+            Aspect aspects = Aspect::None;
+            if (dsFormat.HasDepth()) {
+                aspects |= Aspect::Depth;
+            }
+            if (dsFormat.HasStencil()) {
+                aspects |= Aspect::Stencil;
+            }
+            passInfo.depthStencilAttachmentRef.aspectMask = VulkanAspectMask(aspects);
+        }
 
         // Build the attachment descriptor.
         auto& attachmentDesc = passInfo.attachmentDescs[attachmentCount];
