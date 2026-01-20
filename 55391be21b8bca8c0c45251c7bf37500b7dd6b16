@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c2c42c1_73ee5ab9",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4007,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T15:13:30Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "377ed12f_b9683261",
+      "revId": "55391be21b8bca8c0c45251c7bf37500b7dd6b16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c22d2ce_1be40e40",
@@ -60,6 +78,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "be82c413_7c7abde9",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4017,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T15:13:30Z",
+      "side": 1,
+      "message": "Is that better than type-\u003eSize() \u003d\u003d 2?",
+      "parentUuid": "6c22d2ce_1be40e40",
+      "range": {
+        "startLine": 4010,
+        "startChar": 0,
+        "endLine": 4017,
+        "endChar": 71
+      },
+      "revId": "55391be21b8bca8c0c45251c7bf37500b7dd6b16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2115b682_860eed69",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 3
@@ -71,6 +113,30 @@
       "writtenOn": "2026-01-20T14:32:04Z",
       "side": 1,
       "message": "This seems unrelated to adding u16?",
+      "range": {
+        "startLine": 4409,
+        "startChar": 0,
+        "endLine": 4424,
+        "endChar": 9
+      },
+      "revId": "55391be21b8bca8c0c45251c7bf37500b7dd6b16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33584668_222fe510",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4424,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T15:13:30Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2115b682_860eed69",
       "range": {
         "startLine": 4409,
         "startChar": 0,
