@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "521bddfc_c9cbb6c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-20T21:44:20Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "ad67c3a223d6b169dd246be1a77db9d6a676b497",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4b0055f_d309154f",
+        "filename": "src/tint/lang/wgsl/resolver/eval_indexing_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-20T21:44:20Z",
+      "side": 1,
+      "message": "Nit: These wouldn\u0027t have caught the issue because they are swizzling a non-memory-view. You\u0027d need to declare a var and then swizzle on that instead.",
+      "revId": "ad67c3a223d6b169dd246be1a77db9d6a676b497",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58da7e1d_e87adca3",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1918,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-20T21:44:20Z",
+      "side": 1,
+      "message": "This seems fine to me.\n\nI see that `Index()` calls `UnwrapPtrOrRef()` on the object type which is why it worked before for pointers and references.",
+      "revId": "ad67c3a223d6b169dd246be1a77db9d6a676b497",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
