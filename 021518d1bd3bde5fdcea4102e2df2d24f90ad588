@@ -51,6 +51,24 @@
       "parentUuid": "a569d4f2_e52e69d7",
       "revId": "021518d1bd3bde5fdcea4102e2df2d24f90ad588",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ae64723_3878cdef",
+        "filename": "src/dawn/native/d3d12/CommandRecordingContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-20T17:03:22Z",
+      "side": 1,
+      "message": "Yep!",
+      "parentUuid": "42e63a2a_8b711d67",
+      "revId": "021518d1bd3bde5fdcea4102e2df2d24f90ad588",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
