@@ -71,6 +71,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d07f357c_191ad624",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T19:24:35Z",
+      "side": 1,
+      "message": "This seemed nicer that manually adding a ton of overloads for various constructors.",
+      "parentUuid": "108472ca_6e1c5f35",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a5238c93_224bf81e",
         "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
         "patchSetId": 1
@@ -82,6 +100,24 @@
       "writtenOn": "2026-01-19T19:59:02Z",
       "side": 1,
       "message": "Is this the conglomeration of the bufferView and combining the decompose transforms?",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf834e1b_f668647b",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T19:24:35Z",
+      "side": 1,
+      "message": "Yes you got to this before I framed it. I could pull all the bufferView-specific content out of this if that\u0027s preferable, but there is some testing for it.",
+      "parentUuid": "a5238c93_224bf81e",
       "revId": "b0f13f14271af55107f125d1060673494c66f25d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -139,6 +175,24 @@
       "writtenOn": "2026-01-19T19:59:02Z",
       "side": 1,
       "message": "Oh, is `BaseType` the `ResultElementType` ? or some better name? Seeing it above I was thinking it was just the var type.",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e72604e_45dfce95",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T19:24:35Z",
+      "side": 1,
+      "message": "It is the eventual var\u0027s array element type. I wanted a short name since it\u0027s used all over the file.",
+      "parentUuid": "5b8e7405_cf8564e9",
       "revId": "b0f13f14271af55107f125d1060673494c66f25d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

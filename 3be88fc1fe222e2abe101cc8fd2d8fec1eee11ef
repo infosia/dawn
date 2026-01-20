@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ccef644_4a178c44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-20T19:24:35Z",
+      "side": 1,
+      "message": "I can pull the bufferView specific stuff if that\u0027s preferable, but it is semi-tested at least.",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
