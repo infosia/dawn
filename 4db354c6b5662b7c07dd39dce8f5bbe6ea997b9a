@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4adc16c5_010eeb08",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-20T20:11:21Z",
+      "side": 1,
+      "message": "Hmm, would it make sense to instead just use like UINT32_MAX and 0 for these as sentinel values instead of the optional? Though idk what that means w.r.t to the `AdapterInfo` would return in that case,",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 79
+      },
+      "revId": "4db354c6b5662b7c07dd39dce8f5bbe6ea997b9a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae486776_37106660",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-20T20:11:21Z",
+      "side": 1,
+      "message": "nit. Max",
+      "range": {
+        "startLine": 1064,
+        "startChar": 41,
+        "endLine": 1064,
+        "endChar": 44
+      },
+      "revId": "4db354c6b5662b7c07dd39dce8f5bbe6ea997b9a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09b46632_a35f2c0c",
+        "filename": "src/dawn/tests/unittests/validation/ShaderModuleValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-20T20:11:21Z",
+      "side": 1,
+      "message": "nit. a",
+      "range": {
+        "startLine": 1216,
+        "startChar": 14,
+        "endLine": 1216,
+        "endChar": 16
+      },
+      "revId": "4db354c6b5662b7c07dd39dce8f5bbe6ea997b9a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
