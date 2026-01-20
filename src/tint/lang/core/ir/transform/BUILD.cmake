@@ -39,6 +39,8 @@
 # Kind:      lib
 ################################################################################
 tint_add_target(tint_lang_core_ir_transform lib
+  lang/core/ir/transform/add_immediate_vars.cc
+  lang/core/ir/transform/add_immediate_vars.h
   lang/core/ir/transform/array_length_from_immediate.cc
   lang/core/ir/transform/array_length_from_immediate.h
   lang/core/ir/transform/array_length_from_uniform.cc

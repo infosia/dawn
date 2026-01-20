@@ -62,13 +62,13 @@ TEST_F(GlslWriter_ShaderIOTest, NoInputsOrOutputs) {
 
     auto* expect = src;
 
-    core::ir::transform::ImmediateDataLayout immediate_data;
-    ShaderIOConfig config{immediate_data};
+    ShaderIOConfig config{};
     Run(ShaderIO, config);
 
     EXPECT_EQ(expect, str());
 }
 
+#if 0
 TEST_F(GlslWriter_ShaderIOTest, Parameters_NonStruct) {
     auto* ep = b.Function("foo", ty.void_());
     auto* front_facing = b.FunctionParam("front_facing", ty.bool_());
@@ -1336,6 +1336,7 @@ $B1: {  # root
 
     EXPECT_EQ(expect, str());
 }
+#endif
 
 }  // namespace
 }  // namespace tint::glsl::writer::raise

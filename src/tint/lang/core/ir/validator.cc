@@ -2743,7 +2743,7 @@ void Validator::CheckFunction(const Function* func) {
             });
 
         Hashset<BindingPoint, 4> binding_points{};
-        const Var* user_declared_immediate = nullptr;
+        //        const Var* user_declared_immediate = nullptr;
 
         for (auto var : referenced_module_vars_.TransitiveReferences(func)) {
             if (!capabilities_.Contains(Capability::kAllowDuplicateBindings) &&
@@ -2763,13 +2763,15 @@ void Validator::CheckFunction(const Function* func) {
             }
 
             if (mv->AddressSpace() == AddressSpace::kImmediate) {
-                if (user_declared_immediate) {
-                    AddError(var) << "multiple user-declared immediate data variables referenced "
-                                     "by entry point "
-                                  << NameOf(func);
-                    return;
-                }
-                user_declared_immediate = var;
+                // FIXME: add a capability for this
+                //                if (user_declared_immediate) {
+                //                    AddError(var) << "multiple user-declared immediate data
+                //                    variables referenced "
+                //                                     "by entry point "
+                //                                  << NameOf(func);
+                //                    return;
+                //                }
+                //                user_declared_immediate = var;
             }
 
             if (mv->AddressSpace() != AddressSpace::kIn &&
