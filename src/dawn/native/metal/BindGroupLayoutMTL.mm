@@ -63,8 +63,7 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device,
         desc.access = MTLArgumentAccessReadOnly;
 #pragma clang diagnostic pop
 
-        // TODO(crbug.com/363031535): Handle more then uniform/storage.  (e.g. samplers, textures,
-        // etc.)
+        // TODO(crbug.com/363031535): Implement the unimplemented binding types below.
         MatchVariant(
             bindingInfo.bindingLayout,
             [&](const BufferBindingInfo& layout) { desc.dataType = MTLDataTypePointer; },
@@ -78,8 +77,8 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device,
             [&](const TextureBindingInfo&) { desc.dataType = MTLDataTypeTexture; },
             [&](const StorageTextureBindingInfo&) { desc.dataType = MTLDataTypeTexture; },
             [&](const TexelBufferBindingInfo&) { DAWN_CHECK(false); },
-            [](const InputAttachmentBindingInfo&) { DAWN_CHECK(false); },
-            [](const ExternalTextureBindingInfo&) { DAWN_CHECK(false); });
+            [&](const InputAttachmentBindingInfo&) { DAWN_CHECK(false); },
+            [&](const ExternalTextureBindingInfo&) { DAWN_CHECK(false); });
 
         descriptors.push_back(desc);
     }
