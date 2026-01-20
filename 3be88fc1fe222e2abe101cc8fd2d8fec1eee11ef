@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b031b5a0_dd8df9a5",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-20T22:58:14Z",
+      "side": 1,
+      "message": "Missing `Matrix`? It\u0027d probably be safer with all of the cases in the `tint::Switch` (instead of separating out scalar and vector), and then using `TINT_ICE_ON_NO_MATCH` to make sure we hit everything.\n\nAlso Nit: Maybe slightly cleaner if this function just returns the smallest element size for the given type instead of doing the `std::min()` in here? Then you only need to do the min for the struct and array cases here, and then once in `SmallestAccessSize` after the `tint::Switch` (suggest returning the min from the tint::Switch directly).",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aca214cc_759c2c07",
         "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
         "patchSetId": 4
@@ -100,6 +117,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d088720d_17f5a96d",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-20T22:58:14Z",
+      "side": 1,
+      "message": "Maybe we should do this for any read-only var instead of just `uniform`? Avoids some pessimisation for read-only storage buffers for example.",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b05879b7_00c29d2a",
         "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
         "patchSetId": 4
@@ -116,6 +150,29 @@
         "startChar": 1,
         "endLine": 300,
         "endChar": 34
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f887b5b5_af2ec0f8",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-20T22:58:14Z",
+      "side": 1,
+      "message": "Wondering if the logic would be clearer or more robust with modulos:\n```\nTINT_IR_ASSERT(ir, size % 2 \u003d\u003d 0);\nif (size % 4) {\n  // u16\n} else if (size % 8) {\n  // u32\n} else if (size % 16) {\n  // vec2u\n} else {\n  TINT_IR_ASSERT(ir, size \u003d\u003d 16);\n  // vec4u\n}\n```\n\nEh, not much. Feel free to ignore.",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 9
       },
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
@@ -174,6 +231,23 @@
         "endLine": 355,
         "endChar": 83
       },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c869914_36f3ee9e",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-20T22:58:14Z",
+      "side": 1,
+      "message": "Nit: I think you can just pass in the `u32()`s here and the builder will do the `b.Constant()` for you.",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -397,6 +471,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1cf2210d_ff6db991",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-20T22:58:14Z",
+      "side": 1,
+      "message": "Because we\u0027ve changed the element type of the array, and potentially added more stuff to it. e.g.\n```\nstruct S {\n  a: u32,\n  b: u32,\n  arr: array\u003cvec4\u003cf32, 4\u003e\u003e,\n}\nvar v: S;\n\nBecomes:\nvar v : array\u003cu32\u003e\n```\nThe number of elements in the new array is different, so we need to figure out the length of the original array.",
+      "parentUuid": "e4c07ecd_03665ffa",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "39faa4e1_ad92235c",
         "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
         "patchSetId": 4
@@ -437,6 +529,40 @@
         "endLine": 988,
         "endChar": 27
       },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de91ed7b_05825b6f",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-20T22:58:14Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be a divide? If the new type is always smaller than the old type, then the number of elements will now be larger than before, so we need to divide to get back to the original?",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48a806db_c1d01972",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-20T22:58:14Z",
+      "side": 1,
+      "message": "I assume that chained `reinterpret` calls could produce multiple runtime offsets? If so, maybe add a `TINT_IR_ASSERT(ir, offset.byte_offset_expr.Length() \u003c\u003d 1)` to make sure we update this in the future?",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -505,6 +631,23 @@
       "writtenOn": "2026-01-20T22:06:39Z",
       "side": 1,
       "message": "assert the BaseType DeepestElement is U16?",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "377920b9_1ed67630",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-20T22:58:14Z",
+      "side": 1,
+      "message": "Nit: You use `ty.ptr(var_ty-\u003eAddressSpace(), BaseType(), var_ty-\u003eAccess())` a lot so maybe add a `BaseTypePtr()` helper too?",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
