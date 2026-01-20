@@ -205,6 +205,7 @@ MaybeError Buffer::CaptureContentIfNeeded(CaptureContext& captureContext,
     // capture.
     wgpu::BufferUsage usage = GetUsage();
     bool unwritableOnPlayback = usage & wgpu::BufferUsage::MapWrite;
+    // if (!newResource || unwritableOnPlayback || IsCPUWritableAtCreation()) {
     if (!newResource || unwritableOnPlayback) {
         return {};
     }
