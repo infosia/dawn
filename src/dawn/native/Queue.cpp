@@ -36,6 +36,7 @@
 #include <utility>
 #include <vector>
 
+#include "absl/cleanup/cleanup.h"
 #include "dawn/common/Constants.h"
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/FutureUtils.h"
@@ -332,6 +333,7 @@ MaybeError QueueBase::WriteBuffer(BufferBase* buffer,
     DAWN_TRY(GetDevice()->ValidateObject(this));
     DAWN_TRY(ValidateWriteBuffer(GetDevice(), buffer, bufferOffset, size));
     DAWN_TRY(buffer->ValidateCanUseOnQueueNow());
+    BufferBase::ScopedUseBuffer scopedUseBuffer(buffer);
     return WriteBufferImpl(buffer, bufferOffset, data, size);
 }
 
@@ -482,7 +484,8 @@ MaybeError QueueBase::CopyExternalTextureForBrowserInternal(
 }
 
 MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
-                                     CommandBufferBase* const* commands) const {
+                                     CommandBufferBase* const* commands,
+                                     absl::flat_hash_set<BufferBase*>& buffersUsed) const {
     TRACE_EVENT0(GetDevice()->GetPlatform(), Validation, "Queue::ValidateSubmit");
     DAWN_TRY(GetDevice()->ValidateObject(this));
 
@@ -497,10 +500,18 @@ MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
 
         const CommandBufferResourceUsage& usages = commands[i]->GetResourceUsages();
 
+        auto ValidateBuffer = [&buffersUsed](BufferBase* buffer) -> MaybeError {
+            if (auto [iter, inserted] = buffersUsed.insert(buffer); inserted) {
+                DAWN_TRY_WITH_CLEANUP(buffer->ValidateCanUseOnQueueNow(),
+                                      { buffersUsed.erase(iter); });
+            }
+            return {};
+        };
+
         // Maybe track last usage for other resources, and use it to release resources earlier?
         for (const SyncScopeResourceUsage& scope : usages.renderPasses) {
-            for (const BufferBase* buffer : scope.buffers) {
-                DAWN_TRY(buffer->ValidateCanUseOnQueueNow());
+            for (BufferBase* buffer : scope.buffers) {
+                DAWN_TRY(ValidateBuffer(buffer));
             }
             for (const TextureBase* texture : scope.textures) {
                 DAWN_TRY(texture->ValidateCanUseInSubmitNow());
@@ -511,8 +522,8 @@ MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
         }
 
         for (const ComputePassResourceUsage& pass : usages.computePasses) {
-            for (const BufferBase* buffer : pass.referencedBuffers) {
-                DAWN_TRY(buffer->ValidateCanUseOnQueueNow());
+            for (BufferBase* buffer : pass.referencedBuffers) {
+                DAWN_TRY(ValidateBuffer(buffer));
             }
             for (const TextureBase* texture : pass.referencedTextures) {
                 DAWN_TRY(texture->ValidateCanUseInSubmitNow());
@@ -522,8 +533,8 @@ MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
             }
         }
 
-        for (const BufferBase* buffer : usages.topLevelBuffers) {
-            DAWN_TRY(buffer->ValidateCanUseOnQueueNow());
+        for (BufferBase* buffer : usages.topLevelBuffers) {
+            DAWN_TRY(ValidateBuffer(buffer));
         }
         for (const TextureBase* texture : usages.topLevelTextures) {
             DAWN_TRY(texture->ValidateCanUseInSubmitNow());
@@ -638,12 +649,24 @@ MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* c
     DAWN_TRY(device->ValidateIsAlive());
 
     TRACE_EVENT0(device->GetPlatform(), General, "Queue::Submit");
+
+    absl::flat_hash_set<BufferBase*> buffersUsedInSubmit;
+    absl::Cleanup finishUseBuffers = [&buffersUsedInSubmit]() {
+        for (BufferBase* buffer : buffersUsedInSubmit) {
+            buffer->FinishUse();
+        }
+    };
     if (device->IsValidationEnabled()) {
-        DAWN_TRY(ValidateSubmit(commandCount, commands));
+        // TODO(crbug.com/425472913): Keep a rolling average of set size so this can reserve a
+        // sufficiently large set for max of last N submits.
+        DAWN_TRY(ValidateSubmit(commandCount, commands, buffersUsedInSubmit));
     }
     DAWN_ASSERT(!IsError());
 
     DAWN_TRY(SubmitImpl(commandCount, commands));
+
+    // Switch the buffer state back to unmapped before Tick().
+    std::move(finishUseBuffers).Invoke();
 
     // Call Tick() to flush pending work.
     DAWN_TRY(device->Tick());
