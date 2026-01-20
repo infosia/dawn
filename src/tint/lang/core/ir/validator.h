@@ -54,6 +54,8 @@ enum class Capability : uint8_t {
     kAllowModuleScopeLets,
     /// Allows multiple entry points in the module.
     kAllowMultipleEntryPoints,
+    /// Allows multiple immediate variables
+    kAllowMultipleImmediateVars,
     /// Allow overrides
     kAllowOverrides,
     /// Allows ref types
