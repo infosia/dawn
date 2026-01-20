@@ -420,6 +420,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6afc0bf_cebb74fe",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T21:37:20Z",
+      "side": 1,
+      "message": "Okay, actually fixed for real this time. Unless there\u0027s some reason storage_ty shouldn\u0027t be used in the later Index call... but it seems alright, checking bots. And added unit tests for this case.",
+      "parentUuid": "21b3b68c_8c2a85c2",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b9b5d2d2_e75acd13",
