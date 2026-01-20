@@ -65,6 +65,10 @@ MaybeError BindGroup::InitializeImpl() {
 
     auto encoder = layout->GetArgumentEncoder();
     NSUInteger argumentBufferLength = [*encoder encodedLength];
+    // Avoid zero-sized buffers, but still create a buffer to simplify everything that follows.
+    if (argumentBufferLength == 0) {
+        argumentBufferLength = 8;
+    }
 
     mArgumentBuffer = AcquireNSPRef([device->GetMTLDevice() newBufferWithLength:argumentBufferLength
                                                                         options:0]);
@@ -72,6 +76,8 @@ MaybeError BindGroup::InitializeImpl() {
 
     for (BindingIndex bindingIndex : Range(layout->GetBindingCount())) {
         const BindingInfo& bindingInfo = layout->GetBindingInfo(bindingIndex);
+        // This is the [[id(n)]] index in the MSL shader.
+        // DO NOT SUBMIT: Which index do we use for that??
         uint32_t dstBinding = uint32_t(bindingIndex - bindingInfo.indexInArray);
 
         auto HandleTextureBinding = [&]() {
@@ -85,6 +91,8 @@ MaybeError BindGroup::InitializeImpl() {
         // Validation should ensure we never actually try to use it.
         // TODO(crbug.com/363031535): The buffers, samplers and textures in the MatchVariant need to
         // have resource usage tracking added.
+        // DO NOT SUBMIT: Seems like buffers already do, in ApplyBindGroupWithArgumentBuffersImpl?
+        // Or does it have to happen at bind group creation too?
         MatchVariant(
             bindingInfo.bindingLayout,
             [&](const BufferBindingInfo& layout) {
@@ -94,6 +102,10 @@ MaybeError BindGroup::InitializeImpl() {
                 [*encoder setBuffer:buffer offset:binding.offset atIndex:dstBinding];
             },
             [&](const SamplerBindingInfo&) {
+                // TODO(crbug.com/363031535): Worry about maxArgumentBufferSamplerCount.
+                // Note this is a per-MTLDevice (PhysicalDevice) limitation!
+                // We need an LRU cache that updates argument buffers a
+                // https://github.com/gpuweb/gpuweb/issues/5142
                 auto sampler = ToBackend(GetBindingAsSampler(bindingIndex));
                 id<MTLSamplerState> samplerState = sampler->GetMTLSamplerState();
                 [*encoder setSamplerState:samplerState atIndex:dstBinding];
