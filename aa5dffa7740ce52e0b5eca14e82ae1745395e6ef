@@ -16,6 +16,24 @@
       "message": "I realized I moved this in the wrong case, what was previously HostMappedPersistent will now be Unmapped. I think this is equivalent to ToT in the new PS.\n\nExcept thinking about it the unreachable/assert basically says that it\u0027s impossible to call buffer-\u003eGetMapState() on a host mapped buffer. I don\u0027t see anything enforcing that, you might not be supposed to call GetMappedState() on a host mapped buffer but nothing stops a client from calling it?",
       "revId": "aa5dffa7740ce52e0b5eca14e82ae1745395e6ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40c66d39_e927d781",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-20T23:36:39Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "78d8b84b_eea6b519",
+      "revId": "aa5dffa7740ce52e0b5eca14e82ae1745395e6ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
