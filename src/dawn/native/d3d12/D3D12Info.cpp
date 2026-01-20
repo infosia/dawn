@@ -58,6 +58,10 @@ ResultOrError<D3D12DeviceInfo> GatherDeviceInfo(const PhysicalDevice& physicalDe
                           "ID3D12Device::CheckFeatureSupport"));
     info.resourceHeapTier = featureOptions.ResourceHeapTier;
 
+    // Tier 2 hardware supports at least 1 million descriptors in a heap.
+    // Tier 3 hardware supports essentially the full 32-bit range.
+    info.supportsBindless = featureOptions.ResourceBindingTier >= D3D12_RESOURCE_BINDING_TIER_2;
+
     D3D12_FEATURE_DATA_D3D12_OPTIONS2 featureOptions2 = {};
     if (SUCCEEDED(physicalDevice.GetDevice()->CheckFeatureSupport(
             D3D12_FEATURE_D3D12_OPTIONS2, &featureOptions2, sizeof(featureOptions2)))) {
