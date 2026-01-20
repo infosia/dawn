@@ -58,13 +58,17 @@ MaybeError BindGroup::InitializeImpl() {
         return {};
     }
 
-    // TODO(crbug.com/363031535): The argument buffers should probably work in some kind of pool
+    // TODO(crbug.com/477311786): The argument buffers should probably work in some kind of pool
     // instead of being allocated here
 
     auto layout = ToBackend(GetLayout());
 
     auto encoder = layout->GetArgumentEncoder();
     NSUInteger argumentBufferLength = [*encoder encodedLength];
+    // Avoid zero-sized buffers, but still create a buffer to simplify everything that follows.
+    if (argumentBufferLength == 0) {
+        argumentBufferLength = 8;
+    }
 
     mArgumentBuffer = AcquireNSPRef([device->GetMTLDevice() newBufferWithLength:argumentBufferLength
                                                                         options:0]);
@@ -72,6 +76,8 @@ MaybeError BindGroup::InitializeImpl() {
 
     for (BindingIndex bindingIndex : Range(layout->GetBindingCount())) {
         const BindingInfo& bindingInfo = layout->GetBindingInfo(bindingIndex);
+        // This is the [[id(n)]] index in the MSL shader.
+        // DO NOT SUBMIT: Which index do we use for that??
         uint32_t dstBinding = uint32_t(bindingIndex - bindingInfo.indexInArray);
 
         auto HandleTextureBinding = [&]() {
@@ -83,8 +89,6 @@ MaybeError BindGroup::InitializeImpl() {
 
         // Note, if a resource is destroyed, we will write nil to that slot.
         // Validation should ensure we never actually try to use it.
-        // TODO(crbug.com/363031535): The buffers, samplers and textures in the MatchVariant need to
-        // have resource usage tracking added.
         MatchVariant(
             bindingInfo.bindingLayout,
             [&](const BufferBindingInfo& layout) {
