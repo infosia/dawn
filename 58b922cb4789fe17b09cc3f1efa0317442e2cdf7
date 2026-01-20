@@ -404,6 +404,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "21b3b68c_8c2a85c2",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-20T21:11:47Z",
+      "side": 1,
+      "message": "And the relevant new CTS which confirmed passes on this latest patchset: https://github.com/gpuweb/cts/pull/4570",
+      "parentUuid": "38d3a240_ce917b6f",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b9b5d2d2_e75acd13",
         "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
         "patchSetId": 1
