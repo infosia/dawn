@@ -101,6 +101,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bc8b209a_835b7fbd",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-20T18:30:43Z",
+      "side": 1,
+      "message": "I think it works because D3D11 commands are buffered internally in the driver so you can\u0027t reorder them, and the clearing happens before all other commands, and mapping will wait for commands to be complete. But it would be good to mark for consistency and to make sure that buffer mapping should return without waits in FinalizeMap.",
+      "parentUuid": "2d477fae_190f73cb",
+      "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e2fd3c26_f41163cf",
         "filename": "src/dawn/native/d3d12/BufferD3D12.cpp",
         "patchSetId": 18
@@ -129,6 +147,24 @@
       "writtenOn": "2026-01-16T19:47:51Z",
       "side": 1,
       "message": "I probably also have to fix this. I don\u0027t think anything prevents ClearBufferToZero running on multiple threads so the second UseBufferInternal() call crashes.",
+      "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eee22dc6_4acb5c83",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-20T18:30:43Z",
+      "side": 1,
+      "message": "ClearBufferToZero seems to only be called during initialization, or in queue operations, so it looks like it should be safe.",
+      "parentUuid": "341fd4ee_3c9c4629",
       "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

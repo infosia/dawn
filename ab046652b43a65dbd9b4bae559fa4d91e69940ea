@@ -16,6 +16,23 @@
       "message": "PTAL Loko/Corentin/Quyen. This CL isn\u0027t 100% landable but I\u0027d like feedback on the overall approach before I get any further.",
       "revId": "ab046652b43a65dbd9b4bae559fa4d91e69940ea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e92b9935_936cc7b7",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-20T18:30:43Z",
+      "side": 1,
+      "message": "Copying from a chat with Kyle:\n\n\u003e My high-level concern is that the MT state is starting to get peppered in backends and needs specific code in places that aren\u0027t very obvious when adding code. I\u0027m wondering if we could have something where 1) in command buffers we gather the list of buffers that are used and that are mappable 2) early during submit and under a mutex specific for this we tell them that the are used in the submit 3) in mapAsync we take the same mutex to check the last use to schedule the mapping. But I haven\u0027t really thought it through yet.\n\nMore precisely the need to call UseBufferInternal judiciously in backends.\n\nTo which Kyle clarified:\n\n\u003e We would need to lock the mutex anytime MarkUsedInPendingCommands() is called on the buffer. During Queue::Submit() that can happen in lots of places right now. If we iterated through the list of buffers used in commands at the start of submit and then removed all the other call sites that would kind of work.\n\u003e\n\u003e We\u0027d still have to lock mutex, call MarkUsedInPendingCommands(), unlock mutex for everything that calls MarkUsedInPendingCommands outside Queue::Submit().\n\u003e\n\u003e We\u0027d still have to lock mutex, call MarkUsedInPendingCommands(), unlock mutex for everything that calls MarkUsedInPendingCommands outside Queue::Submit().\n\u003e\n\u003e Would dawn then need to lock/unlock mutex everywhere that reads from mLastUsageSerial? That is MapAsync() but also lots of assertions.\n\nSo yeah I think that\u0027s an alternative, but I think the current approach could be landed if doing this change seemed too onerous.",
+      "revId": "ab046652b43a65dbd9b4bae559fa4d91e69940ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
