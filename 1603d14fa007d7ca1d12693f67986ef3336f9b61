@@ -233,6 +233,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5b6783f4_ef46373a",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 3172,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T20:10:50Z",
+      "side": 1,
+      "message": "[VK_KHR_dynamic_rendering_local_read](https://docs.vulkan.org/refpages/latest/refpages/source/VK_KHR_dynamic_rendering_local_read.html) says:\n\n\u003e This extension enables reads from attachments and resources written by previous fragment shaders within a dynamic render pass.\n\nThis ensures proper ordering of fragment invocation for FBF, but it seems to me that there is nothing (aside from driver bugs) in normal `VK_KHR_dynamic_rendering` that should prevent us from reading the resolve attachments in `VK_IMAGE_LAYOUT_GENERAL` in the render pass (on the same pixel that\u0027s being rendered) as it is written only at the end of a tile, or resolved in VkCmdEndRenderPass (depending on HW being tiler vs. not).",
+      "parentUuid": "bf1d4490_6500c55e",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aa22ce12_f76b97be",
         "filename": "src/dawn/native/AttachmentState.cpp",
         "patchSetId": 9
