@@ -147,6 +147,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6c34851_70a63cc6",
+        "filename": "src/dawn/native/vulkan/RenderPassCache.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T09:03:45Z",
+      "side": 1,
+      "message": "Nice!",
+      "parentUuid": "4773c44b_edc8994a",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 85
+      },
+      "revId": "d05879adefcc36ec862b452b53672f52e59d810b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b07c32ef_20d1ca5c",
@@ -213,6 +237,24 @@
       "side": 1,
       "message": "Here we need to declare `dependency` as pointer instead to set the second item of `passInfo.subpassDependencies`.",
       "parentUuid": "c60c5a4e_8b765c9f",
+      "revId": "d05879adefcc36ec862b452b53672f52e59d810b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d0a7dfd_b03664b2",
+        "filename": "src/dawn/native/vulkan/RenderPassCache.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T09:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9ed3a7e_64126412",
       "revId": "d05879adefcc36ec862b452b53672f52e59d810b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
