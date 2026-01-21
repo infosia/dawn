@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6909be17_76b961b8",
+        "filename": "src/dawn/native/d3d12/D3D12Info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-21T14:28:11Z",
+      "side": 1,
+      "message": "Yeah, the main reason I did this is that `InitializeSupportedFeaturesImpl` currently makes decisions mostly based on what\u0027s in this info struct, and also because this function returns void, not MaybeError, and `CheckFeatureSupport` might fail. We could make it return `MaybeError` like `InitializeSupportedLimitsImpl` does, which also means updating the impls in all the backends (that\u0027s fine). Looking again, I just noticed that we inconsistently allow `CheckFeatureSupport` to fail in [`InitializeSupportedFeaturesImpl`](https://source.chromium.org/chromium/chromium/src/+/663bcb5787e22de55048daabd4b5023c6b25f691:third_party/dawn/src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp;l\u003d239-241), while treating it as an error in [`InitializeSupportedLimitsImpl`](https://source.chromium.org/chromium/chromium/src/+/663bcb5787e22de55048daabd4b5023c6b25f691:third_party/dawn/src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp;l\u003d251-253). So it\u0027s probably a good idea to make the former return a MaybeError for consistency.",
+      "parentUuid": "12be2cf9_3d44cd71",
+      "revId": "306dff40715bbdb0f8217fbb89c61572633acc30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5077e456_9615a9b8",
         "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
         "patchSetId": 4
