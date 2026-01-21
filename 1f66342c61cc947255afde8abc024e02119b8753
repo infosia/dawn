@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff9da31e_320dcde5",
+        "filename": "src/dawn/samples/SampleUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-21T23:22:22Z",
+      "side": 1,
+      "message": "Should this have a default set for the case where EMSCRIPTEN is defined?",
+      "revId": "1f66342c61cc947255afde8abc024e02119b8753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39311af8_bf0a17aa",
+        "filename": "src/dawn/samples/SampleUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-21T23:22:22Z",
+      "side": 1,
+      "message": "This needs to be inside a `ifndef __EMSCRIPTEN__` no? otherwise `backendValidationLevelOpt` isn\u0027t defined.",
+      "revId": "1f66342c61cc947255afde8abc024e02119b8753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3529a9a_0fbefacb",
+        "filename": "src/dawn/samples/SampleUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-21T23:22:22Z",
+      "side": 1,
+      "message": "```suggestion\n    wgpu::ChainedStruct* instanceChain \u003d togglesChain;\n\n#ifndef __EMSCRIPTEN__\n    dawnProcSetProcs(\u0026dawn::native::GetProcs());\n    \n```\n\nMaybe a bit nicer to merge the ifndefs?",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 22
+      },
+      "revId": "1f66342c61cc947255afde8abc024e02119b8753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
