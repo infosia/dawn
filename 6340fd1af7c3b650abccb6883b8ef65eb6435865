@@ -158,6 +158,24 @@
       "parentUuid": "8457e542_de128e43",
       "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8eb0131c_2990b515",
+        "filename": "src/dawn/webgpu_kt_docs.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T16:56:05Z",
+      "side": 1,
+      "message": "FYI we talked about this in the Dawn-Android meeting. Consensus was to add a comment on every class like you were comfortable with, but with more than just a \"Warning this is AI\" but also pointers to file issues if wrong, and maybe the WebGPU spec if people want authoritative behavior explanation.",
+      "parentUuid": "59765448_718b435d",
+      "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
