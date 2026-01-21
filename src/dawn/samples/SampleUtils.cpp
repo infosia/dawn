@@ -59,6 +59,7 @@ static wgpu::BackendType backendType = wgpu::BackendType::Undefined;
 static wgpu::AdapterType adapterType = wgpu::AdapterType::Unknown;
 static std::vector<std::string> enableToggles;
 static std::vector<std::string> disableToggles;
+static dawn::native::BackendValidationLevel backendValidationLevel;
 
 bool InitSample(int argc, const char** argv) {
     dawn::utils::CommandLineParser opts;
@@ -89,6 +90,17 @@ bool InitSample(int argc, const char** argv) {
                                    "adapter-type", "The type of adapter to request")
                                .ShortName('a')
                                .Default(wgpu::AdapterType::Unknown);
+#ifndef __EMSCRIPTEN__
+    auto& backendValidationLevelOpt =
+        opts.AddEnum<dawn::native::BackendValidationLevel>(
+                {
+                    {"full", dawn::native::BackendValidationLevel::Full},
+                    {"partial", dawn::native::BackendValidationLevel::Partial},
+                    {"disabled", dawn::native::BackendValidationLevel::Disabled},
+                },
+                "enable-backend-validation", "Backend validation layer level")
+            .Default(dawn::native::BackendValidationLevel::Disabled);
+#endif  // __EMSCRIPTEN__
 
     auto result = opts.Parse(argc, argv);
     if (!result.success) {
@@ -106,6 +118,7 @@ bool InitSample(int argc, const char** argv) {
     adapterType = adapterTypeOpt.GetValue();
     enableToggles = enableTogglesOpt.GetOwnedValue();
     disableToggles = disableTogglesOpt.GetOwnedValue();
+    backendValidationLevel = backendValidationLevelOpt.GetValue();
     return true;
 }
 
@@ -175,9 +188,18 @@ int SampleBase::Run(unsigned int delay) {
     dawnProcSetProcs(&dawn::native::GetProcs());
 #endif  // __EMSCRIPTEN__
 
-    // Create the instance with the toggles
+    wgpu::ChainedStruct* instanceChain = togglesChain;
+#ifndef __EMSCRIPTEN__
+    dawn::native::DawnInstanceDescriptor dawnInstanceDesc;
+    dawnInstanceDesc.nextInChain = togglesChain;
+    dawnInstanceDesc.backendValidationLevel = backendValidationLevel;
+
+    instanceChain = &dawnInstanceDesc;
+#endif  // __EMSCRIPTEN__
+
+    // Create the instance with the toggles and dawn options
     wgpu::InstanceDescriptor instanceDescriptor = {};
-    instanceDescriptor.nextInChain = togglesChain;
+    instanceDescriptor.nextInChain = instanceChain;
     static constexpr auto kTimedWaitAny = wgpu::InstanceFeatureName::TimedWaitAny;
     instanceDescriptor.requiredFeatureCount = 1;
     instanceDescriptor.requiredFeatures = &kTimedWaitAny;
