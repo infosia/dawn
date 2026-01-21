@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "cddd99d2_72e926cd",
+        "filename": "src/dawn/native/webgpu/BindGroupWGPU.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T14:03:55Z",
+      "side": 1,
+      "message": "Could we instead add a list of use `BindGroup::GetBoundExternalTextures` and somehow provide a guarantee that they are in the order of `BindingNumber`, or have a map in the BGL from `BindingNumber` to index in `GetBoundExternalTextures`? This way we wouldn\u0027t have to discover the external textures magically like this and instead would get definitive information from the frontend.",
+      "revId": "d36972c17b5d6714c08000064184aa7e32648728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07c2b6f0_28ec741d",
+        "filename": "src/dawn/native/webgpu/BindGroupWGPU.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T14:03:55Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "d36972c17b5d6714c08000064184aa7e32648728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cc1a643e_fe84bec8",
@@ -14,6 +48,75 @@
       "writtenOn": "2026-01-21T02:20:58Z",
       "side": 1,
       "message": "Note: capturing the mParamsBuffer in ExternalTexture triggered validation failure. This seems to be a bug (477349135). However since webgpu::ExternalTexture should be a simple passthrough layer, it doesn\u0027t really need the mParamsBuffer. I was thinking about getting rid of this for webgpu backend a bit but that seems too intrusive to existing dawn frontend logic. (need to have a virtual Init or NeedParamsBuffer for the ExternalTextureBase, and BindGroupBase related code to resolve the binding also need to get updated). As a result for now just skip capturing the mParamsBuffer content by skipping triggering this capture bug.",
+      "revId": "d36972c17b5d6714c08000064184aa7e32648728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c10fbb02_8c91841f",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T14:03:55Z",
+      "side": 1,
+      "message": "Since you have a WIP CL to fix that issue, can we stack CLs so we don\u0027t need a temporary workaround here?\n\nAgreed that removing the params buffer would be a bit intrusive for now.",
+      "parentUuid": "cc1a643e_fe84bec8",
+      "revId": "d36972c17b5d6714c08000064184aa7e32648728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f443d439_1471a846",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T14:03:55Z",
+      "side": 1,
+      "message": "That\u0027s a bit overkill in the common case that external textures are not used. Maybe we could do a temporary allocation in a unique_ptr for that purpose, so that only the ExternalTexture case is more expensive? So this would be an `std::vector\u003cstd::unique_ptr\u003cwgpu::ExternalTextureBindingEntry\u003e\u003e` and we don\u0027t need to reserve.",
+      "revId": "d36972c17b5d6714c08000064184aa7e32648728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e125f1b_062744ea",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T14:03:55Z",
+      "side": 1,
+      "message": "There is a single `wgpu::ExternalTextureBindingLayout` because it has no member, so we can have it in the stack and point to it directly. This is done for example in https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/PipelineLayout.cpp;drc\u003d315663686089cc69d70db9dad8aa4d181ea6be69;l\u003d408",
+      "revId": "d36972c17b5d6714c08000064184aa7e32648728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58b031d3_129ce8b6",
+        "filename": "src/dawn/serialization/Schema.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T14:03:55Z",
+      "side": 1,
+      "message": "```suggestion\n// Use alias of std::array since the preprocessor doesn\u0027t consider \u003c \u003e to be parenthesis for the logic of skipping commas (so the end up splitting macro invocation arguments).\n```\n\nJust to be slightly more clear since I happened hit this when I made a toy GLSL preprocessor.",
       "revId": "d36972c17b5d6714c08000064184aa7e32648728",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
