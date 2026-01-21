@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "282e5d44_f7072822",
+        "filename": "src/dawn/native/vulkan/RenderPassCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-21T17:15:46Z",
+      "side": 0,
+      "message": "This line was probably the issue which was overwriting the stuff above. One alt is to use a different name or scope these blocks if we want the same name for the vars and wanted to use reference instead of pointer. I don\u0027t really have a preference here though.",
+      "range": {
+        "startLine": 254,
+        "startChar": 8,
+        "endLine": 254,
+        "endChar": 67
+      },
+      "revId": "c30843e52d7c681a3ec17e27484c2a1105be5023",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
