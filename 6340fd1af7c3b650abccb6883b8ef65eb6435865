@@ -176,6 +176,24 @@
       "parentUuid": "59765448_718b435d",
       "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92bf0d45_1c475ff6",
+        "filename": "src/dawn/webgpu_kt_docs.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-01-21T17:38:54Z",
+      "side": 1,
+      "message": "Thanks Corentin, Alex and Kai for the feedbacks! I\u0027ll add a disclaimer right below the license header to indicate that this documentation was generated using AI and that developers should refer the official JS and C docs in case of inaccuracies.",
+      "parentUuid": "8eb0131c_2990b515",
+      "revId": "6340fd1af7c3b650abccb6883b8ef65eb6435865",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
