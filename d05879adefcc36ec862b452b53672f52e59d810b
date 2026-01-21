@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b44d4bc8_f32ab6b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-21T07:10:21Z",
+      "side": 1,
+      "message": "I\u0027ve found the real root cause at [2]. PTAL, thanks!",
+      "parentUuid": "ff474bcc_0e6522e3",
+      "revId": "d05879adefcc36ec862b452b53672f52e59d810b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "736f04ae_2532e507",
@@ -31,6 +49,30 @@
       "writtenOn": "2026-01-20T13:18:21Z",
       "side": 1,
       "message": "I\u0027m not sure why this one triggers given the code at [2].",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 46
+      },
+      "revId": "d05879adefcc36ec862b452b53672f52e59d810b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2a18ee0_4051d76f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-21T07:10:21Z",
+      "side": 1,
+      "message": "I\u0027ve found the real root cause at [2]. PTAL, thanks!",
+      "parentUuid": "736f04ae_2532e507",
       "range": {
         "startLine": 12,
         "startChar": 0,
@@ -83,6 +125,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4773c44b_edc8994a",
+        "filename": "src/dawn/native/vulkan/RenderPassCache.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-21T07:10:21Z",
+      "side": 1,
+      "message": "They are not needed and the root cause should be an incorrect assignment in [2].",
+      "parentUuid": "1da46ede_e60208ae",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 85
+      },
+      "revId": "d05879adefcc36ec862b452b53672f52e59d810b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b07c32ef_20d1ca5c",
         "filename": "src/dawn/native/vulkan/RenderPassCache.cpp",
         "patchSetId": 3
@@ -94,6 +160,24 @@
       "writtenOn": "2026-01-20T13:18:21Z",
       "side": 1,
       "message": "[1]",
+      "revId": "d05879adefcc36ec862b452b53672f52e59d810b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7abefe62_0dc741fe",
+        "filename": "src/dawn/native/vulkan/RenderPassCache.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-21T07:10:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b07c32ef_20d1ca5c",
       "revId": "d05879adefcc36ec862b452b53672f52e59d810b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -111,6 +195,24 @@
       "writtenOn": "2026-01-20T13:18:21Z",
       "side": 1,
       "message": "[2]",
+      "revId": "d05879adefcc36ec862b452b53672f52e59d810b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9ed3a7e_64126412",
+        "filename": "src/dawn/native/vulkan/RenderPassCache.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-21T07:10:21Z",
+      "side": 1,
+      "message": "Here we need to declare `dependency` as pointer instead to set the second item of `passInfo.subpassDependencies`.",
+      "parentUuid": "c60c5a4e_8b765c9f",
       "revId": "d05879adefcc36ec862b452b53672f52e59d810b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
