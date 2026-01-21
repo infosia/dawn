@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20340d48_57608b95",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-21T02:15:43Z",
+      "side": 1,
+      "message": "Code LGTM\nFor failures:\n- CaptureAndReplay*Tests: only seem to fail for webgpu on D3D12_Microsoft_Basic_Render_Driver so just suppressing should be good.\n- Other depth copy tests: (e.g. DepthCopyTests.*)\nErrorType::Validation, [TextureView of Texture (unlabeled 3x1 px, TextureFormat::Depth24Plus)] internal usage (TextureUsage::(CopySrc|RenderAttachment)) doesn\u0027t include TextureUsage::TextureBinding.\n\nLikely you need to add new entries to [CopySrcNeedsInternalTextureBindingUsage](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Texture.cpp;l\u003d550;drc\u003d4bece0d1a23bed87ec8fa32116b9b88892043e0d) to append wgpu::TextureUsage::TextureBinding",
+      "revId": "ce8720be596a715fc974a187dc59f4e5f049c059",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
