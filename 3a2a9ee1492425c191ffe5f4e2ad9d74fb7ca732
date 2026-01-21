@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8827bda3_86033cb6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-01-21T09:34:55Z",
+      "side": 1,
+      "message": "I think adding a note to the standard header for all .kt files could be a reasonable option, as it would be visible at the top of each file to any user who looked into the source. In addition to the AndroidX release notes note, of course.\n\nBut Kai, I think we should be of one mind about what the goal is that you\u0027re trying to achieve. What is it that you want to tell developers, and more importantly, why? This would be a great topic for this morning\u0027s Dawn on Android call, if that\u0027s an option.\n\nOn Tue, Jan 20, 2026, 11:22 PM Kai Ninomiya (Gerrit) \u003cnoreply-gerritcodereview+PZkOegFvh999ThTjZOaB2Q\u003d\u003d@\u003e wrote: google.com",
+      "tag": "mailMessageId\u003d\u003cCAHn85hggS3uOW6+Ep3pkBcEX4LWxW1GGHNWnf2\u003dwRJjFEL+4jA@mail.gmail.com\u003e",
+      "revId": "3a2a9ee1492425c191ffe5f4e2ad9d74fb7ca732",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
