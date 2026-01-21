@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2957abb_7c6eb7c8",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-21T18:16:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60d83c7e_cb4622eb",
+      "revId": "e20b933e6a36aae10b2913b4527bb5c276ea5833",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bcb03c29_882be5b9",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-01-19T08:56:43Z",
       "side": 1,
       "message": "nit: we should undef helper macros once we are done with them.",
+      "revId": "e20b933e6a36aae10b2913b4527bb5c276ea5833",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a724dd36_3e4e8020",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-21T18:16:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcb03c29_882be5b9",
       "revId": "e20b933e6a36aae10b2913b4527bb5c276ea5833",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
