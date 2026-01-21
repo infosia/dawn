@@ -125,6 +125,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83381179_5dc0858e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-21T18:30:19Z",
+      "side": 1,
+      "message": "I added a static `GetEnvironment`, which I think is the right move in this case (otherwise weshould make all functions in DawnTestEnvironment global/static).",
+      "parentUuid": "65873ea2_d425e085",
+      "revId": "4f98c0637540bbc6e8c572fd7dfbb6baff0de0ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "224707f2_cbd5e2ed",

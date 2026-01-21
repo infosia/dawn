@@ -16,6 +16,24 @@
       "message": "Would it work to move the skip into a conditional in here, so that it still runs on non-software?",
       "revId": "25ac6a0d9ff8eb2732a12a8a5140f76b5965c2eb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bda79ee_c83637d8",
+        "filename": "src/dawn/tests/end2end/DeviceInitializationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-21T18:30:19Z",
+      "side": 1,
+      "message": "Yes, good idea.",
+      "parentUuid": "7f123960_508e1e1b",
+      "revId": "25ac6a0d9ff8eb2732a12a8a5140f76b5965c2eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
