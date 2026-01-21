@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cec4682_1376ab97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-21T17:59:40Z",
+      "side": 1,
+      "message": "I forgot why we removed this before. I feel like the previous impl was more complicated but I didn\u0027t look it up.\n\nNote that this test: https://dawn-review.googlesource.com/c/dawn/+/285915 would not work anymore as it never interacts with queue. Unmap itself is no longer captured ATM.",
+      "revId": "9021606b93c11438ecb0f4f1622dfb81771aa328",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
