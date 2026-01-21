@@ -16,6 +16,63 @@
       "message": "PTAL",
       "revId": "9f529916025c6d0b9b44439f3c09a6b32efd2ed1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66b0ba59_41066421",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-21T23:18:50Z",
+      "side": 1,
+      "message": "lgtm w/ nits",
+      "revId": "9f529916025c6d0b9b44439f3c09a6b32efd2ed1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59533ab5_ea1cd8ba",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-21T23:18:50Z",
+      "side": 1,
+      "message": "I\u0027m surprised this passed presubmit, do we not run the formatter in presubmit anymore?",
+      "range": {
+        "startLine": 672,
+        "startChar": 10,
+        "endLine": 672,
+        "endChar": 15
+      },
+      "revId": "9f529916025c6d0b9b44439f3c09a6b32efd2ed1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9c6e861_955719a3",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-21T23:18:50Z",
+      "side": 1,
+      "message": "Does Dawn typically do early exit? Like this could be:\n\n```\nif (mUseArgumentBuffers) {\n   return;\n}\n```\n\nwhich makes it a bit more obvious that nothing else kicks in. (Similar for SamplerBindingInfo, bailing early would make it clear nothing runs.",
+      "revId": "9f529916025c6d0b9b44439f3c09a6b32efd2ed1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
