@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1070b92_9639c9fb",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-21T06:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4adc16c5_010eeb08",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 79
+      },
+      "revId": "4db354c6b5662b7c07dd39dce8f5bbe6ea997b9a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae486776_37106660",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bf0cdbf_00f04427",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-21T06:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae486776_37106660",
+      "range": {
+        "startLine": 1064,
+        "startChar": 41,
+        "endLine": 1064,
+        "endChar": 44
+      },
+      "revId": "4db354c6b5662b7c07dd39dce8f5bbe6ea997b9a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "09b46632_a35f2c0c",
@@ -60,6 +108,30 @@
       "writtenOn": "2026-01-20T20:11:21Z",
       "side": 1,
       "message": "nit. a",
+      "range": {
+        "startLine": 1216,
+        "startChar": 14,
+        "endLine": 1216,
+        "endChar": 16
+      },
+      "revId": "4db354c6b5662b7c07dd39dce8f5bbe6ea997b9a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed81dd2b_99ae1d74",
+        "filename": "src/dawn/tests/unittests/validation/ShaderModuleValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-21T06:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09b46632_a35f2c0c",
       "range": {
         "startLine": 1216,
         "startChar": 14,
