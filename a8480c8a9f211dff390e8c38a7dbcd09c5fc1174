@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec0214f7_996b3190",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T13:24:27Z",
+      "side": 1,
+      "message": "TBH given that MapInternal does almost nothing, and UploadBuffer is somewhat simple, we could just inline `mMappedData \u003d mUploadData.get();` here and in `MapAsyncImpl`.",
+      "revId": "a8480c8a9f211dff390e8c38a7dbcd09c5fc1174",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
