@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd58f455_be6741bf",
+        "filename": "src/dawn/native/d3d12/D3D12Info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-21T16:10:36Z",
+      "side": 1,
+      "message": "Replaced with `resourceBindingTier` in the struct and moved the decision making to PhysicalDeviceD3D12.",
+      "parentUuid": "6909be17_76b961b8",
+      "revId": "306dff40715bbdb0f8217fbb89c61572633acc30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5077e456_9615a9b8",
@@ -66,6 +84,24 @@
       "writtenOn": "2026-01-21T08:41:41Z",
       "side": 1,
       "message": "We\u0027ll need to choose the maxResourceTableSize limit as well (the base limit seems good there)",
+      "revId": "306dff40715bbdb0f8217fbb89c61572633acc30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e953ab64_42302e90",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-21T16:10:36Z",
+      "side": 1,
+      "message": "Added setting the value (see line 430).",
+      "parentUuid": "5077e456_9615a9b8",
       "revId": "306dff40715bbdb0f8217fbb89c61572633acc30",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
