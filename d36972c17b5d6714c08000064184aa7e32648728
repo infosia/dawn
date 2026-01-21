@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc1a643e_fe84bec8",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-21T02:20:58Z",
+      "side": 1,
+      "message": "Note: capturing the mParamsBuffer in ExternalTexture triggered validation failure. This seems to be a bug (477349135). However since webgpu::ExternalTexture should be a simple passthrough layer, it doesn\u0027t really need the mParamsBuffer. I was thinking about getting rid of this for webgpu backend a bit but that seems too intrusive to existing dawn frontend logic. (need to have a virtual Init or NeedParamsBuffer for the ExternalTextureBase, and BindGroupBase related code to resolve the binding also need to get updated). As a result for now just skip capturing the mParamsBuffer content by skipping triggering this capture bug.",
+      "revId": "d36972c17b5d6714c08000064184aa7e32648728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
