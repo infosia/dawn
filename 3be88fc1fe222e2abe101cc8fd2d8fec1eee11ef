@@ -110,6 +110,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5a5bf79_d07b62b4",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-21T15:10:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "35119d89_f6503e60",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8eaa9168_cb628b58",
@@ -199,6 +217,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ba47a4b6_895aecc5",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-21T15:10:19Z",
+      "side": 1,
+      "message": "Would prefer to case the i8/u8 case to UNREACHABLE if we can at this point so we know to update it in the future unless this will \"just work\" for i8/u8?",
+      "parentUuid": "10827dc2_ba477ade",
+      "range": {
+        "startLine": 299,
+        "startChar": 1,
+        "endLine": 300,
+        "endChar": 34
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f887b5b5_af2ec0f8",
         "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
         "patchSetId": 4
@@ -268,6 +310,24 @@
       "side": 1,
       "message": "I\u0027ll see. The callers would have to do so though and usually just BaseType is used.",
       "parentUuid": "2e0140d8_8f505d07",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd833243_1d3befa8",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-21T15:10:19Z",
+      "side": 1,
+      "message": "There are 4 callers that I\u0027m seeing on a quick search, 1 passe `BaseType` the other 3 all directly pass a vector type.",
+      "parentUuid": "55b59dd9_e555cbb9",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -434,6 +494,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "20a4ac15_e06e7088",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-21T15:10:19Z",
+      "side": 1,
+      "message": "As long as it\u0027s still correct then keeping sgtm.",
+      "parentUuid": "d129d8a6_b3e71791",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99d0e9dc_369861dc",
@@ -505,6 +583,24 @@
       "side": 1,
       "message": "No, that function is when the result is based on a 16-bit type, but this is for when the base is 16-bit, but the result is 32-bit",
       "parentUuid": "db13af0a_47dafad6",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9f16e56_343ea38f",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-21T15:10:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2ea0cabe_86edffe5",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -645,6 +741,24 @@
       "side": 1,
       "message": "Imagine you have\n```\nstruct S {\n  a : vec4u,\n  b : array\u003cu32\u003e\n}\n@group(0) @binding(0) var\u003cstorage\u003e v : S;\n```\nThe original arrayLength returns the number of elements in S.b and new arrayLength returns that value + 4 (S.a) (assuming u32 base type). So we have to account for the offset to get to the runtime-sized array. Previously that would only be possible with a constant offset (struct member), but bufferView can introduce a runtime offset via it\u0027s operand.",
       "parentUuid": "e4c07ecd_03665ffa",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3526f78_4e6e3d51",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-21T15:10:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "65392131_b9758d50",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -800,6 +914,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dd14d4a_1f96683b",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-21T15:10:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7c1f8b5f_ad3fda8a",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4670fb10_8c46f90c",
@@ -831,6 +963,24 @@
       "side": 1,
       "message": "Same answer as previous question. I suppose I could recreate an entire arrayLength call if this is too confusing. Then we could destroy the old call.",
       "parentUuid": "4670fb10_8c46f90c",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32f85259_6ed86502",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-21T15:10:19Z",
+      "side": 1,
+      "message": "I think recreate and destroy might be simpler to understand?",
+      "parentUuid": "b9d99960_0f50bd20",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -956,6 +1106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "647dcf36_5f69d320",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-21T15:10:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a69c0785_31c08c66",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c89b629_eb0db2a2",
@@ -1004,6 +1172,24 @@
       "side": 1,
       "message": "My thought was it would be easier to review this way. Maybe gerrit track those types of changes better than I expect.",
       "parentUuid": "7c1d2910_bb881110",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4dbeca5_294989f4",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-21T15:10:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c6cb0164_212ce788",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

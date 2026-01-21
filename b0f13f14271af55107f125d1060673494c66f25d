@@ -253,6 +253,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "79183d6d_69832af4",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-21T15:10:19Z",
+      "side": 1,
+      "message": "`BaseEleType` works for me",
+      "parentUuid": "0795ac7e_0cd6e9ce",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dcf8ee6e_8b512e00",
         "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
         "patchSetId": 1
