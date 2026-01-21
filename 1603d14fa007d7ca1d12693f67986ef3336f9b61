@@ -249,6 +249,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74e83ff4_a125845f",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 3172,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-21T21:47:43Z",
+      "side": 1,
+      "message": "Recapping here what I said in the Graphite/Clank/Vulkan meeting:\n\nWhat I\u0027d like to do at this point is land this CL and then follow up with a CL that uses `VK_EXT_multisampled_render_to_single_sampled` to implement `DawnLoadResolveTexture`. That would allows the Dynamic Rendering path to be enabled for Graphite, as we as giving Graphite the ability to A/B test whether or not the transient texture allocation required for `DawnLoadResolveTexture` is actually problematic for a variety of devices vs. using `MSAAResolveToSingleSampled` directly. Ideally we can then drop one of those code paths once we gather a bit more data and can weigh which is performing best against which has the widest reach.",
+      "parentUuid": "5b6783f4_ef46373a",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa22ce12_f76b97be",

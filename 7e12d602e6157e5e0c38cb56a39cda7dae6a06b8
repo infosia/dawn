@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6129acdd_bb651e43",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-21T21:47:43Z",
+      "side": 1,
+      "message": "Thanks for all the discussion! Indicated the direction I want to go below. Includes landing this, at least as a temporary step, so please LGTM again!",
+      "revId": "7e12d602e6157e5e0c38cb56a39cda7dae6a06b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
