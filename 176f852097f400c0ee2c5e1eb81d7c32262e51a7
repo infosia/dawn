@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53448cc9_85366940",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-21T18:51:46Z",
+      "side": 1,
+      "message": "Here are some partial replies/changes.",
+      "revId": "176f852097f400c0ee2c5e1eb81d7c32262e51a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33cef920_91be3f2d",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-21T18:51:46Z",
+      "side": 1,
+      "message": "I switch the assertions to use relax ordering. Debug only assertions shouldn\u0027t insert memory barriers as that changes execution flow compared to release builds.",
+      "range": {
+        "startLine": 1024,
+        "startChar": 28,
+        "endLine": 1024,
+        "endChar": 54
+      },
+      "revId": "176f852097f400c0ee2c5e1eb81d7c32262e51a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

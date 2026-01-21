@@ -71,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb01a774_4d89001a",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-21T18:51:46Z",
+      "side": 1,
+      "message": "Done. Although I left the TODO since I\u0027m not sure if @cwallez@chromium.org still wants to investigate this.",
+      "parentUuid": "a722215c_66deed54",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 23
+      },
+      "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "605a0169_49ac9af6",
@@ -84,6 +108,24 @@
       "writtenOn": "2026-01-16T19:47:51Z",
       "side": 1,
       "message": "This is atomic for two reasons. First it can be read without changing the state so we can read/write simultaneously. Second so that if validation is off and multiple updates to the variable happen concurrently we still get atomic updates.",
+      "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dfbaf2c_084e1f58",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-21T18:51:46Z",
+      "side": 1,
+      "message": "Resolving",
+      "parentUuid": "605a0169_49ac9af6",
       "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -189,6 +231,24 @@
       "side": 1,
       "message": "ClearBufferToZero seems to only be called during initialization, or in queue operations, so it looks like it should be safe.",
       "parentUuid": "341fd4ee_3c9c4629",
+      "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8726f81_4f56ff2c",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-21T18:51:46Z",
+      "side": 1,
+      "message": "Ah right, calling mZeroBuffer-\u003eTrackUsageAndTransitionNow() is already not thread safe so if multiple threads could be in this function at the same time it\u0027s going to be a problem.",
+      "parentUuid": "eee22dc6_4acb5c83",
       "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

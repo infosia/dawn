@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2f02bd88_627cd405",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-21T18:51:46Z",
+      "side": 1,
+      "message": "\u003e I think this can become a compare_exchange if we do remove the HostMappedPersistent state.\n\nThat is possible but it becomes:\n\n```\nauto state \u003d BufferState::Unmapped;\nbool compare \u003d compare_exchange_strong(state, BufferState::InsideOperation, ...);\nDAWN_CHECK(compare);\n```\n\nSince execution stops if compare fails we don\u0027t gain anything by comparing before the exchange happens vs after? Comparing after using exchange() seemed simpler as a result.\n\n\u003e Separately, I was also thinking that maybe the state change could actually happen in the ctor of the ScopedUseBuffer. I don\u0027t have a strong preference for this, but right now, only the dtor does anything for that thing and it\u0027s sort of requiring the user to do something before which doesn\u0027t feel as RAII as what the class suggests.\n\nWe can\u0027t do the compare exchange in the constructor if we use it from the queue for external API usage. The constructor can\u0027t fail and return an error which is required. I did make ScopedUseBuffer only able to be constructed from BufferBase though to hopefully prevent misuse.",
+      "parentUuid": "c3732ce5_809a2437",
+      "range": {
+        "startLine": 661,
+        "startChar": 4,
+        "endLine": 661,
+        "endChar": 63
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f1447150_8cc26b38",
         "filename": "src/dawn/native/Buffer.cpp",
         "patchSetId": 20
@@ -37,6 +61,30 @@
       "writtenOn": "2026-01-20T20:00:19Z",
       "side": 1,
       "message": "[1] Would it make sense for this to actually return a `ResultOrError\u003cBufferBase::ScopedUseBuffer\u003e` instead of a `MaybeError`? That way it\u0027s more obvious that this also causes a state change. Otherwise, it\u0027s not obvious since the name only suggests that we are doing some validation and most other validation helpers are roughly const w.r.t the objects.",
+      "range": {
+        "startLine": 667,
+        "startChar": 23,
+        "endLine": 667,
+        "endChar": 47
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48b323ce_0d2bb4a8",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-21T18:51:46Z",
+      "side": 1,
+      "message": "Yeah that makes sense. It\u0027s a little awkward with ValidateSubmit() though. Changing `flat_hash_set\u003cBufferBase*\u003e` to `flat_hash_set\u003cBufferBase::ScopedUseBuffer\u003e` requires implementing heterogeneous lookup for `BufferBase*/ScopedUseBuffer`. I have that working locally although it\u0027s a lot more code. Instead I added a function to release the ScopedUseBuffer so Queue::Submti() can still track a set of `BufferBase*` and manually call FinishUse().",
+      "parentUuid": "f1447150_8cc26b38",
       "range": {
         "startLine": 667,
         "startChar": 23,
@@ -70,6 +118,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d774d28a_f629c679",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-21T18:51:46Z",
+      "side": 1,
+      "message": "UseBufferInternal() does a DAWN_CHECK() whereas this returns a validation error.",
+      "parentUuid": "6f8225c6_cde49981",
+      "range": {
+        "startLine": 684,
+        "startChar": 19,
+        "endLine": 684,
+        "endChar": 72
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5feeb83_33e4972b",
@@ -83,6 +155,30 @@
       "writtenOn": "2026-01-20T20:00:19Z",
       "side": 1,
       "message": "Same comment as for `UseBufferInternal` where we might be able to just use a `compare_exchange` if we remove the `HostMappedPersistent` state.",
+      "range": {
+        "startLine": 690,
+        "startChar": 4,
+        "endLine": 692,
+        "endChar": 52
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69cfb26d_a74598b8",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-21T18:51:46Z",
+      "side": 1,
+      "message": "See other reply.",
+      "parentUuid": "b5feeb83_33e4972b",
       "range": {
         "startLine": 690,
         "startChar": 4,
@@ -116,6 +212,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c316bbf_e6f7dd05",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-21T18:51:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "299a62b1_4a7df513",
+      "range": {
+        "startLine": 1128,
+        "startChar": 4,
+        "endLine": 1128,
+        "endChar": 25
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c24d0a35_36ce7f32",
@@ -129,6 +249,30 @@
       "writtenOn": "2026-01-20T20:00:19Z",
       "side": 1,
       "message": "Is it possible to remove this state entirely with the new bool? I think it would be nice to separate this out of the states since it seems like intuitively it\u0027s an orthogonal property of the buffer. (Maybe same comment about the shared memory one as well, but not as relevant to this change since we aren\u0027t really touching that here.)",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 28
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9adf7ef1_85dfff2a",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-21T18:51:46Z",
+      "side": 1,
+      "message": "Oh, yeah, good point. It\u0027s basically the same as Unmapped except MapAsync() should fail. Sent out a CL for that.",
+      "parentUuid": "c24d0a35_36ce7f32",
       "range": {
         "startLine": 109,
         "startChar": 8,
@@ -164,6 +308,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "673c7890_f59e4cd6",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-21T18:51:46Z",
+      "side": 1,
+      "message": "The `Atomic` class is missing a lot of needed functionality right now in terms of compare_exchange_strong/compare_exchange_weak/exchange. It\u0027s also missing the ability to change the memory order in some calls. It\u0027s possible to implement a fuller wrapper but I\u0027m not sold on it.",
+      "parentUuid": "0fea689f_b6ce3065",
+      "range": {
+        "startLine": 289,
+        "startChar": 4,
+        "endLine": 289,
+        "endChar": 60
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5038abbe_426e5b26",
         "filename": "src/dawn/native/Queue.cpp",
         "patchSetId": 20
@@ -175,6 +343,30 @@
       "writtenOn": "2026-01-20T20:00:19Z",
       "side": 1,
       "message": "I did not know this existed 😮. That said though, since it\u0027s always being invoked early anyways right now, it might be fine to just use a normal lambda? Or just do the loop inline below?",
+      "range": {
+        "startLine": 654,
+        "startChar": 10,
+        "endLine": 654,
+        "endChar": 17
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "618066a0_d4f86e38",
+        "filename": "src/dawn/native/Queue.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-21T18:51:46Z",
+      "side": 1,
+      "message": "The cleanup function gets invoked in one of three different places now, if ValidateSubmit() returns an error, if SubmitImpl() returns an error or at L669 explicitly. We\u0027d have to manually run cleanup logic in all three places without absl::Cleanup.",
+      "parentUuid": "5038abbe_426e5b26",
       "range": {
         "startLine": 654,
         "startChar": 10,
@@ -198,6 +390,30 @@
       "writtenOn": "2026-01-20T20:00:19Z",
       "side": 1,
       "message": "nit. For this test and the one below, I think it might just be better to do two separate `std::thread`\u0027s which do the different things than to use `RunInParallel` since you end up hiding that detail via the index anyways,",
+      "range": {
+        "startLine": 260,
+        "startChar": 4,
+        "endLine": 260,
+        "endChar": 49
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8f7e560_e5b67d8b",
+        "filename": "src/dawn/tests/unittests/native/BufferBaseTests.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-21T18:51:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "901fd12a_37899a47",
       "range": {
         "startLine": 260,
         "startChar": 4,
