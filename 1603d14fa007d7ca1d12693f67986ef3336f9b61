@@ -197,6 +197,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cd936b4f_8b9675be",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 3172,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-21T18:57:46Z",
+      "side": 1,
+      "message": "\u003e Looking at VK_KHR_dynamic_rendering again, it seems that if the resolve attachment are in the layout \"VK_IMAGE_LAYOUT_GENERAL\", then we should be able to read from them in the \"dynamic rendering\", while still resolving to them at the end of the \"dynamic rendering\".\n\nCan you point to where you found that documented? I\u0027ve had a hard time finding a reference for it.",
+      "parentUuid": "c613f5c4_19ce88f1",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aa22ce12_f76b97be",
         "filename": "src/dawn/native/AttachmentState.cpp",
         "patchSetId": 9
