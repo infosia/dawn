@@ -472,6 +472,9 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         mSubgroupMinSize >= kDefaultSubgroupMinSize && mSubgroupMaxSize <= kDefaultSubgroupMaxSize;
     if (hasBaseSubgroupSupport && hasRequiredF16Support && allowSubgroupSizeRanges) {
         EnableFeature(Feature::Subgroups);
+
+        // We have already required `VK_EXT_subgroup_size_control` for `Subgroups` (see condition 4)
+        EnableFeature(Feature::ChromiumExperimentalSubgroupSizeControl);
     }
 
     // Enable subgroup matrix if all of the following are true:
@@ -1524,6 +1527,13 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
         subgroupMatrixConfigs->configs = configs;
         subgroupMatrixConfigs->configCount = supportedConfigs.size();
         memcpy(configs, supportedConfigs.data(), count * sizeof(SubgroupMatrixConfig));
+    }
+    if (auto* explicitComputeSubgroupSizeConfigs =
+            info.Get<AdapterPropertiesExplicitComputeSubgroupSizeConfigs>()) {
+        explicitComputeSubgroupSizeConfigs->minExplicitComputeSubgroupSize =
+            mDeviceInfo.subgroupSizeControlProperties.minSubgroupSize;
+        explicitComputeSubgroupSizeConfigs->maxExplicitComputeSubgroupSize =
+            mDeviceInfo.subgroupSizeControlProperties.maxSubgroupSize;
     }
 }
 
