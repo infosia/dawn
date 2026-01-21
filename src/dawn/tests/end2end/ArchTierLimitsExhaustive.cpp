@@ -308,6 +308,10 @@ TEST_P(TierArchInfoTest_TieredMaxLimits, ExhaustiveTestAllFeatures) {
     // TODO(crbug.com/459848477): Fails on Windows/Snapdragon X Elite.
     DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm());
 
+    // TODO(crbug.com/463721943): Fails on Win11/NVIDIA GTX 1660. Unclear if
+    // this is a Windows 11 issue or caused by the newer driver.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsNvidia() && IsD3D12());
+
     std::multimap<std::string, std::set<uint32_t>> device_map;
 
     using enum wgpu::FeatureName;
