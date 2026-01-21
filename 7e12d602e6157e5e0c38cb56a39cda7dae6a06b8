@@ -16,6 +16,23 @@
       "message": "Thanks for all the discussion! Indicated the direction I want to go below. Includes landing this, at least as a temporary step, so please LGTM again!",
       "revId": "7e12d602e6157e5e0c38cb56a39cda7dae6a06b8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "455b8dcd_8a91ebbc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-21T22:48:27Z",
+      "side": 1,
+      "message": "Just had an offline conversation with Kai about this. The conclusion was that since the Vulkan extension is happy to apply this to a subset of the passes attachment it feels a bit silly to introduce an artificial restriction that it applies to all of the attachments or none of them in Dawn. Given that it\u0027s unlikely that this feature is implemented on any of our other backends, we might as well adhere closer to the native Vulkan behavior.\n\nI\u0027ll upload a new patchset soon that removes that requirement.",
+      "revId": "7e12d602e6157e5e0c38cb56a39cda7dae6a06b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
