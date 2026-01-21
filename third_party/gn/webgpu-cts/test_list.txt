@@ -236168,6 +236168,12 @@ webgpu:shader,validation,const_assert,const_assert:evaluation_stage:scope="modul
 webgpu:shader,validation,const_assert,const_assert:evaluation_stage:scope="function";stage="constant"
 webgpu:shader,validation,const_assert,const_assert:evaluation_stage:scope="function";stage="override"
 webgpu:shader,validation,const_assert,const_assert:evaluation_stage:scope="function";stage="runtime"
+webgpu:shader,validation,decl,assignment_statement:scalar_assignment:
+webgpu:shader,validation,decl,assignment_statement:vector_full_assignment:
+webgpu:shader,validation,decl,assignment_statement:vector_indexed_assignment:
+webgpu:shader,validation,decl,assignment_statement:vector_swizzle_assignment:case="single"
+webgpu:shader,validation,decl,assignment_statement:vector_swizzle_assignment:case="multi"
+webgpu:shader,validation,decl,assignment_statement:vector_swizzle_assignment:case="swizzleswizzle"
 webgpu:shader,validation,decl,compound_statement:decl_conflict:case="a"
 webgpu:shader,validation,decl,compound_statement:decl_conflict:case="bc"
 webgpu:shader,validation,decl,compound_statement:decl_conflict:case="d"
