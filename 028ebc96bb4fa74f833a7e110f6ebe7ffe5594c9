@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38307da9_880a60dd",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T13:28:30Z",
+      "side": 1,
+      "message": "Could we `MarkUsedInPendingCommands` in `WriteInternal` since that\u0027s what uses the buffer in pending commands?",
+      "revId": "028ebc96bb4fa74f833a7e110f6ebe7ffe5594c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75027130_e9f2f83c",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T13:28:30Z",
+      "side": 1,
+      "message": "Why does this need a `Defer`? Any error here will result in a device loss so we should be safe even if the state is left slightly inconsistent.",
+      "revId": "028ebc96bb4fa74f833a7e110f6ebe7ffe5594c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
