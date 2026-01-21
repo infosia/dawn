@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "791deb4f_c35bba8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T08:41:41Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "306dff40715bbdb0f8217fbb89c61572633acc30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12be2cf9_3d44cd71",
+        "filename": "src/dawn/native/d3d12/D3D12Info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T08:41:41Z",
+      "side": 1,
+      "message": "nit: this struct exposes raw info from D3D12, can we leave the decision to support bindless based on D3D12 tiers and other info to PhysicalDeviceD3D12?",
+      "revId": "306dff40715bbdb0f8217fbb89c61572633acc30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5077e456_9615a9b8",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T08:41:41Z",
+      "side": 1,
+      "message": "We\u0027ll need to choose the maxResourceTableSize limit as well (the base limit seems good there)",
+      "revId": "306dff40715bbdb0f8217fbb89c61572633acc30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9496d40_bdc15394",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T08:41:41Z",
+      "side": 1,
+      "message": "Yes definitely!",
+      "revId": "306dff40715bbdb0f8217fbb89c61572633acc30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
