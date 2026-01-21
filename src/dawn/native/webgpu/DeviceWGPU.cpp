@@ -70,14 +70,52 @@
 
 namespace dawn::native::webgpu {
 
+namespace {
+
+// Toggles in this list is never enabled in webgpu::Device, but only get passed down to the inner
+// device.
+constexpr Toggle kBypassedToggles[] = {
+    // UseBlit* toggles can change Buffer/Texture usage flags.
+    Toggle::UseBlitForBufferToDepthTextureCopy,
+    Toggle::UseBlitForBufferToStencilTextureCopy,
+    Toggle::UseBlitForStencilTextureWrite,
+    Toggle::UseBlitForDepthTextureToTextureCopyToNonzeroSubresource,
+    Toggle::UseBlitForDepth16UnormTextureToBufferCopy,
+    Toggle::UseBlitForDepth32FloatTextureToBufferCopy,
+    Toggle::UseBlitForStencilTextureToBufferCopy,
+    Toggle::UseBlitForSnormTextureToBufferCopy,
+    Toggle::UseBlitForBGRA8UnormTextureToBufferCopy,
+    Toggle::UseBlitForRGB9E5UfloatTextureCopy,
+    Toggle::UseBlitForRG11B10UfloatTextureCopy,
+    Toggle::UseBlitForFloat16TextureCopy,
+    Toggle::UseBlitForFloat32TextureCopy,
+    Toggle::UseBlitForT2B,
+    Toggle::UseBlitForB2T,
+};
+
+}  // namespace
+
 // static
 ResultOrError<Ref<Device>> Device::Create(AdapterBase* adapter,
                                           WGPUAdapter innerAdapter,
                                           const UnpackedPtr<DeviceDescriptor>& descriptor,
                                           const TogglesState& deviceToggles,
                                           Ref<DeviceBase::DeviceLostEvent>&& lostEvent) {
-    Ref<Device> device = AcquireRef(
-        new Device(adapter, innerAdapter, descriptor, deviceToggles, std::move(lostEvent)));
+    TogglesState outterDeviceToggles = deviceToggles;
+
+    // For the inner device, we want to enable the toggles if they are enabled in deviceToggles.
+    // TogglesState deviceToggles already has them resolved.
+
+    // For outter (this webgpu::Device), we want to disable them so we don't do the workaround.
+    for (Toggle t : kBypassedToggles) {
+        if (outterDeviceToggles.IsEnabled(t)) {
+            outterDeviceToggles.ForceSet(t, false);
+        }
+    }
+
+    Ref<Device> device =
+        AcquireRef(new Device(adapter, innerAdapter, descriptor, outterDeviceToggles, deviceToggles,
+                              std::move(lostEvent)));
     DAWN_TRY(device->Initialize(descriptor));
     return device;
 }
@@ -86,6 +124,7 @@ Device::Device(AdapterBase* adapter,
                WGPUAdapter innerAdapter,
                const UnpackedPtr<DeviceDescriptor>& descriptor,
                const TogglesState& deviceToggles,
+               const TogglesState& innerDeviceToggles,
                Ref<DeviceBase::DeviceLostEvent>&& lostEvent)
     : DeviceBase(adapter, descriptor, deviceToggles, std::move(lostEvent)),
       ObjectWGPU(ToBackend(adapter->GetPhysicalDevice())->GetFunctions().deviceRelease),
@@ -99,11 +138,11 @@ Device::Device(AdapterBase* adapter,
     WGPUDawnTogglesDescriptor apiToggleDescriptor = WGPU_DAWN_TOGGLES_DESCRIPTOR_INIT;
 
     apiDesc.nextInChain = nullptr;
-    auto enabledTogglesName = deviceToggles.GetEnabledToggleNames();
+    auto enabledTogglesName = innerDeviceToggles.GetEnabledToggleNames();
     apiToggleDescriptor.enabledToggleCount = enabledTogglesName.size();
     apiToggleDescriptor.enabledToggles = enabledTogglesName.data();
 
-    auto disabledTogglesName = deviceToggles.GetDisabledToggleNames();
+    auto disabledTogglesName = innerDeviceToggles.GetDisabledToggleNames();
     apiToggleDescriptor.disabledToggleCount = disabledTogglesName.size();
     apiToggleDescriptor.disabledToggles = disabledTogglesName.data();
 
