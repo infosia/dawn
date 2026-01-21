@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a16b0b02_edde4927",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-21T23:53:22Z",
+      "side": 1,
+      "message": "Ah... I see. That seems fine then. Maybe we should just add some comments in the ctor to make it clear that we should never be constructing it directly, and we should only ever be creating it via a helper function on `BufferBase`. It might be possible to encapsulate it somehow by making the ctor private?",
+      "parentUuid": "2f02bd88_627cd405",
+      "range": {
+        "startLine": 661,
+        "startChar": 4,
+        "endLine": 661,
+        "endChar": 63
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f1447150_8cc26b38",
         "filename": "src/dawn/native/Buffer.cpp",
         "patchSetId": 20
@@ -320,6 +344,30 @@
       "side": 1,
       "message": "The `Atomic` class is missing a lot of needed functionality right now in terms of compare_exchange_strong/compare_exchange_weak/exchange. It\u0027s also missing the ability to change the memory order in some calls. It\u0027s possible to implement a fuller wrapper but I\u0027m not sold on it.",
       "parentUuid": "0fea689f_b6ce3065",
+      "range": {
+        "startLine": 289,
+        "startChar": 4,
+        "endLine": 289,
+        "endChar": 60
+      },
+      "revId": "0602454cf72344c526fb8ad25df86fa4fa0183f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c8bc4ae_09fe7eca",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-21T23:53:22Z",
+      "side": 1,
+      "message": "Ack, fine to leave as is for now then! It was just because I saw a bunch of `mState.load(...::acquire)` so I figured we might be able to simplify it.",
+      "parentUuid": "673c7890_f59e4cd6",
       "range": {
         "startLine": 289,
         "startChar": 4,
