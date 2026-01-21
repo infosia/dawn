@@ -51,6 +51,24 @@
       "parentUuid": "e92b9935_936cc7b7",
       "revId": "ab046652b43a65dbd9b4bae559fa4d91e69940ea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10ae9efa_9a12fe5d",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T20:06:30Z",
+      "side": 1,
+      "message": "Yeah it all seems kinda doable, but also a large rework for a reversible decision (it would just loosen the constraint on concurrent use of buffers and queue submit). Let\u0027s go with the current approach and see much later if we need to revisit. Apologies for randomizing things.",
+      "parentUuid": "e9eec21f_d39df0bc",
+      "revId": "ab046652b43a65dbd9b4bae559fa4d91e69940ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
