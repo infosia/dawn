@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec6a3be3_cedca40b",
+        "filename": "src/dawn/replay/ReplayImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-21T18:15:53Z",
+      "side": 1,
+      "message": "yea, I was worried about that. Since I was only using it for debug ATM I let it slide. I put something in via `const void*` to id. I can change it to `Resource` to id if you\u0027d prefer. I had that but it adds code to visit all the variants when hashing.",
+      "parentUuid": "3627587f_e0041b24",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 11
+      },
+      "revId": "b49e15b61ae5c6f60c1cbccce43d18d746cf8591",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bceb3a22_407e92bc",
@@ -37,6 +61,24 @@
       "writtenOn": "2026-01-19T08:52:04Z",
       "side": 1,
       "message": "nit: this formatting should have been in the previous CL",
+      "revId": "b49e15b61ae5c6f60c1cbccce43d18d746cf8591",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0caedd3_1f1662e8",
+        "filename": "src/dawn/serialization/Schema.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-21T18:15:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bceb3a22_407e92bc",
       "revId": "b49e15b61ae5c6f60c1cbccce43d18d746cf8591",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
