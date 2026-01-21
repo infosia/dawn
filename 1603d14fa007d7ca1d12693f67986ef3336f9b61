@@ -215,6 +215,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bf1d4490_6500c55e",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 3172,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-21T19:03:26Z",
+      "side": 1,
+      "message": "It doesn\u0027t sound like there is any opposition to landing this approach..\n\n\u003e It\u0027s probably more worth editing Quyen\u0027s original doc with more information and history of what we tried (based on your list above).\n\nWill do.\n\n\u003e Looking at VK_KHR_dynamic_rendering again, it seems that if the resolve attachment are in the layout \"VK_IMAGE_LAYOUT_GENERAL\", then we should be able to read from them in the \"dynamic rendering\", while still resolving to them at the end of the \"dynamic rendering\". This should let us use the emulation of the feature without the need for VK_KHR_dynamic_rendering_local_read.\n\nI thought with dynamic rendering you can\u0027t read from a color attachment unless you have VK_KHR_dynamic_rendering_local_read. That requires splitting up subpasses into two render passes which has a flush to VRAM.",
+      "parentUuid": "c613f5c4_19ce88f1",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aa22ce12_f76b97be",
         "filename": "src/dawn/native/AttachmentState.cpp",
         "patchSetId": 9
