@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fa51504_8a6f0476",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 3137,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-21T03:18:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04cd1eef_4fc0acf6",
+      "revId": "7b012de7ec76bcb8dc83ef43db15493078fb1607",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54f17815_318ba51a",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c6222f3_5dcc30bd",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 4036,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-21T03:18:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54f17815_318ba51a",
+      "revId": "7b012de7ec76bcb8dc83ef43db15493078fb1607",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "404cf7f4_51dcd439",
@@ -65,6 +101,24 @@
       "writtenOn": "2026-01-17T00:01:36Z",
       "side": 1,
       "message": "It seems from the discussion on the issue that `VK_EXT_multisampled_render_to_single_sampled` allows mixing single- and multi-sample attachments in one render pass. If I\u0027m understanding this validation correctly it requires either ALL attachments to be single-sample (if the extension struct is used) or ALL to be multi-sample (if not).\n\n---\n\nIf this is changed, then rather than `implicitSampleCount` controlling whether this feature is used, it could just be the source of truth for the sample count of the render pass (which currently is inferred from the sample counts of the attachments).\n\nThat would be more appropriately named `dawn render pass sample count`, as that (1) matches `render pass max draw count`, (2) aligns with the naming conventions of webgpu.h (describe what\u0027s in the extension struct, not the feature it\u0027s associated with), and (3)...\n\nThere\u0027s actually another hypothetical feature that would need that: render passes with no attachments. Today, that\u0027s disallowed by the three instances of \"There must exist at least one attachment\" in the spec, but two of them (render bundle, render pipeline) already have explicit sample counts, only render pass doesn\u0027t.",
+      "revId": "7b012de7ec76bcb8dc83ef43db15493078fb1607",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1be075f4_e0586efe",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-21T03:18:48Z",
+      "side": 1,
+      "message": "That sounds reasonable. Renamed to DawnRenderPassSampleCount and updated all error messages, comments, and documentation to match.\n\nAnd yes, the Vulkan extension is more flexible in that you can pick and choose targets to apply the MSRTSS to, while here we\u0027re making it an all or nothing (for color at least) thing.",
+      "parentUuid": "404cf7f4_51dcd439",
       "revId": "7b012de7ec76bcb8dc83ef43db15493078fb1607",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
