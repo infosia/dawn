@@ -101,9 +101,10 @@ enum class DeviceExt {
     // Promoted to 1.4
     PipelineRobustness,
     Maintenance5,
+    DynamicRenderingLocalRead
 
-    // Others
-    DepthClipEnable,
+        // Others
+        DepthClipEnable,
     ImageDrmFormatModifier,
     Swapchain,
     QueueFamilyForeign,

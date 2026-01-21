@@ -142,6 +142,7 @@ static constexpr std::array<DeviceExtInfo, kDeviceExtCount> sDeviceExtInfos{{
     // Promoted in 1.4
     {DeviceExt::PipelineRobustness, "VK_EXT_pipeline_robustness"},
     {DeviceExt::Maintenance5, "VK_KHR_maintenance5"},
+    {DeviceExt::DynamicRenderingLocalRead, "VK_KHR_dynamic_rendering_local_read"},
 
     // Not promoted to core in any version
     {DeviceExt::DepthClipEnable, "VK_EXT_depth_clip_enable"},
@@ -271,6 +272,7 @@ DeviceExtSet EnsureDependencies(const DeviceExtSet& advertisedExts,
                 break;
 
             case DeviceExt::Maintenance5:
+            case DeviceExt::DynamicRenderingLocalRead:
                 hasDependencies = HasDep(DeviceExt::DynamicRendering);
                 break;
 
