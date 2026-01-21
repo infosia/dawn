@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9d0369c_d46b0edf",
+        "filename": "src/dawn/native/webgpu/BindGroupWGPU.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-21T22:41:45Z",
+      "side": 1,
+      "message": "Done (Add a map `BindingNumber` to `index in mBoundExternalTextures` in `native::BindGroup`)",
+      "parentUuid": "cddd99d2_72e926cd",
+      "revId": "d36972c17b5d6714c08000064184aa7e32648728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "07c2b6f0_28ec741d",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-01-21T14:03:55Z",
       "side": 1,
       "message": "ditto",
+      "revId": "d36972c17b5d6714c08000064184aa7e32648728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "537af29e_36affb93",
+        "filename": "src/dawn/native/webgpu/BindGroupWGPU.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-21T22:41:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07c2b6f0_28ec741d",
       "revId": "d36972c17b5d6714c08000064184aa7e32648728",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -70,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f5120f5_0dce34a9",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-21T22:41:45Z",
+      "side": 1,
+      "message": "Done (Rebased on [this CL](https://dawn-review.googlesource.com/c/dawn/+/285935))",
+      "parentUuid": "c10fbb02_8c91841f",
+      "revId": "d36972c17b5d6714c08000064184aa7e32648728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f443d439_1471a846",
@@ -83,6 +137,24 @@
       "writtenOn": "2026-01-21T14:03:55Z",
       "side": 1,
       "message": "That\u0027s a bit overkill in the common case that external textures are not used. Maybe we could do a temporary allocation in a unique_ptr for that purpose, so that only the ExternalTexture case is more expensive? So this would be an `std::vector\u003cstd::unique_ptr\u003cwgpu::ExternalTextureBindingEntry\u003e\u003e` and we don\u0027t need to reserve.",
+      "revId": "d36972c17b5d6714c08000064184aa7e32648728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e054684c_19e3d292",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-21T22:41:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f443d439_1471a846",
       "revId": "d36972c17b5d6714c08000064184aa7e32648728",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -104,6 +176,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "878829e3_ead9f08e",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-21T22:41:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e125f1b_062744ea",
+      "revId": "d36972c17b5d6714c08000064184aa7e32648728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58b031d3_129ce8b6",
@@ -117,6 +207,24 @@
       "writtenOn": "2026-01-21T14:03:55Z",
       "side": 1,
       "message": "```suggestion\n// Use alias of std::array since the preprocessor doesn\u0027t consider \u003c \u003e to be parenthesis for the logic of skipping commas (so the end up splitting macro invocation arguments).\n```\n\nJust to be slightly more clear since I happened hit this when I made a toy GLSL preprocessor.",
+      "revId": "d36972c17b5d6714c08000064184aa7e32648728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2a2851b_a3bc1883",
+        "filename": "src/dawn/serialization/Schema.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-21T22:41:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58b031d3_129ce8b6",
       "revId": "d36972c17b5d6714c08000064184aa7e32648728",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
