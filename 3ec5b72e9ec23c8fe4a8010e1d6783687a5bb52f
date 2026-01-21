@@ -70,6 +70,30 @@
       },
       "revId": "3ec5b72e9ec23c8fe4a8010e1d6783687a5bb52f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a8735df_da88e258",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-21T03:08:10Z",
+      "side": 1,
+      "message": "Local only? I don\u0027t use `git cl` so maybe yeah. But usually our presubmits run locally and remotely. Anyway, it\u0027s fixed now. Thanks!",
+      "parentUuid": "b6d4f9e0_456519e2",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3ec5b72e9ec23c8fe4a8010e1d6783687a5bb52f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
