@@ -28,6 +28,7 @@
 #include "dawn/native/metal/CommandBufferMTL.h"
 
 #include "absl/container/flat_hash_map.h"
+#include "dawn/common/Assert.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/common/Range.h"
 #include "dawn/native/BindGroupTracker.h"
@@ -66,6 +67,47 @@ MTLIndexType MTLIndexFormat(wgpu::IndexFormat format) {
         case wgpu::IndexFormat::Undefined:
             DAWN_UNREACHABLE();
     }
+}
+
+MTLRenderStages ToMTLRenderStages(wgpu::ShaderStage visibility) {
+    DAWN_ASSERT(IsSubset(visibility, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment));
+    MTLRenderStages stages = 0;
+    if (visibility & wgpu::ShaderStage::Vertex) {
+        stages |= MTLRenderStageVertex;
+    }
+    if (visibility & wgpu::ShaderStage::Fragment) {
+        stages |= MTLRenderStageFragment;
+    }
+    return stages;
+}
+
+MTLResourceUsage ToMTLResourceUsage(wgpu::StorageTextureAccess access) {
+    switch (access) {
+        case wgpu::StorageTextureAccess::ReadOnly:
+            return MTLResourceUsageRead;
+        case wgpu::StorageTextureAccess::WriteOnly:
+            return MTLResourceUsageWrite;
+        case wgpu::StorageTextureAccess::ReadWrite:
+            return MTLResourceUsageRead | MTLResourceUsageWrite;
+        case wgpu::StorageTextureAccess::Undefined:
+        case wgpu::StorageTextureAccess::BindingNotUsed:
+            break;
+    }
+    DAWN_UNREACHABLE();
+}
+
+MTLResourceUsage ToMTLResourceUsage(wgpu::BufferBindingType access) {
+    switch (access) {
+        case wgpu::BufferBindingType::Uniform:
+        case wgpu::BufferBindingType::ReadOnlyStorage:
+            return MTLResourceUsageRead;
+        case wgpu::BufferBindingType::Storage:
+            return MTLResourceUsageRead | MTLResourceUsageWrite;
+        case wgpu::BufferBindingType::Undefined:
+        case wgpu::BufferBindingType::BindingNotUsed:
+            break;
+    }
+    DAWN_UNREACHABLE();
 }
 
 template <typename PassDescriptor>
@@ -729,10 +771,24 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     SingleShaderStage::Compute)[index][bindingIndex];
             }
 
-            auto HandleTextureBinding = [&]() {
+            auto UseResource = [&](id<MTLResource> resource, MTLResourceUsage usage) {
+                if (mUseArgumentBuffers) {
+                    if (render != nullptr) {
+                        [render useResource:resource
+                                      usage:usage
+                                     stages:ToMTLRenderStages(bindingInfo.visibility)];
+                    }
+                    if (compute != nullptr) {
+                        [compute useResource:resource usage:usage];
+                    }
+                }
+            };
+
+            auto SetTextureBinding = [&](MTLResourceUsage usage) {
+                auto textureView = ToBackend(group->GetBindingAsTextureView(bindingIndex));
+                id<MTLTexture> texture = textureView->GetMTLTexture();
+                UseResource(texture, usage);
                 if (!mUseArgumentBuffers) {
-                    auto textureView = ToBackend(group->GetBindingAsTextureView(bindingIndex));
-                    id<MTLTexture> texture = textureView->GetMTLTexture();
                     if (hasVertStage &&
                         mBoundTextures[SingleShaderStage::Vertex][vertIndex] != texture) {
                         mBoundTextures[SingleShaderStage::Vertex][vertIndex] = texture;
@@ -771,8 +827,9 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                         mLengthTracker->dirtyStages |= wgpu::ShaderStage::Compute;
                     }
 
+                    const id<MTLBuffer> buffer = ToBackend(binding.buffer)->GetMTLBuffer();
+                    UseResource(buffer, ToMTLResourceUsage(layout.type));
                     if (!mUseArgumentBuffers) {
-                        const id<MTLBuffer> buffer = ToBackend(binding.buffer)->GetMTLBuffer();
                         NSUInteger offset = binding.offset;
 
                         // TODO(crbug.com/dawn/854): Record bound buffer status to use
@@ -805,6 +862,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                 [&](const SamplerBindingInfo&) {
                     auto sampler = ToBackend(group->GetBindingAsSampler(bindingIndex));
                     id<MTLSamplerState> samplerState = sampler->GetMTLSamplerState();
+                    // (Note useResource is not needed; MTLSamplerState is not a MTLResource.)
                     if (!mUseArgumentBuffers) {
                         if (hasVertStage &&
                             mBoundSamplers[SingleShaderStage::Vertex][vertIndex] != samplerState) {
@@ -832,8 +890,10 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     // Metal backend.
                     DAWN_CHECK(false);
                 },
-                [&](const TextureBindingInfo&) { HandleTextureBinding(); },
-                [&](const StorageTextureBindingInfo&) { HandleTextureBinding(); },
+                [&](const TextureBindingInfo&) { SetTextureBinding(MTLResourceUsageRead); },
+                [&](const StorageTextureBindingInfo& info) {
+                    SetTextureBinding(ToMTLResourceUsage(info.access));
+                },
                 [&](const TexelBufferBindingInfo&) {
                     // Metal does not support texel buffers.
                     // TODO(crbug/382544164): Prototype texel buffer feature
@@ -844,6 +904,9 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
         }
 
         if (mUseArgumentBuffers) {
+            // TODO(crbug.com/477317116): We need to call useResource on all the resources in the
+            // argument buffer before we can do this. (I'm not clear why the Metal validation layer
+            // isn't complaining about this already.) Could use MTLResidencySet on macOS 15.0+.
             uint32_t offset_size = uint32_t(dynamicOffsets.size());
             if (render) {
                 [render setVertexBuffer:*(group->GetArgumentBuffer())
