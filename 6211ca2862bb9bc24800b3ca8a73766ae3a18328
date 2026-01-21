@@ -16,6 +16,46 @@
       "message": "PTAL, thanks!",
       "revId": "6211ca2862bb9bc24800b3ca8a73766ae3a18328",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "beda3448_08ca2de5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T13:16:55Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "6211ca2862bb9bc24800b3ca8a73766ae3a18328",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af72274e_41d53fdc",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-21T13:16:55Z",
+      "side": 1,
+      "message": "nit: we could make this call return an std::optional now as well.",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 64
+      },
+      "revId": "6211ca2862bb9bc24800b3ca8a73766ae3a18328",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
