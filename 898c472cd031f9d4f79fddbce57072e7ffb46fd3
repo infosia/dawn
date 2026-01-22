@@ -63,6 +63,30 @@
       },
       "revId": "898c472cd031f9d4f79fddbce57072e7ffb46fd3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa97202f_adf40a5a",
+        "filename": "infra/config/global/cmake_ci.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-22T18:57:17Z",
+      "side": 1,
+      "message": "Ack, updated to `-asan`.",
+      "parentUuid": "538bad4d_47397cc5",
+      "range": {
+        "startLine": 130,
+        "startChar": 37,
+        "endLine": 130,
+        "endChar": 47
+      },
+      "revId": "898c472cd031f9d4f79fddbce57072e7ffb46fd3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

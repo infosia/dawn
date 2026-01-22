@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "636d8d53_17cbab20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-22T18:57:17Z",
+      "side": 1,
+      "message": "Will need another stamp due to the comment fix in legacy_builders.star",
+      "revId": "0391dbc74a35e90fd36dca3af2b5e832e0528719",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
