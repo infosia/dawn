@@ -410,6 +410,9 @@ void ValidationTest::SetUp(const wgpu::InstanceDescriptor* nativeDesc,
 
     device = RequestDeviceSync(deviceDescriptor);
     DAWN_ASSERT(device);
+    device.SetLoggingCallback([](wgpu::LoggingType type, wgpu::StringView message) {
+        std::cerr << "Device log (" << type << "): " << message << std::endl;
+    });
     device.GetLimits(deviceLimits.GetLinked());
 
     // We only want to set the backendDevice when the device was created via the test setup.
