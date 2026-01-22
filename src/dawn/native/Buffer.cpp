@@ -655,10 +655,16 @@ size_t BufferBase::MapSize() const {
     return mMapSize;
 }
 
-MaybeError BufferBase::ValidateCanUseOnQueueNow() const {
+BufferBase::ScopedUseBuffer BufferBase::UseInternal() {
+    auto fromState = mState.exchange(BufferState::InsideOperation, std::memory_order::acq_rel);
+    DAWN_CHECK(fromState == BufferState::Unmapped);
+    return ScopedUseBuffer(this);
+}
+
+ResultOrError<BufferBase::ScopedUseBuffer> BufferBase::ValidateCanUseOnQueueNow() {
     DAWN_ASSERT(!IsError());
 
-    switch (mState.load(std::memory_order::acquire)) {
+    switch (BufferState state = mState.load(std::memory_order::acquire)) {
         case BufferState::Destroyed:
             return DAWN_VALIDATION_ERROR("%s used in submit while destroyed.", this);
         case BufferState::Mapped:
@@ -671,9 +677,15 @@ MaybeError BufferBase::ValidateCanUseOnQueueNow() const {
         case BufferState::InsideOperation:
             return ConcurrentUseError();
         case BufferState::Unmapped:
-            return {};
+            DAWN_TRY(TransitionState(state, BufferState::InsideOperation));
+            return ScopedUseBuffer(this);
     }
     DAWN_UNREACHABLE();
+}
+
+void BufferBase::FinishUse() {
+    BufferState fromState = mState.exchange(BufferState::Unmapped, std::memory_order::acq_rel);
+    DAWN_CHECK(fromState == BufferState::InsideOperation);
 }
 
 Future BufferBase::APIMapAsync(wgpu::MapMode mode,
@@ -686,8 +698,6 @@ Future BufferBase::APIMapAsync(wgpu::MapMode mode,
 
     Ref<MapAsyncEvent> event;
     {
-        auto deviceGuard = GetDevice()->GetGuard();
-
         // Handle the defaulting of size required by WebGPU, even if in webgpu_cpp.h it is not
         // possible to default the function argument (because there is the callback later in the
         // argument list)
@@ -1010,6 +1020,8 @@ bool BufferBase::NeedsInitialization() const {
 }
 
 void BufferBase::MarkUsedInPendingCommands() {
+    DAWN_ASSERT(!GetDevice()->IsValidationEnabled() ||
+                mState.load(std::memory_order::relaxed) == BufferState::InsideOperation);
     ExecutionSerial serial = GetDevice()->GetQueue()->GetPendingCommandSerial();
     DAWN_ASSERT(serial >= mLastUsageSerial);
     mLastUsageSerial = serial;
@@ -1098,6 +1110,34 @@ MaybeError BufferBase::TransitionState(BufferState currentState, BufferState des
     }
 
     return ConcurrentUseError();
+}
+
+BufferBase::ScopedUseBuffer::ScopedUseBuffer() = default;
+
+BufferBase::ScopedUseBuffer::ScopedUseBuffer(BufferBase* buffer) : mBuffer(buffer) {
+    DAWN_ASSERT(mBuffer);
+    DAWN_ASSERT(mBuffer->mState.load(std::memory_order::relaxed) == BufferState::InsideOperation);
+}
+
+BufferBase::ScopedUseBuffer::~ScopedUseBuffer() {
+    if (mBuffer) {
+        mBuffer->FinishUse();
+    }
+}
+
+BufferBase::ScopedUseBuffer::ScopedUseBuffer(ScopedUseBuffer&& other) : mBuffer(other.mBuffer) {
+    other.mBuffer = nullptr;
+}
+
+BufferBase::ScopedUseBuffer& BufferBase::ScopedUseBuffer::operator=(ScopedUseBuffer&& other) {
+    mBuffer = other.mBuffer;
+    other.mBuffer = nullptr;
+    return *this;
+}
+
+void BufferBase::ScopedUseBuffer::Release() {
+    DAWN_ASSERT(mBuffer);
+    mBuffer = nullptr;
 }
 
 }  // namespace dawn::native
