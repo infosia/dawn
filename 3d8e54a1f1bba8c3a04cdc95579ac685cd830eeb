@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "937e5409_be0fdfae",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-22T22:59:55Z",
+      "side": 1,
+      "message": "[1] The Problem is BGL only knows ExternalTextureBinding, but BG can bind ExternalTexture or textureView to ExternalTextureBindingEntry. I don\u0027t see how to do index random access instead of push_back to `mBoundExternalTextures`. And that makes we cannot have the map of `APIBindingIndex` to index in `BindGroup::mBoundExternalTextures` in BGL (instead of in BG).\n\ne.g.\nbgl \u003d {external_texture_binding, external_texture_binding}\n\nbg1 \u003d {external_texture_0, external_texture_1} mBoundExternalTextures \u003d {external_texture_0, external_texture_1} that_map \u003d { 0: 0, 1: 1}\n\nbg2 \u003d {texture_view_0, external_texture_0} mBoundExternalTextures \u003d {external_texture_0} that_map \u003d {1: 0}",
+      "parentUuid": "ff51d195_6602e9ae",
+      "range": {
+        "startLine": 678,
+        "startChar": 0,
+        "endLine": 681,
+        "endChar": 0
+      },
+      "revId": "3d8e54a1f1bba8c3a04cdc95579ac685cd830eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c8424f55_4d1aae0a",
         "filename": "src/dawn/native/BindGroup.cpp",
         "patchSetId": 12
@@ -37,6 +61,30 @@
       "writtenOn": "2026-01-22T09:16:26Z",
       "side": 1,
       "message": "nit: this could take an APIBindingIndex as its more compact and validated, and we already have it in BindGroupWGPU.",
+      "range": {
+        "startLine": 840,
+        "startChar": 64,
+        "endLine": 840,
+        "endChar": 77
+      },
+      "revId": "3d8e54a1f1bba8c3a04cdc95579ac685cd830eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f3e38a3_cb12ec87",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-22T22:59:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8424f55_4d1aae0a",
       "range": {
         "startLine": 840,
         "startChar": 64,
@@ -64,6 +112,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5255ba3_a1e7c410",
+        "filename": "src/dawn/native/BindGroup.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-22T22:59:55Z",
+      "side": 1,
+      "message": "[1]",
+      "parentUuid": "aae54003_6816b8af",
+      "revId": "3d8e54a1f1bba8c3a04cdc95579ac685cd830eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6b591eeb_cf37da19",
@@ -77,6 +143,24 @@
       "writtenOn": "2026-01-22T09:16:26Z",
       "side": 1,
       "message": "Where is plane0 captured in this code path?",
+      "revId": "3d8e54a1f1bba8c3a04cdc95579ac685cd830eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0832f916_1ed2d830",
+        "filename": "src/dawn/native/webgpu/BindGroupWGPU.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-22T22:59:55Z",
+      "side": 1,
+      "message": "Done (remove early return {}; if externalTexture binding, plane0 still needs capturing)",
+      "parentUuid": "6b591eeb_cf37da19",
       "revId": "3d8e54a1f1bba8c3a04cdc95579ac685cd830eeb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -98,6 +182,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f1fb2db_d9682f5a",
+        "filename": "src/dawn/native/webgpu/BindGroupWGPU.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-22T22:59:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ad6caa7_7588bac4",
+      "revId": "3d8e54a1f1bba8c3a04cdc95579ac685cd830eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b8e4841_5098df4a",
@@ -115,6 +217,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2273df8_a7e4a397",
+        "filename": "src/dawn/native/webgpu/BindGroupWGPU.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-22T22:59:55Z",
+      "side": 1,
+      "message": "Done (removed and add a comment)",
+      "parentUuid": "1b8e4841_5098df4a",
+      "revId": "3d8e54a1f1bba8c3a04cdc95579ac685cd830eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eaeec480_5ee65b51",
@@ -128,6 +248,24 @@
       "writtenOn": "2026-01-22T09:16:26Z",
       "side": 1,
       "message": "Please rework the comment as it talks about context from the place you copied it from that don\u0027t apply here.",
+      "revId": "3d8e54a1f1bba8c3a04cdc95579ac685cd830eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b190fead_338205b8",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-22T22:59:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaeec480_5ee65b51",
       "revId": "3d8e54a1f1bba8c3a04cdc95579ac685cd830eeb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
