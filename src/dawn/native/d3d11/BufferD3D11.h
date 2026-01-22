@@ -32,6 +32,7 @@
 #include <memory>
 #include <tuple>
 #include <utility>
+#include <vector>
 
 #include "absl/container/flat_hash_map.h"
 #include "dawn/common/ityp_array.h"
@@ -190,6 +191,8 @@ class Buffer : public BufferBase {
     // Internal usage indicating the native buffer supports mapping for read and/or write or not.
     const wgpu::BufferUsage mInternalMappableFlags;
     ExecutionSerial mMapReadySerial = kMaxExecutionSerial;
+    // Temporary storage for MapAtCreation when the lock cannot be acquired.
+    std::vector<uint8_t> mMapAtCreationData;
 };
 
 // Buffer that can be used by GPU. It manages several copies of the buffer, each with its own
