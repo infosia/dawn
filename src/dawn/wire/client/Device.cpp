@@ -267,7 +267,8 @@ Device::Device(const ObjectBaseParams& params,
         nullptr, WGPUCallbackMode_AllowSpontaneous, nullptr, nullptr, nullptr};
     static constexpr WGPUUncapturedErrorCallbackInfo kDefaultUncapturedErrorCallbackInfo =
         kEmptyUncapturedErrorCallbackInfo;
-    static constexpr WGPULoggingCallbackInfo kDefaultLoggingCallbackInfo = kEmptyLoggingCallbackInfo;
+    static constexpr WGPULoggingCallbackInfo kDefaultLoggingCallbackInfo =
+        kEmptyLoggingCallbackInfo;
 #endif  // DAWN_ENABLE_ASSERTS
 
     WGPUDeviceLostCallbackInfo deviceLostCallbackInfo = kDefaultDeviceLostCallbackInfo;
