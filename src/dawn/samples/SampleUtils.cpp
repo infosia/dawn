@@ -60,6 +60,13 @@ static wgpu::AdapterType adapterType = wgpu::AdapterType::Unknown;
 static std::vector<std::string> enableToggles;
 static std::vector<std::string> disableToggles;
 
+// Small helper to insert an extension struct into the extension chain.
+template <typename T>
+void InsertExtensionStruct(T* base, wgpu::ChainedStruct* toInsert) {
+    toInsert->nextInChain = base->nextInChain;
+    base->nextInChain = toInsert;
+}
+
 bool InitSample(int argc, const char** argv) {
     dawn::utils::CommandLineParser opts;
     auto& helpOpt = opts.AddHelp();
@@ -121,14 +128,20 @@ SampleBase::SampleBase(uint32_t w, uint32_t h) : width(w), height(h) {
 }
 
 int SampleBase::Run(unsigned int delay) {
+    //
+    // Early setup stuff
+    //
+
+#ifndef __EMSCRIPTEN__
     dawn::ScopedEnvironmentVar angleDefaultPlatform;
     if (dawn::GetEnvironmentVar("ANGLE_DEFAULT_PLATFORM").first.empty()) {
         angleDefaultPlatform.Set("ANGLE_DEFAULT_PLATFORM", "swiftshader");
     }
 
-    // Create the toggles descriptor if not using emscripten.
-    wgpu::ChainedStruct* togglesChain = nullptr;
-#ifndef __EMSCRIPTEN__
+    dawnProcSetProcs(&dawn::native::GetProcs());
+
+    // Set up this extension struct which will be used three times (instance, adapter, device).
+    wgpu::DawnTogglesDescriptor dawnTogglesDesc = {};
     std::vector<const char*> enableToggleNames;
     std::vector<const char*> disabledToggleNames;
     for (const std::string& toggle : enableToggles) {
@@ -137,19 +150,36 @@ int SampleBase::Run(unsigned int delay) {
     for (const std::string& toggle : disableToggles) {
         disabledToggleNames.push_back(toggle.c_str());
     }
-
-    wgpu::DawnTogglesDescriptor toggles = {};
-    toggles.enabledToggles = enableToggleNames.data();
-    toggles.enabledToggleCount = enableToggleNames.size();
-    toggles.disabledToggles = disabledToggleNames.data();
-    toggles.disabledToggleCount = disabledToggleNames.size();
-
-    togglesChain = &toggles;
+    dawnTogglesDesc.enabledToggles = enableToggleNames.data();
+    dawnTogglesDesc.enabledToggleCount = enableToggleNames.size();
+    dawnTogglesDesc.disabledToggles = disabledToggleNames.data();
+    dawnTogglesDesc.disabledToggleCount = disabledToggleNames.size();
+    static const char* kDumpShaders = "dump_shaders";
+    dawnTogglesDesc.enabledToggles = &kDumpShaders;
 #endif  // __EMSCRIPTEN__
 
-    // Setup base adapter options with toggles.
+    //
+    // Create an instance
+    //
+
+    wgpu::InstanceDescriptor instanceDescriptor = {};
+#ifndef __EMSCRIPTEN__
+    InsertExtensionStruct(&instanceDescriptor, &dawnTogglesDesc);
+#endif  // __EMSCRIPTEN__
+    static constexpr auto kTimedWaitAny = wgpu::InstanceFeatureName::TimedWaitAny;
+    instanceDescriptor.requiredFeatureCount = 1;
+    instanceDescriptor.requiredFeatures = &kTimedWaitAny;
+
+    sample->instance = wgpu::CreateInstance(&instanceDescriptor);
+
+    //
+    // Create an adapter
+    //
+
     wgpu::RequestAdapterOptions adapterOptions = {};
-    adapterOptions.nextInChain = togglesChain;
+#ifndef __EMSCRIPTEN__
+    InsertExtensionStruct(&adapterOptions, &dawnTogglesDesc);
+#endif  // __EMSCRIPTEN__
     adapterOptions.backendType = backendType;
     if (backendType != wgpu::BackendType::Undefined) {
         adapterOptions.featureLevel = dawn::utils::BackendRequiresCompat(backendType)
@@ -170,18 +200,6 @@ int SampleBase::Run(unsigned int delay) {
         case wgpu::AdapterType::Unknown:
             break;
     }
-
-#ifndef __EMSCRIPTEN__
-    dawnProcSetProcs(&dawn::native::GetProcs());
-#endif  // __EMSCRIPTEN__
-
-    // Create the instance with the toggles
-    wgpu::InstanceDescriptor instanceDescriptor = {};
-    instanceDescriptor.nextInChain = togglesChain;
-    static constexpr auto kTimedWaitAny = wgpu::InstanceFeatureName::TimedWaitAny;
-    instanceDescriptor.requiredFeatureCount = 1;
-    instanceDescriptor.requiredFeatures = &kTimedWaitAny;
-    sample->instance = wgpu::CreateInstance(&instanceDescriptor);
 
     // Synchronously create the adapter
     sample->instance.WaitAny(
@@ -207,9 +225,15 @@ int SampleBase::Run(unsigned int delay) {
     dawn::InfoLog() << "  subgroupSizes: { min: " << info.subgroupMinSize
                     << " max: " << info.subgroupMaxSize << " }";
 
+    //
+    // Create a device
+    //
+
     // Create device descriptor with callbacks and toggles
     wgpu::DeviceDescriptor deviceDesc = {};
-    deviceDesc.nextInChain = togglesChain;
+#ifndef __EMSCRIPTEN__
+    InsertExtensionStruct(&deviceDesc, &dawnTogglesDesc);
+#endif  // __EMSCRIPTEN__
     deviceDesc.SetDeviceLostCallback(
         wgpu::CallbackMode::AllowSpontaneous,
         [](const wgpu::Device&, wgpu::DeviceLostReason reason, wgpu::StringView message) {
@@ -277,6 +301,10 @@ int SampleBase::Run(unsigned int delay) {
     if (sample->device == nullptr) {
         return 1;
     }
+
+    //
+    // Set up and run the sample
+    //
 
 #ifndef __EMSCRIPTEN__
     if (!sample->Setup()) {
