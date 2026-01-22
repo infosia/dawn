@@ -185,6 +185,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "463928f6_e7d44b79",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-22T15:45:41Z",
+      "side": 1,
+      "message": "I have added `MarkUsedInPendingCommands` to this class\u0027 ClearInitialResource path recently. So the `UseBufferInternal` might be needed here as well.",
+      "parentUuid": "bc8b209a_835b7fbd",
+      "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e2fd3c26_f41163cf",
         "filename": "src/dawn/native/d3d12/BufferD3D12.cpp",
         "patchSetId": 18
