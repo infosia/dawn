@@ -2609,6 +2609,10 @@ bool DeviceBase::NeedsIndirectGPUValidation() const {
     return true;
 }
 
+bool DeviceBase::IsOkayToCreateInternalResources() const {
+    return true;
+}
+
 uint64_t DeviceBase::GetBufferCopyOffsetAlignmentForDepthStencil() const {
     // For depth-stencil texture, buffer offset must be a multiple of 4, which is required
     // by WebGPU and Vulkan SPEC.
