@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6375253e_6179d1b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-22T23:12:57Z",
+      "side": 1,
+      "message": "I added `IsOkayToCreateInternalResources` as a generic flag to be used for any similar issues where the dawn front end is doing work we can\u0027t do while capturing.\n\nI could instead try to turn off the existing `Toggle::DisableTimestampQueryConversion`. Something like this\n\n```cpp\n// in DeviceWGPU.cpp\n\nnamespace {\n\nTogglesState PrepTogglesForDeviceWGPU(const TogglesState\u0026 toggles) {\n    TogglesState result(toggles);\n    result.ForceSet(Toggle::DisableTimestampQueryConversion, false);\n    return result;\n}\n\n} // namespace\n\nDevice::Device(AdapterBase* adapter,\n               WGPUAdapter innerAdapter,\n               const UnpackedPtr\u003cDeviceDescriptor\u003e\u0026 descriptor,\n               const TogglesState\u0026 deviceToggles,\n               Ref\u003cDeviceBase::DeviceLostEvent\u003e\u0026\u0026 lostEvent)\n    : DeviceBase(adapter, descriptor, PrepTogglesForDeviceWGPU(deviceToggles), std::move(lostEvent)),\n      ObjectWGPU(ToBackend(adapter-\u003eGetPhysicalDevice())-\u003eGetFunctions().deviceRelease),\n      wgpu(ToBackend(adapter-\u003eGetPhysicalDevice())-\u003eGetFunctions()) {\n\n```\n\nI thought the generic flag might be more useful but can switch it.",
+      "revId": "546cb997f789c04d9bf24046fb7566a637eb3caa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
