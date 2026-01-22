@@ -1,0 +1,127 @@
+# Copyright 2026 The Dawn & Tint Authors
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# 1. Redistributions of source code must retain the above copyright notice, this
+#    list of conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+#    this list of conditions and the following disclaimer in the documentation
+#    and/or other materials provided with the distribution.
+#
+# 3. Neither the name of the copyright holder nor the names of its
+#    contributors may be used to endorse or promote products derived from
+#    this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+import("//build/config/clang/clang.gni")
+
+template("meson_setup") {
+  assert(defined(invoker.source_dir), "source_dir must be defined")
+
+  _meson_args = [
+    "setup",
+    rebase_path("${target_gen_dir}/${target_name}", root_build_dir),
+    rebase_path(invoker.source_dir, root_build_dir),
+    "--prefix=" + rebase_path("${target_gen_dir}/${target_name}/install"),
+  ]
+  if (defined(invoker.options)) {
+    _meson_args += invoker.options
+  }
+
+  # Use the hermetic clang toolchain
+  if (is_clang) {
+    _cc_path = rebase_path("$clang_base_path/bin/clang")
+    _cxx_path = rebase_path("$clang_base_path/bin/clang++")
+    _meson_args += [
+      "-Dc_link_args=-fuse-ld=lld",
+      "-Dcpp_link_args=-fuse-ld=lld",
+    ]
+
+    # We need to set the environment variables for the compiler
+    # But exec_script doesn't support setting env vars directly easily in a cross-platform way
+    # without a wrapper script.
+    # However, Meson allows passing binaries via a cross-file or native-file.
+    # For simplicity in this step, we will try to rely on Meson finding the right compiler
+    # if we put it in the path or if we pass it via -D options if supported,
+    # but Meson usually prefers a native-file for this.
+
+    # Let's try to construct a native file content to point to our clang.
+    _native_file_content = [
+      "[binaries]",
+      "c = '${_cc_path}'",
+      "cpp = '${_cxx_path}'",
+      "ar = '" + rebase_path("$clang_base_path/bin/llvm-ar") + "'",
+      "strip = '" + rebase_path("$clang_base_path/bin/llvm-strip") + "'",
+      "pkg-config = 'pkg-config'",
+      "python = ['vpython3', '-vpython-spec', '" + rebase_path("//.vpython3") +
+          "']",
+    ]
+
+    _native_file_path = "${target_gen_dir}/${target_name}_native.ini"
+    write_file(_native_file_path, _native_file_content)
+
+    _meson_args += [
+      "--native-file",
+      rebase_path(_native_file_path, root_build_dir),
+    ]
+  }
+
+  exec_script("//third_party/meson/src/meson.py", _meson_args)
+
+  group(target_name) {
+    forward_variables_from(invoker,
+                           [
+                             "deps",
+                             "public_deps",
+                             "testonly",
+                             "visibility",
+                           ])
+  }
+}
+
+template("meson_build") {
+  action(target_name) {
+    forward_variables_from(invoker,
+                           [
+                             "data_deps",
+                             "deps",
+                             "public_deps",
+                             "testonly",
+                             "visibility",
+                             "outputs",
+                           ])
+
+    assert(defined(invoker.meson_setup_target),
+           "meson_setup_target must be defined")
+
+    if (!defined(deps)) {
+      deps = []
+    }
+    deps += [ invoker.meson_setup_target ]
+
+    script = "//third_party/meson/src/meson.py"
+
+    _setup_gen_dir =
+        get_label_info(invoker.meson_setup_target, "target_gen_dir")
+    _setup_name = get_label_info(invoker.meson_setup_target, "name")
+    _build_dir = "${_setup_gen_dir}/${_setup_name}"
+
+    args = [
+      "install",
+      "-C",
+      rebase_path(_build_dir, root_build_dir),
+    ]
+  }
+}

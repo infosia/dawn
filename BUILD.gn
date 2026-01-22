@@ -140,6 +140,7 @@ if (dawn_standalone) {
       ":libs",
       ":samples",
       ":tests",
+      "third_party/mesa",
     ]
   }
 
