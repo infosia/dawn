@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2df4654_6b54faa8",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1373,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-22T21:58:42Z",
+      "side": 1,
+      "message": "Ah, this returns the instruction, I see.",
+      "parentUuid": "8da09206_0678aae9",
+      "revId": "8454237caa8ebab14251f524428aebb5c510147e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "095c1319_0ef9b1fa",
