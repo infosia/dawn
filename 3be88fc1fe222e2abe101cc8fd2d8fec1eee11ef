@@ -287,6 +287,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "469081a2_cebe841c",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T21:53:15Z",
+      "side": 1,
+      "message": "https://crbug.com/tint/477991021",
+      "parentUuid": "63433409_06baa855",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b05879b7_00c29d2a",
@@ -1093,6 +1111,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b132a16_aed15548",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T21:53:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1af4250_114cb1cb",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e4c07ecd_03665ffa",
@@ -1311,6 +1347,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfa640ce_47055d38",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T21:53:15Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "15a38035_e952b1c1",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48a806db_c1d01972",
@@ -1466,6 +1520,24 @@
       "side": 1,
       "message": "I think recreate and destroy might be simpler to understand?",
       "parentUuid": "b9d99960_0f50bd20",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff5e6064_65488e77",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T21:53:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32f85259_6ed86502",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

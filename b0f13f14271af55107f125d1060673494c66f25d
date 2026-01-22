@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3111cbd1_0890d57a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T21:53:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a058e570_34cb671a",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "108472ca_6e1c5f35",
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "This seemed nicer that manually adding a ton of overloads for various constructors.",
       "parentUuid": "108472ca_6e1c5f35",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "621101ec_f8933d28",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T21:53:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d07f357c_191ad624",
       "revId": "b0f13f14271af55107f125d1060673494c66f25d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -307,6 +343,24 @@
       "side": 1,
       "message": "`BaseEleType` works for me",
       "parentUuid": "0795ac7e_0cd6e9ce",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76789a2e_fcc24673",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T21:53:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79183d6d_69832af4",
       "revId": "b0f13f14271af55107f125d1060673494c66f25d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
