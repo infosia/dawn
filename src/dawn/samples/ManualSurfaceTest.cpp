@@ -101,8 +101,8 @@
 #include "dawn/utils/CommandLineParser.h"
 #include "dawn/utils/WGPUHelpers.h"
 #include "dawn/webgpu_cpp_print.h"
-#include "webgpu/webgpu_glfw.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "webgpu/webgpu_glfw.h"
 
 template <typename T>
 std::string NoPrefix(T wgpuThing) {

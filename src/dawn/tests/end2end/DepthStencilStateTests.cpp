@@ -653,8 +653,9 @@ TEST_P(DepthStencilStateTest, StencilReadMask) {
     utils::RGBA8 green = utils::RGBA8(0, 255, 0, 255);
 
     TestSpec base = {&baseState, baseColor, 0.5f, 3u};  // Base triangle to set the stencil to 3
-    DoTest({base, {&state, red, 0.f, 1u}}, baseColor);  // Triangle with stencil reference 1 and read
-                                                       // mask 2 does not draw because (3 & 2 != 1)
+    DoTest({base, {&state, red, 0.f, 1u}},
+           baseColor);  // Triangle with stencil reference 1 and read
+                        // mask 2 does not draw because (3 & 2 != 1)
     DoTest({base, {&state, green, 0.f, 2u}},
            green);  // Triangle with stencil reference 2 and read mask 2 draws because (3 & 2 == 2)
 }
@@ -732,8 +733,8 @@ TEST_P(DepthStencilStateTest, StencilFail) {
         {
             {&baseState, utils::RGBA8(255, 255, 255, 255), 1.f,
              1},  // Triangle to set stencil value to 1
-            {&state, utils::RGBA8(0, 0, 0, 255), 0.f,
-             2}  // Triangle with stencil reference 2 fails the Less comparison function
+            {&state, utils::RGBA8(0, 0, 0, 255), 0.f, 2}
+            // Triangle with stencil reference 2 fails the Less comparison function
         },
         2);  // Replace the stencil on failure, so it should be 2
 }

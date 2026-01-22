@@ -84,7 +84,8 @@ std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
         if (!display->egl->HasExt(EGLExt::CreateContextRobustness)) {
             return DAWN_VALIDATION_ERROR("EGL_EXT_create_context_robustness is required.");
         }
-        if (!display->egl->HasExt(EGLExt::FenceSync) && !display->egl->HasExt(EGLExt::ReusableSync)) {
+        if (!display->egl->HasExt(EGLExt::FenceSync) &&
+            !display->egl->HasExt(EGLExt::ReusableSync)) {
             return DAWN_INTERNAL_ERROR(
                 "EGL_KHR_fence_sync or EGL_KHR_reusable_sync must be supported");
         }

@@ -207,13 +207,15 @@ RenderBundle::RenderBundle(RenderBundleEncoderBase* encoder,
     bundleEncoderDescriptor.depthReadOnly = IsDepthReadOnly();
     bundleEncoderDescriptor.stencilReadOnly = IsStencilReadOnly();
 
-    WGPURenderBundleEncoder innerRenderBundleEncoder = device->wgpu->deviceCreateRenderBundleEncoder(
-        device->GetInnerHandle(), &bundleEncoderDescriptor);
+    WGPURenderBundleEncoder innerRenderBundleEncoder =
+        device->wgpu->deviceCreateRenderBundleEncoder(device->GetInnerHandle(),
+                                                      &bundleEncoderDescriptor);
 
     CommandIterator* iter = GetCommands();
     Command bundleCommandType;
     while (iter->NextCommandId(&bundleCommandType)) {
-        EncodeRenderBundleCommand(device->wgpu.get(), innerRenderBundleEncoder, *iter, bundleCommandType);
+        EncodeRenderBundleCommand(device->wgpu.get(), innerRenderBundleEncoder, *iter,
+                                  bundleCommandType);
     }
 
     mInnerHandle = device->wgpu->renderBundleEncoderFinish(innerRenderBundleEncoder, nullptr);

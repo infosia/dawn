@@ -66,7 +66,7 @@ MaybeError MakeContextCurrent(DisplayEGL* display, const ContextEGL::ContextStat
         display->egl->GetCurrentSurface(EGL_READ) != state.readSurface) {
         EGLBoolean success = display->egl->MakeCurrent(display->GetDisplay(), state.drawSurface,
 
-                                                      state.readSurface, state.context);
+                                                       state.readSurface, state.context);
 
         return CheckEGL(display->egl.get(), static_cast<EGLBoolean>(success == EGL_TRUE),
                         "eglMakeCurrent");
@@ -104,7 +104,7 @@ ContextEGL::~ContextEGL() {
     if (mState.context != EGL_NO_CONTEXT) {
         if (mState.context == mDisplay->egl->GetCurrentContext()) {
             mDisplay->egl->MakeCurrent(mDisplay->GetDisplay(), EGL_NO_SURFACE, EGL_NO_SURFACE,
-                                      EGL_NO_CONTEXT);
+                                       EGL_NO_CONTEXT);
         }
         mDisplay->egl->DestroyContext(mDisplay->GetDisplay(), mState.context);
         mState.context = EGL_NO_CONTEXT;

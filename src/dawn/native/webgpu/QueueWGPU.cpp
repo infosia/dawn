@@ -223,7 +223,7 @@ ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial wai
         WGPUWaitStatus status =
             ToBackend(GetDevice())
                 ->wgpu->instanceWaitAny(ToBackend(GetDevice())->GetInnerInstance(), 1, &waitInfo,
-                                       static_cast<uint64_t>(timeout));
+                                        static_cast<uint64_t>(timeout));
 
         switch (status) {
             case WGPUWaitStatus_TimedOut:
