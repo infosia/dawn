@@ -500,9 +500,17 @@ bool Buffer::IsCPUReadable() const {
 
 MaybeError Buffer::MapAtCreationImpl() {
     DAWN_ASSERT(IsCPUWritable());
-    auto commandContext = ToBackend(GetDevice()->GetQueue())
-                              ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Normal);
-    return MapInternal(&commandContext, wgpu::MapMode::Write);
+    auto maybeCommandContext =
+        ToBackend(GetDevice()->GetQueue())
+            ->TryGetScopedPendingCommandContext(QueueBase::SubmitMode::Normal);
+    if (maybeCommandContext.has_value()) {
+        return MapInternal(&maybeCommandContext.value(), wgpu::MapMode::Write);
+    }
+
+    // Lock could not be acquired, use temporary storage instead
+    mMapAtCreationData.resize(GetAllocatedSize());
+    mMappedData = mMapAtCreationData.data();
+    return {};
 }
 
 MaybeError Buffer::MapInternal(const ScopedCommandRecordingContext* commandContext,
@@ -520,7 +528,22 @@ void Buffer::UnmapIfNeeded(const ScopedCommandRecordingContext* commandContext) 
     if (mMappedData == nullptr) {
         return;
     }
-    UnmapInternal(commandContext);
+
+    if (mMapAtCreationData.empty()) {
+        UnmapInternal(commandContext);
+        return;
+    }
+
+    // We used temporary storage for MapAtCreation, now copy it to the actual buffer
+    mMappedData = nullptr;
+    auto result = ScopedMap::Create(commandContext, this, wgpu::MapMode::Write);
+    // TODO(crbug.com/422741977): handle error properly
+    DAWN_CHECK(result.IsSuccess());
+    ScopedMap scopedMap = result.AcquireSuccess();
+    DAWN_ASSERT(scopedMap.GetMappedData());
+    memcpy(scopedMap.GetMappedData(), mMapAtCreationData.data(), mMapAtCreationData.size());
+    mMapAtCreationData.clear();
+    mMapAtCreationData.shrink_to_fit();
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {

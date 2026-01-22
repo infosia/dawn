@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_D3D11_QUEUED3D11_H_
 #define SRC_DAWN_NATIVE_D3D11_QUEUED3D11_H_
 
+#include <optional>
 #include <vector>
 
 #include "dawn/common/MutexProtected.h"
@@ -47,6 +48,9 @@ class Queue : public d3d::Queue {
 
     ScopedCommandRecordingContext GetScopedPendingCommandContext(SubmitMode submitMode,
                                                                  bool lockD3D11Scope = true);
+    std::optional<ScopedCommandRecordingContext> TryGetScopedPendingCommandContext(
+        SubmitMode submitMode,
+        bool lockD3D11Scope = true);
     ScopedSwapStateCommandRecordingContext GetScopedSwapStatePendingCommandContext(
         SubmitMode submitMode);
     virtual MaybeError NextSerial() = 0;
@@ -101,6 +105,12 @@ class Queue : public d3d::Queue {
 
     // Perform deferred unmaps on pending buffers.
     void PerformDeferredUnmaps(const ScopedCommandRecordingContext* commandContext);
+
+    // Helper template to create scoped command contexts with common logic
+    template <typename ScopedContextType, typename CommandsGuard, typename... Args>
+    ScopedContextType CreateScopedCommandContext(SubmitMode submitMode,
+                                                 CommandsGuard&& commands,
+                                                 Args&&... args);
 
     ComPtr<ID3D11Fence> mFence;
     Ref<SharedFence> mSharedFence;
