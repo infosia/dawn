@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3e1825d_a25d302b",
+        "filename": "src/dawn/native/AttachmentState.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-22T19:31:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ff547c8_c22fcc40",
+      "range": {
+        "startLine": 117,
+        "startChar": 9,
+        "endLine": 117,
+        "endChar": 20
+      },
+      "revId": "8f551b50abef54dcd9a224dc4f59a5a75c36ea9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4a54d555_e2ee8499",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-01-22T05:28:06Z",
       "side": 1,
       "message": "nit: if possible, assert the device feature is enabled, since this being correct relies on the validation logic which is far away",
+      "range": {
+        "startLine": 121,
+        "startChar": 22,
+        "endLine": 121,
+        "endChar": 26
+      },
+      "revId": "8f551b50abef54dcd9a224dc4f59a5a75c36ea9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f2c9c38_4bc75862",
+        "filename": "src/dawn/native/AttachmentState.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-22T19:31:06Z",
+      "side": 1,
+      "message": "I really wanted to do this, but at the moment the `AttachementState` only takes in the `RenderPassDescriptor` so there\u0027s no way to get to the device features. (Okay, that\u0027s not totally true. We could go attachment[0]-\u003eview-\u003etexture-\u003edevice, but... please no.)",
+      "parentUuid": "4a54d555_e2ee8499",
       "range": {
         "startLine": 121,
         "startChar": 22,
@@ -64,6 +112,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a586f6e_890b0a26",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-22T19:31:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2ab280f_d28aa01a",
+      "revId": "8f551b50abef54dcd9a224dc4f59a5a75c36ea9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60727294_80a91535",
@@ -81,6 +147,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f52ab4ad_213a51d1",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-22T19:31:06Z",
+      "side": 1,
+      "message": "Acknowledged. It would definitely be nice if this was less complex!",
+      "parentUuid": "60727294_80a91535",
+      "revId": "8f551b50abef54dcd9a224dc4f59a5a75c36ea9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "44032a37_981a67a2",
@@ -94,6 +178,30 @@
       "writtenOn": "2026-01-22T05:28:06Z",
       "side": 1,
       "message": "typo duplicated line?",
+      "range": {
+        "startLine": 1834,
+        "startChar": 0,
+        "endLine": 1835,
+        "endChar": 42
+      },
+      "revId": "8f551b50abef54dcd9a224dc4f59a5a75c36ea9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aad65c5e_b36913bd",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1835,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-22T19:31:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44032a37_981a67a2",
       "range": {
         "startLine": 1834,
         "startChar": 0,

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49c8067c_2f405724",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-22T19:31:06Z",
+      "side": 1,
+      "message": "Thanks! The patch I uploaded yesterday afternoon wasn\u0027t actually quite ready (just making sure it was saved before I left the office) but I appreciate the feedback.\n\nLatest patch is more complete, and includes some bigger validation refactors to accommodate the new requirement to allow a mix of MSRTSS attachments and regular multisample attachments. PTAL!",
+      "revId": "9c9dc02db15336a8fb6741bd5392a9bdef92bce6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
