@@ -4949,6 +4949,8 @@ webgpu:api,operation,render_pass,storeOp:render_pass_store_op,depth_stencil_atta
 webgpu:api,operation,render_pass,storeOp:render_pass_store_op,depth_stencil_attachment_only:depthStencilFormat="depth32float";storeOperation="store"
 webgpu:api,operation,render_pass,storeop2:storeOp_controls_whether_1x1_drawn_quad_is_stored:storeOp="store"
 webgpu:api,operation,render_pass,storeop2:storeOp_controls_whether_1x1_drawn_quad_is_stored:storeOp="discard"
+webgpu:api,operation,render_pass,transient_attachment:increasing_attachments_count:
+webgpu:api,operation,render_pass,transient_attachment:overlapping_transient_attachments:
 webgpu:api,operation,render_pipeline,culling_tests:culling:frontFace="ccw";cullMode="none"
 webgpu:api,operation,render_pipeline,culling_tests:culling:frontFace="ccw";cullMode="front"
 webgpu:api,operation,render_pipeline,culling_tests:culling:frontFace="ccw";cullMode="back"
