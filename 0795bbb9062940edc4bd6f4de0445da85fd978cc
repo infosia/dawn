@@ -16,6 +16,29 @@
       "message": "PTAL",
       "revId": "0795bbb9062940edc4bd6f4de0445da85fd978cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d93c2a36_fa863c7f",
+        "filename": "infra/config/global/legacy_builders.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-22T17:13:30Z",
+      "side": 1,
+      "message": "dbg",
+      "range": {
+        "startLine": 443,
+        "startChar": 34,
+        "endLine": 443,
+        "endChar": 37
+      },
+      "revId": "0795bbb9062940edc4bd6f4de0445da85fd978cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
