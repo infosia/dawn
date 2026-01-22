@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6fe47bb_9c2aff0e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-22T01:08:33Z",
+      "side": 1,
+      "message": "PTAL",
+      "revId": "898c472cd031f9d4f79fddbce57072e7ffb46fd3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccf876ac_a97c7575",
+        "filename": "infra/config/global/cmake_ci.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-22T01:08:33Z",
+      "side": 1,
+      "message": "ANGLE\u0027s combined sanitizer builder uses `asan`, but IMO `sanitizers` is better since it\u0027s clear that there are multiple sanitizers active. We could also explicitly list out the individual sanitizers, although that\u0027ll require a rename if we end up enabling more in the future like MSan.",
+      "range": {
+        "startLine": 130,
+        "startChar": 37,
+        "endLine": 130,
+        "endChar": 47
+      },
+      "revId": "898c472cd031f9d4f79fddbce57072e7ffb46fd3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
