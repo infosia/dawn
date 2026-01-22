@@ -50,6 +50,24 @@
       "message": "As discussed offline I think it\u0027s a bit confusing if the thing called \"RenderPassSampleCount\" is what triggers render-to-single-sample. Instead we decided to:\n1. loosen the validation so that not all attachments have to be single-sample, instead you can mix them - mainly so that anyone prototyping with this feature isn\u0027t misled into thinking that\u0027s a real constraint\n2. change the logic slightly so that it\u0027s triggered if you BOTH use RenderPassSampleCount (which I\u0027d say should require `sampleCount \u003e 1`) AND have any single-sample attachments in the pass, then we use it for those attachments.",
       "revId": "7e12d602e6157e5e0c38cb56a39cda7dae6a06b8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47c5a3b6_786dde6e",
+        "filename": "src/dawn/native/AttachmentState.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-22T05:28:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "120b94cc_d954527e",
+      "revId": "7e12d602e6157e5e0c38cb56a39cda7dae6a06b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

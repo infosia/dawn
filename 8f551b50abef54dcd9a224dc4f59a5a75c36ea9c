@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ff547c8_c22fcc40",
+        "filename": "src/dawn/native/AttachmentState.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-22T05:28:06Z",
+      "side": 1,
+      "message": "nit: call this something like `msrtssAllowed` (it\u0027s not _necessarily_ in use, we don\u0027t know yet if any of the attachments are single-sampled)",
+      "range": {
+        "startLine": 117,
+        "startChar": 9,
+        "endLine": 117,
+        "endChar": 20
+      },
+      "revId": "8f551b50abef54dcd9a224dc4f59a5a75c36ea9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a54d555_e2ee8499",
+        "filename": "src/dawn/native/AttachmentState.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-22T05:28:06Z",
+      "side": 1,
+      "message": "nit: if possible, assert the device feature is enabled, since this being correct relies on the validation logic which is far away",
+      "range": {
+        "startLine": 121,
+        "startChar": 22,
+        "endLine": 121,
+        "endChar": 26
+      },
+      "revId": "8f551b50abef54dcd9a224dc4f59a5a75c36ea9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2ab280f_d28aa01a",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-22T05:28:06Z",
+      "side": 1,
+      "message": "nit: comment is redundant, variable name already says this",
+      "revId": "8f551b50abef54dcd9a224dc4f59a5a75c36ea9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60727294_80a91535",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-22T05:28:06Z",
+      "side": 1,
+      "message": "aside: I think this change is fine, but I wanted to note that my understanding of how toggles worked when we discussed this the other day does NOT seem to have been correct, see https://crbug.com/477645290\n\nIn particular, when creating a device I think you can override adapter toggles, which might cause weird things to happen here, but it\u0027s fine for now since I doubt anyone will do that.",
+      "revId": "8f551b50abef54dcd9a224dc4f59a5a75c36ea9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44032a37_981a67a2",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1835,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-22T05:28:06Z",
+      "side": 1,
+      "message": "typo duplicated line?",
+      "range": {
+        "startLine": 1834,
+        "startChar": 0,
+        "endLine": 1835,
+        "endChar": 42
+      },
+      "revId": "8f551b50abef54dcd9a224dc4f59a5a75c36ea9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
