@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0f1fa04_c96d9db0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-22T22:57:04Z",
+      "side": 1,
+      "message": "Okay, so after some extensive refactoring of the validation and whatnot I think this is back into a good state BUT... it seems like on the devices I\u0027ve been trying it on (Pixel 7 \u0026 8) this code path only works when using Dynamic Rendering? 😭 I\u0027m acquiring a Pixel 10 to test it on soon to see if it\u0027s a driver issue or a problem with my code. (Previous P10 we had in house was a DVT and has been refusing to charge recently.)",
+      "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c8c22c6_8218f517",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-22T22:57:04Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
