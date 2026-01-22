@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a21dc552_2a5fd94f",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-22T01:31:22Z",
+      "side": 1,
+      "message": "I turned on the tests in DepthStencilCopyTests.cpp. It found bugs! Fixed",
+      "parentUuid": "d86582ad_d996a579",
+      "revId": "92d938545a9de45d29165aab65898f870c5b6213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0edbd9fe_7d2a5bf5",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-01-19T09:13:37Z",
       "side": 1,
       "message": "nit: leftover",
+      "revId": "92d938545a9de45d29165aab65898f870c5b6213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "380f4ca1_f0ca303f",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-22T01:31:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0edbd9fe_7d2a5bf5",
       "revId": "92d938545a9de45d29165aab65898f870c5b6213",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "731640d6_484b8512",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-22T01:31:22Z",
+      "side": 1,
+      "message": "correct, no other changes.",
+      "parentUuid": "c4b21ff1_139c0697",
+      "revId": "92d938545a9de45d29165aab65898f870c5b6213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "753544c2_e0f6c83c",
@@ -65,6 +119,24 @@
       "writtenOn": "2026-01-19T09:13:37Z",
       "side": 1,
       "message": "```suggestion\nconstexpr std::string_view kShaderSrc \u003d R\"(\n```",
+      "revId": "92d938545a9de45d29165aab65898f870c5b6213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69a93a49_fe0612ea",
+        "filename": "src/dawn/replay/BlitBufferToDepthTexture.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-22T01:31:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "753544c2_e0f6c83c",
       "revId": "92d938545a9de45d29165aab65898f870c5b6213",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1537c4e_ac966ccd",
+        "filename": "src/dawn/replay/BlitBufferToDepthTexture.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-22T01:31:22Z",
+      "side": 1,
+      "message": "we test on GL",
+      "parentUuid": "94e09daa_d4d7abbd",
+      "revId": "92d938545a9de45d29165aab65898f870c5b6213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "705d0d7b_d136bb27",
@@ -99,6 +189,24 @@
       "writtenOn": "2026-01-19T09:13:37Z",
       "side": 1,
       "message": "nit: stale comment from copypaste?",
+      "revId": "92d938545a9de45d29165aab65898f870c5b6213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26bdff93_c655bede",
+        "filename": "src/dawn/replay/BlitBufferToDepthTexture.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-22T01:31:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "705d0d7b_d136bb27",
       "revId": "92d938545a9de45d29165aab65898f870c5b6213",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -120,6 +228,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c91cf299_3c690e85",
+        "filename": "src/dawn/replay/BlitBufferToDepthTexture.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-22T01:31:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d03b22c_d3667302",
+      "revId": "92d938545a9de45d29165aab65898f870c5b6213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eefc1f61_4ae150a8",
@@ -133,6 +259,24 @@
       "writtenOn": "2026-01-19T09:13:37Z",
       "side": 1,
       "message": "ditto",
+      "revId": "92d938545a9de45d29165aab65898f870c5b6213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16f4d382_b32954f1",
+        "filename": "src/dawn/replay/BlitBufferToDepthTexture.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-22T01:31:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eefc1f61_4ae150a8",
       "revId": "92d938545a9de45d29165aab65898f870c5b6213",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
