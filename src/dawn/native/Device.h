@@ -416,6 +416,11 @@ class DeviceBase : public ErrorSink,
     // Whether the backend needs to validate the indirect buffer on GPU.
     virtual bool NeedsIndirectGPUValidation() const;
 
+    // Whether the backend should create internal resources.
+    // The WebGPU backend should never create internal resources (resources using itself)
+    // as they'll end up captured. It's fine to create resource son the inner device.
+    virtual bool IsOkayToCreateInternalResources() const;
+
     bool HasFeature(Feature feature) const;
 
     const CombinedLimits& GetLimits() const;

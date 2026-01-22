@@ -330,6 +330,12 @@ bool Device::NeedsIndirectGPUValidation() const {
     return false;
 }
 
+bool Device::IsOkayToCreateInternalResources() const {
+    // The WebGPU backend should never create internal resources (resources using itself)
+    // as they'll end up captured. It's fine to create resource son the inner device.
+    return false;
+}
+
 void Device::StartCapture(CaptureStream& commandStream, CaptureStream& contentStream) {
     MaybeError result = ToBackend(GetQueue())
                             ->SetCaptureContext(std::unique_ptr<CaptureContext>(
