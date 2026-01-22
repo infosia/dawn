@@ -33,6 +33,23 @@
       "message": "```suggestion\n        return InsertBitcastIfNeeded(to, inst-\u003eresult());\n```",
       "revId": "8454237caa8ebab14251f524428aebb5c510147e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "095c1319_0ef9b1fa",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4475,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-22T20:21:05Z",
+      "side": 1,
+      "message": "So this shows where I think the `mul` should be a `div`.\n\nSay that Dawn allocates a buffer large enough for a single `SB` (12 bytes). The result of `arrayLength` should therefore be `1`.\nBut here the `arrayLength` on your new array will return `6` (12 bytes is 6 x u16 elements). So you\u0027d need to /divide/ by `6` to get back to the correct answer of `1`.",
+      "revId": "8454237caa8ebab14251f524428aebb5c510147e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

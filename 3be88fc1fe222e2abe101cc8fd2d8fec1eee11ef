@@ -271,6 +271,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "63433409_06baa855",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-22T20:21:05Z",
+      "side": 1,
+      "message": "Agree not obviously a win. Happy to leave as is for now and maybe create an issue to consider doing in the future.",
+      "parentUuid": "f52a6b03_94a97328",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b05879b7_00c29d2a",
         "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
         "patchSetId": 4
@@ -1271,6 +1289,24 @@
         "endLine": 988,
         "endChar": 27
       },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15a38035_e952b1c1",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-22T20:21:05Z",
+      "side": 1,
+      "message": "Commented on a test; I do still think that this should be a `div`, please check my logic.",
+      "parentUuid": "5fa14243_674ae713",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
