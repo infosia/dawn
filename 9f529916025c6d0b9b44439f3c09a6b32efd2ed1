@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c0199c4_fd8642f4",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-22T05:59:16Z",
+      "side": 1,
+      "message": "uhh. great question. I think the formatter erroneously detected these as \"unchanged lines\" and didn\u0027t reformat them. I edited one and then it fixed the rest.\n\nI\u0027ve noticed at least a few other cases of checked-in formatting being wrong, but I thought they were just due to clang-format rolls changing the style. At least one of them could have been from a bug like this.",
+      "parentUuid": "59533ab5_ea1cd8ba",
+      "range": {
+        "startLine": 672,
+        "startChar": 10,
+        "endLine": 672,
+        "endChar": 15
+      },
+      "revId": "9f529916025c6d0b9b44439f3c09a6b32efd2ed1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a9c6e861_955719a3",
@@ -71,6 +95,24 @@
       "writtenOn": "2026-01-21T23:18:50Z",
       "side": 1,
       "message": "Does Dawn typically do early exit? Like this could be:\n\n```\nif (mUseArgumentBuffers) {\n   return;\n}\n```\n\nwhich makes it a bit more obvious that nothing else kicks in. (Similar for SamplerBindingInfo, bailing early would make it clear nothing runs.",
+      "revId": "9f529916025c6d0b9b44439f3c09a6b32efd2ed1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e566fd6_a8e74205",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-22T05:59:16Z",
+      "side": 1,
+      "message": "There actually is work to do in the argument buffer case, this will make more sense in the next CL, but I should put TODOs here so it makes sense now.\n\nWe do use them, but to go on a tangent, I personally tend to use them only for things like error handling where the early return is setting a very simple precondition for the remainder of the code. Here, there\u0027s no inherent reason we don\u0027t need to do anything else in the argument buffers case (clearly from the fact that we actually do need to do something).",
+      "parentUuid": "a9c6e861_955719a3",
       "revId": "9f529916025c6d0b9b44439f3c09a6b32efd2ed1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
