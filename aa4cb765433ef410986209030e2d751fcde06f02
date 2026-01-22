@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d04d338_3cd98e93",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2114,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-01-22T19:04:53Z",
+      "side": 1,
+      "message": "This moves the error. I could have changed the api. but this is whats required if i do not.",
+      "range": {
+        "startLine": 2114,
+        "startChar": 32,
+        "endLine": 2114,
+        "endChar": 44
+      },
+      "revId": "aa4cb765433ef410986209030e2d751fcde06f02",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
