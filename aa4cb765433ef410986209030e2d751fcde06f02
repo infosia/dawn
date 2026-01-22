@@ -22,6 +22,30 @@
       },
       "revId": "aa4cb765433ef410986209030e2d751fcde06f02",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af89cfaa_d2130715",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2114,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-22T20:15:13Z",
+      "side": 1,
+      "message": "Kinda awkward but I don\u0027t see a better way of doing this.",
+      "parentUuid": "0d04d338_3cd98e93",
+      "range": {
+        "startLine": 2114,
+        "startChar": 32,
+        "endLine": 2114,
+        "endChar": 44
+      },
+      "revId": "aa4cb765433ef410986209030e2d751fcde06f02",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
