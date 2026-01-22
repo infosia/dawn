@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "423be95a_0269f415",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-22T12:38:40Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "7fdb6c20d0627c6f222a1b9364ddd0c384a2da41",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3e50ab3_5cfa12d1",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-22T12:38:40Z",
+      "side": 1,
+      "message": "Note that for these we could use an MTLResidencySet created per bindgroup so that in a single call we can add all the resources used in the BindGroup.\n\nAlternatively  we could iterate over the resources using the PassResourceUsageTracker (as that already contains all the resources that will be used by the pass)",
+      "revId": "7fdb6c20d0627c6f222a1b9364ddd0c384a2da41",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
