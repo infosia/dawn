@@ -46,6 +46,30 @@
       },
       "revId": "aa4cb765433ef410986209030e2d751fcde06f02",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10731ec6_60278602",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2114,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-22T22:03:48Z",
+      "side": 1,
+      "message": "I can think of slight variations but I don\u0027t think any of them are better. LGTM",
+      "parentUuid": "af89cfaa_d2130715",
+      "range": {
+        "startLine": 2114,
+        "startChar": 32,
+        "endLine": 2114,
+        "endChar": 44
+      },
+      "revId": "aa4cb765433ef410986209030e2d751fcde06f02",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
