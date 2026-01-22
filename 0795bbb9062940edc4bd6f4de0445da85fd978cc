@@ -39,6 +39,30 @@
       },
       "revId": "0795bbb9062940edc4bd6f4de0445da85fd978cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20988de6_34e93ddb",
+        "filename": "infra/config/global/legacy_builders.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-22T18:52:42Z",
+      "side": 1,
+      "message": "Will fix in a follow-up CL. Making changes in chained CLs like this is a pain and this is just a minor comment change.",
+      "parentUuid": "d93c2a36_fa863c7f",
+      "range": {
+        "startLine": 443,
+        "startChar": 34,
+        "endLine": 443,
+        "endChar": 37
+      },
+      "revId": "0795bbb9062940edc4bd6f4de0445da85fd978cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
