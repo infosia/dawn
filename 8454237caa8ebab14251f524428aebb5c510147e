@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a06602e8_0dbdc782",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-22T16:00:48Z",
+      "side": 1,
+      "message": "Diff looks a lot better so far, thanks a lot for iterating.",
+      "revId": "8454237caa8ebab14251f524428aebb5c510147e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68a59654_29c687bc",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1373,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-22T16:00:48Z",
+      "side": 1,
+      "message": "```suggestion\n        return InsertBitcastIfNeeded(to, inst-\u003eresult());\n```",
+      "revId": "8454237caa8ebab14251f524428aebb5c510147e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
