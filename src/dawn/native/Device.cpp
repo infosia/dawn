@@ -2111,6 +2111,18 @@ ResultOrError<Ref<ComputePipelineBase>> DeviceBase::CreateComputePipeline(
         SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(GetPlatform(), "CreateComputePipelineUS");
         maybeError = uninitializedComputePipeline->Initialize();
     }
+
+    if (maybeError.IsError() &&
+        maybeError.AcquireError()->GetType() == wgpu::ErrorType::Validation) {
+        // Validation errors (errors from from users) should not actually be considered to be
+        // pipeline failures. An example here is division by zero via a pipeline override.
+        constexpr bool kValidationErrorIsPipelineSuccess = true;
+        DAWN_HISTOGRAM_BOOLEAN(GetPlatform(), "CreateComputePipelineSuccess",
+                               kValidationErrorIsPipelineSuccess);
+    } else {
+        DAWN_HISTOGRAM_BOOLEAN(GetPlatform(), "CreateComputePipelineSuccess",
+                               maybeError.IsSuccess());
+    }
     DAWN_HISTOGRAM_BOOLEAN(GetPlatform(), "CreateComputePipelineSuccess", maybeError.IsSuccess());
 
     DAWN_TRY(std::move(maybeError));
@@ -2253,7 +2265,18 @@ ResultOrError<Ref<RenderPipelineBase>> DeviceBase::CreateRenderPipeline(
         SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(GetPlatform(), "CreateRenderPipelineUS");
         maybeError = uninitializedRenderPipeline->Initialize();
     }
-    DAWN_HISTOGRAM_BOOLEAN(GetPlatform(), "CreateRenderPipelineSuccess", maybeError.IsSuccess());
+
+    if (maybeError.IsError() &&
+        maybeError.AcquireError()->GetType() == wgpu::ErrorType::Validation) {
+        // Validation errors (errors from from users) should not actually be considered to be
+        // pipeline failures. An example here is division by zero via a pipeline override.
+        constexpr bool kValidationErrorIsPipelineSuccess = true;
+        DAWN_HISTOGRAM_BOOLEAN(GetPlatform(), "CreateRenderPipelineSuccess",
+                               kValidationErrorIsPipelineSuccess);
+    } else {
+        DAWN_HISTOGRAM_BOOLEAN(GetPlatform(), "CreateRenderPipelineSuccess",
+                               maybeError.IsSuccess());
+    }
 
     DAWN_TRY(std::move(maybeError));
     return useCache ? AddOrGetCachedRenderPipeline(std::move(uninitializedRenderPipeline))
