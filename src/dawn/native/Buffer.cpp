@@ -793,6 +793,9 @@ void* BufferBase::GetMappedPointer() {
 
 void* BufferBase::GetMappedRange(size_t offset, size_t size, bool writable) {
     if (!CanGetMappedRange(writable, offset, size)) {
+        GetDevice()->EmitLog(
+            wgpu::LoggingType::Error,
+            "GetMappedRange: Mapping is read-only. Use GetConstMappedRange instead.");
         return nullptr;
     }
     uint8_t* start = static_cast<uint8_t*>(GetMappedPointer());
