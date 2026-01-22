@@ -501,11 +501,18 @@ bool Buffer::IsCPUReadable() const {
 
 MaybeError Buffer::MapAtCreationImpl() {
     DAWN_ASSERT(IsCPUWritable());
-    ScopedCommandRecordingContext commandContext;
-    DAWN_TRY_ASSIGN(commandContext,
+    std::optional<ScopedCommandRecordingContext> maybeCommandContext;
+    DAWN_TRY_ASSIGN(maybeCommandContext,
                     ToBackend(GetDevice()->GetQueue())
-                        ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Normal));
-    return MapInternal(&commandContext, wgpu::MapMode::Write);
+                        ->TryGetScopedPendingCommandContext(QueueBase::SubmitMode::Normal));
+    if (maybeCommandContext.has_value()) {
+        return MapInternal(&maybeCommandContext.value(), wgpu::MapMode::Write);
+    }
+
+    // Lock could not be acquired, use temporary storage instead
+    mMapAtCreationData.resize(GetAllocatedSize());
+    mMappedData = mMapAtCreationData.data();
+    return {};
 }
 
 MaybeError Buffer::MapInternal(const ScopedCommandRecordingContext* commandContext,
@@ -519,11 +526,25 @@ void Buffer::UnmapInternal(const ScopedCommandRecordingContext* commandContext) 
     DAWN_UNREACHABLE();
 }
 
-void Buffer::UnmapIfNeeded(const ScopedCommandRecordingContext* commandContext) {
+MaybeError Buffer::UnmapIfNeeded(const ScopedCommandRecordingContext* commandContext) {
     if (mMappedData == nullptr) {
-        return;
+        return {};
     }
-    UnmapInternal(commandContext);
+
+    if (mMapAtCreationData.empty()) {
+        UnmapInternal(commandContext);
+        return {};
+    }
+
+    // We used temporary storage for MapAtCreation, now copy it to the actual buffer
+    mMappedData = nullptr;
+    ScopedMap scopedMap;
+    DAWN_TRY_ASSIGN(scopedMap, ScopedMap::Create(commandContext, this, wgpu::MapMode::Write));
+    DAWN_ASSERT(scopedMap.GetMappedData());
+    memcpy(scopedMap.GetMappedData(), mMapAtCreationData.data(), mMapAtCreationData.size());
+    mMapAtCreationData.clear();
+    mMapAtCreationData.shrink_to_fit();
+    return {};
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
@@ -599,13 +620,18 @@ void Buffer::DestroyImpl(DestroyReason reason) {
     BufferBase::DestroyImpl(reason);
 
     if (mMappedData != nullptr) {
-        ScopedCommandRecordingContext commandContext;
-        if (!GetDevice()->ConsumedError(
-                ToBackend(GetDevice()->GetQueue())
-                    ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Passive),
-                &commandContext)) {
-            UnmapIfNeeded(&commandContext);
-        }
+        // Lock the device before acquiring the scoped command context to avoid lock inversion.
+        // The scoped command context locks the queue's pending commands mutex, and we need to
+        // ensure the device lock is acquired first.
+        auto deviceGuard = GetDevice()->GetGuard();
+        [[maybe_unused]] bool consumed = GetDevice()->ConsumedError([&]() -> MaybeError {
+            ScopedCommandRecordingContext commandContext;
+            DAWN_TRY_ASSIGN(commandContext,
+                            ToBackend(GetDevice()->GetQueue())
+                                ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Passive));
+            DAWN_TRY(UnmapIfNeeded(&commandContext));
+            return {};
+        }());
     }
 }
 
