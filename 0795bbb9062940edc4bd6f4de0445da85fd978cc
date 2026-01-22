@@ -63,6 +63,30 @@
       },
       "revId": "0795bbb9062940edc4bd6f4de0445da85fd978cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d710cda7_a289d735",
+        "filename": "infra/config/global/legacy_builders.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-22T18:55:13Z",
+      "side": 1,
+      "message": "Correction: I\u0027ll include it in the last CL in this chain instead of creating a new one.",
+      "parentUuid": "20988de6_34e93ddb",
+      "range": {
+        "startLine": 443,
+        "startChar": 34,
+        "endLine": 443,
+        "endChar": 37
+      },
+      "revId": "0795bbb9062940edc4bd6f4de0445da85fd978cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
