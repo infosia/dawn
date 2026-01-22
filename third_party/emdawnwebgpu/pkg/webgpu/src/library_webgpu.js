@@ -122,9 +122,9 @@ var LibraryWebGPU = {
         WebGPU.Internals.jsObjects[ptr] = jsObject;
       },
 
-      // Buffer unmapping callbacks are stored in a separate table to keep
+      // State of active buffer mappings are stored in a separate table to keep
       // the jsObject table simple.
-      bufferOnUnmaps: [],
+      activeBufferMappings: [],
 
       // Future to promise management. Note that all FutureIDs (uint64_t) are
       // passed either as a low and high value or by pointer because they need
@@ -167,15 +167,9 @@ var LibraryWebGPU = {
     importJsBuffer__deps: ['emwgpuCreateBuffer'],
     importJsBuffer: (buffer, parentPtr = 0) => {
       // At the moment, we do not allow importing pending buffers.
-      assert(buffer.mapState != "pending");
-      var mapState = buffer.mapState == "mapped" ?
-        {{{ gpu.BufferMapState.Mapped }}} :
-        {{{ gpu.BufferMapState.Unmapped }}};
-      var bufferPtr = _emwgpuCreateBuffer(parentPtr, mapState);
+      assert(buffer.mapState == "unmapped");
+      var bufferPtr = _emwgpuCreateBuffer(parentPtr, {{{ gpu.BufferMapState.Unmapped }}});
       WebGPU.Internals.jsObjectInsert(bufferPtr, buffer);
-      if (buffer.mapState == "mapped") {
-        WebGPU.Internals.bufferOnUnmaps[bufferPtr] = [];
-      }
       return bufferPtr;
     },
     {{{ gpu.makeImportJsObject('CommandBuffer') }}}
@@ -731,14 +725,9 @@ var LibraryWebGPU = {
   // Standalone (non-method) functions
   // --------------------------------------------------------------------------
 
-  wgpuGetInstanceCapabilities: (capabilitiesPtr) => {
-    abort('TODO: wgpuGetInstanceCapabilities unimplemented');
-    return 0;
-  },
-
   wgpuGetProcAddress: (device, procName) => {
     abort('TODO(#11526): wgpuGetProcAddress unimplemented');
-    return 0;
+    return {{{ gpu.NULLPTR }}};
   },
 
   // --------------------------------------------------------------------------
@@ -956,12 +945,12 @@ var LibraryWebGPU = {
   emwgpuBufferDestroy__sig: 'vp',
   emwgpuBufferDestroy: (bufferPtr) => {
     var buffer = WebGPU.getJsObject(bufferPtr);
-    var onUnmap = WebGPU.Internals.bufferOnUnmaps[bufferPtr];
-    if (onUnmap) {
-      for (var i = 0; i < onUnmap.length; ++i) {
-        onUnmap[i]();
+    var activeBufferMapping = WebGPU.Internals.activeBufferMappings[bufferPtr];
+    if (activeBufferMapping) {
+      for (const onUnmap of activeBufferMappings.onUnmaps) {
+        onUnmap();
       }
-      delete WebGPU.Internals.bufferOnUnmaps[bufferPtr];
+      delete WebGPU.Internals.activeBufferMappings[bufferPtr];
     }
 
     buffer.destroy();
@@ -985,17 +974,24 @@ var LibraryWebGPU = {
 #if ASSERTIONS
       err(`buffer.getMappedRange(${offset}, ${size}) failed: ${ex}`);
 #endif
-      return 0;
+      return {{{ gpu.NULLPTR }}};
     }
     var data = _memalign(16, mapped.byteLength);
     HEAPU8.set(new Uint8Array(mapped), data);
-    WebGPU.Internals.bufferOnUnmaps[bufferPtr].push(() => _free(data));
+    WebGPU.Internals.activeBufferMappings[bufferPtr].onUnmaps.push(() => _free(data));
     return data;
   },
 
   emwgpuBufferGetMappedRange__deps: ['$warnOnce', 'memalign', 'free'],
   emwgpuBufferGetMappedRange__sig: 'pppp',
   emwgpuBufferGetMappedRange: (bufferPtr, offset, size) => {
+    if (WebGPU.Internals.activeBufferMappings[bufferPtr]?.mode !== {{{ gpu.MapMode.Write }}}) {
+#if ASSERTIONS
+      err('wgpuBufferWriteMappedRange failed: buffer is not mapped for WRITE');
+#endif
+      return {{{ gpu.NULLPTR }}};
+    }
+
     var buffer = WebGPU.getJsObject(bufferPtr);
 
 #if ASSERTIONS
@@ -1011,12 +1007,12 @@ var LibraryWebGPU = {
 #if ASSERTIONS
       err(`buffer.getMappedRange(${offset}, ${size}) failed: ${ex}`);
 #endif
-      return 0;
+      return {{{ gpu.NULLPTR }}};
     }
 
     var data = _memalign(16, mapped.byteLength);
     HEAPU8.fill(0, data, mapped.byteLength);
-    WebGPU.Internals.bufferOnUnmaps[bufferPtr].push(() => {
+    WebGPU.Internals.activeBufferMappings[bufferPtr].onUnmaps.push(() => {
       new Uint8Array(mapped).set(HEAPU8.subarray(data, data + mapped.byteLength));
       _free(data);
     });
@@ -1025,6 +1021,12 @@ var LibraryWebGPU = {
 
   emwgpuBufferWriteMappedRange__sig: 'ipppp',
   emwgpuBufferWriteMappedRange: (bufferPtr, offset, data, size) => {
+    if (WebGPU.Internals.activeBufferMappings[bufferPtr]?.mode !== {{{ gpu.MapMode.Write }}}) {
+#if ASSERTIONS
+      err('wgpuBufferWriteMappedRange failed: buffer is not mapped for WRITE');
+#endif
+      return {{{ gpu.Status.Error }}};
+    }
     var buffer = WebGPU.getJsObject(bufferPtr);
     var mapped;
     try {
@@ -1072,7 +1074,7 @@ var LibraryWebGPU = {
   emwgpuBufferMapAsync__sig: 'vpjjpp',
   emwgpuBufferMapAsync: (bufferPtr, futureId, mode, offset, size) => {
     var buffer = WebGPU.getJsObject(bufferPtr);
-    WebGPU.Internals.bufferOnUnmaps[bufferPtr] = [];
+    WebGPU.Internals.activeBufferMappings[bufferPtr] = { mode, onUnmaps: [] };
 
     {{{ gpu.convertSentinelToUndefined('size', '*') }}}
 
@@ -1094,7 +1096,7 @@ var LibraryWebGPU = {
           0;
         {{{ gpu.makeCheck('status') }}}
         _emwgpuOnMapAsyncCompleted(futureId, status, {{{ gpu.passAsPointer('messagePtr') }}});
-        delete WebGPU.Internals.bufferOnUnmaps[bufferPtr];
+        delete WebGPU.Internals.activeBufferMappings[bufferPtr];
       });
     }));
   },
@@ -1103,16 +1105,16 @@ var LibraryWebGPU = {
   emwgpuBufferUnmap: (bufferPtr) => {
     var buffer = WebGPU.getJsObject(bufferPtr);
 
-    var onUnmap = WebGPU.Internals.bufferOnUnmaps[bufferPtr];
-    if (!onUnmap) {
+    var activeBufferMapping = WebGPU.Internals.activeBufferMappings[bufferPtr];
+    if (!activeBufferMapping) {
       // Already unmapped
       return;
     }
 
-    for (var i = 0; i < onUnmap.length; ++i) {
-      onUnmap[i]();
+    for (const onUnmap of activeBufferMapping.onUnmaps) {
+      onUnmap();
     }
-    delete WebGPU.Internals.bufferOnUnmaps[bufferPtr]
+    delete WebGPU.Internals.activeBufferMappings[bufferPtr]
 
     buffer.unmap();
   },
@@ -1594,7 +1596,10 @@ var LibraryWebGPU = {
     }
     WebGPU.Internals.jsObjectInsert(bufferPtr, buffer);
     if (mappedAtCreation) {
-      WebGPU.Internals.bufferOnUnmaps[bufferPtr] = [];
+      WebGPU.Internals.activeBufferMappings[bufferPtr] = {
+        mode: {{{ gpu.MapMode.Write }}},
+        onUnmaps: [],
+      };
     }
     return true;
   },
@@ -1966,7 +1971,7 @@ var LibraryWebGPU = {
 #if ASSERTIONS
     assert(context);
 #endif
-    if (!context) return 0;
+    if (!context) return {{{ gpu.NULLPTR }}};
 
     context.surfaceLabelWebGPU = WebGPU.makeStringFromOptionalStringView(
       descriptor + {{{ C_STRUCTS.WGPUSurfaceDescriptor.label }}}
