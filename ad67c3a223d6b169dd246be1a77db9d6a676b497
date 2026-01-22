@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "01d3c65a_01a57f76",
+        "filename": "src/tint/lang/wgsl/resolver/eval_indexing_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-22T16:53:30Z",
+      "side": 1,
+      "message": "Fixed! (And checked that they fail on the old patchset)",
+      "parentUuid": "e4b0055f_d309154f",
+      "revId": "ad67c3a223d6b169dd246be1a77db9d6a676b497",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "58da7e1d_e87adca3",
         "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
         "patchSetId": 6

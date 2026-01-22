@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "384dd7d9_01f920c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-22T16:53:30Z",
+      "side": 1,
+      "message": "Weird, I didn\u0027t think uploads overwrote descriptions. Fixed again.",
+      "parentUuid": "8c2744d4_5dc31dd3",
+      "revId": "58b922cb4789fe17b09cc3f1efa0317442e2cdf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a482b02c_71e0be32",
