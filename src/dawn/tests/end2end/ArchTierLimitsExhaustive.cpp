@@ -33,6 +33,7 @@
 #include <vector>
 
 #include "dawn/common/LinkedList.h"
+#include "dawn/native/Features.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboLimits.h"
 #include "webgpu/webgpu_cpp.h"
@@ -67,17 +68,6 @@ class TierArchInfoTest_TieredMaxLimits : public TierArchInfoTestBase {
     void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
                            dawn::utils::ComboLimits& required) override {
         supported.UnlinkedCopyTo(&required);
-    }
-
-    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
-        std::vector<wgpu::FeatureName> features;
-        if (SupportsFeatures({wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix})) {
-            features.push_back(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix);
-        }
-        if (SupportsFeatures({wgpu::FeatureName::ShaderF16})) {
-            features.push_back(wgpu::FeatureName::ShaderF16);
-        }
-        return features;
     }
 
     std::string GetFullParamString(int alternate = 0) {
@@ -310,90 +300,11 @@ TEST_P(TierArchInfoTest_TieredMaxLimits, ExhaustiveTestAllFeatures) {
 
     std::multimap<std::string, std::set<uint32_t>> device_map;
 
-    using enum wgpu::FeatureName;
-
-    std::set all_feature_enums = {
-        CoreFeaturesAndLimits,
-        DepthClipControl,
-        Depth32FloatStencil8,
-        TextureCompressionBC,
-        TextureCompressionBCSliced3D,
-        TextureCompressionETC2,
-        TextureCompressionASTC,
-        TextureCompressionASTCSliced3D,
-        TimestampQuery,
-        IndirectFirstInstance,
-        ShaderF16,
-        RG11B10UfloatRenderable,
-        BGRA8UnormStorage,
-        Float32Filterable,
-        Float32Blendable,
-        ClipDistances,
-        DualSourceBlending,
-        Subgroups,
-        TextureFormatsTier1,
-        TextureFormatsTier2,
-        PrimitiveIndex,
-        TextureComponentSwizzle,
-        DawnInternalUsages,
-        DawnMultiPlanarFormats,
-        DawnNative,
-        ChromiumExperimentalTimestampQueryInsidePasses,
-        ImplicitDeviceSynchronization,
-        TransientAttachments,
-        MSAARenderToSingleSampled,
-        D3D11MultithreadProtected,
-        ANGLETextureSharing,
-        PixelLocalStorageCoherent,
-        PixelLocalStorageNonCoherent,
-        Unorm16TextureFormats,
-        MultiPlanarFormatExtendedUsages,
-        MultiPlanarFormatP010,
-        HostMappedPointer,
-        MultiPlanarRenderTargets,
-        MultiPlanarFormatNv12a,
-        FramebufferFetch,
-        BufferMapExtendedUsages,
-        AdapterPropertiesMemoryHeaps,
-        AdapterPropertiesD3D,
-        AdapterPropertiesVk,
-        DawnFormatCapabilities,
-        DawnDrmFormatCapabilities,
-        MultiPlanarFormatNv16,
-        MultiPlanarFormatNv24,
-        MultiPlanarFormatP210,
-        MultiPlanarFormatP410,
-        SharedTextureMemoryVkDedicatedAllocation,
-        SharedTextureMemoryAHardwareBuffer,
-        SharedTextureMemoryDmaBuf,
-        SharedTextureMemoryOpaqueFD,
-        SharedTextureMemoryZirconHandle,
-        SharedTextureMemoryDXGISharedHandle,
-        SharedTextureMemoryD3D11Texture2D,
-        SharedTextureMemoryIOSurface,
-        SharedTextureMemoryEGLImage,
-        SharedFenceVkSemaphoreOpaqueFD,
-        SharedFenceSyncFD,
-        SharedFenceVkSemaphoreZirconHandle,
-        SharedFenceDXGISharedHandle,
-        SharedFenceMTLSharedEvent,
-        SharedBufferMemoryD3D12Resource,
-        StaticSamplers,
-        YCbCrVulkanSamplers,
-        ShaderModuleCompilationOptions,
-        DawnLoadResolveTexture,
-        DawnPartialLoadResolveTexture,
-        MultiDrawIndirect,
-        DawnTexelCopyBufferRowAlignment,
-        FlexibleTextureViews,
-        ChromiumExperimentalSubgroupMatrix,
-        SharedFenceEGLSync,
-        DawnDeviceAllocatorControl,
-        AdapterPropertiesWGPU,
-        SharedBufferMemoryD3D12SharedMemoryFileMappingHandle,
-        SharedTextureMemoryD3D12Resource,
-        ChromiumExperimentalSamplingResourceTable,
-    };
+    std::set<wgpu::FeatureName> all_feature_enums;
+    for (auto i = 0; i < static_cast<int>(dawn::native::Feature::InvalidEnum); i++) {
+        // Note we are going from native to wgpu here.
+        all_feature_enums.insert(ToAPI(static_cast<dawn::native::Feature>(i)));
+    }
 
     auto AddDevice = [&](const std::vector<int>& vec, std::string device_str) {
         std::set<uint32_t> device_set;
